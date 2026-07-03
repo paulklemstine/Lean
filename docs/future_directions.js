@@ -4,6 +4,21 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
+    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0211",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-03T21:00:28.912840+00:00",
+    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domains": [
       "Pythagorean"
@@ -30,6 +45,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T00:49:26.963635+00:00",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot \u2014 the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0212",
+    "priority_score": 0.81,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-03T21:00:28.956123+00:00",
+    "title": "Knots That Think: Cognition as Braiding in Category Theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -61,7 +91,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lower Bound for Low Moments of Dirichlet Character Sums"
   },
   {
-    "consumed_by_exp_id": "61cdc208",
+    "consumed_by_exp_id": "",
     "description": "There exists a finite set of vectors in l\u00b2 satisfying specific convolution inequalities such that their weighted average achieves the coefficient \u03b3\u2080=0.94601 in the bound F(N) \u2264 N^{1/2} + \u03b3\u2080N^{1/4} + O(1), and no smaller coefficient is achievable via this method.",
     "domains": [
       "Bridges"
@@ -70,7 +100,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T06:22:13.488931+00:00",
     "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
   },
@@ -862,7 +892,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Hausdorff dimension of Cantor series exact approximation sets"
   },
   {
-    "consumed_by_exp_id": "2f34538d",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any fixed prime q there exist infinitely many pairs (t,p) with p prime, p\u2260q such that p divides A_t^{(q)} and s_q((q-1)p) \u2265 (q-1)t, where A_t^{(q)} = binom(q^{t+1}, q^t) - q^{q^t}. This would yield infinitely many n = q^t p satisfying binom(qn,n) \u2261 q^n (mod n).",
     "domains": [
       "Pythagorean"
@@ -871,7 +901,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T19:19:52.418155+00:00",
     "title": "Infinitely Many Solutions to Prime-Base Binomial Congruences"
   },
@@ -2711,7 +2741,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "That the entries of an integer right triangle are forced"
   },
   {
-    "consumed_by_exp_id": "38fb99e0",
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -2721,9 +2751,24 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:27.007324+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. The Escher Height Invariant via Krull Dimension Gaps\nDefine the *Escher height* of a commutative ring as the largest Krull dimension of\na quotient by the base of a strictly ascending ideal chain whose infinite\nintersection returns to that base. One expects the polynomial ring in `n`\nvariables to have Escher height exactly `n`, the ring in infinitely many variables\nto have infinite height, and height zero to characterize the Artinian rings.\n\n**The key insight is** that the height of an \"impossible staircase\" is not about\nthe chain looping back \u2014 it always does \u2014 but about how much room the ambient\nquotient leaves for the staircase to climb, which is precisely a dimension count.\n\n**Why now?** The equivalence \"ascending staircase exists \u21d4 non-Noetherian\" is now\nfirmly established, so the natural next step is to measure, not merely detect, the\nfailure of the ascending chain condition.\n\n## 2. Ascending\u2013Descending Duality of Vanishing Intersections\nAn ascending chain's intersection is forced to equal its first term, whereas a\ndescending chain of nonzero ideals can collapse all the way to zero. Conjecture a\nsharp duality: descending collapse to zero with nonzero terms happens exactly when\nsome nonzero element sits inside arbitrarily high powers of a proper ideal.\n\n**The key insight is** that the two seemingly opposite pictures \u2014 the ascending\n\"loop-back\" and the descending \"vanishing\" \u2014 are governed by the same quantity,\nthe way small elements survive across the whole chain.\n\n**Why now?** With both the ascending loop-back and the dyadic descending collapse\nin the integers proved side by side, the symmetry between them is begging for a\nunifying criterion.\n\n## 3. Escher Staircases in Semirings and the Tropical Setting\nCarry the whole theory into commutative semirings, where subtraction is\nunavailable. The support-below-`n` construction should still produce strictly\nascending chains of semiring ideals in any product semiring over an infinite index\nset, and the tropical polynomial semiring in infinitely many variables should be\nnon-Noetherian in this sense.\n\n**The key insight is** that non-Noetherianity is fundamentally an order-theoretic\nstatement about chains, so it should survive the loss of additive inverses that\ndistinguishes semirings from rings.\n\n**Why now?** The characterization was proved with a well-founded-order argument\nthat never used subtraction, strongly suggesting it transfers verbatim to the\ntropical world.\n\n## 4. The Escher Height of the Ring of All Algebraic Integers\nThe ring of all algebraic integers is a one-dimensional non-Noetherian domain.\nBuild an explicit staircase from the ideals generated by successive square-root\ntowers `2^(1/2^n)` and show it is strictly ascending with base-returning\nintersection, so that the Escher height is infinite despite Krull dimension one.\n\n**The key insight is** that Krull dimension counts the length of *prime* chains,\nwhile the Escher height counts arbitrary ideal chains \u2014 and a Bezout domain can be\nprime-thin yet ideal-rich.\n\n**Why now?** Explicit radical towers give a concrete, testable staircase, turning a\nfamously abstract non-Noetherian ring into a hands-on example.\n\n## 5. Escher Staircases as a Measure of Distance from Noetherianity\nAttach to each ring its *staircase spectrum*: the collection of order types\nrealized by its strictly ascending ideal chains. Noetherian rings are exactly\nthose whose spectrum omits the natural numbers; product rings over infinite index\nsets should realize every countable ascending order type.\n\n**The key insight is** that \"how far from Noetherian\" is best recorded not by a\nsingle number but by the family of chain shapes a ring can support.\n\n**Why now?** Having a clean model \u2014 the Boolean product ring \u2014 that visibly\nrealizes the natural-number order type gives a foothold for mapping out the full\nspectrum of possibilities.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0213",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6d5a2dac",
+    "status": "available",
+    "timestamp": "2026-07-03T21:04:49.951604+00:00",
+    "title": "Define the *Escher height* of a commutative ring as the largest Krull dimension "
   },
   {
     "consumed_by_exp_id": "e1e6fc31",
@@ -2753,5 +2798,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T04:44:52.457313+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: In the infinite-width limit, the empirical eigenvalue distribution of the Neural Tangent Kernel (NTK) of a fully connected ReLU network with i.i.d. Gaussian weights converges to the Marchenko-Pastur distribution scaled by a depth-dependent factor, independent of architecture details beyond depth. Test: Generate NTK matrices for networks of varying width (e.g., 500\u20135000) and fixed depth, compute eigenvalue histograms, and apply a two-sample Kolmogorov\u2011Smirnov test against the predicted scaled MP law; rejection at p<0.01 across multiple random seeds falsifies the conjecture. Impact: Establishes a direct link between random matrix theory and deep learning generalization, enabling principled initialization schemes and depth\u2011dependent learning\u2011rate schedules.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0214",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-07-03T21:09:51.383213+00:00",
+    "title": "Universal Spectral Law for Wide Neural Tangent Kernels"
   }
 ];

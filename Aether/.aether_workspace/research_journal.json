@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f2fdcb78",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Ramsey Theory: Bounds and Constructions\n\nDerived from the v16 scientific-team cycle that produced\n`Applications/RamseyOffDiagonal.lean`,\n`Applications/RamseyProbabilisticLowerBou",
-      "quality_score": 0.84592,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-06-27T19:38:01",
-      "title": "Ramsey Theory: Bounds and Constructions"
-    },
-    {
       "cycle_id": "bdfd9dbb",
       "domain": "Physics",
       "key_insight": "# Future Directions — Global Label Min-Cut (GLMC)\n\nDerived from this cycle's findings in `Core.lean`, `MinCut.lean`, and\n`Complexity.lean`. This cycle established a faithful finite model of GLMC, a\nde",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-07-03T20:14:15",
       "title": "Exact value of G₃({0,2,5})"
+    },
+    {
+      "cycle_id": "6d5a2dac",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\n## 1. The Escher Height Invariant via Krull Dimension Gaps\nDefine the *Escher height* of a commutative ring as the largest Krull dimension of\na quotient by the base of a strictly",
+      "quality_score": 0.67304,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-03T21:09:59",
+      "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8257369999999999
     }
   ],
-  "last_updated": "2026-07-03T20:14:15",
+  "last_updated": "2026-07-03T21:09:59",
   "open_questions": [
     {
       "context": "and is genuinely proved (no `sorry`, no `decide`-only). The false converse is",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "07255b71",
-        "quality": 0.5811999999999999,
-        "theorems": 4,
-        "title": "Sierpiński Numbers: Covering Systems"
-      },
-      {
         "cycle_id": "e56a1e16",
         "quality": 0.86528,
         "theorems": 20,
@@ -4009,6 +4003,12 @@
         "quality": 0.66208,
         "theorems": 6,
         "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
+      },
+      {
+        "cycle_id": "6d5a2dac",
+        "quality": 0.67304,
+        "theorems": 10,
+        "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
       }
     ]
   }
