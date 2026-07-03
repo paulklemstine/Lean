@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6fa4f641",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Maximum size of cycle-containing families of vectors\n\nThis cycle established, for every alphabet size `b`, the bipartite/girth core of\nthe conjecture: a cycle-containing pair for",
-      "quality_score": 0.7798419999999999,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-27T23:23:06",
-      "title": "Maximum size of cycle-containing families of vectors"
-    },
-    {
       "cycle_id": "ba81674a",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Brualdi–Quinn–Massey strong chromatic index\n\nThese conjectures are derived from this cycle's findings: (i) the conflict-graph\nformulation of `χ'_s`, (ii) the universal star-cliqu",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-03T07:55:37",
       "title": "Phantom Topologies: Spaces That Change When You Look at Them"
+    },
+    {
+      "cycle_id": "f91c88c3",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\nDerived from this cycle's findings about the octahedron `\\overline{3K₂}` — the\ncomplement of a perfect matching on six vertices — as the single forbidden induced\nsubgraph separati",
+      "quality_score": 0.78952,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-03T12:42:34",
+      "title": "Characterization of Balanced Distance-Hereditary Graphs by the Complement of 3-Matching"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e4cbdb61",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Riordan Array Row Sums and Fibonacci Diagonals\n\nDerived from the cycle that proved `∑_{k} C(n+k, 2k) = fib(2n+1)`\n(`Catalog/Novelty/RiordanRowSumFibonacci.lean`) via the coupled",
-      "quality_score": 0.5522400000000001,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-27T16:19:43",
-      "title": "Row Sum Fibonacci Property of Pascal-like Riordan Array"
-    },
     {
       "cycle_id": "6fec91f1",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 8,
       "timestamp": "2026-07-03T09:53:34",
       "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
+    },
+    {
+      "cycle_id": "f91c88c3",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\nDerived from this cycle's findings about the octahedron `\\overline{3K₂}` — the\ncomplement of a perfect matching on six vertices — as the single forbidden induced\nsubgraph separati",
+      "quality_score": 0.78952,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-03T12:42:34",
+      "title": "Characterization of Balanced Distance-Hereditary Graphs by the Complement of 3-Matching"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "562c0234",
-      "domain": "Physics",
-      "name": "is",
-      "quality": 0.74152
-    },
-    {
-      "cycle_id": "562c0234",
-      "domain": "Physics",
-      "name": "roundAcceptProb_nonneg",
-      "quality": 0.74152
-    },
-    {
-      "cycle_id": "562c0234",
-      "domain": "Physics",
-      "name": "roundAcceptProb_le_one",
-      "quality": 0.74152
-    },
     {
       "cycle_id": "fb9fd2df",
       "domain": "Geometry",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "dim_dual",
       "quality": 0.7779935103225806
+    },
+    {
+      "cycle_id": "f91c88c3",
+      "domain": "Bridges",
+      "name": "uses",
+      "quality": 0.78952
+    },
+    {
+      "cycle_id": "f91c88c3",
+      "domain": "Bridges",
+      "name": "isP4Free_of_embedding",
+      "quality": 0.78952
+    },
+    {
+      "cycle_id": "f91c88c3",
+      "domain": "Bridges",
+      "name": "coMatching3_isP4Free",
+      "quality": 0.78952
     }
   ],
-  "last_updated": "2026-07-03T09:53:34",
+  "last_updated": "2026-07-03T12:42:34",
   "open_questions": [
     {
       "context": "",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "2731a7eb",
-        "quality": 0.3034976,
-        "theorems": 3,
-        "title": "Hilbert 13: 7th-Degree Equations via 2-Variable Functions"
-      },
-      {
         "cycle_id": "70e63d82",
         "quality": 0.47904,
         "theorems": 11,
@@ -3203,6 +3197,12 @@
         "quality": 0.712488,
         "theorems": 11,
         "title": "Prove Fermats Little Theorem for p=5"
+      },
+      {
+        "cycle_id": "f91c88c3",
+        "quality": 0.78952,
+        "theorems": 8,
+        "title": "Characterization of Balanced Distance-Hereditary Graphs by the Complement of 3-M"
       }
     ],
     "Combinatorics": [

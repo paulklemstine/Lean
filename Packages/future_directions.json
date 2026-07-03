@@ -610,7 +610,7 @@
         "Sidon sets",
         "convolution inequalities"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -656,7 +656,7 @@
         "Graph Product Theory",
         "Domination in Hypergraphs"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -879,7 +879,7 @@
         "Combinatorial Matrix Theory",
         "Structural Graph Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -1021,7 +1021,7 @@
         "graph theory (clique-width)",
         "computational complexity"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -1969,7 +1969,7 @@
         "Algebraic geometry to combinatorics via geometric invariant theory",
         "Representation theory to geometric combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -4419,7 +4419,7 @@
         "nilperfect ring theory",
         "Dieudonné modules"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -4563,7 +4563,7 @@
         "the theory of matroids",
         "computational complexity"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Bridges"
@@ -4998,7 +4998,7 @@
         "Dieudonné theory",
         "p-adic Hodge theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Bridges"
@@ -5406,7 +5406,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "8638d104",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -5434,7 +5434,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-03T00:49:27.017991+00:00",
       "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
@@ -5735,7 +5735,7 @@
         "graph decomposition",
         "design theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -5882,7 +5882,7 @@
         "combinatorics",
         "model theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -5976,7 +5976,7 @@
         "probabilistic powerdomains",
         "Euclidean convex analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -6424,7 +6424,7 @@
         "Algebraic combinatorics",
         "Polynomial basis transformations"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -6471,7 +6471,7 @@
         "L₁ Space Analysis",
         "Functional Inequalities"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -6708,7 +6708,7 @@
         "Potential method analysis for positional games",
         "Constructive vs probabilistic strategies in Maker-Breaker games"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -7568,7 +7568,7 @@
         "harmonic_analysis",
         "algebraic_combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -7805,7 +7805,7 @@
         "cs.LG",
         "math.CA"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -7949,7 +7949,7 @@
         "Combinatorics",
         "Diophantine approximation"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -8077,6 +8077,170 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [],
+      "category": "famous_subtask",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable — theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements — most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark — they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Novelty",
+        "Logic"
+      ],
+      "github_issue": 0,
+      "id": "fd_0171",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9,
+      "proof_strategy": "Define a dark theorem of level k as a Pi_2 statement 'for all n, there exist at least k values of m such that P(n,m)' such that PA proves the existential claim but PA does not prove P(n,m) for any specific m. Level 1: Paris-Harrington theorem (the strengthened finite Ramsey theorem). Level 2: the Paris-Harrington theorem for the statement 'there exist at least 2 values of m satisfying the Ramsey property'. Prove strictness: if T is level k+1, then T implies a level-k statement that is independent of PA. Prove density: among all Pi_2 statements provable in ZFC, the fraction that are dark approaches 1 as statement length grows. Test: formalize levels 1-3 in Lean 4 using the Paris-Harrington and Goodstein sequences.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "seed",
+      "source_path": "seed:manual_v2",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-03T12:38:43.577653+00:00",
+      "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "famous_subtask",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot — the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Novelty",
+        "Geometry"
+      ],
+      "github_issue": 0,
+      "id": "fd_0172",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.81,
+      "proof_strategy": "Define cognitive braids: each brain region is a strand, each neural firing sequence is a crossing. A cognitive process is an element of B_n (braid group on n strands). Two thoughts are equivalent if related by Reidemeister moves. Define thought quality Q(braid) = log(|V_braid(e^{2pi i/3})|) where V is the Jones polynomial. Prove Q is a braid invariant. Prove: trivial braid has V = 1 so Q = 0 (trivial thought). Trefoil has V = -t^2+t+1 so Q = log(|V(e^{2pi i/3})|) = log(sqrt(3)) > 0 (creative thought). Figure-eight has Q = log(2) (confused thought with maximum entanglement). Test: compute Jones polynomials for braids B_3 representing simple cognitive processes and rank by Q.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "seed",
+      "source_path": "seed:manual_v2",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-03T12:38:43.625635+00:00",
+      "title": "Knots That Think: Cognition as Braiding in Category Theory"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' — they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Novelty",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0173",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.77,
+      "proof_strategy": "Define the periodic table of finite groups: rows indexed by order (atomic number), columns indexed by composition factor pattern (chemical series). Group types: cyclic (noble gases), symmetric (halogens), simple non-abelian (transition metals), nilpotent (alkali metals), solvable non-nilpotent (alkaline earth). Prove: groups in the same column have isomorphic composition factors (Jordan-Holder theorem). Prove: the 'valence' (number of minimal normal subgroups) is determined by the chief factors. Construct the table for order <= 100 and verify periodicity: cyclic groups of prime order form the first column, groups with composition {2,2,3} form the second column, etc. Test: predict properties of groups of order 120 before computing them.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "seed",
+      "source_path": "seed:manual_v2",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-03T12:38:43.645368+00:00",
+      "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions\n\nDerived from this cycle's findings about the octahedron `\\overline{3K₂}` — the\ncomplement of a perfect matching on six vertices — as the single forbidden induced\nsubgraph separating balanced graphs from unbalanced ones inside the\ndistance-hereditary class.\n\n## 1. A metric certificate for the balanced/unbalanced boundary\n\n**Conjecture.** A distance-hereditary graph is balanced if and only if no six of\nits vertices induce an octahedron, and moreover this obstruction can be detected\npurely metrically: a graph is unbalanced exactly when it contains six vertices,\nsplit into three pairs, such that vertices in different pairs are at distance one\nand vertices in the same pair are at distance two.\n\nThe key insight is that in the octahedron every vertex has a *unique* vertex at\ndistance two — its antipode — and it is precisely this \"one missing edge per\nvertex\" rigidity, not any global counting, that creates the odd combinatorial\ncycle responsible for unbalancedness. Reformulating the forbidden subgraph as a\ndistance pattern turns a subgraph search into a search over the distance matrix.\n\nWhy now? We have isolated the octahedron's defining local property (unique\nnon-neighbour) and shown it is exactly what blocks induced four-vertex paths;\ntranslating that property into distance-matrix language is the natural next step\nand would make the balanced test executable directly on shortest-path data.\n\n## 2. From one forbidden octahedron to a hereditary hierarchy\n\n**Conjecture.** For each `k ≥ 3`, the graphs whose only forbidden induced subgraph\nis the complete multipartite graph with `k` parts of size two (the `k`-dimensional\ncocktail-party graph) form a strictly increasing chain of hereditary classes, and\nthe balanced distance-hereditary graphs are exactly the first level `k = 3`.\n\nThe key insight is that the octahedron is `K_{2,2,2}`, the second member of the\ncocktail-party family, so the balanced characterisation is the base case of a\nladder obtained by adding one more antipodal pair at a time; each rung should add\nexactly one new \"odd obstruction\" of larger order.\n\nWhy now? We have proved the octahedron is a proper cograph (it contains an induced\nfour-cycle yet no induced four-path), which pins down its exact position in the\ncograph lattice; the same cograph machinery applies verbatim to every larger\ncocktail-party graph, so the ladder is within immediate reach.\n\n## 3. Balancedness is decided on cograph cotrees\n\n**Conjecture.** Every cograph is balanced if and only if its canonical cotree — the\nrecursive union/join decomposition — never performs a join of three or more\nmutually non-trivial factors that each contribute an independent pair; equivalently,\nbalancedness of a cograph is a local condition at each join node of its cotree.\n\nThe key insight is that the octahedron is the smallest join of three edges, so an\nunbalanced cograph must expose a \"triple join of pairs\" somewhere in its\ndecomposition, and conversely a cotree free of such nodes cannot hide an induced\noctahedron.\n\nWhy now? We have established that the octahedron is `P₄`-free, i.e. a cograph, and\nthat `P₄`-freeness is hereditary; since cographs are exactly the graphs with a\ncotree, the forbidden-subgraph condition can be pushed down to a purely local test\non that tree, which is far cheaper than a global subgraph search.\n\n## 4. Spectral shadow of the balanced boundary\n\n**Conjecture.** Among connected `4`-regular graphs on six vertices, the octahedron\nis the unique one whose adjacency spectrum is `{4, 0, 0, 0, -2, -2}`, and this\nspectral signature — a single large eigenvalue, a repeated `-2`, and a high-nullity\nzero eigenvalue — is a necessary spectral fingerprint of the unbalancing\nobstruction in every distance-hereditary graph that contains it.\n\nThe key insight is that the octahedron's regularity (every vertex has degree four,\nproved here) combined with its unique-non-neighbour structure forces its adjacency\nmatrix to be `J − I − P`, where `P` is a permutation of order two, whose spectrum is\ncompletely determined; unbalancedness should therefore leave a detectable trace in\nthe interlacing eigenvalues of any host graph.\n\nWhy now? We have the exact regular, antipodal structure of the forbidden graph in\nhand, which is precisely the data needed to compute its spectrum and to test\nwhether eigenvalue interlacing can certify the presence of the obstruction without\nexhibiting the six vertices explicitly.\n\n## 5. Balanced graphs and the parity of shortest-path multiplicities\n\n**Conjecture.** A distance-hereditary graph is unbalanced if and only if some pair\nof vertices at distance two is joined by an *even* number of common neighbours that\nthemselves form no edge — the octahedron being the minimal witness, where each\nantipodal pair has exactly four such common neighbours arranged as two\nnon-adjacent pairs.\n\nThe key insight is that balancedness is fundamentally a parity phenomenon (it\nforbids certain odd cyclic structures), and the octahedron encodes that parity\nlocally through the even, edge-free neighbourhood shared by each antipodal pair,\nwhich is exactly the configuration our unique-non-neighbour analysis exposes.\n\nWhy now? Having reduced the octahedron to the statement \"each vertex misses exactly\none other, and that missing partner shares all remaining vertices as neighbours\",\nwe can read off the common-neighbour parity directly, making this parity criterion\na concrete and testable reformulation of the whole characterisation.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0174",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "f91c88c3",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/f91c88c3",
+      "status": "available",
+      "thread_id": "th_fec30efb",
+      "timestamp": "2026-07-03T12:42:27.800219+00:00",
+      "title": "Derived from this cycle's findings about the octahedron `\\overline{3K₂}` — the"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
@@ -8110,6 +8274,46 @@
       "thread_id": "",
       "timestamp": "2026-07-02T05:18:37.114832+00:00",
       "title": "Deepening: unnamed_concept"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle f91c88c3 (Q=0.790), which proved 8 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For any graph $G$, if $G$ is distance-hereditary, then $G$ is balanced if and and only if $G$ does not contain $\\overline{3K_2}$ as an induced subgraph. This formalizes the paper's result that for the class of distance-hereditary graphs, the property of being balanced is equivalent to being $\\overli",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "github_issue": 0,
+      "id": "push_f91c88c3_9a3e900d",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.88952,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "f91c88c3",
+      "source_path": "Characterization of Balanced Distance-Hereditary Graphs by the Complement of 3-M",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-03T12:42:34.766233+00:00",
+      "title": "Deepening: Characterization of Balanced Distance-Hereditary Graphs by the Complement of 3-M"
     }
   ],
   "pruned": [],

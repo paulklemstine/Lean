@@ -4,6 +4,35 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
+    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0171",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-03T12:38:43.577653+00:00",
+    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle f91c88c3 (Q=0.790), which proved 8 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For any graph $G$, if $G$ is distance-hereditary, then $G$ is balanced if and and only if $G$ does not contain $\\overline{3K_2}$ as an induced subgraph. This formalizes the paper's result that for the class of distance-hereditary graphs, the property of being balanced is equivalent to being $\\overli",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_f91c88c3_9a3e900d",
+    "priority_score": 0.88952,
+    "research_mode": "team",
+    "source_exp_id": "f91c88c3",
+    "status": "available",
+    "timestamp": "2026-07-03T12:42:34.766233+00:00",
+    "title": "Deepening: Characterization of Balanced Distance-Hereditary Graphs by the Complement of 3-M"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domains": [
       "Pythagorean"
@@ -30,6 +59,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-03T00:49:26.963635+00:00",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot \u2014 the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0172",
+    "priority_score": 0.81,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-03T12:38:43.625635+00:00",
+    "title": "Knots That Think: Cognition as Braiding in Category Theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -2112,6 +2156,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0173",
+    "priority_score": 0.77,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-03T12:38:43.645368+00:00",
+    "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Congruence Rigidity of Sums of Squares\n\nThis cycle established that the entries of an integer right triangle are forced into\nstrong divisibility patterns \u2014 one leg is a multiple of three, the legs jointly carry a\nfactor of four, one entry is a multiple of five \u2014 and that a four-dimensional right\n\"box\" (a solution of `a\u00b2 + b\u00b2 + c\u00b2 = d\u00b2`) is even more rigid: at most one of its three\nspatial edges can be odd. We also pinned down exactly which whole numbers can serve as a\nleg. These findings point to several bold, testable conjectures.\n\n## 1. The correct modulus for a power of two grows with the power\n**Conjecture.** In any solution of `a\u00b2 + b\u00b2 = c\u00b2`, the two-adic valuation of the leg\nproduct `a\u00b7b` is governed one level deeper than naive reduction suggests: deciding\nwhether `2^k` divides `a\u00b7b` is a question about residues modulo `2^{k+1}`, never modulo\n`2^k`.\n*The key insight is* that a difference of two odd squares is always divisible by eight,\nso each additional factor of two in the product must be certified one binary place\nfurther out than one would guess. *Why now?* Having isolated the exact `mod 8`\nobstruction behind the factor of four, we can test the pattern mechanically for `k = 3,\n4, 5` and either confirm a clean \"shift-by-one\" law or expose its first exception.\n\n## 2. A universal super-divisor for higher-dimensional right figures\n**Conjecture.** For every dimension `r`, solutions of `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` obey a single\nuniversal divisibility law: there is a constant `D(r)`, depending only on `r`, such that\n`D(r)` divides the product `x\u2081\u00b7x\u2082\u00b7\u22ef\u00b7x_r` for *every* solution, and `D(r)` is the largest\nsuch constant.\n*The key insight is* that reduction to a finite residue ring turns \"for all solutions\"\ninto a finite, decidable statement, so the optimal constant `D(r)` is computable and\nshould grow in a structured (conjecturally multiplicative-over-primes) way. *Why now?*\nThe three-dimensional case already yields `4 \u2223 x\u2081x\u2082x\u2083`; comparing it against the planar\nconstant `12` suggests a dimension-indexed sequence worth charting and predicting.\n\n## 3. Parity collapse in higher dimensions\n**Conjecture.** As the number of squared terms increases, the number of edges permitted to\nbe odd stays uniformly bounded: in `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` at most three of the `x_i` can be\nodd, regardless of `r`.\n*The key insight is* that the sum of squares equals the count of odd terms modulo four,\nwhile a perfect square is `0` or `1` modulo four, capping the admissible odd-count no\nmatter how many terms are added. *Why now?* We proved the cap is \"at most one\" in three\ndimensions; extending the modular bookkeeping to arbitrary `r` is a self-contained next\nstep that would reveal whether the cap is truly dimension-independent.\n\n## 4. A sharp threshold characterization of legs in every dimension\n**Conjecture.** Just as the whole numbers that are a leg of a right triangle are exactly\nthose `\u2265 3`, in each higher dimension there is a sharp finite threshold above which every\ninteger appears as an edge of some right figure, and the finitely many exceptions can be\nlisted explicitly.\n*The key insight is* that a single explicit construction, split according to the parity of\nthe target edge, realizes all sufficiently large values, while the small exceptions are\nforced by a factorization that would otherwise require a vanishing edge. *Why now?* The\nplanar threshold `3` and its sharpness (the failures at `1` and `2`) give a template that\nshould transfer verbatim to the box equation and beyond.\n\n## 5. Divisibility as a sieve against near-solutions\n**Conjecture.** The combined congruence obstructions (`12 \u2223 a\u00b7b`, `60 \u2223 a\u00b7b\u00b7c`, and their\nhigher-dimensional analogues) are strong enough that a random integer triple satisfying\nthem has a positive, computable probability of being genuinely Pythagorean \u2014 i.e. the\ncongruence conditions capture a constant fraction of the \"arithmetic mass\" of true\nsolutions.\n*The key insight is* that each universal divisor removes a fixed proportion of impostors,\nso stacking independent prime-power obstructions multiplies into a sieve of predictable\ndensity. *Why now?* With the exact obstructions in hand for the primes `2, 3, 5`, one can\nimmediately measure how much of the solution set they explain and calibrate whether a few\nmore primes suffice to pin down solutions almost completely.\n",
     "domains": [
       "Pythagorean",
@@ -2141,7 +2200,22 @@ window.FUTURE_DIRECTIONS = [
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
   {
-    "consumed_by_exp_id": "8638d104",
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nDerived from this cycle's findings about the octahedron `\\overline{3K\u2082}` \u2014 the\ncomplement of a perfect matching on six vertices \u2014 as the single forbidden induced\nsubgraph separating balanced graphs from unbalanced ones inside the\ndistance-hereditary class.\n\n## 1. A metric certificate for the balanced/unbalanced boundary\n\n**Conjecture.** A distance-hereditary graph is balanced if and only if no six of\nits vertices induce an octahedron, and moreover this obstruction can be detected\npurely metrically: a graph is unbalanced exactly when it contains six vertices,\nsplit into three pairs, such that vertices in different pairs are at distance one\nand vertices in the same pair are at distance two.\n\nThe key insight is that in the octahedron every vertex has a *unique* vertex at\ndistance two \u2014 its antipode \u2014 and it is precisely this \"one missing edge per\nvertex\" rigidity, not any global counting, that creates the odd combinatorial\ncycle responsible for unbalancedness. Reformulating the forbidden subgraph as a\ndistance pattern turns a subgraph search into a search over the distance matrix.\n\nWhy now? We have isolated the octahedron's defining local property (unique\nnon-neighbour) and shown it is exactly what blocks induced four-vertex paths;\ntranslating that property into distance-matrix language is the natural next step\nand would make the balanced test executable directly on shortest-path data.\n\n## 2. From one forbidden octahedron to a hereditary hierarchy\n\n**Conjecture.** For each `k \u2265 3`, the graphs whose only forbidden induced subgraph\nis the complete multipartite graph with `k` parts of size two (the `k`-dimensional\ncocktail-party graph) form a strictly increasing chain of hereditary classes, and\nthe balanced distance-hereditary graphs are exactly the first level `k = 3`.\n\nThe key insight is that the octahedron is `K_{2,2,2}`, the second member of the\ncocktail-party family, so the balanced characterisation is the base case of a\nladder obtained by adding one more antipodal pair at a time; each rung should add\nexactly one new \"odd obstruction\" of larger order.\n\nWhy now? We have proved the octahedron is a proper cograph (it contains an induced\nfour-cycle yet no induced four-path), which pins down its exact position in the\ncograph lattice; the same cograph machinery applies verbatim to every larger\ncocktail-party graph, so the ladder is within immediate reach.\n\n## 3. Balancedness is decided on cograph cotrees\n\n**Conjecture.** Every cograph is balanced if and only if its canonical cotree \u2014 the\nrecursive union/join decomposition \u2014 never performs a join of three or more\nmutually non-trivial factors that each contribute an independent pair; equivalently,\nbalancedness of a cograph is a local condition at each join node of its cotree.\n\nThe key insight is that the octahedron is the smallest join of three edges, so an\nunbalanced cograph must expose a \"triple join of pairs\" somewhere in its\ndecomposition, and conversely a cotree free of such nodes cannot hide an induced\noctahedron.\n\nWhy now? We have established that the octahedron is `P\u2084`-free, i.e. a cograph, and\nthat `P\u2084`-freeness is hereditary; since cographs are exactly the graphs with a\ncotree, the forbidden-subgraph condition can be pushed down to a purely local test\non that tree, which is far cheaper than a global subgraph search.\n\n## 4. Spectral shadow of the balanced boundary\n\n**Conjecture.** Among connected `4`-regular graphs on six vertices, the octahedron\nis the unique one whose adjacency spectrum is `{4, 0, 0, 0, -2, -2}`, and this\nspectral signature \u2014 a single large eigenvalue, a repeated `-2`, and a high-nullity\nzero eigenvalue \u2014 is a necessary spectral fingerprint of the unbalancing\nobstruction in every distance-hereditary graph that contains it.\n\nThe key insight is that the octahedron's regularity (every vertex has degree four,\nproved here) combined with its unique-non-neighbour structure forces its adjacency\nmatrix to be `J \u2212 I \u2212 P`, where `P` is a permutation of order two, whose spectrum is\ncompletely determined; unbalancedness should therefore leave a detectable trace in\nthe interlacing eigenvalues of any host graph.\n\nWhy now? We have the exact regular, antipodal structure of the forbidden graph in\nhand, which is precisely the data needed to compute its spectrum and to test\nwhether eigenvalue interlacing can certify the presence of the obstruction without\nexhibiting the six vertices explicitly.\n\n## 5. Balanced graphs and the parity of shortest-path multiplicities\n\n**Conjecture.** A distance-hereditary graph is unbalanced if and only if some pair\nof vertices at distance two is joined by an *even* number of common neighbours that\nthemselves form no edge \u2014 the octahedron being the minimal witness, where each\nantipodal pair has exactly four such common neighbours arranged as two\nnon-adjacent pairs.\n\nThe key insight is that balancedness is fundamentally a parity phenomenon (it\nforbids certain odd cyclic structures), and the octahedron encodes that parity\nlocally through the even, edge-free neighbourhood shared by each antipodal pair,\nwhich is exactly the configuration our unique-non-neighbour analysis exposes.\n\nWhy now? Having reduced the octahedron to the statement \"each vertex misses exactly\none other, and that missing partner shares all remaining vertices as neighbours\",\nwe can read off the common-neighbour parity directly, making this parity criterion\na concrete and testable reformulation of the whole characterisation.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0174",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f91c88c3",
+    "status": "available",
+    "timestamp": "2026-07-03T12:42:27.800219+00:00",
+    "title": "Derived from this cycle's findings about the octahedron `\\overline{3K\u2082}` \u2014 the"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domains": [
       "Novelty",
@@ -2151,7 +2225,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.73,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:27.017991+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
