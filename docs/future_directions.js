@@ -1404,12 +1404,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any nonnegative integer s and any list of integers m\u2081,\u2026,m_t \u2265 2, let n = s + \u03a3 m_i. If each m_i divides 2n(n\u22121), then there exists a seating schedule for 2n participants consisting of n newlywed couples at s tables of size 2 and t round tables of sizes 2m\u2081,\u2026,2m_t such that each couple sits together every night and each pair of distinct non\u2011spouses sits together exactly once.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0122",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01130v1",
+    "status": "available",
+    "timestamp": "2026-07-03T02:14:54.483527+00:00",
+    "title": "Sufficiency of obvious necessary conditions for the generalized honeymoon Oberwolfach problem with multiple round tables"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0122",
+    "id": "fd_0123",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -1423,7 +1437,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0123",
+    "id": "fd_0124",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -1437,7 +1451,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0124",
+    "id": "fd_0125",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
@@ -1451,7 +1465,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0125",
+    "id": "fd_0126",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",

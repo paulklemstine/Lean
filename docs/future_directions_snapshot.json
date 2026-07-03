@@ -2520,6 +2520,30 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "math.CO:2405.XXXX"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any nonnegative integer s and any list of integers m₁,…,m_t ≥ 2, let n = s + Σ m_i. If each m_i divides 2n(n−1), then there exists a seating schedule for 2n participants consisting of n newlywed couples at s tables of size 2 and t round tables of sizes 2m₁,…,2m_t such that each couple sits together every night and each pair of distinct non‑spouses sits together exactly once.",
+    "domain_bridges": [
+      "graph decomposition",
+      "design theory"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0122",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use an inductive construction based on splitting the set of couples into groups, applying the known solution for one round table (theorem from the paper) as a base case, and combining solutions via pairwise balanced designs and 4-fold graph decompositions to handle additional round tables.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01130v1",
+    "status": "available",
+    "timestamp": "2026-07-03T02:14:54.483527+00:00",
+    "title": "Sufficiency of obvious necessary conditions for the generalized honeymoon Oberwolfach problem with multiple round tables"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "SDtwists",
       "KMR13",
       "KMR14",
@@ -2537,7 +2561,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0122",
+    "id": "fd_0123",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a probabilistic model inspired by the fan structure and apply ergodic arguments under mild GT conditions.",
@@ -2562,7 +2586,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0123",
+    "id": "fd_0124",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on k combined with parity arguments analogous to Meshulam's lemma",
@@ -2593,7 +2617,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0124",
+    "id": "fd_0125",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the combinatorial interpretation via (p,q)-deformed s-rook placements on staircase boards to construct an explicit bijection between rook placements and the terms in the (p,q)-binomial expansion, showing that each rook placement contributes positively.",
@@ -2619,7 +2643,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0125",
+    "id": "fd_0126",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define the property of being a Sidon set in Lean 4. 2. Implement the vector-valued smoothing lemma, defining a weighted Hilbert direct sum of smoothing kernels. 3. Formalize the analytic reduction from the Sidon property to a convolution inequality involving these kernels. 4. Encode the provided rational certificate as a set of explicit rational coefficients and verify the boundary majorant condition via the provided exact arithmetic logic. 5. Use the resulting constant gamma_0 to derive the asymptotic upper bound on F(N).",
