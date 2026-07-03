@@ -6,7 +6,7 @@
 set -e
 
 VERSION_FILES=(
-    "Catalog/Applications/Packages/index.html"
+    "Packages/index.html"
     "docs/index.html"
 )
 
