@@ -3635,7 +3635,7 @@
       "Keskin 2019",
       "Togbé et al. 2020"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c98890ef",
     "description": "The conjecture posits that if the greatest common divisor of a and b exceeds 1 and the exponent n is even, then no positive integer solutions (a, b, x) with a < b exist for the equation (a^n+1)(b^n+1)=x².",
     "domain_bridges": [
       "Pell equations",
@@ -3651,7 +3651,7 @@
     "proof_strategy": "Combine descent methods with analysis of Pell equation solutions and modular constraints to show contradictions under the given conditions.",
     "research_mode": "team",
     "source_exp_id": "2606.31223v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T20:15:36.843139+00:00",
     "title": "Non-existence of solutions for (a^n+1)(b^n+1)=x² when gcd(a,b) > 1 and n is even"
   },

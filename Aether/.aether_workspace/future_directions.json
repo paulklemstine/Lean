@@ -7738,7 +7738,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Szalay 2000",
         "Cohn 2002",
@@ -7747,7 +7747,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "c98890ef",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -7763,7 +7763,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0164",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-03T20:16:33.482617+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem no_solutions_even_n_gcd : forall (a b n : ℕ), a < b → gcd a b > 1 → n ≠ 0 → ∃ x : ℕ, (a^n + 1) * (b^n + 1) ≠ x^2",
       "lineage_refs": [],
@@ -7778,7 +7778,7 @@
       "source": "",
       "source_exp_id": "2606.31223v1",
       "source_path": "http://arxiv.org/abs/2606.31223v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T20:15:36.843139+00:00",
       "title": "Non-existence of solutions for (a^n+1)(b^n+1)=x² when gcd(a,b) > 1 and n is even"
@@ -9982,6 +9982,7 @@
   "recent_domain_counts": {},
   "recent_theme_keywords": {},
   "selection_log": [
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
