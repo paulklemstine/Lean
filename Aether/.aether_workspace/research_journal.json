@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9e0667c2",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Hamiltonian Compression Factor of Cubic Graphs\n\nDerived from this cycle's findings: for every even `n ≥ 4` the cubic circulant\n`ML(n)` admits a 2-symmetric Hamiltonian cycle (`mo",
-      "quality_score": 0.7800670000000001,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-28T03:29:47",
-      "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs"
-    },
-    {
       "cycle_id": "0a880828",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Natural Boundary of Imaginary Quadratic Prime Zeta Functions\n\nDerived from the verified results of this cycle:\n\n* `Catalog/Novelty/ImaginaryQuadraticPrimeZeta.lean` — the Gaussia",
@@ -499,19 +489,19 @@
       "theorem_count": 17,
       "timestamp": "2026-07-03T19:52:39",
       "title": "Multi-kernel smoothing lemma for Sidon sets"
+    },
+    {
+      "cycle_id": "95c356ab",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## 1. The exact three-colour homothety spectrum of short gap patterns\n\nFor a three-point pattern `{0, p, q}` with `0 < p < q`, define its three-colour\nhomothety number as the leas",
+      "quality_score": 0.8257369999999999,
+      "sorry_count": 1,
+      "theorem_count": 8,
+      "timestamp": "2026-07-03T20:14:15",
+      "title": "Exact value of G₃({0,2,5})"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "935abbfb",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Character Class Contradiction\n\nDerived from the two cycles in `CharacterClassContradiction.lean` and\n`CuntzKriegerFullShiftFamily.lean`, which proved: for the full shift on `n` s",
-      "quality_score": 0.484642,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-06-27T19:02:01",
-      "title": "Character Class Contradiction"
-    },
     {
       "cycle_id": "f2fdcb78",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 17,
       "timestamp": "2026-07-03T19:52:39",
       "title": "Multi-kernel smoothing lemma for Sidon sets"
+    },
+    {
+      "cycle_id": "95c356ab",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## 1. The exact three-colour homothety spectrum of short gap patterns\n\nFor a three-point pattern `{0, p, q}` with `0 < p < q`, define its three-colour\nhomothety number as the leas",
+      "quality_score": 0.8257369999999999,
+      "sorry_count": 1,
+      "theorem_count": 8,
+      "timestamp": "2026-07-03T20:14:15",
+      "title": "Exact value of G₃({0,2,5})"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f1070a48",
-      "domain": "Novelty",
-      "name": "card_le_colors_mul_indepNum",
-      "quality": 0.8322400000000001
-    },
-    {
-      "cycle_id": "f1070a48",
-      "domain": "Novelty",
-      "name": "not_colorable_four_of_indepRatio_lt",
-      "quality": 0.8322400000000001
-    },
-    {
-      "cycle_id": "a725bb00",
-      "domain": "Applications",
-      "name": "is",
-      "quality": 0.7976880000000001
-    },
     {
       "cycle_id": "a725bb00",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Applications",
       "name": "trivB_card",
       "quality": 0.7401600000000002
+    },
+    {
+      "cycle_id": "95c356ab",
+      "domain": "Applications",
+      "name": "colVec_avoids",
+      "quality": 0.8257369999999999
+    },
+    {
+      "cycle_id": "95c356ab",
+      "domain": "Applications",
+      "name": "not_forces025_three_76",
+      "quality": 0.8257369999999999
+    },
+    {
+      "cycle_id": "95c356ab",
+      "domain": "Applications",
+      "name": "G025_three_ge_77",
+      "quality": 0.8257369999999999
     }
   ],
-  "last_updated": "2026-07-03T19:52:39",
+  "last_updated": "2026-07-03T20:14:15",
   "open_questions": [
-    {
-      "context": "-- !-- Critique (Critic): T_one_recurrence and T_one_bounded are 0-sorry, use the",
-      "cycle_id": "9e1a2820",
-      "domain": "Logic",
-      "sorry_count": 1,
-      "timestamp": "2026-06-26T02:42:00"
-    },
     {
       "context": "and is genuinely proved (no `sorry`, no `decide`-only). The false converse is",
       "cycle_id": "0f17133d",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 3,
       "timestamp": "2026-07-03T19:50:52"
+    },
+    {
+      "context": "non-vacuous.  No hidden `sorry`; `#print axioms` uses only the standard set.",
+      "cycle_id": "95c356ab",
+      "domain": "Applications",
+      "sorry_count": 1,
+      "timestamp": "2026-07-03T20:14:15"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "946cfca3",
-        "quality": 0.557,
-        "theorems": 20,
-        "title": "Balla's Conjecture for α = 1/3"
-      },
-      {
         "cycle_id": "f4462f16",
         "quality": 0.79052,
         "theorems": 12,
@@ -3141,6 +3135,12 @@
         "quality": 0.7401600000000002,
         "theorems": 17,
         "title": "Multi-kernel smoothing lemma for Sidon sets"
+      },
+      {
+        "cycle_id": "95c356ab",
+        "quality": 0.8257369999999999,
+        "theorems": 8,
+        "title": "Exact value of G₃({0,2,5})"
       }
     ],
     "Bridges": [
