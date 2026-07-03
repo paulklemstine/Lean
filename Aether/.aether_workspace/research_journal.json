@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "33ec0c7d",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Modular Rank-Four Nahm Sums via the Discriminant Condition\n\nDerived from this cycle's findings (see `Discriminant.lean`, `DiscriminantSet.lean`,\n`QPochhammer.lean`, and `Computat",
-      "quality_score": 0.5884799999999999,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-27T17:11:58",
-      "title": "Characterization of Modular Rank Four Nahm Sums via Discriminant Condition"
-    },
-    {
       "cycle_id": "bd70abee",
       "domain": "Applications",
       "key_insight": "# Future Directions — Cusick density `c_t = dens { n : s₂(n) ≤ s₂(n+t) }`\n\nThis research cycle proved (in `Catalog/Applications/`):\n\n* `CusickShiftSevenDensity.lean` — `c_7 = 43/64` (first exact `s₂(t",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-07-03T14:49:45",
       "title": "Fan-structure in Selmer group distributions over p-cyclic extensions"
+    },
+    {
+      "cycle_id": "6044c919",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\nDerived from this cycle's finding that the greedy \"anti-Fibonacci\" rule — start at 1 and always\ntake the smallest positive integer that is not a sum of two consecutive earlier ter",
+      "quality_score": 0.5680000000000001,
+      "sorry_count": 3,
+      "theorem_count": 16,
+      "timestamp": "2026-07-03T15:15:58",
+      "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.73448
     }
   ],
-  "last_updated": "2026-07-03T14:49:45",
+  "last_updated": "2026-07-03T15:15:58",
   "open_questions": [
-    {
-      "context": "",
-      "cycle_id": "f25c8810",
-      "domain": "Computation",
-      "sorry_count": 4,
-      "timestamp": "2026-06-25T03:46:44"
-    },
     {
       "context": "Main results (all 0-sorry):; Main new results (all 0-sorry):",
       "cycle_id": "ff8131d4",
@@ -3016,6 +3009,13 @@
       "domain": "Computation",
       "sorry_count": 3,
       "timestamp": "2026-07-03T05:53:55"
+    },
+    {
+      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
+      "cycle_id": "6044c919",
+      "domain": "Combinatorics",
+      "sorry_count": 3,
+      "timestamp": "2026-07-03T15:15:58"
     }
   ],
   "research_threads": {
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "c3a3db57",
-        "quality": 0.50342,
-        "theorems": 7,
-        "title": "ABC Conjecture: Consequences and Partial Results"
-      },
-      {
         "cycle_id": "48b7f4af",
         "quality": 0.42770230303030304,
         "theorems": 4,
@@ -3265,6 +3259,12 @@
         "quality": 0.6896399999999999,
         "theorems": 14,
         "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
+      },
+      {
+        "cycle_id": "6044c919",
+        "quality": 0.5680000000000001,
+        "theorems": 16,
+        "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
       }
     ],
     "Computation": [
