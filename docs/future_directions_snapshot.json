@@ -445,7 +445,7 @@
       "Serre: Galois Cohomology",
       "Neukirch-Schmidt-Wingberg: Cohomology of Number Fields"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c537b754",
     "description": "Conjecture: For any absolute Galois group G_K and any prime p, the orthogonal complement R_p(G_K) of H^1(G_K, F_p) under the cup product with itself depends only on the maximal pro-2 quotient of G_K; equivalently, if two absolute Galois groups have isomorphic maximal pro-2 quotients then their cup radicals are isomorphic as F_p‑vector spaces.",
     "domain_bridges": [
       "Cohomology of profinite groups",
@@ -461,7 +461,7 @@
     "proof_strategy": "Show that the cup product pairing H^1(G,F_p) × H^1(G,F_p) → H^2(G,F_p) factors through the maximal pro-2 quotient of G, and that any continuous automorphism preserving this quotient induces an isomorphism of the orthogonal complement; use duality of H^1 to characterize the cup radical explicitly.",
     "research_mode": "team",
     "source_exp_id": "2606.31547v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T12:25:18.795432+00:00",
     "title": "The Cup Radical Depends Only on the Maximal Pro-2 Quotient"
   },
@@ -1149,7 +1149,7 @@
       "math.NT",
       "math.RT"
     ],
-    "consumed_by_exp_id": "3aeecf42",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that a torsion Hecke eigenclass in the cohomology of the arithmetic manifold attached to GL_n over a CM number field F with coefficients in Z/ℓ^m gives rise to a continuous semisimple Galois representation r : G_F → GL_n(Z_ℓ) which is de Rham at places v|ℓ, with Hodge–Tate weights determined by the infinitesimal character of the automorphic representation at infinity, and whose associated filtered φ‑module via Fontaine's functor corresponds under the p‑adic local Langlands correspondence to the automorphic component π_v.",
     "domain_bridges": [
       "Representation Theory",
@@ -1166,7 +1166,7 @@
     "proof_strategy": "Extend Scholze's construction of automorphic determinants to Z_ℓ-coefficients, use the comparison isomorphism between étale and de Rham cohomology (via p-adic Hodge theory) to obtain de Rham Galois representations, then apply the p-adic local Langlands correspondence for GL_n over local fields to match the local Langlands parameter at places dividing ℓ with the automorphic data.",
     "research_mode": "team",
     "source_exp_id": "2606.31698v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T12:49:31.510793+00:00",
     "title": "Torsion local-global compatibility at p = ℓ for GL_n over CM fields"
   },
@@ -2545,6 +2545,38 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "p-adic uniformization",
+      "Schottky groups",
+      "Mumford curves",
+      "hyperelliptic curves",
+      "p-adic integration",
+      "Tree structures in p-adic geometry"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a set S = {a₀, b₀, ..., a_g, b_g} ⊂ ℙ¹(K) of size 2g+2 where K is a finite extension of ℚ_p (p ≠ 2), if the associated tree T(S) constructed from equivalence classes of triples has all internal vertices of degree exactly 3 and exactly 2g+2 leaf vertices corresponding bijectively to elements of S, then S is in good position, i.e., Γ(S) = ⟨s₀, ..., s_g⟩ is discontinuous and equals the free product ⋆ᵢ⟨s_i⟩.",
+    "domain_bridges": [
+      "p-adic Hodge theory",
+      "Geometric group theory",
+      "Tropical geometry over p-adic fields",
+      "Algorithmic number theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0124",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Prove sufficiency by showing that the tree condition ensures the Schottky group Γ(S) acts properly discontinuously on Ω_Γ. Use the correspondence between tree combinatorics and fundamental domains in ℙ¹(C_p). Show that degree-3 vertices correspond to specific geometric configurations that prevent accumulation of group translates, ensuring discontinuity. The leaf count condition ensures the correct rank for the free product structure. Counterexamples would involve constructing sets S where the tree has the specified degree pattern but Γ(S) fails to be a Schottky group.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02160v1",
+    "status": "available",
+    "timestamp": "2026-07-03T03:49:23.417787+00:00",
+    "title": "Tree Structure Characterization for Good Position in Hyperelliptic Mumford Curves"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "SDtwists",
       "KMR13",
       "KMR14",
@@ -2562,7 +2594,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0124",
+    "id": "fd_0125",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a probabilistic model inspired by the fan structure and apply ergodic arguments under mild GT conditions.",
@@ -2587,7 +2619,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0125",
+    "id": "fd_0126",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on k combined with parity arguments analogous to Meshulam's lemma",
@@ -2608,7 +2640,7 @@
       "Burde2005",
       "AV2005"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bb3ce4ee",
     "description": "For any s ∈ ℕ₀, h ∈ ℂ\\{0}, and non-negative integers n,k, the (p,q)-generalized Stirling numbers 𝔖_{s;h}(n,k|p,q) defined by the normal ordering of (YX)^n in the (p,q)-deformed generalized Weyl algebra can be expressed as a linear combination of (p,q)-binomial coefficients with non-negative integer coefficients.",
     "domain_bridges": [
       "algebraic combinatorics",
@@ -2618,13 +2650,13 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0126",
+    "id": "fd_0127",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the combinatorial interpretation via (p,q)-deformed s-rook placements on staircase boards to construct an explicit bijection between rook placements and the terms in the (p,q)-binomial expansion, showing that each rook placement contributes positively.",
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T01:39:20.537784+00:00",
     "title": "Positivity of (p,q)-Generalized Stirling Numbers in the (p,q)-Binomial Basis"
   },
@@ -2634,7 +2666,7 @@
       "Erdős-Turán Theorem on Sidon Sets",
       "Singer's Construction"
     ],
-    "consumed_by_exp_id": "bb3ce4ee",
+    "consumed_by_exp_id": "",
     "description": "Formalize the upper bound on the maximum size of a Sidon subset of {0, ..., N-1}, specifically proving that F(N) <= N^{1/2} + 0.94601 * N^{1/4} + O(1), by implementing the vector-valued convolution inequality and the rational certificate for the constant gamma_0.",
     "domain_bridges": [
       "Harmonic Analysis (Convolution Inequalities)",
@@ -2644,13 +2676,13 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0127",
+    "id": "fd_0128",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define the property of being a Sidon set in Lean 4. 2. Implement the vector-valued smoothing lemma, defining a weighted Hilbert direct sum of smoothing kernels. 3. Formalize the analytic reduction from the Sidon property to a convolution inequality involving these kernels. 4. Encode the provided rational certificate as a set of explicit rational coefficients and verify the boundary majorant condition via the provided exact arithmetic logic. 5. Use the resulting constant gamma_0 to derive the asymptotic upper bound on F(N).",
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T01:56:27.032018+00:00",
     "title": "Upper Bound for the Cardinality of Finite Sidon Sets"
   },
@@ -2673,7 +2705,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0128",
+    "id": "fd_0129",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Approach by contradiction assuming no such subgraph exists. Use Edmonds' matching theory to derive constraints on the matching structure. Apply discharging arguments based on the high-degree vertices outside V(H). Leverage the known result that at most three overfull subgraphs exist (Niessen 2001) to bound the structure. Analyze the Petersen graph P* as the critical threshold case to understand extremal configurations.",
@@ -2682,6 +2714,33 @@
     "status": "available",
     "timestamp": "2026-07-03T03:33:00.928355+00:00",
     "title": "Structural Location of Overfull Subgraphs in Class 2 Graphs"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Cameron, Ellis & Raynaud, *Cyclically covering subspaces over finite fields*, 2019",
+      "Aaronson, Groenland & Johnston, *Cyclically covering subspaces in 𝔽₂ⁿ*, 2019",
+      "Isbell, *Cyclic codes and cover problems*, 1956–60"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any odd prime power q≥3 and integer m≥4, the largest codimension of a cyclically covering subspace of 𝔽_qⁿ with n=(q^m+1)/2 equals 1. Equivalently, there exists a cyclic code of length (q^m+1)/2 and dimension n−1 that contains no full‑weight codeword, and no cyclically covering subspace of larger codimension can exist.",
+    "domain_bridges": [
+      "finite geometry (covering radius of dual codes)",
+      "graph theory (de Bruijn–type covering properties)"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0130",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct an explicit cyclic code of length n=(q^m+1)/2 whose generator polynomial is the minimal polynomial of a primitive element of 𝔽_{q^m} of order q^m+1 divided by (x−1). Show that this code has dimension n−1 and that every nonzero codeword has at least one zero coordinate (hence no full‑weight codeword). Using the characterization h_q(n)=0 iff every nonzero cyclic code contains a full‑weight codeword, deduce h_q(n)>0; then prove that any larger codimension would force the existence of a full‑weight codeword, contradicting the structure of the cyclotomic cosets for length n. This establishes h_q(n)=1. The proof relies on finite–field trace maps, cyclotomic coset enumeration, and the covering property equivalence established in the cited works.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02239v1",
+    "status": "available",
+    "timestamp": "2026-07-03T03:50:00.178097+00:00",
+    "title": "Exact Codimension for Cyclically Covering Subspaces of Length (qᵐ+1)/2"
   },
   {
     "ambition_level": "extension",

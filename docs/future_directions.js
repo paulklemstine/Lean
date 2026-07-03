@@ -264,7 +264,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Basic Strata in Unramified GU(1,n-1) Rapoport\u2013Zink Spaces"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c537b754",
     "description": "Conjecture: For any absolute Galois group G_K and any prime p, the orthogonal complement R_p(G_K) of H^1(G_K, F_p) under the cup product with itself depends only on the maximal pro-2 quotient of G_K; equivalently, if two absolute Galois groups have isomorphic maximal pro-2 quotients then their cup radicals are isomorphic as F_p\u2011vector spaces.",
     "domains": [
       "Pythagorean",
@@ -274,7 +274,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31547v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T12:25:18.795432+00:00",
     "title": "The Cup Radical Depends Only on the Maximal Pro-2 Quotient"
   },
@@ -658,7 +658,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the Greenberg\u2013Wiles local lower bound for \u2113\u2011Selmer groups in constant\u2011torsion families"
   },
   {
-    "consumed_by_exp_id": "3aeecf42",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that a torsion Hecke eigenclass in the cohomology of the arithmetic manifold attached to GL_n over a CM number field F with coefficients in Z/\u2113^m gives rise to a continuous semisimple Galois representation r : G_F \u2192 GL_n(Z_\u2113) which is de Rham at places v|\u2113, with Hodge\u2013Tate weights determined by the infinitesimal character of the automorphic representation at infinity, and whose associated filtered \u03c6\u2011module via Fontaine's functor corresponds under the p\u2011adic local Langlands correspondence to the automorphic component \u03c0_v.",
     "domains": [
       "Algebra",
@@ -668,7 +668,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31698v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T12:49:31.510793+00:00",
     "title": "Torsion local-global compatibility at p = \u2113 for GL_n over CM fields"
   },
@@ -1418,12 +1418,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a set S = {a\u2080, b\u2080, ..., a_g, b_g} \u2282 \u2119\u00b9(K) of size 2g+2 where K is a finite extension of \u211a_p (p \u2260 2), if the associated tree T(S) constructed from equivalence classes of triples has all internal vertices of degree exactly 3 and exactly 2g+2 leaf vertices corresponding bijectively to elements of S, then S is in good position, i.e., \u0393(S) = \u27e8s\u2080, ..., s_g\u27e9 is discontinuous and equals the free product \u22c6\u1d62\u27e8s_i\u27e9.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0124",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02160v1",
+    "status": "available",
+    "timestamp": "2026-07-03T03:49:23.417787+00:00",
+    "title": "Tree Structure Characterization for Good Position in Hyperelliptic Mumford Curves"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0124",
+    "id": "fd_0125",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -1437,7 +1452,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0125",
+    "id": "fd_0126",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -1446,30 +1461,30 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on minimal hitting subcomplexes in joins of spanning k\u2011trees with wedge of spheres"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bb3ce4ee",
     "description": "For any s \u2208 \u2115\u2080, h \u2208 \u2102\\{0}, and non-negative integers n,k, the (p,q)-generalized Stirling numbers \ud835\udd16_{s;h}(n,k|p,q) defined by the normal ordering of (YX)^n in the (p,q)-deformed generalized Weyl algebra can be expressed as a linear combination of (p,q)-binomial coefficients with non-negative integer coefficients.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0126",
+    "id": "fd_0127",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T01:39:20.537784+00:00",
     "title": "Positivity of (p,q)-Generalized Stirling Numbers in the (p,q)-Binomial Basis"
   },
   {
-    "consumed_by_exp_id": "bb3ce4ee",
+    "consumed_by_exp_id": "",
     "description": "Formalize the upper bound on the maximum size of a Sidon subset of {0, ..., N-1}, specifically proving that F(N) <= N^{1/2} + 0.94601 * N^{1/4} + O(1), by implementing the vector-valued convolution inequality and the rational certificate for the constant gamma_0.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0127",
+    "id": "fd_0128",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T01:56:27.032018+00:00",
     "title": "Upper Bound for the Cardinality of Finite Sidon Sets"
   },
@@ -1479,13 +1494,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0128",
+    "id": "fd_0129",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
     "status": "available",
     "timestamp": "2026-07-03T03:33:00.928355+00:00",
     "title": "Structural Location of Overfull Subgraphs in Class 2 Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any odd prime power q\u22653 and integer m\u22654, the largest codimension of a cyclically covering subspace of\u202f\ud835\udd3d_q\u207f with n=(q^m+1)/2 equals\u202f1. Equivalently, there exists a cyclic code of length (q^m+1)/2 and dimension n\u22121 that contains no full\u2011weight codeword, and no cyclically covering subspace of larger codimension can exist.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0130",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02239v1",
+    "status": "available",
+    "timestamp": "2026-07-03T03:50:00.178097+00:00",
+    "title": "Exact Codimension for Cyclically Covering Subspaces of Length (q\u1d50+1)/2"
   },
   {
     "consumed_by_exp_id": "",
