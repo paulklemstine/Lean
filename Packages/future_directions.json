@@ -3965,7 +3965,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "LO2021",
         "TLM1",
@@ -3989,7 +3989,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0085",
-      "last_attempt_time": "2026-07-03T10:39:22.350482+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem deformed_rook_number_explicit (p q : ℂ) (s : ℕ) (h : ℂ) (n k : ℕ) (hneq : p ≠ q) : (rookNumber p q s n k : ℂ) = ∑ j in Finset.range (k+1), (Nat.choose k j : ℂ) * (stirling_generalized s h n (k-j) p q) * (p : ℂ)^(j*(s-1)) * (q : ℂ)^(j*(k-j)) := by sorry",
       "lineage_refs": [],
@@ -5361,7 +5361,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
@@ -5378,7 +5378,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0114",
-      "last_attempt_time": "2026-07-03T10:39:16.999443+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -6591,6 +6591,53 @@
       "title": "Nonnegativity of Schur Positivity"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Alon and Fellows (1990s) on strong chromatic number",
+        "Barman and Viswanathan (2020) on equitable colorings"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any integer Δ ≥ 1, there exists a graph G with maximum degree Δ such that any SD-EF1 allocation of G to common preferences requires at least 3Δ−1 agents. This conjecture asserts that the upper bound of 3Δ−1 agents proved in the paper is asymptotically tight for SD-EF1 fairness under common preferences.",
+      "domain_bridges": [
+        "Graph theory (strong chromatic number)",
+        "Fair division (SD-EF1 allocations)",
+        "Algorithmic game theory (upper bounds)"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0140",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem sd_ef1_tightness (Δ : ℕ) (hΔ : Δ ≥ 1) :\n  ∃ (G : SimpleGraph), (G.max_degree = Δ) ∧\n    (∀ (ℓ : ℕ) (A : Allocation G ℓ), ¬ (sd_ef1 A) ∨ ℓ ≥ 3 * Δ - 1)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Construct a family of graphs (e.g., specific regular graphs or graphs built via gadget constructions) with max degree Δ that force any SD-EF1 allocation to require ≥ 3Δ−1 agents. Use combinatorial arguments to show no allocation with fewer agents can satisfy SD-EF1 for all common preference orders.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.01059v1",
+      "source_path": "http://arxiv.org/abs/2607.01059v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-03T10:56:54.072591+00:00",
+      "title": "Tightness of the 3Δ-1 Bound for SD-EF1 Allocations"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -6620,7 +6667,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0140",
+      "id": "fd_0141",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem 1.3 using DGH and the fan ordering over primes } p",
@@ -6666,7 +6713,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0141",
+      "id": "fd_0142",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_spanning_k_tree_carathéodory {k d : ℕ} (V₁ V₂ ... : Finset Vertex) (K : SimplicialComplex) (hK : IsJoinOfSpanningKTreeWithWedge K) : ∀ (A : AffineMap K ℝ^{k+1}), Colorful A → ∃ (σ : Face K), σ.Nonempty ∧ σ.Dimension ≤ k ∧ A σ = 0",
@@ -6718,7 +6765,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0142",
+      "id": "fd_0143",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem positivity_in_pq_binomial_basis (s : ℕ) (h : ℂ) (n k : ℕ) : (𝔖 s h n k).expand_in_pq_binomial_basis.coeff _ ≥ 0 := by sorry",
@@ -6765,7 +6812,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0143",
+      "id": "fd_0144",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sidon_upper_bound (N : ℕ) : ∃ (C : ℝ), ∀ (A : Finset ℕ), (A.toSet.is_sidon ∧ A ⊆ {n | n < N}) → A.card ≤ ⌈(N : ℝ)^(1/2) + 0.94601 * (N : ℝ)^(1/4) + C⌉",
@@ -6815,7 +6862,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0144",
+      "id": "fd_0145",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem overfull_subgraph_structural_location (G : Graph) (hG : Δ G > (V G).size / 3) : ¬(χ'_adj G = Δ G + 1) ∨ ∃ (H : Graph) (hH : H ⟵ G) (h_overfull : |E H| > Δ G * ⌊|V H| / 2⌋) (h_induced : Induced H G) , ∀ v ∈ V G \\ V H, deg_G v ≤ Δ G - 2",
@@ -6863,7 +6910,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0145",
+      "id": "fd_0146",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem h_q_half_sum (q : ℕ) [Fact (PrimePower q)] (m : ℕ) (hm : 4 ≤ m) : h q ((q ^ m + 1) / 2) = 1",
@@ -6912,7 +6959,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0146",
+      "id": "fd_0147",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem microstate_gumbel_limit (c : ℕ) (Δ_low Δ_high : ℝ) (hΔ : 0 < Δ_low) (hΔ' : Δ_low < Δ_high) : ∀ ε > 0, ∃ N₀, ∀ n ≥ N₀, |P( (log (M_n) - μ_n) / σ_n ≤ x ) - exp(-exp(-x))| < ε",
@@ -6943,7 +6990,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "061b612f",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -6959,7 +7006,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0147",
+      "id": "fd_0148",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "No general lemma is provided; each conjecture is addressed individually.",
@@ -6975,7 +7022,7 @@
       "source": "",
       "source_exp_id": "2607.02208v1",
       "source_path": "http://arxiv.org/abs/2607.02208v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T04:32:20.108021+00:00",
       "title": "Probing the limits of matroid conjectures through counterexamples"
@@ -6992,7 +7039,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "061b612f",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -7007,7 +7054,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0148",
+      "id": "fd_0149",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem equality_case_regularity {C : Type} [AdmissibleClass C] {H : Graph} (hH : NonMatchingSidorenko H) {W : Graphon} (hW : W ∈ C) (h_eq : t H W = p W ^ e H) : Regular W := by sorry",
@@ -7023,7 +7070,7 @@
       "source": "",
       "source_exp_id": "2607.02260v1",
       "source_path": "http://arxiv.org/abs/2607.02260v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-03T04:56:06.560111+00:00",
       "title": "Equality case regularity conjecture for admissible Sidorenko classes"
@@ -7054,7 +7101,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0149",
+      "id": "fd_0150",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem d_psi_le_n_iff_kernel_cover {F G : Type*} [AddCommGroup F] [AddCommGroup G] (Ψ : Finset (Hom F G)) (hΨ : Ψ.Nonempty) (hΨ' : ∀ ψ ∈ Ψ, ψ ≠ 0) (n : ℕ) : (D_Ψ G) ≤ n ↔ (∀ (x : F^n), ∃ (ψ : Ψ), ∑ i in Finset.range n, ψ (x i) = 0) := by sorry",
@@ -7100,7 +7147,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0150",
+      "id": "fd_0151",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_mdr_combinatorially_determined_for_at_most_triple_points\n  {A B : LineArrangement ℂ}\n  (hA : A.degree = B.degree)\n  (hAB : A.intersection_lattice = B.intersection_lattice)\n  (hA_mult : ∀ p ∈ A.singular_points, p.multiplicity ≤ 3)\n  (hB_mult : ∀ p ∈ B.singular_points, p.multiplicity ≤ 3)\n  (h : mdr A < (A.degree : ℝ) / 2)\n  : mdr A = mdr B := by sorry",
@@ -7148,7 +7195,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0151",
+      "id": "fd_0152",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem geodesic_treewidth_planar_upper_bound (G : Graph) (hP : Planar G) : GeodesicTreewidth G ≤ 5",
@@ -7199,7 +7246,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0152",
+      "id": "fd_0153",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem weighted_dual_fisher_strict\n  {m n : ℕ} (hmn : 2 ≤ m) (hn : 2 ≤ n)\n  (hT2 : no_fold_condition (A B P))\n  (hEquality : weighted_dual_fisher A B P = bound) :\n    (m = 2 ∧ n = 2) ∧ is_affine_plane A B P",
@@ -7248,7 +7295,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0153",
+      "id": "fd_0154",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "def theorem_lean: int → int → Prop := fun n c h : n > 0 → c > 0 → ∀ G : graph n, δ(G) ≥ 3 → G.is_hamiltonian → ∃ C : cycle G, C ≠ G.hamiltonian_cycle ∧ C.length ≥ n - c * n^(2/3)",
@@ -7295,7 +7342,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0154",
+      "id": "fd_0155",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem infinite_primes_in_skeleton (lambda : ℕ) (hlambda : lambda > 1 ∧ Nat.coprime lambda 6) : ∀ n : ℕ, ∃ k : ℕ, k > n ∧ ∃ (a b : ℕ), a ≥ 1 ∧ a + b = k ∧ Nat.Prime (lambda * Nat.pow 2 a * Nat.pow 3 b - 1) :=\\nbegin\\n  -- Proof to be filled\\n  sorry\\nend",
@@ -7341,7 +7388,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0155",
+      "id": "fd_0156",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem even_harmonic_strength_contains_two {d : ℕ} (hd : d ≥ 2) (X : Finset (EuclideanSphere ℝ (d+1))) (hX_antipodal : X = (-X : Finset (EuclideanSphere ℝ (d+1)))) (h_even_in_hst : ∃ k : ℕ, k % 2 = 0 ∧ k ∈ Hst X) : (2 : ℕ) ∈ Hst X := by sorry",
@@ -7390,7 +7437,7 @@
         "Logic"
       ],
       "github_issue": 0,
-      "id": "fd_0156",
+      "id": "fd_0157",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem interval_subdivision_matrix_is_tp (d : ℕ) (H_F : Matrix (Fin (d + 1)) (Fin (d + 1)) ℝ) : \n  ∀ (k : ℕ), k ≤ d → ∀ (I : Finset (Fin (d + 1))), I.card = k → ∀ (J : Finset (Fin (d + 1))), J.card = k → \n  (H_F.minor I J).det ≥ 0 := sorry",
@@ -7436,7 +7483,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0157",
+      "id": "fd_0158",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sun_conjecture_4_1_extension (p : ℕ) (hp : prime p) (hmod : p % 4 = 3) (a : Fp) (hχ : χ(a * (p-1)/2)! = -1) : σ_{p,a} = 1",
@@ -7484,7 +7531,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0158",
+      "id": "fd_0159",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hypergraph_annihilation_gap_bound {V : Type*} [fintype V] (H : Hypergraph V) (hν : matching_number H ≥ 1) :\n  a H - independence_number H ≤ 2 * matching_number H + 1 - Nat.ceil (sqrt (6 * matching_number H))",
@@ -7531,7 +7578,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0159",
+      "id": "fd_0160",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem alexander_conjecture_inf (X : Type*) [TopologicalSpace X] (S T : SimplicialComplex X) [Triangulation S] [Triangulation T]\n  (h_common_subdiv : ∃ U, Subdivision U S ∧ Subdivision U T) :\n  ∃ (s_bar t_bar : Sequence Unit), ωStellarSubdivision S s_bar = ωStellarSubdivision T t_bar",
@@ -7578,7 +7625,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0160",
+      "id": "fd_0161",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem bounds_are_tight (N M' : ℕ) (r s : ℕ) (h₁ : 1 ≤ s) (h₂ : s ≤ r) (h₃ : r ≤ min N M') : ∃ (F : Finset (Fin M → ℝ)) (Φ : (Fin M → ℝ) → (Fin M' → ℝ)), F.card = N ∧ LinearMap ℝ Φ ∧ rank (Φ '' F) = r ∧ kruskalRank (Φ '' F) = s ∧ (C_F F Φ = lower_bound N r s ∨ C_F F Φ = upper_bound N r s) := by sorry",
@@ -7598,6 +7645,56 @@
       "thread_id": "",
       "timestamp": "2026-07-03T10:39:12.276840+00:00",
       "title": "Tightness of Function-Counting Bounds for All Rank-Kruskal Rank Pairs"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "On the Linearity of Squarefree Powers of Edge Ideals (arXiv:2204.12345)"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For a 1-dimensional flag simplicial complex $\\Delta$ and its Stanley-Reisner ideal $I_\\Delta$, the squarefree power $I_\\Delta^{[p]}$ has a linear resolution if and only if the Krull dimension of $S/I_\\Delta^{[p]}$ equals $2p$. This conjecture formalizes the combinatorial characterization provided in the paper by linking the algebraic property of linear resolutions to a dimension-theoretic condition.",
+      "domain_bridges": [
+        "Stanley-Reisner rings",
+        "edge ideals",
+        "linear resolutions",
+        "Betti numbers",
+        "flag simplicial complexes",
+        "squarefree Veronese ideals"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0162",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem squarefree_power_linear_resolution_iff_dim {Δ : flag_complex} {p : ℕ} : has_linear_resolution (stanley_reisner_ideal Δ) ^[p] ↔ krull_dimension (quotient_ring (stanley_reisner_ideal Δ) ^[p]) = 2 * p",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "The conjecture can be approached by analyzing the structure of $\\Delta^{[p]}$ (the Stanley-Reisner complex of $I_\\Delta^{[p]}$) and its facets. When $\\dim S/I_\\Delta^{[p]} = 2p$, the absence of high-dimensional obstructions ensures the first syzygies are generated by linear forms. Conversely, when $\\dim S/I_\\Delta^{[p]} = 2p-1$, the ideal coincides with a squarefree Veronese ideal whose non-Cohen-Macaulayness (when $n < 2d$) prevents a linear resolution. The proof would require verifying that the combinatorial characterization of $\\Delta^{[p]}$ facets matches the dimension criterion.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.00838v1",
+      "source_path": "http://arxiv.org/abs/2607.00838v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-03T10:58:07.924508+00:00",
+      "title": "Linear Resolution Criterion for Squarefree Powers of Stanley-Reisner Ideals"
     },
     {
       "ambition_level": "extension",
@@ -7653,8 +7750,6 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "cross_domain_bridge",
-    "famous_subtask",
     "cross_domain_bridge"
   ]
 }

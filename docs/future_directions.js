@@ -1650,12 +1650,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any integer \u0394 \u2265 1, there exists a graph G with maximum degree \u0394 such that any SD-EF1 allocation of G to common preferences requires at least 3\u0394\u22121 agents. This conjecture asserts that the upper bound of 3\u0394\u22121 agents proved in the paper is asymptotically tight for SD-EF1 fairness under common preferences.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0140",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01059v1",
+    "status": "available",
+    "timestamp": "2026-07-03T10:56:54.072591+00:00",
+    "title": "Tightness of the 3\u0394-1 Bound for SD-EF1 Allocations"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0140",
+    "id": "fd_0141",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -1669,7 +1683,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0141",
+    "id": "fd_0142",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -1683,7 +1697,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0142",
+    "id": "fd_0143",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
@@ -1697,7 +1711,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0143",
+    "id": "fd_0144",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -1711,7 +1725,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0144",
+    "id": "fd_0145",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
@@ -1726,7 +1740,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0145",
+    "id": "fd_0146",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
@@ -1741,7 +1755,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0146",
+    "id": "fd_0147",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -1750,31 +1764,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "Gumbel limit for extremal microstate counts in AdS/CFT"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "061b612f",
     "description": "This research strives to identify precise mathematical conjectures in the theory of matroids and to design formalized counterexamples that expose their boundaries. The focus is on replicable designs that challenge theoretical assumptions.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0147",
+    "id": "fd_0148",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T04:32:20.108021+00:00",
     "title": "Probing the limits of matroid conjectures through counterexamples"
   },
   {
-    "consumed_by_exp_id": "061b612f",
+    "consumed_by_exp_id": "",
     "description": "For any admissible class C and any non\u2011matching Sidorenko graph H, every W \u2208 C satisfying t(H,W)=p(W)^{e(H)} must be regular; i.e., the equality case regularizes optimally.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0148",
+    "id": "fd_0149",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T04:56:06.560111+00:00",
     "title": "Equality case regularity conjecture for admissible Sidorenko classes"
   },
@@ -1785,7 +1799,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0149",
+    "id": "fd_0150",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02132v1",
@@ -1800,7 +1814,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0150",
+    "id": "fd_0151",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -1814,7 +1828,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0151",
+    "id": "fd_0152",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02098v1",
@@ -1829,7 +1843,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0152",
+    "id": "fd_0153",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01716v1",
@@ -1844,7 +1858,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Physics"
     ],
-    "id": "fd_0153",
+    "id": "fd_0154",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
@@ -1858,7 +1872,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0154",
+    "id": "fd_0155",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01718v1",
@@ -1872,7 +1886,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0155",
+    "id": "fd_0156",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01761v1",
@@ -1887,7 +1901,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Logic"
     ],
-    "id": "fd_0156",
+    "id": "fd_0157",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
@@ -1901,7 +1915,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0157",
+    "id": "fd_0158",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01695v1",
@@ -1915,7 +1929,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0158",
+    "id": "fd_0159",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01438v1",
@@ -1930,7 +1944,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0159",
+    "id": "fd_0160",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -1944,13 +1958,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0160",
+    "id": "fd_0161",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
     "status": "available",
     "timestamp": "2026-07-03T10:39:12.276840+00:00",
     "title": "Tightness of Function-Counting Bounds for All Rank-Kruskal Rank Pairs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a 1-dimensional flag simplicial complex $\\Delta$ and its Stanley-Reisner ideal $I_\\Delta$, the squarefree power $I_\\Delta^{[p]}$ has a linear resolution if and only if the Krull dimension of $S/I_\\Delta^{[p]}$ equals $2p$. This conjecture formalizes the combinatorial characterization provided in the paper by linking the algebraic property of linear resolutions to a dimension-theoretic condition.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0162",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00838v1",
+    "status": "available",
+    "timestamp": "2026-07-03T10:58:07.924508+00:00",
+    "title": "Linear Resolution Criterion for Squarefree Powers of Stanley-Reisner Ideals"
   },
   {
     "consumed_by_exp_id": "",
