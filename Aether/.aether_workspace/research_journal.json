@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ba81674a",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Brualdi–Quinn–Massey strong chromatic index\n\nThese conjectures are derived from this cycle's findings: (i) the conflict-graph\nformulation of `χ'_s`, (ii) the universal star-cliqu",
-      "quality_score": 0.79596,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-28T00:24:51",
-      "title": "Brualdi-Quinn Massey Strong Chromatic Index Conjecture for Bipartite Graphs"
-    },
-    {
       "cycle_id": "2f2206c6",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Multiplicability of Upho Posets from Vertex-Transitive Graphs\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\ncycle.  The cycle established two `sorr",
@@ -499,19 +489,19 @@
       "theorem_count": 8,
       "timestamp": "2026-07-03T12:42:34",
       "title": "Characterization of Balanced Distance-Hereditary Graphs by the Complement of 3-Matching"
+    },
+    {
+      "cycle_id": "87ba90ae",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — Fan-structure in Selmer group distributions\n\nThese conjectures grow directly out of the current cycle, in which the rank\ndistribution of subspaces of a finite vector space was sh",
+      "quality_score": 0.73448,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-03T14:49:45",
+      "title": "Fan-structure in Selmer group distributions over p-cyclic extensions"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d36ccdc3",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Unbounded 2-adic valuations of `f(x)^m` coefficients\n\nContext: `f(x) = ∏_{n≥0}(1-x^{2^n}) = ∑ (-1)^{s₂(n)} x^n`, `f(x)^m = ∑ t_m(n) x^n`.\nThis cycle proved (0 sorries) the Gawron",
-      "quality_score": 0.41604728262910795,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-27T17:02:00",
-      "title": "Unbounded 2-adic valuation of coefficients in F_m(x)^m for m ≥ 2"
-    },
     {
       "cycle_id": "33ec0c7d",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 7,
       "timestamp": "2026-07-03T14:04:43",
       "title": "Generalized Honeymoon Oberwolfach Problem with Multiple Round Tables"
+    },
+    {
+      "cycle_id": "87ba90ae",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — Fan-structure in Selmer group distributions\n\nThese conjectures grow directly out of the current cycle, in which the rank\ndistribution of subspaces of a finite vector space was sh",
+      "quality_score": 0.73448,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-03T14:49:45",
+      "title": "Fan-structure in Selmer group distributions over p-cyclic extensions"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "fb9fd2df",
-      "domain": "Geometry",
-      "name": "total_nonneg",
-      "quality": 0.8091999999999999
-    },
-    {
-      "cycle_id": "fb9fd2df",
-      "domain": "Geometry",
-      "name": "double_count",
-      "quality": 0.8091999999999999
-    },
-    {
-      "cycle_id": "fb9fd2df",
-      "domain": "Geometry",
-      "name": "card_le_indepNum_mul_total",
-      "quality": 0.8091999999999999
-    },
     {
       "cycle_id": "8875d434",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "coMatching3_isP4Free",
       "quality": 0.78952
+    },
+    {
+      "cycle_id": "87ba90ae",
+      "domain": "Algebra",
+      "name": "states",
+      "quality": 0.73448
+    },
+    {
+      "cycle_id": "87ba90ae",
+      "domain": "Algebra",
+      "name": "selmerWalk_parity",
+      "quality": 0.73448
+    },
+    {
+      "cycle_id": "87ba90ae",
+      "domain": "Algebra",
+      "name": "selmerWalk_closed_even",
+      "quality": 0.73448
     }
   ],
-  "last_updated": "2026-07-03T14:04:43",
+  "last_updated": "2026-07-03T14:49:45",
   "open_questions": [
     {
       "context": "",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "1670a4b8",
-        "quality": 0.61528,
-        "theorems": 6,
-        "title": "Ramsey Theory: Bounds and Constructions"
-      },
-      {
         "cycle_id": "168f9c96",
         "quality": 0.68184,
         "theorems": 13,
@@ -3079,6 +3073,12 @@
         "quality": 0.6195219999999999,
         "theorems": 8,
         "title": "β(Z₂ × Z_{2^n}) = 2^{n+1} + 2 for all positive integers n"
+      },
+      {
+        "cycle_id": "87ba90ae",
+        "quality": 0.73448,
+        "theorems": 8,
+        "title": "Fan-structure in Selmer group distributions over p-cyclic extensions"
       }
     ],
     "Applications": [
