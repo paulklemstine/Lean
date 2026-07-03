@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2f2206c6",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Multiplicability of Upho Posets from Vertex-Transitive Graphs\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\ncycle.  The cycle established two `sorr",
-      "quality_score": 0.71552,
-      "sorry_count": 1,
-      "theorem_count": 15,
-      "timestamp": "2026-06-28T00:49:06",
-      "title": "Multiplicability of Upho Posets from Vertex-Transitive Graphs"
-    },
-    {
       "cycle_id": "c011c95b",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Schnorr / Σ-protocol zero-knowledge\n\nThis cycle added three verified Lean files extending the catalog's Schnorr work\n(`SchnorrIdentification.lean`, `AffineSigmaExtraction.lean`):",
@@ -499,19 +489,19 @@
       "theorem_count": 8,
       "timestamp": "2026-07-03T14:49:45",
       "title": "Fan-structure in Selmer group distributions over p-cyclic extensions"
+    },
+    {
+      "cycle_id": "3fe1db8c",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nDerived from this cycle's study of intersecting families of permutations and the\nfixed-point bridge that recasts coordinate-agreement as a derangement condition.\n\n## 1. The matchi",
+      "quality_score": 0.8246161538461538,
+      "sorry_count": 3,
+      "theorem_count": 13,
+      "timestamp": "2026-07-03T19:50:08",
+      "title": "Proving the Existence of a Sufficiently Large Extremal Family"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2ff65a6a",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Tropical Geometry as a Limit of Classical Algebraic Geometry\n\nDerived from the Phase A cycle that produced:\n\n* `Tropical/ClassicalLimit/Dequantization.lean` — Maslov dequantizati",
-      "quality_score": 0.6490400000000001,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-06-27T18:45:04",
-      "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
-    },
     {
       "cycle_id": "e8be0a2a",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-03T18:34:11",
       "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+    },
+    {
+      "cycle_id": "3fe1db8c",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nDerived from this cycle's study of intersecting families of permutations and the\nfixed-point bridge that recasts coordinate-agreement as a derangement condition.\n\n## 1. The matchi",
+      "quality_score": 0.8246161538461538,
+      "sorry_count": 3,
+      "theorem_count": 13,
+      "timestamp": "2026-07-03T19:50:08",
+      "title": "Proving the Existence of a Sufficiently Large Extremal Family"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "8875d434",
-      "domain": "Computation",
-      "name": "triPoints_dist_one",
-      "quality": 0.7476214285714285
-    },
-    {
-      "cycle_id": "8875d434",
-      "domain": "Computation",
-      "name": "triGraph_adj_iff",
-      "quality": 0.7476214285714285
-    },
-    {
-      "cycle_id": "8875d434",
-      "domain": "Computation",
-      "name": "triGraph_colorable",
-      "quality": 0.7476214285714285
-    },
     {
       "cycle_id": "52dd778d",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Algebra",
       "name": "selmerWalk_closed_even",
       "quality": 0.73448
+    },
+    {
+      "cycle_id": "3fe1db8c",
+      "domain": "Novelty",
+      "name": "mem_agreements",
+      "quality": 0.8246161538461538
+    },
+    {
+      "cycle_id": "3fe1db8c",
+      "domain": "Novelty",
+      "name": "agree_iff_fixed",
+      "quality": 0.8246161538461538
+    },
+    {
+      "cycle_id": "3fe1db8c",
+      "domain": "Novelty",
+      "name": "agreements_eq_fixed",
+      "quality": 0.8246161538461538
     }
   ],
-  "last_updated": "2026-07-03T18:34:11",
+  "last_updated": "2026-07-03T19:50:08",
   "open_questions": [
-    {
-      "context": "Main results (all 0-sorry):; Main new results (all 0-sorry):",
-      "cycle_id": "ff8131d4",
-      "domain": "Novelty",
-      "sorry_count": 2,
-      "timestamp": "2026-06-25T07:04:33"
-    },
     {
       "context": "derivation is `sorry`-free.; CRITIQUE.  We confirm by axiom audit that the proof is `sorry`-free, and we expose",
       "cycle_id": "292d0525",
@@ -3016,6 +3009,13 @@
       "domain": "Combinatorics",
       "sorry_count": 3,
       "timestamp": "2026-07-03T15:15:58"
+    },
+    {
+      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
+      "cycle_id": "3fe1db8c",
+      "domain": "Novelty",
+      "sorry_count": 3,
+      "timestamp": "2026-07-03T19:50:08"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "307e78f2",
-        "quality": 0.46884433623188404,
-        "theorems": 6,
-        "title": "Exact sign law for coefficients of Ramanujan's third order mock theta function ρ"
-      },
-      {
         "cycle_id": "b87dcfdc",
         "quality": 0.84436,
         "theorems": 9,
@@ -3637,6 +3631,12 @@
         "quality": 0.6591141074626865,
         "theorems": 8,
         "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+      },
+      {
+        "cycle_id": "3fe1db8c",
+        "quality": 0.8246161538461538,
+        "theorems": 13,
+        "title": "Proving the Existence of a Sufficiently Large Extremal Family"
       }
     ],
     "NumberTheory": [
