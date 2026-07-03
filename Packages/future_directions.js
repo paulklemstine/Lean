@@ -17,7 +17,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: unnamed_concept"
   },
   {
-    "consumed_by_exp_id": "5875a645",
+    "consumed_by_exp_id": "",
     "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
     "domains": [
       "Novelty",
@@ -27,7 +27,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:26.963635+00:00",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
@@ -352,7 +352,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Commutativity of Operator Theorem operators in SR_G"
   },
   {
-    "consumed_by_exp_id": "aad22603",
+    "consumed_by_exp_id": "",
     "description": "Formalize the theorem stating that for any connected bipartite graph G on n vertices and any real p \u2265 2, the positive p-energy E_p+(G) is at least the positive p-energy of the path graph P_n. This involves defining the adjacency spectrum, the positive p-energy sum, and the specific graph structures.",
     "domains": [
       "Physics"
@@ -361,7 +361,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30996v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T15:55:56.869309+00:00",
     "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
   },
@@ -1067,7 +1067,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "A recursive decomposition of greedy Tamari intervals via planar map structures"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7488be0a",
     "description": "The sheared Witt vector functor \\(\\chW\\) is isomorphic to the filtered colimit of the functors \\(n \\mapsto W(R[p^n])/\\hw(R[p^n])\\) over \\(n \\geq 1\\).",
     "domains": [
       "Bridges"
@@ -1076,7 +1076,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01178v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T22:10:42.305562+00:00",
     "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
   },
@@ -1155,7 +1155,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived p-completeness of sheared Witt vectors ensures Dieudonn\u00e9 theory extension"
   },
   {
-    "consumed_by_exp_id": "f550adea",
+    "consumed_by_exp_id": "",
     "description": "There exists a finite family of vector-valued convolution kernels {K_i} such that their weighted combination satisfies a ball-overbag inequality for Sidon sets, with the coefficient \u03b3_0=0.94601 achievable through optimized L\u00b2 energy distribution across kernels.",
     "domains": [
       "Computation",
@@ -1165,7 +1165,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T23:15:13.575664+00:00",
     "title": "Multi-kernel smoothing lemma for Sidon sets"
   },
@@ -1462,16 +1462,30 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "bb3ce4ee",
+    "description": "We classify the finite posets whose probabilistic powerdomain is an RB-domain by proving that a finite poset P has this property if and only if it has a least element and its undirected Hasse graph is a tree.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0127",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02231v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-03T04:55:55.366539+00:00",
+    "title": "Characterization of Finite Posets with RB-Domain Probabilistic Powerdomains"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0127",
+    "id": "fd_0128",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:55:38.042067+00:00",
     "title": "Fan-structured order and uniform bounds in the Selmer group distribution"
   },
@@ -1481,7 +1495,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0128",
+    "id": "fd_0129",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -1495,7 +1509,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0129",
+    "id": "fd_0130",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
@@ -1509,7 +1523,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0130",
+    "id": "fd_0131",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -1523,7 +1537,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0131",
+    "id": "fd_0132",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
@@ -1538,7 +1552,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0132",
+    "id": "fd_0133",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
@@ -1553,7 +1567,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0133",
+    "id": "fd_0134",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -1568,13 +1582,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0134",
+    "id": "fd_0135",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
     "status": "available",
     "timestamp": "2026-07-03T04:32:20.108021+00:00",
     "title": "Probing the limits of matroid conjectures through counterexamples"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any admissible class C and any non\u2011matching Sidorenko graph H, every W \u2208 C satisfying t(H,W)=p(W)^{e(H)} must be regular; i.e., the equality case regularizes optimally.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0136",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02260v1",
+    "status": "available",
+    "timestamp": "2026-07-03T04:56:06.560111+00:00",
+    "title": "Equality case regularity conjecture for admissible Sidorenko classes"
   },
   {
     "consumed_by_exp_id": "",
