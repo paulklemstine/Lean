@@ -4,50 +4,6 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 3fe1db8c (Q=0.825), which proved 13 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: This conjecture extends the classical Complete Intersection Theorem to permutation groups, focusing on bounded intersections using fixed-point conditions.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_3fe1db8c_0648df9b",
-    "priority_score": 0.9246161538461538,
-    "research_mode": "team",
-    "source_exp_id": "3fe1db8c",
-    "status": "available",
-    "timestamp": "2026-07-03T19:50:08.643333+00:00",
-    "title": "Deepening: Proving the Existence of a Sufficiently Large Extremal Family"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition \u2014 zeros on the critical line means the bulk geometry is stable against perturbations.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0209",
-    "priority_score": 0.91,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-03T19:46:28.989007+00:00",
-    "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0206",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-03T19:46:28.919974+00:00",
-    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domains": [
       "Pythagorean"
@@ -74,35 +30,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-03T00:49:26.963635+00:00",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle 3fe1db8c (Q=0.825) proved 13 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: This conjecture extends the classical Complete Intersection Theorem to permutation groups, focusing on bounded intersections using fixed-point conditions.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_3fe1db8c_8ac2ba97",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "3fe1db8c",
-    "status": "available",
-    "timestamp": "2026-07-03T19:50:08.670593+00:00",
-    "title": "Close Proofs: Proving the Existence of a Sufficiently Large Extremal Family"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot \u2014 the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0207",
-    "priority_score": 0.81,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-03T19:46:28.944477+00:00",
-    "title": "Knots That Think: Cognition as Braiding in Category Theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -134,7 +61,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lower Bound for Low Moments of Dirichlet Character Sums"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "61cdc208",
     "description": "There exists a finite set of vectors in l\u00b2 satisfying specific convolution inequalities such that their weighted average achieves the coefficient \u03b3\u2080=0.94601 in the bound F(N) \u2264 N^{1/2} + \u03b3\u2080N^{1/4} + O(1), and no smaller coefficient is achievable via this method.",
     "domains": [
       "Bridges"
@@ -143,7 +70,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T06:22:13.488931+00:00",
     "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
   },
@@ -672,7 +599,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Orbit Boundedness Criterion for Finite Galois Extensions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "80abe18f",
     "description": "Formalize the theorem that for a very general principally polarized abelian variety (X,\u0398) of dimension g, if a subvariety Z of codimension k (1 \u2264 k < g) satisfies [Z] = m\u00b7\u03b8_k where \u03b8_k = [\u0398]^k/k!, then m is divisible by every prime p \u2264 (k+1)/2. This yields a lower bound N_{k,g} \u2265 \u220f_{p \u2264 (k+1)/2} p for the minimal positive multiple of \u03b8_k that is algebraic.",
     "domains": [
       "Algebra",
@@ -682,7 +609,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31894v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T11:14:52.651608+00:00",
     "title": "Divisibility of minimal algebraic multiples of theta_k on very general principally polarized abelian varieties"
   },
@@ -935,7 +862,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Hausdorff dimension of Cantor series exact approximation sets"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2f34538d",
     "description": "Conjecture that for any fixed prime q there exist infinitely many pairs (t,p) with p prime, p\u2260q such that p divides A_t^{(q)} and s_q((q-1)p) \u2265 (q-1)t, where A_t^{(q)} = binom(q^{t+1}, q^t) - q^{q^t}. This would yield infinitely many n = q^t p satisfying binom(qn,n) \u2261 q^n (mod n).",
     "domains": [
       "Pythagorean"
@@ -944,7 +871,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T19:19:52.418155+00:00",
     "title": "Infinitely Many Solutions to Prime-Base Binomial Congruences"
   },
@@ -1505,7 +1432,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tree Structure Characterization for Good Position in Hyperelliptic Mumford Curves"
   },
   {
-    "consumed_by_exp_id": "95c356ab",
+    "consumed_by_exp_id": "",
     "description": "The Gallai homothety number $ G_3(\\{0,2,5\\}) $ equals 77.",
     "domains": [
       "Bridges"
@@ -1514,7 +1441,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02226v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T04:11:45.471727+00:00",
     "title": "Exact value of G\u2083({0,2,5})"
   },
@@ -2057,12 +1984,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any dominant integral weight \u03bb of GL_3(C), the restriction of the irreducible polynomial representation V(\u03bb) to the principal SL_2(C) decomposes as a direct sum of symmetric powers Sym^j(C^2) with multiplicities m_j that can be computed combinatorially: m_j equals the number of positive roots \u03b1 such that 2\u27e8\u03bb+\u03c1,\u03b1\u2228\u27e9 - 2\u27e8\u03c1,\u03b1\u2228\u27e9 = j. This explicit formula determines the Jordan block sizes of the image of a regular unipotent element under V(\u03bb) and is falsifiable by checking concrete weight examples.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0163",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31398v1",
+    "status": "available",
+    "timestamp": "2026-07-03T19:54:37.674342+00:00",
+    "title": "Multiplicity formula for the restriction of GL_3 irreducible representations to the principal SL_2"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0163",
+    "id": "fd_0164",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -2076,7 +2017,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0164",
+    "id": "fd_0165",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -2090,7 +2031,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0165",
+    "id": "fd_0166",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
@@ -2104,7 +2045,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0166",
+    "id": "fd_0167",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -2118,7 +2059,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0167",
+    "id": "fd_0168",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
@@ -2133,7 +2074,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0168",
+    "id": "fd_0169",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
@@ -2148,7 +2089,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0169",
+    "id": "fd_0170",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -2163,7 +2104,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0170",
+    "id": "fd_0171",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -2177,7 +2118,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0171",
+    "id": "fd_0172",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -2192,7 +2133,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0172",
+    "id": "fd_0173",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02132v1",
@@ -2207,7 +2148,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0173",
+    "id": "fd_0174",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -2221,7 +2162,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0174",
+    "id": "fd_0175",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02098v1",
@@ -2236,7 +2177,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0175",
+    "id": "fd_0176",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01716v1",
@@ -2251,7 +2192,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Physics"
     ],
-    "id": "fd_0176",
+    "id": "fd_0177",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
@@ -2265,7 +2206,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0177",
+    "id": "fd_0178",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01718v1",
@@ -2279,7 +2220,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0178",
+    "id": "fd_0179",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01761v1",
@@ -2294,7 +2235,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Logic"
     ],
-    "id": "fd_0179",
+    "id": "fd_0180",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
@@ -2308,7 +2249,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0180",
+    "id": "fd_0181",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01695v1",
@@ -2322,7 +2263,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0181",
+    "id": "fd_0182",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01438v1",
@@ -2337,7 +2278,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0182",
+    "id": "fd_0183",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -2351,7 +2292,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0183",
+    "id": "fd_0184",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -2366,7 +2307,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0184",
+    "id": "fd_0185",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
@@ -2380,7 +2321,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0185",
+    "id": "fd_0186",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00775v1",
@@ -2394,7 +2335,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0186",
+    "id": "fd_0187",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00825v2",
@@ -2408,7 +2349,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0187",
+    "id": "fd_0188",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00651v1",
@@ -2422,7 +2363,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0188",
+    "id": "fd_0189",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00643v1",
@@ -2437,7 +2378,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0189",
+    "id": "fd_0190",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00561v1",
@@ -2451,7 +2392,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0190",
+    "id": "fd_0191",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00608v1",
@@ -2466,7 +2407,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0191",
+    "id": "fd_0192",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00456v1",
@@ -2475,17 +2416,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on exponential lower bound for monochromatic triples in the Boolean lattice"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a8c9dac2",
     "description": "The conjecture posits that finite fields require a threshold of $l+1$ for nonempty interior projections, diverging from Euclidean settings where thresholds align differently, leading to verifiable contrasts.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0192",
+    "id": "fd_0193",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00366v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T14:07:20.160717+00:00",
     "title": "Threshold Discrepancy in Orthogonal Projections"
   },
@@ -2496,7 +2437,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0193",
+    "id": "fd_0194",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00372v1",
@@ -2510,7 +2451,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0194",
+    "id": "fd_0195",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00332v1",
@@ -2524,7 +2465,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0195",
+    "id": "fd_0196",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.32024v1",
@@ -2539,7 +2480,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0196",
+    "id": "fd_0197",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31967v1",
@@ -2554,7 +2495,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0197",
+    "id": "fd_0198",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31940v1",
@@ -2569,7 +2510,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0198",
+    "id": "fd_0199",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31908v1",
@@ -2584,7 +2525,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0199",
+    "id": "fd_0200",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31687v1",
@@ -2599,7 +2540,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0200",
+    "id": "fd_0201",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31821v2",
@@ -2614,7 +2555,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0201",
+    "id": "fd_0202",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31547v1",
@@ -2629,7 +2570,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0202",
+    "id": "fd_0203",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31649v1",
@@ -2644,7 +2585,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0203",
+    "id": "fd_0204",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31565v1",
@@ -2658,7 +2599,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0204",
+    "id": "fd_0205",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31526v1",
@@ -2673,13 +2614,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0205",
+    "id": "fd_0206",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31341v1",
     "status": "available",
     "timestamp": "2026-07-03T19:30:38.483142+00:00",
     "title": "Finiteness of Geometric Semisimple Representations for Arbitrary Characteristic"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "If a polynomial f(X)=X^r B(X^{q-1}) over F_{q^2} with at most five terms and coefficients in {\u00b11} (except possibly one) permutes the field, then there must exist an integer m\u22653 dividing q^2-1 with m\u2208{3,4,6} and (Q,R,S)\u2261\u00b1(1,1,1) or \u00b1(1,1,-1) (mod m), and the associated gcd conditions on r and q\u00b11 must hold. Moreover, the only possible values of b are 0,\u00b11, which forces m\u2208{3,4,6}.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0207",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31262v1",
+    "status": "available",
+    "timestamp": "2026-07-03T19:55:25.577339+00:00",
+    "title": "Conjecture on necessary congruence conditions for permutation pentanomials"
   },
   {
     "consumed_by_exp_id": "",
@@ -2695,21 +2651,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T00:49:27.041847+00:00",
     "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0208",
-    "priority_score": 0.77,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-03T19:46:28.967539+00:00",
-    "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
   },
   {
     "consumed_by_exp_id": "",
@@ -2742,51 +2683,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
   {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nDerived from this cycle's study of intersecting families of permutations and the\nfixed-point bridge that recasts coordinate-agreement as a derangement condition.\n\n## 1. The matching upper bound: uniqueness of the prefix stabilizer\n\nWe have shown that fixing `t` coordinates yields a `t`-intersecting family of\npermutations of `n` points with exactly `(n-t)!` members. The bold conjecture is\nthat, once `n` is large relative to `t`, no `t`-intersecting family can be\nlarger, and that the prefix stabilizer is the *unique* extremal family up to\nrelabelling of points and values.\n\nThe key insight is that coordinate-agreement between two permutations is the\nnumber of fixed points of their quotient `\u03c3\u207b\u00b9\u03c4`, so a `t`-intersecting family is\nexactly a set of permutations whose pairwise quotients each fix at least `t`\npoints; extremality should therefore be forced by how few large-fixed-point\nelements the symmetric group contains.\n\nWhy now? The lower-bound construction is completely pinned down and the\nfixed-point reformulation removes all set-system bookkeeping, so the remaining\nwork is a clean spectral/counting estimate on the distribution of fixed points\nin the symmetric group rather than an ad hoc combinatorial search.\n\n## 2. A derangement-weighted density threshold\n\nReplace the all-or-nothing intersection condition with a weighted one: assign to\neach pair of permutations the number of positions on which they disagree, and ask\nfor the largest family in which the *average* pairwise disagreement stays below a\nthreshold `\u03b8\u00b7n`.\n\nThe key insight is that average disagreement is the average size of the support\nof `\u03c3\u207b\u00b9\u03c4` over the family, a single group-theoretic statistic, so the extremal\nproblem becomes an optimization over probability distributions on the symmetric\ngroup whose typical element has small support.\n\nWhy now? The exact identity relating agreements to support size makes the\nobjective function explicit and differentiable in the family's empirical\ndistribution, opening the door to a variational treatment that the classical\nintersecting formulation does not permit.\n\n## 3. Cross-intersecting pairs of permutation families\n\nStudy two families `A` and `B` such that every permutation in `A` agrees in at\nleast `t` positions with every permutation in `B`, and seek to maximize the\nproduct `|A|\u00b7|B|`. Conjecture: for large `n` the optimum is `((n-t)!)\u00b2`, attained\nby taking both families equal to a common prefix stabilizer.\n\nThe key insight is that cross-agreement between `A` and `B` is controlled by the\nfixed-point counts of the quotients `\u03c3\u207b\u00b9\u03c4` with `\u03c3 \u2208 A`, `\u03c4 \u2208 B`, so the product\nbound reduces to a bipartite version of the single-family derangement estimate.\n\nWhy now? The single-family construction and its exact count are in hand, and the\nproduct form is exactly the shape in which cross-intersecting problems for sets\nwere recently resolved, suggesting the permutation analogue is ripe.\n\n## 4. Fixed-point spectra and forbidden intersection sizes\n\nInstead of a lower bound `t` on agreements, forbid a specific agreement size:\nrequire that no two permutations in the family agree in exactly `s` positions.\nConjecture that for each forbidden `s` the maximum family size is again a shifted\nfactorial determined by `s`, with a phase transition as `s` crosses `n/2`.\n\nThe key insight is that forbidding an exact agreement size is forbidding an exact\nfixed-point count of `\u03c3\u207b\u00b9\u03c4`, i.e. excluding one layer of the conjugacy-class\nspectrum of the symmetric group, so the problem becomes eigenvalue interlacing\nfor the association scheme whose classes are indexed by fixed-point number.\n\nWhy now? The bridge identifies the relevant scheme precisely, and forbidden-size\n(rather than bounded-size) intersection problems have become tractable for sets,\nso importing those techniques through the bridge is the natural next step.\n\n## 5. Beyond symmetric groups: intersecting families in wreath and linear groups\n\nExtend the whole framework from `S_n` to other transitive permutation groups \u2014\nsigned permutations (hyperoctahedral group) and the general linear group acting\non a vector space \u2014 where \"agreement\" means sharing an image on a coordinate or\na common eigenvector. Conjecture that the point-stabilizer analogue is again\nextremal, with size equal to the order of a coordinate stabilizer.\n\nThe key insight is that the fixed-point bridge is group-agnostic: agreement of\ntwo elements is a fixed-point condition on their quotient in *any* group acting\non a set, so the extremal question is uniformly \"how large a subset can keep all\npairwise quotients away from the derangements.\"\n\nWhy now? The bridge has been isolated as a general mechanism rather than a fact\nabout `S_n`, so the same lower-bound construction and counting template transfer\nimmediately to these richer groups, where extremal set theory is largely\nunexplored.\n",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0210",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "3fe1db8c",
-    "status": "available",
-    "timestamp": "2026-07-03T19:50:02.761304+00:00",
-    "title": "Derived from this cycle's study of intersecting families of permutations and the"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Extremal Positive p-Energies of Graphs\n\n## 1. Full path-minimality of positive p-energy via spectral majorization\n\nFor every connected bipartite graph on `n` vertices and every real exponent\n`p \u2265 2`, the positive p-energy `\u2211_{\u03bb>0} \u03bb^p` should be minimized by the path\n`P_n`. The key insight is that the ordered positive part of the adjacency\nspectrum of any connected graph *majorizes* that of the path in the\nHardy\u2013Littlewood\u2013P\u00f3lya sense, and the map `t \u21a6 t^p` is convex for `p \u2265 2`, so\nKaramata's inequality transports the majorization into the energy inequality.\nWhy now? The `p = 2` anchor is settled exactly (positive energy equals the\nedge count, which the spanning-tree bound minimizes), so the remaining task is\npurely the upgrade from one fixed exponent to the whole convex family \u2014 a\nclean, self-contained majorization problem rather than an open-ended search.\n\n## 2. Uniqueness of the path as the strict minimizer\n\nBeyond the inequality, the path should be the *unique* connected minimizer of\npositive p-energy for `p > 2`: any connected graph that is not a path has\nstrictly larger positive p-energy. The key insight is that equality in\nKaramata's inequality for a strictly convex power forces the two spectra to\ncoincide, and only the path realizes the extremal interlacing pattern of\npositive eigenvalues among connected graphs. Why now? Strict convexity of\n`t \u21a6 t^p` for `p > 2` is elementary, so uniqueness reduces to characterizing\nwhich connected graphs share the path's positive spectrum \u2014 a finite,\ncheckable rigidity statement.\n\n## 3. Sharp two-sided Schatten sandwich for bipartite graphs\n\nFor a connected bipartite graph the positive p-energy equals exactly one half\nof the Schatten p-energy `\u2211_k |\u03bb_k|^p`, so extremal questions for positive\nenergy are extremal questions for a Schatten norm. The key insight is that\nbipartiteness makes the spectrum an order-reversing sign involution, collapsing\nthe one-sided sum to half of a symmetric norm, which is then squeezed between\nthe path (minimizer) and the complete bipartite graph (maximizer). Why now? The\nhalving identity is already isolated as a reusable lemma, so both the lower\nextremal (path) and the conjectured upper extremal (balanced complete\nbipartite graph) can be attacked with the same Schatten-norm toolkit.\n\n## 4. Spectral-radius transfer at large exponent\n\nAs the exponent grows the positive p-energy is dominated by the largest\neigenvalue, so path-minimality for large `p` should follow from the fact that\nthe path minimizes the spectral radius among connected graphs on `n` vertices,\nwith `\u03bb_max(P_n) = 2 cos(\u03c0/(n+1))`. The key insight is that\n`E_p^+(G)^{1/p} \u2192 \u03bb_max(G)` and the ratio of subleading terms is uniformly\ncontrolled, so a spectral-radius lower bound plus a tail estimate yields the\nenergy inequality for all sufficiently large `p`. Why now? The path's spectral\nradius is a known closed form, and the asymptotic regime isolates a single\neigenvalue, turning a full-spectrum inequality into a one-eigenvalue\ncomparison.\n\n## 5. Edge-count energy identities beyond `p = 2`\n\nThe identity `\u2211 \u03bb\u00b2 = 2|E|` (trace of `A\u00b2`) has higher analogues:\n`\u2211 \u03bb\u00b3 = 6\u00b7(number of triangles)` and `\u2211 \u03bb\u2074 = 2|E| + ... ` count closed walks.\nThe key insight is that integer-exponent spectral energies are exact\ncombinatorial walk counts via `trace(A^k)`, so positive/negative energy splits\nat even integer exponents become signed walk-counting identities that are\nsharp for bipartite graphs (where odd traces vanish). Why now? The trace\u2013walk\ncorrespondence is elementary and already partially formalized for `k = 2`, so\nextending to `k = 3, 4` gives exact, testable energy formulas that pin down the\nextremal graphs at each even exponent without any analysis.\n",
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_0211",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "bb55b186",
-    "status": "available",
-    "timestamp": "2026-07-03T19:50:47.748345+00:00",
-    "title": "For every connected bipartite graph on `n` vertices and every real exponent"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Sidon sets, convolution kernels, and energy\n\nThese conjectures grew out of a study of Sidon sets (finite sets of integers\nwhose pairwise sums are all distinct) through the lens of their self-convolution\nkernel and additive energy. Two anchors were established: a Sidon set is exactly\na set whose self-convolution carries the minimum possible squared mass, and for\nsuch a set that self-convolution kernel is everywhere at most two, forcing the\nsumset to attain its maximal possible size. Each direction below is stated so\nthat it can be pursued on its own.\n\n## 1. Two kernels are optimal, three are never needed\n\n**Conjecture.** For a Sidon set the entire family of \"trivial\" additive\ncoincidences decomposes into precisely two elementary convolution kernels \u2014 a\ndiagonal kernel and a coordinate-swap kernel \u2014 and no weighted family of fewer\nthan two kernels can reproduce the exact energy minimum, while no family of more\nthan two ever lowers it. In particular the minimal cardinality of an exact\nkernel family that certifies the energy minimum is exactly two, independent of\nthe size of the set.\n\n**The key insight is** that the additive energy of a Sidon set is not merely\nbounded but is realised as an almost-disjoint union of two shifted copies of the\nset's own product, so the \"many kernels\" heuristic collapses to a rigid\ntwo-element basis. **Why now?** The recent emphasis on weighted multi-kernel\nsmoothing has treated the number of kernels as a free optimisation parameter;\nrecognising that the exact minimiser has a fixed two-kernel skeleton reframes\nthose optimisations as perturbations around a known rigid core rather than open\nsearches.\n\n## 2. A quantitative energy defect controls near-Sidon sets\n\n**Conjecture.** If a finite set misses the Sidon condition by exactly `k`\nnon-trivial additive quadruples, then its additive energy exceeds the Sidon\nminimum by precisely a linear function of `k`, and conversely any set whose\nenergy is within `k` of the minimum can be made Sidon by deleting at most a\nbounded multiple of `\u221ak` elements.\n\n**The key insight is** that the gap between a set's additive energy and the\nuniversal Sidon lower bound is an exact count of \"extra\" additive\ncoincidences, turning an inequality into an accounting identity. **Why now?**\nRobust or approximate versions of combinatorial extremal statements are\nincreasingly the ones that transfer to applications; an exact defect formula\nupgrades the qualitative \"low energy \u21d2 structured\" philosophy into a\nquantitative removal statement with explicit constants.\n\n## 3. Higher-order Sidon sets and the two-to-`h!` kernel jump\n\n**Conjecture.** For sets in which all `h`-fold sums are distinct (the `B_h`\ngeneralisation), the self-convolution-to-the-`h` kernel is bounded pointwise by\nexactly `h!`, and the associated energy is minimised precisely by such sets,\nwith the minimal exact kernel family jumping from two (the ordinary Sidon case,\n`h = 2`) to `h!` in general.\n\n**The key insight is** that the pointwise ceiling of the iterated convolution\nkernel counts orderings of a multiset of summands, so the \"two\" in the ordinary\nSidon story is really `2! = 2`, and the whole theory has a factorial shape.\n**Why now?** Higher-order Sidon sets underpin several coding and signal-design\nconstructions; pinning the exact kernel ceiling and the minimal kernel-family\nsize for every order would give a uniform template rather than ad-hoc\norder-by-order arguments.\n\n## 4. The maximal-sumset property characterises Sidon sets in any abelian group\n\n**Conjecture.** In an arbitrary finite abelian group, a subset achieves the\nmaximal possible sumset size `|s|(|s|+1)/2` if and only if it is Sidon, and the\nsame two-kernel energy identity holds verbatim, with the only obstruction being\nelements of order two (which merge a double with its own reflection).\n\n**The key insight is** that the sumset-maximality and the energy-minimality\nconditions are two faces of the same pointwise \"kernel is at most two\"\nstatement, which is group-agnostic except at involutions. **Why now?** Sidon\nsets in groups such as the integers modulo a prime and in vector spaces over\nsmall fields are the workhorses of extremal set theory and additive\ncombinatorics; a single characterisation valid across all abelian groups would\nunify constructions currently proved separately in each setting.\n\n## 5. Energy spectra interpolate between Sidon sets and arithmetic progressions\n\n**Conjecture.** Among all sets of a fixed size, the additive energy takes every\nadmissible value between the Sidon minimum and the arithmetic-progression\nmaximum, and the sets realising each intermediate value have a self-convolution\nkernel whose sorted profile is a predictable interpolation between the\ntwo-valued Sidon profile and the tent-shaped progression profile.\n\n**The key insight is** that the whole \"spectrum\" of additive energy is governed\nby how far the convolution kernel is allowed to climb above its Sidon ceiling of\ntwo, so the extremes (flat kernel versus tent kernel) are endpoints of a single\nmonotone family. **Why now?** Structure-versus-randomness dichotomies usually\ndescribe only the two endpoints; charting the full interpolating spectrum would\nlet one read off structural information directly from a single scalar energy\nmeasurement, a capability increasingly demanded by data-driven combinatorial\nanalysis.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0212",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "5961bdfa",
-    "status": "available",
-    "timestamp": "2026-07-03T19:52:33.276104+00:00",
-    "title": "These conjectures grew out of a study of Sidon sets (finite sets of integers"
-  },
-  {
     "consumed_by_exp_id": "13d70f5f",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domains": [
@@ -2814,19 +2710,5 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T04:44:52.457313+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle bb55b186 (Q=0.601) proved 7 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the theorem stating that for any connected bipartite graph G on n vertices and any real p \u2265 2, the positive p-energy E_p+(G) is at least the positive p-energy of the path graph P_n. This inv",
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_bb55b186_9e571884",
-    "priority_score": 0.6512985714285714,
-    "research_mode": "team",
-    "source_exp_id": "bb55b186",
-    "status": "available",
-    "timestamp": "2026-07-03T19:50:52.654120+00:00",
-    "title": "Close Proofs: Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
   }
 ];
