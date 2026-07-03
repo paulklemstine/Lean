@@ -630,7 +630,7 @@
       "Noubissie, Togbé and Zhang 2020",
       "Fujita and Le 2024"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b31bdbc9",
     "description": "Conjecture that for coprime positive integers a<b with a>1 and odd exponent n>1, the equation (a^n+1)(b^n+1)=x^2 has no positive integer solutions.",
     "domain_bridges": [
       "Pell equations",
@@ -646,7 +646,7 @@
     "proof_strategy": "Apply a descent argument combined with effective bounds from linear forms in logarithms to show that for odd n>1 the product (a^n+1)(b^n+1) cannot be a perfect square when a and b are coprime.",
     "research_mode": "team",
     "source_exp_id": "2606.31223v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T16:13:17.108600+00:00",
     "title": "No solutions for odd exponents in the coprime case"
   },
@@ -837,7 +837,7 @@
     "catalog_references": [
       "math.NT"
     ],
-    "consumed_by_exp_id": "7a96d972",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For any odd prime p, any even integer k ≥ 2, and any a_p ∈ ℚ̄_p with 0 < v(a_p) < p-1 (i.e., a fractional slope), the semi-simplification \\bar{V}_{k,a_p} of the mod p reduction of the two-dimensional crystalline representation V_{k,a_p} of G_{ℚ_p} of weight k and parameter a_p is irreducible as a mod p representation of G_{ℚ_p}.",
     "domain_bridges": [
       "p-adic Hodge theory",
@@ -854,7 +854,7 @@
     "proof_strategy": "Use the mod p local Langlands correspondence to relate \\bar{V}_{k,a_p} to smooth mod p representations of GL_2(ℚ_p), then apply the classification of irreducible smooth mod p representations (principal series, special, and supersingular) together with explicit Breuil module calculations for small slopes and a patching argument to extend the result to all fractional slopes < p-1.",
     "research_mode": "team",
     "source_exp_id": "2607.00930v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T06:58:32.634677+00:00",
     "title": "Irreducibility of mod p reductions of two-dimensional crystalline representations with even weight and fractional slope"
   },
@@ -1821,7 +1821,7 @@
       "Mason-Stothers theorem",
       "Combinatorial Nullstellensatz"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "db4eff76",
     "description": "For $k=18$, there exists a generalized Diophantine tuple $A \\subset \\mathbb{F}[x]$ with $|A|=6$ satisfying property $D_{18}(n)$ that is not contained in the exceptional family (i.e., $n$ is not a square of an element $s \\in \\mathbb{F}[x]$ or $A \\not\\subset s\\mathbb{F}$).",
     "domain_bridges": [
       "Algebraic geometry over polynomial rings",
@@ -1836,7 +1836,7 @@
     "proof_strategy": "Construct an explicit example of a D_18 tuple with 6 elements or use the paper's methods to derive existence via determinant criteria and polynomial identity analysis.",
     "research_mode": "team",
     "source_exp_id": "2607.01165v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T21:38:14.420490+00:00",
     "title": "Existence of a D_18 tuple with size 6 outside the exceptional case"
   },
@@ -2363,7 +2363,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "72278e2e",
+    "consumed_by_exp_id": "77faf02b",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible — how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian — the algebraic equivalent of Escher's impossible architecture.",
     "domain_bridges": [],
     "domains": [
@@ -2552,7 +2552,7 @@
       "p-adic integration",
       "Tree structures in p-adic geometry"
     ],
-    "consumed_by_exp_id": "343eb15e",
+    "consumed_by_exp_id": "",
     "description": "For a set S = {a₀, b₀, ..., a_g, b_g} ⊂ ℙ¹(K) of size 2g+2 where K is a finite extension of ℚ_p (p ≠ 2), if the associated tree T(S) constructed from equivalence classes of triples has all internal vertices of degree exactly 3 and exactly 2g+2 leaf vertices corresponding bijectively to elements of S, then S is in good position, i.e., Γ(S) = ⟨s₀, ..., s_g⟩ is discontinuous and equals the free product ⋆ᵢ⟨s_i⟩.",
     "domain_bridges": [
       "p-adic Hodge theory",
@@ -2570,7 +2570,7 @@
     "proof_strategy": "Prove sufficiency by showing that the tree condition ensures the Schottky group Γ(S) acts properly discontinuously on Ω_Γ. Use the correspondence between tree combinatorics and fundamental domains in ℙ¹(C_p). Show that degree-3 vertices correspond to specific geometric configurations that prevent accumulation of group translates, ensuring discontinuity. The leaf count condition ensures the correct rank for the free product structure. Counterexamples would involve constructing sets S where the tree has the specified degree pattern but Γ(S) fails to be a Schottky group.",
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T03:49:23.417787+00:00",
     "title": "Tree Structure Characterization for Good Position in Hyperelliptic Mumford Curves"
   },
@@ -2829,6 +2829,35 @@
     "title": "Euler Characters of Exterior Powers of the Standard Representation of 𝔤𝔩(m,n)"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Schur Q-functions",
+      "plethystic substitution",
+      "strict partitions",
+      "Hopf algebra automorphisms"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For all strict partitions λ, the shifted t-Schur function Q_λ(X; t) expands in the classical Schur Q-basis as a finite sum ∑_μ c_{λ μ}(t) Q_μ(X), where each coefficient c_{λ μ}(t) is a polynomial in t with non-negative integer coefficients. This conjecture asserts that the plethystic substitution X ↦ X - tX preserves combinatorial positivity in the basis expansion.",
+    "domain_bridges": [
+      "symmetric function theory",
+      "combinatorial representation theory",
+      "integrable probability"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0134",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Show that the operator Rt = ∏_{n odd} (1 - t^n) p_n preserves the positivity of structure constants under conjugation, and that the plethystic substitution X ↦ X - tX acts on Schur Q-functions through a combinatorial rule (e.g., shifted tableaux counting) that yields non-negative polynomial coefficients. Use induction on partition size and the Hopf algebra structure of the odd power-sum ring.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01839v1",
+    "status": "available",
+    "timestamp": "2026-07-03T08:38:04.913761+00:00",
+    "title": "Positivity of Structure Constants in Shifted t-Schur Function Expansions"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "SDtwists",
@@ -2848,7 +2877,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0134",
+    "id": "fd_0135",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a probabilistic model inspired by the fan structure and apply ergodic arguments under mild GT conditions.",
@@ -2873,7 +2902,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0135",
+    "id": "fd_0136",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on k combined with parity arguments analogous to Meshulam's lemma",
@@ -2904,7 +2933,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0136",
+    "id": "fd_0137",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the combinatorial interpretation via (p,q)-deformed s-rook placements on staircase boards to construct an explicit bijection between rook placements and the terms in the (p,q)-binomial expansion, showing that each rook placement contributes positively.",
@@ -2930,7 +2959,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0137",
+    "id": "fd_0138",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define the property of being a Sidon set in Lean 4. 2. Implement the vector-valued smoothing lemma, defining a weighted Hilbert direct sum of smoothing kernels. 3. Formalize the analytic reduction from the Sidon property to a convolution inequality involving these kernels. 4. Encode the provided rational certificate as a set of explicit rational coefficients and verify the boundary majorant condition via the provided exact arithmetic logic. 5. Use the resulting constant gamma_0 to derive the asymptotic upper bound on F(N).",
@@ -2959,7 +2988,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0138",
+    "id": "fd_0139",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Approach by contradiction assuming no such subgraph exists. Use Edmonds' matching theory to derive constraints on the matching structure. Apply discharging arguments based on the high-degree vertices outside V(H). Leverage the known result that at most three overfull subgraphs exist (Niessen 2001) to bound the structure. Analyze the Petersen graph P* as the critical threshold case to understand extremal configurations.",
@@ -2986,7 +3015,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0139",
+    "id": "fd_0140",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit cyclic code of length n=(q^m+1)/2 whose generator polynomial is the minimal polynomial of a primitive element of 𝔽_{q^m} of order q^m+1 divided by (x−1). Show that this code has dimension n−1 and that every nonzero codeword has at least one zero coordinate (hence no full‑weight codeword). Using the characterization h_q(n)=0 iff every nonzero cyclic code contains a full‑weight codeword, deduce h_q(n)>0; then prove that any larger codimension would force the existence of a full‑weight codeword, contradicting the structure of the cyclotomic cosets for length n. This establishes h_q(n)=1. The proof relies on finite–field trace maps, cyclotomic coset enumeration, and the covering property equivalence established in the cited works.",
@@ -3014,7 +3043,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0140",
+    "id": "fd_0141",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage known results on the convergence of extremal statistics of Gaussian log‑correlated processes to the Gumbel distribution, combine them with a rigorous saddle‑point analysis of the CFT partition function to identify the appropriate scaling of μ_c and σ_c, and verify the required tightness and moment conditions for the limit theorem.",
@@ -3040,7 +3069,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0141",
+    "id": "fd_0142",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a minimal counterexamples based on combinatorial bounds on exchange numbers and flip counts.",
@@ -3067,7 +3096,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0142",
+    "id": "fd_0143",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Assume a counterexample W violating regularity; use tensor amplification (degree‑biased or Perron‑biased) to derive a contradiction with the Sidorenko inequality or with known regularity constraints, thereby proving the conjecture.",
@@ -3093,7 +3122,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0143",
+    "id": "fd_0144",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove the equivalence by constructing an explicit finite subcover from a minimal sequence and using the universal property of the direct sum to relate induced homomorphisms to sums of ψ_i.",
@@ -3118,7 +3147,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0144",
+    "id": "fd_0145",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the fact that for arrangements with only double and triple points the Jacobian ideal is generated by the partial derivatives of a defining polynomial that is known to be quasi-homogeneous with respect to certain weights. Apply Saito's criterion for freeness and the relation between the exponents of the arrangement and the degrees of minimal syzygies. Show that under the hypothesis mdr < d/2 the arrangement is plus-one generated, which forces the Jacobian syzygy module to have a predictable graded structure determined solely by the intersection lattice. Verify the claim by computing the relevant graded Betti numbers via Gröbner basis techniques in the polynomial ring S = C[x,y,z].",
@@ -3145,7 +3174,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0145",
+    "id": "fd_0146",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage planar graph separators and the four-color theorem to construct geodesic partitions with bounded treewidth, combined with the paper's algorithmic framework for geodesic treewidth in restricted graph classes",
@@ -3175,7 +3204,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0146",
+    "id": "fd_0147",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "We would formalize the definition of an oriented product structure, its girth functions, the no‑fold condition, and the weighted dual Fisher inequality in Lean. Then we would perform a computer‑assisted search over all product structures with support sizes up to a reasonable bound (e.g. \\(m,n\\le 10\\)). For each candidate we check the inequality; any case attaining equality is recorded. Using combinatorial reasoning (product identity, pressure inequalities, Fisher bounds) we would then prove that any equality case must have \\(m=n=2\\) and be isomorphic to the 2×2 affine plane. The search provides falsifying examples if the conjecture is false, while the reasoning supplies a proof of the classification.",
@@ -3203,7 +3232,7 @@
       "Logic",
       "Physics"
     ],
-    "id": "fd_0147",
+    "id": "fd_0148",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish that all long cycles are blocked by a specific edge, then use a cycle-pairing strategy from poset theory to construct a nontrivial cycle, augmented by a probabilistic counting argument to ensure the existence of a sufficiently long alternative cycle.",
@@ -3229,7 +3258,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0148",
+    "id": "fd_0149",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Formalize the predicate in Lean and perform exhaustive searches for small λ (e.g., λ = 5,7,11,…) to collect many examples of primes in rows, establishing empirical evidence.\n\n2. Use known results on primes in exponential sequences (e.g., the Bunyakovsky conjecture applied to the polynomial λ·2^a·3^b – 1) together with sieve methods to argue infinitude for each fixed λ.\n\n3. Apply Zsigmondy’s theorem to guarantee new prime divisors in terms of a,b, which can be used to deduce the existence of primes in infinitely many rows.\n\n4. Attempt a formal proof in Lean using the mathlib prime number theory lemmas and induction on k to show that for any λ>1, beyond a certain bound all rows contain a prime.",
@@ -3238,6 +3267,31 @@
     "status": "available",
     "timestamp": "2026-07-03T08:21:14.699332+00:00",
     "title": "Infinite prime rows in λ‑skeletons beyond λ=1"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Spherical Designs with Infinite Harmonic Strength"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any finite antipodal set X on the d-dimensional sphere (d ≥ 2), if the harmonic strength Hst(X) contains any even integer, then it must contain 2. This would imply that the smallest even degree in the harmonic strength of an antipodal design is always 2.",
+    "domain_bridges": [
+      "spherical_designs",
+      "harmonic_analysis",
+      "algebraic_combinatorics"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0150",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Investigate the relationship between the moment tensors of antipodal sets. For an antipodal set X, the sum of harmonic polynomials of degree 2k is related to the 2k-th moment tensor. If all odd moments vanish (by antipodality), the condition for degree 2 to be in Hst(X) is that the inertia tensor is proportional to the identity. If degree 2 is not in Hst(X), the inertia tensor has distinct eigenvalues. Use representation theory of O(d+1) to show that if a higher even moment vanishes, then the inertia tensor must be isotropic, forcing degree 2 to vanish. Alternatively, construct a counterexample by finding an antipodal set with Hst(X) containing 4 but not 2.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01761v1",
+    "status": "available",
+    "timestamp": "2026-07-03T08:45:09.613104+00:00",
+    "title": "Even Harmonic Strength of Antipodal Spherical Designs Contains 2"
   },
   {
     "ambition_level": "extension",

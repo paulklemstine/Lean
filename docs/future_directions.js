@@ -366,7 +366,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b31bdbc9",
     "description": "Conjecture that for coprime positive integers a<b with a>1 and odd exponent n>1, the equation (a^n+1)(b^n+1)=x^2 has no positive integer solutions.",
     "domains": [
       "Pythagorean"
@@ -375,7 +375,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31223v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T16:13:17.108600+00:00",
     "title": "No solutions for odd exponents in the coprime case"
   },
@@ -481,7 +481,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Complementary feasibility in seating configurations for the generalized honeymoon Oberwolfach problem"
   },
   {
-    "consumed_by_exp_id": "7a96d972",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For any odd prime p, any even integer k \u2265 2, and any a_p \u2208 \u211a\u0304_p with 0 < v(a_p) < p-1 (i.e., a fractional slope), the semi-simplification \\bar{V}_{k,a_p} of the mod p reduction of the two-dimensional crystalline representation V_{k,a_p} of G_{\u211a_p} of weight k and parameter a_p is irreducible as a mod p representation of G_{\u211a_p}.",
     "domains": [
       "Pythagorean",
@@ -491,7 +491,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00930v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T06:58:32.634677+00:00",
     "title": "Irreducibility of mod p reductions of two-dimensional crystalline representations with even weight and fractional slope"
   },
@@ -1024,7 +1024,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "A Conjecture on A\u2083\u2011formality for pro\u2011p Demushkin groups (extension beyond 2)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "db4eff76",
     "description": "For $k=18$, there exists a generalized Diophantine tuple $A \\subset \\mathbb{F}[x]$ with $|A|=6$ satisfying property $D_{18}(n)$ that is not contained in the exceptional family (i.e., $n$ is not a square of an element $s \\in \\mathbb{F}[x]$ or $A \\not\\subset s\\mathbb{F}$).",
     "domains": [
       "Pythagorean"
@@ -1033,7 +1033,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01165v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T21:38:14.420490+00:00",
     "title": "Existence of a D_18 tuple with size 6 outside the exceptional case"
   },
@@ -1316,7 +1316,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing the generalized honeymoon Oberwolfach problem in Lean 4"
   },
   {
-    "consumed_by_exp_id": "72278e2e",
+    "consumed_by_exp_id": "77faf02b",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
     "domains": [
       "Novelty",
@@ -1417,7 +1417,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Normality of the trianguline variety outside smooth loci for split reductive groups"
   },
   {
-    "consumed_by_exp_id": "343eb15e",
+    "consumed_by_exp_id": "",
     "description": "For a set S = {a\u2080, b\u2080, ..., a_g, b_g} \u2282 \u2119\u00b9(K) of size 2g+2 where K is a finite extension of \u211a_p (p \u2260 2), if the associated tree T(S) constructed from equivalence classes of triples has all internal vertices of degree exactly 3 and exactly 2g+2 leaf vertices corresponding bijectively to elements of S, then S is in good position, i.e., \u0393(S) = \u27e8s\u2080, ..., s_g\u27e9 is discontinuous and equals the free product \u22c6\u1d62\u27e8s_i\u27e9.",
     "domains": [
       "Algebra",
@@ -1427,7 +1427,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T03:49:23.417787+00:00",
     "title": "Tree Structure Characterization for Good Position in Hyperelliptic Mumford Curves"
   },
@@ -1563,12 +1563,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
+    "description": "For all strict partitions \u03bb, the shifted t-Schur function Q_\u03bb(X; t) expands in the classical Schur Q-basis as a finite sum \u2211_\u03bc c_{\u03bb \u03bc}(t) Q_\u03bc(X), where each coefficient c_{\u03bb \u03bc}(t) is a polynomial in t with non-negative integer coefficients. This conjecture asserts that the plethystic substitution X \u21a6 X - tX preserves combinatorial positivity in the basis expansion.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
     "id": "fd_0134",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01839v1",
+    "status": "available",
+    "timestamp": "2026-07-03T08:38:04.913761+00:00",
+    "title": "Positivity of Structure Constants in Shifted t-Schur Function Expansions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0135",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -1582,7 +1597,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0135",
+    "id": "fd_0136",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -1596,7 +1611,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0136",
+    "id": "fd_0137",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
@@ -1610,7 +1625,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0137",
+    "id": "fd_0138",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -1624,7 +1639,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0138",
+    "id": "fd_0139",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
@@ -1639,7 +1654,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0139",
+    "id": "fd_0140",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
@@ -1654,7 +1669,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0140",
+    "id": "fd_0141",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -1669,7 +1684,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0141",
+    "id": "fd_0142",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -1683,7 +1698,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0142",
+    "id": "fd_0143",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -1698,7 +1713,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0143",
+    "id": "fd_0144",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02132v1",
@@ -1713,7 +1728,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0144",
+    "id": "fd_0145",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -1727,7 +1742,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0145",
+    "id": "fd_0146",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02098v1",
@@ -1742,7 +1757,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0146",
+    "id": "fd_0147",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01716v1",
@@ -1757,7 +1772,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Physics"
     ],
-    "id": "fd_0147",
+    "id": "fd_0148",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
@@ -1771,13 +1786,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0148",
+    "id": "fd_0149",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01718v1",
     "status": "available",
     "timestamp": "2026-07-03T08:21:14.699332+00:00",
     "title": "Infinite prime rows in \u03bb\u2011skeletons beyond \u03bb=1"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any finite antipodal set X on the d-dimensional sphere (d \u2265 2), if the harmonic strength Hst(X) contains any even integer, then it must contain 2. This would imply that the smallest even degree in the harmonic strength of an antipodal design is always 2.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0150",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01761v1",
+    "status": "available",
+    "timestamp": "2026-07-03T08:45:09.613104+00:00",
+    "title": "Even Harmonic Strength of Antipodal Spherical Designs Contains 2"
   },
   {
     "consumed_by_exp_id": "",
