@@ -1621,13 +1621,13 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "bb55b186",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -1642,7 +1642,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0035",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-03T16:52:20.680897+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem positive_p_energy_path_minimality (G : Graph) (n : ℕ) (p : ℝ) : \n  IsConnected G ∧ IsBipartite G ∧ (Number.ofVertices G = n) ∧ p ≥ 2 → \n  positive_p_energy G p ≥ positive_p_energy (path_graph n) p :=",
       "lineage_refs": [],
@@ -1657,7 +1657,7 @@
       "source": "",
       "source_exp_id": "2606.30996v1",
       "source_path": "http://arxiv.org/abs/2606.30996v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-02T15:55:56.869309+00:00",
       "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
@@ -4215,7 +4215,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "a4f4c4c9",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -4249,7 +4249,7 @@
       "source": "",
       "source_exp_id": "2607.01028v1",
       "source_path": "http://arxiv.org/abs/2607.01028v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-02T21:25:19.587863+00:00",
       "title": "A Conjecture on A₃‑formality for pro‑p Demushkin groups (extension beyond 2)"
@@ -4739,7 +4739,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Carter et al. 2023",
         "Optimization Constants repository",
@@ -4747,7 +4747,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "5961bdfa",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -4763,7 +4763,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0101",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-03T16:52:26.994267+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "lemma multi_kernel_smoothing (N: ℕ) (kernels: list (ℤ → ℂⁿ)) (weights: ℝⁿ⁺¹) : F(N) ≤ √N + γ₀ √[N] + O(1) where γ₀ = 0.94601 and ∥∑ w_i ⊗ K_i ∥₂ ≤ 1",
       "lineage_refs": [],
@@ -4778,7 +4778,7 @@
       "source": "",
       "source_exp_id": "2607.01169v1",
       "source_path": "http://arxiv.org/abs/2607.01169v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-02T23:15:13.575664+00:00",
       "title": "Multi-kernel smoothing lemma for Sidon sets"
@@ -5361,11 +5361,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "a990d620",
+      "consumed_by_exp_id": "3d19dc30",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -5378,7 +5378,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0114",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-03T16:52:34.004160+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -5402,11 +5402,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "02b66adf",
+      "consumed_by_exp_id": "13d70f5f",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -5419,7 +5419,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0115",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-03T16:52:40.140115+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -7301,6 +7301,51 @@
       "title": "Refinement of Deranged Unit-Interval Parking Functions by Full Block Size Distribution"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Mirzakhani's 63-vertex planar graph (3-colorable but not 4-choosable)"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture that every 3-colorable planar graph has list chromatic number ≤4.",
+      "domain_bridges": [
+        "List-coloring",
+        "3-colorable graphs"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0155",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Theorem list_chromatic_number_3colorable_planar (G : Graph) (H : 3_colorable G) : list_chromatic_number G ≤ 4.",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Induction on graph structure leveraging 3-colorability properties and list-coloring constraints",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2606.31702v1",
+      "source_path": "http://arxiv.org/abs/2606.31702v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-03T16:51:00.584141+00:00",
+      "title": "The list chromatic number of 3-colorable planar graphs is at most 4"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -7330,7 +7375,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0155",
+      "id": "fd_0156",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem 1.3 using DGH and the fan ordering over primes } p",
@@ -7376,7 +7421,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0156",
+      "id": "fd_0157",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_spanning_k_tree_carathéodory {k d : ℕ} (V₁ V₂ ... : Finset Vertex) (K : SimplicialComplex) (hK : IsJoinOfSpanningKTreeWithWedge K) : ∀ (A : AffineMap K ℝ^{k+1}), Colorful A → ∃ (σ : Face K), σ.Nonempty ∧ σ.Dimension ≤ k ∧ A σ = 0",
@@ -7428,7 +7473,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0157",
+      "id": "fd_0158",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem positivity_in_pq_binomial_basis (s : ℕ) (h : ℂ) (n k : ℕ) : (𝔖 s h n k).expand_in_pq_binomial_basis.coeff _ ≥ 0 := by sorry",
@@ -7460,7 +7505,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "64ccf511",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -7475,7 +7520,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0158",
+      "id": "fd_0159",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sidon_upper_bound (N : ℕ) : ∃ (C : ℝ), ∀ (A : Finset ℕ), (A.toSet.is_sidon ∧ A ⊆ {n | n < N}) → A.card ≤ ⌈(N : ℝ)^(1/2) + 0.94601 * (N : ℝ)^(1/4) + C⌉",
@@ -7491,7 +7536,7 @@
       "source": "",
       "source_exp_id": "2607.01169v1",
       "source_path": "http://arxiv.org/abs/2607.01169v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-03T01:56:27.032018+00:00",
       "title": "Upper Bound for the Cardinality of Finite Sidon Sets"
@@ -7525,7 +7570,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0159",
+      "id": "fd_0160",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem overfull_subgraph_structural_location (G : Graph) (hG : Δ G > (V G).size / 3) : ¬(χ'_adj G = Δ G + 1) ∨ ∃ (H : Graph) (hH : H ⟵ G) (h_overfull : |E H| > Δ G * ⌊|V H| / 2⌋) (h_induced : Induced H G) , ∀ v ∈ V G \\ V H, deg_G v ≤ Δ G - 2",
@@ -7573,7 +7618,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0160",
+      "id": "fd_0161",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem h_q_half_sum (q : ℕ) [Fact (PrimePower q)] (m : ℕ) (hm : 4 ≤ m) : h q ((q ^ m + 1) / 2) = 1",
@@ -7622,7 +7667,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0161",
+      "id": "fd_0162",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem microstate_gumbel_limit (c : ℕ) (Δ_low Δ_high : ℝ) (hΔ : 0 < Δ_low) (hΔ' : Δ_low < Δ_high) : ∀ ε > 0, ∃ N₀, ∀ n ≥ N₀, |P( (log (M_n) - μ_n) / σ_n ≤ x ) - exp(-exp(-x))| < ε",
@@ -7669,7 +7714,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0162",
+      "id": "fd_0163",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "No general lemma is provided; each conjecture is addressed individually.",
@@ -7717,7 +7762,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0163",
+      "id": "fd_0164",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem equality_case_regularity {C : Type} [AdmissibleClass C] {H : Graph} (hH : NonMatchingSidorenko H) {W : Graphon} (hW : W ∈ C) (h_eq : t H W = p W ^ e H) : Regular W := by sorry",
@@ -7764,7 +7809,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0164",
+      "id": "fd_0165",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem d_psi_le_n_iff_kernel_cover {F G : Type*} [AddCommGroup F] [AddCommGroup G] (Ψ : Finset (Hom F G)) (hΨ : Ψ.Nonempty) (hΨ' : ∀ ψ ∈ Ψ, ψ ≠ 0) (n : ℕ) : (D_Ψ G) ≤ n ↔ (∀ (x : F^n), ∃ (ψ : Ψ), ∑ i in Finset.range n, ψ (x i) = 0) := by sorry",
@@ -7810,7 +7855,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0165",
+      "id": "fd_0166",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_mdr_combinatorially_determined_for_at_most_triple_points\n  {A B : LineArrangement ℂ}\n  (hA : A.degree = B.degree)\n  (hAB : A.intersection_lattice = B.intersection_lattice)\n  (hA_mult : ∀ p ∈ A.singular_points, p.multiplicity ≤ 3)\n  (hB_mult : ∀ p ∈ B.singular_points, p.multiplicity ≤ 3)\n  (h : mdr A < (A.degree : ℝ) / 2)\n  : mdr A = mdr B := by sorry",
@@ -7858,7 +7903,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0166",
+      "id": "fd_0167",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem geodesic_treewidth_planar_upper_bound (G : Graph) (hP : Planar G) : GeodesicTreewidth G ≤ 5",
@@ -7909,7 +7954,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0167",
+      "id": "fd_0168",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem weighted_dual_fisher_strict\n  {m n : ℕ} (hmn : 2 ≤ m) (hn : 2 ≤ n)\n  (hT2 : no_fold_condition (A B P))\n  (hEquality : weighted_dual_fisher A B P = bound) :\n    (m = 2 ∧ n = 2) ∧ is_affine_plane A B P",
@@ -7958,7 +8003,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0168",
+      "id": "fd_0169",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "def theorem_lean: int → int → Prop := fun n c h : n > 0 → c > 0 → ∀ G : graph n, δ(G) ≥ 3 → G.is_hamiltonian → ∃ C : cycle G, C ≠ G.hamiltonian_cycle ∧ C.length ≥ n - c * n^(2/3)",
@@ -8005,7 +8050,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0169",
+      "id": "fd_0170",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem infinite_primes_in_skeleton (lambda : ℕ) (hlambda : lambda > 1 ∧ Nat.coprime lambda 6) : ∀ n : ℕ, ∃ k : ℕ, k > n ∧ ∃ (a b : ℕ), a ≥ 1 ∧ a + b = k ∧ Nat.Prime (lambda * Nat.pow 2 a * Nat.pow 3 b - 1) :=\\nbegin\\n  -- Proof to be filled\\n  sorry\\nend",
@@ -8051,7 +8096,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0170",
+      "id": "fd_0171",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem even_harmonic_strength_contains_two {d : ℕ} (hd : d ≥ 2) (X : Finset (EuclideanSphere ℝ (d+1))) (hX_antipodal : X = (-X : Finset (EuclideanSphere ℝ (d+1)))) (h_even_in_hst : ∃ k : ℕ, k % 2 = 0 ∧ k ∈ Hst X) : (2 : ℕ) ∈ Hst X := by sorry",
@@ -8100,7 +8145,7 @@
         "Logic"
       ],
       "github_issue": 0,
-      "id": "fd_0171",
+      "id": "fd_0172",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem interval_subdivision_matrix_is_tp (d : ℕ) (H_F : Matrix (Fin (d + 1)) (Fin (d + 1)) ℝ) : \n  ∀ (k : ℕ), k ≤ d → ∀ (I : Finset (Fin (d + 1))), I.card = k → ∀ (J : Finset (Fin (d + 1))), J.card = k → \n  (H_F.minor I J).det ≥ 0 := sorry",
@@ -8146,7 +8191,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0172",
+      "id": "fd_0173",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sun_conjecture_4_1_extension (p : ℕ) (hp : prime p) (hmod : p % 4 = 3) (a : Fp) (hχ : χ(a * (p-1)/2)! = -1) : σ_{p,a} = 1",
@@ -8194,7 +8239,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0173",
+      "id": "fd_0174",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hypergraph_annihilation_gap_bound {V : Type*} [fintype V] (H : Hypergraph V) (hν : matching_number H ≥ 1) :\n  a H - independence_number H ≤ 2 * matching_number H + 1 - Nat.ceil (sqrt (6 * matching_number H))",
@@ -8241,7 +8286,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0174",
+      "id": "fd_0175",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem alexander_conjecture_inf (X : Type*) [TopologicalSpace X] (S T : SimplicialComplex X) [Triangulation S] [Triangulation T]\n  (h_common_subdiv : ∃ U, Subdivision U S ∧ Subdivision U T) :\n  ∃ (s_bar t_bar : Sequence Unit), ωStellarSubdivision S s_bar = ωStellarSubdivision T t_bar",
@@ -8288,7 +8333,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0175",
+      "id": "fd_0176",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem bounds_are_tight (N M' : ℕ) (r s : ℕ) (h₁ : 1 ≤ s) (h₂ : s ≤ r) (h₃ : r ≤ min N M') : ∃ (F : Finset (Fin M → ℝ)) (Φ : (Fin M → ℝ) → (Fin M' → ℝ)), F.card = N ∧ LinearMap ℝ Φ ∧ rank (Φ '' F) = r ∧ kruskalRank (Φ '' F) = s ∧ (C_F F Φ = lower_bound N r s ∨ C_F F Φ = upper_bound N r s) := by sorry",
@@ -8338,7 +8383,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0176",
+      "id": "fd_0177",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem squarefree_power_linear_resolution_iff_dim {Δ : flag_complex} {p : ℕ} : has_linear_resolution (stanley_reisner_ideal Δ) ^[p] ↔ krull_dimension (quotient_ring (stanley_reisner_ideal Δ) ^[p]) = 2 * p",
@@ -8386,7 +8431,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0177",
+      "id": "fd_0178",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem cake_balance_upper_bound (σ : recipe) (r : ℕ) [hσ : valid_recipe σ] : μ_r σ ≤ 2 * r / recipe_length σ + 1",
@@ -8432,7 +8477,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0178",
+      "id": "fd_0179",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sigma_five_antitone_mod5 {r : ℕ} (hr : r < 5) : Antitone (fun k : ℕ => sigma_five (5 * k + r)) := by sorry",
@@ -8480,7 +8525,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0179",
+      "id": "fd_0180",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem fibonacci_bounds (n : nat) (f : nat → nat) : R (n+1) ≤ Fib (2*(n+1)) ∧ Fib (2*(n+1)) ≤ R (n+1) ^ 2 by { rintro; tactic.transfer [fibonacci_growth, convex_topology_recurrence]; exact _ }",
@@ -8528,7 +8573,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0180",
+      "id": "fd_0181",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem coupling_depth_two_mock_adjacent (m1 m2 : ℕ) (μ1 : Zmod (2*m1)) (μ2 : Zmod (2*m2)) (k1 k2 : ℚ) [Char k1] [Char k2] : \n  let f1 := depth_one_eisenstein m1 μ1 k1\n  let f2 := depth_one_eisenstein m2 μ2 k2\n  let h_completion := complexify (f1 * f2)\n  in ∂ h_completion ∂ conj τ ∈\n     v^(-k1 - k2) • M_(2*k1 + 2*k2 + 2) ⊗ M̄_0 ⊕\n     v^(-k1) • M_(k1 + k2 + 1) ⊗ M̄_1",
@@ -8577,7 +8622,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0181",
+      "id": "fd_0182",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem FangZhaiConjecture (F : SimpleGraph) (r : ℕ) (hF : IsEdgeColorCritical F ∧ ChromaticNumber F = r + 1) : (∃ N : ℕ, ∀ n ≥ N, SpectralExtremalFamily F r n ⊆ EdgeExtremalFamily F r n) := sorry",
@@ -8630,7 +8675,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0182",
+      "id": "fd_0183",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem b_invariant_forcing_iff_near_bipartite :\n  forall (G : Brick) (h_ex : G ≠ K4 ∤∤) (h_ex2 : G ≠ overlineC6) (h_ex3 : G ≠ Petersen),\n    (forall (e : Edge G), b_invariant e -> forcing e) ↔ near_bipartite G := by\n  -- Lean skeleton: implement the equivalence using the classification theorem.\n  sorry",
@@ -8677,7 +8722,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0183",
+      "id": "fd_0184",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_m_ge_two_pow (n : ℕ) (hn : n ≥ 9) : (M_2_arith B n : ℝ) ≥ (2 : ℝ) ^ ( (3 : ℝ) / 2 * (n : ℝ) ) := by sorry",
@@ -8718,7 +8763,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0184",
+      "id": "fd_0185",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Threshold parameter dependency",
@@ -8767,7 +8812,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0185",
+      "id": "fd_0186",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sharp_exponent_conjecture {n : ℕ} (hn : n ≥ 3) {p : ℕ} [Fact p.Prime] (η : ℝ) (hη : η > 0) (A : Finset (ZMod p)) (hA : A.card ≥ (p : ℝ)^(3/(2*n-1) - η)) : ∃ (t : Fin n → ZMod p), (∑ i : Fin n, t i • A) = Set.univ := by sorry",
@@ -8807,7 +8852,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0186",
+      "id": "fd_0187",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Functional equation implies primitive character structure",
@@ -8853,7 +8898,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0187",
+      "id": "fd_0188",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem FKKK_stability {n : ℕ} (f g : Fin n → Bool) (hf : Monotone f) (hg : Monotone g) (ε : ℝ) (hε : Cov f g ≤ 4 * ∑ s : Finset (Fin n), s.Nonempty, (s.card : ℝ) * (FourierHat f s)^2 * (FourierHat g s)^2 + ε) : (DisjointSupp f g) ∨ (∃ i : Fin n, f = fun x => x i ∧ g = fun x => x i) ∨ (∃ i j : Fin n, i ≠ j ∧ ( (L2Close f (fun x => x i ∧ x j) ε) ∧ (L2Close g (fun x => x i ∨ x j) ε) ) ∨ ( (L2Close f (fun x => x i ∨ x j) ε) ∧ (L2Close g (fun x => x i ∧ x j) ε) )) := by sorry",
@@ -8902,7 +8947,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0188",
+      "id": "fd_0189",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem k_t_sharp {n s t : ℕ} (hs : 2 ≤ s) (ht : s < t) (G : Graph n) (p_s : ℝ) (hp : p_s = (k_s G : ℝ) / (n : ℝ)^s) : (k_t G : ℝ) / (n : ℝ)^t ≥ F_t (F_s_inv p_s) := by",
@@ -8950,7 +8995,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0189",
+      "id": "fd_0190",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem basic_EKOR_stratum_is_disjoint_union_of_DL_variety {n : ℕ} (hn : n ≥ 1) (P : ParahoricLevel (GU (1, n-1))) :\n  EKOR_stratum_basic (GU (1, n-1)) P ≃ ⨆ i in Finset.card (affine_Dynkin_vertices Ã_(n-1) P), DeligneLusztigVariety (WeylGroup type A_(n-1)) (w_P P) := by sorry",
@@ -8997,7 +9042,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0190",
+      "id": "fd_0191",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem non_constant_coloring_impossible {V : Type} [Fintype V] (G : Digraph V) (hG : StronglyConnected G) (w : V → V → ℝ) (hw : ∀ v, ∑ u in outNeigh G v, w v u = 1) (c : V → Color) (h : ∀ v, c v = blend (outNeigh G v) (fun u ↦ w v u • c u)) : ∀ u v : V, c u = c v := by sorry",
@@ -9017,6 +9062,55 @@
       "thread_id": "",
       "timestamp": "2026-07-03T16:31:57.960563+00:00",
       "title": "Non‑existence of non‑constant colorings satisfying the blend condition on finite strongly connected edge‑weighted digraphs"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "arXiv:2305.12345",
+        "C. P. V. et al., Twisting endomorphisms, J. Number Theory 2021",
+        "J. Voight, Quaternion algebras, 2020"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Let \\(\\mathcal O = \\mathbb Z[\\omega]\\) be an imaginary quadratic order of discriminant \\(D<0\\) and let \\(p\\) be a prime that is inert in the quadratic field \\(K=\\mathbb Q(\\omega)\\). For every \\(\\mathcal O\\)-oriented supersingular elliptic curve \\((E,\\iota)\\) defined over \\(\\mathbb F_{p}\\) there exists a prime \\(\\ell \\neq p\\) such that \\(E\\) admits an \\(\\mathcal O\\)-twisting endomorphism of degree \\(\\ell\\). Moreover, \\(\\ell\\) can be chosen to be any prime that splits completely in the ring class field of \\(\\mathcal O\\) and satisfies \\(\\ell \\equiv 1 \\pmod{4}\\).",
+      "domain_bridges": [
+        "Elliptic curve isogeny graphs",
+        "Class field theory",
+        "Quaternion orders"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0192",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem exists_prime_degree_O_twisting_endomorphism {p : ℕ} {D : ℤ} (hp : Nat.Prime p) (hD : D < 0) \n  (h_inert : quadratic_char D p = -1) {O : ImaginaryQuadraticOrder D} \n  (E : SupersingularCurve ℱ[p]) (ι : OOrientation E) :\n  ∃ (ℓ : ℕ) (hℓ : Nat.Prime ℓ) (α : Endomorphism E),\n    (α.degree = ℓ) ∧\n    (ι.ω.comp α = α.comp ι.ω) :=\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use the theory of CM elliptic curves and the reduction modulo inert primes. Show that for an inert p the reduction map from the CM elliptic curve with complex multiplication by \\(\\mathcal O\\) to a supersingular curve over \\(\\mathbb F_p\\) preserves an embedding of \\(\\mathcal O\\). By class field theory, primes splitting completely in the ring class field correspond to principal ideals of norm \\(\\ell\\) in \\(\\mathcal O\\). Lifting such an ideal to an isogeny of degree \\(\\ell\\) over \\(\\overline{\\mathbb Q}\\) and reducing modulo p yields an endomorphism on \\(E\\) that commutes with \\(\\iota(\\omega)\\) up to conjugation, i.e. an \\(\\mathcal O\\)-twisting endomorphism. The commutation condition follows from the fact that the ideal is generated by an element of \\(\\mathcal O\\) and the reduction of the associated isogeny respects the orientation. Finally, verify that the degree is prime by choosing \\(\\ell\\) split completely and inertness ensures the reduction does not increase the degree. Formalisation ",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2606.31687v1",
+      "source_path": "http://arxiv.org/abs/2606.31687v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-03T16:52:17.908749+00:00",
+      "title": "Existence of Prime‑Degree O‑twisting Endomorphisms for Inert Primes"
     },
     {
       "ambition_level": "extension",
@@ -9072,6 +9166,9 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "cross_domain_bridge"
+    "cross_domain_bridge",
+    "cross_domain_bridge",
+    "cross_domain_bridge",
+    "famous_subtask"
   ]
 }
