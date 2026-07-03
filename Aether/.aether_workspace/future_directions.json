@@ -10165,7 +10165,7 @@
       "depth_estimate": 3,
       "description": "Cycle bb55b186 (Q=0.601) proved 7 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the theorem stating that for any connected bipartite graph G on n vertices and any real p ≥ 2, the positive p-energy E_p+(G) is at least the positive p-energy of the path graph P_n. This inv",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Applications"
       ],
