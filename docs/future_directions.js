@@ -4,6 +4,21 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
+    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0225",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-03T23:49:34.648103+00:00",
+    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domains": [
       "Pythagorean"
@@ -30,6 +45,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T00:49:26.963635+00:00",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot \u2014 the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0226",
+    "priority_score": 0.81,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-03T23:49:34.675892+00:00",
+    "title": "Knots That Think: Cognition as Braiding in Category Theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -366,7 +396,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
   },
   {
-    "consumed_by_exp_id": "aed51c81",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for coprime positive integers a<b with a>1 and odd exponent n>1, the equation (a^n+1)(b^n+1)=x^2 has no positive integer solutions.",
     "domains": [
       "Pythagorean"
@@ -375,7 +405,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31223v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T16:13:17.108600+00:00",
     "title": "No solutions for odd exponents in the coprime case"
   },
@@ -1067,7 +1097,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "A recursive decomposition of greedy Tamari intervals via planar map structures"
   },
   {
-    "consumed_by_exp_id": "f5192907",
+    "consumed_by_exp_id": "",
     "description": "The sheared Witt vector functor \\(\\chW\\) is isomorphic to the filtered colimit of the functors \\(n \\mapsto W(R[p^n])/\\hw(R[p^n])\\) over \\(n \\geq 1\\).",
     "domains": [
       "Bridges"
@@ -1076,7 +1106,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01178v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T22:10:42.305562+00:00",
     "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
   },
@@ -2516,20 +2546,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fang-Zhai Conjecture: Spectral extremal graphs for edge-color-critical graphs are edge extremal"
   },
   {
-    "consumed_by_exp_id": "01bea6c3",
-    "description": "Let G be a brick (i.e. a 3\u2011connected bicritical non\u2011bipartite graph) that is not isomorphic to K4, the complement of C6 (\u0143C6) nor the Petersen graph. Then the following are equivalent:\n\n1) Every b\u2011invariant edge of G is a forcing edge.\n2) G is a near\u2011bipartite brick belonging to the class characterised in the main theorem of the paper (i.e. the complete description of near\u2011bipartite bricks for which every b\u2011invariant edge is forcing).\n\nThus, apart from the three small exceptions, the property \"all b\u2011invariant edges are forcing\" precisely picks out the near\u2011bipartite bricks.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0200",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.00608v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T13:25:27.639831+00:00",
-    "title": "Every b\u2011invariant edge is forcing exactly for near\u2011bipartite bricks (up to the three classical exceptions)"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For every n \u2265 9 and every two\u2011coloring of the Boolean lattice B_n, the minimum possible number of monochromatic triples (S,T,U)\u2208E_n is at least 2^{(3/2)n}.",
     "domains": [
@@ -2901,6 +2917,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0227",
+    "priority_score": 0.77,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-03T23:49:34.709777+00:00",
+    "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Congruence Rigidity of Sums of Squares\n\nThis cycle established that the entries of an integer right triangle are forced into\nstrong divisibility patterns \u2014 one leg is a multiple of three, the legs jointly carry a\nfactor of four, one entry is a multiple of five \u2014 and that a four-dimensional right\n\"box\" (a solution of `a\u00b2 + b\u00b2 + c\u00b2 = d\u00b2`) is even more rigid: at most one of its three\nspatial edges can be odd. We also pinned down exactly which whole numbers can serve as a\nleg. These findings point to several bold, testable conjectures.\n\n## 1. The correct modulus for a power of two grows with the power\n**Conjecture.** In any solution of `a\u00b2 + b\u00b2 = c\u00b2`, the two-adic valuation of the leg\nproduct `a\u00b7b` is governed one level deeper than naive reduction suggests: deciding\nwhether `2^k` divides `a\u00b7b` is a question about residues modulo `2^{k+1}`, never modulo\n`2^k`.\n*The key insight is* that a difference of two odd squares is always divisible by eight,\nso each additional factor of two in the product must be certified one binary place\nfurther out than one would guess. *Why now?* Having isolated the exact `mod 8`\nobstruction behind the factor of four, we can test the pattern mechanically for `k = 3,\n4, 5` and either confirm a clean \"shift-by-one\" law or expose its first exception.\n\n## 2. A universal super-divisor for higher-dimensional right figures\n**Conjecture.** For every dimension `r`, solutions of `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` obey a single\nuniversal divisibility law: there is a constant `D(r)`, depending only on `r`, such that\n`D(r)` divides the product `x\u2081\u00b7x\u2082\u00b7\u22ef\u00b7x_r` for *every* solution, and `D(r)` is the largest\nsuch constant.\n*The key insight is* that reduction to a finite residue ring turns \"for all solutions\"\ninto a finite, decidable statement, so the optimal constant `D(r)` is computable and\nshould grow in a structured (conjecturally multiplicative-over-primes) way. *Why now?*\nThe three-dimensional case already yields `4 \u2223 x\u2081x\u2082x\u2083`; comparing it against the planar\nconstant `12` suggests a dimension-indexed sequence worth charting and predicting.\n\n## 3. Parity collapse in higher dimensions\n**Conjecture.** As the number of squared terms increases, the number of edges permitted to\nbe odd stays uniformly bounded: in `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` at most three of the `x_i` can be\nodd, regardless of `r`.\n*The key insight is* that the sum of squares equals the count of odd terms modulo four,\nwhile a perfect square is `0` or `1` modulo four, capping the admissible odd-count no\nmatter how many terms are added. *Why now?* We proved the cap is \"at most one\" in three\ndimensions; extending the modular bookkeeping to arbitrary `r` is a self-contained next\nstep that would reveal whether the cap is truly dimension-independent.\n\n## 4. A sharp threshold characterization of legs in every dimension\n**Conjecture.** Just as the whole numbers that are a leg of a right triangle are exactly\nthose `\u2265 3`, in each higher dimension there is a sharp finite threshold above which every\ninteger appears as an edge of some right figure, and the finitely many exceptions can be\nlisted explicitly.\n*The key insight is* that a single explicit construction, split according to the parity of\nthe target edge, realizes all sufficiently large values, while the small exceptions are\nforced by a factorization that would otherwise require a vanishing edge. *Why now?* The\nplanar threshold `3` and its sharpness (the failures at `1` and `2`) give a template that\nshould transfer verbatim to the box equation and beyond.\n\n## 5. Divisibility as a sieve against near-solutions\n**Conjecture.** The combined congruence obstructions (`12 \u2223 a\u00b7b`, `60 \u2223 a\u00b7b\u00b7c`, and their\nhigher-dimensional analogues) are strong enough that a random integer triple satisfying\nthem has a positive, computable probability of being genuinely Pythagorean \u2014 i.e. the\ncongruence conditions capture a constant fraction of the \"arithmetic mass\" of true\nsolutions.\n*The key insight is* that each universal divisor removes a fixed proportion of impostors,\nso stacking independent prime-power obstructions multiplies into a sieve of predictable\ndensity. *Why now?* With the exact obstructions in hand for the primes `2, 3, 5`, one can\nimmediately measure how much of the solution set they explain and calibrate whether a few\nmore primes suffice to pin down solutions almost completely.\n",
     "domains": [
       "Pythagorean",
@@ -2928,6 +2959,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.007324+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nDerived from this cycle's findings that a reality can be distributed across two or more\ngenuinely sharper observers exactly when its topology is *join-reducible* (the join of two\nstrictly finer topologies), that maximally blurred (indiscrete) reality always splits on\nany space with more than one point, and that the sharpest (discrete) and certain minimal\n(Sierpi\u0144ski) topologies are *rigid* \u2014 impossible to reconstruct as an agreement of sharper\nviewpoints.\n\n## 1. A complete census of rigid spaces on finitely many points\n\nAmong the four topologies on a two-point space, exactly two \u2014 the fully resolved (discrete)\ntopology and each single-point-resolving (Sierpi\u0144ski) topology \u2014 cannot be split between\ntwo sharper observers, while the blurred (indiscrete) topology can. **Conjecture:** on an\n`n`-point space the rigid topologies are precisely the join-irreducible elements of the\nlattice of topologies, and their number obeys a determinable recurrence tied to how many\ntopologies have a unique cover directly below the blurred one. The key insight is that\nsplittability is a purely order-theoretic property, invisible to point-count and to\nseparation strength, so counting rigid spaces is really counting join-irreducible elements\nof a finite, fully computable lattice. Why now? The freshly established equivalence between\nmulti-observer representability and join-reducibility turns a vague \"how many observers\"\nquestion into a sharp, finite enumeration problem, ripe for an exact combinatorial law.\n\n## 2. The cofinite topology as the first infinite rigid space\n\nOn an infinite set, declare a set open when it is empty or misses only finitely many\npoints. This space is neither fully resolved nor blurred, and every nonempty open set is\ndense. **Conjecture:** this cofinite reality is rigid \u2014 it is not the agreement of any two\nstrictly sharper observers, hence admits no finite multi-observer representation at all. The\nkey insight is that rigidity is governed entirely by the poset of a topology's strict\nrefinements, and the cofinite topology looks like the natural infinite cousin of the\nSierpi\u0144ski topology, whose only nearby refinements each over-resolve a cofinite set and so\ncannot be intersected back down. Why now? The only rigid examples currently known are\nfinite (discrete and Sierpi\u0144ski); producing a canonical *infinite* rigid space would show\nrigidity is a genuine structural phenomenon and not a small-cardinality artifact.\n\n## 3. Every dense order is the agreement of a left- and a right-looking observer\n\nThe real line is exactly the agreement of its lower-limit observer (seeing right half-open\nintervals) and its upper-limit observer (seeing left half-open intervals), each strictly\nsharper than reality. **Conjecture:** for *every* dense linear order without endpoints, the\norder topology is precisely the agreement of its lower-limit and upper-limit observers, so\nevery such order has exactly two observers, witnessed by this canonical left/right pair. The\nkey insight is that the two-sided neighborhood structure of an order factors canonically\ninto a left-looking and a right-looking half, with density supplying the interpolation that\nsqueezes a point pinned from both sides into a genuine two-sided neighborhood. Why now? The\nconcrete real-line split is in hand; abstracting it to all dense orders would produce an\nentire canonical family of two-observer spaces and a reusable order-theoretic splitting\ntheorem.\n\n## 4. Splittability propagates through products\n\n**Conjecture:** the product of a splittable space with any nonempty space is again\nsplittable; more sharply, a product can be distributed across two observers as soon as a\nsingle one of its factors can, with the observers of that factor copied across the product.\nThe key insight is that splittability should be \"local in one coordinate,\" because the\nproduct topology is generated coordinate by coordinate, so one splittable coordinate is\nenough to split the whole. Why now? Having identified splittability with join-reducibility,\nwe can finally ask how it behaves under the standard constructions, and products are the\nfirst arena where phantom representations could be assembled compositionally rather than\nrebuilt space by space.\n\n## 5. Rigidity is orthogonal to metrizability\n\nThe original expectation tied observer count to metric structure, but the smallest\nnon-metrizable space (two blurred points) splits into two observers, whereas the sharply\nseparated discrete space is rigid. **Conjecture:** rigidity is completely decoupled from\nmetrizability and separation \u2014 a topology is rigid exactly when its lattice of open sets is\njoin-irreducible \u2014 and there exist matched pairs of spaces, one metrizable-and-rigid and one\nnon-metrizable-and-splittable, proving the two notions are independent. The key insight is\nthat the number of observers a space demands is an intrinsic order-theoretic invariant of\nits open-set lattice, entirely orthogonal to any metric or separation property. Why now? The\nfalse \"less metric structure means more observers\" guess has just been replaced by the exact\ncriterion of join-reducibility, and the natural next step is to sever the last intuitive\nlink to metrizability with explicit orthogonal witnesses.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0228",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ade3f670",
+    "status": "available",
+    "timestamp": "2026-07-03T23:54:04.014383+00:00",
+    "title": "Derived from this cycle's findings that a reality can be distributed across two "
   },
   {
     "consumed_by_exp_id": "e0253a8b",

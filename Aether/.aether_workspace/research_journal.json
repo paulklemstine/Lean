@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e3ff7cf5",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Semi-induced stars `S_{k,1}` and the suboptimal envelope\n\nDerived from this cycle's findings (see `Basic.lean`, `TuranBridge.lean`, `ComputationalEvidence.md`).\nThis cycle proved",
-      "quality_score": 0.7938000000000001,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-27T20:38:29",
-      "title": "Complement-split minima exceed the quasi-star/quasi-clique envelope for semi-induced stars S_{k,1}"
-    },
-    {
       "cycle_id": "a33a1330",
       "domain": "Applications",
       "key_insight": "# Future Directions — EML Fixed-Point Dynamics\n\nThis cycle proved the EML fixed point `x*` of `f(x) = exp(a)·log(b·x + c)` depends\n*monotonically and strictly* on the scaling parameter `a` (`FixedPoin",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-07-03T22:28:46",
       "title": "Infinitely Many Solutions to Prime-Base Binomial Congruences"
+    },
+    {
+      "cycle_id": "ade3f670",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nDerived from this cycle's findings that a reality can be distributed across two or more\ngenuinely sharper observers exactly when its topology is *join-reducible* (the join of two",
+      "quality_score": 0.46629999999999994,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-03T23:54:08",
+      "title": "Phantom Topologies: Spaces That Change When You Look at Them"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7903600000000002
     }
   ],
-  "last_updated": "2026-07-03T22:28:46",
+  "last_updated": "2026-07-03T23:54:08",
   "open_questions": [
     {
       "context": "and is genuinely proved (no `sorry`, no `decide`-only). The false converse is",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "50540462",
-        "quality": 0.7700800000000001,
-        "theorems": 9,
-        "title": "Uniform Extremality for Siblings of the Coupon Collector"
-      },
-      {
         "cycle_id": "38047daa",
         "quality": 0.6813500000000001,
         "theorems": 16,
@@ -3637,6 +3631,12 @@
         "quality": 0.7903600000000002,
         "theorems": 6,
         "title": "Infinitely Many Solutions to Prime-Base Binomial Congruences"
+      },
+      {
+        "cycle_id": "ade3f670",
+        "quality": 0.46629999999999994,
+        "theorems": 10,
+        "title": "Phantom Topologies: Spaces That Change When You Look at Them"
       }
     ],
     "NumberTheory": [
