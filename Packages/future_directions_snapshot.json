@@ -1791,7 +1791,7 @@
       "Merkurjev‑Scavia, \"Massey products and formality\" (2022, 2023)",
       "GMT (Garkusha‑Meltzer‑Toännesen), \"Formality of cochains\" (2023)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a4f4c4c9",
     "description": "For any odd prime p, let G be a pro‑p Demushkin group. We conjecture that the differential graded algebra of continuous cochains Δb(G, Ҽf_p) is A₃‑formal if and only if the Benson‑Krause‑Schwede canonical class c_G ∈ Ext³(Ҽf_p, Ҽf_p[G]) vanishes. Moreover, using the classification of Demushkin groups (parameters (p,q)), we expect c_G to be non‑trivial precisely in the families with invariant q = 3, providing a concrete obstruction to A₃‑formality. This extends the proven result for pro‑2 Demushkin groups to all odd primes.",
     "domain_bridges": [
       "Massey products",
@@ -1810,7 +1810,7 @@
     "proof_strategy": "1. Review the classification of pro‑p Demushkin groups via parameters (p,q) and recall the description of H²(G,Ҽf_p) and cup‑product structure. 2. Compute the canonical class c_G in Ext³(Ҽf_p, Ҽf_p[G]) using the known minimal model of Δb(G,Ҽf_p) and the Benson‑Krause‑Schwede construction. 3. Show that c_G = 0 whenever q ≠ 3 (by direct algebraic computation and comparison with known vanishing results for triple Massey products). 4. For q = 3, compute c_G explicitly and exhibit a non‑zero Massey product, establishing that c_G ≠ 0 and thus m₃ ≠ 0 in the minimal model. 5. Formalize the algebraic steps and the equivalence between vanishing of c_G and A₃‑formality in a proof assistant, reducing the problem to elementary Grühenfeld calculations and Massey product manipulations.",
     "research_mode": "team",
     "source_exp_id": "2607.01028v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T21:25:19.587863+00:00",
     "title": "A Conjecture on A₃‑formality for pro‑p Demushkin groups (extension beyond 2)"
   },
