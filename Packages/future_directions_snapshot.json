@@ -4956,6 +4956,26 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Extremal Positive p-Energies of Graphs\n\n## 1. Full path-minimality of positive p-energy via spectral majorization\n\nFor every connected bipartite graph on `n` vertices and every real exponent\n`p ≥ 2`, the positive p-energy `∑_{λ>0} λ^p` should be minimized by the path\n`P_n`. The key insight is that the ordered positive part of the adjacency\nspectrum of any connected graph *majorizes* that of the path in the\nHardy–Littlewood–Pólya sense, and the map `t ↦ t^p` is convex for `p ≥ 2`, so\nKaramata's inequality transports the majorization into the energy inequality.\nWhy now? The `p = 2` anchor is settled exactly (positive energy equals the\nedge count, which the spanning-tree bound minimizes), so the remaining task is\npurely the upgrade from one fixed exponent to the whole convex family — a\nclean, self-contained majorization problem rather than an open-ended search.\n\n## 2. Uniqueness of the path as the strict minimizer\n\nBeyond the inequality, the path should be the *unique* connected minimizer of\npositive p-energy for `p > 2`: any connected graph that is not a path has\nstrictly larger positive p-energy. The key insight is that equality in\nKaramata's inequality for a strictly convex power forces the two spectra to\ncoincide, and only the path realizes the extremal interlacing pattern of\npositive eigenvalues among connected graphs. Why now? Strict convexity of\n`t ↦ t^p` for `p > 2` is elementary, so uniqueness reduces to characterizing\nwhich connected graphs share the path's positive spectrum — a finite,\ncheckable rigidity statement.\n\n## 3. Sharp two-sided Schatten sandwich for bipartite graphs\n\nFor a connected bipartite graph the positive p-energy equals exactly one half\nof the Schatten p-energy `∑_k |λ_k|^p`, so extremal questions for positive\nenergy are extremal questions for a Schatten norm. The key insight is that\nbipartiteness makes the spectrum an order-reversing sign involution, collapsing\nthe one-sided sum to half of a symmetric norm, which is then squeezed between\nthe path (minimizer) and the complete bipartite graph (maximizer). Why now? The\nhalving identity is already isolated as a reusable lemma, so both the lower\nextremal (path) and the conjectured upper extremal (balanced complete\nbipartite graph) can be attacked with the same Schatten-norm toolkit.\n\n## 4. Spectral-radius transfer at large exponent\n\nAs the exponent grows the positive p-energy is dominated by the largest\neigenvalue, so path-minimality for large `p` should follow from the fact that\nthe path minimizes the spectral radius among connected graphs on `n` vertices,\nwith `λ_max(P_n) = 2 cos(π/(n+1))`. The key insight is that\n`E_p^+(G)^{1/p} → λ_max(G)` and the ratio of subleading terms is uniformly\ncontrolled, so a spectral-radius lower bound plus a tail estimate yields the\nenergy inequality for all sufficiently large `p`. Why now? The path's spectral\nradius is a known closed form, and the asymptotic regime isolates a single\neigenvalue, turning a full-spectrum inequality into a one-eigenvalue\ncomparison.\n\n## 5. Edge-count energy identities beyond `p = 2`\n\nThe identity `∑ λ² = 2|E|` (trace of `A²`) has higher analogues:\n`∑ λ³ = 6·(number of triangles)` and `∑ λ⁴ = 2|E| + ... ` count closed walks.\nThe key insight is that integer-exponent spectral energies are exact\ncombinatorial walk counts via `trace(A^k)`, so positive/negative energy splits\nat even integer exponents become signed walk-counting identities that are\nsharp for bipartite graphs (where odd traces vanish). Why now? The trace–walk\ncorrespondence is elementary and already partially formalized for `k = 2`, so\nextending to `k = 3, 4` gives exact, testable energy formulas that pin down the\nextremal graphs at each even exponent without any analysis.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_0211",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "bb55b186",
+    "status": "available",
+    "timestamp": "2026-07-03T19:50:47.748345+00:00",
+    "title": "For every connected bipartite graph on `n` vertices and every real exponent"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "13d70f5f",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely — the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence — instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domain_bridges": [],
@@ -4991,5 +5011,24 @@
     "status": "available",
     "timestamp": "2026-07-02T04:44:52.457313+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle bb55b186 (Q=0.601) proved 7 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the theorem stating that for any connected bipartite graph G on n vertices and any real p ≥ 2, the positive p-energy E_p+(G) is at least the positive p-energy of the path graph P_n. This inv",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_bb55b186_9e571884",
+    "lineage_refs": [],
+    "priority_score": 0.6512985714285714,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "bb55b186",
+    "status": "available",
+    "timestamp": "2026-07-03T19:50:52.654120+00:00",
+    "title": "Close Proofs: Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
   }
 ]

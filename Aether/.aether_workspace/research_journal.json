@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e8be0a2a",
-      "domain": "Applications",
-      "key_insight": "# EML Transseries — Future Directions\n\nThis research thread extends the Hahn-series model of transseries\n(`Catalog/EML/Transseries/`). New verified files added across cycles:\n\n- `ExponentLaws.lean` —",
-      "quality_score": 0.8740959999999999,
-      "sorry_count": 0,
-      "theorem_count": 31,
-      "timestamp": "2026-06-27T18:47:29",
-      "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
-    },
-    {
       "cycle_id": "4398a39a",
       "domain": "Applications",
       "key_insight": "# FUTURE DIRECTIONS — Proof Automation (Custom Lean 4 Tactics)\n\nCycle output: `Catalog/Applications/ProofAutomation/FibonacciTactics.lean`\n(\"Proof Automation IV\"), extending the existing series `tropi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-07-03T19:50:08",
       "title": "Proving the Existence of a Sufficiently Large Extremal Family"
+    },
+    {
+      "cycle_id": "bb55b186",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Extremal Positive p-Energies of Graphs\n\n## 1. Full path-minimality of positive p-energy via spectral majorization\n\nFor every connected bipartite graph on `n` vertices and every r",
+      "quality_score": 0.6012985714285713,
+      "sorry_count": 3,
+      "theorem_count": 7,
+      "timestamp": "2026-07-03T19:50:52",
+      "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.8246161538461538
     }
   ],
-  "last_updated": "2026-07-03T19:50:08",
+  "last_updated": "2026-07-03T19:50:52",
   "open_questions": [
-    {
-      "context": "derivation is `sorry`-free.; CRITIQUE.  We confirm by axiom audit that the proof is `sorry`-free, and we expose",
-      "cycle_id": "292d0525",
-      "domain": "NumberTheory",
-      "sorry_count": 2,
-      "timestamp": "2026-06-25T12:36:46"
-    },
     {
       "context": "-- !-- Critique (Critic): T_one_recurrence and T_one_bounded are 0-sorry, use the",
       "cycle_id": "9e1a2820",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 3,
       "timestamp": "2026-07-03T19:50:08"
+    },
+    {
+      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
+      "cycle_id": "bb55b186",
+      "domain": "Applications",
+      "sorry_count": 3,
+      "timestamp": "2026-07-03T19:50:52"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "7469cf90",
-        "quality": 0.6437080000000001,
-        "theorems": 15,
-        "title": "Proof Automation: Custom Lean 4 Tactics"
-      },
-      {
         "cycle_id": "a725bb00",
         "quality": 0.7976880000000001,
         "theorems": 9,
@@ -3141,6 +3135,12 @@
         "quality": 0.4650941176470589,
         "theorems": 13,
         "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+      },
+      {
+        "cycle_id": "bb55b186",
+        "quality": 0.6012985714285713,
+        "theorems": 7,
+        "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
       }
     ],
     "Bridges": [
