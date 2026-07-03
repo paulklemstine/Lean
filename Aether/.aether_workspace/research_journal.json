@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "c85b45b6",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Pfaffian Giambelli formula for shifted `t`-Schur functions\n\nDerived from this cycle's findings (`Pfaffian.lean`, `StrictPartitions.lean`,\n`ShiftedTSchur.lean`).  Each conjecture",
-      "quality_score": 0.6839200000000001,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-27T15:52:25",
-      "title": "Pfaffian Giambelli Formula for Shifted t-Schur Functions"
-    },
-    {
       "cycle_id": "10d599ef",
       "domain": "Applications",
       "key_insight": "# Future Directions — GL(1) Langlands / Global Class Field Theory\n\nDerived from this cycle's findings:\n\n* **Galois side (catalog `GL1Correspondence`)**: `Gal(ℚ(ζₙ)/ℚ) ≃* (ℤ/nℤ)ˣ` and the abstract\n  co",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-07-03T07:55:37",
       "title": "Phantom Topologies: Spaces That Change When You Look at Them"
+    },
+    {
+      "cycle_id": "12f18d90",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## 1. A colouring-count information measure that never collapses\n\nReplace the single-point \"quantum dimension\" with the count of `ℤ/p` colourings\nof a knot, extracted from the Jon",
+      "quality_score": 0.5938800000000001,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-07-03T08:08:24",
+      "title": "Knots That Think: Cognition as Braiding in Category Theory"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7779935103225806
     }
   ],
-  "last_updated": "2026-07-03T07:55:37",
+  "last_updated": "2026-07-03T08:08:24",
   "open_questions": [
     {
       "context": "",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "c56262ed",
-        "quality": 0.456932,
-        "theorems": 26,
-        "title": "Learning with Errors: Hardness Reductions"
-      },
-      {
         "cycle_id": "21b9f7f8",
         "quality": 0.6964000000000001,
         "theorems": 8,
@@ -3141,6 +3135,12 @@
         "quality": 0.51904,
         "theorems": 4,
         "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
+      },
+      {
+        "cycle_id": "12f18d90",
+        "quality": 0.5938800000000001,
+        "theorems": 6,
+        "title": "Knots That Think: Cognition as Braiding in Category Theory"
       }
     ],
     "Bridges": [
