@@ -133,7 +133,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Coxeter Length Scaling"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f91c88c3",
     "description": "For any graph $G$, if $G$ is distance-hereditary, then $G$ is balanced if and and only if $G$ does not contain $\\overline{3K_2}$ as an induced subgraph. This formalizes the paper's result that for the class of distance-hereditary graphs, the property of being balanced is equivalent to being $\\overline{3K_2}$-free.",
     "domains": [
       "Bridges"
@@ -142,7 +142,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00730v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T09:06:43.437769+00:00",
     "title": "Characterization of Balanced Distance-Hereditary Graphs by the Complement of 3-Matching"
   },
@@ -366,7 +366,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
   },
   {
-    "consumed_by_exp_id": "b31bdbc9",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for coprime positive integers a<b with a>1 and odd exponent n>1, the equation (a^n+1)(b^n+1)=x^2 has no positive integer solutions.",
     "domains": [
       "Pythagorean"
@@ -375,7 +375,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31223v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T16:13:17.108600+00:00",
     "title": "No solutions for odd exponents in the coprime case"
   },
@@ -466,7 +466,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sign Alternation in q-Hypergeometric Series via Oscillatory Asymptotics Near Roots of Unity"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4ff8ff84",
     "description": "This conjecture posits that for sufficiently large $s$ and structured seating conditions, a unique non-trivial solution exists in the combinatorial model of the generalized honeymoon problem, formalizable via properties of balanced bipartite decompositions.",
     "domains": [
       "Pythagorean",
@@ -476,7 +476,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01130v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T06:22:20.382248+00:00",
     "title": "Complementary feasibility in seating configurations for the generalized honeymoon Oberwolfach problem"
   },
@@ -1024,7 +1024,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "A Conjecture on A\u2083\u2011formality for pro\u2011p Demushkin groups (extension beyond 2)"
   },
   {
-    "consumed_by_exp_id": "db4eff76",
+    "consumed_by_exp_id": "",
     "description": "For $k=18$, there exists a generalized Diophantine tuple $A \\subset \\mathbb{F}[x]$ with $|A|=6$ satisfying property $D_{18}(n)$ that is not contained in the exceptional family (i.e., $n$ is not a square of an element $s \\in \\mathbb{F}[x]$ or $A \\not\\subset s\\mathbb{F}$).",
     "domains": [
       "Pythagorean"
@@ -1033,7 +1033,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01165v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T21:38:14.420490+00:00",
     "title": "Existence of a D_18 tuple with size 6 outside the exceptional case"
   },
@@ -1316,7 +1316,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing the generalized honeymoon Oberwolfach problem in Lean 4"
   },
   {
-    "consumed_by_exp_id": "77faf02b",
+    "consumed_by_exp_id": "7a3f0b42",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
     "domains": [
       "Novelty",
@@ -1620,12 +1620,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "We conjecture that the upper bound for |\u03b6(1+it)| can be improved further by utilizing smoothing methods. Specifically, we propose that for all t \u2265 3, |\u03b6(1+it)| \u2264 (1/2) log t + 1.5, which would improve the existing bound of (1/2) log t + 1.57. This conjecture is based on extending the analysis in [this paper] to optimize the constants in the smoothed approximation.",
+    "domains": [
+      "Pythagorean",
+      "MachineLearning"
+    ],
+    "id": "fd_0138",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01424v1",
+    "status": "available",
+    "timestamp": "2026-07-03T10:19:57.480990+00:00",
+    "title": "Sharpening the Constant in the Upper Bound of |\u03b6(1+it)| via Smoothing Techniques"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0138",
+    "id": "fd_0139",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -1639,7 +1654,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0139",
+    "id": "fd_0140",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -1653,7 +1668,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0140",
+    "id": "fd_0141",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
@@ -1667,7 +1682,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0141",
+    "id": "fd_0142",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -1681,7 +1696,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0142",
+    "id": "fd_0143",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
@@ -1696,7 +1711,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0143",
+    "id": "fd_0144",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
@@ -1711,7 +1726,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0144",
+    "id": "fd_0145",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -1726,7 +1741,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0145",
+    "id": "fd_0146",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -1740,7 +1755,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0146",
+    "id": "fd_0147",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -1749,23 +1764,8 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equality case regularity conjecture for admissible Sidorenko classes"
   },
   {
-    "consumed_by_exp_id": "",
-    "description": "Conjecture that for any non\u2011empty finite set \u03a8 of non\u2011zero homomorphisms from an abelian group F to G, the weighted Davenport constant D_\u03a8(G) \u2264 n holds precisely when the family of kernels of the induced universal homomorphisms from F^n to G forms a cover of F^n.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0147",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02132v1",
-    "status": "available",
-    "timestamp": "2026-07-03T05:55:53.302394+00:00",
-    "title": "Kernel\u2011cover characterisation of the weighted Davenport constant"
-  },
-  {
     "consumed_by_exp_id": "061b612f",
-    "description": "Conjecture: Let A be a line arrangement in the complex projective plane of degree d such that every singular point has multiplicity at most 3 (i.e., only double and triple points). If the minimal degree of a Jacobian relation satisfies mdr(A) < d/2, then mdr(A) is combinatorially determined: any other line arrangement B with the same intersection lattice (and hence the same singularity multiplicities) has mdr(B) = mdr(A).",
+    "description": "Conjecture that for any non\u2011empty finite set \u03a8 of non\u2011zero homomorphisms from an abelian group F to G, the weighted Davenport constant D_\u03a8(G) \u2264 n holds precisely when the family of kernels of the induced universal homomorphisms from F^n to G forms a cover of F^n.",
     "domains": [
       "Algebra",
       "Pythagorean"
@@ -1773,8 +1773,23 @@ window.FUTURE_DIRECTIONS = [
     "id": "fd_0148",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2607.01985v1",
+    "source_exp_id": "2607.02132v1",
     "status": "in_progress",
+    "timestamp": "2026-07-03T05:55:53.302394+00:00",
+    "title": "Kernel\u2011cover characterisation of the weighted Davenport constant"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Let A be a line arrangement in the complex projective plane of degree d such that every singular point has multiplicity at most 3 (i.e., only double and triple points). If the minimal degree of a Jacobian relation satisfies mdr(A) < d/2, then mdr(A) is combinatorially determined: any other line arrangement B with the same intersection lattice (and hence the same singularity multiplicities) has mdr(B) = mdr(A).",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0149",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01985v1",
+    "status": "available",
     "timestamp": "2026-07-03T06:13:22.731805+00:00",
     "title": "Combinatorial determination of mdr for line arrangements with only double and triple points"
   },
@@ -1784,7 +1799,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0149",
+    "id": "fd_0150",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02098v1",
@@ -1799,7 +1814,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0150",
+    "id": "fd_0151",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01716v1",
@@ -1814,7 +1829,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Physics"
     ],
-    "id": "fd_0151",
+    "id": "fd_0152",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
@@ -1828,7 +1843,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0152",
+    "id": "fd_0153",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01718v1",
@@ -1842,7 +1857,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0153",
+    "id": "fd_0154",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01761v1",
@@ -1857,7 +1872,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Logic"
     ],
-    "id": "fd_0154",
+    "id": "fd_0155",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
@@ -1871,7 +1886,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0155",
+    "id": "fd_0156",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01695v1",
@@ -1885,13 +1900,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0156",
+    "id": "fd_0157",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01438v1",
     "status": "available",
     "timestamp": "2026-07-03T10:03:11.589332+00:00",
     "title": "Hypergraph Extension of the Exact Matching-Number Bound for the Annihilation Gap"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For two triangulations $S$ and $T$ of a topological space $X$, if they admit a common subdivision, then there exist locally finite sequences $\bar{s}$ and $\bar{t}$ such that the $\\omega$-stellar subdivisions $S*\\bar{s}$ and $T*\\bar{t}$ coincide. This generalizes the result of Adiprasito\u2013Pak for finite simplicial complexes to infinite locally finite complexes.",
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_0158",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01349v1",
+    "status": "available",
+    "timestamp": "2026-07-03T10:20:23.815272+00:00",
+    "title": "Alexander's Conjecture for Infinite Simplicial Complexes"
   },
   {
     "consumed_by_exp_id": "",
