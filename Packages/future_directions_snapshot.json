@@ -1680,7 +1680,7 @@
       "Akbari26",
       "LDMSaj"
     ],
-    "consumed_by_exp_id": "6d0ee8e6",
+    "consumed_by_exp_id": "",
     "description": "The generalized honeymoon Oberwolfach problem asks whether n couples can be seated over several nights at s tables of size 2 and t round tables of sizes 2m_1,...,2m_t (with n = s + ∑ m_i) such that each person sits next to their spouse every night and next to every other person exactly once. The paper solves the case t=1, proving that the obvious necessary condition (∑ m_i divides 2n(n-1)) is sufficient. This conjecture extends the result to t ≥ 2, claiming that the same divisibility condition is also sufficient for any number of round tables.",
     "domain_bridges": [
       "graph theory",
@@ -1696,7 +1696,7 @@
     "proof_strategy": "Use the equivalence between HOP solutions and HOP decompositions of 4K_n^•. Develop a general construction method for HOP (C_{m_1},...,C_{m_t})-decompositions of 4K_n^• using starter cycles, factorizations, and amalgamation techniques, extending the methods used for t=1. Leverage the existence of HOP C_m-factorizations for 4K_m^• (m even) and 4K_{2m}^• (m odd) as building blocks. Handle small exceptional cases by computer search.",
     "research_mode": "team",
     "source_exp_id": "2607.01130v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T21:24:44.021492+00:00",
     "title": "Generalized Honeymoon Oberwolfach Problem with Multiple Round Tables"
   },
@@ -2363,7 +2363,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b9e95156",
+    "consumed_by_exp_id": "4b4e6acc",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible — how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian — the algebraic equivalent of Escher's impossible architecture.",
     "domain_bridges": [],
     "domains": [
@@ -2469,7 +2469,7 @@
       "Hardy-Ramanujan partition asymptotics",
       "Rademacher's exact formula"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "05be6424",
     "description": "For the explicit infinite family of q-hypergeometric series introduced in the paper, the coefficients V(n) satisfy: (1) V(n) = 0 for infinitely many n, and (2) there exists a density-zero set E ⊂ ℕ such that for all n ∉ E, V(n+1) and V(n) have opposite signs. This generalizes the proven result for the specific series v₂(q), v₃(q), v₄(q) to their broader family context.",
     "domain_bridges": [
       "Modular forms and quantum modular forms (Zagier)",
@@ -2487,7 +2487,7 @@
     "proof_strategy": "Adapt the circle method framework from Folsom-Males-Rolen-Storzer to the general family. Establish that oscillatory asymptotics near roots of unity produce a dominant alternating sign factor. Prove that the exceptional set has density zero by showing the exponential growth terms in the asymptotic formula prevent sign changes except on a sparse set. The key is controlling the interplay between exponentially growing main terms and oscillatory error terms.",
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T01:56:10.723921+00:00",
     "title": "Alternating Sign Conjecture for Andrews' q-Series Families"
   },
@@ -2916,7 +2916,7 @@
       "Becker, Ivanisvili, Krachun, Madrid (original hypercube conjecture)",
       "related works on sumsets in convex sets"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6418c622",
     "description": "For subsets Aⱼ of the L₁ ball {x ∈ ℤᵈ : |x₁| + ... + |x_d| ≤ m} in ℤᵈ, establish a sharp lower bound |A₁+…+Aₙ| ≥ (|A₁|⋯|Aₙ|)^{1/p}, where p = (n log(m+1))/log(nm+1) or a refined exponent dependent on d, m, and n.",
     "domain_bridges": [
       "Convex Geometry",
@@ -2932,7 +2932,7 @@
     "proof_strategy": "Adapt the original proof's sup-convolution and mixed volume techniques to L₁ geometry, deriving new functional inequalities specific to the L₁ ball structure.",
     "research_mode": "team",
     "source_exp_id": "2607.01458v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T09:58:51.961008+00:00",
     "title": "Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
   },
@@ -3161,6 +3161,35 @@
     "title": "Conjecture: Balanced graphs coincide with hereditary clique‑Helly graphs"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "https://arxiv.org/abs/xxxx.xxxx",
+      "Cherednik, I. every, \"Double affine Hecke algebras\", 2002",
+      "Soergel, W., \"Kazhdan–Lusztig cells and J-structures\", 1990",
+      "Lam, T., \"Affine Fomin–Stanley subalgebra\", 2008"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let Φ be any irreducible root system and H_aff the associated affine Hecke algebra over ℤ[v^±1]. The subalgebra 𝔅_aff⊂H_aff introduced as a pseudo‑centralizer in the double affine Hecke algebra admits a canonical basis {b_w清} indexed by the cosets w∈W_aff/W_fin. The conjecture states that for all w₁,w₂∈W_aff/W_fin the product expands as b_{w₁}⋅b_{w₂}=∑_{w₃}c_{w₁,w₂}^{w₃}b_{w₃} with each coefficient c_{w₁,w₂}^{w₃}∈ℕ[v,v^{-1}], i.e. a polynomial with non‑negative integer coefficients. In particular, specializing v↦1 yields nonnegative integers. This is falsifiable by exhibiting a counterexample in any type.",
+    "domain_bridges": [
+      "representation theory",
+      "algebraic combinatorics",
+      "quantum groups"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0147",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the combinatorial model for the affine Grassmannian homology given by Lam’s subalgebra and the explicit description of 𝔅_aff in types A_n, B_2, G_2. Show that the canonical basis coincides with the dual canonical basis of the associated quantum group, for which positivity of structure constants is known. Employ induction on the length of affine Weyl group elements, braid relations, and the positivity of Kazhdan–Lusztig polynomials. Verify the conjecture in low rank types by computer algebra (Sage/Lean) to support the pattern, then generalize using the categorification via Soergel bimodules.",
+    "research_mode": "team",
+    "source_exp_id": "2607.00426v1",
+    "status": "available",
+    "timestamp": "2026-07-03T13:46:26.965086+00:00",
+    "title": "Positivity of structure constants for the canonical basis of 𝔅_aff"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "SDtwists",
@@ -3180,7 +3209,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0147",
+    "id": "fd_0148",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a probabilistic model inspired by the fan structure and apply ergodic arguments under mild GT conditions.",
@@ -3195,7 +3224,7 @@
     "catalog_references": [
       "arXiv:xxxx.xxxxx (Blagojević 2024)"
     ],
-    "consumed_by_exp_id": "061b612f",
+    "consumed_by_exp_id": "",
     "description": "In the setting of the paper, let K be a subcomplex of the join of all spanning k‑trees of a complete (k+1)-partite graph on disjoint finite vertex sets V₁,…,V_{k+1} together with a wedge of an m‑sphere. Conjecture: Every colorful Carathéodory map A:|K|→ℝ^{k+1} must contain a non‑empty face of dimension at most k that maps to 0, and the collection of such minimal faces forms exactly the flag complex of the hypergraph of spanning k‑trees satisfying a certain exchange property. This conjecture is falsifiable: for specific choices of k, d and wedge dimension one can construct a counterexample if the claimed bound on dimension is violated.",
     "domain_bridges": [
       "Combinatorial Topology",
@@ -3205,13 +3234,13 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0148",
+    "id": "fd_0149",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on k combined with parity arguments analogous to Meshulam's lemma",
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T01:15:12.510112+00:00",
     "title": "Conjecture on minimal hitting subcomplexes in joins of spanning k‑trees with wedge of spheres"
   },
@@ -3236,7 +3265,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0149",
+    "id": "fd_0150",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the combinatorial interpretation via (p,q)-deformed s-rook placements on staircase boards to construct an explicit bijection between rook placements and the terms in the (p,q)-binomial expansion, showing that each rook placement contributes positively.",
@@ -3262,7 +3291,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0150",
+    "id": "fd_0151",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define the property of being a Sidon set in Lean 4. 2. Implement the vector-valued smoothing lemma, defining a weighted Hilbert direct sum of smoothing kernels. 3. Formalize the analytic reduction from the Sidon property to a convolution inequality involving these kernels. 4. Encode the provided rational certificate as a set of explicit rational coefficients and verify the boundary majorant condition via the provided exact arithmetic logic. 5. Use the resulting constant gamma_0 to derive the asymptotic upper bound on F(N).",
@@ -3291,7 +3320,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0151",
+    "id": "fd_0152",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Approach by contradiction assuming no such subgraph exists. Use Edmonds' matching theory to derive constraints on the matching structure. Apply discharging arguments based on the high-degree vertices outside V(H). Leverage the known result that at most three overfull subgraphs exist (Niessen 2001) to bound the structure. Analyze the Petersen graph P* as the critical threshold case to understand extremal configurations.",
@@ -3308,7 +3337,7 @@
       "Aaronson, Groenland & Johnston, *Cyclically covering subspaces in 𝔽₂ⁿ*, 2019",
       "Isbell, *Cyclic codes and cover problems*, 1956–60"
     ],
-    "consumed_by_exp_id": "a511a89e",
+    "consumed_by_exp_id": "",
     "description": "For any odd prime power q≥3 and integer m≥4, the largest codimension of a cyclically covering subspace of 𝔽_qⁿ with n=(q^m+1)/2 equals 1. Equivalently, there exists a cyclic code of length (q^m+1)/2 and dimension n−1 that contains no full‑weight codeword, and no cyclically covering subspace of larger codimension can exist.",
     "domain_bridges": [
       "finite geometry (covering radius of dual codes)",
@@ -3318,13 +3347,13 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0152",
+    "id": "fd_0153",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit cyclic code of length n=(q^m+1)/2 whose generator polynomial is the minimal polynomial of a primitive element of 𝔽_{q^m} of order q^m+1 divided by (x−1). Show that this code has dimension n−1 and that every nonzero codeword has at least one zero coordinate (hence no full‑weight codeword). Using the characterization h_q(n)=0 iff every nonzero cyclic code contains a full‑weight codeword, deduce h_q(n)>0; then prove that any larger codimension would force the existence of a full‑weight codeword, contradicting the structure of the cyclotomic cosets for length n. This establishes h_q(n)=1. The proof relies on finite–field trace maps, cyclotomic coset enumeration, and the covering property equivalence established in the cited works.",
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T03:50:00.178097+00:00",
     "title": "Exact Codimension for Cyclically Covering Subspaces of Length (qᵐ+1)/2"
   },
@@ -3346,7 +3375,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0153",
+    "id": "fd_0154",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage known results on the convergence of extremal statistics of Gaussian log‑correlated processes to the Gumbel distribution, combine them with a rigorous saddle‑point analysis of the CFT partition function to identify the appropriate scaling of μ_c and σ_c, and verify the required tightness and moment conditions for the limit theorem.",
@@ -3372,7 +3401,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0154",
+    "id": "fd_0155",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a minimal counterexamples based on combinatorial bounds on exchange numbers and flip counts.",
@@ -3399,7 +3428,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0155",
+    "id": "fd_0156",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Assume a counterexample W violating regularity; use tensor amplification (degree‑biased or Perron‑biased) to derive a contradiction with the Sidorenko inequality or with known regularity constraints, thereby proving the conjecture.",
@@ -3425,7 +3454,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0156",
+    "id": "fd_0157",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove the equivalence by constructing an explicit finite subcover from a minimal sequence and using the universal property of the direct sum to relate induced homomorphisms to sums of ψ_i.",
@@ -3450,7 +3479,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0157",
+    "id": "fd_0158",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the fact that for arrangements with only double and triple points the Jacobian ideal is generated by the partial derivatives of a defining polynomial that is known to be quasi-homogeneous with respect to certain weights. Apply Saito's criterion for freeness and the relation between the exponents of the arrangement and the degrees of minimal syzygies. Show that under the hypothesis mdr < d/2 the arrangement is plus-one generated, which forces the Jacobian syzygy module to have a predictable graded structure determined solely by the intersection lattice. Verify the claim by computing the relevant graded Betti numbers via Gröbner basis techniques in the polynomial ring S = C[x,y,z].",
@@ -3477,7 +3506,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0158",
+    "id": "fd_0159",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage planar graph separators and the four-color theorem to construct geodesic partitions with bounded treewidth, combined with the paper's algorithmic framework for geodesic treewidth in restricted graph classes",
@@ -3507,7 +3536,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0159",
+    "id": "fd_0160",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "We would formalize the definition of an oriented product structure, its girth functions, the no‑fold condition, and the weighted dual Fisher inequality in Lean. Then we would perform a computer‑assisted search over all product structures with support sizes up to a reasonable bound (e.g. \\(m,n\\le 10\\)). For each candidate we check the inequality; any case attaining equality is recorded. Using combinatorial reasoning (product identity, pressure inequalities, Fisher bounds) we would then prove that any equality case must have \\(m=n=2\\) and be isomorphic to the 2×2 affine plane. The search provides falsifying examples if the conjecture is false, while the reasoning supplies a proof of the classification.",
@@ -3525,7 +3554,7 @@
       "HSV2006",
       "TC2013"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ad3b2c83",
     "description": "For a Hamiltonian graph G with minimum degree at least 3, there exists a constant c > 0 such that G contains a nontrivial cycle of length at least n - c n^{2/3}. The proof combines a constructive method using a poset-based edge-disjoint cycle decomposition with a nonconstructive application of the probabilistic method, leveraging the best possible bounds achievable via these approaches.",
     "domain_bridges": [
       "Poset Theory",
@@ -3535,13 +3564,13 @@
       "Logic",
       "Physics"
     ],
-    "id": "fd_0160",
+    "id": "fd_0161",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish that all long cycles are blocked by a specific edge, then use a cycle-pairing strategy from poset theory to construct a nontrivial cycle, augmented by a probabilistic counting argument to ensure the existence of a sufficiently long alternative cycle.",
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T07:37:36.028717+00:00",
     "title": "Existence of a nontrivial cycle of length n-O(n^{2/3}) in Hamiltonian graphs with δ(G) ≥ 3"
   },
@@ -3551,7 +3580,7 @@
       "Kannan2016",
       "Ren2023"
     ],
-    "consumed_by_exp_id": "71bd52e9",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for every λ > 1 with gcd(λ,6) = 1, the λ‑skeleton L_λ contains infinitely many rows that contain at least one prime. Equivalently, the set of prime‑free rows in L_λ is finite. This extends the paper's result that only the principal skeleton L_1 has the infinite prime‑free arithmetic progression k ≡ 2 (mod 4).",
     "domain_bridges": [
       "formal verification",
@@ -3561,13 +3590,13 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0161",
+    "id": "fd_0162",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Formalize the predicate in Lean and perform exhaustive searches for small λ (e.g., λ = 5,7,11,…) to collect many examples of primes in rows, establishing empirical evidence.\n\n2. Use known results on primes in exponential sequences (e.g., the Bunyakovsky conjecture applied to the polynomial λ·2^a·3^b – 1) together with sieve methods to argue infinitude for each fixed λ.\n\n3. Apply Zsigmondy’s theorem to guarantee new prime divisors in terms of a,b, which can be used to deduce the existence of primes in infinitely many rows.\n\n4. Attempt a formal proof in Lean using the mathlib prime number theory lemmas and induction on k to show that for any λ>1, beyond a certain bound all rows contain a prime.",
     "research_mode": "team",
     "source_exp_id": "2607.01718v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T08:21:14.699332+00:00",
     "title": "Infinite prime rows in λ‑skeletons beyond λ=1"
   },
@@ -3586,7 +3615,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0162",
+    "id": "fd_0163",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Investigate the relationship between the moment tensors of antipodal sets. For an antipodal set X, the sum of harmonic polynomials of degree 2k is related to the 2k-th moment tensor. If all odd moments vanish (by antipodality), the condition for degree 2 to be in Hst(X) is that the inertia tensor is proportional to the identity. If degree 2 is not in Hst(X), the inertia tensor has distinct eigenvalues. Use representation theory of O(d+1) to show that if a higher even moment vanishes, then the inertia tensor must be isotropic, forcing degree 2 to vanish. Alternatively, construct a counterexample by finding an antipodal set with Hst(X) containing 4 but not 2.",
@@ -3614,7 +3643,7 @@
       "Geometry",
       "Logic"
     ],
-    "id": "fd_0163",
+    "id": "fd_0164",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define the structure of a finite simplicial complex and the $h$-vector as a function of the $f$-vector. 2. Implement the $\\mathcal{F}$-uniform subdivision framework specifically for the interval subdivision to derive the explicit entries of the transformation matrix $H_{\\mathcal{F}}$. 3. Use the Lindström-Gessel-Viennot (LGV) lemma or a similar combinatorial path-counting method to show that the determinants of all minors are non-negative, leveraging the combinatorial proof provided in the paper.",
@@ -3639,7 +3668,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0164",
+    "id": "fd_0165",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove σ_{p,a}=1 by analyzing the determinant structure modulo primes and leveraging properties of the Legendre symbol. Examine the matrix's Pfaffian decomposition to show the scaling factor vanishes.",
@@ -3666,7 +3695,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0165",
+    "id": "fd_0166",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit families of hypergraphs (e.g., extensions of the graph constructions that achieve equality for each \\u03bd) and prove the inequality using degree‑sum and counting arguments. Formalize the definitions in Lean and verify the conjecture on small hypergraphs computationally.",
@@ -3692,7 +3721,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0166",
+    "id": "fd_0167",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a common $\\omega$-stellar subdivision by iteratively refining the triangulations using locally finite sequences of stellar moves, leveraging the existence of a common subdivision and the local finiteness condition.",
@@ -3718,7 +3747,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0167",
+    "id": "fd_0168",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit point configurations and linear maps for each (r, s) pair. For the upper bound, use points in general position within an r-dimensional subspace. For the lower bound, design configurations with controlled linear dependencies that minimize separable dichotomies while fixing r and s. Use induction on N and properties of the counting function C(·,·).",
@@ -3747,7 +3776,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0168",
+    "id": "fd_0169",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The conjecture can be approached by analyzing the structure of $\\Delta^{[p]}$ (the Stanley-Reisner complex of $I_\\Delta^{[p]}$) and its facets. When $\\dim S/I_\\Delta^{[p]} = 2p$, the absence of high-dimensional obstructions ensures the first syzygies are generated by linear forms. Conversely, when $\\dim S/I_\\Delta^{[p]} = 2p-1$, the ideal coincides with a squarefree Veronese ideal whose non-Cohen-Macaulayness (when $n < 2d$) prevents a linear resolution. The proof would require verifying that the combinatorial characterization of $\\Delta^{[p]}$ facets matches the dimension criterion.",
@@ -3774,7 +3803,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0169",
+    "id": "fd_0170",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove by induction on r using the self-similar structure of the recursive bisection process. The key insight is that each bisection step at most doubles the number of periods while preserving ratios. Use the periodic structure property from Proposition propLen to reduce analysis to a single phase with sufficiently many periods, then apply extremal combinatorial arguments on the distribution of piece sizes within each period.",
@@ -3799,7 +3828,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0170",
+    "id": "fd_0171",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the connection with rational approximations to the golden ratio φ and the theory of continued fractions to show that any potential decrease would produce a better approximation than a convergent, contradicting optimality of convergents.",
@@ -3826,7 +3855,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0171",
+    "id": "fd_0172",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a bijection between A393920's geometric configurations and Fibonacci-themed tiling-like structures, then prove exponential bounds via characteristic polynomial analysis.",
@@ -3853,7 +3882,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0172",
+    "id": "fd_0173",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Establish modular transformation properties of the coupled product. 2. Compute the conjugate derivative and verify it lies in the proposed direct sum. 3. Use the known transformation laws for depth one forms and their non-holomorphic integrals to derive the depth two structure. 4. Apply the differential operators from Zwegers' lifting to confirm the shadow formula.",
@@ -3881,7 +3910,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0173",
+    "id": "fd_0174",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine Simonovits's decomposition techniques for F with spectral characterization methods from [WKX]. Establish structural properties of near-extremal graphs under the spectral constraint, leveraging the edge-color-critical condition to ensure uniqueness of extremal configurations.",
@@ -3913,7 +3942,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0174",
+    "id": "fd_0175",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Formalise the definitions of matching‑covered graphs, bricks, braces, b‑invariant edges, forcing edges, and near‑bipartite bricks in Lean.\n\n2. Implement auxiliary notions: 3‑connectivity, bicriticality, removable edges, brick number b(G), and the tight‑cut decomposition (as in the literature).\n\n3. Encode the classification theorem from the paper: a constructive description of all near‑bipartite bricks satisfying the forcing property (e.g. in terms of a bipartite backbone with at most one subdivision per edge of a perfect matching and a bound on odd‑cycle lengths).\n\n4. Prove the two directions:\n   - (→) Assuming G is near‑bipartite and satisfies the classification, show that any b‑invariant edge lies in a unique perfect matching (i.e. is forcing). This uses the structural lemmas from the paper (e.g. that b‑invariant edges in such bricks are exactly the subdivided edges of the perfect matching).\n   - (≃) Assuming every b‑invariant edge is forcing, deduce that G cannot contain a non‑ne",
@@ -3922,6 +3951,32 @@
     "status": "available",
     "timestamp": "2026-07-03T13:25:27.639831+00:00",
     "title": "Every b‑invariant edge is forcing exactly for near‑bipartite bricks (up to the three classical exceptions)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "GRS90",
+      "Rosta04"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every n ≥ 9 and every two‑coloring of the Boolean lattice B_n, the minimum possible number of monochromatic triples (S,T,U)∈E_n is at least 2^{(3/2)n}.",
+    "domain_bridges": [
+      "Ramsey theory",
+      "Poset theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0176",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use double‑counting and entropy‑based Fourier–Möbius analysis to derive a lower bound on the number of monochromatic triples; compare with known upper bounds to test falsifiability.",
+    "research_mode": "team",
+    "source_exp_id": "2607.00456v1",
+    "status": "available",
+    "timestamp": "2026-07-03T13:46:51.520754+00:00",
+    "title": "Conjecture on exponential lower bound for monochromatic triples in the Boolean lattice"
   },
   {
     "ambition_level": "extension",

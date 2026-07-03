@@ -951,7 +951,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on explicit closed form for (p,q)-deformed s-rook numbers on staircase boards"
   },
   {
-    "consumed_by_exp_id": "6d0ee8e6",
+    "consumed_by_exp_id": "",
     "description": "The generalized honeymoon Oberwolfach problem asks whether n couples can be seated over several nights at s tables of size 2 and t round tables of sizes 2m_1,...,2m_t (with n = s + \u2211 m_i) such that each person sits next to their spouse every night and next to every other person exactly once. The paper solves the case t=1, proving that the obvious necessary condition (\u2211 m_i divides 2n(n-1)) is sufficient. This conjecture extends the result to t \u2265 2, claiming that the same divisibility condition is also sufficient for any number of round tables.",
     "domains": [
       "Pythagorean"
@@ -960,7 +960,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01130v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T21:24:44.021492+00:00",
     "title": "Generalized Honeymoon Oberwolfach Problem with Multiple Round Tables"
   },
@@ -1316,7 +1316,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing the generalized honeymoon Oberwolfach problem in Lean 4"
   },
   {
-    "consumed_by_exp_id": "b9e95156",
+    "consumed_by_exp_id": "4b4e6acc",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
     "domains": [
       "Novelty",
@@ -1374,7 +1374,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lower bound conjecture for low moments of Dirichlet character sums"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "05be6424",
     "description": "For the explicit infinite family of q-hypergeometric series introduced in the paper, the coefficients V(n) satisfy: (1) V(n) = 0 for infinitely many n, and (2) there exists a density-zero set E \u2282 \u2115 such that for all n \u2209 E, V(n+1) and V(n) have opposite signs. This generalizes the proven result for the specific series v\u2082(q), v\u2083(q), v\u2084(q) to their broader family context.",
     "domains": [
       "Pythagorean",
@@ -1384,7 +1384,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T01:56:10.723921+00:00",
     "title": "Alternating Sign Conjecture for Andrews' q-Series Families"
   },
@@ -1605,7 +1605,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Real-rootedness of the Squares of the Eulerian and Delannoy Triangles"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6418c622",
     "description": "For subsets A\u2c7c of the L\u2081 ball {x \u2208 \u2124\u1d48 : |x\u2081| + ... + |x_d| \u2264 m} in \u2124\u1d48, establish a sharp lower bound |A\u2081+\u2026+A\u2099| \u2265 (|A\u2081|\u22ef|A\u2099|)^{1/p}, where p = (n log(m+1))/log(nm+1) or a refined exponent dependent on d, m, and n.",
     "domains": [
       "Bridges"
@@ -1614,7 +1614,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01458v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T09:58:51.961008+00:00",
     "title": "Sharp Lower Bounds for Sumsets in L\u2081 Balls in \u2124\u1d48"
   },
@@ -1750,12 +1750,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let \u03a6 be any irreducible root system and H_aff the associated affine Hecke algebra over \u2124[v^\u00b11]. The subalgebra \ud835\udd05_aff\u2282H_aff introduced as a pseudo\u2011centralizer in the double affine Hecke algebra admits a canonical basis {b_w\u6e05} indexed by the cosets w\u2208W_aff/W_fin. The conjecture states that for all w\u2081,w\u2082\u2208W_aff/W_fin the product expands as b_{w\u2081}\u22c5b_{w\u2082}=\u2211_{w\u2083}c_{w\u2081,w\u2082}^{w\u2083}b_{w\u2083} with each coefficient c_{w\u2081,w\u2082}^{w\u2083}\u2208\u2115[v,v^{-1}], i.e. a polynomial with non\u2011negative integer coefficients. In particular, specializing v\u21a61 yields nonnegative integers. This is falsifiable by exhibiting a counterexample in any type.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0147",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00426v1",
+    "status": "available",
+    "timestamp": "2026-07-03T13:46:26.965086+00:00",
+    "title": "Positivity of structure constants for the canonical basis of \ud835\udd05_aff"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0147",
+    "id": "fd_0148",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -1764,16 +1779,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fan-structured order and uniform bounds in the Selmer group distribution"
   },
   {
-    "consumed_by_exp_id": "061b612f",
+    "consumed_by_exp_id": "",
     "description": "In the setting of the paper, let K be a subcomplex of the join of all spanning k\u2011trees of a complete (k+1)-partite graph on disjoint finite vertex sets V\u2081,\u2026,V_{k+1} together with a wedge of an m\u2011sphere. Conjecture: Every colorful Carath\u00e9odory map A:|K|\u2192\u211d^{k+1} must contain a non\u2011empty face of dimension at most k that maps to 0, and the collection of such minimal faces forms exactly the flag complex of the hypergraph of spanning k\u2011trees satisfying a certain exchange property. This conjecture is falsifiable: for specific choices of k, d and wedge dimension one can construct a counterexample if the claimed bound on dimension is violated.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0148",
+    "id": "fd_0149",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T01:15:12.510112+00:00",
     "title": "Conjecture on minimal hitting subcomplexes in joins of spanning k\u2011trees with wedge of spheres"
   },
@@ -1783,7 +1798,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0149",
+    "id": "fd_0150",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
@@ -1797,7 +1812,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0150",
+    "id": "fd_0151",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -1811,7 +1826,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0151",
+    "id": "fd_0152",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
@@ -1820,17 +1835,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Structural Location of Overfull Subgraphs in Class 2 Graphs"
   },
   {
-    "consumed_by_exp_id": "a511a89e",
+    "consumed_by_exp_id": "",
     "description": "For any odd prime power q\u22653 and integer m\u22654, the largest codimension of a cyclically covering subspace of\u202f\ud835\udd3d_q\u207f with n=(q^m+1)/2 equals\u202f1. Equivalently, there exists a cyclic code of length (q^m+1)/2 and dimension n\u22121 that contains no full\u2011weight codeword, and no cyclically covering subspace of larger codimension can exist.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0152",
+    "id": "fd_0153",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T03:50:00.178097+00:00",
     "title": "Exact Codimension for Cyclically Covering Subspaces of Length (q\u1d50+1)/2"
   },
@@ -1841,7 +1856,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0153",
+    "id": "fd_0154",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -1856,7 +1871,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0154",
+    "id": "fd_0155",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -1870,7 +1885,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0155",
+    "id": "fd_0156",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -1885,7 +1900,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0156",
+    "id": "fd_0157",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02132v1",
@@ -1900,7 +1915,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0157",
+    "id": "fd_0158",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -1914,7 +1929,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0158",
+    "id": "fd_0159",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02098v1",
@@ -1929,7 +1944,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0159",
+    "id": "fd_0160",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01716v1",
@@ -1938,31 +1953,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equality case of the weighted dual Fisher inequality for taiko product structures"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ad3b2c83",
     "description": "For a Hamiltonian graph G with minimum degree at least 3, there exists a constant c > 0 such that G contains a nontrivial cycle of length at least n - c n^{2/3}. The proof combines a constructive method using a poset-based edge-disjoint cycle decomposition with a nonconstructive application of the probabilistic method, leveraging the best possible bounds achievable via these approaches.",
     "domains": [
       "Logic",
       "Physics"
     ],
-    "id": "fd_0160",
+    "id": "fd_0161",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T07:37:36.028717+00:00",
     "title": "Existence of a nontrivial cycle of length n-O(n^{2/3}) in Hamiltonian graphs with \u03b4(G) \u2265 3"
   },
   {
-    "consumed_by_exp_id": "71bd52e9",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for every \u03bb > 1 with gcd(\u03bb,6) = 1, the \u03bb\u2011skeleton L_\u03bb contains infinitely many rows that contain at least one prime. Equivalently, the set of prime\u2011free rows in L_\u03bb is finite. This extends the paper's result that only the principal skeleton L_1 has the infinite prime\u2011free arithmetic progression k \u2261 2 (mod 4).",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0161",
+    "id": "fd_0162",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01718v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T08:21:14.699332+00:00",
     "title": "Infinite prime rows in \u03bb\u2011skeletons beyond \u03bb=1"
   },
@@ -1972,7 +1987,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0162",
+    "id": "fd_0163",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01761v1",
@@ -1987,7 +2002,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Logic"
     ],
-    "id": "fd_0163",
+    "id": "fd_0164",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
@@ -2001,7 +2016,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0164",
+    "id": "fd_0165",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01695v1",
@@ -2015,7 +2030,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0165",
+    "id": "fd_0166",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01438v1",
@@ -2030,7 +2045,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0166",
+    "id": "fd_0167",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -2044,7 +2059,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0167",
+    "id": "fd_0168",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -2059,7 +2074,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0168",
+    "id": "fd_0169",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
@@ -2073,7 +2088,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0169",
+    "id": "fd_0170",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00775v1",
@@ -2087,7 +2102,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0170",
+    "id": "fd_0171",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00825v2",
@@ -2101,7 +2116,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0171",
+    "id": "fd_0172",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00651v1",
@@ -2115,7 +2130,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0172",
+    "id": "fd_0173",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00643v1",
@@ -2130,7 +2145,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0173",
+    "id": "fd_0174",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00561v1",
@@ -2144,13 +2159,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0174",
+    "id": "fd_0175",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00608v1",
     "status": "available",
     "timestamp": "2026-07-03T13:25:27.639831+00:00",
     "title": "Every b\u2011invariant edge is forcing exactly for near\u2011bipartite bricks (up to the three classical exceptions)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every n \u2265 9 and every two\u2011coloring of the Boolean lattice B_n, the minimum possible number of monochromatic triples (S,T,U)\u2208E_n is at least 2^{(3/2)n}.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0176",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00456v1",
+    "status": "available",
+    "timestamp": "2026-07-03T13:46:51.520754+00:00",
+    "title": "Conjecture on exponential lower bound for monochromatic triples in the Boolean lattice"
   },
   {
     "consumed_by_exp_id": "",
