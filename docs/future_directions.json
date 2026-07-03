@@ -600,7 +600,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "9bec4051",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -631,7 +631,7 @@
       "source": "",
       "source_exp_id": "2607.01169v1",
       "source_path": "http://arxiv.org/abs/2607.01169v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-02T06:22:13.488931+00:00",
       "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
@@ -4449,7 +4449,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "SDtwists",
         "KMR13",
@@ -4474,7 +4474,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0095",
-      "last_attempt_time": "2026-07-03T09:05:49.361294+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Applying the localization lemma in a segmented fashion over parametric directions",
       "lineage_refs": [],
@@ -5361,7 +5361,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
@@ -5378,7 +5378,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0114",
-      "last_attempt_time": "2026-07-03T09:05:43.922753+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -6403,6 +6403,54 @@
       "title": "Formalized Rogers–Ramanujan identities for q-Pochhammer symbols"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "arXiv:2304.12345",
+        "Brenti (1989)",
+        "Liu & Wang (2007)"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The row generating functions (RGFs) of the squares of the Eulerian and Delannoy triangles are real-rooted polynomials. Specifically, for each n ≥ 0, let E^{(2)}_{n,k} be the entry in the nth row and kth column of the squared Eulerian triangle, and D^{(2)}_{n,k} be the corresponding entry for the squared Delannoy triangle. Then the polynomials ∑_{k=0}^{n} E^{(2)}_{n,k} x^k and ∑_{k=0}^{n} D^{(2)}_{n,k} x^k are real-rooted.",
+      "domain_bridges": [
+        "Real algebraic geometry",
+        "Algebraic combinatorics",
+        "Polynomial basis transformations"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "github_issue": 0,
+      "id": "fd_0136",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem real_rooted_eulerian_square_rgf : ∀ n ≥ 0, real_rooted (∑ k ≤ n, eulerian_square_entry n k * x^k) ∧ real_rooted (∑ k ≤ n, delannoy_square_entry n k * x^k)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Leverage the Narayana transformation framework to show that the squared matrices can be represented as products preserving real-rootedness, or apply rectangular additive convolution criteria directly to the squared RGF sequences.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.01572v1",
+      "source_path": "http://arxiv.org/abs/2607.01572v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-03T09:25:28.179644+00:00",
+      "title": "Real-rootedness of the Squares of the Eulerian and Delannoy Triangles"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -6432,7 +6480,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0136",
+      "id": "fd_0137",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem 1.3 using DGH and the fan ordering over primes } p",
@@ -6478,7 +6526,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0137",
+      "id": "fd_0138",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_spanning_k_tree_carathéodory {k d : ℕ} (V₁ V₂ ... : Finset Vertex) (K : SimplicialComplex) (hK : IsJoinOfSpanningKTreeWithWedge K) : ∀ (A : AffineMap K ℝ^{k+1}), Colorful A → ∃ (σ : Face K), σ.Nonempty ∧ σ.Dimension ≤ k ∧ A σ = 0",
@@ -6530,7 +6578,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0138",
+      "id": "fd_0139",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem positivity_in_pq_binomial_basis (s : ℕ) (h : ℂ) (n k : ℕ) : (𝔖 s h n k).expand_in_pq_binomial_basis.coeff _ ≥ 0 := by sorry",
@@ -6577,7 +6625,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0139",
+      "id": "fd_0140",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sidon_upper_bound (N : ℕ) : ∃ (C : ℝ), ∀ (A : Finset ℕ), (A.toSet.is_sidon ∧ A ⊆ {n | n < N}) → A.card ≤ ⌈(N : ℝ)^(1/2) + 0.94601 * (N : ℝ)^(1/4) + C⌉",
@@ -6627,7 +6675,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0140",
+      "id": "fd_0141",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem overfull_subgraph_structural_location (G : Graph) (hG : Δ G > (V G).size / 3) : ¬(χ'_adj G = Δ G + 1) ∨ ∃ (H : Graph) (hH : H ⟵ G) (h_overfull : |E H| > Δ G * ⌊|V H| / 2⌋) (h_induced : Induced H G) , ∀ v ∈ V G \\ V H, deg_G v ≤ Δ G - 2",
@@ -6675,7 +6723,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0141",
+      "id": "fd_0142",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem h_q_half_sum (q : ℕ) [Fact (PrimePower q)] (m : ℕ) (hm : 4 ≤ m) : h q ((q ^ m + 1) / 2) = 1",
@@ -6724,7 +6772,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0142",
+      "id": "fd_0143",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem microstate_gumbel_limit (c : ℕ) (Δ_low Δ_high : ℝ) (hΔ : 0 < Δ_low) (hΔ' : Δ_low < Δ_high) : ∀ ε > 0, ∃ N₀, ∀ n ≥ N₀, |P( (log (M_n) - μ_n) / σ_n ≤ x ) - exp(-exp(-x))| < ε",
@@ -6771,7 +6819,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0143",
+      "id": "fd_0144",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "No general lemma is provided; each conjecture is addressed individually.",
@@ -6819,7 +6867,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0144",
+      "id": "fd_0145",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem equality_case_regularity {C : Type} [AdmissibleClass C] {H : Graph} (hH : NonMatchingSidorenko H) {W : Graphon} (hW : W ∈ C) (h_eq : t H W = p W ^ e H) : Regular W := by sorry",
@@ -6866,7 +6914,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0145",
+      "id": "fd_0146",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem d_psi_le_n_iff_kernel_cover {F G : Type*} [AddCommGroup F] [AddCommGroup G] (Ψ : Finset (Hom F G)) (hΨ : Ψ.Nonempty) (hΨ' : ∀ ψ ∈ Ψ, ψ ≠ 0) (n : ℕ) : (D_Ψ G) ≤ n ↔ (∀ (x : F^n), ∃ (ψ : Ψ), ∑ i in Finset.range n, ψ (x i) = 0) := by sorry",
@@ -6912,7 +6960,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0146",
+      "id": "fd_0147",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_mdr_combinatorially_determined_for_at_most_triple_points\n  {A B : LineArrangement ℂ}\n  (hA : A.degree = B.degree)\n  (hAB : A.intersection_lattice = B.intersection_lattice)\n  (hA_mult : ∀ p ∈ A.singular_points, p.multiplicity ≤ 3)\n  (hB_mult : ∀ p ∈ B.singular_points, p.multiplicity ≤ 3)\n  (h : mdr A < (A.degree : ℝ) / 2)\n  : mdr A = mdr B := by sorry",
@@ -6960,7 +7008,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0147",
+      "id": "fd_0148",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem geodesic_treewidth_planar_upper_bound (G : Graph) (hP : Planar G) : GeodesicTreewidth G ≤ 5",
@@ -7011,7 +7059,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0148",
+      "id": "fd_0149",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem weighted_dual_fisher_strict\n  {m n : ℕ} (hmn : 2 ≤ m) (hn : 2 ≤ n)\n  (hT2 : no_fold_condition (A B P))\n  (hEquality : weighted_dual_fisher A B P = bound) :\n    (m = 2 ∧ n = 2) ∧ is_affine_plane A B P",
@@ -7060,7 +7108,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0149",
+      "id": "fd_0150",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "def theorem_lean: int → int → Prop := fun n c h : n > 0 → c > 0 → ∀ G : graph n, δ(G) ≥ 3 → G.is_hamiltonian → ∃ C : cycle G, C ≠ G.hamiltonian_cycle ∧ C.length ≥ n - c * n^(2/3)",
@@ -7107,7 +7155,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0150",
+      "id": "fd_0151",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem infinite_primes_in_skeleton (lambda : ℕ) (hlambda : lambda > 1 ∧ Nat.coprime lambda 6) : ∀ n : ℕ, ∃ k : ℕ, k > n ∧ ∃ (a b : ℕ), a ≥ 1 ∧ a + b = k ∧ Nat.Prime (lambda * Nat.pow 2 a * Nat.pow 3 b - 1) :=\\nbegin\\n  -- Proof to be filled\\n  sorry\\nend",
@@ -7153,7 +7201,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0151",
+      "id": "fd_0152",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem even_harmonic_strength_contains_two {d : ℕ} (hd : d ≥ 2) (X : Finset (EuclideanSphere ℝ (d+1))) (hX_antipodal : X = (-X : Finset (EuclideanSphere ℝ (d+1)))) (h_even_in_hst : ∃ k : ℕ, k % 2 = 0 ∧ k ∈ Hst X) : (2 : ℕ) ∈ Hst X := by sorry",
@@ -7202,7 +7250,7 @@
         "Logic"
       ],
       "github_issue": 0,
-      "id": "fd_0152",
+      "id": "fd_0153",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem interval_subdivision_matrix_is_tp (d : ℕ) (H_F : Matrix (Fin (d + 1)) (Fin (d + 1)) ℝ) : \n  ∀ (k : ℕ), k ≤ d → ∀ (I : Finset (Fin (d + 1))), I.card = k → ∀ (J : Finset (Fin (d + 1))), J.card = k → \n  (H_F.minor I J).det ≥ 0 := sorry",
@@ -7222,6 +7270,52 @@
       "thread_id": "",
       "timestamp": "2026-07-03T09:05:38.885794+00:00",
       "title": "Total Positivity of the Interval Subdivision Transformation Matrix"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Sun Zhiwei's Conjecture 4.1",
+        "Legendre symbol determinants"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any odd prime p≡3 mod4 and a∈Fp× with χ(a n!)=-1, the positive integer σ_{p,a} defined by s_p D_a(x)=σ_{p,a}²(nx-1) is equal to 1. This would mean the factorization simplifies to s_p D_a(x)=nx-1 without any additional scaling.",
+      "domain_bridges": [
+        "Determinant theory",
+        "Quadratic reciprocity"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0154",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem sun_conjecture_4_1_extension (p : ℕ) (hp : prime p) (hmod : p % 4 = 3) (a : Fp) (hχ : χ(a * (p-1)/2)! = -1) : σ_{p,a} = 1",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Prove σ_{p,a}=1 by analyzing the determinant structure modulo primes and leveraging properties of the Legendre symbol. Examine the matrix's Pfaffian decomposition to show the scaling factor vanishes.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.01695v1",
+      "source_path": "http://arxiv.org/abs/2607.01695v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-03T09:32:14.513880+00:00",
+      "title": "Conjecture on σ_{p,a} being unity for Legendre symbol conditions"
     },
     {
       "ambition_level": "extension",
@@ -7277,8 +7371,6 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "cross_domain_bridge",
-    "famous_subtask",
     "cross_domain_bridge"
   ]
 }

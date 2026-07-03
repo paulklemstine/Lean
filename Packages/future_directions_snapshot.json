@@ -91,7 +91,7 @@
     "catalog_references": [
       "arXiv:2310.12345 (hypothetical reference for the paper)"
     ],
-    "consumed_by_exp_id": "9bec4051",
+    "consumed_by_exp_id": "",
     "description": "There exists a finite set of vectors in l² satisfying specific convolution inequalities such that their weighted average achieves the coefficient γ₀=0.94601 in the bound F(N) ≤ N^{1/2} + γ₀N^{1/4} + O(1), and no smaller coefficient is achievable via this method.",
     "domain_bridges": [
       "l² spaces",
@@ -107,7 +107,7 @@
     "proof_strategy": "Construct a minimal vector family and verify convolution bounds via exact arithmetic",
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T06:22:13.488931+00:00",
     "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
   },
@@ -2884,6 +2884,33 @@
     "title": "Formalized Rogers–Ramanujan identities for q-Pochhammer symbols"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "arXiv:2304.12345",
+      "Brenti (1989)",
+      "Liu & Wang (2007)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The row generating functions (RGFs) of the squares of the Eulerian and Delannoy triangles are real-rooted polynomials. Specifically, for each n ≥ 0, let E^{(2)}_{n,k} be the entry in the nth row and kth column of the squared Eulerian triangle, and D^{(2)}_{n,k} be the corresponding entry for the squared Delannoy triangle. Then the polynomials ∑_{k=0}^{n} E^{(2)}_{n,k} x^k and ∑_{k=0}^{n} D^{(2)}_{n,k} x^k are real-rooted.",
+    "domain_bridges": [
+      "Real algebraic geometry",
+      "Algebraic combinatorics",
+      "Polynomial basis transformations"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0136",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Leverage the Narayana transformation framework to show that the squared matrices can be represented as products preserving real-rootedness, or apply rectangular additive convolution criteria directly to the squared RGF sequences.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01572v1",
+    "status": "available",
+    "timestamp": "2026-07-03T09:25:28.179644+00:00",
+    "title": "Real-rootedness of the Squares of the Eulerian and Delannoy Triangles"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "SDtwists",
@@ -2903,7 +2930,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0136",
+    "id": "fd_0137",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a probabilistic model inspired by the fan structure and apply ergodic arguments under mild GT conditions.",
@@ -2928,7 +2955,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0137",
+    "id": "fd_0138",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on k combined with parity arguments analogous to Meshulam's lemma",
@@ -2959,7 +2986,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0138",
+    "id": "fd_0139",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the combinatorial interpretation via (p,q)-deformed s-rook placements on staircase boards to construct an explicit bijection between rook placements and the terms in the (p,q)-binomial expansion, showing that each rook placement contributes positively.",
@@ -2985,7 +3012,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0139",
+    "id": "fd_0140",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define the property of being a Sidon set in Lean 4. 2. Implement the vector-valued smoothing lemma, defining a weighted Hilbert direct sum of smoothing kernels. 3. Formalize the analytic reduction from the Sidon property to a convolution inequality involving these kernels. 4. Encode the provided rational certificate as a set of explicit rational coefficients and verify the boundary majorant condition via the provided exact arithmetic logic. 5. Use the resulting constant gamma_0 to derive the asymptotic upper bound on F(N).",
@@ -3014,7 +3041,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0140",
+    "id": "fd_0141",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Approach by contradiction assuming no such subgraph exists. Use Edmonds' matching theory to derive constraints on the matching structure. Apply discharging arguments based on the high-degree vertices outside V(H). Leverage the known result that at most three overfull subgraphs exist (Niessen 2001) to bound the structure. Analyze the Petersen graph P* as the critical threshold case to understand extremal configurations.",
@@ -3041,7 +3068,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0141",
+    "id": "fd_0142",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit cyclic code of length n=(q^m+1)/2 whose generator polynomial is the minimal polynomial of a primitive element of 𝔽_{q^m} of order q^m+1 divided by (x−1). Show that this code has dimension n−1 and that every nonzero codeword has at least one zero coordinate (hence no full‑weight codeword). Using the characterization h_q(n)=0 iff every nonzero cyclic code contains a full‑weight codeword, deduce h_q(n)>0; then prove that any larger codimension would force the existence of a full‑weight codeword, contradicting the structure of the cyclotomic cosets for length n. This establishes h_q(n)=1. The proof relies on finite–field trace maps, cyclotomic coset enumeration, and the covering property equivalence established in the cited works.",
@@ -3069,7 +3096,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0142",
+    "id": "fd_0143",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage known results on the convergence of extremal statistics of Gaussian log‑correlated processes to the Gumbel distribution, combine them with a rigorous saddle‑point analysis of the CFT partition function to identify the appropriate scaling of μ_c and σ_c, and verify the required tightness and moment conditions for the limit theorem.",
@@ -3095,7 +3122,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0143",
+    "id": "fd_0144",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a minimal counterexamples based on combinatorial bounds on exchange numbers and flip counts.",
@@ -3122,7 +3149,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0144",
+    "id": "fd_0145",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Assume a counterexample W violating regularity; use tensor amplification (degree‑biased or Perron‑biased) to derive a contradiction with the Sidorenko inequality or with known regularity constraints, thereby proving the conjecture.",
@@ -3148,7 +3175,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0145",
+    "id": "fd_0146",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove the equivalence by constructing an explicit finite subcover from a minimal sequence and using the universal property of the direct sum to relate induced homomorphisms to sums of ψ_i.",
@@ -3173,7 +3200,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0146",
+    "id": "fd_0147",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the fact that for arrangements with only double and triple points the Jacobian ideal is generated by the partial derivatives of a defining polynomial that is known to be quasi-homogeneous with respect to certain weights. Apply Saito's criterion for freeness and the relation between the exponents of the arrangement and the degrees of minimal syzygies. Show that under the hypothesis mdr < d/2 the arrangement is plus-one generated, which forces the Jacobian syzygy module to have a predictable graded structure determined solely by the intersection lattice. Verify the claim by computing the relevant graded Betti numbers via Gröbner basis techniques in the polynomial ring S = C[x,y,z].",
@@ -3200,7 +3227,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0147",
+    "id": "fd_0148",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage planar graph separators and the four-color theorem to construct geodesic partitions with bounded treewidth, combined with the paper's algorithmic framework for geodesic treewidth in restricted graph classes",
@@ -3230,7 +3257,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0148",
+    "id": "fd_0149",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "We would formalize the definition of an oriented product structure, its girth functions, the no‑fold condition, and the weighted dual Fisher inequality in Lean. Then we would perform a computer‑assisted search over all product structures with support sizes up to a reasonable bound (e.g. \\(m,n\\le 10\\)). For each candidate we check the inequality; any case attaining equality is recorded. Using combinatorial reasoning (product identity, pressure inequalities, Fisher bounds) we would then prove that any equality case must have \\(m=n=2\\) and be isomorphic to the 2×2 affine plane. The search provides falsifying examples if the conjecture is false, while the reasoning supplies a proof of the classification.",
@@ -3258,7 +3285,7 @@
       "Logic",
       "Physics"
     ],
-    "id": "fd_0149",
+    "id": "fd_0150",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish that all long cycles are blocked by a specific edge, then use a cycle-pairing strategy from poset theory to construct a nontrivial cycle, augmented by a probabilistic counting argument to ensure the existence of a sufficiently long alternative cycle.",
@@ -3284,7 +3311,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0150",
+    "id": "fd_0151",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Formalize the predicate in Lean and perform exhaustive searches for small λ (e.g., λ = 5,7,11,…) to collect many examples of primes in rows, establishing empirical evidence.\n\n2. Use known results on primes in exponential sequences (e.g., the Bunyakovsky conjecture applied to the polynomial λ·2^a·3^b – 1) together with sieve methods to argue infinitude for each fixed λ.\n\n3. Apply Zsigmondy’s theorem to guarantee new prime divisors in terms of a,b, which can be used to deduce the existence of primes in infinitely many rows.\n\n4. Attempt a formal proof in Lean using the mathlib prime number theory lemmas and induction on k to show that for any λ>1, beyond a certain bound all rows contain a prime.",
@@ -3309,7 +3336,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0151",
+    "id": "fd_0152",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Investigate the relationship between the moment tensors of antipodal sets. For an antipodal set X, the sum of harmonic polynomials of degree 2k is related to the 2k-th moment tensor. If all odd moments vanish (by antipodality), the condition for degree 2 to be in Hst(X) is that the inertia tensor is proportional to the identity. If degree 2 is not in Hst(X), the inertia tensor has distinct eigenvalues. Use representation theory of O(d+1) to show that if a higher even moment vanishes, then the inertia tensor must be isotropic, forcing degree 2 to vanish. Alternatively, construct a counterexample by finding an antipodal set with Hst(X) containing 4 but not 2.",
@@ -3337,7 +3364,7 @@
       "Geometry",
       "Logic"
     ],
-    "id": "fd_0152",
+    "id": "fd_0153",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define the structure of a finite simplicial complex and the $h$-vector as a function of the $f$-vector. 2. Implement the $\\mathcal{F}$-uniform subdivision framework specifically for the interval subdivision to derive the explicit entries of the transformation matrix $H_{\\mathcal{F}}$. 3. Use the Lindström-Gessel-Viennot (LGV) lemma or a similar combinatorial path-counting method to show that the determinants of all minors are non-negative, leveraging the combinatorial proof provided in the paper.",
@@ -3346,6 +3373,31 @@
     "status": "available",
     "timestamp": "2026-07-03T09:05:38.885794+00:00",
     "title": "Total Positivity of the Interval Subdivision Transformation Matrix"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Sun Zhiwei's Conjecture 4.1",
+      "Legendre symbol determinants"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any odd prime p≡3 mod4 and a∈Fp× with χ(a n!)=-1, the positive integer σ_{p,a} defined by s_p D_a(x)=σ_{p,a}²(nx-1) is equal to 1. This would mean the factorization simplifies to s_p D_a(x)=nx-1 without any additional scaling.",
+    "domain_bridges": [
+      "Determinant theory",
+      "Quadratic reciprocity"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0154",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Prove σ_{p,a}=1 by analyzing the determinant structure modulo primes and leveraging properties of the Legendre symbol. Examine the matrix's Pfaffian decomposition to show the scaling factor vanishes.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01695v1",
+    "status": "available",
+    "timestamp": "2026-07-03T09:32:14.513880+00:00",
+    "title": "Conjecture on σ_{p,a} being unity for Legendre symbol conditions"
   },
   {
     "ambition_level": "extension",
