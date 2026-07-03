@@ -105,7 +105,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lower Bound for Low Moments of Dirichlet Character Sums"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c4bca99c",
     "description": "There exists a finite set of vectors in l\u00b2 satisfying specific convolution inequalities such that their weighted average achieves the coefficient \u03b3\u2080=0.94601 in the bound F(N) \u2264 N^{1/2} + \u03b3\u2080N^{1/4} + O(1), and no smaller coefficient is achievable via this method.",
     "domains": [
       "Bridges"
@@ -114,7 +114,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T06:22:13.488931+00:00",
     "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
   },
@@ -1708,6 +1708,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T05:21:41.792909+00:00",
     "title": "**Conjecture.** For every connected bipartite graph `G` on `n` vertices and ever"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Phantom Topologies\n\nThese conjectures are distilled from a single finding: the Euclidean line is the\nexact agreement of two strictly sharper \"observers\" \u2014 a left-looking topology\nwhose basic neighbourhoods are right half-open intervals, and a right-looking one\nwhose neighbourhoods are left half-open intervals \u2014 and that no single observer can\nreproduce the line without simply being the line. This suggests a genuine invariant:\nthe minimum number of strictly sharper observers whose agreement recovers a space.\n\n## 1. The phantom number is a cardinal invariant\n\n**Conjecture.** Every metrizable space without isolated points has strict phantom\nnumber exactly two: it is the agreement of two strictly finer topologies, and never\nof a single non-trivial one. Discrete spaces have phantom number zero (no sharper\ntopology exists), and the Sierpi\u0144ski space has phantom number one.\n\nThe key insight is that \"agreement\" (the join in the lattice of topologies)\nintersects the open-set families of the observers, so recovering a space is a\ncovering problem: each observer must add resolution that all the others cancel out.\nWhy now? The real-line case is settled with an exact value of two, giving a concrete\nanchor from which to test whether \"two\" is universal among nice spaces or genuinely\nvaries.\n\n## 2. Agreement is order-reversing, and hides a Galois connection\n\n**Conjecture.** The map sending a family of observers to their agreed topology forms\none half of a Galois connection whose closed families are precisely those closed\nunder pairwise agreement; its fixed points classify all achievable consensus\ntopologies.\n\nThe key insight is that adding observers can only coarsen reality \u2014 each observer is\nindividually sharper than the consensus \u2014 so the consensus operator is monotone in a\ncounter-intuitive, order-reversing way that is the signature of an adjunction.\nWhy now? The refinement inequality (observer sharper than consensus) is already\nestablished, which is exactly the inequality an adjoint pair needs.\n\n## 3. Two-sided observers on any linear order\n\n**Conjecture.** On every densely ordered set without endpoints, the agreement of the\nright-half-open and left-half-open topologies is exactly the order topology; density\nis necessary and completeness is not.\n\nThe key insight is a purely order-theoretic squeeze: the union of a left half-open\nand a right half-open interval sharing an endpoint is a genuine two-sided interval,\nso agreement at a point always produces a two-sided neighbourhood.\nWhy now? The identity has been proved for the reals; abstracting the proof to expose\nexactly which order axioms it consumes is the natural next step.\n\n## 4. The cofinite plane needs a third observer\n\n**Conjecture.** The cofinite topology on an infinite set \u2014 a stand-in for the Zariski\nplane \u2014 cannot be recovered as the agreement of only two strictly sharper observers;\na third is required.\n\nThe key insight is that cofinite open families are closed under finite intersection\nyet admit no countable neighbourhood basis, which obstructs any two-fold split: the\nintersection of two strictly larger cofinite-containing families always overshoots.\nWhy now? With the two-observer bound made precise for the line, the contrast class \u2014\nspaces that provably resist two observers \u2014 is the sharpest way to show the invariant\nis non-trivial.\n\n## 5. Phantom number as a metrizability detector\n\n**Conjecture.** Among second-countable spaces, phantom number two characterizes the\nregular (metrizable) ones, while non-metrizable second-countable spaces demand at\nleast three observers.\n\nThe key insight is that a compatible metric supplies exactly the two symmetric\none-sided refinements needed for a two-observer split, whereas the absence of a\nlocally finite refinement structure forces additional observers.\nWhy now? The metrizable prototype (the line) already realizes the value two, so the\nconjecture reframes classical metrization theory as a statement about how many\nobservers reality requires.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0141",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5875a645",
+    "status": "available",
+    "timestamp": "2026-07-03T05:23:12.428535+00:00",
+    "title": "These conjectures are distilled from a single finding: the Euclidean line is the"
   },
   {
     "consumed_by_exp_id": "8638d104",

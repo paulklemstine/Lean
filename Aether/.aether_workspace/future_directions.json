@@ -594,13 +594,13 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "arXiv:2310.12345 (hypothetical reference for the paper)"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "c4bca99c",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -616,7 +616,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0013",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-03T05:23:52.386061+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∃v₁, ..., vₘ ∈ l²: ∀x, Σ|vᵢ * 1_A|² ≤ C and Σ wᵢ|vᵢ|² ≤ D ⇒ F(N) ≤ N^{1/2} + 0.94601N^{1/4} + O(1)",
       "lineage_refs": [],
@@ -631,7 +631,7 @@
       "source": "",
       "source_exp_id": "2607.01169v1",
       "source_path": "http://arxiv.org/abs/2607.01169v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-02T06:22:13.488931+00:00",
       "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
@@ -6745,6 +6745,7 @@
     "w(r[p^n])/\\hw(r[p^n])\\": 1
   },
   "selection_log": [
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",

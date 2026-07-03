@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "eb034b80",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Tropical / Baker–Norine Riemann–Roch\n\nThis cycle formalized chip-firing on finite graphs (`prin`, `LinEquiv`, degree\ninvariance), the canonical-degree identity `deg K = 2g − 2` f",
-      "quality_score": 0.8360800000000002,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-27T13:53:55",
-      "title": "Tropical Riemann-Roch Theorem"
-    },
-    {
       "cycle_id": "f0d5604e",
       "domain": "Applications",
       "key_insight": "# Future Directions — average stack-sorting depth and Defant's constant\n\nDerived from this cycle's findings (see `DefantConstant.lean`,\n`StackSortMap.lean`, and `ComputationalEvidence.md`).\n\n## Conjec",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-07-03T05:21:46",
       "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
+    },
+    {
+      "cycle_id": "5875a645",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Phantom Topologies\n\nThese conjectures are distilled from a single finding: the Euclidean line is the\nexact agreement of two strictly sharper \"observers\" — a left-looking topology",
+      "quality_score": 0.5700000000000001,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-07-03T05:23:18",
+      "title": "Phantom Topologies: Spaces That Change When You Look at Them"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8748400000000001
     }
   ],
-  "last_updated": "2026-07-03T05:21:46",
+  "last_updated": "2026-07-03T05:23:18",
   "open_questions": [
     {
       "context": "",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "acbfd883",
-        "quality": 0.65944,
-        "theorems": 14,
-        "title": "Infinite Sign Changes of Symmetric Power L-Function Coefficients over Sums of m "
-      },
-      {
         "cycle_id": "35d54dba",
         "quality": 0.527476,
         "theorems": 8,
@@ -3637,6 +3631,12 @@
         "quality": 0.7916800000000002,
         "theorems": 23,
         "title": "Manifold-Constrained Kruskal Rank Bounds on Dichotomy Counts"
+      },
+      {
+        "cycle_id": "5875a645",
+        "quality": 0.5700000000000001,
+        "theorems": 17,
+        "title": "Phantom Topologies: Spaces That Change When You Look at Them"
       }
     ],
     "NumberTheory": [
