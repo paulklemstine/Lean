@@ -1664,12 +1664,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture that for every 2\u2011tightly connected 3\u2011uniform hypergraph G with no homomorphism to K_4^3, there exists a constant C such that for all n, f_{K_4^3,G}(n) \u2264 C\u00b7(log n)^{\u03b2}, where \u03b2 = max_{\u2205\u2260P\u2286\u2202_2K_4^3} e(P)/(v(P)\u22121) = 3/2.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0141",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00732v1",
+    "status": "available",
+    "timestamp": "2026-07-03T11:16:28.209290+00:00",
+    "title": "Logarithmic bound for generalized Erd\u0151s\u2013Rogers functions: the case F = K_4^3"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0141",
+    "id": "fd_0142",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -1683,7 +1698,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0142",
+    "id": "fd_0143",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -1697,7 +1712,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0143",
+    "id": "fd_0144",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
@@ -1711,7 +1726,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0144",
+    "id": "fd_0145",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -1725,7 +1740,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0145",
+    "id": "fd_0146",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
@@ -1740,7 +1755,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0146",
+    "id": "fd_0147",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
@@ -1749,23 +1764,8 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Codimension for Cyclically Covering Subspaces of Length (q\u1d50+1)/2"
   },
   {
-    "consumed_by_exp_id": "",
-    "description": "For a family of unitary CFTs dual to AdS black holes with central charge c \u2192 \u221e, let M_c denote the maximal number of primary operators in a fixed energy window of width \u0394. Define the centered and scaled variable Y_c = (log M_c - \u03bc_c)/\u03c3_c, where \u03bc_c and \u03c3_c are the mean and standard deviation of log M_c. Conjecture that Y_c converges in distribution to the Gumbel law, i.e., for every real x, \\(\\lim_{c\\to\\infty} P(Y_c \\leq x) = \\exp(-\\exp(-x))\\).",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0147",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02233v1",
-    "status": "available",
-    "timestamp": "2026-07-03T04:12:15.268770+00:00",
-    "title": "Gumbel limit for extremal microstate counts in AdS/CFT"
-  },
-  {
     "consumed_by_exp_id": "061b612f",
-    "description": "This research strives to identify precise mathematical conjectures in the theory of matroids and to design formalized counterexamples that expose their boundaries. The focus is on replicable designs that challenge theoretical assumptions.",
+    "description": "For a family of unitary CFTs dual to AdS black holes with central charge c \u2192 \u221e, let M_c denote the maximal number of primary operators in a fixed energy window of width \u0394. Define the centered and scaled variable Y_c = (log M_c - \u03bc_c)/\u03c3_c, where \u03bc_c and \u03c3_c are the mean and standard deviation of log M_c. Conjecture that Y_c converges in distribution to the Gumbel law, i.e., for every real x, \\(\\lim_{c\\to\\infty} P(Y_c \\leq x) = \\exp(-\\exp(-x))\\).",
     "domains": [
       "Pythagorean",
       "Algebra"
@@ -1773,8 +1773,23 @@ window.FUTURE_DIRECTIONS = [
     "id": "fd_0148",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2607.02208v1",
+    "source_exp_id": "2607.02233v1",
     "status": "in_progress",
+    "timestamp": "2026-07-03T04:12:15.268770+00:00",
+    "title": "Gumbel limit for extremal microstate counts in AdS/CFT"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This research strives to identify precise mathematical conjectures in the theory of matroids and to design formalized counterexamples that expose their boundaries. The focus is on replicable designs that challenge theoretical assumptions.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0149",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02208v1",
+    "status": "available",
     "timestamp": "2026-07-03T04:32:20.108021+00:00",
     "title": "Probing the limits of matroid conjectures through counterexamples"
   },
@@ -1784,7 +1799,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0149",
+    "id": "fd_0150",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -1799,7 +1814,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0150",
+    "id": "fd_0151",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02132v1",
@@ -1814,7 +1829,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0151",
+    "id": "fd_0152",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -1828,7 +1843,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0152",
+    "id": "fd_0153",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02098v1",
@@ -1843,7 +1858,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0153",
+    "id": "fd_0154",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01716v1",
@@ -1858,7 +1873,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Physics"
     ],
-    "id": "fd_0154",
+    "id": "fd_0155",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
@@ -1872,7 +1887,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0155",
+    "id": "fd_0156",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01718v1",
@@ -1886,7 +1901,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0156",
+    "id": "fd_0157",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01761v1",
@@ -1901,7 +1916,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Logic"
     ],
-    "id": "fd_0157",
+    "id": "fd_0158",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
@@ -1915,7 +1930,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0158",
+    "id": "fd_0159",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01695v1",
@@ -1929,7 +1944,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0159",
+    "id": "fd_0160",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01438v1",
@@ -1944,7 +1959,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0160",
+    "id": "fd_0161",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -1958,7 +1973,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0161",
+    "id": "fd_0162",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -1973,13 +1988,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0162",
+    "id": "fd_0163",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
     "status": "available",
     "timestamp": "2026-07-03T10:58:07.924508+00:00",
     "title": "Linear Resolution Criterion for Squarefree Powers of Stanley-Reisner Ideals"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let a = (a_i)_{i=1}^\\infty be an infinite sequence of points on a circle, where the first n points cut the circle into n pieces. For r \\geq 1, let \\mu^r_n(a) be the ratio between the maximum and minimum sizes of r consecutive pieces, and define \\mu_r(a) = limsup_{n\\to\\infty} \\mu^r_n(a). For any fixed recipe \\sigma of length p, define \\mu_r^{\\sigma} as the value of \\mu_r for the sequence generated by that recipe. Conjecture: For any recipe \\sigma of length p and any r \\geq 1, we have \\mu_r^{\\sigma} \\leq 2r/p + 1.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0164",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00775v1",
+    "status": "available",
+    "timestamp": "2026-07-03T11:19:24.185282+00:00",
+    "title": "Upper bound conjecture for the cake balancing ratio sequence"
   },
   {
     "consumed_by_exp_id": "",
