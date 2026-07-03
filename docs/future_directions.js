@@ -75,7 +75,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "89942d46",
     "description": "For any graphs G and H, the domination number of their Cartesian product satisfies \u03b3(G\u25a1H) \u2265 (19 - \u221a73)/18 * \u03b3(G)\u03b3(H).",
     "domains": [
       "Bridges"
@@ -84,7 +84,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01109v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T06:39:03.958610+00:00",
     "title": "Improved Constant for Domination in Cartesian Product of Graphs"
   },
@@ -1316,7 +1316,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing the generalized honeymoon Oberwolfach problem in Lean 4"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4b4e6acc",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
     "domains": [
       "Novelty",
@@ -1326,7 +1326,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.030210+00:00",
     "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
   },
@@ -1374,7 +1374,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lower bound conjecture for low moments of Dirichlet character sums"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "05be6424",
     "description": "For the explicit infinite family of q-hypergeometric series introduced in the paper, the coefficients V(n) satisfy: (1) V(n) = 0 for infinitely many n, and (2) there exists a density-zero set E \u2282 \u2115 such that for all n \u2209 E, V(n+1) and V(n) have opposite signs. This generalizes the proven result for the specific series v\u2082(q), v\u2083(q), v\u2084(q) to their broader family context.",
     "domains": [
       "Pythagorean",
@@ -1384,7 +1384,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T01:56:10.723921+00:00",
     "title": "Alternating Sign Conjecture for Andrews' q-Series Families"
   },
@@ -1605,7 +1605,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Real-rootedness of the Squares of the Eulerian and Delannoy Triangles"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6418c622",
     "description": "For subsets A\u2c7c of the L\u2081 ball {x \u2208 \u2124\u1d48 : |x\u2081| + ... + |x_d| \u2264 m} in \u2124\u1d48, establish a sharp lower bound |A\u2081+\u2026+A\u2099| \u2265 (|A\u2081|\u22ef|A\u2099|)^{1/p}, where p = (n log(m+1))/log(nm+1) or a refined exponent dependent on d, m, and n.",
     "domains": [
       "Bridges"
@@ -1614,7 +1614,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01458v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T09:58:51.961008+00:00",
     "title": "Sharp Lower Bounds for Sumsets in L\u2081 Balls in \u2124\u1d48"
   },
@@ -1851,7 +1851,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Positivity of (p,q)-Generalized Stirling Numbers in the (p,q)-Binomial Basis"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9e981077",
     "description": "Formalize the upper bound on the maximum size of a Sidon subset of {0, ..., N-1}, specifically proving that F(N) <= N^{1/2} + 0.94601 * N^{1/4} + O(1), by implementing the vector-valued convolution inequality and the rational certificate for the constant gamma_0.",
     "domains": [
       "Bridges"
@@ -1860,7 +1860,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T01:56:27.032018+00:00",
     "title": "Upper Bound for the Cardinality of Finite Sidon Sets"
   },
@@ -1953,7 +1953,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Kernel\u2011cover characterisation of the weighted Davenport constant"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ad3b2c83",
     "description": "Conjecture: Let A be a line arrangement in the complex projective plane of degree d such that every singular point has multiplicity at most 3 (i.e., only double and triple points). If the minimal degree of a Jacobian relation satisfies mdr(A) < d/2, then mdr(A) is combinatorially determined: any other line arrangement B with the same intersection lattice (and hence the same singularity multiplicities) has mdr(B) = mdr(A).",
     "domains": [
       "Algebra",
@@ -1963,7 +1963,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T06:13:22.731805+00:00",
     "title": "Combinatorial determination of mdr for line arrangements with only double and triple points"
   },
@@ -2301,7 +2301,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "That the entries of an integer right triangle are forced"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a990d620",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -2311,7 +2311,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.007324+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },

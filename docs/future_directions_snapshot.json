@@ -117,7 +117,7 @@
       "Brešar (2017)",
       "Chen, Piotrowski, Shreve (1996)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "89942d46",
     "description": "For any graphs G and H, the domination number of their Cartesian product satisfies γ(G□H) ≥ (19 - √73)/18 * γ(G)γ(H).",
     "domain_bridges": [
       "Graph Product Theory",
@@ -132,7 +132,7 @@
     "proof_strategy": "Real-valued optimization of a piecewise maximum function via variable substitution and algebraic manipulation",
     "research_mode": "team",
     "source_exp_id": "2607.01109v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T06:39:03.958610+00:00",
     "title": "Improved Constant for Domination in Cartesian Product of Graphs"
   },
@@ -2363,7 +2363,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4b4e6acc",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible — how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian — the algebraic equivalent of Escher's impossible architecture.",
     "domain_bridges": [],
     "domains": [
@@ -2376,7 +2376,7 @@
     "proof_strategy": "Define an Escher staircase in ring R as a strictly ascending chain I_1 strictly contained in I_2 strictly contained in ... such that intersection of I_n is contained in I_1. Prove Int(Z) has an Escher staircase: I_n = {f in Int(Z) : f(Z) contained in 2^n Z}. Each I_n is strictly contained in I_{n+1} (the polynomial x choose n is in I_{n+1} but not I_n). Intersection of I_n = {0} contained in I_1. Prove k[x_1,...,x_n] has Escher height n: the chain (x_1) contained in (x_1,x_2) contained in ... contained in (x_1,...,x_n) has length n. Prove Z_p has no Escher staircase (Noetherian). Test: verify for Int(Z) and k[x,y,z].",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.030210+00:00",
     "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
   },
@@ -2469,7 +2469,7 @@
       "Hardy-Ramanujan partition asymptotics",
       "Rademacher's exact formula"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "05be6424",
     "description": "For the explicit infinite family of q-hypergeometric series introduced in the paper, the coefficients V(n) satisfy: (1) V(n) = 0 for infinitely many n, and (2) there exists a density-zero set E ⊂ ℕ such that for all n ∉ E, V(n+1) and V(n) have opposite signs. This generalizes the proven result for the specific series v₂(q), v₃(q), v₄(q) to their broader family context.",
     "domain_bridges": [
       "Modular forms and quantum modular forms (Zagier)",
@@ -2487,7 +2487,7 @@
     "proof_strategy": "Adapt the circle method framework from Folsom-Males-Rolen-Storzer to the general family. Establish that oscillatory asymptotics near roots of unity produce a dominant alternating sign factor. Prove that the exceptional set has density zero by showing the exponential growth terms in the asymptotic formula prevent sign changes except on a sparse set. The key is controlling the interplay between exponentially growing main terms and oscillatory error terms.",
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T01:56:10.723921+00:00",
     "title": "Alternating Sign Conjecture for Andrews' q-Series Families"
   },
@@ -2916,7 +2916,7 @@
       "Becker, Ivanisvili, Krachun, Madrid (original hypercube conjecture)",
       "related works on sumsets in convex sets"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6418c622",
     "description": "For subsets Aⱼ of the L₁ ball {x ∈ ℤᵈ : |x₁| + ... + |x_d| ≤ m} in ℤᵈ, establish a sharp lower bound |A₁+…+Aₙ| ≥ (|A₁|⋯|Aₙ|)^{1/p}, where p = (n log(m+1))/log(nm+1) or a refined exponent dependent on d, m, and n.",
     "domain_bridges": [
       "Convex Geometry",
@@ -2932,7 +2932,7 @@
     "proof_strategy": "Adapt the original proof's sup-convolution and mixed volume techniques to L₁ geometry, deriving new functional inequalities specific to the L₁ ball structure.",
     "research_mode": "team",
     "source_exp_id": "2607.01458v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T09:58:51.961008+00:00",
     "title": "Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
   },
@@ -3361,7 +3361,7 @@
       "Erdős-Turán Theorem on Sidon Sets",
       "Singer's Construction"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9e981077",
     "description": "Formalize the upper bound on the maximum size of a Sidon subset of {0, ..., N-1}, specifically proving that F(N) <= N^{1/2} + 0.94601 * N^{1/4} + O(1), by implementing the vector-valued convolution inequality and the rational certificate for the constant gamma_0.",
     "domain_bridges": [
       "Harmonic Analysis (Convolution Inequalities)",
@@ -3377,7 +3377,7 @@
     "proof_strategy": "1. Define the property of being a Sidon set in Lean 4. 2. Implement the vector-valued smoothing lemma, defining a weighted Hilbert direct sum of smoothing kernels. 3. Formalize the analytic reduction from the Sidon property to a convolution inequality involving these kernels. 4. Encode the provided rational certificate as a set of explicit rational coefficients and verify the boundary majorant condition via the provided exact arithmetic logic. 5. Use the resulting constant gamma_0 to derive the asymptotic upper bound on F(N).",
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T01:56:27.032018+00:00",
     "title": "Upper Bound for the Cardinality of Finite Sidon Sets"
   },
@@ -3549,7 +3549,7 @@
     "catalog_references": [
       "math.AG"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ad3b2c83",
     "description": "Conjecture: Let A be a line arrangement in the complex projective plane of degree d such that every singular point has multiplicity at most 3 (i.e., only double and triple points). If the minimal degree of a Jacobian relation satisfies mdr(A) < d/2, then mdr(A) is combinatorially determined: any other line arrangement B with the same intersection lattice (and hence the same singularity multiplicities) has mdr(B) = mdr(A).",
     "domain_bridges": [
       "math.CO",
@@ -3565,7 +3565,7 @@
     "proof_strategy": "Use the fact that for arrangements with only double and triple points the Jacobian ideal is generated by the partial derivatives of a defining polynomial that is known to be quasi-homogeneous with respect to certain weights. Apply Saito's criterion for freeness and the relation between the exponents of the arrangement and the degrees of minimal syzygies. Show that under the hypothesis mdr < d/2 the arrangement is plus-one generated, which forces the Jacobian syzygy module to have a predictable graded structure determined solely by the intersection lattice. Verify the claim by computing the relevant graded Betti numbers via Gröbner basis techniques in the polynomial ring S = C[x,y,z].",
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T06:13:22.731805+00:00",
     "title": "Combinatorial determination of mdr for line arrangements with only double and triple points"
   },
@@ -4168,7 +4168,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a990d620",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist — 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 — they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures — combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domain_bridges": [],
     "domains": [
@@ -4181,7 +4181,7 @@
     "proof_strategy": "Define vampire numbers formally: v is a vampire number iff v has 2n digits and there exist x, y each with n digits such that v = x*y and the multiset of digits of v equals the union of digits of x and y. Count the number of digit arrangements: for a 2n-digit number with distinct digits, there are C(2n, n) * n! * n! possible fang pairs, so the expected number of fang pairs is C(2n, n) * (n!)^2 / 10^{2n} = C(2n,n) / 10^n ~ 1/sqrt(n). Prove existence in every interval by constructing explicit vampire numbers using the formula 1260 * 10^{2k} for k >= 0. Test: enumerate up to 10^8.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.007324+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
