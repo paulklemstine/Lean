@@ -1,313 +1,130 @@
-# A Bestiary of Arithmetic Monsters: The Congruence Law of Vampire Numbers and Their Kin
-
-**Author:** Aristotle
-**Date:** 2026-07-03
+# A Bestiary of Numerical Monsters: Digit-Congruence Invariants and a Conservation Law for Digit-Sharing Factorizations
 
 ## Abstract
 
-A *vampire number* is a composite integer with an even number of digits that
-factors as a product of two *fangs* whose combined digits are a rearrangement of
-the digits of the product; the smallest is $1260 = 21 \times 60$. Although the
-defining condition is purely combinatorial — a statement about digit multisets —
-we show that it forces a rigid arithmetic constraint on the *values* of the
-factors. Our central result is that every same-digit factorization $v = x \cdot y$
-in base $b$ satisfies the congruence $x \cdot y \equiv x + y \pmod{b - 1}$.
-Equivalently, over the integers, $(x - 1)(y - 1) \equiv 1 \pmod{b - 1}$: each fang
-decremented by one is a unit modulo $b - 1$, and the two decremented fangs are
-mutual multiplicative inverses. In base ten this yields a divisibility
-obstruction — no fang is congruent to $1$ modulo $3$ — and the law generalizes
-verbatim from two fangs to any finite list of factors. We situate these theorems
-within a broader "bestiary" of digit-based creatures (werewolves, ghosts,
-zombies), give algorithms for enumerating them, present numerical evidence, and
-formulate several precise conjectures about their densities. The recurring theme
-is that a coincidence between digit multisets secretly encodes a coincidence
-between residue classes, which both explains the scarcity of these numbers and
-connects an amusing recreational problem to the hard arithmetic of digits of
-products.
-
-**Keywords:** vampire numbers, digit permutations, casting out nines, modular
-arithmetic, units modulo $n$, digit combinatorics, anagram factorizations.
-
----
+A *vampire number* is a composite integer with an even number of digits that factors as $v = x \cdot y$, where the two factors ("fangs") together reuse exactly the multiset of digits of $v$. The smallest is $1260 = 21 \times 60$. Abstracting away the classical balance conditions, the combinatorial core of the whole family of digit-factorization creatures — vampires, *werewolves*, *ghosts*, and *zombies* — is a single relation: the digits of $x$ concatenated with the digits of $y$ form a permutation of the digits of $x \cdot y$ in base $b$. We call such a pair *digit-sharing*. We prove a suite of base-independent structural laws obeyed by every digit-sharing factorization. First, a **conservation law**: the digit length is exactly additive, $\operatorname{len}(x) + \operatorname{len}(y) = \operatorname{len}(x \cdot y)$, which forces the product to sit at the maximum of its length window and yields the sharp lower bound $b^{\operatorname{len}(x)+\operatorname{len}(y)-1} \le x \cdot y$. Second, a **casting-out-$(b{-}1)$s invariant**: $x + y \equiv x \cdot y \pmod{b-1}$, which in base $10$ sharpens to the *unit identity* $(x-1)(y-1) \equiv 1 \pmod 9$ and hence to an arithmetic **taboo**: no fang is $\equiv 1 \pmod 3$. Third, a **binary bridge**: via submultiplicativity of the binary digit sum, no fang of a base-$2$ digit-sharing factorization is a power of two. We formalize the wider bestiary, give witnesses for each creature, present enumeration algorithms exploiting the invariants as a sieve, and discuss density conjectures and open problems.
 
 ## 1. Introduction
 
-Recreational number theory is full of definitions that sound like jokes but
-behave like mathematics. Vampire numbers, introduced by Clifford Pickover, are a
-prime example. A vampire number is a composite number that can be written as the
-product of two factors — its *fangs* — such that the fangs, taken together, use
-precisely the same digits as the number itself. The canonical example,
-
-$$1260 = 21 \times 60,$$
-
-has digit multiset $\{0, 1, 2, 6\}$, and its fangs $21$ and $60$ contribute
-$\{1, 2\}$ and $\{0, 6\}$, whose union is again $\{0, 1, 2, 6\}$.
-
-The purpose of this paper is to isolate the *stable mathematical core* of this
-game. We argue that the interesting, provable content is not the folklore about
-how vampire numbers are distributed (which is genuinely hard, on par with
-controlling factorizations of random integers), but rather a clean, exact
-congruence law obeyed by *every* same-digit factorization, in *every* base. This
-law is surprising precisely because it extracts an arithmetic fact about the
-values $x$ and $y$ from a condition stated purely about their digits.
-
-The paper is organized as follows. Section 2 fixes definitions and introduces the
-full bestiary. Section 3 proves casting out nines in a general base. Section 4
-proves the central additive congruence and its multiplicative (unit)
-reformulation, together with the base-ten divisibility corollary and the
-multi-factor generalization. Section 5 gives enumeration algorithms. Section 6
-reports numerical experiments. Section 7 collects conjectures and discusses why
-they are hard. Section 8 concludes.
-
----
-
-## 2. Definitions and the Bestiary
-
-Throughout, $b \ge 2$ is an integer base and all numbers are non-negative
-integers. We write $\mathrm{dig}_b(n)$ for the finite sequence of base-$b$ digits
-of $n$ (least significant first), and we treat two digit sequences as equivalent
-when one is a permutation of the other, written $\sim$. For a sequence $s$, $\Sigma s$
-denotes the sum of its entries.
-
-### 2.1 Fang pairs
-
-**Definition 2.1 (Fang pair).** A pair $(x, y)$ of natural numbers is a *fang
-pair in base $b$* if the digits of the product are a permutation of the digits of
-the factors concatenated:
-$$\mathrm{dig}_b(x \cdot y) \;\sim\; \mathrm{dig}_b(x) \,\Vert\, \mathrm{dig}_b(y),$$
-where $\Vert$ denotes concatenation of digit sequences.
-
-**Definition 2.2 (Vampire number).** A *vampire number* in base $b$ is a
-composite number $v$ with an even number $2n$ of digits admitting a factorization
-$v = x \cdot y$ that is a fang pair, where each of $x, y$ has exactly $n$ digits
-and $x, y$ are not both divisible by $b$ (the "no trailing-zeros-only" clause,
-which excludes trivial constructions).
-
-The smallest base-ten vampire is $1260 = 21 \times 60$; further examples include
-$1395 = 15 \times 93$, $1435 = 35 \times 41$, $1530 = 30 \times 51$, and
-$1827 = 21 \times 87$.
-
-### 2.2 The wider bestiary
-
-The fang condition is one point on a spectrum of "digit overlap" between a product
-and its factors. Varying the amount of overlap yields further species.
-
-**Definition 2.3 (Werewolf number).** A composite $v = x \cdot y$ is a *werewolf
-number* if the digit set of $v$ shares *exactly one* digit value with the combined
-digit set of its factors — a partial transformation between the two multisets.
-
-**Definition 2.4 (Ghost number).** A composite $v = x \cdot y$ with $x, y > 1$ is
-a *ghost number* if the digits of $v$ are disjoint from the digits of $x$ and from
-the digits of $y$: the product exhibits none of the digits present in either
-factor.
-
-**Definition 2.5 (Zombie number).** A composite $v$ is a *zombie number* if it
-admits two distinct nontrivial factorizations of mixed prime/composite type — each
-factorization pairs a prime factor with a composite factor. The number
-$125460 = 204 \times 615 = 246 \times 510$ is an illustrative specimen.
-
-Vampires are the most rigid species (total digit conservation); ghosts are the
-most transparent (total digit exclusion); werewolves interpolate; zombies record a
-multiplicity phenomenon orthogonal to digit overlap. The remainder of the paper
-concentrates on the arithmetic law that the *conservation* species (vampires and
-their multi-fang generalization) must obey.
-
-### 2.3 Multi-fang lists
-
-**Definition 2.6 (Fang list).** A finite list $L = [x_1, \dots, x_k]$ of natural
-numbers is a *fang list in base $b$* if
-$$\mathrm{dig}_b\!\Big(\textstyle\prod_i x_i\Big) \;\sim\; \mathrm{dig}_b(x_1) \,\Vert\, \cdots \,\Vert\, \mathrm{dig}_b(x_k),$$
-i.e. the digits of the product are a permutation of all digits of all factors
-pooled together.
-
----
-
-## 3. Casting Out Nines in a General Base
-
-The engine behind every result in this paper is the following classical fact,
-stated and proved for an arbitrary base.
-
-**Theorem 3.1 (General casting out nines).** For all integers $b \ge 2$ and
-$n \ge 0$,
-$$n \;\equiv\; \Sigma\,\mathrm{dig}_b(n) \pmod{b - 1}.$$
-
-*Proof sketch.* Write $n = \sum_{i=0}^{m} d_i \, b^i$ with $d_i$ the base-$b$
-digits. Modulo $b - 1$ we have $b \equiv 1$, hence $b^i \equiv 1^i = 1$ for every
-$i$. Therefore
-$$n = \sum_i d_i\, b^i \;\equiv\; \sum_i d_i \cdot 1 \;=\; \Sigma\,\mathrm{dig}_b(n) \pmod{b - 1}.$$
-The single degenerate case is $b = 2$, where the modulus $b - 1 = 1$ makes every
-congruence trivially true; for $b \ge 3$ one has $b \bmod (b - 1) = 1$ and the
-displayed reduction applies verbatim. $\qquad\blacksquare$
-
-The content of Theorem 3.1 is that *digit sums are a faithful proxy for residues
-modulo $b - 1$*. Because permutations preserve sums, any condition asserting that
-one digit multiset is a rearrangement of another immediately becomes a statement
-about residues — this is the lever we now pull.
+Vampire numbers were introduced by Clifford Pickover in 1994 as a recreational curiosity: a composite number $v$ with an even number $2k$ of digits admits a *vampire factorization* $v = x \cdot y$ if $x$ and $y$ each have $k$ digits, they do not both end in a trailing zero, and the concatenated digits of $x$ and $y$ are a permutation of the digits of $v$. The smallest example is $1260 = 21 \times 60$; the sequence continues $1395, 1435, 1530, 1827, \dots$
 
----
-
-## 4. The Vampire Congruence Law
-
-### 4.1 The additive law
-
-**Theorem 4.1 (Vampire congruence — additive form).** If $(x, y)$ is a fang pair
-in base $b$ with $b \ge 2$, then
-$$x \cdot y \;\equiv\; x + y \pmod{b - 1}.$$
-
-*Proof.* By Definition 2.1, the digit sequence of $x \cdot y$ is a permutation of
-$\mathrm{dig}_b(x) \Vert \mathrm{dig}_b(y)$. Sums are permutation-invariant and
-additive over concatenation, so
-$$\Sigma\,\mathrm{dig}_b(x y) = \Sigma\big(\mathrm{dig}_b(x)\Vert\mathrm{dig}_b(y)\big) = \Sigma\,\mathrm{dig}_b(x) + \Sigma\,\mathrm{dig}_b(y).$$
-Now apply Theorem 3.1 three times:
-$$xy \equiv \Sigma\,\mathrm{dig}_b(xy) = \Sigma\,\mathrm{dig}_b(x) + \Sigma\,\mathrm{dig}_b(y) \equiv x + y \pmod{b-1}. \qquad\blacksquare$$
+Beneath the whimsical framing lies a hard combinatorial problem. Deciding whether a large number is a vampire requires searching its factorizations while enforcing a digit-permutation constraint — a task closely allied to integer factorization. This motivates the search for *necessary conditions*: cheap-to-verify invariants that a digit-sharing factorization must satisfy, which prune the search space before any expensive multiplication or factorization is attempted.
 
-The striking feature is the *decoupling* of information: the hypothesis is a
-combinatorial coincidence about symbols, but the conclusion constrains the
-numerical values $x, y$ with no reference to which digits actually appear.
+This paper isolates the combinatorial heart of the vampire definition and the broader *bestiary* of digit-factorization creatures, and proves base-independent invariants for all of them. The central object is the following relation.
 
-*Verification on $1260 = 21 \times 60$ (base $10$, modulus $9$):* $21 \cdot 60 =
-1260 \equiv 0$ and $21 + 60 = 81 \equiv 0 \pmod 9$. $\checkmark$
-
-### 4.2 The multiplicative (unit) reformulation
-
-**Theorem 4.2 (Vampire congruence — unit form).** If $(x, y)$ is a fang pair in
-base $b$ with $b \ge 2$, then over the integers
-$$(x - 1)(y - 1) \;\equiv\; 1 \pmod{b - 1}.$$
-In particular each of $x - 1$ and $y - 1$ is a unit modulo $b - 1$, and they are
-mutual inverses.
+**Definition 1.1 (Digit-sharing).** Fix a base $b \ge 2$. Write $\operatorname{dig}_b(n)$ for the list of base-$b$ digits of $n$ (least significant first) and $\operatorname{len}_b(n)$ for its length. The pair $(x, y)$ is **digit-sharing** in base $b$, written $\mathrm{SharesAllDigits}(b, x, y)$, if the concatenation $\operatorname{dig}_b(x) \mathbin{+\!+} \operatorname{dig}_b(y)$ is a permutation of $\operatorname{dig}_b(x \cdot y)$.
 
-*Proof.* Expand $(x-1)(y-1) = xy - x - y + 1$. Working modulo $b - 1$ and applying
-Theorem 4.1, $xy \equiv x + y$, so
-$$(x-1)(y-1) = xy - (x + y) + 1 \equiv (x+y) - (x+y) + 1 = 1 \pmod{b-1}.$$
-The transfer from the natural-number congruence of Theorem 4.1 to the integer
-congruence uses the identity $\overline{b - 1} = \overline{b} - \overline{1}$ for
-$b \ge 1$ (valid because the subtraction is not truncated) and standard properties
-of integer congruences under subtraction and addition of a constant. $\blacksquare$
+Equivalently, the multiset of digits of $x$ together with those of $y$ equals the multiset of digits of the product. A vampire number is (up to the balance and trailing-zero conditions) precisely a product $x \cdot y$ with a digit-sharing pair of equal-length factors.
 
-*Verification on $1260 = 21 \times 60$:* $(21 - 1)(60 - 1) = 20 \cdot 59 = 1180 =
-131 \cdot 9 + 1 \equiv 1 \pmod 9$. $\checkmark$
+Throughout, all quantities are non-negative integers. We use two standard facts about base-$b$ digits, valid for $b \ge 2$:
 
-The unit form is the sharp algebraic explanation for the scarcity of these
-creatures: among all factor pairs of a given number, only those whose decremented
-values happen to be mutually inverse residues modulo $b - 1$ can possibly be
-fangs. This is a nontrivial filter that prunes the candidate space by a constant
-factor determined by the base.
+- **(D1) Base bound:** $b^{\operatorname{len}_b(m)} \le b \cdot m$ for $m \ge 1$.
+- **(D2) Digit-sum congruence:** the digit sum $S_b(n) = \sum \operatorname{dig}_b(n)$ satisfies $n \equiv S_b(n) \pmod{b-1}$.
 
-### 4.3 A base-ten divisibility obstruction
-
-**Corollary 4.3 (No fang is $1$ modulo $3$).** For any base-ten fang pair
-$(x, y)$, neither $x$ nor $y$ is congruent to $1$ modulo $3$.
-
-*Proof.* By Theorem 4.2 with $b = 10$, $(x - 1)(y - 1) \equiv 1 \pmod 9$. Since
-$3 \mid 9$, reducing further gives $(x - 1)(y - 1) \equiv 1 \pmod 3$. If $x \equiv
-1 \pmod 3$ then $x - 1 \equiv 0 \pmod 3$, forcing $(x - 1)(y - 1) \equiv 0 \pmod
-3$, contradicting $\equiv 1$. The same argument applies to $y$. $\qquad\blacksquare$
+## 2. The bestiary
 
-Thus the values $1, 4, 7, 10, 13, \dots$ are permanently barred from being fangs of
-a decimal vampire. For $1260$, both fangs are multiples of $3$ (residue $0$), which
-is consistent: only residue $1$ is forbidden, while residues $0$ and $2$ remain
-admissible (a residue-$0$ and residue-$2$ pair gives $(-1)(1) = -1 \equiv 2 \pmod
-3$; a residue-$0$ and residue-$0$ pair gives $(-1)(-1) = 1$, matching $1260$).
-
-### 4.4 The multi-fang generalization
-
-**Theorem 4.4 (Fang-list congruence).** If $L = [x_1, \dots, x_k]$ is a fang list
-in base $b$ with $b \ge 2$, then
-$$\prod_{i=1}^{k} x_i \;\equiv\; \sum_{i=1}^{k} x_i \pmod{b - 1}.$$
-
-*Proof sketch.* The digits of $\prod_i x_i$ are a permutation of the pooled digits
-$\Vert_i\, \mathrm{dig}_b(x_i)$, so $\Sigma\,\mathrm{dig}_b(\prod_i x_i) = \sum_i
-\Sigma\,\mathrm{dig}_b(x_i)$ by permutation-invariance and additivity of sums over
-concatenation (a short induction on the list). Apply Theorem 3.1 to the product
-and to each factor:
-$$\prod_i x_i \equiv \Sigma\,\mathrm{dig}_b\Big(\prod_i x_i\Big) = \sum_i \Sigma\,\mathrm{dig}_b(x_i) \equiv \sum_i x_i \pmod{b-1}. \qquad\blacksquare$$
-
-The two-fang law of Theorem 4.1 is the case $k = 2$. The multiplicative
-reformulation also generalizes: for a fang list, $\prod_i (x_i - 1)$ expands to an
-alternating sum of elementary symmetric functions which collapses, modulo $b - 1$,
-to a fixed value determined only by $k$.
-
----
-
-## 5. Algorithms
-
-We describe two algorithmic building blocks used to explore the bestiary.
-
-### 5.1 Fang test
-
-Given $b$, $x$, $y$, decide whether $(x, y)$ is a fang pair. Compute the digit
-multisets of $x \cdot y$, $x$, and $y$; return true iff the multiset of the product
-equals the union of the multisets of the factors. Cost: $O(\log(xy))$ digit
-operations plus a multiset comparison.
-
-### 5.2 Vampire enumeration in a digit window
-
-To list all $2n$-digit vampires, iterate over candidate fang pairs $(x, y)$ with
-$x \le y$, each an $n$-digit number, subject to the residue filter from Theorem
-4.2 — only retain pairs with $(x - 1)(y - 1) \equiv 1 \pmod{b - 1}$ — then apply the
-fang test to $v = x \cdot y$ and record the survivors. The residue filter discards
-a constant fraction of pairs before the (more expensive) multiset comparison,
-giving a practical constant-factor speedup that is *provably lossless* because the
-filter is a necessary condition. This is the paper's law paying algorithmic
-dividends.
-
----
-
-## 6. Numerical Experiments
-
-Direct enumeration up to $10^8$ confirms the theory. Every vampire number found
-satisfies $x \cdot y \equiv x + y \pmod 9$ and $(x - 1)(y - 1) \equiv 1 \pmod 9$
-without exception, and no fang is ever $\equiv 1 \pmod 3$, exactly as Corollary
-4.3 predicts. The first several decimal vampires and their fang pairs are
-
-$$1260 = 21 \times 60,\quad 1395 = 15 \times 93,\quad 1435 = 35 \times 41,$$
-$$1530 = 30 \times 51,\quad 1827 = 21 \times 87,\quad 2187 = 27 \times 81.$$
-
-Ghost numbers, by contrast, are common among small numbers but rapidly thin out:
-as the digit length grows, the chance that a product avoids *every* digit present
-in either factor collapses, matching the density-zero expectation of Section 7.
-The accompanying software reproduces all of these findings and verifies the
-congruence laws on every specimen it discovers.
-
----
-
-## 7. Conjectures and Discussion
-
-The exact laws above are theorems. The distributional folklore is not, and the gap
-is instructive: controlling *which* numbers are vampires is entangled with
-controlling the digits of products of random integers, a notoriously hard regime.
-
-**Conjecture 7.1 (Density profile).** Let $V(2n)$ be the number of vampire numbers
-in the window $[10^{2n-1}, 10^{2n})$. The density $V(2n)/(10^{2n} - 10^{2n-1})$
-decays on the order of $1/\sqrt{n}$ as $n \to \infty$.
-
-**Conjecture 7.2 (Non-vacancy).** Every even-length window $[10^{2k}, 10^{2k+2})$
-contains at least one vampire number.
-
-**Conjecture 7.3 (Ghost extinction).** Ghost numbers have density zero: the
-proportion of $m$-digit composites that are ghosts tends to $0$ as $m \to \infty$.
-
-Each of these can be reframed as a *collision probability in the space of digit
-multisets*: a vampire is exactly a coincidence between the product's multiset and
-the concatenated fangs' multiset. Conjecture 7.1 asks for the frequency of that
-collision; Conjecture 7.3 asks for the frequency of maximal *anti*-collision. The
-value congruence of Section 4 is helpful because it prunes the search space by a
-constant residue-dependent factor, turning naive enumeration into a structured
-count with an explicit filter — but it does not by itself resolve the asymptotics,
-which appear to require second-moment or entropy/Chernoff arguments over random
-digit multisets.
-
----
-
-## 8. Conclusion
-
-The bestiary of arithmetic monsters begins as a game about digits and ends as a
-lesson in how symbol-level conditions imprint themselves on values. The central
-discovery is that the combinatorial definition of a vampire number secretly
-enforces the congruence $x \cdot y \equiv x + y \pmod{b - 1}$, equivalently the
-unit relation $(x - 1)(y - 1) \equiv 1 \pmod{b - 1}$, in every base and for any
-number of fangs. These laws explain why the creatures are scarce, supply a
-provably lossless pruning rule for hunting them, and sharpen the folklore into
-precise, falsifiable conjectures. The monsters are easy to define; the law they
-obey is exact; and the census of where they live remains a genuine and inviting
-open problem.
+Let $\operatorname{D}_b(n)$ denote the *set* (not multiset) of distinct digit-values occurring in $n$ in base $b$; concretely $\operatorname{D}_b(n)$ is the underlying set of the list $\operatorname{dig}_b(n)$.
+
+**Definition 2.1 (Vampires / digit-sharing core).** $(x, y)$ is *digit-sharing* (Definition 1.1). Adding the balance condition $\operatorname{len}_b(x) = \operatorname{len}_b(y)$ and the trailing-zero exclusion recovers Pickover's vampire numbers.
+
+**Definition 2.2 (Werewolf pair).** $(x, y)$ is a **werewolf pair** in base $b$ if the factors share *exactly one* distinct digit-value with the product:
+$$\bigl| \bigl(\operatorname{D}_b(x) \cup \operatorname{D}_b(y)\bigr) \cap \operatorname{D}_b(x \cdot y) \bigr| = 1.$$
+
+**Definition 2.3 (Ghost pair).** $(x, y)$ is a **ghost pair** in base $b$ if the factors share *no* digit-value with the product:
+$$\bigl(\operatorname{D}_b(x) \cup \operatorname{D}_b(y)\bigr) \cap \operatorname{D}_b(x \cdot y) = \varnothing.$$
+
+**Definition 2.4 (Zombie pair).** $(x, y)$ is a **zombie pair** if *both factors are prime*: $x$ and $y$ are each prime. Zombies are "factorizations into primes" that masquerade as digit monsters; they are governed by multiplicative rather than digit structure and generally intersect the other classes only sporadically.
+
+**Non-vacuity (witnesses).** Each creature is realized:
+- Vampire core: $(21, 60)$ with $21 \cdot 60 = 1260$ is digit-sharing in base $10$ (digits $\{2,1\}, \{6,0\}$ permute $\{1,2,6,0\}$).
+- Werewolf: $(3, 5)$ with $3 \cdot 5 = 15$: $\operatorname{D}_{10}(3) \cup \operatorname{D}_{10}(5) = \{3,5\}$ meets $\operatorname{D}_{10}(15) = \{1,5\}$ in the single value $5$.
+- Ghost: $(7, 7)$ with $7 \cdot 7 = 49$: $\{7\}$ is disjoint from $\{4,9\}$.
+- Zombie: $(3, 5)$, both prime, product $15$.
+
+## 3. The conservation law
+
+Our first main result is a conservation principle. In general the length of a product satisfies $\operatorname{len}_b(x \cdot y) \in \{\operatorname{len}_b(x) + \operatorname{len}_b(y) - 1,\ \operatorname{len}_b(x) + \operatorname{len}_b(y)\}$: the product either fills its top digit or loses one to lack of carry. Digit-sharing forbids the loss.
+
+**Theorem 3.1 (Digit-Length Conservation).** If $(x, y)$ is digit-sharing in base $b$, then
+$$\operatorname{len}_b(x) + \operatorname{len}_b(y) = \operatorname{len}_b(x \cdot y).$$
+
+*Proof.* By definition $\operatorname{dig}_b(x) \mathbin{+\!+} \operatorname{dig}_b(y)$ is a permutation of $\operatorname{dig}_b(x \cdot y)$. A permutation preserves length, and the length of a concatenation is the sum of lengths, so $\operatorname{len}_b(x) + \operatorname{len}_b(y) = \operatorname{len}_b(x \cdot y)$. $\qquad\blacksquare$
+
+**Theorem 3.2 (Digit-Length Extremality).** If $x, y \ge 1$ are digit-sharing in base $b \ge 2$, then the product attains the maximum size for its digit length:
+$$b^{\,\operatorname{len}_b(x) + \operatorname{len}_b(y) - 1} \le x \cdot y.$$
+
+*Proof.* Let $L = \operatorname{len}_b(x \cdot y)$. Since $x, y \ge 1$ we have $x \cdot y \ge 1$, so $L \ge 1$. By the base bound (D1), $b^{L} \le b \cdot (x \cdot y)$. Writing $b^{L} = b \cdot b^{L-1}$ and cancelling the positive factor $b$ gives $b^{L-1} \le x \cdot y$. Now substitute the conserved length $L = \operatorname{len}_b(x) + \operatorname{len}_b(y)$ from Theorem 3.1. $\qquad\blacksquare$
+
+**Remark 3.3.** Theorem 3.2 says digit-sharing products are never "short": they lie in the top decade of their length class. For $(21, 60)$: $L = 4$, and $10^{3} = 1000 \le 1260$. The condition is necessary but not sufficient — $99 \times 99 = 9801$ satisfies $\operatorname{len}=4=2+2$ yet is not digit-sharing — so length equality is a genuine filter, not a characterization.
+
+## 4. Congruence invariants and the mod-3 taboo
+
+The digit-sharing relation conserves not just digit *count* but digit *sum*: since the multiset of digits is preserved, $S_b(x) + S_b(y) = S_b(x \cdot y)$. Combined with (D2) this yields an additive-multiplicative congruence.
+
+**Theorem 4.1 (Casting-out-$(b{-}1)$s invariant).** If $(x, y)$ is digit-sharing in base $b \ge 2$, then
+$$x + y \equiv x \cdot y \pmod{b - 1}.$$
+
+*Proof.* By (D2), $x \equiv S_b(x)$, $y \equiv S_b(y)$, and $x \cdot y \equiv S_b(x \cdot y)$, all modulo $b - 1$. Digit-sharing gives $S_b(x) + S_b(y) = S_b(x \cdot y)$. Adding the first two congruences and substituting yields $x + y \equiv S_b(x) + S_b(y) = S_b(x\cdot y) \equiv x \cdot y \pmod{b-1}$. $\qquad\blacksquare$
+
+Specializing to base $10$ ($b - 1 = 9$) and completing the product:
+
+**Theorem 4.2 (Unit identity mod 9).** If $(x, y)$ is digit-sharing in base $10$, then
+$$(x - 1)(y - 1) \equiv 1 \pmod 9,$$
+i.e. in the ring $\mathbb{Z}/9\mathbb{Z}$ each of $x - 1$ and $y - 1$ is a unit, and the two are mutual inverses.
+
+*Proof.* From Theorem 4.1 with $b = 10$, $x + y \equiv xy \pmod 9$. Hence $xy - x - y + 1 \equiv 1$, and the left side factors as $(x-1)(y-1)$. Since the product of the two residues is $1$, each is invertible. $\qquad\blacksquare$
+
+**Theorem 4.3 (The mod-3 taboo).** If $(x, y)$ is digit-sharing in base $10$, then neither fang is $\equiv 1 \pmod 3$; that is, $x \not\equiv 1 \pmod 3$ and $y \not\equiv 1 \pmod 3$.
+
+*Proof.* Reduce Theorem 4.2 modulo $3$ (a divisor of $9$): $(x-1)(y-1) \equiv 1 \pmod 3$. In $\mathbb{Z}/3\mathbb{Z}$ the residue $0$ is not invertible, so $x - 1 \not\equiv 0$ and $y - 1 \not\equiv 0 \pmod 3$; equivalently $x \not\equiv 1$ and $y \not\equiv 1 \pmod 3$. $\qquad\blacksquare$
+
+**Corollary 4.4 (Sieve density).** The residue class $\{n : n \equiv 1 \pmod 3\}$ has natural density $1/3$ and consists entirely of integers that can never be a fang of a base-$10$ digit-sharing factorization. Consequently any enumeration may discard a $1/3$ fraction of candidate factors a priori.
+
+## 5. A binary bridge: no power-of-two fangs
+
+The invariants above are base-independent in origin but take their sharpest form in base $10$. In base $2$ the natural statistic is the binary digit sum (population count) $s_2(n) = S_2(n)$. Powers of two are exactly the numbers with $s_2 = 1$. A classical fact about the binary digit sum is submultiplicativity.
+
+**Lemma 5.1 (Submultiplicativity of $s_2$).** For all $x, y$, $s_2(x \cdot y) \le s_2(x) \cdot s_2(y)$.
+
+*Sketch.* Write $x = \sum_{i \in A} 2^i$ with $|A| = s_2(x)$. Then $x \cdot y = \sum_{i \in A} 2^i y$, a sum of $s_2(x)$ shifted copies of $y$. Each shift $2^i y$ has $s_2(2^i y) = s_2(y)$ one-bits (shifting only appends zeros), and the digit sum of a sum is at most the sum of the digit sums (subadditivity of $s_2$, since carries only remove one-bits). Hence $s_2(x \cdot y) \le \sum_{i \in A} s_2(y) = s_2(x)\, s_2(y)$. $\qquad\blacksquare$
+
+**Theorem 5.2 (No power-of-two fangs).** If $(x, y)$ is digit-sharing in base $2$ with $x, y \ge 1$, then $s_2(x) \ge 2$ and $s_2(y) \ge 2$. In particular neither fang is a power of two.
+
+*Proof.* Digit-sharing conserves the binary digit sum: $s_2(x) + s_2(y) = s_2(x \cdot y)$. By Lemma 5.1, $s_2(x) + s_2(y) \le s_2(x)\, s_2(y)$. Suppose $s_2(x) = 1$. Then $1 + s_2(y) \le s_2(y)$, i.e. $1 \le 0$, impossible (note $s_2(y) \ge 1$ for $y \ge 1$). Hence $s_2(x) \ge 2$, and symmetrically $s_2(y) \ge 2$. Since powers of two are exactly the numbers with $s_2 = 1$, no fang is a power of two. $\qquad\blacksquare$
+
+**Remark 5.3.** Theorem 5.2 exiles the sparsest integers — the powers of two — from the binary bestiary, and gives the two-sided relation $s_2(x) + s_2(y) = s_2(x \cdot y) \le s_2(x)\, s_2(y)$, a natural starting point for asymptotic counting of binary monsters.
+
+## 6. Algorithms
+
+The invariants convert directly into pruning steps for an enumeration hunt. We describe the base-$10$ vampire hunt; the bestiary variants replace the digit-multiset test with the relevant set-intersection test.
+
+**Algorithm A (Invariant-sieved vampire enumeration).** To enumerate vampire numbers up to $N = 10^{2k}$:
+
+1. For each candidate fang length $k$, iterate over pairs $(x, y)$ with $\operatorname{len}(x) = \operatorname{len}(y) = k$.
+2. **Mod-3 taboo prune (Theorem 4.3):** skip immediately if $x \equiv 1 \pmod 3$ or $y \equiv 1 \pmod 3$. (Removes $\approx 1/3$ of each factor.)
+3. **Casting-out-nines prune (Theorem 4.1):** skip unless $x + y \equiv x \cdot y \pmod 9$.
+4. **Trailing-zero exclusion:** skip if both $x$ and $y$ end in $0$.
+5. **Digit test:** form $v = x \cdot y$; accept iff $\operatorname{dig}(x) \mathbin{+\!+} \operatorname{dig}(y)$ is a permutation of $\operatorname{dig}(v)$ (equivalently, sorted-digit equality).
+
+Steps 2–4 are $O(1)$ arithmetic filters that eliminate the overwhelming majority of pairs before the $O(k \log k)$ digit-sort test of step 5. The extremality law (Theorem 3.2) is automatically satisfied by equal-length balanced pairs and can be used to prune unbalanced generalizations.
+
+**Algorithm B (Bestiary classifier).** Given $(x, y)$, compute $v = x\cdot y$ and the digit sets $\operatorname{D}(x), \operatorname{D}(y), \operatorname{D}(v)$, and the shared set $S = (\operatorname{D}(x) \cup \operatorname{D}(y)) \cap \operatorname{D}(v)$. Classify: *ghost* if $|S| = 0$; *werewolf* if $|S| = 1$; test digit-multiset equality for *vampire*; test primality of $x, y$ for *zombie*. A single pass over the digits classifies the pair against all four species.
+
+## 7. Applications and interpretation
+
+- **Search-space reduction.** The congruence filters (Theorems 4.1, 4.3) are the arithmetic analogue of a sieve: they eliminate candidate factors and factor pairs at $O(1)$ cost, complementing the length filter of Theorem 3.2.
+- **Cross-base robustness.** Theorems 3.1, 3.2, and 4.1 hold in every base $b \ge 2$, so the conservation and casting-out invariants are structural features of digit-sharing, not artifacts of base $10$.
+- **Connection to factoring.** Membership testing for the bestiary is intertwined with integer factorization; the invariants show how far purely digit-theoretic constraints can prune such problems, echoing congruence obstructions used in real factoring sieves.
+
+## 8. Density conjectures and open problems
+
+The proven results are necessary conditions; the enumerative behavior of the bestiary remains largely conjectural.
+
+1. **Vampire abundance.** The density of vampire numbers in $[10^{2n}, 10^{2n+1}]$ is conjectured to behave like $1/\sqrt{n}$ as $n \to \infty$, and every even-length interval $[10^{2k}, 10^{2k+2}]$ is conjectured to contain at least one vampire.
+2. **Ghosts are exponentially rare.** As lengths grow, the digit set of a product saturates all $b$ values, so the probability a factor pool avoids every product digit should decay geometrically. Conjecturally the ghost fraction is $O(\rho^n)$ for some $\rho < 1$, giving natural density $0$.
+3. **Unit spectrum (base $b \ge 3$).** Beyond the forward invariant $(x-1)(y-1) \equiv 1 \pmod{b-1}$, does every unit class modulo $b - 1$ arise from infinitely many digit-sharing factorizations (equidistribution of unit classes)?
+4. **Binary count.** Turning the two-sided bound $s_2(x) + s_2(y) = s_2(v) \le s_2(x) s_2(y)$ into an asymptotic count: is the number of binary monsters below $2^n$ of order $c \cdot 2^n / n$?
+
+## 9. Conclusion
+
+Stripping the vampire definition down to its combinatorial core — the digit-sharing relation — reveals that whimsical digit games are governed by rigid structure. Digit-sharing factorizations conserve digit length and digit sum, forcing an extremal size bound, an additive-multiplicative congruence, a unit identity modulo $9$, an absolute taboo modulo $3$, and the banishment of powers of two in binary. These base-independent invariants both explain why the monsters are well-behaved and provide concrete, cheap filters for hunting them. The counting questions — how densely vampires crowd the number line, how quickly ghosts fade — remain enticing open problems at the boundary between recreational and serious number theory.
