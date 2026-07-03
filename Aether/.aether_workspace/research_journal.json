@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f0d5604e",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — average stack-sorting depth and Defant's constant\n\nDerived from this cycle's findings (see `DefantConstant.lean`,\n`StackSortMap.lean`, and `ComputationalEvidence.md`).\n\n## Conjec",
-      "quality_score": 0.5150000000000001,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-27T13:56:11",
-      "title": "Conjecture: The limit of average stack-sorting depth equals Defant's upper bound"
-    },
-    {
       "cycle_id": "a880054f",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Mutually Orthogonal Italian Squares\n\nThis cycle formalized, over an arbitrary finite carrier `α` (so the carrier of a\nprime-power-order square can be a finite field directly):\n\n*",
@@ -2501,6 +2491,16 @@
       "theorem_count": 17,
       "timestamp": "2026-07-03T05:23:18",
       "title": "Phantom Topologies: Spaces That Change When You Look at Them"
+    },
+    {
+      "cycle_id": "a5a22996",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions\n\n## 1. Construct the intertwining label map for all m\n\nFor every `m ≥ 1`, both the intervals of the greedy `m`-Tamari poset and the\nplanar `(m+1)`-constellations of size `n` are bu",
+      "quality_score": 0.5129090000000001,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-03T05:51:17",
+      "title": "Isomorphism of generating trees for greedy m-Tamari intervals and planar (m+1)-constellations"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8748400000000001
     }
   ],
-  "last_updated": "2026-07-03T05:23:18",
+  "last_updated": "2026-07-03T05:51:17",
   "open_questions": [
     {
       "context": "",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "51640204",
-        "quality": 0.6127985535714285,
-        "theorems": 96,
-        "title": "Lattice Cryptography: LWE Hardness"
-      },
-      {
         "cycle_id": "59a725d3",
         "quality": 0.36443276190476187,
         "theorems": 2,
@@ -3885,6 +3879,12 @@
         "quality": 0.47561819905213276,
         "theorems": 422,
         "title": "Prove Fermats Little Theorem for p=5"
+      },
+      {
+        "cycle_id": "a5a22996",
+        "quality": 0.5129090000000001,
+        "theorems": 13,
+        "title": "Isomorphism of generating trees for greedy m-Tamari intervals and planar (m+1)-c"
       }
     ],
     "Shared": [

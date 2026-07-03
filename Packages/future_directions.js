@@ -18,6 +18,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition \u2014 zeros on the critical line means the bulk geometry is stable against perturbations.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0142",
+    "priority_score": 0.91,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-03T05:39:17.935723+00:00",
+    "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
     "domains": [
       "Novelty",
@@ -76,7 +91,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Knots That Think: Cognition as Braiding in Category Theory"
   },
   {
-    "consumed_by_exp_id": "a5a22996",
+    "consumed_by_exp_id": "",
     "description": "For every m \u2265 1, the generating tree encoding the recursive decomposition of intervals in the greedy m-Tamari poset (on Dyck paths of size n) is isomorphic to the generating tree encoding the recursive decomposition of planar (m+1)-constellations of size n. This conjecture generalizes the m=1 case proved in the paper and would provide a combinatorial proof of the equinumerosity refined by the parameters tracked in the generating tree (e.g., number of valleys in Dyck paths and corresponding statistics in constellations).",
     "domains": [
       "Pythagorean",
@@ -86,7 +101,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01206v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T05:35:11.178227+00:00",
     "title": "Isomorphism of generating trees for greedy m-Tamari intervals and planar (m+1)-constellations"
   },
@@ -103,20 +118,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T06:02:49.115868+00:00",
     "title": "Lower Bound for Low Moments of Dirichlet Character Sums"
-  },
-  {
-    "consumed_by_exp_id": "c4bca99c",
-    "description": "There exists a finite set of vectors in l\u00b2 satisfying specific convolution inequalities such that their weighted average achieves the coefficient \u03b3\u2080=0.94601 in the bound F(N) \u2264 N^{1/2} + \u03b3\u2080N^{1/4} + O(1), and no smaller coefficient is achievable via this method.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0013",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T06:22:13.488931+00:00",
-    "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
   },
   {
     "consumed_by_exp_id": "",
@@ -1737,6 +1738,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T05:23:12.428535+00:00",
     "title": "These conjectures are distilled from a single finding: the Euclidean line is the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Construct the intertwining label map for all m\n\nFor every `m \u2265 1`, both the intervals of the greedy `m`-Tamari poset and the\nplanar `(m+1)`-constellations of size `n` are built by a recursive decomposition\nthat can be recorded as a generating tree whose nodes carry a label tracking a\ncombinatorial statistic. The conjecture that these two trees are isomorphic \u2014 and\nhence that the two families are equinumerous, refined by the tracked statistics \u2014\nreduces to a single concrete object: a label map sending one root to the other\nand turning one succession rule into the other on the nose.\n\nThe key insight is that an isomorphism of generating trees is *local*: it is\nentirely determined by a label map that intertwines the two succession rules, and\nonce such a map exists, the refined equinumerosity at every size follows by a\nroutine level-by-level induction, transporting all label-borne statistics for\nfree. Why now? The general reduction \u2014 from a global bijection of two\nsuper-exponentially growing families to a single local intertwining identity \u2014 is\nnow available in fully verified form, so the remaining work is the sharply\nfocused, checkable task of writing down both succession rules and the map\nbetween them.\n\n## 2. Recover the interval-count integrality from the tree recursion\n\nThe closed form `(m+1)/(n(mn+1)) \u00b7 C((m+1)\u00b2n + m, n\u22121)` counts `m`-Tamari\nintervals and is, experimentally, always a positive integer, yet the formula\nhides a delicate arithmetic cancellation.\n\nThe key insight is that a generating-tree recursion expresses each size-`n` count\nas a manifestly-integer sum over the labels present at level `n`, so integrality\nbecomes automatic and a combinatorial recurrence replaces the binomial identity.\nWhy now? With a working generating-tree engine and the verified base-layer\nrecursion in hand, one can attach the arithmetic to a structure that produces\nintegers by construction, rather than proving divisibility of a binomial\nexpression after the fact.\n\n## 3. Reconstructing a generating tree from its counting sequence\n\nEqual counting sequences do not force two succession rules to be isomorphic; the\nfiner invariant is the multiset of labels present at each level.\n\nThe key insight is that this level-wise label multiset is a strictly stronger\nisomorphism invariant than the sequence of level sizes, and comparing these\nmultisets gives a decision procedure that separates \"genuinely isomorphic\" from\n\"merely equinumerous\" pairs of trees. Why now? The Tamari/constellation program\nproduces many candidate rules with identical Catalan- or Fuss-Catalan-type\ncounts, and a principled invariant is exactly what is needed to tell which\ncandidate pairings can possibly be upgraded to a structural isomorphism.\n\n## 4. Vector-labelled generating-tree isomorphisms\n\nFaithful generating trees for Tamari intervals need more than one catalytic\nparameter, so their labels are naturally vectors rather than single integers.\n\nThe key insight is that the entire intertwining mechanism survives verbatim for\nlabels in `\u2124^d`: an affine label map that intertwines two vector-valued\nsuccession rules transports the *joint* distribution of all coordinate statistics\nat every level, not just a single one. Why now? Multi-parameter succession rules\nare precisely where the `m`-Tamari and constellation decompositions live, so a\nvector-labelled framework is the natural setting in which to search \u2014 by hand or\ncomputationally \u2014 for the map conjectured in direction 1.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0143",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a5a22996",
+    "status": "available",
+    "timestamp": "2026-07-03T05:51:11.834451+00:00",
+    "title": "For every `m \u2265 1`, both the intervals of the greedy `m`-Tamari poset and the"
   },
   {
     "consumed_by_exp_id": "8638d104",
