@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-03T22:52:10.156080+00:00",
+  "last_updated": "2026-07-03T23:31:03.741914+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -31545,6 +31545,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-03T22:52:10.099560+00:00",
       "title": "Jordan type of regular unipotent image for GL\u2080 representations"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 88,
+      "domain": "NumberTheory",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "3010de19",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v16",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783116572.356512,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-03T23:31:03.630311+00:00",
+      "title": "Exact AVD\u2011total chromatic number of central graphs of regular graphs"
     }
   ]
 }

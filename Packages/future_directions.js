@@ -1490,7 +1490,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit \u03bc and \u03bb Invariants for Spectral Resultants in \u2124_p-Towers"
   },
   {
-    "consumed_by_exp_id": "3010de19",
+    "consumed_by_exp_id": "",
     "description": "For every regular graph $G$ of degree $d\\ge 2$ (i.e., $\\Delta(G)=d$ and $G$ is $d$\u2011regular), we conjecture that the central graph $C(G)$ achieves the maximal possible AVD\u2011total chromatic number, namely $\\chi''_{a}(C(G)) = d+3$, except in the degenerate case where $G$ is a complete graph $K_{d+1}$ (for which $\\chi''_{a}(C(G)) = d+2$). This conjecture refines the already verified AVD\u2011TCC bound for central graphs of regular graphs and predicts exact values.",
     "domains": [
       "Pythagorean"
@@ -1499,7 +1499,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01979v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T06:12:59.143802+00:00",
     "title": "Exact AVD\u2011total chromatic number of central graphs of regular graphs"
   },
@@ -2113,12 +2113,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a normalized Hecke eigenform f of weight k for SL(2, Z), and for any even integer m such that 2 <= m <= 12, let r_m(n) be the number of ways to represent n as a sum of m squares. The conjecture states that the sum over n <= x of lambda_{sym^j f}(n)^2 * r_m(n) admits an asymptotic expansion of the form C_{j,m} * x + O(x^(1 - delta)) for some delta > 0, where C_{j,m} is a constant related to the residues of the product of the symmetric power L-function and the Epstein zeta function.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0172",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30603v1",
+    "status": "available",
+    "timestamp": "2026-07-03T23:33:08.947967+00:00",
+    "title": "Asymptotic Growth of Sums of Squared Symmetric Power Coefficients over Sums of Squares"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0172",
+    "id": "fd_0173",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -2132,7 +2146,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0173",
+    "id": "fd_0174",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -2146,7 +2160,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0174",
+    "id": "fd_0175",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
@@ -2160,7 +2174,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0175",
+    "id": "fd_0176",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -2174,7 +2188,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0176",
+    "id": "fd_0177",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
@@ -2189,7 +2203,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0177",
+    "id": "fd_0178",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
@@ -2204,7 +2218,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0178",
+    "id": "fd_0179",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -2219,7 +2233,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0179",
+    "id": "fd_0180",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -2233,7 +2247,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0180",
+    "id": "fd_0181",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -2248,7 +2262,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0181",
+    "id": "fd_0182",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02132v1",
@@ -2263,7 +2277,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0182",
+    "id": "fd_0183",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -2277,7 +2291,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0183",
+    "id": "fd_0184",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02098v1",
@@ -2286,32 +2300,32 @@ window.FUTURE_DIRECTIONS = [
     "title": "Geodesic Treewidth Upper Bound for Planar Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e3e38cc8",
     "description": "We conjecture that for any oriented product structure \\((A,B,P)\\) of type \\((m,n)\\) with \\(m,n\\ge2\\) satisfying the no\u2011fold condition \\(\\mathsf T_2\\), the weighted dual Fisher inequality is strict unless \\((m,n)=(2,2)\\) and the structure is the affine plane of order\u202f2 (i.e. the unique 2\u00d72 grid). Moreover, if the middle\u2011link girth is\u202f6 then the minimum of the two horizontal\u2011link girths is at most\u202f4, and equality in the weighted dual Fisher inequality forces the structure to be exactly this affine\u2011plane construction. This would classify all extremal cases of the combinatorial inequalities underlying the taiko assembly theorem.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0184",
+    "id": "fd_0185",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01716v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T07:08:28.593276+00:00",
     "title": "Equality case of the weighted dual Fisher inequality for taiko product structures"
   },
   {
-    "consumed_by_exp_id": "e3e38cc8",
+    "consumed_by_exp_id": "",
     "description": "For a Hamiltonian graph G with minimum degree at least 3, there exists a constant c > 0 such that G contains a nontrivial cycle of length at least n - c n^{2/3}. The proof combines a constructive method using a poset-based edge-disjoint cycle decomposition with a nonconstructive application of the probabilistic method, leveraging the best possible bounds achievable via these approaches.",
     "domains": [
       "Logic",
       "Physics"
     ],
-    "id": "fd_0185",
+    "id": "fd_0186",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T07:37:36.028717+00:00",
     "title": "Existence of a nontrivial cycle of length n-O(n^{2/3}) in Hamiltonian graphs with \u03b4(G) \u2265 3"
   },
@@ -2321,7 +2335,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0186",
+    "id": "fd_0187",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01718v1",
@@ -2335,7 +2349,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0187",
+    "id": "fd_0188",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01761v1",
@@ -2350,7 +2364,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Logic"
     ],
-    "id": "fd_0188",
+    "id": "fd_0189",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
@@ -2364,7 +2378,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0189",
+    "id": "fd_0190",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01695v1",
@@ -2378,7 +2392,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0190",
+    "id": "fd_0191",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01438v1",
@@ -2393,7 +2407,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0191",
+    "id": "fd_0192",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -2407,7 +2421,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0192",
+    "id": "fd_0193",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -2422,7 +2436,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0193",
+    "id": "fd_0194",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
@@ -2436,7 +2450,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0194",
+    "id": "fd_0195",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00775v1",
@@ -2450,7 +2464,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0195",
+    "id": "fd_0196",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00825v2",
@@ -2464,7 +2478,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0196",
+    "id": "fd_0197",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00651v1",
@@ -2478,7 +2492,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0197",
+    "id": "fd_0198",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00643v1",
@@ -2493,7 +2507,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0198",
+    "id": "fd_0199",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00561v1",
@@ -2502,16 +2516,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fang-Zhai Conjecture: Spectral extremal graphs for edge-color-critical graphs are edge extremal"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "01bea6c3",
     "description": "Let G be a brick (i.e. a 3\u2011connected bicritical non\u2011bipartite graph) that is not isomorphic to K4, the complement of C6 (\u0143C6) nor the Petersen graph. Then the following are equivalent:\n\n1) Every b\u2011invariant edge of G is a forcing edge.\n2) G is a near\u2011bipartite brick belonging to the class characterised in the main theorem of the paper (i.e. the complete description of near\u2011bipartite bricks for which every b\u2011invariant edge is forcing).\n\nThus, apart from the three small exceptions, the property \"all b\u2011invariant edges are forcing\" precisely picks out the near\u2011bipartite bricks.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0199",
+    "id": "fd_0200",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00608v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T13:25:27.639831+00:00",
     "title": "Every b\u2011invariant edge is forcing exactly for near\u2011bipartite bricks (up to the three classical exceptions)"
   },
@@ -2522,7 +2536,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0200",
+    "id": "fd_0201",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00456v1",
@@ -2537,7 +2551,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0201",
+    "id": "fd_0202",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00366v1",
@@ -2552,7 +2566,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0202",
+    "id": "fd_0203",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00372v1",
@@ -2566,7 +2580,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0203",
+    "id": "fd_0204",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00332v1",
@@ -2580,7 +2594,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0204",
+    "id": "fd_0205",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.32024v1",
@@ -2595,7 +2609,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0205",
+    "id": "fd_0206",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31967v1",
@@ -2610,7 +2624,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0206",
+    "id": "fd_0207",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31940v1",
@@ -2625,7 +2639,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0207",
+    "id": "fd_0208",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31908v1",
@@ -2640,7 +2654,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0208",
+    "id": "fd_0209",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31687v1",
@@ -2655,7 +2669,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0209",
+    "id": "fd_0210",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31821v2",
@@ -2670,7 +2684,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0210",
+    "id": "fd_0211",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31547v1",
@@ -2685,7 +2699,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0211",
+    "id": "fd_0212",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31649v1",
@@ -2700,7 +2714,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0212",
+    "id": "fd_0213",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31565v1",
@@ -2714,7 +2728,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0213",
+    "id": "fd_0214",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31526v1",
@@ -2729,7 +2743,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0214",
+    "id": "fd_0215",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31341v1",
@@ -2744,7 +2758,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0215",
+    "id": "fd_0216",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31262v1",
@@ -2759,7 +2773,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0216",
+    "id": "fd_0217",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31264v1",
@@ -2774,7 +2788,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0217",
+    "id": "fd_0218",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30856v1",
@@ -2789,7 +2803,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0218",
+    "id": "fd_0219",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30996v1",
@@ -2804,7 +2818,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0219",
+    "id": "fd_0220",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30885v1",
@@ -2819,7 +2833,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0220",
+    "id": "fd_0221",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31044v1",
@@ -2833,7 +2847,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0221",
+    "id": "fd_0222",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30496v1",
@@ -2848,13 +2862,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0222",
+    "id": "fd_0223",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30588v1",
     "status": "available",
     "timestamp": "2026-07-03T23:12:37.946714+00:00",
     "title": "Seymour's second neighborhood conjecture for oriented graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: There exists an absolute constant K>0 such that for every n\u2208\u2115 and every family F\u22862^[n] that is 3\u2011sunflower\u2011free (i.e., contains no three sets with pairwise constant intersection), we have |F| \u2264 K\u00b7n^{1/6}\u00b7(3/2^{2/3})^n.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0224",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30593v1",
+    "status": "available",
+    "timestamp": "2026-07-03T23:33:38.013269+00:00",
+    "title": "Optimality of the polynomial factor in the Naslund\u2013Sawin bound for sunflower\u2011free families"
   },
   {
     "consumed_by_exp_id": "",
