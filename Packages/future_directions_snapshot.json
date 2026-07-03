@@ -3927,7 +3927,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6044c919",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely — the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence — instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domain_bridges": [],
     "domains": [
@@ -3940,7 +3940,7 @@
     "proof_strategy": "Define A(1) = A(2) = 1, A(n+1) = smallest positive integer not equal to A(n) + A(n-1). Prove by strong induction: A(n) >= floor(n^2/4). Base: A(1)=1 >= 0, A(2)=1 >= 1. Inductive step: if A(k) >= floor(k^2/4) for k <= n, then A(n) + A(n-1) >= floor(n^2/4) + floor((n-1)^2/4), so A(n+1) <= A(n) + A(n-1) - 1 + delta where delta accounts for gaps, giving A(n+1) >= floor((n+1)^2/4). Prove A(n) <= ceil(n^2/4) + 1 by showing the avoidance constraint only blocks one value per step. Test: compute A(n) for n=1..10^6 and verify A(n)/n^2 -> 1/4.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.017991+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
