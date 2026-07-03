@@ -1331,11 +1331,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The $(p,q)$-deformed generalized Weyl algebra's rook-theoretic combinatorial model predicts that the $(p,q)$-generalized Stirling numbers $\\mathfrak{S}_{s;h}(n,k|p,q)$ equal the $s$-rook polynomial on a staircase board of size $(n,k)$ with entries weighted by $p$ and $q$ via $XY\\mapsto qYX\\mapsto q^{s}Y^sZ_pX$. This conjecture seeks to formalize the link between the algebra's normal ordering and rook placements with $(p,q)$-coefficients.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0107",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01141v1",
+    "status": "available",
+    "timestamp": "2026-07-03T00:16:02.557642+00:00",
+    "title": "Combinatorial Interpretation of $s$-Rook Polynomials via $(p,q)$-Deformed Normal Ordering"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This paper establishes an equi-enumerating relationship between greedy $m$-Tamari posets and planar $(m+1)$-constellations, leveraging recursive decomposition akin to bipartite planar maps. The conjecture formalizes this by analyzing the structural isomorphism between interval decompositions and planar mappings.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0107",
+    "id": "fd_0108",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01206v1",
@@ -1349,13 +1364,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0108",
+    "id": "fd_0109",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
     "status": "available",
     "timestamp": "2026-07-02T23:51:53.327272+00:00",
     "title": "Colorful Carath\u00e9odory Theorem for Spanning k-trees"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The coefficients V\u2082(n), V\u2083(n), V\u2084(n) of the q-series v\u2082(q), v\u2083(q), v\u2084(q) satisfy an asymptotic alternating sign property: there exists an explicit oscillatory factor such that (-1)^n V_i(n) > 0 for all sufficiently large n outside a density-zero exceptional set. This means the signs strictly alternate in the limit, with only sparse violations.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0110",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01210v1",
+    "status": "available",
+    "timestamp": "2026-07-03T00:16:17.133115+00:00",
+    "title": "Asymptotic alternating sign conjecture for Andrews q-series v\u2082(q), v\u2083(q), v\u2084(q)"
   },
   {
     "consumed_by_exp_id": "",
