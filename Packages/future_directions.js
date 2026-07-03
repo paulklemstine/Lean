@@ -61,7 +61,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "12f18d90",
     "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot \u2014 the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
     "domains": [
       "Novelty",
@@ -71,7 +71,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T05:11:23.238019+00:00",
     "title": "Knots That Think: Cognition as Braiding in Category Theory"
   },
@@ -702,7 +702,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the Greenberg\u2013Wiles local lower bound for \u2113\u2011Selmer groups in constant\u2011torsion families"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "583299ca",
     "description": "Conjecture that a torsion Hecke eigenclass in the cohomology of the arithmetic manifold attached to GL_n over a CM number field F with coefficients in Z/\u2113^m gives rise to a continuous semisimple Galois representation r : G_F \u2192 GL_n(Z_\u2113) which is de Rham at places v|\u2113, with Hodge\u2013Tate weights determined by the infinitesimal character of the automorphic representation at infinity, and whose associated filtered \u03c6\u2011module via Fontaine's functor corresponds under the p\u2011adic local Langlands correspondence to the automorphic component \u03c0_v.",
     "domains": [
       "Algebra",
@@ -712,7 +712,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31698v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T12:49:31.510793+00:00",
     "title": "Torsion local-global compatibility at p = \u2113 for GL_n over CM fields"
   },
@@ -1109,6 +1109,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T21:53:59.453996+00:00",
     "title": "A recursive decomposition of greedy Tamari intervals via planar map structures"
+  },
+  {
+    "consumed_by_exp_id": "7488be0a",
+    "description": "The sheared Witt vector functor \\(\\chW\\) is isomorphic to the filtered colimit of the functors \\(n \\mapsto W(R[p^n])/\\hw(R[p^n])\\) over \\(n \\geq 1\\).",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0094",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01178v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T22:10:42.305562+00:00",
+    "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
   },
   {
     "consumed_by_exp_id": "",
@@ -1680,7 +1694,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "That the entries of an integer right triangle are forced"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ba614c22",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -1690,7 +1704,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.007324+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },

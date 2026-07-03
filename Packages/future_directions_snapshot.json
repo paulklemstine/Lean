@@ -1208,7 +1208,7 @@
       "math.NT",
       "math.RT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "583299ca",
     "description": "Conjecture that a torsion Hecke eigenclass in the cohomology of the arithmetic manifold attached to GL_n over a CM number field F with coefficients in Z/ℓ^m gives rise to a continuous semisimple Galois representation r : G_F → GL_n(Z_ℓ) which is de Rham at places v|ℓ, with Hodge–Tate weights determined by the infinitesimal character of the automorphic representation at infinity, and whose associated filtered φ‑module via Fontaine's functor corresponds under the p‑adic local Langlands correspondence to the automorphic component π_v.",
     "domain_bridges": [
       "Representation Theory",
@@ -1225,7 +1225,7 @@
     "proof_strategy": "Extend Scholze's construction of automorphic determinants to Z_ℓ-coefficients, use the comparison isomorphism between étale and de Rham cohomology (via p-adic Hodge theory) to obtain de Rham Galois representations, then apply the p-adic local Langlands correspondence for GL_n over local fields to match the local Langlands parameter at places dividing ℓ with the automorphic data.",
     "research_mode": "team",
     "source_exp_id": "2606.31698v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T12:49:31.510793+00:00",
     "title": "Torsion local-global compatibility at p = ℓ for GL_n over CM fields"
   },
@@ -1951,6 +1951,34 @@
     "status": "available",
     "timestamp": "2026-07-02T21:53:59.453996+00:00",
     "title": "A recursive decomposition of greedy Tamari intervals via planar map structures"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Drinfeld-Lau 2025",
+      "Zink 2003",
+      "Lau 2010",
+      "Hoff-Lau 2026"
+    ],
+    "consumed_by_exp_id": "7488be0a",
+    "description": "The sheared Witt vector functor \\(\\chW\\) is isomorphic to the filtered colimit of the functors \\(n \\mapsto W(R[p^n])/\\hw(R[p^n])\\) over \\(n \\geq 1\\).",
+    "domain_bridges": [
+      "Witt vector theory",
+      "nilperfect ring theory",
+      "Dieudonné modules"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0094",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct a natural transformation \\(\\gamma_n: W(R) \\to W(R[p^n])/\\hw(R[p^n])\\) and verify it induces an isomorphism on colimits using properties of nilpotent Witt components and filtered limits of free modules.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01178v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T22:10:42.305562+00:00",
+    "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
   },
   {
     "ambition_level": "grand_challenge",
@@ -2994,7 +3022,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ba614c22",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist — 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 — they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures — combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domain_bridges": [],
     "domains": [
@@ -3007,7 +3035,7 @@
     "proof_strategy": "Define vampire numbers formally: v is a vampire number iff v has 2n digits and there exist x, y each with n digits such that v = x*y and the multiset of digits of v equals the union of digits of x and y. Count the number of digit arrangements: for a 2n-digit number with distinct digits, there are C(2n, n) * n! * n! possible fang pairs, so the expected number of fang pairs is C(2n, n) * (n!)^2 / 10^{2n} = C(2n,n) / 10^n ~ 1/sqrt(n). Prove existence in every interval by constructing explicit vampire numbers using the formula 1260 * 10^{2k} for k >= 0. Test: enumerate up to 10^8.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.007324+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
