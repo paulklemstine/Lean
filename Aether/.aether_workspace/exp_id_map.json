@@ -805,5 +805,6 @@
   "3e52c27d": "manifold_constrained_kruskal_rank_bounds_on_dichot.json",
   "7f2fc4f9": "prove_fermats_little_theorem_for_p5.json",
   "150736b0": "conjecture_on_absolute_boundedness_of_polynomial_d.json",
-  "e4796c8c": "filtered_colimit_preservation_by_sheared_witt_vect.json"
+  "e4796c8c": "filtered_colimit_preservation_by_sheared_witt_vect.json",
+  "f7b97a34": "the_anti_fibonacci_sequence_numbers_that_avoid_the.json"
 }
