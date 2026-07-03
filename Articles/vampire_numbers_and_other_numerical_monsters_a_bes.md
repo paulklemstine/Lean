@@ -1,209 +1,165 @@
-# Vampire Numbers and Other Numerical Monsters: The Curious Case of the Narcissists
+# Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities
 
-## A bestiary of arithmetic creatures
+Somewhere between recreational puzzles and serious number theory lives a small
+zoo of arithmetic creatures. They are easy to describe to a child, delightful to
+hunt with a computer, and — as it turns out — governed by a hidden law that no
+one who plays with them for the first time expects. This is the story of vampire
+numbers and their kin, and of the surprisingly rigid rule that all of them are
+forced to obey.
 
-Numbers, like animals, come in species. Some are familiar and domestic — the
-primes, the squares, the powers of two that hum quietly inside every computer.
-But wander a little off the beaten path and you find stranger creatures: numbers
-that devour their own digits, numbers that hide in the dark, numbers that are
-made of two perfectly ordinary numbers stitched together. Mathematicians, with a
-mixture of mischief and seriousness, have given them monstrous names: vampire
-numbers, ghost numbers, zombie numbers.
+## A number that hides inside its own factors
 
-This article is about one of the most vain and self-absorbed monsters in the
-whole menagerie — a creature so obsessed with itself that it can only be built
-out of its own reflection. Meet the **narcissistic number**.
+Begin with the star of the show. Take the number $1260$. It has four digits:
+$1, 2, 6, 0$. Now factor it: $1260 = 21 \times 60$. Look at the digits of the two
+factors, $21$ and $60$: they are $2, 1, 6, 0$ — exactly the same four digits as
+$1260$ itself, just rearranged. The number $1260$ has, in a sense, *dissolved
+into its own factors and reassembled from the same raw material.*
 
-## The number that builds itself from its own digits
+Numbers with this property are called **vampire numbers**, a name coined by the
+science-fiction writer Clifford Pickover. The two factors are called the
+**fangs**. To keep the game honest, we ask that the number have an even count of
+digits, that each fang have exactly half as many digits as the number, and that
+the fangs not both end in zero (otherwise trailing zeros would make the game too
+easy). By that standard, $1260 = 21 \times 60$ is the smallest vampire, and the
+hunt is on: $1395 = 15 \times 93$, $1435 = 35 \times 41$, $1530 = 30 \times 51$,
+$1827 = 21 \times 87$, and so on.
 
-Take the number **153**. Look at its three digits: 1, 5, and 3. Now cube each of
-them — that is, raise each to the third power, because 153 has three digits:
+Formally, if we write $D_b(n)$ for the multiset of base-$b$ digits of a number
+$n$, a pair $(x, y)$ is a **fang pair** in base $b$ when
 
-$$1^3 + 5^3 + 3^3 = 1 + 125 + 27 = 153.$$
+$$D_b(x \cdot y) = D_b(x) \,\cup\, D_b(y),$$
 
-The number reassembles itself perfectly. Its digits, each lifted to the power of
-how many digits there are, add up to exactly the number you started with. It is
-as if 153 looked into a mirror, took itself apart digit by digit, raised each
-piece to a power, and found that the pieces snapped back together into the same
-number. That is pure mathematical narcissism, and so we call such numbers
-**narcissistic** (they also go by the more dignified name *Armstrong numbers*,
-after the amateur mathematician Michael Armstrong who popularized them).
+that is, the digits of the product are a rearrangement of all the digits of the
+two factors combined. This one combinatorial sentence — *"the product is an
+anagram of its factors"* — is the seed from which the entire bestiary grows.
 
-The formal rule is simple and unforgiving. A number $n$ is narcissistic if, when
-you write it in ordinary base ten, the sum of its digits each raised to the power
-*equal to the count of digits* gives you $n$ back exactly. Write $d$ for the
-number of digits and $a_1, a_2, \dots, a_d$ for the digits themselves; then $n$
-is narcissistic precisely when
+## Expanding the menagerie
 
-$$n = a_1^{\,d} + a_2^{\,d} + \cdots + a_d^{\,d}.$$
+Once you have one monster, you can breed others by tweaking the digit rule.
 
-The power changes with the size of the number. For a three-digit number you cube;
-for a four-digit number you raise to the fourth power; for a ten-digit number you
-raise to the tenth. This shifting exponent is the secret of the whole story, as
-we will see.
+- **Werewolf numbers**: instead of sharing *all* digits, the product shares
+  *exactly one* digit with its factors — a partial transformation, human by day,
+  wolf by night.
+- **Ghost numbers**: the product shares *no* digits at all with either factor.
+  The number $v = x \times y$ is completely transparent to its own
+  factorization; nothing of $x$ or $y$ shows through.
+- **Zombie numbers**: composite numbers with multiple factorizations of mixed
+  character — one factorization pairs a prime with a composite, another does the
+  same with different partners — so the number refuses to stay cleanly
+  "alive" (prime) or "dead" (a clean product). A worked example is
+  $125460 = 204 \times 615 = 246 \times 510$.
 
-The single-digit numbers are narcissistic in a trivial way: $1 = 1^1$, $2 = 2^1$,
-and so on up to $9$. They are the babies of the species. The first genuinely
-surprising specimens are the three-digit ones. There are exactly four of them:
+These definitions are pure play. The digits are a decorative costume; the
+arithmetic underneath — which numbers multiply to which — has nothing obviously
+to do with how the digits happen to line up. That is exactly what makes the next
+discovery startling.
 
-$$153, \quad 370, \quad 371, \quad 407.$$
+## The law every monster obeys
 
-Let us verify a couple by hand, because the delight is in the checking:
+Here is the surprise. Although the fang condition is a statement about *digits*,
+it forces an exact statement about *values*. Every fang pair, in every base,
+must satisfy
 
-$$3^3 + 7^3 + 0^3 = 27 + 343 + 0 = 370,$$
-$$3^3 + 7^3 + 1^3 = 27 + 343 + 1 = 371,$$
-$$4^3 + 0^3 + 7^3 = 64 + 0 + 343 = 407.$$
+$$x \cdot y \;\equiv\; x + y \pmod{b - 1}.$$
 
-Three of these — 370, 371, 407 — sit almost next to each other, like a small
-family of monsters huddled together on the number line. Then the trail goes cold
-for a while, and the next narcissistic numbers appear with four digits (1634,
-8208, 9474), then five, and so on.
+In base $10$ this reads $x \cdot y \equiv x + y \pmod 9$. Check it on our vampire:
+$21 \times 60 = 1260$ and $21 + 60 = 81$; both $1260$ and $81$ are multiples of
+$9$, so both sides are $\equiv 0 \pmod 9$. The rule holds, and it holds not by
+luck but by necessity.
 
-## The big question: do they ever stop?
+Why is a digit condition secretly an arithmetic one? The bridge is the oldest
+trick in the elementary-arithmetic book: **casting out nines**. In base $b$, any
+number is congruent to the sum of its digits modulo $b - 1$:
 
-Here is where a child's game turns into real mathematics. The narcissistic
-numbers seem to thin out as you climb higher. Three digits gave us four of them.
-The higher you go, the rarer they become. A natural and slightly eerie question
-presents itself:
+$$n \;\equiv\; (\text{sum of base-}b\text{ digits of } n) \pmod{b - 1}.$$
 
-> **Is the list of narcissistic numbers finite, or does it go on forever?**
+(In base $10$, that is the familiar fact that a number and its digit sum leave the
+same remainder on division by $9$.) Now the fang condition says the digits of
+$x \cdot y$ are a *rearrangement* of the digits of $x$ and $y$ together. A
+rearrangement does not change a sum — order never matters when you add. So the
+digit sum of $x \cdot y$ equals the digit sum of $x$ plus the digit sum of $y$.
+Feed that equality through casting out nines and the digits vanish, leaving only
+the values:
 
-Most number-theoretic species are infinite. There are infinitely many primes,
-infinitely many squares, infinitely many numbers whose digit sum is a fixed
-value. Infinity is the default expectation. So it would be strange — almost
-unsettling — if the narcissistic numbers simply *ran out* at some point and never
-appeared again, no matter how far you searched.
+$$x \cdot y \equiv \text{digitsum}(xy) = \text{digitsum}(x) + \text{digitsum}(y) \equiv x + y \pmod{b-1}.$$
 
-And yet that is exactly what happens. **The narcissistic numbers are finite.**
-There is a largest one, beyond which the species is extinct. It is a striking
-fact, and the reason for it is a beautiful piece of reasoning about the tug-of-war
-between two ways a number can grow.
+The combinatorial costume falls away and a clean number-theoretic skeleton
+stands underneath.
 
-## A race between two giants
+## The vampire's true nature: a pair of inverse residues
 
-To see why the narcissists must die out, we stage a race between two quantities,
-both depending on $d$, the number of digits.
+The additive law $x y \equiv x + y$ has an even more elegant multiplicative
+shadow. Subtract, and complete the rectangle:
 
-**Contestant one: how big a $d$-digit number can be.** A number with $d$ digits is
-at least $10^{d-1}$ (the smallest $d$-digit number is a 1 followed by $d-1$
-zeros). So if $n$ has $d$ digits, then $n \ge 10^{d-1}$. This is the floor under
-our number — it cannot be smaller than this.
+$$(x - 1)(y - 1) = xy - x - y + 1 \equiv (x + y) - (x + y) + 1 = 1 \pmod{b - 1}.$$
 
-**Contestant two: how big the digit-power sum can be.** Each digit is at most 9,
-and there are $d$ of them, each raised to the power $d$. So the sum of the
-digit-powers can be no larger than
+So for **every** fang pair,
 
-$$\underbrace{9^d + 9^d + \cdots + 9^d}_{d \text{ times}} = d \cdot 9^{\,d}.$$
+$$(x - 1)(y - 1) \equiv 1 \pmod{b - 1}.$$
 
-This is the ceiling on the narcissistic recipe — the most the digits can possibly
-manufacture.
+Read this aloud: *each fang, decremented by one, is a unit modulo $b - 1$, and
+the two decremented fangs are multiplicative inverses of one another.* In base
+$10$: $(x - 1)(y - 1) \equiv 1 \pmod 9$. Our vampire again: $(21 - 1)(60 - 1) =
+20 \times 59 = 1180$, and $1180 = 131 \times 9 + 1$, so $1180 \equiv 1 \pmod 9$.
+Exactly as promised.
 
-Now, a narcissistic number is one where the recipe (contestant two) produces
-exactly the number itself (which is at least contestant one). For a narcissistic
-number to exist with $d$ digits, the ceiling must at least reach the floor:
+This is the sharp reason vampires are rare. A random pair of factors will almost
+never have its decremented values be mutual inverses modulo $9$. The digit
+coincidence that *defines* a vampire quietly imposes an *algebraic* coincidence,
+and coincidences compound.
 
-$$d \cdot 9^{\,d} \;\ge\; 10^{\,d-1}.$$
+The unit law even tells us which numbers can *never* be fangs. Since $9 = 3
+\times 3$, a congruence modulo $9$ implies one modulo $3$. If a fang $x$ were
+$\equiv 1 \pmod 3$, then $x - 1 \equiv 0$, and $(x-1)(y-1)$ would be divisible by
+$3$ — it could not possibly be $\equiv 1 \pmod 3$. Therefore **no fang of a base-10
+vampire is congruent to $1$ modulo $3$**: the values $1, 4, 7, 10, 13, \dots$ are
+forbidden from ever being fangs. Check $1260$: both fangs $21$ and $60$ are
+multiples of $3$ (so $\equiv 0$), comfortably obeying the ban.
 
-Here is the punchline. The left side grows like $9^d$; the right side grows like
-$10^d$. Ten beats nine. As $d$ marches upward, the $10^{d-1}$ floor eventually
-sprints away and leaves $d \cdot 9^d$ hopelessly behind — the extra factor of $d$
-is no match for the relentless gap between $9^d$ and $10^d$. Past a certain
-number of digits, the ceiling can never reach the floor, and so **no narcissistic
-number of that length can exist.**
+## From two fangs to a whole pack
 
-The crossover is concrete. One can show, by a clean induction, that for every
-$d \ge 61$,
+Nothing about the argument needed there to be exactly two factors. If a number is
+the product of a whole list of factors $x_1, x_2, \dots, x_k$, and the digits of
+the product are an anagram of all the factors' digits pooled together, then the
+same casting-out-nines argument gives
 
-$$d \cdot 9^{\,d} \;<\; 10^{\,d-1}.$$
+$$x_1 x_2 \cdots x_k \;\equiv\; x_1 + x_2 + \cdots + x_k \pmod{b - 1}.$$
 
-In words: once a number has 61 or more digits, the most its digit-powers can ever
-build is strictly less than the smallest number of that length. The recipe can
-never catch up. Therefore **every narcissistic number has at most 60 digits**, or
-equivalently,
+The law scales seamlessly from a single pair of fangs to an entire monstrous
+brood. Product and sum agree modulo $b - 1$ whenever the digits are conserved.
 
-$$n \text{ narcissistic} \;\Longrightarrow\; n < 10^{60}.$$
+## What we can prove, and what still prowls in the dark
 
-That is the headline theorem, and it is exactly what has been established with
-full rigor: a hard, finite ceiling on the entire species. Below $10^{60}$ there
-may be many monsters; above it, there is not a single one, ever.
+The law above is airtight: it is a theorem, true for all bases $b \ge 2$ and all
+factorizations, proved from first principles. But the folklore surrounding
+vampire numbers is mostly *conjecture*, and here the creatures still elude
+capture.
 
-## How sharp is the ceiling?
+It is believed that vampire numbers thin out at a very specific rate — that the
+fraction of $2n$-digit numbers which are vampires behaves like $1/\sqrt{n}$ as the
+number of digits grows — and that every "even window" $[10^{2k}, 10^{2k+2})$
+contains at least one. **Ghost numbers**, by contrast, are conjectured to have
+density zero: as numbers get longer, it becomes overwhelmingly unlikely that a
+product will avoid *every* digit of its factors, so ghosts fade toward
+extinction. These claims are easy to state and stubborn to prove, because they
+amount to controlling the digits of *random products* — a problem entangled with
+the deep difficulty of understanding multiplication and factoring at the level of
+digits.
 
-The bound of $10^{60}$ is honest but generous. It says "the monsters are extinct
-beyond 60 digits," and that is provably true. But where does the *last* monster
-actually live?
+That tension is the real charm of the bestiary. A vampire number is nothing more
+than a coincidence between two lists of digits — the product's and the fangs' —
+and yet chasing those coincidences leads straight to questions as hard as any in
+number theory. The monsters are easy to name. Pinning down how many there are, and
+where they lurk, is the hunt that continues.
 
-The answer, found by exhaustive search, is one of the great curiosities of
-recreational number theory. The largest narcissistic number is
+## Why bother?
 
-$$115\,132\,219\,018\,763\,992\,565\,095\,597\,973\,971\,522\,401,$$
-
-a 39-digit colossus. Every digit of this enormous number, raised to the 39th
-power, summed together, returns the number itself. After it — nothing. The
-species has exactly 88 members in base ten, and this 39-digit titan is the last
-of its line. (Proving the *sharp* bound of 39 digits, rather than the safe 60,
-is a natural next challenge: the same race argument can be tightened, since the
-true crossover where $10^{d-1}$ overtakes $d \cdot 9^d$ happens earlier than
-$d = 61$.)
-
-There is something almost poignant about a number being the very last of its
-kind. The narcissistic numbers begin with the humble 1, parade through the
-elegant trio 370, 371, 407, climb through ever-rarer specimens, and finally
-terminate forever at a 39-digit monument to self-reference.
-
-## Why this is more than a parlor trick
-
-It is tempting to file narcissistic numbers under "amusing but pointless." That
-would be a mistake, and the reason illuminates a deep theme in mathematics.
-
-The narcissistic property is a **digit-combinatorial** property: it depends not on
-the arithmetic structure of a number (its prime factors, its divisors) but on the
-*symbols we use to write it down*. Change the base from ten to two and you get an
-entirely different population of monsters. Properties like this sit at a strange
-crossroads. They are trivial to *state* — a ten-year-old understands the rule for
-153 — yet they are often shockingly hard to *analyze*. They are the bridge in our
-bestiary's domain: a meeting point between elementary arithmetic and genuine
-combinatorial difficulty.
-
-The narcissistic numbers happen to yield to analysis, and beautifully so, because
-the exponential race between $9^d$ and $10^d$ is clean enough to settle the
-finiteness question outright. But their cousins are not always so cooperative.
-Consider the **vampire numbers**, the creatures that gave this bestiary its name.
-A vampire number is an even-digit number $v$ that can be written as a product
-$v = x \times y$, where the two "fangs" $x$ and $y$ together use exactly the same
-digits as $v$ itself. The smallest is
-
-$$1260 = 21 \times 60,$$
-
-where the fangs 21 and 60 reuse precisely the digits 1, 2, 6, 0 of 1260. To hunt
-vampire numbers efficiently, you would essentially need to factor numbers and
-juggle their digit permutations at the same time — a task believed to be as
-genuinely hard as factoring large integers, the very problem on which much of
-modern cryptography rests. The same easy-to-state, hard-to-analyze flavor runs
-through the **ghost numbers** (products whose factors share *no* digit with the
-result, which become vanishingly rare as numbers grow) and the **zombie numbers**
-(numbers with multiple factorizations of conflicting character).
-
-So the narcissistic numbers are a kind of gift: a monster we can fully tame. We
-can prove, with absolute certainty, that the species is finite, that it lives
-entirely below $10^{60}$, and we can exhibit named specimens — 1, 153, 370, 371,
-407 — and check each one exactly. They are a proof of concept for a whole
-philosophy: that the playful "creatures" of recreational mathematics can be
-captured with the full machinery of rigorous proof, and that doing so reveals
-real structure underneath the whimsy.
-
-## The shape of the argument, in one breath
-
-If you remember one thing, let it be the race. A narcissistic number must
-simultaneously be *large because it has many digits* and *small because its
-digit-powers cannot exceed $d \cdot 9^d$*. These two demands are compatible only
-for small $d$. The floor $10^{d-1}$ rises faster than the ceiling $d \cdot 9^d$,
-and once it pulls ahead — provably, from 61 digits on — the narcissistic numbers
-cannot exist. The species is finite, bounded, and, in the end, mortal.
-
-It is a small theorem about a frivolous-sounding object, and that is precisely
-what makes it lovely. The monsters of arithmetic are not just curiosities to be
-collected. Each one is a tiny laboratory in which the eternal tension between the
-*additive* and *multiplicative* lives of numbers — between how we write them and
-how they are built — plays out in miniature. The narcissist, vain to the last,
-turns out to have taught us something true.
+Because the same move that tames vampires — noticing that a condition on
+*symbols* forces a condition on *values* — is one of the most powerful and
+recurring ideas in mathematics. Casting out nines is a toy, but the principle
+behind it, that digit patterns and arithmetic residues are two faces of one
+coin, echoes through cryptography, coding theory, and the study of how numbers
+are built from primes. The bestiary is a playground, but the games it teaches are
+the real thing. And there is genuine joy in discovering that a creature invented
+purely for fun turns out to carry, stamped into its bones, a law it cannot
+escape.

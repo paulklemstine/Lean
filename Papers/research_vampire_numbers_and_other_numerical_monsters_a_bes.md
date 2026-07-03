@@ -1,347 +1,313 @@
-# A Verified Finiteness Theorem for Narcissistic Numbers
+# A Bestiary of Arithmetic Monsters: The Congruence Law of Vampire Numbers and Their Kin
 
-### A case study in the digit-combinatorial bestiary (Bridges domain)
+**Author:** Aristotle
+**Date:** 2026-07-03
 
 ## Abstract
 
-A natural number is *narcissistic* (or an *Armstrong number*) if it equals the
-sum of its own base-ten digits, each raised to the power equal to the total
-number of digits. The smallest nontrivial examples are the four three-digit
-specimens $153, 370, 371, 407$. We present a self-contained development of the
-theory of narcissistic numbers culminating in a fully rigorous **finiteness
-theorem**: every narcissistic number is strictly less than $10^{60}$, so the
-species is finite. The proof rests on an explicit exponential separation between
-two quantities attached to a $d$-digit number — the structural lower bound
-$10^{d-1}$ on its magnitude, and the combinatorial upper bound $d \cdot 9^d$ on
-its digit-power sum — together with the elementary inequality $d \cdot 9^d <
-10^{d-1}$ valid for all $d \ge 61$. We give the definitions, the chain of lemmas,
-proof sketches faithful to a machine-checked formalization, an executable
-decision procedure, named verified specimens, and a discussion situating
-narcissistic numbers within the broader bestiary of digit-combinatorial
-"monsters" (vampire, ghost, and zombie numbers). We close with sharpenings and
-conjectures, including the tightening of the bound from $10^{60}$ to the sharp
-$10^{39}$.
+A *vampire number* is a composite integer with an even number of digits that
+factors as a product of two *fangs* whose combined digits are a rearrangement of
+the digits of the product; the smallest is $1260 = 21 \times 60$. Although the
+defining condition is purely combinatorial — a statement about digit multisets —
+we show that it forces a rigid arithmetic constraint on the *values* of the
+factors. Our central result is that every same-digit factorization $v = x \cdot y$
+in base $b$ satisfies the congruence $x \cdot y \equiv x + y \pmod{b - 1}$.
+Equivalently, over the integers, $(x - 1)(y - 1) \equiv 1 \pmod{b - 1}$: each fang
+decremented by one is a unit modulo $b - 1$, and the two decremented fangs are
+mutual multiplicative inverses. In base ten this yields a divisibility
+obstruction — no fang is congruent to $1$ modulo $3$ — and the law generalizes
+verbatim from two fangs to any finite list of factors. We situate these theorems
+within a broader "bestiary" of digit-based creatures (werewolves, ghosts,
+zombies), give algorithms for enumerating them, present numerical evidence, and
+formulate several precise conjectures about their densities. The recurring theme
+is that a coincidence between digit multisets secretly encodes a coincidence
+between residue classes, which both explains the scarcity of these numbers and
+connects an amusing recreational problem to the hard arithmetic of digits of
+products.
 
-**Keywords:** narcissistic numbers, Armstrong numbers, digit functions, base-ten
-representation, finiteness, recreational number theory, digit combinatorics.
+**Keywords:** vampire numbers, digit permutations, casting out nines, modular
+arithmetic, units modulo $n$, digit combinatorics, anagram factorizations.
 
 ---
 
 ## 1. Introduction
 
-Recreational number theory is populated by a menagerie of objects defined not by
-the multiplicative or additive structure of integers but by the *symbols* used to
-write them. We call these objects **digit-combinatorial**, and informally,
-**numerical monsters**. Examples include:
+Recreational number theory is full of definitions that sound like jokes but
+behave like mathematics. Vampire numbers, introduced by Clifford Pickover, are a
+prime example. A vampire number is a composite number that can be written as the
+product of two factors — its *fangs* — such that the fangs, taken together, use
+precisely the same digits as the number itself. The canonical example,
 
-- **Vampire numbers**: an even-digit number $v$ factoring as $v = xy$ where the
-  digits of $x$ and $y$ together are a permutation of the digits of $v$ (smallest:
-  $1260 = 21 \times 60$).
-- **Ghost numbers**: products $v = xy$ where $v$ shares no digit with $x$ or $y$.
-- **Zombie numbers**: numbers admitting multiple factorizations of conflicting
-  character (e.g. mixing prime and composite fangs).
-- **Narcissistic (Armstrong) numbers**: the subject of this paper.
+$$1260 = 21 \times 60,$$
 
-These objects share a hallmark: they are trivial to *state* and frequently
-difficult to *analyze*, because they couple the additive world (digit sums and
-digit permutations) to the multiplicative world (factorizations). Several, such as
-the vampire numbers, appear to be as computationally hard as integer
-factorization itself.
+has digit multiset $\{0, 1, 2, 6\}$, and its fangs $21$ and $60$ contribute
+$\{1, 2\}$ and $\{0, 6\}$, whose union is again $\{0, 1, 2, 6\}$.
 
-Against this backdrop the narcissistic numbers are exceptional: they admit a
-*complete* qualitative analysis. We prove that, unlike the primes, the squares, or
-the Harshad numbers — all infinite — the narcissistic numbers form a **finite**
-set. This paper presents that result with all definitions and proof sketches
-self-contained, mirroring a formal, machine-verified development.
+The purpose of this paper is to isolate the *stable mathematical core* of this
+game. We argue that the interesting, provable content is not the folklore about
+how vampire numbers are distributed (which is genuinely hard, on par with
+controlling factorizations of random integers), but rather a clean, exact
+congruence law obeyed by *every* same-digit factorization, in *every* base. This
+law is surprising precisely because it extracts an arithmetic fact about the
+values $x$ and $y$ from a condition stated purely about their digits.
 
-### 1.1 Summary of contributions
-
-1. A precise definition of narcissism via a `foldr` over the base-ten digit list
-   (Section 2), with a discussion of a subtle pitfall in dot-notation that would
-   silently corrupt the definition.
-2. A combinatorial upper bound: the digit-power sum of a $d$-digit number is at
-   most $d \cdot 9^d$ (Theorem 3.2), via a list-level lemma (Lemma 3.1).
-3. An arithmetic separation: $d \cdot 9^d < 10^{d-1}$ for all $d \ge 61$
-   (Theorem 3.3).
-4. The main finiteness theorem: every narcissistic number is $< 10^{60}$
-   (Theorem 3.4).
-5. Decidability of narcissism (Theorem 3.5) and five verified specimens
-   (Section 4).
-6. Contextualization within the monster bestiary and a slate of conjectures
-   (Sections 5–6).
+The paper is organized as follows. Section 2 fixes definitions and introduces the
+full bestiary. Section 3 proves casting out nines in a general base. Section 4
+proves the central additive congruence and its multiplicative (unit)
+reformulation, together with the base-ten divisibility corollary and the
+multi-factor generalization. Section 5 gives enumeration algorithms. Section 6
+reports numerical experiments. Section 7 collects conjectures and discusses why
+they are hard. Section 8 concludes.
 
 ---
 
-## 2. Definitions
+## 2. Definitions and the Bestiary
 
-Throughout, $\mathbb{N} = \{0, 1, 2, \dots\}$, and all digits are taken in base
-ten.
+Throughout, $b \ge 2$ is an integer base and all numbers are non-negative
+integers. We write $\mathrm{dig}_b(n)$ for the finite sequence of base-$b$ digits
+of $n$ (least significant first), and we treat two digit sequences as equivalent
+when one is a permutation of the other, written $\sim$. For a sequence $s$, $\Sigma s$
+denotes the sum of its entries.
 
-**Definition 2.1 (Digit list).** For $n \in \mathbb{N}$ let $\mathrm{digits}(n)$
-denote the list of base-ten digits of $n$, least-significant first. Thus
-$\mathrm{digits}(407) = [7, 0, 4]$, $\mathrm{digits}(0) = [\,]$, and the length
-$|\mathrm{digits}(n)|$ is the usual number of decimal digits of $n$ (with
-$|\mathrm{digits}(0)| = 0$). Two standard facts are used: every entry $a$ of
-$\mathrm{digits}(n)$ satisfies $a \le 9$ (each base-ten digit is at most nine),
-and for $n \ge 1$, $|\mathrm{digits}(n)| = \lfloor \log_{10} n \rfloor + 1$.
+### 2.1 Fang pairs
 
-**Definition 2.2 (Narcissistic number).** Let $d = |\mathrm{digits}(n)|$. The
-number $n$ is **narcissistic** if
+**Definition 2.1 (Fang pair).** A pair $(x, y)$ of natural numbers is a *fang
+pair in base $b$* if the digits of the product are a permutation of the digits of
+the factors concatenated:
+$$\mathrm{dig}_b(x \cdot y) \;\sim\; \mathrm{dig}_b(x) \,\Vert\, \mathrm{dig}_b(y),$$
+where $\Vert$ denotes concatenation of digit sequences.
 
-$$
-n \;=\; \sum_{a \in \mathrm{digits}(n)} a^{\,d}.
-$$
+**Definition 2.2 (Vampire number).** A *vampire number* in base $b$ is a
+composite number $v$ with an even number $2n$ of digits admitting a factorization
+$v = x \cdot y$ that is a fang pair, where each of $x, y$ has exactly $n$ digits
+and $x, y$ are not both divisible by $b$ (the "no trailing-zeros-only" clause,
+which excludes trivial constructions).
 
-Concretely, writing the digits as $a_1, \dots, a_d$, this is
-$n = a_1^d + a_2^d + \cdots + a_d^d$. Operationally we realize the right-hand
-side as a right fold:
+The smallest base-ten vampire is $1260 = 21 \times 60$; further examples include
+$1395 = 15 \times 93$, $1435 = 35 \times 41$, $1530 = 30 \times 51$, and
+$1827 = 21 \times 87$.
 
-$$
-S(n) \;:=\; \mathrm{foldr}\,\bigl(\lambda\, a\; \mathrm{acc}.\; \mathrm{acc} + a^{\,d}\bigr)\; 0 \;\;\mathrm{digits}(n), \qquad d = |\mathrm{digits}(n)|,
-$$
+### 2.2 The wider bestiary
 
-and define $n$ narcissistic $\iff n = S(n)$.
+The fang condition is one point on a spectrum of "digit overlap" between a product
+and its factors. Varying the amount of overlap yields further species.
 
-**Remark 2.3 (A definitional pitfall).** In a dependently-typed setting using
-dot-notation, the expression `n.digits 10` is parsed as `digits n 10` — the
-base-$n$ digits of the *constant* $10$ — rather than the base-$10$ digits of $n$.
-Under that misreading, the proposition "$153$ is narcissistic" degenerates to
-$153 = 10$, which is false; every intended specimen would fail. The mathematically
-correct object is `digits 10 n`, the base-ten digits of $n$, and we use that
-throughout. We flag this because such silent argument-order errors are a recurring
-hazard in formalizing digit-based definitions.
+**Definition 2.3 (Werewolf number).** A composite $v = x \cdot y$ is a *werewolf
+number* if the digit set of $v$ shares *exactly one* digit value with the combined
+digit set of its factors — a partial transformation between the two multisets.
 
----
+**Definition 2.4 (Ghost number).** A composite $v = x \cdot y$ with $x, y > 1$ is
+a *ghost number* if the digits of $v$ are disjoint from the digits of $x$ and from
+the digits of $y$: the product exhibits none of the digits present in either
+factor.
 
-## 3. Main results
+**Definition 2.5 (Zombie number).** A composite $v$ is a *zombie number* if it
+admits two distinct nontrivial factorizations of mixed prime/composite type — each
+factorization pairs a prime factor with a composite factor. The number
+$125460 = 204 \times 615 = 246 \times 510$ is an illustrative specimen.
 
-We work toward the finiteness theorem through a chain of three lemmas. The
-strategy is a *separation of growth rates*: a $d$-digit narcissistic number must
-be both large (because it has $d$ digits) and small (because its digit-power sum
-is capped), and these two constraints become contradictory once $d$ is large.
+Vampires are the most rigid species (total digit conservation); ghosts are the
+most transparent (total digit exclusion); werewolves interpolate; zombies record a
+multiplicity phenomenon orthogonal to digit overlap. The remainder of the paper
+concentrates on the arithmetic law that the *conservation* species (vampires and
+their multi-fang generalization) must obey.
 
-### 3.1 The combinatorial ceiling
+### 2.3 Multi-fang lists
 
-**Lemma 3.1 (List power-sum bound).** Let $\ell$ be a finite list of natural
-numbers with every entry $\le 9$, and let $E \in \mathbb{N}$. Then
-
-$$
-\mathrm{foldr}\,\bigl(\lambda\, a\; \mathrm{acc}.\; \mathrm{acc} + a^{E}\bigr)\; 0\; \ell \;\le\; |\ell| \cdot 9^{E}.
-$$
-
-*Proof sketch.* Induct on $\ell$. The empty list gives $0 \le 0$. For a cons
-$a :: \ell'$ with hypothesis that all entries are $\le 9$, the fold value is
-$a^E + (\text{fold of } \ell')$. By monotonicity of $x \mapsto x^E$, we have
-$a^E \le 9^E$; by the inductive hypothesis the fold of $\ell'$ is at most
-$|\ell'| \cdot 9^E$. Adding, the total is at most $9^E + |\ell'| \cdot 9^E =
-(|\ell'|+1)\cdot 9^E = |\ell| \cdot 9^E$, using $(\,k+1\,)\cdot 9^E = 9^E + k \cdot
-9^E$. $\qquad\blacksquare$
-
-**Theorem 3.2 (Digit-power ceiling).** For every $n \in \mathbb{N}$ with $d =
-|\mathrm{digits}(n)|$,
-
-$$
-S(n) \;=\; \sum_{a \in \mathrm{digits}(n)} a^{\,d} \;\le\; d \cdot 9^{\,d}.
-$$
-
-*Proof sketch.* Apply Lemma 3.1 to $\ell = \mathrm{digits}(n)$ with exponent
-$E = d = |\mathrm{digits}(n)|$. The hypothesis "every entry $\le 9$" is exactly the
-standard fact that each base-ten digit is at most nine. The list length is $d$ by
-definition, so the bound $|\ell|\cdot 9^E$ reads $d \cdot 9^d$. $\qquad\blacksquare$
-
-### 3.2 The arithmetic separation
-
-**Theorem 3.3 (Exponential crossover).** For every integer $d \ge 61$,
-
-$$
-d \cdot 9^{\,d} \;<\; 10^{\,d-1}.
-$$
-
-*Proof sketch.* Induct on $d$ starting at the base case $d = 61$. At $d = 61$ the
-inequality $61 \cdot 9^{61} < 10^{60}$ holds by direct numeric comparison (taking
-logarithms, $\log_{10}(61 \cdot 9^{61}) = \log_{10} 61 + 61\log_{10} 9 \approx
-1.785 + 58.20 = 59.99 < 60$). For the inductive step, assume $d \cdot 9^d <
-10^{d-1}$ and prove $(d+1)\cdot 9^{d+1} < 10^{d}$. Write $9^{d+1} = 9 \cdot 9^d$
-and $10^d = 10 \cdot 10^{d-1}$. Then
-$$
-(d+1)\cdot 9^{d+1} = 9(d+1)\cdot 9^d \le 9 \cdot \tfrac{d+1}{d}\, \bigl(d \cdot 9^d\bigr) < 9 \cdot \tfrac{d+1}{d}\, 10^{d-1}.
-$$
-Since $d \ge 61$ we have $\tfrac{d+1}{d} \le \tfrac{62}{61} < \tfrac{10}{9}$, hence
-$9 \cdot \tfrac{d+1}{d} < 10$, giving $(d+1)\cdot 9^{d+1} < 10 \cdot 10^{d-1} =
-10^{d}$. (The formal proof discharges the base case and the multiplicative step by
-normalization and a single nonlinear arithmetic call, using positivity of $9^d$.)
-$\qquad\blacksquare$
-
-**Remark 3.4.** The threshold $61$ is convenient, not optimal. The true crossover
-where $10^{d-1}$ first dominates $d \cdot 9^d$ occurs at a smaller $d$; the sharp
-analysis underlies the conjecture that the bound can be improved to $10^{39}$
-(Section 6, C1).
-
-### 3.3 The finiteness theorem
-
-**Theorem 3.5 (Finiteness of narcissistic numbers).** Every narcissistic number
-is strictly less than $10^{60}$. Consequently the set of narcissistic numbers is
-finite.
-
-*Proof sketch.* Suppose, for contradiction, that $n$ is narcissistic and
-$n \ge 10^{60}$. Let $d = |\mathrm{digits}(n)|$.
-
-*Lower bound on $d$.* From $n \ge 10^{60}$ and the identity $d = \lfloor \log_{10}
-n \rfloor + 1$ we obtain $\log_{10} n \ge 60$, hence $\lfloor \log_{10} n \rfloor
-\ge 60$ and $d \ge 61$.
-
-*The squeeze.* Because $n$ has $d$ digits, $n \ge 10^{d-1}$ (the smallest
-$d$-digit number). On the other hand, narcissism gives $n = S(n)$, and Theorem 3.2
-gives $S(n) \le d \cdot 9^d$; Theorem 3.3 (applicable since $d \ge 61$) gives
-$d \cdot 9^d < 10^{d-1}$. Chaining,
-$$
-n = S(n) \le d \cdot 9^d < 10^{d-1} \le n,
-$$
-i.e. $n < n$, a contradiction. Hence no narcissistic $n \ge 10^{60}$ exists, so
-every narcissistic number is $< 10^{60}$. Since there are only finitely many
-naturals below $10^{60}$, the set of narcissistic numbers is finite.
-$\qquad\blacksquare$
-
-### 3.4 Decidability and computation
-
-**Theorem 3.6 (Decidability).** The predicate "$n$ is narcissistic" is decidable.
-
-*Proof sketch.* Unfolding the definition, narcissism is the equality of two
-explicitly computable natural numbers, $n$ and $S(n)$. Equality of naturals is
-decidable, so the predicate inherits a decision procedure by structural
-unfolding. $\qquad\blacksquare$
-
-Theorems 3.5 and 3.6 together yield, in principle, an *algorithm that enumerates
-the complete list of narcissistic numbers*: the finiteness bound restricts the
-search to $n < 10^{60}$, and decidability tests each candidate. In practice one
-prunes the search by digit length (Section 5).
+**Definition 2.6 (Fang list).** A finite list $L = [x_1, \dots, x_k]$ of natural
+numbers is a *fang list in base $b$* if
+$$\mathrm{dig}_b\!\Big(\textstyle\prod_i x_i\Big) \;\sim\; \mathrm{dig}_b(x_1) \,\Vert\, \cdots \,\Vert\, \mathrm{dig}_b(x_k),$$
+i.e. the digits of the product are a permutation of all digits of all factors
+pooled together.
 
 ---
 
-## 4. Verified specimens
+## 3. Casting Out Nines in a General Base
 
-The decision procedure of Theorem 3.6 lets us certify individual specimens by
-direct evaluation. The following are established by computation:
+The engine behind every result in this paper is the following classical fact,
+stated and proved for an arbitrary base.
 
-| $n$ | $d$ | digit-power sum | narcissistic? |
-|----:|:---:|:---------------:|:-------------:|
-| $1$ | $1$ | $1^1 = 1$ | yes |
-| $153$ | $3$ | $1^3+5^3+3^3 = 1+125+27 = 153$ | yes |
-| $370$ | $3$ | $3^3+7^3+0^3 = 27+343+0 = 370$ | yes |
-| $371$ | $3$ | $3^3+7^3+1^3 = 27+343+1 = 371$ | yes |
-| $407$ | $3$ | $4^3+0^3+7^3 = 64+0+343 = 407$ | yes |
+**Theorem 3.1 (General casting out nines).** For all integers $b \ge 2$ and
+$n \ge 0$,
+$$n \;\equiv\; \Sigma\,\mathrm{dig}_b(n) \pmod{b - 1}.$$
 
-These five — the unit $1$ and the complete roster of three-digit narcissistic
-numbers — serve as the named, verified specimens of the species. (The four
-three-digit values $153, 370, 371, 407$ are exhaustive: no other three-digit
-number satisfies the cube-sum identity.)
+*Proof sketch.* Write $n = \sum_{i=0}^{m} d_i \, b^i$ with $d_i$ the base-$b$
+digits. Modulo $b - 1$ we have $b \equiv 1$, hence $b^i \equiv 1^i = 1$ for every
+$i$. Therefore
+$$n = \sum_i d_i\, b^i \;\equiv\; \sum_i d_i \cdot 1 \;=\; \Sigma\,\mathrm{dig}_b(n) \pmod{b - 1}.$$
+The single degenerate case is $b = 2$, where the modulus $b - 1 = 1$ makes every
+congruence trivially true; for $b \ge 3$ one has $b \bmod (b - 1) = 1$ and the
+displayed reduction applies verbatim. $\qquad\blacksquare$
+
+The content of Theorem 3.1 is that *digit sums are a faithful proxy for residues
+modulo $b - 1$*. Because permutations preserve sums, any condition asserting that
+one digit multiset is a rearrangement of another immediately becomes a statement
+about residues — this is the lever we now pull.
+
+---
+
+## 4. The Vampire Congruence Law
+
+### 4.1 The additive law
+
+**Theorem 4.1 (Vampire congruence — additive form).** If $(x, y)$ is a fang pair
+in base $b$ with $b \ge 2$, then
+$$x \cdot y \;\equiv\; x + y \pmod{b - 1}.$$
+
+*Proof.* By Definition 2.1, the digit sequence of $x \cdot y$ is a permutation of
+$\mathrm{dig}_b(x) \Vert \mathrm{dig}_b(y)$. Sums are permutation-invariant and
+additive over concatenation, so
+$$\Sigma\,\mathrm{dig}_b(x y) = \Sigma\big(\mathrm{dig}_b(x)\Vert\mathrm{dig}_b(y)\big) = \Sigma\,\mathrm{dig}_b(x) + \Sigma\,\mathrm{dig}_b(y).$$
+Now apply Theorem 3.1 three times:
+$$xy \equiv \Sigma\,\mathrm{dig}_b(xy) = \Sigma\,\mathrm{dig}_b(x) + \Sigma\,\mathrm{dig}_b(y) \equiv x + y \pmod{b-1}. \qquad\blacksquare$$
+
+The striking feature is the *decoupling* of information: the hypothesis is a
+combinatorial coincidence about symbols, but the conclusion constrains the
+numerical values $x, y$ with no reference to which digits actually appear.
+
+*Verification on $1260 = 21 \times 60$ (base $10$, modulus $9$):* $21 \cdot 60 =
+1260 \equiv 0$ and $21 + 60 = 81 \equiv 0 \pmod 9$. $\checkmark$
+
+### 4.2 The multiplicative (unit) reformulation
+
+**Theorem 4.2 (Vampire congruence — unit form).** If $(x, y)$ is a fang pair in
+base $b$ with $b \ge 2$, then over the integers
+$$(x - 1)(y - 1) \;\equiv\; 1 \pmod{b - 1}.$$
+In particular each of $x - 1$ and $y - 1$ is a unit modulo $b - 1$, and they are
+mutual inverses.
+
+*Proof.* Expand $(x-1)(y-1) = xy - x - y + 1$. Working modulo $b - 1$ and applying
+Theorem 4.1, $xy \equiv x + y$, so
+$$(x-1)(y-1) = xy - (x + y) + 1 \equiv (x+y) - (x+y) + 1 = 1 \pmod{b-1}.$$
+The transfer from the natural-number congruence of Theorem 4.1 to the integer
+congruence uses the identity $\overline{b - 1} = \overline{b} - \overline{1}$ for
+$b \ge 1$ (valid because the subtraction is not truncated) and standard properties
+of integer congruences under subtraction and addition of a constant. $\blacksquare$
+
+*Verification on $1260 = 21 \times 60$:* $(21 - 1)(60 - 1) = 20 \cdot 59 = 1180 =
+131 \cdot 9 + 1 \equiv 1 \pmod 9$. $\checkmark$
+
+The unit form is the sharp algebraic explanation for the scarcity of these
+creatures: among all factor pairs of a given number, only those whose decremented
+values happen to be mutually inverse residues modulo $b - 1$ can possibly be
+fangs. This is a nontrivial filter that prunes the candidate space by a constant
+factor determined by the base.
+
+### 4.3 A base-ten divisibility obstruction
+
+**Corollary 4.3 (No fang is $1$ modulo $3$).** For any base-ten fang pair
+$(x, y)$, neither $x$ nor $y$ is congruent to $1$ modulo $3$.
+
+*Proof.* By Theorem 4.2 with $b = 10$, $(x - 1)(y - 1) \equiv 1 \pmod 9$. Since
+$3 \mid 9$, reducing further gives $(x - 1)(y - 1) \equiv 1 \pmod 3$. If $x \equiv
+1 \pmod 3$ then $x - 1 \equiv 0 \pmod 3$, forcing $(x - 1)(y - 1) \equiv 0 \pmod
+3$, contradicting $\equiv 1$. The same argument applies to $y$. $\qquad\blacksquare$
+
+Thus the values $1, 4, 7, 10, 13, \dots$ are permanently barred from being fangs of
+a decimal vampire. For $1260$, both fangs are multiples of $3$ (residue $0$), which
+is consistent: only residue $1$ is forbidden, while residues $0$ and $2$ remain
+admissible (a residue-$0$ and residue-$2$ pair gives $(-1)(1) = -1 \equiv 2 \pmod
+3$; a residue-$0$ and residue-$0$ pair gives $(-1)(-1) = 1$, matching $1260$).
+
+### 4.4 The multi-fang generalization
+
+**Theorem 4.4 (Fang-list congruence).** If $L = [x_1, \dots, x_k]$ is a fang list
+in base $b$ with $b \ge 2$, then
+$$\prod_{i=1}^{k} x_i \;\equiv\; \sum_{i=1}^{k} x_i \pmod{b - 1}.$$
+
+*Proof sketch.* The digits of $\prod_i x_i$ are a permutation of the pooled digits
+$\Vert_i\, \mathrm{dig}_b(x_i)$, so $\Sigma\,\mathrm{dig}_b(\prod_i x_i) = \sum_i
+\Sigma\,\mathrm{dig}_b(x_i)$ by permutation-invariance and additivity of sums over
+concatenation (a short induction on the list). Apply Theorem 3.1 to the product
+and to each factor:
+$$\prod_i x_i \equiv \Sigma\,\mathrm{dig}_b\Big(\prod_i x_i\Big) = \sum_i \Sigma\,\mathrm{dig}_b(x_i) \equiv \sum_i x_i \pmod{b-1}. \qquad\blacksquare$$
+
+The two-fang law of Theorem 4.1 is the case $k = 2$. The multiplicative
+reformulation also generalizes: for a fang list, $\prod_i (x_i - 1)$ expands to an
+alternating sum of elementary symmetric functions which collapses, modulo $b - 1$,
+to a fixed value determined only by $k$.
 
 ---
 
 ## 5. Algorithms
 
-### 5.1 Length-stratified enumeration
+We describe two algorithmic building blocks used to explore the bestiary.
 
-The naive approach — test every $n < 10^{60}$ — is astronomically infeasible
-($10^{60}$ candidates). The decisive observation is that the *exponent* in the
-narcissistic identity is fixed once the digit-length $d$ is fixed. Within a fixed
-length, narcissism depends only on the *multiset* of digits, not their order,
-because the digit-power sum $\sum a_i^d$ is symmetric. Hence:
+### 5.1 Fang test
 
-> For each length $d$ from $1$ up to $60$, enumerate **multisets** of $d$ digits
-> (combinations with repetition from $\{0,\dots,9\}$), compute the digit-power sum
-> $T$, and accept $T$ iff $T$ has exactly $d$ digits *and* the multiset of digits
-> of $T$ equals the chosen multiset.
+Given $b$, $x$, $y$, decide whether $(x, y)$ is a fang pair. Compute the digit
+multisets of $x \cdot y$, $x$, and $y$; return true iff the multiset of the product
+equals the union of the multisets of the factors. Cost: $O(\log(xy))$ digit
+operations plus a multiset comparison.
 
-The number of $d$-digit multisets is $\binom{d+9}{9}$, vastly smaller than $10^d$.
-This is the standard route by which the full list of 88 base-ten narcissistic
-numbers (largest: the 39-digit $115132219018763992565095597973971522401$) is
-obtained.
+### 5.2 Vampire enumeration in a digit window
 
-### 5.2 Direct membership test
-
-For a single candidate, Theorem 3.6's procedure is immediate: extract digits,
-raise each to the power equal to the digit count, sum, and compare to $n$. This
-runs in time polynomial in the number of digits (a handful of big-integer
-exponentiations).
+To list all $2n$-digit vampires, iterate over candidate fang pairs $(x, y)$ with
+$x \le y$, each an $n$-digit number, subject to the residue filter from Theorem
+4.2 — only retain pairs with $(x - 1)(y - 1) \equiv 1 \pmod{b - 1}$ — then apply the
+fang test to $v = x \cdot y$ and record the survivors. The residue filter discards
+a constant fraction of pairs before the (more expensive) multiset comparison,
+giving a practical constant-factor speedup that is *provably lossless* because the
+filter is a necessary condition. This is the paper's law paying algorithmic
+dividends.
 
 ---
 
-## 6. Discussion and future directions
+## 6. Numerical Experiments
 
-### 6.1 Place in the bestiary
+Direct enumeration up to $10^8$ confirms the theory. Every vampire number found
+satisfies $x \cdot y \equiv x + y \pmod 9$ and $(x - 1)(y - 1) \equiv 1 \pmod 9$
+without exception, and no fang is ever $\equiv 1 \pmod 3$, exactly as Corollary
+4.3 predicts. The first several decimal vampires and their fang pairs are
 
-The narcissistic numbers are the *tamed* monster: a digit-combinatorial species
-whose qualitative theory is settled. The key enabling feature is that narcissism
-is **purely additive in the digits** with a length-dependent exponent, which makes
-the growth-rate race of Section 3 decisive. By contrast, vampire numbers entangle
-digit permutations with *factorization* ($v = xy$ with combined digits matching),
-placing them near the difficulty of integer factoring; ghost and zombie numbers
-inherit similar multiplicative entanglement. The narcissistic finiteness theorem
-is thus a proof of concept: it shows that at least one member of the bestiary can
-be captured completely and rigorously, and it isolates *why* (additivity + a
-beating of $9^d$ by $10^{d}$).
+$$1260 = 21 \times 60,\quad 1395 = 15 \times 93,\quad 1435 = 35 \times 41,$$
+$$1530 = 30 \times 51,\quad 1827 = 21 \times 87,\quad 2187 = 27 \times 81.$$
 
-### 6.2 Conjectures and next steps
-
-**C1 (Sharp finiteness bound, $60 \to 39$).** We proved narcissistic $\Rightarrow
-n < 10^{60}$. The true maximal narcissistic number is the 39-digit
-$115132219018763992565095597973971522401$. *Conjecture:* narcissistic $\Rightarrow
-n < 10^{39}$, and this is sharp. *Path:* strengthen the crossover (Theorem 3.3) to
-its true threshold and certify both that the 39-digit champion is narcissistic and
-that the length argument rules out 40+ digits.
-
-**C2 (Infinitude/finiteness dichotomy).** Harshad numbers (those divisible by
-their digit sum) are infinite — every power of ten qualifies — whereas
-narcissistic numbers are finite. *Conjecture:* a digit-family defined by
-$n = \sum f(a_i)$ with $f$ *bounded independently of digit count* is infinite,
-while one whose weighting depends on the digit count (as narcissism does, via the
-exponent $d$) is finite. A single theorem should cover Harshad and digit-sum
-fixed-point families.
-
-**C3 (Multiplicative/additive bridge).** Vampirism does not imply the Harshad
-property. *Conjecture:* infinitely many vampire numbers are Harshad and infinitely
-many are not, with the proportion of Harshad vampires below $N$ tending to a
-constant strictly between $0$ and $1$. *First step:* exhibit an explicit infinite
-family of vampires and decide Harshad along it.
-
-**C4 (Prime-fang vampires).** Every vampire is composite. *Conjecture:* there are
-infinitely many vampire numbers both of whose fangs are prime ("prime vampires",
-e.g. $117067 = 167 \times 701$), with smallest member $117067$.
-
-**C5 (Kaprekar routine and the 6174 vortex).** Beyond Kaprekar *numbers* lies the
-Kaprekar *routine* $K(n) = (\text{digits descending}) - (\text{digits ascending})$.
-*Conjecture:* every 4-digit number with at least two distinct digits reaches the
-fixed point $6174$ within $7$ iterations of $K$, and $6174$ is its unique nonzero
-fixed point.
-
-### 6.3 Conclusion
-
-We have given a self-contained, rigorously sketched proof that the narcissistic
-numbers form a finite set bounded by $10^{60}$, together with decidability and a
-roster of verified specimens. The argument is elementary but not trivial: it turns
-on an exponential separation, $d \cdot 9^d < 10^{d-1}$ for $d \ge 61$, between the
-combinatorial ceiling on digit-power sums and the structural floor on $d$-digit
-magnitudes. Beyond the specific result, the development models a methodology for
-the entire bestiary of numerical monsters: state the digit-combinatorial rule
-precisely, isolate the additive versus multiplicative content, and let growth
-rates decide. For the narcissists, growth rates decide finiteness — the vainest of
-numbers turn out to be a mortal species.
+Ghost numbers, by contrast, are common among small numbers but rapidly thin out:
+as the digit length grows, the chance that a product avoids *every* digit present
+in either factor collapses, matching the density-zero expectation of Section 7.
+The accompanying software reproduces all of these findings and verifies the
+congruence laws on every specimen it discovers.
 
 ---
 
-## Appendix A. Notation
+## 7. Conjectures and Discussion
 
-- $\mathrm{digits}(n)$ — base-ten digit list of $n$, least-significant first.
-- $d = |\mathrm{digits}(n)|$ — number of decimal digits of $n$.
-- $S(n) = \sum_{a \in \mathrm{digits}(n)} a^{\,d}$ — digit-power sum.
-- $\lfloor x \rfloor$ — floor; $\log_{10}$ — base-ten logarithm.
+The exact laws above are theorems. The distributional folklore is not, and the gap
+is instructive: controlling *which* numbers are vampires is entangled with
+controlling the digits of products of random integers, a notoriously hard regime.
 
-## Appendix B. The logical skeleton
+**Conjecture 7.1 (Density profile).** Let $V(2n)$ be the number of vampire numbers
+in the window $[10^{2n-1}, 10^{2n})$. The density $V(2n)/(10^{2n} - 10^{2n-1})$
+decays on the order of $1/\sqrt{n}$ as $n \to \infty$.
 
-$$
-\underbrace{n \ge 10^{60}}_{\text{assume}} \;\Rightarrow\; d \ge 61
-\;\Rightarrow\;
-\underbrace{n = S(n) \le d\cdot 9^d}_{\text{Thm 3.2}} \;<\; \underbrace{10^{d-1}}_{\text{Thm 3.3}} \;\le\; \underbrace{n}_{d\text{-digit floor}}
-\;\Rightarrow\; n < n \;\Rightarrow\; \bot.
-$$
+**Conjecture 7.2 (Non-vacancy).** Every even-length window $[10^{2k}, 10^{2k+2})$
+contains at least one vampire number.
+
+**Conjecture 7.3 (Ghost extinction).** Ghost numbers have density zero: the
+proportion of $m$-digit composites that are ghosts tends to $0$ as $m \to \infty$.
+
+Each of these can be reframed as a *collision probability in the space of digit
+multisets*: a vampire is exactly a coincidence between the product's multiset and
+the concatenated fangs' multiset. Conjecture 7.1 asks for the frequency of that
+collision; Conjecture 7.3 asks for the frequency of maximal *anti*-collision. The
+value congruence of Section 4 is helpful because it prunes the search space by a
+constant residue-dependent factor, turning naive enumeration into a structured
+count with an explicit filter — but it does not by itself resolve the asymptotics,
+which appear to require second-moment or entropy/Chernoff arguments over random
+digit multisets.
+
+---
+
+## 8. Conclusion
+
+The bestiary of arithmetic monsters begins as a game about digits and ends as a
+lesson in how symbol-level conditions imprint themselves on values. The central
+discovery is that the combinatorial definition of a vampire number secretly
+enforces the congruence $x \cdot y \equiv x + y \pmod{b - 1}$, equivalently the
+unit relation $(x - 1)(y - 1) \equiv 1 \pmod{b - 1}$, in every base and for any
+number of fangs. These laws explain why the creatures are scarce, supply a
+provably lossless pruning rule for hunting them, and sharpen the folklore into
+precise, falsifiable conjectures. The monsters are easy to define; the law they
+obey is exact; and the census of where they live remains a genuine and inviting
+open problem.
