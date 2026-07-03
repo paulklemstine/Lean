@@ -1067,7 +1067,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "A recursive decomposition of greedy Tamari intervals via planar map structures"
   },
   {
-    "consumed_by_exp_id": "db78fb28",
+    "consumed_by_exp_id": "",
     "description": "The sheared Witt vector functor \\(\\chW\\) is isomorphic to the filtered colimit of the functors \\(n \\mapsto W(R[p^n])/\\hw(R[p^n])\\) over \\(n \\geq 1\\).",
     "domains": [
       "Bridges"
@@ -1076,7 +1076,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01178v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T22:10:42.305562+00:00",
     "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
   },
@@ -1316,7 +1316,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing the generalized honeymoon Oberwolfach problem in Lean 4"
   },
   {
-    "consumed_by_exp_id": "3e8df1d3",
+    "consumed_by_exp_id": "6d5a2dac",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
     "domains": [
       "Novelty",
@@ -1911,12 +1911,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "This paper investigates the rare class of real quadratic fields meeting Hammarhjelm's condition, tying their uniqueness to small fundamental units and complex analytic constraints. It provides a definitive enumeration and formalizes a conjecture about their distribution.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0158",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31544v1",
+    "status": "available",
+    "timestamp": "2026-07-03T17:50:42.550912+00:00",
+    "title": "Hammarhjelm's condition and the classification of real quadratic fields"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0158",
+    "id": "fd_0159",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -1930,7 +1945,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0159",
+    "id": "fd_0160",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -1944,7 +1959,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0160",
+    "id": "fd_0161",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
@@ -1958,7 +1973,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0161",
+    "id": "fd_0162",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -1972,7 +1987,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0162",
+    "id": "fd_0163",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
@@ -1987,7 +2002,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0163",
+    "id": "fd_0164",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
@@ -2002,7 +2017,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0164",
+    "id": "fd_0165",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -2017,7 +2032,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0165",
+    "id": "fd_0166",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -2031,7 +2046,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0166",
+    "id": "fd_0167",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -2046,7 +2061,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0167",
+    "id": "fd_0168",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02132v1",
@@ -2061,7 +2076,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0168",
+    "id": "fd_0169",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -2075,7 +2090,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0169",
+    "id": "fd_0170",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02098v1",
@@ -2090,7 +2105,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0170",
+    "id": "fd_0171",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01716v1",
@@ -2105,7 +2120,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Physics"
     ],
-    "id": "fd_0171",
+    "id": "fd_0172",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
@@ -2119,7 +2134,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0172",
+    "id": "fd_0173",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01718v1",
@@ -2133,7 +2148,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0173",
+    "id": "fd_0174",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01761v1",
@@ -2148,7 +2163,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Logic"
     ],
-    "id": "fd_0174",
+    "id": "fd_0175",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
@@ -2162,7 +2177,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0175",
+    "id": "fd_0176",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01695v1",
@@ -2176,7 +2191,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0176",
+    "id": "fd_0177",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01438v1",
@@ -2191,7 +2206,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0177",
+    "id": "fd_0178",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -2200,31 +2215,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "Alexander's Conjecture for Infinite Simplicial Complexes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "47de8358",
     "description": "The lower and upper bounds on the number of \u03a6-separable dichotomies C_F given in Theorem 1 (in terms of N, r = rank(\u03a6(F)), and s = kruskal_rank(\u03a6(F))) are tight for every achievable pair (r, s). That is, for any N \u2208 \u2115 and any integers r, s with 1 \u2264 s \u2264 r \u2264 min(N, M'), there exists a point set F \u2286 \u211d^M of size N and a linear map \u03a6: \u211d^M \u2192 \u211d^{M'} such that rank(\u03a6(F)) = r, kruskal_rank(\u03a6(F)) = s, and C_F achieves the lower bound; similarly, there exists a configuration achieving the upper bound.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0178",
+    "id": "fd_0179",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T10:39:12.276840+00:00",
     "title": "Tightness of Function-Counting Bounds for All Rank-Kruskal Rank Pairs"
   },
   {
-    "consumed_by_exp_id": "47de8358",
+    "consumed_by_exp_id": "",
     "description": "For a 1-dimensional flag simplicial complex $\\Delta$ and its Stanley-Reisner ideal $I_\\Delta$, the squarefree power $I_\\Delta^{[p]}$ has a linear resolution if and only if the Krull dimension of $S/I_\\Delta^{[p]}$ equals $2p$. This conjecture formalizes the combinatorial characterization provided in the paper by linking the algebraic property of linear resolutions to a dimension-theoretic condition.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0179",
+    "id": "fd_0180",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T10:58:07.924508+00:00",
     "title": "Linear Resolution Criterion for Squarefree Powers of Stanley-Reisner Ideals"
   },
@@ -2234,7 +2249,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0180",
+    "id": "fd_0181",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00775v1",
@@ -2248,7 +2263,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0181",
+    "id": "fd_0182",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00825v2",
@@ -2262,7 +2277,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0182",
+    "id": "fd_0183",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00651v1",
@@ -2276,7 +2291,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0183",
+    "id": "fd_0184",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00643v1",
@@ -2291,7 +2306,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0184",
+    "id": "fd_0185",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00561v1",
@@ -2305,7 +2320,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0185",
+    "id": "fd_0186",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00608v1",
@@ -2320,7 +2335,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0186",
+    "id": "fd_0187",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00456v1",
@@ -2335,7 +2350,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0187",
+    "id": "fd_0188",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00366v1",
@@ -2350,7 +2365,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0188",
+    "id": "fd_0189",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00372v1",
@@ -2364,7 +2379,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0189",
+    "id": "fd_0190",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00332v1",
@@ -2378,7 +2393,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0190",
+    "id": "fd_0191",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.32024v1",
@@ -2393,7 +2408,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0191",
+    "id": "fd_0192",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31967v1",
@@ -2408,7 +2423,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0192",
+    "id": "fd_0193",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31940v1",
@@ -2423,7 +2438,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0193",
+    "id": "fd_0194",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31908v1",
@@ -2438,7 +2453,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0194",
+    "id": "fd_0195",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31687v1",
@@ -2453,13 +2468,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0195",
+    "id": "fd_0196",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31821v2",
     "status": "available",
     "timestamp": "2026-07-03T17:15:34.828638+00:00",
     "title": "Existence of Andrews-Gordon type identities for A\u00b2_{6n+3} modules"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any profinite group G and prime p, the cup radical R_p(G) consists exactly of the elements of H^1(G,\ud835\udd3d_p) that vanish on every continuous homomorphism from G to the additive group of \ud835\udd3d_p, equivalently those that factor through the maximal pro\u2011p quotient of the abelianization of G. In particular, if two profinite groups have isomorphic maximal pro\u2011p quotients of their abelianizations then their cup radicals are isomorphic.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0197",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31547v1",
+    "status": "available",
+    "timestamp": "2026-07-03T17:51:05.773666+00:00",
+    "title": "Cup Radical Dependence Conjecture for Profinite Groups"
   },
   {
     "consumed_by_exp_id": "",
