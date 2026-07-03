@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "bd70abee",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Cusick density `c_t = dens { n : s₂(n) ≤ s₂(n+t) }`\n\nThis research cycle proved (in `Catalog/Applications/`):\n\n* `CusickShiftSevenDensity.lean` — `c_7 = 43/64` (first exact `s₂(t",
-      "quality_score": 0.7003299999999999,
-      "sorry_count": 0,
-      "theorem_count": 27,
-      "timestamp": "2026-06-27T18:14:40",
-      "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
-    },
-    {
       "cycle_id": "f8a707b1",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Twin Prime Gaps / Maynard–Tao formalization\n\nDerived from this cycle's findings (the admissibility ⇄ bounded-gaps split, the\n`liminf` reduction, and the Selberg-weight bridge). E",
@@ -2501,6 +2491,16 @@
       "theorem_count": 16,
       "timestamp": "2026-07-03T15:15:58",
       "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+    },
+    {
+      "cycle_id": "db78fb28",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures growing out of the identification of sheared\narithmetic vectors as the filtered colimit of their truncations.\n\n## 1. Descent is an equivalence, not m",
+      "quality_score": 0.66208,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-07-03T18:11:08",
+      "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73448
     }
   ],
-  "last_updated": "2026-07-03T15:15:58",
+  "last_updated": "2026-07-03T18:11:08",
   "open_questions": [
     {
       "context": "Main results (all 0-sorry):; Main new results (all 0-sorry):",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "9537a45c",
-        "quality": 0.7829999999999999,
-        "theorems": 21,
-        "title": "Idempotent Probability: Large Deviations"
-      },
-      {
         "cycle_id": "07255b71",
         "quality": 0.5811999999999999,
         "theorems": 4,
@@ -4009,6 +4003,12 @@
         "quality": 0.87056,
         "theorems": 15,
         "title": "Non-embeddability of the Petersen graph into tropical abelian Cayley graphs"
+      },
+      {
+        "cycle_id": "db78fb28",
+        "quality": 0.66208,
+        "theorems": 6,
+        "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
       }
     ]
   }
