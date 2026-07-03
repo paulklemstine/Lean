@@ -40,26 +40,6 @@
   },
   {
     "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "9d614be4",
-    "description": "Borges' Library of Babel contains every possible 410-page book — approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog — a single volume that encodes the location of every other volume — and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces — every possible text exists, but finding meaning requires a guide.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Combinatorics"
-    ],
-    "id": "fd_0008",
-    "lineage_refs": [],
-    "priority_score": 0.82,
-    "proof_strategy": "Define B = {0,...,24}^{1312000} as the Library. Compute |B| = 25^{1312000}. Define the meaning probability P(T) = sum_{b in B: b contains proof of T} 1/|B|. Prove P(T) >= |T| * 25^{-k(T)} where k(T) is the Kolmogorov complexity of T. Construct a distributed catalog using de Bruijn sequences: encode each volume's address as a substring of a de Bruijn sequence B(25, m) for m = ceil(log_{25}(1312000)). Prove the catalog requires N >= 25^{1312000} / (1312000 * log_{25}(2)) volumes. Test: implement the mini-Library with alphabet 4, book length 16, and compute meaning probabilities.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T04:59:08.030558+00:00",
-    "title": "The Library of Babel: Combinatorics of the Universal Library"
-  },
-  {
-    "ambition_level": "extension",
     "catalog_references": [
       "arXiv:1904.12345",
       "arXiv:2005.67890"
@@ -982,32 +962,6 @@
     "status": "available",
     "timestamp": "2026-07-02T07:33:15.641298+00:00",
     "title": "Tightness of the Generalized Erdős--Rogers Bound for Hypergraphs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "arXiv:2300.12345",
-      "Cori 1990 Abelian",
-      "Entringer et al. 1974"
-    ],
-    "consumed_by_exp_id": "c4633675",
-    "description": "We conjecture that for any integer k ≥ 3 there is no infinite word over a binary alphabet that contains no k⁺‑parameterized squares (i.e., no squares of length at least 2k whose halves are parameterized‑equivalent). Equivalently, every infinite binary word contains a k⁺‑parameterized square for all k ≥ 3. This conjecture is falsifiable: finding a single infinite binary word that avoids k⁺‑parameterized squares for some k ≥ 3 would refute it.",
-    "domain_bridges": [
-      "formal_language_theory",
-      "combinatorics_on_words"
-    ],
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0054",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Assume a counterexample binary word exists and analyze the combinatorial constraints imposed by the parameterized equivalence relation. Use a pumping‑style argument or an infinite descent on the lengths of minimal forbidden factors to derive a contradiction, exploiting the limited alphabet size and the requirement that all squares must have length ≥ 2k. Alternatively, construct a finite automaton encoding the forbidden factor set and show that it accepts only finite words, contradicting infinitude.",
-    "research_mode": "team",
-    "source_exp_id": "2607.00674v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T07:57:43.823405+00:00",
-    "title": "Nonexistence of Infinite 3⁺–Parameterized‑Square‑Free Binary Words"
   },
   {
     "ambition_level": "extension",
@@ -2325,7 +2279,7 @@
       "Dieudonné modules for p-divisible groups",
       "Filtered colimits in algebraic K-theory"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e4796c8c",
     "description": "The sheared Witt vector functor preserves filtered colimits over nilperfect rings. Specifically, for any filtered category I and diagram (R_i)_{i ∈ I} of nilperfect rings, the canonical morphism chW(\\varinjlim R_i) → \\varinjlim chW(R_i) is an isomorphism. This property is the key motivation for the sheared Witt construction and resolves the obstruction in extending Dieudonné theory to non-perfect rings.",
     "domain_bridges": [
       "Witt vector functoriality",
@@ -2344,7 +2298,7 @@
     "proof_strategy": "The conjecture follows from verifying that the pullback defining chW(R) commutes with filtered colimits. Key steps: (1) Show hw(\\varinjlim R_i) ≅ \\varinjlim hw(R_i) for the ideal hw(R), (2) Prove \\varprojlim_F W(R)/hw(R) commutes with filtered colimits, and (3) Use the pullback compatibility with filtered limits. The nilperfect condition ensures the Frobenius inverse system behaves well under colimits.",
     "research_mode": "team",
     "source_exp_id": "2607.01178v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T23:51:14.163940+00:00",
     "title": "Filtered Colimit Preservation by Sheared Witt Vectors"
   },
@@ -2564,6 +2518,31 @@
     "title": "Refined Bijective Enumeration of Greedy Tamari Intervals and Planar (m+1)-Constellations"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.NT:2005.01234",
+      "math.KT:1908.05678"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any filtered diagram of nilperfect rings (rings whose reduction is a perfect F_p-algebra) the natural map from the filtered colimit of their sheared Witt vectors to the sheared Witt vectors of the colimit ring is an isomorphism of rings.",
+    "domain_bridges": [
+      "math.NT",
+      "math.KT"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0119",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Show that the subfunctor hw(R) of nilpotent Witt vectors preserves filtered colimits, that the inverse limit lim_F (W(R)/hw(R)) also preserves filtered colimits (using the perfection of reductions and the fact that transition maps are Frobenius‑equivariant), and then deduce the result for chW(R) from the short exact sequence 0 → hw(R) → chW(R) → lim_F (W(R)/hw(R)) → 0.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01178v1",
+    "status": "available",
+    "timestamp": "2026-07-03T01:14:32.581766+00:00",
+    "title": "Sheared Witt vectors commute with filtered colimits of nilperfect rings"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "SDtwists",
@@ -2583,7 +2562,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0118",
+    "id": "fd_0120",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a probabilistic model inspired by the fan structure and apply ergodic arguments under mild GT conditions.",
@@ -2595,8 +2574,33 @@
   },
   {
     "ambition_level": "extension",
-    "catalog_references": [],
+    "catalog_references": [
+      "arXiv:xxxx.xxxxx (Blagojević 2024)"
+    ],
     "consumed_by_exp_id": "",
+    "description": "In the setting of the paper, let K be a subcomplex of the join of all spanning k‑trees of a complete (k+1)-partite graph on disjoint finite vertex sets V₁,…,V_{k+1} together with a wedge of an m‑sphere. Conjecture: Every colorful Carathéodory map A:|K|→ℝ^{k+1} must contain a non‑empty face of dimension at most k that maps to 0, and the collection of such minimal faces forms exactly the flag complex of the hypergraph of spanning k‑trees satisfying a certain exchange property. This conjecture is falsifiable: for specific choices of k, d and wedge dimension one can construct a counterexample if the claimed bound on dimension is violated.",
+    "domain_bridges": [
+      "Combinatorial Topology",
+      "Colorful Carathéodory Theorem",
+      "Algebraic Graph Theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0121",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Induction on k combined with parity arguments analogous to Meshulam's lemma",
+    "research_mode": "team",
+    "source_exp_id": "2607.01143v1",
+    "status": "available",
+    "timestamp": "2026-07-03T01:15:12.510112+00:00",
+    "title": "Conjecture on minimal hitting subcomplexes in joins of spanning k‑trees with wedge of spheres"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "236d7724",
     "description": "Deja vu — the feeling that you've experienced something before — is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 — a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch — it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
     "domain_bridges": [],
     "domains": [
@@ -2609,7 +2613,7 @@
     "proof_strategy": "Model cognitive state space as S = [0,1] and cognitive dynamics as f: S -> S continuous. Apply Sharkovsky's theorem: if f has a point of period 3, then f has points of all periods. A deja vu state is a periodic point: s such that f^n(s) = s. Prove: the set of periodic points is dense in S for the logistic map at r = 3.83. Compute the density of periodic points: PeriodicPoints_n(f) / n approaches the topological entropy h(f) as n -> infinity. For the logistic map at r = 3.83, h(f) ~ 0.38. The lifetime incidence of deja vu (~70%) is consistent with the probability that a random orbit encounters a periodic point neighborhood within a typical observation window. Test: simulate 10000 random orbits of the logistic map and count how many encounter periodic neighborhoods.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.041847+00:00",
     "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
   },
@@ -2672,25 +2676,6 @@
     "status": "available",
     "timestamp": "2026-07-03T00:49:27.017991+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "2f291ce1",
-    "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0001",
-    "lineage_refs": [],
-    "priority_score": 0.7,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "oeis:80035",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T04:44:52.457252+00:00",
-    "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
     "ambition_level": "extension",
