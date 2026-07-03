@@ -17,7 +17,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: unnamed_concept"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6d7d46c9",
     "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
     "domains": [
       "Novelty",
@@ -27,7 +27,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:26.963635+00:00",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
@@ -320,21 +320,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T13:33:13.366818+00:00",
     "title": "Sign law for the third order mock theta function phi(q)"
-  },
-  {
-    "consumed_by_exp_id": "ffbab418",
-    "description": "For every fixed number of layers m \u2265 2, there exists an integer N(m) such that for all n \u2265 N(m) the critical palette size r for the existence of a rainbow stacking of m independent uniformly random r\u2011edge\u2011colourings of the complete graph K_n satisfies: with high probability (i.e., probability \u2192 1 as n \u2192 \u221e) a rainbow stacking exists iff r \u2265 \u2308 m\u00b7(n choose 2) / (2\u00b7log(n!)) + (2m\u22121)/6 \u2309. This strengthens the existing result which holds only for a density\u2011one set of n by eliminating the exceptional set entirely.",
-    "domains": [
-      "Computation",
-      "Algebra"
-    ],
-    "id": "fd_0032",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.31376v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T14:14:41.903032+00:00",
-    "title": "Sharp threshold for rainbow stackings of random edge-colourings of K_n for all sufficiently large n"
   },
   {
     "consumed_by_exp_id": "",
@@ -1214,20 +1199,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Distribution of p-Selmer rank increments in p-cyclic extensions"
   },
   {
-    "consumed_by_exp_id": "4a282477",
-    "description": "This paper investigates whether Andrews' observed sign phenomenon in specific $q$-series arises from a universal oscillatory mechanism linked to the distribution of roots of unity, with a goal of formalizing the result in Lean 4.",
-    "domains": [
-      "Computation"
-    ],
-    "id": "fd_0103",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01210v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T22:58:06.018849+00:00",
-    "title": "Interplay between oscillatory asymptotics and alternating sign structure in $q$-series from Ramanujan's Lost Notebook"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Conjecture: For every pro-2 Demushkin group G, the Benson--Krause--Schwede canonical class c(G) in the Hochschild cohomology HH^2(C^*(G;\ud835\udd3d\u2082), C^*(G;\ud835\udd3d\u2082)) of the cochain differential graded \ud835\udd3d\u2082-algebra of continuous cochains is zero. This is equivalent to the A\u2083-formality of C^*(G;\ud835\udd3d\u2082).",
     "domains": [
@@ -1359,7 +1330,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing the generalized honeymoon Oberwolfach problem in Lean 4"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7976b3bb",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
     "domains": [
       "Novelty",
@@ -1369,7 +1340,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.030210+00:00",
     "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
   },
@@ -1418,12 +1389,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For the explicit infinite family of q-hypergeometric series introduced in the paper, the coefficients V(n) satisfy: (1) V(n) = 0 for infinitely many n, and (2) there exists a density-zero set E \u2282 \u2115 such that for all n \u2209 E, V(n+1) and V(n) have opposite signs. This generalizes the proven result for the specific series v\u2082(q), v\u2083(q), v\u2084(q) to their broader family context.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0121",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01210v1",
+    "status": "available",
+    "timestamp": "2026-07-03T01:56:10.723921+00:00",
+    "title": "Alternating Sign Conjecture for Andrews' q-Series Families"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0121",
+    "id": "fd_0122",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -1437,7 +1423,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0122",
+    "id": "fd_0123",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -1451,13 +1437,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0123",
+    "id": "fd_0124",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
     "status": "available",
     "timestamp": "2026-07-03T01:39:20.537784+00:00",
     "title": "Positivity of (p,q)-Generalized Stirling Numbers in the (p,q)-Binomial Basis"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the upper bound on the maximum size of a Sidon subset of {0, ..., N-1}, specifically proving that F(N) <= N^{1/2} + 0.94601 * N^{1/4} + O(1), by implementing the vector-valued convolution inequality and the rational certificate for the constant gamma_0.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0125",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01169v1",
+    "status": "available",
+    "timestamp": "2026-07-03T01:56:27.032018+00:00",
+    "title": "Upper Bound for the Cardinality of Finite Sidon Sets"
   },
   {
     "consumed_by_exp_id": "236d7724",
