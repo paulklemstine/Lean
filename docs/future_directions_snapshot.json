@@ -602,7 +602,7 @@
     "catalog_references": [
       "math.CO"
     ],
-    "consumed_by_exp_id": "bb55b186",
+    "consumed_by_exp_id": "",
     "description": "Formalize the theorem stating that for any connected bipartite graph G on n vertices and any real p ≥ 2, the positive p-energy E_p+(G) is at least the positive p-energy of the path graph P_n. This involves defining the adjacency spectrum, the positive p-energy sum, and the specific graph structures.",
     "domain_bridges": [
       "Linear Algebra (Eigenvalues)",
@@ -617,7 +617,7 @@
     "proof_strategy": "The proof strategy would involve using the spectral properties of the adjacency matrix of bipartite graphs. Specifically, one would leverage the fact that for bipartite graphs, the spectrum is symmetric about zero. The inequality can be reduced to comparing the sums of the p-th powers of the singular values of the biadjacency matrix, potentially utilizing the majorization properties or the second-order stop-loss-type inequalities mentioned in the paper's companion results.",
     "research_mode": "team",
     "source_exp_id": "2606.30996v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T15:55:56.869309+00:00",
     "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
   },
@@ -2065,7 +2065,7 @@
       "Optimization Constants repository",
       "Tao's tentative 0.947 improvement"
     ],
-    "consumed_by_exp_id": "5961bdfa",
+    "consumed_by_exp_id": "",
     "description": "There exists a finite family of vector-valued convolution kernels {K_i} such that their weighted combination satisfies a ball-overbag inequality for Sidon sets, with the coefficient γ_0=0.94601 achievable through optimized L² energy distribution across kernels.",
     "domain_bridges": [
       "harmonic analysis",
@@ -2081,7 +2081,7 @@
     "proof_strategy": "Construct explicit vectors K_i in L²(ℤ/ℤ) with bounded support, prove their weighted L² norm combination controls the Sidon set density via Cauchy-Schwarz, and numerically verify the rational certificate for γ_0 using Lean 4's decision procedures.",
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T23:15:13.575664+00:00",
     "title": "Multi-kernel smoothing lemma for Sidon sets"
   },
@@ -3223,7 +3223,7 @@
       "Deza-Frankl, P. (1977).",
       "Kupavskii, V. (2022)."
     ],
-    "consumed_by_exp_id": "3fe1db8c",
+    "consumed_by_exp_id": "",
     "description": "This conjecture extends the classical Complete Intersection Theorem to permutation groups, focusing on bounded intersections using fixed-point conditions.",
     "domain_bridges": [
       "extremal combinatorics",
@@ -3239,7 +3239,7 @@
     "proof_strategy": "Constructive existence via refinement of fixed-point families",
     "research_mode": "team",
     "source_exp_id": "2607.00318v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T14:28:51.936404+00:00",
     "title": "Proving the Existence of a Sufficiently Large Extremal Family"
   },
@@ -3571,6 +3571,36 @@
     "title": "Non-existence of weak Ziegler pairs for high-degree plus-one generated conic-line arrangements with defect three"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Ziegler1999",
+      "Aichholzer2000",
+      "KortenkampRichterGebertSarangarajanZiegler1997"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer d ≥7, there exists a simplicial 0/1-polytope in dimension d with exactly 2d vertices that is not centrally symmetric. This generalizes the explicit 7-dimensional counterexample to all higher dimensions, extending the classification beyond the known result for d=7.",
+    "domain_bridges": [
+      "convex polytopes",
+      "0/1-polytopes",
+      "simplicial polytopes",
+      "centrally symmetric polytopes",
+      "vertex enumeration",
+      "cross polytopes"
+    ],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_0162",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Generalize the 7-dimensional construction by iteratively adding antipodal vertex pairs while preserving simpliciality and breaking central symmetry. For each d >7, construct a base example from the d=7 case and extend it via controlled vertex additions. Formal verification would require proving simpliciality (all facets are simplices), dimension preservation, and the absence of central symmetry through combinatorial analysis of vertex sets.",
+    "research_mode": "team",
+    "source_exp_id": "2606.31640v2",
+    "status": "available",
+    "timestamp": "2026-07-03T19:30:02.443246+00:00",
+    "title": "Existence of Non-Centrally Symmetric Simplicial 0/1-Polytopes for All Dimensions ≥7"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "SDtwists",
@@ -3590,7 +3620,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0162",
+    "id": "fd_0163",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a probabilistic model inspired by the fan structure and apply ergodic arguments under mild GT conditions.",
@@ -3615,7 +3645,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0163",
+    "id": "fd_0164",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on k combined with parity arguments analogous to Meshulam's lemma",
@@ -3646,7 +3676,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0164",
+    "id": "fd_0165",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the combinatorial interpretation via (p,q)-deformed s-rook placements on staircase boards to construct an explicit bijection between rook placements and the terms in the (p,q)-binomial expansion, showing that each rook placement contributes positively.",
@@ -3672,7 +3702,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0165",
+    "id": "fd_0166",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define the property of being a Sidon set in Lean 4. 2. Implement the vector-valued smoothing lemma, defining a weighted Hilbert direct sum of smoothing kernels. 3. Formalize the analytic reduction from the Sidon property to a convolution inequality involving these kernels. 4. Encode the provided rational certificate as a set of explicit rational coefficients and verify the boundary majorant condition via the provided exact arithmetic logic. 5. Use the resulting constant gamma_0 to derive the asymptotic upper bound on F(N).",
@@ -3701,7 +3731,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0166",
+    "id": "fd_0167",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Approach by contradiction assuming no such subgraph exists. Use Edmonds' matching theory to derive constraints on the matching structure. Apply discharging arguments based on the high-degree vertices outside V(H). Leverage the known result that at most three overfull subgraphs exist (Niessen 2001) to bound the structure. Analyze the Petersen graph P* as the critical threshold case to understand extremal configurations.",
@@ -3728,7 +3758,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0167",
+    "id": "fd_0168",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit cyclic code of length n=(q^m+1)/2 whose generator polynomial is the minimal polynomial of a primitive element of 𝔽_{q^m} of order q^m+1 divided by (x−1). Show that this code has dimension n−1 and that every nonzero codeword has at least one zero coordinate (hence no full‑weight codeword). Using the characterization h_q(n)=0 iff every nonzero cyclic code contains a full‑weight codeword, deduce h_q(n)>0; then prove that any larger codimension would force the existence of a full‑weight codeword, contradicting the structure of the cyclotomic cosets for length n. This establishes h_q(n)=1. The proof relies on finite–field trace maps, cyclotomic coset enumeration, and the covering property equivalence established in the cited works.",
@@ -3756,7 +3786,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0168",
+    "id": "fd_0169",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage known results on the convergence of extremal statistics of Gaussian log‑correlated processes to the Gumbel distribution, combine them with a rigorous saddle‑point analysis of the CFT partition function to identify the appropriate scaling of μ_c and σ_c, and verify the required tightness and moment conditions for the limit theorem.",
@@ -3782,7 +3812,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0169",
+    "id": "fd_0170",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a minimal counterexamples based on combinatorial bounds on exchange numbers and flip counts.",
@@ -3809,7 +3839,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0170",
+    "id": "fd_0171",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Assume a counterexample W violating regularity; use tensor amplification (degree‑biased or Perron‑biased) to derive a contradiction with the Sidorenko inequality or with known regularity constraints, thereby proving the conjecture.",
@@ -3835,7 +3865,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0171",
+    "id": "fd_0172",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove the equivalence by constructing an explicit finite subcover from a minimal sequence and using the universal property of the direct sum to relate induced homomorphisms to sums of ψ_i.",
@@ -3860,7 +3890,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0172",
+    "id": "fd_0173",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the fact that for arrangements with only double and triple points the Jacobian ideal is generated by the partial derivatives of a defining polynomial that is known to be quasi-homogeneous with respect to certain weights. Apply Saito's criterion for freeness and the relation between the exponents of the arrangement and the degrees of minimal syzygies. Show that under the hypothesis mdr < d/2 the arrangement is plus-one generated, which forces the Jacobian syzygy module to have a predictable graded structure determined solely by the intersection lattice. Verify the claim by computing the relevant graded Betti numbers via Gröbner basis techniques in the polynomial ring S = C[x,y,z].",
@@ -3887,7 +3917,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0173",
+    "id": "fd_0174",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage planar graph separators and the four-color theorem to construct geodesic partitions with bounded treewidth, combined with the paper's algorithmic framework for geodesic treewidth in restricted graph classes",
@@ -3917,7 +3947,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0174",
+    "id": "fd_0175",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "We would formalize the definition of an oriented product structure, its girth functions, the no‑fold condition, and the weighted dual Fisher inequality in Lean. Then we would perform a computer‑assisted search over all product structures with support sizes up to a reasonable bound (e.g. \\(m,n\\le 10\\)). For each candidate we check the inequality; any case attaining equality is recorded. Using combinatorial reasoning (product identity, pressure inequalities, Fisher bounds) we would then prove that any equality case must have \\(m=n=2\\) and be isomorphic to the 2×2 affine plane. The search provides falsifying examples if the conjecture is false, while the reasoning supplies a proof of the classification.",
@@ -3945,7 +3975,7 @@
       "Logic",
       "Physics"
     ],
-    "id": "fd_0175",
+    "id": "fd_0176",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish that all long cycles are blocked by a specific edge, then use a cycle-pairing strategy from poset theory to construct a nontrivial cycle, augmented by a probabilistic counting argument to ensure the existence of a sufficiently long alternative cycle.",
@@ -3971,7 +4001,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0176",
+    "id": "fd_0177",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Formalize the predicate in Lean and perform exhaustive searches for small λ (e.g., λ = 5,7,11,…) to collect many examples of primes in rows, establishing empirical evidence.\n\n2. Use known results on primes in exponential sequences (e.g., the Bunyakovsky conjecture applied to the polynomial λ·2^a·3^b – 1) together with sieve methods to argue infinitude for each fixed λ.\n\n3. Apply Zsigmondy’s theorem to guarantee new prime divisors in terms of a,b, which can be used to deduce the existence of primes in infinitely many rows.\n\n4. Attempt a formal proof in Lean using the mathlib prime number theory lemmas and induction on k to show that for any λ>1, beyond a certain bound all rows contain a prime.",
@@ -3996,7 +4026,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0177",
+    "id": "fd_0178",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Investigate the relationship between the moment tensors of antipodal sets. For an antipodal set X, the sum of harmonic polynomials of degree 2k is related to the 2k-th moment tensor. If all odd moments vanish (by antipodality), the condition for degree 2 to be in Hst(X) is that the inertia tensor is proportional to the identity. If degree 2 is not in Hst(X), the inertia tensor has distinct eigenvalues. Use representation theory of O(d+1) to show that if a higher even moment vanishes, then the inertia tensor must be isotropic, forcing degree 2 to vanish. Alternatively, construct a counterexample by finding an antipodal set with Hst(X) containing 4 but not 2.",
@@ -4024,7 +4054,7 @@
       "Geometry",
       "Logic"
     ],
-    "id": "fd_0178",
+    "id": "fd_0179",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define the structure of a finite simplicial complex and the $h$-vector as a function of the $f$-vector. 2. Implement the $\\mathcal{F}$-uniform subdivision framework specifically for the interval subdivision to derive the explicit entries of the transformation matrix $H_{\\mathcal{F}}$. 3. Use the Lindström-Gessel-Viennot (LGV) lemma or a similar combinatorial path-counting method to show that the determinants of all minors are non-negative, leveraging the combinatorial proof provided in the paper.",
@@ -4049,7 +4079,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0179",
+    "id": "fd_0180",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove σ_{p,a}=1 by analyzing the determinant structure modulo primes and leveraging properties of the Legendre symbol. Examine the matrix's Pfaffian decomposition to show the scaling factor vanishes.",
@@ -4076,7 +4106,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0180",
+    "id": "fd_0181",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit families of hypergraphs (e.g., extensions of the graph constructions that achieve equality for each \\u03bd) and prove the inequality using degree‑sum and counting arguments. Formalize the definitions in Lean and verify the conjecture on small hypergraphs computationally.",
@@ -4102,7 +4132,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0181",
+    "id": "fd_0182",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a common $\\omega$-stellar subdivision by iteratively refining the triangulations using locally finite sequences of stellar moves, leveraging the existence of a common subdivision and the local finiteness condition.",
@@ -4128,7 +4158,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0182",
+    "id": "fd_0183",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit point configurations and linear maps for each (r, s) pair. For the upper bound, use points in general position within an r-dimensional subspace. For the lower bound, design configurations with controlled linear dependencies that minimize separable dichotomies while fixing r and s. Use induction on N and properties of the counting function C(·,·).",
@@ -4157,7 +4187,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0183",
+    "id": "fd_0184",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The conjecture can be approached by analyzing the structure of $\\Delta^{[p]}$ (the Stanley-Reisner complex of $I_\\Delta^{[p]}$) and its facets. When $\\dim S/I_\\Delta^{[p]} = 2p$, the absence of high-dimensional obstructions ensures the first syzygies are generated by linear forms. Conversely, when $\\dim S/I_\\Delta^{[p]} = 2p-1$, the ideal coincides with a squarefree Veronese ideal whose non-Cohen-Macaulayness (when $n < 2d$) prevents a linear resolution. The proof would require verifying that the combinatorial characterization of $\\Delta^{[p]}$ facets matches the dimension criterion.",
@@ -4184,7 +4214,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0184",
+    "id": "fd_0185",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove by induction on r using the self-similar structure of the recursive bisection process. The key insight is that each bisection step at most doubles the number of periods while preserving ratios. Use the periodic structure property from Proposition propLen to reduce analysis to a single phase with sufficiently many periods, then apply extremal combinatorial arguments on the distribution of piece sizes within each period.",
@@ -4209,7 +4239,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0185",
+    "id": "fd_0186",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the connection with rational approximations to the golden ratio φ and the theory of continued fractions to show that any potential decrease would produce a better approximation than a convergent, contradicting optimality of convergents.",
@@ -4236,7 +4266,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0186",
+    "id": "fd_0187",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a bijection between A393920's geometric configurations and Fibonacci-themed tiling-like structures, then prove exponential bounds via characteristic polynomial analysis.",
@@ -4263,7 +4293,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0187",
+    "id": "fd_0188",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Establish modular transformation properties of the coupled product. 2. Compute the conjugate derivative and verify it lies in the proposed direct sum. 3. Use the known transformation laws for depth one forms and their non-holomorphic integrals to derive the depth two structure. 4. Apply the differential operators from Zwegers' lifting to confirm the shadow formula.",
@@ -4291,7 +4321,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0188",
+    "id": "fd_0189",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine Simonovits's decomposition techniques for F with spectral characterization methods from [WKX]. Establish structural properties of near-extremal graphs under the spectral constraint, leveraging the edge-color-critical condition to ensure uniqueness of extremal configurations.",
@@ -4323,7 +4353,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0189",
+    "id": "fd_0190",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Formalise the definitions of matching‑covered graphs, bricks, braces, b‑invariant edges, forcing edges, and near‑bipartite bricks in Lean.\n\n2. Implement auxiliary notions: 3‑connectivity, bicriticality, removable edges, brick number b(G), and the tight‑cut decomposition (as in the literature).\n\n3. Encode the classification theorem from the paper: a constructive description of all near‑bipartite bricks satisfying the forcing property (e.g. in terms of a bipartite backbone with at most one subdivision per edge of a perfect matching and a bound on odd‑cycle lengths).\n\n4. Prove the two directions:\n   - (→) Assuming G is near‑bipartite and satisfies the classification, show that any b‑invariant edge lies in a unique perfect matching (i.e. is forcing). This uses the structural lemmas from the paper (e.g. that b‑invariant edges in such bricks are exactly the subdivided edges of the perfect matching).\n   - (≃) Assuming every b‑invariant edge is forcing, deduce that G cannot contain a non‑ne",
@@ -4349,7 +4379,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0190",
+    "id": "fd_0191",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use double‑counting and entropy‑based Fourier–Möbius analysis to derive a lower bound on the number of monochromatic triples; compare with known upper bounds to test falsifiability.",
@@ -4369,7 +4399,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0191",
+    "id": "fd_0192",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive proof",
@@ -4397,7 +4427,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0192",
+    "id": "fd_0193",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "To attack the conjecture, one would attempt to construct extremal sets A (e.g., subfields, multiplicative subgroups, or random sets) that avoid full sumsets for any choice of coefficients, using combinatorial or algebraic methods such as the polynomial method, character sums, or entropy arguments. Disproving the conjecture would require showing that the stated lower bound on |A| can be improved, possibly via new additive combinatorial inequalities or refined Fourier analysis.",
@@ -4416,7 +4446,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0193",
+    "id": "fd_0194",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Application of Dirichlet character properties and functional equation constraints",
@@ -4441,7 +4471,7 @@
     "domains": [
       "Physics"
     ],
-    "id": "fd_0194",
+    "id": "fd_0195",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the inductive four-restriction scheme from the original proof to isolate the deficit term, apply a sharp Bonami-Beckner inequality to control higher-degree Fourier mass, and invoke an invariance principle to reduce to Gaussian space where the extremal configurations are classified via Ehrhard-type inequalities.",
@@ -4469,7 +4499,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0195",
+    "id": "fd_0196",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove that for every n, s, t with 2 ≤ s < t and every n‑vertex graph G, the inequality becomes equality for a suitable Turán graph or its balanced blow‑up, using induction on n together with Zykov symmetrization to show the bound cannot be improved.",
@@ -4496,7 +4526,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0196",
+    "id": "fd_0197",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the description of EKOR strata via G‑zips and mixed‑characteristic local shtukas to identify the basic stratum with a quotient of a Deligne‑Lusztig variety by a finite group action. Then apply the Künneth formula for ℓ‑adic cohomology and the known point‑count formulas for Deligne‑Lusztig varieties to compute the number of geometric components. Finally, invoke the smoothness criterion for Schubert varieties in the affine flag manifold to deduce smoothness of each component.",
@@ -4522,7 +4552,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0197",
+    "id": "fd_0198",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the classical harmonic lemma proof by employing a Markov chain stopping rule to derive a maximum principle; show that any non‑constant color assignment would violate the blend axiom, leading to a contradiction.",
@@ -4550,7 +4580,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0198",
+    "id": "fd_0199",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the theory of CM elliptic curves and the reduction modulo inert primes. Show that for an inert p the reduction map from the CM elliptic curve with complex multiplication by \\(\\mathcal O\\) to a supersingular curve over \\(\\mathbb F_p\\) preserves an embedding of \\(\\mathcal O\\). By class field theory, primes splitting completely in the ring class field correspond to principal ideals of norm \\(\\ell\\) in \\(\\mathcal O\\). Lifting such an ideal to an isogeny of degree \\(\\ell\\) over \\(\\overline{\\mathbb Q}\\) and reducing modulo p yields an endomorphism on \\(E\\) that commutes with \\(\\iota(\\omega)\\) up to conjugation, i.e. an \\(\\mathcal O\\)-twisting endomorphism. The commutation condition follows from the fact that the ideal is generated by an element of \\(\\mathcal O\\) and the reduction of the associated isogeny respects the orientation. Finally, verify that the degree is prime by choosing \\(\\ell\\) split completely and inertness ensures the reduction does not increase the degree. Formalisation ",
@@ -4578,7 +4608,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0199",
+    "id": "fd_0200",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extending Bailey lattice techniques to handle exceptional symmetry breaking at 6n+3, combined with modular form evaluations at q^14 roots",
@@ -4605,7 +4635,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0200",
+    "id": "fd_0201",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute cup radicals in concrete pro‑p groups, search for counterexamples, and attempt to prove invariance under maximal pro‑p quotients of abelianizations",
@@ -4633,7 +4663,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0201",
+    "id": "fd_0202",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Derive explicit local lower‑bound factors from the Greenberg–Wiles formula, prove equidistribution of Frobenius elements for families with constant ℓ‑torsion, and show that the average ℓ‑Selmer rank over such families meets or exceeds the product of these local bounds, with equality on a dense set of families.",
@@ -4662,7 +4692,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0202",
+    "id": "fd_0203",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove both directions: (1) Show that any CM tournament satisfies CI by using the equality ν_w^* = ν_w and the known relation between τ_w^* and ν_w^*; (2) Show that any CI tournament satisfies CM by constructing appropriate weight functions that force ν_w^* = ν_w, leveraging the structural characterization of CM tournaments.",
@@ -4685,7 +4715,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0203",
+    "id": "fd_0204",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the Erné-Stege moment reduction modulo 4. Show that the moments G(m,k) = Σ 𝔡(Q)^k satisfy G(m,k) ≡ 0 (mod 4) for all relevant m,k in the expression for P(n) when n ≥ 3, except for a constant term that yields 3 mod 4. Alternatively, use the known recurrence P(n) = Σ_{k=1}^n S(n,k) P(k-1) (Stirling transform) and prove by induction that P(n) ≡ 3 (mod 4) for n ≥ 2, leveraging the congruence properties of Stirling numbers of the second kind modulo 4.",
@@ -4694,6 +4724,36 @@
     "status": "available",
     "timestamp": "2026-07-03T18:54:52.477458+00:00",
     "title": "Constant residue of labeled poset counts modulo 4"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Hiranouchi's π₁(X,D) fundamental group construction",
+      "Faltings' higher-dimensional Hermite-Minkowski theorem",
+      "Geometric fundamental subgroup π₁(X,D)⁰",
+      "Semisimple continuous representations in discrete topology"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any prime p (including p=2), any finite field k with char(k) ≠ p, any normal geometrically connected variety X over k, and any n ≥ 1, there exist only finitely many isomorphism classes of continuous semisimple geometric representations ρ: π₁(X,0) → GLₙ(F) where F is algebraically closed of characteristic p. This extends the proven result for odd p to all characteristics in the tame ramification case D=0.",
+    "domain_bridges": [
+      "Galois representations formalism in Lean",
+      "Étale fundamental group constructions",
+      "Algebraic geometry over finite fields",
+      "Representation theory in positive characteristic"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0205",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Extend Hiranouchi's compactness argument using the smallness of π₁(X,0) and combine with Lang-Weil estimates for varieties over finite fields to control the possible representations. The key is to show the discrete image condition forces finiteness even when p=2 by analyzing the wild ramification constraints more carefully.",
+    "research_mode": "team",
+    "source_exp_id": "2606.31341v1",
+    "status": "available",
+    "timestamp": "2026-07-03T19:30:38.483142+00:00",
+    "title": "Finiteness of Geometric Semisimple Representations for Arbitrary Characteristic"
   },
   {
     "ambition_level": "extension",
