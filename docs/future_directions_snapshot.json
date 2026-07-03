@@ -3,65 +3,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Building on cycle aad22603 (Q=0.875), which proved 9 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the theorem stating that for any connected bipartite graph G on n vertices and any real p ≥ 2, the positive p-energy E_p+(G) is at least the positive p-energy of the path graph P_n. This involves defining the adjacency spectrum, the positive p-energy sum, and the specific graph structures.",
-    "domain_bridges": [],
-    "domains": [
-      "Probability"
-    ],
-    "id": "push_aad22603_e8ec83fb",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "aad22603",
-    "status": "available",
-    "timestamp": "2026-07-03T05:21:46.839208+00:00",
-    "title": "Deepening: Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition — zeros on the critical line means the bulk geometry is stable against perturbations.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0142",
-    "lineage_refs": [],
-    "priority_score": 0.91,
-    "proof_strategy": "Define the prime partition function Z(beta) = prod_p (1 - e^{-beta log p})^{-1}. Prove Z(beta) = zeta(s) where beta = Re(s)/log(p) in the saddle-point approximation. Define the holographic dictionary: bulk field phi_s(x) in AdS_3 <-> boundary CFT operator O_{1-s}(y) on S^1. Prove the correspondence: phi_s <-> (1 - p^{-s})^{-1} for each prime p. The functional equation Xi(s) = Xi(1-s) is the holographic duality. Prove: if all zeros of Xi(s) are on Re(s) = 1/2, then the bulk AdS geometry is stable (no tachyonic modes). Conversely, an off-critical-line zero at s = 1/2 + epsilon corresponds to a tachyonic instability in the bulk. Test: compute Z(beta) numerically and verify convergence to zeta(s).",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-03T05:39:17.935723+00:00",
-    "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable — theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements — most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark — they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0137",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "Define a dark theorem of level k as a Pi_2 statement 'for all n, there exist at least k values of m such that P(n,m)' such that PA proves the existential claim but PA does not prove P(n,m) for any specific m. Level 1: Paris-Harrington theorem (the strengthened finite Ramsey theorem). Level 2: the Paris-Harrington theorem for the statement 'there exist at least 2 values of m satisfying the Ramsey property'. Prove strictness: if T is level k+1, then T implies a level-k statement that is independent of PA. Prove density: among all Pi_2 statements provable in ZFC, the fraction that are dark approaches 1 as statement length grows. Test: formalize levels 1-3 in Lean 4 using the Paris-Harrington and Goodstein sequences.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-03T05:11:23.223421+00:00",
-    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domain_bridges": [],
     "domains": [
@@ -80,7 +21,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "70c42dc4",
     "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer — the mathematical formalization of 'reality depends on the observer'.",
     "domain_bridges": [],
     "domains": [
@@ -93,29 +34,9 @@
     "proof_strategy": "Define a phantom topology as a function T: O -> Top(X) from a set of observers to topologies on X. Define the intersection topology T_cap = intersection of all T(o). Prove: every second-countable T_0 space (X, tau) admits a phantom representation with |O| = 2. Proof: for a basis {B_n}, define T(o1) as the topology generated by {B_n : n odd} union {X} and T(o2) by {B_n : n even} union {X}. Then T_cap = tau. Prove non-metrizable spaces need >= 3 observers: the Zariski topology on R^2 cannot be written as the intersection of two first-countable topologies. Test: verify the R example and construct the 3-observer phantom representation for the Zariski topology.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:26.963635+00:00",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "12f18d90",
-    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot — the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0138",
-    "lineage_refs": [],
-    "priority_score": 0.81,
-    "proof_strategy": "Define cognitive braids: each brain region is a strand, each neural firing sequence is a crossing. A cognitive process is an element of B_n (braid group on n strands). Two thoughts are equivalent if related by Reidemeister moves. Define thought quality Q(braid) = log(|V_braid(e^{2pi i/3})|) where V is the Jones polynomial. Prove Q is a braid invariant. Prove: trivial braid has V = 1 so Q = 0 (trivial thought). Trefoil has V = -t^2+t+1 so Q = log(|V(e^{2pi i/3})|) = log(sqrt(3)) > 0 (creative thought). Figure-eight has Q = log(2) (confused thought with maximum entanglement). Test: compute Jones polynomials for braids B_3 representing simple cognitive processes and rank by Q.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T05:11:23.238019+00:00",
-    "title": "Knots That Think: Cognition as Braiding in Category Theory"
   },
   {
     "ambition_level": "extension",
@@ -164,6 +85,31 @@
     "status": "available",
     "timestamp": "2026-07-02T06:02:49.115868+00:00",
     "title": "Lower Bound for Low Moments of Dirichlet Character Sums"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "arXiv:2310.12345 (hypothetical reference for the paper)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "There exists a finite set of vectors in l² satisfying specific convolution inequalities such that their weighted average achieves the coefficient γ₀=0.94601 in the bound F(N) ≤ N^{1/2} + γ₀N^{1/4} + O(1), and no smaller coefficient is achievable via this method.",
+    "domain_bridges": [
+      "l² spaces",
+      "Sidon sets",
+      "convolution inequalities"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0013",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct a minimal vector family and verify convolution bounds via exact arithmetic",
+    "research_mode": "team",
+    "source_exp_id": "2607.01169v1",
+    "status": "available",
+    "timestamp": "2026-07-02T06:22:13.488931+00:00",
+    "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
   },
   {
     "ambition_level": "extension",
@@ -1203,7 +1149,7 @@
       "math.NT",
       "math.RT"
     ],
-    "consumed_by_exp_id": "583299ca",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that a torsion Hecke eigenclass in the cohomology of the arithmetic manifold attached to GL_n over a CM number field F with coefficients in Z/ℓ^m gives rise to a continuous semisimple Galois representation r : G_F → GL_n(Z_ℓ) which is de Rham at places v|ℓ, with Hodge–Tate weights determined by the infinitesimal character of the automorphic representation at infinity, and whose associated filtered φ‑module via Fontaine's functor corresponds under the p‑adic local Langlands correspondence to the automorphic component π_v.",
     "domain_bridges": [
       "Representation Theory",
@@ -1220,7 +1166,7 @@
     "proof_strategy": "Extend Scholze's construction of automorphic determinants to Z_ℓ-coefficients, use the comparison isomorphism between étale and de Rham cohomology (via p-adic Hodge theory) to obtain de Rham Galois representations, then apply the p-adic local Langlands correspondence for GL_n over local fields to match the local Langlands parameter at places dividing ℓ with the automorphic data.",
     "research_mode": "team",
     "source_exp_id": "2606.31698v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T12:49:31.510793+00:00",
     "title": "Torsion local-global compatibility at p = ℓ for GL_n over CM fields"
   },
@@ -1955,7 +1901,7 @@
       "Lau 2010",
       "Hoff-Lau 2026"
     ],
-    "consumed_by_exp_id": "7488be0a",
+    "consumed_by_exp_id": "",
     "description": "The sheared Witt vector functor \\(\\chW\\) is isomorphic to the filtered colimit of the functors \\(n \\mapsto W(R[p^n])/\\hw(R[p^n])\\) over \\(n \\geq 1\\).",
     "domain_bridges": [
       "Witt vector theory",
@@ -1971,7 +1917,7 @@
     "proof_strategy": "Construct a natural transformation \\(\\gamma_n: W(R) \\to W(R[p^n])/\\hw(R[p^n])\\) and verify it induces an isomorphism on colimits using properties of nilpotent Witt components and filtered limits of free modules.",
     "research_mode": "team",
     "source_exp_id": "2607.01178v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T22:10:42.305562+00:00",
     "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
   },
@@ -2417,7 +2363,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "a51976ad",
+    "consumed_by_exp_id": "",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible — how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian — the algebraic equivalent of Escher's impossible architecture.",
     "domain_bridges": [],
     "domains": [
@@ -2430,7 +2376,7 @@
     "proof_strategy": "Define an Escher staircase in ring R as a strictly ascending chain I_1 strictly contained in I_2 strictly contained in ... such that intersection of I_n is contained in I_1. Prove Int(Z) has an Escher staircase: I_n = {f in Int(Z) : f(Z) contained in 2^n Z}. Each I_n is strictly contained in I_{n+1} (the polynomial x choose n is in I_{n+1} but not I_n). Intersection of I_n = {0} contained in I_1. Prove k[x_1,...,x_n] has Escher height n: the chain (x_1) contained in (x_1,x_2) contained in ... contained in (x_1,...,x_n) has length n. Prove Z_p has no Escher staircase (Noetherian). Test: verify for Int(Z) and k[x,y,z].",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:27.030210+00:00",
     "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
   },
@@ -2685,7 +2631,7 @@
       "JungTix1998",
       "Rockafellar1970"
     ],
-    "consumed_by_exp_id": "bb3ce4ee",
+    "consumed_by_exp_id": "",
     "description": "We classify the finite posets whose probabilistic powerdomain is an RB-domain by proving that a finite poset P has this property if and only if it has a least element and its undirected Hasse graph is a tree.",
     "domain_bridges": [
       "domain theory",
@@ -2701,9 +2647,38 @@
     "proof_strategy": "We split the proof into two cases: first proving that without a least element, the minimal face must be fixed by all deflations, and second showing that cycles in the Hasse graph violate the simpliciality of the stochastic cone through Euclidean finite-step arguments.",
     "research_mode": "team",
     "source_exp_id": "2607.02231v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T04:55:55.366539+00:00",
     "title": "Characterization of Finite Posets with RB-Domain Probabilistic Powerdomains"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Iwasawa theory for graph towers",
+      "p-adic L-functions",
+      "spectral graph theory",
+      "quantum walks on graphs"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a ℤ_p-tower of finite connected symmetric digraphs arising from voltage assignments and monic polynomial P(A) coprime to A²-1, the p-adic valuation v_p(det P(U_n)) admits an exact formula v_p(det P(U_n)) = μ·p^n + λ·n + c for constants μ, λ, c that can be computed explicitly from the Bass-Severin decomposition of the spectral resultant R_{X,P}(T) = F_∞^μ · F_λ · U(T), where F_∞ and F_λ are the μ and λ components and U is a unit in the Iwasawa algebra.",
+    "domain_bridges": [
+      "Algebraic Number Theory ↔ Spectral Graph Theory",
+      "Iwasawa Theory ↔ Quantum Walk Dynamics",
+      "Galois Representations ↔ Graph Cohomology"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0128",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish the Bass-Severin decomposition of the spectral resultant in the Iwasawa algebra Λ = Z_p[[Γ]]; prove that the μ-invariant equals the order of vanishing at the trivial character of certain completed determinant; compute the λ-invariant via the Herbrand quotient of the torsion module; verify the formula on explicit towers including dicyclic K_3 and Heisenberg covers.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02011v1",
+    "status": "available",
+    "timestamp": "2026-07-03T05:55:02.614614+00:00",
+    "title": "Explicit μ and λ Invariants for Spectral Resultants in ℤ_p-Towers"
   },
   {
     "ambition_level": "grand_challenge",
@@ -2725,7 +2700,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0128",
+    "id": "fd_0129",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a probabilistic model inspired by the fan structure and apply ergodic arguments under mild GT conditions.",
@@ -2750,7 +2725,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0129",
+    "id": "fd_0130",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on k combined with parity arguments analogous to Meshulam's lemma",
@@ -2781,7 +2756,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0130",
+    "id": "fd_0131",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the combinatorial interpretation via (p,q)-deformed s-rook placements on staircase boards to construct an explicit bijection between rook placements and the terms in the (p,q)-binomial expansion, showing that each rook placement contributes positively.",
@@ -2807,7 +2782,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0131",
+    "id": "fd_0132",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define the property of being a Sidon set in Lean 4. 2. Implement the vector-valued smoothing lemma, defining a weighted Hilbert direct sum of smoothing kernels. 3. Formalize the analytic reduction from the Sidon property to a convolution inequality involving these kernels. 4. Encode the provided rational certificate as a set of explicit rational coefficients and verify the boundary majorant condition via the provided exact arithmetic logic. 5. Use the resulting constant gamma_0 to derive the asymptotic upper bound on F(N).",
@@ -2836,7 +2811,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0132",
+    "id": "fd_0133",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Approach by contradiction assuming no such subgraph exists. Use Edmonds' matching theory to derive constraints on the matching structure. Apply discharging arguments based on the high-degree vertices outside V(H). Leverage the known result that at most three overfull subgraphs exist (Niessen 2001) to bound the structure. Analyze the Petersen graph P* as the critical threshold case to understand extremal configurations.",
@@ -2863,7 +2838,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0133",
+    "id": "fd_0134",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit cyclic code of length n=(q^m+1)/2 whose generator polynomial is the minimal polynomial of a primitive element of 𝔽_{q^m} of order q^m+1 divided by (x−1). Show that this code has dimension n−1 and that every nonzero codeword has at least one zero coordinate (hence no full‑weight codeword). Using the characterization h_q(n)=0 iff every nonzero cyclic code contains a full‑weight codeword, deduce h_q(n)>0; then prove that any larger codimension would force the existence of a full‑weight codeword, contradicting the structure of the cyclotomic cosets for length n. This establishes h_q(n)=1. The proof relies on finite–field trace maps, cyclotomic coset enumeration, and the covering property equivalence established in the cited works.",
@@ -2891,7 +2866,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0134",
+    "id": "fd_0135",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage known results on the convergence of extremal statistics of Gaussian log‑correlated processes to the Gumbel distribution, combine them with a rigorous saddle‑point analysis of the CFT partition function to identify the appropriate scaling of μ_c and σ_c, and verify the required tightness and moment conditions for the limit theorem.",
@@ -2917,7 +2892,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0135",
+    "id": "fd_0136",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a minimal counterexamples based on combinatorial bounds on exchange numbers and flip counts.",
@@ -2944,7 +2919,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0136",
+    "id": "fd_0137",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Assume a counterexample W violating regularity; use tensor amplification (degree‑biased or Perron‑biased) to derive a contradiction with the Sidorenko inequality or with known regularity constraints, thereby proving the conjecture.",
@@ -2953,6 +2928,32 @@
     "status": "available",
     "timestamp": "2026-07-03T04:56:06.560111+00:00",
     "title": "Equality case regularity conjecture for admissible Sidorenko classes"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "G. Wang, Comm. Algebra 2025"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any non‑empty finite set Ψ of non‑zero homomorphisms from an abelian group F to G, the weighted Davenport constant D_Ψ(G) ≤ n holds precisely when the family of kernels of the induced universal homomorphisms from F^n to G forms a cover of F^n.",
+    "domain_bridges": [
+      "additive combinatorics",
+      "category theory",
+      "group theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0138",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Prove the equivalence by constructing an explicit finite subcover from a minimal sequence and using the universal property of the direct sum to relate induced homomorphisms to sums of ψ_i.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02132v1",
+    "status": "available",
+    "timestamp": "2026-07-03T05:55:53.302394+00:00",
+    "title": "Kernel‑cover characterisation of the weighted Davenport constant"
   },
   {
     "ambition_level": "extension",
@@ -2978,26 +2979,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' — they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0139",
-    "lineage_refs": [],
-    "priority_score": 0.77,
-    "proof_strategy": "Define the periodic table of finite groups: rows indexed by order (atomic number), columns indexed by composition factor pattern (chemical series). Group types: cyclic (noble gases), symmetric (halogens), simple non-abelian (transition metals), nilpotent (alkali metals), solvable non-nilpotent (alkaline earth). Prove: groups in the same column have isomorphic composition factors (Jordan-Holder theorem). Prove: the 'valence' (number of minimal normal subgroups) is determined by the chief factors. Construct the table for order <= 100 and verify periodicity: cyclic groups of prime order form the first column, groups with composition {2,2,3} form the second column, etc. Test: predict properties of groups of order 120 before computing them.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-03T05:11:23.249595+00:00",
-    "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "# Future Directions — Congruence Rigidity of Sums of Squares\n\nThis cycle established that the entries of an integer right triangle are forced into\nstrong divisibility patterns — one leg is a multiple of three, the legs jointly carry a\nfactor of four, one entry is a multiple of five — and that a four-dimensional right\n\"box\" (a solution of `a² + b² + c² = d²`) is even more rigid: at most one of its three\nspatial edges can be odd. We also pinned down exactly which whole numbers can serve as a\nleg. These findings point to several bold, testable conjectures.\n\n## 1. The correct modulus for a power of two grows with the power\n**Conjecture.** In any solution of `a² + b² = c²`, the two-adic valuation of the leg\nproduct `a·b` is governed one level deeper than naive reduction suggests: deciding\nwhether `2^k` divides `a·b` is a question about residues modulo `2^{k+1}`, never modulo\n`2^k`.\n*The key insight is* that a difference of two odd squares is always divisible by eight,\nso each additional factor of two in the product must be certified one binary place\nfurther out than one would guess. *Why now?* Having isolated the exact `mod 8`\nobstruction behind the factor of four, we can test the pattern mechanically for `k = 3,\n4, 5` and either confirm a clean \"shift-by-one\" law or expose its first exception.\n\n## 2. A universal super-divisor for higher-dimensional right figures\n**Conjecture.** For every dimension `r`, solutions of `x₁² + ⋯ + x_r² = y²` obey a single\nuniversal divisibility law: there is a constant `D(r)`, depending only on `r`, such that\n`D(r)` divides the product `x₁·x₂·⋯·x_r` for *every* solution, and `D(r)` is the largest\nsuch constant.\n*The key insight is* that reduction to a finite residue ring turns \"for all solutions\"\ninto a finite, decidable statement, so the optimal constant `D(r)` is computable and\nshould grow in a structured (conjecturally multiplicative-over-primes) way. *Why now?*\nThe three-dimensional case already yields `4 ∣ x₁x₂x₃`; comparing it against the planar\nconstant `12` suggests a dimension-indexed sequence worth charting and predicting.\n\n## 3. Parity collapse in higher dimensions\n**Conjecture.** As the number of squared terms increases, the number of edges permitted to\nbe odd stays uniformly bounded: in `x₁² + ⋯ + x_r² = y²` at most three of the `x_i` can be\nodd, regardless of `r`.\n*The key insight is* that the sum of squares equals the count of odd terms modulo four,\nwhile a perfect square is `0` or `1` modulo four, capping the admissible odd-count no\nmatter how many terms are added. *Why now?* We proved the cap is \"at most one\" in three\ndimensions; extending the modular bookkeeping to arbitrary `r` is a self-contained next\nstep that would reveal whether the cap is truly dimension-independent.\n\n## 4. A sharp threshold characterization of legs in every dimension\n**Conjecture.** Just as the whole numbers that are a leg of a right triangle are exactly\nthose `≥ 3`, in each higher dimension there is a sharp finite threshold above which every\ninteger appears as an edge of some right figure, and the finitely many exceptions can be\nlisted explicitly.\n*The key insight is* that a single explicit construction, split according to the parity of\nthe target edge, realizes all sufficiently large values, while the small exceptions are\nforced by a factorization that would otherwise require a vanishing edge. *Why now?* The\nplanar threshold `3` and its sharpness (the failures at `1` and `2`) give a template that\nshould transfer verbatim to the box equation and beyond.\n\n## 5. Divisibility as a sieve against near-solutions\n**Conjecture.** The combined congruence obstructions (`12 ∣ a·b`, `60 ∣ a·b·c`, and their\nhigher-dimensional analogues) are strong enough that a random integer triple satisfying\nthem has a positive, computable probability of being genuinely Pythagorean — i.e. the\ncongruence conditions capture a constant fraction of the \"arithmetic mass\" of true\nsolutions.\n*The key insight is* that each universal divisor removes a fixed proportion of impostors,\nso stacking independent prime-power obstructions multiplies into a sieve of predictable\ndensity. *Why now?* With the exact obstructions in hand for the primes `2, 3, 5`, one can\nimmediately measure how much of the solution set they explain and calibrate whether a few\nmore primes suffice to pin down solutions almost completely.\n",
     "domain_bridges": [],
     "domains": [
@@ -3017,7 +2998,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ba614c22",
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist — 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 — they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures — combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domain_bridges": [],
     "domains": [
@@ -3030,7 +3011,7 @@
     "proof_strategy": "Define vampire numbers formally: v is a vampire number iff v has 2n digits and there exist x, y each with n digits such that v = x*y and the multiset of digits of v equals the union of digits of x and y. Count the number of digit arrangements: for a 2n-digit number with distinct digits, there are C(2n, n) * n! * n! possible fang pairs, so the expected number of fang pairs is C(2n, n) * (n!)^2 / 10^{2n} = C(2n,n) / 10^n ~ 1/sqrt(n). Prove existence in every interval by constructing explicit vampire numbers using the formula 1260 * 10^{2k} for k >= 0. Test: enumerate up to 10^8.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:27.007324+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
@@ -3038,66 +3019,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions — Positive p-Energies and Path Extremality\n\n## 1. Full path-minimality for all exponents p ≥ 2\n\n**Conjecture.** For every connected bipartite graph `G` on `n` vertices and every real `p ≥ 2`, the\npositive p-energy satisfies `E_p^+(G) ≥ E_p^+(P_n)`, with equality if and only if `G` is the path.\n\nThe key insight is that the path graph has the most \"spread-out yet smallest\" spectrum among\nconnected graphs: its largest eigenvalue is the minimum possible spectral radius, and its remaining\npositive eigenvalues fill the interval `(0, 2)` as slowly as any connected graph allows. Convexity of\n`x ↦ x^p` for `p ≥ 2` should convert this spectral spreading into an energy inequality via a\nmajorization argument on the positive part of the spectrum. The `p = 2` case is settled exactly,\nwhere positive energy collapses to the edge count and minimality is the elementary fact that a\nconnected graph has at least `n-1` edges. Why now? The exact `p = 2` identity `E_2^+(P_n) = n-1` and\nthe reflection-symmetry description of bipartite spectra together pinpoint precisely which spectral\ncomparison must be upgraded from `p = 2` to `p ≥ 2`, turning a vague extremal claim into a concrete\nmajorization target.\n\n## 2. Uniqueness and the second-smallest configuration\n\n**Conjecture.** Among connected graphs on `n` vertices, the path is the unique minimiser of `E_p^+`\nfor every `p > 2`, and the second-smallest value is attained by the \"broom\" or the path with one\npendant edge relocated.\n\nThe key insight is that equality in the energy inequality forces equality in the underlying edge\ncount at `p = 2`, which characterises trees, and strict convexity for `p > 2` then breaks all ties\nexcept the path. Identifying the runner-up requires understanding how a single local modification of\na tree perturbs the whole positive spectrum. Why now? With the minimiser value fixed exactly, the\nnatural next quantitative question is the size of the spectral gap between the extremal path and its\nnearest competitor, a stability statement that sharpens the bare extremality result.\n\n## 3. A p-energy isoperimetric inequality across bipartite classes\n\n**Conjecture.** For bipartite graphs with fixed parts of sizes `a` and `b`, the positive p-energy is\nminimised by the \"double path\" (a balanced caterpillar) and maximised by the complete bipartite\ngraph `K_{a,b}`, for all `p ≥ 2`.\n\nThe key insight is that positive p-energy behaves like a convex isoperimetric functional on the\nlattice of bipartite graphs: adding edges pushes spectral mass toward the extreme eigenvalue `√(ab)`\nof `K_{a,b}`, while sparsifying spreads it toward zero. Locating both extremes turns a single\nminimality theorem into a full order-theoretic sandwich. Why now? The exact evaluation of the path's\nenergy provides one calibrated endpoint; pairing it with the known single dominant eigenvalue of\ncomplete bipartite graphs makes both ends of the spectrum computable, so the intermediate ordering\nbecomes a well-posed target.\n\n## 4. Positive p-energy as a fractional-power moment and its threshold at p = 2\n\n**Conjecture.** The map `p ↦ E_p^+(G)^{1/p}` is nonincreasing and converges to the spectral radius as\n`p → ∞`, and the exponent `p = 2` is the unique value at which `E_p^+` becomes a purely combinatorial\n(graph-invariant) quantity equal to the edge count for every graph.\n\nThe key insight is that `E_p^+` interpolates between counting edges (`p = 2`) and reading off the\nspectral radius (`p → ∞`), so the exponent controls a continuous deformation from combinatorics to\nanalysis. The monotonicity of the normalised energy is a power-mean statement about the positive\neigenvalues. Why now? The identity `E_2^+ = |E|` isolates the exact crossover point where algebra and\ncombinatorics coincide, giving a firm anchor from which to study the behaviour on both sides.\n\n## 5. Reflection-symmetry certificates of bipartiteness from energy balance\n\n**Conjecture.** A graph is bipartite if and only if its adjacency spectrum admits a sign-reversing\ninvolution, equivalently if and only if `E_p^+ = E_p^-` for a single non-integer `p`; a mismatch at\nany such `p` is a quantitative certificate of an odd cycle.\n\nThe key insight is that the balance between positive and negative p-energy is not merely a\nconsequence of bipartiteness but a faithful detector of it: for non-bipartite graphs the spectral\nasymmetry (e.g. the isolated positive Perron eigenvalue against clustered negative ones) forces\n`E_p^+ ≠ E_p^-`, and the size of the gap measures the \"odd-cycle content.\" Why now? The abstract\nbalance theorem shows that a sign-reversing index involution alone yields energy balance for all `p`;\nthe converse — energy balance implying such an involution — would upgrade a symmetry consequence into\na spectral characterisation of bipartiteness with a built-in numerical witness.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_0140",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "aad22603",
-    "status": "available",
-    "timestamp": "2026-07-03T05:21:41.792909+00:00",
-    "title": "**Conjecture.** For every connected bipartite graph `G` on `n` vertices and ever"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions — Phantom Topologies\n\nThese conjectures are distilled from a single finding: the Euclidean line is the\nexact agreement of two strictly sharper \"observers\" — a left-looking topology\nwhose basic neighbourhoods are right half-open intervals, and a right-looking one\nwhose neighbourhoods are left half-open intervals — and that no single observer can\nreproduce the line without simply being the line. This suggests a genuine invariant:\nthe minimum number of strictly sharper observers whose agreement recovers a space.\n\n## 1. The phantom number is a cardinal invariant\n\n**Conjecture.** Every metrizable space without isolated points has strict phantom\nnumber exactly two: it is the agreement of two strictly finer topologies, and never\nof a single non-trivial one. Discrete spaces have phantom number zero (no sharper\ntopology exists), and the Sierpiński space has phantom number one.\n\nThe key insight is that \"agreement\" (the join in the lattice of topologies)\nintersects the open-set families of the observers, so recovering a space is a\ncovering problem: each observer must add resolution that all the others cancel out.\nWhy now? The real-line case is settled with an exact value of two, giving a concrete\nanchor from which to test whether \"two\" is universal among nice spaces or genuinely\nvaries.\n\n## 2. Agreement is order-reversing, and hides a Galois connection\n\n**Conjecture.** The map sending a family of observers to their agreed topology forms\none half of a Galois connection whose closed families are precisely those closed\nunder pairwise agreement; its fixed points classify all achievable consensus\ntopologies.\n\nThe key insight is that adding observers can only coarsen reality — each observer is\nindividually sharper than the consensus — so the consensus operator is monotone in a\ncounter-intuitive, order-reversing way that is the signature of an adjunction.\nWhy now? The refinement inequality (observer sharper than consensus) is already\nestablished, which is exactly the inequality an adjoint pair needs.\n\n## 3. Two-sided observers on any linear order\n\n**Conjecture.** On every densely ordered set without endpoints, the agreement of the\nright-half-open and left-half-open topologies is exactly the order topology; density\nis necessary and completeness is not.\n\nThe key insight is a purely order-theoretic squeeze: the union of a left half-open\nand a right half-open interval sharing an endpoint is a genuine two-sided interval,\nso agreement at a point always produces a two-sided neighbourhood.\nWhy now? The identity has been proved for the reals; abstracting the proof to expose\nexactly which order axioms it consumes is the natural next step.\n\n## 4. The cofinite plane needs a third observer\n\n**Conjecture.** The cofinite topology on an infinite set — a stand-in for the Zariski\nplane — cannot be recovered as the agreement of only two strictly sharper observers;\na third is required.\n\nThe key insight is that cofinite open families are closed under finite intersection\nyet admit no countable neighbourhood basis, which obstructs any two-fold split: the\nintersection of two strictly larger cofinite-containing families always overshoots.\nWhy now? With the two-observer bound made precise for the line, the contrast class —\nspaces that provably resist two observers — is the sharpest way to show the invariant\nis non-trivial.\n\n## 5. Phantom number as a metrizability detector\n\n**Conjecture.** Among second-countable spaces, phantom number two characterizes the\nregular (metrizable) ones, while non-metrizable second-countable spaces demand at\nleast three observers.\n\nThe key insight is that a compatible metric supplies exactly the two symmetric\none-sided refinements needed for a two-observer split, whereas the absence of a\nlocally finite refinement structure forces additional observers.\nWhy now? The metrizable prototype (the line) already realizes the value two, so the\nconjecture reframes classical metrization theory as a statement about how many\nobservers reality requires.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_0141",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "5875a645",
-    "status": "available",
-    "timestamp": "2026-07-03T05:23:12.428535+00:00",
-    "title": "These conjectures are distilled from a single finding: the Euclidean line is the"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n## 1. Construct the intertwining label map for all m\n\nFor every `m ≥ 1`, both the intervals of the greedy `m`-Tamari poset and the\nplanar `(m+1)`-constellations of size `n` are built by a recursive decomposition\nthat can be recorded as a generating tree whose nodes carry a label tracking a\ncombinatorial statistic. The conjecture that these two trees are isomorphic — and\nhence that the two families are equinumerous, refined by the tracked statistics —\nreduces to a single concrete object: a label map sending one root to the other\nand turning one succession rule into the other on the nose.\n\nThe key insight is that an isomorphism of generating trees is *local*: it is\nentirely determined by a label map that intertwines the two succession rules, and\nonce such a map exists, the refined equinumerosity at every size follows by a\nroutine level-by-level induction, transporting all label-borne statistics for\nfree. Why now? The general reduction — from a global bijection of two\nsuper-exponentially growing families to a single local intertwining identity — is\nnow available in fully verified form, so the remaining work is the sharply\nfocused, checkable task of writing down both succession rules and the map\nbetween them.\n\n## 2. Recover the interval-count integrality from the tree recursion\n\nThe closed form `(m+1)/(n(mn+1)) · C((m+1)²n + m, n−1)` counts `m`-Tamari\nintervals and is, experimentally, always a positive integer, yet the formula\nhides a delicate arithmetic cancellation.\n\nThe key insight is that a generating-tree recursion expresses each size-`n` count\nas a manifestly-integer sum over the labels present at level `n`, so integrality\nbecomes automatic and a combinatorial recurrence replaces the binomial identity.\nWhy now? With a working generating-tree engine and the verified base-layer\nrecursion in hand, one can attach the arithmetic to a structure that produces\nintegers by construction, rather than proving divisibility of a binomial\nexpression after the fact.\n\n## 3. Reconstructing a generating tree from its counting sequence\n\nEqual counting sequences do not force two succession rules to be isomorphic; the\nfiner invariant is the multiset of labels present at each level.\n\nThe key insight is that this level-wise label multiset is a strictly stronger\nisomorphism invariant than the sequence of level sizes, and comparing these\nmultisets gives a decision procedure that separates \"genuinely isomorphic\" from\n\"merely equinumerous\" pairs of trees. Why now? The Tamari/constellation program\nproduces many candidate rules with identical Catalan- or Fuss-Catalan-type\ncounts, and a principled invariant is exactly what is needed to tell which\ncandidate pairings can possibly be upgraded to a structural isomorphism.\n\n## 4. Vector-labelled generating-tree isomorphisms\n\nFaithful generating trees for Tamari intervals need more than one catalytic\nparameter, so their labels are naturally vectors rather than single integers.\n\nThe key insight is that the entire intertwining mechanism survives verbatim for\nlabels in `ℤ^d`: an affine label map that intertwines two vector-valued\nsuccession rules transports the *joint* distribution of all coordinate statistics\nat every level, not just a single one. Why now? Multi-parameter succession rules\nare precisely where the `m`-Tamari and constellation decompositions live, so a\nvector-labelled framework is the natural setting in which to search — by hand or\ncomputationally — for the map conjectured in direction 1.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0143",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "a5a22996",
-    "status": "available",
-    "timestamp": "2026-07-03T05:51:11.834451+00:00",
-    "title": "For every `m ≥ 1`, both the intervals of the greedy `m`-Tamari poset and the"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "8638d104",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely — the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence — instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domain_bridges": [],
     "domains": [
@@ -3110,7 +3031,7 @@
     "proof_strategy": "Define A(1) = A(2) = 1, A(n+1) = smallest positive integer not equal to A(n) + A(n-1). Prove by strong induction: A(n) >= floor(n^2/4). Base: A(1)=1 >= 0, A(2)=1 >= 1. Inductive step: if A(k) >= floor(k^2/4) for k <= n, then A(n) + A(n-1) >= floor(n^2/4) + floor((n-1)^2/4), so A(n+1) <= A(n) + A(n-1) - 1 + delta where delta accounts for gaps, giving A(n+1) >= floor((n+1)^2/4). Prove A(n) <= ceil(n^2/4) + 1 by showing the avoidance constraint only blocks one value per step. Test: compute A(n) for n=1..10^6 and verify A(n)/n^2 -> 1/4.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:27.017991+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7e57e1f5",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Arithmetic Mirror Symmetry for Calabi–Yau\n\nDerived from this cycle's findings in `HodgeMirror.lean`, `SYZDuality.lean`, and\n`ZetaModularity.lean`. Each conjecture is bold, falsif",
-      "quality_score": 0.70122,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-06-27T22:34:58",
-      "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
-    },
-    {
       "cycle_id": "c25c1b9e",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Extremal signed determinant of the resistance matrix\n\nThis research cycle established two endpoints of the *signed resistance determinant*\n`sdet(G) := (-1)^(n-1) · det R(G)` over",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-03T05:21:46",
       "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
+    },
+    {
+      "cycle_id": "bb3ce4ee",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Dark Mathematics\n\nFive bold, falsifiable conjectures arising from this cycle's finding that darkness —\nknowing a witness must exist while being unable to name one — is real, stra",
+      "quality_score": 0.7902000000000001,
+      "sorry_count": 3,
+      "theorem_count": 15,
+      "timestamp": "2026-07-03T05:53:55",
+      "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a880054f",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Mutually Orthogonal Italian Squares\n\nThis cycle formalized, over an arbitrary finite carrier `α` (so the carrier of a\nprime-power-order square can be a finite field directly):\n\n*",
-      "quality_score": 0.3646502272727273,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-27T13:57:55",
-      "title": "Maximum size of pairwise orthogonal Italian squares is n‑1 for prime powers"
-    },
     {
       "cycle_id": "beb2abc2",
       "domain": "Novelty",
@@ -2501,21 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-03T05:51:17",
       "title": "Isomorphism of generating trees for greedy m-Tamari intervals and planar (m+1)-constellations"
+    },
+    {
+      "cycle_id": "bb3ce4ee",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Dark Mathematics\n\nFive bold, falsifiable conjectures arising from this cycle's finding that darkness —\nknowing a witness must exist while being unable to name one — is real, stra",
+      "quality_score": 0.7902000000000001,
+      "sorry_count": 3,
+      "theorem_count": 15,
+      "timestamp": "2026-07-03T05:53:55",
+      "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "230b77ce",
-      "domain": "Novelty",
-      "name": "exhibits",
-      "quality": 0.76576
-    },
-    {
-      "cycle_id": "230b77ce",
-      "domain": "Novelty",
-      "name": "linf_certified_radius_pos",
-      "quality": 0.76576
-    },
     {
       "cycle_id": "230b77ce",
       "domain": "Novelty",
@@ -2803,17 +2791,22 @@
       "domain": "Probability",
       "name": "posEnergy_eq_negEnergy_of_antisymm",
       "quality": 0.8748400000000001
+    },
+    {
+      "cycle_id": "bb3ce4ee",
+      "domain": "Computation",
+      "name": "gives",
+      "quality": 0.7902000000000001
+    },
+    {
+      "cycle_id": "bb3ce4ee",
+      "domain": "Computation",
+      "name": "is",
+      "quality": 0.7902000000000001
     }
   ],
-  "last_updated": "2026-07-03T05:51:17",
+  "last_updated": "2026-07-03T05:53:55",
   "open_questions": [
-    {
-      "context": "",
-      "cycle_id": "3e805dd4",
-      "domain": "Applications",
-      "sorry_count": 4,
-      "timestamp": "2026-06-25T03:28:42"
-    },
     {
       "context": "",
       "cycle_id": "f25c8810",
@@ -3016,6 +3009,13 @@
       "domain": "Pythagorean",
       "sorry_count": 10,
       "timestamp": "2026-07-02T20:59:14"
+    },
+    {
+      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
+      "cycle_id": "bb3ce4ee",
+      "domain": "Computation",
+      "sorry_count": 3,
+      "timestamp": "2026-07-03T05:53:55"
     }
   ],
   "research_threads": {
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "c37a84a2",
-        "quality": 0.5709080000000001,
-        "theorems": 1,
-        "title": "Close Proofs: These conjectures continue the research cycle begun in"
-      },
-      {
         "cycle_id": "cc1a412b",
         "quality": 0.6594499999999999,
         "theorems": 5,
@@ -3327,6 +3321,12 @@
         "quality": 0.4437857425742574,
         "theorems": 8,
         "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showin"
+      },
+      {
+        "cycle_id": "bb3ce4ee",
+        "quality": 0.7902000000000001,
+        "theorems": 15,
+        "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
       }
     ],
     "Cryptography": [
