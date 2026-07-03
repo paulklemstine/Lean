@@ -4,21 +4,6 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
-    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0225",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-03T23:49:34.648103+00:00",
-    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domains": [
       "Pythagorean"
@@ -32,7 +17,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: unnamed_concept"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ca29fc4b",
     "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
     "domains": [
       "Novelty",
@@ -42,24 +27,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:26.963635+00:00",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot \u2014 the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0226",
-    "priority_score": 0.81,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-03T23:49:34.675892+00:00",
-    "title": "Knots That Think: Cognition as Braiding in Category Theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -396,7 +366,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "aed51c81",
     "description": "Conjecture that for coprime positive integers a<b with a>1 and odd exponent n>1, the equation (a^n+1)(b^n+1)=x^2 has no positive integer solutions.",
     "domains": [
       "Pythagorean"
@@ -405,7 +375,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31223v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T16:13:17.108600+00:00",
     "title": "No solutions for odd exponents in the coprime case"
   },
@@ -1097,7 +1067,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "A recursive decomposition of greedy Tamari intervals via planar map structures"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f5192907",
     "description": "The sheared Witt vector functor \\(\\chW\\) is isomorphic to the filtered colimit of the functors \\(n \\mapsto W(R[p^n])/\\hw(R[p^n])\\) over \\(n \\geq 1\\).",
     "domains": [
       "Bridges"
@@ -1106,7 +1076,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01178v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T22:10:42.305562+00:00",
     "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
   },
@@ -2157,12 +2127,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The conjecture posits that the sharpness of the entropic inequality ensures equality in maximum entropy states when samples align with uniform distributions.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_0173",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30486v1",
+    "status": "available",
+    "timestamp": "2026-07-03T23:56:26.184055+00:00",
+    "title": "Shareness of Entropic Analogues"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0173",
+    "id": "fd_0174",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -2176,7 +2161,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0174",
+    "id": "fd_0175",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -2190,7 +2175,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0175",
+    "id": "fd_0176",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
@@ -2204,7 +2189,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0176",
+    "id": "fd_0177",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -2218,7 +2203,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0177",
+    "id": "fd_0178",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
@@ -2233,7 +2218,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0178",
+    "id": "fd_0179",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
@@ -2248,7 +2233,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0179",
+    "id": "fd_0180",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -2263,7 +2248,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0180",
+    "id": "fd_0181",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -2277,7 +2262,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0181",
+    "id": "fd_0182",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -2292,7 +2277,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0182",
+    "id": "fd_0183",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02132v1",
@@ -2307,7 +2292,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0183",
+    "id": "fd_0184",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -2316,31 +2301,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "Combinatorial determination of mdr for line arrangements with only double and triple points"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e3e38cc8",
     "description": "Every planar graph has geodesic treewidth at most 5. The paper improves the known lower bound to 5, and this conjecture asserts that 5 is also tight as an upper bound for planar graphs.",
     "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0184",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02098v1",
-    "status": "available",
-    "timestamp": "2026-07-03T06:33:32.655747+00:00",
-    "title": "Geodesic Treewidth Upper Bound for Planar Graphs"
-  },
-  {
-    "consumed_by_exp_id": "e3e38cc8",
-    "description": "We conjecture that for any oriented product structure \\((A,B,P)\\) of type \\((m,n)\\) with \\(m,n\\ge2\\) satisfying the no\u2011fold condition \\(\\mathsf T_2\\), the weighted dual Fisher inequality is strict unless \\((m,n)=(2,2)\\) and the structure is the affine plane of order\u202f2 (i.e. the unique 2\u00d72 grid). Moreover, if the middle\u2011link girth is\u202f6 then the minimum of the two horizontal\u2011link girths is at most\u202f4, and equality in the weighted dual Fisher inequality forces the structure to be exactly this affine\u2011plane construction. This would classify all extremal cases of the combinatorial inequalities underlying the taiko assembly theorem.",
-    "domains": [
-      "Algebra",
       "Pythagorean"
     ],
     "id": "fd_0185",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2607.01716v1",
+    "source_exp_id": "2607.02098v1",
     "status": "in_progress",
+    "timestamp": "2026-07-03T06:33:32.655747+00:00",
+    "title": "Geodesic Treewidth Upper Bound for Planar Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for any oriented product structure \\((A,B,P)\\) of type \\((m,n)\\) with \\(m,n\\ge2\\) satisfying the no\u2011fold condition \\(\\mathsf T_2\\), the weighted dual Fisher inequality is strict unless \\((m,n)=(2,2)\\) and the structure is the affine plane of order\u202f2 (i.e. the unique 2\u00d72 grid). Moreover, if the middle\u2011link girth is\u202f6 then the minimum of the two horizontal\u2011link girths is at most\u202f4, and equality in the weighted dual Fisher inequality forces the structure to be exactly this affine\u2011plane construction. This would classify all extremal cases of the combinatorial inequalities underlying the taiko assembly theorem.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0186",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01716v1",
+    "status": "available",
     "timestamp": "2026-07-03T07:08:28.593276+00:00",
     "title": "Equality case of the weighted dual Fisher inequality for taiko product structures"
   },
@@ -2351,7 +2336,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Physics"
     ],
-    "id": "fd_0186",
+    "id": "fd_0187",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
@@ -2365,7 +2350,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0187",
+    "id": "fd_0188",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01718v1",
@@ -2379,7 +2364,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0188",
+    "id": "fd_0189",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01761v1",
@@ -2394,7 +2379,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Logic"
     ],
-    "id": "fd_0189",
+    "id": "fd_0190",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
@@ -2408,7 +2393,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0190",
+    "id": "fd_0191",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01695v1",
@@ -2422,7 +2407,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0191",
+    "id": "fd_0192",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01438v1",
@@ -2437,7 +2422,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0192",
+    "id": "fd_0193",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -2451,7 +2436,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0193",
+    "id": "fd_0194",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -2466,7 +2451,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0194",
+    "id": "fd_0195",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
@@ -2480,7 +2465,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0195",
+    "id": "fd_0196",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00775v1",
@@ -2494,7 +2479,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0196",
+    "id": "fd_0197",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00825v2",
@@ -2508,7 +2493,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0197",
+    "id": "fd_0198",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00651v1",
@@ -2522,7 +2507,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0198",
+    "id": "fd_0199",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00643v1",
@@ -2531,19 +2516,33 @@ window.FUTURE_DIRECTIONS = [
     "title": "Coupling Depth One Mock Modular Eisenstein Series into Depth Two Forms"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "01bea6c3",
     "description": "For every edge-color-critical graph F with chromatic number \u03c7(F) = r + 1 (r \u2265 2), all sufficiently large non-r-partite F-free graphs maximizing the adjacency spectral radius also maximize the number of edges. Formally, if EX_{r+1,\u03c1}(n,F) and EX_{r+1}(n,F) denote the families of non-r-partite F-free graphs of order n attaining maximum spectral radius and maximum edges respectively, then EX_{r+1,\u03c1}(n,F) \u2286 EX_{r+1}(n,F) for all sufficiently large n.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0199",
+    "id": "fd_0200",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00561v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T12:57:08.370062+00:00",
     "title": "Fang-Zhai Conjecture: Spectral extremal graphs for edge-color-critical graphs are edge extremal"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let G be a brick (i.e. a 3\u2011connected bicritical non\u2011bipartite graph) that is not isomorphic to K4, the complement of C6 (\u0143C6) nor the Petersen graph. Then the following are equivalent:\n\n1) Every b\u2011invariant edge of G is a forcing edge.\n2) G is a near\u2011bipartite brick belonging to the class characterised in the main theorem of the paper (i.e. the complete description of near\u2011bipartite bricks for which every b\u2011invariant edge is forcing).\n\nThus, apart from the three small exceptions, the property \"all b\u2011invariant edges are forcing\" precisely picks out the near\u2011bipartite bricks.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0201",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00608v1",
+    "status": "available",
+    "timestamp": "2026-07-03T13:25:27.639831+00:00",
+    "title": "Every b\u2011invariant edge is forcing exactly for near\u2011bipartite bricks (up to the three classical exceptions)"
   },
   {
     "consumed_by_exp_id": "",
@@ -2552,7 +2551,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0201",
+    "id": "fd_0202",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00456v1",
@@ -2567,7 +2566,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0202",
+    "id": "fd_0203",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00366v1",
@@ -2582,7 +2581,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0203",
+    "id": "fd_0204",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00372v1",
@@ -2596,7 +2595,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0204",
+    "id": "fd_0205",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00332v1",
@@ -2610,7 +2609,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0205",
+    "id": "fd_0206",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.32024v1",
@@ -2625,7 +2624,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0206",
+    "id": "fd_0207",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31967v1",
@@ -2640,7 +2639,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0207",
+    "id": "fd_0208",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31940v1",
@@ -2655,7 +2654,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0208",
+    "id": "fd_0209",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31908v1",
@@ -2670,7 +2669,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0209",
+    "id": "fd_0210",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31687v1",
@@ -2685,7 +2684,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0210",
+    "id": "fd_0211",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31821v2",
@@ -2700,7 +2699,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0211",
+    "id": "fd_0212",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31547v1",
@@ -2715,7 +2714,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0212",
+    "id": "fd_0213",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31649v1",
@@ -2730,7 +2729,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0213",
+    "id": "fd_0214",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31565v1",
@@ -2744,7 +2743,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0214",
+    "id": "fd_0215",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31526v1",
@@ -2759,7 +2758,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0215",
+    "id": "fd_0216",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31341v1",
@@ -2774,7 +2773,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0216",
+    "id": "fd_0217",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31262v1",
@@ -2789,7 +2788,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0217",
+    "id": "fd_0218",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31264v1",
@@ -2804,7 +2803,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0218",
+    "id": "fd_0219",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30856v1",
@@ -2819,7 +2818,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0219",
+    "id": "fd_0220",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30996v1",
@@ -2834,7 +2833,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0220",
+    "id": "fd_0221",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30885v1",
@@ -2849,7 +2848,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0221",
+    "id": "fd_0222",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31044v1",
@@ -2863,7 +2862,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0222",
+    "id": "fd_0223",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30496v1",
@@ -2878,7 +2877,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0223",
+    "id": "fd_0224",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30588v1",
@@ -2892,13 +2891,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0224",
+    "id": "fd_0225",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30593v1",
     "status": "available",
     "timestamp": "2026-07-03T23:33:38.013269+00:00",
     "title": "Optimality of the polynomial factor in the Naslund\u2013Sawin bound for sunflower\u2011free families"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "There exists an absolute constant C such that for every d-regular graph G on n vertices with d \u2265 2, the irregularity strength s(G) satisfies s(G) \u2264 n/d + C. Here s(G) is the smallest integer k such that the edges of G can be weighted with integers from {1,\u2026,k} so that all weighted vertex degrees are distinct.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0226",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30612v1",
+    "status": "available",
+    "timestamp": "2026-07-03T23:58:16.205238+00:00",
+    "title": "Faudree-Lehel Conjecture on Irregularity Strength of Regular Graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -2914,21 +2927,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T00:49:27.041847+00:00",
     "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0227",
-    "priority_score": 0.77,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-03T23:49:34.709777+00:00",
-    "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
   },
   {
     "consumed_by_exp_id": "",
@@ -2962,21 +2960,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nDerived from this cycle's findings that a reality can be distributed across two or more\ngenuinely sharper observers exactly when its topology is *join-reducible* (the join of two\nstrictly finer topologies), that maximally blurred (indiscrete) reality always splits on\nany space with more than one point, and that the sharpest (discrete) and certain minimal\n(Sierpi\u0144ski) topologies are *rigid* \u2014 impossible to reconstruct as an agreement of sharper\nviewpoints.\n\n## 1. A complete census of rigid spaces on finitely many points\n\nAmong the four topologies on a two-point space, exactly two \u2014 the fully resolved (discrete)\ntopology and each single-point-resolving (Sierpi\u0144ski) topology \u2014 cannot be split between\ntwo sharper observers, while the blurred (indiscrete) topology can. **Conjecture:** on an\n`n`-point space the rigid topologies are precisely the join-irreducible elements of the\nlattice of topologies, and their number obeys a determinable recurrence tied to how many\ntopologies have a unique cover directly below the blurred one. The key insight is that\nsplittability is a purely order-theoretic property, invisible to point-count and to\nseparation strength, so counting rigid spaces is really counting join-irreducible elements\nof a finite, fully computable lattice. Why now? The freshly established equivalence between\nmulti-observer representability and join-reducibility turns a vague \"how many observers\"\nquestion into a sharp, finite enumeration problem, ripe for an exact combinatorial law.\n\n## 2. The cofinite topology as the first infinite rigid space\n\nOn an infinite set, declare a set open when it is empty or misses only finitely many\npoints. This space is neither fully resolved nor blurred, and every nonempty open set is\ndense. **Conjecture:** this cofinite reality is rigid \u2014 it is not the agreement of any two\nstrictly sharper observers, hence admits no finite multi-observer representation at all. The\nkey insight is that rigidity is governed entirely by the poset of a topology's strict\nrefinements, and the cofinite topology looks like the natural infinite cousin of the\nSierpi\u0144ski topology, whose only nearby refinements each over-resolve a cofinite set and so\ncannot be intersected back down. Why now? The only rigid examples currently known are\nfinite (discrete and Sierpi\u0144ski); producing a canonical *infinite* rigid space would show\nrigidity is a genuine structural phenomenon and not a small-cardinality artifact.\n\n## 3. Every dense order is the agreement of a left- and a right-looking observer\n\nThe real line is exactly the agreement of its lower-limit observer (seeing right half-open\nintervals) and its upper-limit observer (seeing left half-open intervals), each strictly\nsharper than reality. **Conjecture:** for *every* dense linear order without endpoints, the\norder topology is precisely the agreement of its lower-limit and upper-limit observers, so\nevery such order has exactly two observers, witnessed by this canonical left/right pair. The\nkey insight is that the two-sided neighborhood structure of an order factors canonically\ninto a left-looking and a right-looking half, with density supplying the interpolation that\nsqueezes a point pinned from both sides into a genuine two-sided neighborhood. Why now? The\nconcrete real-line split is in hand; abstracting it to all dense orders would produce an\nentire canonical family of two-observer spaces and a reusable order-theoretic splitting\ntheorem.\n\n## 4. Splittability propagates through products\n\n**Conjecture:** the product of a splittable space with any nonempty space is again\nsplittable; more sharply, a product can be distributed across two observers as soon as a\nsingle one of its factors can, with the observers of that factor copied across the product.\nThe key insight is that splittability should be \"local in one coordinate,\" because the\nproduct topology is generated coordinate by coordinate, so one splittable coordinate is\nenough to split the whole. Why now? Having identified splittability with join-reducibility,\nwe can finally ask how it behaves under the standard constructions, and products are the\nfirst arena where phantom representations could be assembled compositionally rather than\nrebuilt space by space.\n\n## 5. Rigidity is orthogonal to metrizability\n\nThe original expectation tied observer count to metric structure, but the smallest\nnon-metrizable space (two blurred points) splits into two observers, whereas the sharply\nseparated discrete space is rigid. **Conjecture:** rigidity is completely decoupled from\nmetrizability and separation \u2014 a topology is rigid exactly when its lattice of open sets is\njoin-irreducible \u2014 and there exist matched pairs of spaces, one metrizable-and-rigid and one\nnon-metrizable-and-splittable, proving the two notions are independent. The key insight is\nthat the number of observers a space demands is an intrinsic order-theoretic invariant of\nits open-set lattice, entirely orthogonal to any metric or separation property. Why now? The\nfalse \"less metric structure means more observers\" guess has just been replaced by the exact\ncriterion of join-reducibility, and the natural next step is to sever the last intuitive\nlink to metrizability with explicit orthogonal witnesses.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0228",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "ade3f670",
-    "status": "available",
-    "timestamp": "2026-07-03T23:54:04.014383+00:00",
-    "title": "Derived from this cycle's findings that a reality can be distributed across two "
-  },
-  {
-    "consumed_by_exp_id": "e0253a8b",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domains": [
       "Novelty",
@@ -2986,7 +2969,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.73,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:27.017991+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-03T23:31:03.741914+00:00",
+  "last_updated": "2026-07-03T23:56:02.509594+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -31574,6 +31574,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-03T23:31:03.630311+00:00",
       "title": "Exact AVD\u2011total chromatic number of central graphs of regular graphs"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.2723,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 83,
+      "domain": "Novelty",
+      "duration_seconds": 2266.056832075119,
+      "end_time": 1783122587.7907867,
+      "files_integrated": 7,
+      "job_id": "ade3f670",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v16",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.86,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7673,
+        "cross_domain": 0.9,
+        "grade": "world_class",
+        "importance": 0.7845,
+        "novelty": 0.77,
+        "proof_depth": 0.7907,
+        "usefulness": 0.8454
+      },
+      "quality_score": 0.46629999999999994,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783120321.7339547,
+      "strategy_count": 0,
+      "theorem_count": 10,
+      "theorem_novelty_disproof": 3,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 7,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-03T23:56:02.445552+00:00",
+      "title": "Phantom Topologies: Spaces That Change When You Look at Them"
     }
   ]
 }
