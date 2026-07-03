@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c027516f",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Proof Complexity: Resolution and Cutting Planes\n\nDerived from this cycle's findings (soundness of resolution, unsatisfiability of\nthe pigeonhole CNF `PHP n`, soundness of the two",
-      "quality_score": 0.7101600000000001,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-06-27T22:10:10",
-      "title": "Proof Complexity: Resolution and Cutting Planes"
-    },
-    {
       "cycle_id": "7e57e1f5",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Arithmetic Mirror Symmetry for Calabi–Yau\n\nDerived from this cycle's findings in `HodgeMirror.lean`, `SYZDuality.lean`, and\n`ZetaModularity.lean`. Each conjecture is bold, falsif",
@@ -499,19 +489,19 @@
       "theorem_count": 5,
       "timestamp": "2026-07-02T20:14:02",
       "title": "Prove Fermats Little Theorem for p=5"
+    },
+    {
+      "cycle_id": "aad22603",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Positive p-Energies and Path Extremality\n\n## 1. Full path-minimality for all exponents p ≥ 2\n\n**Conjecture.** For every connected bipartite graph `G` on `n` vertices and every re",
+      "quality_score": 0.8748400000000001,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-03T05:21:46",
+      "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2cb7b634",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Extremal Graph Theory: Turán, Kruskal–Katona, Szemerédi, Roth\n\nThis cycle formalized, with 0 sorries:\n\n* `turan_density_bound` — Turán's theorem in density form\n  `ex(n, K_r) ≤ (",
-      "quality_score": 0.7014400000000001,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-06-27T13:51:50",
-      "title": "Extremal Graph Theory: Turán and Szemerédi"
-    },
     {
       "cycle_id": "eb034b80",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-03T04:31:26",
       "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+    },
+    {
+      "cycle_id": "aad22603",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Positive p-Energies and Path Extremality\n\n## 1. Full path-minimality for all exponents p ≥ 2\n\n**Conjecture.** For every connected bipartite graph `G` on `n` vertices and every re",
+      "quality_score": 0.8748400000000001,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-03T05:21:46",
+      "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "99e4c1c9",
-      "domain": "MachineLearning",
-      "name": "remains",
-      "quality": 0.77624
-    },
-    {
-      "cycle_id": "99e4c1c9",
-      "domain": "MachineLearning",
-      "name": "Eplane_value",
-      "quality": 0.77624
-    },
-    {
-      "cycle_id": "99e4c1c9",
-      "domain": "MachineLearning",
-      "name": "Eunif_value",
-      "quality": 0.77624
-    },
     {
       "cycle_id": "230b77ce",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "pow_five_modEq_self",
       "quality": 0.7480399999999999
+    },
+    {
+      "cycle_id": "aad22603",
+      "domain": "Probability",
+      "name": "by",
+      "quality": 0.8748400000000001
+    },
+    {
+      "cycle_id": "aad22603",
+      "domain": "Probability",
+      "name": "is",
+      "quality": 0.8748400000000001
+    },
+    {
+      "cycle_id": "aad22603",
+      "domain": "Probability",
+      "name": "posEnergy_eq_negEnergy_of_antisymm",
+      "quality": 0.8748400000000001
     }
   ],
-  "last_updated": "2026-07-03T04:31:26",
+  "last_updated": "2026-07-03T05:21:46",
   "open_questions": [
     {
       "context": "",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "d3c0af99",
-        "quality": 0.63104,
-        "theorems": 19,
-        "title": "Minimal Minor-Closed Classes Below 3/2 Have Single Forbidden Minors"
-      },
-      {
         "cycle_id": "5a434903",
         "quality": 0.333456,
         "theorems": 4,
@@ -3823,6 +3817,12 @@
         "quality": 0.6757399999999999,
         "theorems": 5,
         "title": "Filtered Colimit Preservation by Sheared Witt Vectors"
+      },
+      {
+        "cycle_id": "aad22603",
+        "quality": 0.8748400000000001,
+        "theorems": 9,
+        "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
       }
     ],
     "Pythagorean": [
