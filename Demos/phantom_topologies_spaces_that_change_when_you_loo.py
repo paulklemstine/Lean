@@ -1,290 +1,215 @@
 """
 Phantom Topologies: numerical demonstrations.
 
-A *phantom topology* on a finite set X is a family of "observer" topologies on X.
-The *consensus* (real) topology is the collection of sets open in EVERY observer:
-in the lattice of topologies it is the supremum (join), whose open sets are the
-intersection of the observers' open-set collections. An observer is *strictly
-finer* than the consensus when it has strictly more open sets. The *phantom
-number* is the least number of strictly-finer observers whose consensus is a
-given topology.
+A *phantom topology* on a finite set X is a family of topologies (observers).
+The *consensus* (real) topology is the collection of sets open for EVERY
+observer -- i.e. the intersection of the observers' open-set families, which is
+the supremum in the lattice of topologies (finer <-> more open sets).
 
-Central results demonstrated here:
-  * Consensus = intersection of open-set collections.
-  * Collapse Principle: any genuine k-observer representation (k >= 2, each
-    observer strictly finer than the consensus) collapses to a genuine
-    2-observer one.
-  * Two-valued dichotomy: the finite phantom number is 2 (reducible topology) or
-    unattainable (join-irreducible topology).
-  * The Euclidean line is the consensus of the lower-limit and upper-limit
-    topologies (illustrated on a finite discretization).
+This script demonstrates, entirely self-contained:
 
-A "topology" on a finite universe is represented as a frozenset of frozensets:
-the collection of open sets. It must contain the empty set and the whole set and
-be closed under unions and intersections.
+  1. Consensus computation and the "measurement coarsens" monotonicity.
+  2. The co-excluded-point observers coExcl(a) = {emptyset, X, X\\{a}}.
+  3. The Indiscrete Splitting Theorem: for p != q,
+        coExcl(p) join coExcl(q) = indiscrete topology,
+     with each observer strictly finer than the indiscrete topology.
+  4. The Extremal Dichotomy: indiscrete splits, discrete is rigid.
+  5. Brute-force verification of splittability / rigidity on all topologies
+     of a small finite set.
+
+Topologies are represented as a Python `frozenset` of `frozenset`s (open sets).
 """
 
 from __future__ import annotations
 
-from itertools import combinations
-from typing import FrozenSet, Iterable, List, Optional, Tuple
+from itertools import combinations, chain
+from typing import FrozenSet, Iterable, List, Set, Tuple
 
-Set = FrozenSet[int]
-Topology = FrozenSet[Set]
+# A topology is a frozenset of open sets; each open set is a frozenset of points.
+Point = int
+OpenSet = FrozenSet[Point]
+Topology = FrozenSet[OpenSet]
 
 
 # --------------------------------------------------------------------------- #
-#  Basic topology utilities on a finite universe                              #
+# Core topology utilities
 # --------------------------------------------------------------------------- #
-def powerset(universe: Set) -> List[Set]:
-    """All subsets of a finite universe, as frozensets."""
-    elems = list(universe)
+def powerset(xs: Iterable[Point]) -> List[FrozenSet[Point]]:
+    """All subsets of `xs` as frozensets."""
+    items = list(xs)
     return [
         frozenset(c)
-        for r in range(len(elems) + 1)
-        for c in combinations(elems, r)
+        for r in range(len(items) + 1)
+        for c in combinations(items, r)
     ]
 
 
-def is_topology(opens: Iterable[Set], universe: Set) -> bool:
-    """Check the three topology axioms on a finite universe."""
-    O = set(opens)
-    if frozenset() not in O or universe not in O:
+def is_topology(opens: Set[OpenSet], universe: FrozenSet[Point]) -> bool:
+    """Check the topology axioms for `opens` on `universe`."""
+    if frozenset() not in opens or universe not in opens:
         return False
-    for a in O:
-        for b in O:
-            if (a | b) not in O or (a & b) not in O:
+    for a in opens:
+        for b in opens:
+            if (a & b) not in opens:  # finite intersections
+                return False
+            if (a | b) not in opens:  # (finite) unions suffice for finite sets
                 return False
     return True
 
 
-def discrete(universe: Set) -> Topology:
-    """The discrete topology: every subset is open (finest topology)."""
-    return frozenset(powerset(universe))
+def all_topologies(universe: FrozenSet[Point]) -> List[Topology]:
+    """Brute-force enumerate every topology on a small finite `universe`."""
+    subsets = powerset(universe)
+    # Every topology must contain emptyset and the universe; the remaining
+    # candidate open sets are the "middle" subsets.
+    middle = [s for s in subsets if s != frozenset() and s != universe]
+    topologies: List[Topology] = []
+    for r in range(len(middle) + 1):
+        for chosen in combinations(middle, r):
+            opens = set(chosen) | {frozenset(), universe}
+            if is_topology(opens, universe):
+                topologies.append(frozenset(opens))
+    return topologies
 
 
-def indiscrete(universe: Set) -> Topology:
-    """The indiscrete topology: only the empty set and the whole set are open."""
-    return frozenset({frozenset(), universe})
-
-
-def consensus(observers: List[Topology]) -> Topology:
-    """
-    Consensus (real) topology = supremum in the lattice of topologies.
-    Its opens are the sets open in EVERY observer, i.e. the intersection of the
-    observers' open-set collections.
-    """
-    if not observers:
-        raise ValueError("need at least one observer")
-    result = set(observers[0])
+def consensus(observers: Iterable[Topology]) -> Topology:
+    """Consensus / real topology: sets open in EVERY observer (intersection)."""
+    observers = list(observers)
+    result = observers[0]
     for t in observers[1:]:
-        result &= set(t)
+        result = result & t
     return frozenset(result)
 
 
-def strictly_finer(observer: Topology, real: Topology) -> bool:
-    """True iff `observer` has strictly more open sets than `real`."""
-    return set(real) < set(observer)
+def finer(a: Topology, b: Topology) -> bool:
+    """`a` is finer than or equal to `b` (a has all of b's open sets)."""
+    return b <= a
+
+
+def strictly_finer(a: Topology, b: Topology) -> bool:
+    return finer(a, b) and a != b
 
 
 # --------------------------------------------------------------------------- #
-#  The Collapse Principle, constructively                                      #
+# Named topologies and the co-excluded-point construction
 # --------------------------------------------------------------------------- #
-def collapse_to_two(
-    observers: List[Topology], real: Topology
-) -> Tuple[Topology, Topology]:
+def discrete(universe: FrozenSet[Point]) -> Topology:
+    return frozenset(powerset(universe))
+
+
+def indiscrete(universe: FrozenSet[Point]) -> Topology:
+    return frozenset({frozenset(), universe})
+
+
+def co_excl(a: Point, universe: FrozenSet[Point]) -> Topology:
+    """coExcl(a): open sets are emptyset, universe, and universe \\ {a}."""
+    return frozenset({frozenset(), universe, universe - {a}})
+
+
+# --------------------------------------------------------------------------- #
+# Splittability
+# --------------------------------------------------------------------------- #
+def is_splittable(tau: Topology, universe: FrozenSet[Point]) -> Tuple[bool, object]:
     """
-    Constructive Collapse Principle. Given a genuine k-observer representation
-    (k >= 2, each observer strictly finer than `real`, consensus == `real`),
-    return a genuine 2-observer pair (b, c) with b, c strictly finer than `real`
-    and consensus([b, c]) == real.
-
-    Algorithm: peel one observer f_j; pool the rest into c. If c is strictly
-    finer than reality, return (f_j, c). Otherwise the pooled remainder already
-    equals reality, so recurse on the strictly smaller family. The recursion
-    cannot bottom out at a single observer (a single strict observer can never
-    have consensus equal to reality).
+    Return (True, (a, b)) if tau = consensus(a, b) with a, b strictly finer
+    than tau; otherwise (False, None).
     """
-    assert len(observers) >= 2, "need at least two observers"
-    assert consensus(observers) == real, "consensus must equal reality"
-    assert all(strictly_finer(o, real) for o in observers), "must be genuine"
-
-    fam = list(observers)
-    while True:
-        f_j = fam[0]
-        rest = fam[1:]
-        pooled = consensus(rest)  # supremum of the remaining observers
-        if strictly_finer(pooled, real):
-            return f_j, pooled
-        # pooled == real: recurse on the strictly smaller remaining family
-        assert len(rest) >= 2, "recursion cannot bottom out at one observer"
-        fam = rest
+    finer_topologies = [
+        t for t in all_topologies(universe) if strictly_finer(t, tau)
+    ]
+    for a, b in combinations(finer_topologies, 2):
+        if consensus([a, b]) == tau:
+            return True, (a, b)
+    # also allow a == b? strictly finer pair with a possibly equal is covered
+    for a in finer_topologies:
+        if consensus([a, a]) == tau:  # trivial, never equals a strictly finer tau
+            pass
+    return False, None
 
 
-# --------------------------------------------------------------------------- #
-#  Reducibility / phantom number on finite spaces                             #
-# --------------------------------------------------------------------------- #
-def all_topologies(universe: Set) -> List[Topology]:
-    """Enumerate every topology on a small finite universe (brute force)."""
-    P = powerset(universe)
-    must = {frozenset(), universe}
-    optional = [s for s in P if s not in must]
-    tops: List[Topology] = []
-    for r in range(len(optional) + 1):
-        for extra in combinations(optional, r):
-            cand = set(must) | set(extra)
-            if is_topology(cand, universe):
-                tops.append(frozenset(cand))
-    return tops
-
-
-def is_reducible(real: Topology, universe: Set) -> Optional[Tuple[Topology, Topology]]:
-    """
-    Decide reducibility: search for topologies b, c each strictly finer than
-    `real` with consensus([b, c]) == real. Returns such a pair or None
-    (join-irreducible). By the dichotomy, a pair exists iff the finite phantom
-    number is 2.
-    """
-    finer = [t for t in all_topologies(universe) if strictly_finer(t, real)]
-    for b, c in combinations(finer, 2):
-        if consensus([b, c]) == real:
-            return b, c
-    # also allow b == c is pointless (would not be strictly finer pair giving real
-    # unless a single observer equals real, excluded); check unordered pairs only
-    return None
-
-
-def phantom_number(real: Topology, universe: Set) -> str:
-    """Return '2' if reducible, else 'unattainable (join-irreducible)'."""
-    return "2" if is_reducible(real, universe) is not None else \
-        "unattainable (join-irreducible)"
+def fmt(t: Topology) -> str:
+    inner = sorted(("{" + ",".join(map(str, sorted(s))) + "}") if s else "{}"
+                   for s in t)
+    return "{ " + ", ".join(inner) + " }"
 
 
 # --------------------------------------------------------------------------- #
-#  The real line: lower-limit and upper-limit observers, and the squeeze       #
+# Demonstrations
 # --------------------------------------------------------------------------- #
-# On the genuine real line the lower-limit ('right-looking') observer sees each
-# half-open interval [x, b) as open, and the upper-limit ('left-looking')
-# observer sees each (a, x] as open. A set U open to BOTH observers is Euclidean
-# open, because around any point x we can glue a left piece (a, x] and a right
-# piece [x, b) into a genuine two-sided interval (a, b) sitting inside U:
-#
-#            (a, x]  ∪  [x, b)  =  (a, b).
-#
-# We verify this gluing identity numerically at the level of interval endpoints.
-
-def in_left_halfopen(a: float, x: float, t: float) -> bool:
-    """Membership in (a, x]: a < t <= x."""
-    return a < t <= x
-
-
-def in_right_halfopen(x: float, b: float, t: float) -> bool:
-    """Membership in [x, b): x <= t < b."""
-    return x <= t < b
-
-
-def in_open_interval(a: float, b: float, t: float) -> bool:
-    """Membership in (a, b): a < t < b."""
-    return a < t < b
-
-
-def squeeze_holds(a: float, x: float, b: float, samples: int = 20001) -> bool:
-    """
-    Numerically verify (a, x] ∪ [x, b) = (a, b) for a < x < b by sampling the
-    range (a, b) densely and checking that a point lies in (a, b) iff it lies in
-    the left piece or the right piece.
-    """
-    lo, hi = a - 1.0, b + 1.0
-    for k in range(samples):
-        t = lo + (hi - lo) * k / (samples - 1)
-        union = in_left_halfopen(a, x, t) or in_right_halfopen(x, b, t)
-        interval = in_open_interval(a, b, t)
-        if union != interval:
-            return False
-    return True
-
-
-# --------------------------------------------------------------------------- #
-#  Demonstrations                                                              #
-# --------------------------------------------------------------------------- #
-def demo_consensus_and_collapse() -> None:
-    print("=" * 68)
-    print("DEMO 1: Consensus and the Collapse Principle")
-    print("=" * 68)
-    U = frozenset({0, 1})
-    # Two Sierpinski-like observers on {0,1}, plus a redundant discrete observer.
-    s0 = frozenset({frozenset(), frozenset({0}), U})      # {0} open
-    s1 = frozenset({frozenset(), frozenset({1}), U})      # {1} open
-    disc = discrete(U)                                    # everything open
-    observers = [s0, s1, disc]
-    real = consensus(observers)
-    print(f"Universe: {sorted(U)}")
-    print(f"Observer 1 opens (Sierpinski, {{0}} open): {_fmt(s0)}")
-    print(f"Observer 2 opens (Sierpinski, {{1}} open): {_fmt(s1)}")
-    print(f"Observer 3 opens (discrete, redundant):    {_fmt(disc)}")
-    print(f"Consensus (real) topology:                 {_fmt(real)}")
-    print(f"Consensus is the indiscrete topology?      {real == indiscrete(U)}")
-    b, c = collapse_to_two(observers, real)
-    print(f"Collapsed to two observers: b={_fmt(b)}, c={_fmt(c)}")
-    print(f"consensus([b, c]) == real?                 {consensus([b, c]) == real}")
-    print(f"both strictly finer than real?             "
-          f"{strictly_finer(b, real) and strictly_finer(c, real)}")
-    print()
-
-
-def demo_dichotomy() -> None:
-    print("=" * 68)
-    print("DEMO 2: The two-valued dichotomy (phantom number is 2 or unattainable)")
-    print("=" * 68)
+def demo_consensus_monotonicity() -> None:
+    print("=" * 70)
+    print("1. Consensus and 'measurement coarsens'")
+    print("=" * 70)
     U = frozenset({0, 1, 2})
-    indisc = indiscrete(U)
-    disc = discrete(U)
-    print(f"Universe: {sorted(U)}")
-    print(f"Indiscrete topology  -> phantom number: {phantom_number(indisc, U)}")
-    print(f"Discrete topology    -> phantom number: {phantom_number(disc, U)}")
-    # A join-irreducible example: Sierpinski-type topology {∅, {0}, X} on 2 points.
-    U2 = frozenset({0, 1})
-    sierp = frozenset({frozenset(), frozenset({0}), U2})
-    print(f"Sierpinski {{∅,{{0}},X}} -> phantom number: {phantom_number(sierp, U2)}")
+    a = co_excl(0, U)
+    b = co_excl(1, U)
+    c = co_excl(2, U)
+    print(f"observer a = coExcl(0): {fmt(a)}")
+    print(f"observer b = coExcl(1): {fmt(b)}")
+    con_ab = consensus([a, b])
+    con_abc = consensus([a, b, c])
+    print(f"consensus(a,b)   = {fmt(con_ab)}  (#opens={len(con_ab)})")
+    print(f"consensus(a,b,c) = {fmt(con_abc)}  (#opens={len(con_abc)})")
+    print("Each observer is finer than the consensus:",
+          finer(a, con_ab) and finer(b, con_ab))
+    print("Adding observers never increases #opens:",
+          len(con_abc) <= len(con_ab))
     print()
 
 
-def demo_real_line() -> None:
-    print("=" * 68)
-    print("DEMO 3: The Euclidean line = lower-limit  ⋁  upper-limit observer")
-    print("=" * 68)
-    print("Gluing identity behind the two-observer theorem for R:")
-    print("    (a, x] ∪ [x, b) = (a, b)")
-    print("A set open to both the left-looking and right-looking observer thus")
-    print("contains a genuine two-sided neighbourhood around each of its points.")
-    print()
-    triples = [(-1.0, 0.0, 1.0), (0.0, 0.5, 2.0), (-3.2, -1.1, 4.7), (2.0, 2.25, 2.5)]
-    for (a, x, b) in triples:
-        ok = squeeze_holds(a, x, b)
-        print(f"    a={a:+.2f}, x={x:+.2f}, b={b:+.2f}:  "
-              f"(a,x] ∪ [x,b) = (a,b)?  {ok}")
-    print()
-    print("Phantom witnesses (each observer strictly finer than Euclidean):")
-    print("    [0,1) is open to the right-looking observer but NOT Euclidean-open")
-    print("          (no two-sided interval around 0 fits inside [0,1)).")
-    print("    (0,1] is open to the left-looking observer but NOT Euclidean-open.")
-    # Confirm the obstruction at the endpoint 0 for [0,1): every (0-eps, 0+eps)
-    # pokes out to the left of [0,1).
-    escapes = all((-eps) < 0 and not in_right_halfopen(0.0, 1.0, -eps)
-                  for eps in (0.5, 0.1, 0.01, 1e-4))
-    print(f"    every symmetric ball around 0 escapes [0,1)?  {escapes}")
+def demo_indiscrete_splitting() -> None:
+    print("=" * 70)
+    print("2. Indiscrete Splitting Theorem")
+    print("=" * 70)
+    for n in (2, 3, 4, 5):
+        U = frozenset(range(n))
+        p, q = 0, 1
+        a, b = co_excl(p, U), co_excl(q, U)
+        top = indiscrete(U)
+        join = consensus([a, b])
+        print(f"|X| = {n}:  coExcl({p}) join coExcl({q}) == indiscrete ? "
+              f"{join == top};  "
+              f"both strictly finer ? "
+              f"{strictly_finer(a, top) and strictly_finer(b, top)}")
     print()
 
 
-def _fmt(top: Topology) -> str:
-    inside = sorted((sorted(s) for s in top), key=lambda x: (len(x), x))
-    return "{" + ", ".join("{" + ",".join(map(str, s)) + "}" for s in inside) + "}"
+def demo_extremal_dichotomy() -> None:
+    print("=" * 70)
+    print("3. Extremal Dichotomy (brute force over all topologies)")
+    print("=" * 70)
+    for n in (2, 3):
+        U = frozenset(range(n))
+        top = indiscrete(U)
+        bot = discrete(U)
+        split_top, witness = is_splittable(top, U)
+        split_bot, _ = is_splittable(bot, U)
+        print(f"|X| = {n}:  indiscrete splittable ? {split_top};  "
+              f"discrete splittable ? {split_bot}")
+        if witness:
+            a, b = witness
+            print(f"          witness for indiscrete: a={fmt(a)}  b={fmt(b)}")
+    print()
+
+
+def demo_rigid_census() -> None:
+    print("=" * 70)
+    print("4. Census of rigid (non-splittable) topologies")
+    print("=" * 70)
+    for n in (2, 3):
+        U = frozenset(range(n))
+        tops = all_topologies(U)
+        rigid = [t for t in tops if not is_splittable(t, U)[0]]
+        print(f"|X| = {n}: {len(tops)} topologies total, "
+              f"{len(rigid)} rigid, {len(tops) - len(rigid)} splittable")
+    print()
 
 
 def main() -> None:
-    demo_consensus_and_collapse()
-    demo_dichotomy()
-    demo_real_line()
+    demo_consensus_monotonicity()
+    demo_indiscrete_splitting()
+    demo_extremal_dichotomy()
+    demo_rigid_census()
     print("All demonstrations complete.")
 
 
