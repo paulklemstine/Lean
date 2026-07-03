@@ -1081,7 +1081,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2d9578c9",
     "description": "This paper investigates the statistical behavior of Selmer ranks of twisted elliptic curves in various Galois extension settings, under assumptions related to the Extended Riemann Hypothesis. The study aims to formalize probabilistic predictions through an ordered framework inspired by combinatorial fan structures.",
     "domains": [
       "Algebra",
@@ -1091,7 +1091,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T21:54:06.879713+00:00",
     "title": "Fan-structure in Selmer group distributions over p-cyclic extensions"
   },
@@ -1432,7 +1432,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tree Structure Characterization for Good Position in Hyperelliptic Mumford Curves"
   },
   {
-    "consumed_by_exp_id": "07344e82",
+    "consumed_by_exp_id": "",
     "description": "The Gallai homothety number $ G_3(\\{0,2,5\\}) $ equals 77.",
     "domains": [
       "Bridges"
@@ -1441,7 +1441,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02226v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T04:11:45.471727+00:00",
     "title": "Exact value of G\u2083({0,2,5})"
   },
@@ -1578,12 +1578,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture that the Rogers\u2013Ramanujan identities hold as equalities of formal power series in the variable q with coefficients in \u2115, i.e., for all non\u2011negative integers n the coefficient of q^n in the generating function \u2211_{k\u22650} q^{k(k+1)/2}/(q;q)_k equals the coefficient of q^n in the product \u220f_{j\u22650} 1/((1\u2212q^{5j+1})(1\u2212q^{5j+4})). This can be expressed as a statement about the equality of two infinite products after truncation to any finite degree, making it falsifiable by checking a finite set of coefficients.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0135",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01544v1",
+    "status": "available",
+    "timestamp": "2026-07-03T09:01:30.241791+00:00",
+    "title": "Formalized Rogers\u2013Ramanujan identities for q-Pochhammer symbols"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0135",
+    "id": "fd_0136",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -1597,7 +1611,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0136",
+    "id": "fd_0137",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -1611,7 +1625,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0137",
+    "id": "fd_0138",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
@@ -1625,7 +1639,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0138",
+    "id": "fd_0139",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -1639,7 +1653,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0139",
+    "id": "fd_0140",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
@@ -1654,7 +1668,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0140",
+    "id": "fd_0141",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
@@ -1669,7 +1683,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0141",
+    "id": "fd_0142",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -1684,7 +1698,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0142",
+    "id": "fd_0143",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -1698,7 +1712,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0143",
+    "id": "fd_0144",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -1713,7 +1727,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0144",
+    "id": "fd_0145",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02132v1",
@@ -1728,7 +1742,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0145",
+    "id": "fd_0146",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -1742,7 +1756,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0146",
+    "id": "fd_0147",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02098v1",
@@ -1757,7 +1771,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0147",
+    "id": "fd_0148",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01716v1",
@@ -1772,7 +1786,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Physics"
     ],
-    "id": "fd_0148",
+    "id": "fd_0149",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
@@ -1786,7 +1800,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0149",
+    "id": "fd_0150",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01718v1",
@@ -1800,13 +1814,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0150",
+    "id": "fd_0151",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01761v1",
     "status": "available",
     "timestamp": "2026-07-03T08:45:09.613104+00:00",
     "title": "Even Harmonic Strength of Antipodal Spherical Designs Contains 2"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the proof that the transformation matrix $H_{\\mathcal{F}}$ associated with the interval subdivision of a finite simplicial complex is totally positive (TP). This requires defining the $h$-vector of a simplicial complex, the interval subdivision operation, the resulting transformation matrix $H_{\\mathcal{F}}$, and proving that all its minors are non-negative.",
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_0152",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01577v1",
+    "status": "available",
+    "timestamp": "2026-07-03T09:05:38.885794+00:00",
+    "title": "Total Positivity of the Interval Subdivision Transformation Matrix"
   },
   {
     "consumed_by_exp_id": "",
@@ -1839,7 +1868,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "That the entries of an integer right triangle are forced"
   },
   {
-    "consumed_by_exp_id": "ba614c22",
+    "consumed_by_exp_id": "92210ffa",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
