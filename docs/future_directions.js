@@ -18,7 +18,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bb3ce4ee",
     "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
     "domains": [
       "Novelty",
@@ -28,7 +28,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T02:31:29.596926+00:00",
     "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
   },
@@ -47,7 +47,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: unnamed_concept"
   },
   {
-    "consumed_by_exp_id": "6d7d46c9",
+    "consumed_by_exp_id": "",
     "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
     "domains": [
       "Novelty",
@@ -57,7 +57,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-03T00:49:26.963635+00:00",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
@@ -77,7 +77,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Knots That Think: Cognition as Braiding in Category Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a5a22996",
     "description": "For every m \u2265 1, the generating tree encoding the recursive decomposition of intervals in the greedy m-Tamari poset (on Dyck paths of size n) is isomorphic to the generating tree encoding the recursive decomposition of planar (m+1)-constellations of size n. This conjecture generalizes the m=1 case proved in the paper and would provide a combinatorial proof of the equinumerosity refined by the parameters tracked in the generating tree (e.g., number of valleys in Dyck paths and corresponding statistics in constellations).",
     "domains": [
       "Pythagorean",
@@ -87,7 +87,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01206v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T05:35:11.178227+00:00",
     "title": "Isomorphism of generating trees for greedy m-Tamari intervals and planar (m+1)-constellations"
   },
@@ -397,7 +397,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Commutativity of Operator Theorem operators in SR_G"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "aad22603",
     "description": "Formalize the theorem stating that for any connected bipartite graph G on n vertices and any real p \u2265 2, the positive p-energy E_p+(G) is at least the positive p-energy of the path graph P_n. This involves defining the adjacency spectrum, the positive p-energy sum, and the specific graph structures.",
     "domains": [
       "Physics"
@@ -406,7 +406,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30996v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T15:55:56.869309+00:00",
     "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
   },
@@ -526,7 +526,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Complementary feasibility in seating configurations for the generalized honeymoon Oberwolfach problem"
   },
   {
-    "consumed_by_exp_id": "b44d43b2",
+    "consumed_by_exp_id": "",
     "description": "For a d-dimensional submanifold E of \u211d^M and a smooth injective map \u03a6:E\u2192\u211d^{M'}, any N-point set F\u2282E in general position satisfies Kruskal rank s \u2264 d+1. This implies the \u03a6-separable dichotomy count C_F(N) is bounded by Cover's counting function C(N,d+M'+1), generalizing high-dimensional bounds to low-dimensional data structures.",
     "domains": [
       "Geometry"
@@ -535,7 +535,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T06:40:25.125636+00:00",
     "title": "Manifold-Constrained Kruskal Rank Bounds on Dichotomy Counts"
   },
@@ -891,7 +891,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on the asymptotic growth of \u03c7_S(n,\u230an/2\u230b,P_4)"
   },
   {
-    "consumed_by_exp_id": "6d751fda",
+    "consumed_by_exp_id": "",
     "description": "The function h(\u03b1, \u03b2) := density{n \u2208 \u2115 : \u2203 d|n, d \u2208 [n^\u03b1, n^\u03b2]} is real-analytic on the domain {(\u03b1, \u03b2) \u2208 \u211d\u00b2 : 0 < \u03b1 < \u03b2 < 1, \u03b2 - \u03b1 > 0.02} and continuous on its closure {\u03b2 - \u03b1 \u2265 0.02}.",
     "domains": [
       "Pythagorean",
@@ -901,7 +901,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30428v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T18:35:30.838855+00:00",
     "title": "Analyticity of the localized divisor density function"
   },
@@ -1214,7 +1214,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived p-completeness of sheared Witt vectors ensures Dieudonn\u00e9 theory extension"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f550adea",
     "description": "There exists a finite family of vector-valued convolution kernels {K_i} such that their weighted combination satisfies a ball-overbag inequality for Sidon sets, with the coefficient \u03b3_0=0.94601 achievable through optimized L\u00b2 energy distribution across kernels.",
     "domains": [
       "Computation",
@@ -1224,7 +1224,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T23:15:13.575664+00:00",
     "title": "Multi-kernel smoothing lemma for Sidon sets"
   },
@@ -1519,7 +1519,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Upper Bound for the Cardinality of Finite Sidon Sets"
   },
   {
-    "consumed_by_exp_id": "236d7724",
+    "consumed_by_exp_id": "",
     "description": "Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch \u2014 it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
     "domains": [
       "Novelty",
@@ -1529,7 +1529,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.78,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:27.041847+00:00",
     "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
   },
@@ -1564,7 +1564,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "That the entries of an integer right triangle are forced"
   },
   {
-    "consumed_by_exp_id": "dbc16a2f",
+    "consumed_by_exp_id": "ce0b06a3",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
