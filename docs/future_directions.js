@@ -133,7 +133,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Coxeter Length Scaling"
   },
   {
-    "consumed_by_exp_id": "f91c88c3",
+    "consumed_by_exp_id": "",
     "description": "For any graph $G$, if $G$ is distance-hereditary, then $G$ is balanced if and and only if $G$ does not contain $\\overline{3K_2}$ as an induced subgraph. This formalizes the paper's result that for the class of distance-hereditary graphs, the property of being balanced is equivalent to being $\\overline{3K_2}$-free.",
     "domains": [
       "Bridges"
@@ -142,7 +142,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00730v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T09:06:43.437769+00:00",
     "title": "Characterization of Balanced Distance-Hereditary Graphs by the Complement of 3-Matching"
   },
@@ -1707,12 +1707,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
+    "description": "This conjecture formalizes the existence of long square-free sequences under generalized equivalence relations, linking combinatorial growth to algebraic constraints. It targets the parameterization of morphic structures in Lean 4's framework.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
     "id": "fd_0144",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00674v1",
+    "status": "available",
+    "timestamp": "2026-07-03T12:21:38.085440+00:00",
+    "title": "Extending Pattern Analysis in Combinatorial Structures"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0145",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -1726,7 +1741,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0145",
+    "id": "fd_0146",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -1740,7 +1755,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0146",
+    "id": "fd_0147",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
@@ -1749,30 +1764,30 @@ window.FUTURE_DIRECTIONS = [
     "title": "Positivity of (p,q)-Generalized Stirling Numbers in the (p,q)-Binomial Basis"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "061b612f",
     "description": "Formalize the upper bound on the maximum size of a Sidon subset of {0, ..., N-1}, specifically proving that F(N) <= N^{1/2} + 0.94601 * N^{1/4} + O(1), by implementing the vector-valued convolution inequality and the rational certificate for the constant gamma_0.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0147",
+    "id": "fd_0148",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T01:56:27.032018+00:00",
     "title": "Upper Bound for the Cardinality of Finite Sidon Sets"
   },
   {
-    "consumed_by_exp_id": "061b612f",
+    "consumed_by_exp_id": "",
     "description": "Every class 2 graph G with \u0394(G) > |V(G)|/3 contains an induced \u0394(G)-overfull subgraph H such that every vertex in V(G)\\V(H) has degree at most \u0394(G) - 2 in the original graph G. This conjecture strengthens the Overfull Conjecture by asserting not just existence but also a structural property: the overfull subgraph can be found so that removing it reduces the maximum degree significantly.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0148",
+    "id": "fd_0149",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T03:33:00.928355+00:00",
     "title": "Structural Location of Overfull Subgraphs in Class 2 Graphs"
   },
@@ -1783,7 +1798,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0149",
+    "id": "fd_0150",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
@@ -1798,7 +1813,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0150",
+    "id": "fd_0151",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -1807,31 +1822,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "Gumbel limit for extremal microstate counts in AdS/CFT"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a511a89e",
     "description": "This research strives to identify precise mathematical conjectures in the theory of matroids and to design formalized counterexamples that expose their boundaries. The focus is on replicable designs that challenge theoretical assumptions.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0151",
+    "id": "fd_0152",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T04:32:20.108021+00:00",
     "title": "Probing the limits of matroid conjectures through counterexamples"
   },
   {
-    "consumed_by_exp_id": "a511a89e",
+    "consumed_by_exp_id": "",
     "description": "For any admissible class C and any non\u2011matching Sidorenko graph H, every W \u2208 C satisfying t(H,W)=p(W)^{e(H)} must be regular; i.e., the equality case regularizes optimally.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0152",
+    "id": "fd_0153",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T04:56:06.560111+00:00",
     "title": "Equality case regularity conjecture for admissible Sidorenko classes"
   },
@@ -1842,7 +1857,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0153",
+    "id": "fd_0154",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02132v1",
@@ -1857,7 +1872,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0154",
+    "id": "fd_0155",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -1871,7 +1886,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0155",
+    "id": "fd_0156",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02098v1",
@@ -1886,7 +1901,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0156",
+    "id": "fd_0157",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01716v1",
@@ -1901,7 +1916,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Physics"
     ],
-    "id": "fd_0157",
+    "id": "fd_0158",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
@@ -1915,7 +1930,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0158",
+    "id": "fd_0159",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01718v1",
@@ -1929,7 +1944,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0159",
+    "id": "fd_0160",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01761v1",
@@ -1938,31 +1953,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "Even Harmonic Strength of Antipodal Spherical Designs Contains 2"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "71bd52e9",
     "description": "Formalize the proof that the transformation matrix $H_{\\mathcal{F}}$ associated with the interval subdivision of a finite simplicial complex is totally positive (TP). This requires defining the $h$-vector of a simplicial complex, the interval subdivision operation, the resulting transformation matrix $H_{\\mathcal{F}}$, and proving that all its minors are non-negative.",
     "domains": [
       "Geometry",
       "Logic"
     ],
-    "id": "fd_0160",
+    "id": "fd_0161",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T09:05:38.885794+00:00",
     "title": "Total Positivity of the Interval Subdivision Transformation Matrix"
   },
   {
-    "consumed_by_exp_id": "71bd52e9",
+    "consumed_by_exp_id": "",
     "description": "For any odd prime p\u22613 mod4 and a\u2208Fp\u00d7 with \u03c7(a n!)=-1, the positive integer \u03c3_{p,a} defined by s_p D_a(x)=\u03c3_{p,a}\u00b2(nx-1) is equal to 1. This would mean the factorization simplifies to s_p D_a(x)=nx-1 without any additional scaling.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0161",
+    "id": "fd_0162",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01695v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T09:32:14.513880+00:00",
     "title": "Conjecture on \u03c3_{p,a} being unity for Legendre symbol conditions"
   },
@@ -1972,7 +1987,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0162",
+    "id": "fd_0163",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01438v1",
@@ -1987,7 +2002,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0163",
+    "id": "fd_0164",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -2001,7 +2016,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0164",
+    "id": "fd_0165",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -2016,7 +2031,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0165",
+    "id": "fd_0166",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
@@ -2030,7 +2045,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0166",
+    "id": "fd_0167",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00775v1",
@@ -2044,7 +2059,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0167",
+    "id": "fd_0168",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00825v2",
@@ -2058,13 +2073,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0168",
+    "id": "fd_0169",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00651v1",
     "status": "available",
     "timestamp": "2026-07-03T11:59:43.715928+00:00",
     "title": "On the Growth Rate of Extension-Closed Additive Subcategories for Oriented A_n Quivers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Let $f_{m_1, \\mu_1}$ and $f_{m_2, \\mu_2}$ be depth one mock modular Eisenstein series defined as in equation (1) with weights $\\k_1$ and $\\k_2$. Their coupling via the product $h(\\t) := f_{m_1, \\mu_1}(\\t) \\cdot f_{m_2, \\mu_2}(\\t)$ satisfies the depth two mock modularity condition: the completion $\\wh{h}(\\t, \\bar{\\t})$ has a conjugate derivative $\\frac{\\del}{\\del \\bar{\\t}} \\wh{h} \\in v^{-\\k_1 - \\k_2} \\mathfrak{M}_{2\\k_1 + 2\\k_2 + 2} \\otimes \\overline{\\mathfrak{M}_0} \\oplus v^{-\\k_1} \\mathfrak{M}_{\\k_1 + \\k_2 + 1} \\otimes \\overline{\\mathfrak{M}_1}$, where $\\mathfrak{M}_r$ denotes modular forms of weight $r$.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0170",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00643v1",
+    "status": "available",
+    "timestamp": "2026-07-03T12:23:11.405875+00:00",
+    "title": "Coupling Depth One Mock Modular Eisenstein Series into Depth Two Forms"
   },
   {
     "consumed_by_exp_id": "",
@@ -2097,7 +2126,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "That the entries of an integer right triangle are forced"
   },
   {
-    "consumed_by_exp_id": "f498d6bb",
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -2107,7 +2136,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:27.007324+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
