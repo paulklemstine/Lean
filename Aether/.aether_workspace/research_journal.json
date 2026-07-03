@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "492e1625",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Panmagic Affine Permutations over `ZMod n`\n\nBuilt on the results in `Catalog/Algebra/PanmagicAffine.lean`:\n\n* `isPanmagic_iff_units` — `σ_{a,b}` panmagic ⇔ `a, a−1, a+1` all units",
-      "quality_score": 0.66648,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-06-27T16:57:47",
-      "title": "Algebraic Characterization of Panmagic Affine Permutations over Z_n"
-    },
-    {
       "cycle_id": "d36ccdc3",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Unbounded 2-adic valuations of `f(x)^m` coefficients\n\nContext: `f(x) = ∏_{n≥0}(1-x^{2^n}) = ∑ (-1)^{s₂(n)} x^n`, `f(x)^m = ∑ t_m(n) x^n`.\nThis cycle proved (0 sorries) the Gawron",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-07-03T12:55:58",
       "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+    },
+    {
+      "cycle_id": "6d0ee8e6",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — Generalized Honeymoon Oberwolfach Problem\n\nThese conjectures are derived from this cycle's findings: the acquaintance count `2n(n-1)`,\nthe divisibility necessary condition `M = ∑",
+      "quality_score": 0.6876800000000001,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-07-03T14:04:43",
+      "title": "Generalized Honeymoon Oberwolfach Problem with Multiple Round Tables"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.78952
     }
   ],
-  "last_updated": "2026-07-03T12:55:58",
+  "last_updated": "2026-07-03T14:04:43",
   "open_questions": [
     {
       "context": "",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "60ec8c30",
-        "quality": 0.48337107438016536,
-        "theorems": 39,
-        "title": "Quantum Error Correction Threshold: The Eastin-Knill Theorem"
-      },
-      {
         "cycle_id": "47b46667",
         "quality": 0.4507929497716895,
         "theorems": 10,
@@ -3947,6 +3941,12 @@
         "quality": 0.45987362,
         "theorems": 8,
         "title": "Entanglement-Inspired Algorithmic Complexity in Noncommutative Spaces"
+      },
+      {
+        "cycle_id": "6d0ee8e6",
+        "quality": 0.6876800000000001,
+        "theorems": 7,
+        "title": "Generalized Honeymoon Oberwolfach Problem with Multiple Round Tables"
       }
     ],
     "Tropical": [

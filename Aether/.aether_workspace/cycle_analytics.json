@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-03T13:45:48.642068+00:00",
+  "last_updated": "2026-07-03T14:04:44.952355+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -30380,6 +30380,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-03T13:45:48.595034+00:00",
       "title": "Equality case regularity conjecture for admissible Sidorenko classes"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6194,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 38,
+      "domain": "Shared",
+      "duration_seconds": 1031.4875135421753,
+      "end_time": 1783087377.9469664,
+      "files_integrated": 6,
+      "job_id": "6d0ee8e6",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v16",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 1.0,
+        "composite": 0.7644,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.6964,
+        "novelty": 0.77,
+        "proof_depth": 0.6648,
+        "usefulness": 0.8074
+      },
+      "quality_score": 0.6876800000000001,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783086346.4594529,
+      "strategy_count": 0,
+      "theorem_count": 7,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 7,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-03T14:04:44.905767+00:00",
+      "title": "Generalized Honeymoon Oberwolfach Problem with Multiple Round Tables"
     }
   ]
 }
