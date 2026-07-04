@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f73687d8",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — EML Kolmogorov–Arnold rank-one frontier\n\nDerived from this cycle's findings in\n`Catalog/Applications/KolmogorovArnoldEMLSeparability.lean` and\n`Catalog/Applications/KolmogorovArn",
-      "quality_score": 0.5230660465116279,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-06-28T03:01:57",
-      "title": "EML Kolmogorov-Arnold Representation"
-    },
-    {
       "cycle_id": "c011c95b",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Schnorr / Σ-protocol zero-knowledge\n\nThis cycle added three verified Lean files extending the catalog's Schnorr work\n(`SchnorrIdentification.lean`, `AffineSigmaExtraction.lean`):",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-04T09:19:00",
       "title": "Knots That Think: Cognition as Braiding in Category Theory"
+    },
+    {
+      "cycle_id": "116dddb5",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Escher Staircases and the Escher Height Invariant\n\n## 1. A quantitative Escher height from bounded chains\n\nDefine the Escher height of a commutative ring as the supremum, over al",
+      "quality_score": 0.5346635084337349,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-04T10:56:51",
+      "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.75424
     }
   ],
-  "last_updated": "2026-07-04T09:19:00",
+  "last_updated": "2026-07-04T10:56:51",
   "open_questions": [
     {
       "context": "and the colour pigeonhole.  Both are fully provable in Lean with no `sorry`.; `afl_constant_gap` — all `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "5961bdfa",
-        "quality": 0.7401600000000002,
-        "theorems": 17,
-        "title": "Multi-kernel smoothing lemma for Sidon sets"
-      },
-      {
         "cycle_id": "95c356ab",
         "quality": 0.8257369999999999,
         "theorems": 8,
@@ -3141,6 +3135,12 @@
         "quality": 0.30277126000000004,
         "theorems": 0,
         "title": "Knots That Think: Cognition as Braiding in Category Theory"
+      },
+      {
+        "cycle_id": "116dddb5",
+        "quality": 0.5346635084337349,
+        "theorems": 10,
+        "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
       }
     ],
     "Bridges": [
