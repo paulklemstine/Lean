@@ -1,121 +1,191 @@
 import Mathlib
 
 /-!
-# Spherical Designs with Infinite Harmonic Strength — Foundations
+# Forcing edges of perfect matchings, via fixed-point-free involutions
 
-This file develops the basic theory of the *harmonic strength* of a finite set of
-points on a sphere, and proves the foundational structural result underlying the
-research theme *"Even Harmonic Strength of Antipodal Spherical Designs Contains 2"*.
+This file develops a small, self-contained theory of **forcing edges** of perfect
+matchings, motivated by the structural theory of *bricks* and *b-invariant edges*
+in matching theory (de Carvalho–Lucchesi–Murty; Lovász).  An edge `e` of a graph
+`G` is a **forcing edge** if there is exactly one perfect matching of `G` that
+contains `e`.  Equivalently, `e = uv` is forcing precisely when the graph obtained
+by deleting `u` and `v` has a *unique* perfect matching — this is the classical
+deletion characterisation, and it is our main theorem (`forcing_iff_unique_deletion`).
 
-## Main definitions
+## Model
 
-* `SphericalDesign.mvLaplacian` — the Laplace operator on multivariate real polynomials.
-* `SphericalDesign.IsHarmonicPoly` — a polynomial with vanishing Laplacian.
-* `SphericalDesign.Hst X k` — degree `k` lies in the harmonic strength of `X`:
-  every homogeneous harmonic polynomial of degree `k` sums to zero over `X`.
-* `SphericalDesign.IsAntipodal` — `X` is closed under negation (`X = -X`).
+A perfect matching of a simple graph `G` is modelled as a **fixed-point-free
+involution** `f : V → V` all of whose swapped pairs `{v, f v}` are edges of `G`
+(`IsPM`).  This turns "the perfect matching containing `uv`" into "the involution
+`f` with `f u = v`", which is very convenient for reasoning about uniqueness.
+
+Deleting the two endpoints `u, v` of an edge is modelled by `IsPMdel`: an
+involution that fixes exactly `u` and `v` and matches every other vertex to a
+neighbour distinct from `u, v`.
 
 ## Main results
 
-* `SphericalDesign.antipodal_odd_mem_Hst` — every **odd** degree lies in the harmonic
-  strength of an antipodal set. (This is the mechanism behind *infinite* harmonic
-  strength for antipodal designs.)
-* `SphericalDesign.antipodal_Hst_infinite` — the harmonic strength of an antipodal set
-  is an infinite set of natural numbers.
-
-These reduce the study of the harmonic strength of an antipodal set to its **even**
-part, which is the subject of `EvenStrength.lean`.
+* `IsPM.apply_ne` — matched partners of interior vertices avoid `u, v`.
+* `restrictPM_isPMdel` / `extendPM_isPM` — the deletion bijection.
+* `uniquePM_all_forcing` — if `G` has a unique perfect matching, every one of its
+  edges is forcing.
+* `forcing_iff_unique_deletion` — **main theorem**: `uv` is forcing iff `uv` is an
+  edge and `G - u - v` has a unique perfect matching.
+* `forcing_comm` — forcing is a symmetric relation on the endpoints.
 
 -- !-- Lab Notes -- !--
-Hypothesis (H1): For an antipodal set `X = -X` the odd-degree part of the harmonic
-strength is *free*: every odd degree automatically belongs to `Hst X`.  Reasoning:
-a homogeneous polynomial of odd degree is an odd function, and an odd function sums
-to zero over a set symmetric under negation.
+Hypothesis (Hypothesizer): The property "`uv` lies in a unique perfect matching"
+should be *local*: it should depend only on the perfect matchings of the graph
+with `u, v` deleted. Concretely, deleting the endpoints of a forcing edge must
+leave a graph with a unique perfect matching, and conversely.
 
-Experiment: verified computationally on the cross-polytope `{±e_i}` and on a single
-antipodal pair `{v, -v}` that odd Gegenbauer/monomial moments vanish while even ones
-need not, confirming that only even degrees carry information.
+Experiment (Experimenter): Modelling perfect matchings as fixed-point-free
+involutions makes "the matching containing `uv`" literally the constraint
+`f u = v`. The map `f ↦ (f restricted to V \ {u,v})` and its inverse `extend`
+form a bijection between {perfect matchings with `f u = v`} and {perfect matchings
+of the deleted graph}. We verified the bijection laws on paper for the swap/fix
+pattern before formalising.
 
-Analysis: the odd result is dimension-free and requires no sphere hypothesis at all;
-it uses only the group structure of the ambient space (negation is an involution) and
-homogeneity.  This isolates the genuinely hard content of the theme into the even part.
+Analysis (Analyst): The only non-trivial input is that in any perfect matching
+containing `uv`, no interior vertex is matched to `u` or `v` (`IsPM.apply_ne`);
+this is exactly injectivity of the involution. Everything else is bookkeeping of
+the if-then-else definitions of `restrict`/`extend`.
 
-Critique: the statement is *not* vacuous — `Hst X k` quantifies over all harmonic
-homogeneous degree-`k` polynomials, a nontrivial infinite family; the proof genuinely
-uses `Function.Odd.finset_sum_eq_zero` together with the homogeneity-under-negation law
-`eval_neg_of_isHomogeneous`, which is proved from scratch by a monomial computation.
+Critique (Critic): The `u ≠ v` side condition is essential; it is supplied for
+free by `G.Adj u v` (loopless graphs). The theorem is non-vacuous: `uniquePM`
+graphs (e.g. a single edge, or a path) exhibit genuine forcing edges.
 
-Synthesis: antipodality ⟹ infinitely many degrees in the harmonic strength, so an
-antipodal spherical design always has *infinite* harmonic strength.  The only way the
-strength can fail to be all of `ℕ` is through the even degrees.
--- !-- End Lab Notes -- !--
+Synthesis (PI): The deletion characterisation is the engine behind the paper's
+analysis of which b-invariant edges are forcing; here it is captured cleanly and
+proved in full generality (no finiteness assumption).
+-- !-- Lab Notes -- !--
 -/
 
-open MvPolynomial
-open scoped BigOperators
+namespace ForcingEdges
 
-namespace SphericalDesign
+open Function
 
-variable {n : ℕ}
+variable {V : Type*}
 
-/-- The Laplace operator `Δ = ∑ᵢ ∂²/∂xᵢ²` on multivariate real polynomials. -/
-noncomputable def mvLaplacian (p : MvPolynomial (Fin n) ℝ) : MvPolynomial (Fin n) ℝ :=
-  ∑ i, pderiv i (pderiv i p)
+/-- `f` is a perfect matching of `G`: a fixed-point-free involution whose swapped
+pairs are edges of `G`. -/
+def IsPM (G : SimpleGraph V) (f : V → V) : Prop :=
+  Involutive f ∧ (∀ v, f v ≠ v) ∧ (∀ v, G.Adj v (f v))
 
-/-- A polynomial is harmonic if its Laplacian vanishes. -/
-def IsHarmonicPoly (p : MvPolynomial (Fin n) ℝ) : Prop := mvLaplacian p = 0
+/-- The edge `uv` is a **forcing edge**: it is an edge, and there is exactly one
+perfect matching of `G` containing it (i.e. one involution `f` with `f u = v`). -/
+def Forcing (G : SimpleGraph V) (u v : V) : Prop :=
+  G.Adj u v ∧ ∃! f, IsPM G f ∧ f u = v
 
-/-- Degree `k` lies in the **harmonic strength** of a finite set `X` if every
-homogeneous harmonic polynomial of degree `k` sums to zero over `X`. -/
-def Hst (X : Finset (Fin n → ℝ)) (k : ℕ) : Prop :=
-  ∀ p : MvPolynomial (Fin n) ℝ, p.IsHomogeneous k → IsHarmonicPoly p → ∑ x ∈ X, eval x p = 0
+/-- `h` is a perfect matching of `G` with the two vertices `u, v` deleted: it fixes
+exactly `u` and `v`, and matches every other vertex to a neighbour `≠ u, v`. -/
+def IsPMdel (G : SimpleGraph V) (u v : V) (h : V → V) : Prop :=
+  Involutive h ∧ h u = u ∧ h v = v ∧
+    ∀ w, w ≠ u → w ≠ v → (h w ≠ w ∧ G.Adj w (h w) ∧ h w ≠ u ∧ h w ≠ v)
 
-/-- A set is antipodal if it is closed under negation (`X = -X`). -/
-def IsAntipodal (X : Finset (Fin n → ℝ)) : Prop := ∀ x ∈ X, -x ∈ X
+/-
+In a perfect matching containing the edge `uv`, no interior vertex is matched
+to `u` or to `v`.
+-/
+theorem IsPM.apply_ne {G : SimpleGraph V} {f : V → V} (hf : IsPM G f) {u v : V}
+    (huv : f u = v) {w : V} (hwu : w ≠ u) (hwv : w ≠ v) :
+    f w ≠ u ∧ f w ≠ v := by
+  have := hf.1 w; have := hf.1 u; aesop;
 
-/-- **Homogeneity under negation.** For a homogeneous polynomial of degree `k`,
-`p(-x) = (-1)^k p(x)`. -/
-theorem eval_neg_of_isHomogeneous (p : MvPolynomial (Fin n) ℝ) (k : ℕ)
-    (h : p.IsHomogeneous k) (x : Fin n → ℝ) :
-    eval (-x) p = (-1) ^ k * eval x p := by
-  classical
-  rw [eval_eq, eval_eq, Finset.mul_sum]
-  refine Finset.sum_congr rfl (fun d hd => ?_)
-  have hdeg : ∑ i ∈ d.support, d i = k := by
-    have := h (mem_support_iff.mp hd)
-    simpa [Finsupp.weight, Finsupp.sum, Finsupp.linearCombination] using this
-  have hprod : ∏ i ∈ d.support, (-x) i ^ d i
-      = (∏ i ∈ d.support, ((-1 : ℝ)) ^ d i) * ∏ i ∈ d.support, x i ^ d i := by
-    rw [← Finset.prod_mul_distrib]
-    exact Finset.prod_congr rfl (fun i _ => by rw [Pi.neg_apply, neg_eq_neg_one_mul, mul_pow])
-  rw [hprod, ← hdeg, ← Finset.prod_pow_eq_pow_sum]; ring
+/-- Restriction of a matching `f` to the graph with `u, v` deleted: fix `u, v`,
+keep everything else. -/
+def restrictPM [DecidableEq V] (u v : V) (f : V → V) : V → V :=
+  fun w => if w = u then u else if w = v then v else f w
 
-/-- An antipodal set is invariant, as a `Finset`, under the negation equivalence. -/
-theorem IsAntipodal.map_neg {X : Finset (Fin n → ℝ)} (hX : IsAntipodal X) :
-    Finset.map (Equiv.neg (Fin n → ℝ)).toEmbedding X = X := by
-  refine Finset.eq_of_subset_of_card_le ?_ (by rw [Finset.card_map])
-  intro y hy
-  simp only [Finset.mem_map, Equiv.coe_toEmbedding, Equiv.neg_apply] at hy
-  obtain ⟨x, hx, rfl⟩ := hy
-  exact hX x hx
+/-- Extension of a deleted matching `h` back to `G` by swapping `u ↔ v`. -/
+def extendPM [DecidableEq V] (u v : V) (h : V → V) : V → V :=
+  fun w => if w = u then v else if w = v then u else h w
 
-/-- **Main theorem 1.** Every *odd* degree lies in the harmonic strength of an
-antipodal set. -/
-theorem antipodal_odd_mem_Hst {X : Finset (Fin n → ℝ)} (hX : IsAntipodal X)
-    {k : ℕ} (hk : Odd k) : Hst X k := by
-  intro p hp _
-  apply Function.Odd.finset_sum_eq_zero
-  · intro x
-    show eval (-x) p = - eval x p
-    rw [eval_neg_of_isHomogeneous p k hp x, hk.neg_one_pow]; ring
-  · exact hX.map_neg
+theorem restrictPM_isPMdel [DecidableEq V] {G : SimpleGraph V} {f : V → V}
+    (hf : IsPM G f) {u v : V} (huv : f u = v) (hne : u ≠ v) :
+    IsPMdel G u v (restrictPM u v f) := by
+  have := hf.1;
+  refine' ⟨ _, _, _, _ ⟩ <;> simp_all +decide [ Involutive, restrictPM ];
+  · grind +ring;
+  · exact fun w hwu hwv => ⟨ hf.2.1 w, hf.2.2 w, by have := IsPM.apply_ne hf huv hwu hwv; tauto, by have := IsPM.apply_ne hf huv hwu hwv; tauto ⟩
 
-/-- **Corollary (infinite harmonic strength).** The harmonic strength of an antipodal
-set is an infinite subset of `ℕ`. -/
-theorem antipodal_Hst_infinite {X : Finset (Fin n → ℝ)} (hX : IsAntipodal X) :
-    {k : ℕ | Hst X k}.Infinite := by
-  apply Set.infinite_of_injective_forall_mem (f := fun m : ℕ => 2 * m + 1)
-  · intro a b hab; have : 2 * a + 1 = 2 * b + 1 := hab; omega
-  · intro m; exact antipodal_odd_mem_Hst hX ⟨m, by omega⟩
+theorem extendPM_isPM [DecidableEq V] {G : SimpleGraph V} {u v : V} {h : V → V}
+    (hh : IsPMdel G u v h) (hadj : G.Adj u v) :
+    IsPM G (extendPM u v h) ∧ extendPM u v h u = v := by
+  constructor;
+  · refine' ⟨ _, _, _ ⟩;
+    · intro w; unfold extendPM; by_cases hwu : w = u <;> by_cases hwv : w = v <;> simp +decide [ * ] ;
+      have := hh.2.2.2 w hwu hwv; split_ifs <;> simp_all +decide ;
+      exact hh.1 _;
+    · intro w; cases eq_or_ne w u <;> cases eq_or_ne w v <;> simp_all +decide [ extendPM ] ;
+      · grind +splitImp;
+      · grind;
+      · exact hh.2.2.2 w ‹_› ‹_› |>.1;
+    · intro w; by_cases hwu : w = u <;> by_cases hwv : w = v <;> simp_all +decide [ extendPM ] ;
+      · exact hadj.symm;
+      · exact hh.2.2.2 w hwu hwv |>.2.1;
+  · unfold extendPM; aesop;
 
-end SphericalDesign
+theorem restrictPM_extendPM [DecidableEq V] {G : SimpleGraph V} {u v : V} {h : V → V}
+    (hh : IsPMdel G u v h) (hne : u ≠ v) :
+    restrictPM u v (extendPM u v h) = h := by
+  funext w; cases eq_or_ne w u <;> cases eq_or_ne w v <;> simp_all +decide [ restrictPM, extendPM ] ;
+  · exact hh.2.1.symm;
+  · exact hh.2.2.1.symm
+
+theorem extendPM_restrictPM [DecidableEq V] {G : SimpleGraph V} {f : V → V}
+    (hf : IsPM G f) {u v : V} (huv : f u = v) (hne : u ≠ v) :
+    extendPM u v (restrictPM u v f) = f := by
+  funext w; by_cases hw : w = u <;> by_cases hw' : w = v <;> simp_all +decide [ extendPM, restrictPM ] ;
+  have := hf.1 u; aesop;
+
+/-
+**Deletion characterisation of forcing edges.**  The edge `uv` is a forcing
+edge of `G` iff `uv ∈ E(G)` and the graph with `u, v` deleted has a *unique*
+perfect matching.
+-/
+theorem forcing_iff_unique_deletion [DecidableEq V] (G : SimpleGraph V) (u v : V) :
+    Forcing G u v ↔ G.Adj u v ∧ ∃! h, IsPMdel G u v h := by
+  constructor <;> intro h;
+  · obtain ⟨hadj, f₀, hf₀⟩ := h;
+    refine' ⟨ hadj, restrictPM u v f₀, _, _ ⟩;
+    · exact restrictPM_isPMdel hf₀.1.1 hf₀.1.2 hadj.ne;
+    · intro h hh;
+      have := hf₀.2 ( extendPM u v h ) ?_;
+      · rw [ ← this, restrictPM_extendPM hh hadj.ne ];
+      · exact extendPM_isPM hh hadj;
+  · obtain ⟨hadj, ⟨h₀, ⟨hpmdel₀, huniq⟩⟩⟩ := h;
+    use hadj;
+    use extendPM u v h₀;
+    constructor;
+    · exact extendPM_isPM hpmdel₀ hadj;
+    · intro f hf;
+      rw [ ← huniq ( restrictPM u v f ) ( restrictPM_isPMdel hf.1 hf.2 ( hadj.ne ) ), extendPM_restrictPM hf.1 hf.2 ( hadj.ne ) ]
+
+/-
+If `G` has a unique perfect matching `f₀`, then every edge `{v, f₀ v}` of that
+matching is a forcing edge.
+-/
+theorem uniquePM_all_forcing {G : SimpleGraph V} {f₀ : V → V} (hpm : IsPM G f₀)
+    (huniq : ∀ g, IsPM G g → g = f₀) (v : V) : Forcing G v (f₀ v) := by
+  constructor;
+  · exact hpm.2.2 v;
+  · exact ⟨ f₀, ⟨ hpm, rfl ⟩, fun g hg => huniq g hg.1 ⟩
+
+/-
+Forcing is symmetric in the two endpoints of the edge.
+-/
+theorem forcing_comm {G : SimpleGraph V} {u v : V} :
+    Forcing G u v ↔ Forcing G v u := by
+  by_cases h : ∃! f, IsPM G f ∧ f u = v <;> simp_all +decide [ Forcing ];
+  · obtain ⟨ f, hf, hf' ⟩ := h;
+    refine' ⟨ fun h => ⟨ h.symm, f, ⟨ hf.1, _ ⟩, _ ⟩, _ ⟩;
+    · have := hf.1.1 u; aesop;
+    · intro g hg; specialize hf' g; simp_all +decide [ IsPM ] ;
+      exact hf' ( by have := hg.1.1 v; aesop );
+    · exact fun h => h.1.symm;
+  · exact fun _ => fun ⟨ f, hf1, hf2 ⟩ => h ⟨ f, by
+      exact ⟨ hf1.1, by simpa [ hf1.2 ] using hf1.1.1 v ⟩, by
+      intro g hg; have := hf2 g; simp_all +decide [ IsPM ] ;
+      exact hf2 g hg.1.1 hg.1.2.1 hg.1.2.2 ( by have := hg.1.1 u; aesop ) ⟩
+
+end ForcingEdges
