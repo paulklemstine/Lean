@@ -1,62 +1,58 @@
-# Computational Evidence — Phantom Topologies over Ordered Observers
+# Computational Evidence: Phantom Number of the Cofinite / Zariski Line
 
-This note records the small-case checks that preceded the formal development in
-`PhantomTopologyOrderGeneral.lean` and `PhantomTopologyOrderBridge.lean`.
+This note records the small-case checks done before formalizing the claim that the
+cofinite (Zariski affine-line) topology has phantom number exactly 2.
 
-## 1. The interval-split identity (the whole engine)
+## 1. The split observers on a finite model
 
-The metric-free proof reduces to a single order identity:
+To gain intuition, model "cofinite-within-S" on a small finite set (where cofinite = full
+power set, but the *within-S* refinement structure is still visible for the shape of the
+argument). Take X = {0,1,2,3} and S = {0,1}, so Sᶜ = {2,3}.
 
-```
-Ioo a b = Ioc a x ∪ Ico x b     whenever a < x < b.
-```
+- Opens of `cofiniteWithin S` (schematically, keeping the "⊆ S with small complement in S"
+  branch): all cofinite sets, plus subsets of {0,1}.
+- Opens of `cofiniteWithin Sᶜ`: all cofinite sets, plus subsets of {2,3}.
+- Common opens: a set that is a subset of {0,1} AND a subset of {2,3} must be ∅; otherwise
+  it must be cofinite. So the agreed opens are exactly {∅ and cofinite sets} = the cofinite
+  topology. ✔ matches `cofinite_split`.
 
-Sample checks over ℚ (endpoints as ordered pairs):
+## 2. The disjointness mechanism (the heart of the split)
 
-| a | x | b | Ioc a x        | Ico x b        | union        | Ioo a b |
-|---|---|---|----------------|----------------|--------------|---------|
-| 0 | 1 | 2 | (0,1]          | [1,2)          | (0,2)        | (0,2) ✓ |
-| -1| 0 | 1 | (-1,0]         | [0,1)          | (-1,1)       | (-1,1) ✓|
-| 0 |1/2| 1 | (0,1/2]        | [1/2,1)        | (0,1)        | (0,1) ✓ |
+The consensus computation reduces to a one-line set fact:
 
-The proof is a `le_total y x` case split, using no completeness or metric — so it
-holds verbatim in ℚ, ℝ, and any linear order.
+  if U ⊆ S and U ⊆ Sᶜ then U ⊆ S ∩ Sᶜ = ∅.
 
-## 2. Density controls the phantom number
+Checked directly: a "phantom" open of the first observer lives in S, a phantom open of the
+second lives in Sᶜ, so a set phantom to both is empty. This is why exactly two observers
+suffice, and it is exactly the load-bearing step of the formal proof.
 
-**Dense chains (ℚ, ℝ).** The ray `Ici x = [x,∞)` is open for the lower-limit
-observer (take `b` any point `> y`), but it is *not* order-open: any `Ioo a b`
-neighbourhood of `x` (with `a < x`) contains, by density, a point `c` with
-`a < c < x`, and `c ∉ [x,∞)`. Sample over ℚ at `x = 0`:
+## 3. Strictness of each observer
 
-- candidate neighbourhood `(-1/2, 1/2)`; density gives `c = -1/4 ∈ (-1/2,1/2)`
-  but `-1/4 ∉ [0,∞)`. Escape confirmed.
+For the split to be *genuine* each observer must be strictly finer than the cofinite
+topology. Witness: S itself is open in `cofiniteWithin S` (S ⊆ S and S \ S = ∅ is finite),
+but S is not cofinite when S is infinite and co-infinite (Sᶜ is infinite). On ℝ with
+S = (-∞, 0], the set S is a phantom open the cofinite line does not see. ✔ matches
+`cofiniteWithin_lt`.
 
-Hence the lower observer is *strictly* finer than reality, and dually for the
-upper observer, so **two** distinct observers are needed and suffice.
+## 4. Non-Hausdorffness on an infinite carrier
 
-**Discrete chains (ℤ).** Here `Ico n (n+1) = {n}`, so *every* subset is
-lower-open. Sample:
+Sample check on any infinite X: for nonempty opens u, v (necessarily cofinite), the
+complement uᶜ ∪ vᶜ is finite, so u ∩ v is cofinite hence nonempty. Two distinct points can
+never be separated, so the space is not Hausdorff and therefore not metrizable — yet it is
+T₁ (every singleton has cofinite, hence open, complement). ✔ matches `cofinite_not_t2`,
+`cofinite_not_metrizable`, `cofinite_t1`.
 
-- `Ico 3 4 = {3}`, `Ico (-2) (-1) = {-2}`. Every singleton is lower-open ⇒ the
-  lower topology is the discrete topology ⇒ it already equals the order topology.
-  A single observer determines reality: **phantom number one**.
+## 5. Zariski vs. Euclidean on ℝ
 
-So the phantom number of an order chain measures *order density*, not size or
-metrizability. This is the counter-intuitive finding of the cycle.
+The interval (0,1) is Euclidean-open but not cofinite-open (its complement contains [1, ∞),
+which is infinite). Conversely every cofinite set is Euclidean-open (its complement is
+finite, hence closed). So the Euclidean line is strictly finer than the Zariski line, giving
+two *distinct* realities on ℝ, each with phantom number two. ✔ matches
+`euclidean_lt_zariskiLine`, `zariskiLine_ne_euclidean`.
 
-## 3. Counterexample hunt
+## Sequence/OEIS note
 
-- *"Every order topology (no endpoints) is a two-observer consensus."* — Searched
-  ℤ, ℚ, ℝ. Holds for all three (`consensus_orderTop`). ℤ additionally collapses to
-  one observer, which does **not** contradict the theorem (it is still a
-  consensus of the two observers, they simply coincide).
-- *"Two distinct strictly-finer observers exist for every order topology."* —
-  **False** on ℤ (both observers equal reality). Guarded by adding
-  `DenselyOrdered`; the ℤ collapse is retained as `lowerTopGen_int_eq_bot` to
-  witness necessity.
-
-## 4. No OEIS sequence
-
-The invariants here are `1` (discrete) and `2` (dense), not an integer sequence,
-so no OEIS lookup applies. Evidence is structural rather than enumerative.
+No integer sequence arises: the phantom number is the constant 2 across all infinite
+carriers and all infinite/co-infinite splitters, which is itself the headline finding (the
+conjectured growth to "≥ 3" does not occur). Counterexample hunt for a reality needing
+three observers turned up none, consistent with the catalog's lattice collapse principle.
