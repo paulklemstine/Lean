@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "a33a1330",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — EML Fixed-Point Dynamics\n\nThis cycle proved the EML fixed point `x*` of `f(x) = exp(a)·log(b·x + c)` depends\n*monotonically and strictly* on the scaling parameter `a` (`FixedPoin",
-      "quality_score": 0.6787,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-06-27T21:02:22",
-      "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
-    },
-    {
       "cycle_id": "b3c4aeb5",
       "domain": "Novelty",
       "key_insight": "# Future Directions — strong blocking sets / minimal codes\n\nBuilding on `Catalog/Novelty/FanoStrongBlocking.lean`, which proves that the Fano plane\n`PG(2,2)` has strong-blocking-set threshold exactly",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-07-03T23:54:08",
       "title": "Phantom Topologies: Spaces That Change When You Look at Them"
+    },
+    {
+      "cycle_id": "e0253a8b",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Anti-Fibonacci and Quadratic-Growth Avoidance\n\nThese conjectures grow out of a single corrected observation: the \"anti-Fibonacci\"\nsequence forced by the terms `1, 1, 2, 4, 7, 11,",
+      "quality_score": 0.6907399999999999,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-04T00:16:33",
+      "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7903600000000002
     }
   ],
-  "last_updated": "2026-07-03T23:54:08",
+  "last_updated": "2026-07-04T00:16:33",
   "open_questions": [
     {
       "context": "and is genuinely proved (no `sorry`, no `decide`-only). The false converse is",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "f4462f16",
-        "quality": 0.79052,
-        "theorems": 12,
-        "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
-      },
-      {
         "cycle_id": "6501d983",
         "quality": 0.6341419999999999,
         "theorems": 2,
@@ -3141,6 +3135,12 @@
         "quality": 0.8257369999999999,
         "theorems": 8,
         "title": "Exact value of G₃({0,2,5})"
+      },
+      {
+        "cycle_id": "e0253a8b",
+        "quality": 0.6907399999999999,
+        "theorems": 8,
+        "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
       }
     ],
     "Bridges": [
