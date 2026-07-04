@@ -9825,6 +9825,56 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "matching_polynomials",
+        "spectral_graph_theory",
+        "limit_points_of_graph_roots",
+        "golden_ratio_in_graph_theory"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Let τ = (√5 + 1)/2 be the golden ratio. For the threshold value T = τ^(1/2) + τ^(-1/2), there exists a countable set S ⊆ [−T, T] such that S is exactly the set of limit points of largest matching roots μ(G) for graphs G. Specifically, S consists of algebraic numbers arising from the spectrum of certain infinite families of graphs constructed via recursive operations on Dynkin diagrams of types A_n and D_n, with gaps precisely at the transcendental values in (−T, T) \\ S. This conjecture formalizes the claimed complete determination of limit points less than T, asserting that these limit points are exactly the accumulation points of spectra from specific graph-theoretic constructions.",
+      "domain_bridges": [
+        "algebraic_number_theory",
+        "spectral_theory",
+        "combinatorial_matrix_theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0208",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem matching_limit_points_below_threshold : let τ : ℝ := (Real.sqrt 5 + 1) / 2, T : ℝ := Real.sqrt τ + 1 / Real.sqrt τ. exists (S : Set ℝ), ∀ γ : ℝ, (IsLimitPointOfMatchingRoots γ ↔ γ ∈ S) ∧ γ < T → γ is algebraic",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Prove by constructing explicit graph sequences whose matching roots converge to claimed limit points, while showing any convergent sequence of largest matching roots must arise from these constructions. Use interlacing properties of matching polynomials under graph operations, analyze the asymptotic spectrum of recursively defined graph families, and establish algebraic characterization of the resulting limit values.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2606.28162v1",
+      "source_path": "http://arxiv.org/abs/2606.28162v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-04T16:55:54.714925+00:00",
+      "title": "Characterization of Limit Points Below the Golden Ratio Threshold for Largest Matching Roots"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "SDtwists",
         "KMR13",
         "KMR14",
@@ -9849,7 +9899,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0208",
+      "id": "fd_0209",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem 1.3 using DGH and the fan ordering over primes } p",
@@ -9895,7 +9945,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0209",
+      "id": "fd_0210",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_spanning_k_tree_carathéodory {k d : ℕ} (V₁ V₂ ... : Finset Vertex) (K : SimplicialComplex) (hK : IsJoinOfSpanningKTreeWithWedge K) : ∀ (A : AffineMap K ℝ^{k+1}), Colorful A → ∃ (σ : Face K), σ.Nonempty ∧ σ.Dimension ≤ k ∧ A σ = 0",
@@ -9947,7 +9997,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0210",
+      "id": "fd_0211",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem positivity_in_pq_binomial_basis (s : ℕ) (h : ℂ) (n k : ℕ) : (𝔖 s h n k).expand_in_pq_binomial_basis.coeff _ ≥ 0 := by sorry",
@@ -9994,7 +10044,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0211",
+      "id": "fd_0212",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sidon_upper_bound (N : ℕ) : ∃ (C : ℝ), ∀ (A : Finset ℕ), (A.toSet.is_sidon ∧ A ⊆ {n | n < N}) → A.card ≤ ⌈(N : ℝ)^(1/2) + 0.94601 * (N : ℝ)^(1/4) + C⌉",
@@ -10044,7 +10094,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0212",
+      "id": "fd_0213",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem overfull_subgraph_structural_location (G : Graph) (hG : Δ G > (V G).size / 3) : ¬(χ'_adj G = Δ G + 1) ∨ ∃ (H : Graph) (hH : H ⟵ G) (h_overfull : |E H| > Δ G * ⌊|V H| / 2⌋) (h_induced : Induced H G) , ∀ v ∈ V G \\ V H, deg_G v ≤ Δ G - 2",
@@ -10092,7 +10142,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0213",
+      "id": "fd_0214",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem h_q_half_sum (q : ℕ) [Fact (PrimePower q)] (m : ℕ) (hm : 4 ≤ m) : h q ((q ^ m + 1) / 2) = 1",
@@ -10141,7 +10191,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0214",
+      "id": "fd_0215",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem microstate_gumbel_limit (c : ℕ) (Δ_low Δ_high : ℝ) (hΔ : 0 < Δ_low) (hΔ' : Δ_low < Δ_high) : ∀ ε > 0, ∃ N₀, ∀ n ≥ N₀, |P( (log (M_n) - μ_n) / σ_n ≤ x ) - exp(-exp(-x))| < ε",
@@ -10188,7 +10238,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0215",
+      "id": "fd_0216",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "No general lemma is provided; each conjecture is addressed individually.",
@@ -10236,7 +10286,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0216",
+      "id": "fd_0217",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem equality_case_regularity {C : Type} [AdmissibleClass C] {H : Graph} (hH : NonMatchingSidorenko H) {W : Graphon} (hW : W ∈ C) (h_eq : t H W = p W ^ e H) : Regular W := by sorry",
@@ -10283,7 +10333,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0217",
+      "id": "fd_0218",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem d_psi_le_n_iff_kernel_cover {F G : Type*} [AddCommGroup F] [AddCommGroup G] (Ψ : Finset (Hom F G)) (hΨ : Ψ.Nonempty) (hΨ' : ∀ ψ ∈ Ψ, ψ ≠ 0) (n : ℕ) : (D_Ψ G) ≤ n ↔ (∀ (x : F^n), ∃ (ψ : Ψ), ∑ i in Finset.range n, ψ (x i) = 0) := by sorry",
@@ -10329,7 +10379,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0218",
+      "id": "fd_0219",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_mdr_combinatorially_determined_for_at_most_triple_points\n  {A B : LineArrangement ℂ}\n  (hA : A.degree = B.degree)\n  (hAB : A.intersection_lattice = B.intersection_lattice)\n  (hA_mult : ∀ p ∈ A.singular_points, p.multiplicity ≤ 3)\n  (hB_mult : ∀ p ∈ B.singular_points, p.multiplicity ≤ 3)\n  (h : mdr A < (A.degree : ℝ) / 2)\n  : mdr A = mdr B := by sorry",
@@ -10377,7 +10427,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0219",
+      "id": "fd_0220",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem geodesic_treewidth_planar_upper_bound (G : Graph) (hP : Planar G) : GeodesicTreewidth G ≤ 5",
@@ -10428,7 +10478,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0220",
+      "id": "fd_0221",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem weighted_dual_fisher_strict\n  {m n : ℕ} (hmn : 2 ≤ m) (hn : 2 ≤ n)\n  (hT2 : no_fold_condition (A B P))\n  (hEquality : weighted_dual_fisher A B P = bound) :\n    (m = 2 ∧ n = 2) ∧ is_affine_plane A B P",
@@ -10477,7 +10527,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0221",
+      "id": "fd_0222",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "def theorem_lean: int → int → Prop := fun n c h : n > 0 → c > 0 → ∀ G : graph n, δ(G) ≥ 3 → G.is_hamiltonian → ∃ C : cycle G, C ≠ G.hamiltonian_cycle ∧ C.length ≥ n - c * n^(2/3)",
@@ -10524,7 +10574,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0222",
+      "id": "fd_0223",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem infinite_primes_in_skeleton (lambda : ℕ) (hlambda : lambda > 1 ∧ Nat.coprime lambda 6) : ∀ n : ℕ, ∃ k : ℕ, k > n ∧ ∃ (a b : ℕ), a ≥ 1 ∧ a + b = k ∧ Nat.Prime (lambda * Nat.pow 2 a * Nat.pow 3 b - 1) :=\\nbegin\\n  -- Proof to be filled\\n  sorry\\nend",
@@ -10570,7 +10620,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0223",
+      "id": "fd_0224",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem even_harmonic_strength_contains_two {d : ℕ} (hd : d ≥ 2) (X : Finset (EuclideanSphere ℝ (d+1))) (hX_antipodal : X = (-X : Finset (EuclideanSphere ℝ (d+1)))) (h_even_in_hst : ∃ k : ℕ, k % 2 = 0 ∧ k ∈ Hst X) : (2 : ℕ) ∈ Hst X := by sorry",
@@ -10619,7 +10669,7 @@
         "Logic"
       ],
       "github_issue": 0,
-      "id": "fd_0224",
+      "id": "fd_0225",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem interval_subdivision_matrix_is_tp (d : ℕ) (H_F : Matrix (Fin (d + 1)) (Fin (d + 1)) ℝ) : \n  ∀ (k : ℕ), k ≤ d → ∀ (I : Finset (Fin (d + 1))), I.card = k → ∀ (J : Finset (Fin (d + 1))), J.card = k → \n  (H_F.minor I J).det ≥ 0 := sorry",
@@ -10665,7 +10715,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0225",
+      "id": "fd_0226",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sun_conjecture_4_1_extension (p : ℕ) (hp : prime p) (hmod : p % 4 = 3) (a : Fp) (hχ : χ(a * (p-1)/2)! = -1) : σ_{p,a} = 1",
@@ -10713,7 +10763,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0226",
+      "id": "fd_0227",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hypergraph_annihilation_gap_bound {V : Type*} [fintype V] (H : Hypergraph V) (hν : matching_number H ≥ 1) :\n  a H - independence_number H ≤ 2 * matching_number H + 1 - Nat.ceil (sqrt (6 * matching_number H))",
@@ -10760,7 +10810,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0227",
+      "id": "fd_0228",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem alexander_conjecture_inf (X : Type*) [TopologicalSpace X] (S T : SimplicialComplex X) [Triangulation S] [Triangulation T]\n  (h_common_subdiv : ∃ U, Subdivision U S ∧ Subdivision U T) :\n  ∃ (s_bar t_bar : Sequence Unit), ωStellarSubdivision S s_bar = ωStellarSubdivision T t_bar",
@@ -10807,7 +10857,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0228",
+      "id": "fd_0229",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem bounds_are_tight (N M' : ℕ) (r s : ℕ) (h₁ : 1 ≤ s) (h₂ : s ≤ r) (h₃ : r ≤ min N M') : ∃ (F : Finset (Fin M → ℝ)) (Φ : (Fin M → ℝ) → (Fin M' → ℝ)), F.card = N ∧ LinearMap ℝ Φ ∧ rank (Φ '' F) = r ∧ kruskalRank (Φ '' F) = s ∧ (C_F F Φ = lower_bound N r s ∨ C_F F Φ = upper_bound N r s) := by sorry",
@@ -10857,7 +10907,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0229",
+      "id": "fd_0230",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem squarefree_power_linear_resolution_iff_dim {Δ : flag_complex} {p : ℕ} : has_linear_resolution (stanley_reisner_ideal Δ) ^[p] ↔ krull_dimension (quotient_ring (stanley_reisner_ideal Δ) ^[p]) = 2 * p",
@@ -10905,7 +10955,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0230",
+      "id": "fd_0231",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem cake_balance_upper_bound (σ : recipe) (r : ℕ) [hσ : valid_recipe σ] : μ_r σ ≤ 2 * r / recipe_length σ + 1",
@@ -10951,7 +11001,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0231",
+      "id": "fd_0232",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sigma_five_antitone_mod5 {r : ℕ} (hr : r < 5) : Antitone (fun k : ℕ => sigma_five (5 * k + r)) := by sorry",
@@ -10999,7 +11049,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0232",
+      "id": "fd_0233",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem fibonacci_bounds (n : nat) (f : nat → nat) : R (n+1) ≤ Fib (2*(n+1)) ∧ Fib (2*(n+1)) ≤ R (n+1) ^ 2 by { rintro; tactic.transfer [fibonacci_growth, convex_topology_recurrence]; exact _ }",
@@ -11047,7 +11097,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0233",
+      "id": "fd_0234",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem coupling_depth_two_mock_adjacent (m1 m2 : ℕ) (μ1 : Zmod (2*m1)) (μ2 : Zmod (2*m2)) (k1 k2 : ℚ) [Char k1] [Char k2] : \n  let f1 := depth_one_eisenstein m1 μ1 k1\n  let f2 := depth_one_eisenstein m2 μ2 k2\n  let h_completion := complexify (f1 * f2)\n  in ∂ h_completion ∂ conj τ ∈\n     v^(-k1 - k2) • M_(2*k1 + 2*k2 + 2) ⊗ M̄_0 ⊕\n     v^(-k1) • M_(k1 + k2 + 1) ⊗ M̄_1",
@@ -11096,7 +11146,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0234",
+      "id": "fd_0235",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem FangZhaiConjecture (F : SimpleGraph) (r : ℕ) (hF : IsEdgeColorCritical F ∧ ChromaticNumber F = r + 1) : (∃ N : ℕ, ∀ n ≥ N, SpectralExtremalFamily F r n ⊆ EdgeExtremalFamily F r n) := sorry",
@@ -11149,7 +11199,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0235",
+      "id": "fd_0236",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem b_invariant_forcing_iff_near_bipartite :\n  forall (G : Brick) (h_ex : G ≠ K4 ∤∤) (h_ex2 : G ≠ overlineC6) (h_ex3 : G ≠ Petersen),\n    (forall (e : Edge G), b_invariant e -> forcing e) ↔ near_bipartite G := by\n  -- Lean skeleton: implement the equivalence using the classification theorem.\n  sorry",
@@ -11196,7 +11246,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0236",
+      "id": "fd_0237",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_m_ge_two_pow (n : ℕ) (hn : n ≥ 9) : (M_2_arith B n : ℝ) ≥ (2 : ℝ) ^ ( (3 : ℝ) / 2 * (n : ℝ) ) := by sorry",
@@ -11237,7 +11287,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0237",
+      "id": "fd_0238",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Threshold parameter dependency",
@@ -11286,7 +11336,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0238",
+      "id": "fd_0239",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sharp_exponent_conjecture {n : ℕ} (hn : n ≥ 3) {p : ℕ} [Fact p.Prime] (η : ℝ) (hη : η > 0) (A : Finset (ZMod p)) (hA : A.card ≥ (p : ℝ)^(3/(2*n-1) - η)) : ∃ (t : Fin n → ZMod p), (∑ i : Fin n, t i • A) = Set.univ := by sorry",
@@ -11326,7 +11376,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0239",
+      "id": "fd_0240",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Functional equation implies primitive character structure",
@@ -11372,7 +11422,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0240",
+      "id": "fd_0241",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem FKKK_stability {n : ℕ} (f g : Fin n → Bool) (hf : Monotone f) (hg : Monotone g) (ε : ℝ) (hε : Cov f g ≤ 4 * ∑ s : Finset (Fin n), s.Nonempty, (s.card : ℝ) * (FourierHat f s)^2 * (FourierHat g s)^2 + ε) : (DisjointSupp f g) ∨ (∃ i : Fin n, f = fun x => x i ∧ g = fun x => x i) ∨ (∃ i j : Fin n, i ≠ j ∧ ( (L2Close f (fun x => x i ∧ x j) ε) ∧ (L2Close g (fun x => x i ∨ x j) ε) ) ∨ ( (L2Close f (fun x => x i ∨ x j) ε) ∧ (L2Close g (fun x => x i ∧ x j) ε) )) := by sorry",
@@ -11405,7 +11455,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "054477b4",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -11421,7 +11471,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0241",
+      "id": "fd_0242",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem k_t_sharp {n s t : ℕ} (hs : 2 ≤ s) (ht : s < t) (G : Graph n) (p_s : ℝ) (hp : p_s = (k_s G : ℝ) / (n : ℝ)^s) : (k_t G : ℝ) / (n : ℝ)^t ≥ F_t (F_s_inv p_s) := by",
@@ -11437,7 +11487,7 @@
       "source": "",
       "source_exp_id": "2606.31967v1",
       "source_path": "http://arxiv.org/abs/2606.31967v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T15:36:33.626121+00:00",
       "title": "Sharpness of the k_t lower bound given k_s in extremal graphs"
@@ -11453,7 +11503,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "054477b4",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -11469,7 +11519,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0242",
+      "id": "fd_0243",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem basic_EKOR_stratum_is_disjoint_union_of_DL_variety {n : ℕ} (hn : n ≥ 1) (P : ParahoricLevel (GU (1, n-1))) :\n  EKOR_stratum_basic (GU (1, n-1)) P ≃ ⨆ i in Finset.card (affine_Dynkin_vertices Ã_(n-1) P), DeligneLusztigVariety (WeylGroup type A_(n-1)) (w_P P) := by sorry",
@@ -11485,7 +11535,7 @@
       "source": "",
       "source_exp_id": "2606.31940v1",
       "source_path": "http://arxiv.org/abs/2606.31940v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-03T15:54:12.765581+00:00",
       "title": "Basic EKOR Strata are Disjoint Unions of Fine Deligne-Lusztig Varieties"
@@ -11516,7 +11566,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0243",
+      "id": "fd_0244",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem non_constant_coloring_impossible {V : Type} [Fintype V] (G : Digraph V) (hG : StronglyConnected G) (w : V → V → ℝ) (hw : ∀ v, ∑ u in outNeigh G v, w v u = 1) (c : V → Color) (h : ∀ v, c v = blend (outNeigh G v) (fun u ↦ w v u • c u)) : ∀ u v : V, c u = c v := by sorry",
@@ -11565,7 +11615,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0244",
+      "id": "fd_0245",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem exists_prime_degree_O_twisting_endomorphism {p : ℕ} {D : ℤ} (hp : Nat.Prime p) (hD : D < 0) \n  (h_inert : quadratic_char D p = -1) {O : ImaginaryQuadraticOrder D} \n  (E : SupersingularCurve ℱ[p]) (ι : OOrientation E) :\n  ∃ (ℓ : ℕ) (hℓ : Nat.Prime ℓ) (α : Endomorphism E),\n    (α.degree = ℓ) ∧\n    (ι.ω.comp α = α.comp ι.ω) :=\n  sorry",
@@ -11614,7 +11664,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0245",
+      "id": "fd_0246",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀n ∈ ℕ, ∃f: ℤ≥0 → ℚ[q] such that ∑_{j≥0} f(j)q^{P(j)} = ∏_{k∈S} (1-q^{a_k q^b})^{-1} where S is a modular orbit of exponents under q ↦ q^14",
@@ -11662,7 +11712,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0246",
+      "id": "fd_0247",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem cup_radical_eq_iff {G : Type*} [ProfiniteGroup G] {p : ℕ} (hp : Nat.Prime p) : R p G = { α : H₁(G,Fin p) | ∀ β : H₁(G,Fin p), α.sm cup β = 0 } := by sorry",
@@ -11711,7 +11761,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0247",
+      "id": "fd_0248",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem average_selmer_lower_bound {M : GQModule} {ℓ : ℕ} (hM : M.IsFinite ∧ M.IsℓTorsionConstant) (F : FamilyOfAbelianVarieties) (hF : F.BoundedConductor) : (average ℓ‑Selmer rank of F) ≥ ∏ v in F.Places, L_v(M,ℓ) := by sorry",
@@ -11761,7 +11811,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0248",
+      "id": "fd_0249",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": " theorem cm_iff_ci {T : Type} [Tournament T] (w : ArcWeightFun T) : IsCM T ↔ IsCI T := by sorry",
@@ -11805,7 +11855,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0249",
+      "id": "fd_0250",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem labeled_posets_mod_four (n : ℕ) (hn : n ≥ 2) : (number_of_labeled_posets n) % 4 = 3 := by sorry",
@@ -11856,7 +11906,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0250",
+      "id": "fd_0251",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem geometric_representation_finiteness (p : Nat) [hp : Fact (Prime p)] (k : Type) [Field k] [Fintype k] (X : Type) [Variety X] [geometrically_connected X] [normal X] (F : Type) [Field F] [AlgebraicallyClosed F] [CharP F p] (n : Nat) : ∃ (finitely_many : Finset (ContinuousRep Semisimple Geometric π₁(X, 0) (GL n F))) (h : ∀ (ρ : ContinuousRep Semisimple Geometric π₁(X, 0) (GL n F)), ρ ∈ finitely_many)",
@@ -11903,7 +11953,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0251",
+      "id": "fd_0252",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_perm_poly_necessary {p k : ℕ} (hp : Nat.Prime p) (kpos : 0 < k) (q : ℕ) (hq : q = p ^ k) (m : ℕ) (hm : 3 ≤ m) (hmq : m ∣ q^2 - 1) (b : ℤ) (hb : b = 0 ∨ b = 1 ∨ b = -1) (Q R S r : ℕ) (hQ : ∃ i, Q = p^i) (hR : ∃ i, R = p^i) (hS : ∃ i, S = p^i) (hr : r > 0) (hmod : r ≡ Q+R+S [MOD q+1]) (hgcd : Nat.Coprime r (q-1)) : PermutationOnFiniteField f → (q % m = 1 ∧ ((Q % m = 1 ∧ R % m = 1 ∧ S % m = 1) ∨ (Q % m = m-1 ∧ R % m = m-1 ∧ S % m = m-1)))",
@@ -11952,7 +12002,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0252",
+      "id": "fd_0253",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem DSOME_congruence_mod4 (n : ℕ) (h : n ≥ 1) : DSOME n ≡ n * q n [MOD 4]\nwhere\n  DSOME : ℕ → ℕ := \"sum of odd parts minus sum of even parts in distinct partitions of n\"\n  q : ℕ → ℕ := \"number of distinct partitions of n\"",
@@ -11995,7 +12045,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0253",
+      "id": "fd_0254",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Volume bounds via linear relations",
@@ -12042,7 +12092,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0254",
+      "id": "fd_0255",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem adjacency_p_energy_strict_ineq {G : SimpleGraph ℕ} (hG : G.IsConnected) (p : ℝ) (hp : p > 2) (hp_neq_path : ¬IsPath G) : EnergyPPlus G p > EnergyPPlus (Path G.order) p := by sorry",
@@ -12094,7 +12144,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0255",
+      "id": "fd_0256",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem optimal_turing_bound_conjecture {n : ℕ} (hn : n ≥ 2) {G : Finset ℕ} (hG : G.Nonempty) (hG_clique_free : (n+1)-CliqueFree G) :\n  ∀ (χ : Embedding G (HensonGraph (n+1)) → ℕ), Computable χ →\n  ∃ (H' : Substructure (HensonGraph (n+1))), Isomorphic H' (HensonGraph (n+1)) ∧\n    (Set.range (fun e : Embedding G H' => χ (H'.embedding.comp e))).Card ≤ BigRamseyDegree G n ∧\n    TuringDegree H' ≤ TuringDegree (ZeroJump (Finset.card G - 1)) := by sorry",
@@ -12145,7 +12195,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0256",
+      "id": "fd_0257",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem effective_resistance_recurrence (r : ℕ) (hr : r ≥ 1) :\n  ∃ (c : Finset ℂ) (init : Fin (2 * r) → ℂ),\n    (∀ (N : ℕ), N > 2 * r → (∃ (a : ℕ → ℂ), (∀ n : ℕ, a n = ∑ k in Finset.Icc 1 (2 * r), c k * a (n - k)) ∧ a N = effective_resistance_G_N_r_1 N r ∧ (∀ i : Fin (2 * r), a i = init i))) := by sorry",
@@ -12193,7 +12243,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0257",
+      "id": "fd_0258",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem pisot_numeration_torus_iff_preserves_zeros {\n  (β : NumberField) (hβ : IsPisot β) (U : PisotNumerationSystem β) :\n  ContinuousGroupIsomorphism (Z_U U) (Tori (degree β - 1)) ↔ PreservesZeros U :=\nbegin\n  split,\n  {\n    -- (→) direction: torus isomorphism implies zero preservation\n    intro h_iso,\n    -- Extract the isomorphism and use continuity to show carries only propagate left\n    -- This requires analyzing how addition in ℤ_U corresponds to addition in the torus\n  },\n  {\n    -- (←) direction: zero preservation implies torus isomorphism (main theorem)\n    intro h_preserve,\n    -- Apply the construction from the paper to build the isomorphism\n    exact pisot_numeration_torus_iso_of_preserves_zeros hβ U h_preserve\n  }\nend",
@@ -12246,7 +12296,7 @@
         "Logic"
       ],
       "github_issue": 0,
-      "id": "fd_0258",
+      "id": "fd_0259",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Minimal degree conditions and neighborhood structures",
@@ -12293,7 +12343,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0259",
+      "id": "fd_0260",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sunflower_free_bound {n : ℕ} (F : Finset (Finset ℕ)) (h : ∀ (A B C : Finset ℕ), A ∈ F → B ∈ F → C ∈ F → (A ∩ B ∩ C) = (A ∩ C)) : F.card ≤ (K : ℝ) * (n : ℝ) ^ (1/6 : ℝ) * (3 / (2 : ℝ) ^ (2/3 : ℝ)) ^ n := by sorry",
@@ -12344,7 +12394,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0260",
+      "id": "fd_0261",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem faudree_lehel_conjecture : ∃ (C : ℝ), ∀ (G : SimpleGraph ℕ) (n d : ℕ), G.IsDRegular d → G.Order = n → d ≥ 2 → (G.IrregularityStrength : ℝ) ≤ (n : ℝ) / d + C := by sorry",
@@ -12392,7 +12442,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0261",
+      "id": "fd_0262",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "For all α, β : ℝ with 0 < α < β < 1 and β - α ≥ 0.02, ∃ P : Polytope and ∀ n ∈ ℕ, (∃ d | n ∧ d ∈ [n^α, n^β]) ≡ ∃ k : ℕ, (n ∈ supp(S(P, k)) ∧ |S(P, k) − I(P)| < ε).",
@@ -12436,7 +12486,7 @@
         "Computation"
       ],
       "github_issue": 0,
-      "id": "fd_0262",
+      "id": "fd_0263",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem joint_descendants_scaling_limit {d : ℕ} (hd : d ≥ 2) {k : ℕ} (hk : k ≥ 2) : ∃ (μ : Measure ℝ), ( (fun n : ℕ => (joint_descendants_size d n k : ℝ) / (n : ℝ) ^ ((d : ℝ) / (d + 1 : ℝ)) ) ).ConvergesInDistribution μ := by sorry",
@@ -12467,7 +12517,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "829d5920",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -12482,7 +12532,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0263",
+      "id": "fd_0264",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem counterexample_exists : ∃ (G : Graph ℕ), Is2K4Free G ∧ Fintype.card (Vertex G) = 9 ∧ QSpectralRadius G = QSpectralRadius (K1 ∨ T3 8) ∧ ¬Isomorphic G (K1 ∨ T3 8)",
@@ -12498,7 +12548,7 @@
       "source": "",
       "source_exp_id": "2606.30272v1",
       "source_path": "http://arxiv.org/abs/2606.30272v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-04T01:20:02.252152+00:00",
       "title": "Uniqueness failure for signless Laplacian extremal graphs at n=9 for (2K_4)-free graphs"
@@ -12515,7 +12565,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "829d5920",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -12531,7 +12581,7 @@
         "Tropical"
       ],
       "github_issue": 0,
-      "id": "fd_0264",
+      "id": "fd_0265",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem basic_r_symmetric_tropical_polynomials_are_algebraically_independent {n r : ℕ} (hn : n ≥ 1) (hr : r ≥ 1) :\n  AlgebraicIndependent (𝕂 := Tropical ℝ) (basic_r_symmetric_polynomials n r) :=\n  sorry\n",
@@ -12547,7 +12597,7 @@
       "source": "",
       "source_exp_id": "2606.30184v1",
       "source_path": "http://arxiv.org/abs/2606.30184v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-04T01:45:28.530447+00:00",
       "title": "Algebraic Independence of Basic r‑Symmetric Tropical Polynomials"
@@ -12579,7 +12629,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0265",
+      "id": "fd_0266",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hypermap_partial_dual_bipartite_iff {H : Hypermap} {E_prime : Finset (Hyperedge H)} :\n  H^{E_prime}.is_bipartite ↔ (∃ (Φ : Direction (MedialMap H)), Φ.is_all_crossing ∧ E_prime = Φ.c_edges)",
@@ -12610,7 +12660,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "f39d97c8",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -12624,7 +12674,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0266",
+      "id": "fd_0267",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_discrete_pseudomanifold_2d_plus_7_not_sphere {d : ℕ} (hd : d ≥ 3) {V : Type*} [DecidableEq V] (M : SimpleGraph V) (hM : DiscreteDPseudomanifold M d) (hV : Fintype.card V = 2*d + 7) (hNotSphere : ¬ IsSimplicialSphere M d) : IsFlagNormal M ∧ IsSuspensionOfRP2 M (d-2) := by sorry",
@@ -12640,7 +12690,7 @@
       "source": "",
       "source_exp_id": "2606.29753v1",
       "source_path": "http://arxiv.org/abs/2606.29753v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-04T03:17:14.082596+00:00",
       "title": "Classification of Discrete d-Pseudomanifolds with 2d+7 Vertices"
@@ -12657,7 +12707,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "f39d97c8",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -12673,7 +12723,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0267",
+      "id": "fd_0268",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem distance_set_linear_size {q : ℕ} [Fact (Nat.Prime q)] {n : ℕ} (hn : n % 2 = 0) {Q : quadratic_form (fin n) (zmod q)} (hQ : Q.is_non_degenerate) {E : set (fin n → zmod q)} (hE : E.finite) (hsize : (E.to_finset.card : ℝ) ≥ C * (q : ℝ) ^ (n / 2 + 1/3)) : (Δ Q E).to_finset.card ≥ c * q :=\n  sorry",
@@ -12689,7 +12739,7 @@
       "source": "",
       "source_exp_id": "2606.29965v1",
       "source_path": "http://arxiv.org/abs/2606.29965v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-04T03:34:32.567013+00:00",
       "title": "Sharpness of the n/2 + 1/3 exponent for the finite‑field Erdős–Falconer distance problem"
@@ -12718,7 +12768,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0268",
+      "id": "fd_0269",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_p3_packing_tight (G : PlaneTriangulation) : λ_P3 G = G.order / 5 := by sorry",
@@ -12766,7 +12816,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0269",
+      "id": "fd_0270",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem double_weighted_gl2_fourier (X Y : ℕ) (a b : GL2FourierCoeff) (c : ℕ → ℤ)` \" \\{ \\forall n : ℕ, |a(n)| ≤ 1 \\} \\{ \\forall m : ℕ, |b(m)| ≤ 1 \\} \\{ \\forall m : ℕ, |c(m)| ≤ 1 \\} \\{ \\sum_{n=1}^X \\sum_{m=1}^Y a(n) * b(m) * c(n+m) ≤ (X Y)^{1/2} log(X Y) \\} \" }",
@@ -12815,7 +12865,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0270",
+      "id": "fd_0271",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sl2_multiplicity_eq_specht_dim (n k : ℕ) (h : k ≤ Nat.choose n 2) : multiplicity_of_sl2_irrep k in graphAlgebra n = dim (spechtModule (Nat.choose n 2) (k, Nat.choose n 2 - k)) := by sorry",
@@ -12861,7 +12911,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0271",
+      "id": "fd_0272",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem exists_positive_power_saving (k : ℕ) (hk : 2 ≤ k) : ∃ c : ℝ, 0 < c ∧ c ≥ 1 / (k ^ 2) ∧ ∀ (A : Finset ℝ), A.finite → A.nonempty → |minkowski_eval f A| ≤ |A| ^ (k - c)",
@@ -12909,7 +12959,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0272",
+      "id": "fd_0273",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem three_pile_halve_nim_p_positions (a b c : ℕ) : ∀ G_a G_b G_c : ℕ, G_a = grundy_single_pile a ∧ G_b = grundy_single_pile b ∧ G_c = grundy_single_pile c → (G_a ^ G_b ^ G_c = 0 ↔ is_p_position (a, b, c))",
@@ -12955,7 +13005,7 @@
         "Computation"
       ],
       "github_issue": 0,
-      "id": "fd_0273",
+      "id": "fd_0274",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem improved_goldbach_level : ∀ (A : ℝ), A > 0 → ∃ (B : ℝ), B > 0 ∧ ∀ᶠ (X : ℝ) in Filter.atTop, (∑ (N : ℕ) in Finset.Icc ⌈X/2⌉₊ ⌈X⌉₊, if N % 2 = 0 ∧ ¬goldbach_bv_holds N (X^(1/3) / (Real.log X)^B) then 1 else 0 : ℝ) = O(X / (Real.log X)^A) := by sorry",
@@ -13004,7 +13054,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0274",
+      "id": "fd_0275",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem local_to_global_KKL {K : SimplicialComplex} (h : ∀ (σ : K), Linksatisfy_KKL σ) : Global_KKL_K K",
@@ -13060,7 +13110,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0275",
+      "id": "fd_0276",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem minimal_isometric_embedding_dim {G : Graph} (hconn : connected G) :\\n  ∃ (H : AbelianGroup) (e : IsometricEmbedding G H),\\n    rank H = t G - rank (cycleClassParityMatrix G) :=\\nby\\n  -- 1. Compute t := |E G| (number of edges)\\n  -- 2. Compute A := cycleClassParityMatrix G\\n  -- 3. Apply CocycleQuotientLabelingTheorem to obtain labeling λ : V G → (zmod 2) ^ (t - rank A)\\n  -- 4. Show λ defines an isometric embedding into the Cayley graph of (zmod 2) ^ (t - rank A) w.r.t. its standard generators\\n  -- 5. Prove minimality: assume     H' with rank H' < t - rank A, derive contradiction using rank properties of A\\n  sorry",
@@ -13108,7 +13158,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0276",
+      "id": "fd_0277",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": " theorem hilbert_polya_via_spin_model :\n  ∃ (H : QuantumOperator), is_selfadjoint H ∧\n    (∀ n : ℕ, ∃ λ ∈ spectrum H, λ = imag_part (ζ_zero n)) ∧\n    (∀ λ ∈ spectrum H, ∃ n, λ = imag_part (ζ_zero n)) := by\n  -- Placeholder for the full proof construction.\n  admit",
@@ -13161,7 +13211,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0277",
+      "id": "fd_0278",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem iterated_ramification_growth {K : Qp} (f : Polynomial K[X]) (hf : Monic f) (hdeg : degree f ≥ 2) (hder : derivative f ∈ maximal_ideal K • (Polynomial K[X])) (t0 : K) (ht0 : t0 ∈ ring_of_integers K) (t : ℤ → K) (ht : ∀ n, f.eval (t (n+1)) = t n) (e : ℤ → ℤ) (he : ∀ n, e n = ramification_index (K_n K t n)) (hdeep : ≊ n, e n = 1) : ∃ N : ℤ, ∀ n ≥ N, valuation K (e n) ≥ n := by sorry where K_n := K(t n) E_n := K_n ∩ K^{ur} e n := (K_n : E_n) K^{ur} := algebraic maximal unramified extension of K",
@@ -13209,7 +13259,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0278",
+      "id": "fd_0279",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem f_4_upper_bound (N C : ℕ) (A : Finset ℕ) (hA : A ⊆ {1,...,N}) (hsize : A.card ≥ (11*N + 16*C) / 16) :\n  ∃ a b c d : ℕ,\n    a ≠ b ∧ a ≠ c ∧ a ≠ d ∧ b ≠ c ∧ b ≠ d ∧ c ≠ d ∧\n    a + b ∈ A ∧ a + c ∈ A ∧ a + d ∈ A ∧ b + c ∈ A ∧ b + d ∈ A ∧ c + d ∈ A := by\n  -- To be filled in: induction on N, folding sums, centering argument, etc.\n  sorry",
@@ -13253,7 +13303,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0279",
+      "id": "fd_0280",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem finiteness_mod_two_galois_representations {K : GlobalFunctionField} (hK : K.char ≠ 2) {n : ℕ} (hn : n > 2) (R : EffectiveDivisor K) :\n  Set.Finite {ρ : ContinuousGeometricSemisimpleRep K n (AlgebraicClosure (ZMod 2)) | ρ.artin_conductor ∣ R} := by sorry",
@@ -13300,7 +13350,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0280",
+      "id": "fd_0281",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "\\(\\forall X, \\forall z \\in [1, Z(X)], \\mathbb{P}_X(A(n) \\le \\mathcal{F}_X \\exp(-z)) \\asymp \\exp(-2z) \\wedge \\mathbb{P}_X(A(n) > \\mathcal{F}_X \\exp(z)) \\ll \\exp(-2z)\\)",
@@ -13348,7 +13398,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0281",
+      "id": "fd_0282",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem zero_sum_ramsey_finite_exceptions (q : ℕ) (s : ℕ) : ¬∃ₘ s' (s' > s) (R (K_{s', q}, ℤ_q) ≠ s' + q).",
@@ -13397,7 +13447,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0282",
+      "id": "fd_0283",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Appropriate instance of the converse of Theorem 5.2 from the referenced work",
@@ -13446,7 +13496,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0283",
+      "id": "fd_0284",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem rademacher_short_interval_clt {f : ℕ → ℤ} (hf : IsRademacherRMF f) {y : ℕ → ℕ} (hy : TendstoAtTop y) (hy' : ∀ x, y x = o(x)) (hsq : SquarefreeDensityInIntervals y) : ConvergesInDistribution (fun x : ℕ => (∑ n in Finset.Icc x (x + y x), (f n : ℝ)) / σ x (y x)) (Normal 0 1)",
@@ -13495,7 +13545,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0284",
+      "id": "fd_0285",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sat_KkC4 {k n : ℕ} (hk : 4 ≤ k) (hn : 2 ≤ n) : sat (K k n) (C 4) = n * (k - 1) := by sorry",
@@ -13541,7 +13591,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0285",
+      "id": "fd_0286",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Canonical representations and modular constraints in discrete bases",
@@ -13590,7 +13640,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0286",
+      "id": "fd_0287",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem one_row_transition_unimodality (n : ℕ) (μ : strict_partition) :\n  let C := transition_coefficient (single_row n) μ 2 in\n  polynomial.unimodal (C.coeffs) ∧ polynomial.nonneg_coeffs (C.coeffs)",
@@ -13636,7 +13686,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0287",
+      "id": "fd_0288",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem K_infinitely_many_primes_even_m (m : ℕ) (hm : 5 ≤ m ∧ Even m) : ¬(fintype (setOf (λ p : Prime, p^m ∈ K))))",
@@ -13684,7 +13734,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0288",
+      "id": "fd_0289",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem example_theorem (C : UnderclosedClutter) : Equivalent cointerval C complement C implies LinearQuotient (CircuitIdeal C).",
@@ -13729,7 +13779,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0289",
+      "id": "fd_0290",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem exists_k_antichain_with_Hausdorff (k n : ℕ) (hn : 0 < n) : ∃ (A : Set (Fin n → ℝ)), IsKAntichain A ∧ MeasureTheory.Hausdorff (A : Set (Fin n → ℝ)) (n - 1) = (k : ℝ) * n := by sorry",
@@ -13775,7 +13825,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0290",
+      "id": "fd_0291",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem persistent_maximal_simplices_cardinality {W : FiniteCoxeterGroup} {a : ℝ ^ n} (ha : a ∈ fundamental_chamber W) (hgen : generic a W) : cardinality (maximal_persistent_simplices (CoxeterPermutahedron W a)) = cardinality (W) := by sorry",
@@ -13822,7 +13872,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0291",
+      "id": "fd_0292",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem exists_golomb_ruler_with_limsup_eq_sqrt_gamma (γ : ℕ) (hγ : 0 < γ) : ∃ G : Set ℕ, (is_golomb_ruler G γ) ∧ (limsup.models (λ n : ℕ, ((G.filter (fun x => x ≤ n)).card : ℝ) / Real.sqrt (n : ℝ)) = Real.sqrt (γ : ℝ))",
@@ -13871,7 +13921,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0292",
+      "id": "fd_0293",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem count_d_balanced_e_regular_partitions (d e w : ℕ) (hde : d > 1 ∧ e > 1) : # {λ // IsDBalancedERegular λ d e ∧ e_weight λ = w} = Nat.binomial (w + (d-1)*(e-1)/2 - 1) w",
@@ -13918,7 +13968,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0293",
+      "id": "fd_0294",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "\\forall m : ℕ, ν₂(R m - 1) = \\text{piecewise expression matching Padovan case but with Perrin-specific constants and congruence classes}",
@@ -13963,7 +14013,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0294",
+      "id": "fd_0295",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem power_of_two_characterization {n : ℕ} (hn : 1 ≤ n) : (∃ (R : Fin n → Fin n → Fin n), (∀ i, Function.Injective (fun j => R i j)) ∧ (∀ j, Function.Injective (fun i => R i j)) ∧ (∀ (p q : Fin n), Finset.card ( (Finset.univ : Finset (Fin n × Fin n)).filter (fun ⟨i, j⟩ => R i j = p ∧ R j i = q) ) = Finset.card ( (Finset.univ : Finset (Fin n × Fin n)).filter (fun ⟨i, j⟩ => R i j = q ∧ R j i = p) ) ) ↔ ∃ k : ℕ, n = 2 ^ k )",
@@ -13983,6 +14033,58 @@
       "thread_id": "",
       "timestamp": "2026-07-04T16:39:06.146756+00:00",
       "title": "Power-of-Two Characterisation of λ=1 Pairwise Reflection Symmetric Latin Rectangles"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "arXiv:2405.xxxxx (The combinatorial nerve theorem)",
+        "Borsuk (1948)",
+        "Leray (1945)",
+        "Forman (1998)",
+        "Robin (2022)"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "We conjecture that for any finite simplicial complex X covered by subcomplexes A_i, each equipped with an acyclic discrete gradient vector field V_i that is compatible on all non‑trivial intersections (including higher‑fold intersections), the homology groups of X are isomorphic to the homology of the induced colimit of the Morse complexes of the V_i.  Formally, the E^1‑page of the spectral sequence obtained from the covering by the Morse data of the A_i computes H_*(X) as the alternating sum of the critical simplices of the A_i, with corrections given by the Morse homology of their intersections.",
+      "domain_bridges": [
+        "category theory",
+        "homological algebra",
+        "type theory",
+        "formal verification"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "github_issue": 0,
+      "id": "fd_0296",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem effective_combinatorial_nerve_theorem\n  {X : SimplicialComplex}\n  (A : Vector (SimplicialComplex) k)\n  (V : Vector (DiscreteGradient X) k)\n  (h_cover : ∪ i, A[i] = X)\n  (h_acyclic : ∀ i, Acyclic V[i])\n  (h_compatible : ∀ {i j}, A[i] ∩ A[j] ≠ ℧ → Compatible V[i] V[j (A[i] ∩ A[j]))\n  : Homology X ≌ (MorseColimit V) :=\nbegin\n  -- proof proceeds via the spectral sequence constructed from the covering\nend",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Construct a spectral sequence from the covering by the Morse data of the V_i.  Show that the E^1 term coincides with the homology of the direct sum of the Morse complexes of the A_i, modulo the contributions of their intersections.  Prove convergence using a Mayer‑Vietoris argument adapted to discrete Morse theory and induction on the covering refinement.  Finally, verify that the limit of the spectral sequence equals the usual simplicial homology of X, yielding a natural isomorphism H_*(X) ≃ colim_i H_*(C(V_i), V_i|_{∥_j A_j}).",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2606.28047v1",
+      "source_path": "http://arxiv.org/abs/2606.28047v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-04T16:56:33.268750+00:00",
+      "title": "Effective Combinatorial Nerve Theorem for Arbitrary Covers"
     },
     {
       "ambition_level": "extension",
