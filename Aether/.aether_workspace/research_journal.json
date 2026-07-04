@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "cff6413b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Lower semi-inducibility profile of the red-blue star `S_{2,1}`\n\nThis cycle established (in `RedBlueStarS21Profile.lean`, `RedBlueStarS21Optimization.lean`,\n`RedBlueStarS21Catalog",
-      "quality_score": 0.8251200000000001,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-06-28T06:24:48",
-      "title": "Exact lower semi-inducibility profile for the red‑blue star S_{2,1}"
-    },
-    {
       "cycle_id": "5d028d25",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Prismatic Purity for F-Crystals\n\nDerived from this cycle's findings (faithfulness is cheap; the deep input is\ncodimension-≥2 Hartogs extension; normality is exactly the dimension",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-04T05:06:11",
       "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
+    },
+    {
+      "cycle_id": "fbcfb71f",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — A Bestiary of Arithmetic Monsters\n\nThese conjectures grew directly out of the casting-out-nines analysis of\ndigit-permutation factorizations and the binary-digit-sum bridge.\n\n##",
+      "quality_score": 0.75424,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-04T08:03:45",
+      "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ba81674a",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Brualdi–Quinn–Massey strong chromatic index\n\nThese conjectures are derived from this cycle's findings: (i) the conflict-graph\nformulation of `χ'_s`, (ii) the universal star-cliqu",
-      "quality_score": 0.79596,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-28T00:24:51",
-      "title": "Brualdi-Quinn Massey Strong Chromatic Index Conjecture for Bipartite Graphs"
-    },
     {
       "cycle_id": "2f2206c6",
       "domain": "Novelty",
@@ -2501,21 +2491,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-04T07:35:15",
       "title": "Phantom Topologies: Spaces That Change When You Look at Them"
+    },
+    {
+      "cycle_id": "fbcfb71f",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — A Bestiary of Arithmetic Monsters\n\nThese conjectures grew directly out of the casting-out-nines analysis of\ndigit-permutation factorizations and the binary-digit-sum bridge.\n\n##",
+      "quality_score": 0.75424,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-04T08:03:45",
+      "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "50540462",
-      "domain": "Novelty",
-      "name": "EUgen_uniform",
-      "quality": 0.7700800000000001
-    },
-    {
-      "cycle_id": "f4462f16",
-      "domain": "Applications",
-      "name": "contract_walk",
-      "quality": 0.79052
-    },
     {
       "cycle_id": "f4462f16",
       "domain": "Applications",
@@ -2803,9 +2791,21 @@
       "domain": "Applications",
       "name": "IsFangPair",
       "quality": 0.71008
+    },
+    {
+      "cycle_id": "fbcfb71f",
+      "domain": "Applications",
+      "name": "s2_mul_le",
+      "quality": 0.75424
+    },
+    {
+      "cycle_id": "fbcfb71f",
+      "domain": "Applications",
+      "name": "s2_mul_le_min",
+      "quality": 0.75424
     }
   ],
-  "last_updated": "2026-07-04T07:35:15",
+  "last_updated": "2026-07-04T08:03:45",
   "open_questions": [
     {
       "context": "and the colour pigeonhole.  Both are fully provable in Lean with no `sorry`.; `afl_constant_gap` — all `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "7488be0a",
-        "quality": 0.51904,
-        "theorems": 4,
-        "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
-      },
-      {
         "cycle_id": "12f18d90",
         "quality": 0.5938800000000001,
         "theorems": 6,
@@ -3141,6 +3135,12 @@
         "quality": 0.65567,
         "theorems": 9,
         "title": "Lower Bound for the Proportion of Zeros on the Critical Line for PGL(3) L-functi"
+      },
+      {
+        "cycle_id": "fbcfb71f",
+        "quality": 0.75424,
+        "theorems": 10,
+        "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
       }
     ],
     "Bridges": [

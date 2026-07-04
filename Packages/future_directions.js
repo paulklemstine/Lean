@@ -17,7 +17,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: unnamed_concept"
   },
   {
-    "consumed_by_exp_id": "87e9f111",
+    "consumed_by_exp_id": "",
     "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
     "domains": [
       "Novelty",
@@ -27,7 +27,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:26.963635+00:00",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
@@ -1141,7 +1141,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Recursive Decomposition Isomorphism for General m-Tamari Intervals and Planar Constellations"
   },
   {
-    "consumed_by_exp_id": "f2d98ef6",
+    "consumed_by_exp_id": "",
     "description": "For nilperfect rings R, the derived p-completeness of \u03c7W(R) is a necessary and sufficient condition for the extension of Dieudonn\u00e9 theory to rings with perfect reduction.",
     "domains": [
       "Algebra"
@@ -1150,7 +1150,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01178v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T22:56:09.506388+00:00",
     "title": "Derived p-completeness of sheared Witt vectors ensures Dieudonn\u00e9 theory extension"
   },
@@ -1316,7 +1316,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing the generalized honeymoon Oberwolfach problem in Lean 4"
   },
   {
-    "consumed_by_exp_id": "318aca4d",
+    "consumed_by_exp_id": "",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
     "domains": [
       "Novelty",
@@ -1326,7 +1326,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:27.030210+00:00",
     "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
   },
@@ -1678,7 +1678,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Logarithmic bound for generalized Erd\u0151s\u2013Rogers functions: the case F = K_4^3"
   },
   {
-    "consumed_by_exp_id": "563a1975",
+    "consumed_by_exp_id": "",
     "description": "For the Maker-Breaker C_k-game on K_n with fixed k \u2265 4, the threshold bias is exactly c_k \u00b7 n^{(k-2)/(k-1)} where c_k = [(k-1)(2(k-1)/k)^{k-2}]^{1/(k-1)}. That is, Maker wins when q < (1-\u03b5)c_k\u00b7n^{(k-2)/(k-1)} and Breaker wins when q > (1+\u03b5)c_k\u00b7n^{(k-2)/(k-1)} for any \u03b5 > 0 and all sufficiently large n.",
     "domains": [
       "Bridges"
@@ -1687,7 +1687,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01294v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T11:40:15.032234+00:00",
     "title": "Sharp Threshold Constant for Cycle Games"
   },
@@ -2361,12 +2361,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Analysis of the maximal number of chains required to cover strict chains in the Boolean lattice, with connections to inclusion-exclusion and logarithmic approximations.",
+    "domains": [
+      "Cryptography",
+      "MachineLearning"
+    ],
+    "id": "fd_0189",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29385v2",
+    "status": "available",
+    "timestamp": "2026-07-04T08:04:06.155536+00:00",
+    "title": "Chain Covers in the Boolean Lattice"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0189",
+    "id": "fd_0190",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -2380,7 +2395,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0190",
+    "id": "fd_0191",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -2394,7 +2409,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0191",
+    "id": "fd_0192",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
@@ -2408,7 +2423,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0192",
+    "id": "fd_0193",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -2422,7 +2437,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0193",
+    "id": "fd_0194",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
@@ -2437,7 +2452,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0194",
+    "id": "fd_0195",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
@@ -2452,7 +2467,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0195",
+    "id": "fd_0196",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -2467,7 +2482,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0196",
+    "id": "fd_0197",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -2481,7 +2496,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0197",
+    "id": "fd_0198",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -2496,7 +2511,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0198",
+    "id": "fd_0199",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02132v1",
@@ -2511,7 +2526,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0199",
+    "id": "fd_0200",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -2525,7 +2540,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0200",
+    "id": "fd_0201",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02098v1",
@@ -2540,7 +2555,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0201",
+    "id": "fd_0202",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01716v1",
@@ -2555,7 +2570,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Physics"
     ],
-    "id": "fd_0202",
+    "id": "fd_0203",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
@@ -2569,7 +2584,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0203",
+    "id": "fd_0204",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01718v1",
@@ -2583,7 +2598,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0204",
+    "id": "fd_0205",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01761v1",
@@ -2598,7 +2613,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Logic"
     ],
-    "id": "fd_0205",
+    "id": "fd_0206",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
@@ -2612,7 +2627,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0206",
+    "id": "fd_0207",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01695v1",
@@ -2626,7 +2641,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0207",
+    "id": "fd_0208",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01438v1",
@@ -2641,7 +2656,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0208",
+    "id": "fd_0209",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -2655,7 +2670,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0209",
+    "id": "fd_0210",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -2670,7 +2685,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0210",
+    "id": "fd_0211",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
@@ -2684,7 +2699,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0211",
+    "id": "fd_0212",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00775v1",
@@ -2698,7 +2713,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0212",
+    "id": "fd_0213",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00825v2",
@@ -2712,7 +2727,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0213",
+    "id": "fd_0214",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00651v1",
@@ -2726,7 +2741,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0214",
+    "id": "fd_0215",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00643v1",
@@ -2741,7 +2756,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0215",
+    "id": "fd_0216",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00561v1",
@@ -2755,7 +2770,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0216",
+    "id": "fd_0217",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00608v1",
@@ -2770,7 +2785,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0217",
+    "id": "fd_0218",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00456v1",
@@ -2785,7 +2800,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0218",
+    "id": "fd_0219",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00366v1",
@@ -2800,7 +2815,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0219",
+    "id": "fd_0220",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00372v1",
@@ -2814,7 +2829,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0220",
+    "id": "fd_0221",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00332v1",
@@ -2828,7 +2843,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0221",
+    "id": "fd_0222",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.32024v1",
@@ -2843,7 +2858,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0222",
+    "id": "fd_0223",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31967v1",
@@ -2858,7 +2873,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0223",
+    "id": "fd_0224",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31940v1",
@@ -2873,7 +2888,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0224",
+    "id": "fd_0225",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31908v1",
@@ -2888,7 +2903,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0225",
+    "id": "fd_0226",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31687v1",
@@ -2903,7 +2918,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0226",
+    "id": "fd_0227",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31821v2",
@@ -2918,7 +2933,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0227",
+    "id": "fd_0228",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31547v1",
@@ -2933,7 +2948,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0228",
+    "id": "fd_0229",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31649v1",
@@ -2948,7 +2963,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0229",
+    "id": "fd_0230",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31565v1",
@@ -2962,7 +2977,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0230",
+    "id": "fd_0231",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31526v1",
@@ -2977,7 +2992,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0231",
+    "id": "fd_0232",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31341v1",
@@ -2992,7 +3007,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0232",
+    "id": "fd_0233",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31262v1",
@@ -3007,7 +3022,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0233",
+    "id": "fd_0234",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31264v1",
@@ -3022,7 +3037,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0234",
+    "id": "fd_0235",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30856v1",
@@ -3037,7 +3052,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0235",
+    "id": "fd_0236",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30996v1",
@@ -3052,7 +3067,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0236",
+    "id": "fd_0237",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30885v1",
@@ -3067,7 +3082,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0237",
+    "id": "fd_0238",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31044v1",
@@ -3081,7 +3096,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0238",
+    "id": "fd_0239",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30496v1",
@@ -3090,17 +3105,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Characterization of Zero-Preserving Pisot Numerations via Torus Isomorphism"
   },
   {
-    "consumed_by_exp_id": "e62d479c",
+    "consumed_by_exp_id": "",
     "description": "This paper presents a proof of Seymour's second neighborhood conjecture on oriented graphs with minimum out-degree at most 7, improving the threshold from 6 to 7.",
     "domains": [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0239",
+    "id": "fd_0240",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30588v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T23:12:37.946714+00:00",
     "title": "Seymour's second neighborhood conjecture for oriented graphs"
   },
@@ -3110,7 +3125,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0240",
+    "id": "fd_0241",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30593v1",
@@ -3124,7 +3139,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0241",
+    "id": "fd_0242",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30612v1",
@@ -3139,7 +3154,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0242",
+    "id": "fd_0243",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30428v1",
@@ -3153,7 +3168,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_0243",
+    "id": "fd_0244",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3168,7 +3183,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0244",
+    "id": "fd_0245",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30272v1",
@@ -3183,7 +3198,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Tropical"
     ],
-    "id": "fd_0245",
+    "id": "fd_0246",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30184v1",
@@ -3197,7 +3212,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0246",
+    "id": "fd_0247",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30071v1",
@@ -3211,7 +3226,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0247",
+    "id": "fd_0248",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -3226,7 +3241,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0248",
+    "id": "fd_0249",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -3240,7 +3255,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0249",
+    "id": "fd_0250",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
@@ -3249,16 +3264,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tightness Conjecture for P3-Packings in Plane Triangulations"
   },
   {
-    "consumed_by_exp_id": "865247f5",
+    "consumed_by_exp_id": "",
     "description": "Investigate an exponential sum of the form \\(\\sum_{n \\le X} \\sum_{m \\le Y} a(n) b(m) c(n+m)\\) where \\(a, b\\) are normalized GL(2) Fourier coefficients and \\(c\\) is a bounded arithmetic function, using partial results from Theorem 1.2 of the paper. The goal is to derive non-trivial cancellation bounds with a power saving over the classical \\(X Y\\) bound.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0250",
+    "id": "fd_0251",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T04:45:23.170809+00:00",
     "title": "Exponential Sums of GL(2) Fourier Coefficients with Double Weighting"
   },
@@ -3269,7 +3284,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0251",
+    "id": "fd_0252",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
@@ -3283,7 +3298,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0252",
+    "id": "fd_0253",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30690v1",
@@ -3297,7 +3312,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0253",
+    "id": "fd_0254",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29740v1",
@@ -3312,7 +3327,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0254",
+    "id": "fd_0255",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29559v1",
@@ -3326,7 +3341,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0255",
+    "id": "fd_0256",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29449v1",
@@ -3341,13 +3356,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0256",
+    "id": "fd_0257",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29391v1",
     "status": "available",
     "timestamp": "2026-07-04T07:14:44.555433+00:00",
     "title": "Minimal Dimension of Isometric Embeddings into Abelian Cayley Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that the Hamiltonian H of the spin\u2011\u00bd XXZ model on a rectangular torus of size L\u00d7M (with anisotropic coupling J and anisotropy \u0394) is a self\u2011adjoint operator on \u2113\u00b2(\u2124\u00b2) whose point spectrum contains the imaginary parts of all non\u2011trivial zeros of the Riemann zeta function. In particular there is a bijection between the set of non\u2011trivial zeros \u03c1 = \u03b2 + i\u03b3 and an infinite subset of eigenvalues {\u03bb_k} of H such that \u03bb_k = \u03b3 and \u03b2 = 1/2.",
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_0258",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29294v1",
+    "status": "available",
+    "timestamp": "2026-07-04T08:04:40.296946+00:00",
+    "title": "Hilbert\u2013Polya operator from a 2\u2011dimensional lattice spin model"
   },
   {
     "consumed_by_exp_id": "",
@@ -3380,7 +3410,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "That the entries of an integer right triangle are forced"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1db5380b",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -3390,42 +3420,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.007324+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n## 1. A degree-squared law for zeros on the critical line\nFor a fixed self-dual cuspidal automorphic representation attached to a degree-`d` L-function, and\nfor families of twists by Dirichlet characters of growing conductor, at least a proportion `1/d\u00b2`\nof the zeros should lie on the critical line, unconditionally. The flagship case `d = 3` gives the\nconstant `1/9`.\n\nThe key insight is that the notoriously analytic \"positive proportion\" phenomenon is, at its core,\na single Cauchy\u2013Schwarz inequality: if a real mollified sum detects only critical-line zeros, then\nthe square of its first moment is bounded by the number of detected zeros times its second moment,\nso a moment inequality of the form `M\u2081\u00b2 \u2265 (1/d\u00b2) M\u2082 N` forces at least `N/d\u00b2` zeros onto the line.\n\nWhy now? Recent progress on second-moment asymptotics for higher-degree L-functions has, for the\nfirst time, put the two required moment estimates within reach for `GL(3)`, turning a heuristic into\na provable target and making the clean degree-squared constant testable across degrees.\n\n## 2. Beating `1/d\u00b2` via the Cauchy\u2013Schwarz deficit\nThe proportion bound is an equality exactly when the detection weights are constant across the\non-line zeros; any spread in the weights leaves room to spare. Quantifying that spread should yield\na strictly better constant `(1/d\u00b2)(1 + c)` with explicit `c > 0`.\n\nThe key insight is that the gap in Cauchy\u2013Schwarz is governed by the variance-to-mean-square ratio\nof the mollifier weights, a quantity one can estimate directly from the mollifier design rather than\nfrom any new arithmetic input.\n\nWhy now? Modern mollifiers carry enough structural information to compute their weight dispersion\nexplicitly, so the previously invisible slack in the classical inequality can finally be harvested\ninto an improved theorem.\n\n## 3. A limiting density for the pooled family of twists\nSince there are exactly `\u03c6(Q)` Dirichlet twists modulo `Q`, one can pool the zeros of all of them.\nThe pooled proportion is conjecturally not just bounded below but convergent, tending to a limiting\ndensity `\u03ba` as `Q` runs over primes.\n\nThe key insight is that pooling replaces a single L-function by a statistical ensemble whose\nzero-density is dictated by the symmetry type of the family, so the limit `\u03ba` is predicted by\none-level density statistics rather than by any individual L-function.\n\nWhy now? The symmetry type of twisted `GL(3)` families has recently been pinned down, giving a\nconcrete prediction for `\u03ba` that a pooling argument can be measured against.\n\n## 4. Positivity certificates for the moment inequality\nThe only non-elementary ingredient in the degree-squared law is the moment inequality itself. It\nshould be reducible to a finite, checkable positivity statement about the mollifier coefficients.\n\nThe key insight is that the mollified second moment is a quadratic form in the mollifier\ncoefficients, so proving the required inequality is equivalent to certifying positivity of an\nexplicit finite matrix \u2014 a sum-of-squares problem rather than an asymptotic analysis.\n\nWhy now? Optimisation tools for large structured positivity problems have matured to the point where\ncertifying such quadratic forms is routine, offering a new route around the hardest analytic step.\n\n## 5. A detection principle linking sign changes and real zeros\nTwo mechanisms produce critical-line zeros: mollified moments (Cauchy\u2013Schwarz) and counted sign\nchanges of a real symmetrised function. A general combinatorial \"detection lemma\" should unify them.\n\nThe key insight is that lower bounds on the number of sign changes of a real sampling of an entire\nfunction translate directly into guaranteed real zeros, giving a second, independent lower bound on\nthe proportion that can be combined with the moment bound.\n\nWhy now? The functional-equation symmetrisation needed to make the sampled function genuinely real\nis now understood for higher-degree twists, so the sign-change route \u2014 long available only for the\nRiemann zeta function \u2014 becomes usable for `GL(3)`.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0257",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "0a7c4b5a",
-    "status": "available",
-    "timestamp": "2026-07-04T07:33:52.627566+00:00",
-    "title": "For a fixed self-dual cuspidal automorphic representation attached to a degree-`"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Phantom Topologies over Ordered Observers\n\nThis cycle proved that the real line's \"two-observer\" phantom representation is a\nspecial case of a purely order-theoretic phenomenon: every densely ordered chain\nwithout endpoints is the consensus of a left-looking and a right-looking observer,\neach strictly finer than reality, while a discretely ordered chain collapses to a\nsingle observer. The number of observers reality needs turns out to measure *order\ndensity*. The directions below build on that finding.\n\n## 1. The phantom number is a density invariant, not a metric one\n\n**Conjecture.** For a linear order with the order topology and no extreme points,\nthe minimum number of strictly-finer observers whose consensus is the order\ntopology equals two exactly when the order is densely ordered, and one otherwise;\nno such chain ever needs three.\n\nThe key insight is that the two half-open observers already squeeze every point\nbetween a left interval and a right interval, so their agreement reconstructs the\norder topology regardless of any distance function \u2014 density alone decides whether\nthose two observers are genuinely distinct.\n\nWhy now? We have a metric-free proof that the reals need exactly two observers and\nthat the integers need exactly one; the remaining step is to show two always\nsuffice and to pin down the dichotomy across all chains, closing the gap between\nthe dense and discrete extremes with a single order-theoretic statement.\n\n## 2. Phantom rigidity of well-orders and ordinals\n\n**Conjecture.** Every successor point of a well-ordered chain forces the\nlower-limit observer to resolve that point exactly as the order topology does, so\nthe order topologies of ordinals such as `\u03c9`, `\u03c9+1`, and `\u03c9\u00b72` all have phantom\nnumber one, whereas inserting a single dense block raises it to two.\n\nThe key insight is that a successor gap makes the basic right half-open interval\ndegenerate to a single point, which trivialises the extra resolution an observer\ncould add \u2014 rigidity is created precisely at isolated points.\n\nWhy now? The integer collapse we established is the smallest instance of this\nphenomenon; extending the same successor-gap argument transfinitely would give a\ncomplete phantom-number classification of ordinal order topologies.\n\n## 3. Endpoints as forbidden observers\n\n**Conjecture.** On a chain with a greatest or least element, the naive half-open\nobservers fail to be topologies at the endpoint, and the correct repair \u2014 allowing\na closed ray at the extreme point \u2014 yields a consensus that still equals the order\ntopology, so bounded intervals like the closed unit interval retain phantom number\ntwo.\n\nThe key insight is that the obstruction at an endpoint is purely the missing\n\"further point\" needed to form a half-open interval, and supplying the endpoint's\nown closed ray restores the squeeze without changing the consensus.\n\nWhy now? Our theorem deliberately assumed no extreme points to keep the two\nobservers total; understanding the boundary case would extend the whole framework\nfrom open chains to compact ones and to product spaces built from them.\n\n## 4. Higher-dimensional consensus and the Zariski obstruction\n\n**Conjecture.** The product of two dense endpoint-free chains has phantom number\ntwo under the product order observers, but a genuinely two-dimensional topology\nwhose closed sets are zero loci of polynomials cannot be written as the consensus\nof two observers that are each strictly finer than it, because its lattice of\nopen sets is join-irreducible in a way linear orders never are.\n\nThe key insight is that consensus is a supremum in the lattice of topologies, so a\nspace resists a small phantom representation exactly when its open-set lattice\ncannot be split into two strictly larger sublattices \u2014 a property that\ndistinguishes algebraic topologies from order topologies.\n\nWhy now? The linear case is fully understood; contrasting it with a\ntwo-dimensional algebraic topology would test whether \"reality depends on the\nobserver\" has genuine content beyond one dimension, and would locate the exact\nlattice-theoretic feature that blocks small representations.\n\n## 5. Consensus dynamics: iterating the observer map\n\n**Conjecture.** Assigning to a topology the consensus of its lower-limit and\nupper-limit observers defines an operator on the lattice of topologies over a\nfixed chain whose only fixed points are the order topology and the discrete\ntopology, and every densely ordered starting topology flows to the order topology\nin one step.\n\nThe key insight is that taking two half-open refinements and then intersecting\ntheir open sets is idempotent on order topologies, so the operator behaves like a\nprojection onto the \"consensus-stable\" topologies.\n\nWhy now? We have the one-step statement for the order topology; framing it as a\ndynamical system would reveal whether repeated measurement stabilises reality or\ncan oscillate, giving a precise sense to the slogan that observation converges to a\ncanonical topology.\n",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_0258",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "4120a115",
-    "status": "available",
-    "timestamp": "2026-07-04T07:35:11.057788+00:00",
-    "title": "That the real line's \"two-observer\" phantom representation is"
-  },
-  {
-    "consumed_by_exp_id": "22f3c392",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domains": [
       "Novelty",
@@ -3435,7 +3435,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.73,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:27.017991+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
@@ -3452,19 +3452,5 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T04:44:52.457313+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
-  },
-  {
-    "consumed_by_exp_id": "c2b51bcc",
-    "description": "Cycle 4120a115 (Q=0.521) proved 20 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_4120a115_3030b02d",
-    "priority_score": 0.5706,
-    "research_mode": "team",
-    "source_exp_id": "4120a115",
-    "status": "in_progress",
-    "timestamp": "2026-07-04T07:35:15.764806+00:00",
-    "title": "Close Proofs: Phantom Topologies: Spaces That Change When You Look at Them"
   }
 ];
