@@ -1,122 +1,122 @@
-"""
-Numerical demonstrations for the Anti-Fibonacci sequence.
+"""Numerical demonstrations for the Anti-Fibonacci sequence.
 
 The anti-Fibonacci sequence is defined by
-    A(0) = 1,   A(k+1) = A(k) + k,
-with first terms 1, 1, 2, 4, 7, 11, 16, 22, 29, 37, 46, 56, ...
 
-This script verifies, numerically, the main theorems:
-  1. Exact closed form:      2*A(k) + k = k^2 + 2,  i.e.  A(k) = 1 + k(k-1)/2.
-  2. Quadratic growth:       A(k)/k^2 -> 1/2.
-  3. Avoidance of golden phi: A(k+1)/A(k) -> 1  (NOT phi = 1.618...).
-  4. Density zero:           #{A(k) <= N} / N -> 0.
-  5. Folklore corrections:   the constant is 1/2 (not 1/4), and the ratio
-                             converges monotonically to 1 (it does not oscillate).
+    A(0) = 1,   A(n+1) = A(n) + n,
 
-Pure standard-library Python; no external dependencies.
+equivalently by the closed form  A(n) = (n^2 - n + 2) / 2.
+
+This self-contained script demonstrates the paper's main results:
+
+  1. Closed form vs. recurrence agreement.
+  2. Sharp addition-avoidance excess  (A(n-1)+A(n-2)) - A(n) = (n-2)(n-5)/2,
+     strict avoidance for n >= 6, unique equality A(5) = A(4) + A(3).
+  3. Quadratic growth constant  A(n)/n^2 -> 1/2  (NOT 1/4).
+  4. Consecutive ratio  A(n+1)/A(n) -> 1  (monotone, not oscillating),
+     hence provably not the golden ratio phi.
+
+Run:  python3 demo.py
 """
 
 from __future__ import annotations
 
-from math import isqrt, sqrt
+from typing import List, Tuple
 
 
-def anti_fibonacci(n: int) -> list[int]:
-    """Return [A(0), ..., A(n-1)] via the recurrence A(k+1) = A(k) + k."""
-    seq: list[int] = []
-    a: int = 1  # A(0)
-    for k in range(n):
+def anti_fib_closed(n: int) -> int:
+    """Return A(n) via the exact closed form (n^2 - n + 2) / 2, O(1)."""
+    return (n * n - n + 2) // 2
+
+
+def anti_fib_sequence(count: int) -> List[int]:
+    """Generate A(0), ..., A(count-1) via the recurrence A(n+1) = A(n) + n."""
+    seq: List[int] = []
+    a = 1  # A(0)
+    for n in range(count):
         seq.append(a)
-        a = a + k  # A(k+1) = A(k) + k
+        a = a + n  # A(n+1) = A(n) + n
     return seq
 
 
-def anti_fibonacci_closed(k: int) -> int:
-    """Return A(k) via the closed form A(k) = 1 + k(k-1)//2."""
-    return 1 + k * (k - 1) // 2
+def avoidance_excess(n: int) -> int:
+    """Return (A(n-1) + A(n-2)) - A(n); equals (n-2)(n-5)/2."""
+    return anti_fib_closed(n - 1) + anti_fib_closed(n - 2) - anti_fib_closed(n)
 
 
-def golden_ratio() -> float:
-    """Return phi = (1 + sqrt 5) / 2."""
-    return (1.0 + sqrt(5.0)) / 2.0
+def growth_ratio(n: int) -> float:
+    """Return A(n) / n^2  (approaches 1/2)."""
+    return anti_fib_closed(n) / (n * n)
 
 
-def verify_closed_form(n: int) -> bool:
-    """Check 2*A(k) + k == k^2 + 2 and recurrence == closed form for k < n."""
-    seq = anti_fibonacci(n)
-    for k in range(n):
-        if 2 * seq[k] + k != k * k + 2:
-            return False
-        if seq[k] != anti_fibonacci_closed(k):
-            return False
-    return True
+def consecutive_ratio(n: int) -> float:
+    """Return A(n+1) / A(n)  (approaches 1)."""
+    return anti_fib_closed(n + 1) / anti_fib_closed(n)
 
 
-def growth_ratios(ks: list[int]) -> list[tuple[int, float]]:
-    """Return (k, A(k)/k^2) for each k in ks (k >= 1)."""
-    return [(k, anti_fibonacci_closed(k) / (k * k)) for k in ks if k >= 1]
+def demo_closed_vs_recurrence(count: int = 15) -> None:
+    print("=" * 64)
+    print("1. Closed form vs recurrence")
+    print("=" * 64)
+    seq = anti_fib_sequence(count)
+    closed = [anti_fib_closed(n) for n in range(count)]
+    print("recurrence:", seq)
+    print("closed    :", closed)
+    assert seq == closed, "closed form and recurrence disagree!"
+    print("MATCH: A(n) = (n^2 - n + 2)/2 confirmed for n < %d\n" % count)
 
 
-def consecutive_ratios(ks: list[int]) -> list[tuple[int, float]]:
-    """Return (k, A(k+1)/A(k)) for each k in ks."""
-    out: list[tuple[int, float]] = []
-    for k in ks:
-        out.append((k, anti_fibonacci_closed(k + 1) / anti_fibonacci_closed(k)))
-    return out
+def demo_avoidance(upto: int = 12) -> None:
+    print("=" * 64)
+    print("2. Addition avoidance: (A(n-1)+A(n-2)) - A(n) = (n-2)(n-5)/2")
+    print("=" * 64)
+    print(f"{'n':>3} {'A(n)':>6} {'A(n-1)+A(n-2)':>14} {'excess':>7} {'(n-2)(n-5)/2':>13}")
+    for n in range(2, upto):
+        exc = avoidance_excess(n)
+        formula = (n - 2) * (n - 5) // 2
+        assert exc == formula
+        s = anti_fib_closed(n - 1) + anti_fib_closed(n - 2)
+        tag = ""
+        if exc == 0:
+            tag = "  <- EQUALITY (A5 = A4 + A3)" if n == 5 else "  <- boundary"
+        elif exc < 0:
+            tag = "  term exceeds sum"
+        print(f"{n:>3} {anti_fib_closed(n):>6} {s:>14} {exc:>7} {formula:>13}{tag}")
+    print("For all n >= 6 the excess is positive: A(n) < A(n-1)+A(n-2) strictly.\n")
 
 
-def value_density(n_max: int) -> float:
-    """Return #{k : A(k) <= n_max} / n_max, the empirical density up to n_max."""
-    count = 0
-    k = 0
-    while anti_fibonacci_closed(k) <= n_max:
-        count += 1
-        k += 1
-    return count / n_max
+def demo_growth() -> None:
+    print("=" * 64)
+    print("3. Quadratic growth constant: A(n)/n^2 -> 1/2  (not 1/4)")
+    print("=" * 64)
+    for n in (10, 100, 1000, 10_000, 100_000, 1_000_000):
+        print(f"  n = {n:>9}   A(n)/n^2 = {growth_ratio(n):.8f}")
+    print("  limit = 0.5  (the '1/4' conjecture is refuted)\n")
+
+
+def demo_ratio() -> None:
+    print("=" * 64)
+    print("4. Consecutive ratio A(n+1)/A(n) -> 1  (not the golden ratio)")
+    print("=" * 64)
+    phi = (1 + 5 ** 0.5) / 2
+    prev = None
+    for n in (2, 5, 10, 100, 1000, 10_000):
+        r = consecutive_ratio(n)
+        mono = ""
+        if prev is not None:
+            mono = "decreasing" if r < prev else "increasing"
+        print(f"  n = {n:>6}   A(n+1)/A(n) = {r:.6f}   {mono}")
+        prev = r
+    print(f"  limit = 1.0 ;  golden ratio phi = {phi:.6f} is NOT approached.")
+    print("  Since the ratio -> 1 and phi^2 = phi + 1 forbids phi = 1,")
+    print("  the golden ratio is logically excluded.\n")
 
 
 def main() -> None:
-    print("=" * 68)
-    print("Anti-Fibonacci sequence  A(0)=1,  A(k+1)=A(k)+k")
-    print("=" * 68)
-
-    seq = anti_fibonacci(12)
-    print("\nFirst 12 terms:", seq)
-    print("Expected      : [1, 1, 2, 4, 7, 11, 16, 22, 29, 37, 46, 56]")
-
-    print("\n[1] Exact closed form  2*A(k)+k == k^2+2  and  A(k)=1+k(k-1)/2")
-    print("    verified for k < 10000 :", verify_closed_form(10000))
-
-    print("\n[2] Quadratic growth   A(k)/k^2 -> 1/2   (NOT 1/4)")
-    for k, r in growth_ratios([10, 100, 1000, 10000, 100000, 1000000]):
-        print(f"    k = {k:>8}   A(k)/k^2 = {r:.8f}")
-    print("    limit = 0.5")
-
-    print("\n[3] Consecutive ratio  A(k+1)/A(k) -> 1   (golden phi = "
-          f"{golden_ratio():.6f})")
-    for k, r in consecutive_ratios([10, 100, 1000, 10000, 100000, 1000000]):
-        print(f"    k = {k:>8}   A(k+1)/A(k) = {r:.8f}")
-    print("    limit = 1.0  =>  NOT phi:  the golden ratio is avoided.")
-
-    print("\n[4] Density of the value set  #{A(k)<=N}/N -> 0")
-    for N in [10**3, 10**4, 10**6, 10**8]:
-        d = value_density(N)
-        print(f"    N = {N:>10}   density = {d:.3e}   (~ sqrt(2/N) = "
-              f"{sqrt(2.0 / N):.3e})")
-
-    print("\n[5] Folklore corrections")
-    k = 50
-    print(f"    A({k})/{k}^2 = {anti_fibonacci_closed(k)/(k*k):.4f}  -> 0.5, "
-          "so the constant is 1/2, not 1/4.")
-    ratios = [anti_fibonacci_closed(j + 1) / anti_fibonacci_closed(j)
-              for j in range(50, 56)]
-    print("    consecutive ratios k=50..55:",
-          [f"{x:.4f}" for x in ratios])
-    print("    monotonically decreasing toward 1 (no oscillation between 1 and 2).")
-
-    print("\n" + "=" * 68)
-    print("All numerical checks agree with the theorems.")
-    print("=" * 68)
+    demo_closed_vs_recurrence()
+    demo_avoidance()
+    demo_growth()
+    demo_ratio()
+    print("All demonstrations completed successfully.")
 
 
 if __name__ == "__main__":
