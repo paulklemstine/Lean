@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "417ceff0",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Schubert smoothness, Bruhat rank, and Plücker regularity\n\nDerived from this cycle's findings (`SchubertSmoothPatterns.lean`,\n`SchubertLengthChain.lean`, `ComputationalEvidence.md",
-      "quality_score": 0.49606231111111115,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-06-27T23:51:43",
-      "title": "Falsifiability of Multigraded Regularity Conjecture for Schubert Varieties via Plücker Embedding"
-    },
-    {
       "cycle_id": "ba81674a",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Brualdi–Quinn–Massey strong chromatic index\n\nThese conjectures are derived from this cycle's findings: (i) the conflict-graph\nformulation of `χ'_s`, (ii) the universal star-cliqu",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-07-04T07:33:59",
       "title": "Lower Bound for the Proportion of Zeros on the Critical Line for PGL(3) L-functions"
+    },
+    {
+      "cycle_id": "4120a115",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Phantom Topologies over Ordered Observers\n\nThis cycle proved that the real line's \"two-observer\" phantom representation is a\nspecial case of a purely order-theoretic phenomenon:",
+      "quality_score": 0.5206,
+      "sorry_count": 3,
+      "theorem_count": 20,
+      "timestamp": "2026-07-04T07:35:15",
+      "title": "Phantom Topologies: Spaces That Change When You Look at Them"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.71008
     }
   ],
-  "last_updated": "2026-07-04T07:33:59",
+  "last_updated": "2026-07-04T07:35:15",
   "open_questions": [
-    {
-      "context": "and is genuinely proved (no `sorry`, no `decide`-only). The false converse is",
-      "cycle_id": "0f17133d",
-      "domain": "Bridges",
-      "sorry_count": 1,
-      "timestamp": "2026-06-26T07:57:04"
-    },
     {
       "context": "and the colour pigeonhole.  Both are fully provable in Lean with no `sorry`.; `afl_constant_gap` — all `sorry`-free.",
       "cycle_id": "f014f8e3",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 1,
       "timestamp": "2026-07-03T20:14:15"
+    },
+    {
+      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
+      "cycle_id": "4120a115",
+      "domain": "Novelty",
+      "sorry_count": 3,
+      "timestamp": "2026-07-04T07:35:15"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "f498d6bb",
-        "quality": 0.6591141074626865,
-        "theorems": 8,
-        "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-      },
-      {
         "cycle_id": "3fe1db8c",
         "quality": 0.8246161538461538,
         "theorems": 13,
@@ -3637,6 +3631,12 @@
         "quality": 0.4546,
         "theorems": 7,
         "title": "The list chromatic number of 3-colorable planar graphs is at most 4"
+      },
+      {
+        "cycle_id": "4120a115",
+        "quality": 0.5206,
+        "theorems": 20,
+        "title": "Phantom Topologies: Spaces That Change When You Look at Them"
       }
     ],
     "NumberTheory": [
