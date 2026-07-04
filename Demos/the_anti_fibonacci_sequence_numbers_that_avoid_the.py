@@ -1,122 +1,143 @@
-"""Numerical demonstrations for the Anti-Fibonacci sequence.
+"""
+Numerical demonstrations for the Anti-Fibonacci sequence.
 
 The anti-Fibonacci sequence is defined by
-
     A(0) = 1,   A(n+1) = A(n) + n,
+producing 1, 1, 2, 4, 7, 11, 16, 22, 29, 37, 46, ...
 
-equivalently by the closed form  A(n) = (n^2 - n + 2) / 2.
+This script verifies, purely numerically, the exact results proved in the
+accompanying paper:
 
-This self-contained script demonstrates the paper's main results:
+  * closed form            A(n) = 1 + n(n-1)/2
+  * quadratic density      A(n) / n^2  -> 1/2
+  * neighbor ratio         A(n+1)/A(n) -> 1   (never the golden ratio ~1.618)
+  * cubic partial sums     6 * sum_{k<=n} A(k) = n^3 + 5n + 6
+  * cubic Cesaro density   (sum_{k<=n} A(k)) / n^3 -> 1/6
+  * square spectrum        m in range(A)  iff  8m - 7 is a perfect square
+  * density zero           #{m < M : m in range(A)} ~ sqrt(2M)
 
-  1. Closed form vs. recurrence agreement.
-  2. Sharp addition-avoidance excess  (A(n-1)+A(n-2)) - A(n) = (n-2)(n-5)/2,
-     strict avoidance for n >= 6, unique equality A(5) = A(4) + A(3).
-  3. Quadratic growth constant  A(n)/n^2 -> 1/2  (NOT 1/4).
-  4. Consecutive ratio  A(n+1)/A(n) -> 1  (monotone, not oscillating),
-     hence provably not the golden ratio phi.
-
-Run:  python3 demo.py
+Self-contained: standard library only.
 """
 
 from __future__ import annotations
 
-from typing import List, Tuple
+from math import isqrt, sqrt
 
 
-def anti_fib_closed(n: int) -> int:
-    """Return A(n) via the exact closed form (n^2 - n + 2) / 2, O(1)."""
-    return (n * n - n + 2) // 2
-
-
-def anti_fib_sequence(count: int) -> List[int]:
-    """Generate A(0), ..., A(count-1) via the recurrence A(n+1) = A(n) + n."""
-    seq: List[int] = []
-    a = 1  # A(0)
-    for n in range(count):
-        seq.append(a)
-        a = a + n  # A(n+1) = A(n) + n
+# --------------------------------------------------------------------------
+# Core generators and closed forms
+# --------------------------------------------------------------------------
+def anti_fib_iter(n_max: int) -> list[int]:
+    """Return [A(0), ..., A(n_max)] via the recurrence A(n+1) = A(n) + n."""
+    seq: list[int] = [1]
+    for n in range(n_max):
+        seq.append(seq[-1] + n)
     return seq
 
 
-def avoidance_excess(n: int) -> int:
-    """Return (A(n-1) + A(n-2)) - A(n); equals (n-2)(n-5)/2."""
-    return anti_fib_closed(n - 1) + anti_fib_closed(n - 2) - anti_fib_closed(n)
+def anti_fib_closed(n: int) -> int:
+    """Closed form A(n) = 1 + n(n-1)/2 in O(1)."""
+    return 1 + n * (n - 1) // 2
 
 
-def growth_ratio(n: int) -> float:
-    """Return A(n) / n^2  (approaches 1/2)."""
-    return anti_fib_closed(n) / (n * n)
+def anti_fib_partial_sum_closed(n: int) -> int:
+    """Closed form for sum_{k=0}^{n} A(k) = (n^3 + 5n + 6)/6 in O(1)."""
+    return (n ** 3 + 5 * n + 6) // 6
 
 
-def consecutive_ratio(n: int) -> float:
-    """Return A(n+1) / A(n)  (approaches 1)."""
-    return anti_fib_closed(n + 1) / anti_fib_closed(n)
+def is_anti_fib(m: int) -> bool:
+    """Membership test: m in range(A) iff 8m - 7 is a perfect square."""
+    if m < 1:
+        return False
+    s = 8 * m - 7
+    r = isqrt(s)
+    return r * r == s
 
 
-def demo_closed_vs_recurrence(count: int = 15) -> None:
-    print("=" * 64)
-    print("1. Closed form vs recurrence")
-    print("=" * 64)
-    seq = anti_fib_sequence(count)
-    closed = [anti_fib_closed(n) for n in range(count)]
-    print("recurrence:", seq)
-    print("closed    :", closed)
-    assert seq == closed, "closed form and recurrence disagree!"
-    print("MATCH: A(n) = (n^2 - n + 2)/2 confirmed for n < %d\n" % count)
+# --------------------------------------------------------------------------
+# Demonstrations
+# --------------------------------------------------------------------------
+def demo_closed_form(n_max: int = 20) -> None:
+    print("=== Closed form  A(n) = 1 + n(n-1)/2 ===")
+    seq = anti_fib_iter(n_max)
+    ok = all(seq[n] == anti_fib_closed(n) for n in range(n_max + 1))
+    print(f"first terms: {seq[:11]}")
+    print(f"recurrence matches closed form up to n={n_max}: {ok}")
+    print()
 
 
-def demo_avoidance(upto: int = 12) -> None:
-    print("=" * 64)
-    print("2. Addition avoidance: (A(n-1)+A(n-2)) - A(n) = (n-2)(n-5)/2")
-    print("=" * 64)
-    print(f"{'n':>3} {'A(n)':>6} {'A(n-1)+A(n-2)':>14} {'excess':>7} {'(n-2)(n-5)/2':>13}")
-    for n in range(2, upto):
-        exc = avoidance_excess(n)
-        formula = (n - 2) * (n - 5) // 2
-        assert exc == formula
-        s = anti_fib_closed(n - 1) + anti_fib_closed(n - 2)
-        tag = ""
-        if exc == 0:
-            tag = "  <- EQUALITY (A5 = A4 + A3)" if n == 5 else "  <- boundary"
-        elif exc < 0:
-            tag = "  term exceeds sum"
-        print(f"{n:>3} {anti_fib_closed(n):>6} {s:>14} {exc:>7} {formula:>13}{tag}")
-    print("For all n >= 6 the excess is positive: A(n) < A(n-1)+A(n-2) strictly.\n")
+def demo_quadratic_density(n_max: int = 1_000_000) -> None:
+    print("=== Quadratic density  A(n)/n^2 -> 1/2 ===")
+    for n in [10, 100, 1000, 10_000, 100_000, n_max]:
+        val = anti_fib_closed(n) / n ** 2
+        print(f"  n = {n:>9}:  A(n)/n^2 = {val:.8f}")
+    print(f"  target                = {0.5:.8f}")
+    print()
 
 
-def demo_growth() -> None:
-    print("=" * 64)
-    print("3. Quadratic growth constant: A(n)/n^2 -> 1/2  (not 1/4)")
-    print("=" * 64)
-    for n in (10, 100, 1000, 10_000, 100_000, 1_000_000):
-        print(f"  n = {n:>9}   A(n)/n^2 = {growth_ratio(n):.8f}")
-    print("  limit = 0.5  (the '1/4' conjecture is refuted)\n")
+def demo_neighbor_ratio(n_max: int = 1_000_000) -> None:
+    print("=== Neighbor ratio  A(n+1)/A(n) -> 1  (not the golden ratio) ===")
+    golden = (1 + sqrt(5)) / 2
+    for n in [1, 2, 3, 5, 10, 100, 10_000, n_max]:
+        ratio = anti_fib_closed(n + 1) / anti_fib_closed(n)
+        print(f"  n = {n:>9}:  A(n+1)/A(n) = {ratio:.6f}")
+    print(f"  limit = 1.000000   (golden ratio = {golden:.6f}, never reached)")
+    print()
 
 
-def demo_ratio() -> None:
-    print("=" * 64)
-    print("4. Consecutive ratio A(n+1)/A(n) -> 1  (not the golden ratio)")
-    print("=" * 64)
-    phi = (1 + 5 ** 0.5) / 2
-    prev = None
-    for n in (2, 5, 10, 100, 1000, 10_000):
-        r = consecutive_ratio(n)
-        mono = ""
-        if prev is not None:
-            mono = "decreasing" if r < prev else "increasing"
-        print(f"  n = {n:>6}   A(n+1)/A(n) = {r:.6f}   {mono}")
-        prev = r
-    print(f"  limit = 1.0 ;  golden ratio phi = {phi:.6f} is NOT approached.")
-    print("  Since the ratio -> 1 and phi^2 = phi + 1 forbids phi = 1,")
-    print("  the golden ratio is logically excluded.\n")
+def demo_cubic_partial_sums(n_max: int = 12) -> None:
+    print("=== Cubic partial sums  6*sum_{k<=n} A(k) = n^3 + 5n + 6 ===")
+    seq = anti_fib_iter(n_max)
+    running = 0
+    ok = True
+    for n in range(n_max + 1):
+        running += seq[n]
+        lhs = 6 * running
+        rhs = n ** 3 + 5 * n + 6
+        ok = ok and (lhs == rhs)
+        if n < 8:
+            print(f"  n = {n}:  6*sum = {lhs:>4}   n^3+5n+6 = {rhs:>4}")
+    print(f"identity holds up to n={n_max}: {ok}")
+    print()
+
+
+def demo_cesaro_density(n_max: int = 1_000_000) -> None:
+    print("=== Cubic Cesaro density  (sum_{k<=n} A(k))/n^3 -> 1/6 ===")
+    for n in [10, 100, 1000, 100_000, n_max]:
+        val = anti_fib_partial_sum_closed(n) / n ** 3
+        print(f"  n = {n:>9}:  sum/n^3 = {val:.8f}")
+    print(f"  target                = {1/6:.8f}")
+    print()
+
+
+def demo_square_spectrum(m_max: int = 60) -> None:
+    print("=== Square spectrum  m in range(A) iff 8m-7 is a perfect square ===")
+    seq = set(anti_fib_iter(200))  # plenty of terms to cover m_max
+    members = [m for m in range(1, m_max + 1) if is_anti_fib(m)]
+    truth = [m for m in range(1, m_max + 1) if m in seq]
+    print(f"  via 8m-7 test : {members}")
+    print(f"  via generation: {truth}")
+    print(f"  agree: {members == truth}")
+    print()
+
+
+def demo_density_zero(m_max: int = 1_000_000) -> None:
+    print("=== Density zero  #{m < M : m in range(A)} ~ sqrt(2M) ===")
+    for M in [100, 10_000, 1_000_000, m_max]:
+        count = sum(1 for m in range(1, M) if is_anti_fib(m))
+        print(f"  M = {M:>9}:  count = {count:>5}   sqrt(2M) = {sqrt(2*M):8.2f}   "
+              f"density = {count / M:.2e}")
+    print()
 
 
 def main() -> None:
-    demo_closed_vs_recurrence()
-    demo_avoidance()
-    demo_growth()
-    demo_ratio()
-    print("All demonstrations completed successfully.")
+    demo_closed_form()
+    demo_quadratic_density()
+    demo_neighbor_ratio()
+    demo_cubic_partial_sums()
+    demo_cesaro_density()
+    demo_square_spectrum()
+    demo_density_zero(m_max=1_000_000)
 
 
 if __name__ == "__main__":
