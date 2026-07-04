@@ -1676,7 +1676,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "aed51c81",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -1707,7 +1707,7 @@
       "source": "",
       "source_exp_id": "2606.31223v1",
       "source_path": "http://arxiv.org/abs/2606.31223v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-02T16:13:17.108600+00:00",
       "title": "No solutions for odd exponents in the coprime case"
@@ -4739,7 +4739,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Carter et al. 2023",
         "Optimization Constants repository",
@@ -4747,7 +4747,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "a1e3ce3a",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -4763,7 +4763,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0101",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-04T02:34:11.546446+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "lemma multi_kernel_smoothing (N: ℕ) (kernels: list (ℤ → ℂⁿ)) (weights: ℝⁿ⁺¹) : F(N) ≤ √N + γ₀ √[N] + O(1) where γ₀ = 0.94601 and ∥∑ w_i ⊗ K_i ∥₂ ≤ 1",
       "lineage_refs": [],
@@ -4778,7 +4778,7 @@
       "source": "",
       "source_exp_id": "2607.01169v1",
       "source_path": "http://arxiv.org/abs/2607.01169v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-02T23:15:13.575664+00:00",
       "title": "Multi-kernel smoothing lemma for Sidon sets"
@@ -5324,7 +5324,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "ca29fc4b",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -5352,7 +5352,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T00:49:26.963635+00:00",
       "title": "Phantom Topologies: Spaces That Change When You Look at Them"
@@ -5365,7 +5365,7 @@
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "e87997bd",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -5393,7 +5393,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T00:49:27.007324+00:00",
       "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
@@ -5406,7 +5406,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "51cf87c3",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -5434,7 +5434,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T00:49:27.017991+00:00",
       "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
@@ -5475,7 +5475,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "completed",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T00:49:27.030210+00:00",
       "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
@@ -11409,6 +11409,7 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "famous_subtask"
+    "famous_subtask",
+    "cross_domain_bridge"
   ]
 }
