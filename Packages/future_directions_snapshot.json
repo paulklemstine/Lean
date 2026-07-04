@@ -3276,7 +3276,7 @@
       "Cotner-Springer example on non-smooth centralizers in $\\mathrm{PGL}_2$",
       "Universal covers and fundamental groups in algebraic groups"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "244691c2",
     "description": "Let $k$ be an algebraically closed field of characteristic $p > 0$, let $G$ be a reductive algebraic group over $k$ with universal cover $\\pi\\colon G' \\to G$. For any regular unipotent element $u \\in G(k)$, the scheme-theoretic stabilizer $\\Stab_{Z(G')}(C_{u'})$, where $u' \\in G'(k)$ is a preimage of $u$ under $\\pi$, is equal to $\\ker \\pi$. This generalizes Steinberg's description of stabilizers for semisimple elements to regular unipotent elements, explaining the failure of smoothness in non-étale cases.",
     "domain_bridges": [
       "Central isogenies and their kernels",
@@ -3292,7 +3292,7 @@
     "proof_strategy": "Generalize the proof techniques from Steinberg's work on semisimple elements to regular unipotent elements, utilizing the fiber product structure of conjugacy classes under central isogenies and analyzing the failure of smoothness via the faithful flatness of the induced map on component groups.",
     "research_mode": "team",
     "source_exp_id": "2607.00088v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T15:18:04.081728+00:00",
     "title": "Scheme-theoretic stabilizer of regular unipotent conjugacy classes under the center of the simply connected cover"
   },

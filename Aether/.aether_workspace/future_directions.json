@@ -7107,7 +7107,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Steinberg's description of $\\pi_0(Z_{G'}(g))$ for semisimple $g$",
         "Cotner-Springer example on non-smooth centralizers in $\\mathrm{PGL}_2$",
@@ -7115,7 +7115,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "244691c2",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -7131,7 +7131,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0151",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-04T12:00:11.237888+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem stabilizer_regular_unipotent (G' G : AlgebraicGroup k) (π : G' → G) [universal_cover π] (u : UnipotentElement G) [regular_unipotent u] (u' : π⁻¹ u) : Stab (center G') (conjugacy_class u') = ker π",
       "lineage_refs": [],
@@ -7146,7 +7146,7 @@
       "source": "",
       "source_exp_id": "2607.00088v1",
       "source_path": "http://arxiv.org/abs/2607.00088v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T15:18:04.081728+00:00",
       "title": "Scheme-theoretic stabilizer of regular unipotent conjugacy classes under the center of the simply connected cover"
@@ -13178,6 +13178,7 @@
   "recent_domain_counts": {},
   "recent_theme_keywords": {},
   "selection_log": [
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
