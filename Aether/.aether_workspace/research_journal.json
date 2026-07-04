@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c8e22e5a",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — EML Differential Equations (Riccati Galois Cycle)\n\nDerived from this cycle's findings:\n* `EMLRiccatiMobius.lean` — the Riccati Galois group is `⊆ PGL₂(constants)`; the\n  cross-ra",
-      "quality_score": 0.8043199999999999,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-06-28T09:38:33",
-      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
-    },
-    {
       "cycle_id": "8d0e7e8c",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Excluded minors for Z_n-gainable biased graphs\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle. The formalised\nresults (`ZnGain.lean`, `ZnGainSharp.lean`) s",
@@ -499,19 +489,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-04T15:19:42",
       "title": "Sufficiency of obvious necessary conditions for the generalized honeymoon Oberwolfach problem with m"
+    },
+    {
+      "cycle_id": "bb909d34",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Anabelomorphic Equivalence\n\nFive falsifiable conjectures derived from this cycle's findings, which established that the tame\n(GL(1) residue) layer of a local field is completely",
+      "quality_score": 0.8344800000000001,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-04T18:07:51",
+      "title": "Anabelomorphic Equivalence"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4554c3a3",
-      "domain": "Applications",
-      "key_insight": "",
-      "quality_score": 0.630526,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-28T05:27:57",
-      "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
-    },
     {
       "cycle_id": "9ee5d694",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 6,
       "timestamp": "2026-07-04T16:18:38",
       "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
+    },
+    {
+      "cycle_id": "bb909d34",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Anabelomorphic Equivalence\n\nFive falsifiable conjectures derived from this cycle's findings, which established that the tame\n(GL(1) residue) layer of a local field is completely",
+      "quality_score": 0.8344800000000001,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-04T18:07:51",
+      "title": "Anabelomorphic Equivalence"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "8b6fc6d0",
-      "domain": "Pythagorean",
-      "name": "parametrization_is_triple",
-      "quality": 0.7859200000000002
-    },
-    {
-      "cycle_id": "8b7f43f1",
-      "domain": "Novelty",
-      "name": "must",
-      "quality": 0.7303200000000001
-    },
-    {
-      "cycle_id": "4b429121",
-      "domain": "Probability",
-      "name": "piFinset_card_eq_prod",
-      "quality": 0.7118800000000001
-    },
     {
       "cycle_id": "4b429121",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "m_ne_zero_zmod",
       "quality": 0.79104
+    },
+    {
+      "cycle_id": "bb909d34",
+      "domain": "Applications",
+      "name": "card_residueUnits",
+      "quality": 0.8344800000000001
+    },
+    {
+      "cycle_id": "bb909d34",
+      "domain": "Applications",
+      "name": "AnabelEquiv",
+      "quality": 0.8344800000000001
+    },
+    {
+      "cycle_id": "bb909d34",
+      "domain": "Applications",
+      "name": "AnabelEquiv",
+      "quality": 0.8344800000000001
     }
   ],
-  "last_updated": "2026-07-04T16:18:38",
+  "last_updated": "2026-07-04T18:07:51",
   "open_questions": [
     {
       "context": "and the colour pigeonhole.  Both are fully provable in Lean with no `sorry`.; `afl_constant_gap` — all `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "fbcfb71f",
-        "quality": 0.75424,
-        "theorems": 10,
-        "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-      },
-      {
         "cycle_id": "865247f5",
         "quality": 0.35455610000000004,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.69479,
         "theorems": 6,
         "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
+      },
+      {
+        "cycle_id": "bb909d34",
+        "quality": 0.8344800000000001,
+        "theorems": 10,
+        "title": "Anabelomorphic Equivalence"
       }
     ],
     "Bridges": [
