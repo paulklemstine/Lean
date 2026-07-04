@@ -5324,7 +5324,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "15dc7e95",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -5352,7 +5352,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T00:49:26.963635+00:00",
       "title": "Phantom Topologies: Spaces That Change When You Look at Them"
@@ -5583,7 +5583,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "191dce32",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -5613,7 +5613,7 @@
       "source": "",
       "source_exp_id": "2607.01178v1",
       "source_path": "http://arxiv.org/abs/2607.01178v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T01:14:32.581766+00:00",
       "title": "Sheared Witt vectors commute with filtered colimits of nilperfect rings"
@@ -8824,14 +8824,14 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Fargues and Scholze 2024",
         "Joshi 2020a"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "bb909d34",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -8844,7 +8844,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0187",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-04T15:53:40.895905+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Absolute Galois group equivalence",
       "lineage_refs": [],
@@ -8859,7 +8859,7 @@
       "source": "",
       "source_exp_id": "2606.29478v1",
       "source_path": "http://arxiv.org/abs/2606.29478v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-04T06:47:02.579564+00:00",
       "title": "Anabelomorphic Equivalence"
@@ -10311,7 +10311,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "59faa9bb",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -10344,7 +10344,7 @@
       "source": "",
       "source_exp_id": "2607.01716v1",
       "source_path": "http://arxiv.org/abs/2607.01716v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T07:08:28.593276+00:00",
       "title": "Equality case of the weighted dual Fisher inequality for taiko product structures"
@@ -12698,7 +12698,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "c500d57b",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -12731,7 +12731,7 @@
       "source": "",
       "source_exp_id": "2606.29558v1",
       "source_path": "http://arxiv.org/abs/2606.29558v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-04T05:23:42.180643+00:00",
       "title": "Conjecture on the sl2-multiplicity decomposition of the graph algebra"
@@ -13848,6 +13848,7 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "famous_subtask"
+    "famous_subtask",
+    "cross_domain_bridge"
   ]
 }
