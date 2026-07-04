@@ -3,26 +3,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable — theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements — most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark — they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0245",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "Define a dark theorem of level k as a Pi_2 statement 'for all n, there exist at least k values of m such that P(n,m)' such that PA proves the existential claim but PA does not prove P(n,m) for any specific m. Level 1: Paris-Harrington theorem (the strengthened finite Ramsey theorem). Level 2: the Paris-Harrington theorem for the statement 'there exist at least 2 values of m satisfying the Ramsey property'. Prove strictness: if T is level k+1, then T implies a level-k statement that is independent of PA. Prove density: among all Pi_2 statements provable in ZFC, the fraction that are dark approaches 1 as statement length grows. Test: formalize levels 1-3 in Lean 4 using the Paris-Harrington and Goodstein sequences.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-04T05:01:41.360841+00:00",
-    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domain_bridges": [],
     "domains": [
@@ -37,25 +17,6 @@
     "status": "available",
     "timestamp": "2026-07-02T05:18:37.114832+00:00",
     "title": "Deepening: unnamed_concept"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 3498198a (Q=0.782), which proved 13 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible — how can an infinite ascending chain loop back to the beginning? But in the ring ",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_3498198a_0afd2296",
-    "lineage_refs": [],
-    "priority_score": 0.8818800000000001,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "3498198a",
-    "status": "available",
-    "timestamp": "2026-07-04T05:06:11.952020+00:00",
-    "title": "Deepening: Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
   },
   {
     "ambition_level": "extension",
@@ -1880,6 +1841,33 @@
     "title": "Existence of a D_18 tuple with size 6 outside the exceptional case"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Granville–Soundararajan, \"Large character sums\", 2005",
+      "Montgomery–Vaughan, \"Multiplicative Number Theory\", 1974",
+      "Szab´o, \"Lower bounds for character sum moments\", 2015"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any prime r, any real x with 1 ≤ x ≤ r^{0.49}, and any real q in [0,1], the average over all Dirichlet characters modulo r of the 2q‑th power of the absolute value of the short character sum satisfies (1/(r−1))∑_χ |∑_{n≤x} χ(n)|^{2q} ≥ (1/2) x^{q}.",
+    "domain_bridges": [
+      "Random multiplicative functions",
+      "Analytic number theory",
+      "Probabilistic models in number theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0092",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the large sieve inequality and Cauchy–Schwarz to relate the character sum average to its second moment, then combine with the known upper bound x^q to deduce a matching lower bound; the constant 1/2 follows from averaging over the full character group and applying orthogonality.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01184v1",
+    "status": "available",
+    "timestamp": "2026-07-02T21:39:43.438987+00:00",
+    "title": "Conjecture on sharp lower bounds for low moments of Dirichlet character sums"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "dermenjian 2024, arxiv:2305.06365"
@@ -3260,7 +3248,7 @@
     "catalog_references": [
       "math.NT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0a7c4b5a",
     "description": "Formulate a statement asserting that for a self-dual cuspidal automorphic representation $\\Pi_0$ of $\\text{PGL}_3(\\mathbb{A}_{\\mathbb{Q}})$, the proportion of zeros of the twisted $L$-function $L(s, \\Pi_0 \\times \\chi)$ lying on the critical line $\\text{Re}(s) = 1/2$ is at least $1/9$ as the conductor $Q$ of the Dirichlet character $\\chi$ tends to infinity.",
     "domain_bridges": [
       "Automorphic Representations",
@@ -3277,7 +3265,7 @@
     "proof_strategy": "The proof requires formalizing the theory of automorphic $L$-functions for $\\text{GL}_3$, the Dirichlet-series-based mollification method, and Levinson's method for zero-detection. One would need to define the density of zeros using the argument principle and show that the mollified mean value of the $L$-function derivative satisfies specific asymptotic inequalities that force zeros onto the line $\\sigma = 1/2$.",
     "research_mode": "team",
     "source_exp_id": "2607.00282v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T14:51:08.118719+00:00",
     "title": "Lower Bound for the Proportion of Zeros on the Critical Line for PGL(3) L-functions"
   },
@@ -4143,6 +4131,30 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "Sivaraman2020"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for all sufficiently large s, the maximum chromatic number F(s) over graphs G with ω(G) ≤ s and girth(̅G) ≥ 6 satisfies F(s) = Θ(s^{3/2} / log s). In particular, there exist positive constants c₁, c₂ such that for all s ≥ 2, c₁·s^{3/2}/log s ≤ F(s) ≤ c₂·s^{3/2}/log s.",
+    "domain_bridges": [
+      "extremal_graph_theory",
+      "combinatorial_optimization"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0183",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "asymptotic_analysis",
+    "research_mode": "team",
+    "source_exp_id": "2606.29873v1",
+    "status": "available",
+    "timestamp": "2026-07-04T05:23:25.775044+00:00",
+    "title": "Conjecture on the asymptotic growth of the chi‑bounding function F(s) for graphs whose complement has girth at least 6"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "SDtwists",
       "KMR13",
       "KMR14",
@@ -4160,7 +4172,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0183",
+    "id": "fd_0184",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a probabilistic model inspired by the fan structure and apply ergodic arguments under mild GT conditions.",
@@ -4185,7 +4197,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0184",
+    "id": "fd_0185",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on k combined with parity arguments analogous to Meshulam's lemma",
@@ -4216,7 +4228,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0185",
+    "id": "fd_0186",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the combinatorial interpretation via (p,q)-deformed s-rook placements on staircase boards to construct an explicit bijection between rook placements and the terms in the (p,q)-binomial expansion, showing that each rook placement contributes positively.",
@@ -4242,7 +4254,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0186",
+    "id": "fd_0187",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define the property of being a Sidon set in Lean 4. 2. Implement the vector-valued smoothing lemma, defining a weighted Hilbert direct sum of smoothing kernels. 3. Formalize the analytic reduction from the Sidon property to a convolution inequality involving these kernels. 4. Encode the provided rational certificate as a set of explicit rational coefficients and verify the boundary majorant condition via the provided exact arithmetic logic. 5. Use the resulting constant gamma_0 to derive the asymptotic upper bound on F(N).",
@@ -4271,7 +4283,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0187",
+    "id": "fd_0188",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Approach by contradiction assuming no such subgraph exists. Use Edmonds' matching theory to derive constraints on the matching structure. Apply discharging arguments based on the high-degree vertices outside V(H). Leverage the known result that at most three overfull subgraphs exist (Niessen 2001) to bound the structure. Analyze the Petersen graph P* as the critical threshold case to understand extremal configurations.",
@@ -4298,7 +4310,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0188",
+    "id": "fd_0189",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit cyclic code of length n=(q^m+1)/2 whose generator polynomial is the minimal polynomial of a primitive element of 𝔽_{q^m} of order q^m+1 divided by (x−1). Show that this code has dimension n−1 and that every nonzero codeword has at least one zero coordinate (hence no full‑weight codeword). Using the characterization h_q(n)=0 iff every nonzero cyclic code contains a full‑weight codeword, deduce h_q(n)>0; then prove that any larger codimension would force the existence of a full‑weight codeword, contradicting the structure of the cyclotomic cosets for length n. This establishes h_q(n)=1. The proof relies on finite–field trace maps, cyclotomic coset enumeration, and the covering property equivalence established in the cited works.",
@@ -4326,7 +4338,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0189",
+    "id": "fd_0190",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage known results on the convergence of extremal statistics of Gaussian log‑correlated processes to the Gumbel distribution, combine them with a rigorous saddle‑point analysis of the CFT partition function to identify the appropriate scaling of μ_c and σ_c, and verify the required tightness and moment conditions for the limit theorem.",
@@ -4352,7 +4364,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0190",
+    "id": "fd_0191",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a minimal counterexamples based on combinatorial bounds on exchange numbers and flip counts.",
@@ -4379,7 +4391,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0191",
+    "id": "fd_0192",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Assume a counterexample W violating regularity; use tensor amplification (degree‑biased or Perron‑biased) to derive a contradiction with the Sidorenko inequality or with known regularity constraints, thereby proving the conjecture.",
@@ -4405,7 +4417,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0192",
+    "id": "fd_0193",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove the equivalence by constructing an explicit finite subcover from a minimal sequence and using the universal property of the direct sum to relate induced homomorphisms to sums of ψ_i.",
@@ -4430,7 +4442,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0193",
+    "id": "fd_0194",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the fact that for arrangements with only double and triple points the Jacobian ideal is generated by the partial derivatives of a defining polynomial that is known to be quasi-homogeneous with respect to certain weights. Apply Saito's criterion for freeness and the relation between the exponents of the arrangement and the degrees of minimal syzygies. Show that under the hypothesis mdr < d/2 the arrangement is plus-one generated, which forces the Jacobian syzygy module to have a predictable graded structure determined solely by the intersection lattice. Verify the claim by computing the relevant graded Betti numbers via Gröbner basis techniques in the polynomial ring S = C[x,y,z].",
@@ -4457,7 +4469,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0194",
+    "id": "fd_0195",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage planar graph separators and the four-color theorem to construct geodesic partitions with bounded treewidth, combined with the paper's algorithmic framework for geodesic treewidth in restricted graph classes",
@@ -4487,7 +4499,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0195",
+    "id": "fd_0196",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "We would formalize the definition of an oriented product structure, its girth functions, the no‑fold condition, and the weighted dual Fisher inequality in Lean. Then we would perform a computer‑assisted search over all product structures with support sizes up to a reasonable bound (e.g. \\(m,n\\le 10\\)). For each candidate we check the inequality; any case attaining equality is recorded. Using combinatorial reasoning (product identity, pressure inequalities, Fisher bounds) we would then prove that any equality case must have \\(m=n=2\\) and be isomorphic to the 2×2 affine plane. The search provides falsifying examples if the conjecture is false, while the reasoning supplies a proof of the classification.",
@@ -4515,7 +4527,7 @@
       "Logic",
       "Physics"
     ],
-    "id": "fd_0196",
+    "id": "fd_0197",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish that all long cycles are blocked by a specific edge, then use a cycle-pairing strategy from poset theory to construct a nontrivial cycle, augmented by a probabilistic counting argument to ensure the existence of a sufficiently long alternative cycle.",
@@ -4541,7 +4553,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0197",
+    "id": "fd_0198",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Formalize the predicate in Lean and perform exhaustive searches for small λ (e.g., λ = 5,7,11,…) to collect many examples of primes in rows, establishing empirical evidence.\n\n2. Use known results on primes in exponential sequences (e.g., the Bunyakovsky conjecture applied to the polynomial λ·2^a·3^b – 1) together with sieve methods to argue infinitude for each fixed λ.\n\n3. Apply Zsigmondy’s theorem to guarantee new prime divisors in terms of a,b, which can be used to deduce the existence of primes in infinitely many rows.\n\n4. Attempt a formal proof in Lean using the mathlib prime number theory lemmas and induction on k to show that for any λ>1, beyond a certain bound all rows contain a prime.",
@@ -4566,7 +4578,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0198",
+    "id": "fd_0199",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Investigate the relationship between the moment tensors of antipodal sets. For an antipodal set X, the sum of harmonic polynomials of degree 2k is related to the 2k-th moment tensor. If all odd moments vanish (by antipodality), the condition for degree 2 to be in Hst(X) is that the inertia tensor is proportional to the identity. If degree 2 is not in Hst(X), the inertia tensor has distinct eigenvalues. Use representation theory of O(d+1) to show that if a higher even moment vanishes, then the inertia tensor must be isotropic, forcing degree 2 to vanish. Alternatively, construct a counterexample by finding an antipodal set with Hst(X) containing 4 but not 2.",
@@ -4594,7 +4606,7 @@
       "Geometry",
       "Logic"
     ],
-    "id": "fd_0199",
+    "id": "fd_0200",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define the structure of a finite simplicial complex and the $h$-vector as a function of the $f$-vector. 2. Implement the $\\mathcal{F}$-uniform subdivision framework specifically for the interval subdivision to derive the explicit entries of the transformation matrix $H_{\\mathcal{F}}$. 3. Use the Lindström-Gessel-Viennot (LGV) lemma or a similar combinatorial path-counting method to show that the determinants of all minors are non-negative, leveraging the combinatorial proof provided in the paper.",
@@ -4619,7 +4631,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0200",
+    "id": "fd_0201",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove σ_{p,a}=1 by analyzing the determinant structure modulo primes and leveraging properties of the Legendre symbol. Examine the matrix's Pfaffian decomposition to show the scaling factor vanishes.",
@@ -4646,7 +4658,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0201",
+    "id": "fd_0202",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit families of hypergraphs (e.g., extensions of the graph constructions that achieve equality for each \\u03bd) and prove the inequality using degree‑sum and counting arguments. Formalize the definitions in Lean and verify the conjecture on small hypergraphs computationally.",
@@ -4672,7 +4684,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0202",
+    "id": "fd_0203",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a common $\\omega$-stellar subdivision by iteratively refining the triangulations using locally finite sequences of stellar moves, leveraging the existence of a common subdivision and the local finiteness condition.",
@@ -4698,7 +4710,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0203",
+    "id": "fd_0204",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit point configurations and linear maps for each (r, s) pair. For the upper bound, use points in general position within an r-dimensional subspace. For the lower bound, design configurations with controlled linear dependencies that minimize separable dichotomies while fixing r and s. Use induction on N and properties of the counting function C(·,·).",
@@ -4727,7 +4739,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0204",
+    "id": "fd_0205",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The conjecture can be approached by analyzing the structure of $\\Delta^{[p]}$ (the Stanley-Reisner complex of $I_\\Delta^{[p]}$) and its facets. When $\\dim S/I_\\Delta^{[p]} = 2p$, the absence of high-dimensional obstructions ensures the first syzygies are generated by linear forms. Conversely, when $\\dim S/I_\\Delta^{[p]} = 2p-1$, the ideal coincides with a squarefree Veronese ideal whose non-Cohen-Macaulayness (when $n < 2d$) prevents a linear resolution. The proof would require verifying that the combinatorial characterization of $\\Delta^{[p]}$ facets matches the dimension criterion.",
@@ -4754,7 +4766,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0205",
+    "id": "fd_0206",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove by induction on r using the self-similar structure of the recursive bisection process. The key insight is that each bisection step at most doubles the number of periods while preserving ratios. Use the periodic structure property from Proposition propLen to reduce analysis to a single phase with sufficiently many periods, then apply extremal combinatorial arguments on the distribution of piece sizes within each period.",
@@ -4779,7 +4791,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0206",
+    "id": "fd_0207",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the connection with rational approximations to the golden ratio φ and the theory of continued fractions to show that any potential decrease would produce a better approximation than a convergent, contradicting optimality of convergents.",
@@ -4806,7 +4818,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0207",
+    "id": "fd_0208",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a bijection between A393920's geometric configurations and Fibonacci-themed tiling-like structures, then prove exponential bounds via characteristic polynomial analysis.",
@@ -4833,7 +4845,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0208",
+    "id": "fd_0209",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Establish modular transformation properties of the coupled product. 2. Compute the conjugate derivative and verify it lies in the proposed direct sum. 3. Use the known transformation laws for depth one forms and their non-holomorphic integrals to derive the depth two structure. 4. Apply the differential operators from Zwegers' lifting to confirm the shadow formula.",
@@ -4861,7 +4873,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0209",
+    "id": "fd_0210",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine Simonovits's decomposition techniques for F with spectral characterization methods from [WKX]. Establish structural properties of near-extremal graphs under the spectral constraint, leveraging the edge-color-critical condition to ensure uniqueness of extremal configurations.",
@@ -4893,7 +4905,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0210",
+    "id": "fd_0211",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Formalise the definitions of matching‑covered graphs, bricks, braces, b‑invariant edges, forcing edges, and near‑bipartite bricks in Lean.\n\n2. Implement auxiliary notions: 3‑connectivity, bicriticality, removable edges, brick number b(G), and the tight‑cut decomposition (as in the literature).\n\n3. Encode the classification theorem from the paper: a constructive description of all near‑bipartite bricks satisfying the forcing property (e.g. in terms of a bipartite backbone with at most one subdivision per edge of a perfect matching and a bound on odd‑cycle lengths).\n\n4. Prove the two directions:\n   - (→) Assuming G is near‑bipartite and satisfies the classification, show that any b‑invariant edge lies in a unique perfect matching (i.e. is forcing). This uses the structural lemmas from the paper (e.g. that b‑invariant edges in such bricks are exactly the subdivided edges of the perfect matching).\n   - (≃) Assuming every b‑invariant edge is forcing, deduce that G cannot contain a non‑ne",
@@ -4919,7 +4931,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0211",
+    "id": "fd_0212",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use double‑counting and entropy‑based Fourier–Möbius analysis to derive a lower bound on the number of monochromatic triples; compare with known upper bounds to test falsifiability.",
@@ -4939,7 +4951,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0212",
+    "id": "fd_0213",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive proof",
@@ -4967,7 +4979,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0213",
+    "id": "fd_0214",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "To attack the conjecture, one would attempt to construct extremal sets A (e.g., subfields, multiplicative subgroups, or random sets) that avoid full sumsets for any choice of coefficients, using combinatorial or algebraic methods such as the polynomial method, character sums, or entropy arguments. Disproving the conjecture would require showing that the stated lower bound on |A| can be improved, possibly via new additive combinatorial inequalities or refined Fourier analysis.",
@@ -4986,7 +4998,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0214",
+    "id": "fd_0215",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Application of Dirichlet character properties and functional equation constraints",
@@ -5011,7 +5023,7 @@
     "domains": [
       "Physics"
     ],
-    "id": "fd_0215",
+    "id": "fd_0216",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the inductive four-restriction scheme from the original proof to isolate the deficit term, apply a sharp Bonami-Beckner inequality to control higher-degree Fourier mass, and invoke an invariance principle to reduce to Gaussian space where the extremal configurations are classified via Ehrhard-type inequalities.",
@@ -5039,7 +5051,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0216",
+    "id": "fd_0217",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove that for every n, s, t with 2 ≤ s < t and every n‑vertex graph G, the inequality becomes equality for a suitable Turán graph or its balanced blow‑up, using induction on n together with Zykov symmetrization to show the bound cannot be improved.",
@@ -5066,7 +5078,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0217",
+    "id": "fd_0218",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the description of EKOR strata via G‑zips and mixed‑characteristic local shtukas to identify the basic stratum with a quotient of a Deligne‑Lusztig variety by a finite group action. Then apply the Künneth formula for ℓ‑adic cohomology and the known point‑count formulas for Deligne‑Lusztig varieties to compute the number of geometric components. Finally, invoke the smoothness criterion for Schubert varieties in the affine flag manifold to deduce smoothness of each component.",
@@ -5092,7 +5104,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0218",
+    "id": "fd_0219",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the classical harmonic lemma proof by employing a Markov chain stopping rule to derive a maximum principle; show that any non‑constant color assignment would violate the blend axiom, leading to a contradiction.",
@@ -5120,7 +5132,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0219",
+    "id": "fd_0220",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the theory of CM elliptic curves and the reduction modulo inert primes. Show that for an inert p the reduction map from the CM elliptic curve with complex multiplication by \\(\\mathcal O\\) to a supersingular curve over \\(\\mathbb F_p\\) preserves an embedding of \\(\\mathcal O\\). By class field theory, primes splitting completely in the ring class field correspond to principal ideals of norm \\(\\ell\\) in \\(\\mathcal O\\). Lifting such an ideal to an isogeny of degree \\(\\ell\\) over \\(\\overline{\\mathbb Q}\\) and reducing modulo p yields an endomorphism on \\(E\\) that commutes with \\(\\iota(\\omega)\\) up to conjugation, i.e. an \\(\\mathcal O\\)-twisting endomorphism. The commutation condition follows from the fact that the ideal is generated by an element of \\(\\mathcal O\\) and the reduction of the associated isogeny respects the orientation. Finally, verify that the degree is prime by choosing \\(\\ell\\) split completely and inertness ensures the reduction does not increase the degree. Formalisation ",
@@ -5148,7 +5160,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0220",
+    "id": "fd_0221",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extending Bailey lattice techniques to handle exceptional symmetry breaking at 6n+3, combined with modular form evaluations at q^14 roots",
@@ -5175,7 +5187,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0221",
+    "id": "fd_0222",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute cup radicals in concrete pro‑p groups, search for counterexamples, and attempt to prove invariance under maximal pro‑p quotients of abelianizations",
@@ -5203,7 +5215,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0222",
+    "id": "fd_0223",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Derive explicit local lower‑bound factors from the Greenberg–Wiles formula, prove equidistribution of Frobenius elements for families with constant ℓ‑torsion, and show that the average ℓ‑Selmer rank over such families meets or exceeds the product of these local bounds, with equality on a dense set of families.",
@@ -5232,7 +5244,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0223",
+    "id": "fd_0224",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove both directions: (1) Show that any CM tournament satisfies CI by using the equality ν_w^* = ν_w and the known relation between τ_w^* and ν_w^*; (2) Show that any CI tournament satisfies CM by constructing appropriate weight functions that force ν_w^* = ν_w, leveraging the structural characterization of CM tournaments.",
@@ -5255,7 +5267,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0224",
+    "id": "fd_0225",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the Erné-Stege moment reduction modulo 4. Show that the moments G(m,k) = Σ 𝔡(Q)^k satisfy G(m,k) ≡ 0 (mod 4) for all relevant m,k in the expression for P(n) when n ≥ 3, except for a constant term that yields 3 mod 4. Alternatively, use the known recurrence P(n) = Σ_{k=1}^n S(n,k) P(k-1) (Stirling transform) and prove by induction that P(n) ≡ 3 (mod 4) for n ≥ 2, leveraging the congruence properties of Stirling numbers of the second kind modulo 4.",
@@ -5285,7 +5297,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0225",
+    "id": "fd_0226",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend Hiranouchi's compactness argument using the smallness of π₁(X,0) and combine with Lang-Weil estimates for varieties over finite fields to control the possible representations. The key is to show the discrete image condition forces finiteness even when p=2 by analyzing the wild ramification constraints more carefully.",
@@ -5311,7 +5323,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0226",
+    "id": "fd_0227",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Search for counterexample by exhaustive enumeration for small q and m; attempt proof by contradiction using properties of roots of unity",
@@ -5339,7 +5351,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0227",
+    "id": "fd_0228",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The conjecture can be approached by establishing a generating function identity for DSOME(n) analogous to Theorem 1 in the paper, which relates SOME(n) to p(n) via divisor sums. For DSOME(n), one would expect an identity involving the generating function for distinct partitions and the sum-of-divisors function. Proving such an identity would yield the congruence by equating coefficients modulo 4. Alternatively, direct combinatorial or algebraic manipulation of the defining generating function for DSOME(n) could establish the congruence.",
@@ -5361,7 +5373,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0228",
+    "id": "fd_0229",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Elementary volume comparisons under linear transformations",
@@ -5387,7 +5399,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0229",
+    "id": "fd_0230",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "exhaustive search for counterexamples among small graphs; use of eigenvalue interlacing and perturbation analysis; convexity properties of the energy functional",
@@ -5418,7 +5430,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0230",
+    "id": "fd_0231",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Refine the diary-based coding tree construction from the paper by introducing a more efficient enumeration of diary levels that avoids the exponential blowup in δ(G,n). Alternatively, develop a direct priority argument with |G|−1 jumps that constructs the homogeneous copy while simultaneously controlling the coloring on all copies of G, leveraging the exact characterization of k(G,n) from [Balko7].",
@@ -5448,7 +5460,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0231",
+    "id": "fd_0232",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Use the discrete Fourier diagonalization of the Laplacian to express R_N^{(r)}(1) as a trigonometric sum. 2. Show that this sum can be rewritten as a contour integral or as the coefficient of a rational generating function whose denominator is a polynomial in z of degree 2r (via Chebyshev polynomials). 3. Deduce that the sequence satisfies a linear recurrence with constant coefficients whose characteristic polynomial is this denominator. 4. Verify the base cases r=1,2 match the paper's results (order 2 recurrences). 5. For general r, use the fact that the eigenvalues λ_k = N - 1 - 2∑_{j=1}^r cos(2πjk/N) are evaluations of a fixed polynomial in cos(2πk/N), and the sum over k can be converted to a sum over roots of unity, yielding a rational function in N with algebraic coefficients that are independent of N.",
@@ -5475,7 +5487,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0232",
+    "id": "fd_0233",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First, assume ℤ_U ≅ 𝕋^(d-1) and derive necessary conditions on the carry propagation. Use the continuous isomorphism to show that the pseudo-valuation ν_U must satisfy the standard ultrametric inequality ν_U(x+y) ≥ min(ν_U(x), ν_U(y)) (i.e., K=0 in the paper's formulation). Then prove that this ultrametric property is equivalent to Condition F/zero preservation by analyzing the structure of normalized expansions and their convergence in the topology. The key step involves showing that any violation of zero preservation would create a topological obstruction to the torus structure.",
@@ -5507,7 +5519,7 @@
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0233",
+    "id": "fd_0234",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Local reduction + oracle-based verification via OR-Tools",
@@ -5533,7 +5545,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0234",
+    "id": "fd_0235",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the slice‑rank lemma for i‑triangular tensors to obtain the bound, then exhibit families attaining Ω(n^{1/6}(3/2^{2/3})^n) to show optimality.",
@@ -5563,7 +5575,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0235",
+    "id": "fd_0236",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The conjecture has seen significant progress via probabilistic methods and algebraic constructions. A potential proof strategy could involve combining the polynomial method with iterative absorption techniques, or developing a more refined random weighting scheme that ensures distinct weighted degrees while keeping the maximum weight close to n/d. Recent asymptotic results by Przybyło and Wei suggest that a combination of random weighting and careful derandomization might close the gap to an absolute constant.",
@@ -5590,7 +5602,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0236",
+    "id": "fd_0237",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the refined formula from the paper and verify against LattE-computed integrals for specific α, β pairs.",
@@ -5613,7 +5625,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_0237",
+    "id": "fd_0238",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the ancestry process and Pólya urn methods used for k=2 to general k by analyzing the intersection of k descendant sets via the joint ancestry processes of the k vertices, and compute the limiting distribution using moment generating functions or martingale techniques.",
@@ -5638,7 +5650,7 @@
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0238",
+    "id": "fd_0239",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "minimal_counterexample_search",
@@ -5655,7 +5667,7 @@
       "Derksen–Kemper, \"Computational Invariant Theory\"",
       "Matsui, \"Ultradiscretized Weyl's basic invariants\""
     ],
-    "consumed_by_exp_id": "e62d479c",
+    "consumed_by_exp_id": "",
     "description": "For any integers n ≥ 1 and r ≥ 1, the set of \\(\\binom{n+r}{r}\\) basic r‑symmetric tropical polynomials of degree ≤ n in the variables \\(\\{x_{i,j}\\}_{1\\le i\\le n,1\\le j\\le r}\\) is algebraically independent over the tropical semiring (max‑plus). Equivalently, any non‑trivial tropical polynomial relation among them must be the tropical zero (the identically \\(-\\infty\\) function). This strengthens the separation result of the paper by asserting that the invariants not only separate orbits but generate a free tropical algebra.",
     "domain_bridges": [
       "Algebraic Geometry",
@@ -5666,13 +5678,13 @@
       "Algebra",
       "Tropical"
     ],
-    "id": "fd_0239",
+    "id": "fd_0240",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that the valuation map from the usual polynomial ring \\(\\mathbb{R}[x_{i,j}]\\) to the tropical semiring sends the classical elementary symmetric polynomials in the multivariate monomials to the basic r‑symmetric tropical polynomials. Use the known algebraic independence of the classical elementary symmetric polynomials to deduce independence after tropicalization via the fact that tropicalization preserves relations only up to the max‑plus linear span. Alternatively, construct a matrix of tropical Jacobian (the tropical analogue of the Jacobian determinant) and prove that it is non‑degenerate at a generic point, implying no non‑trivial tropical polynomial vanishes identically on the image. The argument can be formalised by: (1) defining the basic r‑symmetric tropical polynomials in Lean (using max and +); (2) proving that any tropical polynomial relation would give a classical polynomial relation after lifting via a generic perturbation; (3) invoking the classical algebraic indepen",
     "research_mode": "team",
     "source_exp_id": "2606.30184v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T01:45:28.530447+00:00",
     "title": "Algebraic Independence of Basic r‑Symmetric Tropical Polynomials"
   },
@@ -5693,7 +5705,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0240",
+    "id": "fd_0241",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Formalize the (σ, α) model of orientable hypermaps as a pair of permutations acting transitively on a finite set. 2. Implement the partial duality operation as a transformation of the α-cycles. 3. Define the medial map M(H) and the notions of 'all-crossing directions' and 'c-type edges'. 4. Establish a bijection between the vertices of H^{E'} and the state circles of the black/white smoothing S_{E'}. 5. Prove that the bipartiteness of H^{E'} is equivalent to the existence of the specified direction Φ, utilizing the parity of state circle lengths and the vertex-adjacency graph Γ(H).",
@@ -5717,7 +5729,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0241",
+    "id": "fd_0242",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use induction on d. The base case d=3 reduces to showing that any discrete 3-pseudomanifold with 13 vertices that is not a 3-sphere contains an induced link isomorphic to the 6-vertex triangulation of ℝP². For the inductive step, analyze the link of a vertex: it must be a discrete (d-1)-pseudomanifold with 2d+5 vertices that is not a (d-1)-sphere, apply the induction hypothesis to deduce its structure as a (d-3)-fold suspension of ℝP², and then verify that the original complex is the join of this link with a pair of non-adjacent vertices, yielding the desired suspension.",
@@ -5745,7 +5757,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0242",
+    "id": "fd_0243",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the Delsarte linear programming bound for the association scheme defined by the level sets of Q. Formalize the eigenvalue calculations (Gauss and Kloosterman sums) in Lean, construct an explicit feasible solution to the LP, and deduce the desired lower bound on |Δ_Q(E)| via the standard LP‑duality argument. For optimality, exhibit a construction based on subspaces of dimension n/2+1/3 (using a product of a large subspace with a small additive character set) and bound its distance set by exploiting cancellation in Kloosterman sums; this shows any exponent below n/2+1/3 cannot guarantee linear distance set size.",
@@ -5769,7 +5781,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0243",
+    "id": "fd_0244",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct infinite families of triangulations with prescribed degree sequences using vertex splitting and edge subdivision, then apply a greedy packing algorithm to obtain exactly floor(n/5) disjoint P3 subgraphs, showing the bound cannot be improved.",
@@ -5796,7 +5808,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0244",
+    "id": "fd_0245",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the circle method with character sum estimates, leveraging existing bounds on GL(2) coefficients and orthogonal decomposition of sums over \\(m\\) via Kloosterman decomposition.",
@@ -5805,6 +5817,34 @@
     "status": "available",
     "timestamp": "2026-07-04T04:45:23.170809+00:00",
     "title": "Exponential Sums of GL(2) Fourier Coefficients with Double Weighting"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "arXiv:2105.12345",
+      "arXiv:2009.06789"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer k with 0 <= k <= binomial n 2, the multiplicity of the irreducible sl2-module of highest weight k in the sl2-module structure of the graph algebra A_n equals the dimension of the Specht module S^{(k, binomial n 2 - k)} of the symmetric group S_{binomial n 2}.",
+    "domain_bridges": [
+      "Representation Theory",
+      "Combinatorial Algebra",
+      "Lie Algebras",
+      "Symmetric Functions"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0246",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "representation_theoretic_decomposition_and_multiplicity_computation",
+    "research_mode": "team",
+    "source_exp_id": "2606.29558v1",
+    "status": "available",
+    "timestamp": "2026-07-04T05:23:42.180643+00:00",
+    "title": "Conjecture on the sl2-multiplicity decomposition of the graph algebra"
   },
   {
     "ambition_level": "extension",
@@ -5850,61 +5890,21 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions — Escher Staircases in Algebra\n\nAn *Escher staircase* is an infinite strictly ascending chain of ideals\n`I₀ ⊂ I₁ ⊂ I₂ ⊂ ⋯` in a commutative ring. A ring admits such a chain exactly when\nit fails the ascending chain condition, so the staircase is a faithful witness of\nnon-Noetherianity. In the product ring of countably many copies of the integers,\nthe chain of \"sequences vanishing past index `n`\" is an explicit staircase whose\nbottom rung is `{0}` and whose meet is again `{0}`: the chain climbs forever yet its\ninfimum is the point it started from. The `p`-adic integers, a discrete valuation\nring, admit no staircase at all. The following conjectures grow out of this picture.\n\n## 1. The Escher spectrum separates non-Noetherian rings\n\nAttach to each staircase the growth function `n ↦ (minimal number of generators of\nIₙ)`, and define the *Escher spectrum* of a ring as the set of asymptotic growth\nclasses realized by its staircases.\n\n**Conjecture.** The product ring of countably many copies of the integers realizes\nonly linear growth, whereas a polynomial ring in countably many variables realizes\nsuper-polynomial growth; hence the two rings, indistinguishable to the plain\nNoetherian/non-Noetherian dichotomy, have disjoint Escher spectra.\n\n**The key insight is** that the *existence* of an ascending chain is a yes/no fact,\nbut the *rate* at which minimal generating sets must swell along the chain is a\ngenuine, ring-theoretic invariant that discriminates among non-Noetherian rings.\n\n**Why now?** A fully worked base case — an explicit staircase whose meet collapses to\nits bottom rung — is available to calibrate growth rates against, so comparisons\nacross rings finally have a fixed reference point.\n\n## 2. Loop-back staircases and collapsing intersections\n\nCall an ascending chain a *loop-back staircase* when the infimum of the whole chain\nequals its smallest member. The product-ring example loops back to `{0}`.\n\n**Conjecture.** A domain admits a loop-back staircase with bottom rung `{0}` if and\nonly if it contains an infinite family of pairwise-comparable ideals with trivial\nintersection; in particular every non-Noetherian von Neumann regular ring admits\none, and this property is strictly stronger than being non-Noetherian.\n\n**The key insight is** that \"looping back to zero\" is not a paradox but the precise\nlattice-theoretic statement that an ascending chain's meet collapses to its start,\nwhich forces a strong intersection condition on the ideal lattice.\n\n**Why now?** The paradoxical Escher framing can be replaced by an exact lattice\ncondition, turning a piece of visual folklore into a falsifiable statement testable\non concrete product and polynomial rings.\n\n## 3. Escher height on the Noetherian side equals Krull dimension\n\nFor a Noetherian ring no infinite ascending chain exists, so define the *Escher\nheight* through *prime* chains: the supremum of lengths of strictly ascending chains\nof prime ideals.\n\n**Conjecture.** For the polynomial ring in `n` variables over a field the Escher\nheight equals `n`, coinciding exactly with Krull dimension.\n\n**The key insight is** that the impossible-staircase intuition should be re-anchored\nto prime chains, where finiteness is guaranteed, converting a vague \"height of the\nEscher effect\" into the well-defined and computable Krull dimension.\n\n**Why now?** With the Noetherian boundary pinned down precisely by the existence of\ninfinite ascending chains, it is exactly the right moment to identify which finite\nchain invariant survives on the Noetherian side.\n\n## 4. The corrected staircase inside integer-valued polynomials\n\nThe ring of integer-valued polynomials, `{f ∈ ℚ[x] : f(ℤ) ⊆ ℤ}`, is a classical\nnon-Noetherian ring. The frequently quoted filtration `{f : f(ℤ) ⊆ 2ⁿℤ}` is in fact\n*descending*, since `2ⁿ⁺¹ℤ ⊆ 2ⁿℤ`; its intersection is `{0}`.\n\n**Conjecture.** A genuine *ascending* Escher staircase lives in the binomial-\ncoefficient basis: the ideals generated by the first `n` binomial polynomials\n`binom(x,0),…,binom(x,n-1)` strictly ascend, and their union is a\nnon-finitely-generated ideal, constructively witnessing the failure of the ascending\nchain condition.\n\n**The key insight is** that the natural ascending structure of this ring lives in the\nbinomial basis, not in the powers-of-two filtration whose inclusions actually run the\nwrong way.\n\n**Why now?** A verified template for ascending chains with controlled intersections\nnow exists in a simple product ring, and transporting it to the binomial basis is the\nnatural next test of the framework.\n\n## 5. Escher-rigid rings: uniform bounds beyond Noetherianity\n\nA ring has no Escher staircase exactly when it is Noetherian, as the `p`-adic\nintegers show. Call a ring *Escher-rigid* if even the submodules of every finitely\ngenerated module admit no infinite ascending chain.\n\n**Conjecture.** Every discrete valuation ring is Escher-rigid; every Artinian ring is\nEscher-rigid with a *uniform* finite bound on chain lengths; and there exist\nNoetherian rings that forbid infinite chains yet admit no uniform length bound.\n\n**The key insight is** that forbidding infinite ascending chains is qualitative, but\nthe existence of a uniform numerical ceiling on chain length is a strictly finer\nstratification of the Noetherian world.\n\n**Why now?** The equivalence between admitting a staircase and being non-Noetherian is\nnow settled, and the `p`-adic integers furnish a clean rigid example, so quantifying\nrigidity inside the Noetherian class is the natural refinement.\n",
+    "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist — 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 — they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures — combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domain_bridges": [],
     "domains": [
-      "Algebra",
-      "Pythagorean"
+      "Novelty",
+      "NumberTheory"
     ],
-    "id": "fd_0246",
+    "id": "fd_0114",
     "lineage_refs": [],
     "priority_score": 0.75,
-    "proof_strategy": "",
+    "proof_strategy": "Define vampire numbers formally: v is a vampire number iff v has 2n digits and there exist x, y each with n digits such that v = x*y and the multiset of digits of v equals the union of digits of x and y. Count the number of digit arrangements: for a 2n-digit number with distinct digits, there are C(2n, n) * n! * n! possible fang pairs, so the expected number of fang pairs is C(2n, n) * (n!)^2 / 10^{2n} = C(2n,n) / 10^n ~ 1/sqrt(n). Prove existence in every interval by constructing explicit vampire numbers using the formula 1260 * 10^{2k} for k >= 0. Test: enumerate up to 10^8.",
     "research_mode": "team",
-    "source_exp_id": "3498198a",
+    "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-04T05:06:05.464784+00:00",
-    "title": "An *Escher staircase* is an infinite strictly ascending chain of ideals"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions — Dark Mathematics\n\nA *dark theorem* asserts that witnesses of some property exist — indeed that many\ndo — while no single witness can ever be named. This cycle isolated the\nstructural core of that phenomenon, showed it forms a strict, non-collapsing\nhierarchy graded by how many witnesses are provably present, showed the hierarchy\nis amplified when two dark theories are combined, and refuted the naive claim\nthat dark theorems are dense under uniform counting. The following conjectures\ngrow directly out of those findings.\n\n## 1. The darkness spectrum runs through the ordinals\n\nThe graded hierarchy of darkness, in which level `k` means \"at least `k`\nwitnesses are provably present but none is findable,\" should not stop at the\nfinite levels. Replacing the plain counting markers by fast-growing counting\nfunctions extends the ladder past every finite stage and into the transfinite,\nwith a distinguished rung where provable multiplicity finally outruns what\nordinary arithmetic induction can certify.\n\n*The key insight is* that the exact ordinal at which darkness becomes\nunmeasurable by finitary means should coincide with the classical\nindependence thresholds already known from strengthened-Ramsey and\ntree-termination phenomena, giving a single ordinal invariant for \"how dark\" a\nstatement is.\n\n*Why now?* We have, for the first time, a level function for darkness that is\nprovably strict between consecutive stages; extending a strict finite ladder to\nan ordinal-indexed one is the natural and now-tractable next step.\n\n## 2. Darkness has a lattice of its own\n\nTheories combine, and darkness survives the combination: joining a theory that\nsees `a` hidden witnesses with one that sees `b` yields a theory that provably\nsees `max(a,b)` — strictly more than either alone. This suggests the darkness\nlevel is a structured, order-respecting invariant, not a mere label.\n\n*The key insight is* that combining ignorance can manufacture strictly deeper\nignorance: two theories, each unable to name a witness, can jointly prove that\neven more witnesses exist while remaining just as blind.\n\n*Why now?* The join behaviour is already pinned down exactly; the immediate\nquestion — whether meets, tops, and a full homomorphism onto the level scale also\nexist — is squarely posed and testable.\n\n## 3. Dark theorems are rare by count but may be generic by weight\n\nCounting witnesses uniformly, exactly one configuration in every finite family is\ndark, so darkness has vanishing density — the slogan \"most true statements are\ndark\" is false as literally stated. Yet the intuition that independence is\ntypical is compelling, which points to the wrong yardstick being used.\n\n*The key insight is* that genericity of darkness must be measured by logical\ncomplexity, not by raw instance counts: a single statement whose one witness is\nastronomically hard to certify should carry more weight than a whole family of\neasily checked ones.\n\n*Why now?* We have a clean negative result under uniform counting; this forces\nthe precise, answerable question of which weighting restores density, turning a\nvague slogan into a sharp conjecture.\n\n## 4. Reflection turns dark theorems bright\n\nDarkness is measured relative to a base theory. Strengthening that theory — for\ninstance by asserting that what it proves is true — should make some previously\nunnameable witnesses suddenly findable, lowering the darkness level of exactly\nthe statements the new principle reaches.\n\n*The key insight is* that darkness is a relative, not absolute, property, and\neach increment in the reflective strength of a theory should be readable as a\nmeasurable decrease in the darkness of a specific family of statements.\n\n*Why now?* With darkness quantified on a strict scale, the effect of a\nreflection step can be stated as an exact numerical drop in level, making a\npreviously philosophical remark into a precise conjecture.\n\n## 5. Some witnesses are hidden forever, and their depth is a Turing degree\n\nThe purest dark theorems assert an infinite supply of witnesses none of which can\nbe exhibited. Such objects should exist throughout the computable-in-the-halting-\nproblem range, and the difficulty of the (uncomputable) function that would name\na witness should classify exactly how deeply the witnesses are hidden.\n\n*The key insight is* that permanent unfindability is not a single condition but a\ngraded one, calibrated by the computational complexity of the witness-selecting\nfunction, with a least degree marking the frontier between extractable and\nforever-hidden existence.\n\n*Why now?* The structural definition of provable-existence-without-provable-\nwitness is now firmly in hand; attaching a computational degree to it is the\nnatural bridge from the logic of darkness to its effective content.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0247",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "6f613cb7",
-    "status": "available",
-    "timestamp": "2026-07-04T05:18:14.306556+00:00",
-    "title": "A *dark theorem* asserts that witnesses of some property exist — indeed that man"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nFive self-contained, falsifiable conjectures arising from the study of *possibility*\ntopologies (pooled resolution) as the order-dual of *consensus* topologies (unanimous\nagreement) among a family of observers, each assigning their own topology to a fixed set.\n\n## 1. The Possibility Number\n\nAlongside the number of observers whose *agreement* reconstructs a space, define its dual:\nthe least number of coarser observers whose *pooled* view already isolates every point,\nturning the space discrete. **Conjecture:** the real line has possibility number exactly\ntwo — the left-looking and right-looking half-open viewpoints together isolate every point\nthrough the collapse `[x, x+1) ∩ (x-1, x] = {x}`, and no single coarser observer isolates\nanything — and a metrizable space has finite possibility number if and only if it carries a\ncountable network.\n\nThe key insight is that discreteness of the pooled topology is a *pointwise* condition:\neach singleton must appear as a finite intersection of open sets contributed by individual\nobservers, so the possibility number measures how many viewpoints must be superimposed\nbefore every point becomes individually distinguishable.\n\nWhy now? The exact discreteness collapse of the two half-open viewpoints on the line has\njust been established, giving a concrete anchor case from which the general invariant can be\ncalibrated and tested against classical spaces.\n\n## 2. Join-Reducibility Governs Genuine Representability\n\nWhether a space can be reconstructed as the agreement of two strictly sharper viewpoints is\nequivalent to whether its topology is a join of two strictly smaller topologies in the\nlattice of all topologies on the set. **Conjecture:** the viewpoints that *cannot* be split\nthis way are exactly the discrete topology together with those whose lattice of open sets\nhas a unique maximal proper element, and on a finite set they are precisely the topologies\nwhose specialisation order is a forest with a single source.\n\nThe key insight is that \"how many observers reconstruct a space\" is not a geometric\nquestion at all but an order-theoretic one about covers and atoms in the lattice of\ntopologies, so rigidity is a statement about join-irreducibility rather than about the\nspace's shape.\n\nWhy now? The reduction of representability to a single join-reducibility condition is in\nhand, so the classification of the rigid (unsplittable) viewpoints becomes a concrete and\nattackable lattice problem.\n\n## 3. Separation and Phantom Number Are Independent\n\nBeing highly separated (metrizable, Hausdorff) neither forces nor forbids a low observer\ncount: the blurred two-point space needs only two observers, while the fully-resolved\ntwo-point space — as separated as possible — cannot be split at all. **Conjecture:** for any\ntarget observer count in {zero, two, infinite} and any consistent combination of the\nclassical separation axioms, there is a space realising exactly that count and exactly those\naxioms.\n\nThe key insight is that separation axioms constrain the specialisation preorder of a space\nwhile the phantom number constrains join-reducibility of its topology, and these two\ninvariants can be dialled independently by gluing together simple Sierpinski and indiscrete\nbuilding blocks.\n\nWhy now? Both halves of the original metrizability heuristic have just been refuted by\nminimal two-point examples, exposing the two invariants as orthogonal and inviting a full\nindependence theorem.\n\n## 4. Observer Chains Between Pooling and Agreement\n\nA single pair of observers on the line yields three strictly ordered realities — discrete\nwhen pooled, Euclidean when agreed upon, indiscrete when ignored. **Conjecture:** replacing\nstrict unanimity by a \"k-out-of-n majority see it\" rule produces a strictly increasing chain\nof topologies as the required majority grows, and for the two half-open observers on the\nline this chain has no terms strictly between discrete and Euclidean; a third, centrally\nplaced observer is needed to create a genuinely intermediate reality.\n\nThe key insight is that pooling and agreement are the two endpoints of a whole spectrum of\nconsensus rules indexed by how many observers must concur, and the coarseness of the\nresulting reality varies monotonically along that spectrum.\n\nWhy now? The extreme cases (full pooling and full agreement) have been pinned down exactly\nfor a concrete observer pair, so the intermediate majority rules can be measured against\nfixed, known endpoints.\n\n## 5. Metrizability as an Artefact of Disagreement\n\nOn the line, two individually non-metrizable viewpoints agree on exactly the metrizable\nEuclidean topology. **Conjecture:** every metrizable topology on a set is the agreement of\ntwo non-metrizable viewpoints on that set, so metrizability is never intrinsic to a single\nviewpoint but always emerges from the consensus of two non-metrizable ones; more sharply, if\ntwo hereditarily Lindelof viewpoints pool to the discrete topology, their agreement is\nmetrizable.\n\nThe key insight is that the metric structure of the line factors through a left/right\nasymmetry: each one-sided viewpoint is badly non-metrizable, yet cancelling the asymmetry by\ntaking their common opens restores a metric.\n\nWhy now? The concrete Sorgenfrey decomposition of the Euclidean line into two non-metrizable\nhalves is now fully worked out, providing the template from which a general \"metrizability\nfrom disagreement\" principle can be abstracted.\n\n\n# Future Directions\n\nFive self-contained, falsifiable conjectures arising from the study of *possibility*\ntopologies (pooled resolution) as the order-dual of *consensus* topologies (unanimous\nagreement) among a family of observers, each assigning their own topology to a fixed set.\n\n## 1. The Possibility Number\n\nAlongside the number of observers whose *agreement* reconstructs a space, define its dual:\nthe least number of coarser observers whose *pooled* view already isolates every point,\nturning the space discrete. **Conjecture:** the real line has possibility number exactly\ntwo — the left-looking and right-looking half-open viewpoints together isolate every point\nthrough the collapse `[x, x+1) ∩ (x-1, x] = {x}`, and no single coarser observer isolates\nanything — and a metrizable space has finite possibility number if and only if it carries a\ncountable network.\n\nThe key insight is that discreteness of the pooled topology is a *pointwise* condition:\neach singleton must appear as a finite intersection of open sets contributed by individual\nobservers, so the possibility number measures how many viewpoints must be superimposed\nbefore every point becomes individually distinguishable.\n\nWhy now? The exact discreteness collapse of the two half-open viewpoints on the line has\njust been established, giving a concrete anchor case from which the general invariant can be\ncalibrated and tested against classical spaces.\n\n## 2. Join-Reducibility Governs Genuine Representability\n\nWhether a space can be reconstructed as the agreement of two strictly sharper viewpoints is\nequivalent to whether its topology is a join of two strictly smaller topologies in the\nlattice of all topologies on the set. **Conjecture:** the viewpoints that *cannot* be split\nthis way are exactly the discrete topology together with those whose lattice of open sets\nhas a unique maximal proper element, and on a finite set they are precisely the topologies\nwhose specialisation order is a forest with a single source.\n\nThe key insight is that \"how many observers reconstruct a space\" is not a geometric\nquestion at all but an order-theoretic one about covers and atoms in the lattice of\ntopologies, so rigidity is a statement about join-irreducibility rather than about the\nspace's shape.\n\nWhy now? The reduction of representability to a single join-reducibility condition is in\nhand, so the classification of the rigid (unsplittable) viewpoints becomes a concrete and\nattackable lattice problem.\n\n## 3. Separation and Phantom Number Are Independent\n\nBeing highly separated (metrizable, Hausdorff) neither forces nor forbids a low observer\ncount: the blurred two-point space needs only two observers, while the fully-resolved\ntwo-point space — as separated as possible — cannot be split at all. **Conjecture:** for any\ntarget observer count in {zero, two, infinite} and any consistent combination of the\nclassical separation axioms, there is a space realising exactly that count and exactly those\naxioms.\n\nThe key insight is that separation axioms constrain the specialisation preorder of a space\nwhile the phantom number constrains join-reducibility of its topology, and these two\ninvariants can be dialled independently by gluing together simple Sierpinski and indiscrete\nbuilding blocks.\n\nWhy now? Both halves of the original metrizability heuristic have just been refuted by\nminimal two-point examples, exposing the two invariants as orthogonal and inviting a full\nindependence theorem.\n\n## 4. Observer Chains Between Pooling and Agreement\n\nA single pair of observers on the line yields three strictly ordered realities — discrete\nwhen pooled, Euclidean when agreed upon, indiscrete when ignored. **Conjecture:** replacing\nstrict unanimity by a \"k-out-of-n majority see it\" rule produces a strictly increasing chain\nof topologies as the required majority grows, and for the two half-open observers on the\nline this chain has no terms strictly between discrete and Euclidean; a third, centrally\nplaced observer is needed to create a genuinely intermediate reality.\n\nThe key insight is that pooling and agreement are the two endpoints of a whole spectrum of\nconsensus rules indexed by how many observers must concur, and the coarseness of the\nresulting reality varies monotonically along that spectrum.\n\nWhy now? The extreme cases (full pooling and full agreement) have been pinned down exactly\nfor a concrete observer pair, so the intermediate majority rules can be measured against\nfixed, known endpoints.\n\n## 5. Metrizability as an Artefact of Disagreement\n\nOn the line, two individually non-metrizable viewpoints agree on exactly the metrizable\nEuclidean topology. **Conjecture:** every metrizable topology on a set is the agreement of\ntwo non-metrizable viewpoints on that set, so metrizability is never intrinsic to a single\nviewpoint but always emerges from the consensus of two non-metrizable ones; more sharply, if\ntwo hereditarily Lindelof viewpoints pool to the discrete topology, their agreement is\nmetrizable.\n\nThe key insight is that the metric structure of the line factors through a left/right\nasymmetry: each one-sided viewpoint is badly non-metrizable, yet cancelling the asymmetry by\ntaking their common opens restores a metric.\n\nWhy now? The concrete Sorgenfrey decomposition of the Euclidean line into two non-metrizable\nhalves is now fully worked out, providing the template from which a general \"metrizability\nfrom disagreement\" principle can be abstracted.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0248",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "ca29fc4b",
-    "status": "available",
-    "timestamp": "2026-07-04T05:20:28.031700+00:00",
-    "title": "Five self-contained, falsifiable conjectures arising from the study of *possibil"
+    "timestamp": "2026-07-03T00:49:27.007324+00:00",
+    "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
   {
     "ambition_level": "extension",

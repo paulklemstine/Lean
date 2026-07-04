@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "470fcb83",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Idempotent Probability: Large Deviations\n\nDerived from this cycle's findings (`Catalog/Tropical/MeasureTheory/LaplacePrinciple.lean`\nand `DonskerVaradhan.lean`), which establishe",
-      "quality_score": 0.7623499999999999,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-27T22:57:33",
-      "title": "Idempotent Probability: Large Deviations"
-    },
-    {
       "cycle_id": "26246c0e",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Modified Wiener Attack with Partial `p+q` Knowledge\n\nDerived from this cycle's findings in `WienerPartialKnowledge.lean`,\n`WienerRecovery.lean`, and the new `WienerFactorization.",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-04T05:20:33",
       "title": "Phantom Topologies: Spaces That Change When You Look at Them"
+    },
+    {
+      "cycle_id": "aed51c81",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nDerived from the cycle studying `(aⁿ+1)(bⁿ+1) = x²` for odd exponents. The organising\ndiscovery is that, for odd `n`, the 2-adic valuation of `aⁿ+1` collapses to that of `a+1`,\ntu",
+      "quality_score": 0.6341600000000001,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-04T05:23:13",
+      "title": "No solutions for odd exponents in the coprime case"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71008
     }
   ],
-  "last_updated": "2026-07-04T05:20:33",
+  "last_updated": "2026-07-04T05:23:13",
   "open_questions": [
     {
       "context": "and is genuinely proved (no `sorry`, no `decide`-only). The false converse is",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "3e52c27d",
-        "quality": 0.7916800000000002,
-        "theorems": 23,
-        "title": "Manifold-Constrained Kruskal Rank Bounds on Dichotomy Counts"
-      },
-      {
         "cycle_id": "5875a645",
         "quality": 0.5700000000000001,
         "theorems": 17,
@@ -3637,6 +3631,12 @@
         "quality": 0.6449999999999999,
         "theorems": 0,
         "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
+      },
+      {
+        "cycle_id": "aed51c81",
+        "quality": 0.6341600000000001,
+        "theorems": 0,
+        "title": "No solutions for odd exponents in the coprime case"
       }
     ],
     "NumberTheory": [

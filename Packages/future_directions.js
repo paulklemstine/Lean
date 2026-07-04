@@ -4,21 +4,6 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
-    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0245",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-04T05:01:41.360841+00:00",
-    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domains": [
       "Pythagorean"
@@ -30,20 +15,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T05:18:37.114832+00:00",
     "title": "Deepening: unnamed_concept"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 3498198a (Q=0.782), which proved 13 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring ",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_3498198a_0afd2296",
-    "priority_score": 0.8818800000000001,
-    "research_mode": "team",
-    "source_exp_id": "3498198a",
-    "status": "available",
-    "timestamp": "2026-07-04T05:06:11.952020+00:00",
-    "title": "Deepening: Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
   },
   {
     "consumed_by_exp_id": "",
@@ -1068,6 +1039,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any prime r, any real x with 1 \u2264 x \u2264 r^{0.49}, and any real q in [0,1], the average over all Dirichlet characters modulo r of the 2q\u2011th power of the absolute value of the short character sum satisfies (1/(r\u22121))\u2211_\u03c7 |\u2211_{n\u2264x} \u03c7(n)|^{2q} \u2265 (1/2) x^{q}.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0092",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01184v1",
+    "status": "available",
+    "timestamp": "2026-07-02T21:39:43.438987+00:00",
+    "title": "Conjecture on sharp lower bounds for low moments of Dirichlet character sums"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture extends the equi-enumeration result for planar $(m+1)$-constellations to general $m$ by asserting that greedy intervals admit a decomposition matching the combinatorial structure of bipartite planar maps, now formalized in Lean.",
     "domains": [
       "Pythagorean",
@@ -1809,7 +1794,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proving the Existence of a Sufficiently Large Extremal Family"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0a7c4b5a",
     "description": "Formulate a statement asserting that for a self-dual cuspidal automorphic representation $\\Pi_0$ of $\\text{PGL}_3(\\mathbb{A}_{\\mathbb{Q}})$, the proportion of zeros of the twisted $L$-function $L(s, \\Pi_0 \\times \\chi)$ lying on the critical line $\\text{Re}(s) = 1/2$ is at least $1/9$ as the conductor $Q$ of the Dirichlet character $\\chi$ tends to infinity.",
     "domains": [
       "Algebra"
@@ -1818,7 +1803,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00282v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T14:51:08.118719+00:00",
     "title": "Lower Bound for the Proportion of Zeros on the Critical Line for PGL(3) L-functions"
   },
@@ -2289,12 +2274,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture that for all sufficiently large s, the maximum chromatic number F(s) over graphs G with \u03c9(G) \u2264 s and girth(\u0305G) \u2265 6 satisfies F(s) = \u0398(s^{3/2} / log s). In particular, there exist positive constants c\u2081, c\u2082 such that for all s \u2265 2, c\u2081\u00b7s^{3/2}/log s \u2264 F(s) \u2264 c\u2082\u00b7s^{3/2}/log s.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0183",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29873v1",
+    "status": "available",
+    "timestamp": "2026-07-04T05:23:25.775044+00:00",
+    "title": "Conjecture on the asymptotic growth of the chi\u2011bounding function F(s) for graphs whose complement has girth at least 6"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0183",
+    "id": "fd_0184",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -2308,7 +2307,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0184",
+    "id": "fd_0185",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -2322,7 +2321,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0185",
+    "id": "fd_0186",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
@@ -2336,7 +2335,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0186",
+    "id": "fd_0187",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -2350,7 +2349,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0187",
+    "id": "fd_0188",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
@@ -2365,7 +2364,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0188",
+    "id": "fd_0189",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
@@ -2380,7 +2379,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0189",
+    "id": "fd_0190",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -2395,7 +2394,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0190",
+    "id": "fd_0191",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -2409,7 +2408,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0191",
+    "id": "fd_0192",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -2424,7 +2423,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0192",
+    "id": "fd_0193",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02132v1",
@@ -2439,7 +2438,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0193",
+    "id": "fd_0194",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -2453,7 +2452,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0194",
+    "id": "fd_0195",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02098v1",
@@ -2468,7 +2467,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0195",
+    "id": "fd_0196",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01716v1",
@@ -2483,7 +2482,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Physics"
     ],
-    "id": "fd_0196",
+    "id": "fd_0197",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
@@ -2497,7 +2496,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0197",
+    "id": "fd_0198",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01718v1",
@@ -2511,7 +2510,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0198",
+    "id": "fd_0199",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01761v1",
@@ -2526,7 +2525,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Logic"
     ],
-    "id": "fd_0199",
+    "id": "fd_0200",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
@@ -2540,7 +2539,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0200",
+    "id": "fd_0201",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01695v1",
@@ -2554,7 +2553,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0201",
+    "id": "fd_0202",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01438v1",
@@ -2569,7 +2568,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0202",
+    "id": "fd_0203",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -2583,7 +2582,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0203",
+    "id": "fd_0204",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -2598,7 +2597,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0204",
+    "id": "fd_0205",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
@@ -2612,7 +2611,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0205",
+    "id": "fd_0206",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00775v1",
@@ -2626,7 +2625,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0206",
+    "id": "fd_0207",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00825v2",
@@ -2640,7 +2639,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0207",
+    "id": "fd_0208",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00651v1",
@@ -2654,7 +2653,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0208",
+    "id": "fd_0209",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00643v1",
@@ -2669,7 +2668,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0209",
+    "id": "fd_0210",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00561v1",
@@ -2683,7 +2682,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0210",
+    "id": "fd_0211",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00608v1",
@@ -2698,7 +2697,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0211",
+    "id": "fd_0212",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00456v1",
@@ -2713,7 +2712,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0212",
+    "id": "fd_0213",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00366v1",
@@ -2728,7 +2727,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0213",
+    "id": "fd_0214",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00372v1",
@@ -2742,7 +2741,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0214",
+    "id": "fd_0215",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00332v1",
@@ -2756,7 +2755,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0215",
+    "id": "fd_0216",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.32024v1",
@@ -2771,7 +2770,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0216",
+    "id": "fd_0217",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31967v1",
@@ -2786,7 +2785,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0217",
+    "id": "fd_0218",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31940v1",
@@ -2801,7 +2800,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0218",
+    "id": "fd_0219",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31908v1",
@@ -2816,7 +2815,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0219",
+    "id": "fd_0220",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31687v1",
@@ -2831,7 +2830,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0220",
+    "id": "fd_0221",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31821v2",
@@ -2846,7 +2845,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0221",
+    "id": "fd_0222",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31547v1",
@@ -2861,7 +2860,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0222",
+    "id": "fd_0223",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31649v1",
@@ -2876,7 +2875,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0223",
+    "id": "fd_0224",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31565v1",
@@ -2890,7 +2889,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0224",
+    "id": "fd_0225",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31526v1",
@@ -2905,7 +2904,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0225",
+    "id": "fd_0226",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31341v1",
@@ -2920,7 +2919,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0226",
+    "id": "fd_0227",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31262v1",
@@ -2935,7 +2934,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0227",
+    "id": "fd_0228",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31264v1",
@@ -2950,7 +2949,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0228",
+    "id": "fd_0229",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30856v1",
@@ -2965,7 +2964,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0229",
+    "id": "fd_0230",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30996v1",
@@ -2980,7 +2979,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0230",
+    "id": "fd_0231",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30885v1",
@@ -2995,7 +2994,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0231",
+    "id": "fd_0232",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31044v1",
@@ -3009,7 +3008,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0232",
+    "id": "fd_0233",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30496v1",
@@ -3024,7 +3023,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0233",
+    "id": "fd_0234",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30588v1",
@@ -3038,7 +3037,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0234",
+    "id": "fd_0235",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30593v1",
@@ -3052,7 +3051,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0235",
+    "id": "fd_0236",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30612v1",
@@ -3067,7 +3066,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0236",
+    "id": "fd_0237",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30428v1",
@@ -3081,7 +3080,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_0237",
+    "id": "fd_0238",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3096,7 +3095,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0238",
+    "id": "fd_0239",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30272v1",
@@ -3105,17 +3104,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Uniqueness failure for signless Laplacian extremal graphs at n=9 for (2K_4)-free graphs"
   },
   {
-    "consumed_by_exp_id": "e62d479c",
+    "consumed_by_exp_id": "",
     "description": "For any integers n \u2265 1 and r \u2265 1, the set of \\(\\binom{n+r}{r}\\) basic r\u2011symmetric tropical polynomials of degree \u2264 n in the variables \\(\\{x_{i,j}\\}_{1\\le i\\le n,1\\le j\\le r}\\) is algebraically independent over the tropical semiring (max\u2011plus). Equivalently, any non\u2011trivial tropical polynomial relation among them must be the tropical zero (the identically \\(-\\infty\\) function). This strengthens the separation result of the paper by asserting that the invariants not only separate orbits but generate a free tropical algebra.",
     "domains": [
       "Algebra",
       "Tropical"
     ],
-    "id": "fd_0239",
+    "id": "fd_0240",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30184v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T01:45:28.530447+00:00",
     "title": "Algebraic Independence of Basic r\u2011Symmetric Tropical Polynomials"
   },
@@ -3125,7 +3124,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0240",
+    "id": "fd_0241",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30071v1",
@@ -3139,7 +3138,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0241",
+    "id": "fd_0242",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -3154,7 +3153,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0242",
+    "id": "fd_0243",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -3168,7 +3167,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0243",
+    "id": "fd_0244",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
@@ -3182,13 +3181,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0244",
+    "id": "fd_0245",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
     "status": "available",
     "timestamp": "2026-07-04T04:45:23.170809+00:00",
     "title": "Exponential Sums of GL(2) Fourier Coefficients with Double Weighting"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer k with 0 <= k <= binomial n 2, the multiplicity of the irreducible sl2-module of highest weight k in the sl2-module structure of the graph algebra A_n equals the dimension of the Specht module S^{(k, binomial n 2 - k)} of the symmetric group S_{binomial n 2}.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0246",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29558v1",
+    "status": "available",
+    "timestamp": "2026-07-04T05:23:42.180643+00:00",
+    "title": "Conjecture on the sl2-multiplicity decomposition of the graph algebra"
   },
   {
     "consumed_by_exp_id": "",
@@ -3222,48 +3236,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Escher Staircases in Algebra\n\nAn *Escher staircase* is an infinite strictly ascending chain of ideals\n`I\u2080 \u2282 I\u2081 \u2282 I\u2082 \u2282 \u22ef` in a commutative ring. A ring admits such a chain exactly when\nit fails the ascending chain condition, so the staircase is a faithful witness of\nnon-Noetherianity. In the product ring of countably many copies of the integers,\nthe chain of \"sequences vanishing past index `n`\" is an explicit staircase whose\nbottom rung is `{0}` and whose meet is again `{0}`: the chain climbs forever yet its\ninfimum is the point it started from. The `p`-adic integers, a discrete valuation\nring, admit no staircase at all. The following conjectures grow out of this picture.\n\n## 1. The Escher spectrum separates non-Noetherian rings\n\nAttach to each staircase the growth function `n \u21a6 (minimal number of generators of\nI\u2099)`, and define the *Escher spectrum* of a ring as the set of asymptotic growth\nclasses realized by its staircases.\n\n**Conjecture.** The product ring of countably many copies of the integers realizes\nonly linear growth, whereas a polynomial ring in countably many variables realizes\nsuper-polynomial growth; hence the two rings, indistinguishable to the plain\nNoetherian/non-Noetherian dichotomy, have disjoint Escher spectra.\n\n**The key insight is** that the *existence* of an ascending chain is a yes/no fact,\nbut the *rate* at which minimal generating sets must swell along the chain is a\ngenuine, ring-theoretic invariant that discriminates among non-Noetherian rings.\n\n**Why now?** A fully worked base case \u2014 an explicit staircase whose meet collapses to\nits bottom rung \u2014 is available to calibrate growth rates against, so comparisons\nacross rings finally have a fixed reference point.\n\n## 2. Loop-back staircases and collapsing intersections\n\nCall an ascending chain a *loop-back staircase* when the infimum of the whole chain\nequals its smallest member. The product-ring example loops back to `{0}`.\n\n**Conjecture.** A domain admits a loop-back staircase with bottom rung `{0}` if and\nonly if it contains an infinite family of pairwise-comparable ideals with trivial\nintersection; in particular every non-Noetherian von Neumann regular ring admits\none, and this property is strictly stronger than being non-Noetherian.\n\n**The key insight is** that \"looping back to zero\" is not a paradox but the precise\nlattice-theoretic statement that an ascending chain's meet collapses to its start,\nwhich forces a strong intersection condition on the ideal lattice.\n\n**Why now?** The paradoxical Escher framing can be replaced by an exact lattice\ncondition, turning a piece of visual folklore into a falsifiable statement testable\non concrete product and polynomial rings.\n\n## 3. Escher height on the Noetherian side equals Krull dimension\n\nFor a Noetherian ring no infinite ascending chain exists, so define the *Escher\nheight* through *prime* chains: the supremum of lengths of strictly ascending chains\nof prime ideals.\n\n**Conjecture.** For the polynomial ring in `n` variables over a field the Escher\nheight equals `n`, coinciding exactly with Krull dimension.\n\n**The key insight is** that the impossible-staircase intuition should be re-anchored\nto prime chains, where finiteness is guaranteed, converting a vague \"height of the\nEscher effect\" into the well-defined and computable Krull dimension.\n\n**Why now?** With the Noetherian boundary pinned down precisely by the existence of\ninfinite ascending chains, it is exactly the right moment to identify which finite\nchain invariant survives on the Noetherian side.\n\n## 4. The corrected staircase inside integer-valued polynomials\n\nThe ring of integer-valued polynomials, `{f \u2208 \u211a[x] : f(\u2124) \u2286 \u2124}`, is a classical\nnon-Noetherian ring. The frequently quoted filtration `{f : f(\u2124) \u2286 2\u207f\u2124}` is in fact\n*descending*, since `2\u207f\u207a\u00b9\u2124 \u2286 2\u207f\u2124`; its intersection is `{0}`.\n\n**Conjecture.** A genuine *ascending* Escher staircase lives in the binomial-\ncoefficient basis: the ideals generated by the first `n` binomial polynomials\n`binom(x,0),\u2026,binom(x,n-1)` strictly ascend, and their union is a\nnon-finitely-generated ideal, constructively witnessing the failure of the ascending\nchain condition.\n\n**The key insight is** that the natural ascending structure of this ring lives in the\nbinomial basis, not in the powers-of-two filtration whose inclusions actually run the\nwrong way.\n\n**Why now?** A verified template for ascending chains with controlled intersections\nnow exists in a simple product ring, and transporting it to the binomial basis is the\nnatural next test of the framework.\n\n## 5. Escher-rigid rings: uniform bounds beyond Noetherianity\n\nA ring has no Escher staircase exactly when it is Noetherian, as the `p`-adic\nintegers show. Call a ring *Escher-rigid* if even the submodules of every finitely\ngenerated module admit no infinite ascending chain.\n\n**Conjecture.** Every discrete valuation ring is Escher-rigid; every Artinian ring is\nEscher-rigid with a *uniform* finite bound on chain lengths; and there exist\nNoetherian rings that forbid infinite chains yet admit no uniform length bound.\n\n**The key insight is** that forbidding infinite ascending chains is qualitative, but\nthe existence of a uniform numerical ceiling on chain length is a strictly finer\nstratification of the Noetherian world.\n\n**Why now?** The equivalence between admitting a staircase and being non-Noetherian is\nnow settled, and the `p`-adic integers furnish a clean rigid example, so quantifying\nrigidity inside the Noetherian class is the natural refinement.\n",
+    "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
-      "Algebra",
-      "Pythagorean"
+      "Novelty",
+      "NumberTheory"
     ],
-    "id": "fd_0246",
+    "id": "fd_0114",
     "priority_score": 0.75,
     "research_mode": "team",
-    "source_exp_id": "3498198a",
+    "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-04T05:06:05.464784+00:00",
-    "title": "An *Escher staircase* is an infinite strictly ascending chain of ideals"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Dark Mathematics\n\nA *dark theorem* asserts that witnesses of some property exist \u2014 indeed that many\ndo \u2014 while no single witness can ever be named. This cycle isolated the\nstructural core of that phenomenon, showed it forms a strict, non-collapsing\nhierarchy graded by how many witnesses are provably present, showed the hierarchy\nis amplified when two dark theories are combined, and refuted the naive claim\nthat dark theorems are dense under uniform counting. The following conjectures\ngrow directly out of those findings.\n\n## 1. The darkness spectrum runs through the ordinals\n\nThe graded hierarchy of darkness, in which level `k` means \"at least `k`\nwitnesses are provably present but none is findable,\" should not stop at the\nfinite levels. Replacing the plain counting markers by fast-growing counting\nfunctions extends the ladder past every finite stage and into the transfinite,\nwith a distinguished rung where provable multiplicity finally outruns what\nordinary arithmetic induction can certify.\n\n*The key insight is* that the exact ordinal at which darkness becomes\nunmeasurable by finitary means should coincide with the classical\nindependence thresholds already known from strengthened-Ramsey and\ntree-termination phenomena, giving a single ordinal invariant for \"how dark\" a\nstatement is.\n\n*Why now?* We have, for the first time, a level function for darkness that is\nprovably strict between consecutive stages; extending a strict finite ladder to\nan ordinal-indexed one is the natural and now-tractable next step.\n\n## 2. Darkness has a lattice of its own\n\nTheories combine, and darkness survives the combination: joining a theory that\nsees `a` hidden witnesses with one that sees `b` yields a theory that provably\nsees `max(a,b)` \u2014 strictly more than either alone. This suggests the darkness\nlevel is a structured, order-respecting invariant, not a mere label.\n\n*The key insight is* that combining ignorance can manufacture strictly deeper\nignorance: two theories, each unable to name a witness, can jointly prove that\neven more witnesses exist while remaining just as blind.\n\n*Why now?* The join behaviour is already pinned down exactly; the immediate\nquestion \u2014 whether meets, tops, and a full homomorphism onto the level scale also\nexist \u2014 is squarely posed and testable.\n\n## 3. Dark theorems are rare by count but may be generic by weight\n\nCounting witnesses uniformly, exactly one configuration in every finite family is\ndark, so darkness has vanishing density \u2014 the slogan \"most true statements are\ndark\" is false as literally stated. Yet the intuition that independence is\ntypical is compelling, which points to the wrong yardstick being used.\n\n*The key insight is* that genericity of darkness must be measured by logical\ncomplexity, not by raw instance counts: a single statement whose one witness is\nastronomically hard to certify should carry more weight than a whole family of\neasily checked ones.\n\n*Why now?* We have a clean negative result under uniform counting; this forces\nthe precise, answerable question of which weighting restores density, turning a\nvague slogan into a sharp conjecture.\n\n## 4. Reflection turns dark theorems bright\n\nDarkness is measured relative to a base theory. Strengthening that theory \u2014 for\ninstance by asserting that what it proves is true \u2014 should make some previously\nunnameable witnesses suddenly findable, lowering the darkness level of exactly\nthe statements the new principle reaches.\n\n*The key insight is* that darkness is a relative, not absolute, property, and\neach increment in the reflective strength of a theory should be readable as a\nmeasurable decrease in the darkness of a specific family of statements.\n\n*Why now?* With darkness quantified on a strict scale, the effect of a\nreflection step can be stated as an exact numerical drop in level, making a\npreviously philosophical remark into a precise conjecture.\n\n## 5. Some witnesses are hidden forever, and their depth is a Turing degree\n\nThe purest dark theorems assert an infinite supply of witnesses none of which can\nbe exhibited. Such objects should exist throughout the computable-in-the-halting-\nproblem range, and the difficulty of the (uncomputable) function that would name\na witness should classify exactly how deeply the witnesses are hidden.\n\n*The key insight is* that permanent unfindability is not a single condition but a\ngraded one, calibrated by the computational complexity of the witness-selecting\nfunction, with a least degree marking the frontier between extractable and\nforever-hidden existence.\n\n*Why now?* The structural definition of provable-existence-without-provable-\nwitness is now firmly in hand; attaching a computational degree to it is the\nnatural bridge from the logic of darkness to its effective content.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0247",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "6f613cb7",
-    "status": "available",
-    "timestamp": "2026-07-04T05:18:14.306556+00:00",
-    "title": "A *dark theorem* asserts that witnesses of some property exist \u2014 indeed that man"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nFive self-contained, falsifiable conjectures arising from the study of *possibility*\ntopologies (pooled resolution) as the order-dual of *consensus* topologies (unanimous\nagreement) among a family of observers, each assigning their own topology to a fixed set.\n\n## 1. The Possibility Number\n\nAlongside the number of observers whose *agreement* reconstructs a space, define its dual:\nthe least number of coarser observers whose *pooled* view already isolates every point,\nturning the space discrete. **Conjecture:** the real line has possibility number exactly\ntwo \u2014 the left-looking and right-looking half-open viewpoints together isolate every point\nthrough the collapse `[x, x+1) \u2229 (x-1, x] = {x}`, and no single coarser observer isolates\nanything \u2014 and a metrizable space has finite possibility number if and only if it carries a\ncountable network.\n\nThe key insight is that discreteness of the pooled topology is a *pointwise* condition:\neach singleton must appear as a finite intersection of open sets contributed by individual\nobservers, so the possibility number measures how many viewpoints must be superimposed\nbefore every point becomes individually distinguishable.\n\nWhy now? The exact discreteness collapse of the two half-open viewpoints on the line has\njust been established, giving a concrete anchor case from which the general invariant can be\ncalibrated and tested against classical spaces.\n\n## 2. Join-Reducibility Governs Genuine Representability\n\nWhether a space can be reconstructed as the agreement of two strictly sharper viewpoints is\nequivalent to whether its topology is a join of two strictly smaller topologies in the\nlattice of all topologies on the set. **Conjecture:** the viewpoints that *cannot* be split\nthis way are exactly the discrete topology together with those whose lattice of open sets\nhas a unique maximal proper element, and on a finite set they are precisely the topologies\nwhose specialisation order is a forest with a single source.\n\nThe key insight is that \"how many observers reconstruct a space\" is not a geometric\nquestion at all but an order-theoretic one about covers and atoms in the lattice of\ntopologies, so rigidity is a statement about join-irreducibility rather than about the\nspace's shape.\n\nWhy now? The reduction of representability to a single join-reducibility condition is in\nhand, so the classification of the rigid (unsplittable) viewpoints becomes a concrete and\nattackable lattice problem.\n\n## 3. Separation and Phantom Number Are Independent\n\nBeing highly separated (metrizable, Hausdorff) neither forces nor forbids a low observer\ncount: the blurred two-point space needs only two observers, while the fully-resolved\ntwo-point space \u2014 as separated as possible \u2014 cannot be split at all. **Conjecture:** for any\ntarget observer count in {zero, two, infinite} and any consistent combination of the\nclassical separation axioms, there is a space realising exactly that count and exactly those\naxioms.\n\nThe key insight is that separation axioms constrain the specialisation preorder of a space\nwhile the phantom number constrains join-reducibility of its topology, and these two\ninvariants can be dialled independently by gluing together simple Sierpinski and indiscrete\nbuilding blocks.\n\nWhy now? Both halves of the original metrizability heuristic have just been refuted by\nminimal two-point examples, exposing the two invariants as orthogonal and inviting a full\nindependence theorem.\n\n## 4. Observer Chains Between Pooling and Agreement\n\nA single pair of observers on the line yields three strictly ordered realities \u2014 discrete\nwhen pooled, Euclidean when agreed upon, indiscrete when ignored. **Conjecture:** replacing\nstrict unanimity by a \"k-out-of-n majority see it\" rule produces a strictly increasing chain\nof topologies as the required majority grows, and for the two half-open observers on the\nline this chain has no terms strictly between discrete and Euclidean; a third, centrally\nplaced observer is needed to create a genuinely intermediate reality.\n\nThe key insight is that pooling and agreement are the two endpoints of a whole spectrum of\nconsensus rules indexed by how many observers must concur, and the coarseness of the\nresulting reality varies monotonically along that spectrum.\n\nWhy now? The extreme cases (full pooling and full agreement) have been pinned down exactly\nfor a concrete observer pair, so the intermediate majority rules can be measured against\nfixed, known endpoints.\n\n## 5. Metrizability as an Artefact of Disagreement\n\nOn the line, two individually non-metrizable viewpoints agree on exactly the metrizable\nEuclidean topology. **Conjecture:** every metrizable topology on a set is the agreement of\ntwo non-metrizable viewpoints on that set, so metrizability is never intrinsic to a single\nviewpoint but always emerges from the consensus of two non-metrizable ones; more sharply, if\ntwo hereditarily Lindelof viewpoints pool to the discrete topology, their agreement is\nmetrizable.\n\nThe key insight is that the metric structure of the line factors through a left/right\nasymmetry: each one-sided viewpoint is badly non-metrizable, yet cancelling the asymmetry by\ntaking their common opens restores a metric.\n\nWhy now? The concrete Sorgenfrey decomposition of the Euclidean line into two non-metrizable\nhalves is now fully worked out, providing the template from which a general \"metrizability\nfrom disagreement\" principle can be abstracted.\n\n\n# Future Directions\n\nFive self-contained, falsifiable conjectures arising from the study of *possibility*\ntopologies (pooled resolution) as the order-dual of *consensus* topologies (unanimous\nagreement) among a family of observers, each assigning their own topology to a fixed set.\n\n## 1. The Possibility Number\n\nAlongside the number of observers whose *agreement* reconstructs a space, define its dual:\nthe least number of coarser observers whose *pooled* view already isolates every point,\nturning the space discrete. **Conjecture:** the real line has possibility number exactly\ntwo \u2014 the left-looking and right-looking half-open viewpoints together isolate every point\nthrough the collapse `[x, x+1) \u2229 (x-1, x] = {x}`, and no single coarser observer isolates\nanything \u2014 and a metrizable space has finite possibility number if and only if it carries a\ncountable network.\n\nThe key insight is that discreteness of the pooled topology is a *pointwise* condition:\neach singleton must appear as a finite intersection of open sets contributed by individual\nobservers, so the possibility number measures how many viewpoints must be superimposed\nbefore every point becomes individually distinguishable.\n\nWhy now? The exact discreteness collapse of the two half-open viewpoints on the line has\njust been established, giving a concrete anchor case from which the general invariant can be\ncalibrated and tested against classical spaces.\n\n## 2. Join-Reducibility Governs Genuine Representability\n\nWhether a space can be reconstructed as the agreement of two strictly sharper viewpoints is\nequivalent to whether its topology is a join of two strictly smaller topologies in the\nlattice of all topologies on the set. **Conjecture:** the viewpoints that *cannot* be split\nthis way are exactly the discrete topology together with those whose lattice of open sets\nhas a unique maximal proper element, and on a finite set they are precisely the topologies\nwhose specialisation order is a forest with a single source.\n\nThe key insight is that \"how many observers reconstruct a space\" is not a geometric\nquestion at all but an order-theoretic one about covers and atoms in the lattice of\ntopologies, so rigidity is a statement about join-irreducibility rather than about the\nspace's shape.\n\nWhy now? The reduction of representability to a single join-reducibility condition is in\nhand, so the classification of the rigid (unsplittable) viewpoints becomes a concrete and\nattackable lattice problem.\n\n## 3. Separation and Phantom Number Are Independent\n\nBeing highly separated (metrizable, Hausdorff) neither forces nor forbids a low observer\ncount: the blurred two-point space needs only two observers, while the fully-resolved\ntwo-point space \u2014 as separated as possible \u2014 cannot be split at all. **Conjecture:** for any\ntarget observer count in {zero, two, infinite} and any consistent combination of the\nclassical separation axioms, there is a space realising exactly that count and exactly those\naxioms.\n\nThe key insight is that separation axioms constrain the specialisation preorder of a space\nwhile the phantom number constrains join-reducibility of its topology, and these two\ninvariants can be dialled independently by gluing together simple Sierpinski and indiscrete\nbuilding blocks.\n\nWhy now? Both halves of the original metrizability heuristic have just been refuted by\nminimal two-point examples, exposing the two invariants as orthogonal and inviting a full\nindependence theorem.\n\n## 4. Observer Chains Between Pooling and Agreement\n\nA single pair of observers on the line yields three strictly ordered realities \u2014 discrete\nwhen pooled, Euclidean when agreed upon, indiscrete when ignored. **Conjecture:** replacing\nstrict unanimity by a \"k-out-of-n majority see it\" rule produces a strictly increasing chain\nof topologies as the required majority grows, and for the two half-open observers on the\nline this chain has no terms strictly between discrete and Euclidean; a third, centrally\nplaced observer is needed to create a genuinely intermediate reality.\n\nThe key insight is that pooling and agreement are the two endpoints of a whole spectrum of\nconsensus rules indexed by how many observers must concur, and the coarseness of the\nresulting reality varies monotonically along that spectrum.\n\nWhy now? The extreme cases (full pooling and full agreement) have been pinned down exactly\nfor a concrete observer pair, so the intermediate majority rules can be measured against\nfixed, known endpoints.\n\n## 5. Metrizability as an Artefact of Disagreement\n\nOn the line, two individually non-metrizable viewpoints agree on exactly the metrizable\nEuclidean topology. **Conjecture:** every metrizable topology on a set is the agreement of\ntwo non-metrizable viewpoints on that set, so metrizability is never intrinsic to a single\nviewpoint but always emerges from the consensus of two non-metrizable ones; more sharply, if\ntwo hereditarily Lindelof viewpoints pool to the discrete topology, their agreement is\nmetrizable.\n\nThe key insight is that the metric structure of the line factors through a left/right\nasymmetry: each one-sided viewpoint is badly non-metrizable, yet cancelling the asymmetry by\ntaking their common opens restores a metric.\n\nWhy now? The concrete Sorgenfrey decomposition of the Euclidean line into two non-metrizable\nhalves is now fully worked out, providing the template from which a general \"metrizability\nfrom disagreement\" principle can be abstracted.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0248",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "ca29fc4b",
-    "status": "available",
-    "timestamp": "2026-07-04T05:20:28.031700+00:00",
-    "title": "Five self-contained, falsifiable conjectures arising from the study of *possibil"
+    "timestamp": "2026-07-03T00:49:27.007324+00:00",
+    "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
   {
     "consumed_by_exp_id": "",
