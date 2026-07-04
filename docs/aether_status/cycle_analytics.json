@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-04T00:18:41.585847+00:00",
+  "last_updated": "2026-07-04T00:48:13.191294+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -31701,6 +31701,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-04T00:18:41.531216+00:00",
       "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4178,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 84,
+      "domain": "Applications",
+      "duration_seconds": 1575.8403759002686,
+      "end_time": 1783125895.3820987,
+      "files_integrated": 7,
+      "job_id": "3a1da3d1",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v16",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.74,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 1.0,
+        "composite": 0.7953,
+        "cross_domain": 0.7,
+        "grade": "world_class",
+        "importance": 0.8612,
+        "novelty": 0.95,
+        "proof_depth": 0.8231,
+        "usefulness": 0.7615
+      },
+      "quality_score": 0.71008,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783124319.5417228,
+      "strategy_count": 0,
+      "theorem_count": 11,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 11,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-04T00:48:13.050795+00:00",
+      "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
     }
   ]
 }

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8ffddeae",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Balanced side lengths maximise spanning trees\n\nDerived from this cycle's findings (computable Kirchhoff counter `tauG`, the\nverified instances `balanced_strict_4/6/8`, and the ab",
-      "quality_score": 0.76734,
-      "sorry_count": 2,
-      "theorem_count": 16,
-      "timestamp": "2026-06-28T05:31:58",
-      "title": "Balanced Side Lengths Maximize Spanning Trees in Free Boundary Product Grids"
-    },
-    {
       "cycle_id": "dbb7efcb",
       "domain": "Novelty",
       "key_insight": "# FUTURE DIRECTIONS — EML Differential Equations\n\nDerived from this cycle's findings (`EMLReductionOfOrder`, `EMLFirstOrderGroup`,\n`EMLRiccatiNormalForm`) together with the existing obstruction layer",
@@ -499,19 +489,19 @@
       "theorem_count": 6,
       "timestamp": "2026-07-03T22:28:46",
       "title": "Infinitely Many Solutions to Prime-Base Binomial Congruences"
+    },
+    {
+      "cycle_id": "3a1da3d1",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Vampire Numbers and the Fang Congruence\n\n## 1. The mod-9 residue distribution is asymptotically saturated\nEvery digit-preserving factorization forces `(x-1)(y-1) ≡ 1` modulo nine",
+      "quality_score": 0.71008,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-04T00:48:10",
+      "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b3c4aeb5",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — strong blocking sets / minimal codes\n\nBuilding on `Catalog/Novelty/FanoStrongBlocking.lean`, which proves that the Fano plane\n`PG(2,2)` has strong-blocking-set threshold exactly",
-      "quality_score": 0.59463,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-27T21:04:38",
-      "title": "Fano-plane threshold for additive strong blocking sets in the h=1 case"
-    },
     {
       "cycle_id": "dd8b8392",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 8,
       "timestamp": "2026-07-04T00:16:33",
       "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+    },
+    {
+      "cycle_id": "3a1da3d1",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Vampire Numbers and the Fang Congruence\n\n## 1. The mod-9 residue distribution is asymptotically saturated\nEvery digit-preserving factorization forces `(x-1)(y-1) ≡ 1` modulo nine",
+      "quality_score": 0.71008,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-04T00:48:10",
+      "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b87dcfdc",
-      "domain": "Novelty",
-      "name": "isCyclic_galois_prime",
-      "quality": 0.84436
-    },
-    {
-      "cycle_id": "b87dcfdc",
-      "domain": "Novelty",
-      "name": "card_galois_prime",
-      "quality": 0.84436
-    },
-    {
-      "cycle_id": "50540462",
-      "domain": "Novelty",
-      "name": "EUgen_perm",
-      "quality": 0.7700800000000001
-    },
     {
       "cycle_id": "50540462",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "A_qadic_valuation",
       "quality": 0.7903600000000002
+    },
+    {
+      "cycle_id": "3a1da3d1",
+      "domain": "Applications",
+      "name": "digitsum_modEq_nine",
+      "quality": 0.71008
+    },
+    {
+      "cycle_id": "3a1da3d1",
+      "domain": "Applications",
+      "name": "digitsum_modEq_three",
+      "quality": 0.71008
+    },
+    {
+      "cycle_id": "3a1da3d1",
+      "domain": "Applications",
+      "name": "IsFangPair",
+      "quality": 0.71008
     }
   ],
-  "last_updated": "2026-07-04T00:16:33",
+  "last_updated": "2026-07-04T00:48:10",
   "open_questions": [
     {
       "context": "and is genuinely proved (no `sorry`, no `decide`-only). The false converse is",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "6501d983",
-        "quality": 0.6341419999999999,
-        "theorems": 2,
-        "title": "Deepening: Hilbert 12: Kronecker-Weber Generalization"
-      },
-      {
         "cycle_id": "756bc0b6",
         "quality": 0.389,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.6907399999999999,
         "theorems": 8,
         "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+      },
+      {
+        "cycle_id": "3a1da3d1",
+        "quality": 0.71008,
+        "theorems": 11,
+        "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
       }
     ],
     "Bridges": [
