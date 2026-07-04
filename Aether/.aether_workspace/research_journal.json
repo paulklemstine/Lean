@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "2f2206c6",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Multiplicability of Upho Posets from Vertex-Transitive Graphs\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\ncycle.  The cycle established two `sorr",
-      "quality_score": 0.71552,
-      "sorry_count": 1,
-      "theorem_count": 15,
-      "timestamp": "2026-06-28T00:49:06",
-      "title": "Multiplicability of Upho Posets from Vertex-Transitive Graphs"
-    },
-    {
       "cycle_id": "2d24ca82",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Regularized Sum of Primes via Analytic Continuation\n\nDerived from this cycle's findings: the prime Dirichlet series\n`P(s) = ∑_p p^{-s}` has abscissa of convergence exactly `1`\n(`",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-07-04T08:03:45",
       "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+    },
+    {
+      "cycle_id": "865247f5",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures emerging from the study of how the image of a finite set of\nintegers behaves under a monic polynomial map of degree `k`.\n\n## 1. The factor-`k` collap",
+      "quality_score": 0.35455610000000004,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-04T08:23:44",
+      "title": "Explicit Quantitative Lower Bound on Power-Saving for Monic Minkowski Polynomials"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.75424
     }
   ],
-  "last_updated": "2026-07-04T08:03:45",
+  "last_updated": "2026-07-04T08:23:44",
   "open_questions": [
     {
       "context": "and the colour pigeonhole.  Both are fully provable in Lean with no `sorry`.; `afl_constant_gap` — all `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "12f18d90",
-        "quality": 0.5938800000000001,
-        "theorems": 6,
-        "title": "Knots That Think: Cognition as Braiding in Category Theory"
-      },
-      {
         "cycle_id": "3d19dc30",
         "quality": 0.4650941176470589,
         "theorems": 13,
@@ -3141,6 +3135,12 @@
         "quality": 0.75424,
         "theorems": 10,
         "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+      },
+      {
+        "cycle_id": "865247f5",
+        "quality": 0.35455610000000004,
+        "theorems": 0,
+        "title": "Explicit Quantitative Lower Bound on Power-Saving for Monic Minkowski Polynomial"
       }
     ],
     "Bridges": [
