@@ -17,7 +17,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: unnamed_concept"
   },
   {
-    "consumed_by_exp_id": "87e9f111",
+    "consumed_by_exp_id": "",
     "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
     "domains": [
       "Novelty",
@@ -27,7 +27,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:26.963635+00:00",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
@@ -1316,7 +1316,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing the generalized honeymoon Oberwolfach problem in Lean 4"
   },
   {
-    "consumed_by_exp_id": "116dddb5",
+    "consumed_by_exp_id": "",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
     "domains": [
       "Novelty",
@@ -1326,7 +1326,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:27.030210+00:00",
     "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
   },
@@ -1459,20 +1459,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T04:32:10.282925+00:00",
     "title": "Rational Points Finiteness"
-  },
-  {
-    "consumed_by_exp_id": "5f5c5773",
-    "description": "We classify the finite posets whose probabilistic powerdomain is an RB-domain by proving that a finite poset P has this property if and only if it has a least element and its undirected Hasse graph is a tree.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0127",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02231v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T04:55:55.366539+00:00",
-    "title": "Characterization of Finite Posets with RB-Domain Probabilistic Powerdomains"
   },
   {
     "consumed_by_exp_id": "",
@@ -3469,7 +3455,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "That the entries of an integer right triangle are forced"
   },
   {
-    "consumed_by_exp_id": "1db5380b",
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -3479,9 +3465,24 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:27.007324+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Sharp Threshold Constants for Cycle Games\n\n## 1. The threshold constant tends to two\n\n**Conjecture.** For the cycle avoidance/creation game, the leading constant\n`c_k = ((k-1)\u00b7(2(k-1)/k)^{k-2})^{1/(k-1)}` is not monotone in `k`: it rises from\n`c_4 \u2248 1.89`, peaks near `k \u2248 15` at roughly `2.15`, and then decreases, converging to\nexactly `2` as the cycle length grows without bound.\n\nThe key insight is that the constant factorises as a product of two competing pieces,\n`(k-1)^{1/(k-1)}` and `(2(k-1)/k)^{(k-2)/(k-1)}`, the first shrinking towards `1` and the\nsecond growing towards `2`; their interaction produces a single interior maximum and a\nclean universal limit of `2` that is independent of every lower-order detail of the\nformula.\n\nWhy now? The exponent and the exact closed form of the constant are now pinned down\nrigorously, so the asymptotics of the constant itself \u2014 previously folklore \u2014 become a\nprecise, checkable analytic target.\n\n## 2. Densest-subgraph characterisation of every threshold exponent\n\n**Conjecture.** For any fixed connected graph `H`, the avoidance-game exponent equals\n`1/m\u2082(H)`, and among all graphs with a fixed number of edges the cycle is the unique\nminimiser of `m\u2082`, hence the \"hardest to force\" among fixed-edge targets.\n\nThe key insight is that `m\u2082(H)` is governed entirely by the sparsest, most tree-like\nwitness inside `H`: a cycle is exactly the connected graph whose every proper subgraph is\na forest, which forces its maximum 2-density down to the extremal value `1 + 1/(k-2)`.\n\nWhy now? We have an explicit, verified formula `m\u2082(C_k) = (k-1)/(k-2)` obtained by a\nclean forest/edge-count argument that generalises verbatim to other sparse targets.\n\n## 3. Second-order (window) width of the cycle-game threshold\n\n**Conjecture.** The transition window of the cycle game has width of smaller order than\nthe threshold itself: there is an exponent `\u03b2 < (k-2)/(k-1)` such that the game outcome\nflips from a decisive Maker win to a decisive Breaker win as the bias moves across an\ninterval of length `\u0398(n^\u03b2)` centred at `c_k \u00b7 n^{(k-2)/(k-1)}`.\n\nThe key insight is that once the leading constant is sharp, the residual uncertainty is\ncontrolled by fluctuations in the number of length-`k` cycles available to Maker, whose\nconcentration should localise the transition far more tightly than the main term.\n\nWhy now? Sharpness of the leading constant is the prerequisite for even asking about the\nwidth; with the constant fixed, the window becomes the natural next quantitative object.\n\n## 4. Constant-sharp thresholds for unions and blow-ups of cycles\n\n**Conjecture.** For a disjoint union of cycles, or a bounded \"blow-up\" of a single\ncycle, the threshold bias is again `c \u00b7 n^{(k-2)/(k-1)}` with the *same* exponent as the\ndensest cycle component, and an explicitly computable constant obtained by combining the\nper-component constants through their 2-densities.\n\nThe key insight is that the exponent is dictated solely by the densest component, while\nthe constant aggregates the components multiplicatively in a way mirroring the\nfactorised structure of the single-cycle constant.\n\nWhy now? The single-cycle constant is now known in closed form, giving the exact\nbuilding block from which composite constants can be assembled and tested.\n\n## 5. A potential-function certificate for the Breaker side\n\n**Conjecture.** There is an explicit potential function on partial boards whose expected\none-move change is nonpositive precisely when the bias exceeds\n`(1+\u03b5)\u00b7c_k\u00b7n^{(k-2)/(k-1)}`, yielding a self-contained Breaker strategy that matches the\nsharp constant without any probabilistic detour.\n\nThe key insight is that the sharp constant `c_k` should appear as the exact critical\nvalue at which a weight of the form `\u2211 \u03bb^{(edges of a threatened cycle)}` stops being a\nsupermartingale, converting the asymptotic threshold into a deterministic invariant.\n\nWhy now? With the target constant identified exactly, one can calibrate the potential's\nbase `\u03bb` to that value and test the supermartingale property directly on small boards.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0263",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "563a1975",
+    "status": "available",
+    "timestamp": "2026-07-04T09:12:32.209015+00:00",
+    "title": "**Conjecture.** For the cycle avoidance/creation game, the leading constant"
   },
   {
     "consumed_by_exp_id": "",
