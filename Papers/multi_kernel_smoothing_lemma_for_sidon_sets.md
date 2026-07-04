@@ -1,68 +1,65 @@
-# Computational Evidence — Sidon sets, additive energy, and the representation kernel
+# Computational Evidence — Sidon multi-kernel support counts
 
-All computations below were run with exact integer/`Finset` arithmetic (no
-floating point). A finite set `s ⊆ ℤ` is **Sidon** when all pairwise sums are
-distinct. We write:
+All computations below were run over `Finset ℤ` (exact integer arithmetic, no
+floating point). A finite set `s` is *Sidon* (a `B₂` set) when all pairwise sums
+are distinct.
 
-* `E[s]` = additive energy = `#{(a,b,c,d) ∈ s⁴ : a+b = c+d}` (`Finset.addEnergy`);
-* `r_s(x)` = representation kernel = `#{(a,b) ∈ s² : a+b = x}`;
-* `s+s` = sumset = `{a+b : a,b ∈ s}`.
+## 1. Small-case calculations
 
-## 1. Additive energy: the exact Sidon value and the strict gap
+For the power-of-two Sidon sets `s = {2⁰, …, 2^{k-1}}` (a genuine Sidon family):
 
-Claim under test: `E[s] + |s| = 2|s|²` **iff** `s` is Sidon; and `E[s] + |s| ≥ 2|s|²`
-always (universal lower bound).
+| `s`            | `k=|s|` | `|s+s|` | `|s-s|` | `|s|(|s|+1)` vs `2|s+s|` | `|s|²-|s|+1` vs `|s-s|` |
+|----------------|---------|---------|---------|--------------------------|------------------------|
+| `{1}`          | 1       | 1       | 1       | `2 = 2·1`                | `1 = 1`                |
+| `{1,2}`        | 2       | 3       | 3       | `6 = 2·3`                | `3 = 3`                |
+| `{1,2,4}`      | 3       | 6       | 7       | `12 = 2·6`               | `7 = 7`                |
+| `{1,2,4,8}`    | 4       | 10      | 13      | `20 = 2·10`              | `13 = 13`              |
+| `{1,2,4,8,16}` | 5       | 15      | 21      | `30 = 2·15`              | `21 = 21`              |
 
-| set `s`            | Sidon? | `|s|` | `E[s]` | `2|s|² − |s|` | `E[s]` vs bound |
-|--------------------|:------:|:-----:|:------:|:-------------:|:---------------:|
-| `{0,1,3,7}`        | yes    | 4     | 28     | 28            | equal (tight)   |
-| `{0,1,2}` (AP)     | no     | 3     | 19     | 15            | `19 > 15`       |
-| `{0,1,2,3}` (AP)   | no     | 4     | 44     | 28            | `44 > 28`       |
-| `{0,2,5,11,13}`    | no     | 5     | 53     | 45            | `53 > 45`       |
+Both exact support laws hold on every case:
 
-Every row satisfies `E[s] ≥ 2|s|² − |s|`, with **equality exactly on the Sidon
-row**. This is the content of `addEnergy_ge` and `sidon_iff_addEnergy`.
+* **Sum kernel:**   `2·|s + s| = |s|·(|s| + 1)`.
+* **Difference kernel:** `|s - s| = |s|² - |s| + 1`, i.e. `|s-s| + |s| = |s|²+1`.
 
-## 2. Representation kernel `r_s(x)` is two-valued for Sidon sets
+## 2. The conservation law
 
-For the Sidon set `s = {0,1,3,7}` the nonzero values of `r_s` are:
+Checking `2·|s + s| = |s - s| + 2·|s| - 1`:
 
-```
-x : 0 1 2 3 4 6 7 8 10 14
-r : 1 2 1 2 2 2 2 2  2  1      (doubles 0,2,6,14 → r=1; all others r=2)
-```
+| `k` | `2|s+s|` | `|s-s| + 2|s| - 1` |
+|-----|----------|--------------------|
+| 1   | 2        | `1 + 2 - 1 = 2`    |
+| 2   | 6        | `3 + 4 - 1 = 6`    |
+| 3   | 12       | `7 + 6 - 1 = 12`   |
+| 4   | 20       | `13 + 8 - 1 = 20`  |
+| 5   | 30       | `21 + 10 - 1 = 30` |
 
-Maximum is `2`, and `r_s(x)=1` occurs precisely at the doubles `2a`
-(`a ∈ {0,1,3,7} → 0,2,6,14`). This matches `sidon_repCount_le_two` and
-`sidon_repCount_eq_one_iff`.
+The identity holds exactly in every case.
 
-For the non-Sidon `s = {0,1,2,3}` the kernel exceeds `2`: `r_s(3) = 4`
-(pairs `(0,3),(1,2),(2,1),(3,0)`), so the bound `≤ 2` is genuinely special to
-Sidon sets.
+## 3. Counterexample hunt (necessity of the Sidon hypothesis)
 
-## 3. Sumset size
+The individual support laws are *false* for non-Sidon sets, confirming the Sidon
+hypothesis is load-bearing:
 
-Claim: for Sidon `s`, `2·|s+s| = |s|(|s|+1)`.
+| non-Sidon `s` | `k` | `|s-s|` | `|s|²-|s|+1` | `2|s+s|` | `|s|(|s|+1)` |
+|---------------|-----|---------|--------------|----------|--------------|
+| `{1,2,3,4}`   | 4   | 7       | 13           | 14       | 20           |
+| `{1,2,3,5}`   | 4   | 9       | 13           | 16       | 20           |
+| `{0,1,3,4}`   | 4   | 9       | 13           | 18       | 20           |
 
-| set `s`         | Sidon? | `2·|s+s|` | `|s|(|s|+1)` | match? |
-|-----------------|:------:|:---------:|:------------:|:------:|
-| `{0,1,3,7}`     | yes    | 20        | 20           | yes    |
-| `{0,1,2,3}` (AP)| no     | 14        | 20           | no     |
-| `{0,2,5,11,13}` | no     | 28        | 30           | no     |
+For every non-Sidon sample the difference-set count drops strictly below the
+maximal value `|s|² - |s| + 1`. This is exactly the content of the *sharp
+characterisation* proved in `DifferenceKernel.lean`: a nonempty set is Sidon
+**iff** `|s - s| + |s| = |s|² + 1`.
 
-Equality holds exactly on the Sidon row — the content of `sidon_sumset_card`.
+## 4. Edge cases
 
-## 4. Counterexample hunt
+* **Empty set:** `|∅ - ∅| = 0`, while `|s|² - |s| + 1 = 1`. The formula requires
+  nonemptiness; this hypothesis is retained in all statements.
+* **Singletons:** `k = 1` gives `|s+s| = |s-s| = 1`, and all three laws hold.
 
-The universal lower bound `E[s] ≥ 2|s|² − |s|` was tested on all AP witnesses,
-random small sets, and the geometric family `{2⁰,…,2^{k-1}}` (a Sidon set for
-every `k`); **no counterexample was found**, consistent with the proved theorem.
-The *equality* `E[s] + |s| = 2|s|²` was found to fail for every non-Sidon set
-tested and to hold for every Sidon set tested, confirming the biconditional.
+## 5. Sequence note
 
-## 5. OEIS note
-
-The maximum size `F(N)` of a Sidon set contained in `{1,…,N}` is the classical
-Sidon extremal function (OEIS A005282-adjacent perfect-difference-set data);
-this file studies the *energy/kernel* invariants that govern its extremal
-behaviour rather than the sequence `F(N)` itself, so no new sequence is claimed.
+The difference-set sizes `1, 3, 7, 13, 21, 31, …` for `k = 1,2,3,…` follow
+`k² - k + 1` (centered polygonal-type numbers, OEIS A002061), and the sum-set
+sizes `1, 3, 6, 10, 15, …` are the triangular numbers `k(k+1)/2` (OEIS A000217).
+Both match the proved closed forms.
