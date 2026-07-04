@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "dbb7efcb",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE DIRECTIONS — EML Differential Equations\n\nDerived from this cycle's findings (`EMLReductionOfOrder`, `EMLFirstOrderGroup`,\n`EMLRiccatiNormalForm`) together with the existing obstruction layer",
-      "quality_score": 0.79816,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-28T05:34:37",
-      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
-    },
-    {
       "cycle_id": "b1625408",
       "domain": "Applications",
       "key_insight": "# Future Directions — Gorenstein Polytopes, Joins, and Free Sums\n\nThe verified result `Geometry/GorensteinJoin.lean` *refutes* the mission title: the join of\nGorenstein polytopes is always Gorenstein,",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-07-04T22:07:22",
       "title": "Explicit Formula for 2-adic Valuation of Shifted Perrin Numbers"
+    },
+    {
+      "cycle_id": "054477b4",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThese conjectures are distilled from a single finding: on a finite, strongly\nconnected, edge-weighted digraph whose outgoing weights form probability\ndistributions, the only verte",
+      "quality_score": 0.4514887166666668,
+      "sorry_count": 1,
+      "theorem_count": 10,
+      "timestamp": "2026-07-04T22:19:10",
+      "title": "Non‑existence of non‑constant colorings satisfying the blend condition on finite strongly connected "
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.7258007692307691
     }
   ],
-  "last_updated": "2026-07-04T22:07:22",
+  "last_updated": "2026-07-04T22:19:10",
   "open_questions": [
-    {
-      "context": "unique line) and proves, with zero `sorry`s:",
-      "cycle_id": "bc0a8e2b",
-      "domain": "Applications",
-      "sorry_count": 1,
-      "timestamp": "2026-06-26T14:58:13"
-    },
     {
       "context": "without cross-imports. All results have zero `sorry`s.; What *is* provable, and proved here with zero `sorry`s, is:; All results are proved with zero `sorry`s.",
       "cycle_id": "be72639d",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 3,
       "timestamp": "2026-07-04T22:07:22"
+    },
+    {
+      "context": "necessary.  All main theorems are `sorry`-free and use genuine arguments",
+      "cycle_id": "054477b4",
+      "domain": "Novelty",
+      "sorry_count": 1,
+      "timestamp": "2026-07-04T22:19:10"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "6f613cb7",
-        "quality": 0.6449999999999999,
-        "theorems": 0,
-        "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-      },
-      {
         "cycle_id": "aed51c81",
         "quality": 0.6341600000000001,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.7258007692307691,
         "theorems": 13,
         "title": "Explicit Formula for 2-adic Valuation of Shifted Perrin Numbers"
+      },
+      {
+        "cycle_id": "054477b4",
+        "quality": 0.4514887166666668,
+        "theorems": 10,
+        "title": "Non‑existence of non‑constant colorings satisfying the blend condition on finite"
       }
     ],
     "NumberTheory": [
