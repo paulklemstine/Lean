@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9a7cbc8b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Plethystic Triviality of the Shifted t-Schur Basis\n\nDerived from this cycle's findings:\n- Headline identity `S^t_λ = φ_t(Q_λ)` (`Sfun_eq_phiT_Qfun`) and its strict-partition form",
-      "quality_score": 0.7861499999999999,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-28T08:11:13",
-      "title": "Plethystic Triviality of the Shifted t-Schur Basis"
-    },
-    {
       "cycle_id": "a530b001",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Monotone Circuit Complexity\n\nThis cycle assembled a three-pronged formal toolkit for monotone Boolean circuit\nlower bounds:\n\n* `Basic.lean` — circuits, evaluation, size/depth/var",
@@ -499,19 +489,19 @@
       "theorem_count": 29,
       "timestamp": "2026-07-04T14:40:33",
       "title": "Classification of Discrete d-Pseudomanifolds with 2d+7 Vertices"
+    },
+    {
+      "cycle_id": "244691c2",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nDerived from the study of the stabilizer of a regular unipotent conjugacy class\nunder the center of the simply connected cover, modeled on `SL₂ → PGL₂` and its\ncharacteristic-`p`",
+      "quality_score": 0.8009580000000001,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-07-04T15:14:21",
+      "title": "Scheme-theoretic stabilizer of regular unipotent conjugacy classes under the center of the simply co"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "72f7aee6",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Random Matrices: Edge Universality\n\nDerived from the verified results in `AiryODE.lean`, `AiryKernel.lean`, and\n`AiryNonPolynomial.lean` (all 0-sorry, axioms = {propext, Classica",
-      "quality_score": 0.73264,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-28T04:28:31",
-      "title": "Random Matrices: Edge Universality"
-    },
     {
       "cycle_id": "a59363e7",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 29,
       "timestamp": "2026-07-04T14:40:33",
       "title": "Classification of Discrete d-Pseudomanifolds with 2d+7 Vertices"
+    },
+    {
+      "cycle_id": "244691c2",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nDerived from the study of the stabilizer of a regular unipotent conjugacy class\nunder the center of the simply connected cover, modeled on `SL₂ → PGL₂` and its\ncharacteristic-`p`",
+      "quality_score": 0.8009580000000001,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-07-04T15:14:21",
+      "title": "Scheme-theoretic stabilizer of regular unipotent conjugacy classes under the center of the simply co"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "135cab00",
-      "domain": "Novelty",
-      "name": "is",
-      "quality": 0.7176246153846154
-    },
-    {
-      "cycle_id": "135cab00",
-      "domain": "Novelty",
-      "name": "sum_erase_cartan",
-      "quality": 0.7176246153846154
-    },
-    {
-      "cycle_id": "d80d981e",
-      "domain": "Tropical",
-      "name": "is",
-      "quality": 0.87056
-    },
     {
       "cycle_id": "d80d981e",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "incidence_double_count",
       "quality": 0.7998400000000001
+    },
+    {
+      "cycle_id": "244691c2",
+      "domain": "Applications",
+      "name": "produces",
+      "quality": 0.8009580000000001
+    },
+    {
+      "cycle_id": "244691c2",
+      "domain": "Applications",
+      "name": "det_u",
+      "quality": 0.8009580000000001
+    },
+    {
+      "cycle_id": "244691c2",
+      "domain": "Applications",
+      "name": "det_l",
+      "quality": 0.8009580000000001
     }
   ],
-  "last_updated": "2026-07-04T14:40:33",
+  "last_updated": "2026-07-04T15:14:21",
   "open_questions": [
     {
       "context": "and the colour pigeonhole.  Both are fully provable in Lean with no `sorry`.; `afl_constant_gap` — all `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "ca29fc4b",
-        "quality": 0.467453,
-        "theorems": 0,
-        "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-      },
-      {
         "cycle_id": "0a7c4b5a",
         "quality": 0.65567,
         "theorems": 9,
@@ -3141,6 +3135,12 @@
         "quality": 0.7998400000000001,
         "theorems": 29,
         "title": "Classification of Discrete d-Pseudomanifolds with 2d+7 Vertices"
+      },
+      {
+        "cycle_id": "244691c2",
+        "quality": 0.8009580000000001,
+        "theorems": 24,
+        "title": "Scheme-theoretic stabilizer of regular unipotent conjugacy classes under the cen"
       }
     ],
     "Bridges": [
