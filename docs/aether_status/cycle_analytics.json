@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-04T13:03:56.141664+00:00",
+  "last_updated": "2026-07-04T13:49:15.543295+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -33165,6 +33165,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-04T13:03:55.888978+00:00",
       "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.462,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 132,
+      "domain": "Novelty",
+      "duration_seconds": 1089.5241348743439,
+      "end_time": 1783172571.5056965,
+      "files_integrated": 6,
+      "job_id": "c63aa9e3",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v16",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.38,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.537,
+        "cross_domain": 0.1,
+        "grade": "substantial",
+        "importance": 0.5894,
+        "novelty": 0.89,
+        "proof_depth": 0.4606,
+        "usefulness": 0.2803
+      },
+      "quality_score": 0.6148,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783171481.9815617,
+      "strategy_count": 0,
+      "theorem_count": 7,
+      "theorem_novelty_disproof": 6,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 1,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-04T13:49:15.379234+00:00",
+      "title": "Eventual congruence of mis\u00e8re P\u2011positions in nuclear escalation ladders"
     }
   ]
 }
