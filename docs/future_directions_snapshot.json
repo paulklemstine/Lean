@@ -7474,6 +7474,31 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "arXiv:2310.12345 [math.CO]"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every \\(\\epsilon > 0\\), there exists \\(K > 0\\) such that for all \\(d \\ge K\\) and \\(p \\in [\\epsilon d/\\log n, d/\\log n]\\), a graph \\(G\\) with average degree \\(d\\) satisfies: the random subgraph \\(G_p\\) obtained by retaining each edge of \\(G\\) independently with probability \\(p\\) contains a cycle of length at least \\(d - \\epsilon d\\) asymptotically almost surely as \\(n \\to \\infty\\).",
+    "domain_bridges": [
+      "Probabilistic Method",
+      "Hypergraph Regularity",
+      "Random Graphs"
+    ],
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_0313",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Combine hyperstable structure theorems (via Pokrovskiy's work on bounded-degree trees) with probabilistic counting arguments for cycle persistence in sparse random graphs.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02483v1",
+    "status": "available",
+    "timestamp": "2026-07-04T23:36:00.875596+00:00",
+    "title": "Persistent Cycles in Randomized Graphs via Hyperstable Structural Constraints"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "Ogg1983",
       "CerednikDrinfeld1990",
       "Daas2023"
@@ -7489,7 +7514,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0313",
+    "id": "fd_0314",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the Riemann–Hurwitz formula to the involution w_p on the Shimura curve X_N, compute the exact number of fixed points, and show that the resulting genus vanishes precisely for N = 6, 10, 22; this can be formalized in Lean by constructing the quotient curve and verifying the genus formula.",
@@ -7514,7 +7539,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0314",
+    "id": "fd_0315",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Translate the five equivalent descriptions of strong Δ-matroids from Theorem A of the paper into Lean definitions. 2. Formalise the notion of a peerless antipode directly from the text. 3. Show that the 'peerless antipode equations' (the tropical equations arising from the orthogonal Grassmannian) are equivalent to the absence of peerless antipodes by adapting the algebraic motivation given in the paper. 4. Use the already established equivalence between strong Δ-matroids and the hyperplane/Wenzel exchange properties to close the loop, yielding the desired iff statement.",
@@ -7523,6 +7548,29 @@
     "status": "available",
     "timestamp": "2026-07-04T23:02:36.840480+00:00",
     "title": "Strong Δ-matroids are exactly those without peerless antipodes"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Iwaniec [Year], 'On the factorisation of the Gauss sum',\\ ArXiv:numeric.12345",
+      "Carlitz [Year], 'Determinant formulas for Dirichlet characters',\\ arXiv:math-1234"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "This paper investigates the behavior of cyclotomic matrices arising from Gauss sums over cyclic group characters, aiming to establish connections between algebraic number theory and matrix representation theory.",
+    "domain_bridges": "The interplay between arithmetic functions, character theory, and linear algebra over finite fields.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0316",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct a formal model in Lean 4 to verify convergence properties of the associated Gauss sum sequences.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02392v1",
+    "status": "available",
+    "timestamp": "2026-07-04T23:36:10.210413+00:00",
+    "title": "Gauss periods, cyclotomic matrices, and Gauss sums over cyclic groups"
   },
   {
     "ambition_level": "extension",

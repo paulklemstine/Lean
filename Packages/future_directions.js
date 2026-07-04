@@ -4079,12 +4079,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every \\(\\epsilon > 0\\), there exists \\(K > 0\\) such that for all \\(d \\ge K\\) and \\(p \\in [\\epsilon d/\\log n, d/\\log n]\\), a graph \\(G\\) with average degree \\(d\\) satisfies: the random subgraph \\(G_p\\) obtained by retaining each edge of \\(G\\) independently with probability \\(p\\) contains a cycle of length at least \\(d - \\epsilon d\\) asymptotically almost surely as \\(n \\to \\infty\\).",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_0313",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02483v1",
+    "status": "available",
+    "timestamp": "2026-07-04T23:36:00.875596+00:00",
+    "title": "Persistent Cycles in Randomized Graphs via Hyperstable Structural Constraints"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any squarefree integer N > 1 with an even number of distinct prime factors, the genus of the Atkin\u2013Lehner quotient X_N / \u27e8w_p\u27e9 is zero if and only if N belongs to the finite set {6, 10, 22}.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0313",
+    "id": "fd_0314",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02306v1",
@@ -4099,13 +4113,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0314",
+    "id": "fd_0315",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02419v1",
     "status": "available",
     "timestamp": "2026-07-04T23:02:36.840480+00:00",
     "title": "Strong \u0394-matroids are exactly those without peerless antipodes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This paper investigates the behavior of cyclotomic matrices arising from Gauss sums over cyclic group characters, aiming to establish connections between algebraic number theory and matrix representation theory.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0316",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02392v1",
+    "status": "available",
+    "timestamp": "2026-07-04T23:36:10.210413+00:00",
+    "title": "Gauss periods, cyclotomic matrices, and Gauss sums over cyclic groups"
   },
   {
     "consumed_by_exp_id": "ab59ff3c",

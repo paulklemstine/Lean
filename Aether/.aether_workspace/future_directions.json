@@ -14859,6 +14859,52 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "arXiv:2310.12345 [math.CO]"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every \\(\\epsilon > 0\\), there exists \\(K > 0\\) such that for all \\(d \\ge K\\) and \\(p \\in [\\epsilon d/\\log n, d/\\log n]\\), a graph \\(G\\) with average degree \\(d\\) satisfies: the random subgraph \\(G_p\\) obtained by retaining each edge of \\(G\\) independently with probability \\(p\\) contains a cycle of length at least \\(d - \\epsilon d\\) asymptotically almost surely as \\(n \\to \\infty\\).",
+      "domain_bridges": [
+        "Probabilistic Method",
+        "Hypergraph Regularity",
+        "Random Graphs"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Computation"
+      ],
+      "github_issue": 0,
+      "id": "fd_0313",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "\\(\\text{theorem main} \\ (G \\ : \\text{Graph}) \\ (d \\ : \\mathbb{N}) \\ (\\epsilon \\ : \\mathbb{Q}^+) \\ (p \\ : \\mathbb{Q}) \\ (n \\ : \\mathbb{N}) \\ \\text{Hypothesis} \\ \\text{(Hyp1: } \\text{average_degree G = d}) \\ \\text{(Hyp2: } p \\ge \\epsilon d / \\log n) \\ \\text{(Hyp3: } p \\le d / \\log n) \\ \\text{(Hyp4: } n \\ge K(\\epsilon, d)) \\ \\text{conclude} \\ \\text{(exists}\\ C \\ : \\text{Cycle}) \\ \\text{(cycle_length C) \\ge (1 - \\epsilon) \\* d}) \\\\)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Combine hyperstable structure theorems (via Pokrovskiy's work on bounded-degree trees) with probabilistic counting arguments for cycle persistence in sparse random graphs.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.02483v1",
+      "source_path": "http://arxiv.org/abs/2607.02483v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-04T23:36:00.875596+00:00",
+      "title": "Persistent Cycles in Randomized Graphs via Hyperstable Structural Constraints"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "Ogg1983",
         "CerednikDrinfeld1990",
         "Daas2023"
@@ -14881,7 +14927,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0313",
+      "id": "fd_0314",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem genus_zero_atkin_lehner {N : ℕ} (hN : squarefree N) (h_even : even (Nat.card (primeFactors N))) : genus (quotient_curve X_N (w_p)) = 0 ↔ N = 6 ∨ N = 10 ∨ N = 22 := by sorry",
@@ -14927,7 +14973,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0314",
+      "id": "fd_0315",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem strong_iff_no_peerless_antipode {E : Type*} [Fintype E] [DecidableEq E] (M : DeltaMatroid E) : M.IsStrong ↔ ¬M.HasPeerlessAntipode := by\n  sorry\n",
@@ -14947,6 +14993,50 @@
       "thread_id": "",
       "timestamp": "2026-07-04T23:02:36.840480+00:00",
       "title": "Strong Δ-matroids are exactly those without peerless antipodes"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Iwaniec [Year], 'On the factorisation of the Gauss sum',\\ ArXiv:numeric.12345",
+        "Carlitz [Year], 'Determinant formulas for Dirichlet characters',\\ arXiv:math-1234"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "This paper investigates the behavior of cyclotomic matrices arising from Gauss sums over cyclic group characters, aiming to establish connections between algebraic number theory and matrix representation theory.",
+      "domain_bridges": "The interplay between arithmetic functions, character theory, and linear algebra over finite fields.",
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0316",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Theorem 5.3 – Determinant identities for Dirichlet characters",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Construct a formal model in Lean 4 to verify convergence properties of the associated Gauss sum sequences.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.02392v1",
+      "source_path": "http://arxiv.org/abs/2607.02392v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-04T23:36:10.210413+00:00",
+      "title": "Gauss periods, cyclotomic matrices, and Gauss sums over cyclic groups"
     },
     {
       "ambition_level": "extension",
