@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-04T09:19:02.087272+00:00",
+  "last_updated": "2026-07-04T10:04:22.724073+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -32720,6 +32720,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-04T09:19:02.024451+00:00",
       "title": "Knots That Think: Cognition as Braiding in Category Theory"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 120,
+      "domain": "Applications",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "64126b7c",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v16",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783153651.3268437,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-04T10:04:22.439105+00:00",
+      "title": "Characterization of Zero-Preserving Pisot Numerations via Torus Isomorphism"
     }
   ]
 }
