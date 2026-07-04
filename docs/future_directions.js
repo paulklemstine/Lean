@@ -3,21 +3,6 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "6f613cb7",
-    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0237",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-04T02:26:45.311845+00:00",
-    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domains": [
@@ -45,21 +30,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-03T00:49:26.963635+00:00",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-  },
-  {
-    "consumed_by_exp_id": "e62d479c",
-    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot \u2014 the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0239",
-    "priority_score": 0.81,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-04T02:50:27.331369+00:00",
-    "title": "Knots That Think: Cognition as Braiding in Category Theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -1578,7 +1548,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit error bound for smoothed sigma divisor sum"
   },
   {
-    "consumed_by_exp_id": "8c2b179b",
+    "consumed_by_exp_id": "",
     "description": "For the general linear Lie superalgebra \ud835\udd24\ud835\udd29(m,n) with standard representation V = V\u2080 \u2295 V\u2081 (dim V\u2080 = m, dim V\u2081 = n), the Euler character of the k-th exterior power \u2227\u1d4fV coincides with the k-th elementary supersymmetric polynomial in the variables x\u2081,\u2026,x\u2098,y\u2081,\u2026,y\u2099. Specifically, \u03c7_Euler(\u2227\u1d4fV) = e\u2096(x\u2081,\u2026,x\u2098; y\u2081,\u2026,y\u2099) where e\u2096 is the k-th elementary supersymmetric polynomial, and this polynomial lies in the ring \u039b^\u00b1_{m,n} of supersymmetric Laurent polynomials invariant under S\u2098 \u00d7 S\u2099 and satisfying x_i \u2202f/\u2202x_i + y_j \u2202f/\u2202y_j \u2208 (x_i + y_j).",
     "domains": [
       "Algebra"
@@ -1587,7 +1557,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01782v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T08:15:37.979428+00:00",
     "title": "Euler Characters of Exterior Powers of the Standard Representation of \ud835\udd24\ud835\udd29(m,n)"
   },
@@ -2246,12 +2216,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every integer $d \\geq 3$ and every finite group $G$, there exists a $d$-regular simple graph $\\Gamma$ and a strong embedding $\\beta$ of $\\Gamma$ into a surface such that the group of automorphisms of the graph $\\text{Aut}(\\Gamma)$ and the group of automorphisms of the embedded graph $\\text{Aut}(\\beta(\\Gamma))$ are both isomorphic to $G$.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0179",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29768v1",
+    "status": "available",
+    "timestamp": "2026-07-04T03:16:29.014621+00:00",
+    "title": "Existence of Regular Graphs with Prescribed Automorphism Groups and Strong Embeddings"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0179",
+    "id": "fd_0180",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -2265,7 +2250,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0180",
+    "id": "fd_0181",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -2279,7 +2264,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0181",
+    "id": "fd_0182",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
@@ -2293,7 +2278,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0182",
+    "id": "fd_0183",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -2307,7 +2292,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0183",
+    "id": "fd_0184",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
@@ -2322,7 +2307,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0184",
+    "id": "fd_0185",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
@@ -2337,7 +2322,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0185",
+    "id": "fd_0186",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -2352,7 +2337,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0186",
+    "id": "fd_0187",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -2366,7 +2351,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0187",
+    "id": "fd_0188",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -2381,7 +2366,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0188",
+    "id": "fd_0189",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02132v1",
@@ -2396,7 +2381,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0189",
+    "id": "fd_0190",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -2410,7 +2395,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0190",
+    "id": "fd_0191",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02098v1",
@@ -2425,7 +2410,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0191",
+    "id": "fd_0192",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01716v1",
@@ -2440,7 +2425,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Physics"
     ],
-    "id": "fd_0192",
+    "id": "fd_0193",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
@@ -2454,7 +2439,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0193",
+    "id": "fd_0194",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01718v1",
@@ -2468,7 +2453,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0194",
+    "id": "fd_0195",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01761v1",
@@ -2483,7 +2468,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Logic"
     ],
-    "id": "fd_0195",
+    "id": "fd_0196",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
@@ -2497,7 +2482,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0196",
+    "id": "fd_0197",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01695v1",
@@ -2511,7 +2496,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0197",
+    "id": "fd_0198",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01438v1",
@@ -2526,7 +2511,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0198",
+    "id": "fd_0199",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -2540,7 +2525,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0199",
+    "id": "fd_0200",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -2555,7 +2540,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0200",
+    "id": "fd_0201",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
@@ -2569,7 +2554,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0201",
+    "id": "fd_0202",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00775v1",
@@ -2583,7 +2568,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0202",
+    "id": "fd_0203",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00825v2",
@@ -2597,7 +2582,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0203",
+    "id": "fd_0204",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00651v1",
@@ -2611,7 +2596,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0204",
+    "id": "fd_0205",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00643v1",
@@ -2626,7 +2611,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0205",
+    "id": "fd_0206",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00561v1",
@@ -2640,7 +2625,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0206",
+    "id": "fd_0207",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00608v1",
@@ -2655,7 +2640,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0207",
+    "id": "fd_0208",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00456v1",
@@ -2670,7 +2655,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0208",
+    "id": "fd_0209",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00366v1",
@@ -2685,7 +2670,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0209",
+    "id": "fd_0210",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00372v1",
@@ -2699,7 +2684,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0210",
+    "id": "fd_0211",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00332v1",
@@ -2713,7 +2698,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0211",
+    "id": "fd_0212",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.32024v1",
@@ -2728,7 +2713,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0212",
+    "id": "fd_0213",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31967v1",
@@ -2743,7 +2728,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0213",
+    "id": "fd_0214",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31940v1",
@@ -2758,7 +2743,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0214",
+    "id": "fd_0215",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31908v1",
@@ -2773,7 +2758,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0215",
+    "id": "fd_0216",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31687v1",
@@ -2782,17 +2767,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of Prime\u2011Degree O\u2011twisting Endomorphisms for Inert Primes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f69e0caf",
     "description": "For the exceptional case A\u00b2_{6n+3} of level 2 standard modules, there exists an Andrews-Gordon type infinite series whose sum-product identity holds under modular arithmetic conditions modulo 14 (mirroring Nandi's partial result), characterized by specific pentagonal-like q-Pochhammer expansions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0216",
+    "id": "fd_0217",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31821v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T17:15:34.828638+00:00",
     "title": "Existence of Andrews-Gordon type identities for A\u00b2_{6n+3} modules"
   },
@@ -2803,7 +2788,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0217",
+    "id": "fd_0218",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31547v1",
@@ -2818,7 +2803,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0218",
+    "id": "fd_0219",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31649v1",
@@ -2833,7 +2818,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0219",
+    "id": "fd_0220",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31565v1",
@@ -2847,7 +2832,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0220",
+    "id": "fd_0221",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31526v1",
@@ -2862,7 +2847,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0221",
+    "id": "fd_0222",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31341v1",
@@ -2877,7 +2862,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0222",
+    "id": "fd_0223",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31262v1",
@@ -2892,7 +2877,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0223",
+    "id": "fd_0224",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31264v1",
@@ -2907,7 +2892,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0224",
+    "id": "fd_0225",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30856v1",
@@ -2922,7 +2907,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0225",
+    "id": "fd_0226",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30996v1",
@@ -2937,7 +2922,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0226",
+    "id": "fd_0227",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30885v1",
@@ -2952,7 +2937,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0227",
+    "id": "fd_0228",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31044v1",
@@ -2966,7 +2951,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0228",
+    "id": "fd_0229",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30496v1",
@@ -2981,7 +2966,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0229",
+    "id": "fd_0230",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30588v1",
@@ -2995,7 +2980,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0230",
+    "id": "fd_0231",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30593v1",
@@ -3009,7 +2994,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0231",
+    "id": "fd_0232",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30612v1",
@@ -3024,7 +3009,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0232",
+    "id": "fd_0233",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30428v1",
@@ -3038,7 +3023,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_0233",
+    "id": "fd_0234",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3053,7 +3038,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0234",
+    "id": "fd_0235",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30272v1",
@@ -3068,7 +3053,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Tropical"
     ],
-    "id": "fd_0235",
+    "id": "fd_0236",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30184v1",
@@ -3077,18 +3062,32 @@ window.FUTURE_DIRECTIONS = [
     "title": "Algebraic Independence of Basic r\u2011Symmetric Tropical Polynomials"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6f613cb7",
     "description": "For an orientable hypermap H defined by permutations (\u03c3, \u03b1), a partial dual H^{E'} with respect to a hyperedge subset E' is bipartite if and only if there exists an all-crossing direction \u03a6 of the medial map M(H) such that E' = C(\u03a6), provided that every hyperedge of H has even length.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0236",
+    "id": "fd_0237",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30071v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T02:10:40.019984+00:00",
     "title": "Characterization of Bipartite Partial Duals of Orientable Hypermaps"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For d \u2265 3, every discrete d-pseudomanifold with exactly 2d+7 vertices that is not a simplicial d-sphere is flag normal and isomorphic to the (d-2)-fold suspension of the 6-vertex triangulation of \u211dP\u00b2. This extends the optimality result in the paper by characterizing all non-sphere examples at the threshold number of vertices.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_0238",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29753v1",
+    "status": "available",
+    "timestamp": "2026-07-04T03:17:14.082596+00:00",
+    "title": "Classification of Discrete d-Pseudomanifolds with 2d+7 Vertices"
   },
   {
     "consumed_by_exp_id": "",
@@ -3134,21 +3133,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.007324+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Forcing edges, deletion, and near-bipartite bricks\n\nThese conjectures grow out of the deletion characterisation of forcing edges\n(an edge `uv` lies in a unique perfect matching exactly when removing `u` and `v`\nleaves a graph with a unique perfect matching) and the two obstruction lemmas\n(distinct matchings through an edge prevent forcing).\n\n## 1. The deletion spectrum of a matching-covered graph is monotone under ear decompositions\n\n**Conjecture.** For a matching-covered graph built up by a sequence of single and\ndouble ear additions, the number of forcing edges is non-decreasing along the\ndecomposition, and each double ear addition increases it by at most the length of\nthe shorter ear.\n\nThe key insight is that adding an ear can only *merge* previously distinct\nalternating routes, never create new ones through an old edge, so the \"two\ndistinct matchings through an edge\" obstruction can only be resolved, not\nintroduced, as the graph grows. Why now? The deletion characterisation reduces the\nglobal forcing count to a purely local, per-edge test, which turns the ear\ndecomposition into a tractable induction on which the monotonicity can finally be\npinned down quantitatively.\n\n## 2. Forcing edges detect near-bipartiteness among bricks with a spectral gap\n\n**Conjecture.** A brick in which every strictly internal edge is forcing, and\nwhose adjacency matrix has a simple second-largest eigenvalue, is near-bipartite.\n\nThe key insight is that \"every edge forcing\" forbids short alternating cycles,\nwhich in turn caps the multiplicity of extremal eigenvalues; a single spectral gap\nthen rigidly fixes the two colour classes that a near-bipartite structure requires.\nWhy now? The deletion characterisation gives a clean combinatorial certificate for\n\"no alternating cycle through an edge\", which is exactly the hypothesis a spectral\nargument needs as input, making the bridge between forcing edges and eigenvalue\nmultiplicity concrete for the first time.\n\n## 3. Almost all edges of a random cubic brick are non-forcing\n\n**Conjecture.** In a uniformly random cubic (3-regular) brick on `2n` vertices,\nthe fraction of forcing edges tends to `0` as `n \u2192 \u221e`, and in fact the expected\nnumber of forcing edges is `O(log n)`.\n\nThe key insight is that a forcing edge requires its two-vertex deletion to leave a\n*uniquely* matchable remainder, an event that becomes exponentially unlikely once\nthe remainder is a dense expander with many alternating cycles. Why now? The\nreduction of forcing to a unique-matching property of a deleted subgraph lets one\nimport the well-developed first-moment machinery for counting perfect matchings in\nrandom regular graphs, which previously had no clean hook into forcing questions.\n\n## 4. The three classical exceptions are exactly the vertex-transitive all-forcing bricks\n\n**Conjecture.** Among vertex-transitive bricks, the property \"every edge is\nforcing\" holds precisely for the three small exceptional graphs (the tetrahedron,\nthe complement of the six-cycle, and the Petersen graph), and for no larger\nvertex-transitive brick.\n\nThe key insight is that vertex-transitivity forces every edge to have the same\ndeletion type, so \"all forcing\" becomes a single symmetric condition that only the\nsmallest, most rigid graphs can satisfy before their girth admits an alternating\ncycle. Why now? With forcing recast as a deletion-uniqueness test, the exceptional\ntrio can be certified uniformly by one local computation per orbit rather than by\nad hoc case analysis, opening the door to a symmetry-based classification.\n\n## 5. A forcing edge is stable under the removal of any non-adjacent forcing edge\n\n**Conjecture.** If `e` and `f` are two forcing edges of a matching-covered graph\nthat share no endpoint, then `e` remains forcing after contracting `f` into a\nsingle vertex, and the map `e \u21a6` (its unique matching) is compatible with these\ncontractions.\n\nThe key insight is that the unique deletion matching witnessing `e` never uses the\nedge `f` in an essential, non-unique way, so contracting `f` cannot spawn a second\nmatching through `e`. Why now? The deletion characterisation makes precise which\nmatchings witness a forcing edge, so one can track exactly how these witnesses\ntransform under contraction, a bookkeeping that was hopeless without the local\ncertificate.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0238",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "01bea6c3",
-    "status": "available",
-    "timestamp": "2026-07-04T02:31:00.375358+00:00",
-    "title": "These conjectures grow out of the deletion characterisation of forcing edges"
   },
   {
     "consumed_by_exp_id": "51cf87c3",
