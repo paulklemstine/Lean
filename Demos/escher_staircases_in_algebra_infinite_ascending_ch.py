@@ -1,238 +1,199 @@
-"""
-Escher Staircases in Algebra: numerical demonstrations.
+"""Escher Staircases: numerical demonstrations.
 
-An *Escher staircase* is an infinite strictly ascending chain of ideals
+An *Escher staircase* in a commutative ring is an infinite strictly ascending chain
+of ideals
+
     I_0  <  I_1  <  I_2  <  ...
-whose infimum (the ideal common to every rung) equals the bottom rung I_0.
-The chain climbs forever yet "loops back" to where it began.
 
-Central fact (the Staircase Criterion):
-    a commutative ring admits an Escher staircase  <=>  it is NOT Noetherian.
+that "loops back": the meet (intersection) of the whole ascending tower equals the
+bottom rung, and in the flagship examples that bottom rung is the zero ideal {0}.  A
+commutative ring admits such a staircase if and only if it is NOT Noetherian.
 
-This file demonstrates, with finite truncations one can actually compute:
+This script demonstrates, with fully explicit finite windows:
 
-  1. The tail-vanishing staircase S_n in the product ring Z^N.
-  2. The variable-ideal staircase V_n in k[x_0, x_1, ...].
-  3. The loop-back property: the infimum collapses to the zero ideal.
-  4. The finite/infinite dichotomy and the Escher height.
-  5. The cautionary sign error: the Int(Z) 2^n-divisibility chain DESCENDS.
+  1. The tail-vanishing staircase  S_n = {f : f_k = 0 for all k >= n}  in the
+     product ring of integer sequences, with the indicator witness separating each
+     step and the loop-back to {0}.
 
-Everything is elementary and self-contained (standard library only).
+  2. The variable staircase  V_n = <x_0, ..., x_{n-1}>  in the polynomial ring in
+     countably many variables, with monomial-ideal membership tested by divisibility.
+
+  3. The product transfer law: R x S has a staircase iff a factor does.
+
+  4. The collapse: each rung V_n is a proper ideal of the polynomial ring, but
+     generates the WHOLE fraction field once nonzero elements become invertible.
+
+Everything is self-contained; no third-party libraries are required.
 """
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-from fractions import Fraction
-from typing import Dict, List, Sequence, Set, Tuple
+from typing import Callable, Dict, List, Sequence, Set, Tuple
 
 
 # ---------------------------------------------------------------------------
-# 1. The tail-vanishing staircase  S_n = {f : f_k = 0 for all k >= n}  in Z^N.
-#     We model a sequence by its finite support (a dict index -> value).
+# 1. The tail-vanishing staircase  S_n  in the product ring of integer sequences
 # ---------------------------------------------------------------------------
 
-Sequence_ = Dict[int, int]  # finitely supported integer sequence f : N -> Z
+# We model a "finitely supported" integer sequence as a dict {index: value} with
+# only nonzero entries stored.  A sequence f belongs to S_n iff every stored index
+# is < n (i.e. f_k = 0 for all k >= n).
+
+Sequence_ = Dict[int, int]
 
 
 def in_tail_zero_ideal(f: Sequence_, n: int) -> bool:
-    """True iff f vanishes from index n onward, i.e. f in S_n."""
-    return all(value == 0 for index, value in f.items() if index >= n)
+    """Return True iff f in S_n, i.e. f_k = 0 for all k >= n."""
+    return all(index < n for index, value in f.items() if value != 0)
 
 
-def spike(n: int) -> Sequence_:
-    """The separating witness e_n: value 1 at index n, 0 elsewhere."""
+def indicator(n: int) -> Sequence_:
+    """The indicator sequence e_n: value 1 at position n, 0 elsewhere."""
     return {n: 1}
 
 
-def demo_tail_zero_staircase(depth: int = 6) -> None:
+def demo_tail_staircase(depth: int = 6) -> None:
+    """Certify that S_0 < S_1 < ... is a strictly ascending, looping staircase."""
     print("=" * 70)
-    print("1. Tail-vanishing staircase  S_0 < S_1 < S_2 < ...  in Z^N")
+    print("1. Tail-vanishing staircase  S_n  in the ring of integer sequences")
     print("=" * 70)
-    print("   S_n = { integer sequences f : f_k = 0 for all k >= n }")
-    print()
     for n in range(depth):
-        e = spike(n)  # lives in S_{n+1} but not S_n
-        below = in_tail_zero_ideal(e, n)
-        above = in_tail_zero_ideal(e, n + 1)
-        print(f"   spike e_{n}:  in S_{n} ? {below!s:5}   in S_{n+1} ? {above!s:5}"
-              f"   => S_{n} STRICTLY inside S_{n+1}: {(above and not below)}")
-    print()
-    print("   Bottom rung S_0 = {0}: a sequence vanishing from index 0 on is zero.")
-    print("   Infimum of the whole chain = intersection of all S_n = {0} = S_0.")
-    print("   The staircase LOOPS BACK to its bottom rung.\n")
+        e = indicator(n)  # witness for the strict jump S_n < S_{n+1}
+        in_next = in_tail_zero_ideal(e, n + 1)
+        in_here = in_tail_zero_ideal(e, n)
+        strict = in_next and not in_here
+        print(
+            f"  e_{n} = (1 at pos {n})  in S_{n+1}: {in_next},  in S_{n}: {in_here}"
+            f"   =>  S_{n} < S_{n+1}: {strict}"
+        )
+    # loop-back: only the zero sequence lies in S_0, hence in the whole meet.
+    only_zero_in_S0 = in_tail_zero_ideal({}, 0) and not in_tail_zero_ideal({0: 1}, 0)
+    print(f"  S_0 = {{0}} (only the zero sequence): {only_zero_in_S0}")
+    print("  => meet of all S_n = S_0 = {0}: the staircase loops back.\n")
 
 
 # ---------------------------------------------------------------------------
-# 2. The variable-ideal staircase  V_n = <x_0, ..., x_{n-1}>  in k[x_0,x_1,...].
-#     Membership test (for ideals generated by variables) via the evaluation
-#     homomorphism phi_s that sends x_i -> 0 for i in s and fixes the rest.
-#     A polynomial is modeled as a list of monomials; each monomial is a
-#     (coefficient, set-of-variable-indices-with-positive-degree) pair, which
-#     is all we need to detect membership in a variable-generated ideal.
+# 2. The variable staircase  V_n = <x_0, ..., x_{n-1}>  (monomial ideals)
 # ---------------------------------------------------------------------------
 
-Monomial = Tuple[Fraction, Set[int]]   # (coefficient, support of variables)
-Polynomial = List[Monomial]
+# A monomial in x_0, x_1, ... is an exponent vector, stored as a tuple of
+# (variable_index, exponent) pairs with positive exponents, sorted by index.
+# A monomial m lies in the monomial ideal generated by variables in a set S iff
+# some variable x_i with i in S divides m, i.e. m has positive exponent at i.
+
+Monomial = Tuple[Tuple[int, int], ...]
 
 
-def apply_phi(poly: Polynomial, s: Set[int]) -> Polynomial:
-    """Substitute x_i = 0 for i in s. A monomial dies iff it uses some x_i, i in s."""
-    survivors: Polynomial = []
-    for coeff, support in poly:
-        if support & s:          # monomial touches a killed variable -> becomes 0
-            continue
-        survivors.append((coeff, support))
-    return survivors
+def monomial(**powers: int) -> Monomial:
+    """Build a monomial from keyword powers, e.g. monomial(x0=2, x1=1)."""
+    items = []
+    for name, exp in powers.items():
+        if exp > 0:
+            items.append((int(name[1:]), exp))
+    return tuple(sorted(items))
 
 
-def is_zero(poly: Polynomial) -> bool:
-    return all(coeff == 0 for coeff, _ in poly)
+def variable(i: int) -> Monomial:
+    """The bare variable x_i as a monomial."""
+    return ((i, 1),)
 
 
-def in_variable_ideal(poly: Polynomial, gens: Set[int]) -> bool:
-    """
-    Decide whether `poly` lies in the ideal generated by { x_i : i in gens }.
-    Complete test for variable-generated ideals: poly in the ideal iff every
-    monomial uses at least one generator variable, i.e. iff phi_{complement}
-    kills poly -- equivalently phi_s with s = gens leaves nothing but the part
-    outside the ideal. We check: poly is in <gens> iff substituting all
-    generators to 0 yields 0.
-    """
-    return is_zero(apply_phi(poly, gens))
-
-
-def variable(j: int) -> Polynomial:
-    """The single variable x_j as a polynomial."""
-    return [(Fraction(1), {j})]
+def in_variable_ideal(m: Monomial, gens: Set[int]) -> bool:
+    """Return True iff monomial m lies in the ideal generated by {x_i : i in gens}."""
+    return any(exp > 0 and idx in gens for idx, exp in m)
 
 
 def demo_variable_staircase(depth: int = 6) -> None:
+    """Certify x_n in V_{n+1} \\ V_n, so V_0 < V_1 < ... is strictly ascending."""
     print("=" * 70)
-    print("2. Variable-ideal staircase  V_0 < V_1 < V_2 < ...  in k[x_0,x_1,...]")
+    print("2. Variable staircase  V_n = <x_0, ..., x_{n-1}>  in k[x_0, x_1, ...]")
     print("=" * 70)
-    print("   V_n = < x_0, x_1, ..., x_{n-1} >")
-    print()
     for n in range(depth):
-        Vn: Set[int] = set(range(n))         # generators of V_n
-        Vn1: Set[int] = set(range(n + 1))    # generators of V_{n+1}
+        gens_next: Set[int] = set(range(n + 1))  # V_{n+1} = <x_0,...,x_n>
+        gens_here: Set[int] = set(range(n))      # V_n     = <x_0,...,x_{n-1}>
         xn = variable(n)
-        below = in_variable_ideal(xn, Vn)
-        above = in_variable_ideal(xn, Vn1)
-        print(f"   x_{n}:  in V_{n} ? {below!s:5}   in V_{n+1} ? {above!s:5}"
-              f"   => V_{n} STRICTLY inside V_{n+1}: {(above and not below)}")
-    print()
-    print("   The missing-variable lemma: x_n is not in <x_0,...,x_{n-1}> because")
-    print("   phi (sending x_0..x_{n-1} -> 0) sends x_n to x_n != 0.")
-    print("   Bottom rung V_0 = <> = {0}; infimum of the chain = {0} = V_0.")
-    print("   Again the staircase LOOPS BACK.\n")
-
-
-# ---------------------------------------------------------------------------
-# 3. The finite/infinite dichotomy and the Escher height.
-# ---------------------------------------------------------------------------
-
-@dataclass(frozen=True)
-class EscherReport:
-    ring: str
-    has_staircase: bool
-    escher_height: str   # "0" or "infinite (>= omega)"
-    reason: str
-
-
-def escher_report_polynomial(num_variables) -> EscherReport:
-    """
-    num_variables: a nonnegative int (finite) or the string 'infinity'.
-    Returns whether k[x_0,...] has a staircase and its Escher height.
-    """
-    if num_variables == "infinity":
-        return EscherReport(
-            ring="k[x_0, x_1, x_2, ...]  (countably many variables)",
-            has_staircase=True,
-            escher_height="infinite (>= omega)",
-            reason="explicit variable-ideal staircase V_n = <x_0,...,x_{n-1}>",
+        in_next = in_variable_ideal(xn, gens_next)
+        in_here = in_variable_ideal(xn, gens_here)
+        print(
+            f"  x_{n}  in V_{n+1}: {in_next},  in V_{n}: {in_here}"
+            f"   =>  V_{n} < V_{n+1}: {in_next and not in_here}"
         )
-    n = int(num_variables)
-    return EscherReport(
-        ring=f"k[x_0, ..., x_{{{n-1}}}]  ({n} variables)" if n > 0 else "k  (0 variables)",
-        has_staircase=False,
-        escher_height="0",
-        reason="Hilbert Basis Theorem => Noetherian => no strictly ascending chain",
-    )
+    print("  V_0 = <empty> = {0}; meet of all V_n = V_0 = {0}: loops back.\n")
 
 
-def demo_dichotomy() -> None:
-    print("=" * 70)
-    print("3. The Escher dichotomy for polynomial rings over a field")
-    print("=" * 70)
-    for nv in [0, 1, 2, 3, 5, "infinity"]:
-        r = escher_report_polynomial(nv)
-        print(f"   {r.ring}")
-        print(f"       staircase? {r.has_staircase}    Escher height: {r.escher_height}")
-        print(f"       reason: {r.reason}")
-    print()
-    print("   Escher height tracks the number of variables: 0 when finite,")
-    print("   infinite exactly when the variable set is infinite.\n")
+# ---------------------------------------------------------------------------
+# 3. The product transfer law:  Esc(R x S)  <=>  Esc(R) or Esc(S)
+# ---------------------------------------------------------------------------
+
+def escher_product(has_staircase_R: bool, has_staircase_S: bool) -> bool:
+    """The transfer law: a finite product has a staircase iff some factor does."""
+    return has_staircase_R or has_staircase_S
 
 
-def demo_known_rings() -> None:
+def demo_product_law() -> None:
     print("=" * 70)
-    print("3b. Escher height of some familiar rings")
+    print("3. Product transfer law:  Esc(R x S)  <=>  Esc(R) or Esc(S)")
     print("=" * 70)
-    table = [
-        ("Z (integers)",            False, "0",                "PID => Noetherian"),
-        ("a field k",               False, "0",                "only ideals (0),(1)"),
-        ("k[x]",                    False, "0",                "PID => Noetherian"),
-        ("Z_p (p-adic integers)",   False, "0",                "DVR => PID => Noetherian"),
-        ("Z^N (integer sequences)", True,  "infinite (>= om)", "tail-vanishing staircase"),
-        ("k[x_0,x_1,...]",          True,  "infinite (>= om)", "variable-ideal staircase"),
-        ("all algebraic integers",  True,  "infinite (>= om)", "non-Noetherian => staircase"),
+    cases: List[Tuple[str, bool, str, bool]] = [
+        ("Q[x_0,x_1,...]", True, "Q", False),   # staircase x none
+        ("Q", False, "Q", False),               # none x none
+        ("Q[x_0,x_1,...]", True, "Z^N", True),  # staircase x staircase
+        ("Z_p", False, "Q[x_0,x_1,...]", True), # none x staircase
     ]
-    for ring, has, height, why in table:
-        mark = "yes" if has else "no "
-        print(f"   {ring:28s} staircase: {mark}  height: {height:18s} ({why})")
+    for nameR, escR, nameS, escS in cases:
+        result = escher_product(escR, escS)
+        witness = (
+            "left coordinate" if escR else "right coordinate" if escS else "none"
+        )
+        print(
+            f"  ({nameR}) x ({nameS}):  Esc = {result}"
+            f"   (witnessing coordinate: {witness})"
+        )
     print()
 
 
 # ---------------------------------------------------------------------------
-# 4. The cautionary sign error: the Int(Z) 2^n-divisibility chain DESCENDS.
+# 4. The collapse:  V_n proper in the ring, but = (1) in the fraction field
 # ---------------------------------------------------------------------------
 
-def divisibility_level_ok(values: Sequence[int], power: int) -> bool:
-    """True iff every value is divisible by 2**power (models f(Z) in 2^power Z)."""
-    modulus = 2 ** power
-    return all(v % modulus == 0 for v in values)
+def rung_generates_unit_in_field(gens: Set[int]) -> bool:
+    """In a field every nonzero ideal is the whole ring: a nonempty rung swells to (1)."""
+    return len(gens) > 0
 
 
-def demo_sign_error() -> None:
+def demo_collapse(depth: int = 6) -> None:
+    """Track each rung V_n as an ideal of the ring vs. the fraction field."""
     print("=" * 70)
-    print("4. Cautionary tale: the Int(Z) '2^n-divisibility' chain runs backward")
+    print("4. The collapse:  Q[x_0,x_1,...]  ↪  Q(x_0,x_1,...)  (fraction field)")
     print("=" * 70)
-    print("   Proposed:  I_n = { f : f(Z) in 2^n Z }.  Is I_n < I_{n+1} (ascending)?")
-    print()
-    # A witness polynomial's values, e.g. f(k) = 4*k : divisible by 4 but pattern
-    sample_values = [4, 8, 12, 16, 20]   # all divisible by 4 (=2^2), not all by 8
-    for n in range(4):
-        inside_n = divisibility_level_ok(sample_values, n)
-        inside_n1 = divisibility_level_ok(sample_values, n + 1)
-        print(f"   sample values {sample_values}:  in I_{n} ? {inside_n!s:5}"
-              f"   in I_{n+1} ? {inside_n1!s:5}")
-    print()
-    print("   Since 2^{n+1}Z is contained in 2^n Z, we get I_{n+1} contained in I_n:")
-    print("   the chain DESCENDS, not ascends. It is NOT an Escher staircase.")
-    print("   (The value at level n+1 is a stronger condition than at level n.)\n")
+    print("  rung    in the ring         in the fraction field")
+    for n in range(1, depth):
+        gens: Set[int] = set(range(n))
+        # In the polynomial ring V_n is a PROPER ideal (does not contain 1):
+        proper_in_ring = not in_variable_ideal(monomial(), gens)  # 1 = empty monomial
+        # In the field every nonzero element is invertible, so V_n = (1):
+        unit_in_field = rung_generates_unit_in_field(gens)
+        print(
+            f"  V_{n}     proper: {proper_in_ring!s:<12} "
+            f"equals whole field (1): {unit_in_field}"
+        )
+    print("  => the infinite strict tower downstairs collapses to a single level"
+          " upstairs.\n")
 
 
+# ---------------------------------------------------------------------------
+# Driver
 # ---------------------------------------------------------------------------
 
 def main() -> None:
-    demo_tail_zero_staircase()
+    print()
+    print("ESCHER STAIRCASES: infinite ascending ideal chains that loop back")
+    print("(a ring admits one iff it is NOT Noetherian)\n")
+    demo_tail_staircase()
     demo_variable_staircase()
-    demo_dichotomy()
-    demo_known_rings()
-    demo_sign_error()
-    print("Done. Every strictly ascending example loops back to the zero ideal;")
-    print("the Noetherian rings admit no staircase at all.")
+    demo_product_law()
+    demo_collapse()
+    print("All demonstrations completed.")
 
 
 if __name__ == "__main__":
