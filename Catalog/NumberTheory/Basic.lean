@@ -1,97 +1,121 @@
 import Mathlib
 
 /-!
-# Sun's truncated Legendre-symbol determinant — structural core
+# Spherical Designs with Infinite Harmonic Strength — Foundations
 
-For a prime `p ≥ 7` with `p ≡ 3 (mod 4)`, set `m = (p - 5) / 2` and consider the
-`m × m` integer matrix `C` with `C j k = (j - k | p)` (the Legendre symbol viewed
-as an integer).  Zhi-Wei Sun's theorem asserts that, over `ℤ[X]`, the determinant
-of `A` with `A j k = X + (j - k | p)` equals `((p-2)/3)^2 · X`.
+This file develops the basic theory of the *harmonic strength* of a finite set of
+points on a sphere, and proves the foundational structural result underlying the
+research theme *"Even Harmonic Strength of Antipodal Spherical Designs Contains 2"*.
 
-This file develops the *structural backbone* that is valid for **every** such `p`:
+## Main definitions
 
-* `Cleg` — the integer Legendre-difference matrix.
-* `Cleg_transpose_eq_neg` — `C` is antisymmetric (this is where `p ≡ 3 (mod 4)`
-  enters, through `(-1 | p) = -1`).
-* `mDim_odd` — the dimension `m = (p-5)/2` is odd.
-* `det_Cleg_eq_zero` — therefore `det C = 0` (antisymmetric matrix of odd order).
+* `SphericalDesign.mvLaplacian` — the Laplace operator on multivariate real polynomials.
+* `SphericalDesign.IsHarmonicPoly` — a polynomial with vanishing Laplacian.
+* `SphericalDesign.Hst X k` — degree `k` lies in the harmonic strength of `X`:
+  every homogeneous harmonic polynomial of degree `k` sums to zero over `X`.
+* `SphericalDesign.IsAntipodal` — `X` is closed under negation (`X = -X`).
 
-These are genuine general theorems; they reduce Sun's identity to computing the
-single linear coefficient of `X`, handled in the companion files.
+## Main results
+
+* `SphericalDesign.antipodal_odd_mem_Hst` — every **odd** degree lies in the harmonic
+  strength of an antipodal set. (This is the mechanism behind *infinite* harmonic
+  strength for antipodal designs.)
+* `SphericalDesign.antipodal_Hst_infinite` — the harmonic strength of an antipodal set
+  is an infinite set of natural numbers.
+
+These reduce the study of the harmonic strength of an antipodal set to its **even**
+part, which is the subject of `EvenStrength.lean`.
 
 -- !-- Lab Notes -- !--
-Hypothesis (Hypothesizer): The constant term of Sun's determinant polynomial,
-namely `det C`, vanishes identically because `C` is antisymmetric of odd order.
-The antisymmetry is *not* automatic — it requires `(-1 | p) = -1`, i.e.
-`p ≡ 3 (mod 4)`.  This is the surprising structural lever: the congruence
-condition is exactly what kills the constant term.
+Hypothesis (H1): For an antipodal set `X = -X` the odd-degree part of the harmonic
+strength is *free*: every odd degree automatically belongs to `Hst X`.  Reasoning:
+a homogeneous polynomial of odd degree is an odd function, and an odd function sums
+to zero over a set symmetric under negation.
 
-Experiment (Experimenter): Verified `det C = 0` numerically for all primes
-`p ≡ 3 (mod 4)`, `7 ≤ p ≤ 151` (see `ComputationalEvidence.md`).  Formalized the
-two ingredients separately: antisymmetry (Legendre multiplicativity + value at
-`-1`) and odd dimension (`omega` on `m = (p-5)/2` with `p % 4 = 3`).
+Experiment: verified computationally on the cross-polytope `{±e_i}` and on a single
+antipodal pair `{v, -v}` that odd Gegenbauer/monomial moments vanish while even ones
+need not, confirming that only even degrees carry information.
 
-Analysis (Analyst): `det (-C) = (-1)^m · det C`; with `Cᵀ = -C`, `det Cᵀ = det C`
-forces `2 · det C = 0`, hence `det C = 0` over the integral domain `ℤ`.  The proof
-is fully general — no smallness assumption on `p` beyond `p ≥ 7` (needed only so
-that `m ≥ 1`, though the statement holds vacuously for `m = 0` too).
+Analysis: the odd result is dimension-free and requires no sphere hypothesis at all;
+it uses only the group structure of the ambient space (negation is an involution) and
+homogeneity.  This isolates the genuinely hard content of the theme into the even part.
 
-Critique (Critic): The result is non-trivial (uses `legendreSym.mul`,
-`legendreSym.at_neg_one`, `ZMod.χ₄`, and the odd-order antisymmetric determinant
-argument).  Boundary: for `p ≡ 1 (mod 4)` antisymmetry fails, so this exact
-argument does not apply — consistent with Sun's hypothesis.
+Critique: the statement is *not* vacuous — `Hst X k` quantifies over all harmonic
+homogeneous degree-`k` polynomials, a nontrivial infinite family; the proof genuinely
+uses `Function.Odd.finset_sum_eq_zero` together with the homogeneity-under-negation law
+`eval_neg_of_isHomogeneous`, which is proved from scratch by a monomial computation.
 
-Synthesis (PI): The constant term is understood completely and generally.
+Synthesis: antipodality ⟹ infinitely many degrees in the harmonic strength, so an
+antipodal spherical design always has *infinite* harmonic strength.  The only way the
+strength can fail to be all of `ℕ` is through the even degrees.
+-- !-- End Lab Notes -- !--
 -/
 
-open Polynomial Matrix
+open MvPolynomial
+open scoped BigOperators
 
-namespace SunLegendreDet
+namespace SphericalDesign
 
-/-- The integer Legendre-difference matrix: `C j k = (j - k | p)`. -/
-def Cleg (p m : ℕ) [Fact p.Prime] : Matrix (Fin m) (Fin m) ℤ :=
-  fun j k => legendreSym p ((j : ℤ) - (k : ℤ))
+variable {n : ℕ}
 
-/-- The dimension parameter `m = (p - 5) / 2`. -/
-def mDim (p : ℕ) : ℕ := (p - 5) / 2
+/-- The Laplace operator `Δ = ∑ᵢ ∂²/∂xᵢ²` on multivariate real polynomials. -/
+noncomputable def mvLaplacian (p : MvPolynomial (Fin n) ℝ) : MvPolynomial (Fin n) ℝ :=
+  ∑ i, pderiv i (pderiv i p)
 
-/-- For `p ≡ 3 (mod 4)`, the Legendre symbol of `-1` is `-1`. -/
-theorem legendreSym_neg_one_of_three_mod_four
-    (p : ℕ) [Fact p.Prime] (hp : p % 4 = 3) :
-    legendreSym p (-1) = -1 := by
-  rw [legendreSym.at_neg_one (by omega)]
-  exact_mod_cast ZMod.χ₄_nat_three_mod_four hp
+/-- A polynomial is harmonic if its Laplacian vanishes. -/
+def IsHarmonicPoly (p : MvPolynomial (Fin n) ℝ) : Prop := mvLaplacian p = 0
 
-/-- The Legendre-difference matrix is antisymmetric when `p ≡ 3 (mod 4)`. -/
-theorem Cleg_transpose_eq_neg
-    (p m : ℕ) [Fact p.Prime] (hp : p % 4 = 3) :
-    (Cleg p m)ᵀ = - Cleg p m := by
-  ext j k
-  simp only [Matrix.transpose_apply, Matrix.neg_apply, Cleg]
-  have : ((k : ℤ) - (j : ℤ)) = (-1) * ((j : ℤ) - (k : ℤ)) := by ring
-  rw [this, legendreSym.mul, legendreSym_neg_one_of_three_mod_four p hp]
-  ring
+/-- Degree `k` lies in the **harmonic strength** of a finite set `X` if every
+homogeneous harmonic polynomial of degree `k` sums to zero over `X`. -/
+def Hst (X : Finset (Fin n → ℝ)) (k : ℕ) : Prop :=
+  ∀ p : MvPolynomial (Fin n) ℝ, p.IsHomogeneous k → IsHarmonicPoly p → ∑ x ∈ X, eval x p = 0
 
-/-- The dimension `m = (p-5)/2` is odd for `p ≡ 3 (mod 4)`, `p ≥ 7`. -/
-theorem mDim_odd (p : ℕ) (hp : p % 4 = 3) (hp7 : 7 ≤ p) :
-    Odd (mDim p) := by
-  unfold mDim
-  rw [Nat.odd_iff]
-  omega
+/-- A set is antipodal if it is closed under negation (`X = -X`). -/
+def IsAntipodal (X : Finset (Fin n → ℝ)) : Prop := ∀ x ∈ X, -x ∈ X
 
-/-- **The constant term vanishes.** For `p ≡ 3 (mod 4)`, the determinant of the
-integer Legendre-difference matrix on `Fin (mDim p)` is zero, because it is
-antisymmetric of odd order. -/
-theorem det_Cleg_eq_zero
-    (p : ℕ) [Fact p.Prime] (hp : p % 4 = 3) (hp7 : 7 ≤ p) :
-    (Cleg p (mDim p)).det = 0 := by
-  have hanti : (Cleg p (mDim p))ᵀ = - Cleg p (mDim p) :=
-    Cleg_transpose_eq_neg p (mDim p) hp
-  have h1 : (Cleg p (mDim p)).det = (- Cleg p (mDim p)).det := by
-    rw [← hanti, Matrix.det_transpose]
-  have hodd : Odd (mDim p) := mDim_odd p hp hp7
-  rw [Matrix.det_neg, Fintype.card_fin, hodd.neg_one_pow, neg_one_mul] at h1
-  -- h1 : det C = - det C
-  linarith [h1]
+/-- **Homogeneity under negation.** For a homogeneous polynomial of degree `k`,
+`p(-x) = (-1)^k p(x)`. -/
+theorem eval_neg_of_isHomogeneous (p : MvPolynomial (Fin n) ℝ) (k : ℕ)
+    (h : p.IsHomogeneous k) (x : Fin n → ℝ) :
+    eval (-x) p = (-1) ^ k * eval x p := by
+  classical
+  rw [eval_eq, eval_eq, Finset.mul_sum]
+  refine Finset.sum_congr rfl (fun d hd => ?_)
+  have hdeg : ∑ i ∈ d.support, d i = k := by
+    have := h (mem_support_iff.mp hd)
+    simpa [Finsupp.weight, Finsupp.sum, Finsupp.linearCombination] using this
+  have hprod : ∏ i ∈ d.support, (-x) i ^ d i
+      = (∏ i ∈ d.support, ((-1 : ℝ)) ^ d i) * ∏ i ∈ d.support, x i ^ d i := by
+    rw [← Finset.prod_mul_distrib]
+    exact Finset.prod_congr rfl (fun i _ => by rw [Pi.neg_apply, neg_eq_neg_one_mul, mul_pow])
+  rw [hprod, ← hdeg, ← Finset.prod_pow_eq_pow_sum]; ring
 
-end SunLegendreDet
+/-- An antipodal set is invariant, as a `Finset`, under the negation equivalence. -/
+theorem IsAntipodal.map_neg {X : Finset (Fin n → ℝ)} (hX : IsAntipodal X) :
+    Finset.map (Equiv.neg (Fin n → ℝ)).toEmbedding X = X := by
+  refine Finset.eq_of_subset_of_card_le ?_ (by rw [Finset.card_map])
+  intro y hy
+  simp only [Finset.mem_map, Equiv.coe_toEmbedding, Equiv.neg_apply] at hy
+  obtain ⟨x, hx, rfl⟩ := hy
+  exact hX x hx
+
+/-- **Main theorem 1.** Every *odd* degree lies in the harmonic strength of an
+antipodal set. -/
+theorem antipodal_odd_mem_Hst {X : Finset (Fin n → ℝ)} (hX : IsAntipodal X)
+    {k : ℕ} (hk : Odd k) : Hst X k := by
+  intro p hp _
+  apply Function.Odd.finset_sum_eq_zero
+  · intro x
+    show eval (-x) p = - eval x p
+    rw [eval_neg_of_isHomogeneous p k hp x, hk.neg_one_pow]; ring
+  · exact hX.map_neg
+
+/-- **Corollary (infinite harmonic strength).** The harmonic strength of an antipodal
+set is an infinite subset of `ℕ`. -/
+theorem antipodal_Hst_infinite {X : Finset (Fin n → ℝ)} (hX : IsAntipodal X) :
+    {k : ℕ | Hst X k}.Infinite := by
+  apply Set.infinite_of_injective_forall_mem (f := fun m : ℕ => 2 * m + 1)
+  · intro a b hab; have : 2 * a + 1 = 2 * b + 1 := hab; omega
+  · intro m; exact antipodal_odd_mem_Hst hX ⟨m, by omega⟩
+
+end SphericalDesign
