@@ -1,139 +1,183 @@
-"""
-Cognitive Braids: numerical demonstration of the writhe as an information
-invariant that detects creativity but is blind to confusion.
+"""Knots That Think: Cognition as Braiding — Numerical Demonstrations.
 
-A braid word is a sequence of signed generators. We represent a generator
-sigma_i by the integer (i+1) and its inverse sigma_i^{-1} by -(i+1). Thus:
-    sigma_0        ->  1
-    sigma_0^{-1}   -> -1
-    sigma_1        ->  2
-    sigma_1^{-1}   -> -2
+This self-contained script demonstrates the core mathematical results of the
+"cognition as braiding" model:
 
-We compute two complementary invariants:
-    * writhe(w)      = signed crossing count (a homomorphism into the integers),
-    * permutation(w) = the underlying permutation of the strands (into S_{n+1}).
+  * Braid words over signed Artin generators model cognitive processes.
+  * The WRITHE (signed crossing number) is additive and invariant under the
+    Artin braid moves (distant commutation and the braid relation), hence a
+    well-defined invariant of cognitive equivalence.
+  * The writhe descends to a homomorphism B_n -> Z (net directed charge).
+  * The Jones polynomial and its quantum dimension distinguish trivial,
+    creative (trefoil), and confused (figure-eight) thoughts, assigning
+    positive information only to the trefoil.
 
-The three archetypal cognitive braids:
-    trivial   = []                          (in B_2, one generator sigma_0)
-    creative  = [1, 1, 1]  = sigma_0^3      (in B_2)
-    confused  = [1, -2, 1, -2] = (sigma_0 sigma_1^{-1})^2   (in B_3)
-
-Results reproduced numerically:
-    writhe(creative) = 3,   writhe(trivial) = 0,   writhe(confused) = 0,
-    yet the confused braid has a nontrivial underlying permutation (a 3-cycle),
-    so it is a genuinely nontrivial braid that the writhe cannot see.
+Run with:  python demo.py
+No third-party dependencies required.
 """
 
 from __future__ import annotations
 
-from typing import List, Dict
+import cmath
+import math
+from typing import List, Tuple
+
+# A letter is (generator_index, sign): sign True = sigma_i, False = sigma_i^{-1}.
+Letter = Tuple[int, bool]
+BraidWord = List[Letter]
 
 
-def writhe(word: List[int]) -> int:
-    """Signed crossing count (exponent sum) of a braid word.
+# ----------------------------------------------------------------------------
+# Writhe
+# ----------------------------------------------------------------------------
+def letter_writhe(letter: Letter) -> int:
+    """Signed contribution of a single letter: +1 for sigma_i, -1 for its inverse."""
+    return 1 if letter[1] else -1
 
-    Each positive generator contributes +1, each inverse contributes -1.
-    This is a homomorphism, so the value depends only on the braid, not the word.
+
+def writhe(word: BraidWord) -> int:
+    """The writhe of a braid word: sum of the signed contributions of its letters."""
+    return sum(letter_writhe(l) for l in word)
+
+
+# ----------------------------------------------------------------------------
+# Artin braid moves (cognitive equivalence)
+# ----------------------------------------------------------------------------
+def apply_far(p: BraidWord, i: int, s: bool, j: int, t: bool, q: BraidWord) -> Tuple[BraidWord, BraidWord]:
+    """Distant commutation: sigma_i sigma_j = sigma_j sigma_i for |i - j| > 1.
+
+    Returns the (before, after) words with the two-letter subword swapped.
     """
-    return sum(1 if letter > 0 else -1 for letter in word)
+    assert i + 1 < j, "distant commutation requires i + 1 < j"
+    before = p + [(i, s), (j, t)] + q
+    after = p + [(j, t), (i, s)] + q
+    return before, after
 
 
-def underlying_permutation(word: List[int], strands: int) -> List[int]:
-    """Underlying permutation of a braid word on the given number of strands.
+def apply_braid(p: BraidWord, i: int, q: BraidWord) -> Tuple[BraidWord, BraidWord]:
+    """Braid relation: sigma_i sigma_{i+1} sigma_i = sigma_{i+1} sigma_i sigma_{i+1}."""
+    j = i + 1
+    before = p + [(i, True), (j, True), (i, True)] + q
+    after = p + [(j, True), (i, True), (j, True)] + q
+    return before, after
 
-    Returns a list p of length `strands` with p[k] = image of strand k.
-    Each letter +-(i+1) applies the adjacent transposition (i, i+1).
+
+# ----------------------------------------------------------------------------
+# Jones polynomial data (standard normalizations) and information content
+# ----------------------------------------------------------------------------
+def jones_trivial(t: complex) -> complex:
+    """Jones polynomial of the unknot / trivial thought: V(t) = 1."""
+    return 1.0 + 0.0j
+
+
+def jones_trefoil(t: complex) -> complex:
+    """Jones polynomial of the trefoil (creative thought), standard normalization:
+
+        V(t) = -t^{-4} + t^{-3} + t^{-1}.
     """
-    p: List[int] = list(range(strands))
-    for letter in word:
-        i = abs(letter) - 1  # generator index; sign is irrelevant for the permutation
-        p[i], p[i + 1] = p[i + 1], p[i]
-    return p
+    return -t**-4 + t**-3 + t**-1
 
 
-def is_identity_permutation(p: List[int]) -> bool:
-    """True iff p is the identity permutation."""
-    return all(p[k] == k for k in range(len(p)))
+def jones_figure_eight(t: complex) -> complex:
+    """Jones polynomial of the figure-eight knot (confused thought):
+
+        V(t) = t^{-2} - t^{-1} + 1 - t + t^2.
+    """
+    return t**-2 - t**-1 + 1.0 - t + t**2
 
 
-def cycle_type(p: List[int]) -> List[int]:
-    """Return the sorted list of cycle lengths of a permutation p."""
-    n = len(p)
-    seen = [False] * n
-    lengths: List[int] = []
-    for start in range(n):
-        if seen[start]:
-            continue
-        length = 0
-        j = start
-        while not seen[j]:
-            seen[j] = True
-            j = p[j]
-            length += 1
-        lengths.append(length)
-    return sorted(lengths, reverse=True)
+def information_content(jones) -> float:
+    """I = log|V(e^{i pi / 3})|, the log quantum dimension.
+
+    Evaluated at the primitive 6th root of unity t = e^{i pi / 3}, where
+    |V| = (sqrt 3)^d with d the number of independent Z/3 cycles in the
+    double branched cover.
+    """
+    t = cmath.exp(1j * math.pi / 3)
+    v = jones(t)
+    modulus = abs(v)
+    if modulus <= 0:
+        return float("-inf")
+    return math.log(modulus)
 
 
-def analyze(name: str, word: List[int], strands: int) -> Dict[str, object]:
-    """Compute both invariants for one cognitive braid and print a report."""
-    w = writhe(word)
-    perm = underlying_permutation(word, strands)
-    nontrivial_perm = not is_identity_permutation(perm)
-    report: Dict[str, object] = {
-        "name": name,
-        "word": word,
-        "strands": strands,
-        "writhe": w,
-        "permutation": perm,
-        "permutation_cycle_type": cycle_type(perm),
-        "permutation_nontrivial": nontrivial_perm,
-    }
-    print(f"--- {name} ---")
-    print(f"  braid word           : {word}")
-    print(f"  strands (n+1)        : {strands}")
-    print(f"  writhe (exponent sum): {w}")
-    print(f"  underlying perm      : {perm}  cycle type {cycle_type(perm)}")
-    print(f"  permutation != id    : {nontrivial_perm}")
-    print()
-    return report
+# ----------------------------------------------------------------------------
+# Demonstrations
+# ----------------------------------------------------------------------------
+def demo_additivity() -> None:
+    print("=" * 64)
+    print("Writhe additivity:  writhe(u ++ v) = writhe(u) + writhe(v)")
+    print("=" * 64)
+    u: BraidWord = [(0, True), (1, False), (2, True)]
+    v: BraidWord = [(1, True), (0, True)]
+    print(f"  writhe(u)        = {writhe(u)}")
+    print(f"  writhe(v)        = {writhe(v)}")
+    print(f"  writhe(u ++ v)   = {writhe(u + v)}")
+    assert writhe(u + v) == writhe(u) + writhe(v)
+    print("  OK: additive.\n")
+
+
+def demo_invariance() -> None:
+    print("=" * 64)
+    print("Writhe invariance under the Artin braid moves")
+    print("=" * 64)
+    p: BraidWord = [(0, True)]
+    q: BraidWord = [(3, False)]
+
+    b1, a1 = apply_far(p, 0, True, 2, False, q)
+    print("  Distant commutation  sigma_0 sigma_2 -> sigma_2 sigma_0")
+    print(f"    writhe before = {writhe(b1)}, after = {writhe(a1)}")
+    assert writhe(b1) == writhe(a1)
+
+    b2, a2 = apply_braid(p, 1, q)
+    print("  Braid relation  s1 s2 s1 -> s2 s1 s2")
+    print(f"    writhe before = {writhe(b2)}, after = {writhe(a2)}")
+    assert writhe(b2) == writhe(a2)
+    print("  OK: writhe is invariant under both moves.\n")
+
+
+def demo_homomorphism() -> None:
+    print("=" * 64)
+    print("Writhe as a homomorphism B_n -> Z (relators map to 0)")
+    print("=" * 64)
+    # Far-commutation commutator: x_i x_j x_i^{-1} x_j^{-1}, i+1<j.
+    commutator: BraidWord = [(0, True), (2, True), (0, False), (2, False)]
+    # Braid relator: x_i x_j x_i (x_j x_i x_j)^{-1}, j = i+1.
+    braid_relator: BraidWord = [
+        (0, True), (1, True), (0, True),
+        (1, False), (0, False), (1, False),
+    ]
+    print(f"  writhe(far-commutator) = {writhe(commutator)}")
+    print(f"  writhe(braid relator)  = {writhe(braid_relator)}")
+    assert writhe(commutator) == 0
+    assert writhe(braid_relator) == 0
+    print("  OK: both relators have writhe 0, so writhe descends to B_n.\n")
+
+
+def demo_information_content() -> None:
+    print("=" * 64)
+    print("Information content  I = log|V(e^{i pi / 3})|  of thought archetypes")
+    print("=" * 64)
+    for name, jones in (
+        ("trivial thought (unknot)", jones_trivial),
+        ("creative thought (trefoil)", jones_trefoil),
+        ("confused thought (figure-eight)", jones_figure_eight),
+    ):
+        i = information_content(jones)
+        print(f"  {name:34s}  I = {i:+.6f}")
+    half_log3 = 0.5 * math.log(3)
+    print(f"\n  Note: trefoil information equals (1/2) log 3 = {half_log3:.6f}")
+    print("  Only the trefoil carries positive information; the figure-eight")
+    print("  collapses to 0, matching the trivial thought.\n")
+    assert abs(information_content(jones_trefoil) - half_log3) < 1e-9
+    assert abs(information_content(jones_figure_eight)) < 1e-9
 
 
 def main() -> None:
-    print("Cognitive Braids: writhe detects creativity but is blind to confusion")
-    print("=" * 70)
-    print()
-
-    trivial = analyze("trivial  (linear reasoning)  1", [], 2)
-    creative = analyze("creative (insight)  sigma_0^3", [1, 1, 1], 2)
-    confused = analyze(
-        "confused (deliberation)  (sigma_0 sigma_1^-1)^2", [1, -2, 1, -2], 3
-    )
-
-    print("Verification of the main results:")
-    print("-" * 70)
-
-    assert creative["writhe"] == 3, "creative braid should have writhe 3"
-    assert trivial["writhe"] == 0, "trivial braid should have writhe 0"
-    assert confused["writhe"] == 0, "confused braid should have writhe 0"
-    print("  writhe(creative) = 3  != 0          -> creativity is DETECTED")
-    print("  writhe(confused) = 0  = writhe(trivial) -> confusion is INVISIBLE to writhe")
-
-    # But the confused braid is genuinely nontrivial: nontrivial permutation.
-    assert confused["permutation_nontrivial"], "confused braid must be nontrivial"
-    assert confused["permutation_cycle_type"] == [3], "confused perm is a 3-cycle"
-    assert not creative["permutation_nontrivial"] is False  # sanity
-    print("  confused underlying permutation is a 3-cycle -> confused braid != identity")
-    print()
-    print("Conclusion: the writhe cannot distinguish the confused braid from the")
-    print("trivial braid, yet the confused braid is genuinely nontrivial.")
-    print()
-
-    # Bonus: the writhe is a homomorphism (additive over concatenation).
-    a = [1, 1, -2]
-    b = [2, -1, 1]
-    assert writhe(a + b) == writhe(a) + writhe(b)
-    print(f"Homomorphism check: writhe({a}+{b}) = writhe(a)+writhe(b) = "
-          f"{writhe(a)}+{writhe(b)} = {writhe(a + b)}")
+    demo_additivity()
+    demo_invariance()
+    demo_homomorphism()
+    demo_information_content()
 
 
 if __name__ == "__main__":
