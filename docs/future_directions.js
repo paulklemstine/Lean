@@ -47,6 +47,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
   {
+    "consumed_by_exp_id": "e62d479c",
+    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot \u2014 the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0239",
+    "priority_score": 0.81,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-04T02:50:27.331369+00:00",
+    "title": "Knots That Think: Cognition as Braiding in Category Theory"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "For every m \u2265 1, the generating tree encoding the recursive decomposition of intervals in the greedy m-Tamari poset (on Dyck paths of size n) is isomorphic to the generating tree encoding the recursive decomposition of planar (m+1)-constellations of size n. This conjecture generalizes the m=1 case proved in the paper and would provide a combinatorial proof of the equinumerosity refined by the parameters tracked in the generating tree (e.g., number of valleys in Dyck paths and corresponding statistics in constellations).",
     "domains": [
@@ -2679,7 +2694,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the exponent 3/(2n-1) in the linear covering problem for product sets over finite fields"
   },
   {
-    "consumed_by_exp_id": "71f9931f",
+    "consumed_by_exp_id": "",
     "description": "This conjecture asserts that functional equations for Dirichlet L-functions, under mild assumptions, necessitate the coefficient function to be a primitive Dirichlet character.",
     "domains": [
       "Pythagorean"
@@ -2688,7 +2703,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00332v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T14:51:39.872882+00:00",
     "title": "Functional Equations Enforce Primitivity of Coefficients"
   },
