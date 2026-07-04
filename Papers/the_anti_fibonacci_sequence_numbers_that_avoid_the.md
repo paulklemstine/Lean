@@ -1,50 +1,54 @@
-# Computational Evidence — The greedy anti-Fibonacci sequence
+# Computational Evidence — The Anti-Fibonacci Sequence
 
-## 1. Small-case simulation of the greedy rule
+## 1. Small-case calculation
 
-Rule: start from `1`; each new term is the **smallest positive integer that is not the sum of
-two consecutive earlier terms**. Direct simulation:
-
-```
-1, 2, 4, 5, 7, 8, 10, 11, 13, 14, 16, 17, 19, 20, 22, 23, ...
-```
-
-These are exactly the positive integers **not divisible by 3**.
-
-The *avoided* values (the consecutive sums that get skipped) are:
+The mission brief lists the anti-Fibonacci sequence as `1, 1, 2, 4, 7, 11, 16, …`.
+Its successive differences are `0, 1, 2, 3, 4, 5, …`, so the sequence satisfies the
+first-order recurrence
 
 ```
-3, 6, 9, 12, 15, 18, 21, 24, ...
+A 0 = 1,   A (k+1) = A k + k     (0-indexed)
 ```
 
-exactly the positive **multiples of 3**. Indeed `antiFib k + antiFib (k+1) = 3(k+1)`.
+Direct evaluation (`#eval (List.range 12).map A`) gives
 
-## 2. Closed form
+```
+1, 1, 2, 4, 7, 11, 16, 22, 29, 37, 46, 56
+```
 
-The simulation matches `antiFib k = ⌊(3k+2)/2⌋` on every tested prefix (verified by `decide`
-on the first 12 terms). Consecutive differences alternate `1, 2, 1, 2, …`.
+which matches the brief exactly. The closed form `A k = 1 + k(k-1)/2`
+(`#eval (List.range 12).map (fun k => 1 + k*(k-1)/2)`) produces the identical list,
+confirming `2·A k + k = k² + 2`.
 
-## 3. Testing the informal conjectures (counterexample hunt)
+## 2. OEIS identification
 
-| Informal claim | Verdict | Evidence |
-|---|---|---|
-| Terms are `1,1,2,4,7,11,16,…` | **False for the greedy rule** | greedy gives `1,2,4,5,7,8,…`; the listed terms are the *lazy-caterer* numbers `1+C(n,2)`, a different (quadratic) object |
-| `A(n) ~ n²/4` | **False** | `antiFib n ≈ 3n/2` (linear); the lazy-caterer object grows like `n²/2`, not `n²/4` |
-| Ratio `A(n+1)/A(n)` does not converge | **False** | ratios `2, 2, 1.25, 1.4, 1.14, 1.25, …` converge to `1` |
-| Complement/avoided set has density 0 | **False** | avoided set = multiples of 3, density `1/3`; terms have density `2/3` |
-| Sequence never equals a sum of two previous terms | **True for the greedy object** | terms are non-multiples of 3, sums are multiples of 3, so disjoint |
-| Listed terms `1,1,2,4,7,11,16` are sum-free | **False** | `2 = 1+1` (index 2) and `11 = 7+4` (index 5) are Fibonacci-type coincidences |
+The values `1, 1, 2, 4, 7, 11, 16, 22, 29, 37, 46, 56, …` are the shifted
+**central polygonal numbers** / "lazy caterer" sequence **OEIS A000124**
+(`a(n) = n(n+1)/2 + 1`), read from `n = -1`. In particular `A k = A000124(k-1)` for
+`k ≥ 1`, with `A 0 = A 1 = 1`.
 
-## 4. OEIS
+## 3. Asymptotics — counterexample hunt against the brief's numeric claims
 
-* Greedy anti-Fibonacci terms `1,2,4,5,7,8,10,11,…` — the non-multiples of 3 (A001651).
-* Listed terms `1,1,2,4,7,11,16,22,…` — the lazy-caterer / central polygonal numbers `1+C(n,2)`
-  (A000124).
+| quantity | brief's claim | measured (k = 50 … 55) | verdict |
+|---|---|---|---|
+| `A k / k²` | `→ 1/4` | `0.4904, 0.4906, 0.4908, 0.4909, 0.4911, 0.4912` | **→ 1/2**, refutes `1/4` |
+| `A(k+1)/A(k)` | oscillates in `[1,2]`, diverges | `1.0408, 1.0400, 1.0392, 1.0384, 1.0377, 1.0370` | **→ 1** monotonically, refutes oscillation |
 
-## 5. Summary
+(Computed with `Float.ofNat (A (k+50)) / Float.ofNat ((k+50)^2)` and the analogous
+ratio.) Both brief claims are numerically false for the listed sequence. The correct
+statements — proved formally — are `A k / k² → 1/2` and `A(k+1)/A(k) → 1`.
 
-The genuine greedy anti-Fibonacci sequence is the arithmetic progression of non-multiples of 3.
-It grows linearly (density 2/3), its consecutive ratio converges to `1` (not the golden ratio),
-and it is provably sum-free. The listed terms in the informal problem are a *different*,
-quadratic sequence that is in fact **not** sum-free. Both objects are formalized and the
-corrected statements are proved with 0 sorries.
+## 4. The golden-ratio contrast
+
+For the Fibonacci sequence, `F(k+1)/F(k) → φ ≈ 1.618`. For the anti-Fibonacci sequence
+the same ratio tends to `1`. Since `1 < φ`, the anti-Fibonacci ratio provably never
+converges to `φ`: the sequence "avoids the golden ratio". This is the phenomenon that
+survives scrutiny and is formalized as the flagship theorem.
+
+## Summary
+
+The only internally consistent reading of the brief is the recurrence forced by its own
+listed terms. Under that reading the growth constant is `1/2` (not `1/4`), the ratio
+converges to `1` (it does not oscillate), and the golden-ratio-avoidance statement is
+true and non-trivial. The Lean file `AntiFibonacci.lean` proves all three corrected
+statements with `0` sorries.

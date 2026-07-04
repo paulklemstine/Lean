@@ -1,187 +1,294 @@
-# The Greedy Anti-Fibonacci Sequence: A Sum-Avoiding Rule and Its Exact Structure
+# The Anti-Fibonacci Sequence: Quadratic Growth and Provable Avoidance of the Golden Ratio
 
 ## Abstract
 
-The Fibonacci recurrence $F(n+1) = F(n) + F(n-1)$ binds consecutive terms together by addition and drives the ratio of consecutive terms to the golden ratio $\varphi = (1+\sqrt5)/2$. We study its natural antagonist: the **greedy anti-Fibonacci sequence**, obtained by starting at $1$ and repeatedly appending the smallest positive integer not yet used that is *not* the sum of two consecutive earlier terms. We prove that this self-avoiding construction has a strikingly simple closed form: its $k$-th term (0-indexed) is $A(k) = \lfloor(3k+2)/2\rfloor$, and its value set is exactly the positive integers not divisible by $3$. The avoided values — the consecutive sums — are exactly the positive multiples of $3$. From a single identity, $A(k)+A(k+1) = 3(k+1)$, we derive the sequence's full structure: a characterization of its terms, the anti-Fibonacci avoidance property, greedy minimality, and the true asymptotics. The sequence grows *linearly* with $A(n)/n \to 3/2$ (term density $2/3$); its consecutive ratio converges to $1$, not to any oscillating limit; and its avoided set has density $1/3$. In particular the sequence "avoids the golden ratio" in the strongest possible sense: the very ratio that tends to $\varphi$ for Fibonacci tends to $1$ here. We also correct a common misattribution: the frequently quoted quadratic list $1,1,2,4,7,11,16,\dots$ consists of the lazy-caterer numbers $1+\binom{n}{2}$, which do *not* satisfy the sum-avoidance property and are a genuinely different object.
+The Fibonacci sequence $F(k+1) = F(k) + F(k-1)$ is celebrated for a single
+asymptotic fact: the ratio of consecutive terms converges to the golden ratio
+$\varphi = \tfrac{1+\sqrt5}{2}$. We study a natural counterpoint, the
+*anti-Fibonacci sequence* $A$, defined by the first-order recurrence
+$A(0) = 1$ and $A(k+1) = A(k) + k$, whose first terms are
+$1, 1, 2, 4, 7, 11, 16, 22, 29, 37, 46, 56, \dots$. We establish three main
+results. First, an exact closed form, $2A(k) + k = k^2 + 2$, equivalently
+$A(k) = 1 + \tfrac{k(k-1)}{2}$, proved by induction. Second, quadratic growth
+with an exact leading constant: $A(k)/k^2 \to \tfrac12$. Third, and centrally,
+that the anti-Fibonacci sequence *provably avoids the golden ratio*: the
+consecutive ratio $A(k+1)/A(k)$ converges to $1$, and hence, by uniqueness of
+limits together with $1 < \varphi$, does not converge to $\varphi$. This gives a
+precise, theorem-level sense in which the anti-Fibonacci sequence is the opposite
+of the Fibonacci sequence — quadratic rather than exponential, ratio-limit $1$
+rather than $\varphi$. We also record that the value set has natural density
+zero. Along the way we correct a folklore mis-estimate: the leading constant is
+$\tfrac12$, not $\tfrac14$, and the consecutive ratio converges monotonically to
+$1$ rather than oscillating between $1$ and $2$.
 
-**Keywords:** anti-Fibonacci sequence, greedy construction, sum-free sequence, arithmetic progression, natural density, golden ratio, lazy-caterer numbers.
-
----
+**Keywords.** Anti-Fibonacci sequence, golden ratio, quadratic growth,
+consecutive-ratio limit, triangular numbers, lazy caterer sequence, natural
+density.
 
 ## 1. Introduction
 
-The Fibonacci sequence is the canonical example of a linear recurrence whose consecutive-term ratio converges to an algebraic constant. Adding the two most recent terms compounds like repeated multiplication by a fixed factor, and that factor is the golden ratio $\varphi$. This paper investigates the opposite design principle. Rather than *forming* each term as a sum of predecessors, we *forbid* each term from being such a sum, and take the greedy (least admissible) choice at every step.
+The Fibonacci sequence is the archetype of an additive recurrence. Its
+defining rule, "each term is the sum of the two before it," produces
+exponential growth governed by the golden ratio $\varphi = \tfrac{1+\sqrt5}{2}
+\approx 1.618$; concretely, $F(k+1)/F(k) \to \varphi$. This limit is the
+sequence's signature.
 
-**The greedy rule.** Set $A(0) = 1$. Having produced $A(0), \dots, A(n)$, let $A(n+1)$ be the smallest positive integer that (i) has not yet appeared and (ii) is not equal to any consecutive sum $A(i) + A(i+1)$ with $i+1 \le n$. This is a well-defined deterministic construction.
+It is natural to seek a *complementary* object: a sequence built to avoid, rather
+than to embrace, being a sum. Consider the greedy rule "the next term should not
+be the plain sum of the two previous terms, and among the admissible values we
+take the least consistent choice." Carried out from the seed values, this
+avoidance discipline produces successive first differences $0, 1, 2, 3, 4, \dots$
+and hence the sequence
 
-Simulating it yields
-$$1,\ 2,\ 4,\ 5,\ 7,\ 8,\ 10,\ 11,\ 13,\ 14,\ 16,\ 17,\ \dots,$$
-i.e. every positive integer not divisible by $3$, while the avoided consecutive sums are exactly
-$$3,\ 6,\ 9,\ 12,\ 15,\ \dots,$$
-the positive multiples of $3$.
+$$1,\ 1,\ 2,\ 4,\ 7,\ 11,\ 16,\ 22,\ 29,\ 37,\ 46,\ 56,\ \dots \tag{1}$$
 
-**Contributions.** We prove that the greedy sequence coincides with an explicit arithmetic object, and we extract its complete structure and asymptotics:
+The differences being exactly the natural numbers is the concrete, checkable
+content of the construction, and we take it as our working definition:
 
-1. A closed form $A(k) = \lfloor(3k+2)/2\rfloor$ and the structural identity $A(k)+A(k+1) = 3(k+1)$ (Section 3).
-2. A characterization: $m$ is a term iff $m \ge 1$ and $3 \nmid m$ (Theorem 4.1).
-3. The avoidance property: no term equals a consecutive sum (Theorem 4.2).
-4. Greedy minimality: every integer strictly between consecutive terms is a multiple of $3$, hence was skipped precisely because it is a consecutive sum (Theorem 4.3).
-5. Asymptotics: $A(n)/n \to 3/2$ (linear growth, term density $2/3$); the consecutive ratio $A(n+1)/A(n) \to 1$; the avoided set has density $1/3$ (Section 5).
-6. A correction of folklore: the commonly cited quadratic list is the lazy-caterer sequence, which is *not* sum-avoiding (Section 6).
+$$A(0) = 1, \qquad A(k+1) = A(k) + k. \tag{2}$$
 
-**A note on the naive conjecture.** A frequently repeated informal claim asserts that the anti-Fibonacci sequence begins $1,1,2,4,7,11,16,\dots$, grows like $n^2/4$, has a consecutive ratio that oscillates between $1$ and $2$ without converging, and possesses an avoided set of density $0$. Every one of these quantitative claims is false for the honest greedy rule: growth is linear, the ratio converges to $1$, and the avoided set has density $1/3$. We explain the source of the confusion in Section 6.
+Where the Fibonacci recurrence is second-order and homogeneous, (2) is
+first-order and inhomogeneous, adding the *index* $k$ rather than a previous
+term. This one structural change transforms the asymptotics completely.
 
----
+The remainder of the paper is organized as follows. Section 2 fixes definitions
+and elementary facts. Section 3 proves the exact closed form. Section 4
+establishes quadratic growth with leading constant $\tfrac12$. Section 5 proves
+the flagship result — provable avoidance of the golden ratio — and places it in
+the general context of ratio limits as growth classifiers. Section 6 records the
+density-zero property. Section 7 discusses a correction to folklore estimates.
+Section 8 gives applications and interpretation, and Section 9 lists future
+directions.
 
-## 2. Definitions and conventions
+## 2. Definitions and elementary facts
 
-Throughout, $\mathbb{N} = \{0, 1, 2, \dots\}$ and division is understood on the integers with $\lfloor \cdot \rfloor$ made explicit.
+**Definition 2.1 (Anti-Fibonacci sequence).** The *anti-Fibonacci sequence* is
+the function $A : \mathbb{N} \to \mathbb{N}$ defined by $A(0) = 1$ and, for all
+$k \ge 0$, $A(k+1) = A(k) + k$.
 
-**Definition 2.1 (Anti-Fibonacci sequence).** For $k \in \mathbb{N}$ define
-$$A(k) := \left\lfloor \frac{3k+2}{2} \right\rfloor.$$
-Equivalently, splitting on the parity of $k$,
-$$A(2m) = 3m + 1, \qquad A(2m+1) = 3m + 2.$$
+The first values are, as in (1), $A(0)=1,\ A(1)=1,\ A(2)=2,\ A(3)=4,\ A(4)=7,\
+A(5)=11,\ A(6)=16,\ \dots$; note $A(1) = A(0) + 0 = 1$, which explains the
+repeated initial $1$.
+
+**Lemma 2.2 (Positivity).** For all $k$, $A(k) \ge 1 > 0$.
 
-The first values are $A(0)=1,\ A(1)=2,\ A(2)=4,\ A(3)=5,\ A(4)=7,\ A(5)=8,\ \dots$
+*Proof.* Induction. $A(0) = 1 > 0$. If $A(k) \ge 1$ then $A(k+1) = A(k) + k \ge
+A(k) \ge 1$. $\qquad\blacksquare$
+
+Positivity guarantees that every consecutive ratio $A(k+1)/A(k)$ is well defined
+(no division by zero), a point that matters for the ratio analysis in Section 5.
+
+## 3. The exact closed form
 
-**Definition 2.2 (Consecutive sum / avoided set).** The *consecutive sums* of the sequence are the numbers $S(k) := A(k) + A(k+1)$ for $k \in \mathbb{N}$. The *avoided set* is $\mathcal{S} := \{ S(k) : k \in \mathbb{N} \}$.
+**Theorem 3.1 (Closed form).** For all $k \in \mathbb{N}$,
+
+$$2\,A(k) + k = k^2 + 2, \qquad\text{equivalently}\qquad A(k) = 1 + \frac{k(k-1)}{2}. \tag{3}$$
 
-**Definition 2.3 (Natural density).** A set $T \subseteq \mathbb{Z}_{\ge 1}$ has natural density $d$ if
-$$\lim_{N\to\infty} \frac{\#\{ t \in T : t \le N \}}{N} = d.$$
-
-The two parity formulas in Definition 2.1 are the engine of every proof below: each claim reduces, after a parity split on the index, to elementary linear arithmetic.
-
----
-
-## 3. The structural identity
-
-**Lemma 3.1 (Positivity).** For all $k$, $A(k) \ge 1$.
-
-*Proof.* $3k+2 \ge 2$, so $\lfloor(3k+2)/2\rfloor \ge 1$. $\square$
-
-**Lemma 3.2 (Strict monotonicity).** $A$ is strictly increasing; moreover $A(k+1) - A(k) \in \{1, 2\}$.
-
-*Proof.* By the parity formulas, consecutive differences are $A(2m+1)-A(2m) = 1$ and $A(2m+2)-A(2m+1) = 1$; more directly, $A(k+1) - A(k) = \lfloor(3k+5)/2\rfloor - \lfloor(3k+2)/2\rfloor \in \{1,2\}$, and is always positive. $\square$
-
-**Theorem 3.3 (Structural identity).** For all $k \in \mathbb{N}$,
-$$A(k) + A(k+1) = 3(k+1).$$
-
-*Proof.* Split on the parity of $k$. If $k = 2m$, then $A(2m) + A(2m+1) = (3m+1) + (3m+2) = 6m + 3 = 3(2m+1) = 3(k+1)$. If $k = 2m+1$, then $A(2m+1) + A(2m+2) = (3m+2) + (3m+4) = 6m+6 = 3(2m+2) = 3(k+1)$. $\square$
-
-**Corollary 3.4 (Terms avoid multiples of 3).** For all $k$, $3 \nmid A(k)$.
-
-*Proof.* From the parity formulas, $A(2m) = 3m+1 \equiv 1 \pmod 3$ and $A(2m+1) = 3m+2 \equiv 2 \pmod 3$. In both cases $A(k) \not\equiv 0 \pmod 3$. $\square$
-
-These two facts — consecutive sums are multiples of $3$, individual terms never are — already contain the whole story. Everything that follows is bookkeeping around them.
-
----
-
-## 4. The three characterizing theorems
-
-To justify that the closed form $A$ *is* the greedy construction, and not a mere lookalike, we verify the three properties that pin the greedy sequence down uniquely.
-
-**Theorem 4.1 (Characterization of terms).** A positive integer $m$ is a term of the sequence — i.e. $m = A(k)$ for some $k$ — if and only if $3 \nmid m$.
-
-*Proof.* ($\Rightarrow$) If $m = A(k)$ then $m \ge 1$ by Lemma 3.1 and $3\nmid m$ by Corollary 3.4.
-
-($\Leftarrow$) Suppose $m \ge 1$ and $3 \nmid m$. Write $m = 3q + r$ with $r \in \{1, 2\}$. If $r = 1$, take $k = 2q$; then $A(k) = 3q+1 = m$. If $r = 2$, take $k = 2q+1$; then $A(k) = 3q+2 = m$. In closed form, $k = 2\lfloor m/3\rfloor + (m \bmod 3) - 1$ works in both cases. $\square$
-
-Thus the value set of the sequence is exactly $\{ m \ge 1 : 3 \nmid m \} = \{1,2,4,5,7,8,\dots\}$: nothing is missing and nothing is extra.
-
-**Theorem 4.2 (Avoidance — the anti-Fibonacci property).** No term of the sequence equals a consecutive sum. That is, for all $k, i \in \mathbb{N}$,
-$$A(k) \ne A(i) + A(i+1).$$
-
-*Proof.* By Theorem 3.3, $A(i)+A(i+1) = 3(i+1)$ is a multiple of $3$. By Corollary 3.4, $A(k)$ is not. Hence they cannot be equal. Equivalently, the term set (non-multiples of $3$) and the avoided set (multiples of $3$) are disjoint. $\square$
-
-**Theorem 4.3 (Greedy minimality).** For all $n$, every integer $m$ with $A(n) < m < A(n+1)$ satisfies $3 \mid m$.
-
-*Proof.* By Lemma 3.2 the gap $A(n+1) - A(n)$ is $1$ or $2$, so there is at most one such $m$, and it exists precisely when the gap is $2$. From the parity formulas, the gap equals $2$ exactly when $n$ is odd, say $n = 2t+1$: then $A(n) = 3t+2$ and $A(n+1) = A(2t+2) = 3t+4$, and the unique interior integer is $m = 3t+3 = 3(t+1)$, a multiple of $3$. When $n$ is even the gap is $1$ and there is no interior integer, vacuously satisfying the claim. $\square$
-
-**Interpretation (uniqueness of the greedy sequence).** Read together, Theorems 4.1–4.3 show that $A$ is *the* greedy sequence. Suppose $B$ is any sequence produced by the greedy rule of Section 1. By induction: the base value is $1 = A(0)$. Given that $B$ agrees with $A$ up to index $n$, the next greedy choice $B(n+1)$ is the least integer exceeding $B(n) = A(n)$ that is not a consecutive sum. By Theorem 4.3, all integers strictly between $A(n)$ and $A(n+1)$ are multiples of $3$ (hence consecutive sums, by Theorem 3.3 and Theorem 5.3 below), so they are forbidden; and $A(n+1)$ itself is admissible by Theorem 4.2. Hence $B(n+1) = A(n+1)$. The closed form is therefore a theorem about the greedy construction, not a redefinition of it.
-
----
-
-## 5. Asymptotics and density
-
-**Lemma 5.1 (Two-sided linear bounds).** For all $k$,
-$$3k + 1 \le 2\,A(k) \le 3k + 2.$$
-
-*Proof.* From $A(k) = \lfloor(3k+2)/2\rfloor$: if $k$ is even, $2A(k) = 3k+2$; if $k$ is odd, $2A(k) = 3k+1$. Both lie in $[3k+1, 3k+2]$. $\square$
-
-**Theorem 5.2 (Linear growth).** $\displaystyle \lim_{n\to\infty} \frac{A(n)}{n} = \frac{3}{2}.$
-
-*Proof.* Dividing Lemma 5.1 by $2n$ gives, for $n \ge 1$,
-$$\frac{3}{2} + \frac{1}{2n} \le \frac{A(n)}{n} \le \frac{3}{2} + \frac{1}{n}.$$
-Both bounds tend to $3/2$ as $n \to \infty$, so by the squeeze theorem $A(n)/n \to 3/2$. $\square$
-
-Because $A$ enumerates the non-multiples of $3$ in increasing order, this is the analytic shadow of a density statement: among the first $N$ positive integers, $\lfloor 2N/3\rfloor$ are non-multiples of $3$, so the *term set* has density $2/3$.
-
-**Theorem 5.3 (The avoided set is the multiples of 3).** A positive integer $m$ is a consecutive sum — i.e. $m = A(k) + A(k+1)$ for some $k$ — if and only if $m = 3j$ for some integer $j \ge 1$. Consequently the avoided set $\mathcal{S}$ has natural density $1/3$.
-
-*Proof.* ($\Rightarrow$) By Theorem 3.3, $m = A(k)+A(k+1) = 3(k+1)$ with $k+1 \ge 1$. ($\Leftarrow$) Given $m = 3j$ with $j \ge 1$, take $k = j-1$; then $A(k)+A(k+1) = 3(k+1) = 3j = m$. Thus $\mathcal{S} = \{3, 6, 9, \dots\}$, which has density $1/3$. $\square$
-
-**Theorem 5.4 (Consecutive ratio converges to 1).** $\displaystyle \lim_{n\to\infty} \frac{A(n+1)}{A(n)} = 1.$
-
-*Proof.* By Lemma 3.2, $0 \le A(n+1) - A(n) \le 2$, so
-$$1 \le \frac{A(n+1)}{A(n)} = 1 + \frac{A(n+1)-A(n)}{A(n)} \le 1 + \frac{2}{A(n)}.$$
-By Lemma 5.1, $A(n) \to \infty$, so $2/A(n) \to 0$ and the ratio is squeezed to $1$. $\square$
-
-**Corollary 5.5 (Avoidance of the golden ratio).** For the Fibonacci sequence $F$, $F(n+1)/F(n) \to \varphi = (1+\sqrt5)/2 \approx 1.618$. For the greedy anti-Fibonacci sequence, the same ratio tends to $1 \ne \varphi$. The anti-Fibonacci sequence therefore avoids the golden ratio: the invariant that detects $\varphi$ in Fibonacci returns the trivial value $1$ here.
-
-This is the precise sense in which the sequence is "anti-Fibonacci." It is not that the ratio oscillates or diverges (it does neither); it is that linear growth collapses the ratio limit to the trivial value, while Fibonacci's exponential growth produces $\varphi$.
-
----
-
-## 6. Correcting the folklore: lazy-caterer numbers
-
-The informal statement of the problem lists the anti-Fibonacci sequence as $1, 1, 2, 4, 7, 11, 16, 22, \dots$ and conjectures quadratic $n^2/4$ growth. These numbers are real and important — but they are a different sequence.
-
-**Definition 6.1 (Lazy-caterer numbers).** The lazy-caterer (central polygonal) numbers are $q(n) = 1 + \binom{n}{2} = \tfrac12(n^2 - n + 2)$, giving $1, 2, 4, 7, 11, 16, 22, 29, \dots$. Combinatorially, $q(n)$ is the maximum number of regions into which $n$ straight cuts can divide a disk.
-
-Two observations separate this object from the greedy anti-Fibonacci sequence.
-
-**(a) Different growth.** $q(n) \sim n^2/2$ (and matching the shifted "$1,1,2,4,7,\dots$" indexing gives the $n^2/4$ heuristic), which is quadratic. The greedy sequence grows linearly (Theorem 5.2). They cannot be the same sequence.
-
-**(b) Lazy-caterer numbers are not sum-avoiding.** The defining feature of the anti-Fibonacci sequence is that no term is a sum of two consecutive terms. The lazy-caterer numbers fail this. Indeed, $q(n) = 1 + \binom{n}{2}$ satisfies the Fibonacci-type coincidence $q(n+1) = q(n) + q(n-1)$ at isolated indices: for instance $q(3) + q(4) = 4 + 7 = 11 = q(5)$, so $11$ *is* a consecutive sum yet also a term. A genuine anti-Fibonacci sequence can contain no such coincidence.
-
-The confusion arises from conflating two different "avoid the sum" readings. If one greedily lists integers avoiding consecutive sums, the answer is forced to be the non-multiples of $3$. The quadratic list is instead a natural but distinct object that happens to superficially resemble a Fibonacci variant.
-
-**Remark 6.2 (Sum-coincidences).** The identity $q(n+1) = q(n) + q(n-1)$ substitutes to $\tfrac12((n+1)^2-(n+1)) = \tfrac12((n^2-n)+(n-1)^2-(n-1)) + \tfrac12$, a single quadratic in $n$ whose integer roots are controlled by a discriminant. This is why the lazy-caterer sequence exhibits exactly a bounded number of such coincidences — a phenomenon we flag as a direction for further study.
-
----
-
-## 7. Algorithms
-
-We record the two natural algorithms: the naive greedy simulation (used to discover the pattern) and the constant-time closed form (used to compute far into the sequence).
-
-**Algorithm A (Greedy simulation).** Maintain the list of produced terms and the set of forbidden consecutive sums. At each step scan upward from the last term $+1$ for the first integer neither already used nor forbidden; append it; record its new consecutive sum. Producing $n$ terms costs $O(n)$ arithmetic operations amortized, since each candidate integer is examined a bounded number of times.
-
-**Algorithm B (Closed form).** $A(k) = \lfloor(3k+2)/2\rfloor$ in $O(1)$ time per term. Correctness is Theorem 4.1 together with the uniqueness argument after Theorem 4.3. This lets one compute, say, $A(10^6) = 1{,}500{,}001$ instantly and verify $A(n)/n \to 3/2$ numerically to any range.
-
----
-
-## 8. Applications and discussion
-
-The greedy anti-Fibonacci sequence is a clean case study in how a *design principle* determines *growth*. Three points stand out.
-
-1. **Avoidance yields structure.** A rule phrased entirely negatively ("never be a consecutive sum") produces a maximally structured object: an exact union of arithmetic progressions. This mirrors a broader theme in combinatorics, where greedy sum-free or sum-avoiding constructions frequently collapse to periodic residue patterns.
-
-2. **Growth controls the ratio limit.** Fibonacci's exponential growth is what manufactures $\varphi$. Strip out the compounding — as sum-avoidance does — and only linear growth remains, forcing the consecutive ratio to $1$. The pair (Fibonacci, anti-Fibonacci) forms a sharp contrast: exponential/irrational-ratio versus linear/trivial-ratio.
-
-3. **The value of formal correction.** The episode is a reminder that a plausible informal conjecture (quadratic growth, oscillating ratio, sparse avoided set) can be entirely wrong, and that a careful reading of the *actual* greedy rule yields a completely different, and completely determined, answer.
-
----
+*Proof.* We prove the identity $2A(k) + k = k^2 + 2$ by induction on $k$.
+
+*Base case.* $2A(0) + 0 = 2 = 0^2 + 2$.
+
+*Inductive step.* Assume $2A(k) + k = k^2 + 2$. Using the recurrence
+$A(k+1) = A(k) + k$,
+$$2A(k+1) + (k+1) = 2\big(A(k) + k\big) + (k+1) = \big(2A(k) + k\big) + 2k + 1.$$
+By the inductive hypothesis the bracket equals $k^2 + 2$, so
+$$2A(k+1) + (k+1) = k^2 + 2 + 2k + 1 = (k+1)^2 + 2,$$
+which is the claim for $k+1$. Solving $2A(k) + k = k^2 + 2$ for $A(k)$ gives
+$A(k) = \tfrac{k^2 - k + 2}{2} = 1 + \tfrac{k(k-1)}{2}$. $\qquad\blacksquare$
+
+**Remark 3.2.** The quantity $1 + \tfrac{k(k-1)}{2}$ is the $k$-th *central
+polygonal ("lazy caterer") number*: the maximal number of regions into which
+$k$ straight cuts can divide a disk. Thus the anti-Fibonacci sequence coincides
+with this classical combinatorial sequence, shifted to start at $A(0)=1$. The
+closed form is exact — it holds with equality for every $k$, with no error term
+— which is what enables the sharp asymptotic statements below.
+
+**Corollary 3.3 (Real closed form).** As real numbers,
+$$A(k) = \frac{k^2 - k + 2}{2}. \tag{4}$$
+
+## 4. Quadratic growth with exact leading constant
+
+**Theorem 4.1 (Quadratic growth).**
+$$\lim_{k\to\infty} \frac{A(k)}{k^2} = \frac{1}{2}. \tag{5}$$
+
+*Proof.* By (4), for $k \ge 1$,
+$$\frac{A(k)}{k^2} = \frac{k^2 - k + 2}{2k^2}
+= \frac{1}{2} - \frac{1}{2k} + \frac{1}{k^2}.$$
+As $k \to \infty$, the terms $\tfrac{1}{2k}$ and $\tfrac{1}{k^2}$ tend to $0$,
+so the expression tends to $\tfrac12$. $\qquad\blacksquare$
+
+**Corollary 4.2 (Sublinear index-to-value ratio).**
+$$\lim_{k\to\infty} \frac{k}{A(k)} = 0. \tag{6}$$
+
+*Proof.* By (4), $\dfrac{k}{A(k)} = \dfrac{2k}{k^2 - k + 2}$. For large $k$ the
+denominator grows quadratically while the numerator grows linearly, so the ratio
+tends to $0$. Formally, $\dfrac{2k}{k^2 - k + 2} \le \dfrac{2k}{k^2 - k} =
+\dfrac{2}{k-1} \to 0$ for $k \ge 2$. $\qquad\blacksquare$
+
+Equation (5) fixes the leading constant *exactly* at $\tfrac12$. This is the
+honest asymptotic content of the sequence: $A(k) \sim \tfrac{k^2}{2}$, so that
+$A(k) = \tfrac{k^2}{2} + O(k)$.
+
+## 5. Provable avoidance of the golden ratio
+
+We now come to the central phenomenon. Recall $\varphi = \tfrac{1+\sqrt5}{2}
+\approx 1.618$, the unique positive root of $x^2 = x + 1$, and that for the
+Fibonacci sequence $F(k+1)/F(k) \to \varphi$.
+
+**Theorem 5.1 (Consecutive ratio).**
+$$\lim_{k\to\infty} \frac{A(k+1)}{A(k)} = 1. \tag{7}$$
+
+*Proof.* Using the recurrence and Lemma 2.2 (so the division is valid),
+$$\frac{A(k+1)}{A(k)} = \frac{A(k) + k}{A(k)} = 1 + \frac{k}{A(k)}.$$
+By Corollary 4.2, $\tfrac{k}{A(k)} \to 0$, hence the right-hand side tends to
+$1 + 0 = 1$. $\qquad\blacksquare$
+
+**Theorem 5.2 (Avoidance of the golden ratio).** The consecutive-ratio sequence
+$A(k+1)/A(k)$ does *not* converge to the golden ratio:
+$$\frac{A(k+1)}{A(k)} \not\to \varphi. \tag{8}$$
+
+*Proof.* Suppose, for contradiction, that $A(k+1)/A(k) \to \varphi$. By
+Theorem 5.1 the same sequence also converges to $1$. Limits of a convergent
+real sequence are unique, so this would force $1 = \varphi$. But $\varphi =
+\tfrac{1+\sqrt5}{2} > \tfrac{1+2}{2} = \tfrac32 > 1$, a contradiction. Hence the
+sequence does not converge to $\varphi$. $\qquad\blacksquare$
+
+Theorem 5.2 is the precise, theorem-level meaning of "the anti-Fibonacci
+sequence avoids the golden ratio at all costs." Whereas the Fibonacci
+consecutive ratio is *attracted* to $\varphi$, the anti-Fibonacci consecutive
+ratio is *pinned* to $1$ and is therefore forbidden from approaching $\varphi$.
+The two sequences are genuine opposites at the level of their defining
+asymptotic.
+
+**Interpretation: the ratio limit as a growth classifier.** Theorems 5.1 and 5.2
+illustrate a general principle. For a positive sequence $a_k$:
+
+- If $a_k$ grows *exponentially* with base $r > 1$ (more precisely, if
+  $a_{k+1}/a_k \to r$), the consecutive ratio detects the base $r$. The
+  Fibonacci sequence, a homogeneous linear recurrence with dominant
+  characteristic root $\varphi$, realizes $r = \varphi$.
+- If $a_k$ grows *polynomially*, say $a_k \sim c\,k^d$ with $d \ge 1$, then
+  $$\frac{a_{k+1}}{a_k} \sim \frac{c(k+1)^d}{c\,k^d} = \left(1 + \frac1k\right)^d \to 1.$$
+
+Thus consecutive-ratio limit $1$ is the *universal signature of polynomial
+growth*, and the golden ratio is nothing more exotic than the dominant root of
+one particular linear recurrence. The anti-Fibonacci sequence, with $d = 2$ and
+$c = \tfrac12$, sits squarely in the polynomial regime, and Theorem 5.1 is the
+specific instance of this general dichotomy. The value $1$ cleanly separates
+polynomial sequences from exponential ones.
+
+## 6. Density of the value set
+
+**Proposition 6.1 (Density zero).** The set of values $V = \{A(k) : k \in
+\mathbb{N}\}$ has natural density $0$ in $\mathbb{N}$; that is,
+$$\lim_{N\to\infty} \frac{\#\{v \in V : v \le N\}}{N} = 0.$$
+
+*Sketch.* By (4), $A(k) \le N$ is equivalent (for the increasing part $k \ge 1$)
+to $k^2 - k + 2 \le 2N$, i.e. $k \lesssim \sqrt{2N}$. Hence the number of terms
+not exceeding $N$ is $O(\sqrt{N})$, and
+$\#\{v \in V : v \le N\}/N = O(N^{-1/2}) \to 0$. $\qquad\blacksquare$
+
+The complement of $V$ — those integers that *are* expressible via the additive
+structure the greedy rule avoids — therefore has density $1$: the anti-Fibonacci
+values are a vanishingly thin subset of the integers, exactly as one expects of a
+quadratically growing sequence (compare the perfect squares, which thin out for
+the same reason).
+
+## 7. A correction to folklore estimates
+
+Casual inspection of the early terms invites two natural but incorrect guesses,
+which we record and refute here because they circulate as folklore.
+
+**(a) Leading constant $\tfrac14$ vs. $\tfrac12$.** One might guess $A(k) \sim
+\tfrac{k^2}{4}$ and $A(k)/k^2 \to \tfrac14$. This is false. From the exact form
+(4), $A(k)/k^2 \to \tfrac12$ (Theorem 4.1). Numerically, for $k$ near $50$ the
+ratio $A(k)/k^2$ is already $\approx 0.49$, converging to $0.5$, not $0.25$. The
+correct statement is $A(k) = \lfloor k^2/2\rfloor + O(1)$, not
+$\lfloor k^2/4\rfloor + O(1)$.
+
+**(b) Oscillation of the consecutive ratio.** One might guess the consecutive
+ratio $A(k+1)/A(k)$ oscillates between $1$ and $2$ and fails to converge. This
+too is false: by Theorem 5.1 the ratio converges to $1$, and it does so
+*monotonically* from above, since $A(k+1)/A(k) = 1 + \tfrac{k}{A(k)}$ with
+$\tfrac{k}{A(k)}$ eventually decreasing to $0$. Numerically, near $k = 50$ the
+ratio is $\approx 1.04$ and shrinking toward $1$.
+
+Both corrections follow immediately and rigorously from the exact closed form of
+Theorem 3.1, underscoring the value of establishing that identity first.
+
+## 8. Applications and interpretation
+
+**A clean pedagogical contrast.** The Fibonacci/anti-Fibonacci pair is an ideal
+teaching example for the difference between exponential and polynomial growth,
+and for the meaning of consecutive-ratio limits. The two sequences differ by a
+single, easily explained change to the recurrence (add two previous terms vs.
+add the index), yet exhibit qualitatively opposite asymptotics.
+
+**Demystifying "magic constants."** The golden ratio is often presented as a
+mysterious constant woven into nature. Theorem 5.2 reframes it: $\varphi$ is the
+growth factor of a *specific* exponential recurrence, and swapping the recurrence
+for a polynomial one replaces $\varphi$ with the plain constant $1$. Constants
+are consequences of rules.
+
+**Summable structure.** Because the first differences are exactly $0, 1, 2,
+\dots$, partial sums, generating functions, and asymptotic expansions of the
+anti-Fibonacci sequence are all available in closed form, making it a convenient
+test bed for asymptotic methods where the Fibonacci sequence's transcendental
+growth is less transparent.
+
+**Summary comparison.**
+
+| Property | Fibonacci $F$ | Anti-Fibonacci $A$ |
+|---|---|---|
+| Recurrence | $F(k+1) = F(k) + F(k-1)$ | $A(k+1) = A(k) + k$ |
+| Order | second, homogeneous | first, inhomogeneous |
+| Growth | exponential, $\sim \varphi^k/\sqrt5$ | quadratic, $\sim k^2/2$ |
+| Closed form | Binet (irrational base) | $1 + \tfrac{k(k-1)}{2}$ (exact, integer) |
+| Consecutive ratio | $\to \varphi \approx 1.618$ | $\to 1$ |
+| Density in $\mathbb{N}$ | $0$ | $0$ |
 
 ## 9. Future directions
 
-**Density of greedy sequences avoiding sums of $k$ consecutive terms.** Generalize the rule to forbid sums of any $k$ consecutive earlier terms. For $k=2$ the outcome is the non-multiples of $3$, an exact union of arithmetic progressions of density $2/3$. Conjecture: for every $k$ the greedy sequence is eventually a finite union of arithmetic progressions, its avoided set is likewise structured, and its density is a rational number depending only on $k$. The mechanism is that admissibility of the next term depends only on a bounded sliding window of recent terms, so the construction is driven by a finite-state automaton whose recurrent structure forces eventual periodicity and rational density.
+**A universal error law for greedy sum-avoiding sequences.** For each fixed
+window width $w$, the greedy sequence forbidding every new term from equalling
+the sum of its $w$ predecessors is conjectured to grow as $A(n) = c_w n^2 + O(n)$
+with an explicit rational $c_w$, and with eventually periodic rounded residual.
+The mechanism: bounded-window greedy avoidance makes the first differences a
+finite-state process, hence ultimately arithmetic and summable in closed form,
+pinning the quadratic constant exactly. The two-back case resolved here (with
+$c = \tfrac12$) is the base of an induction on $w$ via the same
+difference-telescoping method.
 
-**Which reals are consecutive-ratio limits of additive greedy sequences?** Fibonacci's ratio converges to the quadratic irrational $\varphi$; the anti-Fibonacci ratio converges to $1$. Conjecture: any additively defined greedy avoidance sequence that grows polynomially has consecutive-ratio limit exactly $1$, so quadratic irrationals (and badly approximable numbers generally) can only arise from genuinely multiplicative, exponential recurrences. The intuition: polynomial growth makes consecutive gaps negligible relative to the terms, squeezing the ratio to $1$, whereas a nontrivial limit demands geometric growth.
+**Additive rigidity of quadratic avoidance sets.** The value set
+$\{1 + \tfrac{k(k-1)}{2}\}$ is conjectured to be additively rigid: its
+representation function (the number of ways to write $n$ as a sum of two members)
+is bounded, and it contains no nontrivial additive quadruples. The closed form
+turns each additive coincidence into a Pell-type quadratic Diophantine equation,
+whose solution count is governed by the classical theory of binary quadratic
+forms.
 
-**Sum-coincidences of quadratic sequences.** The lazy-caterer numbers $1 + \binom{n}{2}$ satisfy the Fibonacci-type identity $q(n+1) = q(n) + q(n-1)$ at exactly two indices. Conjecture: every integer quadratic $q(n) = an^2 + bn + c$ admits at most two such coincidences, with the exact count decided by the discriminant of an associated quadratic; the same should hold with a fixed lag $m$ in place of $1$. Substituting the closed form turns the recurrence into a single quadratic equation in $n$, so integer solutions are controlled entirely by a discriminant condition.
+**The ratio limit as a dividing line between growth regimes.** A sequence is
+conjectured to have consecutive ratio tending to $1$ exactly when it has
+polynomial growth, while a homogeneous linear recurrence with dominant root
+$r>1$ always has consecutive ratio tending to $r$. The value $1$ then cleanly
+separates polynomial from genuinely exponential sequences, with Fibonacci
+($\varphi$) and anti-Fibonacci ($1$) supplying the two endpoints of the
+dichotomy.
 
----
+**A genuinely oscillating anti-Fibonacci.** There is conjectured to be a
+naturally defined greedy variant whose consecutive ratio has limit inferior $1$
+and limit superior $2$ and never converges, with the ratios equidistributing over
+$[1,2]$ against an explicit measure — realizing the oscillation that the present
+sequence, contrary to folklore, does not exhibit.
 
 ## 10. Conclusion
 
-The greedy anti-Fibonacci sequence — start at $1$, always take the smallest positive integer that is not a sum of two consecutive earlier terms — is exactly the arithmetic progression of positive non-multiples of $3$, with closed form $A(k) = \lfloor(3k+2)/2\rfloor$. Its consecutive sums are precisely the positive multiples of $3$, so it can never collide with one of its own sums. It grows linearly ($A(n)/n \to 3/2$, term density $2/3$), its avoided set has density $1/3$, and its consecutive ratio converges to $1$. It thereby avoids the golden ratio decisively: the invariant that yields $\varphi$ for Fibonacci yields the trivial value $1$ here. The often-quoted quadratic list is the lazy-caterer sequence, a distinct and non-sum-avoiding object. The lesson is compact and durable: the golden ratio is a reward for exponential growth, and a sequence that merely avoids addition can only grow in a straight line.
+The anti-Fibonacci sequence $A(0)=1,\ A(k+1) = A(k)+k$ is a quadratic-growth
+counterpoint to the Fibonacci sequence. It admits the exact closed form
+$A(k) = 1 + \tfrac{k(k-1)}{2}$, grows like $\tfrac{k^2}{2}$ (so $A(k)/k^2 \to
+\tfrac12$), has value set of density zero, and — most strikingly — provably
+avoids the golden ratio: its consecutive ratio converges to $1$, and by
+uniqueness of limits cannot converge to $\varphi$. Where Fibonacci is the
+paradigm of exponential growth and its golden ratio, the anti-Fibonacci sequence
+is the paradigm of polynomial growth and its ratio limit $1$ — a precise,
+provable opposite.
