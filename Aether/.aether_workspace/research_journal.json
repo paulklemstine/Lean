@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "49c290ff",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS — derived from the Law-of-Apparition cycle\n\nThis cycle proved the concrete law of apparition `p ∣ F_{p−1} ∨ p ∣ F_{p+1}`\n(`FibonacciApparitionLaw.lean`), its rank form `α(p) ∣ p−1",
-      "quality_score": 0.48585960124610594,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-28T03:26:34",
-      "title": "Constructing a canonical F-isocrystal to enhance the Gauss--Manin connection"
-    },
-    {
       "cycle_id": "9e0667c2",
       "domain": "Applications",
       "key_insight": "# Future Directions — Hamiltonian Compression Factor of Cubic Graphs\n\nDerived from this cycle's findings: for every even `n ≥ 4` the cubic circulant\n`ML(n)` admits a 2-symmetric Hamiltonian cycle (`mo",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-04T11:31:28",
       "title": "Recursive Decomposition Isomorphism for General m-Tamari Intervals and Planar Constellations"
+    },
+    {
+      "cycle_id": "c2b51bcc",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Phantom Topologies and the Symmetry of Observation\n\nThis cycle established that a space reconstructed as the *consensus* of several\n\"observer\" topologies inherits a hidden symmetr",
+      "quality_score": 0.4724886610169492,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-07-04T11:53:50",
+      "title": "Close Proofs: Phantom Topologies: Spaces That Change When You Look at Them"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.75424
     }
   ],
-  "last_updated": "2026-07-04T11:31:28",
+  "last_updated": "2026-07-04T11:53:50",
   "open_questions": [
     {
       "context": "and the colour pigeonhole.  Both are fully provable in Lean with no `sorry`.; `afl_constant_gap` — all `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "e0253a8b",
-        "quality": 0.6907399999999999,
-        "theorems": 8,
-        "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
-      },
-      {
         "cycle_id": "3a1da3d1",
         "quality": 0.71008,
         "theorems": 11,
@@ -3141,6 +3135,12 @@
         "quality": 0.50004,
         "theorems": 0,
         "title": "Recursive Decomposition Isomorphism for General m-Tamari Intervals and Planar Co"
+      },
+      {
+        "cycle_id": "c2b51bcc",
+        "quality": 0.4724886610169492,
+        "theorems": 7,
+        "title": "Close Proofs: Phantom Topologies: Spaces That Change When You Look at Them"
       }
     ],
     "Bridges": [
