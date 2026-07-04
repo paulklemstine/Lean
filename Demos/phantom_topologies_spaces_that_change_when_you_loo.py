@@ -1,262 +1,246 @@
-"""
-Phantom Topologies: Spaces That Change When You Look at Them
-===========================================================
+"""Phantom Topologies: Spaces That Change When You Look at Them.
 
-Numerical demonstrations of the two headline results about observer-dependent
-("phantom") topologies on the real line:
+Numerical demonstrations of the consensus theory of topology.
 
-  * CONSENSUS RECONSTRUCTION.  The Euclidean topology on R is the *agreement*
-    (supremum in the lattice of topologies) of two complementary observers:
-    the lower-limit / right-looking observer (basic opens  [x, b) ) and the
-    upper-limit / left-looking observer (basic opens  (a, x] ).  A set is
-    Euclidean-open iff it is open for BOTH observers.
+A *phantom topology* on a set X with observers I assigns to each observer a
+topology on X.  The *consensus* (real) topology is the family of sets open for
+EVERY observer -- the supremum in the lattice of topologies.  This module models
+finite topologies by their open-set families and demonstrates, computationally:
 
-  * POSSIBILITY COLLAPSE.  The *possibility* (infimum) of the SAME two
-    observers is the DISCRETE topology, because for a < x < b
+  1. Consensus = unanimity: consensus opens are the intersection of observer opens.
+  2. Measurement coarsens: each observer is finer than (a superset of) the consensus.
+  3. The two-observer theorem on a finite chain: the order topology is the
+     consensus of the forward (lower-limit) and backward (upper-limit) observers.
+  4. Density vs. discreteness: a "dense" finite sample makes both observers strict
+     (phantom number two); a "discrete" chain collapses the forward observer onto
+     the order topology (phantom number one).
+  5. The collapse principle and the refutation of the "3 observers" conjecture:
+     the two-point indiscrete space is a two-observer consensus.
 
-            [x, b)  cap  (a, x]  =  {x}.
-
-    Every singleton becomes open, hence every set is open.
-
-Because R is infinite, we illustrate the phenomena three ways:
-
-  1. Exact rational verification of the singleton-collapse identity
-     [x, b) cap (a, x] = {x}  on dense rational grids (no floating point).
-  2. A finite lattice-of-topologies engine that computes consensus (supremum)
-     and possibility (infimum) of arbitrary finite topologies, confirming the
-     sandwich  possibility <= observer <= consensus  and the modal duality.
-  3. A "half-open observers" model on a finite ordered sample of the line,
-     showing that pooling the left-cut and right-cut viewpoints isolates every
-     sample point (discreteness), while their agreement keeps only two-sided
-     neighbourhoods.
-
-Self-contained: standard library only.
+Everything is self-contained and uses only the standard library.
 """
 
 from __future__ import annotations
 
-from fractions import Fraction
 from itertools import combinations
-from typing import FrozenSet, Iterable, List, Sequence, Set, Tuple
+from typing import FrozenSet, Iterable, List, Set, Tuple
 
-# A finite topology is represented as a set of open sets; each open set is a
-# frozenset of points.
-Point = int
-OpenSet = FrozenSet[Point]
-Topology = FrozenSet[OpenSet]
+# A finite topology is a set of open sets; each open set is a frozenset of points.
+OpenSet = FrozenSet[int]
+Topology = Set[OpenSet]
 
 
-# ---------------------------------------------------------------------------
-# 1. Exact verification of the collapse identity  [x, b) cap (a, x] = {x}
-# ---------------------------------------------------------------------------
+# --------------------------------------------------------------------------- #
+# Core phantom-topology operations
+# --------------------------------------------------------------------------- #
+def consensus(observers: List[Topology]) -> Topology:
+    """The consensus topology: sets open in EVERY observer (Agreement Principle).
 
-def half_open_right(x: Fraction, b: Fraction, grid: Sequence[Fraction]) -> Set[Fraction]:
-    """Points of `grid` lying in the right half-open interval [x, b)."""
-    return {p for p in grid if x <= p < b}
-
-
-def half_open_left(a: Fraction, x: Fraction, grid: Sequence[Fraction]) -> Set[Fraction]:
-    """Points of `grid` lying in the left half-open interval (a, x]."""
-    return {p for p in grid if a < p <= x}
-
-
-def verify_singleton_collapse(
-    a: Fraction, x: Fraction, b: Fraction, grid: Sequence[Fraction]
-) -> bool:
-    """Check [x, b) cap (a, x] = {x} on a rational grid (requires a < x < b)."""
-    assert a < x < b, "identity requires a < x < b"
-    left = half_open_left(a, x, grid)
-    right = half_open_right(x, b, grid)
-    return left & right == {x}
-
-
-def demo_singleton_collapse() -> None:
-    print("=" * 70)
-    print("1. SINGLETON COLLAPSE:  [x, b) cap (a, x] = {x}   (exact rationals)")
-    print("=" * 70)
-    # A dense rational grid on [-2, 2] with step 1/12.
-    step = Fraction(1, 12)
-    grid = [Fraction(-24) * step + k * step for k in range(0, 97)]
-    triples = [
-        (Fraction(-1), Fraction(0), Fraction(1)),
-        (Fraction(-1, 2), Fraction(1, 3), Fraction(3, 2)),
-        (Fraction(-2), Fraction(-1, 4), Fraction(1)),
-        (Fraction(0), Fraction(1, 2), Fraction(2)),
-    ]
-    all_ok = True
-    for (a, x, b) in triples:
-        ok = verify_singleton_collapse(a, x, b, grid)
-        all_ok &= ok
-        print(f"  a={str(a):>6}  x={str(x):>6}  b={str(b):>6}  ->  "
-              f"[x,b) cap (a,x] = {{{x}}}  : {ok}")
-    print(f"\n  All singleton-collapse checks passed: {all_ok}\n")
-
-
-# ---------------------------------------------------------------------------
-# 2. Finite lattice of topologies: consensus (sup) and possibility (inf)
-# ---------------------------------------------------------------------------
-
-def generate_topology(ground: FrozenSet[Point], subbasis: Iterable[OpenSet]) -> Topology:
-    """Smallest topology on `ground` containing `subbasis`.
-
-    Close the subbasis (together with empty set and the whole space) under
-    finite intersections, then under arbitrary unions.
+    This is the lattice supremum realized concretely as the intersection of the
+    observers' open-set families.
     """
-    empty: OpenSet = frozenset()
-    sub: Set[OpenSet] = {empty, ground}
-    for s in subbasis:
-        sub.add(frozenset(s) & ground)
+    if not observers:
+        raise ValueError("need at least one observer")
+    result: Topology = set(observers[0])
+    for obs in observers[1:]:
+        result &= obs
+    return result
 
-    # Close under pairwise (hence finite) intersections.
-    basis: Set[OpenSet] = set(sub)
+
+def is_finer(fine: Topology, coarse: Topology) -> bool:
+    """True if `fine` refines `coarse` (fine has at least all of coarse's opens)."""
+    return coarse <= fine
+
+
+def is_strictly_finer(fine: Topology, coarse: Topology) -> bool:
+    """True if `fine` strictly refines `coarse` -- a genuine (phantom) observer."""
+    return coarse < fine
+
+
+def is_genuine_representation(observers: List[Topology]) -> bool:
+    """Every observer strictly finer than the consensus => genuine representation."""
+    cons = consensus(observers)
+    return all(is_strictly_finer(obs, cons) for obs in observers)
+
+
+# --------------------------------------------------------------------------- #
+# Building topologies from a subbasis / generating set
+# --------------------------------------------------------------------------- #
+def generate_topology(carrier: FrozenSet[int], generators: Iterable[OpenSet]) -> Topology:
+    """Smallest topology on `carrier` containing all `generators`.
+
+    Closes the generating family under finite intersection and arbitrary union,
+    always including the empty set and the whole carrier.
+    """
+    base: Set[OpenSet] = {frozenset(), carrier}
+    base |= {frozenset(g) & carrier for g in generators}
+
+    # Close under pairwise intersection until stable (finite intersections).
     changed = True
     while changed:
         changed = False
-        for u in list(basis):
-            for v in list(basis):
-                w = u & v
-                if w not in basis:
-                    basis.add(w)
-                    changed = True
+        for a, b in combinations(list(base), 2):
+            inter = a & b
+            if inter not in base:
+                base.add(inter)
+                changed = True
 
-    # Close under arbitrary unions (build all unions of basis elements).
-    opens: Set[OpenSet] = {empty}
-    for r in range(1, len(basis) + 1):
-        for combo in combinations(basis, r):
-            union: OpenSet = frozenset().union(*combo)
-            opens.add(union)
-    opens.add(empty)
-    opens.add(ground)
-    return frozenset(opens)
-
-
-def is_finer(t: Topology, s: Topology) -> bool:
-    """t is finer than s  (t <= s in the refinement order):  every s-open is t-open."""
-    return s <= t
+    # Close under arbitrary union (subsets of a finite base -> finite work).
+    opens: Set[OpenSet] = set(base)
+    changed = True
+    while changed:
+        changed = False
+        current = list(opens)
+        for a, b in combinations(current, 2):
+            union = a | b
+            if union not in opens:
+                opens.add(union)
+                changed = True
+    return opens
 
 
-def consensus(topologies: Sequence[Topology]) -> Topology:
-    """Consensus (supremum): sets open in EVERY observer -> intersection of opens."""
-    if not topologies:
-        raise ValueError("need at least one topology")
-    result: Set[OpenSet] = set(topologies[0])
-    for t in topologies[1:]:
-        result &= set(t)
-    return frozenset(result)
+# --------------------------------------------------------------------------- #
+# Observers on a finite linear order  x_0 < x_1 < ... < x_{n-1}
+# --------------------------------------------------------------------------- #
+def order_topology(points: List[int]) -> Topology:
+    """Order topology of a finite chain (generated by open intervals (a,b))."""
+    carrier = frozenset(points)
+    gens: List[OpenSet] = []
+    n = len(points)
+    for i in range(n):
+        for j in range(n):
+            # open interval (points[i], points[j]) = strictly between
+            interval = frozenset(p for p in points if points[i] < p < points[j])
+            gens.append(interval)
+        # open rays as well
+        gens.append(frozenset(p for p in points if p < points[i]))
+        gens.append(frozenset(p for p in points if p > points[i]))
+    return generate_topology(carrier, gens)
 
 
-def possibility(ground: FrozenSet[Point], topologies: Sequence[Topology]) -> Topology:
-    """Possibility (infimum): topology GENERATED by the union of all observers' opens."""
-    union_opens: Set[OpenSet] = set()
-    for t in topologies:
-        union_opens |= set(t)
-    return generate_topology(ground, union_opens)
+def forward_observer(points: List[int]) -> Topology:
+    """Lower-limit (forward) observer: generated by half-open [x_i, x_j)."""
+    carrier = frozenset(points)
+    gens: List[OpenSet] = []
+    for i in range(len(points)):
+        for j in range(len(points)):
+            half = frozenset(p for p in points if points[i] <= p < points[j])
+            gens.append(half)
+        # forward ray [x_i, infinity)
+        gens.append(frozenset(p for p in points if p >= points[i]))
+    return generate_topology(carrier, gens)
 
 
-def discrete(ground: FrozenSet[Point]) -> Topology:
-    pts = list(ground)
-    opens: Set[OpenSet] = {frozenset()}
-    for r in range(1, len(pts) + 1):
-        for combo in combinations(pts, r):
-            opens.add(frozenset(combo))
-    return frozenset(opens)
+def backward_observer(points: List[int]) -> Topology:
+    """Upper-limit (backward) observer: generated by half-open (x_i, x_j]."""
+    carrier = frozenset(points)
+    gens: List[OpenSet] = []
+    for i in range(len(points)):
+        for j in range(len(points)):
+            half = frozenset(p for p in points if points[i] < p <= points[j])
+            gens.append(half)
+        # backward ray (-infinity, x_i]
+        gens.append(frozenset(p for p in points if p <= points[i]))
+    return generate_topology(carrier, gens)
 
 
-def demo_lattice_duality() -> None:
+# --------------------------------------------------------------------------- #
+# The two-point indiscrete space and its Sierpinski observers
+# --------------------------------------------------------------------------- #
+def indiscrete_two_point() -> Tuple[Topology, Topology, Topology]:
+    """Return (indiscrete consensus, observer resolving {1}, observer resolving {0})."""
+    whole = frozenset({0, 1})
+    empty: OpenSet = frozenset()
+    sierp_one: Topology = {empty, frozenset({1}), whole}   # only {1} nontrivial
+    sierp_zero: Topology = {empty, frozenset({0}), whole}  # only {0} nontrivial
+    return {empty, whole}, sierp_one, sierp_zero
+
+
+# --------------------------------------------------------------------------- #
+# Demonstrations
+# --------------------------------------------------------------------------- #
+def _fmt(top: Topology) -> str:
+    parts = sorted(("{" + ",".join(map(str, sorted(s))) + "}") if s else "{}" for s in top)
+    return "  ".join(parts)
+
+
+def demo_two_observer_chain() -> None:
     print("=" * 70)
-    print("2. LATTICE DUALITY:  possibility <= observer <= consensus")
+    print("DEMO 1: Two half-open observers on a finite chain (discrete collapse)")
     print("=" * 70)
-    ground: FrozenSet[Point] = frozenset({0, 1, 2})
-    # Two genuinely disagreeing observers on {0,1,2}.
-    obs_A = generate_topology(ground, [frozenset({0}), frozenset({0, 1})])
-    obs_B = generate_topology(ground, [frozenset({2}), frozenset({1, 2})])
-
-    con = consensus([obs_A, obs_B])
-    pos = possibility(ground, [obs_A, obs_B])
-
-    print(f"  |ground| = {len(ground)}   points = {sorted(ground)}")
-    print(f"  observer A opens: {sorted(map(sorted, obs_A))}")
-    print(f"  observer B opens: {sorted(map(sorted, obs_B))}")
-    print(f"  consensus opens : {sorted(map(sorted, con))}")
-    print(f"  possibility opens: {sorted(map(sorted, pos))}")
-
-    # Sandwich: possibility finer than each observer; each observer finer than consensus.
-    checks = {
-        "possibility <= A": is_finer(pos, obs_A),
-        "possibility <= B": is_finer(pos, obs_B),
-        "A <= consensus": is_finer(obs_A, con),
-        "B <= consensus": is_finer(obs_B, con),
-        "possibility == discrete": pos == discrete(ground),
-    }
+    points = [0, 1, 2, 3]
+    otop = order_topology(points)
+    fwd = forward_observer(points)
+    bwd = backward_observer(points)
+    cons = consensus([fwd, bwd])
+    print(f"chain: {points}")
+    print(f"order topology has {len(otop)} open sets")
+    print(f"forward observer has {len(fwd)} open sets")
+    print(f"backward observer has {len(bwd)} open sets")
+    print(f"consensus(forward, backward) has {len(cons)} open sets")
+    print(f"consensus == order topology?  {cons == otop}")
+    print(f"forward strictly finer than consensus?  {is_strictly_finer(fwd, cons)}")
+    print(f"backward strictly finer than consensus? {is_strictly_finer(bwd, cons)}")
+    print(f"genuine two-observer representation?  {is_genuine_representation([fwd, bwd])}")
+    print("note: a FINITE chain is DISCRETELY ordered, so the forward observer")
+    print("already equals the order topology (Thm 5.6): phantom number one here.")
+    print("Density -- as in R or Q -- is what makes the two observers strict.")
     print()
-    for name, ok in checks.items():
-        print(f"    {name:>28} : {ok}")
+
+
+def demo_collapse_indiscrete() -> None:
+    print("=" * 70)
+    print("DEMO 2: Refuting '>= 3 observers': indiscrete 2-point space")
+    print("=" * 70)
+    indiscrete, sierp_one, sierp_zero = indiscrete_two_point()
+    cons = consensus([sierp_one, sierp_zero])
+    print(f"observer A (resolves point 1): {_fmt(sierp_one)}")
+    print(f"observer B (resolves point 0): {_fmt(sierp_zero)}")
+    print(f"consensus opens: {_fmt(cons)}")
+    print(f"consensus == indiscrete topology?  {cons == indiscrete}")
+    print(f"both observers strictly finer (genuine)?  "
+          f"{is_genuine_representation([sierp_one, sierp_zero])}")
+    print("=> non-metrizable space with phantom number 2, not 3.")
     print()
 
 
-# ---------------------------------------------------------------------------
-# 3. Half-open observers on a finite ordered sample of the line
-# ---------------------------------------------------------------------------
-
-def right_looking_topology(sample: Sequence[Fraction]) -> Topology:
-    """Lower-limit observer on a finite ordered sample: basic opens are the
-    'right rays'  {p : p >= sample[i]} = [sample[i], +inf) restricted to the sample."""
-    ground = frozenset(range(len(sample)))
-    subbasis = [frozenset(j for j in range(len(sample)) if sample[j] >= sample[i])
-                for i in range(len(sample))]
-    return generate_topology(ground, subbasis)
-
-
-def left_looking_topology(sample: Sequence[Fraction]) -> Topology:
-    """Upper-limit observer: basic opens are the 'left rays'
-    {p : p <= sample[i]} = (-inf, sample[i]] restricted to the sample."""
-    ground = frozenset(range(len(sample)))
-    subbasis = [frozenset(j for j in range(len(sample)) if sample[j] <= sample[i])
-                for i in range(len(sample))]
-    return generate_topology(ground, subbasis)
-
-
-def demo_half_open_observers() -> None:
+def demo_measurement_coarsens() -> None:
     print("=" * 70)
-    print("3. HALF-OPEN OBSERVERS on a finite ordered sample of the line")
+    print("DEMO 3: Measurement coarsens -- more observers, coarser reality")
     print("=" * 70)
-    sample: List[Fraction] = [Fraction(k, 2) for k in range(-2, 3)]  # -1, -1/2, 0, 1/2, 1
-    print(f"  sample points: {[str(s) for s in sample]}")
-
-    right = right_looking_topology(sample)   # left-cut viewpoint
-    left = left_looking_topology(sample)     # right-cut viewpoint
-    ground = frozenset(range(len(sample)))
-
-    pos = possibility(ground, [left, right])
-    con = consensus([left, right])
-
-    # Each singleton = right-ray cap left-ray  (the finite analogue of [x,b) cap (a,x]).
-    print("\n  Pooling the two viewpoints isolates every sample point:")
-    for i, val in enumerate(sample):
-        singleton = frozenset({i})
-        print(f"    point {str(val):>5}  ->  {{{val}}} is possibility-open: "
-              f"{singleton in pos}")
-
-    print(f"\n  possibility == discrete : {pos == discrete(ground)}")
-    print(f"  #consensus opens = {len(con)}  (agreement keeps far fewer opens)")
-    print(f"  #possibility opens = {len(pos)} = 2^{len(sample)} "
-          f"(every subset is open)\n")
+    points = [0, 1, 2, 3]
+    fwd = forward_observer(points)
+    bwd = backward_observer(points)
+    one = consensus([fwd])
+    two = consensus([fwd, bwd])
+    print(f"|consensus with 1 observer (forward)| = {len(one)}")
+    print(f"|consensus with 2 observers|          = {len(two)}")
+    print(f"adding an observer did not increase opens?  {len(two) <= len(one)}")
+    print(f"each observer finer than the 2-consensus?  "
+          f"{is_finer(fwd, two) and is_finer(bwd, two)}")
+    print()
 
 
-# ---------------------------------------------------------------------------
+def demo_collapse_three_to_two() -> None:
+    print("=" * 70)
+    print("DEMO 4: Lattice collapse -- a redundant 3rd observer is absorbed")
+    print("=" * 70)
+    indiscrete, sierp_one, sierp_zero = indiscrete_two_point()
+    # A third, redundant observer (also strictly finer): resolves {1} again.
+    third = {frozenset(), frozenset({1}), frozenset({0, 1})}
+    cons3 = consensus([sierp_one, sierp_zero, third])
+    cons2 = consensus([sierp_one, sierp_zero])
+    print(f"consensus of 3 observers == consensus of 2?  {cons3 == cons2}")
+    print(f"both equal the indiscrete topology?  {cons3 == indiscrete}")
+    print("=> any finite genuine representation collapses to two observers.")
+    print()
+
 
 def main() -> None:
-    demo_singleton_collapse()
-    demo_lattice_duality()
-    demo_half_open_observers()
-    print("=" * 70)
-    print("SUMMARY")
-    print("=" * 70)
-    print("  * Consensus of the two half-open observers reconstructs the")
-    print("    two-sided (Euclidean) neighbourhoods.")
-    print("  * Possibility of the SAME two observers collapses to the discrete")
-    print("    topology via  [x, b) cap (a, x] = {x}.")
-    print("  * One fixed pair of observers, two opposite realities.")
+    demo_two_observer_chain()
+    demo_collapse_indiscrete()
+    demo_measurement_coarsens()
+    demo_collapse_three_to_two()
 
 
 if __name__ == "__main__":
