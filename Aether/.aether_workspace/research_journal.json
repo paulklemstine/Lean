@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "c011c95b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Schnorr / Σ-protocol zero-knowledge\n\nThis cycle added three verified Lean files extending the catalog's Schnorr work\n(`SchnorrIdentification.lean`, `AffineSigmaExtraction.lean`):",
-      "quality_score": 0.7862199999999999,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-06-28T03:03:40",
-      "title": "Zero-Knowledge Proofs: Schnorr Protocol"
-    },
-    {
       "cycle_id": "49c290ff",
       "domain": "Applications",
       "key_insight": "# FUTURE DIRECTIONS — derived from the Law-of-Apparition cycle\n\nThis cycle proved the concrete law of apparition `p ∣ F_{p−1} ∨ p ∣ F_{p+1}`\n(`FibonacciApparitionLaw.lean`), its rank form `α(p) ∣ p−1",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-07-04T10:56:51",
       "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
+    },
+    {
+      "cycle_id": "a45ab2ca",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nDerived from this cycle's finding: a single uniform relabelling `k ↦ k+1`\nintertwines the *active-sites* and *shifted* succession rules of the recursive\ndecomposition for **every*",
+      "quality_score": 0.50004,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-04T11:31:28",
+      "title": "Recursive Decomposition Isomorphism for General m-Tamari Intervals and Planar Constellations"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.75424
     }
   ],
-  "last_updated": "2026-07-04T10:56:51",
+  "last_updated": "2026-07-04T11:31:28",
   "open_questions": [
     {
       "context": "and the colour pigeonhole.  Both are fully provable in Lean with no `sorry`.; `afl_constant_gap` — all `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "95c356ab",
-        "quality": 0.8257369999999999,
-        "theorems": 8,
-        "title": "Exact value of G₃({0,2,5})"
-      },
-      {
         "cycle_id": "e0253a8b",
         "quality": 0.6907399999999999,
         "theorems": 8,
@@ -3141,6 +3135,12 @@
         "quality": 0.5346635084337349,
         "theorems": 10,
         "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
+      },
+      {
+        "cycle_id": "a45ab2ca",
+        "quality": 0.50004,
+        "theorems": 0,
+        "title": "Recursive Decomposition Isomorphism for General m-Tamari Intervals and Planar Co"
       }
     ],
     "Bridges": [
