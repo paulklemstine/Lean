@@ -4,21 +4,6 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
-    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0291",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-04T16:09:58.503970+00:00",
-    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domains": [
       "Pythagorean"
@@ -2345,7 +2330,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Unique exceptional integer palindromes of degree\u202f4 with unit roots"
   },
   {
-    "consumed_by_exp_id": "bb909d34",
+    "consumed_by_exp_id": "",
     "description": "A conjecture linking Langlands stacks and anabelomorphic properties under group isomorphism conditions.",
     "domains": [
       "Pythagorean",
@@ -2355,7 +2340,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29478v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T06:47:02.579564+00:00",
     "title": "Anabelomorphic Equivalence"
   },
@@ -2622,12 +2607,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "We conjecture that the Maximum Edge Open Packing Problem is solvable in polynomial time for chordal bipartite graphs, leveraging their intersection of chordality and bipartiteness. The proof strategy involves a dynamic programming approach based on a clique-width decomposition, utilizing the graph's structure to manage conflicts efficiently.",
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_0206",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28599v1",
+    "status": "available",
+    "timestamp": "2026-07-04T16:18:57.324227+00:00",
+    "title": "Maximum Edge Open Packing in Chordal Bipartite Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0206",
+    "id": "fd_0207",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -2641,7 +2641,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0207",
+    "id": "fd_0208",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -2655,7 +2655,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0208",
+    "id": "fd_0209",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
@@ -2669,7 +2669,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0209",
+    "id": "fd_0210",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -2683,7 +2683,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0210",
+    "id": "fd_0211",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
@@ -2698,7 +2698,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0211",
+    "id": "fd_0212",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
@@ -2713,7 +2713,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0212",
+    "id": "fd_0213",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -2728,7 +2728,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0213",
+    "id": "fd_0214",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -2742,7 +2742,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0214",
+    "id": "fd_0215",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -2757,7 +2757,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0215",
+    "id": "fd_0216",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02132v1",
@@ -2772,7 +2772,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0216",
+    "id": "fd_0217",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -2786,7 +2786,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0217",
+    "id": "fd_0218",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02098v1",
@@ -2801,7 +2801,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0218",
+    "id": "fd_0219",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01716v1",
@@ -2816,7 +2816,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Physics"
     ],
-    "id": "fd_0219",
+    "id": "fd_0220",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
@@ -2830,7 +2830,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0220",
+    "id": "fd_0221",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01718v1",
@@ -2844,7 +2844,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0221",
+    "id": "fd_0222",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01761v1",
@@ -2859,7 +2859,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Logic"
     ],
-    "id": "fd_0222",
+    "id": "fd_0223",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
@@ -2873,7 +2873,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0223",
+    "id": "fd_0224",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01695v1",
@@ -2887,7 +2887,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0224",
+    "id": "fd_0225",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01438v1",
@@ -2902,7 +2902,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0225",
+    "id": "fd_0226",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -2916,7 +2916,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0226",
+    "id": "fd_0227",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -2931,7 +2931,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0227",
+    "id": "fd_0228",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
@@ -2945,7 +2945,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0228",
+    "id": "fd_0229",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00775v1",
@@ -2959,7 +2959,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0229",
+    "id": "fd_0230",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00825v2",
@@ -2973,7 +2973,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0230",
+    "id": "fd_0231",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00651v1",
@@ -2987,7 +2987,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0231",
+    "id": "fd_0232",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00643v1",
@@ -3002,7 +3002,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0232",
+    "id": "fd_0233",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00561v1",
@@ -3016,7 +3016,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0233",
+    "id": "fd_0234",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00608v1",
@@ -3031,7 +3031,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0234",
+    "id": "fd_0235",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00456v1",
@@ -3046,7 +3046,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0235",
+    "id": "fd_0236",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00366v1",
@@ -3061,7 +3061,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0236",
+    "id": "fd_0237",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00372v1",
@@ -3075,7 +3075,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0237",
+    "id": "fd_0238",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00332v1",
@@ -3089,7 +3089,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0238",
+    "id": "fd_0239",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.32024v1",
@@ -3104,7 +3104,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0239",
+    "id": "fd_0240",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31967v1",
@@ -3119,7 +3119,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0240",
+    "id": "fd_0241",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31940v1",
@@ -3128,17 +3128,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Basic EKOR Strata are Disjoint Unions of Fine Deligne-Lusztig Varieties"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "054477b4",
     "description": "Conjecture that for every finite strongly connected edge\u2011weighted directed graph G there is no assignment of colors to its vertices such that each vertex\u2019s color is a (weighted) convex combination of the colors of its neighbors, unless all vertices share the same color.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0241",
+    "id": "fd_0242",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31908v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T16:31:57.960563+00:00",
     "title": "Non\u2011existence of non\u2011constant colorings satisfying the blend condition on finite strongly connected edge\u2011weighted digraphs"
   },
@@ -3149,7 +3149,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0242",
+    "id": "fd_0243",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31687v1",
@@ -3164,7 +3164,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0243",
+    "id": "fd_0244",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31821v2",
@@ -3179,7 +3179,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0244",
+    "id": "fd_0245",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31547v1",
@@ -3194,7 +3194,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0245",
+    "id": "fd_0246",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31649v1",
@@ -3209,7 +3209,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0246",
+    "id": "fd_0247",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31565v1",
@@ -3223,7 +3223,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0247",
+    "id": "fd_0248",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31526v1",
@@ -3238,7 +3238,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0248",
+    "id": "fd_0249",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31341v1",
@@ -3253,7 +3253,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0249",
+    "id": "fd_0250",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31262v1",
@@ -3268,7 +3268,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0250",
+    "id": "fd_0251",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31264v1",
@@ -3283,7 +3283,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0251",
+    "id": "fd_0252",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30856v1",
@@ -3298,7 +3298,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0252",
+    "id": "fd_0253",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30996v1",
@@ -3313,7 +3313,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0253",
+    "id": "fd_0254",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30885v1",
@@ -3328,7 +3328,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0254",
+    "id": "fd_0255",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31044v1",
@@ -3342,7 +3342,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0255",
+    "id": "fd_0256",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30496v1",
@@ -3357,7 +3357,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0256",
+    "id": "fd_0257",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30588v1",
@@ -3371,7 +3371,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0257",
+    "id": "fd_0258",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30593v1",
@@ -3385,7 +3385,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0258",
+    "id": "fd_0259",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30612v1",
@@ -3400,7 +3400,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0259",
+    "id": "fd_0260",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30428v1",
@@ -3414,7 +3414,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_0260",
+    "id": "fd_0261",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3429,7 +3429,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0261",
+    "id": "fd_0262",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30272v1",
@@ -3444,7 +3444,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Tropical"
     ],
-    "id": "fd_0262",
+    "id": "fd_0263",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30184v1",
@@ -3458,7 +3458,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0263",
+    "id": "fd_0264",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30071v1",
@@ -3472,7 +3472,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0264",
+    "id": "fd_0265",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -3487,7 +3487,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0265",
+    "id": "fd_0266",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -3501,7 +3501,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0266",
+    "id": "fd_0267",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
@@ -3510,16 +3510,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tightness Conjecture for P3-Packings in Plane Triangulations"
   },
   {
-    "consumed_by_exp_id": "f39d97c8",
+    "consumed_by_exp_id": "",
     "description": "Investigate an exponential sum of the form \\(\\sum_{n \\le X} \\sum_{m \\le Y} a(n) b(m) c(n+m)\\) where \\(a, b\\) are normalized GL(2) Fourier coefficients and \\(c\\) is a bounded arithmetic function, using partial results from Theorem 1.2 of the paper. The goal is to derive non-trivial cancellation bounds with a power saving over the classical \\(X Y\\) bound.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0267",
+    "id": "fd_0268",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T04:45:23.170809+00:00",
     "title": "Exponential Sums of GL(2) Fourier Coefficients with Double Weighting"
   },
@@ -3530,7 +3530,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0268",
+    "id": "fd_0269",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
@@ -3544,7 +3544,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0269",
+    "id": "fd_0270",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30690v1",
@@ -3558,7 +3558,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0270",
+    "id": "fd_0271",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29740v1",
@@ -3573,7 +3573,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0271",
+    "id": "fd_0272",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29559v1",
@@ -3587,7 +3587,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0272",
+    "id": "fd_0273",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29449v1",
@@ -3602,7 +3602,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0273",
+    "id": "fd_0274",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29391v1",
@@ -3617,7 +3617,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0274",
+    "id": "fd_0275",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29294v1",
@@ -3631,7 +3631,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0275",
+    "id": "fd_0276",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29310v1",
@@ -3646,7 +3646,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0276",
+    "id": "fd_0277",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29361v1",
@@ -3661,7 +3661,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0277",
+    "id": "fd_0278",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29277v1",
@@ -3676,7 +3676,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0278",
+    "id": "fd_0279",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29062v1",
@@ -3690,7 +3690,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0279",
+    "id": "fd_0280",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29216v2",
@@ -3705,7 +3705,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0280",
+    "id": "fd_0281",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28976v1",
@@ -3720,7 +3720,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_0281",
+    "id": "fd_0282",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29040v1",
@@ -3734,7 +3734,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0282",
+    "id": "fd_0283",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28903v1",
@@ -3749,7 +3749,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0283",
+    "id": "fd_0284",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28849v1",
@@ -3763,7 +3763,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0284",
+    "id": "fd_0285",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28723v1",
@@ -3777,7 +3777,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0285",
+    "id": "fd_0286",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28829v1",
@@ -3792,7 +3792,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0286",
+    "id": "fd_0287",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28610v1",
@@ -3806,7 +3806,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0287",
+    "id": "fd_0288",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28606v1",
@@ -3821,7 +3821,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0288",
+    "id": "fd_0289",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28680v1",
@@ -3835,7 +3835,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0289",
+    "id": "fd_0290",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28651v1",
@@ -3850,13 +3850,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0290",
+    "id": "fd_0291",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28305v1",
     "status": "available",
     "timestamp": "2026-07-04T15:53:12.426874+00:00",
     "title": "Generalized Binomial Formula for d-Balanced e-Regular Partitions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The 2-adic valuation of the shifted Perrin sequence {R_m - 1} admits an explicit piecewise formula for all m \u2265 0, analogous to Theorem TV1 for the Padovan sequence. Specifically, there exists a finite set of congruence conditions modulo powers of 2 and 7 such that \u03bd\u2082(R_m - 1) is determined by linear expressions in \u03bd\u2082(m + c) for certain constants c, leading to a complete classification of all possible valuations. This formula would enable the same type of factorial-growth bounding techniques used in the paper to be applied to the Perrin-Brocard equation.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0292",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28577v1",
+    "status": "available",
+    "timestamp": "2026-07-04T16:20:21.592155+00:00",
+    "title": "Explicit Formula for 2-adic Valuation of Shifted Perrin Numbers"
   },
   {
     "consumed_by_exp_id": "",
@@ -3890,18 +3904,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 The Anti-Fibonacci Sequence\n\nThis cycle studied the addition-avoiding counterpart of the Fibonacci sequence:\nthe sequence beginning `1, 1, 2, 4, 7, 11, 16, 22, \u2026`, whose successive differences\nare `0, 1, 2, 3, \u2026` and whose closed form is `A(n) = 1 + n(n-1)/2`. Three exact\nstructural facts emerged: its partial sums obey the cubic identity\n`6\u00b7(A(0)+\u00b7\u00b7\u00b7+A(n)) = n\u00b3 + 5n + 6`; a number `m` occurs in the sequence exactly when\n`8m \u2212 7` is a perfect square (equivalently, when `m \u2212 1` is a triangular number); and\nthe cumulative sums grow with the finite cubic density `1/6`, the discrete\nantiderivative of the value-level density `1/2`. The following conjectures grow\ndirectly out of these findings.\n\n## 1. A factorial tower of cumulative densities\n\nIterating the summation operator on the anti-Fibonacci sequence should produce a\nclean staircase of constants: the values grow like `n\u00b2/2`, the first cumulative sums\nlike `n\u00b3/6`, the second like `n\u2074/24`, and in general the `d`-fold cumulative sum\nshould be a polynomial of degree `d + 2` with leading coefficient `1/(d+2)!`.\n\nThe key insight is that repeated summation is a discrete antiderivative, so it should\npromote the value density `1/2` through the factorials exactly the way iterated\nintegration turns `x\u00b2/2` into `x^(d+2)/(d+2)!`. Why now? The first two rungs of this\ntower are now known exactly, which fixes both the pattern and the inductive step\nneeded to climb it, turning a numerical guess into a precise, provable recurrence.\n\n## 2. Perfect-square membership as a fingerprint of quadratic growth\n\nThe discovery that the anti-Fibonacci values are exactly the integers `m` with\n`8m \u2212 7` a perfect square suggests a general principle: an integer sequence built by a\ngreedy additive-avoidance rule has a value-set of the form \"the `m` for which some\nfixed quadratic `Q(m)` is a perfect square\" if and only if the sequence is eventually\na quadratic polynomial, and in that case `Q` is forced by the polynomial's\ndiscriminant.\n\nThe key insight is that a perfect-square membership test is the arithmetic signature\nof quadratic growth, because such a test makes the counting function grow like a\nsquare-root, which in turn pins the sequence to degree two. Why now? We have a fully\nworked instance of the phenomenon in hand, so both directions of the proposed\nequivalence can be stress-tested on it before the general theory is attempted.\n\n## 3. The avoided-sum shadow has density zero\n\nEach anti-Fibonacci term deliberately stays below the sum of its two predecessors; the\nvalues it \"refuses to become,\" namely `A(n+1) + A(n)`, simplify to the shifted squares\n`n\u00b2 + 1`. This shadow set should have natural density zero, contain no long arithmetic\nprogressions beyond an initial segment, and have a counting function asymptotic to\n`\u221a(2m)`.\n\nThe key insight is that the shadow a sequence casts by avoidance inherits the growth\norder of the sequence itself, so avoidance can never produce a dense set \u2014 the very act\nof dodging addition forces the dodged values to be sparse. Why now? The exact quadratic\nclosed form makes the shadow an explicit shifted-square set, converting vague density\nclaims into concrete, classical questions about squares.\n\n## 4. Residue coverage governed by quadratic residues\n\nBecause membership reduces to `m \u2212 1` being triangular, the residues the anti-Fibonacci\nsequence can occupy modulo a fixed `q` are exactly the values of `1 + j(j+1)/2`.\nConjecture: the number of residues attained modulo `q` is multiplicative in `q`, and\nevery residue class is hit only for a very restricted family of `q` (essentially\npowers of two times tightly controlled squarefree parts); for all other `q` the\nsequence permanently avoids some residues.\n\nThe key insight is that a purely additive construction imprints a purely\nmultiplicative constraint on which residue classes are reachable, linking a greedy\ncombinatorial rule to the classical theory of quadratic residues. Why now? The clean\ntriangular-number membership test exposes the residue image as a single quadratic map\nmodulo `q`, a directly computable object ready for Gauss-sum techniques.\n",
+    "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
-      "Pythagorean",
-      "Algebra"
+      "Novelty",
+      "NumberTheory"
     ],
-    "id": "fd_0292",
+    "id": "fd_0114",
     "priority_score": 0.75,
     "research_mode": "team",
-    "source_exp_id": "605be963",
+    "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-04T16:14:10.361784+00:00",
-    "title": "This cycle studied the addition-avoiding counterpart of the Fibonacci sequence:"
+    "timestamp": "2026-07-03T00:49:27.007324+00:00",
+    "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
   {
     "consumed_by_exp_id": "",
