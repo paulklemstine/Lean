@@ -1141,6 +1141,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Recursive Decomposition Isomorphism for General m-Tamari Intervals and Planar Constellations"
   },
   {
+    "consumed_by_exp_id": "f2d98ef6",
+    "description": "For nilperfect rings R, the derived p-completeness of \u03c7W(R) is a necessary and sufficient condition for the extension of Dieudonn\u00e9 theory to rings with perfect reduction.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0100",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01178v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T22:56:09.506388+00:00",
+    "title": "Derived p-completeness of sheared Witt vectors ensures Dieudonn\u00e9 theory extension"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "There exists a finite family of vector-valued convolution kernels {K_i} such that their weighted combination satisfies a ball-overbag inequality for Sidon sets, with the coefficient \u03b3_0=0.94601 achievable through optimized L\u00b2 energy distribution across kernels.",
     "domains": [
@@ -1302,7 +1316,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing the generalized honeymoon Oberwolfach problem in Lean 4"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "318aca4d",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
     "domains": [
       "Novelty",
@@ -1312,7 +1326,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.030210+00:00",
     "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
   },
@@ -1662,6 +1676,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T11:16:28.209290+00:00",
     "title": "Logarithmic bound for generalized Erd\u0151s\u2013Rogers functions: the case F = K_4^3"
+  },
+  {
+    "consumed_by_exp_id": "563a1975",
+    "description": "For the Maker-Breaker C_k-game on K_n with fixed k \u2265 4, the threshold bias is exactly c_k \u00b7 n^{(k-2)/(k-1)} where c_k = [(k-1)(2(k-1)/k)^{k-2}]^{1/(k-1)}. That is, Maker wins when q < (1-\u03b5)c_k\u00b7n^{(k-2)/(k-1)} and Breaker wins when q > (1+\u03b5)c_k\u00b7n^{(k-2)/(k-1)} for any \u03b5 > 0 and all sufficiently large n.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0142",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01294v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-03T11:40:15.032234+00:00",
+    "title": "Sharp Threshold Constant for Cycle Games"
   },
   {
     "consumed_by_exp_id": "",
@@ -3397,7 +3425,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "That the real line's \"two-observer\" phantom representation is"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "22f3c392",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domains": [
       "Novelty",
@@ -3407,7 +3435,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.73,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.017991+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
@@ -3426,7 +3454,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c2b51bcc",
     "description": "Cycle 4120a115 (Q=0.521) proved 20 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o",
     "domains": [
       "Novelty"
@@ -3435,7 +3463,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5706,
     "research_mode": "team",
     "source_exp_id": "4120a115",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T07:35:15.764806+00:00",
     "title": "Close Proofs: Phantom Topologies: Spaces That Change When You Look at Them"
   }
