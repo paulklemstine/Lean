@@ -1,221 +1,236 @@
 """
-A Bestiary of Numerical Monsters — Numerical Demonstrations
-===========================================================
+Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities
+================================================================================
 
-Self-contained demonstrations of the structural laws governing digit-sharing
-factorizations (vampires, werewolves, ghosts, zombies).
+Self-contained numerical demonstrations of the digit-multiset framework for
+vampire numbers and their modular signatures, plus the wider bestiary of
+werewolves, ghosts, and zombies.
 
-Each function is inlined and type-hinted. Running this file exercises every
-theorem from the paper on concrete data.
+All results here correspond to the theorems in the accompanying paper:
 
-    Digit-Length Conservation :  len(x) + len(y) = len(x*y)
-    Digit-Length Extremality  :  b^(len x + len y - 1) <= x*y
-    Casting-out-(b-1)s         :  x + y == x*y   (mod b-1)
-    Unit identity (base 10)    :  (x-1)(y-1) == 1 (mod 9)
-    Mod-3 taboo                :  x % 3 != 1 and y % 3 != 1
-    No power-of-two fangs (b=2):  popcount(x), popcount(y) >= 2
+  * digit-length additivity across a fang pair          (Lemma 2)
+  * digit-sum additivity across a fang pair             (Lemma 3)
+  * casting out nines/threes                            (Lemma 4)
+  * vampire law  v = x + y  (mod 9) and (mod 3)         (Theorems 4, 5)
+  * fang taboo:  neither fang is = 1 (mod 3)            (Theorem 6)
+  * mod-nine residue confinement (x-1)(y-1) = 1 (mod 9) (Proposition 7)
+  * ghost density decays geometrically in digit length  (Theorem 8)
+
+Run:  python demo.py
 """
 
 from __future__ import annotations
 
-from typing import List, Tuple
+from collections import Counter
+from typing import Dict, List, Tuple
 
 
 # --------------------------------------------------------------------------
-# Core digit utilities
+# Core digit utilities: the multiset of decimal digits and its projections.
 # --------------------------------------------------------------------------
 
-def digits(b: int, n: int) -> List[int]:
-    """Base-b digits of n, least significant first (empty list for n = 0)."""
-    if b < 2:
-        raise ValueError("base must be >= 2")
-    out: List[int] = []
-    while n > 0:
-        out.append(n % b)
-        n //= b
-    return out
+def digit_multiset(n: int) -> Counter:
+    """The multiset M(n) of base-10 digits of n (order forgotten, multiplicity kept)."""
+    return Counter(str(n))
 
 
-def digit_len(b: int, n: int) -> int:
-    """Number of base-b digits of n (0 has length 0)."""
-    return len(digits(b, n))
+def digit_sum(n: int) -> int:
+    """S(n): the sum of the decimal digits of n = total of the digit multiset."""
+    return sum(int(c) for c in str(n))
 
 
-def digit_sum(b: int, n: int) -> int:
-    """Sum of the base-b digits of n."""
-    return sum(digits(b, n))
+def digit_length(n: int) -> int:
+    """L(n): the number of decimal digits of n = cardinality of the digit multiset."""
+    return len(str(n))
 
 
-def shares_all_digits(b: int, x: int, y: int) -> bool:
-    """True iff digits(x) ++ digits(y) is a permutation of digits(x*y)."""
-    return sorted(digits(b, x) + digits(b, y)) == sorted(digits(b, x * y))
-
-
-def digit_set(b: int, n: int) -> set[int]:
-    """Set of distinct digit-values of n in base b."""
-    return set(digits(b, n))
-
-
-def popcount(n: int) -> int:
-    """Number of 1-bits in the binary expansion of n."""
-    return bin(n).count("1")
+def digit_set(n: int) -> set:
+    """D(n): the set of distinct digits occurring in n (support of the multiset)."""
+    return set(str(n))
 
 
 # --------------------------------------------------------------------------
-# Bestiary classifiers
+# The fang relation and vampire test.
 # --------------------------------------------------------------------------
 
-def is_werewolf(b: int, x: int, y: int) -> bool:
-    """Factors share exactly one distinct digit-value with the product."""
-    shared = (digit_set(b, x) | digit_set(b, y)) & digit_set(b, x * y)
-    return len(shared) == 1
+def is_fang_pair(v: int, x: int, y: int) -> bool:
+    """True iff M(v) = M(x) + M(y) and x * y = v  (Definition 2)."""
+    return x * y == v and digit_multiset(v) == digit_multiset(x) + digit_multiset(y)
 
 
-def is_ghost(b: int, x: int, y: int) -> bool:
-    """Factors share no digit-value with the product."""
-    shared = (digit_set(b, x) | digit_set(b, y)) & digit_set(b, x * y)
-    return len(shared) == 0
-
-
-def is_prime(n: int) -> bool:
-    if n < 2:
-        return False
-    i = 2
-    while i * i <= n:
-        if n % i == 0:
-            return False
-        i += 1
-    return True
-
-
-def is_zombie(x: int, y: int) -> bool:
-    """Both factors prime."""
-    return is_prime(x) and is_prime(y)
-
-
-# --------------------------------------------------------------------------
-# Vampire enumeration with invariant sieve (Algorithm A)
-# --------------------------------------------------------------------------
-
-def vampire_numbers(k: int) -> List[Tuple[int, int, int]]:
-    """
-    All vampire numbers with 2k digits, via balanced digit-sharing factor
-    pairs. Returns sorted list of (vampire, x, y). Uses the mod-3 taboo and
-    casting-out-nines filters before the digit test.
-    """
-    lo, hi = 10 ** (k - 1), 10 ** k - 1
-    found: dict[int, Tuple[int, int]] = {}
+def find_vampire_fangs(v: int) -> List[Tuple[int, int]]:
+    """All balanced, non-trivial fang pairs (x, y) with x <= y of a vampire v."""
+    s = str(v)
+    if len(s) % 2 != 0:
+        return []
+    half = len(s) // 2
+    lo, hi = 10 ** (half - 1), 10 ** half - 1
+    fangs: List[Tuple[int, int]] = []
     for x in range(lo, hi + 1):
-        if x % 3 == 1:                      # mod-3 taboo prune
+        if v % x:
             continue
+        y = v // x
+        if x <= y <= hi:
+            if x % 10 == 0 and y % 10 == 0:  # exclude trailing-zero-only pairs
+                continue
+            if is_fang_pair(v, x, y):
+                fangs.append((x, y))
+    return fangs
+
+
+def is_vampire(v: int) -> bool:
+    return len(find_vampire_fangs(v)) > 0
+
+
+# --------------------------------------------------------------------------
+# Efficient fang-first enumeration with the modular sieve of Section 5.
+# --------------------------------------------------------------------------
+
+def enumerate_vampires(half_len: int, use_sieve: bool = True) -> Dict[int, List[Tuple[int, int]]]:
+    """Return {v: [fang pairs]} for all vampires with 2*half_len digits.
+
+    Uses the mod-9 confinement (Prop. 7) and mod-3 fang taboo (Thm. 6) to prune
+    candidate factor pairs cheaply before the multiset comparison.
+    """
+    lo, hi = 10 ** (half_len - 1), 10 ** half_len - 1
+    results: Dict[int, List[Tuple[int, int]]] = {}
+    target = 2 * half_len
+    for x in range(lo, hi + 1):
         for y in range(x, hi + 1):
-            if y % 3 == 1:                  # mod-3 taboo prune
+            if x % 10 == 0 and y % 10 == 0:
                 continue
-            if x % 10 == 0 and y % 10 == 0:  # trailing-zero exclusion
-                continue
+            if use_sieve:
+                if ((x - 1) * (y - 1)) % 9 != 1 % 9:  # Proposition 7
+                    continue
+                if x % 3 == 1 or y % 3 == 1:          # Theorem 6
+                    continue
             v = x * y
-            if (x + y) % 9 != v % 9:        # casting-out-nines prune
+            if digit_length(v) != target:
                 continue
-            if shares_all_digits(10, x, y):
-                found.setdefault(v, (x, y))
-    return sorted((v, xy[0], xy[1]) for v, xy in found.items())
+            if digit_multiset(v) == digit_multiset(x) + digit_multiset(y):
+                results.setdefault(v, []).append((x, y))
+    return results
 
 
 # --------------------------------------------------------------------------
-# Verification harness for the structural laws
+# The wider bestiary.
 # --------------------------------------------------------------------------
 
-def verify_laws(b: int, x: int, y: int) -> None:
-    """Assert every proven law on a digit-sharing pair (x, y)."""
-    assert shares_all_digits(b, x, y), "precondition: must be digit-sharing"
-    v = x * y
+def is_werewolf(v: int, x: int, y: int) -> bool:
+    """Fangs share EXACTLY ONE distinct digit with v (Definition 4)."""
+    return v == x * y and len(digit_set(v) & (digit_set(x) | digit_set(y))) == 1
 
-    # Theorem 3.1 — conservation
-    assert digit_len(b, x) + digit_len(b, y) == digit_len(b, v)
 
-    # Theorem 3.2 — extremality
-    assert b ** (digit_len(b, x) + digit_len(b, y) - 1) <= v
-
-    # Theorem 4.1 — casting out (b-1)s
-    assert (x + y) % (b - 1) == v % (b - 1)
-
-    if b == 10:
-        # Theorem 4.2 — unit identity mod 9
-        assert ((x - 1) * (y - 1)) % 9 == 1 % 9
-        # Theorem 4.3 — mod-3 taboo
-        assert x % 3 != 1 and y % 3 != 1
-
-    if b == 2:
-        # Theorem 5.2 — no power-of-two fangs
-        assert popcount(x) >= 2 and popcount(y) >= 2
-        # digit-sum conservation and submultiplicativity
-        assert popcount(x) + popcount(y) == popcount(v)
-        assert popcount(v) <= popcount(x) * popcount(y)
+def is_ghost(v: int, x: int, y: int) -> bool:
+    """Fangs share NO digit with v (Definition 5)."""
+    return v == x * y and len(digit_set(v) & (digit_set(x) | digit_set(y))) == 0
 
 
 # --------------------------------------------------------------------------
-# Main
+# Demonstrations.
 # --------------------------------------------------------------------------
+
+def demo_smallest_vampire() -> None:
+    print("=" * 68)
+    print("1. The smallest vampire: 1260 = 21 * 60")
+    print("=" * 68)
+    v, x, y = 1260, 21, 60
+    print(f"  M({v}) = {dict(digit_multiset(v))}")
+    print(f"  M({x}) + M({y}) = {dict(digit_multiset(x) + digit_multiset(y))}")
+    print(f"  is_fang_pair(1260, 21, 60) = {is_fang_pair(v, x, y)}")
+    print()
+
+
+def demo_additivity() -> None:
+    print("=" * 68)
+    print("2. Additivity of digit length (Lemma 2) and digit sum (Lemma 3)")
+    print("=" * 68)
+    for (v, x, y) in [(1260, 21, 60), (125460, 204, 615), (125460, 246, 510)]:
+        assert is_fang_pair(v, x, y)
+        print(f"  {v} = {x} * {y}")
+        print(f"    L: L(v)={digit_length(v)},  L(x)+L(y)={digit_length(x)+digit_length(y)}")
+        print(f"    S: S(v)={digit_sum(v)},  S(x)+S(y)={digit_sum(x)+digit_sum(y)}")
+    print()
+
+
+def demo_modular_signature() -> None:
+    print("=" * 68)
+    print("3. The modular signature: v = x + y (mod 9) and (mod 3)  [Thm 4,5]")
+    print("=" * 68)
+    for (v, x, y) in [(1260, 21, 60), (1395, 15, 93), (125460, 204, 615)]:
+        m9 = (v % 9 == (x + y) % 9)
+        m3 = (v % 3 == (x + y) % 3)
+        conf = ((x - 1) * (y - 1)) % 9 == 1 % 9
+        print(f"  {v} = {x} * {y}:  mod9 {v%9}=={(x+y)%9} [{m9}], "
+              f"mod3 {v%3}=={(x+y)%3} [{m3}], (x-1)(y-1)=1 mod9 [{conf}]")
+    print()
+
+
+def demo_fang_taboo() -> None:
+    print("=" * 68)
+    print("4. The fang taboo: no fang is = 1 (mod 3)  [Theorem 6]")
+    print("=" * 68)
+    fangs = enumerate_vampires(2)  # all 4-digit vampires
+    violations = 0
+    for v, pairs in sorted(fangs.items()):
+        for (x, y) in pairs:
+            if x % 3 == 1 or y % 3 == 1:
+                violations += 1
+    print(f"  Enumerated {len(fangs)} four-digit vampires.")
+    print(f"  Fang pairs violating the mod-3 taboo: {violations}  (expected 0)")
+    print()
+
+
+def demo_census() -> None:
+    print("=" * 68)
+    print("5. Census of four-digit vampires (fang-first enumeration)")
+    print("=" * 68)
+    fangs = enumerate_vampires(2)
+    for v, pairs in sorted(fangs.items()):
+        pretty = ", ".join(f"{x}*{y}" for (x, y) in pairs)
+        print(f"  {v} = {pretty}")
+    print(f"  Total: {len(fangs)} four-digit vampires.")
+    print()
+
+
+def demo_double_vampire() -> None:
+    print("=" * 68)
+    print("6. A double (multiple) vampire: 125460")
+    print("=" * 68)
+    for (x, y) in find_vampire_fangs(125460):
+        print(f"  125460 = {x} * {y}   [fang pair: {is_fang_pair(125460, x, y)}]")
+    print()
+
+
+def demo_ghosts_decay() -> None:
+    print("=" * 68)
+    print("7. Ghost numbers thin out with digit length  [Theorem 8]")
+    print("=" * 68)
+    print("  Counting products x*y (2-digit factors) that are ghosts, by v-length:")
+    length_counts: Counter = Counter()
+    total: Counter = Counter()
+    for x in range(10, 100):
+        for y in range(x, 100):
+            v = x * y
+            total[digit_length(v)] += 1
+            if is_ghost(v, x, y):
+                length_counts[digit_length(v)] += 1
+    for L in sorted(total):
+        frac = length_counts[L] / total[L] if total[L] else 0.0
+        print(f"    v-length {L}: ghost fraction = {frac:.4f} "
+              f"({length_counts[L]}/{total[L]})")
+    print()
+
 
 def main() -> None:
-    print("=" * 68)
-    print("A BESTIARY OF NUMERICAL MONSTERS — DEMONSTRATIONS")
-    print("=" * 68)
-
-    print("\n[1] Vampire numbers with 4 digits (2k = 4):")
-    vamps = vampire_numbers(2)
-    for v, x, y in vamps:
-        print(f"    {v} = {x} x {y}")
-    print(f"    ... {len(vamps)} four-digit vampires found "
-          f"(smallest is {vamps[0][0]}).")
-
-    print("\n[2] Structural laws verified on the smallest vampire 1260 = 21 x 60:")
-    verify_laws(10, 21, 60)
-    print("    len(21)+len(60) = 2+2 = 4 = len(1260)          [conservation]")
-    print("    10^3 = 1000 <= 1260                              [extremality]")
-    print("    21+60 = 81 == 1260 (mod 9)  [both 0]             [casting out 9s]")
-    print("    (21-1)(20*... ) -> (20)(59) % 9 = 1              [unit identity]")
-    print("    21 % 3 = 0, 60 % 3 = 0  (neither is 1)           [mod-3 taboo]")
-
-    print("\n[3] Mod-3 taboo: verify NO vampire fang is 1 mod 3 (4- and 6-digit):")
-    ok = all(x % 3 != 1 and y % 3 != 1
-             for v, x, y in vampire_numbers(2) + vampire_numbers(3))
-    print(f"    All fangs avoid residue 1 mod 3: {ok}")
-
-    print("\n[4] Werewolf / Ghost / Zombie witnesses:")
-    print(f"    Werewolf 3 x 5 = 15  (share exactly {{5}}): {is_werewolf(10,3,5)}")
-    print(f"    Ghost    7 x 7 = 49  (share nothing):        {is_ghost(10,7,7)}")
-    print(f"    Zombie   3 x 5 = 15  (both prime):           {is_zombie(3,5)}")
-
-    print("\n[5] Binary bestiary — no power-of-two fangs:")
-    bin_examples = [(x, y) for x in range(1, 64) for y in range(x, 64)
-                    if shares_all_digits(2, x, y)]
-    sample = bin_examples[:8]
-    for x, y in sample:
-        verify_laws(2, x, y)
-        print(f"    {x} x {y} = {x*y}: popcount fangs = "
-              f"({popcount(x)},{popcount(y)}) both >= 2, "
-              f"sum = {popcount(x)+popcount(y)} = popcount(product)")
-    assert all(popcount(x) >= 2 and popcount(y) >= 2 for x, y in bin_examples)
-    print(f"    Verified over {len(bin_examples)} binary digit-sharing pairs "
-          f"(x,y < 64): every fang has >= 2 one-bits.")
-
-    print("\n[6] Casting-out-nines sieve efficiency (4-digit factor pairs):")
-    lo, hi = 100, 999
-    total = passed = 0
-    for x in range(lo, hi + 1):
-        for y in range(x, hi + 1):
-            total += 1
-            if x % 3 == 1 or y % 3 == 1:
-                continue
-            if (x + y) % 9 != (x * y) % 9:
-                continue
-            passed += 1
-    print(f"    Pairs surviving mod-3 + casting-out-9 filters: "
-          f"{passed}/{total} = {100*passed/total:.1f}%")
-    print(f"    (Filters remove {100*(1-passed/total):.1f}% before any digit test.)")
-
-    print("\nAll structural laws verified. \u2713")
+    demo_smallest_vampire()
+    demo_additivity()
+    demo_modular_signature()
+    demo_fang_taboo()
+    demo_census()
+    demo_double_vampire()
+    demo_ghosts_decay()
+    print("All demonstrations complete.")
 
 
 if __name__ == "__main__":
