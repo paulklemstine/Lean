@@ -5,6 +5,19 @@
 window.renderDirectionCards = function(container, directions, detailIdPrefix) {
     if (typeof detailIdPrefix === 'undefined') detailIdPrefix = 'details-';
 
+    function escapeHTML(str) {
+        if (!str) return '';
+        return String(str).replace(/[&<>'"]/g, 
+            tag => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                "'": '&#39;',
+                '"': '&quot;'
+            }[tag] || tag)
+        );
+    }
+
     const statusColors = { available: '#4caf50', in_progress: '#2196f3' };
     const statusLabels = { available: 'Available', in_progress: 'In Progress' };
 
@@ -14,7 +27,7 @@ window.renderDirectionCards = function(container, directions, detailIdPrefix) {
         const statusColor = statusColors[d.status] || '#9e9e9e';
         const statusLabel = statusLabels[d.status] || d.status;
         const domainTags = (d.domains || []).map(dm =>
-            `<span class="direction-domain-tag">${dm}</span>`
+            `<span class="direction-domain-tag">${escapeHTML(dm)}</span>`
         ).join('');
         const shortDesc = d.description.length > 200
             ? d.description.substring(0, 200) + '...' : d.description;
@@ -22,19 +35,19 @@ window.renderDirectionCards = function(container, directions, detailIdPrefix) {
         return `
             <div class="direction-card" data-id="${d.id}" style="border-left: 4px solid ${statusColor}">
                 <div class="direction-card-header">
-                    <h3 class="direction-card-title">${d.title}</h3>
+                    <h3 class="direction-card-title">${escapeHTML(d.title)}</h3>
                     <div class="direction-card-badges">
                         <span class="direction-priority-badge" style="background:${priorityColor}">${priorityPct}%</span>
                         <span class="direction-status-badge" style="background:${statusColor}">${statusLabel}</span>
                     </div>
                 </div>
                 <div class="direction-card-domains">${domainTags}</div>
-                <p class="direction-card-desc">${shortDesc}</p>
+                <p class="direction-card-desc">${escapeHTML(shortDesc)}</p>
                 <div class="direction-card-details hidden" id="${detailIdPrefix}${d.id}">
-                    <p class="direction-card-full-desc">${d.description}</p>
-                    ${d.research_mode ? `<div class="direction-detail-row"><strong>Mode:</strong> ${d.research_mode}</div>` : ''}
-                    ${d.consumed_by_exp_id ? `<div class="direction-detail-row"><strong>Active Experiment:</strong> ${d.consumed_by_exp_id}</div>` : ''}
-                    <div class="direction-detail-row"><strong>Source:</strong> ${d.source_exp_id}</div>
+                    <p class="direction-card-full-desc">${escapeHTML(d.description)}</p>
+                    ${d.research_mode ? `<div class="direction-detail-row"><strong>Mode:</strong> ${escapeHTML(d.research_mode)}</div>` : ''}
+                    ${d.consumed_by_exp_id ? `<div class="direction-detail-row"><strong>Active Experiment:</strong> ${escapeHTML(d.consumed_by_exp_id)}</div>` : ''}
+                    <div class="direction-detail-row"><strong>Source:</strong> ${escapeHTML(d.source_exp_id)}</div>
                 </div>
                 <button class="direction-card-expand" data-id="${d.id}">Show Details</button>
             </div>
