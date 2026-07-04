@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a530b001",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Monotone Circuit Complexity\n\nThis cycle assembled a three-pronged formal toolkit for monotone Boolean circuit\nlower bounds:\n\n* `Basic.lean` — circuits, evaluation, size/depth/var",
-      "quality_score": 0.7436,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-06-28T08:50:01",
-      "title": "Circuit Complexity: Monotone Lower Bounds"
-    },
-    {
       "cycle_id": "c8e22e5a",
       "domain": "Applications",
       "key_insight": "# Future Directions — EML Differential Equations (Riccati Galois Cycle)\n\nDerived from this cycle's findings:\n* `EMLRiccatiMobius.lean` — the Riccati Galois group is `⊆ PGL₂(constants)`; the\n  cross-ra",
@@ -499,19 +489,19 @@
       "theorem_count": 24,
       "timestamp": "2026-07-04T15:14:21",
       "title": "Scheme-theoretic stabilizer of regular unipotent conjugacy classes under the center of the simply co"
+    },
+    {
+      "cycle_id": "242f16a7",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Generalized Honeymoon Oberwolfach Schedules\n\nSetting. Two `n` newlywed couples must be seated over several nights. Every night the `2n`\nguests are split among tables whose sizes",
+      "quality_score": 0.79104,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-04T15:19:42",
+      "title": "Sufficiency of obvious necessary conditions for the generalized honeymoon Oberwolfach problem with m"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a59363e7",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Exact Ratio Spectrum of Lagrange Constants\n\nDerived from this cycle's findings (Core invariances, the dilation lower bound,\nand the `Bad ⊆ Irrational` bridge). Each conjecture is",
-      "quality_score": 0.631596,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-06-28T04:30:44",
-      "title": "Exact Ratio Spectrum of Lagrange Constants under Integer Linear Fractional Transformations"
-    },
     {
       "cycle_id": "f347664d",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 24,
       "timestamp": "2026-07-04T15:14:21",
       "title": "Scheme-theoretic stabilizer of regular unipotent conjugacy classes under the center of the simply co"
+    },
+    {
+      "cycle_id": "242f16a7",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Generalized Honeymoon Oberwolfach Schedules\n\nSetting. Two `n` newlywed couples must be seated over several nights. Every night the `2n`\nguests are split among tables whose sizes",
+      "quality_score": 0.79104,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-04T15:19:42",
+      "title": "Sufficiency of obvious necessary conditions for the generalized honeymoon Oberwolfach problem with m"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d80d981e",
-      "domain": "Tropical",
-      "name": "colorable_of_isometric",
-      "quality": 0.87056
-    },
-    {
-      "cycle_id": "8b6fc6d0",
-      "domain": "Pythagorean",
-      "name": "every_int_ge_three_is_leg",
-      "quality": 0.7859200000000002
-    },
-    {
-      "cycle_id": "8b6fc6d0",
-      "domain": "Pythagorean",
-      "name": "gaussian_parametrization_is_triple",
-      "quality": 0.7859200000000002
-    },
     {
       "cycle_id": "8b6fc6d0",
       "domain": "Pythagorean",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "det_l",
       "quality": 0.8009580000000001
+    },
+    {
+      "cycle_id": "242f16a7",
+      "domain": "Novelty",
+      "name": "cyc_def",
+      "quality": 0.79104
+    },
+    {
+      "cycle_id": "242f16a7",
+      "domain": "Novelty",
+      "name": "zmod_m_add_m",
+      "quality": 0.79104
+    },
+    {
+      "cycle_id": "242f16a7",
+      "domain": "Novelty",
+      "name": "m_ne_zero_zmod",
+      "quality": 0.79104
     }
   ],
-  "last_updated": "2026-07-04T15:14:21",
+  "last_updated": "2026-07-04T15:19:42",
   "open_questions": [
     {
       "context": "and the colour pigeonhole.  Both are fully provable in Lean with no `sorry`.; `afl_constant_gap` — all `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "ade3f670",
-        "quality": 0.46629999999999994,
-        "theorems": 10,
-        "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-      },
-      {
         "cycle_id": "a1e3ce3a",
         "quality": 0.44295649681528665,
         "theorems": 16,
@@ -3637,6 +3631,12 @@
         "quality": 0.6148,
         "theorems": 7,
         "title": "Eventual congruence of misère P‑positions in nuclear escalation ladders"
+      },
+      {
+        "cycle_id": "242f16a7",
+        "quality": 0.79104,
+        "theorems": 16,
+        "title": "Sufficiency of obvious necessary conditions for the generalized honeymoon Oberwo"
       }
     ],
     "NumberTheory": [

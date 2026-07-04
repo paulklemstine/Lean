@@ -4,20 +4,6 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 244691c2 (Q=0.801), which proved 24 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Let $k$ be an algebraically closed field of characteristic $p > 0$, let $G$ be a reductive algebraic group over $k$ with universal cover $\\pi\\colon G' \\to G$. For any regular unipotent element $u \\in G(k)$, the scheme-theoretic stabilizer $\\Stab_{Z(G')}(C_{u'})$, where $u' \\in G'(k)$ is a preimage o",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_244691c2_aaa332ec",
-    "priority_score": 0.900958,
-    "research_mode": "team",
-    "source_exp_id": "244691c2",
-    "status": "available",
-    "timestamp": "2026-07-04T15:14:21.884209+00:00",
-    "title": "Deepening: Scheme-theoretic stabilizer of regular unipotent conjugacy classes under the cen"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domains": [
       "Pythagorean"
@@ -2607,12 +2593,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "This conjecture asserts that the upper bound on the number of edges in a $\u03c4_k$-maximal graph is not only an upper limit but also an exact characterization. By proposing this as a precise and falsifiable conjecture, it opens the door to further structural investigations of $\u03c4_k$-maximal graphs and their edge-critical properties.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0205",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28198v1",
+    "status": "available",
+    "timestamp": "2026-07-04T15:52:09.764829+00:00",
+    "title": "Every $\u03c4_k$-maximal graph on $n$ vertices has exactly $(k+1)(n-1)-1$ edges for $n \u2265 2k+2$"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0205",
+    "id": "fd_0206",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -2626,7 +2626,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0206",
+    "id": "fd_0207",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -2640,7 +2640,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0207",
+    "id": "fd_0208",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
@@ -2654,7 +2654,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0208",
+    "id": "fd_0209",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -2668,7 +2668,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0209",
+    "id": "fd_0210",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
@@ -2683,7 +2683,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0210",
+    "id": "fd_0211",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
@@ -2698,7 +2698,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0211",
+    "id": "fd_0212",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -2713,7 +2713,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0212",
+    "id": "fd_0213",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -2727,7 +2727,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0213",
+    "id": "fd_0214",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -2742,7 +2742,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0214",
+    "id": "fd_0215",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02132v1",
@@ -2757,7 +2757,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0215",
+    "id": "fd_0216",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -2771,7 +2771,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0216",
+    "id": "fd_0217",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02098v1",
@@ -2786,7 +2786,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0217",
+    "id": "fd_0218",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01716v1",
@@ -2796,11 +2796,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a Hamiltonian graph G with minimum degree at least 3, there exists a constant c > 0 such that G contains a nontrivial cycle of length at least n - c n^{2/3}. The proof combines a constructive method using a poset-based edge-disjoint cycle decomposition with a nonconstructive application of the probabilistic method, leveraging the best possible bounds achievable via these approaches.",
+    "domains": [
+      "Logic",
+      "Physics"
+    ],
+    "id": "fd_0219",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01738v1",
+    "status": "available",
+    "timestamp": "2026-07-03T07:37:36.028717+00:00",
+    "title": "Existence of a nontrivial cycle of length n-O(n^{2/3}) in Hamiltonian graphs with \u03b4(G) \u2265 3"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for every \u03bb > 1 with gcd(\u03bb,6) = 1, the \u03bb\u2011skeleton L_\u03bb contains infinitely many rows that contain at least one prime. Equivalently, the set of prime\u2011free rows in L_\u03bb is finite. This extends the paper's result that only the principal skeleton L_1 has the infinite prime\u2011free arithmetic progression k \u2261 2 (mod 4).",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0219",
+    "id": "fd_0220",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01718v1",
@@ -2814,7 +2829,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0220",
+    "id": "fd_0221",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01761v1",
@@ -2829,7 +2844,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Logic"
     ],
-    "id": "fd_0221",
+    "id": "fd_0222",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
@@ -2843,7 +2858,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0222",
+    "id": "fd_0223",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01695v1",
@@ -2857,7 +2872,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0223",
+    "id": "fd_0224",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01438v1",
@@ -2872,7 +2887,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0224",
+    "id": "fd_0225",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -2886,7 +2901,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0225",
+    "id": "fd_0226",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -2901,7 +2916,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0226",
+    "id": "fd_0227",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
@@ -2915,7 +2930,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0227",
+    "id": "fd_0228",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00775v1",
@@ -2929,7 +2944,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0228",
+    "id": "fd_0229",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00825v2",
@@ -2943,7 +2958,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0229",
+    "id": "fd_0230",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00651v1",
@@ -2957,7 +2972,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0230",
+    "id": "fd_0231",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00643v1",
@@ -2972,7 +2987,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0231",
+    "id": "fd_0232",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00561v1",
@@ -2986,7 +3001,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0232",
+    "id": "fd_0233",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00608v1",
@@ -3001,7 +3016,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0233",
+    "id": "fd_0234",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00456v1",
@@ -3016,7 +3031,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0234",
+    "id": "fd_0235",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00366v1",
@@ -3031,7 +3046,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0235",
+    "id": "fd_0236",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00372v1",
@@ -3045,7 +3060,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0236",
+    "id": "fd_0237",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00332v1",
@@ -3059,7 +3074,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0237",
+    "id": "fd_0238",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.32024v1",
@@ -3074,7 +3089,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0238",
+    "id": "fd_0239",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31967v1",
@@ -3089,7 +3104,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0239",
+    "id": "fd_0240",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31940v1",
@@ -3104,7 +3119,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0240",
+    "id": "fd_0241",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31908v1",
@@ -3119,7 +3134,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0241",
+    "id": "fd_0242",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31687v1",
@@ -3134,7 +3149,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0242",
+    "id": "fd_0243",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31821v2",
@@ -3149,7 +3164,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0243",
+    "id": "fd_0244",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31547v1",
@@ -3164,7 +3179,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0244",
+    "id": "fd_0245",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31649v1",
@@ -3179,7 +3194,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0245",
+    "id": "fd_0246",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31565v1",
@@ -3193,7 +3208,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0246",
+    "id": "fd_0247",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31526v1",
@@ -3208,7 +3223,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0247",
+    "id": "fd_0248",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31341v1",
@@ -3223,7 +3238,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0248",
+    "id": "fd_0249",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31262v1",
@@ -3238,7 +3253,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0249",
+    "id": "fd_0250",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31264v1",
@@ -3253,7 +3268,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0250",
+    "id": "fd_0251",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30856v1",
@@ -3268,7 +3283,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0251",
+    "id": "fd_0252",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30996v1",
@@ -3283,7 +3298,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0252",
+    "id": "fd_0253",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30885v1",
@@ -3298,7 +3313,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0253",
+    "id": "fd_0254",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31044v1",
@@ -3312,7 +3327,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0254",
+    "id": "fd_0255",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30496v1",
@@ -3327,7 +3342,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0255",
+    "id": "fd_0256",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30588v1",
@@ -3341,7 +3356,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0256",
+    "id": "fd_0257",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30593v1",
@@ -3355,7 +3370,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0257",
+    "id": "fd_0258",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30612v1",
@@ -3370,7 +3385,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0258",
+    "id": "fd_0259",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30428v1",
@@ -3384,7 +3399,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_0259",
+    "id": "fd_0260",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3399,7 +3414,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0260",
+    "id": "fd_0261",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30272v1",
@@ -3414,7 +3429,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Tropical"
     ],
-    "id": "fd_0261",
+    "id": "fd_0262",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30184v1",
@@ -3428,7 +3443,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0262",
+    "id": "fd_0263",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30071v1",
@@ -3442,7 +3457,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0263",
+    "id": "fd_0264",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -3457,7 +3472,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0264",
+    "id": "fd_0265",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -3471,7 +3486,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0265",
+    "id": "fd_0266",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
@@ -3480,16 +3495,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tightness Conjecture for P3-Packings in Plane Triangulations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f39d97c8",
     "description": "Investigate an exponential sum of the form \\(\\sum_{n \\le X} \\sum_{m \\le Y} a(n) b(m) c(n+m)\\) where \\(a, b\\) are normalized GL(2) Fourier coefficients and \\(c\\) is a bounded arithmetic function, using partial results from Theorem 1.2 of the paper. The goal is to derive non-trivial cancellation bounds with a power saving over the classical \\(X Y\\) bound.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0266",
+    "id": "fd_0267",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T04:45:23.170809+00:00",
     "title": "Exponential Sums of GL(2) Fourier Coefficients with Double Weighting"
   },
@@ -3500,7 +3515,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0267",
+    "id": "fd_0268",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
@@ -3509,16 +3524,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on the sl2-multiplicity decomposition of the graph algebra"
   },
   {
-    "consumed_by_exp_id": "c500d57b",
+    "consumed_by_exp_id": "",
     "description": "For any monic polynomial f in Z[x] of degree k \u2265 2, the power-saving constant c in the inequality |f(A)| \u2264 |A|^(k-c) can be taken to satisfy c \u2265 1/k\u00b2, where A ranges over finite sets constructed via the Bloom-Sawin-Schildkraut-Zhelezov method.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0268",
+    "id": "fd_0269",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30690v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T05:42:15.565147+00:00",
     "title": "Explicit Quantitative Lower Bound on Power-Saving for Monic Minkowski Polynomials"
   },
@@ -3528,7 +3543,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0269",
+    "id": "fd_0270",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29740v1",
@@ -3543,7 +3558,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0270",
+    "id": "fd_0271",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29559v1",
@@ -3557,7 +3572,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0271",
+    "id": "fd_0272",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29449v1",
@@ -3572,7 +3587,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0272",
+    "id": "fd_0273",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29391v1",
@@ -3587,7 +3602,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0273",
+    "id": "fd_0274",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29294v1",
@@ -3601,7 +3616,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0274",
+    "id": "fd_0275",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29310v1",
@@ -3616,7 +3631,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0275",
+    "id": "fd_0276",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29361v1",
@@ -3631,7 +3646,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0276",
+    "id": "fd_0277",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29277v1",
@@ -3646,7 +3661,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0277",
+    "id": "fd_0278",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29062v1",
@@ -3660,7 +3675,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0278",
+    "id": "fd_0279",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29216v2",
@@ -3675,7 +3690,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0279",
+    "id": "fd_0280",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28976v1",
@@ -3690,7 +3705,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_0280",
+    "id": "fd_0281",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29040v1",
@@ -3704,7 +3719,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0281",
+    "id": "fd_0282",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28903v1",
@@ -3719,7 +3734,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0282",
+    "id": "fd_0283",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28849v1",
@@ -3733,7 +3748,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0283",
+    "id": "fd_0284",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28723v1",
@@ -3747,7 +3762,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0284",
+    "id": "fd_0285",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28829v1",
@@ -3762,7 +3777,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0285",
+    "id": "fd_0286",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28610v1",
@@ -3776,7 +3791,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0286",
+    "id": "fd_0287",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28606v1",
@@ -3791,7 +3806,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0287",
+    "id": "fd_0288",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28680v1",
@@ -3805,13 +3820,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0288",
+    "id": "fd_0289",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28651v1",
     "status": "available",
     "timestamp": "2026-07-04T14:41:56.025274+00:00",
     "title": "Existence of \u03b3\u2011Golomb Rulers with Maximal \u221a\u03b3 Density"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For all integers d, e > 1 and non-negative integers w, the number of d-balanced e-regular partitions in a block of e-weight w equals the binomial coefficient binom(w + ((d-1)(e-1)/2 - 1), w). This generalizes the specific case for d=2 and odd prime e=p proven in the paper, extending it to all integers d,e>1.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0290",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28305v1",
+    "status": "available",
+    "timestamp": "2026-07-04T15:53:12.426874+00:00",
+    "title": "Generalized Binomial Formula for d-Balanced e-Regular Partitions"
   },
   {
     "consumed_by_exp_id": "",
@@ -3857,21 +3887,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T00:49:27.007324+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nDerived from the study of the stabilizer of a regular unipotent conjugacy class\nunder the center of the simply connected cover, modeled on `SL\u2082 \u2192 PGL\u2082` and its\ncharacteristic-`p` degeneration.\n\n## 1. Length, not points: measuring the invisible part of the stabilizer\n\n**Conjecture.** For a regular unipotent element of a simple, simply connected\ngroup of type `A_{p-1}` over an algebraically closed field of characteristic `p`,\nthe stabilizer of its conjugacy class under the center has exactly one geometric\npoint but scheme-theoretic length `p`; equivalently, its coordinate ring is a\ntruncated polynomial algebra `k[t]/(t^p)`.\n\nThe key insight is that the failure of smoothness is quantitative: the point\ncount collapses to `1` while a conserved invariant \u2014 the length of the defining\nArtinian algebra \u2014 records the full size of the center that has become\ninfinitesimal. **Why now?** The explicit collapse `x^p = 1 \u21d4 (x-1)^p = 0`\nidentifies the precise nilpotent that carries this hidden length, turning a\nqualitative \"non-smooth\" statement into a computable numerical invariant.\n\n## 2. A characteristic-jump formula for stabilizer smoothness\n\n**Conjecture.** For a fixed simply connected group and a regular unipotent class,\nthe stabilizer under the center is smooth in exactly those characteristics that\ndo not divide the order of the fundamental group; in every dividing\ncharacteristic the smooth locus loses dimension equal to the `p`-torsion of that\nfundamental group.\n\nThe key insight is that smoothness of the stabilizer is controlled by a single\narithmetic condition \u2014 divisibility of `|\u03c0\u2081|` by the characteristic \u2014 rather than\nby the fine structure of the unipotent class. **Why now?** The `\u03bc_2`-in-char-`2`\nand `\u03bc_p`-in-char-`p` computations exhibit exactly this jump, suggesting the\ngeneral statement is governed only by the arithmetic of the center.\n\n## 3. Regular unipotents versus regular semisimple: a unified stabilizer law\n\n**Conjecture.** The description \"stabilizer under the center equals the kernel of\nthe simply connected cover\" holds simultaneously for every regular element \u2014\nunipotent, semisimple, or mixed \u2014 and fails for non-regular elements, where the\nstabilizer strictly contains the kernel.\n\nThe key insight is that regularity, characterized by a minimal-dimensional\ncentralizer, is the exact hypothesis that pins the central stabilizer down to the\nfundamental group, unifying Steinberg's semisimple picture with the unipotent\none. **Why now?** Both endpoints (regular semisimple \u00e0 la Steinberg, regular\nunipotent as here) now yield the same kernel answer, making the interpolation\nacross the regular locus the natural next target.\n\n## 4. Frobenius kernels as the universal source of non-reduced centralizers\n\n**Conjecture.** Every non-reduced stabilizer of a regular conjugacy class in a\nsimply connected group in characteristic `p` is, canonically, an extension of an\n\u00e9tale group by a Frobenius kernel of the center, and is annihilated by a single\npower of the relative Frobenius.\n\nThe key insight is that all infinitesimal behavior of these stabilizers factors\nthrough Frobenius: the non-reduced directions are exactly the ones killed by\nraising to the `p`-th power. **Why now?** The identity `(x-1)^p = x^p - 1` shows\nthe defining ideal of the stabilizer is Frobenius-closed, pointing directly to a\nFrobenius-kernel decomposition.\n\n## 5. From `PGL_2` to wreath and exceptional centers: torsion primes revisited\n\n**Conjecture.** For groups whose center is a product of cyclic factors, the\nstabilizer of a regular unipotent class decomposes as the product of the\ncorresponding root-of-unity schemes `\u03bc_{n_i}`, and is non-smooth precisely at the\nprimes dividing some `n_i`; for exceptional groups this recovers the classical\nlist of torsion primes.\n\nThe key insight is that the multiplicative structure of the center transfers\ndirectly to a product decomposition of the stabilizer scheme, so its\nnon-smoothness locus is read off from the elementary divisors of the fundamental\ngroup. **Why now?** The scalar-matrix computation `det(a\u00b7I) = a^n` already shows\nthe center of `SL_n` is `\u03bc_n`, giving the base case of a decomposition that\nshould extend to arbitrary reductive centers.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0289",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "244691c2",
-    "status": "available",
-    "timestamp": "2026-07-04T15:14:11.210904+00:00",
-    "title": "Derived from the study of the stabilizer of a regular unipotent conjugacy class"
   },
   {
     "consumed_by_exp_id": "",
