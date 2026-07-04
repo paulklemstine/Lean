@@ -1,58 +1,47 @@
-# Computational Evidence: Escher Staircases
+# Computational Evidence — Escher Staircases
 
-## 1. Small-case calculation — the Boolean product ring `ℕ → 𝔽₂`
+An *Escher staircase* is an infinite strictly ascending chain of ideals
+`I 0 < I 1 < I 2 < ⋯`.  We collect small-case evidence for the three claims we
+formalize.
 
-Ideals `Iₙ = suppLt n = { f : ℕ → 𝔽₂ | f i = 0 for all i ≥ n }`.
+## 1. The concrete staircase in `ℕ → ℤ`
 
-| n | membership condition        | example element in `Iₙ \ I_{n-1}` |
-|---|-----------------------------|-----------------------------------|
-| 0 | `f = 0` (all coords zero)   | — (`I₀ = {0}`)                    |
-| 1 | `f i = 0` for `i ≥ 1`       | `e₀ = (1,0,0,…)`                  |
-| 2 | `f i = 0` for `i ≥ 2`       | `e₁ = (0,1,0,…)`                  |
-| 3 | `f i = 0` for `i ≥ 3`       | `e₂ = (0,0,1,0,…)`               |
+Rungs: `S n = { f : ℕ → ℤ | ∀ k ≥ n, f k = 0 }`.
 
-* `eₙ = Pi.single n 1` lies in `I_{n+1}` (vanishes past index `n`) but **not** in
-  `Iₙ` (its value at `n` is `1`).  Hence `Iₙ ⊊ I_{n+1}` strictly for every `n`.
-* `I₀ = {0} = ⊥`.
-* `⋂ₙ Iₙ = {f | ∀n, ∀ i ≥ n, f i = 0} = {0}`; consistent with the loop-back
-  identity `⋂ₙ Iₙ = I₀`.
+| n | typical element of `S n \ S (n-1)` | `S n` contains |
+|---|-----------------------------------|----------------|
+| 0 | (none — `S 0 = {0}`)              | only `0`       |
+| 1 | `(1,0,0,0,…)`                     | seqs supported on `{0}` |
+| 2 | `(0,1,0,0,…)`                     | seqs supported on `{0,1}` |
+| 3 | `(0,0,1,0,…)`                     | seqs supported on `{0,1,2}` |
 
-So `ℕ → 𝔽₂` carries a genuine strictly ascending Escher staircase and is
-non-Noetherian.  (Formalized: `not_isNoetherianRing_boolProduct`.)
+* Strictness: the indicator `δ_n = Pi.single n 1` lies in `S (n+1)` (it vanishes
+  from index `n+1` on) but not in `S n` (since `δ_n n = 1 ≠ 0`).  Hence
+  `S n ⊊ S (n+1)` for every `n`.
+* Loop-back: `⨅_n S n = S 0 = {0}`.  Membership in `S 0` already forces `f k = 0`
+  for all `k ≥ 0`, i.e. `f = 0`.  So the meet of the whole ascending chain is its
+  bottom rung — the "impossible staircase" picture.
 
-## 2. The advertised `Int(ℤ)` example is a DESCENDING chain
+Conclusion: `ℕ → ℤ` carries an explicit Escher staircase, so it is **not**
+Noetherian.
 
-Claimed chain `Iₙ = {f ∈ Int(ℤ) : f(ℤ) ⊆ 2ⁿℤ}`.  Because `2ⁿ⁺¹ℤ ⊆ 2ⁿℤ`, the
-condition for `I_{n+1}` is *stronger*, so `I_{n+1} ⊆ Iₙ`.  Concrete test values:
+## 2. Sanity check on the informal description's chain
 
-| n | `Iₙ` contains constant `2ⁿ`? | `Iₙ` contains constant `2ⁿ⁻¹`? |
-|---|------------------------------|-------------------------------|
-| 1 | yes (`2 ∈ 2ℤ`)              | `1 ∉ 2ℤ` → no                |
-| 2 | yes (`4 ∈ 4ℤ`)             | `2 ∉ 4ℤ` → no                |
+The mission's informal chain `I_n = { f ∈ Int(ℤ) | f(ℤ) ⊆ 2ⁿℤ }` is claimed to be
+*ascending*.  But `2^{n+1}ℤ ⊆ 2ⁿℤ`, so `I_{n+1} ⊆ I_n`: the chain is in fact
+**descending**.  The write-up has the inclusion reversed.  Our `ℕ → ℤ` construction
+repairs this: it is genuinely ascending and still exhibits the `{0}`-intersection
+"loop back".
 
-The constant `2 ∈ I₁` but `2 ∉ I₂`, so `I₂ ⊊ I₁`: **descending**, not ascending.
-The headline example is therefore a *descending* "Anti-Escher" chain (whose
-intersection is `{0}`), not an ascending staircase.  This is the phenomenon
-already studied for `ℤ` in `Logic/ChainInvariants.lean`.
+## 3. The negative instance `ℤ_[p]`
 
-## 3. Dyadic descending chain in `ℤ` (bridge)
+`ℤ_[p]` is a discrete valuation ring: every nonzero ideal is `pⁿ ℤ_[p]` for some
+`n`, and the ideals are totally ordered by reverse inclusion
+`ℤ_[p] ⊋ pℤ_[p] ⊋ p²ℤ_[p] ⊋ ⋯ ⊋ (0)`.  There is no room for an *infinite ascending*
+chain: any ascending chain of the `pⁿ` stabilises.  Hence `ℤ_[p]` has **no** Escher
+staircase.  This matches the general principle (verified formally): a ring has an
+Escher staircase iff it is not Noetherian, and `ℤ_[p]` (a PID) is Noetherian.
 
-`(2⁰) ⊇ (2¹) ⊇ (2²) ⊇ ⋯`, generators `1, 2, 4, 8, …` (OEIS A000079).
-Since `|2ⁿ| = 2ⁿ → ∞`, any nonzero integer eventually fails to be divisible, so
-`⋂ₙ (2ⁿ) = {0}`.  (Formalized: `dyadic_int_intersection_bot`, via the catalog's
-`ChainInvariants.int_anti_escher_ideal`.)
-
-## 4. Counterexample hunt on the loop-back identity
-
-Claim `⨅ₙ Iₙ = I₀` for every ascending chain.  This is *forced*: `I₀ ≤ Iₙ` for all
-`n` (monotone), so `I₀` is a lower bound and equals the term `n = 0`, giving
-`I₀ ≤ ⨅ₙ Iₙ ≤ I₀`.  No ascending counterexample can exist — the "paradox" that an
-ascending chain has intersection different from its base is impossible.
-(Formalized: `Escher.Staircase.iInf_eq_first`.)
-
-## Summary of findings
-* Ascending Escher staircase exists ⇔ ring non-Noetherian (proved).
-* Loop-back `⨅ = I₀` is automatic (proved).
-* `ℕ → 𝔽₂` is an explicit non-Noetherian model (proved).
-* The `Int(ℤ)` headline example is descending; its true content is the ℤ
-  Anti-Escher collapse (proved for the dyadic chain, bridging the catalog).
+## OEIS
+No integer sequence is central to these order-theoretic claims, so no OEIS lookup
+applies.
