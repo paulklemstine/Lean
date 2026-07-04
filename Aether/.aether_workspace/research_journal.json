@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f347664d",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE DIRECTIONS — Finite Height ↔ Semistability (Breuil–Kisin shadow)\n\nBuilt on `Speculative/AutoResearch/FiniteHeightConverse.lean`, which proves, for a\nBreuil–Kisin module presented by its Frobe",
-      "quality_score": 0.535421090909091,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-28T05:03:43",
-      "title": "A Converse to Finite Height Implying Semistability for p-adic Galois Representations"
-    },
-    {
       "cycle_id": "c7101b5e",
       "domain": "Applications",
       "key_insight": "# Future Directions — Lucas / Fibonacci sequence algebra\n\nThis cycle added `Catalog/Applications/LucasSequenceIdentities.lean`: the algebraic\n(doubling / addition / Cassini / partial-sum) half of the",
@@ -2501,6 +2491,16 @@
       "theorem_count": 16,
       "timestamp": "2026-07-04T15:19:42",
       "title": "Sufficiency of obvious necessary conditions for the generalized honeymoon Oberwolfach problem with m"
+    },
+    {
+      "cycle_id": "605be963",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Anti-Fibonacci Sequence\n\nThis cycle studied the addition-avoiding counterpart of the Fibonacci sequence:\nthe sequence beginning `1, 1, 2, 4, 7, 11, 16, 22, …`, whose successi",
+      "quality_score": 0.6772,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-07-04T16:14:17",
+      "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79104
     }
   ],
-  "last_updated": "2026-07-04T15:19:42",
+  "last_updated": "2026-07-04T16:14:17",
   "open_questions": [
     {
       "context": "and the colour pigeonhole.  Both are fully provable in Lean with no `sorry`.; `afl_constant_gap` — all `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "a1e3ce3a",
-        "quality": 0.44295649681528665,
-        "theorems": 16,
-        "title": "Multi-kernel smoothing lemma for Sidon sets"
-      },
-      {
         "cycle_id": "3498198a",
         "quality": 0.7818800000000001,
         "theorems": 13,
@@ -3637,6 +3631,12 @@
         "quality": 0.79104,
         "theorems": 16,
         "title": "Sufficiency of obvious necessary conditions for the generalized honeymoon Oberwo"
+      },
+      {
+        "cycle_id": "605be963",
+        "quality": 0.6772,
+        "theorems": 6,
+        "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
       }
     ],
     "NumberTheory": [
