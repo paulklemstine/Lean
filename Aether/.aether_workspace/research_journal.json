@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8d0e7e8c",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Excluded minors for Z_n-gainable biased graphs\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle. The formalised\nresults (`ZnGain.lean`, `ZnGainSharp.lean`) s",
-      "quality_score": 0.7360800000000001,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T09:42:01",
-      "title": "Excluded minors for Z_n-gainable biased graphs"
-    },
-    {
       "cycle_id": "ef629b7b",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Riordan Array Row Sums and Fibonacci Bisections\n\nDerived from the cycle that proved `Σ_{k=0}^{n} C(n+k, 2k) = F(2n+1)` and the\ncompanion `Σ_{k=0}^{n} C(n+1+k, 2k+1) = F(2n+2)` vi",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-04T18:07:51",
       "title": "Anabelomorphic Equivalence"
+    },
+    {
+      "cycle_id": "0a41cc78",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — 2-adic valuation of shifted Perrin numbers\n\nDerived from this cycle's findings: the Perrin sequence `R` (`R0=3, R1=0, R2=2`,\n`R(n+3)=R(n+1)+R(n)`) has `R mod 2^k` periodic with p",
+      "quality_score": 0.7258007692307691,
+      "sorry_count": 3,
+      "theorem_count": 13,
+      "timestamp": "2026-07-04T22:07:22",
+      "title": "Explicit Formula for 2-adic Valuation of Shifted Perrin Numbers"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8ffddeae",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Balanced side lengths maximise spanning trees\n\nDerived from this cycle's findings (computable Kirchhoff counter `tauG`, the\nverified instances `balanced_strict_4/6/8`, and the ab",
-      "quality_score": 0.76734,
-      "sorry_count": 2,
-      "theorem_count": 16,
-      "timestamp": "2026-06-28T05:31:58",
-      "title": "Balanced Side Lengths Maximize Spanning Trees in Free Boundary Product Grids"
-    },
     {
       "cycle_id": "dbb7efcb",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 17,
       "timestamp": "2026-07-04T18:57:57",
       "title": "Characterization of Bipartite Partial Duals of Orientable Hypermaps"
+    },
+    {
+      "cycle_id": "0a41cc78",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — 2-adic valuation of shifted Perrin numbers\n\nDerived from this cycle's findings: the Perrin sequence `R` (`R0=3, R1=0, R2=2`,\n`R(n+3)=R(n+1)+R(n)`) has `R mod 2^k` periodic with p",
+      "quality_score": 0.7258007692307691,
+      "sorry_count": 3,
+      "theorem_count": 13,
+      "timestamp": "2026-07-04T22:07:22",
+      "title": "Explicit Formula for 2-adic Valuation of Shifted Perrin Numbers"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4b429121",
-      "domain": "Probability",
-      "name": "roundAccept_card_le",
-      "quality": 0.7118800000000001
-    },
-    {
-      "cycle_id": "4b429121",
-      "domain": "Probability",
-      "name": "amplified_prob_le",
-      "quality": 0.7118800000000001
-    },
-    {
-      "cycle_id": "bfccf79e",
-      "domain": "Bridges",
-      "name": "feeding",
-      "quality": 0.712488
-    },
     {
       "cycle_id": "bfccf79e",
       "domain": "Bridges",
@@ -2803,17 +2785,28 @@
       "domain": "Applications",
       "name": "AnabelEquiv",
       "quality": 0.8344800000000001
+    },
+    {
+      "cycle_id": "0a41cc78",
+      "domain": "Novelty",
+      "name": "R_rec",
+      "quality": 0.7258007692307691
+    },
+    {
+      "cycle_id": "0a41cc78",
+      "domain": "Novelty",
+      "name": "pv_eq",
+      "quality": 0.7258007692307691
+    },
+    {
+      "cycle_id": "0a41cc78",
+      "domain": "Novelty",
+      "name": "pv_zero_of_even",
+      "quality": 0.7258007692307691
     }
   ],
-  "last_updated": "2026-07-04T18:57:57",
+  "last_updated": "2026-07-04T22:07:22",
   "open_questions": [
-    {
-      "context": "and the colour pigeonhole.  Both are fully provable in Lean with no `sorry`.; `afl_constant_gap` — all `sorry`-free.",
-      "cycle_id": "f014f8e3",
-      "domain": "Novelty",
-      "sorry_count": 2,
-      "timestamp": "2026-06-26T13:14:44"
-    },
     {
       "context": "unique line) and proves, with zero `sorry`s:",
       "cycle_id": "bc0a8e2b",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 3,
       "timestamp": "2026-07-04T07:35:15"
+    },
+    {
+      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
+      "cycle_id": "0a41cc78",
+      "domain": "Novelty",
+      "sorry_count": 3,
+      "timestamp": "2026-07-04T22:07:22"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "3498198a",
-        "quality": 0.7818800000000001,
-        "theorems": 13,
-        "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
-      },
-      {
         "cycle_id": "6f613cb7",
         "quality": 0.6449999999999999,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.6772,
         "theorems": 6,
         "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+      },
+      {
+        "cycle_id": "0a41cc78",
+        "quality": 0.7258007692307691,
+        "theorems": 13,
+        "title": "Explicit Formula for 2-adic Valuation of Shifted Perrin Numbers"
       }
     ],
     "NumberTheory": [

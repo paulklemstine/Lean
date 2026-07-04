@@ -17,7 +17,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: unnamed_concept"
   },
   {
-    "consumed_by_exp_id": "bdd384c4",
+    "consumed_by_exp_id": "",
     "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
     "domains": [
       "Novelty",
@@ -27,7 +27,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:26.963635+00:00",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
@@ -1316,7 +1316,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing the generalized honeymoon Oberwolfach problem in Lean 4"
   },
   {
-    "consumed_by_exp_id": "4acfe6d8",
+    "consumed_by_exp_id": "",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
     "domains": [
       "Novelty",
@@ -1326,7 +1326,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:27.030210+00:00",
     "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
   },
@@ -1432,7 +1432,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tree Structure Characterization for Good Position in Hyperelliptic Mumford Curves"
   },
   {
-    "consumed_by_exp_id": "5f5f76b3",
+    "consumed_by_exp_id": "",
     "description": "The Gallai homothety number $ G_3(\\{0,2,5\\}) $ equals 77.",
     "domains": [
       "Bridges"
@@ -1441,7 +1441,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02226v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T04:11:45.471727+00:00",
     "title": "Exact value of G\u2083({0,2,5})"
   },
@@ -2273,7 +2273,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Generalized variance formula for digit expansions of $1/p$ beyond powers of two"
   },
   {
-    "consumed_by_exp_id": "1ed1e4f7",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for all sufficiently large s, the maximum chromatic number F(s) over graphs G with \u03c9(G) \u2264 s and girth(\u0305G) \u2265 6 satisfies F(s) = \u0398(s^{3/2} / log s). In particular, there exist positive constants c\u2081, c\u2082 such that for all s \u2265 2, c\u2081\u00b7s^{3/2}/log s \u2264 F(s) \u2264 c\u2082\u00b7s^{3/2}/log s.",
     "domains": [
       "Pythagorean"
@@ -2282,7 +2282,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29873v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T05:23:25.775044+00:00",
     "title": "Conjecture on the asymptotic growth of the chi\u2011bounding function F(s) for graphs whose complement has girth at least 6"
   },
@@ -2564,7 +2564,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existenceof a Reduced Planar Convex Body Exceeding Lassak's Area Bound"
   },
   {
-    "consumed_by_exp_id": "f446a284",
+    "consumed_by_exp_id": "",
     "description": "A conjectural condition on the compatibility constraints of symbol frequencies and row/column balances within extended Latin structures, aiming to formalize the critical threshold for symplectic completion.",
     "domains": [
       "Bridges"
@@ -2573,7 +2573,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28634v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T14:11:16.421178+00:00",
     "title": "The Andersen-Hoffman Theorem for Equitable Rectangles"
   },
@@ -3129,7 +3129,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fang-Zhai Conjecture: Spectral extremal graphs for edge-color-critical graphs are edge extremal"
   },
   {
-    "consumed_by_exp_id": "054477b4",
+    "consumed_by_exp_id": "",
     "description": "Let G be a brick (i.e. a 3\u2011connected bicritical non\u2011bipartite graph) that is not isomorphic to K4, the complement of C6 (\u0143C6) nor the Petersen graph. Then the following are equivalent:\n\n1) Every b\u2011invariant edge of G is a forcing edge.\n2) G is a near\u2011bipartite brick belonging to the class characterised in the main theorem of the paper (i.e. the complete description of near\u2011bipartite bricks for which every b\u2011invariant edge is forcing).\n\nThus, apart from the three small exceptions, the property \"all b\u2011invariant edges are forcing\" precisely picks out the near\u2011bipartite bricks.",
     "domains": [
       "Bridges"
@@ -3138,7 +3138,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00608v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T13:25:27.639831+00:00",
     "title": "Every b\u2011invariant edge is forcing exactly for near\u2011bipartite bricks (up to the three classical exceptions)"
   },
@@ -4125,7 +4125,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0309",
+    "id": "fd_0310",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -4150,6 +4150,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle 0a41cc78 (Q=0.726) proved 13 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The 2-adic valuation of the shifted Perrin sequence {R_m - 1} admits an explicit piecewise formula for all m \u2265 0, analogous to Theorem TV1 for the Padovan sequence. Specifically, there exists a finite",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_0a41cc78_ca0f203b",
+    "priority_score": 0.7758007692307691,
+    "research_mode": "team",
+    "source_exp_id": "0a41cc78",
+    "status": "available",
+    "timestamp": "2026-07-04T22:07:22.177819+00:00",
+    "title": "Close Proofs: Explicit Formula for 2-adic Valuation of Shifted Perrin Numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Congruence Rigidity of Sums of Squares\n\nThis cycle established that the entries of an integer right triangle are forced into\nstrong divisibility patterns \u2014 one leg is a multiple of three, the legs jointly carry a\nfactor of four, one entry is a multiple of five \u2014 and that a four-dimensional right\n\"box\" (a solution of `a\u00b2 + b\u00b2 + c\u00b2 = d\u00b2`) is even more rigid: at most one of its three\nspatial edges can be odd. We also pinned down exactly which whole numbers can serve as a\nleg. These findings point to several bold, testable conjectures.\n\n## 1. The correct modulus for a power of two grows with the power\n**Conjecture.** In any solution of `a\u00b2 + b\u00b2 = c\u00b2`, the two-adic valuation of the leg\nproduct `a\u00b7b` is governed one level deeper than naive reduction suggests: deciding\nwhether `2^k` divides `a\u00b7b` is a question about residues modulo `2^{k+1}`, never modulo\n`2^k`.\n*The key insight is* that a difference of two odd squares is always divisible by eight,\nso each additional factor of two in the product must be certified one binary place\nfurther out than one would guess. *Why now?* Having isolated the exact `mod 8`\nobstruction behind the factor of four, we can test the pattern mechanically for `k = 3,\n4, 5` and either confirm a clean \"shift-by-one\" law or expose its first exception.\n\n## 2. A universal super-divisor for higher-dimensional right figures\n**Conjecture.** For every dimension `r`, solutions of `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` obey a single\nuniversal divisibility law: there is a constant `D(r)`, depending only on `r`, such that\n`D(r)` divides the product `x\u2081\u00b7x\u2082\u00b7\u22ef\u00b7x_r` for *every* solution, and `D(r)` is the largest\nsuch constant.\n*The key insight is* that reduction to a finite residue ring turns \"for all solutions\"\ninto a finite, decidable statement, so the optimal constant `D(r)` is computable and\nshould grow in a structured (conjecturally multiplicative-over-primes) way. *Why now?*\nThe three-dimensional case already yields `4 \u2223 x\u2081x\u2082x\u2083`; comparing it against the planar\nconstant `12` suggests a dimension-indexed sequence worth charting and predicting.\n\n## 3. Parity collapse in higher dimensions\n**Conjecture.** As the number of squared terms increases, the number of edges permitted to\nbe odd stays uniformly bounded: in `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` at most three of the `x_i` can be\nodd, regardless of `r`.\n*The key insight is* that the sum of squares equals the count of odd terms modulo four,\nwhile a perfect square is `0` or `1` modulo four, capping the admissible odd-count no\nmatter how many terms are added. *Why now?* We proved the cap is \"at most one\" in three\ndimensions; extending the modular bookkeeping to arbitrary `r` is a self-contained next\nstep that would reveal whether the cap is truly dimension-independent.\n\n## 4. A sharp threshold characterization of legs in every dimension\n**Conjecture.** Just as the whole numbers that are a leg of a right triangle are exactly\nthose `\u2265 3`, in each higher dimension there is a sharp finite threshold above which every\ninteger appears as an edge of some right figure, and the finitely many exceptions can be\nlisted explicitly.\n*The key insight is* that a single explicit construction, split according to the parity of\nthe target edge, realizes all sufficiently large values, while the small exceptions are\nforced by a factorization that would otherwise require a vanishing edge. *Why now?* The\nplanar threshold `3` and its sharpness (the failures at `1` and `2`) give a template that\nshould transfer verbatim to the box equation and beyond.\n\n## 5. Divisibility as a sieve against near-solutions\n**Conjecture.** The combined congruence obstructions (`12 \u2223 a\u00b7b`, `60 \u2223 a\u00b7b\u00b7c`, and their\nhigher-dimensional analogues) are strong enough that a random integer triple satisfying\nthem has a positive, computable probability of being genuinely Pythagorean \u2014 i.e. the\ncongruence conditions capture a constant fraction of the \"arithmetic mass\" of true\nsolutions.\n*The key insight is* that each universal divisor removes a fixed proportion of impostors,\nso stacking independent prime-power obstructions multiplies into a sieve of predictable\ndensity. *Why now?* With the exact obstructions in hand for the primes `2, 3, 5`, one can\nimmediately measure how much of the solution set they explain and calibrate whether a few\nmore primes suffice to pin down solutions almost completely.\n",
     "domains": [
       "Pythagorean",
@@ -4164,7 +4178,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "That the entries of an integer right triangle are forced"
   },
   {
-    "consumed_by_exp_id": "b071583c",
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -4174,12 +4188,27 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:27.007324+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
   {
-    "consumed_by_exp_id": "e4ce96ae",
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 2-adic valuation of shifted Perrin numbers\n\nDerived from this cycle's findings: the Perrin sequence `R` (`R0=3, R1=0, R2=2`,\n`R(n+3)=R(n+1)+R(n)`) has `R mod 2^k` periodic with period `7\u00b72^{k-1}`; the shifted\nvaluation `\u03bd\u2082(R_m \u2212 1)` is a constant in `{0,1,2}` on 25 of the 28 residue classes\nmod 28, and is unbounded exactly on the three classes `m \u2261 10, 19, 26 (mod 28)`\n(equivalently `R_m \u2261 1 mod 8`), where it refines self-similarly at each higher power of 2.\n\n## 1. A closed ruler-function form for the exceptional exponents\n\nOn the three exceptional classes the valuation appears to equal `3` plus a term that is\naffine in a single `\u03bd\u2082(m + c)`, so that the entire valuation is piecewise linear in\n`\u03bd\u2082(m + c)` \u2014 the exact analogue of the Padovan \"TV1\" law.\n**The key insight is** that the period doubles cleanly under each 2-adic refinement,\nso exactly one \"child\" residue survives at every level and the increments form a ruler\nsequence. **Why now?** The base cases (levels mod 28 and mod 56) are now pinned down\nexactly, giving both the constant part and the first two ruler increments to anchor an\ninduction on the companion-matrix expansion `M^{7\u00b72^{k-1}} = I + 2^k B_k`.\n\n## 2. The valuation realizes every natural number\n\nEmpirically `\u03bd\u2082(R_m \u2212 1)` attains `0, 1, 2, 3, \u2026` with explicit small witnesses, so its\nvalue set is exactly `\u2115`, and for `k \u2265 3` precisely three residues mod `7\u00b72^{k-1}` carry\nvaluation `\u2265 k`. **The key insight is** that the Perrin period is *primitive* \u2014 it never\ncollapses when the modulus doubles \u2014 which forces a nonempty survivor set at every level.\n**Why now?** We can prove exact-period primitivity by an inductive squaring identity\n`(I + 2^k B)^2 \u2261 I (mod 2^{k+1})`, and the three-residue survivor count is already\nverified through four full doublings.\n\n## 3. Finiteness of the Perrin\u2013Brocard equation `R_m = x\u00b2 + 1`\n\nSince a perfect square has even 2-adic valuation, every `m` with `\u03bd\u2082(R_m \u2212 1)` odd is\nimmediately excluded \u2014 for example all `m \u2261 0,3,7,13,14,17,21,27 (mod 28)`, where the\nvaluation equals `1`. **The key insight is** that an explicit valuation formula converts a\nhard Diophantine search into a finite congruence-plus-size check. **Why now?** With the\nmod-28/mod-56 valuation table in hand, the surviving residues are a short explicit list,\nand the exponential growth `R_m \u223c \u03c1^m` (\u03c1 the plastic number) should bound the remaining\ncandidates to a finite, checkable range.\n\n## 4. The same law for the whole family `R(n+3) = a\u00b7R(n+1) + b\u00b7R(n)`\n\nPerrin is the case `(a,b) = (1,1)`. For odd `b`, the companion matrix is 2-adically\nregular, so `R mod 2^k` should again be purely periodic with a doubling period and a\nfinite congruence description of `\u03bd\u2082(R_m \u2212 c)`. **The key insight is** that period-doubling\nis a generic property of a 2-adically regular companion matrix, not a Perrin coincidence.\n**Why now?** The Perrin proof isolates exactly which matrix computation drives the law,\nso it can be replayed across the parameter family by classifying `(a,b) mod` small\n2-powers.\n\n## 5. Valuation profiles at odd primes\n\nFor each odd prime `p`, `R mod p^k` should be periodic with a Pisano-type period\n`\u03c0(p)\u00b7p^{k\u2212k\u2080}`, and `\u03bd_p(R_m \u2212 1)` should again be governed by finitely many congruences,\nwith the exceptional residues being exactly those where `R_m \u2261 1 (mod p)`. **The key\ninsight is** that the shift by `1` selects the residues where the recurrence orbit meets a\nfixed point of multiplication, after which lifting-the-exponent yields linear-in-`\u03bd_p(m+c)`\ngrowth. **Why now?** The 2-adic case gives a complete, verified template \u2014 determine\n`\u03c0(p)`, count the exceptional residues, and prove the level-1 formula via the `p`-adic\ncompanion matrix \u2014 that transfers directly to `p = 7, 23, 29` and beyond.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0311",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0a41cc78",
+    "status": "available",
+    "timestamp": "2026-07-04T22:04:47.184113+00:00",
+    "title": "Derived from this cycle's findings: the Perrin sequence `R` (`R0=3, R1=0, R2=2`,"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domains": [
       "Novelty",
@@ -4189,7 +4218,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.73,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:27.017991+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
@@ -4206,5 +4235,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T04:44:52.457313+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For sufficiently large N, the double sum S(N) = \u03a3_{n\u2264N} \u03a3_{p|F_n} 1/p satisfies S(N) = C\u00b7N^{-1/2} + o(N^{-1/2}), where C = \u221a(\u03c0/2)\u00b7\u03b3 (\u03b3 is the Euler\u2013Mascheroni constant). Test: Compute S(N) for N = 10^4, 10^5, 10^6 and fit S(N)\u00b7\u221aN; the fitted constant should converge to C within statistical error. If the constant deviates beyond 5% or the exponent differs from -1/2 by more than 0.02, the conjecture is falsified. Impact: Establishing this universal scaling would link the distribution of prime divisors in linear recurrences with probabilistic number theory, enabling new subexponential algorithms for factoring Fibonacci\u2011related integers and providing a benchmark for models of prime occurrence in recursive sequences.",
+    "domains": [
+      "NumberTheory",
+      "Novelty"
+    ],
+    "id": "fd_0312",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-07-04T22:07:16.990618+00:00",
+    "title": "Scaling law for the reciprocal prime factor sum of Fibonacci numbers"
   }
 ];
