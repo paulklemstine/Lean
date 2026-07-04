@@ -4,21 +4,6 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
-    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0243",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-04T04:30:55.046655+00:00",
-    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domains": [
       "Pythagorean"
@@ -1053,7 +1038,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of a D_18 tuple with size 6 outside the exceptional case"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7664f9cd",
     "description": "For any prime r, any real x with 1 \u2264 x \u2264 r^{0.49}, and any real q in [0,1], the average over all Dirichlet characters modulo r of the 2q\u2011th power of the absolute value of the short character sum satisfies (1/(r\u22121))\u2211_\u03c7 |\u2211_{n\u2264x} \u03c7(n)|^{2q} \u2265 (1/2) x^{q}.",
     "domains": [
       "Pythagorean"
@@ -1062,7 +1047,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01184v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T21:39:43.438987+00:00",
     "title": "Conjecture on sharp lower bounds for low moments of Dirichlet character sums"
   },
@@ -2275,12 +2260,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "We conjecture that for any prime p >= 3, integer base b >= 2 with p not dividing b, let l be the order of b modulo p and d = (p-1)/l. For each prime q dividing d let m_q be the exponent of q in d. Then there exist Dirichlet characters \u03c7_{q,r} modulo p of order q^{m_q} (for 1 <= r <= m_q) such that the sum S of the repetend digits and the sum T of the squares of the digits satisfy S = (b-1)/2 * l + (b-1)/2 * \u03a3_{q|d} \u03a3_{r=1}^{m_q} [B_{\u03c7_{q,r}}]_0, T = (T_0 + T_1)/d + \u03a3_{q|d} \u03a3_{r=2}^{m_q} [T_{q,r}]_0 / q^{m_q - r + 1} + [T_d]_0 / 2, where the definitions of T_0,T_1,T_{q,r} are the same as in Theorem 2 with the appropriate characters. Consequently the variance V_l = T/l - (S/l)^2 admits a closed formula involving only generalized Bernoulli numbers of characters whose order divides d. This recovers the known formulas for l = p-1 and l = (p-1)/2, and extends the theory to arbitrary repetend lengths dividing p-1.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0182",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29930v1",
+    "status": "available",
+    "timestamp": "2026-07-04T04:45:09.367217+00:00",
+    "title": "Generalized variance formula for digit expansions of $1/p$ beyond powers of two"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0182",
+    "id": "fd_0183",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -2294,7 +2293,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0183",
+    "id": "fd_0184",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -2308,7 +2307,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0184",
+    "id": "fd_0185",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
@@ -2322,7 +2321,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0185",
+    "id": "fd_0186",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -2336,7 +2335,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0186",
+    "id": "fd_0187",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
@@ -2351,7 +2350,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0187",
+    "id": "fd_0188",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
@@ -2366,7 +2365,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0188",
+    "id": "fd_0189",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -2381,7 +2380,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0189",
+    "id": "fd_0190",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -2395,7 +2394,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0190",
+    "id": "fd_0191",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -2410,7 +2409,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0191",
+    "id": "fd_0192",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02132v1",
@@ -2425,7 +2424,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0192",
+    "id": "fd_0193",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -2439,7 +2438,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0193",
+    "id": "fd_0194",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02098v1",
@@ -2454,7 +2453,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0194",
+    "id": "fd_0195",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01716v1",
@@ -2469,7 +2468,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Physics"
     ],
-    "id": "fd_0195",
+    "id": "fd_0196",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
@@ -2483,7 +2482,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0196",
+    "id": "fd_0197",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01718v1",
@@ -2497,7 +2496,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0197",
+    "id": "fd_0198",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01761v1",
@@ -2512,7 +2511,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Logic"
     ],
-    "id": "fd_0198",
+    "id": "fd_0199",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
@@ -2526,7 +2525,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0199",
+    "id": "fd_0200",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01695v1",
@@ -2540,7 +2539,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0200",
+    "id": "fd_0201",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01438v1",
@@ -2555,7 +2554,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0201",
+    "id": "fd_0202",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -2569,7 +2568,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0202",
+    "id": "fd_0203",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -2584,7 +2583,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0203",
+    "id": "fd_0204",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
@@ -2598,7 +2597,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0204",
+    "id": "fd_0205",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00775v1",
@@ -2612,7 +2611,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0205",
+    "id": "fd_0206",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00825v2",
@@ -2626,7 +2625,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0206",
+    "id": "fd_0207",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00651v1",
@@ -2640,7 +2639,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0207",
+    "id": "fd_0208",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00643v1",
@@ -2655,7 +2654,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0208",
+    "id": "fd_0209",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00561v1",
@@ -2669,7 +2668,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0209",
+    "id": "fd_0210",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00608v1",
@@ -2684,7 +2683,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0210",
+    "id": "fd_0211",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00456v1",
@@ -2699,7 +2698,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0211",
+    "id": "fd_0212",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00366v1",
@@ -2714,7 +2713,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0212",
+    "id": "fd_0213",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00372v1",
@@ -2728,7 +2727,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0213",
+    "id": "fd_0214",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00332v1",
@@ -2742,7 +2741,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0214",
+    "id": "fd_0215",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.32024v1",
@@ -2757,7 +2756,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0215",
+    "id": "fd_0216",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31967v1",
@@ -2766,32 +2765,32 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the k_t lower bound given k_s in extremal graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f69e0caf",
     "description": "Conjecture: In the unramified GU(1,n-1) Rapoport\u2011Zink space of arbitrary parahoric level P, every basic Ekedahl\u2011Kottwitz\u2011Oort\u2011Rapoport (EKOR) stratum is isomorphic (as a scheme over the residue field \ud835\udd3d_q) to a finite disjoint union of copies of a explicitly defined fine Deligne\u2011Lusztig variety X(w_P) attached to a Weyl group element w_P determined by P. Moreover, the number of irreducible components equals the number of vertices in the affine Dynkin diagram of type \u00c3_{n-1} corresponding to the parahoric subgroup P, and each component is smooth and projective.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0216",
+    "id": "fd_0217",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31940v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T15:54:12.765581+00:00",
     "title": "Basic EKOR Strata are Disjoint Unions of Fine Deligne-Lusztig Varieties"
   },
   {
-    "consumed_by_exp_id": "f69e0caf",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for every finite strongly connected edge\u2011weighted directed graph G there is no assignment of colors to its vertices such that each vertex\u2019s color is a (weighted) convex combination of the colors of its neighbors, unless all vertices share the same color.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0217",
+    "id": "fd_0218",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31908v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T16:31:57.960563+00:00",
     "title": "Non\u2011existence of non\u2011constant colorings satisfying the blend condition on finite strongly connected edge\u2011weighted digraphs"
   },
@@ -2802,7 +2801,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0218",
+    "id": "fd_0219",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31687v1",
@@ -2817,7 +2816,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0219",
+    "id": "fd_0220",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31821v2",
@@ -2832,7 +2831,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0220",
+    "id": "fd_0221",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31547v1",
@@ -2847,7 +2846,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0221",
+    "id": "fd_0222",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31649v1",
@@ -2862,7 +2861,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0222",
+    "id": "fd_0223",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31565v1",
@@ -2876,7 +2875,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0223",
+    "id": "fd_0224",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31526v1",
@@ -2891,7 +2890,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0224",
+    "id": "fd_0225",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31341v1",
@@ -2906,7 +2905,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0225",
+    "id": "fd_0226",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31262v1",
@@ -2921,7 +2920,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0226",
+    "id": "fd_0227",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31264v1",
@@ -2936,7 +2935,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0227",
+    "id": "fd_0228",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30856v1",
@@ -2951,7 +2950,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0228",
+    "id": "fd_0229",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30996v1",
@@ -2966,7 +2965,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0229",
+    "id": "fd_0230",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30885v1",
@@ -2981,7 +2980,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0230",
+    "id": "fd_0231",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31044v1",
@@ -2995,7 +2994,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0231",
+    "id": "fd_0232",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30496v1",
@@ -3010,7 +3009,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0232",
+    "id": "fd_0233",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30588v1",
@@ -3024,7 +3023,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0233",
+    "id": "fd_0234",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30593v1",
@@ -3038,7 +3037,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0234",
+    "id": "fd_0235",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30612v1",
@@ -3053,7 +3052,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0235",
+    "id": "fd_0236",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30428v1",
@@ -3067,7 +3066,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_0236",
+    "id": "fd_0237",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3076,46 +3075,46 @@ window.FUTURE_DIRECTIONS = [
     "title": "Joint descendants of the last k vertices in random d-DAGs"
   },
   {
-    "consumed_by_exp_id": "6f613cb7",
+    "consumed_by_exp_id": "",
     "description": "For r=3 and t=1, the graph K_1 \u2228 T_3(8) is not the unique maximizer of the signless Laplacian spectral radius among 2K_4-free graphs of order 9; there exists another non-isomorphic 2K_4-free graph on 9 vertices with identical signless Laplacian spectral radius.",
     "domains": [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0237",
+    "id": "fd_0238",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30272v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T01:20:02.252152+00:00",
     "title": "Uniqueness failure for signless Laplacian extremal graphs at n=9 for (2K_4)-free graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e62d479c",
     "description": "For any integers n \u2265 1 and r \u2265 1, the set of \\(\\binom{n+r}{r}\\) basic r\u2011symmetric tropical polynomials of degree \u2264 n in the variables \\(\\{x_{i,j}\\}_{1\\le i\\le n,1\\le j\\le r}\\) is algebraically independent over the tropical semiring (max\u2011plus). Equivalently, any non\u2011trivial tropical polynomial relation among them must be the tropical zero (the identically \\(-\\infty\\) function). This strengthens the separation result of the paper by asserting that the invariants not only separate orbits but generate a free tropical algebra.",
     "domains": [
       "Algebra",
       "Tropical"
     ],
-    "id": "fd_0238",
+    "id": "fd_0239",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30184v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T01:45:28.530447+00:00",
     "title": "Algebraic Independence of Basic r\u2011Symmetric Tropical Polynomials"
   },
   {
-    "consumed_by_exp_id": "e62d479c",
+    "consumed_by_exp_id": "",
     "description": "For an orientable hypermap H defined by permutations (\u03c3, \u03b1), a partial dual H^{E'} with respect to a hyperedge subset E' is bipartite if and only if there exists an all-crossing direction \u03a6 of the medial map M(H) such that E' = C(\u03a6), provided that every hyperedge of H has even length.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0239",
+    "id": "fd_0240",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30071v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T02:10:40.019984+00:00",
     "title": "Characterization of Bipartite Partial Duals of Orientable Hypermaps"
   },
@@ -3125,7 +3124,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0240",
+    "id": "fd_0241",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -3140,7 +3139,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0241",
+    "id": "fd_0242",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -3154,13 +3153,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0242",
+    "id": "fd_0243",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
     "status": "available",
     "timestamp": "2026-07-04T04:14:42.891046+00:00",
     "title": "Tightness Conjecture for P3-Packings in Plane Triangulations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate an exponential sum of the form \\(\\sum_{n \\le X} \\sum_{m \\le Y} a(n) b(m) c(n+m)\\) where \\(a, b\\) are normalized GL(2) Fourier coefficients and \\(c\\) is a bounded arithmetic function, using partial results from Theorem 1.2 of the paper. The goal is to derive non-trivial cancellation bounds with a power saving over the classical \\(X Y\\) bound.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0244",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29822v1",
+    "status": "available",
+    "timestamp": "2026-07-04T04:45:23.170809+00:00",
+    "title": "Exponential Sums of GL(2) Fourier Coefficients with Double Weighting"
   },
   {
     "consumed_by_exp_id": "",
@@ -3193,7 +3206,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "That the entries of an integer right triangle are forced"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fbcfb71f",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -3203,24 +3216,24 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.007324+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
   {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThese conjectures grow directly out of the exact support laws established for the\nsum and difference kernels of Sidon sets: for a nonempty Sidon set of size `k`,\nthe difference set has exactly `k\u00b2 \u2212 k + 1` elements (the maximum possible), the\nsumset satisfies `2\u00b7|s + s| = k\u00b7(k + 1)`, and the two kernels obey the single\nconservation law `2\u00b7|s + s| = |s \u2212 s| + 2\u00b7k \u2212 1`.\n\n## 1. Higher-order support laws for B_h sets\n\nA set is a `B_h` set when every integer arises in at most one way as an unordered\nsum of `h` of its elements; ordinary Sidon sets are the case `h = 2`. Conjecture:\nevery `B_h` set has an `h`-fold difference set whose cardinality is an explicit\ndegree-`h` polynomial in `k`, and the family of `h`-fold sum and difference\nkernels obeys one linear conservation identity whose correction terms are\ngoverned entirely by the degenerate (repeated-coordinate) configurations.\n\nThe key insight is that all of this is driven by injectivity of a single\nrepresentation map on the non-degenerate configurations, so the corrections are\nnothing more than the lower-dimensional degenerate strata counted by\ninclusion\u2013exclusion. Why now? The `h = 2` case is now settled with clean closed\nforms and a transparent stratification argument, so exactly the same\nstratification of the configuration cube is ready to be carried to all `h`.\n\n## 2. The conservation law modulo n and perfect difference sets\n\nIn a cyclic group the difference kernel can wrap around, so the integer count\n`k\u00b2 \u2212 k + 1` may collapse. Singer perfect difference sets are the opposite\nextreme, with a perfectly flat difference kernel covering the whole group once.\nConjecture: modulo `n` the conservation law deforms into a corrected identity\nwhose defect term counts precisely the wrap-around collisions, and the defect\nvanishes exactly for translates of perfect difference sets.\n\nThe key insight is that the modular defect is itself an additive-energy quantity,\nso the counting law becomes an energy identity in the finite setting. Why now?\nThe exact integer identity supplies a clean baseline from which the modular\ndefect can be isolated and measured, turning the perfect-difference-set case into\na sharp, testable extremal statement.\n\n## 3. Stability: near-Sidon sets and the difference-set deficit\n\nFor any nonempty set the difference set never exceeds `k\u00b2 \u2212 k + 1`, with equality\nonly for Sidon sets. Let the deficit be the gap between this maximum and the\nactual difference-set size. Conjecture: the deficit tightly controls the number\nof additive collisions, so a set with small deficit is quantitatively close to\nSidon and can be repaired into a genuine Sidon set by deleting a number of\nelements proportional to the deficit.\n\nThe key insight is that the deficit and the collision count are two linear\nreadouts of the very same distribution of difference-map fibre sizes, so\ncontrolling one automatically controls the other. Why now? The exact extremal\ncount and its equality characterization are in hand, so the natural next step is\nto upgrade the rigid equality into a robust inequality with an explicit gap term.\n\n## 4. Optimal weighting of the sum and difference kernels\n\nThe difference kernel of a Sidon set is asymptotically twice as spread out as its\nunordered sum kernel, a fact made exact by the conservation law. Conjecture:\namong all convex combinations of the two kernels, the combined `L\u00b2` energy is\nminimized at a unique weight determined only by `k`, and for Sidon sets this\noptimal weight tends to an explicit universal constant as `k` grows.\n\nThe key insight is that for Sidon sets the cross-correlation between the two\nkernels is controlled by the same diagonal configurations that produce the\nconservation law, so the energy is an explicit quadratic in the weight with\ncomputable coefficients. Why now? The exact support counts pin down the leading\nbehaviour of both kernels, delivering precisely the quadratic whose minimizer is\nsought.\n\n## 5. A master cardinality invariant forcing the Sidon property\n\nThe Sidon property is detected on one side by equality in the difference-set\nbound and, dually, by equality in the sumset bound. Conjecture: there is a single\ncardinality functional built from the sizes of `s`, its sumset, and its\ndifference set that is bounded above for all nonempty sets and attains its maximum\nexactly on Sidon sets, unifying both one-sided characterizations into one\nextremal principle that is moreover hereditary under passing to subsets.\n\nThe key insight is that both characterizations are equality cases of the same\nunderlying injectivity phenomenon, so a suitable positive combination of the two\nbounds inherits a single, shared equality locus. Why now? With both one-sided\ncharacterizations proved exactly, the only remaining task is to align their\nequality cases into one master invariant.\n",
+    "consumed_by_exp_id": "559d8e74",
+    "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domains": [
-      "Algebra",
-      "Pythagorean"
+      "Novelty",
+      "NumberTheory"
     ],
-    "id": "fd_0244",
-    "priority_score": 0.75,
+    "id": "fd_0115",
+    "priority_score": 0.73,
     "research_mode": "team",
-    "source_exp_id": "a1e3ce3a",
-    "status": "available",
-    "timestamp": "2026-07-04T04:39:22.256437+00:00",
-    "title": "These conjectures grow directly out of the exact support laws established for th"
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-03T00:49:27.017991+00:00",
+    "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
   {
     "consumed_by_exp_id": "",
