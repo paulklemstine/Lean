@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ca01957a",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — n-Queens Completion Threshold\n\nThis cycle formalized (0 sorries) the structural skeleton of the n-queens completion\nproblem in `Catalog/Applications/NQueens/{Basic,Completion,Thr",
-      "quality_score": 0.6280000000000001,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-06-28T02:59:41",
-      "title": "Tight asymptotic bound for the n‑queens completion threshold"
-    },
-    {
       "cycle_id": "f73687d8",
       "domain": "Applications",
       "key_insight": "# Future Directions — EML Kolmogorov–Arnold rank-one frontier\n\nDerived from this cycle's findings in\n`Catalog/Applications/KolmogorovArnoldEMLSeparability.lean` and\n`Catalog/Applications/KolmogorovArn",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-04T09:16:15",
       "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+    },
+    {
+      "cycle_id": "e62d479c",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Knots That Think\n\nFive self-contained, falsifiable conjectures arising from this cycle's finding\nthat, among the trivial, trefoil, and figure-eight \"thought-knots\", only the\ntref",
+      "quality_score": 0.30277126000000004,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-04T09:19:00",
+      "title": "Knots That Think: Cognition as Braiding in Category Theory"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.75424
     }
   ],
-  "last_updated": "2026-07-04T09:16:15",
+  "last_updated": "2026-07-04T09:19:00",
   "open_questions": [
     {
       "context": "and the colour pigeonhole.  Both are fully provable in Lean with no `sorry`.; `afl_constant_gap` — all `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "bb55b186",
-        "quality": 0.6012985714285713,
-        "theorems": 7,
-        "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
-      },
-      {
         "cycle_id": "5961bdfa",
         "quality": 0.7401600000000002,
         "theorems": 17,
@@ -3141,6 +3135,12 @@
         "quality": 0.4794705000000001,
         "theorems": 9,
         "title": "Sharp Threshold Constant for Cycle Games"
+      },
+      {
+        "cycle_id": "e62d479c",
+        "quality": 0.30277126000000004,
+        "theorems": 0,
+        "title": "Knots That Think: Cognition as Braiding in Category Theory"
       }
     ],
     "Bridges": [

@@ -1,0 +1,8 @@
+--- TropicalPolynomial.lean
++++ TropicalPolynomial.lean
+@@ -1,4 +1,4 @@
+-import Tropical.FundamentalTheorem.Basic
++import Algebra.«2ff65a6a_retry1_aristotle».Tropical.FundamentalTheorem.Basic
+ 
+ /-!
+ 

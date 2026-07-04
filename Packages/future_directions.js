@@ -1462,6 +1462,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "We classify the finite posets whose probabilistic powerdomain is an RB-domain by proving that a finite poset P has this property if and only if it has a least element and its undirected Hasse graph is a tree.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0127",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02231v1",
+    "status": "available",
+    "timestamp": "2026-07-03T04:55:55.366539+00:00",
+    "title": "Characterization of Finite Posets with RB-Domain Probabilistic Powerdomains"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For a \u2124_p-tower of finite connected symmetric digraphs arising from voltage assignments and monic polynomial P(A) coprime to A\u00b2-1, the p-adic valuation v_p(det P(U_n)) admits an exact formula v_p(det P(U_n)) = \u03bc\u00b7p^n + \u03bb\u00b7n + c for constants \u03bc, \u03bb, c that can be computed explicitly from the Bass-Severin decomposition of the spectral resultant R_{X,P}(T) = F_\u221e^\u03bc \u00b7 F_\u03bb \u00b7 U(T), where F_\u221e and F_\u03bb are the \u03bc and \u03bb components and U is a unit in the Iwasawa algebra.",
     "domains": [
       "Pythagorean",
@@ -2392,12 +2406,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every semi-complete digraph G, the directed clique-width of G is at most the cycle rank of G plus 2.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0192",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29336v1",
+    "status": "available",
+    "timestamp": "2026-07-04T09:21:10.954489+00:00",
+    "title": "Directed Clique-Width Bound for Semi-Complete Digraphs via Cycle Rank"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0192",
+    "id": "fd_0193",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -2411,7 +2439,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0193",
+    "id": "fd_0194",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -2425,7 +2453,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0194",
+    "id": "fd_0195",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
@@ -2439,7 +2467,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0195",
+    "id": "fd_0196",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -2453,7 +2481,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0196",
+    "id": "fd_0197",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
@@ -2468,7 +2496,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0197",
+    "id": "fd_0198",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
@@ -2483,7 +2511,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0198",
+    "id": "fd_0199",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -2498,7 +2526,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0199",
+    "id": "fd_0200",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -2512,7 +2540,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0200",
+    "id": "fd_0201",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -2527,7 +2555,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0201",
+    "id": "fd_0202",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02132v1",
@@ -2542,7 +2570,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0202",
+    "id": "fd_0203",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -2556,7 +2584,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0203",
+    "id": "fd_0204",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02098v1",
@@ -2571,7 +2599,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0204",
+    "id": "fd_0205",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01716v1",
@@ -2586,7 +2614,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Physics"
     ],
-    "id": "fd_0205",
+    "id": "fd_0206",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
@@ -2600,7 +2628,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0206",
+    "id": "fd_0207",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01718v1",
@@ -2614,7 +2642,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0207",
+    "id": "fd_0208",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01761v1",
@@ -2629,7 +2657,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Logic"
     ],
-    "id": "fd_0208",
+    "id": "fd_0209",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
@@ -2643,7 +2671,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0209",
+    "id": "fd_0210",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01695v1",
@@ -2657,7 +2685,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0210",
+    "id": "fd_0211",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01438v1",
@@ -2672,7 +2700,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0211",
+    "id": "fd_0212",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -2686,7 +2714,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0212",
+    "id": "fd_0213",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -2701,7 +2729,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0213",
+    "id": "fd_0214",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
@@ -2715,7 +2743,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0214",
+    "id": "fd_0215",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00775v1",
@@ -2724,16 +2752,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Upper bound conjecture for the cake balancing ratio sequence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0f872c04",
     "description": "For each residue r \u2208 {0,1,2,3,4}, the function k \u21a6 \u03c3\u2085(5k + r) is non\u2011increasing (i.e., \u03c3\u2085(5(k+1)+r) \u2264 \u03c3\u2085(5k+r) for all k \u2208 \u2115).",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0215",
+    "id": "fd_0216",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00825v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T11:40:31.517494+00:00",
     "title": "Monotonicity of the minimal absolute value of sums of fifth roots of unity within each residue class modulo 5"
   },
@@ -2743,7 +2771,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0216",
+    "id": "fd_0217",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00651v1",
@@ -2757,7 +2785,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0217",
+    "id": "fd_0218",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00643v1",
@@ -2772,7 +2800,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0218",
+    "id": "fd_0219",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00561v1",
@@ -2786,7 +2814,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0219",
+    "id": "fd_0220",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00608v1",
@@ -2801,7 +2829,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0220",
+    "id": "fd_0221",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00456v1",
@@ -2816,7 +2844,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0221",
+    "id": "fd_0222",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00366v1",
@@ -2831,7 +2859,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0222",
+    "id": "fd_0223",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00372v1",
@@ -2845,7 +2873,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0223",
+    "id": "fd_0224",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00332v1",
@@ -2859,7 +2887,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0224",
+    "id": "fd_0225",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.32024v1",
@@ -2874,7 +2902,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0225",
+    "id": "fd_0226",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31967v1",
@@ -2889,7 +2917,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0226",
+    "id": "fd_0227",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31940v1",
@@ -2904,7 +2932,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0227",
+    "id": "fd_0228",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31908v1",
@@ -2919,7 +2947,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0228",
+    "id": "fd_0229",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31687v1",
@@ -2934,7 +2962,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0229",
+    "id": "fd_0230",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31821v2",
@@ -2949,7 +2977,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0230",
+    "id": "fd_0231",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31547v1",
@@ -2964,7 +2992,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0231",
+    "id": "fd_0232",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31649v1",
@@ -2979,7 +3007,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0232",
+    "id": "fd_0233",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31565v1",
@@ -2993,7 +3021,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0233",
+    "id": "fd_0234",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31526v1",
@@ -3008,7 +3036,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0234",
+    "id": "fd_0235",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31341v1",
@@ -3023,7 +3051,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0235",
+    "id": "fd_0236",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31262v1",
@@ -3038,7 +3066,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0236",
+    "id": "fd_0237",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31264v1",
@@ -3053,7 +3081,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0237",
+    "id": "fd_0238",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30856v1",
@@ -3068,7 +3096,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0238",
+    "id": "fd_0239",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30996v1",
@@ -3083,7 +3111,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0239",
+    "id": "fd_0240",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30885v1",
@@ -3092,17 +3120,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimal Turing Degree Bound for Big Ramsey Degrees of Henson Graphs"
   },
   {
-    "consumed_by_exp_id": "64126b7c",
+    "consumed_by_exp_id": "",
     "description": "For each integer r \u2265 1, consider the graph G_N^{(r)} obtained by deleting edges of circular distances {\u00b11, \u2026, \u00b1r} from the complete graph K_N. Let R_N^{(r)}(1) denote the effective resistance between adjacent vertices (distance 1) in G_N^{(r)}. The paper derives explicit closed forms for r=1 (in terms of Bejaia and Pisa numbers, satisfying a second-order linear recurrence) and r=2 (in terms of a generalized complex sequence, also satisfying a second-order recurrence). This conjecture asserts that for every r \u2265 1, the sequence {R_N^{(r)}(1)}_{N > 2r} satisfies a linear recurrence relation with constant coefficients of order at most 2r. This would generalize the observed pattern and provide a uniform algebraic structure for the effective resistance as a function of the graph size N.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0240",
+    "id": "fd_0241",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31044v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T22:31:48.457691+00:00",
     "title": "Constant-Coefficient Recurrence for Effective Resistance Sequences in Circulant Complete Graphs"
   },
@@ -3112,7 +3140,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0241",
+    "id": "fd_0242",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30496v1",
@@ -3127,7 +3155,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0242",
+    "id": "fd_0243",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30588v1",
@@ -3141,7 +3169,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0243",
+    "id": "fd_0244",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30593v1",
@@ -3155,7 +3183,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0244",
+    "id": "fd_0245",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30612v1",
@@ -3170,7 +3198,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0245",
+    "id": "fd_0246",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30428v1",
@@ -3184,7 +3212,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_0246",
+    "id": "fd_0247",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3199,7 +3227,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0247",
+    "id": "fd_0248",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30272v1",
@@ -3214,7 +3242,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Tropical"
     ],
-    "id": "fd_0248",
+    "id": "fd_0249",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30184v1",
@@ -3228,7 +3256,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0249",
+    "id": "fd_0250",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30071v1",
@@ -3242,7 +3270,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0250",
+    "id": "fd_0251",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -3257,7 +3285,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0251",
+    "id": "fd_0252",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -3271,7 +3299,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0252",
+    "id": "fd_0253",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
@@ -3285,7 +3313,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0253",
+    "id": "fd_0254",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
@@ -3300,7 +3328,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0254",
+    "id": "fd_0255",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
@@ -3314,7 +3342,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0255",
+    "id": "fd_0256",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30690v1",
@@ -3328,7 +3356,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0256",
+    "id": "fd_0257",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29740v1",
@@ -3343,7 +3371,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0257",
+    "id": "fd_0258",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29559v1",
@@ -3357,7 +3385,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0258",
+    "id": "fd_0259",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29449v1",
@@ -3372,7 +3400,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0259",
+    "id": "fd_0260",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29391v1",
@@ -3387,7 +3415,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0260",
+    "id": "fd_0261",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29294v1",
@@ -3401,7 +3429,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0261",
+    "id": "fd_0262",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29310v1",
@@ -3416,13 +3444,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0262",
+    "id": "fd_0263",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29361v1",
     "status": "available",
     "timestamp": "2026-07-04T08:53:37.886411+00:00",
     "title": "Sharp Upper Bound for the Four\u2011Element Pairwise\u2011Sum Problem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let p=2, let K be a global function field of odd characteristic, let n be an integer greater than 2, and let R be an effective divisor of K. Then there are only finitely many isomorphism classes of continuous geometric semisimple representations \u03c1: G_K \u2192 GL_n(algebraic closure of F_2) such that the Artin conductor of \u03c1 divides R.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0264",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29277v1",
+    "status": "available",
+    "timestamp": "2026-07-04T09:23:02.675104+00:00",
+    "title": "Finiteness of mod 2 Galois representations with bounded conductor for n>2 over global function fields of odd characteristic"
   },
   {
     "consumed_by_exp_id": "",
@@ -3468,36 +3511,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T00:49:27.007324+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Sharp Threshold Constants for Cycle Games\n\n## 1. The threshold constant tends to two\n\n**Conjecture.** For the cycle avoidance/creation game, the leading constant\n`c_k = ((k-1)\u00b7(2(k-1)/k)^{k-2})^{1/(k-1)}` is not monotone in `k`: it rises from\n`c_4 \u2248 1.89`, peaks near `k \u2248 15` at roughly `2.15`, and then decreases, converging to\nexactly `2` as the cycle length grows without bound.\n\nThe key insight is that the constant factorises as a product of two competing pieces,\n`(k-1)^{1/(k-1)}` and `(2(k-1)/k)^{(k-2)/(k-1)}`, the first shrinking towards `1` and the\nsecond growing towards `2`; their interaction produces a single interior maximum and a\nclean universal limit of `2` that is independent of every lower-order detail of the\nformula.\n\nWhy now? The exponent and the exact closed form of the constant are now pinned down\nrigorously, so the asymptotics of the constant itself \u2014 previously folklore \u2014 become a\nprecise, checkable analytic target.\n\n## 2. Densest-subgraph characterisation of every threshold exponent\n\n**Conjecture.** For any fixed connected graph `H`, the avoidance-game exponent equals\n`1/m\u2082(H)`, and among all graphs with a fixed number of edges the cycle is the unique\nminimiser of `m\u2082`, hence the \"hardest to force\" among fixed-edge targets.\n\nThe key insight is that `m\u2082(H)` is governed entirely by the sparsest, most tree-like\nwitness inside `H`: a cycle is exactly the connected graph whose every proper subgraph is\na forest, which forces its maximum 2-density down to the extremal value `1 + 1/(k-2)`.\n\nWhy now? We have an explicit, verified formula `m\u2082(C_k) = (k-1)/(k-2)` obtained by a\nclean forest/edge-count argument that generalises verbatim to other sparse targets.\n\n## 3. Second-order (window) width of the cycle-game threshold\n\n**Conjecture.** The transition window of the cycle game has width of smaller order than\nthe threshold itself: there is an exponent `\u03b2 < (k-2)/(k-1)` such that the game outcome\nflips from a decisive Maker win to a decisive Breaker win as the bias moves across an\ninterval of length `\u0398(n^\u03b2)` centred at `c_k \u00b7 n^{(k-2)/(k-1)}`.\n\nThe key insight is that once the leading constant is sharp, the residual uncertainty is\ncontrolled by fluctuations in the number of length-`k` cycles available to Maker, whose\nconcentration should localise the transition far more tightly than the main term.\n\nWhy now? Sharpness of the leading constant is the prerequisite for even asking about the\nwidth; with the constant fixed, the window becomes the natural next quantitative object.\n\n## 4. Constant-sharp thresholds for unions and blow-ups of cycles\n\n**Conjecture.** For a disjoint union of cycles, or a bounded \"blow-up\" of a single\ncycle, the threshold bias is again `c \u00b7 n^{(k-2)/(k-1)}` with the *same* exponent as the\ndensest cycle component, and an explicitly computable constant obtained by combining the\nper-component constants through their 2-densities.\n\nThe key insight is that the exponent is dictated solely by the densest component, while\nthe constant aggregates the components multiplicatively in a way mirroring the\nfactorised structure of the single-cycle constant.\n\nWhy now? The single-cycle constant is now known in closed form, giving the exact\nbuilding block from which composite constants can be assembled and tested.\n\n## 5. A potential-function certificate for the Breaker side\n\n**Conjecture.** There is an explicit potential function on partial boards whose expected\none-move change is nonpositive precisely when the bias exceeds\n`(1+\u03b5)\u00b7c_k\u00b7n^{(k-2)/(k-1)}`, yielding a self-contained Breaker strategy that matches the\nsharp constant without any probabilistic detour.\n\nThe key insight is that the sharp constant `c_k` should appear as the exact critical\nvalue at which a weight of the form `\u2211 \u03bb^{(edges of a threatened cycle)}` stops being a\nsupermartingale, converting the asymptotic threshold into a deterministic invariant.\n\nWhy now? With the target constant identified exactly, one can calibrate the potential's\nbase `\u03bb` to that value and test the supermartingale property directly on small boards.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0263",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "563a1975",
-    "status": "available",
-    "timestamp": "2026-07-04T09:12:32.209015+00:00",
-    "title": "**Conjecture.** For the cycle avoidance/creation game, the leading constant"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Anti-Fibonacci and Addition-Avoiding Sequences\n\nDerived from this cycle's findings: the \"anti-Fibonacci\" data `1,1,2,4,7,11,16,\u2026` is the\ncentral-polygonal sequence `A(n) = 1 + n(n-1)/2`, with exact growth constant `1/2` (not\n`1/4`), consecutive ratio converging to `1` (not oscillating and not the golden ratio),\nand a *sharp* addition-avoidance threshold at index `6` (with equality `A5 = A4 + A3`).\n\n## 1. The exact threshold of addition-avoidance for polynomial greedy sequences\n\nConsider any first-order increment sequence `A(0)=1`, `A(n+1)=A(n)+g(n)` with `g` an\ninteger polynomial. For each such sequence there is a *finite* index `N` beyond which\n`A(k) < A(k-1)+A(k-2)` holds for all `k \u2265 N`, and equality/excess occurs only below `N`.\nConjecture: `N` is determined solely by the degree and leading coefficient of `g`, and for\n`g(n)=n` the threshold is exactly `6` with a unique equality at `k=5`.\n**The key insight is** that \"avoiding the sum of the two predecessors\" is not a global\ncombinatorial property but a *tail* property whose onset is an explicit function of the\nincrement's growth rate. **Why now?** We have the exact closed form and the verified sharp\nthreshold for the base case, giving a concrete anchor from which to parametrize the family.\n\n## 2. Second-difference sequences that provably avoid all golden-ratio behaviour\n\nDefine the \"curvature-`c`\" sequence by constant second difference `c`: `A(n+1)-A(n)`\nincreases by `c` each step. For every `c \u2265 1` the consecutive ratio converges to `1` and\nthe normalized growth `A(n)/n\u00b2` converges to `c/2`. Conjecture: these are exactly the\ninteger sequences with a bounded, non-golden ratio spectrum, and no constant-second-\ndifference sequence has a consecutive ratio converging to any algebraic irrational.\n**The key insight is** that a fixed nonzero second difference forces quadratic growth,\nwhich pins the ratio limit at `1` and forbids convergence to constants like the golden\nratio. **Why now?** The `c=1` case is fully settled here (limit `1/2`, ratio `1`, golden\nratio provably excluded), providing the template for the whole one-parameter family.\n\n## 3. Additive-representation density of central-polygonal sequences\n\nFor the sequence `A(n) = 1 + n(n-1)/2`, study the set of integers expressible as `A(i)+A(j)`\nwith `i \u2264 j`. Conjecture: this sumset has natural density `0`, and moreover the counting\nfunction of representable integers up to `x` is `\u0398(x^{3/4})`. More generally, the sumset of\na degree-`d` polynomial value set has density `0` with counting exponent `2/(d+1) \u00b7 d/2`.\n**The key insight is** that quadratic value sets are so sparse that even their pairwise sums\nmiss almost every integer, the opposite of a Sidon-to-basis transition. **Why now?** The\nexact quadratic closed form makes the sumset an explicit lattice of shifted triangular\nnumbers, ready for a direct density estimate.\n\n## 4. Uniqueness of the golden ratio as a \"reachable\" ratio limit\n\nAmong all integer sequences satisfying a fixed-order linear recurrence with constant\ncoefficients, characterize which real numbers arise as `lim A(n+1)/A(n)`. The Fibonacci\nrecurrence reaches the golden ratio; the increment recurrence `A(n+1)=A(n)+n` reaches `1`.\nConjecture: the set of reachable ratio limits is exactly the set of dominant real roots of\nmonic integer polynomials (Perron numbers together with `1`), and `1` is reachable *only*\nby sequences of eventual polynomial growth. **The key insight is** that the ratio limit is\ngoverned by the dominant characteristic root, so \"avoiding the golden ratio\" is equivalent\nto excluding `x\u00b2=x+1` from the characteristic polynomial. **Why now?** We have a clean pair\nof extremal witnesses (golden ratio vs. `1`) with fully verified limits to seed the general\nclassification.\n\n## 5. Anti-Fibonacci analogues of Zeckendorf representation\n\nZeckendorf's theorem uniquely represents every positive integer as a sum of\nnon-consecutive Fibonacci numbers. Ask the dual question for the anti-Fibonacci values\n`A(n) = 1 + n(n-1)/2`: does every sufficiently large integer admit a representation as a\nsum of distinct anti-Fibonacci numbers, and is there a greedy/canonical form? Conjecture:\nevery integer `\u2265 1` is a sum of at most three distinct `A(n)` (a \"triangular-plus-one\"\nWaring bound), and the number of representations grows like `\u0398(\u221ax)`.\n**The key insight is** that shifted triangular numbers form an additive basis of small\norder, mirroring\u2014yet sharply contrasting\u2014the multiplicative rigidity of Zeckendorf's\nFibonacci basis. **Why now?** The exact closed form reduces the representation question to\nsolvability of `x\u00b2\u00b1x = m` type equations, which are within reach of elementary methods.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0264",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "22f3c392",
-    "status": "available",
-    "timestamp": "2026-07-04T09:16:09.651677+00:00",
-    "title": "Derived from this cycle's findings: the \"anti-Fibonacci\" data `1,1,2,4,7,11,16,\u2026"
   },
   {
     "consumed_by_exp_id": "",
