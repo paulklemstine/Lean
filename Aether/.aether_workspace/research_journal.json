@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "dd8b8392",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — EML ODEs with Exponential–Logarithmic Coefficients\n\nThis cycle added the *positive* theory of first-order linear EML ODEs to the\n`Catalog/EML` directory:\n\n- `EML/EMLLogDerivHom.l",
-      "quality_score": 0.47243587450980395,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-27T21:35:39",
-      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
-    },
-    {
       "cycle_id": "f31c8198",
       "domain": "Applications",
       "key_insight": "# FUTURE DIRECTIONS — Erdős–Rényi Threshold Phenomena\n\nCycle 1 established the Bernoulli-product foundation in\n`Catalog/Probability/ErdosRenyiThreshold.lean`: the law of `G(n,p)` on an abstract\nslot t",
@@ -2501,6 +2491,16 @@
       "theorem_count": 11,
       "timestamp": "2026-07-04T00:48:10",
       "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+    },
+    {
+      "cycle_id": "e3e38cc8",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions\n\n## 1. The even harmonic strength of an antipodal design always contains 2\n\nFor a finite antipodal set on a sphere of dimension at least two, the odd degrees of\nthe harmonic streng",
+      "quality_score": 0.5266726923076923,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-04T01:42:23",
+      "title": "Even Harmonic Strength of Antipodal Spherical Designs Contains 2"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71008
     }
   ],
-  "last_updated": "2026-07-04T00:48:10",
+  "last_updated": "2026-07-04T01:42:23",
   "open_questions": [
     {
       "context": "and is genuinely proved (no `sorry`, no `decide`-only). The false converse is",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "f39e2cb3",
-        "quality": 0.57755,
-        "theorems": 6,
-        "title": "Langlands Correspondence: GL(1) Case"
-      },
-      {
         "cycle_id": "ceeb135f",
         "quality": 0.6807300000000001,
         "theorems": 13,
@@ -3699,6 +3693,12 @@
         "quality": 0.68521,
         "theorems": 12,
         "title": "[Reset] Fresh approach in NumberTheory"
+      },
+      {
+        "cycle_id": "e3e38cc8",
+        "quality": 0.5266726923076923,
+        "theorems": 13,
+        "title": "Even Harmonic Strength of Antipodal Spherical Designs Contains 2"
       }
     ],
     "Physics": [
