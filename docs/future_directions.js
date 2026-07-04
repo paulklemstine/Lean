@@ -4064,18 +4064,48 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every integer n \u2265 11 with binary expansion n = 2^{a\u2081} + 2^{a\u2082} + \u2026 + 2^{a_t} where a\u2081 > a\u2082 > \u2026 > a_t \u2265 0, the set \u0394(n,k) of non\u2011hook partitions of n with at most k parts is contained in \u03a9\u2082(n) if and only if k \u2264 a\u2081 + t - 1. Equivalently, the largest integer k for which \u0394(n,k) \u2286 \u03a9\u2082(n) is exactly a\u2081 + t - 1. This refines the theorem of the paper by asserting that the stated bound holds universally (i.e., without the exceptional small\u2011n cases) and predicts a precise formula for the maximal size of such partitions.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0312",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02433v1",
+    "status": "available",
+    "timestamp": "2026-07-04T23:01:54.640398+00:00",
+    "title": "Conjecture on the maximal number of parts of non\u2011hook partitions in \u03a9\u2082(n)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any squarefree integer N > 1 with an even number of distinct prime factors, the genus of the Atkin\u2013Lehner quotient X_N / \u27e8w_p\u27e9 is zero if and only if N belongs to the finite set {6, 10, 22}.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0312",
+    "id": "fd_0313",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02306v1",
     "status": "available",
     "timestamp": "2026-07-04T22:27:31.126530+00:00",
     "title": "Genus-zero condition for Atkin\u2013Lehner quotients of Shimura curves"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: A \u0394-matroid M on a finite ground set E is strong (i.e., satisfies the symmetric basis exchange axiom) if and only if its system of feasible sets contains no peerless antipode. A peerless antipode is defined as an element e\u2208E for which there exist feasible sets A,B\u2208F(M) such that A\u25b3B={e} and for every feasible set C\u2208F(M) with e\u2208C we have C\u2216{e}\u2209F(M). This conjecture links the combinatorial notion of strength with the novel 'peerless' antipode characterisation introduced in the paper and is expected to be formalizable in Lean 4 using the existing \u0394-matroid library.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0314",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02419v1",
+    "status": "available",
+    "timestamp": "2026-07-04T23:02:36.840480+00:00",
+    "title": "Strong \u0394-matroids are exactly those without peerless antipodes"
   },
   {
     "consumed_by_exp_id": "ab59ff3c",

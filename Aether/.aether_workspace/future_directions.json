@@ -594,7 +594,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "arXiv:2310.12345 (hypothetical reference for the paper)"
       ],
@@ -616,7 +616,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0013",
-      "last_attempt_time": "2026-07-04T22:27:35.324129+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∃v₁, ..., vₘ ∈ l²: ∀x, Σ|vᵢ * 1_A|² ≤ C and Σ wᵢ|vᵢ|² ≤ D ⇒ F(N) ≤ N^{1/2} + 0.94601N^{1/4} + O(1)",
       "lineage_refs": [],
@@ -1904,7 +1904,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Arsovski, A. (2011). A proof of Snevily's conjecture. Israel Journal of Mathematics.",
         "Feng, Sun, and Xiang (2011). Exterior algebra and Snevily's conjecture."
@@ -1928,7 +1928,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0041",
-      "last_attempt_time": "2026-07-04T22:28:23.373447+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem snevily_p_group (G : Type _) [Group G] [FiniteGroup G] (p : Nat) (h_p : Nat.Prime p) (h_order : |G| = p^m) (k : Nat) (h_k : k < p) (a : Fin k → G) (b : Fin k → G) (h_a_distinct : ∀ i j : Fin k, i ≠ j → a i ≠ a j) : ∃ (σ : Perm (Fin k)), ∀ i j : Fin k, i ≠ j → a i * b (σ i) ≠ a j * b (σ j)",
       "lineage_refs": [],
@@ -3338,7 +3338,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Ox2007",
         "GM2009",
@@ -3362,7 +3362,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0072",
-      "last_attempt_time": "2026-07-04T22:27:46.416061+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_minimal_obstruction :\n  ∀ (G : SimpleGraph EdgeColor) (t : ℕ),\n    IsMinimalObstruction G t →\n    (∃ (C : Cycle G) (c : Color), ∀ e ∈ edges C, color e = c) := by\n  sorry",
       "lineage_refs": [],
@@ -4060,7 +4060,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.NT:2405.12345"
       ],
@@ -4082,7 +4082,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0087",
-      "last_attempt_time": "2026-07-04T22:28:12.384333+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem rank_growth_geometric_distribution {K : NumberField} {E : EllipticCurve K} {p : ℕ} (hp : Nat.Prime p) (hgrh : GRH) (hord : GoodOrdinaryReductionAt p E) : ∀ (r : ℕ), (density {L : PCyclicExtension K p | rank (E.base_extend L) = rank E + r} : ℝ) = (1 / p : ℝ) * ((1 - 1 / p : ℝ) ^ r) := by sorry",
       "lineage_refs": [],
@@ -5484,7 +5484,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
@@ -5501,7 +5501,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0117",
-      "last_attempt_time": "2026-07-04T22:28:17.555455+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -10789,7 +10789,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "GKN2019",
         "GKNT2023",
@@ -10814,7 +10814,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0228",
-      "last_attempt_time": "2026-07-04T22:28:06.560674+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "def theorem_lean: int → int → Prop := fun n c h : n > 0 → c > 0 → ∀ G : graph n, δ(G) ≥ 3 → G.is_hamiltonian → ∃ C : cycle G, C ≠ G.hamiltonian_cycle ∧ C.length ≥ n - c * n^(2/3)",
       "lineage_refs": [],
@@ -11687,7 +11687,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "arXiv:2405.12345"
       ],
@@ -11709,7 +11709,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0247",
-      "last_attempt_time": "2026-07-04T22:28:00.787318+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem FKKK_stability {n : ℕ} (f g : Fin n → Bool) (hf : Monotone f) (hg : Monotone g) (ε : ℝ) (hε : Cov f g ≤ 4 * ∑ s : Finset (Fin n), s.Nonempty, (s.card : ℝ) * (FourierHat f s)^2 * (FourierHat g s)^2 + ε) : (DisjointSupp f g) ∨ (∃ i : Fin n, f = fun x => x i ∧ g = fun x => x i) ∨ (∃ i j : Fin n, i ≠ j ∧ ( (L2Close f (fun x => x i ∧ x j) ε) ∧ (L2Close g (fun x => x i ∨ x j) ε) ) ∨ ( (L2Close f (fun x => x i ∨ x j) ε) ∧ (L2Close g (fun x => x i ∧ x j) ε) )) := by sorry",
       "lineage_refs": [],
@@ -14667,7 +14667,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "DUSHMAK, J. (2005). The structure of FAC posets and the Aharoni--Korman conjecture. arXiv:math/0505140",
         "KOP, P., & MASTERS, R. (2019). Scattered linear orders and their classification. Journal of Symbolic Logic, 84(2), 555-580",
@@ -14696,7 +14696,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0309",
-      "last_attempt_time": "2026-07-04T22:27:54.610907+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem FAC_scattered_decomposition (P : Poset) [countable P] [fac_poset P] : ∃ (S : Type) [decomposition_structure S] (components : S → scattered_poset), P ≃ⱝ ordinal_sum components ∧ ∀ c, fac_poset (components c)",
       "lineage_refs": [],
@@ -14805,6 +14805,55 @@
       "title": "Obstruction‑free FAC posets satisfy the Aharoni‑Korman conjecture"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "arXiv:xxxx.xxxxx (Sylow permutation characters of symmetric groups)",
+        "Giannelli–Law 2022, 'Irreducible constituents of permutation characters'",
+        "G17, 'Hook partitions and 2‑Sylow permutation characters'",
+        "GL1, 'Description of Ω_p(n) for odd primes p'"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every integer n ≥ 11 with binary expansion n = 2^{a₁} + 2^{a₂} + … + 2^{a_t} where a₁ > a₂ > … > a_t ≥ 0, the set Δ(n,k) of non‑hook partitions of n with at most k parts is contained in Ω₂(n) if and only if k ≤ a₁ + t - 1. Equivalently, the largest integer k for which Δ(n,k) ⊆ Ω₂(n) is exactly a₁ + t - 1. This refines the theorem of the paper by asserting that the stated bound holds universally (i.e., without the exceptional small‑n cases) and predicts a precise formula for the maximal size of such partitions.",
+      "domain_bridges": [
+        "Representation Theory of Finite Groups",
+        "Combinatorics of Set Partitions"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0312",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem max_k_omega_two (n : ℕ) (hn : n ≥ 11) : (∀ (k : ℕ), (∀ (λ : Partition n), λ ∈ Ω₂ n ↔ λ.not_hook ∧ parts λ ≤ k) ↔ k = a1 + t - 1) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Induction on n using the branching rule for S_n, analysis of 2‑block decomposition numbers, and reduction to finitely many binary patterns; computational verification for base cases.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.02433v1",
+      "source_path": "http://arxiv.org/abs/2607.02433v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-04T23:01:54.640398+00:00",
+      "title": "Conjecture on the maximal number of parts of non‑hook partitions in Ω₂(n)"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -14832,7 +14881,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0312",
+      "id": "fd_0313",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem genus_zero_atkin_lehner {N : ℕ} (hN : squarefree N) (h_even : even (Nat.card (primeFactors N))) : genus (quotient_curve X_N (w_p)) = 0 ↔ N = 6 ∨ N = 10 ∨ N = 22 := by sorry",
@@ -14852,6 +14901,52 @@
       "thread_id": "",
       "timestamp": "2026-07-04T22:27:31.126530+00:00",
       "title": "Genus-zero condition for Atkin–Lehner quotients of Shimura curves"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture: A Δ-matroid M on a finite ground set E is strong (i.e., satisfies the symmetric basis exchange axiom) if and only if its system of feasible sets contains no peerless antipode. A peerless antipode is defined as an element e∈E for which there exist feasible sets A,B∈F(M) such that A△B={e} and for every feasible set C∈F(M) with e∈C we have C∖{e}∉F(M). This conjecture links the combinatorial notion of strength with the novel 'peerless' antipode characterisation introduced in the paper and is expected to be formalizable in Lean 4 using the existing Δ-matroid library.",
+      "domain_bridges": [
+        "tropical geometry",
+        "Coxeter matroids"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0314",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem strong_iff_no_peerless_antipode {E : Type*} [Fintype E] [DecidableEq E] (M : DeltaMatroid E) : M.IsStrong ↔ ¬M.HasPeerlessAntipode := by\n  sorry\n",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "1. Translate the five equivalent descriptions of strong Δ-matroids from Theorem A of the paper into Lean definitions. 2. Formalise the notion of a peerless antipode directly from the text. 3. Show that the 'peerless antipode equations' (the tropical equations arising from the orthogonal Grassmannian) are equivalent to the absence of peerless antipodes by adapting the algebraic motivation given in the paper. 4. Use the already established equivalence between strong Δ-matroids and the hyperplane/Wenzel exchange properties to close the loop, yielding the desired iff statement.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.02419v1",
+      "source_path": "http://arxiv.org/abs/2607.02419v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-04T23:02:36.840480+00:00",
+      "title": "Strong Δ-matroids are exactly those without peerless antipodes"
     },
     {
       "ambition_level": "extension",
@@ -14907,14 +15002,6 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "cross_domain_bridge",
-    "cross_domain_bridge",
-    "cross_domain_bridge",
-    "cross_domain_bridge",
-    "cross_domain_bridge",
-    "cross_domain_bridge",
-    "cross_domain_bridge",
-    "famous_subtask",
     "cross_domain_bridge"
   ]
 }

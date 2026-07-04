@@ -7444,6 +7444,34 @@
     "title": "Obstruction‑free FAC posets satisfy the Aharoni‑Korman conjecture"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "arXiv:xxxx.xxxxx (Sylow permutation characters of symmetric groups)",
+      "Giannelli–Law 2022, 'Irreducible constituents of permutation characters'",
+      "G17, 'Hook partitions and 2‑Sylow permutation characters'",
+      "GL1, 'Description of Ω_p(n) for odd primes p'"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer n ≥ 11 with binary expansion n = 2^{a₁} + 2^{a₂} + … + 2^{a_t} where a₁ > a₂ > … > a_t ≥ 0, the set Δ(n,k) of non‑hook partitions of n with at most k parts is contained in Ω₂(n) if and only if k ≤ a₁ + t - 1. Equivalently, the largest integer k for which Δ(n,k) ⊆ Ω₂(n) is exactly a₁ + t - 1. This refines the theorem of the paper by asserting that the stated bound holds universally (i.e., without the exceptional small‑n cases) and predicts a precise formula for the maximal size of such partitions.",
+    "domain_bridges": [
+      "Representation Theory of Finite Groups",
+      "Combinatorics of Set Partitions"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0312",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Induction on n using the branching rule for S_n, analysis of 2‑block decomposition numbers, and reduction to finitely many binary patterns; computational verification for base cases.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02433v1",
+    "status": "available",
+    "timestamp": "2026-07-04T23:01:54.640398+00:00",
+    "title": "Conjecture on the maximal number of parts of non‑hook partitions in Ω₂(n)"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "Ogg1983",
@@ -7461,7 +7489,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0312",
+    "id": "fd_0313",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the Riemann–Hurwitz formula to the involution w_p on the Shimura curve X_N, compute the exact number of fixed points, and show that the resulting genus vanishes precisely for N = 6, 10, 22; this can be formalized in Lean by constructing the quotient curve and verifying the genus formula.",
@@ -7470,6 +7498,31 @@
     "status": "available",
     "timestamp": "2026-07-04T22:27:31.126530+00:00",
     "title": "Genus-zero condition for Atkin–Lehner quotients of Shimura curves"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: A Δ-matroid M on a finite ground set E is strong (i.e., satisfies the symmetric basis exchange axiom) if and only if its system of feasible sets contains no peerless antipode. A peerless antipode is defined as an element e∈E for which there exist feasible sets A,B∈F(M) such that A△B={e} and for every feasible set C∈F(M) with e∈C we have C∖{e}∉F(M). This conjecture links the combinatorial notion of strength with the novel 'peerless' antipode characterisation introduced in the paper and is expected to be formalizable in Lean 4 using the existing Δ-matroid library.",
+    "domain_bridges": [
+      "tropical geometry",
+      "Coxeter matroids"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0314",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "1. Translate the five equivalent descriptions of strong Δ-matroids from Theorem A of the paper into Lean definitions. 2. Formalise the notion of a peerless antipode directly from the text. 3. Show that the 'peerless antipode equations' (the tropical equations arising from the orthogonal Grassmannian) are equivalent to the absence of peerless antipodes by adapting the algebraic motivation given in the paper. 4. Use the already established equivalence between strong Δ-matroids and the hyperplane/Wenzel exchange properties to close the loop, yielding the desired iff statement.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02419v1",
+    "status": "available",
+    "timestamp": "2026-07-04T23:02:36.840480+00:00",
+    "title": "Strong Δ-matroids are exactly those without peerless antipodes"
   },
   {
     "ambition_level": "extension",
