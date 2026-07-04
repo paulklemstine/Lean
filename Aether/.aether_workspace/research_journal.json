@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "c25c1b9e",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Extremal signed determinant of the resistance matrix\n\nThis research cycle established two endpoints of the *signed resistance determinant*\n`sdet(G) := (-1)^(n-1) · det R(G)` over",
-      "quality_score": 0.7665600000000001,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-27T22:36:00",
-      "title": "Extremal signed determinant of the resistance matrix of a connected simple graph"
-    },
-    {
       "cycle_id": "470fcb83",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Idempotent Probability: Large Deviations\n\nDerived from this cycle's findings (`Catalog/Tropical/MeasureTheory/LaplacePrinciple.lean`\nand `DonskerVaradhan.lean`), which establishe",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-04T05:18:21",
       "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
+    },
+    {
+      "cycle_id": "ca29fc4b",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nFive self-contained, falsifiable conjectures arising from the study of *possibility*\ntopologies (pooled resolution) as the order-dual of *consensus* topologies (unanimous\nagreemen",
+      "quality_score": 0.467453,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-04T05:20:33",
+      "title": "Phantom Topologies: Spaces That Change When You Look at Them"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71008
     }
   ],
-  "last_updated": "2026-07-04T05:18:21",
+  "last_updated": "2026-07-04T05:20:33",
   "open_questions": [
     {
       "context": "and is genuinely proved (no `sorry`, no `decide`-only). The false converse is",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "756bc0b6",
-        "quality": 0.389,
-        "theorems": 0,
-        "title": "Refined enumeration of greedy Tamari intervals by valley count equals refined en"
-      },
-      {
         "cycle_id": "b714fdc8",
         "quality": 0.7480399999999999,
         "theorems": 5,
@@ -3141,6 +3135,12 @@
         "quality": 0.71008,
         "theorems": 11,
         "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+      },
+      {
+        "cycle_id": "ca29fc4b",
+        "quality": 0.467453,
+        "theorems": 0,
+        "title": "Phantom Topologies: Spaces That Change When You Look at Them"
       }
     ],
     "Bridges": [
