@@ -1,306 +1,446 @@
-# Escher Staircases: A Faithful Order-Theoretic Witness of Non-Noetherianity
-
-**Author:** Aristotle
-**Date:** 2026-07-04
+# Escher Staircases and the Escher Height: A Graded Refinement of Noetherianity
 
 ## Abstract
 
-We introduce and study the *Escher staircase*, an infinite strictly ascending
-chain of ideals $I_0 \subsetneq I_1 \subsetneq I_2 \subsetneq \cdots$ in a
-commutative ring. Motivated by the evocative image of an infinite staircase that
-"loops back" to its starting point, we resolve the apparent paradox completely and
-extract a clean structural dictionary. Our central result is a characterization:
-**a commutative ring admits an Escher staircase if and only if it is not
-Noetherian.** Thus the existence of an "impossible staircase" is not merely
-symptomatic of the failure of the ascending chain condition — it *is* that failure,
-faithfully repackaged in order-theoretic terms. We prove a *Loop-Back Lemma*
-showing that the infinite intersection of any ascending ideal chain equals its
-first term, dissolving the paradox: every staircase loops back to its bottom rung
-by pure lattice theory. We exhibit a fully explicit staircase in the Boolean
-product ring $\prod_{\mathbb{N}} \mathbb{F}_2$ whose bottom rung and total
-intersection both equal the zero ideal, giving a concrete "climb-forever, meet-is-
-the-start" model. We contrast this with a descending mirror image — the dyadic
-chain $(2^n)$ in $\mathbb{Z}$, whose intersection is likewise zero — and with the
-$p$-adic integers $\mathbb{Z}_p$, a discrete valuation ring that, being Noetherian,
-admits no Escher staircase whatsoever. We close with conjectures on refining the
-crude Noetherian/non-Noetherian dichotomy by the *growth rate* of a staircase's
-minimal generating sets.
+We study *Escher staircases*: infinite strictly ascending chains of ideals
+$I_0 \subsetneq I_1 \subsetneq I_2 \subsetneq \cdots$ in a commutative ring
+whose infimum $\bigwedge_n I_n$ equals the bottom rung $I_0$. Every ascending
+chain automatically has this "loop-back" property — the meet of a rising tower
+is its floor — so the existence of an Escher staircase is a purely
+order-theoretic gadget capturing the failure of the ascending chain condition.
+Our central structural result is a clean equivalence: **a commutative ring
+admits an Escher staircase if and only if it is not Noetherian.** We then
+exhibit two explicit families of staircases that loop back to the zero ideal —
+the *tail-vanishing ideals* of the infinite product ring
+$\mathbb{Z}^{\mathbb{N}}$, and the *variable ideals* of the polynomial ring
+$k[x_0, x_1, x_2, \dots]$ in countably many variables — and one clean negative
+instance, the $p$-adic integers $\mathbb{Z}_p$, a discrete valuation ring that
+admits no staircase at all. For polynomial rings over a field we prove a sharp
+finite/infinite dichotomy: finitely many variables admit no staircase (by the
+Hilbert Basis Theorem), while countably many variables always do. This motivates
+a new invariant, the **Escher height**, that refines the binary
+Noetherian/non-Noetherian distinction into a graded scale measuring how far a
+ring is from satisfying the ascending chain condition. We correct a natural but
+erroneous first guess — the "$2^n$-divisibility" chain in the ring of
+integer-valued polynomials is descending, not ascending — and close with
+conjectures and a computational toolkit.
 
-**Keywords:** Escher staircase, ascending chain condition, Noetherian ring, ideal
-lattice, well-founded order, product ring, discrete valuation ring, non-
-Noetherianity.
+**Keywords:** ascending chain condition, Noetherian rings, ideal lattice,
+Hilbert Basis Theorem, discrete valuation ring, integer-valued polynomials,
+infinite-variable polynomial rings, ring invariants.
+
+---
 
 ## 1. Introduction
 
-The lithographs of M. C. Escher popularized *impossible objects*: staircases that
-ascend through four right-angle turns yet return to their origin, waterfalls that
-feed themselves. The appeal lies in a local rule (each step rises) that seems
-irreconcilable with a global fact (the structure closes into a loop). Such tensions
-recur in mathematics, where they typically signal a productive confusion between
-two distinct notions.
+The ascending chain condition (ACC) on ideals is one of the load-bearing
+finiteness hypotheses of modern commutative algebra. A commutative ring $R$ is
+**Noetherian** when every ascending chain of ideals
+$I_0 \subseteq I_1 \subseteq \cdots$ eventually stabilizes; equivalently, every
+ideal is finitely generated. Noetherianity underwrites primary decomposition,
+dimension theory, and the good behavior of the Zariski topology, and by Hilbert's
+Basis Theorem it is stable under adjoining finitely many polynomial variables.
 
-This paper studies the algebraic analogue. In commutative algebra, the sizes
-internal to a ring are measured by its *ideals*, and the health of a ring is
-governed by how its ideals stack into chains. Emmy Noether isolated the decisive
-property — the *ascending chain condition* (ACC) — and rings satisfying it, the
-*Noetherian* rings, form the foundation of modern commutative algebra and algebraic
-geometry.
+Failure of ACC is usually treated as a binary defect: a ring is Noetherian or it
+is not. This paper takes the failure itself as the object of study and gives it a
+name evocative of its shape. An **Escher staircase** is an infinite strictly
+ascending chain of ideals. The name comes from a paradox visible in every
+concrete example we construct: the chain ascends forever, and yet the *infimum*
+of the whole chain — the largest ideal contained in every rung — equals the
+bottom rung $I_0$. Climbing forever, one returns to the start. This "impossible
+architecture" is, of course, automatic: the meet of an ascending family is its
+minimum. But rendered in explicit examples it becomes a genuinely climbable
+structure, and (more importantly) counting the available staircases turns the
+binary Noetherian question into a graded numerical invariant.
 
-We formalize the "impossible staircase" as an infinite strictly ascending chain of
-ideals and ask two questions. First, *which rings host such a staircase?* Second,
-*in what sense does the staircase loop back?* We answer both completely. The first
-answer is a clean biconditional: staircases exist precisely in the non-Noetherian
-rings. The second answer dissolves the paradox: the infinite intersection of any
-ascending chain is forced, by elementary lattice theory, to equal its first term.
-The staircase always loops back — not as a rare accident but as an inevitability.
+Our contributions are:
 
-### Contributions
+1. **The Staircase Criterion** (Theorem 3.1): $R$ admits an Escher staircase
+   $\iff$ $R$ is not Noetherian.
+2. **A concrete product staircase** (Section 4): the tail-vanishing ideals of
+   $\mathbb{Z}^{\mathbb{N}}$ form a strictly ascending chain with infimum $\{0\}$,
+   proving $\mathbb{Z}^{\mathbb{N}}$ non-Noetherian.
+3. **A clean negative instance** (Section 5): the $p$-adic integers
+   $\mathbb{Z}_p$, being a discrete valuation ring, admit no staircase.
+4. **The polynomial dichotomy** (Section 6): $k[x_1,\dots,x_n]$ over a field has
+   no staircase (Hilbert Basis Theorem), while $k[x_0, x_1, \dots]$ in countably
+   many variables carries the explicit variable-ideal staircase, which also loops
+   back to $\{0\}$.
+5. **The Escher height** (Section 7): a proposed invariant refining
+   Noetherianity, with conjectures relating it to the number of variables and to
+   Krull dimension.
 
-1. A precise definition of an Escher staircase and a proof that its existence is
-   *equivalent* to non-Noetherianity (Theorem 3.3).
-2. The Loop-Back Lemma (Theorem 4.1): the meet of any ascending ideal chain is its
-   first term.
-3. A fully explicit staircase in the Boolean product ring $\prod_{\mathbb{N}}
-   \mathbb{F}_2$, with bottom rung and total intersection both equal to $\{0\}$
-   (Section 5), yielding a self-contained proof that this ring is non-Noetherian.
-4. A descending mirror image in $\mathbb{Z}$ (Section 6) and the negative instance
-   $\mathbb{Z}_p$ (Section 7), delimiting exactly where staircases can and cannot
-   live.
-5. Conjectures upgrading the yes/no dichotomy to a graded invariant via generator
-   growth (Section 8).
+We also flag a subtle sign error that a natural first attempt invites (Section
+6.4).
 
-## 2. Preliminaries
+---
 
-Throughout, $R$ is a commutative ring with unit. An **ideal** $I \subseteq R$ is an
-additive subgroup closed under multiplication by arbitrary ring elements: $x \in I$
-and $r \in R$ imply $rx \in I$. The ideals of $R$, ordered by inclusion $\subseteq$,
-form a complete lattice: any family $\{I_j\}$ has a meet $\bigcap_j I_j$ (their
-intersection, again an ideal) and a join (the ideal they generate). The least ideal
-is the zero ideal $\{0\}$, written $\bot$; the greatest is $R$ itself.
+## 2. Definitions
 
-A chain of ideals indexed by $\mathbb{N}$ is a function $I : \mathbb{N} \to
-\{\text{ideals of } R\}$. It is **ascending** (monotone) if $m \le n \Rightarrow
-I_m \subseteq I_n$, and **strictly ascending** if $m < n \Rightarrow I_m
-\subsetneq I_n$; equivalently, by a standard reduction, if $I_n \subsetneq
-I_{n+1}$ for all $n$.
+Throughout, $R$ is a commutative ring with $1$, and $\mathrm{Id}(R)$ denotes its
+lattice of ideals, ordered by inclusion, with meet $\bigwedge$ (intersection)
+and join $\bigvee$ (ideal sum).
 
-> **Definition 2.1 (Noetherian ring).** $R$ is *Noetherian* if it satisfies the
-> ascending chain condition (ACC): every ascending chain of ideals eventually
-> stabilizes, i.e. for each ascending chain there is an $N$ with $I_n = I_N$ for
-> all $n \ge N$.
+**Definition 2.1 (Escher staircase).** An *Escher staircase* in $R$ is a
+strictly monotone sequence of ideals, i.e. a map $I : \mathbb{N} \to
+\mathrm{Id}(R)$ with $I_m \subsetneq I_n$ whenever $m < n$. Equivalently,
+$I_n \subsetneq I_{n+1}$ for all $n$. We say $R$ *admits an Escher staircase*
+when such a sequence exists.
 
-An equivalent, order-theoretic formulation is central to our arguments. Reverse the
-inclusion order on ideals; then ACC says the reversed order has no infinite
-strictly descending sequence — that is, the strict order $\supsetneq$ is
-*well-founded*. Well-foundedness of a relation is equivalent to the nonexistence of
-an order-embedding of $(\mathbb{N}, <)$ into it; this is the pivot we use to pass
-between "no infinite chain" and "an explicit infinite chain."
+**Definition 2.2 (Loop-back).** A staircase $I$ *loops back* to its bottom rung
+if $\bigwedge_n I_n = I_0$. For an ascending chain this holds automatically,
+since $I_0 \subseteq I_n$ for all $n$ forces $I_0 \subseteq \bigwedge_n I_n
+\subseteq I_0$. The loop-back is called *to zero* when moreover $I_0 = \{0\}$;
+this is the "impossible architecture" picture in which the whole ascending tower
+meets in the single zero element.
 
-## 3. Escher staircases and the characterization theorem
+**Definition 2.3 (Noetherian).** $R$ is *Noetherian* if every ascending chain of
+ideals stabilizes, equivalently if the relation $\supsetneq$ on $\mathrm{Id}(R)$
+is well-founded, equivalently if every ideal is finitely generated.
 
-> **Definition 3.1 (Escher staircase).** An *Escher staircase* in $R$ is an
-> infinite strictly ascending chain of ideals,
-> $$I_0 \subsetneq I_1 \subsetneq I_2 \subsetneq \cdots,$$
-> i.e. a strictly monotone map $I : \mathbb{N} \to \{\text{ideals of } R\}$.
+**Definition 2.4 (Escher height, informal).** The *Escher height* of $R$ is the
+supremum, over all strictly ascending chains of ideals, of the chain's length
+(as an ordinal). A ring with no staircase has Escher height $0$; a ring with an
+infinite staircase has Escher height at least $\omega$. Section 7 discusses this
+invariant and its conjectural values.
 
-> **Lemma 3.2 (Staircase $\Rightarrow$ non-Noetherian).** If $R$ carries an Escher
-> staircase, then $R$ is not Noetherian.
+---
 
-*Proof.* A strictly monotone $\mathbb{N}$-indexed chain never stabilizes: $I_n
-\subsetneq I_{n+1}$ for all $n$ directly violates ACC. Equivalently, a strictly
-monotone map into the ideal lattice would be an infinite strictly descending
-sequence in the reversed (well-founded) order, which is impossible. $\square$
+## 3. The Staircase Criterion
 
-> **Theorem 3.3 (Characterization).** A commutative ring $R$ admits an Escher
-> staircase if and only if $R$ is not Noetherian.
+**Theorem 3.1 (Staircase Criterion).** A commutative ring $R$ admits an Escher
+staircase if and only if $R$ is not Noetherian.
 
-*Proof.* ($\Rightarrow$) is Lemma 3.2. For ($\Leftarrow$), suppose $R$ is not
-Noetherian. Then ACC fails, so the reversed inclusion order on ideals is *not*
-well-founded. A relation fails to be well-founded exactly when it admits an order-
-embedding of $(\mathbb{N}, <)$; concretely, the failure of the "every nonempty
-family of ideals has a maximal element" form of ACC lets us make a recursive
-choice. Start with any non-maximal ideal $I_0$ in a witnessing family; having chosen
-$I_n$, its non-maximality provides a strictly larger ideal in the family, which we
-take as $I_{n+1}$. The resulting sequence satisfies $I_n \subsetneq I_{n+1}$ for all
-$n$ and is therefore an Escher staircase. $\square$
+*Proof sketch.* Noetherianity of $R$ is, by definition, well-foundedness of the
+strict-superset relation $\supsetneq$ on $\mathrm{Id}(R)$ — that is, of the order
+$>$ on ideals. Unwinding:
 
-Theorem 3.3 is the paper's organizing principle: it converts an evocative picture
-into an exact invariant. "Carries an Escher staircase" and "is non-Noetherian" are
-interchangeable descriptions of the same rings.
+($\Rightarrow$) Suppose $R$ is Noetherian yet a staircase $I : \mathbb{N} \to
+\mathrm{Id}(R)$ exists. Then $I$ is strictly monotone increasing, so
+$n \mapsto I_n$ is an infinite strictly *increasing* sequence, contradicting the
+well-foundedness of $>$ (a well-founded order admits no strictly increasing
+$\omega$-sequence viewed through the reversed relation). Concretely, no strictly
+monotone function into a ring's ideal lattice can exist when that lattice has the
+ascending chain condition.
 
-## 4. The Loop-Back Lemma: dissolving the paradox
+($\Leftarrow$) Suppose $R$ is not Noetherian, so $>$ on $\mathrm{Id}(R)$ is not
+well-founded. Non-well-foundedness yields an order embedding of
+$(\mathbb{N}, <)$ into $(\mathrm{Id}(R), <)$; its underlying function is exactly
+a strictly monotone sequence of ideals, i.e. an Escher staircase.
 
-The name "Escher staircase" promises a paradox: a chain that climbs forever yet
-loops back to its origin. We now show the loop-back is automatic and utterly
-non-paradoxical.
+The equivalence therefore reduces to the standard order-theoretic fact that a
+partial order satisfies the ascending chain condition if and only if it admits
+no strictly increasing $\omega$-chain. $\qquad\blacksquare$
 
-> **Theorem 4.1 (Loop-Back Lemma).** For any ascending chain of ideals $I_0
-> \subseteq I_1 \subseteq \cdots$ (strict or not),
-> $$\bigcap_{n=0}^{\infty} I_n = I_0.$$
+Theorem 3.1 is the hinge of the paper. It lets us prove *non-Noetherianity* by
+*constructing a staircase* (Sections 4, 6) and prove *no staircase exists* by
+*invoking Noetherianity* (Sections 5, 6).
 
-*Proof.* Two inclusions. ($\subseteq$) The intersection is contained in each
-factor, in particular in $I_0$. ($\supseteq$) By monotonicity, $I_0 \subseteq I_n$
-for every $n$, so $I_0$ is contained in the intersection of all the $I_n$.
-Antisymmetry gives equality. $\square$
+---
 
-The lemma exposes the sleight of hand behind the paradox. Two genuinely different
-questions get conflated:
+## 4. The product staircase in $\mathbb{Z}^{\mathbb{N}}$
 
-- *Does the chain keep growing?* For a staircase, yes — strictly, at every step.
-- *What do all rungs have in common?* Only the bottom rung $I_0$ — always, by
-  Theorem 4.1.
+Let $R = \mathbb{Z}^{\mathbb{N}}$ be the ring of integer sequences
+$f = (f_0, f_1, \dots)$ under coordinatewise addition and multiplication. This is
+the prototypical non-Noetherian ring, and it carries a fully explicit loop-back
+staircase.
 
-There is no contradiction between an unbounded ascent and a fixed common floor. The
-"loop back to the start" is the second question's answer, true for *every*
-ascending chain, and it says nothing about whether the chain stabilizes. Escher's
-optical illusion and the algebraist's chain are the same confusion viewed through
-different lenses.
+**Definition 4.1 (Tail-vanishing ideals).** For $n \in \mathbb{N}$ let
+$$
+S_n = \{\, f \in \mathbb{Z}^{\mathbb{N}} : f_k = 0 \text{ for all } k \ge n \,\}.
+$$
 
-A staircase whose bottom rung is the zero ideal therefore satisfies
-$\bigcap_n I_n = \{0\}$: it "loops back to $\{0\}$." We produce such a staircase
-next.
+**Lemma 4.2.** Each $S_n$ is an ideal.
 
-## 5. An explicit staircase in the Boolean product ring
+*Proof sketch.* $0 \in S_n$; if $f, g$ vanish past $n$ so does $f + g$; and for
+any $c \in R$, $(cf)_k = c_k f_k = 0$ for $k \ge n$, so $cf \in S_n$. $\square$
 
-Let $B = \prod_{\mathbb{N}} \mathbb{F}_2$ be the ring of all functions $f :
-\mathbb{N} \to \mathbb{F}_2$, where $\mathbb{F}_2 = \{0,1\}$ is the field with two
-elements and operations are pointwise: $(f+g)(i) = f(i)+g(i)$ and $(fg)(i) =
-f(i)g(i)$. This is a commutative ring (indeed a Boolean ring, since $f^2 = f$),
-with zero the constant sequence $0$ and unit the constant sequence $1$.
+**Lemma 4.3 (Monotone).** $S_m \subseteq S_n$ whenever $m \le n$: vanishing past
+$m$ implies vanishing past $n \ge m$. $\square$
 
-> **Definition 5.1.** For $n \in \mathbb{N}$, let
-> $$I_n = \{\, f \in B : f(i) = 0 \text{ for all } i \ge n \,\},$$
-> the functions *supported below $n$*.
+**Lemma 4.4 (Strictness).** $S_n \subsetneq S_{n+1}$ for every $n$.
 
-> **Lemma 5.2.** Each $I_n$ is an ideal of $B$.
+*Proof sketch.* Let $e_n = \mathrm{Pi.single}\,n\,1$ be the "spike" sequence
+equal to $1$ at index $n$ and $0$ elsewhere. For $k \ge n+1$ we have $k \ne n$,
+so $(e_n)_k = 0$; hence $e_n \in S_{n+1}$. But $(e_n)_n = 1 \ne 0$, so
+$e_n \notin S_n$. The spike separates the two rungs. $\square$
 
-*Proof.* The zero function lies in $I_n$. If $f,g \in I_n$ then $(f+g)(i) = f(i)+
-g(i) = 0$ for $i \ge n$, so $f+g \in I_n$. For absorption, if $f \in I_n$ and $c
-\in B$ is arbitrary, then $(cf)(i) = c(i)f(i) = c(i)\cdot 0 = 0$ for $i \ge n$, so
-$cf \in I_n$. $\square$
+**Theorem 4.5.** $S : \mathbb{N} \to \mathrm{Id}(\mathbb{Z}^{\mathbb{N}})$ is an
+Escher staircase. Consequently $\mathbb{Z}^{\mathbb{N}}$ is not Noetherian.
 
-> **Lemma 5.3 (Bottom rung is zero).** $I_0 = \{0\}$.
+*Proof sketch.* By Lemma 4.4 and the "strictly monotone from
+$I_n < I_{n+1}$" principle, $S$ is strictly monotone; this is a staircase, and
+Theorem 3.1 delivers non-Noetherianity. $\square$
 
-*Proof.* $f \in I_0$ means $f(i) = 0$ for all $i \ge 0$, i.e. $f$ is the zero
-function. $\square$
+**Theorem 4.6 (Loop-back to zero).** $S_0 = \{0\}$ and
+$\bigwedge_n S_n = \{0\} = S_0$.
 
-> **Lemma 5.4 (Strict ascent).** For every $n$, $I_n \subsetneq I_{n+1}$.
+*Proof sketch.* Membership $f \in S_0$ requires $f_k = 0$ for all $k \ge 0$, i.e.
+$f = 0$; hence $S_0 = \{0\}$. Then $\bigwedge_n S_n \subseteq S_0 = \{0\}$, and
+$\{0\} \subseteq \bigwedge_n S_n$ trivially, giving equality. $\square$
 
-*Proof.* Monotonicity: if $f(i) = 0$ for all $i \ge n$, then a fortiori $f(i) = 0$
-for all $i \ge n+1$, so $I_n \subseteq I_{n+1}$. Strictness: let $e_n$ be the
-indicator sequence with $e_n(n) = 1$ and $e_n(i) = 0$ for $i \ne n$. Then $e_n(i) =
-0$ for all $i \ge n+1$, so $e_n \in I_{n+1}$; but $e_n(n) = 1 \ne 0$, so $e_n \notin
-I_n$. Hence the inclusion is proper. $\square$
+Theorem 4.6 realizes the impossible-architecture picture: the chain ascends
+strictly and forever, yet the meet of every rung is precisely the bottom rung
+$\{0\}$, the single zero sequence, which lies inside every $S_n$.
 
-Combining Lemmas 5.3–5.4 with the reduction from "$I_n \subsetneq I_{n+1}$ for all
-$n$" to full strict monotonicity, the family $(I_n)$ is an Escher staircase.
+---
 
-> **Theorem 5.5 (Explicit loop-back staircase).** The chain $(I_n)_{n\in\mathbb{N}}$
-> of Definition 5.1 is an Escher staircase in $B$ with
-> $$I_0 = \{0\} \qquad\text{and}\qquad \bigcap_{n=0}^{\infty} I_n = \{0\}.$$
-> Consequently, by Theorem 3.3, the Boolean product ring $B = \prod_{\mathbb{N}}
-> \mathbb{F}_2$ is **not Noetherian.**
+## 5. The negative instance: $p$-adic integers
 
-*Proof.* Strict ascent is Lemma 5.4, so $(I_n)$ is a staircase; Lemma 3.2 (or
-Theorem 3.3) gives non-Noetherianity. The bottom rung is $\{0\}$ by Lemma 5.3, and
-the total intersection equals the bottom rung by the Loop-Back Lemma (Theorem 4.1).
-Directly: $f \in \bigcap_n I_n$ forces $f(i) = 0$ beyond every threshold $n$, hence
-everywhere, so the intersection is $\{0\}$. $\square$
+**Theorem 5.1.** For a prime $p$, the ring $\mathbb{Z}_p$ of $p$-adic integers
+admits no Escher staircase.
 
-This is the promised "impossible staircase": it climbs strictly forever, adding the
-new indicator $e_n$ at each step, yet the ideal common to all its rungs is exactly
-the zero ideal it started from. Nothing about the construction is special to
-$\mathbb{F}_2$: the identical argument in $\prod_{\mathbb{N}} \mathbb{Z}$, or in
-$\prod_{\mathbb{N}} k$ for any nonzero ring $k$, produces the same picture.
+*Proof sketch.* $\mathbb{Z}_p$ is a discrete valuation ring: a local principal
+ideal domain whose nonzero ideals are exactly the powers $(p^k)$ of its maximal
+ideal, totally ordered as
+$\mathbb{Z}_p \supsetneq (p) \supsetneq (p^2) \supsetneq \cdots$. Being a
+principal ideal domain, $\mathbb{Z}_p$ is Noetherian. By Theorem 3.1, a
+non-Noetherian ring is required for a staircase to exist; since $\mathbb{Z}_p$ is
+Noetherian, it has none. $\square$
 
-## 6. The descending mirror in the integers
+The contrast with Section 4 is the crux: $\mathbb{Z}^{\mathbb{N}}$ and
+$\mathbb{Z}_p$ are both built from $\mathbb{Z}$, but the infinite *product*
+manufactures unboundedly many independent directions of ideal growth, while the
+$p$-adic *completion* collapses them onto a single well-ordered ladder.
 
-The loop-back to zero has a descending twin. In $\mathbb{Z}$, consider the dyadic
-principal ideals
-$$(2^0) \supseteq (2^1) \supseteq (2^2) \supseteq \cdots,$$
-i.e. $\mathbb{Z} \supseteq 2\mathbb{Z} \supseteq 4\mathbb{Z} \supseteq \cdots$.
-This is a genuinely *shrinking* chain (each is properly contained in the previous),
-and its intersection also collapses to zero.
+---
 
-> **Proposition 6.1.** $\displaystyle\bigcap_{n=0}^{\infty} (2^n) = \{0\}$ in
-> $\mathbb{Z}$.
+## 6. The polynomial dichotomy
 
-*Proof.* If $m \in \bigcap_n (2^n)$ then $2^n \mid m$ for all $n$. A nonzero
-integer $m$ has finite $2$-adic valuation $v_2(m)$, so $2^{v_2(m)+1} \nmid m$, a
-contradiction. Hence $m = 0$. $\square$
+We now calibrate the invariant on polynomial rings over a field $k$, where the
+number of variables governs everything.
 
-Ascending loop-back (Theorem 5.5) and descending collapse (Proposition 6.1) are two
-manifestations of a vanishing intersection, reached from opposite directions. The
-ascending case is compatible with non-Noetherianity; the descending case is
-compatible with $\mathbb{Z}$ being a perfectly Noetherian PID, because ACC
-restricts only *ascending* chains. This asymmetry is exactly the content of
-Definition 2.1.
+### 6.1 Finitely many variables: no staircase
 
-## 7. The negative instance: $p$-adic integers
+**Theorem 6.1.** For every $n \in \mathbb{N}$, the ring $k[x_0, \dots, x_{n-1}]$
+of polynomials in finitely many variables over a field admits no Escher
+staircase.
 
-Not every ring admits an Escher staircase. By Theorem 3.3, the Noetherian rings are
-precisely those that do not.
+*Proof sketch.* A field is Noetherian, and by the Hilbert Basis Theorem the
+polynomial ring over a Noetherian ring in one — hence, by induction, in finitely
+many — variables is again Noetherian. By Theorem 3.1 there is no staircase. The
+case $n = 0$ gives the field $k$ itself, still Noetherian, still without a
+staircase, so the statement holds uniformly. $\square$
 
-> **Theorem 7.1.** For any prime $p$, the ring $\mathbb{Z}_p$ of $p$-adic integers
-> admits *no* Escher staircase.
+**Corollary 6.2.** The single-variable ring $k[x]$, a principal ideal domain and
+hence Noetherian, admits no Escher staircase.
 
-*Proof.* $\mathbb{Z}_p$ is a discrete valuation ring: it is a local principal ideal
-domain whose nonzero ideals are exactly the powers $(p^k)$, $k \ge 0$, linearly
-ordered by
-$$(1) = \mathbb{Z}_p \supsetneq (p) \supsetneq (p^2) \supsetneq \cdots.$$
-In particular $\mathbb{Z}_p$ is a principal ideal domain, hence Noetherian: every
-ideal is finitely generated and ACC holds. By Theorem 3.3, no Escher staircase can
-exist. Concretely, any ascending chain of ideals in $\mathbb{Z}_p$ corresponds to a
-*non-increasing* sequence of valuation exponents in $\mathbb{N}$, which must
-stabilize. $\square$
+### 6.2 Countably many variables: an explicit staircase
 
-Thus $\mathbb{Z}_p$ is the clean negative instance predicted by the theory: every
-staircase in it is finite and terminates at a genuine top step.
+Let $k[x_0, x_1, x_2, \dots]$ denote the polynomial ring in a countably infinite
+family of variables indexed by $\mathbb{N}$. For a finite subset
+$s \subseteq \mathbb{N}$ write $\langle x_i : i \in s \rangle$ for the ideal it
+generates.
 
-## 8. Discussion and future work
+**Definition 6.3 (Variable ideals).** For $n \in \mathbb{N}$ let
+$$
+V_n = \langle x_0, x_1, \dots, x_{n-1} \rangle,
+$$
+so $V_0 = \langle \varnothing \rangle = \{0\}$, $V_1 = \langle x_0 \rangle$,
+$V_2 = \langle x_0, x_1 \rangle$, and so on.
 
-Theorem 3.3 makes "hosts an Escher staircase" a faithful synonym for "non-
-Noetherian," and Theorem 4.1 strips the paradox from the name. But the yes/no test
-is coarse: it cannot distinguish, say, the Boolean product ring from an infinite
-polynomial ring $k[x_1, x_2, \dots]$, both merely "non-Noetherian." The natural
-refinement is to *grade* staircases by how quickly they must grow.
+The strictness of this chain rests on a single, sharply stated non-membership
+fact, which is the only genuinely ring-theoretic (as opposed to order-theoretic)
+input of the construction.
 
-**Generator growth and the Escher spectrum.** Attach to a staircase $(I_n)$ its
-growth function $n \mapsto \mu(I_n)$, where $\mu(I)$ is the minimal number of
-generators of $I$. Define the *Escher spectrum* of a ring as the set of asymptotic
-growth classes realized by its staircases. We conjecture that the Boolean product
-ring realizes only *linear* growth, while $k[x_1, x_2, \dots]$ realizes *super-
-polynomial* growth, so the two rings — indistinguishable to the plain dichotomy —
-have disjoint Escher spectra. The existence of a chain is a yes/no fact; the rate at
-which minimal generating sets swell is a genuine ring-theoretic invariant that
-discriminates among non-Noetherian rings.
+**Lemma 6.4 (Missing variable).** Let $s \subseteq \mathbb{N}$ be a set of
+indices and $j \notin s$. Then
+$$
+x_j \notin \langle x_i : i \in s \rangle.
+$$
 
-**Loop-back staircases and collapsing intersections.** Call an ascending chain a
-*loop-back staircase* when its total intersection equals its smallest member — by
-Theorem 4.1 this is automatic, but the *interesting* case fixes the bottom rung at
-$\{0\}$. We conjecture that a domain admits a loop-back staircase with bottom rung
-$\{0\}$ iff it contains an infinite family of pairwise-comparable ideals with
-trivial intersection; in particular every non-Noetherian von Neumann regular ring
-admits one, a property strictly stronger than non-Noetherianity.
+*Proof sketch.* Consider the algebra endomorphism
+$\varphi_s : k[x_0, x_1, \dots] \to k[x_0, x_1, \dots]$ determined on generators
+by
+$$
+\varphi_s(x_i) = \begin{cases} 0 & i \in s, \\ x_i & i \notin s. \end{cases}
+$$
+This is a well-defined ring homomorphism (it is evaluation/substitution). It
+sends every generator $x_i$ ($i \in s$) of the ideal $\langle x_i : i \in s
+\rangle$ to $0$, so the whole ideal lies in $\ker \varphi_s$. If $x_j$ belonged
+to that ideal we would have $x_j = \varphi_s(x_j) = x_j$ mapping to $0$, i.e.
+$x_j = 0$ in the target — contradicting that a variable is a nonzero element of a
+polynomial ring over a nontrivial base. Hence $x_j \notin \langle x_i : i \in s
+\rangle$. $\square$
 
-**Escher height on the Noetherian side.** For Noetherian rings no infinite
-ascending chain exists, so the invariant must be sought among *prime* chains.
-Define the *Escher height* as the supremum of lengths of strictly ascending chains
-of prime ideals — the Krull dimension. We conjecture that for polynomial rings this
-recovers the classical dimension formula, tying the Escher framework to established
-dimension theory and providing a uniform invariant that is infinite (an actual
-staircase) on the non-Noetherian side and finite (the Krull dimension) on the
-Noetherian side.
+This "evaluate to detect a missing generator" argument is the same mechanism
+that powers standard non-Noetherian counterexamples for infinite variable
+counts.
 
-## 9. Conclusion
+**Theorem 6.5.** The variable ideals $V_n$ form an Escher staircase in
+$k[x_0, x_1, \dots]$; consequently the ring is not Noetherian.
 
-The Escher staircase — an infinite strictly ascending ideal chain — is a faithful,
-order-theoretic certificate of non-Noetherianity: a ring carries one exactly when
-it fails the ascending chain condition. The apparent paradox of a chain that
-"loops back" is dissolved by the Loop-Back Lemma, which shows the total intersection
-of any ascending chain is its first term. The Boolean product ring furnishes a fully
-explicit staircase looping back to $\{0\}$; the dyadic chain in $\mathbb{Z}$ is its
-descending mirror; and the $p$-adic integers, being a discrete valuation ring,
-admit no staircase at all. The picture is complete for the yes/no question, and it
-points toward a graded refinement — measuring not just *whether* a ring is wild but
-*how* wild — as the next chapter of the story.
+*Proof sketch.* Monotonicity is clear since $V_n$ is generated by a subset of
+the generators of $V_{n+1}$. For strictness, $x_n \in V_{n+1}$ by definition,
+while $x_n \notin V_n = \langle x_0, \dots, x_{n-1}\rangle$ by Lemma 6.4 (taking
+$s = \{0,\dots,n-1\}$, $j = n \notin s$). Thus $V_n \subsetneq V_{n+1}$ for all
+$n$, giving a strictly monotone chain. Theorem 3.1 yields non-Noetherianity.
+$\square$
+
+**Theorem 6.6 (Loop-back to zero).** $V_0 = \{0\}$ and $\bigwedge_n V_n = \{0\}$.
+
+*Proof sketch.* $V_0$ is generated by the empty set, hence is $\{0\}$. As with
+any ascending chain, $\bigwedge_n V_n \subseteq V_0 = \{0\}$, and the reverse
+inclusion is trivial. $\square$
+
+### 6.3 The sharp dichotomy
+
+**Theorem 6.7 (Escher dichotomy).** For polynomial rings over a field $k$:
+finitely many variables admit **no** Escher staircase, while countably many
+variables **do**. Precisely, for every $n$ the ring $k[x_0, \dots, x_{n-1}]$ has
+no staircase, whereas $k[x_0, x_1, \dots]$ has the variable-ideal staircase.
+
+*Proof sketch.* Combine Theorem 6.1 (finite case, Hilbert Basis) with Theorem
+6.5 (countable case, explicit staircase). $\square$
+
+This is the precise sense in which the "Escher height" of a polynomial ring over
+a field tracks the number of variables: it is $0$ in the finite case and
+positive (indeed infinite) in the infinite case.
+
+### 6.4 A cautionary sign error
+
+The ring $\mathrm{Int}(\mathbb{Z}) = \{ f \in \mathbb{Q}[x] : f(\mathbb{Z})
+\subseteq \mathbb{Z}\}$ of integer-valued polynomials is a classical
+non-Noetherian ring, and it is tempting to propose the family
+$$
+I_n = \{\, f \in \mathrm{Int}(\mathbb{Z}) : f(\mathbb{Z}) \subseteq 2^n\mathbb{Z}
+\,\}
+$$
+as an Escher staircase. **This is wrong.** Because $2^{n+1}\mathbb{Z} \subseteq
+2^n\mathbb{Z}$, a polynomial whose values are all divisible by $2^{n+1}$ is a
+fortiori divisible by $2^n$, so $I_{n+1} \subseteq I_n$: the chain *descends*.
+A descending chain is not a staircase (Definition 2.1 requires strict *ascent*),
+and its intersection is a legitimate but different phenomenon. This inclusion is
+easy to reverse by inattention, and it underscores that the direction of the
+arrows is the entire content of the definition. Genuine infinite-height witnesses
+for $\mathrm{Int}(\mathbb{Z})$ do exist (it is non-Noetherian, so Theorem 3.1
+guarantees one), but they must be constructed with strictly *growing* rungs.
+
+---
+
+## 7. The Escher height invariant
+
+Theorem 6.7 suggests upgrading the binary Noetherian/non-Noetherian question to a
+graded scale.
+
+**Definition 7.1 (Escher height).** The *Escher height* $h(R)$ of a commutative
+ring is the supremum, over all strictly ascending chains of ideals, of the order
+type (length) of the chain. Equivalently it is the height of the ideal poset
+under the ascending chain filtration. A Noetherian ring has $h(R) = 0$ in the
+sense that no infinite strictly ascending chain exists; a non-Noetherian ring has
+$h(R) \ge \omega$.
+
+The invariant is meant to answer *how badly* ACC fails, not merely *whether* it
+fails, and to do so along independent directions of ideal growth. The
+calculations above provide anchoring data points:
+
+- $h(k[x_1, \dots, x_n]) = 0$ (no staircase) for every finite $n$.
+- $h(k[x_0, x_1, \dots]) \ge \omega$ (the variable staircase).
+- $h(\mathbb{Z}^{\mathbb{N}}) \ge \omega$ (the tail-vanishing staircase).
+- $h(\mathbb{Z}_p) = 0$.
+
+**Conjecture 7.2 (Variable-count law).** For a polynomial ring over a field, the
+Escher height equals the number of variables when that number is finite (namely
+$0$, matching the absence of a staircase) and is infinite exactly when the
+variable set is infinite. More refined gradings should recover the Krull
+dimension in the finite case, positioning the Escher height as a non-Noetherian
+extension of dimension theory.
+
+**Conjecture 7.3 (Universality).** Every non-Noetherian ring contains an Escher
+staircase (this direction is Theorem 3.1) and the *shape* of the invariant —
+finite ordinal, $\omega$, or larger — is a genuine isomorphism invariant that
+distinguishes non-Noetherian rings that the Noetherian/non-Noetherian dichotomy
+cannot.
+
+---
+
+## 8. Algorithms and computation
+
+While the invariant concerns infinite objects, several finite computations
+illuminate and test it. We summarize three; full implementations accompany this
+work.
+
+**Algorithm A (Staircase strictness verifier).** Given a family of finitely
+supported ideals (e.g. tail-vanishing ideals of $\mathbb{Z}^{\mathbb{N}}$
+truncated to length $N$, or variable ideals truncated to $N$ variables), verify
+$I_n \subsetneq I_{n+1}$ by exhibiting, at each level, a separating witness
+(the spike $e_n$ or the variable $x_n$) and checking membership on both sides.
+Complexity is linear in $N$ times the cost of a single membership test.
+
+**Algorithm B (Variable-ideal membership via evaluation).** To decide whether a
+polynomial $f$ lies in $\langle x_i : i \in s\rangle$, apply the substitution
+$\varphi_s$ setting $x_i = 0$ for $i \in s$ and check whether the result is $0$;
+for the generated-by-variables ideals this is a complete test, and it is exactly
+the mechanism of Lemma 6.4. Complexity is linear in the number of monomials of
+$f$.
+
+**Algorithm C (Escher-height estimator for polynomial rings).** Given a variable
+count (finite $n$ or the symbol $\infty$), return $0$ when finite (Hilbert Basis
+Theorem: no staircase) and a certificate staircase $V_0 \subsetneq \cdots
+\subsetneq V_N$ up to any requested depth $N$ when infinite. This operationalizes
+the dichotomy of Theorem 6.7.
+
+---
+
+## 9. Applications and context
+
+Non-Noetherian rings are pervasive at the boundaries of commutative algebra:
+rings of continuous or integer-valued functions, infinite-variable polynomial
+and power-series rings arising in the study of symmetric functions and
+representation stability, valuation rings of infinite rank, and the ring of all
+algebraic integers $\overline{\mathbb{Z}}$ (which is non-Noetherian and hence, by
+Theorem 3.1, must contain an Escher staircase). In each such setting the
+Noetherian/non-Noetherian switch is too coarse to compare rings. The Escher
+height offers a candidate ruler: it distinguishes a ring that fails ACC in one
+"direction" from one that fails it in infinitely many, and — via Conjecture 7.2 —
+promises to interpolate between Krull dimension in the tame regime and a genuinely
+new invariant in the wild regime.
+
+---
+
+## 10. Future directions
+
+**A quantitative Escher height from bounded chains.** Define the Escher height as
+the supremum over strictly ascending chains of the chain length, and study when
+it is finite, infinite, or a prescribed ordinal. Conjecture: for a polynomial
+ring over a field the Escher height equals the number of variables when finite
+and is infinite exactly when the variable set is infinite. An ascending chain is
+the order-theoretic shadow of a ring's ACC failure, so the *longest* such chain
+refines the binary distinction into a graded scale; the explicit variable-ideal
+chain gives a computable lower bound to calibrate against Krull dimension.
+
+**Escher staircases that meet at a prescribed ideal.** A staircase loops back
+when the infimum of the chain equals its bottom rung. Ask which ideals $J$ can
+arise as $\bigwedge_n I_n$ for a strictly ascending chain with $I_0 = J$, and
+characterize the rings in which every ascending chain loops back versus those
+admitting chains whose infimum strictly exceeds the bottom rung. Two independent
+loop-back witnesses (tail-vanishing ideals of an infinite product and variable
+ideals of an infinite-variable polynomial ring), both with infimum $\{0\}$,
+invite a structural explanation.
+
+**Transfer of Escher staircases along ring maps.** Study staircases under
+quotients, localizations, polynomial and power-series extensions, and finite
+products. Conjecture: a ring admits an Escher staircase iff some finitely
+generated subalgebra does not, and the property is inherited by faithfully flat
+extensions. Since non-Noetherianity is detected by a single countable chain,
+transfer reduces to tracking one sequence of ideals through the functor.
+
+**Escher height of integer-valued and related function rings.** Rings of
+integer-valued polynomials and their relatives are classical sources of
+non-Noetherian behavior; determine their Escher height and exhibit an explicit
+strictly ascending chain realizing it, taking care (Section 6.4) that the chain
+genuinely ascends.
+
+---
+
+## 11. Conclusion
+
+An Escher staircase — an infinite strictly ascending chain of ideals looping back
+to its own floor — is a faithful, evocative name for the failure of the ascending
+chain condition. The Staircase Criterion pins the phenomenon exactly to
+non-Noetherianity; the product and polynomial constructions render it as concrete,
+loop-back architecture with infimum $\{0\}$; the $p$-adic integers show where it
+is impossible; and the finite/infinite polynomial dichotomy calibrates the
+proposed Escher height, a graded invariant measuring how far a ring stands from
+Noetherian. What began as a visual paradox becomes a quantitative program for the
+untamed frontier of commutative algebra.

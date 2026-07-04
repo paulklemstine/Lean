@@ -1,47 +1,51 @@
-# Computational Evidence — Escher Staircases
+# Computational Evidence — Escher Staircases and Escher Height
 
-An *Escher staircase* is an infinite strictly ascending chain of ideals
-`I 0 < I 1 < I 2 < ⋯`.  We collect small-case evidence for the three claims we
-formalize.
+## 1. The variable-ideal chain in `k[x₀, x₁, x₂, …]`
 
-## 1. The concrete staircase in `ℕ → ℤ`
+Rungs `V n = ⟨x₀, …, x_{n-1}⟩`:
 
-Rungs: `S n = { f : ℕ → ℤ | ∀ k ≥ n, f k = 0 }`.
+| n | generators of `V n`        | new element in `V (n+1) \ V n` |
+|---|----------------------------|--------------------------------|
+| 0 | `∅`  (so `V 0 = ⟨0⟩ = ⊥`)   | `x₀`                           |
+| 1 | `x₀`                        | `x₁`                           |
+| 2 | `x₀, x₁`                    | `x₂`                           |
+| 3 | `x₀, x₁, x₂`                | `x₃`                           |
 
-| n | typical element of `S n \ S (n-1)` | `S n` contains |
-|---|-----------------------------------|----------------|
-| 0 | (none — `S 0 = {0}`)              | only `0`       |
-| 1 | `(1,0,0,0,…)`                     | seqs supported on `{0}` |
-| 2 | `(0,1,0,0,…)`                     | seqs supported on `{0,1}` |
-| 3 | `(0,0,1,0,…)`                     | seqs supported on `{0,1,2}` |
+Strictness check (separating homomorphism): let `φ_n : x_i ↦ 0` for `i < n`,
+`x_i ↦ x_i` for `i ≥ n`. Then `φ_n` kills every generator of `V n`, so `φ_n(V n) = 0`,
+yet `φ_n(x_n) = x_n ≠ 0`. Hence `x_n ∉ V n` while `x_n ∈ V (n+1)`. The chain is
+strictly ascending → an Escher staircase.
 
-* Strictness: the indicator `δ_n = Pi.single n 1` lies in `S (n+1)` (it vanishes
-  from index `n+1` on) but not in `S n` (since `δ_n n = 1 ≠ 0`).  Hence
-  `S n ⊊ S (n+1)` for every `n`.
-* Loop-back: `⨅_n S n = S 0 = {0}`.  Membership in `S 0` already forces `f k = 0`
-  for all `k ≥ 0`, i.e. `f = 0`.  So the meet of the whole ascending chain is its
-  bottom rung — the "impossible staircase" picture.
+Loop-back: `⨅ n V n ⊆ V 0 = ⊥`, so the infimum of the whole ascending chain is exactly
+the bottom rung `{0}`.
 
-Conclusion: `ℕ → ℤ` carries an explicit Escher staircase, so it is **not**
-Noetherian.
+## 2. Finite-variable side (Hilbert basis)
 
-## 2. Sanity check on the informal description's chain
+For each fixed `n`, `k[x₀,…,x_{n-1}]` is Noetherian. Sample: any ascending chain of
+ideals in `k[x]` (a PID) stabilises because ideals are `⟨d⟩` with `d | d'` forcing the
+degrees to be non-increasing along the chain — a finite descent. No infinite strictly
+ascending chain exists ⇒ no Escher staircase.
 
-The mission's informal chain `I_n = { f ∈ Int(ℤ) | f(ℤ) ⊆ 2ⁿℤ }` is claimed to be
-*ascending*.  But `2^{n+1}ℤ ⊆ 2ⁿℤ`, so `I_{n+1} ⊆ I_n`: the chain is in fact
-**descending**.  The write-up has the inclusion reversed.  Our `ℕ → ℤ` construction
-repairs this: it is genuinely ascending and still exhibits the `{0}`-intersection
-"loop back".
+## 3. The mission's `Int(ℤ)` chain is descending, not ascending
 
-## 3. The negative instance `ℤ_[p]`
+The description proposes `I_n = {f ∈ Int(ℤ) : f(ℤ) ⊆ 2ⁿℤ}`. Since `2^{n+1}ℤ ⊆ 2ⁿℤ`,
+we get `I_{n+1} ⊆ I_n`: the chain is *descending*. Concretely `f = 2` lies in `I_1`
+(all values divisible by 2) but not in `I_2`. So this particular family is **not** an
+Escher staircase in the ascending sense. The honest infinite-height witness is instead
+the variable chain of §1 (equivalently, any infinite-variable polynomial ring), and
+the negative predictions of the mission (`ℤ_p`, finitely many variables) are Noetherian.
 
-`ℤ_[p]` is a discrete valuation ring: every nonzero ideal is `pⁿ ℤ_[p]` for some
-`n`, and the ideals are totally ordered by reverse inclusion
-`ℤ_[p] ⊋ pℤ_[p] ⊋ p²ℤ_[p] ⊋ ⋯ ⊋ (0)`.  There is no room for an *infinite ascending*
-chain: any ascending chain of the `pⁿ` stabilises.  Hence `ℤ_[p]` has **no** Escher
-staircase.  This matches the general principle (verified formally): a ring has an
-Escher staircase iff it is not Noetherian, and `ℤ_[p]` (a PID) is Noetherian.
+## 4. Dichotomy summary
 
-## OEIS
-No integer sequence is central to these order-theoretic claims, so no OEIS lookup
-applies.
+| ring                       | Noetherian? | Escher staircase? |
+|----------------------------|-------------|-------------------|
+| field `k`                  | yes         | no                |
+| `k[X]`                     | yes         | no                |
+| `k[x₀,…,x_{n-1}]`          | yes         | no                |
+| `k[x₀, x₁, x₂, …]`         | **no**      | **yes**           |
+| `ℤ_p` (p-adic integers)    | yes         | no                |
+| `ℕ → ℤ` (infinite product) | **no**      | **yes**           |
+
+All rows are formalised: the finite/Noetherian rows via the ACC characterisation plus
+Hilbert basis / DVR instances, the two "yes" rows via explicit strictly ascending
+chains whose infimum returns to the bottom rung `⊥`.
