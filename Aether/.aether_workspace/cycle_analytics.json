@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-04T02:06:59.554967+00:00",
+  "last_updated": "2026-07-04T02:31:09.342855+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -31816,6 +31816,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-04T02:06:59.472298+00:00",
       "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.5542,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 91,
+      "domain": "NumberTheory",
+      "duration_seconds": 1263.1540129184723,
+      "end_time": 1783132013.1110926,
+      "files_integrated": 8,
+      "job_id": "01bea6c3",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v16",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.8692,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.9332,
+        "novelty": 0.95,
+        "proof_depth": 0.9261,
+        "usefulness": 0.938
+      },
+      "quality_score": 0.573804028436019,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783130749.9570796,
+      "strategy_count": 0,
+      "theorem_count": 16,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 16,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-04T02:31:09.288140+00:00",
+      "title": "Every b\u2011invariant edge is forcing exactly for near\u2011bipartite bricks (up to the three classical excep"
     }
   ]
 }

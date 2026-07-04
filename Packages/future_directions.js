@@ -3,6 +3,21 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
+    "consumed_by_exp_id": "6f613cb7",
+    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0237",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-04T02:26:45.311845+00:00",
+    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domains": [
@@ -17,7 +32,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: unnamed_concept"
   },
   {
-    "consumed_by_exp_id": "ca29fc4b",
+    "consumed_by_exp_id": "",
     "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
     "domains": [
       "Novelty",
@@ -27,7 +42,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:26.963635+00:00",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
@@ -366,7 +381,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
   },
   {
-    "consumed_by_exp_id": "aed51c81",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for coprime positive integers a<b with a>1 and odd exponent n>1, the equation (a^n+1)(b^n+1)=x^2 has no positive integer solutions.",
     "domains": [
       "Pythagorean"
@@ -375,7 +390,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31223v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T16:13:17.108600+00:00",
     "title": "No solutions for odd exponents in the coprime case"
   },
@@ -658,7 +673,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the Greenberg\u2013Wiles local lower bound for \u2113\u2011Selmer groups in constant\u2011torsion families"
   },
   {
-    "consumed_by_exp_id": "e4d7a22a",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that a torsion Hecke eigenclass in the cohomology of the arithmetic manifold attached to GL_n over a CM number field F with coefficients in Z/\u2113^m gives rise to a continuous semisimple Galois representation r : G_F \u2192 GL_n(Z_\u2113) which is de Rham at places v|\u2113, with Hodge\u2013Tate weights determined by the infinitesimal character of the automorphic representation at infinity, and whose associated filtered \u03c6\u2011module via Fontaine's functor corresponds under the p\u2011adic local Langlands correspondence to the automorphic component \u03c0_v.",
     "domains": [
       "Algebra",
@@ -668,7 +683,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31698v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T12:49:31.510793+00:00",
     "title": "Torsion local-global compatibility at p = \u2113 for GL_n over CM fields"
   },
@@ -1314,21 +1329,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T00:33:22.393572+00:00",
     "title": "Formalizing the generalized honeymoon Oberwolfach problem in Lean 4"
-  },
-  {
-    "consumed_by_exp_id": "3498198a",
-    "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0116",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T00:49:27.030210+00:00",
-    "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
   },
   {
     "consumed_by_exp_id": "",
@@ -3091,7 +3091,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "That the entries of an integer right triangle are forced"
   },
   {
-    "consumed_by_exp_id": "e87997bd",
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -3101,12 +3101,27 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:27.007324+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
   {
-    "consumed_by_exp_id": "51cf87c3",
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Forcing edges, deletion, and near-bipartite bricks\n\nThese conjectures grow out of the deletion characterisation of forcing edges\n(an edge `uv` lies in a unique perfect matching exactly when removing `u` and `v`\nleaves a graph with a unique perfect matching) and the two obstruction lemmas\n(distinct matchings through an edge prevent forcing).\n\n## 1. The deletion spectrum of a matching-covered graph is monotone under ear decompositions\n\n**Conjecture.** For a matching-covered graph built up by a sequence of single and\ndouble ear additions, the number of forcing edges is non-decreasing along the\ndecomposition, and each double ear addition increases it by at most the length of\nthe shorter ear.\n\nThe key insight is that adding an ear can only *merge* previously distinct\nalternating routes, never create new ones through an old edge, so the \"two\ndistinct matchings through an edge\" obstruction can only be resolved, not\nintroduced, as the graph grows. Why now? The deletion characterisation reduces the\nglobal forcing count to a purely local, per-edge test, which turns the ear\ndecomposition into a tractable induction on which the monotonicity can finally be\npinned down quantitatively.\n\n## 2. Forcing edges detect near-bipartiteness among bricks with a spectral gap\n\n**Conjecture.** A brick in which every strictly internal edge is forcing, and\nwhose adjacency matrix has a simple second-largest eigenvalue, is near-bipartite.\n\nThe key insight is that \"every edge forcing\" forbids short alternating cycles,\nwhich in turn caps the multiplicity of extremal eigenvalues; a single spectral gap\nthen rigidly fixes the two colour classes that a near-bipartite structure requires.\nWhy now? The deletion characterisation gives a clean combinatorial certificate for\n\"no alternating cycle through an edge\", which is exactly the hypothesis a spectral\nargument needs as input, making the bridge between forcing edges and eigenvalue\nmultiplicity concrete for the first time.\n\n## 3. Almost all edges of a random cubic brick are non-forcing\n\n**Conjecture.** In a uniformly random cubic (3-regular) brick on `2n` vertices,\nthe fraction of forcing edges tends to `0` as `n \u2192 \u221e`, and in fact the expected\nnumber of forcing edges is `O(log n)`.\n\nThe key insight is that a forcing edge requires its two-vertex deletion to leave a\n*uniquely* matchable remainder, an event that becomes exponentially unlikely once\nthe remainder is a dense expander with many alternating cycles. Why now? The\nreduction of forcing to a unique-matching property of a deleted subgraph lets one\nimport the well-developed first-moment machinery for counting perfect matchings in\nrandom regular graphs, which previously had no clean hook into forcing questions.\n\n## 4. The three classical exceptions are exactly the vertex-transitive all-forcing bricks\n\n**Conjecture.** Among vertex-transitive bricks, the property \"every edge is\nforcing\" holds precisely for the three small exceptional graphs (the tetrahedron,\nthe complement of the six-cycle, and the Petersen graph), and for no larger\nvertex-transitive brick.\n\nThe key insight is that vertex-transitivity forces every edge to have the same\ndeletion type, so \"all forcing\" becomes a single symmetric condition that only the\nsmallest, most rigid graphs can satisfy before their girth admits an alternating\ncycle. Why now? With forcing recast as a deletion-uniqueness test, the exceptional\ntrio can be certified uniformly by one local computation per orbit rather than by\nad hoc case analysis, opening the door to a symmetry-based classification.\n\n## 5. A forcing edge is stable under the removal of any non-adjacent forcing edge\n\n**Conjecture.** If `e` and `f` are two forcing edges of a matching-covered graph\nthat share no endpoint, then `e` remains forcing after contracting `f` into a\nsingle vertex, and the map `e \u21a6` (its unique matching) is compatible with these\ncontractions.\n\nThe key insight is that the unique deletion matching witnessing `e` never uses the\nedge `f` in an essential, non-unique way, so contracting `f` cannot spawn a second\nmatching through `e`. Why now? The deletion characterisation makes precise which\nmatchings witness a forcing edge, so one can track exactly how these witnesses\ntransform under contraction, a bookkeeping that was hopeless without the local\ncertificate.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0238",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "01bea6c3",
+    "status": "available",
+    "timestamp": "2026-07-04T02:31:00.375358+00:00",
+    "title": "These conjectures grow out of the deletion characterisation of forcing edges"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domains": [
       "Novelty",
@@ -3116,7 +3131,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.73,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:27.017991+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
