@@ -1141,20 +1141,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Recursive Decomposition Isomorphism for General m-Tamari Intervals and Planar Constellations"
   },
   {
-    "consumed_by_exp_id": "f2d98ef6",
-    "description": "For nilperfect rings R, the derived p-completeness of \u03c7W(R) is a necessary and sufficient condition for the extension of Dieudonn\u00e9 theory to rings with perfect reduction.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0100",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01178v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T22:56:09.506388+00:00",
-    "title": "Derived p-completeness of sheared Witt vectors ensures Dieudonn\u00e9 theory extension"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "There exists a finite family of vector-valued convolution kernels {K_i} such that their weighted combination satisfies a ball-overbag inequality for Sidon sets, with the coefficient \u03b3_0=0.94601 achievable through optimized L\u00b2 energy distribution across kernels.",
     "domains": [
@@ -1316,7 +1302,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing the generalized honeymoon Oberwolfach problem in Lean 4"
   },
   {
-    "consumed_by_exp_id": "318aca4d",
+    "consumed_by_exp_id": "",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
     "domains": [
       "Novelty",
@@ -1326,7 +1312,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:27.030210+00:00",
     "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
   },
@@ -3380,7 +3366,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "That the entries of an integer right triangle are forced"
   },
   {
-    "consumed_by_exp_id": "fbcfb71f",
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -3390,12 +3376,27 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:27.007324+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
   {
-    "consumed_by_exp_id": "22f3c392",
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. A degree-squared law for zeros on the critical line\nFor a fixed self-dual cuspidal automorphic representation attached to a degree-`d` L-function, and\nfor families of twists by Dirichlet characters of growing conductor, at least a proportion `1/d\u00b2`\nof the zeros should lie on the critical line, unconditionally. The flagship case `d = 3` gives the\nconstant `1/9`.\n\nThe key insight is that the notoriously analytic \"positive proportion\" phenomenon is, at its core,\na single Cauchy\u2013Schwarz inequality: if a real mollified sum detects only critical-line zeros, then\nthe square of its first moment is bounded by the number of detected zeros times its second moment,\nso a moment inequality of the form `M\u2081\u00b2 \u2265 (1/d\u00b2) M\u2082 N` forces at least `N/d\u00b2` zeros onto the line.\n\nWhy now? Recent progress on second-moment asymptotics for higher-degree L-functions has, for the\nfirst time, put the two required moment estimates within reach for `GL(3)`, turning a heuristic into\na provable target and making the clean degree-squared constant testable across degrees.\n\n## 2. Beating `1/d\u00b2` via the Cauchy\u2013Schwarz deficit\nThe proportion bound is an equality exactly when the detection weights are constant across the\non-line zeros; any spread in the weights leaves room to spare. Quantifying that spread should yield\na strictly better constant `(1/d\u00b2)(1 + c)` with explicit `c > 0`.\n\nThe key insight is that the gap in Cauchy\u2013Schwarz is governed by the variance-to-mean-square ratio\nof the mollifier weights, a quantity one can estimate directly from the mollifier design rather than\nfrom any new arithmetic input.\n\nWhy now? Modern mollifiers carry enough structural information to compute their weight dispersion\nexplicitly, so the previously invisible slack in the classical inequality can finally be harvested\ninto an improved theorem.\n\n## 3. A limiting density for the pooled family of twists\nSince there are exactly `\u03c6(Q)` Dirichlet twists modulo `Q`, one can pool the zeros of all of them.\nThe pooled proportion is conjecturally not just bounded below but convergent, tending to a limiting\ndensity `\u03ba` as `Q` runs over primes.\n\nThe key insight is that pooling replaces a single L-function by a statistical ensemble whose\nzero-density is dictated by the symmetry type of the family, so the limit `\u03ba` is predicted by\none-level density statistics rather than by any individual L-function.\n\nWhy now? The symmetry type of twisted `GL(3)` families has recently been pinned down, giving a\nconcrete prediction for `\u03ba` that a pooling argument can be measured against.\n\n## 4. Positivity certificates for the moment inequality\nThe only non-elementary ingredient in the degree-squared law is the moment inequality itself. It\nshould be reducible to a finite, checkable positivity statement about the mollifier coefficients.\n\nThe key insight is that the mollified second moment is a quadratic form in the mollifier\ncoefficients, so proving the required inequality is equivalent to certifying positivity of an\nexplicit finite matrix \u2014 a sum-of-squares problem rather than an asymptotic analysis.\n\nWhy now? Optimisation tools for large structured positivity problems have matured to the point where\ncertifying such quadratic forms is routine, offering a new route around the hardest analytic step.\n\n## 5. A detection principle linking sign changes and real zeros\nTwo mechanisms produce critical-line zeros: mollified moments (Cauchy\u2013Schwarz) and counted sign\nchanges of a real symmetrised function. A general combinatorial \"detection lemma\" should unify them.\n\nThe key insight is that lower bounds on the number of sign changes of a real sampling of an entire\nfunction translate directly into guaranteed real zeros, giving a second, independent lower bound on\nthe proportion that can be combined with the moment bound.\n\nWhy now? The functional-equation symmetrisation needed to make the sampled function genuinely real\nis now understood for higher-degree twists, so the sign-change route \u2014 long available only for the\nRiemann zeta function \u2014 becomes usable for `GL(3)`.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0257",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0a7c4b5a",
+    "status": "available",
+    "timestamp": "2026-07-04T07:33:52.627566+00:00",
+    "title": "For a fixed self-dual cuspidal automorphic representation attached to a degree-`"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domains": [
       "Novelty",
@@ -3405,7 +3406,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.73,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:27.017991+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },

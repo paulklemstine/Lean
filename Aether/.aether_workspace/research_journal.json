@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "6fa4f641",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Maximum size of cycle-containing families of vectors\n\nThis cycle established, for every alphabet size `b`, the bipartite/girth core of\nthe conjecture: a cycle-containing pair for",
-      "quality_score": 0.7798419999999999,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-27T23:23:06",
-      "title": "Maximum size of cycle-containing families of vectors"
-    },
-    {
       "cycle_id": "417ceff0",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Schubert smoothness, Bruhat rank, and Plücker regularity\n\nDerived from this cycle's findings (`SchubertSmoothPatterns.lean`,\n`SchubertLengthChain.lean`, `ComputationalEvidence.md",
@@ -2501,6 +2491,16 @@
       "theorem_count": 7,
       "timestamp": "2026-07-04T07:11:09",
       "title": "The list chromatic number of 3-colorable planar graphs is at most 4"
+    },
+    {
+      "cycle_id": "0a7c4b5a",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## 1. A degree-squared law for zeros on the critical line\nFor a fixed self-dual cuspidal automorphic representation attached to a degree-`d` L-function, and\nfor families of twists",
+      "quality_score": 0.65567,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-04T07:33:59",
+      "title": "Lower Bound for the Proportion of Zeros on the Critical Line for PGL(3) L-functions"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71008
     }
   ],
-  "last_updated": "2026-07-04T07:11:09",
+  "last_updated": "2026-07-04T07:33:59",
   "open_questions": [
     {
       "context": "and is genuinely proved (no `sorry`, no `decide`-only). The false converse is",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "b714fdc8",
-        "quality": 0.7480399999999999,
-        "theorems": 5,
-        "title": "Prove Fermats Little Theorem for p=5"
-      },
-      {
         "cycle_id": "7488be0a",
         "quality": 0.51904,
         "theorems": 4,
@@ -3141,6 +3135,12 @@
         "quality": 0.467453,
         "theorems": 0,
         "title": "Phantom Topologies: Spaces That Change When You Look at Them"
+      },
+      {
+        "cycle_id": "0a7c4b5a",
+        "quality": 0.65567,
+        "theorems": 9,
+        "title": "Lower Bound for the Proportion of Zeros on the Critical Line for PGL(3) L-functi"
       }
     ],
     "Bridges": [
