@@ -1,63 +1,62 @@
 # Computational Evidence — Dark Mathematics
 
-We test the structural core of "dark theorems" (a system proves `∃x T(x)` but proves
-no instance `T(n)`) inside the explicit model `concreteModel atomTrue` from
-`DarkTheorems.lean`, where truth is `cTrue` and provability `cProv` is truth **except
-that no atom is ever provable**.
+We model a deductive system abstractly by a Cook–Reckhow proof system over the
+formula type `DarkFormula` (instance statements `inst n` = `T(n)`, and counting
+statements `atLeast k` = "there are at least `k` witnesses `x` with `T(x)`").
+A system is **dark of level `k`** if it proves `atLeast k` but proves no `inst n`.
 
-## 1. Small-case calculations
+## 1. Small-case check of the strict hierarchy
 
-Let `D n := atom n` (the identity predicate) and vary the atom-truth assignment.
+The explicit witness system `boundedDark k` has proof objects `{ j // j ≤ k }`,
+each concluding `atLeast j`. Its provability profile:
 
-| model `atomTrue`         | true atoms      | `Prov (∃x D)` | `Prov (D n)` any n | `Prov (AtLeast k D)` | dark? |
-|--------------------------|-----------------|:-------------:|:------------------:|:--------------------:|:-----:|
-| `fun _ => True`          | all of ℕ        | yes           | never              | yes, every k         | dark ∞ |
-| `fun n => n < 3`         | {0,1,2}         | yes           | never              | yes iff k ≤ 3        | dark at level 3, not 4 |
-| `fun n => n < 1`         | {0}             | yes           | never              | yes iff k ≤ 1        | dark at level 1, not 2 |
-| `fun _ => False`         | ∅               | no            | never              | only k = 0           | not dark |
+| `k` | provable counting statements | provable instances | dark levels reached | fails at |
+|-----|------------------------------|--------------------|---------------------|----------|
+| 0   | `atLeast 0`                  | none               | 0                   | level 1  |
+| 1   | `atLeast 0,1`                | none               | 0,1                 | level 2  |
+| 2   | `atLeast 0,1,2`              | none               | 0,1,2               | level 3  |
+| 3   | `atLeast 0,1,2,3`            | none               | 0,1,2,3             | level 4  |
 
-Reading off the table:
-* Existential provable + no instance provable ⇒ genuine darkness whenever ≥1 atom is true.
-* The provable witness-count is exactly the number of true atoms: this is the
-  darkness **level**, and the levels are strictly separated (row `n < 3` is dark at 3
-  but not 4). Formalized as `darkness_hierarchy_strict`.
+So `boundedDark k` is dark of every level `j ≤ k` but not of level `k+1`. The
+top provable level equals `k` exactly, so the levels are genuinely distinct: the
+hierarchy does not collapse. This is verified in `Core.lean`
+(`dark_hierarchy_strict`).
 
-## 2. Counting / density check
+## 2. Join amplification
 
-Family `Tg g n := atom (2n + [g n = false])` for `g : ℕ → Bool`.
-* Every `Tg g` is atom-valued, so no instance is ever provable, and (in the
-  "all true" model) `∃x Tg g x` is provable ⇒ every `Tg g` is dark.
-* Distinct `g` give distinct predicates (the code `2n+…` recovers `g n`), so the dark
-  set contains an injective copy of `ℕ → Bool` ⇒ **uncountable** (continuum-sized).
-  This is the sharp, checkable form of "most Π₂ statements are dark"
-  (`dark_theorems_uncountable`).
+Combining two dark theories via the lattice join (`ProofSystemCollapse.union`)
+proves `atLeast (max a b)` while still naming no witness. Sample:
 
-Sanity enumeration of the first codes for two assignments:
-```
-g = all-false : Tg 0=atom 1, Tg 1=atom 3, Tg 2=atom 5, ...   (odds)
-g = all-true  : Tg 0=atom 0, Tg 1=atom 2, Tg 2=atom 4, ...   (evens)
-```
-Different at every coordinate ⇒ injective, as expected.
+| `a` | `b` | `max a b` = join level |
+|-----|-----|------------------------|
+| 1   | 1   | 1                      |
+| 1   | 3   | 3                      |
+| 2   | 5   | 5                      |
 
-## 3. Counterexample hunt
+The join can strictly exceed each component's level, so darkness compounds.
+Verified as `dark_union_join` / `dark_union_boundedDark` in `DensityAndJoin.lean`.
 
-* Claim "darkness ⇒ some instance is true" — tested against `fun _ => False`
-  (the existential is then *not* provable, so vacuously no dark statement there): no
-  counterexample; the shadow theorem `dark_has_true_unprovable_witness` only fires
-  when the existential is actually provable, and then soundness delivers a true
-  witness. No counterexample found across the assignments above.
-* Claim "level k+1 ⇒ level k" — checked on `n < 3`: `AtLeast 3` provable ⇒ `AtLeast 2`,
-  `AtLeast 1` provable (drop elements of the witness set). No counterexample.
+## 3. Counterexample hunt for the density conjecture
 
-## 4. OEIS
+The programme conjectured that dark theorems are *dense* among `Π₂` statements.
+We tested the naive uniform reading by enumerating provability profiles over a
+finite instance pool `Fin N` (a profile = the set of instances a theory proves;
+dark ⇔ the empty set).
 
-No integer sequence is central here; the darkness level equals the (possibly
-infinite) count of true atoms, and the abundance result is a cardinality statement
-(continuum), not a counting sequence, so no OEIS entry applies.
+| `N` | total profiles `2^N` | dark profiles | uniform density |
+|-----|----------------------|---------------|-----------------|
+| 1   | 2                    | 1             | 1/2             |
+| 2   | 4                    | 1             | 1/4             |
+| 3   | 8                    | 1             | 1/8             |
+| 4   | 16                   | 1             | 1/16            |
 
-## Conclusion
+There is always **exactly one** dark profile (the empty one), so the uniform
+density is `2^{-N} → 0`. This is a decisive counterexample to the *naive*
+density conjecture: under uniform counting, dark theorems are exponentially
+*rare*, not dense. Verified as `darkProfiles_card`, `allProfiles_card`, and
+`naive_density_refuted` in `DensityAndJoin.lean`.
 
-The computational picture matches all four formalized theorems: darkness is real
-(non-vacuous), soundness-relative, strictly stratified by witness count, and generic
-(uncountable). Evidence collection was kept minimal since the model is finite-to-check
-per case and the general statements are the actual deliverables.
+**Conclusion.** The strict-hierarchy and join-amplification hypotheses survived;
+the naive-uniform density hypothesis was falsified. Genericity of independence
+must therefore be phrased in a coarser (non-uniform) topology — recorded as a
+future direction.

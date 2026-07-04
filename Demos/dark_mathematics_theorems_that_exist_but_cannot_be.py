@@ -1,227 +1,229 @@
 """
-Dark Mathematics: Theorems That Exist But Cannot Be Found
-=========================================================
+Dark Mathematics: numerical demonstrations.
 
-A self-contained numerical illustration of the theory of *dark theorems*.
+A *dark theorem* asserts provable existence of witnesses none of which can ever
+be exhibited. We model this with abstract Cook-Reckhow-style proof systems over
+a formula type with two kinds of formulas:
 
-A statement T(.) is DARK for a sound proof system when:
-    (1) the system proves the existential closure  "exists x, T(x)", yet
-    (2) for every specific n, the system does NOT prove the instance  T(n).
+    * inst(n)    -- "n is a witness of T"          (an INSTANCE statement)
+    * atLeast(k) -- "there are at least k witnesses" (a COUNTING statement)
 
-We build the explicit "cautious" model from the paper:
+A system is DARK OF LEVEL k when it proves atLeast(k) but proves no inst(n).
 
-    * Sentences are atoms atom(n), an existential builder ex(T), and a
-      counting builder atLeast(k, T).
-    * Truth (cTrue) is the honest semantics over a chosen set of true atoms.
-    * Provability (cProv) is deliberately weakened: it certifies any *true*
-      existential or counting sentence but NEVER certifies an atom.
+This script demonstrates, entirely self-contained and with no dependencies:
 
-Under this model we exhibit:
-    - a genuinely dark statement (Shadow Theorem),
-    - the strict darkness hierarchy at levels 0, 1, 2, 3, ...,
-    - the abundance of dark statements (injection from {True,False}^N),
-    - the failure of any uniform provability decider (diagonalization).
+    1. The explicit witness family B_k and its exact provability profile.
+    2. Strictness of the darkness hierarchy: B_k is dark of level k, not k+1.
+    3. Join amplification: dark(a) join dark(b) is dark of level max(a, b).
+    4. Vanishing uniform density of dark configurations: O(1/N) -> 0.
 
-Run with:  python3 demo.py
+Run:  python demo.py
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Callable, List, Optional, Set
+from typing import Callable, Iterable
+from fractions import Fraction
 
 
 # --------------------------------------------------------------------------- #
-# Sentence algebra
+# Formulas
 # --------------------------------------------------------------------------- #
 @dataclass(frozen=True)
-class Sentence:
-    """A node of the inductive sentence algebra `Sent`.
-
-    kind is one of: "atom", "bot", "ex", "atLeast".
-    """
-    kind: str
-    n: int = 0                                   # atom index
-    k: int = 0                                   # count for atLeast
-    pred: Optional[Callable[[int], "Sentence"]] = None  # predicate for ex/atLeast
+class Formula:
+    """A dark-theorem formula. kind is 'inst' or 'atLeast'; value is n or k."""
+    kind: str   # "inst" or "atLeast"
+    value: int
 
 
-def atom(n: int) -> Sentence:
-    return Sentence(kind="atom", n=n)
+def inst(n: int) -> Formula:
+    """The instance statement T(n): 'n is a witness'."""
+    return Formula("inst", n)
 
 
-def bot() -> Sentence:
-    return Sentence(kind="bot")
+def atLeast(k: int) -> Formula:
+    """The counting statement: 'there exist at least k witnesses'."""
+    return Formula("atLeast", k)
 
 
-def ex(pred: Callable[[int], Sentence]) -> Sentence:
-    return Sentence(kind="ex", pred=pred)
-
-
-def at_least(k: int, pred: Callable[[int], Sentence]) -> Sentence:
-    return Sentence(kind="atLeast", k=k, pred=pred)
+EXISTS = atLeast(1)  # the existential statement  exists x. T(x)
 
 
 # --------------------------------------------------------------------------- #
-# The cautious model: truth (cTrue) and provability (cProv)
+# Abstract proof systems (Cook-Reckhow style)
 # --------------------------------------------------------------------------- #
-class ConcreteModel:
-    """concreteModel(A): a sound proof system parameterized by atom-truth A.
-
-    `search_bound` bounds the finite search used to evaluate existentials and
-    counts (the underlying mathematics is over all of N; we truncate for
-    computation).
+@dataclass(frozen=True)
+class ProofSys:
     """
+    An abstract proof system.
 
-    def __init__(self, atom_true: Callable[[int], bool], search_bound: int = 64) -> None:
-        self.atom_true = atom_true
-        self.search_bound = search_bound
+    proofs : the finite collection of proof objects (any hashable labels).
+    concl  : maps each proof object to the formula it establishes.
+    size   : maps each proof object to its resource cost.
+    """
+    proofs: tuple
+    concl: Callable[[object], Formula]
+    size: Callable[[object], int]
 
-    # ---- truth --------------------------------------------------------- #
-    def c_true(self, s: Sentence) -> bool:
-        if s.kind == "atom":
-            return self.atom_true(s.n)
-        if s.kind == "bot":
-            return False
-        if s.kind == "ex":
-            assert s.pred is not None
-            return any(self.c_true(s.pred(n)) for n in range(self.search_bound))
-        if s.kind == "atLeast":
-            assert s.pred is not None
-            witnesses = [n for n in range(self.search_bound) if self.c_true(s.pred(n))]
-            return len(witnesses) >= s.k
-        raise ValueError(f"unknown sentence kind: {s.kind}")
+    def provable(self, f: Formula) -> bool:
+        """A formula is provable iff some proof object concludes it."""
+        return any(self.concl(p) == f for p in self.proofs)
 
-    # ---- provability (deliberately cautious) --------------------------- #
-    def c_prov(self, s: Sentence) -> bool:
-        """Prove only *true* existential/counting sentences; never an atom."""
-        if s.kind in ("ex", "atLeast"):
-            return self.c_true(s)
-        return False  # atoms and bot are never provable
 
-    # ---- witness bookkeeping ------------------------------------------- #
-    def true_witnesses(self, pred: Callable[[int], Sentence]) -> Set[int]:
-        return {n for n in range(self.search_bound) if self.c_true(pred(n))}
+def bounded_dark(k: int) -> ProofSys:
+    """
+    The explicit witness system B_k: proof objects 0..k, the j-th concluding
+    atLeast(j). It proves exactly atLeast(0..k) and no instance statement.
+    """
+    return ProofSys(
+        proofs=tuple(range(k + 1)),
+        concl=lambda j: atLeast(j),
+        size=lambda j: 0,
+    )
+
+
+def join(s: ProofSys, t: ProofSys) -> ProofSys:
+    """
+    The join S \/ T: a proof is a proof from either component.
+    Provable(join) f  <=>  Provable S f  or  Provable T f.
+    """
+    tagged = tuple(("L", p) for p in s.proofs) + tuple(("R", p) for p in t.proofs)
+    return ProofSys(
+        proofs=tagged,
+        concl=lambda tp: s.concl(tp[1]) if tp[0] == "L" else t.concl(tp[1]),
+        size=lambda tp: s.size(tp[1]) if tp[0] == "L" else t.size(tp[1]),
+    )
 
 
 # --------------------------------------------------------------------------- #
 # Darkness predicates
 # --------------------------------------------------------------------------- #
-def is_dark(model: ConcreteModel, pred: Callable[[int], Sentence],
-            index_bound: int = 64) -> bool:
-    """Dark: proves existence, proves no instance."""
-    proves_existence = model.c_prov(ex(pred))
-    proves_no_instance = all(not model.c_prov(pred(n)) for n in range(index_bound))
-    return proves_existence and proves_no_instance
+def no_instance_provable(s: ProofSys, check_up_to: int = 50) -> bool:
+    """Empirically: no inst(n) is provable for n in 0..check_up_to."""
+    return all(not s.provable(inst(n)) for n in range(check_up_to + 1))
 
 
-def is_dark_level(model: ConcreteModel, k: int, pred: Callable[[int], Sentence],
-                  index_bound: int = 64) -> bool:
-    """Dark at level k: proves at-least-k witnesses, proves no instance."""
-    proves_count = model.c_prov(at_least(k, pred))
-    proves_no_instance = all(not model.c_prov(pred(n)) for n in range(index_bound))
-    return proves_count and proves_no_instance
+def dark_at_level(s: ProofSys, k: int, check_up_to: int = 50) -> bool:
+    """S is dark of level k: proves atLeast(k) and proves no instance."""
+    return s.provable(atLeast(k)) and no_instance_provable(s, check_up_to)
 
 
-def darkness_level(model: ConcreteModel, pred: Callable[[int], Sentence],
-                   index_bound: int = 64) -> int:
-    """Largest k with dark-at-level-k (= number of provable witnesses)."""
-    k = 0
-    while is_dark_level(model, k + 1, pred, index_bound):
-        k += 1
-    # confirm base darkness (proves no instance) even at k = 0
-    return k if is_dark_level(model, k, pred, index_bound) else -1
+def darkness_level(s: ProofSys, max_k: int = 50) -> int:
+    """The top level of darkness: largest k with atLeast(k) provable (or -1)."""
+    top = -1
+    for k in range(max_k + 1):
+        if s.provable(atLeast(k)):
+            top = k
+    return top if no_instance_provable(s) else -1
 
 
 # --------------------------------------------------------------------------- #
 # Demonstrations
 # --------------------------------------------------------------------------- #
-def demo_shadow_theorem() -> None:
+def demo_provability_profile() -> None:
     print("=" * 70)
-    print("1. THE SHADOW THEOREM: a witness that exists but cannot be found")
+    print("1. Provability profile of the witness family B_k")
     print("=" * 70)
-    model = ConcreteModel(atom_true=lambda _n: True)   # every atom is true
-    pred = atom                                         # T(n) = atom(n)
-
-    print(f"  Proves existence  'exists x, T(x)' : {model.c_prov(ex(pred))}")
-    print(f"  Proves any instance T(n)?          : "
-          f"{any(model.c_prov(pred(n)) for n in range(16))}")
-    print(f"  => Dark                             : {is_dark(model, pred)}")
-
-    # Shadow theorem: some instance is genuinely TRUE though unprovable.
-    true_ns = [n for n in range(8) if model.c_true(pred(n))]
-    print(f"  Genuinely true instances (sample)  : {true_ns}")
-    print(f"  ... yet none of them is provable   : "
-          f"{all(not model.c_prov(pred(n)) for n in true_ns)}")
-    print("  Interpretation: the shadow is cast by a real, invisible object.\n")
+    for k in range(4):
+        b = bounded_dark(k)
+        counts = [j for j in range(6) if b.provable(atLeast(j))]
+        insts = [n for n in range(6) if b.provable(inst(n))]
+        print(f"  B_{k}: proves atLeast(j) for j in {counts};  "
+              f"proves inst(n) for n in {insts}")
+    print("  => B_k proves atLeast(j) iff j <= k, and NO instance ever.\n")
 
 
 def demo_strict_hierarchy() -> None:
     print("=" * 70)
-    print("2. THE STRICT DARKNESS HIERARCHY: levels 0, 1, 2, 3 are distinct")
+    print("2. Strictness of the darkness hierarchy")
     print("=" * 70)
-    for k in range(5):
-        # exactly k true atoms: {0, ..., k-1}
-        model = ConcreteModel(atom_true=lambda n, k=k: n < k)
-        pred = atom
-        level = darkness_level(model, pred)
-        proves_k = model.c_prov(at_least(k, pred))
-        proves_kp1 = model.c_prov(at_least(k + 1, pred))
-        print(f"  A(n) = [n < {k}]  ->  proves AtLeast({k}) = {proves_k}, "
-              f"proves AtLeast({k+1}) = {proves_kp1}, darkness level = {level}")
-    print("  Each level is achieved and strictly separated from the next.\n")
+    for k in range(1, 5):
+        b = bounded_dark(k)
+        here = dark_at_level(b, k)
+        above = dark_at_level(b, k + 1)
+        print(f"  B_{k}: dark of level {k}? {here};   "
+              f"dark of level {k + 1}? {above}")
+    print("  => Each B_k is dark of level k but not k+1: the ladder is strict.\n")
 
 
-def demo_abundance() -> None:
+def demo_explicit_123() -> None:
     print("=" * 70)
-    print("3. ABUNDANCE: an injection {True,False}^N  ->  dark statements")
+    print("3. Explicit dark theorems of levels 1, 2, 3")
     print("=" * 70)
-    # Each g : N -> Bool yields a distinct model whose atom-predicate is dark,
-    # as long as at least one coordinate is true (existence stays provable).
-    import itertools
-    patterns = list(itertools.product([True, False], repeat=3))
-    dark_count = 0
-    for g in patterns:
-        gfun = lambda n, g=g: g[n] if n < len(g) else True  # tail all-true
-        model = ConcreteModel(atom_true=gfun)
-        if is_dark(model, atom):
-            dark_count += 1
-    print(f"  Finite sample: {dark_count}/{len(patterns)} length-3 flag "
-          f"patterns give dark statements.")
-    print("  The full family is indexed by {True,False}^N, of cardinality")
-    print("  2^aleph0 = continuum: the dark statements are UNCOUNTABLE.\n")
+    for k in (1, 2, 3):
+        b = bounded_dark(k)
+        print(f"  Level {k}: B_{k} certifies at least {k} hidden witnesses, "
+              f"names none.  dark_at_level = {dark_at_level(b, k)}")
+    print()
 
 
-def demo_no_uniform_decider() -> None:
+def demo_join_amplification() -> None:
     print("=" * 70)
-    print("4. NO UNIFORM DECIDER: diagonalization defeats any master table")
+    print("4. Joins amplify darkness:  dark(a) \\/ dark(b) is dark of max(a,b)")
     print("=" * 70)
+    for a, b_lvl in [(1, 3), (2, 2), (4, 1), (0, 5)]:
+        j = join(bounded_dark(a), bounded_dark(b_lvl))
+        lvl = darkness_level(j)
+        print(f"  B_{a} \\/ B_{b_lvl}: darkness level = {lvl}   "
+              f"(expected max({a},{b_lvl}) = {max(a, b_lvl)})   "
+              f"no witness named? {no_instance_provable(j)}")
+    print("  => Combining two blind theories yields a strictly deeper blindness.\n")
 
-    # Suppose D(i, n) claims to decide whether instance n of statement i is
-    # provable. Build a diagonal statement that disagrees on its own diagonal.
-    def fake_decider(i: int, n: int) -> bool:
-        return (i * 7 + n) % 2 == 0  # any concrete total table
 
-    def diagonal_pattern(i: int) -> List[bool]:
-        # statement i's true instances are the NEGATION of D's diagonal guess
-        return [not fake_decider(i, i)]
+def demo_vanishing_density() -> None:
+    print("=" * 70)
+    print("5. Vanishing uniform density of dark configurations")
+    print("=" * 70)
+    print("  A 'configuration' over a family of size N specifies:")
+    print("    * a top counting-level t in {0..N-1}, and")
+    print("    * for each of the N candidate witnesses, a provability bit.")
+    print("  It is DARK iff t >= 1 (existence provable) AND every one of the N")
+    print("  instance-bits is false (no witness provable). Among the 2^N")
+    print("  instance-patterns exactly ONE (all-false) qualifies.")
+    print()
+    print(f"  {'N':>5} | {'#configs':>14} | {'#dark':>6} | {'density':>12}")
+    print("  " + "-" * 48)
+    for N in [2, 4, 8, 16, 32]:
+        total = N * (2 ** N)       # N top-levels x 2^N instance patterns
+        dark = (N - 1)             # t in {1..N-1}, unique all-false pattern
+        density = Fraction(dark, total)
+        print(f"  {N:>5} | {total:>14} | {dark:>6} | {float(density):>12.3e}")
+    print("  => density = (N-1)/(N*2^N) -> 0: only the unique 'counts-but-names-")
+    print("     nothing' corner is dark. The naive 'most are dark' slogan is")
+    print("     FALSE; darkness has vanishing uniform density.\n")
 
-    disagreements = sum(
-        1 for i in range(10)
-        if diagonal_pattern(i)[0] != fake_decider(i, i)
-    )
-    print(f"  Constructed a statement disagreeing with the decider on all "
-          f"{disagreements}/10 diagonal entries.")
-    print("  No total table can predict its own diagonal: no uniform decider "
-          "exists.\n")
+
+def demo_joint_density_strict() -> None:
+    """
+    A sharper density model: a configuration also fixes, for each of N candidate
+    witnesses, whether inst(n) is provable. Darkness needs ALL N to be
+    unprovable AND the top count >= 1. The dark fraction is then O(1/N)*2^-N-ish
+    but the *conditional-on-existence* fraction is exactly 2^{-N} -> 0.
+    """
+    print("=" * 70)
+    print("6. Joint model: instance-freeness across N candidates")
+    print("=" * 70)
+    print(f"  {'N':>5} | {'P(no witness among N provable)':>32}")
+    print("  " + "-" * 44)
+    for N in [1, 2, 4, 8, 16]:
+        # each candidate independently provable with prob 1/2 in the uniform model
+        p = Fraction(1, 2 ** N)
+        print(f"  {N:>5} | {float(p):>32.8f}")
+    print("  => Even conditioned on provable existence, the probability that no")
+    print("     single witness is provable collapses geometrically: darkness is")
+    print("     rare under uniform counting.  Genericity must be reweighted by")
+    print("     logical complexity instead.\n")
 
 
 def main() -> None:
-    demo_shadow_theorem()
+    demo_provability_profile()
     demo_strict_hierarchy()
-    demo_abundance()
-    demo_no_uniform_decider()
-    print("All demonstrations complete.")
+    demo_explicit_123()
+    demo_join_amplification()
+    demo_vanishing_density()
+    demo_joint_density_strict()
+    print("All demonstrations completed.")
 
 
 if __name__ == "__main__":

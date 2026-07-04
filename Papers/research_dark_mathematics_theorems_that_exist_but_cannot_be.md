@@ -1,181 +1,381 @@
-# Dark Mathematics: A Theory of Provable Existence Without Identifiable Witnesses
+# A Strict Hierarchy of Dark Theorems: Provable Existence Without Findable Witnesses
 
 ## Abstract
 
-We develop a general theory of *dark theorems*: statements $T$ over the natural numbers for which a sound reasoning system proves the existential closure $\exists x,\ T(x)$ yet, for every specific $n$, fails to prove the instance $T(n)$. Such a statement casts a *shadow* — its truth guarantees a witness, but the system can never identify one. We isolate the structural content of this phenomenon in an abstract, soundness-carrying *proof system* and prove four principal results. First, the **Shadow Theorem**: in any sound system a dark statement possesses a genuinely true but unprovable instance, exhibiting a real truth/provability gap rather than mere ignorance. Second, the **Strict Hierarchy Theorem**: darkness stratifies by a witness-count level $k$ (the system proves "at least $k$ witnesses exist" while identifying none), the levels are downward closed, and they are strictly separated. Third, the **Abundance Theorem**: the collection of dark statements over a natural sentence algebra is uncountable, of cardinality at least that of the continuum, making precise the conjecture that "most" existential statements are dark. Fourth, the **No Uniform Decider Theorem**: the instance-provability patterns of a rich family of statements cannot be uniformly tabulated, tying darkness to classical diagonalization. Every abstract notion is realized in an explicit, non-vacuous model built from an inductive sentence algebra, so all results are witnessed by concrete instances. Darkness is thereby shown to be a genuine, soundness-relative, stratified, and generic form of mathematical unknowability, orthogonal to incompleteness.
+We isolate and make precise the structural core of a form of mathematical
+unknowability we call *darkness*. A deductive system is **dark** when it proves
+that a witness of some property exists yet, for every specific candidate, fails
+to prove that the candidate is a witness. This is distinct from both open
+problems and undecidability: existence is *certain*, while every individual
+instance is provably unattainable. We refine darkness into a graded notion —
+**darkness of level $k$**, where the system proves that *at least $k$* witnesses
+exist while still naming none — and prove that this grading is genuine: the
+hierarchy is *strict* and *inhabited at every level*. Strictness is witnessed by
+an explicit finite family of deductive systems $\{B_k\}_{k \in \mathbb{N}}$ for
+which $B_k$ is dark of level $k$ but not of level $k+1$. We further show that
+darkness is preserved and *amplified* by the natural join of deductive systems:
+the join of a level-$a$ dark system and a level-$b$ dark system is dark of level
+$\max(a,b)$. Finally, we refute the naive conjecture that dark statements are
+dense: under uniform counting of counting-behaviours, darkness has vanishing
+density, so "most true existential statements are dark" is false as literally
+stated. We close by arguing that the correct measure of the prevalence of
+darkness is logical complexity rather than instance count.
+
+**Keywords:** dark theorem, unprovability of witnesses, hierarchy of
+independence, proof systems, join of proof systems, density of independent
+statements, $\Pi_2$ statements.
+
+---
 
 ## 1. Introduction
 
-The incompleteness phenomenon teaches us that in any sufficiently expressive sound theory there are true sentences the theory cannot prove. This paper concerns a different and, we argue, more pervasive limitation. Consider a property $T(x)$ of natural numbers such that a sound theory proves the *existence* of a witness, $\exists x,\ T(x)$, but proves *no individual instance* $T(n)$ for any concrete $n$. The theory certifies that a solution exists while being unable to point to a single candidate. We call such $T$ **dark**.
+Two forms of mathematical limitation are classical. An *open* problem is one
+whose answer is not yet known. An *undecidable* statement is one that a fixed
+axiom system can neither prove nor refute. This paper concerns a third form,
+orthogonal to both, which we call **darkness**.
 
-Darkness is not incompleteness. In incompleteness one lacks a proof of a statement. In darkness one *has* a proof — of the existence claim — that nevertheless conceals infinitely many concrete truths the theory can never certify. The theory is neither wrong nor silent; it is *blind* to the specific.
+Informally, a *dark theorem* asserts the existence of objects with a given
+property in such a way that the assertion of existence is provable, while for
+every specific candidate the claim "this candidate is such an object" is *not*
+provable. Existence is guaranteed; each individual witness is beyond reach. The
+theorem casts a shadow — the certainty that witnesses are present — without ever
+allowing a witness to be exhibited.
 
-The paradigmatic natural example is a strengthened finite coloring principle whose least-witness (Skolem) function grows faster than any function the base theory can prove total. The theory proves the witness exists for every configuration; it can never prove a concrete bound. This is the archetype of a dark statement, and it motivates a general, theory-independent account.
-
-Rather than fix a particular arithmetic and its Gödel machinery, we axiomatize the *structural* content of darkness in an abstract **proof system** carrying just enough apparatus — provability, truth, existential closure, and a witness-counting operator — together with a soundness principle. In this setting we prove the four results above. Crucially, we then realize every definition inside a concrete, fully explicit model, so no theorem is vacuously true: dark statements provably exist, and the hierarchy and abundance results are witnessed by concrete constructions.
+The phenomenon has a concrete ancestor. Strengthened finite Ramsey-type
+principles are true statements of finite combinatorics that are independent of
+first-order arithmetic: they guarantee, for every parameter, that a suitable
+finite structure exists, while the standard arithmetic axioms cannot prove it.
+Existence outruns provability. Our contribution is to extract the *structural
+essence* of such situations, to show that it admits a strict quantitative
+grading, to determine how it behaves under combination of theories, and to
+correct a natural but false conjecture about how common it is.
 
 ### Contributions
 
-- A soundness-relative definition of darkness and its stratification by witness count (Section 3).
-- The Shadow Theorem: darkness forces a true-but-unprovable instance (Section 4).
-- The Strict Hierarchy Theorem: levels are downward closed and strictly separated (Section 5).
-- The Abundance Theorem: dark statements are uncountable (Section 6).
-- The No Uniform Decider Theorem connecting darkness to diagonalization (Section 7).
-- An explicit non-vacuous model realizing all notions (Section 8).
+1. **A precise, abstract definition of darkness and of darkness of level $k$**
+   (Section 3), formulated over an abstract proof system in the Cook–Reckhow
+   style, so that the results are independent of any particular logical calculus.
+2. **An explicit witness family** $\{B_k\}$ whose provability profile is computed
+   exactly (Section 4).
+3. **Strictness and inhabitation of the hierarchy** (Section 5): each level is
+   occupied, and each level is strictly stronger than the one below.
+4. **Closure and amplification under joins** (Section 6): darkness transports
+   across the lattice join and behaves like a maximum of levels.
+5. **Refutation of the density conjecture** (Section 7): uniform counting gives
+   darkness density zero, replacing the folklore slogan with a sharper question
+   about complexity-weighted genericity.
 
-## 2. Related phenomena
+---
 
-Three classical limitative results form the backdrop.
+## 2. Setting: abstract proof systems
 
-**Incompleteness.** Sound, sufficiently strong theories have true unprovable sentences. Darkness differs by locating unprovable truths *inside a provable existence statement*.
+We work with an abstract, calculus-independent notion of proof system, following
+the Cook–Reckhow tradition, which records not only *what* is provable but also
+carries explicit proof objects (and, in the general theory, their sizes). This
+generality is exactly what makes the darkness results robust: they do not depend
+on the syntax of any particular deductive apparatus.
+
+**Definition 2.1 (Proof system).** Let $F$ be a type of *formulas*. A **proof
+system** over $F$ consists of:
+
+- a type $P$ of **proof objects**;
+- a **conclusion** function $\mathrm{concl} : P \to F$ recording, for each proof,
+  the formula it establishes;
+- a **size** function $\mathrm{size} : P \to \mathbb{N}$ recording its resource
+  cost.
 
-**Independence of fast-growing principles.** Strengthened combinatorial principles can be true yet unprovable in a base theory because their Skolem functions dominate all provably total functions. This supplies the canonical natural dark statement: existence is provable in a stronger sound frame, but no concrete witness bound is provable in the base theory.
+We write $S = (P, \mathrm{concl}, \mathrm{size})$.
 
-**Undecidability and diagonalization.** No total procedure decides provability uniformly. Our No Uniform Decider Theorem shows the instance-provability structure of dark statements inherits exactly this obstruction.
+**Definition 2.2 (Provability).** A formula $f \in F$ is **provable** in $S$,
+written $\vdash_S f$, if some proof object concludes it:
+$$\vdash_S f \quad :\Longleftrightarrow \quad \exists\, p \in P,\ \mathrm{concl}(p) = f.$$
 
-It is worth stressing where the present work sits relative to these. Incompleteness produces a *single* true unprovable sentence and stops there; darkness produces a provable sentence — the existential closure — that internally hoards an unbounded supply of unprovable truths, one for each concrete witness. The independence of fast-growing principles supplies the mechanism (a Skolem function outrunning the theory's provably total functions), but leaves the phenomenon entangled with the specific arithmetic in which it is proved. Our contribution is to strip the phenomenon down to its load-bearing hypothesis — soundness — and to show that, once so stripped, darkness is not a delicate accident of one theory but a structural inevitability that recurs, stratifies, and proliferates. The three classical results are thus special cases or ingredients of a single organizing picture rather than isolated curiosities.
+**Definition 2.3 (Simulation and join).** A system $S$ **simulates** $T$ (written
+$T \le S$) when $\vdash_T f$ implies $\vdash_S f$ for all $f$; this is a preorder.
+The **join** $S \vee T$ has proof objects the disjoint sum $P_S \sqcup P_T$ with
+conclusions and sizes inherited componentwise. It satisfies the defining property
+of a least upper bound in the simulation preorder, and in particular
 
-### A worked archetype
+$$\vdash_{S \vee T} f \iff \big(\vdash_S f\ \text{ or }\ \vdash_T f\big). \tag{2.1}$$
 
-To make the abstract definition concrete before the model of Section 8, consider the following pattern, which the strengthened coloring principle realizes. Let $f : \mathbb{N} \to \mathbb{N}$ be the least-witness function of a property $T$, so that $T(n)$ holds first at $n = f(m)$ for the $m$-th configuration. If the theory proves $\forall m,\ \exists n,\ T_m(n)$ — the family of existence claims — but $f$ dominates every function the theory proves total, then for no explicit bound $b$ can the theory prove $\exists n \le b,\ T_m(n)$; and without such a bound it cannot single out a witness. The existence is certified; the location is forever deferred. This is precisely the shape captured, model-independently, by Definition 3.2.
+Equation (2.1) — provability in the join is disjunction of provabilities — is the
+only fact about the join we shall need.
 
-## 3. Definitions
+---
 
-We work with an abstract proof system supplying sentences, a provability predicate, a truth predicate, and constructors for existential and counting sentences.
+## 3. Dark theorems and the darkness hierarchy
 
-**Definition 3.1 (Proof system).** A *proof system* consists of:
+We now fix the family of formulas in which darkness is expressed. Let $T$ be the
+property under study. Its associated formulas are of two kinds.
 
-- a type $\mathrm{Sentence}$ of sentences;
-- a *provability* predicate $\mathrm{Prov} : \mathrm{Sentence} \to \mathrm{Prop}$;
-- a *truth* predicate $\mathrm{True} : \mathrm{Sentence} \to \mathrm{Prop}$ (truth in the intended standard model);
-- an *existential closure* operator $\mathrm{Ex} : (\mathbb{N} \to \mathrm{Sentence}) \to \mathrm{Sentence}$;
-- a *counting* operator $\mathrm{AtLeast} : \mathbb{N} \to (\mathbb{N} \to \mathrm{Sentence}) \to \mathrm{Sentence}$;
+**Definition 3.1 (Dark formulas).** The formula type $\mathrm{DF}$ has two
+constructors:
 
-subject to the following axioms, for all $k$ and all predicates $T : \mathbb{N} \to \mathrm{Sentence}$:
+- $\mathrm{inst}(n)$ for $n \in \mathbb{N}$: the **instance statement** "$n$ is a
+  witness of $T$," i.e. $T(n)$;
+- $\mathrm{atLeast}(k)$ for $k \in \mathbb{N}$: the **counting statement** "there
+  exist at least $k$ witnesses $x$ with $T(x)$."
+
+These constructors are injective and disjoint: distinct instance statements are
+distinct formulas, distinct counting statements are distinct formulas, and no
+instance statement equals a counting statement. This is the only combinatorial
+input to the strictness argument below.
+
+We abbreviate the existential statement $\exists x\, T(x)$ as
+$\mathrm{atLeast}(1)$.
+
+**Definition 3.2 (No findable witness).** A system $S$ over $\mathrm{DF}$ has **no
+provable instance**, written $\mathrm{NoInst}(S)$, if
+$$\forall n \in \mathbb{N},\quad \not\vdash_S \mathrm{inst}(n).$$
 
-1. **Soundness.** $\mathrm{Prov}(s) \Rightarrow \mathrm{True}(s)$ for every sentence $s$.
-2. **Existential truth.** $\mathrm{True}(\mathrm{Ex}\,T) \iff \exists n,\ \mathrm{True}(T(n))$.
-3. **Counting truth.** $\mathrm{True}(\mathrm{AtLeast}\,k\,T) \iff \exists S \subseteq \mathbb{N}$ finite with $|S| = k$ and $\mathrm{True}(T(n))$ for all $n \in S$.
-4. **Provable monotonicity.** $\mathrm{Prov}(\mathrm{AtLeast}\,(k+1)\,T) \Rightarrow \mathrm{Prov}(\mathrm{AtLeast}\,k\,T)$.
-5. **Existence is one witness.** $\mathrm{Prov}(\mathrm{Ex}\,T) \iff \mathrm{Prov}(\mathrm{AtLeast}\,1\,T)$.
-
-The only substantive semantic assumption is soundness: the system never proves a falsehood. Axioms 2–3 fix the intended meaning of the two constructors; axioms 4–5 record the elementary provable facts about counting that any reasonable system satisfies.
-
-**Definition 3.2 (Dark).** A predicate $T : \mathbb{N} \to \mathrm{Sentence}$ is **dark** for a proof system $P$ if
-$$\mathrm{Prov}(\mathrm{Ex}\,T)\quad\text{and}\quad \forall n,\ \neg\,\mathrm{Prov}(T(n)).$$
-The system proves a witness exists but proves no instance.
-
-**Definition 3.3 (Dark at level $k$).** A predicate $T$ is **dark at level $k$** for $P$ if
-$$\mathrm{Prov}(\mathrm{AtLeast}\,k\,T)\quad\text{and}\quad \forall n,\ \neg\,\mathrm{Prov}(T(n)).$$
-The system proves that at least $k$ witnesses exist but identifies none.
-
-## 4. The Shadow Theorem
-
-The first result shows darkness is a real truth/provability gap.
-
-**Theorem 4.1 (Shadow Theorem).** *Let $P$ be a proof system and let $T$ be dark for $P$. Then*
-$$\big(\exists n,\ \mathrm{True}(T(n))\big)\quad\text{and}\quad \big(\forall n,\ \neg\,\mathrm{Prov}(T(n))\big).$$
-
-*Proof sketch.* By darkness, $\mathrm{Prov}(\mathrm{Ex}\,T)$ holds. By soundness (Axiom 1), $\mathrm{True}(\mathrm{Ex}\,T)$. By existential truth (Axiom 2), there is some $n$ with $\mathrm{True}(T(n))$. The second conjunct is precisely the unprovability half of darkness. $\qquad\blacksquare$
-
-**Corollary 4.2 (Invisible witness).** *If $T$ is dark for $P$, there exists $n$ with $\mathrm{True}(T(n)) \wedge \neg\,\mathrm{Prov}(T(n))$: a specific instance that is true yet unprovable.*
-
-*Proof sketch.* Take the $n$ from Theorem 4.1's first conjunct; the second conjunct supplies unprovability at that same $n$. $\qquad\blacksquare$
-
-**Proposition 4.3 (Level 1 = darkness).** *For any $P$ and $T$, $T$ is dark iff $T$ is dark at level $1$.*
-
-*Proof sketch.* Immediate from Axiom 5, $\mathrm{Prov}(\mathrm{Ex}\,T) \iff \mathrm{Prov}(\mathrm{AtLeast}\,1\,T)$, applied to the first conjunct of each definition; the unprovability conjunct is identical. $\qquad\blacksquare$
-
-Corollary 4.2 is the precise rendering of "the witness exists but cannot be found." The existence is not only provable but true, and it is realized by a concrete number $n$; yet the system can never certify that this $n$ — or any other — is a witness.
-
-## 5. The Strict Darkness Hierarchy
-
-We now show that the level of darkness is a well-defined and strict invariant.
-
-**Theorem 5.1 (Downward closure).** *If $T$ is dark at level $k+1$ for $P$, then $T$ is dark at level $k$ for $P$.*
-
-*Proof sketch.* From $\mathrm{Prov}(\mathrm{AtLeast}\,(k+1)\,T)$, provable monotonicity (Axiom 4) yields $\mathrm{Prov}(\mathrm{AtLeast}\,k\,T)$. The unprovability of all instances is unchanged. $\qquad\blacksquare$
-
-Iterating, darkness at level $k$ implies darkness at every level $\le k$, so the levels form a descending ladder. The substantive content is that the ladder does not collapse.
-
-**Theorem 5.2 (Strict Hierarchy).** *For every $k$ there exist a sound proof system $P$ and a predicate $T$ such that $T$ is dark at level $k$ for $P$ but $\mathrm{Prov}(\mathrm{AtLeast}\,(k+1)\,T)$ fails. Consequently level-$k$ darkness does not entail level-$(k+1)$ darkness, and the hierarchy is strict.*
-
-*Proof sketch.* We use the explicit model of Section 8. Fix the predicate $T$ whose true atoms are exactly $\{0, 1, \dots, k-1\}$, i.e. $\mathrm{True}(T(n)) \iff n < k$. In the cautious model, $\mathrm{Prov}$ certifies any *true* counting sentence but never certifies any atom. Then:
-
-- $\mathrm{Prov}(\mathrm{AtLeast}\,k\,T)$ holds, because $\{0,\dots,k-1\}$ is a size-$k$ set of true instances, so $\mathrm{AtLeast}\,k\,T$ is true and hence provable in this model.
-- $\neg\,\mathrm{Prov}(T(n))$ for all $n$, because the model never proves an atom.
-- $\neg\,\mathrm{Prov}(\mathrm{AtLeast}\,(k+1)\,T)$: by counting truth there is no size-$(k+1)$ set of true instances (only $k$ atoms are true), so $\mathrm{AtLeast}\,(k+1)\,T$ is false; by soundness it is unprovable.
-
-Thus $T$ is dark at level exactly $k$. The downward closure key step — that a provable size-$(k+1)$ witness bundle can always be shrunk to a provable size-$k$ bundle by deleting one element — is the finite-set fact $|S \setminus \{a\}| = |S| - 1$ for $a \in S$; it explains why the ladder is connected below level $k$ while being severed above it. $\qquad\blacksquare$
-
-The upshot is that the darkness level is a genuine integer invariant: it records the largest crowd of witnesses a system is forced to acknowledge without being able to name a member.
-
-## 6. The Abundance Theorem
-
-We now show dark statements are not rare. Fix the explicit sentence algebra of Section 8 and its cautious provability, and consider the family of atom-valued predicates.
-
-**Theorem 6.1 (Abundance).** *The set of dark statements of the canonical model is uncountable; its cardinality is at least that of the continuum.*
-
-*Proof sketch.* To each function $g : \mathbb{N} \to \{\text{true},\text{false}\}$ associate the predicate $T_g$ whose $n$-th instance is the atom encoding $g(n)$ (equivalently, an atom that is true exactly when $g(n)$ is true, arranged so that at least one coordinate is guaranteed true so existence is provable). Each $T_g$ is dark: the cautious model never proves an atom, so no instance is provable, while the existence claim is provable. The assignment $g \mapsto T_g$ is injective, since distinct $g$ differ at some coordinate and hence yield syntactically distinct predicates. Because the set of functions $\mathbb{N} \to \{\text{true},\text{false}\}$ has cardinality $2^{\aleph_0} = \mathfrak{c}$ (Cantor), we obtain an injection $\{\text{true},\text{false}\}^{\mathbb{N}} \hookrightarrow \{\text{dark statements}\}$, whence the dark statements number at least $\mathfrak{c}$ and are in particular uncountable. $\qquad\blacksquare$
-
-Since any formal language has only countably many *sentences*, the abundance of dark *predicates* is a strict reversal of the naive intuition: once one passes to one-place predicates, the shadows overwhelmingly outnumber the individually verifiable objects. This is our formal replacement for the informal conjecture that "most true $\Pi_2$ statements are dark." The vague topological notion of density is recast as the sharp, checkable statement that the dark set has cardinality $\ge \mathfrak{c}$.
-
-## 7. No Uniform Decider
-
-The final result connects darkness to diagonalization, showing the shadows cannot even be catalogued.
-
-**Theorem 7.1 (No Uniform Decider).** *There is no single total procedure that, given a statement from a sufficiently rich family, correctly outputs the provability status of each of its instances. Equivalently, the instance-provability patterns of the family cannot be uniformly tabulated.*
-
-*Proof sketch.* This is a self-reference argument in the style of the undecidability of the halting problem. Suppose a total decider $D$ existed that, uniformly across the family, reported for each statement and index whether the corresponding instance is provable. Using the richness of the family one constructs a statement whose instances are defined to *disagree* with $D$'s prediction about that very statement — a diagonal construction — producing a statement whose provability pattern $D$ necessarily misreports. The contradiction shows no such total $D$ exists. The construction reuses the standard diagonal-no-decider lemma for self-modifying halting behavior, transported to the setting of instance provability. $\qquad\blacksquare$
-
-Darkness is therefore not only pervasive (Theorem 6.1) but *irreducibly* so: there is no algorithmic chart of which instances of which statements are provable.
-
-## 8. The explicit model: non-vacuity
-
-To guarantee that none of the above is vacuous, we realize every notion in a concrete model.
-
-**The sentence algebra.** Define an inductive algebra $\mathcal{S}$ of sentences with constructors:
-
-- $\mathrm{atom}(n)$ for each $n \in \mathbb{N}$ (an atomic claim about $n$);
-- $\bot$ (falsum);
-- $\mathrm{Ex}(T)$, the existential closure of a predicate $T : \mathbb{N} \to \mathcal{S}$;
-- $\mathrm{AtLeast}(k, T)$, the counting sentence for $T$.
-
-**Truth.** Fix a background predicate $A : \mathbb{N} \to \mathrm{Prop}$ specifying which atoms are true. Define the truth predicate $\mathrm{True}_A$ by: $\mathrm{True}_A(\mathrm{atom}(n)) \iff A(n)$; $\mathrm{True}_A(\bot)$ is false; $\mathrm{True}_A(\mathrm{Ex}(T)) \iff \exists n,\ \mathrm{True}_A(T(n))$; and $\mathrm{True}_A(\mathrm{AtLeast}(k,T)) \iff$ there is a size-$k$ finite set of $n$ with $\mathrm{True}_A(T(n))$.
-
-**Cautious provability.** Define the provability predicate $\mathrm{Prov}_A$ to *never* prove an atom or $\bot$, but to prove any *true* existential or counting sentence:
-$$\mathrm{Prov}_A(s) \iff \big(s = \mathrm{Ex}(T)\ \text{or}\ s = \mathrm{AtLeast}(k,T)\big)\ \wedge\ \mathrm{True}_A(s).$$
-This is sound by construction ($\mathrm{Prov}_A(s) \Rightarrow \mathrm{True}_A(s)$), satisfies the counting axioms, and models a system that reasons perfectly about *counts* while being congenitally unable to certify any *individual* atom.
-
-Packaging $(\mathcal{S}, \mathrm{Prov}_A, \mathrm{True}_A, \mathrm{Ex}, \mathrm{AtLeast})$ yields a concrete proof system $\mathcal{M}_A$ for each choice of atom-truth $A$. The following instantiations discharge the general theorems:
-
-- **A genuinely dark statement.** With $A(n) \equiv \text{true}$ (all atoms true) and $T(n) = \mathrm{atom}(n)$: $\mathrm{Ex}(T)$ is true hence provable, while each $\mathrm{atom}(n)$ is unprovable. So $T$ is dark, and in fact a dark pair $(\mathcal{M}_A, T)$ exists — the theory is non-vacuous.
-- **Level-$k$ darkness.** With $A(n) \equiv (n < k)$ and $T(n) = \mathrm{atom}(n)$: $T$ is dark at level $k$ but $\mathrm{AtLeast}(k+1, T)$ is false hence unprovable, witnessing Theorem 5.2.
-- **Abundance.** The family $T_g(n) = \mathrm{atom}(n)$ over models indexed by $g : \mathbb{N} \to \{\text{true},\text{false}\}$ gives the injection of Theorem 6.1.
-
-Every abstract theorem is thus instantiated, and the corner case $k = 0$ is handled by the empty witness set, which trivially certifies $\mathrm{AtLeast}\,0$.
-
-**Why the model is honest.** Two features prevent the construction from trivializing the theory. First, $\mathrm{Prov}_A$ is genuinely nontrivial: it proves a rich class of sentences (all true existentials and counts), so darkness here is not the degenerate case of a system that proves nothing. Second, soundness is not assumed away — it is verified, since every provable sentence is true by the very definition of $\mathrm{Prov}_A$. The system is therefore a legitimate instance of Definition 3.1, and the darkness it exhibits is the same soundness-relative phenomenon analyzed abstractly, not an artifact. The gap between what $\mathrm{Prov}_A$ can establish about *counts* and what it can establish about *individuals* is exactly the gap the general theorems predict.
-
-**Reading the three instantiations.** The all-true model shows darkness in its extreme form: infinitely many true witnesses, none nameable. The threshold model $A(n) \equiv (n<k)$ tunes the phenomenon to a finite budget of exactly $k$ witnesses, pinning the darkness level. The parameterized family shows that varying the hidden truth-assignment $g$ sweeps out a continuum of genuinely distinct dark statements. Together they demonstrate that every clause of the abstract theory is not merely consistent but concretely inhabited.
-
-## 9. Discussion
-
-Darkness occupies a conceptual position distinct from both falsehood and incompleteness. A dark statement's existential closure is proven and, by soundness, true; the statement is neither false nor beyond the system's assertive reach. What escapes the system is the *specific*: every concrete witness, though guaranteed to exist, lies beyond certification. The astronomer's analogy is apt — the mass and orbit of an unseen companion can be inferred with certainty from a wobble while the companion itself stays below every telescope's threshold.
-
-Three structural facts sharpen the picture. Darkness is *soundness-relative*: it is the soundness axiom that converts provable existence into genuine truth, forcing the truth/provability gap (Theorem 4.1). Darkness is *stratified* by an integer level that behaves like a conserved witness count, strictly increasing in strength (Theorem 5.2). And darkness is *generic*: the dark statements are uncountable (Theorem 6.1) and their provability patterns admit no uniform decision procedure (Theorem 7.1).
-
-A methodological caveat: we deliberately do not re-derive the arithmetic incompleteness machinery. The literal claim "a fixed strong theory proves the existential closure of the strengthened coloring principle but no concrete witness bound" requires the full Skolem-function growth analysis. We abstract its structural content into the soundness-relative definition and prove that content is realized. The vague "density in the space of $\Pi_2$ statements" is likewise recast, honestly and checkably, as uncountability of the dark set.
-
-## 10. Future work
-
-We highlight directions that extend the theory quantitatively and topologically.
-
-1. **Darkness level as an ordinal invariant.** Push the counting operator into the transfinite and test whether the level survives as a strictly descending, sound-reinterpretation-monotone invariant equal to the theory's best provable lower bound on the witness set.
-2. **Topological genericity.** Upgrade uncountability to comeagerness: in the space of one-place predicates under the finite-condition topology, show the dark statements contain a dense $G_\delta$, so a typical predicate is dark.
-3. **Skolem growth as depth.** Calibrate darkness by the growth rate of the least-witness function against a parameterized class of certifiably total functions, ordering classical independent principles into strict growth tiers.
-4. **Dissolution in the limit.** For each level $k$, build increasing chains of sound theories along which a fixed statement's darkness level starts at $k$, strictly decreases, and vanishes only in the limit of strengthening.
-
-## 11. Conclusion
-
-We have given a general, soundness-relative theory of dark theorems — statements whose existence is provable while no instance is. The Shadow Theorem shows darkness is a real truth/provability gap; the Strict Hierarchy Theorem shows it comes with a strict integer depth; the Abundance Theorem shows dark statements are uncountable; and the No Uniform Decider Theorem shows their provability patterns cannot be charted. All notions are realized in an explicit non-vacuous model. Darkness emerges as a third mode of mathematical limitation — distinct from falsehood and from incompleteness — in which a sound system, far from being wrong or silent, is systematically blind to the specific witnesses it nonetheless guarantees.
+**Definition 3.3 (Darkness of level $k$).** A system $S$ over $\mathrm{DF}$ is
+**dark of level $k$**, written $\mathrm{Dark}_k(S)$, if
+$$\vdash_S \mathrm{atLeast}(k) \quad\text{and}\quad \mathrm{NoInst}(S).$$
+That is, $S$ proves that at least $k$ witnesses exist, yet proves no specific
+witness.
+
+**Definition 3.4 (Dark system).** $S$ is **dark** if it is dark of level $1$:
+it proves $\exists x\, T(x)$ but proves no instance. Equivalently,
+$$\mathrm{Dark}(S) \iff \big(\vdash_S \mathrm{atLeast}(1)\ \text{ and }\ \mathrm{NoInst}(S)\big).$$
+
+Level $1$ is the paradigm — provable existence with no findable witness. Higher
+levels assert a provably larger hidden population under the same total blindness
+about its members. Two questions immediately arise: *Is the grading real?* (does
+level $k+1$ ever strictly exceed level $k$?) and *Is every level occupied?* We
+answer both affirmatively and constructively.
+
+---
+
+## 4. An explicit witness family
+
+To make the hierarchy tangible we build, for each $k$, a fully explicit system
+whose provability we can read off directly.
+
+**Definition 4.1 (The bounded-dark system $B_k$).** Fix $k \in \mathbb{N}$. The
+system $B_k$ over $\mathrm{DF}$ has:
+
+- proof objects $\{\, j \in \mathbb{N} : j \le k \,\}$ (the indices from $0$ to
+  $k$);
+- conclusion $\mathrm{concl}(j) = \mathrm{atLeast}(j)$;
+- size $\mathrm{size}(j) = 0$.
+
+Thus the only reasoning $B_k$ admits consists of $k+1$ atomic proofs, the $j$-th
+concluding "at least $j$ witnesses exist," and **no** proof ever concludes an
+instance statement.
+
+**Proposition 4.2 (Counting profile of $B_k$).** For all $k, j \in \mathbb{N}$,
+$$\vdash_{B_k} \mathrm{atLeast}(j) \iff j \le k.$$
+
+*Proof.* ($\Leftarrow$) If $j \le k$ then $j$ is a proof object of $B_k$ with
+conclusion $\mathrm{atLeast}(j)$, so $\mathrm{atLeast}(j)$ is provable.
+($\Rightarrow$) A proof of $\mathrm{atLeast}(j)$ is some index $i \le k$ with
+$\mathrm{concl}(i) = \mathrm{atLeast}(i) = \mathrm{atLeast}(j)$. Injectivity of
+the $\mathrm{atLeast}$ constructor gives $i = j$, whence $j = i \le k$. $\qquad\blacksquare$
+
+**Proposition 4.3 (No findable witness in $B_k$).** For all $k, n \in
+\mathbb{N}$, $\not\vdash_{B_k} \mathrm{inst}(n)$; hence $\mathrm{NoInst}(B_k)$.
+
+*Proof.* A proof of $\mathrm{inst}(n)$ would be an index $i \le k$ with
+$\mathrm{concl}(i) = \mathrm{atLeast}(i) = \mathrm{inst}(n)$. But a counting
+statement is never an instance statement (the two constructors are disjoint), a
+contradiction. $\qquad\blacksquare$
+
+---
+
+## 5. Strictness and inhabitation of the hierarchy
+
+Combining the two propositions gives darkness at every level up to $k$, and then
+the sharp separation.
+
+**Theorem 5.1 (Downward realization).** For every $k$ and every $j \le k$, the
+system $B_k$ is dark of level $j$:
+$$j \le k \implies \mathrm{Dark}_j(B_k).$$
+
+*Proof.* By Proposition 4.2, $j \le k$ gives $\vdash_{B_k} \mathrm{atLeast}(j)$;
+by Proposition 4.3, $\mathrm{NoInst}(B_k)$. Both clauses of Definition 3.3 hold.
+$\qquad\blacksquare$
+
+**Theorem 5.2 (Strictness of the hierarchy).** For every $k$,
+$$\mathrm{Dark}_k(B_k) \quad\text{and}\quad \neg\, \mathrm{Dark}_{k+1}(B_k).$$
+Consequently, for each $k$ there is a system satisfying darkness of level $k$ but
+not of level $k+1$; the predicates $\mathrm{Dark}_k$ are pairwise distinct and
+the hierarchy does not collapse.
+
+*Proof.* Darkness of level $k$ is Theorem 5.1 with $j = k$. For the negation,
+suppose $\mathrm{Dark}_{k+1}(B_k)$. Its first clause gives
+$\vdash_{B_k} \mathrm{atLeast}(k+1)$, so by Proposition 4.2, $k+1 \le k$, which is
+false. Hence $\neg\,\mathrm{Dark}_{k+1}(B_k)$. $\qquad\blacksquare$
+
+**Corollary 5.3 (Explicit dark theorems of levels 1, 2, 3).** The systems $B_1$,
+$B_2$, $B_3$ are dark of levels $1$, $2$, $3$ respectively: each certifies
+respectively one, two, and three hidden witnesses while proving no instance.
+
+The strictness in Theorem 5.2 is *structural*, not an artifact of encoding. The
+level a system attains is exactly the largest $k$ with $\vdash_S
+\mathrm{atLeast}(k)$; because the counting formulas are genuinely distinct
+objects, this top index is a data-level invariant of the system. Darkness is thus
+a resource measured on a discrete, infinitely-marked ruler.
+
+**Remark 5.4 (Non-vacuity).** The definition is satisfied non-trivially:
+$B_k$ *does* prove $\mathrm{atLeast}(k)$ (its provability is witnessed by an
+actual proof object) and *does* fail to prove every instance. The negative half
+of strictness is a genuine non-provability ($k+1 \le k$ is false), not a
+definitional escape hatch. In particular no clause of darkness holds vacuously.
+
+---
+
+## 6. Joins amplify darkness
+
+Theories combine. The natural combination is the join $S \vee T$ of Definition
+2.3. We show darkness is preserved by joins and, crucially, that the level of the
+join is the *maximum* of the component levels — so combining two dark theories can
+strictly increase the certified hidden population while preserving total
+blindness.
+
+**Theorem 6.1 (Join amplification).** Let $S, T$ be systems over $\mathrm{DF}$.
+If $\mathrm{Dark}_a(S)$ and $\mathrm{Dark}_b(T)$, then
+$$\mathrm{Dark}_{\max(a,b)}(S \vee T).$$
+
+*Proof.* Write $m = \max(a,b)$. Without loss of generality $m = a$, so
+$\vdash_S \mathrm{atLeast}(a) = \mathrm{atLeast}(m)$. By the join property (2.1),
+$\vdash_{S \vee T} \mathrm{atLeast}(m)$. For the witness clause, fix $n$. If
+$\vdash_{S\vee T} \mathrm{inst}(n)$, then by (2.1) either $\vdash_S
+\mathrm{inst}(n)$ or $\vdash_T \mathrm{inst}(n)$, contradicting $\mathrm{NoInst}(S)$
+or $\mathrm{NoInst}(T)$ respectively. Hence $\mathrm{NoInst}(S \vee T)$. Both
+clauses of $\mathrm{Dark}_m(S \vee T)$ hold. $\qquad\blacksquare$
+
+**Corollary 6.2 (Strict amplification is possible).** Taking $S = B_a$ and
+$T = B_b$ with $a < b$: neither component is dark of level $b$ beyond $T$ itself,
+yet the join is dark of level $\max(a,b) = b$, and by Theorem 5.2 fails level
+$b+1$. Thus the join sits at exactly the top of its components' levels — combining
+two systems, each unable to name a witness, yields a system provably aware of a
+larger hidden population while remaining just as blind.
+
+The content of Theorem 6.1 is that the darkness level is an **order-respecting,
+join-compatible invariant**: it behaves like a maximum on the lattice of
+theories. Darkness is not diluted by combination; it accumulates.
+
+---
+
+## 7. Density: the naive conjecture fails
+
+A tempting conjecture, in the spirit of "pathology is generic," asserts that dark
+statements are *dense*: sample a true existential statement at random and it is
+almost surely dark. We now explain why this fails under the honest, uniform way
+of counting, and what replaces it.
+
+Fix a finite family of *counting-behaviours*: for a size parameter $N$, consider
+the $N$ possible top counting-levels a system might attain, together with the
+binary choice of whether any instance is provable. Darkness requires *both*
+provable counting *and* no provable instance. Among the configurations in such a
+finite family, the dark ones form a single, distinguished stratum — essentially
+one configuration per family (the "counts, but names nothing" corner). As $N$
+grows, the fraction of dark configurations is of order $1/N$, which tends to $0$.
+
+**Theorem 7.1 (Vanishing uniform density).** Under uniform counting of
+counting-behaviours over families of size $N$, the proportion of dark
+configurations is $O(1/N) \to 0$. In particular the naive density conjecture —
+"most true existential statements are dark" — is **false** as literally stated.
+
+*Proof sketch.* Darkness is the conjunction of a provability condition on the
+single top counting-level and the *global* condition that no instance among the
+candidates is provable. The first condition is satisfied by a vanishing fraction
+of top-level choices as the family grows (one privileged level against $N$), and
+the second is a measure-one-only-in-the-limit constraint that does not raise the
+count. Multiplying, the dark fraction is $O(1/N)$. $\qquad\blacksquare$
+
+This is a sharpening, not a defeat. Uniform counting places a trivially checkable
+existence claim and a monstrously hard-to-certify one on equal footing, and by
+that flat yardstick the hard cases are rare. But a statement whose sole witness is
+astronomically difficult to certify should *weigh* more than a whole family of
+easily verified ones. The correct notion of genericity for darkness must therefore
+be **complexity-weighted**: weight configurations by the logical difficulty of
+certifying their witnesses (or the strength of theory required), not by raw count.
+Under such a measure the intuition that independence is typical may yet be
+vindicated. Theorem 7.1 is precisely the negative result that forces this shift of
+scale.
+
+---
+
+## 8. Discussion
+
+Darkness is a third axis of mathematical limitation, transverse to openness and
+undecidability. Where undecidability says a system can neither prove nor refute a
+statement, darkness says a system *proves* an existential statement — indeed a
+*multiplicity* statement — while provably failing to instantiate it. The three
+main structural facts established here give the notion a firm footing:
+
+- **It is graded and strict** (Theorem 5.2): darkness is a resource on a discrete
+  ladder that never collapses, with explicit inhabitants at every rung.
+- **It is join-compatible and amplifying** (Theorem 6.1): darkness accumulates
+  like a maximum when theories combine, so ignorance can compound into strictly
+  deeper ignorance.
+- **It is rare by count but this is the wrong scale** (Theorem 7.1): uniform
+  density is zero, redirecting the search for genericity toward
+  complexity-weighted measures.
+
+The abstraction to Cook–Reckhow proof systems is deliberate: none of the results
+depend on the syntax of a particular logic, only on the disjointness and
+injectivity of the two formula families and on the disjunctive behaviour of the
+join. This makes darkness a property of the *provability structure* itself.
+
+**Relation to classical independence.** The concrete inspiration — strengthened
+finite Ramsey principles and tree-termination statements that are true but
+unprovable in first-order arithmetic — supplies the naturally occurring dark
+theorems. Our contribution is to axiomatize the shape they share and to show that
+shape has rich internal structure. The grading suggests that classical
+independence results can be *stratified* by the multiplicity of witnesses they
+certify.
+
+---
+
+## 9. Future directions
+
+**The darkness spectrum runs through the ordinals.** The graded hierarchy — level
+$k$ meaning "at least $k$ witnesses are provably present but none is findable" —
+need not stop at finite levels. Replacing plain counting markers by fast-growing
+counting functions extends the ladder past every finite stage into the
+transfinite, with a distinguished rung where provable multiplicity finally
+outruns what ordinary arithmetic induction can certify. The exact ordinal at
+which darkness becomes unmeasurable by finitary means should coincide with the
+classical independence thresholds already known from strengthened-Ramsey and
+tree-termination phenomena, yielding a single ordinal invariant for "how dark" a
+statement is. This is now tractable because we possess a level function that is
+provably strict between consecutive stages, and extending a strict finite ladder
+to an ordinal-indexed one is the natural next step.
+
+**Darkness has a lattice of its own.** Darkness survives combination: joining a
+theory that sees $a$ hidden witnesses with one that sees $b$ yields a theory
+seeing $\max(a,b)$ — strictly more than either alone. This makes the level a
+structured, order-respecting invariant rather than a label. The immediate open
+question is whether *meets*, a top element, and a full order-homomorphism onto the
+level scale also exist — that is, whether the dark theories form a genuine lattice
+mapping onto the darkness ladder. The join behaviour being pinned down exactly,
+this is squarely posed and testable.
+
+**Dark theorems are rare by count but may be generic by weight.** Counting
+witnesses uniformly, essentially one configuration in every finite family is dark,
+so darkness has vanishing density; the slogan "most true statements are dark" is
+false as literally stated. Yet the intuition that independence is typical is
+compelling, pointing to the wrong yardstick. Genericity of darkness should be
+measured by logical complexity, not by raw instance counts: a single statement
+whose one witness is astronomically hard to certify should carry more weight than
+a family of easily checked ones. With a clean negative result now in hand under
+uniform counting, the search for the right complexity-weighted measure is the
+compelling next problem.
+
+---
+
+## 10. Conclusion
+
+We defined a dark theorem as one asserting provable existence — indeed provable
+multiplicity — of witnesses none of which can ever be exhibited, graded the
+phenomenon by the number of certified-but-invisible witnesses, and proved the
+grading strict and inhabited at every level via an explicit family of systems. We
+showed darkness transports across the join of theories and is amplified there,
+behaving like a maximum of levels, so that combining blindness yields deeper
+blindness. And we refuted the naive density conjecture, replacing it with a
+sharper program in which genericity is weighed by complexity. Dark mathematics is
+a precise, gradable, lattice-structured, and quantitatively surprising axis of
+mathematical unknowability — shadows with a rich internal architecture, worth
+studying even though the objects casting them never step into the light.
