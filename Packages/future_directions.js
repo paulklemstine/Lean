@@ -18,21 +18,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0113",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-03T00:49:26.963635+00:00",
-    "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "For every m \u2265 1, the generating tree encoding the recursive decomposition of intervals in the greedy m-Tamari poset (on Dyck paths of size n) is isomorphic to the generating tree encoding the recursive decomposition of planar (m+1)-constellations of size n. This conjecture generalizes the m=1 case proved in the paper and would provide a combinatorial proof of the equinumerosity refined by the parameters tracked in the generating tree (e.g., number of valleys in Dyck paths and corresponding statistics in constellations).",
     "domains": [
       "Pythagorean",
@@ -61,7 +46,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lower Bound for Low Moments of Dirichlet Character Sums"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2c4f5225",
     "description": "There exists a finite set of vectors in l\u00b2 satisfying specific convolution inequalities such that their weighted average achieves the coefficient \u03b3\u2080=0.94601 in the bound F(N) \u2264 N^{1/2} + \u03b3\u2080N^{1/4} + O(1), and no smaller coefficient is achievable via this method.",
     "domains": [
       "Bridges"
@@ -70,7 +55,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T06:22:13.488931+00:00",
     "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
   },
@@ -1317,21 +1302,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0116",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-03T00:49:27.030210+00:00",
-    "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "For all m \u2265 1, the refined generating function for intervals in the greedy m-Tamari poset, tracking both the number of elements and the number of leaves (peaks in the corresponding Dyck paths), is equal to the refined generating function for planar (m+1)-constellations tracking the same statistics. This extends the combinatorial proof for m=1 to all m \u2265 1.",
     "domains": [
       "Algebra",
@@ -1430,20 +1400,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T03:49:23.417787+00:00",
     "title": "Tree Structure Characterization for Good Position in Hyperelliptic Mumford Curves"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The Gallai homothety number $ G_3(\\{0,2,5\\}) $ equals 77.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0125",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02226v1",
-    "status": "available",
-    "timestamp": "2026-07-03T04:11:45.471727+00:00",
-    "title": "Exact value of G\u2083({0,2,5})"
   },
   {
     "consumed_by_exp_id": "",
@@ -2274,20 +2230,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Conjecture that for all sufficiently large s, the maximum chromatic number F(s) over graphs G with \u03c9(G) \u2264 s and girth(\u0305G) \u2265 6 satisfies F(s) = \u0398(s^{3/2} / log s). In particular, there exist positive constants c\u2081, c\u2082 such that for all s \u2265 2, c\u2081\u00b7s^{3/2}/log s \u2264 F(s) \u2264 c\u2082\u00b7s^{3/2}/log s.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0183",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.29873v1",
-    "status": "available",
-    "timestamp": "2026-07-04T05:23:25.775044+00:00",
-    "title": "Conjecture on the asymptotic growth of the chi\u2011bounding function F(s) for graphs whose complement has girth at least 6"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "For a Drinfeld module \u03b6 of rank r over a global function field K and any finite set of K\u2011rational points P1,\u2026,P\u2113\u2208\u03b6(K), the Fq[t]\u2013module of linear relations among the Pi is generated by a finite set of relations whose coefficient polynomials all have degree bounded by r(\u2113\u22121).  Equivalently, the maximal degree appearing in a minimal generating set for the relation module is at most r(\u2113\u22121).  This conjecture predicts a uniform, effective bound independent of the particular points.  A counterexample would immediately falsify the\u0438\u0447\u043d\u0430\u044f bound.",
     "domains": [
       "Algebra",
@@ -2562,20 +2504,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-04T13:50:48.421830+00:00",
     "title": "Existenceof a Reduced Planar Convex Body Exceeding Lassak's Area Bound"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "A conjectural condition on the compatibility constraints of symbol frequencies and row/column balances within extended Latin structures, aiming to formalize the critical threshold for symplectic completion.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0203",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.28634v1",
-    "status": "available",
-    "timestamp": "2026-07-04T14:11:16.421178+00:00",
-    "title": "The Andersen-Hoffman Theorem for Equitable Rectangles"
   },
   {
     "consumed_by_exp_id": "",
@@ -3127,20 +3055,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T12:57:08.370062+00:00",
     "title": "Fang-Zhai Conjecture: Spectral extremal graphs for edge-color-critical graphs are edge extremal"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Let G be a brick (i.e. a 3\u2011connected bicritical non\u2011bipartite graph) that is not isomorphic to K4, the complement of C6 (\u0143C6) nor the Petersen graph. Then the following are equivalent:\n\n1) Every b\u2011invariant edge of G is a forcing edge.\n2) G is a near\u2011bipartite brick belonging to the class characterised in the main theorem of the paper (i.e. the complete description of near\u2011bipartite bricks for which every b\u2011invariant edge is forcing).\n\nThus, apart from the three small exceptions, the property \"all b\u2011invariant edges are forcing\" precisely picks out the near\u2011bipartite bricks.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0242",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.00608v1",
-    "status": "available",
-    "timestamp": "2026-07-03T13:25:27.639831+00:00",
-    "title": "Every b\u2011invariant edge is forcing exactly for near\u2011bipartite bricks (up to the three classical exceptions)"
   },
   {
     "consumed_by_exp_id": "",
@@ -4135,6 +4049,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let $P$ be a poset satisfying the Finite Antichain Condition (FAC). Suppose that $P$ contains no saturated chain $D$ such that either $D$ or its reverse $D^*$ is order\u2011isomorphic to a direct sum $\\bigoplus_{\\alpha<\\kappa} D_\\alpha$ for some infinite cardinal $\\kappa$, where each $D_\\alpha$ is infinite and co\u2011well\u2011founded. Then there exist a chain $C\\subseteq P$ and a partition $\\{A_i\\}_{i\\in I}$ of $P$ into antichains such that $C\\cap A_i\\neq\\varnothing$ for every $i\\in I$.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0311",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02500v1",
+    "status": "available",
+    "timestamp": "2026-07-04T22:26:29.896780+00:00",
+    "title": "Obstruction\u2011free FAC posets satisfy the Aharoni\u2011Korman conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any squarefree integer N > 1 with an even number of distinct prime factors, the genus of the Atkin\u2013Lehner quotient X_N / \u27e8w_p\u27e9 is zero if and only if N belongs to the finite set {6, 10, 22}.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0312",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02306v1",
+    "status": "available",
+    "timestamp": "2026-07-04T22:27:31.126530+00:00",
+    "title": "Genus-zero condition for Atkin\u2013Lehner quotients of Shimura curves"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch \u2014 it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
     "domains": [
       "Novelty",
@@ -4147,20 +4091,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T00:49:27.041847+00:00",
     "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle 0a41cc78 (Q=0.726) proved 13 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The 2-adic valuation of the shifted Perrin sequence {R_m - 1} admits an explicit piecewise formula for all m \u2265 0, analogous to Theorem TV1 for the Padovan sequence. Specifically, there exists a finite",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_0a41cc78_ca0f203b",
-    "priority_score": 0.7758007692307691,
-    "research_mode": "team",
-    "source_exp_id": "0a41cc78",
-    "status": "available",
-    "timestamp": "2026-07-04T22:07:22.177819+00:00",
-    "title": "Close Proofs: Explicit Formula for 2-adic Valuation of Shifted Perrin Numbers"
   },
   {
     "consumed_by_exp_id": "",
@@ -4179,66 +4109,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0114",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-03T00:49:27.007324+00:00",
-    "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 2-adic valuation of shifted Perrin numbers\n\nDerived from this cycle's findings: the Perrin sequence `R` (`R0=3, R1=0, R2=2`,\n`R(n+3)=R(n+1)+R(n)`) has `R mod 2^k` periodic with period `7\u00b72^{k-1}`; the shifted\nvaluation `\u03bd\u2082(R_m \u2212 1)` is a constant in `{0,1,2}` on 25 of the 28 residue classes\nmod 28, and is unbounded exactly on the three classes `m \u2261 10, 19, 26 (mod 28)`\n(equivalently `R_m \u2261 1 mod 8`), where it refines self-similarly at each higher power of 2.\n\n## 1. A closed ruler-function form for the exceptional exponents\n\nOn the three exceptional classes the valuation appears to equal `3` plus a term that is\naffine in a single `\u03bd\u2082(m + c)`, so that the entire valuation is piecewise linear in\n`\u03bd\u2082(m + c)` \u2014 the exact analogue of the Padovan \"TV1\" law.\n**The key insight is** that the period doubles cleanly under each 2-adic refinement,\nso exactly one \"child\" residue survives at every level and the increments form a ruler\nsequence. **Why now?** The base cases (levels mod 28 and mod 56) are now pinned down\nexactly, giving both the constant part and the first two ruler increments to anchor an\ninduction on the companion-matrix expansion `M^{7\u00b72^{k-1}} = I + 2^k B_k`.\n\n## 2. The valuation realizes every natural number\n\nEmpirically `\u03bd\u2082(R_m \u2212 1)` attains `0, 1, 2, 3, \u2026` with explicit small witnesses, so its\nvalue set is exactly `\u2115`, and for `k \u2265 3` precisely three residues mod `7\u00b72^{k-1}` carry\nvaluation `\u2265 k`. **The key insight is** that the Perrin period is *primitive* \u2014 it never\ncollapses when the modulus doubles \u2014 which forces a nonempty survivor set at every level.\n**Why now?** We can prove exact-period primitivity by an inductive squaring identity\n`(I + 2^k B)^2 \u2261 I (mod 2^{k+1})`, and the three-residue survivor count is already\nverified through four full doublings.\n\n## 3. Finiteness of the Perrin\u2013Brocard equation `R_m = x\u00b2 + 1`\n\nSince a perfect square has even 2-adic valuation, every `m` with `\u03bd\u2082(R_m \u2212 1)` odd is\nimmediately excluded \u2014 for example all `m \u2261 0,3,7,13,14,17,21,27 (mod 28)`, where the\nvaluation equals `1`. **The key insight is** that an explicit valuation formula converts a\nhard Diophantine search into a finite congruence-plus-size check. **Why now?** With the\nmod-28/mod-56 valuation table in hand, the surviving residues are a short explicit list,\nand the exponential growth `R_m \u223c \u03c1^m` (\u03c1 the plastic number) should bound the remaining\ncandidates to a finite, checkable range.\n\n## 4. The same law for the whole family `R(n+3) = a\u00b7R(n+1) + b\u00b7R(n)`\n\nPerrin is the case `(a,b) = (1,1)`. For odd `b`, the companion matrix is 2-adically\nregular, so `R mod 2^k` should again be purely periodic with a doubling period and a\nfinite congruence description of `\u03bd\u2082(R_m \u2212 c)`. **The key insight is** that period-doubling\nis a generic property of a 2-adically regular companion matrix, not a Perrin coincidence.\n**Why now?** The Perrin proof isolates exactly which matrix computation drives the law,\nso it can be replayed across the parameter family by classifying `(a,b) mod` small\n2-powers.\n\n## 5. Valuation profiles at odd primes\n\nFor each odd prime `p`, `R mod p^k` should be periodic with a Pisano-type period\n`\u03c0(p)\u00b7p^{k\u2212k\u2080}`, and `\u03bd_p(R_m \u2212 1)` should again be governed by finitely many congruences,\nwith the exceptional residues being exactly those where `R_m \u2261 1 (mod p)`. **The key\ninsight is** that the shift by `1` selects the residues where the recurrence orbit meets a\nfixed point of multiplication, after which lifting-the-exponent yields linear-in-`\u03bd_p(m+c)`\ngrowth. **Why now?** The 2-adic case gives a complete, verified template \u2014 determine\n`\u03c0(p)`, count the exceptional residues, and prove the level-1 formula via the `p`-adic\ncompanion matrix \u2014 that transfers directly to `p = 7, 23, 29` and beyond.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0311",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "0a41cc78",
-    "status": "available",
-    "timestamp": "2026-07-04T22:04:47.184113+00:00",
-    "title": "Derived from this cycle's findings: the Perrin sequence `R` (`R0=3, R1=0, R2=2`,"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThese conjectures are distilled from a single finding: on a finite, strongly\nconnected, edge-weighted digraph whose outgoing weights form probability\ndistributions, the only vertex colourings in which each colour is the weighted\naverage of its out-neighbours are the constant ones. Strong connectivity is the\nexact dividing line, and neither symmetry nor reversibility of the weights plays\nany role. Each direction below sharpens, weakens, or transports that dividing\nline into new territory.\n\n## 1. The collapse has a speed, and the speed is spectral\n\n**Conjecture.** Repeatedly replacing every vertex's colour by the weighted\naverage of its out-neighbours' colours drives any initial colouring to the global\naverage at a geometric rate, and that rate is controlled by the amount of\noutgoing mass that any two vertices are guaranteed to share.\n\nThe key insight is that strong connectivity together with a uniform positive\noverlap between the outgoing distributions of any two vertices upgrades the\none-step maximum principle from \"the spread cannot increase\" to \"the spread must\nstrictly shrink by a fixed proportion.\" Constancy of equilibria then becomes a\nfree corollary of a genuine contraction estimate.\n\nWhy now? The qualitative theorem already isolates strong connectivity as the\nmechanism; the natural next question is not *whether* colourings collapse but\n*how fast*, and the overlap (Dobrushin) coefficient gives a clean, checkable\nquantity that ties the combinatorics of the digraph directly to a convergence\nrate.\n\n## 2. Strict convexity, not the real line, is what forces collapse\n\n**Conjecture.** The same collapse holds when colours live in any strictly convex\ngeometry \u2014 a strictly convex normed space, or more ambitiously a nonpositively\ncurved metric space where \"weighted average\" means barycentre \u2014 and it can fail\nin geometries that are convex but not strictly so.\n\nThe key insight is that at an extreme point of the set of colours the averaging\nequation can only hold if every positively weighted neighbour sits at that same\nextreme point; strict convexity is precisely the property that makes extremality\ncontagious, and strong connectivity then spreads it everywhere.\n\nWhy now? The real-valued proof secretly uses only that a maximum is extreme and\nthat averages cannot exceed it. Recognising this exposes the theorem as a\nstatement about convex geometry rather than about numbers, opening a bridge to\nthe theory of averages on curved spaces.\n\n## 3. When connectivity breaks, the answer is counted by sinks\n\n**Conjecture.** Without strong connectivity, the space of averaging colourings is\nfinite-dimensional with dimension equal to the number of terminal\nstrongly-connected components (\"sinks\") of the digraph, and a natural basis is\ngiven by the absorption probabilities into those sinks.\n\nThe key insight is that each closed, internally strongly connected cluster\ncontributes exactly one constant degree of freedom, while every remaining vertex\nis pinned down as a weighted blend of where random exploration eventually settles.\n\nWhy now? Our sharpness example already shows that a single extra sink creates a\none-parameter family of non-constant colourings; the immediate structural\nquestion is to turn that observation into an exact dimension formula, converting a\nyes/no rigidity statement into a precise enumeration.\n\n## 4. On infinite networks, rigidity becomes a recurrence property\n\n**Conjecture.** On infinite but locally finite strongly connected networks,\nbounded averaging colourings are constant exactly when random exploration of the\nnetwork returns to its starting region infinitely often; on networks that drift\naway to infinity, explicit non-constant bounded colourings exist.\n\nThe key insight is that the finiteness assumption in the original theorem was\nnever really about size \u2014 it guaranteed that the maximum colour is attained\nsomewhere \u2014 and the correct infinite replacement is recurrence, which guarantees\nthat the influence of any region is inescapable.\n\nWhy now? Extending the rigidity statement past finite graphs forces a confrontation\nwith the failure of the maximum principle, and recurrence supplies exactly the\nmissing ingredient, linking a combinatorial rigidity phenomenon to the long-run\nbehaviour of exploration.\n\n## 5. Allowing signed weights trades collapse for rotation\n\n**Conjecture.** If the averaging weights are permitted to be negative (while still\nsumming to one at each vertex), non-constant colourings appear precisely when the\nnetwork carries a hidden cyclic symmetry, and those colourings are the symmetry's\ncharacters.\n\nThe key insight is that positivity of the weights, through the Perron-Frobenius\nphenomenon, is what makes the constant colouring the *unique* stable pattern;\nremoving positivity lets other unit-strength modes survive, and these modes read\noff the periodic structure of the network.\n\nWhy now? Our evidence shows symmetry and reversibility are irrelevant to the\npositive-weight theorem, which sharpens the question of what actually matters:\nthe conjecture proposes that it is positivity alone, and that abandoning it\nconverts a rigidity theorem into a classification of discrete rotational\nsymmetries.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0313",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "054477b4",
-    "status": "available",
-    "timestamp": "2026-07-04T22:12:29.463847+00:00",
-    "title": "These conjectures are distilled from a single finding: on a finite, strongly"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0115",
-    "priority_score": 0.73,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-03T00:49:27.017991+00:00",
-    "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Geometry"
@@ -4250,34 +4120,5 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T04:44:52.457313+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Conjecture: For sufficiently large N, the double sum S(N) = \u03a3_{n\u2264N} \u03a3_{p|F_n} 1/p satisfies S(N) = C\u00b7N^{-1/2} + o(N^{-1/2}), where C = \u221a(\u03c0/2)\u00b7\u03b3 (\u03b3 is the Euler\u2013Mascheroni constant). Test: Compute S(N) for N = 10^4, 10^5, 10^6 and fit S(N)\u00b7\u221aN; the fitted constant should converge to C within statistical error. If the constant deviates beyond 5% or the exponent differs from -1/2 by more than 0.02, the conjecture is falsified. Impact: Establishing this universal scaling would link the distribution of prime divisors in linear recurrences with probabilistic number theory, enabling new subexponential algorithms for factoring Fibonacci\u2011related integers and providing a benchmark for models of prime occurrence in recursive sequences.",
-    "domains": [
-      "NumberTheory",
-      "Novelty"
-    ],
-    "id": "fd_0312",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "available",
-    "timestamp": "2026-07-04T22:07:16.990618+00:00",
-    "title": "Scaling law for the reciprocal prime factor sum of Fibonacci numbers"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle 054477b4 (Q=0.451) proved 10 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that for every finite strongly connected edge\u2011weighted directed graph G there is no assignment of colors to its vertices such that each vertex\u2019s color is a (weighted) convex combination of ",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_054477b4_4b97cb7a",
-    "priority_score": 0.5014887166666668,
-    "research_mode": "team",
-    "source_exp_id": "054477b4",
-    "status": "available",
-    "timestamp": "2026-07-04T22:19:10.240614+00:00",
-    "title": "Close Proofs: Non\u2011existence of non\u2011constant colorings satisfying the blend condition"
   }
 ];

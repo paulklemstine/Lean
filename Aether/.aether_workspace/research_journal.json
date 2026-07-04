@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ef629b7b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Riordan Array Row Sums and Fibonacci Bisections\n\nDerived from the cycle that proved `Σ_{k=0}^{n} C(n+k, 2k) = F(2n+1)` and the\ncompanion `Σ_{k=0}^{n} C(n+1+k, 2k+1) = F(2n+2)` vi",
-      "quality_score": 0.722996,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-06-28T13:04:38",
-      "title": "Row Sum Fibonacci Property of Pascal-like Riordan Array"
-    },
-    {
       "cycle_id": "872fa119",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Incoherence Index of Standard Social Decision Frames\n\nDerived from this cycle's findings (`OrderSpectrum.lean`,\n`SpectrumCharacterization.lean`): the incoherence index of a singl",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-04T22:07:22",
       "title": "Explicit Formula for 2-adic Valuation of Shifted Perrin Numbers"
+    },
+    {
+      "cycle_id": "bdd384c4",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThese conjectures are distilled from a study of *phantom topologies*: a \"reality\" is\nthe topology all observers agree on (the common open sets of a family of finer observer\ntopolo",
+      "quality_score": 0.83176,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-04T22:25:53",
+      "title": "Phantom Topologies: Spaces That Change When You Look at Them"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b1625408",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Gorenstein Polytopes, Joins, and Free Sums\n\nThe verified result `Geometry/GorensteinJoin.lean` *refutes* the mission title: the join of\nGorenstein polytopes is always Gorenstein,",
-      "quality_score": 0.69204,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-28T06:03:35",
-      "title": "Join of Gorenstein Polytopes is Not Necessarily Gorenstein"
-    },
     {
       "cycle_id": "cff6413b",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-07-04T22:19:10",
       "title": "Non‑existence of non‑constant colorings satisfying the blend condition on finite strongly connected "
+    },
+    {
+      "cycle_id": "bdd384c4",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThese conjectures are distilled from a study of *phantom topologies*: a \"reality\" is\nthe topology all observers agree on (the common open sets of a family of finer observer\ntopolo",
+      "quality_score": 0.83176,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-04T22:25:53",
+      "title": "Phantom Topologies: Spaces That Change When You Look at Them"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7258007692307691
     }
   ],
-  "last_updated": "2026-07-04T22:19:10",
+  "last_updated": "2026-07-04T22:25:53",
   "open_questions": [
     {
       "context": "without cross-imports. All results have zero `sorry`s.; What *is* provable, and proved here with zero `sorry`s, is:; All results are proved with zero `sorry`s.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "aed51c81",
-        "quality": 0.6341600000000001,
-        "theorems": 0,
-        "title": "No solutions for odd exponents in the coprime case"
-      },
-      {
         "cycle_id": "51b04544",
         "quality": 0.4546,
         "theorems": 7,
@@ -3637,6 +3631,12 @@
         "quality": 0.4514887166666668,
         "theorems": 10,
         "title": "Non‑existence of non‑constant colorings satisfying the blend condition on finite"
+      },
+      {
+        "cycle_id": "bdd384c4",
+        "quality": 0.83176,
+        "theorems": 14,
+        "title": "Phantom Topologies: Spaces That Change When You Look at Them"
       }
     ],
     "NumberTheory": [
