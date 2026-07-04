@@ -5324,7 +5324,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "87e9f111",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -5352,7 +5352,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T00:49:26.963635+00:00",
       "title": "Phantom Topologies: Spaces That Change When You Look at Them"
@@ -5406,7 +5406,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "59993b2c",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -5434,7 +5434,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T00:49:27.017991+00:00",
       "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
@@ -5447,7 +5447,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "7edca83f",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -5475,7 +5475,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T00:49:27.030210+00:00",
       "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
@@ -5726,7 +5726,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "242f16a7",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -5756,7 +5756,7 @@
       "source": "",
       "source_exp_id": "2607.01130v1",
       "source_path": "http://arxiv.org/abs/2607.01130v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T02:14:54.483527+00:00",
       "title": "Sufficiency of obvious necessary conditions for the generalized honeymoon Oberwolfach problem with multiple round tables"
@@ -7163,7 +7163,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "ce849dcc",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -7195,7 +7195,7 @@
       "source": "",
       "source_exp_id": "2607.00212v1",
       "source_path": "http://arxiv.org/abs/2607.00212v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T15:36:16.872679+00:00",
       "title": "Strong Majority Edge-Coloring Conjecture"
@@ -8638,13 +8638,13 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Sivaraman2020"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "6f2d7205",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -8659,7 +8659,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0183",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-04T11:32:59.753458+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem F_asymptotic (s : ℕ) : (F s : ℝ) = Theta ((s : ℝ)^(3/2) / Real.log (s : ℝ)) := by sorry",
       "lineage_refs": [],
@@ -8674,7 +8674,7 @@
       "source": "",
       "source_exp_id": "2606.29873v1",
       "source_path": "http://arxiv.org/abs/2606.29873v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-04T05:23:25.775044+00:00",
       "title": "Conjecture on the asymptotic growth of the chi‑bounding function F(s) for graphs whose complement has girth at least 6"
@@ -13094,6 +13094,7 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "famous_subtask"
+    "famous_subtask",
+    "cross_domain_bridge"
   ]
 }
