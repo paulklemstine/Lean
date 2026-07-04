@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "8170e958",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Collision Resistance from Hard Problems\n\nDerived from this cycle's findings on `Cryptography.ClawFreeHash` and\n`Cryptography.MDLengthExtension`, building on `Cryptography.MerkleD",
-      "quality_score": 0.5594,
-      "sorry_count": 1,
-      "theorem_count": 15,
-      "timestamp": "2026-06-27T22:08:34",
-      "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
-    },
-    {
       "cycle_id": "c027516f",
       "domain": "Applications",
       "key_insight": "# Future Directions — Proof Complexity: Resolution and Cutting Planes\n\nDerived from this cycle's findings (soundness of resolution, unsatisfiability of\nthe pigeonhole CNF `PHP n`, soundness of the two",
@@ -2501,6 +2491,16 @@
       "theorem_count": 16,
       "timestamp": "2026-07-04T02:31:07",
       "title": "Every b‑invariant edge is forcing exactly for near‑bipartite bricks (up to the three classical excep"
+    },
+    {
+      "cycle_id": "a1e3ce3a",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThese conjectures grow directly out of the exact support laws established for the\nsum and difference kernels of Sidon sets: for a nonempty Sidon set of size `k`,\nthe difference se",
+      "quality_score": 0.44295649681528665,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-04T04:39:28",
+      "title": "Multi-kernel smoothing lemma for Sidon sets"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71008
     }
   ],
-  "last_updated": "2026-07-04T02:31:07",
+  "last_updated": "2026-07-04T04:39:28",
   "open_questions": [
     {
       "context": "and is genuinely proved (no `sorry`, no `decide`-only). The false converse is",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "38047daa",
-        "quality": 0.6813500000000001,
-        "theorems": 16,
-        "title": "Uniqueness of the Critical 2-Vertex Augmentation of G27"
-      },
-      {
         "cycle_id": "135cab00",
         "quality": 0.7176246153846154,
         "theorems": 13,
@@ -3637,6 +3631,12 @@
         "quality": 0.46629999999999994,
         "theorems": 10,
         "title": "Phantom Topologies: Spaces That Change When You Look at Them"
+      },
+      {
+        "cycle_id": "a1e3ce3a",
+        "quality": 0.44295649681528665,
+        "theorems": 16,
+        "title": "Multi-kernel smoothing lemma for Sidon sets"
       }
     ],
     "NumberTheory": [
