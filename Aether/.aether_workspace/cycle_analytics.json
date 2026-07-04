@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-04T13:49:15.543295+00:00",
+  "last_updated": "2026-07-04T14:40:39.557145+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -33208,6 +33208,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-04T13:49:15.379234+00:00",
       "title": "Eventual congruence of mis\u00e8re P\u2011positions in nuclear escalation ladders"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.3331,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 131,
+      "domain": "Applications",
+      "duration_seconds": 1065.3158259391785,
+      "end_time": 1783175305.7646244,
+      "files_integrated": 7,
+      "job_id": "ee6f49cd",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v16",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.38,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.8331,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.8779,
+        "novelty": 0.95,
+        "proof_depth": 0.847,
+        "usefulness": 0.8985
+      },
+      "quality_score": 0.7998400000000001,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783174240.4487984,
+      "strategy_count": 0,
+      "theorem_count": 29,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 29,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-04T14:40:39.217992+00:00",
+      "title": "Classification of Discrete d-Pseudomanifolds with 2d+7 Vertices"
     }
   ]
 }

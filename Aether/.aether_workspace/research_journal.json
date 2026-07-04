@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5d028d25",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Prismatic Purity for F-Crystals\n\nDerived from this cycle's findings (faithfulness is cheap; the deep input is\ncodimension-≥2 Hartogs extension; normality is exactly the dimension",
-      "quality_score": 0.747936,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-06-28T06:56:13",
-      "title": "Prismatic Purity for F-Crystals on Regular Schemes"
-    },
-    {
       "cycle_id": "9a7cbc8b",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Plethystic Triviality of the Shifted t-Schur Basis\n\nDerived from this cycle's findings:\n- Headline identity `S^t_λ = φ_t(Q_λ)` (`Sfun_eq_phiT_Qfun`) and its strict-partition form",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-04T08:03:45",
       "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+    },
+    {
+      "cycle_id": "ee6f49cd",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures arising from the study of discrete pseudomanifolds at\nthe vertex threshold, the combinatorial suspension operation, and the minimal\ntriangulation of",
+      "quality_score": 0.7998400000000001,
+      "sorry_count": 0,
+      "theorem_count": 29,
+      "timestamp": "2026-07-04T14:40:33",
+      "title": "Classification of Discrete d-Pseudomanifolds with 2d+7 Vertices"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "552f4622",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Σ-ramified Iwasawa modules over a ℤ_p-extension\n\nThis cycle formalized the algebraic engine of torsionness for Σ-ramified Iwasawa\nmodules in the bounded-rank regime (`μ = 0`, `λ",
-      "quality_score": 0.642034,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-06-28T04:01:53",
-      "title": "Torsionness of Σ‑ramified Iwasawa modules over a ℤₚ‑extension"
-    },
     {
       "cycle_id": "72f7aee6",
       "domain": "Novelty",
@@ -2501,21 +2491,19 @@
       "theorem_count": 7,
       "timestamp": "2026-07-04T13:49:12",
       "title": "Eventual congruence of misère P‑positions in nuclear escalation ladders"
+    },
+    {
+      "cycle_id": "ee6f49cd",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures arising from the study of discrete pseudomanifolds at\nthe vertex threshold, the combinatorial suspension operation, and the minimal\ntriangulation of",
+      "quality_score": 0.7998400000000001,
+      "sorry_count": 0,
+      "theorem_count": 29,
+      "timestamp": "2026-07-04T14:40:33",
+      "title": "Classification of Discrete d-Pseudomanifolds with 2d+7 Vertices"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f4462f16",
-      "domain": "Applications",
-      "name": "dist_contract",
-      "quality": 0.79052
-    },
-    {
-      "cycle_id": "f4462f16",
-      "domain": "Applications",
-      "name": "cayleyGraph_adj",
-      "quality": 0.79052
-    },
     {
       "cycle_id": "135cab00",
       "domain": "Novelty",
@@ -2803,9 +2791,21 @@
       "domain": "Applications",
       "name": "s2_mul_le_min",
       "quality": 0.75424
+    },
+    {
+      "cycle_id": "ee6f49cd",
+      "domain": "Applications",
+      "name": "maximally",
+      "quality": 0.7998400000000001
+    },
+    {
+      "cycle_id": "ee6f49cd",
+      "domain": "Applications",
+      "name": "incidence_double_count",
+      "quality": 0.7998400000000001
     }
   ],
-  "last_updated": "2026-07-04T13:49:12",
+  "last_updated": "2026-07-04T14:40:33",
   "open_questions": [
     {
       "context": "and the colour pigeonhole.  Both are fully provable in Lean with no `sorry`.; `afl_constant_gap` — all `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "3a1da3d1",
-        "quality": 0.71008,
-        "theorems": 11,
-        "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-      },
-      {
         "cycle_id": "ca29fc4b",
         "quality": 0.467453,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.4724886610169492,
         "theorems": 7,
         "title": "Close Proofs: Phantom Topologies: Spaces That Change When You Look at Them"
+      },
+      {
+        "cycle_id": "ee6f49cd",
+        "quality": 0.7998400000000001,
+        "theorems": 29,
+        "title": "Classification of Discrete d-Pseudomanifolds with 2d+7 Vertices"
       }
     ],
     "Bridges": [
