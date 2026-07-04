@@ -17,7 +17,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: unnamed_concept"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "87e9f111",
     "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
     "domains": [
       "Novelty",
@@ -27,7 +27,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:26.963635+00:00",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
@@ -1316,7 +1316,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing the generalized honeymoon Oberwolfach problem in Lean 4"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7edca83f",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
     "domains": [
       "Novelty",
@@ -1326,7 +1326,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.030210+00:00",
     "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
   },
@@ -1389,7 +1389,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Alternating Sign Conjecture for Andrews' q-Series Families"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "242f16a7",
     "description": "For any nonnegative integer s and any list of integers m\u2081,\u2026,m_t \u2265 2, let n = s + \u03a3 m_i. If each m_i divides 2n(n\u22121), then there exists a seating schedule for 2n participants consisting of n newlywed couples at s tables of size 2 and t round tables of sizes 2m\u2081,\u2026,2m_t such that each couple sits together every night and each pair of distinct non\u2011spouses sits together exactly once.",
     "domains": [
       "Bridges"
@@ -1398,7 +1398,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01130v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T02:14:54.483527+00:00",
     "title": "Sufficiency of obvious necessary conditions for the generalized honeymoon Oberwolfach problem with multiple round tables"
   },
@@ -1808,7 +1808,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lower Bound for the Proportion of Zeros on the Critical Line for PGL(3) L-functions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "244691c2",
     "description": "Let $k$ be an algebraically closed field of characteristic $p > 0$, let $G$ be a reductive algebraic group over $k$ with universal cover $\\pi\\colon G' \\to G$. For any regular unipotent element $u \\in G(k)$, the scheme-theoretic stabilizer $\\Stab_{Z(G')}(C_{u'})$, where $u' \\in G'(k)$ is a preimage of $u$ under $\\pi$, is equal to $\\ker \\pi$. This generalizes Steinberg's description of stabilizers for semisimple elements to regular unipotent elements, explaining the failure of smoothness in non-\u00e9tale cases.",
     "domains": [
       "Algebra"
@@ -1817,7 +1817,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00088v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T15:18:04.081728+00:00",
     "title": "Scheme-theoretic stabilizer of regular unipotent conjugacy classes under the center of the simply connected cover"
   },
@@ -2273,7 +2273,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Generalized variance formula for digit expansions of $1/p$ beyond powers of two"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6f2d7205",
     "description": "Conjecture that for all sufficiently large s, the maximum chromatic number F(s) over graphs G with \u03c9(G) \u2264 s and girth(\u0305G) \u2265 6 satisfies F(s) = \u0398(s^{3/2} / log s). In particular, there exist positive constants c\u2081, c\u2082 such that for all s \u2265 2, c\u2081\u00b7s^{3/2}/log s \u2264 F(s) \u2264 c\u2082\u00b7s^{3/2}/log s.",
     "domains": [
       "Pythagorean"
@@ -2282,7 +2282,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29873v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T05:23:25.775044+00:00",
     "title": "Conjecture on the asymptotic growth of the chi\u2011bounding function F(s) for graphs whose complement has girth at least 6"
   },
@@ -2463,7 +2463,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on Leading Term Cancellation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c63aa9e3",
     "description": "We conjecture that for any fixed escalation granularity m\u22651, the mis\u00e8re P\u2011positions of the single\u2011theater escalation game (Definition\u202f1) eventually follow a simple congruence modulo (m+1). Precisely, there exists an integer T(m) such that for every ladder length N\u2265T(m) and every remaining rung count r with 0\u2264 r\u2264 N, the position r is a P\u2011position under mis\u00e8re play if and only if r\u00a0\u2261\u00a00 (mod m+1). This strengthens Theorem\u202f4.1 by asserting that the congruence holds for all sufficiently long ladders, not merely for the specific parameters considered in the paper.",
     "domains": [
       "Pythagorean"
@@ -2472,7 +2472,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29015v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T10:58:20.247042+00:00",
     "title": "Eventual congruence of mis\u00e8re P\u2011positions in nuclear escalation ladders"
   },
@@ -3672,7 +3672,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "That the entries of an integer right triangle are forced"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "aad3630a",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -3682,12 +3682,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.007324+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "59993b2c",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domains": [
       "Novelty",
@@ -3697,7 +3697,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.73,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.017991+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
