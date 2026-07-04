@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f3fa5004",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Explicit bias bounds for the Cusick density `c_t`\n\nContext: `c_t = dens { n : s₂(n) ≤ s₂(n + t) }`, `s₂` the binary digit sum.\nThe Drmota–Kauers–Spiegelhofer (2016) theorem gives",
-      "quality_score": 0.38602000000000003,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-06-28T01:56:26",
-      "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
-    },
-    {
       "cycle_id": "ca01957a",
       "domain": "Applications",
       "key_insight": "# Future Directions — n-Queens Completion Threshold\n\nThis cycle formalized (0 sorries) the structural skeleton of the n-queens completion\nproblem in `Catalog/Applications/NQueens/{Basic,Completion,Thr",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-07-04T09:12:37",
       "title": "Sharp Threshold Constant for Cycle Games"
+    },
+    {
+      "cycle_id": "22f3c392",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Anti-Fibonacci and Addition-Avoiding Sequences\n\nDerived from this cycle's findings: the \"anti-Fibonacci\" data `1,1,2,4,7,11,16,…` is the\ncentral-polygonal sequence `A(n) = 1 + n(",
+      "quality_score": 0.36398012292358806,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-04T09:16:15",
+      "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.75424
     }
   ],
-  "last_updated": "2026-07-04T09:12:37",
+  "last_updated": "2026-07-04T09:16:15",
   "open_questions": [
     {
       "context": "and the colour pigeonhole.  Both are fully provable in Lean with no `sorry`.; `afl_constant_gap` — all `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "3fe1db8c",
-        "quality": 0.8246161538461538,
-        "theorems": 13,
-        "title": "Proving the Existence of a Sufficiently Large Extremal Family"
-      },
-      {
         "cycle_id": "af0095a3",
         "quality": 0.7636449999999999,
         "theorems": 7,
@@ -3637,6 +3631,12 @@
         "quality": 0.5206,
         "theorems": 20,
         "title": "Phantom Topologies: Spaces That Change When You Look at Them"
+      },
+      {
+        "cycle_id": "22f3c392",
+        "quality": 0.36398012292358806,
+        "theorems": 0,
+        "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
       }
     ],
     "NumberTheory": [

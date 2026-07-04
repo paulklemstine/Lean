@@ -1,0 +1,13 @@
+--- Threshold.lean
++++ Threshold.lean
+@@ -55,8 +55,8 @@
+   the thresholds at `1/n` (subgraphs) and `ln n / n` (connectivity).
+ -/
+ import Mathlib
+-import Catalog.Algebra.ErdosRenyi.Model
+-import Catalog.Algebra.ErdosRenyi.Concrete
++import Algebra.ErdosRenyi.Model
++import Algebra.ErdosRenyi.Concrete
+ 
+ 
+ 
