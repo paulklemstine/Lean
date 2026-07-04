@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "9e0667c2",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Hamiltonian Compression Factor of Cubic Graphs\n\nDerived from this cycle's findings: for every even `n ≥ 4` the cubic circulant\n`ML(n)` admits a 2-symmetric Hamiltonian cycle (`mo",
-      "quality_score": 0.7800670000000001,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-28T03:29:47",
-      "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs"
-    },
-    {
       "cycle_id": "0a880828",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Natural Boundary of Imaginary Quadratic Prime Zeta Functions\n\nDerived from the verified results of this cycle:\n\n* `Catalog/Novelty/ImaginaryQuadraticPrimeZeta.lean` — the Gaussia",
@@ -2501,6 +2491,16 @@
       "theorem_count": 7,
       "timestamp": "2026-07-04T11:53:50",
       "title": "Close Proofs: Phantom Topologies: Spaces That Change When You Look at Them"
+    },
+    {
+      "cycle_id": "0f872c04",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nDerived from this cycle's finding that, for `ζ = exp(2πi/5)`, the minimal modulus\n`σ₅(n)` of a sum of `n` fifth roots of unity is non-increasing along every residue\nclass modulo 5",
+      "quality_score": 0.62536,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-04T11:58:18",
+      "title": "Monotonicity of the minimal absolute value of sums of fifth roots of unity within each residue class"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.75424
     }
   ],
-  "last_updated": "2026-07-04T11:53:50",
+  "last_updated": "2026-07-04T11:58:18",
   "open_questions": [
     {
       "context": "and the colour pigeonhole.  Both are fully provable in Lean with no `sorry`.; `afl_constant_gap` — all `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "af0095a3",
-        "quality": 0.7636449999999999,
-        "theorems": 7,
-        "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-      },
-      {
         "cycle_id": "2f34538d",
         "quality": 0.7903600000000002,
         "theorems": 6,
@@ -3637,6 +3631,12 @@
         "quality": 0.36398012292358806,
         "theorems": 0,
         "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+      },
+      {
+        "cycle_id": "0f872c04",
+        "quality": 0.62536,
+        "theorems": 0,
+        "title": "Monotonicity of the minimal absolute value of sums of fifth roots of unity withi"
       }
     ],
     "NumberTheory": [
