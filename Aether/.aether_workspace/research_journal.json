@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "26246c0e",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Modified Wiener Attack with Partial `p+q` Knowledge\n\nDerived from this cycle's findings in `WienerPartialKnowledge.lean`,\n`WienerRecovery.lean`, and the new `WienerFactorization.",
-      "quality_score": 0.39061,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-27T23:00:45",
-      "title": "RSA Factorization with Partial p+q Knowledge and Small Private Exponent"
-    },
-    {
       "cycle_id": "6fa4f641",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Maximum size of cycle-containing families of vectors\n\nThis cycle established, for every alphabet size `b`, the bipartite/girth core of\nthe conjecture: a cycle-containing pair for",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-04T05:23:13",
       "title": "No solutions for odd exponents in the coprime case"
+    },
+    {
+      "cycle_id": "51b04544",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nFive bold, falsifiable conjectures arising from the divergence between colourability and\nlist colourability studied in this cycle.\n\n## 1. A degeneracy characterisation of the gree",
+      "quality_score": 0.4546,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-07-04T07:11:09",
+      "title": "The list chromatic number of 3-colorable planar graphs is at most 4"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71008
     }
   ],
-  "last_updated": "2026-07-04T05:23:13",
+  "last_updated": "2026-07-04T07:11:09",
   "open_questions": [
     {
       "context": "and is genuinely proved (no `sorry`, no `decide`-only). The false converse is",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "5875a645",
-        "quality": 0.5700000000000001,
-        "theorems": 17,
-        "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-      },
-      {
         "cycle_id": "f498d6bb",
         "quality": 0.6591141074626865,
         "theorems": 8,
@@ -3637,6 +3631,12 @@
         "quality": 0.6341600000000001,
         "theorems": 0,
         "title": "No solutions for odd exponents in the coprime case"
+      },
+      {
+        "cycle_id": "51b04544",
+        "quality": 0.4546,
+        "theorems": 7,
+        "title": "The list chromatic number of 3-colorable planar graphs is at most 4"
       }
     ],
     "NumberTheory": [
