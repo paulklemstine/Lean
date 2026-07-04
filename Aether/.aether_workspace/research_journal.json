@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "7e57e1f5",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Arithmetic Mirror Symmetry for Calabi–Yau\n\nDerived from this cycle's findings in `HodgeMirror.lean`, `SYZDuality.lean`, and\n`ZetaModularity.lean`. Each conjecture is bold, falsif",
-      "quality_score": 0.70122,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-06-27T22:34:58",
-      "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
-    },
-    {
       "cycle_id": "c25c1b9e",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Extremal signed determinant of the resistance matrix\n\nThis research cycle established two endpoints of the *signed resistance determinant*\n`sdet(G) := (-1)^(n-1) · det R(G)` over",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-07-04T05:06:11",
       "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
+    },
+    {
+      "cycle_id": "6f613cb7",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Dark Mathematics\n\nA *dark theorem* asserts that witnesses of some property exist — indeed that many\ndo — while no single witness can ever be named. This cycle isolated the\nstruct",
+      "quality_score": 0.6449999999999999,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-04T05:18:21",
+      "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71008
     }
   ],
-  "last_updated": "2026-07-04T05:06:11",
+  "last_updated": "2026-07-04T05:18:21",
   "open_questions": [
     {
       "context": "and is genuinely proved (no `sorry`, no `decide`-only). The false converse is",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "8b7f43f1",
-        "quality": 0.7303200000000001,
-        "theorems": 8,
-        "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
-      },
-      {
         "cycle_id": "3e52c27d",
         "quality": 0.7916800000000002,
         "theorems": 23,
@@ -3637,6 +3631,12 @@
         "quality": 0.7818800000000001,
         "theorems": 13,
         "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
+      },
+      {
+        "cycle_id": "6f613cb7",
+        "quality": 0.6449999999999999,
+        "theorems": 0,
+        "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
       }
     ],
     "NumberTheory": [
