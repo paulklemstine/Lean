@@ -1280,7 +1280,7 @@
       "GM2009",
       "Bro2021"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "aad4c1c5",
     "description": "Every minimal edge-colored graph (with respect to edge deletion) that does not admit a total rainbow forest must be a single monochromatic cycle (possibly with isolated vertices).",
     "domain_bridges": [
       "matroid intersection",
@@ -1296,7 +1296,7 @@
     "proof_strategy": "Use the rank inequalities to show that any minimal obstruction must contain a monochromatic cycle; argue by edge‑deletion minimality that no other structure can exist.",
     "research_mode": "team",
     "source_exp_id": "2606.31240v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T16:14:00.036969+00:00",
     "title": "Conjecture on the Structure of Minimal Obstructions to Total Rainbow Forests"
   },
