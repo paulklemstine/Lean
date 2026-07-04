@@ -379,7 +379,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sign changes of symmetric power L-function coefficients along sums of squares"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "131df22e",
     "description": "Let G be a finite group of order p^m where p is prime. For any k < p, and any two sequences a_1,..., a_k and b_1,..., b_k in G where the a_i are distinct, there exists a permutation sigma of {1,..., k} such that the products a_i * b_sigma(i) are all distinct.",
     "domains": [
       "Pythagorean",
@@ -389,7 +389,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:11:54.994533+00:00",
     "title": "Extension of Snevily-type Permutation Property to p-groups"
   },
@@ -731,7 +731,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tokushige's r-wise intersecting conjecture for non\u2011uniform product measures"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "aad4c1c5",
     "description": "Every minimal edge-colored graph (with respect to edge deletion) that does not admit a total rainbow forest must be a single monochromatic cycle (possibly with isolated vertices).",
     "domains": [
       "Pythagorean"
@@ -740,7 +740,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31240v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T16:14:00.036969+00:00",
     "title": "Conjecture on the Structure of Minimal Obstructions to Total Rainbow Forests"
   },
@@ -950,7 +950,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Generalized Honeymoon Oberwolfach Problem with Multiple Round Tables"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2aa93bab",
     "description": "Assuming the Extended Riemann Hypothesis, for a fixed elliptic curve E over a number field K with good ordinary reduction at p, the natural density of p\u2011cyclic extensions L/K (ordered by the product of ramified primes) such that the Mordell\u2011Weil rank of E over L exceeds the rank over K by exactly r equals (1/p)*(1\u22121/p)^r for every integer r \u2265 0.",
     "domains": [
       "Pythagorean",
@@ -960,7 +960,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T20:15:14.615812+00:00",
     "title": "Geometric distribution of Mordell-Weil rank growth in p\u2011cyclic extensions"
   },
@@ -1851,7 +1851,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the generic ordinarity bound for the Katz family"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "71bc6f98",
     "description": "The corrected estimator E(x) + C(x) from the proposed algorithm satisfies the error bound |E(x) + C(x) - \u03c0(x)| \u2264 K\u221ax for some constant K > 0 and all x \u2265 2. This conjecture formalizes the claim that the correction term significantly improves accuracy by reducing the error to O(\u221ax), matching the algorithm's computational complexity.",
     "domains": [
       "Pythagorean",
@@ -1861,7 +1861,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31761v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T17:32:19.384043+00:00",
     "title": "Error Bound Conjecture for Corrected Prime Count Estimator"
   },
@@ -2856,7 +2856,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equality case of the weighted dual Fisher inequality for taiko product structures"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2752f1be",
     "description": "For a Hamiltonian graph G with minimum degree at least 3, there exists a constant c > 0 such that G contains a nontrivial cycle of length at least n - c n^{2/3}. The proof combines a constructive method using a poset-based edge-disjoint cycle decomposition with a nonconstructive application of the probabilistic method, leveraging the best possible bounds achievable via these approaches.",
     "domains": [
       "Logic",
@@ -2866,7 +2866,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T07:37:36.028717+00:00",
     "title": "Existence of a nontrivial cycle of length n-O(n^{2/3}) in Hamiltonian graphs with \u03b4(G) \u2265 3"
   },
@@ -3116,7 +3116,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Functional Equations Enforce Primitivity of Coefficients"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "00261a50",
     "description": "For increasing Boolean functions f,g:{0,1}^n\u2192{0,1}, if the covariance exceeds the right-hand side of the FKKK inequality by at most a small \u03b5, then either f and g depend on disjoint sets of coordinates, or they are both dictatorships on the same coordinate, or after permuting coordinates and possibly swapping f,g they are L^2-close to the two-coordinate AND-OR pair (x_i x_j, x_i \u2228 x_j).",
     "domains": [
       "Physics"
@@ -3125,7 +3125,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.32024v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T15:19:41.775801+00:00",
     "title": "Stability of the sharp diagonal spectral correlation inequality for monotone Boolean functions"
   },
@@ -4019,7 +4019,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finite sign law for Ramanujan's third-order mock theta function \u03c1(q)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bb4b4c93",
     "description": "Every countable FAC poset P can be naturally decomposed into a topological sum (ordinal sum) of scattered subposets, where a poset is scattered if it contains no non-trivial dense subposet (i.e., no subset isomorphic to the rationals Q). This decomposition reflects the global structure of P and provides a foundation for analyzing chain-antichain interactions. The conjecture states that such a decomposition exists with explicitly constructible scattered components that preserve FAC properties.",
     "domains": [
       "Logic",
@@ -4029,7 +4029,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02500v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T19:57:33.862963+00:00",
     "title": "A structural decomposition theorem for countable FAC posets via scattered components"
   },
@@ -4078,7 +4078,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Genus-zero condition for Atkin\u2013Lehner quotients of Shimura curves"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ab59ff3c",
     "description": "Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch \u2014 it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
     "domains": [
       "Novelty",
@@ -4088,7 +4088,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.78,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.041847+00:00",
     "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
   },
