@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "dbb7efcb",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE DIRECTIONS — EML Differential Equations\n\nDerived from this cycle's findings (`EMLReductionOfOrder`, `EMLFirstOrderGroup`,\n`EMLRiccatiNormalForm`) together with the existing obstruction layer",
-      "quality_score": 0.79816,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-28T05:34:37",
-      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
-    },
-    {
       "cycle_id": "cff6413b",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Lower semi-inducibility profile of the red-blue star `S_{2,1}`\n\nThis cycle established (in `RedBlueStarS21Profile.lean`, `RedBlueStarS21Optimization.lean`,\n`RedBlueStarS21Catalog",
@@ -499,19 +489,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-04T00:48:10",
       "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+    },
+    {
+      "cycle_id": "3498198a",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Escher Staircases in Algebra\n\nAn *Escher staircase* is an infinite strictly ascending chain of ideals\n`I₀ ⊂ I₁ ⊂ I₂ ⊂ ⋯` in a commutative ring. A ring admits such a chain exactly",
+      "quality_score": 0.7818800000000001,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-04T05:06:11",
+      "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c027516f",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Proof Complexity: Resolution and Cutting Planes\n\nDerived from this cycle's findings (soundness of resolution, unsatisfiability of\nthe pigeonhole CNF `PHP n`, soundness of the two",
-      "quality_score": 0.7101600000000001,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-06-27T22:10:10",
-      "title": "Proof Complexity: Resolution and Cutting Planes"
-    },
     {
       "cycle_id": "7e57e1f5",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 16,
       "timestamp": "2026-07-04T04:39:28",
       "title": "Multi-kernel smoothing lemma for Sidon sets"
+    },
+    {
+      "cycle_id": "3498198a",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Escher Staircases in Algebra\n\nAn *Escher staircase* is an infinite strictly ascending chain of ideals\n`I₀ ⊂ I₁ ⊂ I₂ ⊂ ⋯` in a commutative ring. A ring admits such a chain exactly",
+      "quality_score": 0.7818800000000001,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-04T05:06:11",
+      "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71008
     }
   ],
-  "last_updated": "2026-07-04T04:39:28",
+  "last_updated": "2026-07-04T05:06:11",
   "open_questions": [
     {
       "context": "and is genuinely proved (no `sorry`, no `decide`-only). The false converse is",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "135cab00",
-        "quality": 0.7176246153846154,
-        "theorems": 13,
-        "title": "Classification of ρ-dominant elements in B(ρ) for symmetrizable Kac-Moody algebr"
-      },
-      {
         "cycle_id": "8b7f43f1",
         "quality": 0.7303200000000001,
         "theorems": 8,
@@ -3637,6 +3631,12 @@
         "quality": 0.44295649681528665,
         "theorems": 16,
         "title": "Multi-kernel smoothing lemma for Sidon sets"
+      },
+      {
+        "cycle_id": "3498198a",
+        "quality": 0.7818800000000001,
+        "theorems": 13,
+        "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
       }
     ],
     "NumberTheory": [

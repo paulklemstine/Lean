@@ -4,6 +4,21 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
+    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0245",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-04T05:01:41.360841+00:00",
+    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domains": [
       "Pythagorean"
@@ -15,6 +30,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T05:18:37.114832+00:00",
     "title": "Deepening: unnamed_concept"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 3498198a (Q=0.782), which proved 13 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring ",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_3498198a_0afd2296",
+    "priority_score": 0.8818800000000001,
+    "research_mode": "team",
+    "source_exp_id": "3498198a",
+    "status": "available",
+    "timestamp": "2026-07-04T05:06:11.952020+00:00",
+    "title": "Deepening: Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
   },
   {
     "consumed_by_exp_id": "",
@@ -1036,20 +1065,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T21:38:14.420490+00:00",
     "title": "Existence of a D_18 tuple with size 6 outside the exceptional case"
-  },
-  {
-    "consumed_by_exp_id": "7664f9cd",
-    "description": "For any prime r, any real x with 1 \u2264 x \u2264 r^{0.49}, and any real q in [0,1], the average over all Dirichlet characters modulo r of the 2q\u2011th power of the absolute value of the short character sum satisfies (1/(r\u22121))\u2211_\u03c7 |\u2211_{n\u2264x} \u03c7(n)|^{2q} \u2265 (1/2) x^{q}.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0092",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01184v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T21:39:43.438987+00:00",
-    "title": "Conjecture on sharp lower bounds for low moments of Dirichlet character sums"
   },
   {
     "consumed_by_exp_id": "",
@@ -2765,7 +2780,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the k_t lower bound given k_s in extremal graphs"
   },
   {
-    "consumed_by_exp_id": "f69e0caf",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: In the unramified GU(1,n-1) Rapoport\u2011Zink space of arbitrary parahoric level P, every basic Ekedahl\u2011Kottwitz\u2011Oort\u2011Rapoport (EKOR) stratum is isomorphic (as a scheme over the residue field \ud835\udd3d_q) to a finite disjoint union of copies of a explicitly defined fine Deligne\u2011Lusztig variety X(w_P) attached to a Weyl group element w_P determined by P. Moreover, the number of irreducible components equals the number of vertices in the affine Dynkin diagram of type \u00c3_{n-1} corresponding to the parahoric subgroup P, and each component is smooth and projective.",
     "domains": [
       "Algebra",
@@ -2775,7 +2790,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31940v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T15:54:12.765581+00:00",
     "title": "Basic EKOR Strata are Disjoint Unions of Fine Deligne-Lusztig Varieties"
   },
@@ -3221,7 +3236,22 @@ window.FUTURE_DIRECTIONS = [
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
   {
-    "consumed_by_exp_id": "559d8e74",
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Escher Staircases in Algebra\n\nAn *Escher staircase* is an infinite strictly ascending chain of ideals\n`I\u2080 \u2282 I\u2081 \u2282 I\u2082 \u2282 \u22ef` in a commutative ring. A ring admits such a chain exactly when\nit fails the ascending chain condition, so the staircase is a faithful witness of\nnon-Noetherianity. In the product ring of countably many copies of the integers,\nthe chain of \"sequences vanishing past index `n`\" is an explicit staircase whose\nbottom rung is `{0}` and whose meet is again `{0}`: the chain climbs forever yet its\ninfimum is the point it started from. The `p`-adic integers, a discrete valuation\nring, admit no staircase at all. The following conjectures grow out of this picture.\n\n## 1. The Escher spectrum separates non-Noetherian rings\n\nAttach to each staircase the growth function `n \u21a6 (minimal number of generators of\nI\u2099)`, and define the *Escher spectrum* of a ring as the set of asymptotic growth\nclasses realized by its staircases.\n\n**Conjecture.** The product ring of countably many copies of the integers realizes\nonly linear growth, whereas a polynomial ring in countably many variables realizes\nsuper-polynomial growth; hence the two rings, indistinguishable to the plain\nNoetherian/non-Noetherian dichotomy, have disjoint Escher spectra.\n\n**The key insight is** that the *existence* of an ascending chain is a yes/no fact,\nbut the *rate* at which minimal generating sets must swell along the chain is a\ngenuine, ring-theoretic invariant that discriminates among non-Noetherian rings.\n\n**Why now?** A fully worked base case \u2014 an explicit staircase whose meet collapses to\nits bottom rung \u2014 is available to calibrate growth rates against, so comparisons\nacross rings finally have a fixed reference point.\n\n## 2. Loop-back staircases and collapsing intersections\n\nCall an ascending chain a *loop-back staircase* when the infimum of the whole chain\nequals its smallest member. The product-ring example loops back to `{0}`.\n\n**Conjecture.** A domain admits a loop-back staircase with bottom rung `{0}` if and\nonly if it contains an infinite family of pairwise-comparable ideals with trivial\nintersection; in particular every non-Noetherian von Neumann regular ring admits\none, and this property is strictly stronger than being non-Noetherian.\n\n**The key insight is** that \"looping back to zero\" is not a paradox but the precise\nlattice-theoretic statement that an ascending chain's meet collapses to its start,\nwhich forces a strong intersection condition on the ideal lattice.\n\n**Why now?** The paradoxical Escher framing can be replaced by an exact lattice\ncondition, turning a piece of visual folklore into a falsifiable statement testable\non concrete product and polynomial rings.\n\n## 3. Escher height on the Noetherian side equals Krull dimension\n\nFor a Noetherian ring no infinite ascending chain exists, so define the *Escher\nheight* through *prime* chains: the supremum of lengths of strictly ascending chains\nof prime ideals.\n\n**Conjecture.** For the polynomial ring in `n` variables over a field the Escher\nheight equals `n`, coinciding exactly with Krull dimension.\n\n**The key insight is** that the impossible-staircase intuition should be re-anchored\nto prime chains, where finiteness is guaranteed, converting a vague \"height of the\nEscher effect\" into the well-defined and computable Krull dimension.\n\n**Why now?** With the Noetherian boundary pinned down precisely by the existence of\ninfinite ascending chains, it is exactly the right moment to identify which finite\nchain invariant survives on the Noetherian side.\n\n## 4. The corrected staircase inside integer-valued polynomials\n\nThe ring of integer-valued polynomials, `{f \u2208 \u211a[x] : f(\u2124) \u2286 \u2124}`, is a classical\nnon-Noetherian ring. The frequently quoted filtration `{f : f(\u2124) \u2286 2\u207f\u2124}` is in fact\n*descending*, since `2\u207f\u207a\u00b9\u2124 \u2286 2\u207f\u2124`; its intersection is `{0}`.\n\n**Conjecture.** A genuine *ascending* Escher staircase lives in the binomial-\ncoefficient basis: the ideals generated by the first `n` binomial polynomials\n`binom(x,0),\u2026,binom(x,n-1)` strictly ascend, and their union is a\nnon-finitely-generated ideal, constructively witnessing the failure of the ascending\nchain condition.\n\n**The key insight is** that the natural ascending structure of this ring lives in the\nbinomial basis, not in the powers-of-two filtration whose inclusions actually run the\nwrong way.\n\n**Why now?** A verified template for ascending chains with controlled intersections\nnow exists in a simple product ring, and transporting it to the binomial basis is the\nnatural next test of the framework.\n\n## 5. Escher-rigid rings: uniform bounds beyond Noetherianity\n\nA ring has no Escher staircase exactly when it is Noetherian, as the `p`-adic\nintegers show. Call a ring *Escher-rigid* if even the submodules of every finitely\ngenerated module admit no infinite ascending chain.\n\n**Conjecture.** Every discrete valuation ring is Escher-rigid; every Artinian ring is\nEscher-rigid with a *uniform* finite bound on chain lengths; and there exist\nNoetherian rings that forbid infinite chains yet admit no uniform length bound.\n\n**The key insight is** that forbidding infinite ascending chains is qualitative, but\nthe existence of a uniform numerical ceiling on chain length is a strictly finer\nstratification of the Noetherian world.\n\n**Why now?** The equivalence between admitting a staircase and being non-Noetherian is\nnow settled, and the `p`-adic integers furnish a clean rigid example, so quantifying\nrigidity inside the Noetherian class is the natural refinement.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0246",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3498198a",
+    "status": "available",
+    "timestamp": "2026-07-04T05:06:05.464784+00:00",
+    "title": "An *Escher staircase* is an infinite strictly ascending chain of ideals"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domains": [
       "Novelty",
@@ -3231,7 +3261,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.73,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:27.017991+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
