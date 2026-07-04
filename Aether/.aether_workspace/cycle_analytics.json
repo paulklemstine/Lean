@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-04T18:07:53.240326+00:00",
+  "last_updated": "2026-07-04T18:58:01.463631+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -33681,6 +33681,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-04T18:07:53.180192+00:00",
       "title": "Anabelomorphic Equivalence"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4076,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 145,
+      "domain": "Applications",
+      "duration_seconds": 1148.5500366687775,
+      "end_time": 1783190951.0325189,
+      "files_integrated": 8,
+      "job_id": "829d5920",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v16",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.8551,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.8767,
+        "novelty": 0.95,
+        "proof_depth": 0.8453,
+        "usefulness": 0.9227
+      },
+      "quality_score": 0.6395200000000001,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783189802.4824822,
+      "strategy_count": 0,
+      "theorem_count": 17,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 17,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-04T18:58:00.868624+00:00",
+      "title": "Characterization of Bipartite Partial Duals of Orientable Hypermaps"
     }
   ]
 }
