@@ -17,7 +17,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: unnamed_concept"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ca29fc4b",
     "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
     "domains": [
       "Novelty",
@@ -27,7 +27,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:26.963635+00:00",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
@@ -366,7 +366,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "aed51c81",
     "description": "Conjecture that for coprime positive integers a<b with a>1 and odd exponent n>1, the equation (a^n+1)(b^n+1)=x^2 has no positive integer solutions.",
     "domains": [
       "Pythagorean"
@@ -375,7 +375,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31223v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T16:13:17.108600+00:00",
     "title": "No solutions for odd exponents in the coprime case"
   },
@@ -658,7 +658,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the Greenberg\u2013Wiles local lower bound for \u2113\u2011Selmer groups in constant\u2011torsion families"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e4d7a22a",
     "description": "Conjecture that a torsion Hecke eigenclass in the cohomology of the arithmetic manifold attached to GL_n over a CM number field F with coefficients in Z/\u2113^m gives rise to a continuous semisimple Galois representation r : G_F \u2192 GL_n(Z_\u2113) which is de Rham at places v|\u2113, with Hodge\u2013Tate weights determined by the infinitesimal character of the automorphic representation at infinity, and whose associated filtered \u03c6\u2011module via Fontaine's functor corresponds under the p\u2011adic local Langlands correspondence to the automorphic component \u03c0_v.",
     "domains": [
       "Algebra",
@@ -668,7 +668,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31698v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T12:49:31.510793+00:00",
     "title": "Torsion local-global compatibility at p = \u2113 for GL_n over CM fields"
   },
@@ -1067,7 +1067,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "A recursive decomposition of greedy Tamari intervals via planar map structures"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f5192907",
     "description": "The sheared Witt vector functor \\(\\chW\\) is isomorphic to the filtered colimit of the functors \\(n \\mapsto W(R[p^n])/\\hw(R[p^n])\\) over \\(n \\geq 1\\).",
     "domains": [
       "Bridges"
@@ -1076,7 +1076,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01178v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T22:10:42.305562+00:00",
     "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
   },
@@ -1316,7 +1316,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing the generalized honeymoon Oberwolfach problem in Lean 4"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9e42a510",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
     "domains": [
       "Novelty",
@@ -1326,7 +1326,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.030210+00:00",
     "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
   },
@@ -2301,7 +2301,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equality case regularity conjecture for admissible Sidorenko classes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e3e38cc8",
     "description": "Conjecture that for any non\u2011empty finite set \u03a8 of non\u2011zero homomorphisms from an abelian group F to G, the weighted Davenport constant D_\u03a8(G) \u2264 n holds precisely when the family of kernels of the induced universal homomorphisms from F^n to G forms a cover of F^n.",
     "domains": [
       "Algebra",
@@ -2311,7 +2311,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02132v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T05:55:53.302394+00:00",
     "title": "Kernel\u2011cover characterisation of the weighted Davenport constant"
   },
@@ -2518,7 +2518,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Monotonicity of the minimal absolute value of sums of fifth roots of unity within each residue class modulo 5"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "01bea6c3",
     "description": "Establishes a precise exponential growth bound for the sequence A393920, relating it to the Fibonacci sequence and its combinatorial structure in additive subcategories.",
     "domains": [
       "Algebra"
@@ -2527,7 +2527,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00651v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T11:59:43.715928+00:00",
     "title": "On the Growth Rate of Extension-Closed Additive Subcategories for Oriented A_n Quivers"
   },
@@ -3018,7 +3018,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "51cf87c3",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domains": [
       "Novelty",
@@ -3028,7 +3028,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.73,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.017991+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
