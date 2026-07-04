@@ -55,8 +55,8 @@ Synthesis (Stage 5): together with `Model.lean` (first moment) and
   the thresholds at `1/n` (subgraphs) and `ln n / n` (connectivity).
 -/
 import Mathlib
-import Catalog.Algebra.ErdosRenyi.Model
-import Catalog.Algebra.ErdosRenyi.Concrete
+import Algebra.ErdosRenyi.Model
+import Algebra.ErdosRenyi.Concrete
 
 open Finset BigOperators Filter Topology ErdosRenyi ErdosRenyiConcrete
 
