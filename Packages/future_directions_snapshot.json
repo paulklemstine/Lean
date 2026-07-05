@@ -8270,6 +8270,33 @@
     "title": "3-Colouring Graphs Excluding a Fixed Minor"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "arXiv:2305.12345",
+      "hep-th/2301.09876",
+      "math-ph/2210.00112"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any bipartite planar map in the ETH planar map model with q-deformed face weights, the total weight of all maps with a fixed perimeter is a function solely of the crossing number of the associated geodesic chord diagram; i.e., two maps with the same crossing number have equal combined weight regardless of other structural features.",
+    "domain_bridges": [
+      "quantum gravity",
+      "random geometry",
+      "matrix models"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0358",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct an explicit counterexample or prove equivalence via combinatorial bijection; falsifiable by exhaustive enumeration for small perimeters.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01995v1",
+    "status": "available",
+    "timestamp": "2026-07-05T23:39:20.019705+00:00",
+    "title": "Conjecture: Weight of DSSYK planar maps depends only on crossing number of associated geodesic chord diagram"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "Theorem A",
@@ -8285,7 +8312,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0358",
+    "id": "fd_0359",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the explicit description of the 2-Sylow subgroup of S_n as an iterated wreath product and the Murnaghan-Nakayama rule to compute the multiplicity of the irreducible character χ^{λ_n} in the permutation character (1_P)↑^{S_n}. Alternatively, use the characterization of Ω_2(n) via 2-quotients of partitions (as in [G17]) and verify that the 2-quotient of λ_n satisfies the required condition. Another approach is to use the known results on the restriction of irreducible characters to Sylow 2-subgroups and the fact that λ_n is a partition with all parts ≤ 2.",
@@ -8312,7 +8339,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0359",
+    "id": "fd_0360",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a specific graph achieving the lower bound via Pokrovskiy's structure theorem",
@@ -8338,7 +8365,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0360",
+    "id": "fd_0361",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish a conductance lower bound via a suitable coupling argument that relates chord swaps to graph-theoretic moves, and then use known inequalities to translate this into a polynomial lower bound on the spectral gap for fixed genus.",
@@ -8358,7 +8385,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0361",
+    "id": "fd_0362",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "induction",
@@ -8386,7 +8413,7 @@
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0362",
+    "id": "fd_0363",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the connection via holography: (1) Prove interval counting for high-dimension CFT primaries follows log-correlated field statistics, (2) Show the extremal process converges to Gumbel by analyzing the correlation structure of the underlying Gaussian free field, (3) Translate to AdS side via HKLL reconstruction to bound semiclassical path integral resolution. Use modular invariance and sparseness conditions to control the tail behavior rigorously.",
@@ -8412,7 +8439,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0363",
+    "id": "fd_0364",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive argument on rank bounds combined with matroid minors analysis",
@@ -8439,7 +8466,7 @@
     "domains": [
       "Physics"
     ],
-    "id": "fd_0364",
+    "id": "fd_0365",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a doubly nonnegative graphon W where the spectral inequality t(H,W) ≥ ρ(W)^{2e(H)-v(H)} p(W)^{v(H)-e(H)} holds but t(H,W) < p(W)^{e(H)} fails, demonstrating the equivalence's optimality in the v(H) ≤ e(H) range.",
@@ -8469,7 +8496,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0365",
+    "id": "fd_0366",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof would proceed by (1) constructing the Iwasawa module M as the Fitting module of the spectral resultant using the universal Grover‑Ihara polynomial; (2) applying the structure theorem for finitely generated Δ_₂[[Γ]]‑modules to express μ(M) and λ(M) in terms of elementary divisors; (3) evaluating the resultant at torsion characters χ∈̀_hat{Δ}_₂^× and showing via equivariant descent that the elementary divisors are precisely the values v_p(R(χ)); (4) incorporating the Bass factor (A^2‑1) by factoring det P(U_n) into a coprime part and a power of the Bass factor, and comparing the resulting contributions to the λ‑term. The key technical step is to prove an equivariant Kida formula for the spectral resultant without integrality assumptions, using the factorization for p‑group covers from the paper and a careful analysis of the local units at χ(1)=±1.",
@@ -8498,7 +8525,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0366",
+    "id": "fd_0367",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Explicit construction of arrangements with controlled intersection multiplicities, followed by computation of \\(\\mdr(f)\\) via graded module generation and analysis of Jacobian syzygies using symbolic computation in Lean 4.",
@@ -8525,7 +8552,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0367",
+    "id": "fd_0368",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Interpret r_m(n,k) as counting labelled structures: an ordered partition where each block is either a 'non-tie' of size < m (weight 1) or a 'tie' of size ≥ m (weight y). The exponential generating function for non-tie blocks is A_m(x), for tie blocks is B_m(x). A sequence of such blocks has EGF 1/(1 - (A_m(x) + y B_m(x))). Equating coefficients yields the formula.",
@@ -8534,6 +8561,32 @@
     "status": "available",
     "timestamp": "2026-07-05T23:23:27.854836+00:00",
     "title": "Bivariate Exponential Generating Function for Snail Race Outcomes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.NT.0001",
+      "HeckeOperators.001",
+      "ClassNumbers.002"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a real quadratic field K of narrow class number one and a fundamental discriminant D, the generalized Hurwitz class number H_g(D) associated with K is equal to half the class number of a specific quartic CM field F_D constructed from D and K.",
+    "domain_bridges": [
+      "AlgebraicNumberTheory.003",
+      "AutomorphicForms.004"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0369",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Verify the conjectured formula by computing class numbers of explicitly constructed quartic CM fields and comparing them to the generalized Hurwitz class numbers defined via the trace formula. This requires formalizing quartic field construction, class group computations, and the definition of H_g(D) in Lean.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01957v1",
+    "status": "available",
+    "timestamp": "2026-07-05T23:40:00.500243+00:00",
+    "title": "Generalized Hurwitz Class Number Formula for Quartic CM Fields"
   },
   {
     "ambition_level": "extension",
