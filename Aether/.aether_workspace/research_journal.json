@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "5d028d25",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Prismatic Purity for F-Crystals\n\nDerived from this cycle's findings (faithfulness is cheap; the deep input is\ncodimension-≥2 Hartogs extension; normality is exactly the dimension",
-      "quality_score": 0.747936,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-06-28T06:56:13",
-      "title": "Prismatic Purity for F-Crystals on Regular Schemes"
-    },
-    {
       "cycle_id": "53e074b6",
       "domain": "Applications",
       "key_insight": "# Future Directions: invariants under purely inseparable base change\n\nThese conjectures are derived from this cycle's findings, namely that the separable degree\n`m_f = (minpoly K θ).natSepDegree` is i",
@@ -2501,6 +2491,16 @@
       "theorem_count": 20,
       "timestamp": "2026-07-05T21:12:39",
       "title": "Exact 2-adic valuation of coefficients of T(x)^m for m ≡ 1 mod 4"
+    },
+    {
+      "cycle_id": "2e937390",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures growing out of this cycle's finding that conjugation\nof integer partitions acts on the natural extension of the triangle map as a\nmeasure-preserving",
+      "quality_score": 0.5295662942477877,
+      "sorry_count": 1,
+      "theorem_count": 39,
+      "timestamp": "2026-07-05T21:33:41",
+      "title": "Young Conjugation Induces a Measure-Preserving Involution on the Natural Extension of the Triangle M"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.7258007692307691
     }
   ],
-  "last_updated": "2026-07-05T21:12:39",
+  "last_updated": "2026-07-05T21:33:41",
   "open_questions": [
-    {
-      "context": "without cross-imports. All results have zero `sorry`s.; What *is* provable, and proved here with zero `sorry`s, is:; All results are proved with zero `sorry`s.",
-      "cycle_id": "be72639d",
-      "domain": "Applications",
-      "sorry_count": 3,
-      "timestamp": "2026-06-26T16:40:58"
-    },
     {
       "context": "Synthesis (PI): A self-contained, sorry-free description of the hydrogen energy",
       "cycle_id": "5077231f",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 1,
       "timestamp": "2026-07-04T22:19:10"
+    },
+    {
+      "context": "on `ℝ²` as a product — no `sorry`, no `native_decide`.",
+      "cycle_id": "2e937390",
+      "domain": "Novelty",
+      "sorry_count": 1,
+      "timestamp": "2026-07-05T21:33:41"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "51b04544",
-        "quality": 0.4546,
-        "theorems": 7,
-        "title": "The list chromatic number of 3-colorable planar graphs is at most 4"
-      },
-      {
         "cycle_id": "4120a115",
         "quality": 0.5206,
         "theorems": 20,
@@ -3637,6 +3631,12 @@
         "quality": 0.83176,
         "theorems": 14,
         "title": "Phantom Topologies: Spaces That Change When You Look at Them"
+      },
+      {
+        "cycle_id": "2e937390",
+        "quality": 0.5295662942477877,
+        "theorems": 39,
+        "title": "Young Conjugation Induces a Measure-Preserving Involution on the Natural Extensi"
       }
     ],
     "NumberTheory": [

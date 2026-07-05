@@ -4,6 +4,36 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
+    "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition \u2014 zeros on the critical line means the bulk geometry is stable against perturbations.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0359",
+    "priority_score": 0.91,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-05T21:32:07.971415+00:00",
+    "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0356",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-05T21:32:07.884376+00:00",
+    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domains": [
       "Pythagorean"
@@ -15,6 +45,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T05:18:37.114832+00:00",
     "title": "Deepening: unnamed_concept"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot \u2014 the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0357",
+    "priority_score": 0.81,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-05T21:32:07.914911+00:00",
+    "title": "Knots That Think: Cognition as Braiding in Category Theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -380,7 +425,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
   {
-    "consumed_by_exp_id": "23007999",
+    "consumed_by_exp_id": "",
     "description": "For the random recursive DAG G_n with out-degree d \u2265 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n \u2192 \u221e.",
     "domains": [
       "Computation"
@@ -389,7 +434,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
@@ -409,7 +454,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Ramified Prime Product Equality"
   },
   {
-    "consumed_by_exp_id": "59aff0ea",
+    "consumed_by_exp_id": "",
     "description": "For a q-hypergeometric series whose coefficients have an asymptotic expansion dominated by oscillatory terms near a root of unity \u03c9, the signs of the coefficients alternate except for a density-zero set of indices n.",
     "domains": [
       "Geometry"
@@ -418,7 +463,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T06:04:27.717812+00:00",
     "title": "Sign Alternation in q-Hypergeometric Series via Oscillatory Asymptotics Near Roots of Unity"
   },
@@ -701,20 +746,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T15:36:40.230896+00:00",
     "title": "Tokushige's r-wise intersecting conjecture for non\u2011uniform product measures"
-  },
-  {
-    "consumed_by_exp_id": "d01d52df",
-    "description": "Every minimal edge-colored graph (with respect to edge deletion) that does not admit a total rainbow forest must be a single monochromatic cycle (possibly with isolated vertices).",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0072",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.31240v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T16:14:00.036969+00:00",
-    "title": "Conjecture on the Structure of Minimal Obstructions to Total Rainbow Forests"
   },
   {
     "consumed_by_exp_id": "",
@@ -1097,7 +1128,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived p-completeness of sheared Witt vectors ensures Dieudonn\u00e9 theory extension"
   },
   {
-    "consumed_by_exp_id": "9ab455c2",
+    "consumed_by_exp_id": "",
     "description": "There exists a finite family of vector-valued convolution kernels {K_i} such that their weighted combination satisfies a ball-overbag inequality for Sidon sets, with the coefficient \u03b3_0=0.94601 achievable through optimized L\u00b2 energy distribution across kernels.",
     "domains": [
       "Computation",
@@ -1107,7 +1138,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T23:15:13.575664+00:00",
     "title": "Multi-kernel smoothing lemma for Sidon sets"
   },
@@ -1344,7 +1375,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Normality of the trianguline variety outside smooth loci for split reductive groups"
   },
   {
-    "consumed_by_exp_id": "4ce791a9",
+    "consumed_by_exp_id": "",
     "description": "For a set S = {a\u2080, b\u2080, ..., a_g, b_g} \u2282 \u2119\u00b9(K) of size 2g+2 where K is a finite extension of \u211a_p (p \u2260 2), if the associated tree T(S) constructed from equivalence classes of triples has all internal vertices of degree exactly 3 and exactly 2g+2 leaf vertices corresponding bijectively to elements of S, then S is in good position, i.e., \u0393(S) = \u27e8s\u2080, ..., s_g\u27e9 is discontinuous and equals the free product \u22c6\u1d62\u27e8s_i\u27e9.",
     "domains": [
       "Algebra",
@@ -1354,7 +1385,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T03:49:23.417787+00:00",
     "title": "Tree Structure Characterization for Good Position in Hyperelliptic Mumford Curves"
   },
@@ -2509,7 +2540,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Classification of regular 4\u2011maniplexes via tetravalent graph censuses"
   },
   {
-    "consumed_by_exp_id": "2e937390",
+    "consumed_by_exp_id": "",
     "description": "The natural extension of the triangle map (a multi-dimensional continued fraction algorithm) admits a Z/2Z symmetry action generated by an involution \u03c4 corresponding to Young conjugation of integer partitions. This involution preserves the invariant measure on the natural extension space and permutes four distinguished subdomains D\u2081, D\u2082, D\u2083, D\u2084 into each other. Specifically, \u03c4 maps each subdomain to another in a 4-cycle or involution pattern, and each subdomain carries exactly 1/4 of the total measure. This symmetry generalizes the classical case for the Gauss map and Farey map, where Young conjugation provides a new perspective on previously known symmetries.",
     "domains": [
       "Algebra",
@@ -2519,7 +2550,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28014v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T18:08:39.918536+00:00",
     "title": "Young Conjugation Induces a Measure-Preserving Involution on the Natural Extension of the Triangle Map"
   },
@@ -3135,7 +3166,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on average \u2113\u2011Selmer rank lower bounds via Greenberg\u2013Wiles local factors"
   },
   {
-    "consumed_by_exp_id": "2e971067",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that a tournament T is cycle Mengerian (CM) if and only if it is cycle ideal (CI), i.e., for every non\u2011negative integral weight function w on its arcs the minimum weight of a feedback arc set equals the weight of a minimum\u2011weight feedback arc set in its linear programming relaxation.",
     "domains": [
       "Algebra",
@@ -3145,7 +3176,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31565v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T18:35:10.861567+00:00",
     "title": "CM tournaments are precisely the cycle\u2011ideal tournaments"
   },
@@ -3254,7 +3285,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Constant-Coefficient Recurrence for Effective Resistance Sequences in Circulant Complete Graphs"
   },
   {
-    "consumed_by_exp_id": "bf444d1d",
+    "consumed_by_exp_id": "",
     "description": "For any Pisot numeration system U with minimal polynomial f of degree d associated to a Pisot number \u03b2, if the constructed group \u2124_U is continuously isomorphic to the torus \ud835\udd4b^(d-1), then U must preserve zeros. This provides a converse to the main theorem in the paper and establishes that the torus isomorphism property characterizes exactly those numerations with controlled carry propagation.",
     "domains": [
       "Algebra"
@@ -3263,7 +3294,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30496v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T22:53:45.983763+00:00",
     "title": "Characterization of Zero-Preserving Pisot Numerations via Torus Isomorphism"
   },
@@ -4506,6 +4537,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0358",
+    "priority_score": 0.77,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-05T21:32:07.943827+00:00",
+    "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Congruence Rigidity of Sums of Squares\n\nThis cycle established that the entries of an integer right triangle are forced into\nstrong divisibility patterns \u2014 one leg is a multiple of three, the legs jointly carry a\nfactor of four, one entry is a multiple of five \u2014 and that a four-dimensional right\n\"box\" (a solution of `a\u00b2 + b\u00b2 + c\u00b2 = d\u00b2`) is even more rigid: at most one of its three\nspatial edges can be odd. We also pinned down exactly which whole numbers can serve as a\nleg. These findings point to several bold, testable conjectures.\n\n## 1. The correct modulus for a power of two grows with the power\n**Conjecture.** In any solution of `a\u00b2 + b\u00b2 = c\u00b2`, the two-adic valuation of the leg\nproduct `a\u00b7b` is governed one level deeper than naive reduction suggests: deciding\nwhether `2^k` divides `a\u00b7b` is a question about residues modulo `2^{k+1}`, never modulo\n`2^k`.\n*The key insight is* that a difference of two odd squares is always divisible by eight,\nso each additional factor of two in the product must be certified one binary place\nfurther out than one would guess. *Why now?* Having isolated the exact `mod 8`\nobstruction behind the factor of four, we can test the pattern mechanically for `k = 3,\n4, 5` and either confirm a clean \"shift-by-one\" law or expose its first exception.\n\n## 2. A universal super-divisor for higher-dimensional right figures\n**Conjecture.** For every dimension `r`, solutions of `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` obey a single\nuniversal divisibility law: there is a constant `D(r)`, depending only on `r`, such that\n`D(r)` divides the product `x\u2081\u00b7x\u2082\u00b7\u22ef\u00b7x_r` for *every* solution, and `D(r)` is the largest\nsuch constant.\n*The key insight is* that reduction to a finite residue ring turns \"for all solutions\"\ninto a finite, decidable statement, so the optimal constant `D(r)` is computable and\nshould grow in a structured (conjecturally multiplicative-over-primes) way. *Why now?*\nThe three-dimensional case already yields `4 \u2223 x\u2081x\u2082x\u2083`; comparing it against the planar\nconstant `12` suggests a dimension-indexed sequence worth charting and predicting.\n\n## 3. Parity collapse in higher dimensions\n**Conjecture.** As the number of squared terms increases, the number of edges permitted to\nbe odd stays uniformly bounded: in `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` at most three of the `x_i` can be\nodd, regardless of `r`.\n*The key insight is* that the sum of squares equals the count of odd terms modulo four,\nwhile a perfect square is `0` or `1` modulo four, capping the admissible odd-count no\nmatter how many terms are added. *Why now?* We proved the cap is \"at most one\" in three\ndimensions; extending the modular bookkeeping to arbitrary `r` is a self-contained next\nstep that would reveal whether the cap is truly dimension-independent.\n\n## 4. A sharp threshold characterization of legs in every dimension\n**Conjecture.** Just as the whole numbers that are a leg of a right triangle are exactly\nthose `\u2265 3`, in each higher dimension there is a sharp finite threshold above which every\ninteger appears as an edge of some right figure, and the finitely many exceptions can be\nlisted explicitly.\n*The key insight is* that a single explicit construction, split according to the parity of\nthe target edge, realizes all sufficiently large values, while the small exceptions are\nforced by a factorization that would otherwise require a vanishing edge. *Why now?* The\nplanar threshold `3` and its sharpness (the failures at `1` and `2`) give a template that\nshould transfer verbatim to the box equation and beyond.\n\n## 5. Divisibility as a sieve against near-solutions\n**Conjecture.** The combined congruence obstructions (`12 \u2223 a\u00b7b`, `60 \u2223 a\u00b7b\u00b7c`, and their\nhigher-dimensional analogues) are strong enough that a random integer triple satisfying\nthem has a positive, computable probability of being genuinely Pythagorean \u2014 i.e. the\ncongruence conditions capture a constant fraction of the \"arithmetic mass\" of true\nsolutions.\n*The key insight is* that each universal divisor removes a fixed proportion of impostors,\nso stacking independent prime-power obstructions multiplies into a sieve of predictable\ndensity. *Why now?* With the exact obstructions in hand for the primes `2, 3, 5`, one can\nimmediately measure how much of the solution set they explain and calibrate whether a few\nmore primes suffice to pin down solutions almost completely.\n",
     "domains": [
       "Pythagorean",
@@ -4521,6 +4567,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nBold, falsifiable conjectures growing out of this cycle's finding that conjugation\nof integer partitions acts on the natural extension of the triangle map as a\nmeasure-preserving involution, splitting the domain into four equal-mass cells and\ngenerating a Klein four-group of symmetries.\n\n## 1. The diagonal measures the odd-distinct partitions\n\nThe reflection that realizes conjugation fixes exactly the diagonal cells of the\nnatural extension, and on the partition side its fixed points are the self-conjugate\ndiagrams \u2014 those encoded by partitions into distinct odd parts. We conjecture that\nthe size of the fixed-point locus, measured with the induced lower-dimensional\ndensity, is governed by the very same generating function that counts self-conjugate\npartitions. **The key insight is** that a purely geometric quantity \u2014 the \"diagonal\"\nof a continued-fraction domain \u2014 should be readable off an arithmetic generating\nfunction, because both are shadows of one order-two operation. **Why now?** The\nequal-mass four-cell decomposition has just been pinned down exactly, so the\nboundary between symmetric cells is now a well-defined object whose measure can be\ncompared against the classical self-conjugate count.\n\n## 2. Every polytopal continued-fraction algorithm carries a Klein four-group\n\nConjugation and central reflection here generate a Klein four-group of\nmeasure-preserving involutions, with the anti-transpose as the third non-trivial\nelement. We conjecture that this is universal: every additive multidimensional\ncontinued-fraction algorithm whose natural extension is a polytope admits such a\nfour-element symmetry group, and its four distinguished subdomains are exactly the\norbit cells. **The key insight is** that the \"conjugation\" and \"reflection\"\nsymmetries are not special to the triangle map but are forced by the affine,\nbranch-preserving structure shared across the Brun, Selmer, and Jacobi\u2013Perron\nfamilies. **Why now?** With one algorithm's symmetry group made fully explicit, the\nstructural features responsible for it can be isolated and tested against neighboring\nalgorithms.\n\n## 3. Conjugation is invisible to long-term averages\n\nBecause the involution preserves the invariant measure and interlocks with the\nshift, we conjecture that Birkhoff averages of any integrable observable coincide\nwith those of its conjugation-pullback almost everywhere, and that the four\nsubdomains are visited with asymptotic frequency exactly one quarter each. **The key\ninsight is** that a measure-preserving symmetry commuting with the dynamics must\nrender conjugation statistically undetectable over long orbits. **Why now?** The\nequal-mass property \u2014 the quantitative backbone of any visit-frequency statement \u2014\nis now established on the nose rather than heuristically.\n\n## 4. The transfer operator inherits a parity grading\n\nA measure-preserving involution conjugating the dynamics yields a unitary that\ncommutes with the transfer operator. We conjecture that the transfer operator of the\ntriangle map therefore has a spectrum invariant under the conjugation action, with\neigenfunctions splitting cleanly into conjugation-even and conjugation-odd families\nthat the four equal-mass cells block-diagonalize. **The key insight is** that a\ncombinatorial symmetry of partitions can impose a parity selection rule on the\nanalytic spectrum controlling mixing rates. **Why now?** The involution has just\nbeen shown to be measure preserving, which is exactly the hypothesis needed to\npromote it to a unitary intertwiner on square-integrable functions.\n\n## 5. A continuous bridge from Gauss\u2013Farey to the triangle map\n\nThe classical reflection symmetry of the one-dimensional Gauss and Farey maps is\nrecovered here as the single-row (or single-column) degeneration of the conjugation\ninvolution. We conjecture the existence of a continuous family of natural extensions\ninterpolating between the one-dimensional square and the two-dimensional triangle\ndomain along which the conjugation involution deforms continuously, staying\nmeasure preserving and order two, while the number of equal-mass subdomains jumps\nfrom two to four precisely at the increase in dimension. **The key insight is** that\nthe jump from two to four symmetric cells is a codimension-one bifurcation of a\nsingle deforming symmetry rather than an unrelated coincidence between algorithms.\n**Why now?** Both endpoints are now described by the same order-two, measure-preserving\ntemplate, making the interpolation between them a concrete and testable construction.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0361",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2e937390",
+    "status": "available",
+    "timestamp": "2026-07-05T21:33:37.406616+00:00",
+    "title": "Bold, falsifiable conjectures growing out of this cycle's finding that conjugati"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every real number defines a musical scale: map the digits 0-9 to frequencies f_n = 220 * 2^{n/12} (the A minor pentatonic scale extended). The number pi = 3.14159265... produces the sequence E4, C5, C#5, D5, D#5, F5, E5, A4, G5, C5... \u2014 a melody. Conjecture: The melody of pi is not periodic (because pi is irrational) but has musical structure: the autocorrelation of the digit sequence at lag 12 (one octave) is positive and statistically significant. This means pi has more octave-related notes than expected by chance \u2014 pi 'favors' notes separated by octaves. Similarly, e 'favors' perfect fifths (lag 7) and sqrt(2) 'favors' minor thirds (lag 3). The musical structure of transcendental numbers reflects their continued fraction properties: numbers with bounded partial quotients have more consonant melodies. Test: compute the digit autocorrelation of pi, e, and sqrt(2) at lags 0-12 (representing unison through octave). Perform a chi-squared test comparing to the uniform distribution. Generate the 'music' of each constant and analyze for tonal centers. Impact: transcendental numbers have musical souls \u2014 their digit sequences contain hidden harmonies that reflect their deepest arithmetic properties.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0360",
+    "priority_score": 0.72,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-05T21:32:08.000844+00:00",
+    "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Geometry"
@@ -4532,5 +4608,19 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T04:44:52.457313+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 2e937390 (Q=0.530) proved 39 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The natural extension of the triangle map (a multi-dimensional continued fraction algorithm) admits a Z/2Z symmetry action generated by an involution \u03c4 corresponding to Young conjugation of integer pa",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_2e937390_2f83cada",
+    "priority_score": 0.5795662942477877,
+    "research_mode": "team",
+    "source_exp_id": "2e937390",
+    "status": "available",
+    "timestamp": "2026-07-05T21:33:41.669018+00:00",
+    "title": "Close Proofs: Young Conjugation Induces a Measure-Preserving Involution on the Natur"
   }
 ];
