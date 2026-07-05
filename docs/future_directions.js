@@ -4122,12 +4122,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any finite simple graph G, if the maximum degree \u0394(G) exceeds one third of the number of vertices, then G is class\u202f2 (i.e., \u03c7'(G)=\u0394(G)+1) if and only if G contains a \u0394(G)-overfull subgraph.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0316",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02270v1",
+    "status": "available",
+    "timestamp": "2026-07-05T01:19:21.700530+00:00",
+    "title": "Overfull Conjecture for Graphs with \u0394 > |V|/3"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any squarefree integer N > 1 with an even number of distinct prime factors, the genus of the Atkin\u2013Lehner quotient X_N / \u27e8w_p\u27e9 is zero if and only if N belongs to the finite set {6, 10, 22}.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0316",
+    "id": "fd_0317",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02306v1",
@@ -4142,7 +4156,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0317",
+    "id": "fd_0318",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02419v1",
@@ -4157,7 +4171,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0318",
+    "id": "fd_0319",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02392v1",
@@ -4171,7 +4185,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0319",
+    "id": "fd_0320",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
@@ -4186,13 +4200,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0320",
+    "id": "fd_0321",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02215v1",
     "status": "available",
     "timestamp": "2026-07-05T00:45:26.853739+00:00",
     "title": "Crystallinity criterion via regularity of triangulation parameters"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any finite subset S of BP^1(K) with at least three points, the graph T(S) constructed from equivalence classes of triples in S^3 is always a tree (i.e., it is connected and contains no cycles). This conjecture extends known observations in the paper and is falsifiable by providing a counterexample where the graph contains a cycle.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0322",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02160v1",
+    "status": "available",
+    "timestamp": "2026-07-05T01:19:57.095760+00:00",
+    "title": "Conjecture on the tree structure of T(S) for subsets of the projective line"
   },
   {
     "consumed_by_exp_id": "da489ec4",

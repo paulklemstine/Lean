@@ -7552,6 +7552,33 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "Chetwynd–Hilton 1986 Overfull Conjecture",
+      "Vizing's Theorem",
+      "Seymour 1979 Matching Polytope"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any finite simple graph G, if the maximum degree Δ(G) exceeds one third of the number of vertices, then G is class 2 (i.e., χ'(G)=Δ(G)+1) if and only if G contains a Δ(G)-overfull subgraph.",
+    "domain_bridges": [
+      "Matching Theory",
+      "Vizing's Theorem",
+      "Chromatic Index"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0316",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use polynomial-time detection of Δ(G)-overfull subgraphs via Edmonds' matching polytope and verify that any class‑2 graph with Δ> |V|/3 must contain such a subgraph; reduction to checking degree conditions.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02270v1",
+    "status": "available",
+    "timestamp": "2026-07-05T01:19:21.700530+00:00",
+    "title": "Overfull Conjecture for Graphs with Δ > |V|/3"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "Ogg1983",
       "CerednikDrinfeld1990",
       "Daas2023"
@@ -7567,7 +7594,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0316",
+    "id": "fd_0317",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the Riemann–Hurwitz formula to the involution w_p on the Shimura curve X_N, compute the exact number of fixed points, and show that the resulting genus vanishes precisely for N = 6, 10, 22; this can be formalized in Lean by constructing the quotient curve and verifying the genus formula.",
@@ -7592,7 +7619,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0317",
+    "id": "fd_0318",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Translate the five equivalent descriptions of strong Δ-matroids from Theorem A of the paper into Lean definitions. 2. Formalise the notion of a peerless antipode directly from the text. 3. Show that the 'peerless antipode equations' (the tropical equations arising from the orthogonal Grassmannian) are equivalent to the absence of peerless antipodes by adapting the algebraic motivation given in the paper. 4. Use the already established equivalence between strong Δ-matroids and the hyperplane/Wenzel exchange properties to close the loop, yielding the desired iff statement.",
@@ -7615,7 +7642,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0318",
+    "id": "fd_0319",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a formal model in Lean 4 to verify convergence properties of the associated Gauss sum sequences.",
@@ -7640,7 +7667,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0319",
+    "id": "fd_0320",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "classify all graphs with exactly T(n) edges, show that only the split graph achieves non-positive curvature, and verify curvature values using Ollivier's formula",
@@ -7667,7 +7694,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0320",
+    "id": "fd_0321",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Develop a Lean library for split connected reductive groups, Tannakian formalism, trianguline modules, and the trianguline variety T_G. Define the regularity condition on triangulation parameters and the crystallinity property for (phi, Gamma_K)-modules with G-structure. Then construct the equivalence by adapting the arguments from the paper, verifying each step using Lean's algebraic geometry and category theory tools. This will require proving lemmas about smoothness, normality, and base change properties of T_G.",
@@ -7676,6 +7703,33 @@
     "status": "available",
     "timestamp": "2026-07-05T00:45:26.853739+00:00",
     "title": "Crystallinity criterion via regularity of triangulation parameters"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "math.NT",
+      "math.AG"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any finite subset S of BP^1(K) with at least three points, the graph T(S) constructed from equivalence classes of triples in S^3 is always a tree (i.e., it is connected and contains no cycles). This conjecture extends known observations in the paper and is falsifiable by providing a counterexample where the graph contains a cycle.",
+    "domain_bridges": [
+      "math.NT",
+      "math.AG"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0322",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Induction on the size of S combined with combinatorial analysis of the equivalence relation; check connectivity and absence of cycles; search for counterexamples computationally.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02160v1",
+    "status": "available",
+    "timestamp": "2026-07-05T01:19:57.095760+00:00",
+    "title": "Conjecture on the tree structure of T(S) for subsets of the projective line"
   },
   {
     "ambition_level": "extension",
