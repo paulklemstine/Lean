@@ -2566,7 +2566,7 @@
       "JungTix1998",
       "Rockafellar1970"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f28e9f40",
     "description": "We classify the finite posets whose probabilistic powerdomain is an RB-domain by proving that a finite poset P has this property if and only if it has a least element and its undirected Hasse graph is a tree.",
     "domain_bridges": [
       "domain theory",
@@ -2582,7 +2582,7 @@
     "proof_strategy": "We split the proof into two cases: first proving that without a least element, the minimal face must be fixed by all deflations, and second showing that cycles in the Hasse graph violate the simpliciality of the stochastic cone through Euclidean finite-step arguments.",
     "research_mode": "team",
     "source_exp_id": "2607.02231v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T04:55:55.366539+00:00",
     "title": "Characterization of Finite Posets with RB-Domain Probabilistic Powerdomains"
   },
@@ -3798,7 +3798,7 @@
       "See MMS Conjecture Foundations",
       "Shannon Entropy Properties"
     ],
-    "consumed_by_exp_id": "847e72f8",
+    "consumed_by_exp_id": "",
     "description": "The conjecture posits that the sharpness of the entropic inequality ensures equality in maximum entropy states when samples align with uniform distributions.",
     "domain_bridges": "Uniform Sampling Conditions",
     "domains": [
@@ -3811,7 +3811,7 @@
     "proof_strategy": "Direct verification via majorization principles",
     "research_mode": "team",
     "source_exp_id": "2606.30486v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T23:56:26.184055+00:00",
     "title": "Shareness of Entropic Analogues"
   },
@@ -8101,6 +8101,66 @@
     "status": "available",
     "timestamp": "2026-07-05T05:20:34.768144+00:00",
     "title": "Quantitative Thinness of Galois‑Group‑Changing Specializations for Strongly n‑Genuine Polynomials"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Aharoni‑Korman conjecture (1992)",
+      "FAC posets",
+      "scattered posets",
+      "chain completions and saturated chains"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for every countable poset \\(P\\) satisfying the Finite Antichain Condition (FAC), its chain extension \\(H(P)\\) (defined via equivalence classes of increasing chains) is a scattered poset. Equivalently, \\(H(P)\\) contains no subposet order‑isomorphic to the rational line \\(\\mathbb{Q}\\). This strengthens the result that a countable FAC poset can be decomposed into scattered components by asserting that the completion itself already has a scattered structure.",
+    "domain_bridges": [
+      "order theory",
+      "model theory of linear orders",
+      "set theory (countable structures)",
+      "formal verification in Lean 4"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0336",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "1. Formalise the notions of FAC, increasing/saturated chains, mutual finite incomparability, equivalence of chains, and the construction of \\(H(P)\\) in Lean.\n2. Define scattered posets as those with no subposet \\(\\cong\\mathbb{Q}\\).\n3. Show that any copy of \\(\\mathbb{Q}\\) inside \\(H(P)\\) would give rise to an infinite antichain in \\(P\\) violating FAC, using the properties of equivalence classes and final segments.\n4. Use a back‑and‑forth argument to build an order‑embedding of \\(H(P)\\) into a direct sum of well‑ordered and reverse‑well‑ordered chains (i.e., a scattered decomposition).\n5. Conclude that \\(H(P)\\) is scattered, thereby proving the conjecture.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02500v1",
+    "status": "available",
+    "timestamp": "2026-07-05T09:35:18.092306+00:00",
+    "title": "The chain hull of a countable FAC poset is scattered"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Giampietro-Darmon conjecture (2005)",
+      "Gross-Zagier factorization formula",
+      "Howard-Yang counting problem",
+      "Cerednik-Drinfeld p-adic uniformization",
+      "Ogg's genus formula for quaternion algebras"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any squarefree integer N supported at an even number of primes, let N = pM where p divides N. Let X_N be the Shimura curve of level N, and let w_p be the Atkin-Lehner involution at p. If the genus of the quotient X_N/w_p is zero, then the norm of the algebraic number defined as the infinite product of p-adic cross-ratios of CM points equals the explicit factorization formula conjectured by Giampietro-Darmon. This generalizes the original conjecture which required genus(X_N) = 0 (only valid for N in {6,10,22}) to cases where only the quotient genus vanishes.",
+    "domain_bridges": [
+      "p-adic uniformization of Shimura curves",
+      "Atkin-Lehner theory for quaternionic modular curves",
+      "CM points and singular moduli",
+      "Intersection theory on Shimura curves"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0337",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use Cerednik-Drinfeld p-adic uniformization to relate the algebraic number to its p-adic realization, apply the solved p-inverted Howard-Yang counting problem to compute cross-ratios, and leverage the vanishing genus condition on X_N/w_p to establish the factorization via analysis of the quotient curve's analytic properties.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02306v1",
+    "status": "available",
+    "timestamp": "2026-07-05T09:36:24.655112+00:00",
+    "title": "Conjecture on Norm Formula for Algebraic Numbers via Atkin-Lehner Quotients of Shimura Curves"
   },
   {
     "ambition_level": "extension",

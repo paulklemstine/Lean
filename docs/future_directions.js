@@ -1417,7 +1417,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rational Points Finiteness"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f28e9f40",
     "description": "We classify the finite posets whose probabilistic powerdomain is an RB-domain by proving that a finite poset P has this property if and only if it has a least element and its undirected Hasse graph is a tree.",
     "domains": [
       "Bridges"
@@ -1426,7 +1426,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02231v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T04:55:55.366539+00:00",
     "title": "Characterization of Finite Posets with RB-Domain Probabilistic Powerdomains"
   },
@@ -2082,7 +2082,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic Growth of Sums of Squared Symmetric Power Coefficients over Sums of Squares"
   },
   {
-    "consumed_by_exp_id": "847e72f8",
+    "consumed_by_exp_id": "",
     "description": "The conjecture posits that the sharpness of the entropic inequality ensures equality in maximum entropy states when samples align with uniform distributions.",
     "domains": [
       "Pythagorean",
@@ -2092,7 +2092,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30486v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T23:56:26.184055+00:00",
     "title": "Shareness of Entropic Analogues"
   },
@@ -4414,6 +4414,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-05T05:20:34.768144+00:00",
     "title": "Quantitative Thinness of Galois\u2011Group\u2011Changing Specializations for Strongly\u202fn\u2011Genuine Polynomials"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for every countable poset \\(P\\) satisfying the Finite Antichain Condition (FAC), its chain extension \\(H(P)\\) (defined via equivalence classes of increasing chains) is a scattered poset. Equivalently, \\(H(P)\\) contains no subposet order\u2011isomorphic to the rational line \\(\\mathbb{Q}\\). This strengthens the result that a countable FAC poset can be decomposed into scattered components by asserting that the completion itself already has a scattered structure.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0336",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02500v1",
+    "status": "available",
+    "timestamp": "2026-07-05T09:35:18.092306+00:00",
+    "title": "The chain hull of a countable FAC poset is scattered"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any squarefree integer N supported at an even number of primes, let N = pM where p divides N. Let X_N be the Shimura curve of level N, and let w_p be the Atkin-Lehner involution at p. If the genus of the quotient X_N/w_p is zero, then the norm of the algebraic number defined as the infinite product of p-adic cross-ratios of CM points equals the explicit factorization formula conjectured by Giampietro-Darmon. This generalizes the original conjecture which required genus(X_N) = 0 (only valid for N in {6,10,22}) to cases where only the quotient genus vanishes.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0337",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02306v1",
+    "status": "available",
+    "timestamp": "2026-07-05T09:36:24.655112+00:00",
+    "title": "Conjecture on Norm Formula for Algebraic Numbers via Atkin-Lehner Quotients of Shimura Curves"
   },
   {
     "consumed_by_exp_id": "93bf3c15",
