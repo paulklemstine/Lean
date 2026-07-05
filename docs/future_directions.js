@@ -118,7 +118,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Coxeter Length Scaling"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1480bd2c",
     "description": "For any graph $G$, if $G$ is distance-hereditary, then $G$ is balanced if and and only if $G$ does not contain $\\overline{3K_2}$ as an induced subgraph. This formalizes the paper's result that for the class of distance-hereditary graphs, the property of being balanced is equivalent to being $\\overline{3K_2}$-free.",
     "domains": [
       "Bridges"
@@ -127,7 +127,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00730v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T09:06:43.437769+00:00",
     "title": "Characterization of Balanced Distance-Hereditary Graphs by the Complement of 3-Matching"
   },
@@ -1286,7 +1286,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing the generalized honeymoon Oberwolfach problem in Lean 4"
   },
   {
-    "consumed_by_exp_id": "fddc2dce",
+    "consumed_by_exp_id": "",
     "description": "For all m \u2265 1, the refined generating function for intervals in the greedy m-Tamari poset, tracking both the number of elements and the number of leaves (peaks in the corresponding Dyck paths), is equal to the refined generating function for planar (m+1)-constellations tracking the same statistics. This extends the combinatorial proof for m=1 to all m \u2265 1.",
     "domains": [
       "Algebra",
@@ -1296,7 +1296,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01206v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:55:26.518816+00:00",
     "title": "Refined Bijective Enumeration of Greedy Tamari Intervals and Planar (m+1)-Constellations"
   },
@@ -4372,12 +4372,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every extremal symmetric one-weight coloring achieving the lower bound for HJ(t,r) must consist of a bracket regime combined with a single boundary scale, as observed in the (4,2) case.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0341",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02226v1",
+    "status": "available",
+    "timestamp": "2026-07-05T19:18:57.857280+00:00",
+    "title": "Extremal Symmetric One-Weight Colorings Must Have Bracket-Regime Structure"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let N > 1 be a squarefree integer with an even number of prime factors, and let X_N be the associated Shimura curve over \u211a. For each divisor d|N, let w_d be the Atkin-Lehner involution on X_N, and let X_N/\u27e8w_d\u27e9 be the corresponding quotient curve. The conjecture states that the set of all such N for which there exists at least one divisor d|N such that the quotient curve X_N/\u27e8w_d\u27e9 has genus zero is exactly the finite set {6, 10, 14, 15, 21, 22, 26, 33, 34, 35, 38, 39, 46, 51, 55, 57, 58, 62, 65, 69, 74, 77, 82, 85, 86, 87, 91, 93, 94, 95, 106, 111, 115, 118, 119, 122, 123, 129, 133, 134, 141, 142, 143, 145, 146, 155, 158, 159, 161, 166, 177, 178, 183, 185, 187, 194, 201, 202, 203, 205, 206, 209, 213, 214, 215, 217, 218, 219, 221, 226, 235, 237, 247, 249, 253, 254, 259, 262, 265, 267, 274, 278, 287, 291, 295, 298, 299, 301, 302, 303, 305, 309, 314, 319, 321, 323, 326, 327, 329, 334, 335, 339, 341, 346, 355, 358, 362, 365, 371, 377, 381, 382, 386, 391, 393, 394, 395, 398, 403, 407, 411, 413, 415, 417, 422, 427, 437, 445, 446, 447, 451, 453, 454, 458, 466, 469, 471, 473, 478, 481, 482, 485, 489, 493, 497}. (This list is conjectural and based on known classifications of genus-zero Atkin-Lehner quotients of Shimura curves.)",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0341",
+    "id": "fd_0342",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02306v1",
@@ -4392,7 +4406,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0342",
+    "id": "fd_0343",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02392v1",
@@ -4407,7 +4421,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0343",
+    "id": "fd_0344",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
@@ -4421,7 +4435,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0344",
+    "id": "fd_0345",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
@@ -4436,13 +4450,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0345",
+    "id": "fd_0346",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
     "status": "available",
     "timestamp": "2026-07-05T18:43:18.370713+00:00",
     "title": "Extension of h_q((q^m +1)/2) > 0 to smaller m"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The author proposes that the fluctuation distribution of high-dimension primary operators in AdS/CFT correspondence should conform to Gaussian log-correlated field models, with a sharp universal limit imposed at large N.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0347",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02233v1",
+    "status": "available",
+    "timestamp": "2026-07-05T19:19:07.709653+00:00",
+    "title": "Extremal Fluctuations in AdS Black Hole Microstates Follow Gaussian Log-Correlated Statistics"
   },
   {
     "consumed_by_exp_id": "",

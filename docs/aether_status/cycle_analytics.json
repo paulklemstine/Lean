@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-05T18:41:14.490479+00:00",
+  "last_updated": "2026-07-05T19:17:39.716118+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -35262,6 +35262,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-05T18:41:14.438515+00:00",
       "title": "Tightness Conjecture for P3-Packings in Plane Triangulations"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 7,
+      "domain": "Logic",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "fddc2dce",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v16",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783272748.7081301,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-05T19:17:39.653875+00:00",
+      "title": "Refined Bijective Enumeration of Greedy Tamari Intervals and Planar (m+1)-Constellations"
     }
   ]
 }

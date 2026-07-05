@@ -188,7 +188,7 @@
       "math.CO",
       "cs.DM"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1480bd2c",
     "description": "For any graph $G$, if $G$ is distance-hereditary, then $G$ is balanced if and and only if $G$ does not contain $\\overline{3K_2}$ as an induced subgraph. This formalizes the paper's result that for the class of distance-hereditary graphs, the property of being balanced is equivalent to being $\\overline{3K_2}$-free.",
     "domain_bridges": [
       "Combinatorial Matrix Theory",
@@ -203,7 +203,7 @@
     "proof_strategy": "The proof involves two directions: (1) Showing that if $G$ contains $\\overline{3K_2}$ as an induced subgraph, it cannot be balanced (which is true for any graph). (2) Showing that if $G$ is distance-hereditary and contains no induced $\\overline{3K_2}$, then it is balanced. The second part relies on the paper's proof that for distance-hereditary graphs, balancedness is equivalent to being hereditary clique-Helly, and then showing that distance-hereditary graphs are hereditary clique-Helly if and only if they are $\\overline{3K_2}$-free.",
     "research_mode": "team",
     "source_exp_id": "2607.00730v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T09:06:43.437769+00:00",
     "title": "Characterization of Balanced Distance-Hereditary Graphs by the Complement of 3-Matching"
   },
@@ -2320,7 +2320,7 @@
       "Bousquet-Mélou and Chapoton's functional equation for greedy Tamari intervals (2024)",
       "Dermenjian's definition of greedy ν-Tamari posets (2023)"
     ],
-    "consumed_by_exp_id": "fddc2dce",
+    "consumed_by_exp_id": "",
     "description": "For all m ≥ 1, the refined generating function for intervals in the greedy m-Tamari poset, tracking both the number of elements and the number of leaves (peaks in the corresponding Dyck paths), is equal to the refined generating function for planar (m+1)-constellations tracking the same statistics. This extends the combinatorial proof for m=1 to all m ≥ 1.",
     "domain_bridges": [
       "Bijections between Dyck paths and plane trees",
@@ -2338,7 +2338,7 @@
     "proof_strategy": "Formalize the bijection between greedy Tamari intervals and planar (m+1)-constellations as a type equivalence in Lean, then prove that the pullback of the leaf statistic on constellations equals the peak statistic on Dyck paths. Use structural induction on the recursive decomposition, leveraging the established isomorphism between the combinatorial structures.",
     "research_mode": "team",
     "source_exp_id": "2607.01206v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:55:26.518816+00:00",
     "title": "Refined Bijective Enumeration of Greedy Tamari Intervals and Planar (m+1)-Constellations"
   },
@@ -8024,6 +8024,33 @@
     "title": "Existence of p-adic Schottky groups for hyperelliptic Mumford curves under split multiplicative reduction"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Hales--Jewett numbers",
+      "one-weight colorings",
+      "bracket regime"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every extremal symmetric one-weight coloring achieving the lower bound for HJ(t,r) must consist of a bracket regime combined with a single boundary scale, as observed in the (4,2) case.",
+    "domain_bridges": [
+      "Gallai's theorem",
+      "homothetic sets",
+      "symmetric colorings"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0341",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Enumerate extremal symmetric one-weight colorings and verify structural constraints via combinatorial induction or SAT-based verification.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02226v1",
+    "status": "available",
+    "timestamp": "2026-07-05T19:18:57.857280+00:00",
+    "title": "Extremal Symmetric One-Weight Colorings Must Have Bracket-Regime Structure"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "Giam",
@@ -8043,7 +8070,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0341",
+    "id": "fd_0342",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the genus formula for Atkin-Lehner quotients of Shimura curves, which expresses the genus in terms of class numbers of quaternion orders, fixed point counts of the Atkin-Lehner involutions, and contributions from elliptic points. Systematically evaluate this formula for all squarefree N with an even number of prime factors, leveraging known bounds on class numbers to prove finiteness of the genus-zero cases. The computation reduces to checking a finite list of N up to a computable bound, which can be verified by computer-assisted enumeration of the genus formula.",
@@ -8071,7 +8098,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0342",
+    "id": "fd_0343",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Formalize the ring of integers modulo $N$ and the group of Dirichlet characters in Lean 4 using `mathlib`. 2. Implement the definition of Gauss sums $G_N(\\psi)$ as sums over $\\mathbb{Z}/N\\mathbb{Z}$ into $\\mathbb{C}$. 3. Use the property that the entries of $A_k(\\chi)$ are characters of a subgroup of the character group. 4. Apply a generalized version of the determinant formula for matrices whose entries are characters (related to the group determinant formula) to factorize $\\det(A_k(\\chi))$ into a product of Gauss sums. 5. Use the Hasse-Davenport lifting formula and properties of primitive characters modulo $p^m$ to simplify the product.",
@@ -8104,7 +8131,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0343",
+    "id": "fd_0344",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The conjecture reduces to proving that any graph G with T(n) edges and a non-positive curvature edge must have the specified join structure. Key steps: (1) Show G must be n/2-connected using expansion arguments, (2) Prove the complement G̅ has exactly n/2 edges forming a perfect matching, (3) Apply stability methods to show any edge not in the join structure can be moved to the matching without decreasing edge count, (4) Use the curvature formula κ(e) = 1 - W₂(μ₁, μ₂) to demonstrate the matching edges have κ ≤ 0 while all edges in K_{n/2} have κ > 0. The technical core involves estimating Wasserstein distances for the specific probability measures μ_x = (1-deg(x))δ_x + Σ_{y~x} δ_y/(deg(x)+1).",
@@ -8130,7 +8157,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0344",
+    "id": "fd_0345",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive formulation followed by reduction argument",
@@ -8155,7 +8182,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0345",
+    "id": "fd_0346",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Verify base cases (m=2,3) via explicit construction or known bounds. 2. Use induction on m, leveraging recursive properties of h_q(n). 3. Apply the paper's lemma on divisibility and codimension bounds for composite n.",
@@ -8164,6 +8191,29 @@
     "status": "available",
     "timestamp": "2026-07-05T18:43:18.370713+00:00",
     "title": "Extension of h_q((q^m +1)/2) > 0 to smaller m"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "1023",
+      "2023X"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The author proposes that the fluctuation distribution of high-dimension primary operators in AdS/CFT correspondence should conform to Gaussian log-correlated field models, with a sharp universal limit imposed at large N.",
+    "domain_bridges": "Quantum Gravity ↔ Conformal Field Theory",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0347",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construction of spectral bounds via holographic duality and random matrix scaling",
+    "research_mode": "team",
+    "source_exp_id": "2607.02233v1",
+    "status": "available",
+    "timestamp": "2026-07-05T19:19:07.709653+00:00",
+    "title": "Extremal Fluctuations in AdS Black Hole Microstates Follow Gaussian Log-Correlated Statistics"
   },
   {
     "ambition_level": "extension",
