@@ -1465,7 +1465,7 @@
       "Jarník29",
       "Bugeaud03"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cd3668cb",
     "description": "Conjecture that for any monotone ψ : ℕ → (0,∞) with Σ_{n≥1} ψ(n)·(q1...qn) < ∞ and lim_{n→∞} log qn / log(q1...qn) = 0, the exact set E_c(ψ) = {x∈[0,1) : x-ω_n(x) < ψ(n)/(q1...qn) i.o.} has Hausdorff dimension dim_H E_c(ψ) = 2 / λ, where λ = liminf_{n→∞} (-log ψ(n)) / log(q1...qn).",
     "domain_bridges": [
       "Dynamical Systems",
@@ -1482,7 +1482,7 @@
     "proof_strategy": "Combine the second Borel-Cantelli lemma with a suitable mass transference principle to estimate Hausdorff measure of cylinder sets defined by the Cantor series, then apply standard dimension formulas.",
     "research_mode": "team",
     "source_exp_id": "2606.30435v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:57:50.869620+00:00",
     "title": "Exact Hausdorff dimension of Cantor series exact approximation sets"
   },
@@ -4516,7 +4516,7 @@
       "Babson et al. (2013), Atkins & Gwilliam",
       "Carranza & Kapulkin (2008)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a41914fd",
     "description": "This paper proposes a combinatorial framework to describe the discrete homotopy groups of quasisymmetric cubical sets, extending prior work by Carranza and Kapulkin. It aims to provide a formally verified, leveraging Lean 4, synthetic proof of isomorphism between the homotopy groups of the geometric realization and those of the underlying cubical configuration.",
     "domain_bridges": [
       "Combinatorial mathematics",
@@ -4532,7 +4532,7 @@
     "proof_strategy": "Combinatorial construction followed by inductive argument and verifiable lemmas",
     "research_mode": "team",
     "source_exp_id": "2606.28693v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T13:25:20.641906+00:00",
     "title": "Discrete homotopy groups of quasisymmetric cubical sets"
   },
@@ -5228,7 +5228,7 @@
       "HSV2006",
       "TC2013"
     ],
-    "consumed_by_exp_id": "2752f1be",
+    "consumed_by_exp_id": "",
     "description": "For a Hamiltonian graph G with minimum degree at least 3, there exists a constant c > 0 such that G contains a nontrivial cycle of length at least n - c n^{2/3}. The proof combines a constructive method using a poset-based edge-disjoint cycle decomposition with a nonconstructive application of the probabilistic method, leveraging the best possible bounds achievable via these approaches.",
     "domain_bridges": [
       "Poset Theory",
@@ -5244,7 +5244,7 @@
     "proof_strategy": "Establish that all long cycles are blocked by a specific edge, then use a cycle-pairing strategy from poset theory to construct a nontrivial cycle, augmented by a probabilistic counting argument to ensure the existence of a sufficiently long alternative cycle.",
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T07:37:36.028717+00:00",
     "title": "Existence of a nontrivial cycle of length n-O(n^{2/3}) in Hamiltonian graphs with δ(G) ≥ 3"
   },
@@ -5692,7 +5692,7 @@
     "catalog_references": [
       "arXiv:2405.12345"
     ],
-    "consumed_by_exp_id": "00261a50",
+    "consumed_by_exp_id": "",
     "description": "For increasing Boolean functions f,g:{0,1}^n→{0,1}, if the covariance exceeds the right-hand side of the FKKK inequality by at most a small ε, then either f and g depend on disjoint sets of coordinates, or they are both dictatorships on the same coordinate, or after permuting coordinates and possibly swapping f,g they are L^2-close to the two-coordinate AND-OR pair (x_i x_j, x_i ∨ x_j).",
     "domain_bridges": [
       "Fourier analysis on the Boolean cube",
@@ -5708,7 +5708,7 @@
     "proof_strategy": "Use the inductive four-restriction scheme from the original proof to isolate the deficit term, apply a sharp Bonami-Beckner inequality to control higher-degree Fourier mass, and invoke an invariance principle to reduce to Gaussian space where the extremal configurations are classified via Ehrhard-type inequalities.",
     "research_mode": "team",
     "source_exp_id": "2606.32024v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T15:19:41.775801+00:00",
     "title": "Stability of the sharp diagonal spectral correlation inequality for monotone Boolean functions"
   },
@@ -7635,6 +7635,35 @@
     "title": "Tail Distribution Exponent for Black Hole Microstate Extremal Fluctuations"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "White's conjectures on basis exchange",
+      "Mason's conjecture on flat rank log-concavity",
+      "Matroid rank generating functions",
+      "Combinatorial convexity properties"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Provide a concrete matroid where the sequence of flat rank counts violates log-concavity, i.e., exhibit a matroid M with rank r such that for some k, f_k² > f_{k-1}·f_{k+1} where f_i denotes the number of flats of rank i.",
+    "domain_bridges": [
+      "Combinatorial commutative algebra (toric ideals)",
+      "Polytope theory (face lattice log-concavity)",
+      "Algebraic combinatorics (Stanley-Reisner rings)"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0319",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct explicit counterexample from referenced paper using finite ground set matroid, compute all flats by rank enumeration, verify violation of f_k² > f_{k-1}f_{k+1} inequality.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02208v1",
+    "status": "available",
+    "timestamp": "2026-07-05T03:01:06.348760+00:00",
+    "title": "Counterexample to Mason's log-concavity conjecture for matroid flat counts"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "Ogg1983",
@@ -7652,7 +7681,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0319",
+    "id": "fd_0320",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the Riemann–Hurwitz formula to the involution w_p on the Shimura curve X_N, compute the exact number of fixed points, and show that the resulting genus vanishes precisely for N = 6, 10, 22; this can be formalized in Lean by constructing the quotient curve and verifying the genus formula.",
@@ -7677,7 +7706,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0320",
+    "id": "fd_0321",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Translate the five equivalent descriptions of strong Δ-matroids from Theorem A of the paper into Lean definitions. 2. Formalise the notion of a peerless antipode directly from the text. 3. Show that the 'peerless antipode equations' (the tropical equations arising from the orthogonal Grassmannian) are equivalent to the absence of peerless antipodes by adapting the algebraic motivation given in the paper. 4. Use the already established equivalence between strong Δ-matroids and the hyperplane/Wenzel exchange properties to close the loop, yielding the desired iff statement.",
@@ -7700,7 +7729,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0321",
+    "id": "fd_0322",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a formal model in Lean 4 to verify convergence properties of the associated Gauss sum sequences.",
@@ -7725,7 +7754,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0322",
+    "id": "fd_0323",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "classify all graphs with exactly T(n) edges, show that only the split graph achieves non-positive curvature, and verify curvature values using Ollivier's formula",
@@ -7752,7 +7781,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0323",
+    "id": "fd_0324",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Develop a Lean library for split connected reductive groups, Tannakian formalism, trianguline modules, and the trianguline variety T_G. Define the regularity condition on triangulation parameters and the crystallinity property for (phi, Gamma_K)-modules with G-structure. Then construct the equivalence by adapting the arguments from the paper, verifying each step using Lean's algebraic geometry and category theory tools. This will require proving lemmas about smoothness, normality, and base change properties of T_G.",
@@ -7779,7 +7808,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0324",
+    "id": "fd_0325",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on the size of S combined with combinatorial analysis of the equivalence relation; check connectivity and absence of cycles; search for counterexamples computationally.",
@@ -7808,7 +7837,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0325",
+    "id": "fd_0326",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Reduce to finite constraint satisfaction; exploit weight-preserving bijections between symmetric colorings and one-dimensional Gallai colorings; verify via exhaustive search for small parameters.",
@@ -7841,7 +7870,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0326",
+    "id": "fd_0327",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof strategy involves three main components: (1) Use the minimal model program to show that a fibration f: X → C with general type generic fiber admits a canonical fibration structure after removing negligible subvarieties; (2) Apply the framework of Vojta's dictionary to construct entire curves on complex conjugates of fibers from rational points of large height; (3) Combine the Xie--Yuan--Gao theorem on varieties admitting finite morphisms to abelian varieties with equidistribution results to show that such constructed entire curves must be contained in proper subvarieties, forcing the rational points to lie in the special loci. Technical tools include potential theory, height machinery, and the arithmetic Simpson correspondence between heights and curvature.",
@@ -7850,6 +7879,31 @@
     "status": "available",
     "timestamp": "2026-07-05T02:27:15.905526+00:00",
     "title": "Geometric Bombieri--Lang Conjecture for Varieties Fibered Over Curves with Generic Fiber of General Type"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Jung 1989",
+      "Jung-Tix 1998"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "This paper investigates the structural constraints under which a finite poset admits a probabilistic powerdomain isomorphic to an RB-domain. The key claim is that such a domain must inherit a least element and possess a tree-like Hasse graph structure.",
+    "domain_bridges": [
+      "finite-binary-channel coding",
+      "probabilistic chains"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0328",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Constructive separation with two clear obstruction layers",
+    "research_mode": "team",
+    "source_exp_id": "2607.02231v1",
+    "status": "available",
+    "timestamp": "2026-07-05T03:01:13.702884+00:00",
+    "title": "Characterizing finite posets whose probabilistic powerdomain is an RB-domain"
   },
   {
     "ambition_level": "extension",

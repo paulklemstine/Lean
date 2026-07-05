@@ -832,7 +832,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Analyticity of the localized divisor density function"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cd3668cb",
     "description": "Conjecture that for any monotone \u03c8 : \u2115 \u2192 (0,\u221e) with \u03a3_{n\u22651} \u03c8(n)\u00b7(q1...qn) < \u221e and lim_{n\u2192\u221e} log qn / log(q1...qn) = 0, the exact set E_c(\u03c8) = {x\u2208[0,1) : x-\u03c9_n(x) < \u03c8(n)/(q1...qn) i.o.} has Hausdorff dimension dim_H E_c(\u03c8) = 2 / \u03bb, where \u03bb = liminf_{n\u2192\u221e} (-log \u03c8(n)) / log(q1...qn).",
     "domains": [
       "Pythagorean",
@@ -842,7 +842,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30435v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:57:50.869620+00:00",
     "title": "Exact Hausdorff dimension of Cantor series exact approximation sets"
   },
@@ -2476,7 +2476,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact 2-adic valuation of coefficients of T(x)^m for m \u2261 1 mod 4"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a41914fd",
     "description": "This paper proposes a combinatorial framework to describe the discrete homotopy groups of quasisymmetric cubical sets, extending prior work by Carranza and Kapulkin. It aims to provide a formally verified, leveraging Lean 4, synthetic proof of isomorphism between the homotopy groups of the geometric realization and those of the underlying cubical configuration.",
     "domains": [
       "Algebra",
@@ -2486,7 +2486,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28693v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T13:25:20.641906+00:00",
     "title": "Discrete homotopy groups of quasisymmetric cubical sets"
   },
@@ -2856,7 +2856,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equality case of the weighted dual Fisher inequality for taiko product structures"
   },
   {
-    "consumed_by_exp_id": "2752f1be",
+    "consumed_by_exp_id": "",
     "description": "For a Hamiltonian graph G with minimum degree at least 3, there exists a constant c > 0 such that G contains a nontrivial cycle of length at least n - c n^{2/3}. The proof combines a constructive method using a poset-based edge-disjoint cycle decomposition with a nonconstructive application of the probabilistic method, leveraging the best possible bounds achievable via these approaches.",
     "domains": [
       "Logic",
@@ -2866,7 +2866,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T07:37:36.028717+00:00",
     "title": "Existence of a nontrivial cycle of length n-O(n^{2/3}) in Hamiltonian graphs with \u03b4(G) \u2265 3"
   },
@@ -3116,7 +3116,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Functional Equations Enforce Primitivity of Coefficients"
   },
   {
-    "consumed_by_exp_id": "00261a50",
+    "consumed_by_exp_id": "",
     "description": "For increasing Boolean functions f,g:{0,1}^n\u2192{0,1}, if the covariance exceeds the right-hand side of the FKKK inequality by at most a small \u03b5, then either f and g depend on disjoint sets of coordinates, or they are both dictatorships on the same coordinate, or after permuting coordinates and possibly swapping f,g they are L^2-close to the two-coordinate AND-OR pair (x_i x_j, x_i \u2228 x_j).",
     "domains": [
       "Physics"
@@ -3125,7 +3125,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.32024v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T15:19:41.775801+00:00",
     "title": "Stability of the sharp diagonal spectral correlation inequality for monotone Boolean functions"
   },
@@ -4166,12 +4166,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Provide a concrete matroid where the sequence of flat rank counts violates log-concavity, i.e., exhibit a matroid M with rank r such that for some k, f_k\u00b2 > f_{k-1}\u00b7f_{k+1} where f_i denotes the number of flats of rank i.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0319",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02208v1",
+    "status": "available",
+    "timestamp": "2026-07-05T03:01:06.348760+00:00",
+    "title": "Counterexample to Mason's log-concavity conjecture for matroid flat counts"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any squarefree integer N > 1 with an even number of distinct prime factors, the genus of the Atkin\u2013Lehner quotient X_N / \u27e8w_p\u27e9 is zero if and only if N belongs to the finite set {6, 10, 22}.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0319",
+    "id": "fd_0320",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02306v1",
@@ -4186,7 +4201,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0320",
+    "id": "fd_0321",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02419v1",
@@ -4201,7 +4216,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0321",
+    "id": "fd_0322",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02392v1",
@@ -4215,7 +4230,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0322",
+    "id": "fd_0323",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
@@ -4230,7 +4245,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0323",
+    "id": "fd_0324",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02215v1",
@@ -4245,7 +4260,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0324",
+    "id": "fd_0325",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -4260,7 +4275,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0325",
+    "id": "fd_0326",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02226v1",
@@ -4275,13 +4290,27 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0326",
+    "id": "fd_0327",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02165v1",
     "status": "available",
     "timestamp": "2026-07-05T02:27:15.905526+00:00",
     "title": "Geometric Bombieri--Lang Conjecture for Varieties Fibered Over Curves with Generic Fiber of General Type"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This paper investigates the structural constraints under which a finite poset admits a probabilistic powerdomain isomorphic to an RB-domain. The key claim is that such a domain must inherit a least element and possess a tree-like Hasse graph structure.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0328",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02231v1",
+    "status": "available",
+    "timestamp": "2026-07-05T03:01:13.702884+00:00",
+    "title": "Characterizing finite posets whose probabilistic powerdomain is an RB-domain"
   },
   {
     "consumed_by_exp_id": "5ab8fd19",
