@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-05T03:00:53.848770+00:00",
+  "last_updated": "2026-07-05T03:34:45.114196+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -34537,6 +34537,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-05T03:00:53.785996+00:00",
       "title": "Existence of a nontrivial cycle of length n-O(n^{2/3}) in Hamiltonian graphs with \u03b4(G) \u2265 3"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 17,
+      "domain": "Geometry",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "67d07abb",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v16",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783216445.634519,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-05T03:34:45.055014+00:00",
+      "title": "A structural decomposition theorem for countable FAC posets via scattered components"
     }
   ]
 }

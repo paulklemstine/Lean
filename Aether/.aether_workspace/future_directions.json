@@ -3670,7 +3670,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Khinchin24",
         "Jarník29",
@@ -3695,7 +3695,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0079",
-      "last_attempt_time": "2026-07-05T03:01:24.734280+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem exact_dimension (Q : ℕ → ℕ) (hq : ∀ n, Q n ≥ 2) (hlim : Filter.Tendsto (fun n : ℕ => Real.log (∏ k in Finset.range n, Q k)) Filter.atTop (nhds 0)) (ψ : ℕ → ℝ) (hψ : ∀ n, 0 < ψ n) (hmono : Monotone ψ) (hsum : Summable (fun n ↦ ψ n * (∏ k in Finset.range n, Q k))) : ∃ (λ : ℝ), λ = liminf (fun n ↦ -Real.log (ψ n)) Filter.atTop / Real.log (∏ k in Finset.range n, Q k) → dim_H (ExactSet Q ψ) = 2 / λ := by sorry",
       "lineage_refs": [],
@@ -9487,7 +9487,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Babson et al. (2013), Atkins & Gwilliam",
         "Carranza & Kapulkin (2008)"
@@ -9510,7 +9510,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0201",
-      "last_attempt_time": "2026-07-05T03:01:18.945500+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Formalization of adjunction alignment and naturality conditions in the proof of conclusion",
       "lineage_refs": [],
@@ -12797,13 +12797,13 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "NiWangKang2023"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "d111b5f2",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -12819,7 +12819,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0270",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-05T03:35:20.904382+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem counterexample_exists : ∃ (G : Graph ℕ), Is2K4Free G ∧ Fintype.card (Vertex G) = 9 ∧ QSpectralRadius G = QSpectralRadius (K1 ∨ T3 8) ∧ ¬Isomorphic G (K1 ∨ T3 8)",
       "lineage_refs": [],
@@ -12834,7 +12834,7 @@
       "source": "",
       "source_exp_id": "2606.30272v1",
       "source_path": "http://arxiv.org/abs/2606.30272v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-04T01:20:02.252152+00:00",
       "title": "Uniqueness failure for signless Laplacian extremal graphs at n=9 for (2K_4)-free graphs"
@@ -14676,7 +14676,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "67d07abb",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -14711,7 +14711,7 @@
       "source": "",
       "source_exp_id": "2607.02500v1",
       "source_path": "http://arxiv.org/abs/2607.02500v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-04T19:57:33.862963+00:00",
       "title": "A structural decomposition theorem for countable FAC posets via scattered components"
@@ -15198,6 +15198,55 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "ErdosSimonovits1984",
+        "LovaszSzegedy2006",
+        "ConlonFoxSudakov2010",
+        "LiSzegedy2026"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The paper introduces a tensor-amplification framework for proving Sidorenko-type inequalities in graphon classes, providing two transfer principles and formalizing structural closure properties.",
+      "domain_bridges": [
+        "Graph Theory",
+        "Probability Theory",
+        "Stochastic Processes"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Physics"
+      ],
+      "github_issue": 0,
+      "id": "fd_0320",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Ultrafilter-based regularity arguments for principal restraints under tensor powers",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Conversion of geometric concentration estimates into tensor-exponential forms using Perron regularity",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.02260v1",
+      "source_path": "http://arxiv.org/abs/2607.02260v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-05T03:34:51.895674+00:00",
+      "title": "Tensor Amplification and Spectral Transfer for Sidorenko-Type Inequalities"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "Ogg1983",
         "CerednikDrinfeld1990",
         "Daas2023"
@@ -15220,7 +15269,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0320",
+      "id": "fd_0321",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem genus_zero_atkin_lehner {N : ℕ} (hN : squarefree N) (h_even : even (Nat.card (primeFactors N))) : genus (quotient_curve X_N (w_p)) = 0 ↔ N = 6 ∨ N = 10 ∨ N = 22 := by sorry",
@@ -15266,7 +15315,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0321",
+      "id": "fd_0322",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem strong_iff_no_peerless_antipode {E : Type*} [Fintype E] [DecidableEq E] (M : DeltaMatroid E) : M.IsStrong ↔ ¬M.HasPeerlessAntipode := by\n  sorry\n",
@@ -15310,7 +15359,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0322",
+      "id": "fd_0323",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem 5.3 – Determinant identities for Dirichlet characters",
@@ -15356,7 +15405,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0323",
+      "id": "fd_0324",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem unique_extremal_nonpos_curvature (n : ℕ) (hn : n ≥ 12) (he : n % 2 = 0) : ∃! (G : SimpleGraph ℕ), G.edges.Count = T n ∧ ∃ e ∈ G.edges, curvature e ≤ 0",
@@ -15404,7 +15453,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0324",
+      "id": "fd_0325",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem trianguline_crystallinity :\n  ∀ (G : SplitConnectedReductiveGroup) (D : ΦΓModuleWithGStructure G),\n    Crystalline D ↔ RegularTriangulationParameter D",
@@ -15452,7 +15501,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0325",
+      "id": "fd_0326",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tree_structure_of_T {K : Type*} [Field K] (S : Finset (BP1 K)) (hS : S.card ≥ 3) : IsTree (graph_of_T S) := by sorry",
@@ -15502,7 +15551,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0326",
+      "id": "fd_0327",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_symmetric_one_weight_threshold (t : ℕ) (S : Finset ℤ) (r : ℕ) : ∀ (col : (Fin t → ℕ) → Fin r), ∃ (n : ℕ), (∀ (line : List ℕ), line ≠ [] → (∃ (a b : ℕ), a ∈ line → b ∈ line → col a = col b) ∧ n ≤ G_r S)",
@@ -15556,7 +15605,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0327",
+      "id": "fd_0328",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem geometric_Bombieri_Lang_fibration {k : Type} [field isChar0] [k algebraicallyClosed] {K : Type} [field (fractionField K)] [finitelyGenerated K k] {C : Scheme} [properSmoothCurve C] {X : Scheme} [projective X] (f : X ⟶ C) (h_gen_type : generalType (genericFiber f K)) : ∃ (S : ClosedSubscheme X), (∨ (λ x : X.valueSet K, x ∈ (X \\ S).points)) ↔ (∨ (λ γ : WholeCurve k, ∃ (Y : ClosedSubscheme X), γ.val.image ⊆ Y.val ∧ Y.val ≤ specialLocus f))",
@@ -15602,7 +15651,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0328",
+      "id": "fd_0329",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The natural representation of deflations as bounded cones over finite-dimensional bases allows extinction of infinite sequences of redefinitions.",
@@ -15622,6 +15671,55 @@
       "thread_id": "",
       "timestamp": "2026-07-05T03:01:13.702884+00:00",
       "title": "Characterizing finite posets whose probabilistic powerdomain is an RB-domain"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "graph_automorphism_groups",
+        "finite_geometric_graphs",
+        "polar_spaces",
+        "quadratic_forms_over_finite_fields"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For a non-degenerate quadratic space (V,Q) over F_q with q>3 odd, and Γ_Q the graph with vertices as non-isotropic points adjacent when spanning a tangent line, the automorphism group Aut(Γ_Q) is isomorphic to PΓO(V,Q), the projective semilinear orthogonal group preserving Q.",
+      "domain_bridges": [
+        "algebraic_graph_theory_to_finite_geometry",
+        "combinatorial_methods_to_group_theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "github_issue": 0,
+      "id": "fd_0330",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem automorphism_group_orthogonal_graph (q : ℕ) [hq : q > 3] [hodd : odd q] (V : Type) (Q : quadratic_form V (F_q q)) [non_degenerate Q] : is_simple_connected (Γ_Q V Q) → Aut (Γ_Q V Q) ≃* PΓO (V,Q)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use the local characterization theorem to show any automorphism induces a structure-preserving bijection on the underlying quadratic space, then prove this correspondence respects the quadratic form up to scalar multiplication, and finally apply fundamental theorem of projective geometry to conclude the automorphism group is exactly PΓO(V,Q).",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.02035v1",
+      "source_path": "http://arxiv.org/abs/2607.02035v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-05T03:35:16.225579+00:00",
+      "title": "Automorphism group of orthogonal graphs equals projective semilinear orthogonal group"
     },
     {
       "ambition_level": "extension",
@@ -15668,7 +15766,6 @@
   "recent_domain_counts": {},
   "recent_theme_keywords": {},
   "selection_log": [
-    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",

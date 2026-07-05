@@ -3455,7 +3455,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Joint descendants of the last k vertices in random d-DAGs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d111b5f2",
     "description": "For r=3 and t=1, the graph K_1 \u2228 T_3(8) is not the unique maximizer of the signless Laplacian spectral radius among 2K_4-free graphs of order 9; there exists another non-isomorphic 2K_4-free graph on 9 vertices with identical signless Laplacian spectral radius.",
     "domains": [
       "Algebra",
@@ -3465,7 +3465,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30272v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T01:20:02.252152+00:00",
     "title": "Uniqueness failure for signless Laplacian extremal graphs at n=9 for (2K_4)-free graphs"
   },
@@ -4019,7 +4019,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finite sign law for Ramanujan's third-order mock theta function \u03c1(q)"
   },
   {
-    "consumed_by_exp_id": "67d07abb",
+    "consumed_by_exp_id": "",
     "description": "Every countable FAC poset P can be naturally decomposed into a topological sum (ordinal sum) of scattered subposets, where a poset is scattered if it contains no non-trivial dense subposet (i.e., no subset isomorphic to the rationals Q). This decomposition reflects the global structure of P and provides a foundation for analyzing chain-antichain interactions. The conjecture states that such a decomposition exists with explicitly constructible scattered components that preserve FAC properties.",
     "domains": [
       "Logic",
@@ -4029,7 +4029,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02500v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T19:57:33.862963+00:00",
     "title": "A structural decomposition theorem for countable FAC posets via scattered components"
   },
@@ -4181,12 +4181,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The paper introduces a tensor-amplification framework for proving Sidorenko-type inequalities in graphon classes, providing two transfer principles and formalizing structural closure properties.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_0320",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02260v1",
+    "status": "available",
+    "timestamp": "2026-07-05T03:34:51.895674+00:00",
+    "title": "Tensor Amplification and Spectral Transfer for Sidorenko-Type Inequalities"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any squarefree integer N > 1 with an even number of distinct prime factors, the genus of the Atkin\u2013Lehner quotient X_N / \u27e8w_p\u27e9 is zero if and only if N belongs to the finite set {6, 10, 22}.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0320",
+    "id": "fd_0321",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02306v1",
@@ -4201,7 +4215,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0321",
+    "id": "fd_0322",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02419v1",
@@ -4216,7 +4230,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0322",
+    "id": "fd_0323",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02392v1",
@@ -4230,7 +4244,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0323",
+    "id": "fd_0324",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
@@ -4245,7 +4259,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0324",
+    "id": "fd_0325",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02215v1",
@@ -4260,7 +4274,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0325",
+    "id": "fd_0326",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -4275,7 +4289,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0326",
+    "id": "fd_0327",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02226v1",
@@ -4290,7 +4304,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0327",
+    "id": "fd_0328",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02165v1",
@@ -4304,13 +4318,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0328",
+    "id": "fd_0329",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02231v1",
     "status": "available",
     "timestamp": "2026-07-05T03:01:13.702884+00:00",
     "title": "Characterizing finite posets whose probabilistic powerdomain is an RB-domain"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a non-degenerate quadratic space (V,Q) over F_q with q>3 odd, and \u0393_Q the graph with vertices as non-isotropic points adjacent when spanning a tangent line, the automorphism group Aut(\u0393_Q) is isomorphic to P\u0393O(V,Q), the projective semilinear orthogonal group preserving Q.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0330",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02035v1",
+    "status": "available",
+    "timestamp": "2026-07-05T03:35:16.225579+00:00",
+    "title": "Automorphism group of orthogonal graphs equals projective semilinear orthogonal group"
   },
   {
     "consumed_by_exp_id": "5ab8fd19",
