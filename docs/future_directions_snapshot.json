@@ -692,7 +692,7 @@
       "Theorem 1.5",
       "Kane's work"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "244a22c3",
     "description": "The product of primes in the extension field equals its order.",
     "domain_bridges": "extension",
     "domains": [
@@ -705,7 +705,7 @@
     "proof_strategy": "Direct arithmetic verification",
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T05:35:59.496154+00:00",
     "title": "Ramified Prime Product Equality"
   },
@@ -1940,7 +1940,7 @@
       "Optimization Constants repository",
       "Tao's tentative 0.947 improvement"
     ],
-    "consumed_by_exp_id": "9ab455c2",
+    "consumed_by_exp_id": "",
     "description": "There exists a finite family of vector-valued convolution kernels {K_i} such that their weighted combination satisfies a ball-overbag inequality for Sidon sets, with the coefficient γ_0=0.94601 achievable through optimized L² energy distribution across kernels.",
     "domain_bridges": [
       "harmonic analysis",
@@ -1956,7 +1956,7 @@
     "proof_strategy": "Construct explicit vectors K_i in L²(ℤ/ℤ) with bounded support, prove their weighted L² norm combination controls the Sidon set density via Cauchy-Schwarz, and numerically verify the rational certificate for γ_0 using Lean 4's decision procedures.",
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T23:15:13.575664+00:00",
     "title": "Multi-kernel smoothing lemma for Sidon sets"
   },
@@ -2407,7 +2407,7 @@
       "p-adic integration",
       "Tree structures in p-adic geometry"
     ],
-    "consumed_by_exp_id": "4ce791a9",
+    "consumed_by_exp_id": "",
     "description": "For a set S = {a₀, b₀, ..., a_g, b_g} ⊂ ℙ¹(K) of size 2g+2 where K is a finite extension of ℚ_p (p ≠ 2), if the associated tree T(S) constructed from equivalence classes of triples has all internal vertices of degree exactly 3 and exactly 2g+2 leaf vertices corresponding bijectively to elements of S, then S is in good position, i.e., Γ(S) = ⟨s₀, ..., s_g⟩ is discontinuous and equals the free product ⋆ᵢ⟨s_i⟩.",
     "domain_bridges": [
       "p-adic Hodge theory",
@@ -2425,7 +2425,7 @@
     "proof_strategy": "Prove sufficiency by showing that the tree condition ensures the Schottky group Γ(S) acts properly discontinuously on Ω_Γ. Use the correspondence between tree combinatorics and fundamental domains in ℙ¹(C_p). Show that degree-3 vertices correspond to specific geometric configurations that prevent accumulation of group translates, ensuring discontinuity. The leaf count condition ensures the correct rank for the free product structure. Counterexamples would involve constructing sets S where the tree has the specified degree pattern but Γ(S) fails to be a Schottky group.",
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T03:49:23.417787+00:00",
     "title": "Tree Structure Characterization for Good Position in Hyperelliptic Mumford Curves"
   },
@@ -3459,7 +3459,7 @@
       "math.NT",
       "math.CO"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "46b08ba4",
     "description": "For any d × d matrix A over a number field K with ring of integers O_K, if there exists n ≥ 1 such that A^n ∈ M_d(O_K), then the pseudo-determinant of A is an algebraic integer in K.",
     "domain_bridges": [
       "algebraic number theory",
@@ -3474,7 +3474,7 @@
     "proof_strategy": "Show that eigenvalues λ of A satisfy λ^n ∈ O_K (hence algebraic integers) via characteristic polynomial of A^n, then prove their product (pseudo-determinant) is an algebraic integer",
     "research_mode": "team",
     "source_exp_id": "2606.30876v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T21:26:19.991104+00:00",
     "title": "Pseudo-determinant of power-integral matrices is an algebraic integer"
   },
@@ -4528,7 +4528,7 @@
       "Potočnik's tetravalent graph census",
       "regular 4‑maniplex dataset"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e29ffbac",
     "description": "We conjecture that the isomorphism classes of regular 4‑maniplexes are in bijective correspondence with the isomorphism classes of tetravalent graphs appearing in Potočnik's census.  Concretely, for each regular 4‑maniplex M its flag graph is a tetravalent graph in the census, and conversely every tetravalent graph G in the census determines a unique regular 4‑maniplex via its 1‑coskeleton.  Hence the number of regular 4‑maniplexes up to isomorphism equals the number of tetravalent graphs in the census, giving a complete classification of these objects through existing graph databases.",
     "domain_bridges": [
       "Maniplex theory",
@@ -4546,7 +4546,7 @@
     "proof_strategy": "Using the existing datasets we will compute canonical forms (flag graph, 1‑skeleton, 1‑coskeleton) for each regular 4‑maniplex and compare them with the tetravalent graphs in the census.  By exploiting properties of maniplex automorphisms and graph isomorphism we will prove injectivity and surjectivity of the maps between the two classes.  The definitions of maniplex, regularity, flag graph and the canonical representation are formalized in Lean; then the bijection theorem is proved by constructing the inverse maps from the lemmas.",
     "research_mode": "team",
     "source_exp_id": "2606.27987v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T17:37:07.759741+00:00",
     "title": "Classification of regular 4‑maniplexes via tetravalent graph censuses"
   },
@@ -5673,7 +5673,7 @@
       "Seymour 1995",
       "Even et al. 1995"
     ],
-    "consumed_by_exp_id": "2e971067",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that a tournament T is cycle Mengerian (CM) if and only if it is cycle ideal (CI), i.e., for every non‑negative integral weight function w on its arcs the minimum weight of a feedback arc set equals the weight of a minimum‑weight feedback arc set in its linear programming relaxation.",
     "domain_bridges": [
       "LP duality",
@@ -5691,7 +5691,7 @@
     "proof_strategy": "Prove both directions: (1) Show that any CM tournament satisfies CI by using the equality ν_w^* = ν_w and the known relation between τ_w^* and ν_w^*; (2) Show that any CI tournament satisfies CM by constructing appropriate weight functions that force ν_w^* = ν_w, leveraging the structural characterization of CM tournaments.",
     "research_mode": "team",
     "source_exp_id": "2606.31565v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T18:35:10.861567+00:00",
     "title": "CM tournaments are precisely the cycle‑ideal tournaments"
   },
@@ -8166,6 +8166,34 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "RB-domains as finitely-deflatable dcpos",
+      "probabilistic powerdomain via probability simplex",
+      "Hasse graph tree characterization"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let P be a finite poset. The main theorem shows that V₁(P) is an RB-domain iff P has a least element and its undirected Hasse graph is a tree. I conjecture that the four-point diamond (a poset with 4 elements where 2 incomparable elements are both below 2 incomparable maxima) is the unique minimal poset violating this: any finite poset P with fewer than 4 elements has V₁(P) an RB-domain, and among 4-element posets, only the four-point diamond violates the RB-domain property. This is falsifiable by either finding a smaller counterexample or proving no other 4-element poset violates the condition.",
+    "domain_bridges": [
+      "order_theory",
+      "convex_analysis",
+      "graph_theory",
+      "probability_theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0354",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "1) Enumerate all finite posets with ≤3 elements and verify V₁(P) is always RB-domain using the known characterization. 2) Classify all 4-element posets and compute their undirected Hasse graphs. 3) Show that only the four-point diamond has both a least element and a cyclic Hasse graph (specifically, a 4-cycle). 4) Apply the local stochastic cone non-simpliciality argument to prove RB-domain failure for this case.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02231v1",
+    "status": "available",
+    "timestamp": "2026-07-05T22:13:05.785493+00:00",
+    "title": "Uniqueness of the Four-Point Diamond as Minimal RB-Domain Violator in Probabilistic Powerdomains"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Theorem A",
       "Proposition big"
     ],
@@ -8179,7 +8207,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0354",
+    "id": "fd_0355",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the explicit description of the 2-Sylow subgroup of S_n as an iterated wreath product and the Murnaghan-Nakayama rule to compute the multiplicity of the irreducible character χ^{λ_n} in the permutation character (1_P)↑^{S_n}. Alternatively, use the characterization of Ω_2(n) via 2-quotients of partitions (as in [G17]) and verify that the 2-quotient of λ_n satisfies the required condition. Another approach is to use the known results on the restriction of irreducible characters to Sylow 2-subgroups and the fact that λ_n is a partition with all parts ≤ 2.",
@@ -8206,7 +8234,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0355",
+    "id": "fd_0356",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a specific graph achieving the lower bound via Pokrovskiy's structure theorem",
@@ -8232,7 +8260,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0356",
+    "id": "fd_0357",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish a conductance lower bound via a suitable coupling argument that relates chord swaps to graph-theoretic moves, and then use known inequalities to translate this into a polynomial lower bound on the spectral gap for fixed genus.",
@@ -8252,7 +8280,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0357",
+    "id": "fd_0358",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "induction",
@@ -8280,7 +8308,7 @@
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0358",
+    "id": "fd_0359",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the connection via holography: (1) Prove interval counting for high-dimension CFT primaries follows log-correlated field statistics, (2) Show the extremal process converges to Gumbel by analyzing the correlation structure of the underlying Gaussian free field, (3) Translate to AdS side via HKLL reconstruction to bound semiclassical path integral resolution. Use modular invariance and sparseness conditions to control the tail behavior rigorously.",
@@ -8306,7 +8334,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0359",
+    "id": "fd_0360",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive argument on rank bounds combined with matroid minors analysis",
@@ -8315,6 +8343,33 @@
     "status": "available",
     "timestamp": "2026-07-05T21:57:06.806565+00:00",
     "title": "Symmetric Exchange Generation in Rank-Bounded Matroids"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Sidorenko's conjecture (Sidorenko 1991)",
+      "Lovász-Szegedy graphon theory (Lovász 2012)",
+      "Tensor amplification methods (this paper)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The spectral inequality equivalence for Sidorenko-type inequalities in admissible classes fails for certain bipartite graphs outside the range v(H) ≤ e(H). Specifically, for the 5-vertex path graph H (a tree with 5 vertices and 4 edges), there exists an admissible class C (e.g., the class of doubly nonnegative graphons) such that the spectral inequality holds for all W ∈ C, but H is not C-Sidorenko.",
+    "domain_bridges": [
+      "Spectral radius vs. edge density relationships",
+      "Tensor power closure properties",
+      "Graphon regularity and forcing principles"
+    ],
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_0361",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct a doubly nonnegative graphon W where the spectral inequality t(H,W) ≥ ρ(W)^{2e(H)-v(H)} p(W)^{v(H)-e(H)} holds but t(H,W) < p(W)^{e(H)} fails, demonstrating the equivalence's optimality in the v(H) ≤ e(H) range.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02260v1",
+    "status": "available",
+    "timestamp": "2026-07-05T22:13:32.517589+00:00",
+    "title": "Spectral Transfer Sharpness for Trees Beyond the Sidorenko Range"
   },
   {
     "ambition_level": "extension",

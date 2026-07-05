@@ -394,7 +394,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "244a22c3",
     "description": "The product of primes in the extension field equals its order.",
     "domains": [
       "Pythagorean",
@@ -404,7 +404,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T05:35:59.496154+00:00",
     "title": "Ramified Prime Product Equality"
   },
@@ -1083,7 +1083,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived p-completeness of sheared Witt vectors ensures Dieudonn\u00e9 theory extension"
   },
   {
-    "consumed_by_exp_id": "9ab455c2",
+    "consumed_by_exp_id": "",
     "description": "There exists a finite family of vector-valued convolution kernels {K_i} such that their weighted combination satisfies a ball-overbag inequality for Sidon sets, with the coefficient \u03b3_0=0.94601 achievable through optimized L\u00b2 energy distribution across kernels.",
     "domains": [
       "Computation",
@@ -1093,7 +1093,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T23:15:13.575664+00:00",
     "title": "Multi-kernel smoothing lemma for Sidon sets"
   },
@@ -1330,7 +1330,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Normality of the trianguline variety outside smooth loci for split reductive groups"
   },
   {
-    "consumed_by_exp_id": "4ce791a9",
+    "consumed_by_exp_id": "",
     "description": "For a set S = {a\u2080, b\u2080, ..., a_g, b_g} \u2282 \u2119\u00b9(K) of size 2g+2 where K is a finite extension of \u211a_p (p \u2260 2), if the associated tree T(S) constructed from equivalence classes of triples has all internal vertices of degree exactly 3 and exactly 2g+2 leaf vertices corresponding bijectively to elements of S, then S is in good position, i.e., \u0393(S) = \u27e8s\u2080, ..., s_g\u27e9 is discontinuous and equals the free product \u22c6\u1d62\u27e8s_i\u27e9.",
     "domains": [
       "Algebra",
@@ -1340,7 +1340,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T03:49:23.417787+00:00",
     "title": "Tree Structure Characterization for Good Position in Hyperelliptic Mumford Curves"
   },
@@ -1896,7 +1896,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality for exactly one edge subset"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "46b08ba4",
     "description": "For any d \u00d7 d matrix A over a number field K with ring of integers O_K, if there exists n \u2265 1 such that A^n \u2208 M_d(O_K), then the pseudo-determinant of A is an algebraic integer in K.",
     "domains": [
       "Algebra"
@@ -1905,7 +1905,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30876v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T21:26:19.991104+00:00",
     "title": "Pseudo-determinant of power-integral matrices is an algebraic integer"
   },
@@ -2480,7 +2480,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of a fine unit-distance graph with low independence ratio"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e29ffbac",
     "description": "We conjecture that the isomorphism classes of regular 4\u2011maniplexes are in bijective correspondence with the isomorphism classes of tetravalent graphs appearing in Poto\u010dnik's census.  Concretely, for each regular 4\u2011maniplex M its flag graph is a tetravalent graph in the census, and conversely every tetravalent graph G in the census determines a unique regular 4\u2011maniplex via its 1\u2011coskeleton.  Hence the number of regular 4\u2011maniplexes up to isomorphism equals the number of tetravalent graphs in the census, giving a complete classification of these objects through existing graph databases.",
     "domains": [
       "Pythagorean",
@@ -2490,7 +2490,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27987v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T17:37:07.759741+00:00",
     "title": "Classification of regular 4\u2011maniplexes via tetravalent graph censuses"
   },
@@ -3106,7 +3106,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on average \u2113\u2011Selmer rank lower bounds via Greenberg\u2013Wiles local factors"
   },
   {
-    "consumed_by_exp_id": "2e971067",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that a tournament T is cycle Mengerian (CM) if and only if it is cycle ideal (CI), i.e., for every non\u2011negative integral weight function w on its arcs the minimum weight of a feedback arc set equals the weight of a minimum\u2011weight feedback arc set in its linear programming relaxation.",
     "domains": [
       "Algebra",
@@ -3116,7 +3116,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31565v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T18:35:10.861567+00:00",
     "title": "CM tournaments are precisely the cycle\u2011ideal tournaments"
   },
@@ -4449,11 +4449,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let P be a finite poset. The main theorem shows that V\u2081(P) is an RB-domain iff P has a least element and its undirected Hasse graph is a tree. I conjecture that the four-point diamond (a poset with 4 elements where 2 incomparable elements are both below 2 incomparable maxima) is the unique minimal poset violating this: any finite poset P with fewer than 4 elements has V\u2081(P) an RB-domain, and among 4-element posets, only the four-point diamond violates the RB-domain property. This is falsifiable by either finding a smaller counterexample or proving no other 4-element poset violates the condition.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0354",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02231v1",
+    "status": "available",
+    "timestamp": "2026-07-05T22:13:05.785493+00:00",
+    "title": "Uniqueness of the Four-Point Diamond as Minimal RB-Domain Violator in Probabilistic Powerdomains"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0354",
+    "id": "fd_0355",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -4467,7 +4481,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0355",
+    "id": "fd_0356",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -4482,7 +4496,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0356",
+    "id": "fd_0357",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
@@ -4497,7 +4511,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0357",
+    "id": "fd_0358",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -4512,7 +4526,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0358",
+    "id": "fd_0359",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -4526,13 +4540,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0359",
+    "id": "fd_0360",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
     "status": "available",
     "timestamp": "2026-07-05T21:57:06.806565+00:00",
     "title": "Symmetric Exchange Generation in Rank-Bounded Matroids"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The spectral inequality equivalence for Sidorenko-type inequalities in admissible classes fails for certain bipartite graphs outside the range v(H) \u2264 e(H). Specifically, for the 5-vertex path graph H (a tree with 5 vertices and 4 edges), there exists an admissible class C (e.g., the class of doubly nonnegative graphons) such that the spectral inequality holds for all W \u2208 C, but H is not C-Sidorenko.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_0361",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02260v1",
+    "status": "available",
+    "timestamp": "2026-07-05T22:13:32.517589+00:00",
+    "title": "Spectral Transfer Sharpness for Trees Beyond the Sidorenko Range"
   },
   {
     "consumed_by_exp_id": "",
