@@ -5777,7 +5777,7 @@
     "catalog_references": [
       "arxiv:math/xxx"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f4921e42",
     "description": "For any d-dimensional lattice polytope with m vertices, its surface area is bounded below by (d-1)/d times its volume, ensuring a precise upper limit on surface measures despite growth rates, making this inequality falsifiable through counterexamples in higher dimensions.",
     "domain_bridges": "d-dimensional lattice bounds",
     "domains": [
@@ -5790,7 +5790,7 @@
     "proof_strategy": "Elementary volume comparisons under linear transformations",
     "research_mode": "team",
     "source_exp_id": "2606.30856v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T21:26:47.114852+00:00",
     "title": "Surface-to-Volume Bounding Inequality"
   },
@@ -5888,7 +5888,7 @@
       "cs.FL",
       "math.NT"
     ],
-    "consumed_by_exp_id": "bf444d1d",
+    "consumed_by_exp_id": "",
     "description": "For any Pisot numeration system U with minimal polynomial f of degree d associated to a Pisot number β, if the constructed group ℤ_U is continuously isomorphic to the torus 𝕋^(d-1), then U must preserve zeros. This provides a converse to the main theorem in the paper and establishes that the torus isomorphism property characterizes exactly those numerations with controlled carry propagation.",
     "domain_bridges": [
       "Algebraic Topology",
@@ -5904,7 +5904,7 @@
     "proof_strategy": "First, assume ℤ_U ≅ 𝕋^(d-1) and derive necessary conditions on the carry propagation. Use the continuous isomorphism to show that the pseudo-valuation ν_U must satisfy the standard ultrametric inequality ν_U(x+y) ≥ min(ν_U(x), ν_U(y)) (i.e., K=0 in the paper's formulation). Then prove that this ultrametric property is equivalent to Condition F/zero preservation by analyzing the structure of normalized expansions and their convergence in the topology. The key step involves showing that any violation of zero preservation would create a topological obstruction to the torus structure.",
     "research_mode": "team",
     "source_exp_id": "2606.30496v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T22:53:45.983763+00:00",
     "title": "Characterization of Zero-Preserving Pisot Numerations via Torus Isomorphism"
   },
@@ -8145,6 +8145,26 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": "Bombieri--Lang conjecture, Faltings, VojtaMordell",
+    "consumed_by_exp_id": "",
+    "description": "The conjecture posits that algebraic varieties of general type over finite fields have finitely many rational points unless constrained by the special locus, where density is non-zero.",
+    "domain_bridges": "general_type",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0353",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Examining subvariety exclusion and density arguments",
+    "research_mode": "team",
+    "source_exp_id": "2607.02165v1",
+    "status": "available",
+    "timestamp": "2026-07-05T21:56:14.698310+00:00",
+    "title": "Finiteness of Rational Points on General Type Varieties"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [
       "Theorem A",
       "Proposition big"
@@ -8159,7 +8179,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0353",
+    "id": "fd_0354",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the explicit description of the 2-Sylow subgroup of S_n as an iterated wreath product and the Murnaghan-Nakayama rule to compute the multiplicity of the irreducible character χ^{λ_n} in the permutation character (1_P)↑^{S_n}. Alternatively, use the characterization of Ω_2(n) via 2-quotients of partitions (as in [G17]) and verify that the 2-quotient of λ_n satisfies the required condition. Another approach is to use the known results on the restriction of irreducible characters to Sylow 2-subgroups and the fact that λ_n is a partition with all parts ≤ 2.",
@@ -8186,7 +8206,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0354",
+    "id": "fd_0355",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a specific graph achieving the lower bound via Pokrovskiy's structure theorem",
@@ -8212,7 +8232,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0355",
+    "id": "fd_0356",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish a conductance lower bound via a suitable coupling argument that relates chord swaps to graph-theoretic moves, and then use known inequalities to translate this into a polynomial lower bound on the spectral gap for fixed genus.",
@@ -8232,7 +8252,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0356",
+    "id": "fd_0357",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "induction",
@@ -8260,7 +8280,7 @@
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0357",
+    "id": "fd_0358",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the connection via holography: (1) Prove interval counting for high-dimension CFT primaries follows log-correlated field statistics, (2) Show the extremal process converges to Gumbel by analyzing the correlation structure of the underlying Gaussian free field, (3) Translate to AdS side via HKLL reconstruction to bound semiclassical path integral resolution. Use modular invariance and sparseness conditions to control the tail behavior rigorously.",
@@ -8269,6 +8289,32 @@
     "status": "available",
     "timestamp": "2026-07-05T21:39:27.004204+00:00",
     "title": "Gumbel Distribution for Black Hole Microstate Extremal Fluctuations"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "WhiteBases",
+      "Farber1",
+      "Farber2"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any matroid of rank r ≤ k, any two pairs of bases with the same multiset union can be transformed into each other via a sequence of symmetric exchanges.",
+    "domain_bridges": [
+      "matroid theory",
+      "combinatorial optimization"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0359",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Inductive argument on rank bounds combined with matroid minors analysis",
+    "research_mode": "team",
+    "source_exp_id": "2607.02208v1",
+    "status": "available",
+    "timestamp": "2026-07-05T21:57:06.806565+00:00",
+    "title": "Symmetric Exchange Generation in Rank-Bounded Matroids"
   },
   {
     "ambition_level": "extension",

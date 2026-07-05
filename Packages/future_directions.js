@@ -3165,7 +3165,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "A congruence conjecture for DSOME(n) modulo 4"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f4921e42",
     "description": "For any d-dimensional lattice polytope with m vertices, its surface area is bounded below by (d-1)/d times its volume, ensuring a precise upper limit on surface measures despite growth rates, making this inequality falsifiable through counterexamples in higher dimensions.",
     "domains": [
       "Algebra",
@@ -3175,7 +3175,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30856v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T21:26:47.114852+00:00",
     "title": "Surface-to-Volume Bounding Inequality"
   },
@@ -3225,7 +3225,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Constant-Coefficient Recurrence for Effective Resistance Sequences in Circulant Complete Graphs"
   },
   {
-    "consumed_by_exp_id": "bf444d1d",
+    "consumed_by_exp_id": "",
     "description": "For any Pisot numeration system U with minimal polynomial f of degree d associated to a Pisot number \u03b2, if the constructed group \u2124_U is continuously isomorphic to the torus \ud835\udd4b^(d-1), then U must preserve zeros. This provides a converse to the main theorem in the paper and establishes that the torus isomorphism property characterizes exactly those numerations with controlled carry propagation.",
     "domains": [
       "Algebra"
@@ -3234,7 +3234,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30496v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T22:53:45.983763+00:00",
     "title": "Characterization of Zero-Preserving Pisot Numerations via Torus Isomorphism"
   },
@@ -4434,11 +4434,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The conjecture posits that algebraic varieties of general type over finite fields have finitely many rational points unless constrained by the special locus, where density is non-zero.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0353",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02165v1",
+    "status": "available",
+    "timestamp": "2026-07-05T21:56:14.698310+00:00",
+    "title": "Finiteness of Rational Points on General Type Varieties"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0353",
+    "id": "fd_0354",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -4452,7 +4467,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0354",
+    "id": "fd_0355",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -4467,7 +4482,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0355",
+    "id": "fd_0356",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
@@ -4482,7 +4497,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0356",
+    "id": "fd_0357",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -4497,13 +4512,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0357",
+    "id": "fd_0358",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
     "status": "available",
     "timestamp": "2026-07-05T21:39:27.004204+00:00",
     "title": "Gumbel Distribution for Black Hole Microstate Extremal Fluctuations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any matroid of rank r \u2264 k, any two pairs of bases with the same multiset union can be transformed into each other via a sequence of symmetric exchanges.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0359",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02208v1",
+    "status": "available",
+    "timestamp": "2026-07-05T21:57:06.806565+00:00",
+    "title": "Symmetric Exchange Generation in Rank-Bounded Matroids"
   },
   {
     "consumed_by_exp_id": "",
