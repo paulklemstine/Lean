@@ -582,7 +582,7 @@
     "catalog_references": [
       "math.CO"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4c40c6b4",
     "description": "Formalize the theorem stating that for any connected bipartite graph G on n vertices and any real p ≥ 2, the positive p-energy E_p+(G) is at least the positive p-energy of the path graph P_n. This involves defining the adjacency spectrum, the positive p-energy sum, and the specific graph structures.",
     "domain_bridges": [
       "Linear Algebra (Eigenvalues)",
@@ -597,7 +597,7 @@
     "proof_strategy": "The proof strategy would involve using the spectral properties of the adjacency matrix of bipartite graphs. Specifically, one would leverage the fact that for bipartite graphs, the spectrum is symmetric about zero. The inequality can be reduced to comparing the sums of the p-th powers of the singular values of the biadjacency matrix, potentially utilizing the majorization properties or the second-order stop-loss-type inequalities mentioned in the paper's companion results.",
     "research_mode": "team",
     "source_exp_id": "2606.30996v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T15:55:56.869309+00:00",
     "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
   },
@@ -766,7 +766,7 @@
       "Zwegers' mock modular forms",
       "Zagier's quantum modular forms"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "59aff0ea",
     "description": "For a q-hypergeometric series whose coefficients have an asymptotic expansion dominated by oscillatory terms near a root of unity ω, the signs of the coefficients alternate except for a density-zero set of indices n.",
     "domain_bridges": [
       "q-series asymptotics",
@@ -782,7 +782,7 @@
     "proof_strategy": "Analyze the dominant oscillatory term in the asymptotic expansion near ω and show that its phase enforces sign alternation, except when phase cancellation occurs finitely often or on a sparse set.",
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T06:04:27.717812+00:00",
     "title": "Sign Alternation in q-Hypergeometric Series via Oscillatory Asymptotics Near Roots of Unity"
   },
@@ -3240,7 +3240,7 @@
       "Chaves Meyles et al. 2023",
       "Belbachir, Djemmada, Németh"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4b597589",
     "description": "For any composition λ = (λ₁, …, λₘ) of n, the number of deranged unit-interval parking functions of length n with block structure λ is exactly (dₘ / m!) times the multinomial coefficient n!/(λ₁! ⋯ λₘ!), where dₘ is the number of derangements of m elements. Equivalently, the deranged condition depends only on the number of blocks m and not on the block sizes, so that the distribution of block sizes in deranged unit-interval parking functions is proportional to the distribution in all unit-interval parking functions.",
     "domain_bridges": [
       "parking functions",
@@ -3258,7 +3258,7 @@
     "proof_strategy": "Use the intrinsic characterization of deranged unit-interval parking functions via lucky cars (block leaders) to show that the deranged condition is equivalent to the permutation of blocks (when ordered by their minima) being a derangement. Then the block sizes are independent of the derangement condition, yielding the product formula. Alternatively, use the symbolic method with the exponential generating function e^{1-eˣ}/(2-eˣ) and track block sizes via the labeled construction of set partitions.",
     "research_mode": "team",
     "source_exp_id": "2607.01273v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T16:31:00.209169+00:00",
     "title": "Refinement of Deranged Unit-Interval Parking Functions by Full Block Size Distribution"
   },
@@ -3617,7 +3617,7 @@
     "catalog_references": [
       "arxiv.org/theorem"
     ],
-    "consumed_by_exp_id": "25f6b04b",
+    "consumed_by_exp_id": "",
     "description": "The conjecture asserts that sum throttling for any graph G is at most twice the product throttling value of its complement, ensuring mathematical consistency.",
     "domain_bridges": "none",
     "domains": [
@@ -3630,7 +3630,7 @@
     "proof_strategy": "inductive proof",
     "research_mode": "team",
     "source_exp_id": "2606.30950v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T22:06:31.480034+00:00",
     "title": "Sum Throttling Bound Upper Limit"
   },
@@ -3797,7 +3797,7 @@
       "Berge hypergraphs",
       "Extremal Hypergraph Theory"
     ],
-    "consumed_by_exp_id": "4fe41193",
+    "consumed_by_exp_id": "",
     "description": "For any positive integers r and k with k >= 2, and any set R ⊆ {1, ..., k}, there exists a constant n_0(k, r) such that every R-graph H on n >= n_0 vertices with minimum r-degree δ_r(H) >= 1 contains a Berge-C_t^r (a Berge-hypergraph based on the t-vertex r-uniform tight cycle) for all t in the range r+1 <= t <= n.",
     "domain_bridges": [
       "Graph Theory",
@@ -3813,7 +3813,7 @@
     "proof_strategy": "The proof would involve formalizing the definition of a Berge-hypergraph as a mapping from a base graph (the tight cycle C_t^r) to the R-graph H. The core strategy involves an induction on t, starting from the base case t = r+1, and utilizing the condition δ_r(H) >= 1 to ensure the existence of hyperedges that can extend a Berge-tight cycle of length t to length t+1, while maintaining the injection and bijection requirements of the Berge mapping.",
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T01:19:19.875599+00:00",
     "title": "Existence of Berge-Tight Cycles in R-Graphs with Positive Minimum r-Degree"
   },
@@ -5415,7 +5415,7 @@
       "math.NT:11B39",
       "math.CO:05A15"
     ],
-    "consumed_by_exp_id": "40c1c1bc",
+    "consumed_by_exp_id": "",
     "description": "For each residue r ∈ {0,1,2,3,4}, the function k ↦ σ₅(5k + r) is non‑increasing (i.e., σ₅(5(k+1)+r) ≤ σ₅(5k+r) for all k ∈ ℕ).",
     "domain_bridges": [
       "Combinatorics",
@@ -5430,7 +5430,7 @@
     "proof_strategy": "Use the connection with rational approximations to the golden ratio φ and the theory of continued fractions to show that any potential decrease would produce a better approximation than a convergent, contradicting optimality of convergents.",
     "research_mode": "team",
     "source_exp_id": "2607.00825v2",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T11:40:31.517494+00:00",
     "title": "Monotonicity of the minimal absolute value of sums of fifth roots of unity within each residue class modulo 5"
   },
@@ -6290,7 +6290,7 @@
     "catalog_references": [
       "3-packings in Triangulations: Algorithms, bounds, and Complexity"
     ],
-    "consumed_by_exp_id": "f95a8b94",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for every integer k ≥ 1 there exists a plane triangulation G on n = 5k + r vertices (r ∈ {0,1,2,3,4}) such that the maximum size of a P3-packing λ_{P3}(G) equals floor(n/5). This would imply the lower bound λ_{P3}(G) ≥ floor(n/5) proved in the paper is tight for arbitrarily large triangulations.",
     "domain_bridges": [
       "planar_graph_theory",
@@ -6305,7 +6305,7 @@
     "proof_strategy": "Construct infinite families of triangulations with prescribed degree sequences using vertex splitting and edge subdivision, then apply a greedy packing algorithm to obtain exactly floor(n/5) disjoint P3 subgraphs, showing the bound cannot be improved.",
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T04:14:42.891046+00:00",
     "title": "Tightness Conjecture for P3-Packings in Plane Triangulations"
   },
@@ -7048,7 +7048,7 @@
       "https://doi.org/10.1090/dm/1234",
       "https://doi.org/10.1109/TSPN.2023.9456789"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "44b8cab0",
     "description": "For odd primes \\(p\\), it is conjectured that \\(\\delta((\\mathbb{Z}/p^2\\mathbb{Z})^2, p\\mathbb{Z}/p^2\\mathbb{Z}) = (2p-1)^2\\), with an established lower bound of \\(3p^2 - p - 1\\) and probabilistic evidence supporting the conjecture for small primes.",
     "domain_bridges": [
       "Finite abelian group factorization",
@@ -7064,7 +7064,7 @@
     "proof_strategy": "Demonstrate that all difference fibres \\(\\mathcal{D}_a(T)\\) contain at least \\((2p-1)^2\\) elements via carry-corrected derivative analysis and probabilistic transversal selection.",
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T18:08:50.995634+00:00",
     "title": "Exact Transversal Difference Bound for Prime-Square Cyclic Quotients"
   },
@@ -7998,6 +7998,34 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "Kadziela's approximation theorem",
+      "Werner's formula for Schneider heights",
+      "Mumford's theory of curves"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a hyperelliptic Mumford curve X defined over a p-adic field with split multiplicative reduction at p (p≠2), the extended Kadziela's approximation theorem guarantees the existence of a p-adic Schottky group W that uniformizes X if and only if the tree T(S) associated to X's marked points satisfies a bounded diameter condition relative to the curve's genus.",
+    "domain_bridges": [
+      "p-adic uniformization",
+      "Abelian integrals",
+      "Schneider height computations"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0340",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Extend Kadziela's theorem to hyperelliptic cases via tree structure analysis of marked points, then apply to split reduction conditions.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02160v1",
+    "status": "available",
+    "timestamp": "2026-07-05T18:41:53.978278+00:00",
+    "title": "Existence of p-adic Schottky groups for hyperelliptic Mumford curves under split multiplicative reduction"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "Giam",
       "daas1",
       "HY",
@@ -8015,7 +8043,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0340",
+    "id": "fd_0341",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the genus formula for Atkin-Lehner quotients of Shimura curves, which expresses the genus in terms of class numbers of quaternion orders, fixed point counts of the Atkin-Lehner involutions, and contributions from elliptic points. Systematically evaluate this formula for all squarefree N with an even number of prime factors, leveraging known bounds on class numbers to prove finiteness of the genus-zero cases. The computation reduces to checking a finite list of N up to a computable bound, which can be verified by computer-assisted enumeration of the genus formula.",
@@ -8043,7 +8071,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0341",
+    "id": "fd_0342",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Formalize the ring of integers modulo $N$ and the group of Dirichlet characters in Lean 4 using `mathlib`. 2. Implement the definition of Gauss sums $G_N(\\psi)$ as sums over $\\mathbb{Z}/N\\mathbb{Z}$ into $\\mathbb{C}$. 3. Use the property that the entries of $A_k(\\chi)$ are characters of a subgroup of the character group. 4. Apply a generalized version of the determinant formula for matrices whose entries are characters (related to the group determinant formula) to factorize $\\det(A_k(\\chi))$ into a product of Gauss sums. 5. Use the Hasse-Davenport lifting formula and properties of primitive characters modulo $p^m$ to simplify the product.",
@@ -8076,7 +8104,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0342",
+    "id": "fd_0343",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The conjecture reduces to proving that any graph G with T(n) edges and a non-positive curvature edge must have the specified join structure. Key steps: (1) Show G must be n/2-connected using expansion arguments, (2) Prove the complement G̅ has exactly n/2 edges forming a perfect matching, (3) Apply stability methods to show any edge not in the join structure can be moved to the matching without decreasing edge count, (4) Use the curvature formula κ(e) = 1 - W₂(μ₁, μ₂) to demonstrate the matching edges have κ ≤ 0 while all edges in K_{n/2} have κ > 0. The technical core involves estimating Wasserstein distances for the specific probability measures μ_x = (1-deg(x))δ_x + Σ_{y~x} δ_y/(deg(x)+1).",
@@ -8102,7 +8130,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0343",
+    "id": "fd_0344",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive formulation followed by reduction argument",
@@ -8111,6 +8139,31 @@
     "status": "available",
     "timestamp": "2026-07-05T18:07:26.218182+00:00",
     "title": "Towards the Overfull Conjecture II"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Cyclic Codes and Cyclically Covering Subspaces over Finite Fields"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any odd prime q and integer m ≥ 2, the maximum codimension h_q((q^m +1)/2) of a cyclically covering subspace in 𝔽_q^{(q^m +1)/2} is positive. This extends the paper's result which requires m ≥ 4 to all m ≥ 2.",
+    "domain_bridges": [
+      "Number Theory",
+      "Coding Theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0345",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "1. Verify base cases (m=2,3) via explicit construction or known bounds. 2. Use induction on m, leveraging recursive properties of h_q(n). 3. Apply the paper's lemma on divisibility and codimension bounds for composite n.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02239v1",
+    "status": "available",
+    "timestamp": "2026-07-05T18:43:18.370713+00:00",
+    "title": "Extension of h_q((q^m +1)/2) > 0 to smaller m"
   },
   {
     "ambition_level": "extension",

@@ -337,7 +337,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Commutativity of Operator Theorem operators in SR_G"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4c40c6b4",
     "description": "Formalize the theorem stating that for any connected bipartite graph G on n vertices and any real p \u2265 2, the positive p-energy E_p+(G) is at least the positive p-energy of the path graph P_n. This involves defining the adjacency spectrum, the positive p-energy sum, and the specific graph structures.",
     "domains": [
       "Physics"
@@ -346,7 +346,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30996v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T15:55:56.869309+00:00",
     "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
   },
@@ -437,7 +437,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Ramified Prime Product Equality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "59aff0ea",
     "description": "For a q-hypergeometric series whose coefficients have an asymptotic expansion dominated by oscillatory terms near a root of unity \u03c9, the signs of the coefficients alternate except for a density-zero set of indices n.",
     "domains": [
       "Geometry"
@@ -446,7 +446,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T06:04:27.717812+00:00",
     "title": "Sign Alternation in q-Hypergeometric Series via Oscillatory Asymptotics Near Roots of Unity"
   },
@@ -1779,7 +1779,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Integrality of the line graph of $BL_n(k-1,k)$ beyond the regular case"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4b597589",
     "description": "For any composition \u03bb = (\u03bb\u2081, \u2026, \u03bb\u2098) of n, the number of deranged unit-interval parking functions of length n with block structure \u03bb is exactly (d\u2098 / m!) times the multinomial coefficient n!/(\u03bb\u2081! \u22ef \u03bb\u2098!), where d\u2098 is the number of derangements of m elements. Equivalently, the deranged condition depends only on the number of blocks m and not on the block sizes, so that the distribution of block sizes in deranged unit-interval parking functions is proportional to the distribution in all unit-interval parking functions.",
     "domains": [
       "Computation"
@@ -1788,7 +1788,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01273v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T16:31:00.209169+00:00",
     "title": "Refinement of Deranged Unit-Interval Parking Functions by Full Block Size Distribution"
   },
@@ -1980,7 +1980,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Spectral radius threshold for fractional ID-$[a,b]$-factor-critical graphs"
   },
   {
-    "consumed_by_exp_id": "25f6b04b",
+    "consumed_by_exp_id": "",
     "description": "The conjecture asserts that sum throttling for any graph G is at most twice the product throttling value of its complement, ensuring mathematical consistency.",
     "domains": [
       "Pythagorean",
@@ -1990,7 +1990,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30950v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T22:06:31.480034+00:00",
     "title": "Sum Throttling Bound Upper Limit"
   },
@@ -2083,7 +2083,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Probabilistic lower bounds on weighted weighted sums of Bernoulli variables"
   },
   {
-    "consumed_by_exp_id": "4fe41193",
+    "consumed_by_exp_id": "",
     "description": "For any positive integers r and k with k >= 2, and any set R \u2286 {1, ..., k}, there exists a constant n_0(k, r) such that every R-graph H on n >= n_0 vertices with minimum r-degree \u03b4_r(H) >= 1 contains a Berge-C_t^r (a Berge-hypergraph based on the t-vertex r-uniform tight cycle) for all t in the range r+1 <= t <= n.",
     "domains": [
       "Bridges"
@@ -2092,7 +2092,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T01:19:19.875599+00:00",
     "title": "Existence of Berge-Tight Cycles in R-Graphs with Positive Minimum r-Degree"
   },
@@ -2956,7 +2956,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Upper bound conjecture for the cake balancing ratio sequence"
   },
   {
-    "consumed_by_exp_id": "40c1c1bc",
+    "consumed_by_exp_id": "",
     "description": "For each residue r \u2208 {0,1,2,3,4}, the function k \u21a6 \u03c3\u2085(5k + r) is non\u2011increasing (i.e., \u03c3\u2085(5(k+1)+r) \u2264 \u03c3\u2085(5k+r) for all k \u2208 \u2115).",
     "domains": [
       "Bridges"
@@ -2965,7 +2965,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00825v2",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T11:40:31.517494+00:00",
     "title": "Monotonicity of the minimal absolute value of sums of fifth roots of unity within each residue class modulo 5"
   },
@@ -3439,7 +3439,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the n/2\u202f+\u202f1/3 exponent for the finite\u2011field Erd\u0151s\u2013Falconer distance problem"
   },
   {
-    "consumed_by_exp_id": "f95a8b94",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for every integer k \u2265 1 there exists a plane triangulation G on n = 5k + r vertices (r \u2208 {0,1,2,3,4}) such that the maximum size of a P3-packing \u03bb_{P3}(G) equals floor(n/5). This would imply the lower bound \u03bb_{P3}(G) \u2265 floor(n/5) proved in the paper is tight for arbitrarily large triangulations.",
     "domains": [
       "Pythagorean"
@@ -3448,7 +3448,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T04:14:42.891046+00:00",
     "title": "Tightness Conjecture for P3-Packings in Plane Triangulations"
   },
@@ -3846,7 +3846,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "44b8cab0",
     "description": "For odd primes \\(p\\), it is conjectured that \\(\\delta((\\mathbb{Z}/p^2\\mathbb{Z})^2, p\\mathbb{Z}/p^2\\mathbb{Z}) = (2p-1)^2\\), with an established lower bound of \\(3p^2 - p - 1\\) and probabilistic evidence supporting the conjecture for small primes.",
     "domains": [
       "Pythagorean"
@@ -3855,7 +3855,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T18:08:50.995634+00:00",
     "title": "Exact Transversal Difference Bound for Prime-Square Cyclic Quotients"
   },
@@ -4357,12 +4357,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a hyperelliptic Mumford curve X defined over a p-adic field with split multiplicative reduction at p (p\u22602), the extended Kadziela's approximation theorem guarantees the existence of a p-adic Schottky group W that uniformizes X if and only if the tree T(S) associated to X's marked points satisfies a bounded diameter condition relative to the curve's genus.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0340",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02160v1",
+    "status": "available",
+    "timestamp": "2026-07-05T18:41:53.978278+00:00",
+    "title": "Existence of p-adic Schottky groups for hyperelliptic Mumford curves under split multiplicative reduction"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let N > 1 be a squarefree integer with an even number of prime factors, and let X_N be the associated Shimura curve over \u211a. For each divisor d|N, let w_d be the Atkin-Lehner involution on X_N, and let X_N/\u27e8w_d\u27e9 be the corresponding quotient curve. The conjecture states that the set of all such N for which there exists at least one divisor d|N such that the quotient curve X_N/\u27e8w_d\u27e9 has genus zero is exactly the finite set {6, 10, 14, 15, 21, 22, 26, 33, 34, 35, 38, 39, 46, 51, 55, 57, 58, 62, 65, 69, 74, 77, 82, 85, 86, 87, 91, 93, 94, 95, 106, 111, 115, 118, 119, 122, 123, 129, 133, 134, 141, 142, 143, 145, 146, 155, 158, 159, 161, 166, 177, 178, 183, 185, 187, 194, 201, 202, 203, 205, 206, 209, 213, 214, 215, 217, 218, 219, 221, 226, 235, 237, 247, 249, 253, 254, 259, 262, 265, 267, 274, 278, 287, 291, 295, 298, 299, 301, 302, 303, 305, 309, 314, 319, 321, 323, 326, 327, 329, 334, 335, 339, 341, 346, 355, 358, 362, 365, 371, 377, 381, 382, 386, 391, 393, 394, 395, 398, 403, 407, 411, 413, 415, 417, 422, 427, 437, 445, 446, 447, 451, 453, 454, 458, 466, 469, 471, 473, 478, 481, 482, 485, 489, 493, 497}. (This list is conjectural and based on known classifications of genus-zero Atkin-Lehner quotients of Shimura curves.)",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0340",
+    "id": "fd_0341",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02306v1",
@@ -4377,7 +4392,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0341",
+    "id": "fd_0342",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02392v1",
@@ -4392,7 +4407,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0342",
+    "id": "fd_0343",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
@@ -4406,13 +4421,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0343",
+    "id": "fd_0344",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
     "status": "available",
     "timestamp": "2026-07-05T18:07:26.218182+00:00",
     "title": "Towards the Overfull Conjecture II"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any odd prime q and integer m \u2265 2, the maximum codimension h_q((q^m +1)/2) of a cyclically covering subspace in \ud835\udd3d_q^{(q^m +1)/2} is positive. This extends the paper's result which requires m \u2265 4 to all m \u2265 2.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0345",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02239v1",
+    "status": "available",
+    "timestamp": "2026-07-05T18:43:18.370713+00:00",
+    "title": "Extension of h_q((q^m +1)/2) > 0 to smaller m"
   },
   {
     "consumed_by_exp_id": "",
