@@ -466,7 +466,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Complementary feasibility in seating configurations for the generalized honeymoon Oberwolfach problem"
   },
   {
-    "consumed_by_exp_id": "86ab4897",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For any odd prime p, any even integer k \u2265 2, and any a_p \u2208 \u211a\u0304_p with 0 < v(a_p) < p-1 (i.e., a fractional slope), the semi-simplification \\bar{V}_{k,a_p} of the mod p reduction of the two-dimensional crystalline representation V_{k,a_p} of G_{\u211a_p} of weight k and parameter a_p is irreducible as a mod p representation of G_{\u211a_p}.",
     "domains": [
       "Pythagorean",
@@ -476,7 +476,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00930v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T06:58:32.634677+00:00",
     "title": "Irreducibility of mod p reductions of two-dimensional crystalline representations with even weight and fractional slope"
   },
@@ -555,7 +555,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Four Colors Suffice for Strong Majority Edge-Coloring of Admissible Graphs"
   },
   {
-    "consumed_by_exp_id": "5305833a",
+    "consumed_by_exp_id": "",
     "description": "A complete classification exists for all bidihedral groups up to isomorphism.",
     "domains": [
       "Algebra"
@@ -564,7 +564,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00352v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T10:27:44.557266+00:00",
     "title": "Bidihedral Group Classification"
   },
@@ -803,7 +803,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Precise threshold for vertex\u2011Ramsey property in random perturbations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "776d5107",
     "description": "There exists a constant K>0 such that for all sufficiently large n, \u03c7_S(n,\u230an/2\u230b,P_4) \u2264 K\u00b7n^{1/2}.",
     "domains": [
       "Pythagorean"
@@ -812,7 +812,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:12:21.463153+00:00",
     "title": "Conjecture on the asymptotic growth of \u03c7_S(n,\u230an/2\u230b,P_4)"
   },
@@ -1301,7 +1301,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing the generalized honeymoon Oberwolfach problem in Lean 4"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eb98199f",
     "description": "For all m \u2265 1, the refined generating function for intervals in the greedy m-Tamari poset, tracking both the number of elements and the number of leaves (peaks in the corresponding Dyck paths), is equal to the refined generating function for planar (m+1)-constellations tracking the same statistics. This extends the combinatorial proof for m=1 to all m \u2265 1.",
     "domains": [
       "Algebra",
@@ -1311,7 +1311,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01206v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:55:26.518816+00:00",
     "title": "Refined Bijective Enumeration of Greedy Tamari Intervals and Planar (m+1)-Constellations"
   },
@@ -1575,7 +1575,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharp Lower Bounds for Sumsets in L\u2081 Balls in \u2124\u1d48"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ba338a87",
     "description": "We conjecture that the upper bound for |\u03b6(1+it)| can be improved further by utilizing smoothing methods. Specifically, we propose that for all t \u2265 3, |\u03b6(1+it)| \u2264 (1/2) log t + 1.5, which would improve the existing bound of (1/2) log t + 1.57. This conjecture is based on extending the analysis in [this paper] to optimize the constants in the smoothed approximation.",
     "domains": [
       "Pythagorean",
@@ -1585,7 +1585,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01424v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T10:19:57.480990+00:00",
     "title": "Sharpening the Constant in the Upper Bound of |\u03b6(1+it)| via Smoothing Techniques"
   },
@@ -3485,7 +3485,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Algebraic Independence of Basic r\u2011Symmetric Tropical Polynomials"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "70677671",
     "description": "For an orientable hypermap H defined by permutations (\u03c3, \u03b1), a partial dual H^{E'} with respect to a hyperedge subset E' is bipartite if and only if there exists an all-crossing direction \u03a6 of the medial map M(H) such that E' = C(\u03a6), provided that every hyperedge of H has even length.",
     "domains": [
       "Bridges"
@@ -3494,7 +3494,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30071v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T02:10:40.019984+00:00",
     "title": "Characterization of Bipartite Partial Duals of Orientable Hypermaps"
   },
@@ -3643,7 +3643,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimal Dimension of Isometric Embeddings into Abelian Cayley Graphs"
   },
   {
-    "consumed_by_exp_id": "3049ed62",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that the Hamiltonian H of the spin\u2011\u00bd XXZ model on a rectangular torus of size L\u00d7M (with anisotropic coupling J and anisotropy \u0394) is a self\u2011adjoint operator on \u2113\u00b2(\u2124\u00b2) whose point spectrum contains the imaginary parts of all non\u2011trivial zeros of the Riemann zeta function. In particular there is a bijection between the set of non\u2011trivial zeros \u03c1 = \u03b2 + i\u03b3 and an infinite subset of eigenvalues {\u03bb_k} of H such that \u03bb_k = \u03b3 and \u03b2 = 1/2.",
     "domains": [
       "Pythagorean",
@@ -3653,7 +3653,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29294v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T08:04:40.296946+00:00",
     "title": "Hilbert\u2013Polya operator from a 2\u2011dimensional lattice spin model"
   },
@@ -3790,7 +3790,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Striking progress on the monotonicity of higher-fold representation functions"
   },
   {
-    "consumed_by_exp_id": "f13fa41e",
+    "consumed_by_exp_id": "",
     "description": "For the cyclotomic specialization at M=2, the transition coefficients C_{\u03bb\u03bc}^{[2]}(t) between one-row shifted t-Schur functions are unimodal with positive coefficients. Specifically, when \u03bb = (1^n) is a one-row strict partition, the polynomial C_{\u03bb\u03bc}(t^2, t) has nonnegative integer coefficients that are unimodal with maximum at the middle degree.",
     "domains": [
       "Algebra"
@@ -3799,7 +3799,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28723v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T12:19:23.572578+00:00",
     "title": "Unimodality of Transition Coefficients for One-Row Shifted t-Schur Functions at M=2"
   },
@@ -4151,12 +4151,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "In the holographic counting of AdS black hole microstates, the properly centered and scaled extremal fluctuation random variable X_N satisfies the tail bound: P(X_N > x) ~ C\u00b7x^(-\u03b1)\u00b7exp(-\u03b2\u00b7x^2) as x \u2192 \u221e, where \u03b1 and \u03b2 are explicit constants determined by the large-N asymptotics of the underlying conformal field theory. This requires formalizing the precise relationship between the random variable characterizing extremal fluctuations and the Gaussian log-correlated field universality class.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0318",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02233v1",
+    "status": "available",
+    "timestamp": "2026-07-05T02:27:02.134070+00:00",
+    "title": "Tail Distribution Exponent for Black Hole Microstate Extremal Fluctuations"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any squarefree integer N > 1 with an even number of distinct prime factors, the genus of the Atkin\u2013Lehner quotient X_N / \u27e8w_p\u27e9 is zero if and only if N belongs to the finite set {6, 10, 22}.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0318",
+    "id": "fd_0319",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02306v1",
@@ -4171,7 +4186,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0319",
+    "id": "fd_0320",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02419v1",
@@ -4186,7 +4201,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0320",
+    "id": "fd_0321",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02392v1",
@@ -4200,7 +4215,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0321",
+    "id": "fd_0322",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
@@ -4215,7 +4230,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0322",
+    "id": "fd_0323",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02215v1",
@@ -4230,7 +4245,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0323",
+    "id": "fd_0324",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -4245,7 +4260,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0324",
+    "id": "fd_0325",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02226v1",
@@ -4254,7 +4269,22 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture: Gallai homothety numbers characterize symmetric one-weight HJ thresholds"
   },
   {
-    "consumed_by_exp_id": "da489ec4",
+    "consumed_by_exp_id": "",
+    "description": "Let K/k be a finitely generated extension of characteristic zero, and let f: X \u2192 C be a dominant morphism from a smooth projective variety X over K to a smooth projective curve C over k, such that the generic fiber X_\u03b7 is of general type over the function field K(C) = K. Then, after removing a proper Zariski closed subset S \u2282 X, all K-rational points of X lie in the union of fibered components and constant families parametrized by subvarieties of C. In particular, X(K) \u2229 (X \\ S) is not Zariski dense in X.",
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_0326",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02165v1",
+    "status": "available",
+    "timestamp": "2026-07-05T02:27:15.905526+00:00",
+    "title": "Geometric Bombieri--Lang Conjecture for Varieties Fibered Over Curves with Generic Fiber of General Type"
+  },
+  {
+    "consumed_by_exp_id": "5ab8fd19",
     "description": "Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch \u2014 it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
     "domains": [
       "Novelty",
