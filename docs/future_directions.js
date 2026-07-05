@@ -380,7 +380,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
   {
-    "consumed_by_exp_id": "23007999",
+    "consumed_by_exp_id": "",
     "description": "For the random recursive DAG G_n with out-degree d \u2265 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n \u2192 \u221e.",
     "domains": [
       "Computation"
@@ -389,7 +389,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
@@ -2668,7 +2668,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equality case regularity conjecture for admissible Sidorenko classes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4591bde2",
     "description": "Conjecture that for any non\u2011empty finite set \u03a8 of non\u2011zero homomorphisms from an abelian group F to G, the weighted Davenport constant D_\u03a8(G) \u2264 n holds precisely when the family of kernels of the induced universal homomorphisms from F^n to G forms a cover of F^n.",
     "domains": [
       "Algebra",
@@ -2678,7 +2678,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02132v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T05:55:53.302394+00:00",
     "title": "Kernel\u2011cover characterisation of the weighted Davenport constant"
   },
@@ -4493,11 +4493,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
+    "description": "This result improves the clustering guarantees for proper minor-closed graph classes beyond linear factors, establishing tighter bounds on monochromatic components.",
     "domains": [
       "Algebra"
     ],
     "id": "fd_0357",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02159v1",
+    "status": "available",
+    "timestamp": "2026-07-05T23:04:48.460535+00:00",
+    "title": "3-Colouring Graphs Excluding a Fixed Minor"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0358",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -4511,7 +4525,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0358",
+    "id": "fd_0359",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -4526,7 +4540,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0359",
+    "id": "fd_0360",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
@@ -4541,7 +4555,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0360",
+    "id": "fd_0361",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -4556,7 +4570,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0361",
+    "id": "fd_0362",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -4570,7 +4584,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0362",
+    "id": "fd_0363",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -4584,7 +4598,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0363",
+    "id": "fd_0364",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -4599,7 +4613,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0364",
+    "id": "fd_0365",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02011v1",
@@ -4614,13 +4628,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0365",
+    "id": "fd_0366",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
     "status": "available",
     "timestamp": "2026-07-05T22:48:46.476501+00:00",
     "title": "Minimal Degree of Jacobian Relations for Arrangements with Isomorphic Intersection Lattices"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For positive integers m and nonnegative integers n, k, let r_m(n,k) be the number of ordered partitions of an n-element set with exactly k blocks of size at least m. The bivariate exponential generating function F_m(x,y) = \u2211_{n,k\u22650} r_m(n,k) x^n/n! y^k is given by F_m(x,y) = 1 / (1 - A_m(x) - y B_m(x)), where A_m(x) = \u2211_{i=1}^{m-1} x^i/i! and B_m(x) = e^x - 1 - A_m(x).",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0367",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02085v1",
+    "status": "available",
+    "timestamp": "2026-07-05T23:23:27.854836+00:00",
+    "title": "Bivariate Exponential Generating Function for Snail Race Outcomes"
   },
   {
     "consumed_by_exp_id": "",

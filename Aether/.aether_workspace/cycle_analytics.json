@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-05T22:48:12.276691+00:00",
+  "last_updated": "2026-07-05T23:04:42.139003+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -35738,6 +35738,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-05T22:48:12.193771+00:00",
       "title": "Conjecture on the Structure of Minimal Obstructions to Total Rainbow Forests"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 4,
+      "domain": "Novelty",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "23007999",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v16",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783287136.857001,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-05T23:04:42.076863+00:00",
+      "title": "Limit Distribution of Descendants in Random d-DAGs"
     }
   ]
 }
