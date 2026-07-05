@@ -46,7 +46,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lower Bound for Low Moments of Dirichlet Character Sums"
   },
   {
-    "consumed_by_exp_id": "2c4f5225",
+    "consumed_by_exp_id": "",
     "description": "There exists a finite set of vectors in l\u00b2 satisfying specific convolution inequalities such that their weighted average achieves the coefficient \u03b3\u2080=0.94601 in the bound F(N) \u2264 N^{1/2} + \u03b3\u2080N^{1/4} + O(1), and no smaller coefficient is achievable via this method.",
     "domains": [
       "Bridges"
@@ -55,7 +55,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T06:22:13.488931+00:00",
     "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
   },
@@ -379,7 +379,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sign changes of symmetric power L-function coefficients along sums of squares"
   },
   {
-    "consumed_by_exp_id": "131df22e",
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite group of order p^m where p is prime. For any k < p, and any two sequences a_1,..., a_k and b_1,..., b_k in G where the a_i are distinct, there exists a permutation sigma of {1,..., k} such that the products a_i * b_sigma(i) are all distinct.",
     "domains": [
       "Pythagorean",
@@ -389,7 +389,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T18:11:54.994533+00:00",
     "title": "Extension of Snevily-type Permutation Property to p-groups"
   },
@@ -466,7 +466,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Complementary feasibility in seating configurations for the generalized honeymoon Oberwolfach problem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "86ab4897",
     "description": "Conjecture: For any odd prime p, any even integer k \u2265 2, and any a_p \u2208 \u211a\u0304_p with 0 < v(a_p) < p-1 (i.e., a fractional slope), the semi-simplification \\bar{V}_{k,a_p} of the mod p reduction of the two-dimensional crystalline representation V_{k,a_p} of G_{\u211a_p} of weight k and parameter a_p is irreducible as a mod p representation of G_{\u211a_p}.",
     "domains": [
       "Pythagorean",
@@ -476,7 +476,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00930v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T06:58:32.634677+00:00",
     "title": "Irreducibility of mod p reductions of two-dimensional crystalline representations with even weight and fractional slope"
   },
@@ -555,7 +555,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Four Colors Suffice for Strong Majority Edge-Coloring of Admissible Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5305833a",
     "description": "A complete classification exists for all bidihedral groups up to isomorphism.",
     "domains": [
       "Algebra"
@@ -564,7 +564,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00352v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T10:27:44.557266+00:00",
     "title": "Bidihedral Group Classification"
   },
@@ -731,7 +731,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tokushige's r-wise intersecting conjecture for non\u2011uniform product measures"
   },
   {
-    "consumed_by_exp_id": "aad4c1c5",
+    "consumed_by_exp_id": "",
     "description": "Every minimal edge-colored graph (with respect to edge deletion) that does not admit a total rainbow forest must be a single monochromatic cycle (possibly with isolated vertices).",
     "domains": [
       "Pythagorean"
@@ -740,7 +740,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31240v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T16:14:00.036969+00:00",
     "title": "Conjecture on the Structure of Minimal Obstructions to Total Rainbow Forests"
   },
@@ -3643,7 +3643,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimal Dimension of Isometric Embeddings into Abelian Cayley Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3049ed62",
     "description": "We conjecture that the Hamiltonian H of the spin\u2011\u00bd XXZ model on a rectangular torus of size L\u00d7M (with anisotropic coupling J and anisotropy \u0394) is a self\u2011adjoint operator on \u2113\u00b2(\u2124\u00b2) whose point spectrum contains the imaginary parts of all non\u2011trivial zeros of the Riemann zeta function. In particular there is a bijection between the set of non\u2011trivial zeros \u03c1 = \u03b2 + i\u03b3 and an infinite subset of eigenvalues {\u03bb_k} of H such that \u03bb_k = \u03b3 and \u03b2 = 1/2.",
     "domains": [
       "Pythagorean",
@@ -3653,7 +3653,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29294v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T08:04:40.296946+00:00",
     "title": "Hilbert\u2013Polya operator from a 2\u2011dimensional lattice spin model"
   },
@@ -3790,7 +3790,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Striking progress on the monotonicity of higher-fold representation functions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f13fa41e",
     "description": "For the cyclotomic specialization at M=2, the transition coefficients C_{\u03bb\u03bc}^{[2]}(t) between one-row shifted t-Schur functions are unimodal with positive coefficients. Specifically, when \u03bb = (1^n) is a one-row strict partition, the polynomial C_{\u03bb\u03bc}(t^2, t) has nonnegative integer coefficients that are unimodal with maximum at the middle degree.",
     "domains": [
       "Algebra"
@@ -3799,7 +3799,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28723v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T12:19:23.572578+00:00",
     "title": "Unimodality of Transition Coefficients for One-Row Shifted t-Schur Functions at M=2"
   },
@@ -4019,7 +4019,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finite sign law for Ramanujan's third-order mock theta function \u03c1(q)"
   },
   {
-    "consumed_by_exp_id": "bb4b4c93",
+    "consumed_by_exp_id": "",
     "description": "Every countable FAC poset P can be naturally decomposed into a topological sum (ordinal sum) of scattered subposets, where a poset is scattered if it contains no non-trivial dense subposet (i.e., no subset isomorphic to the rationals Q). This decomposition reflects the global structure of P and provides a foundation for analyzing chain-antichain interactions. The conjecture states that such a decomposition exists with explicitly constructible scattered components that preserve FAC properties.",
     "domains": [
       "Logic",
@@ -4029,7 +4029,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02500v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T19:57:33.862963+00:00",
     "title": "A structural decomposition theorem for countable FAC posets via scattered components"
   },
@@ -4107,12 +4107,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "This conjecture formalizes the polynomial spectral gap for genus $g$ chord swap chains when $n > 2g$, with a tight dependence on $g$. It proposes a domain bridge to the theory of planar graphs and algebraic geometry to refine the bounds.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0315",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02410v1",
+    "status": "available",
+    "timestamp": "2026-07-05T00:43:16.601494+00:00",
+    "title": "Polynomial Mixing for Small Genus Chord Diagrams: Spectral Gap and Domain Bridge"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any squarefree integer N > 1 with an even number of distinct prime factors, the genus of the Atkin\u2013Lehner quotient X_N / \u27e8w_p\u27e9 is zero if and only if N belongs to the finite set {6, 10, 22}.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0315",
+    "id": "fd_0316",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02306v1",
@@ -4127,7 +4142,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0316",
+    "id": "fd_0317",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02419v1",
@@ -4142,7 +4157,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0317",
+    "id": "fd_0318",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02392v1",
@@ -4156,13 +4171,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0318",
+    "id": "fd_0319",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
     "status": "available",
     "timestamp": "2026-07-05T00:09:57.235649+00:00",
     "title": "Unique extremal graph for non-positive curvature at the edge-threshold"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for a split connected reductive group G over Qpbar, a finitely generated (phi, Gamma_K)-module D equipped with a G-linear extension is crystalline if and only if the associated triangulation parameter (coming from the point on the trianguline variety T_G) is Qpbar-regular. This refines the theorem of Breuil, Hellmann, and Schraen and gives a clean characterization of crystalline modules in terms of regularity of trianguline parameters.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0320",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02215v1",
+    "status": "available",
+    "timestamp": "2026-07-05T00:45:26.853739+00:00",
+    "title": "Crystallinity criterion via regularity of triangulation parameters"
   },
   {
     "consumed_by_exp_id": "da489ec4",

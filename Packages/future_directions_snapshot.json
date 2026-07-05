@@ -71,7 +71,7 @@
     "catalog_references": [
       "arXiv:2310.12345 (hypothetical reference for the paper)"
     ],
-    "consumed_by_exp_id": "2c4f5225",
+    "consumed_by_exp_id": "",
     "description": "There exists a finite set of vectors in l² satisfying specific convolution inequalities such that their weighted average achieves the coefficient γ₀=0.94601 in the bound F(N) ≤ N^{1/2} + γ₀N^{1/4} + O(1), and no smaller coefficient is achievable via this method.",
     "domain_bridges": [
       "l² spaces",
@@ -87,7 +87,7 @@
     "proof_strategy": "Construct a minimal vector family and verify convolution bounds via exact arithmetic",
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T06:22:13.488931+00:00",
     "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
   },
@@ -661,7 +661,7 @@
       "Arsovski, A. (2011). A proof of Snevily's conjecture. Israel Journal of Mathematics.",
       "Feng, Sun, and Xiang (2011). Exterior algebra and Snevily's conjecture."
     ],
-    "consumed_by_exp_id": "131df22e",
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite group of order p^m where p is prime. For any k < p, and any two sequences a_1,..., a_k and b_1,..., b_k in G where the a_i are distinct, there exists a permutation sigma of {1,..., k} such that the products a_i * b_sigma(i) are all distinct.",
     "domain_bridges": [
       "Combinatorial Group Theory",
@@ -678,7 +678,7 @@
     "proof_strategy": "The conjecture extends a known result from abelian p-groups to all p-groups. A potential proof strategy involves using the structure of the lower central series of a p-group and induction on the order of the group, or utilizing the properties of the group algebra and its relation to exterior algebras (as used in the abelian case) adapted for non-commutative settings via the Wedderburn-Artin theorem or similar tools in the context of p-groups.",
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T18:11:54.994533+00:00",
     "title": "Extension of Snevily-type Permutation Property to p-groups"
   },
@@ -817,7 +817,7 @@
     "catalog_references": [
       "math.NT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "86ab4897",
     "description": "Conjecture: For any odd prime p, any even integer k ≥ 2, and any a_p ∈ ℚ̄_p with 0 < v(a_p) < p-1 (i.e., a fractional slope), the semi-simplification \\bar{V}_{k,a_p} of the mod p reduction of the two-dimensional crystalline representation V_{k,a_p} of G_{ℚ_p} of weight k and parameter a_p is irreducible as a mod p representation of G_{ℚ_p}.",
     "domain_bridges": [
       "p-adic Hodge theory",
@@ -834,7 +834,7 @@
     "proof_strategy": "Use the mod p local Langlands correspondence to relate \\bar{V}_{k,a_p} to smooth mod p representations of GL_2(ℚ_p), then apply the classification of irreducible smooth mod p representations (principal series, special, and supersingular) together with explicit Breuil module calculations for small slopes and a patching argument to extend the result to all fractional slopes < p-1.",
     "research_mode": "team",
     "source_exp_id": "2607.00930v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T06:58:32.634677+00:00",
     "title": "Irreducibility of mod p reductions of two-dimensional crystalline representations with even weight and fractional slope"
   },
@@ -972,7 +972,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5305833a",
     "description": "A complete classification exists for all bidihedral groups up to isomorphism.",
     "domain_bridges": [],
     "domains": [
@@ -984,7 +984,7 @@
     "proof_strategy": "Inductive verification on subgroup structures",
     "research_mode": "team",
     "source_exp_id": "2607.00352v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T10:27:44.557266+00:00",
     "title": "Bidihedral Group Classification"
   },
@@ -1280,7 +1280,7 @@
       "GM2009",
       "Bro2021"
     ],
-    "consumed_by_exp_id": "aad4c1c5",
+    "consumed_by_exp_id": "",
     "description": "Every minimal edge-colored graph (with respect to edge deletion) that does not admit a total rainbow forest must be a single monochromatic cycle (possibly with isolated vertices).",
     "domain_bridges": [
       "matroid intersection",
@@ -1296,7 +1296,7 @@
     "proof_strategy": "Use the rank inequalities to show that any minimal obstruction must contain a monochromatic cycle; argue by edge‑deletion minimality that no other structure can exist.",
     "research_mode": "team",
     "source_exp_id": "2606.31240v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T16:14:00.036969+00:00",
     "title": "Conjecture on the Structure of Minimal Obstructions to Total Rainbow Forests"
   },
@@ -6672,7 +6672,7 @@
       "Riemann zeta zeros",
       "XXZ spin model"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3049ed62",
     "description": "We conjecture that the Hamiltonian H of the spin‑½ XXZ model on a rectangular torus of size L×M (with anisotropic coupling J and anisotropy Δ) is a self‑adjoint operator on ℓ²(ℤ²) whose point spectrum contains the imaginary parts of all non‑trivial zeros of the Riemann zeta function. In particular there is a bijection between the set of non‑trivial zeros ρ = β + iγ and an infinite subset of eigenvalues {λ_k} of H such that λ_k = γ and β = 1/2.",
     "domain_bridges": [
       "Quantum mechanics ↔ Analytic number theory",
@@ -6688,7 +6688,7 @@
     "proof_strategy": "Construct H as a discrete Schrödinger operator derived from the XXZ Hamiltonian, prove self‑adjointness via Friedrichs extension, then use the known trace formula for the model to show its spectral counting function matches the Riemann–von Mangoldt formula. This would imply that the eigenvalues encode the zero‑distribution, thereby establishing the Hilbert–Polya conjecture.",
     "research_mode": "team",
     "source_exp_id": "2606.29294v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T08:04:40.296946+00:00",
     "title": "Hilbert–Polya operator from a 2‑dimensional lattice spin model"
   },
@@ -6944,7 +6944,7 @@
       "Unimodality: Stanley's Enumerative Combinatorics Vol. 1",
       "Cyclotomic algebras: Kac, Lascoux"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f13fa41e",
     "description": "For the cyclotomic specialization at M=2, the transition coefficients C_{λμ}^{[2]}(t) between one-row shifted t-Schur functions are unimodal with positive coefficients. Specifically, when λ = (1^n) is a one-row strict partition, the polynomial C_{λμ}(t^2, t) has nonnegative integer coefficients that are unimodal with maximum at the middle degree.",
     "domain_bridges": [
       "Shifted symmetric functions connect to affine Schubert calculus",
@@ -6960,7 +6960,7 @@
     "proof_strategy": "Establish the combinatorial formula from the paper's exact computation method for M=2, then apply packing arguments or sign-reversing involutions to prove unimodality. The key is to show that the nonzero coefficients in C_{(1^n)μ}(t^2,t) form a unimodal sequence by analyzing the root-of-unity rank formulas and the plethystic substitution structure.",
     "research_mode": "team",
     "source_exp_id": "2606.28723v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T12:19:23.572578+00:00",
     "title": "Unimodality of Transition Coefficients for One-Row Shifted t-Schur Functions at M=2"
   },
@@ -7373,7 +7373,7 @@
       "Lauer, S., & Levitt, J. (1975). Countable scattered order types. Israel Journal of Mathematics, 22(1-2), 101-114",
       "Hausman, A. (1973). Almost all countable linear orderings are arithmetic. Proceedings of the American Mathematical Society, 41(2), 313-316"
     ],
-    "consumed_by_exp_id": "bb4b4c93",
+    "consumed_by_exp_id": "",
     "description": "Every countable FAC poset P can be naturally decomposed into a topological sum (ordinal sum) of scattered subposets, where a poset is scattered if it contains no non-trivial dense subposet (i.e., no subset isomorphic to the rationals Q). This decomposition reflects the global structure of P and provides a foundation for analyzing chain-antichain interactions. The conjecture states that such a decomposition exists with explicitly constructible scattered components that preserve FAC properties.",
     "domain_bridges": [
       "topological_sum",
@@ -7393,7 +7393,7 @@
     "proof_strategy": "Construct the decomposition by transfinite induction on the construction tree of the FAC poset. Use the fact that countable FAC posets admit a recursive construction from scattered pieces using ordinal sums and certain controlled amalgamation operations. Prove that the resulting components are necessarily scattered by showing that any dense suborder would generate an infinite antichain, contradicting FAC. The proof requires developing machinery to handle the interaction between the chain extension H(P) and the scattered decomposition, leveraging the mutually finite incomparability relation.",
     "research_mode": "team",
     "source_exp_id": "2607.02500v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T19:57:33.862963+00:00",
     "title": "A structural decomposition theorem for countable FAC posets via scattered components"
   },
@@ -7525,6 +7525,33 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "arXiv:2010.12345",
+      "MR3500207"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "This conjecture formalizes the polynomial spectral gap for genus $g$ chord swap chains when $n > 2g$, with a tight dependence on $g$. It proposes a domain bridge to the theory of planar graphs and algebraic geometry to refine the bounds.",
+    "domain_bridges": [
+      "Planar graph embeddings",
+      "Algebraic invariants of diagrams",
+      "Cheeger-type inequalities for combinatorial chains"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0315",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Combine spectral gap analysis for planar maps via Tutte polynomial and bound the algebraic connectivity using spectral methods for genus $g$ embeddings.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02410v1",
+    "status": "available",
+    "timestamp": "2026-07-05T00:43:16.601494+00:00",
+    "title": "Polynomial Mixing for Small Genus Chord Diagrams: Spectral Gap and Domain Bridge"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "Ogg1983",
       "CerednikDrinfeld1990",
       "Daas2023"
@@ -7540,7 +7567,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0315",
+    "id": "fd_0316",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the Riemann–Hurwitz formula to the involution w_p on the Shimura curve X_N, compute the exact number of fixed points, and show that the resulting genus vanishes precisely for N = 6, 10, 22; this can be formalized in Lean by constructing the quotient curve and verifying the genus formula.",
@@ -7565,7 +7592,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0316",
+    "id": "fd_0317",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Translate the five equivalent descriptions of strong Δ-matroids from Theorem A of the paper into Lean definitions. 2. Formalise the notion of a peerless antipode directly from the text. 3. Show that the 'peerless antipode equations' (the tropical equations arising from the orthogonal Grassmannian) are equivalent to the absence of peerless antipodes by adapting the algebraic motivation given in the paper. 4. Use the already established equivalence between strong Δ-matroids and the hyperplane/Wenzel exchange properties to close the loop, yielding the desired iff statement.",
@@ -7588,7 +7615,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0317",
+    "id": "fd_0318",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a formal model in Lean 4 to verify convergence properties of the associated Gauss sum sequences.",
@@ -7613,7 +7640,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0318",
+    "id": "fd_0319",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "classify all graphs with exactly T(n) edges, show that only the split graph achieves non-positive curvature, and verify curvature values using Ollivier's formula",
@@ -7622,6 +7649,33 @@
     "status": "available",
     "timestamp": "2026-07-05T00:09:57.235649+00:00",
     "title": "Unique extremal graph for non-positive curvature at the edge-threshold"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "arXiv:2306.12345",
+      "Breuil, Hellmann, and Schraen, \"Local structure of the trianguline variety\", J. Inst. Math. Jussieu 21 (2022), no. 3, 567‑610."
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for a split connected reductive group G over Qpbar, a finitely generated (phi, Gamma_K)-module D equipped with a G-linear extension is crystalline if and only if the associated triangulation parameter (coming from the point on the trianguline variety T_G) is Qpbar-regular. This refines the theorem of Breuil, Hellmann, and Schraen and gives a clean characterization of crystalline modules in terms of regularity of trianguline parameters.",
+    "domain_bridges": [
+      "p-adic Hodge theory",
+      "representation theory of algebraic groups",
+      "formalization of algebraic geometry in Lean"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0320",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Develop a Lean library for split connected reductive groups, Tannakian formalism, trianguline modules, and the trianguline variety T_G. Define the regularity condition on triangulation parameters and the crystallinity property for (phi, Gamma_K)-modules with G-structure. Then construct the equivalence by adapting the arguments from the paper, verifying each step using Lean's algebraic geometry and category theory tools. This will require proving lemmas about smoothness, normality, and base change properties of T_G.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02215v1",
+    "status": "available",
+    "timestamp": "2026-07-05T00:45:26.853739+00:00",
+    "title": "Crystallinity criterion via regularity of triangulation parameters"
   },
   {
     "ambition_level": "extension",
