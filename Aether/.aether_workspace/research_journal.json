@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "cff6413b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Lower semi-inducibility profile of the red-blue star `S_{2,1}`\n\nThis cycle established (in `RedBlueStarS21Profile.lean`, `RedBlueStarS21Optimization.lean`,\n`RedBlueStarS21Catalog",
-      "quality_score": 0.8251200000000001,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-06-28T06:24:48",
-      "title": "Exact lower semi-inducibility profile for the red‑blue star S_{2,1}"
-    },
-    {
       "cycle_id": "c0f7c830",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Sharp lower bounds for `L(x,y)` (smooth-number count)\n\nBuilt on `Catalog/Novelty/SmoothNumberLowerBound.lean`, where:\n\n- `L x y` = number of `y`-smooth integers in `(0, x]`;\n- `p",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-07-04T22:25:53",
       "title": "Phantom Topologies: Spaces That Change When You Look at Them"
+    },
+    {
+      "cycle_id": "a7402c18",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Second Neighborhoods in Oriented Graphs\n\nThese conjectures are derived from a study of Seymour's Second Neighborhood\nConjecture, which asserts that every finite oriented graph (a",
+      "quality_score": 0.6096,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-05T20:41:25",
+      "title": "Seymour's second neighborhood conjecture for oriented graphs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7258007692307691
     }
   ],
-  "last_updated": "2026-07-04T22:25:53",
+  "last_updated": "2026-07-05T20:41:25",
   "open_questions": [
     {
       "context": "without cross-imports. All results have zero `sorry`s.; What *is* provable, and proved here with zero `sorry`s, is:; All results are proved with zero `sorry`s.",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "5a434903",
-        "quality": 0.333456,
-        "theorems": 4,
-        "title": "Extremal Graph Theory: Turán and Szemerédi"
-      },
-      {
         "cycle_id": "ef874ad4",
         "quality": 0.512,
         "theorems": 22,
@@ -3823,6 +3817,12 @@
         "quality": 0.8748400000000001,
         "theorems": 9,
         "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
+      },
+      {
+        "cycle_id": "a7402c18",
+        "quality": 0.6096,
+        "theorems": 9,
+        "title": "Seymour's second neighborhood conjecture for oriented graphs"
       }
     ],
     "Pythagorean": [

@@ -578,30 +578,6 @@
     "title": "Commutativity of Operator Theorem operators in SR_G"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "math.CO"
-    ],
-    "consumed_by_exp_id": "4c40c6b4",
-    "description": "Formalize the theorem stating that for any connected bipartite graph G on n vertices and any real p ≥ 2, the positive p-energy E_p+(G) is at least the positive p-energy of the path graph P_n. This involves defining the adjacency spectrum, the positive p-energy sum, and the specific graph structures.",
-    "domain_bridges": [
-      "Linear Algebra (Eigenvalues)",
-      "Real Analysis (Power Sums)"
-    ],
-    "domains": [
-      "Physics"
-    ],
-    "id": "fd_0035",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "The proof strategy would involve using the spectral properties of the adjacency matrix of bipartite graphs. Specifically, one would leverage the fact that for bipartite graphs, the spectrum is symmetric about zero. The inequality can be reduced to comparing the sums of the p-th powers of the singular values of the biadjacency matrix, potentially utilizing the majorization properties or the second-order stop-loss-type inequalities mentioned in the paper's companion results.",
-    "research_mode": "team",
-    "source_exp_id": "2606.30996v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T15:55:56.869309+00:00",
-    "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "Szalay 2000",
@@ -3235,36 +3211,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
-      "arXiv:xxxx.xxxxx (On Deranged Unit-Interval Parking Functions and the Deranged Bell Numbers)",
-      "Bradt et al. 2024",
-      "Chaves Meyles et al. 2023",
-      "Belbachir, Djemmada, Németh"
-    ],
-    "consumed_by_exp_id": "4b597589",
-    "description": "For any composition λ = (λ₁, …, λₘ) of n, the number of deranged unit-interval parking functions of length n with block structure λ is exactly (dₘ / m!) times the multinomial coefficient n!/(λ₁! ⋯ λₘ!), where dₘ is the number of derangements of m elements. Equivalently, the deranged condition depends only on the number of blocks m and not on the block sizes, so that the distribution of block sizes in deranged unit-interval parking functions is proportional to the distribution in all unit-interval parking functions.",
-    "domain_bridges": [
-      "parking functions",
-      "ordered set partitions",
-      "derangements",
-      "Stirling numbers",
-      "Fubini numbers"
-    ],
-    "domains": [
-      "Computation"
-    ],
-    "id": "fd_0154",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Use the intrinsic characterization of deranged unit-interval parking functions via lucky cars (block leaders) to show that the deranged condition is equivalent to the permutation of blocks (when ordered by their minima) being a derangement. Then the block sizes are independent of the derangement condition, yielding the product formula. Alternatively, use the symbolic method with the exponential generating function e^{1-eˣ}/(2-eˣ) and track block sizes via the labeled construction of set partitions.",
-    "research_mode": "team",
-    "source_exp_id": "2607.01273v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T16:31:00.209169+00:00",
-    "title": "Refinement of Deranged Unit-Interval Parking Functions by Full Block Size Distribution"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
       "Mirzakhani's 63-vertex planar graph (3-colorable but not 4-choosable)"
     ],
     "consumed_by_exp_id": "",
@@ -5833,7 +5779,7 @@
       "Seymour 1995",
       "Even et al. 1995"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2e971067",
     "description": "Conjecture that a tournament T is cycle Mengerian (CM) if and only if it is cycle ideal (CI), i.e., for every non‑negative integral weight function w on its arcs the minimum weight of a feedback arc set equals the weight of a minimum‑weight feedback arc set in its linear programming relaxation.",
     "domain_bridges": [
       "LP duality",
@@ -5851,7 +5797,7 @@
     "proof_strategy": "Prove both directions: (1) Show that any CM tournament satisfies CI by using the equality ν_w^* = ν_w and the known relation between τ_w^* and ν_w^*; (2) Show that any CI tournament satisfies CM by constructing appropriate weight functions that force ν_w^* = ν_w, leveraging the structural characterization of CM tournaments.",
     "research_mode": "team",
     "source_exp_id": "2606.31565v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T18:35:10.861567+00:00",
     "title": "CM tournaments are precisely the cycle‑ideal tournaments"
   },
@@ -6067,38 +6013,6 @@
     "status": "in_progress",
     "timestamp": "2026-07-03T22:53:45.983763+00:00",
     "title": "Characterization of Zero-Preserving Pisot Numerations via Torus Isomorphism"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "DeanLatka1995",
-      "Fisher1996",
-      "HavetThomasse2000",
-      "AiGerkeGutinWangYeoZhou2024",
-      "BrantnerBrockmanKaySnively2009",
-      "CohnGodboleHarknessZhang2016",
-      "DaraFrancisJacobNarayanan2022",
-      "EspunyDiazGiraoGranetKronenberg2024"
-    ],
-    "consumed_by_exp_id": "a7402c18",
-    "description": "This paper presents a proof of Seymour's second neighborhood conjecture on oriented graphs with minimum out-degree at most 7, improving the threshold from 6 to 7.",
-    "domain_bridges": [
-      "Computational Complexity Theory",
-      "Combinatorics"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Logic"
-    ],
-    "id": "fd_0265",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Local reduction + oracle-based verification via OR-Tools",
-    "research_mode": "team",
-    "source_exp_id": "2606.30588v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T23:12:37.946714+00:00",
-    "title": "Seymour's second neighborhood conjecture for oriented graphs"
   },
   {
     "ambition_level": "grand_challenge",
@@ -7040,33 +6954,6 @@
     "status": "available",
     "timestamp": "2026-07-04T17:47:18.653210+00:00",
     "title": "Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "[1] https://arxiv.org/abs/2306.01234",
-      "https://doi.org/10.1090/dm/1234",
-      "https://doi.org/10.1109/TSPN.2023.9456789"
-    ],
-    "consumed_by_exp_id": "44b8cab0",
-    "description": "For odd primes \\(p\\), it is conjectured that \\(\\delta((\\mathbb{Z}/p^2\\mathbb{Z})^2, p\\mathbb{Z}/p^2\\mathbb{Z}) = (2p-1)^2\\), with an established lower bound of \\(3p^2 - p - 1\\) and probabilistic evidence supporting the conjecture for small primes.",
-    "domain_bridges": [
-      "Finite abelian group factorization",
-      "Small-sumset theory",
-      "Kneser's theorem applications"
-    ],
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0305",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Demonstrate that all difference fibres \\(\\mathcal{D}_a(T)\\) contain at least \\((2p-1)^2\\) elements via carry-corrected derivative analysis and probabilistic transversal selection.",
-    "research_mode": "team",
-    "source_exp_id": "2606.27961v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-04T18:08:50.995634+00:00",
-    "title": "Exact Transversal Difference Bound for Prime-Square Cyclic Quotients"
   },
   {
     "ambition_level": "extension",
@@ -8245,32 +8132,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
-      "Theorem A",
-      "Proposition big"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "For every positive integer n, the partition λ_n consisting of ⌊n/2⌋ parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set Ω_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound ⌈n/2⌉ on the number of parts of partitions in Ω_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
-    "domain_bridges": [
-      "representation theory of symmetric groups",
-      "combinatorics of partitions",
-      "Sylow permutation characters"
-    ],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0348",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Use the explicit description of the 2-Sylow subgroup of S_n as an iterated wreath product and the Murnaghan-Nakayama rule to compute the multiplicity of the irreducible character χ^{λ_n} in the permutation character (1_P)↑^{S_n}. Alternatively, use the characterization of Ω_2(n) via 2-quotients of partitions (as in [G17]) and verify that the 2-quotient of λ_n satisfies the required condition. Another approach is to use the known results on the restriction of irreducible characters to Sylow 2-subgroups and the fact that λ_n is a partition with all parts ≤ 2.",
-    "research_mode": "team",
-    "source_exp_id": "2607.02433v1",
-    "status": "available",
-    "timestamp": "2026-07-05T19:45:16.570930+00:00",
-    "title": "The all-twos partition achieves the maximum number of parts in Ω₂(n)"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
       "arXiv:2305.XXXX",
       "CDFS1",
       "BorovikGelfandWhite2003",
@@ -8300,6 +8161,61 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "ohsugi-tsuchiya-conj",
+      "higashitani-jochemko-michalek",
+      "gal",
+      "branden-gamma"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The smallest dimension of a symmetric edge polytope whose Ehrhart h*-polynomial fails to be γ-positive is 36. Equivalently, for every connected graph G with |V(G)| ≤ 36, the symmetric edge polytope Q_G has a γ-positive h*-polynomial.",
+    "domain_bridges": [
+      "Ehrhart theory",
+      "Graph theory",
+      "Polytope theory",
+      "Algebraic combinatorics"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0350",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Combine computational verification for all graphs up to 36 vertices using Ehrhart polynomial computation software (e.g., Normaliz, SageMath) with theoretical analysis of γ-coefficients for graphs with special structure (cones, complete bipartite, series-parallel with few paths). The Ohsugi-Tsuchiya conjecture was verified for small graphs computationally; this conjecture asserts their computation was exhaustive up to dimension 35.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02424v1",
+    "status": "available",
+    "timestamp": "2026-07-05T20:44:02.717732+00:00",
+    "title": "Minimal dimension of non-γ-positive symmetric edge polytopes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Theorem A",
+      "Proposition big"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every positive integer n, the partition λ_n consisting of ⌊n/2⌋ parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set Ω_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound ⌈n/2⌉ on the number of parts of partitions in Ω_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
+    "domain_bridges": [
+      "representation theory of symmetric groups",
+      "combinatorics of partitions",
+      "Sylow permutation characters"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0351",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the explicit description of the 2-Sylow subgroup of S_n as an iterated wreath product and the Murnaghan-Nakayama rule to compute the multiplicity of the irreducible character χ^{λ_n} in the permutation character (1_P)↑^{S_n}. Alternatively, use the characterization of Ω_2(n) via 2-quotients of partitions (as in [G17]) and verify that the 2-quotient of λ_n satisfies the required condition. Another approach is to use the known results on the restriction of irreducible characters to Sylow 2-subgroups and the fact that λ_n is a partition with all parts ≤ 2.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02433v1",
+    "status": "available",
+    "timestamp": "2026-07-05T19:45:16.570930+00:00",
+    "title": "The all-twos partition achieves the maximum number of parts in Ω₂(n)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Erdős-Gallai theorem",
       "hyperstability",
       "vertex cover",
@@ -8314,7 +8230,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0349",
+    "id": "fd_0352",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a specific graph achieving the lower bound via Pokrovskiy's structure theorem",
@@ -8323,6 +8239,32 @@
     "status": "available",
     "timestamp": "2026-07-05T20:11:01.715515+00:00",
     "title": "Tightness of Edge Deletion Bound in Hyperstability Extension of Erdős-Gallai Theorem"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Lando-Zvonkin, Graphs on Surfaces (2004)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any fixed genus g > 0, there exists a constant C_g > 0 such that the spectral gap γ_{n,g} of the fixed genus chord swap chain on chord diagrams with n chords and genus g satisfies γ_{n,g} ≥ C_g / n for all n > 2g.",
+    "domain_bridges": [
+      "graph theory",
+      "probability theory",
+      "topology of surfaces"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_0353",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish a conductance lower bound via a suitable coupling argument that relates chord swaps to graph-theoretic moves, and then use known inequalities to translate this into a polynomial lower bound on the spectral gap for fixed genus.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02410v1",
+    "status": "available",
+    "timestamp": "2026-07-05T20:44:48.765213+00:00",
+    "title": "Polynomial spectral gap lower bound for fixed genus chord swap chain"
   },
   {
     "ambition_level": "extension",

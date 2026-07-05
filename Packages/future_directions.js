@@ -337,20 +337,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Commutativity of Operator Theorem operators in SR_G"
   },
   {
-    "consumed_by_exp_id": "4c40c6b4",
-    "description": "Formalize the theorem stating that for any connected bipartite graph G on n vertices and any real p \u2265 2, the positive p-energy E_p+(G) is at least the positive p-energy of the path graph P_n. This involves defining the adjacency spectrum, the positive p-energy sum, and the specific graph structures.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "fd_0035",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.30996v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T15:55:56.869309+00:00",
-    "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Conjecture that for coprime positive integers a<b with a>1 and odd exponent n>1, the equation (a^n+1)(b^n+1)=x^2 has no positive integer solutions.",
     "domains": [
@@ -1779,20 +1765,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Integrality of the line graph of $BL_n(k-1,k)$ beyond the regular case"
   },
   {
-    "consumed_by_exp_id": "4b597589",
-    "description": "For any composition \u03bb = (\u03bb\u2081, \u2026, \u03bb\u2098) of n, the number of deranged unit-interval parking functions of length n with block structure \u03bb is exactly (d\u2098 / m!) times the multinomial coefficient n!/(\u03bb\u2081! \u22ef \u03bb\u2098!), where d\u2098 is the number of derangements of m elements. Equivalently, the deranged condition depends only on the number of blocks m and not on the block sizes, so that the distribution of block sizes in deranged unit-interval parking functions is proportional to the distribution in all unit-interval parking functions.",
-    "domains": [
-      "Computation"
-    ],
-    "id": "fd_0154",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01273v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T16:31:00.209169+00:00",
-    "title": "Refinement of Deranged Unit-Interval Parking Functions by Full Block Size Distribution"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Conjecture that every 3-colorable planar graph has list chromatic number \u22644.",
     "domains": [
@@ -3191,7 +3163,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on average \u2113\u2011Selmer rank lower bounds via Greenberg\u2013Wiles local factors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2e971067",
     "description": "Conjecture that a tournament T is cycle Mengerian (CM) if and only if it is cycle ideal (CI), i.e., for every non\u2011negative integral weight function w on its arcs the minimum weight of a feedback arc set equals the weight of a minimum\u2011weight feedback arc set in its linear programming relaxation.",
     "domains": [
       "Algebra",
@@ -3201,7 +3173,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31565v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T18:35:10.861567+00:00",
     "title": "CM tournaments are precisely the cycle\u2011ideal tournaments"
   },
@@ -3322,21 +3294,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-03T22:53:45.983763+00:00",
     "title": "Characterization of Zero-Preserving Pisot Numerations via Torus Isomorphism"
-  },
-  {
-    "consumed_by_exp_id": "a7402c18",
-    "description": "This paper presents a proof of Seymour's second neighborhood conjecture on oriented graphs with minimum out-degree at most 7, improving the threshold from 6 to 7.",
-    "domains": [
-      "Pythagorean",
-      "Logic"
-    ],
-    "id": "fd_0265",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.30588v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T23:12:37.946714+00:00",
-    "title": "Seymour's second neighborhood conjecture for oriented graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -3844,20 +3801,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-04T17:47:18.653210+00:00",
     "title": "Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
-  },
-  {
-    "consumed_by_exp_id": "44b8cab0",
-    "description": "For odd primes \\(p\\), it is conjectured that \\(\\delta((\\mathbb{Z}/p^2\\mathbb{Z})^2, p\\mathbb{Z}/p^2\\mathbb{Z}) = (2p-1)^2\\), with an established lower bound of \\(3p^2 - p - 1\\) and probabilistic evidence supporting the conjecture for small primes.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0305",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.27961v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-04T18:08:50.995634+00:00",
-    "title": "Exact Transversal Difference Bound for Prime-Square Cyclic Quotients"
   },
   {
     "consumed_by_exp_id": "",
@@ -4490,20 +4433,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0348",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02433v1",
-    "status": "available",
-    "timestamp": "2026-07-05T19:45:16.570930+00:00",
-    "title": "The all-twos partition achieves the maximum number of parts in \u03a9\u2082(n)"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "A \u0394-matroid is strong if and only if it contains no peerless antipodes, defined as pairs of feasible sets with symmetric difference 4 that cannot be exchanged through the standard \u0394-matroid axioms. This provides a novel combinatorial criterion for strongness.",
     "domains": [
       "Algebra",
@@ -4519,17 +4448,60 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The smallest dimension of a symmetric edge polytope whose Ehrhart h*-polynomial fails to be \u03b3-positive is 36. Equivalently, for every connected graph G with |V(G)| \u2264 36, the symmetric edge polytope Q_G has a \u03b3-positive h*-polynomial.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0350",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02424v1",
+    "status": "available",
+    "timestamp": "2026-07-05T20:44:02.717732+00:00",
+    "title": "Minimal dimension of non-\u03b3-positive symmetric edge polytopes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0351",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02433v1",
+    "status": "available",
+    "timestamp": "2026-07-05T19:45:16.570930+00:00",
+    "title": "The all-twos partition achieves the maximum number of parts in \u03a9\u2082(n)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "There exists a graph G without a cycle of length d such that at least cd n edge deletions are required to transform G into a graph where each connected component has a vertex cover of size at most (1+c)d.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0349",
+    "id": "fd_0352",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
     "status": "available",
     "timestamp": "2026-07-05T20:11:01.715515+00:00",
     "title": "Tightness of Edge Deletion Bound in Hyperstability Extension of Erd\u0151s-Gallai Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any fixed genus g > 0, there exists a constant C_g > 0 such that the spectral gap \u03b3_{n,g} of the fixed genus chord swap chain on chord diagrams with n chords and genus g satisfies \u03b3_{n,g} \u2265 C_g / n for all n > 2g.",
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_0353",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02410v1",
+    "status": "available",
+    "timestamp": "2026-07-05T20:44:48.765213+00:00",
+    "title": "Polynomial spectral gap lower bound for fixed genus chord swap chain"
   },
   {
     "consumed_by_exp_id": "",
