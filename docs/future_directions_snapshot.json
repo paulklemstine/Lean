@@ -666,7 +666,7 @@
       "Jan2023 - Recent work on descendants of n in G_n",
       "Drm2009 - Random recursive trees (d=1 case)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "23007999",
     "description": "For the random recursive DAG G_n with out-degree d ≥ 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n → ∞.",
     "domain_bridges": [
       "Multi-draw Pólya urn processes",
@@ -682,7 +682,7 @@
     "proof_strategy": "Generalize Janson's martingale-based analysis using refined Pólya urn techniques and derive explicit scaling limits through characteristic function methods",
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
@@ -692,7 +692,7 @@
       "Theorem 1.5",
       "Kane's work"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "244a22c3",
     "description": "The product of primes in the extension field equals its order.",
     "domain_bridges": "extension",
     "domains": [
@@ -705,7 +705,7 @@
     "proof_strategy": "Direct arithmetic verification",
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T05:35:59.496154+00:00",
     "title": "Ramified Prime Product Equality"
   },
@@ -3459,7 +3459,7 @@
       "math.NT",
       "math.CO"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "46b08ba4",
     "description": "For any d × d matrix A over a number field K with ring of integers O_K, if there exists n ≥ 1 such that A^n ∈ M_d(O_K), then the pseudo-determinant of A is an algebraic integer in K.",
     "domain_bridges": [
       "algebraic number theory",
@@ -3474,7 +3474,7 @@
     "proof_strategy": "Show that eigenvalues λ of A satisfy λ^n ∈ O_K (hence algebraic integers) via characteristic polynomial of A^n, then prove their product (pseudo-determinant) is an algebraic integer",
     "research_mode": "team",
     "source_exp_id": "2606.30876v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T21:26:19.991104+00:00",
     "title": "Pseudo-determinant of power-integral matrices is an algebraic integer"
   },
@@ -4528,7 +4528,7 @@
       "Potočnik's tetravalent graph census",
       "regular 4‑maniplex dataset"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e29ffbac",
     "description": "We conjecture that the isomorphism classes of regular 4‑maniplexes are in bijective correspondence with the isomorphism classes of tetravalent graphs appearing in Potočnik's census.  Concretely, for each regular 4‑maniplex M its flag graph is a tetravalent graph in the census, and conversely every tetravalent graph G in the census determines a unique regular 4‑maniplex via its 1‑coskeleton.  Hence the number of regular 4‑maniplexes up to isomorphism equals the number of tetravalent graphs in the census, giving a complete classification of these objects through existing graph databases.",
     "domain_bridges": [
       "Maniplex theory",
@@ -4546,7 +4546,7 @@
     "proof_strategy": "Using the existing datasets we will compute canonical forms (flag graph, 1‑skeleton, 1‑coskeleton) for each regular 4‑maniplex and compare them with the tetravalent graphs in the census.  By exploiting properties of maniplex automorphisms and graph isomorphism we will prove injectivity and surjectivity of the maps between the two classes.  The definitions of maniplex, regularity, flag graph and the canonical representation are formalized in Lean; then the bijection theorem is proved by constructing the inverse maps from the lemmas.",
     "research_mode": "team",
     "source_exp_id": "2606.27987v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T17:37:07.759741+00:00",
     "title": "Classification of regular 4‑maniplexes via tetravalent graph censuses"
   },
@@ -5777,7 +5777,7 @@
     "catalog_references": [
       "arxiv:math/xxx"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f4921e42",
     "description": "For any d-dimensional lattice polytope with m vertices, its surface area is bounded below by (d-1)/d times its volume, ensuring a precise upper limit on surface measures despite growth rates, making this inequality falsifiable through counterexamples in higher dimensions.",
     "domain_bridges": "d-dimensional lattice bounds",
     "domains": [
@@ -5790,7 +5790,7 @@
     "proof_strategy": "Elementary volume comparisons under linear transformations",
     "research_mode": "team",
     "source_exp_id": "2606.30856v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T21:26:47.114852+00:00",
     "title": "Surface-to-Volume Bounding Inequality"
   },
@@ -5996,7 +5996,7 @@
     "catalog_references": [
       "Jan2023"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e545fdf8",
     "description": "For any fixed integer k ≥ 2, the size of the set of common descendants of vertices n, n+1, ..., n+k-1 in G_{n+k-1}, scaled by n^{d/(d+1)}, converges in distribution to a non-degenerate random variable expressible in terms of independent Gamma random variables (or a product of Beta random variables), generalizing the result for k=2 obtained via ancestry processes and multi-draw Pólya urns.",
     "domain_bridges": [
       "math.CO"
@@ -6010,7 +6010,7 @@
     "proof_strategy": "Extend the ancestry process and Pólya urn methods used for k=2 to general k by analyzing the intersection of k descendant sets via the joint ancestry processes of the k vertices, and compute the limiting distribution using moment generating functions or martingale techniques.",
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T00:55:11.921809+00:00",
     "title": "Joint descendants of the last k vertices in random d-DAGs"
   },
@@ -7290,7 +7290,7 @@
       "Yuzvinsky",
       "DimcaSticlaruPascal"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f8ce2785",
     "description": "If a reduced plane curve (or line arrangement) of degree d has minimal Jacobian relation degree mdr(f) strictly less than d/2, then mdr(f) is uniquely determined by the combinatorial data of its intersection lattice (the multiplicities n_k).",
     "domain_bridges": [
       "Intersection lattices",
@@ -7308,7 +7308,7 @@
     "proof_strategy": "Develop a computable combinatorial invariant derived from the intersection lattice that predicts mdr(f); prove the equivalence when mdr(f) < d/2 by analyzing graded Betti numbers and Jacobian syzygies; provide explicit counterexamples to test falsifiability.",
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T04:44:21.963122+00:00",
     "title": "Combinatorial Determinism of Minimal Jacobian Relation Degree for Plane Curve Arrangements"
   },
@@ -7560,7 +7560,7 @@
       "Jung 1989",
       "Jung-Tix 1998"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6780d0c8",
     "description": "This paper investigates the structural constraints under which a finite poset admits a probabilistic powerdomain isomorphic to an RB-domain. The key claim is that such a domain must inherit a least element and possess a tree-like Hasse graph structure.",
     "domain_bridges": [
       "finite-binary-channel coding",
@@ -7575,7 +7575,7 @@
     "proof_strategy": "Constructive separation with two clear obstruction layers",
     "research_mode": "team",
     "source_exp_id": "2607.02231v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T03:01:13.702884+00:00",
     "title": "Characterizing finite posets whose probabilistic powerdomain is an RB-domain"
   },

@@ -380,7 +380,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "23007999",
     "description": "For the random recursive DAG G_n with out-degree d \u2265 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n \u2192 \u221e.",
     "domains": [
       "Computation"
@@ -389,12 +389,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "244a22c3",
     "description": "The product of primes in the extension field equals its order.",
     "domains": [
       "Pythagorean",
@@ -404,7 +404,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T05:35:59.496154+00:00",
     "title": "Ramified Prime Product Equality"
   },
@@ -1896,7 +1896,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality for exactly one edge subset"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "46b08ba4",
     "description": "For any d \u00d7 d matrix A over a number field K with ring of integers O_K, if there exists n \u2265 1 such that A^n \u2208 M_d(O_K), then the pseudo-determinant of A is an algebraic integer in K.",
     "domains": [
       "Algebra"
@@ -1905,7 +1905,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30876v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T21:26:19.991104+00:00",
     "title": "Pseudo-determinant of power-integral matrices is an algebraic integer"
   },
@@ -2480,7 +2480,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of a fine unit-distance graph with low independence ratio"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e29ffbac",
     "description": "We conjecture that the isomorphism classes of regular 4\u2011maniplexes are in bijective correspondence with the isomorphism classes of tetravalent graphs appearing in Poto\u010dnik's census.  Concretely, for each regular 4\u2011maniplex M its flag graph is a tetravalent graph in the census, and conversely every tetravalent graph G in the census determines a unique regular 4\u2011maniplex via its 1\u2011coskeleton.  Hence the number of regular 4\u2011maniplexes up to isomorphism equals the number of tetravalent graphs in the census, giving a complete classification of these objects through existing graph databases.",
     "domains": [
       "Pythagorean",
@@ -2490,7 +2490,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27987v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T17:37:07.759741+00:00",
     "title": "Classification of regular 4\u2011maniplexes via tetravalent graph censuses"
   },
@@ -3165,7 +3165,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "A congruence conjecture for DSOME(n) modulo 4"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f4921e42",
     "description": "For any d-dimensional lattice polytope with m vertices, its surface area is bounded below by (d-1)/d times its volume, ensuring a precise upper limit on surface measures despite growth rates, making this inequality falsifiable through counterexamples in higher dimensions.",
     "domains": [
       "Algebra",
@@ -3175,7 +3175,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30856v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T21:26:47.114852+00:00",
     "title": "Surface-to-Volume Bounding Inequality"
   },
@@ -3282,7 +3282,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equivalence of h(\u03b1, \u03b2) and Sieve Integral for Localized Divisors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e545fdf8",
     "description": "For any fixed integer k \u2265 2, the size of the set of common descendants of vertices n, n+1, ..., n+k-1 in G_{n+k-1}, scaled by n^{d/(d+1)}, converges in distribution to a non-degenerate random variable expressible in terms of independent Gamma random variables (or a product of Beta random variables), generalizing the result for k=2 obtained via ancestry processes and multi-draw P\u00f3lya urns.",
     "domains": [
       "Computation"
@@ -3291,7 +3291,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T00:55:11.921809+00:00",
     "title": "Joint descendants of the last k vertices in random d-DAGs"
   },
@@ -3978,7 +3978,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equivariant Kida formula for spectral resultants of Grover walks on p-group graph covers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f8ce2785",
     "description": "If a reduced plane curve (or line arrangement) of degree d has minimal Jacobian relation degree mdr(f) strictly less than d/2, then mdr(f) is uniquely determined by the combinatorial data of its intersection lattice (the multiplicities n_k).",
     "domains": [
       "Algebra",
@@ -3988,7 +3988,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T04:44:21.963122+00:00",
     "title": "Combinatorial Determinism of Minimal Jacobian Relation Degree for Plane Curve Arrangements"
   },
@@ -4126,7 +4126,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Geometric Bombieri--Lang Conjecture for Varieties Fibered Over Curves with Generic Fiber of General Type"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6780d0c8",
     "description": "This paper investigates the structural constraints under which a finite poset admits a probabilistic powerdomain isomorphic to an RB-domain. The key claim is that such a domain must inherit a least element and possess a tree-like Hasse graph structure.",
     "domains": [
       "Bridges"
@@ -4135,7 +4135,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02231v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T03:01:13.702884+00:00",
     "title": "Characterizing finite posets whose probabilistic powerdomain is an RB-domain"
   },
