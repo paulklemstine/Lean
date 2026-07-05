@@ -4494,13 +4494,43 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0348",
+    "id": "fd_0349",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
     "status": "available",
     "timestamp": "2026-07-05T19:45:16.570930+00:00",
     "title": "The all-twos partition achieves the maximum number of parts in \u03a9\u2082(n)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For every countable poset P that satisfies the finite antichain condition (FAC) and does not contain a saturated chain D (or its reverse) that is a countable sum of infinite co\u2011wellfounded components, there exists a chain C in P and a finite partition of P into antichains A\u2081,\u2026,A\u2099 such that C meets each antichain A_i (i.e., C \u2229 A_i \u2260 \u2205 for all i).",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0350",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02500v1",
+    "status": "available",
+    "timestamp": "2026-07-05T19:53:18.166175+00:00",
+    "title": "Countable FAC posets admit a chain intersecting a finite partition of antichains"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any rational polytopal measure in \u211d^d with total vertex count N, the set of oriented hyperplanes that bisect the measure (i.e., ham\u2011sandwich cuts) is a semialgebraic set described by O(N^d) polynomial inequalities of degree \u22642, and the number of its connected components is bounded by (N+1)^{2d}.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0350",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02400v1",
+    "status": "available",
+    "timestamp": "2026-07-05T19:53:37.272255+00:00",
+    "title": "Conjecture: Polynomial bound on the number of connected components of ham\u2011sandwich cut spaces for rational polytopal measures"
   },
   {
     "consumed_by_exp_id": "",

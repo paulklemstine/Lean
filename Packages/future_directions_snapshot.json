@@ -8258,7 +8258,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0348",
+    "id": "fd_0349",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the explicit description of the 2-Sylow subgroup of S_n as an iterated wreath product and the Murnaghan-Nakayama rule to compute the multiplicity of the irreducible character χ^{λ_n} in the permutation character (1_P)↑^{S_n}. Alternatively, use the characterization of Ω_2(n) via 2-quotients of partitions (as in [G17]) and verify that the 2-quotient of λ_n satisfies the required condition. Another approach is to use the known results on the restriction of irreducible characters to Sylow 2-subgroups and the fact that λ_n is a partition with all parts ≤ 2.",
@@ -8267,6 +8267,61 @@
     "status": "available",
     "timestamp": "2026-07-05T19:45:16.570930+00:00",
     "title": "The all-twos partition achieves the maximum number of parts in Ω₂(n)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Aharoni–Korman (1992), \"On a conjecture of Erdos and Moser\", arXiv:math/9201234"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For every countable poset P that satisfies the finite antichain condition (FAC) and does not contain a saturated chain D (or its reverse) that is a countable sum of infinite co‑wellfounded components, there exists a chain C in P and a finite partition of P into antichains A₁,…,Aₙ such that C meets each antichain A_i (i.e., C ∩ A_i ≠ ∅ for all i).",
+    "domain_bridges": [
+      "order theory",
+      "combinatorial set theory",
+      "model theory of posets"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0350",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the structural decomposition of countable FAC posets into scattered components, apply the chain equivalence relation to select a dominating chain, and construct a finite antichain partition from the scattered decomposition; then verify that this chain meets every antichain in the partition.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02500v1",
+    "status": "available",
+    "timestamp": "2026-07-05T19:53:18.166175+00:00",
+    "title": "Countable FAC posets admit a chain intersecting a finite partition of antichains"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Stone & Tukey 1942",
+      "Rado 1946",
+      "Basu, Pollack, Roy 2006",
+      "Bochnak, Coste, Roy 1998"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any rational polytopal measure in ℝ^d with total vertex count N, the set of oriented hyperplanes that bisect the measure (i.e., ham‑sandwich cuts) is a semialgebraic set described by O(N^d) polynomial inequalities of degree ≤2, and the number of its connected components is bounded by (N+1)^{2d}.",
+    "domain_bridges": [
+      "Computational geometry ↔ semialgebraic geometry",
+      "Measure theory ↔ algebraic topology",
+      "Discrete geometry ↔ piecewise rational functions"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0350",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct a cell decomposition of the space of oriented hyperplanes induced by the piecewise‑rational cap‑volume function, apply cylindrical algebraic decomposition to bound the number of cells, and prove the (N+1)^{2d} bound by induction on the number of vertices.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02400v1",
+    "status": "available",
+    "timestamp": "2026-07-05T19:53:37.272255+00:00",
+    "title": "Conjecture: Polynomial bound on the number of connected components of ham‑sandwich cut spaces for rational polytopal measures"
   },
   {
     "ambition_level": "extension",
