@@ -204,7 +204,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Functional Equation Characterizes Primitive Dirichlet Characters"
   },
   {
-    "consumed_by_exp_id": "547c07d6",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that the finite Chromonic Lemma extends to infinite, locally finite, strongly connected digraphs. Formally, let G be an infinite directed graph that is strongly connected and locally finite, equipped with a real\u2011valued weight function on its edges and a color\u2011blending operation satisfying the Color Blend Axiom. If there exists a vertex coloring c : V \u2192 Colors such that for every vertex v, c(v) equals the weighted blend of the colors of its out\u2011neighbors (i.e., c(v) = \u03c0_{(u,p)\u2208Out(v)} p\u00b7c(u) ), then c must be constant. This generalizes the paper\u2019s result from finite graphs to infinite ones and highlights the robustness of the underlying combinatorial principle.",
     "domains": [
       "Algebra",
@@ -214,7 +214,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31908v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T11:14:08.155742+00:00",
     "title": "Infinite Color Wheels: No Nontrivial Neighbor\u2011Blend Colorings"
   },
@@ -2347,7 +2347,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "If-and-only-if classification of real quadratic fields where Kim's octonary diagonal form is universal"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2fcfc9fd",
     "description": "For every semi-complete digraph G, the directed clique-width of G is at most the cycle rank of G plus 2.",
     "domains": [
       "Bridges"
@@ -2356,7 +2356,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29336v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T09:21:10.954489+00:00",
     "title": "Directed Clique-Width Bound for Semi-Complete Digraphs via Cycle Rank"
   },
@@ -2506,7 +2506,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existenceof a Reduced Planar Convex Body Exceeding Lassak's Area Bound"
   },
   {
-    "consumed_by_exp_id": "accc7a36",
+    "consumed_by_exp_id": "",
     "description": "For weight 1/2 sesquiharmonic Maass forms of moderate growth, the weighted Riesz mean of Hurwitz class numbers has an asymptotic expansion of the form \u2211_{n\u2264X} H(n) \u00d7 weight(n) \u223c C X^\u03b1 log^k X as X\u2192\u221e, where C, \u03b1, and k depend on the Maass form's spectral parameters.",
     "domains": [
       "Physics"
@@ -2515,7 +2515,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28657v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T14:41:26.130876+00:00",
     "title": "Asymptotic Expansion of Weighted Riesz Means for Sesquiharmonic Maass Forms"
   },
@@ -4019,7 +4019,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finite sign law for Ramanujan's third-order mock theta function \u03c1(q)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "67d07abb",
     "description": "Every countable FAC poset P can be naturally decomposed into a topological sum (ordinal sum) of scattered subposets, where a poset is scattered if it contains no non-trivial dense subposet (i.e., no subset isomorphic to the rationals Q). This decomposition reflects the global structure of P and provides a foundation for analyzing chain-antichain interactions. The conjecture states that such a decomposition exists with explicitly constructible scattered components that preserve FAC properties.",
     "domains": [
       "Logic",
@@ -4029,7 +4029,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02500v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T19:57:33.862963+00:00",
     "title": "A structural decomposition theorem for countable FAC posets via scattered components"
   },
@@ -4136,12 +4136,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture that the invariant h_2(n), the maximal codimension of a cyclically covering subspace of F_2^n, tends to infinity as n ranges over odd integers. Formally, for every integer M \u2265 2 there exists an odd n such that h_2(n) > M.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0317",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02239v1",
+    "status": "available",
+    "timestamp": "2026-07-05T01:53:29.957353+00:00",
+    "title": "Unboundedness of h_2(n) over odd integers"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any squarefree integer N > 1 with an even number of distinct prime factors, the genus of the Atkin\u2013Lehner quotient X_N / \u27e8w_p\u27e9 is zero if and only if N belongs to the finite set {6, 10, 22}.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0317",
+    "id": "fd_0318",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02306v1",
@@ -4156,7 +4171,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0318",
+    "id": "fd_0319",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02419v1",
@@ -4171,7 +4186,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0319",
+    "id": "fd_0320",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02392v1",
@@ -4185,7 +4200,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0320",
+    "id": "fd_0321",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
@@ -4200,7 +4215,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0321",
+    "id": "fd_0322",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02215v1",
@@ -4215,13 +4230,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0322",
+    "id": "fd_0323",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
     "status": "available",
     "timestamp": "2026-07-05T01:19:57.095760+00:00",
     "title": "Conjecture on the tree structure of T(S) for subsets of the projective line"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any finite set S \u2286 \u2124 and any number of colors r \u2265 2, the Gallai homothety number G_r(S) equals the smallest n such that every symmetric one-weight coloring of [t]^n contains a monochromatic combinatorial line whose weight vector belongs to S.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0324",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02226v1",
+    "status": "available",
+    "timestamp": "2026-07-05T01:53:56.425500+00:00",
+    "title": "Conjecture: Gallai homothety numbers characterize symmetric one-weight HJ thresholds"
   },
   {
     "consumed_by_exp_id": "da489ec4",

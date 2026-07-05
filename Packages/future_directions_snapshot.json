@@ -342,7 +342,7 @@
       "Is There An Ideal Color Wheel? (arXiv:xxxx)",
       "Doyle, Graph Theory"
     ],
-    "consumed_by_exp_id": "547c07d6",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that the finite Chromonic Lemma extends to infinite, locally finite, strongly connected digraphs. Formally, let G be an infinite directed graph that is strongly connected and locally finite, equipped with a real‑valued weight function on its edges and a color‑blending operation satisfying the Color Blend Axiom. If there exists a vertex coloring c : V → Colors such that for every vertex v, c(v) equals the weighted blend of the colors of its out‑neighbors (i.e., c(v) = π_{(u,p)∈Out(v)} p·c(u) ), then c must be constant. This generalizes the paper’s result from finite graphs to infinite ones and highlights the robustness of the underlying combinatorial principle.",
     "domain_bridges": [
       "Markov chain stopping rule",
@@ -359,7 +359,7 @@
     "proof_strategy": "Extend the finite proof via a compactness/ultraproduct construction: take an increasing sequence of finite subgraphs exhausting G, apply the finite Chromonic Lemma to obtain constant colorings on each subgraph, then use an ultralimit to build a global coloring satisfying the neighbor‑blend condition. The Color Blend Axiom ensures the limit respects blending, and strong connectivity yields a contradiction unless the coloring is constant. Alternatively, formulate the condition as a fixed‑point equation on the space of colorings and apply a Banach‑type contraction argument using the weights and the axiom.",
     "research_mode": "team",
     "source_exp_id": "2606.31908v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T11:14:08.155742+00:00",
     "title": "Infinite Color Wheels: No Nontrivial Neighbor‑Blend Colorings"
   },
@@ -4280,7 +4280,7 @@
       "Gruber (DMTCS 2012)",
       "Giannopoulou, Hunter, and Thilikos (DAM 2012)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2fcfc9fd",
     "description": "For every semi-complete digraph G, the directed clique-width of G is at most the cycle rank of G plus 2.",
     "domain_bridges": [
       "Parameterized Complexity",
@@ -4295,7 +4295,7 @@
     "proof_strategy": "Prove by induction on the cycle rank. Base cases: acyclic graphs (cr=0) have directed clique-width ≤ 2. For inductive step, use the cycle rank decomposition: when G is strongly connected, remove a vertex v to get G-v with cr(G-v) ≤ cr(G)-1. By inductive hypothesis, cw(G-v) ≤ cr(G-v)+2 ≤ cr(G)+1. Then show that adding v back and reconnecting edges in the semi-complete manner increases the directed clique-width by at most 1.",
     "research_mode": "team",
     "source_exp_id": "2606.29336v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T09:21:10.954489+00:00",
     "title": "Directed Clique-Width Bound for Semi-Complete Digraphs via Cycle Rank"
   },
@@ -4568,7 +4568,7 @@
       "DukeImamogluToth19",
       "BRR3"
     ],
-    "consumed_by_exp_id": "accc7a36",
+    "consumed_by_exp_id": "",
     "description": "For weight 1/2 sesquiharmonic Maass forms of moderate growth, the weighted Riesz mean of Hurwitz class numbers has an asymptotic expansion of the form ∑_{n≤X} H(n) × weight(n) ∼ C X^α log^k X as X→∞, where C, α, and k depend on the Maass form's spectral parameters.",
     "domain_bridges": [
       "harmonic Maass forms",
@@ -4584,7 +4584,7 @@
     "proof_strategy": "Analyze the spectral decomposition of the introduced L-functions and apply Tauberian techniques to extract coefficients from the Riesz mean.",
     "research_mode": "team",
     "source_exp_id": "2606.28657v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T14:41:26.130876+00:00",
     "title": "Asymptotic Expansion of Weighted Riesz Means for Sesquiharmonic Maass Forms"
   },
@@ -7373,7 +7373,7 @@
       "Lauer, S., & Levitt, J. (1975). Countable scattered order types. Israel Journal of Mathematics, 22(1-2), 101-114",
       "Hausman, A. (1973). Almost all countable linear orderings are arithmetic. Proceedings of the American Mathematical Society, 41(2), 313-316"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "67d07abb",
     "description": "Every countable FAC poset P can be naturally decomposed into a topological sum (ordinal sum) of scattered subposets, where a poset is scattered if it contains no non-trivial dense subposet (i.e., no subset isomorphic to the rationals Q). This decomposition reflects the global structure of P and provides a foundation for analyzing chain-antichain interactions. The conjecture states that such a decomposition exists with explicitly constructible scattered components that preserve FAC properties.",
     "domain_bridges": [
       "topological_sum",
@@ -7393,7 +7393,7 @@
     "proof_strategy": "Construct the decomposition by transfinite induction on the construction tree of the FAC poset. Use the fact that countable FAC posets admit a recursive construction from scattered pieces using ordinal sums and certain controlled amalgamation operations. Prove that the resulting components are necessarily scattered by showing that any dense suborder would generate an infinite antichain, contradicting FAC. The proof requires developing machinery to handle the interaction between the chain extension H(P) and the scattered decomposition, leveraging the mutually finite incomparability relation.",
     "research_mode": "team",
     "source_exp_id": "2607.02500v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T19:57:33.862963+00:00",
     "title": "A structural decomposition theorem for countable FAC posets via scattered components"
   },
@@ -7579,6 +7579,36 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "Isbell56",
+      "Isbell60",
+      "Cameron-Ellis-Raynaud2019",
+      "CameronProblem190",
+      "Aaronson-Groenland-Johnston2020"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that the invariant h_2(n), the maximal codimension of a cyclically covering subspace of F_2^n, tends to infinity as n ranges over odd integers. Formally, for every integer M ≥ 2 there exists an odd n such that h_2(n) > M.",
+    "domain_bridges": [
+      "additive combinatorics",
+      "linear codes",
+      "cyclic codes"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0317",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Develop a systematic construction of cyclically covering subspaces with large codimension. Use the equivalence with cyclic codes lacking full‑weight codewords, and exploit the structure of the factorization of x^n‑1 over F_2. By selecting n with many primitive prime divisors and carefully choosing generators of cyclic codes, one can force the covering radius to be small while keeping the dimension low, yielding h_2(n) arbitrarily large. A combination of number‑theoretic results (Zsigmondy’s theorem) and linear‑programming bounds (Delsarte’s inequality) would give the required lower bounds.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02239v1",
+    "status": "available",
+    "timestamp": "2026-07-05T01:53:29.957353+00:00",
+    "title": "Unboundedness of h_2(n) over odd integers"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "Ogg1983",
       "CerednikDrinfeld1990",
       "Daas2023"
@@ -7594,7 +7624,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0317",
+    "id": "fd_0318",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the Riemann–Hurwitz formula to the involution w_p on the Shimura curve X_N, compute the exact number of fixed points, and show that the resulting genus vanishes precisely for N = 6, 10, 22; this can be formalized in Lean by constructing the quotient curve and verifying the genus formula.",
@@ -7619,7 +7649,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0318",
+    "id": "fd_0319",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Translate the five equivalent descriptions of strong Δ-matroids from Theorem A of the paper into Lean definitions. 2. Formalise the notion of a peerless antipode directly from the text. 3. Show that the 'peerless antipode equations' (the tropical equations arising from the orthogonal Grassmannian) are equivalent to the absence of peerless antipodes by adapting the algebraic motivation given in the paper. 4. Use the already established equivalence between strong Δ-matroids and the hyperplane/Wenzel exchange properties to close the loop, yielding the desired iff statement.",
@@ -7642,7 +7672,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0319",
+    "id": "fd_0320",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a formal model in Lean 4 to verify convergence properties of the associated Gauss sum sequences.",
@@ -7667,7 +7697,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0320",
+    "id": "fd_0321",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "classify all graphs with exactly T(n) edges, show that only the split graph achieves non-positive curvature, and verify curvature values using Ollivier's formula",
@@ -7694,7 +7724,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0321",
+    "id": "fd_0322",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Develop a Lean library for split connected reductive groups, Tannakian formalism, trianguline modules, and the trianguline variety T_G. Define the regularity condition on triangulation parameters and the crystallinity property for (phi, Gamma_K)-modules with G-structure. Then construct the equivalence by adapting the arguments from the paper, verifying each step using Lean's algebraic geometry and category theory tools. This will require proving lemmas about smoothness, normality, and base change properties of T_G.",
@@ -7721,7 +7751,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0322",
+    "id": "fd_0323",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on the size of S combined with combinatorial analysis of the equivalence relation; check connectivity and absence of cycles; search for counterexamples computationally.",
@@ -7730,6 +7760,35 @@
     "status": "available",
     "timestamp": "2026-07-05T01:19:57.095760+00:00",
     "title": "Conjecture on the tree structure of T(S) for subsets of the projective line"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Hales--Jewett 1963",
+      "Gallai 1968",
+      "Lavrov 2020",
+      "Kozik--Shabanov 2016"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any finite set S ⊆ ℤ and any number of colors r ≥ 2, the Gallai homothety number G_r(S) equals the smallest n such that every symmetric one-weight coloring of [t]^n contains a monochromatic combinatorial line whose weight vector belongs to S.",
+    "domain_bridges": [
+      "Additive combinatorics",
+      "Finite automata",
+      "SAT modulo theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0324",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Reduce to finite constraint satisfaction; exploit weight-preserving bijections between symmetric colorings and one-dimensional Gallai colorings; verify via exhaustive search for small parameters.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02226v1",
+    "status": "available",
+    "timestamp": "2026-07-05T01:53:56.425500+00:00",
+    "title": "Conjecture: Gallai homothety numbers characterize symmetric one-weight HJ thresholds"
   },
   {
     "ambition_level": "extension",
