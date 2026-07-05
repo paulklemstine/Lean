@@ -7942,6 +7942,34 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "ohsugi-tsuchiya-conj",
+      "higashitani-jochemko-michalek",
+      "gal",
+      "branden-gamma"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The Ehrhart $h^*$-polynomial of a symmetric edge polytope is γ-positive if and only if the graph has a vertex connected to all other vertices.",
+    "domain_bridges": [
+      "Ehrhart theory",
+      "graph theory",
+      "γ-positivity in polynomials"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0338",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Prove that cones are γ-positive (already established) and that non-cones (e.g., series-parallel graphs) are not γ-positive (as shown by counterexamples), formalizing graph-cone characterization and polynomial coefficients in Lean 4.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02424v1",
+    "status": "available",
+    "timestamp": "2026-07-05T17:33:22.409085+00:00",
+    "title": "Gamma-positivity of Symmetric Edge Polytopes is Equivalent to the Graph Being a Cone"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "Giam",
       "daas1",
       "HY",
@@ -7959,7 +7987,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0338",
+    "id": "fd_0339",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the genus formula for Atkin-Lehner quotients of Shimura curves, which expresses the genus in terms of class numbers of quaternion orders, fixed point counts of the Atkin-Lehner involutions, and contributions from elliptic points. Systematically evaluate this formula for all squarefree N with an even number of prime factors, leveraging known bounds on class numbers to prove finiteness of the genus-zero cases. The computation reduces to checking a finite list of N up to a computable bound, which can be verified by computer-assisted enumeration of the genus formula.",
@@ -7987,7 +8015,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0339",
+    "id": "fd_0340",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Formalize the ring of integers modulo $N$ and the group of Dirichlet characters in Lean 4 using `mathlib`. 2. Implement the definition of Gauss sums $G_N(\\psi)$ as sums over $\\mathbb{Z}/N\\mathbb{Z}$ into $\\mathbb{C}$. 3. Use the property that the entries of $A_k(\\chi)$ are characters of a subgroup of the character group. 4. Apply a generalized version of the determinant formula for matrices whose entries are characters (related to the group determinant formula) to factorize $\\det(A_k(\\chi))$ into a product of Gauss sums. 5. Use the Hasse-Davenport lifting formula and properties of primitive characters modulo $p^m$ to simplify the product.",
@@ -7996,6 +8024,39 @@
     "status": "available",
     "timestamp": "2026-07-05T16:59:15.702271+00:00",
     "title": "Determinant Formula for the Cyclotomic Matrix of Gauss Sums over Prime Powers"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO 05C35 - Extremal problems for graphs",
+      "math.CO 05C05 - Graph connectivity",
+      "math.DG 53C21 - Curves and surfaces in Riemannian manifolds",
+      "math.PR 60B12 - Discrete groups and ergodic theory"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For all even n ≥ 12, the unique graph with T(n) = (n²-3n)/2 - ⌈n/2⌉ + 2 edges that contains an edge with non-positive Lin--Lu--Yau curvature is the join of a perfect matching on n/2 vertices and a complete graph on n/2 vertices, K₂ plus K_{n/2}. This structure is characterized by: (1) vertex partition into two sets A and B each of size n/2, (2) A induces a perfect matching, B induces a complete graph, (3) every vertex in A is adjacent to every vertex in B, and (4) the unique edge with non-positive curvature lies within the matchings. This conjecture generalizes the uniqueness result and provides an explicit structural description.",
+    "domain_bridges": [
+      "discrete curvature",
+      "Ollivier-Ricci curvature",
+      "Lin-Lu-Yau curvature",
+      "extremal graph theory",
+      "graph joins",
+      "perfect matchings",
+      "Turán-type problems"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0341",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The conjecture reduces to proving that any graph G with T(n) edges and a non-positive curvature edge must have the specified join structure. Key steps: (1) Show G must be n/2-connected using expansion arguments, (2) Prove the complement G̅ has exactly n/2 edges forming a perfect matching, (3) Apply stability methods to show any edge not in the join structure can be moved to the matching without decreasing edge count, (4) Use the curvature formula κ(e) = 1 - W₂(μ₁, μ₂) to demonstrate the matching edges have κ ≤ 0 while all edges in K_{n/2} have κ > 0. The technical core involves estimating Wasserstein distances for the specific probability measures μ_x = (1-deg(x))δ_x + Σ_{y~x} δ_y/(deg(x)+1).",
+    "research_mode": "team",
+    "source_exp_id": "2607.02297v1",
+    "status": "available",
+    "timestamp": "2026-07-05T17:33:31.047466+00:00",
+    "title": "Characterization of Extremal Graphs for Positive Lin--Lu--Yau Curvature"
   },
   {
     "ambition_level": "extension",

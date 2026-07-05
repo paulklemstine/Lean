@@ -4328,12 +4328,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The Ehrhart $h^*$-polynomial of a symmetric edge polytope is \u03b3-positive if and only if the graph has a vertex connected to all other vertices.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0338",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02424v1",
+    "status": "available",
+    "timestamp": "2026-07-05T17:33:22.409085+00:00",
+    "title": "Gamma-positivity of Symmetric Edge Polytopes is Equivalent to the Graph Being a Cone"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let N > 1 be a squarefree integer with an even number of prime factors, and let X_N be the associated Shimura curve over \u211a. For each divisor d|N, let w_d be the Atkin-Lehner involution on X_N, and let X_N/\u27e8w_d\u27e9 be the corresponding quotient curve. The conjecture states that the set of all such N for which there exists at least one divisor d|N such that the quotient curve X_N/\u27e8w_d\u27e9 has genus zero is exactly the finite set {6, 10, 14, 15, 21, 22, 26, 33, 34, 35, 38, 39, 46, 51, 55, 57, 58, 62, 65, 69, 74, 77, 82, 85, 86, 87, 91, 93, 94, 95, 106, 111, 115, 118, 119, 122, 123, 129, 133, 134, 141, 142, 143, 145, 146, 155, 158, 159, 161, 166, 177, 178, 183, 185, 187, 194, 201, 202, 203, 205, 206, 209, 213, 214, 215, 217, 218, 219, 221, 226, 235, 237, 247, 249, 253, 254, 259, 262, 265, 267, 274, 278, 287, 291, 295, 298, 299, 301, 302, 303, 305, 309, 314, 319, 321, 323, 326, 327, 329, 334, 335, 339, 341, 346, 355, 358, 362, 365, 371, 377, 381, 382, 386, 391, 393, 394, 395, 398, 403, 407, 411, 413, 415, 417, 422, 427, 437, 445, 446, 447, 451, 453, 454, 458, 466, 469, 471, 473, 478, 481, 482, 485, 489, 493, 497}. (This list is conjectural and based on known classifications of genus-zero Atkin-Lehner quotients of Shimura curves.)",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0338",
+    "id": "fd_0339",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02306v1",
@@ -4348,13 +4362,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0339",
+    "id": "fd_0340",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02392v1",
     "status": "available",
     "timestamp": "2026-07-05T16:59:15.702271+00:00",
     "title": "Determinant Formula for the Cyclotomic Matrix of Gauss Sums over Prime Powers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For all even n \u2265 12, the unique graph with T(n) = (n\u00b2-3n)/2 - \u2308n/2\u2309 + 2 edges that contains an edge with non-positive Lin--Lu--Yau curvature is the join of a perfect matching on n/2 vertices and a complete graph on n/2 vertices, K\u2082 plus K_{n/2}. This structure is characterized by: (1) vertex partition into two sets A and B each of size n/2, (2) A induces a perfect matching, B induces a complete graph, (3) every vertex in A is adjacent to every vertex in B, and (4) the unique edge with non-positive curvature lies within the matchings. This conjecture generalizes the uniqueness result and provides an explicit structural description.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0341",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02297v1",
+    "status": "available",
+    "timestamp": "2026-07-05T17:33:31.047466+00:00",
+    "title": "Characterization of Extremal Graphs for Positive Lin--Lu--Yau Curvature"
   },
   {
     "consumed_by_exp_id": "",
