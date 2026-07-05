@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "c0f7c830",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Sharp lower bounds for `L(x,y)` (smooth-number count)\n\nBuilt on `Catalog/Novelty/SmoothNumberLowerBound.lean`, where:\n\n- `L x y` = number of `y`-smooth integers in `(0, x]`;\n- `p",
-      "quality_score": 0.63496,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-06-28T06:27:51",
-      "title": "Sharp lower bound for L(x,y) under Hypothesis U"
-    },
-    {
       "cycle_id": "5d028d25",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Prismatic Purity for F-Crystals\n\nDerived from this cycle's findings (faithfulness is cheap; the deep input is\ncodimension-≥2 Hartogs extension; normality is exactly the dimension",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-07-05T20:41:25",
       "title": "Seymour's second neighborhood conjecture for oriented graphs"
+    },
+    {
+      "cycle_id": "1da6d023",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\nDerived from this cycle's findings on the 2-adic valuations of the coefficients of\n`T(x)^m`, where `T(x) = ∏_{k≥0}(1 - x^{2^k})` is the Thue–Morse generating\nfunction.\n\n## 1. The",
+      "quality_score": 0.5940000000000001,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-05T21:12:39",
+      "title": "Exact 2-adic valuation of coefficients of T(x)^m for m ≡ 1 mod 4"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7258007692307691
     }
   ],
-  "last_updated": "2026-07-05T20:41:25",
+  "last_updated": "2026-07-05T21:12:39",
   "open_questions": [
     {
       "context": "without cross-imports. All results have zero `sorry`s.; What *is* provable, and proved here with zero `sorry`s, is:; All results are proved with zero `sorry`s.",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "4dca8a63",
-        "quality": 0.5251532857142858,
-        "theorems": 297,
-        "title": "Triviality of Modular Form Coefficients"
-      },
-      {
         "cycle_id": "62850b85",
         "quality": 0.4446527272727273,
         "theorems": 8,
@@ -3575,6 +3569,12 @@
         "quality": 0.4398394666666667,
         "theorems": 8,
         "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
+      },
+      {
+        "cycle_id": "1da6d023",
+        "quality": 0.5940000000000001,
+        "theorems": 20,
+        "title": "Exact 2-adic valuation of coefficients of T(x)^m for m ≡ 1 mod 4"
       }
     ],
     "Novelty": [

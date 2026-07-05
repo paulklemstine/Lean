@@ -118,20 +118,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Coxeter Length Scaling"
   },
   {
-    "consumed_by_exp_id": "1480bd2c",
-    "description": "For any graph $G$, if $G$ is distance-hereditary, then $G$ is balanced if and and only if $G$ does not contain $\\overline{3K_2}$ as an induced subgraph. This formalizes the paper's result that for the class of distance-hereditary graphs, the property of being balanced is equivalent to being $\\overline{3K_2}$-free.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0019",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.00730v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T09:06:43.437769+00:00",
-    "title": "Characterization of Balanced Distance-Hereditary Graphs by the Complement of 3-Matching"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Every essentially 4\u2011edge\u2011connected near\u2011bipartite brick G, with |V(G)| \u2265 6 and G \u2260 K4, contains at least \u2308|V(G)|/2\u2309 b\u2011invariant edges (and each such edge is a forcing edge).",
     "domains": [
@@ -394,7 +380,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
   {
-    "consumed_by_exp_id": "23007999",
+    "consumed_by_exp_id": "",
     "description": "For the random recursive DAG G_n with out-degree d \u2265 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n \u2192 \u221e.",
     "domains": [
       "Computation"
@@ -403,7 +389,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
@@ -1111,7 +1097,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived p-completeness of sheared Witt vectors ensures Dieudonn\u00e9 theory extension"
   },
   {
-    "consumed_by_exp_id": "9ab455c2",
+    "consumed_by_exp_id": "",
     "description": "There exists a finite family of vector-valued convolution kernels {K_i} such that their weighted combination satisfies a ball-overbag inequality for Sidon sets, with the coefficient \u03b3_0=0.94601 achievable through optimized L\u00b2 energy distribution across kernels.",
     "domains": [
       "Computation",
@@ -1121,7 +1107,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T23:15:13.575664+00:00",
     "title": "Multi-kernel smoothing lemma for Sidon sets"
   },
@@ -1358,7 +1344,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Normality of the trianguline variety outside smooth loci for split reductive groups"
   },
   {
-    "consumed_by_exp_id": "4ce791a9",
+    "consumed_by_exp_id": "",
     "description": "For a set S = {a\u2080, b\u2080, ..., a_g, b_g} \u2282 \u2119\u00b9(K) of size 2g+2 where K is a finite extension of \u211a_p (p \u2260 2), if the associated tree T(S) constructed from equivalence classes of triples has all internal vertices of degree exactly 3 and exactly 2g+2 leaf vertices corresponding bijectively to elements of S, then S is in good position, i.e., \u0393(S) = \u27e8s\u2080, ..., s_g\u27e9 is discontinuous and equals the free product \u22c6\u1d62\u27e8s_i\u27e9.",
     "domains": [
       "Algebra",
@@ -1368,7 +1354,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T03:49:23.417787+00:00",
     "title": "Tree Structure Characterization for Good Position in Hyperelliptic Mumford Curves"
   },
@@ -2260,7 +2246,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Linear height bound for special points on non-special curves"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "abf4101d",
     "description": "Conjecture that for a squarefree integer D>1, the diagonal octonary form f = x1^2+...+x4^2+\u03b5+(x5^2+...+x8^2) over the ring of integers of K = Q(\u221aD) is universal if and only if D is of the form n^2-1 for some integer n \u2265 2, or D is of the form n^2-4 for some odd integer n \u2265 3.",
     "domains": [
       "Algebra",
@@ -2270,7 +2256,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29321v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T08:52:07.693913+00:00",
     "title": "If-and-only-if classification of real quadratic fields where Kim's octonary diagonal form is universal"
   },
@@ -2388,20 +2374,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-04T12:17:30.591918+00:00",
     "title": "Locality of supersingular representations of GL_2 over unramified extensions of Q_p"
-  },
-  {
-    "consumed_by_exp_id": "1da6d023",
-    "description": "For any odd integer m \u2261 1 (mod 4), let T(x) = \u220f_{k\u22650} (1 - x^{2^k}) be the Thue\u2013Morse generating function and write T(x)^m = \u2211_{n\u22650} t_m(n) x^n. Then for all n \u2265 0 and j \u2208 {0, \u2026, m\u22122}, \u03bd\u2082(t_m((m\u22121)n + j)) = (m\u22121) \u22c5 \u2308\u03bd\u2082(n+1)/2\u2309 \u2212 ((m\u22121)/4) \u22c5 (\u03bd\u2082(n+1) mod 2).",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0200",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.28718v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-04T12:36:31.093230+00:00",
-    "title": "Exact 2-adic valuation of coefficients of T(x)^m for m \u2261 1 mod 4"
   },
   {
     "consumed_by_exp_id": "",
@@ -3163,7 +3135,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on average \u2113\u2011Selmer rank lower bounds via Greenberg\u2013Wiles local factors"
   },
   {
-    "consumed_by_exp_id": "2e971067",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that a tournament T is cycle Mengerian (CM) if and only if it is cycle ideal (CI), i.e., for every non\u2011negative integral weight function w on its arcs the minimum weight of a feedback arc set equals the weight of a minimum\u2011weight feedback arc set in its linear programming relaxation.",
     "domains": [
       "Algebra",
@@ -3173,7 +3145,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31565v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T18:35:10.861567+00:00",
     "title": "CM tournaments are precisely the cycle\u2011ideal tournaments"
   },
@@ -4462,11 +4434,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any graph G with \u0394(G) \u2265 (1/3 + 1)|V(G)|, \u03c7'(G) = \u0394(G) if and only if G contains no \u0394(G)-overfull subgraph.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0351",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02270v1",
+    "status": "available",
+    "timestamp": "2026-07-05T21:16:11.875018+00:00",
+    "title": "Overfull Conjecture with Tightened Degree Condition"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0351",
+    "id": "fd_0352",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -4480,7 +4466,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0352",
+    "id": "fd_0353",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -4495,13 +4481,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0353",
+    "id": "fd_0354",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
     "status": "available",
     "timestamp": "2026-07-05T20:44:48.765213+00:00",
     "title": "Polynomial spectral gap lower bound for fixed genus chord swap chain"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The conjecture posits that the Schottky group W_p for X over \u211a(p) is finitely generated.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0355",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02160v1",
+    "status": "available",
+    "timestamp": "2026-07-05T21:16:37.395514+00:00",
+    "title": "Finitely Generated Schottky Group"
   },
   {
     "consumed_by_exp_id": "",
