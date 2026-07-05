@@ -4314,18 +4314,47 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every \u03b5\u2208(0,1) there exists K\u2208\u2115 such that any graph G with average degree d\u2265K contains a cycle of length at least (1-\u03b5)d.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0337",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02483v1",
+    "status": "available",
+    "timestamp": "2026-07-05T16:58:46.084141+00:00",
+    "title": "Conjecture on Cycle Length Relative to Average Degree"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let N > 1 be a squarefree integer with an even number of prime factors, and let X_N be the associated Shimura curve over \u211a. For each divisor d|N, let w_d be the Atkin-Lehner involution on X_N, and let X_N/\u27e8w_d\u27e9 be the corresponding quotient curve. The conjecture states that the set of all such N for which there exists at least one divisor d|N such that the quotient curve X_N/\u27e8w_d\u27e9 has genus zero is exactly the finite set {6, 10, 14, 15, 21, 22, 26, 33, 34, 35, 38, 39, 46, 51, 55, 57, 58, 62, 65, 69, 74, 77, 82, 85, 86, 87, 91, 93, 94, 95, 106, 111, 115, 118, 119, 122, 123, 129, 133, 134, 141, 142, 143, 145, 146, 155, 158, 159, 161, 166, 177, 178, 183, 185, 187, 194, 201, 202, 203, 205, 206, 209, 213, 214, 215, 217, 218, 219, 221, 226, 235, 237, 247, 249, 253, 254, 259, 262, 265, 267, 274, 278, 287, 291, 295, 298, 299, 301, 302, 303, 305, 309, 314, 319, 321, 323, 326, 327, 329, 334, 335, 339, 341, 346, 355, 358, 362, 365, 371, 377, 381, 382, 386, 391, 393, 394, 395, 398, 403, 407, 411, 413, 415, 417, 422, 427, 437, 445, 446, 447, 451, 453, 454, 458, 466, 469, 471, 473, 478, 481, 482, 485, 489, 493, 497}. (This list is conjectural and based on known classifications of genus-zero Atkin-Lehner quotients of Shimura curves.)",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0337",
+    "id": "fd_0338",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02306v1",
     "status": "available",
     "timestamp": "2026-07-05T16:21:31.636534+00:00",
     "title": "Classification of Genus-Zero Atkin-Lehner Quotients of Shimura Curves"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a prime power $N=p^m$ and a generator $\\chi$ of the character group $\\widehat{(\\mathbb{Z}/N\\mathbb{Z})^{\\times}}$, let $A_k(\\chi)$ be the matrix with entries $A_k(\\chi)_{i,j} = G_N(\\chi^{k(i+j)})$ for $0 \\le i, j \\le \\varphi(N)/k - 1$. The conjecture is to establish a closed-form expression for $\\det(A_k(\\chi))$ in terms of the Gauss sums $G_N(\\chi)$ and the Euler totient function $\\varphi(N)$, generalizing Carlitz's result for $N=p$ to $N=p^m$.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0339",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02392v1",
+    "status": "available",
+    "timestamp": "2026-07-05T16:59:15.702271+00:00",
+    "title": "Determinant Formula for the Cyclotomic Matrix of Gauss Sums over Prime Powers"
   },
   {
     "consumed_by_exp_id": "",

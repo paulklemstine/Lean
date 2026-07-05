@@ -7918,6 +7918,30 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "Erdős–Gallai theorem"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every ε∈(0,1) there exists K∈ℕ such that any graph G with average degree d≥K contains a cycle of length at least (1-ε)d.",
+    "domain_bridges": [
+      "extremal graph theory",
+      "probabilistic methods"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0337",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use a structural decomposition based on Pokrovskiy's hyperstability of bounded-degree trees, combined with an inductive argument on the average degree and a probabilistic refinement for the random percolation case.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02483v1",
+    "status": "available",
+    "timestamp": "2026-07-05T16:58:46.084141+00:00",
+    "title": "Conjecture on Cycle Length Relative to Average Degree"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "Giam",
       "daas1",
       "HY",
@@ -7935,7 +7959,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0337",
+    "id": "fd_0338",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the genus formula for Atkin-Lehner quotients of Shimura curves, which expresses the genus in terms of class numbers of quaternion orders, fixed point counts of the Atkin-Lehner involutions, and contributions from elliptic points. Systematically evaluate this formula for all squarefree N with an even number of prime factors, leveraging known bounds on class numbers to prove finiteness of the genus-zero cases. The computation reduces to checking a finite list of N up to a computable bound, which can be verified by computer-assisted enumeration of the genus formula.",
@@ -7944,6 +7968,34 @@
     "status": "available",
     "timestamp": "2026-07-05T16:21:31.636534+00:00",
     "title": "Classification of Genus-Zero Atkin-Lehner Quotients of Shimura Curves"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.NT",
+      "Dirichlet characters",
+      "Gauss sums",
+      "Cyclotomic matrices"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a prime power $N=p^m$ and a generator $\\chi$ of the character group $\\widehat{(\\mathbb{Z}/N\\mathbb{Z})^{\\times}}$, let $A_k(\\chi)$ be the matrix with entries $A_k(\\chi)_{i,j} = G_N(\\chi^{k(i+j)})$ for $0 \\le i, j \\le \\varphi(N)/k - 1$. The conjecture is to establish a closed-form expression for $\\det(A_k(\\chi))$ in terms of the Gauss sums $G_N(\\chi)$ and the Euler totient function $\\varphi(N)$, generalizing Carlitz's result for $N=p$ to $N=p^m$.",
+    "domain_bridges": [
+      "linear_algebra",
+      "algebraic_number_theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0339",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "1. Formalize the ring of integers modulo $N$ and the group of Dirichlet characters in Lean 4 using `mathlib`. 2. Implement the definition of Gauss sums $G_N(\\psi)$ as sums over $\\mathbb{Z}/N\\mathbb{Z}$ into $\\mathbb{C}$. 3. Use the property that the entries of $A_k(\\chi)$ are characters of a subgroup of the character group. 4. Apply a generalized version of the determinant formula for matrices whose entries are characters (related to the group determinant formula) to factorize $\\det(A_k(\\chi))$ into a product of Gauss sums. 5. Use the Hasse-Davenport lifting formula and properties of primitive characters modulo $p^m$ to simplify the product.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02392v1",
+    "status": "available",
+    "timestamp": "2026-07-05T16:59:15.702271+00:00",
+    "title": "Determinant Formula for the Cyclotomic Matrix of Gauss Sums over Prime Powers"
   },
   {
     "ambition_level": "extension",
