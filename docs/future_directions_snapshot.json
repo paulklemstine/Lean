@@ -691,7 +691,7 @@
       "Jan2023 - Recent work on descendants of n in G_n",
       "Drm2009 - Random recursive trees (d=1 case)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "23007999",
     "description": "For the random recursive DAG G_n with out-degree d ≥ 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n → ∞.",
     "domain_bridges": [
       "Multi-draw Pólya urn processes",
@@ -707,7 +707,7 @@
     "proof_strategy": "Generalize Janson's martingale-based analysis using refined Pólya urn techniques and derive explicit scaling limits through characteristic function methods",
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
@@ -1993,7 +1993,7 @@
       "Optimization Constants repository",
       "Tao's tentative 0.947 improvement"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9ab455c2",
     "description": "There exists a finite family of vector-valued convolution kernels {K_i} such that their weighted combination satisfies a ball-overbag inequality for Sidon sets, with the coefficient γ_0=0.94601 achievable through optimized L² energy distribution across kernels.",
     "domain_bridges": [
       "harmonic analysis",
@@ -2009,7 +2009,7 @@
     "proof_strategy": "Construct explicit vectors K_i in L²(ℤ/ℤ) with bounded support, prove their weighted L² norm combination controls the Sidon set density via Cauchy-Schwarz, and numerically verify the rational certificate for γ_0 using Lean 4's decision procedures.",
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T23:15:13.575664+00:00",
     "title": "Multi-kernel smoothing lemma for Sidon sets"
   },
@@ -2460,7 +2460,7 @@
       "p-adic integration",
       "Tree structures in p-adic geometry"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4ce791a9",
     "description": "For a set S = {a₀, b₀, ..., a_g, b_g} ⊂ ℙ¹(K) of size 2g+2 where K is a finite extension of ℚ_p (p ≠ 2), if the associated tree T(S) constructed from equivalence classes of triples has all internal vertices of degree exactly 3 and exactly 2g+2 leaf vertices corresponding bijectively to elements of S, then S is in good position, i.e., Γ(S) = ⟨s₀, ..., s_g⟩ is discontinuous and equals the free product ⋆ᵢ⟨s_i⟩.",
     "domain_bridges": [
       "p-adic Hodge theory",
@@ -2478,7 +2478,7 @@
     "proof_strategy": "Prove sufficiency by showing that the tree condition ensures the Schottky group Γ(S) acts properly discontinuously on Ω_Γ. Use the correspondence between tree combinatorics and fundamental domains in ℙ¹(C_p). Show that degree-3 vertices correspond to specific geometric configurations that prevent accumulation of group translates, ensuring discontinuity. The leaf count condition ensures the correct rank for the free product structure. Counterexamples would involve constructing sets S where the tree has the specified degree pattern but Γ(S) fails to be a Schottky group.",
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T03:49:23.417787+00:00",
     "title": "Tree Structure Characterization for Good Position in Hyperelliptic Mumford Curves"
   },

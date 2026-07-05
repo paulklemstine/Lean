@@ -394,7 +394,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "23007999",
     "description": "For the random recursive DAG G_n with out-degree d \u2265 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n \u2192 \u221e.",
     "domains": [
       "Computation"
@@ -403,7 +403,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
@@ -1111,7 +1111,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived p-completeness of sheared Witt vectors ensures Dieudonn\u00e9 theory extension"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9ab455c2",
     "description": "There exists a finite family of vector-valued convolution kernels {K_i} such that their weighted combination satisfies a ball-overbag inequality for Sidon sets, with the coefficient \u03b3_0=0.94601 achievable through optimized L\u00b2 energy distribution across kernels.",
     "domains": [
       "Computation",
@@ -1121,7 +1121,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T23:15:13.575664+00:00",
     "title": "Multi-kernel smoothing lemma for Sidon sets"
   },
@@ -1358,7 +1358,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Normality of the trianguline variety outside smooth loci for split reductive groups"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4ce791a9",
     "description": "For a set S = {a\u2080, b\u2080, ..., a_g, b_g} \u2282 \u2119\u00b9(K) of size 2g+2 where K is a finite extension of \u211a_p (p \u2260 2), if the associated tree T(S) constructed from equivalence classes of triples has all internal vertices of degree exactly 3 and exactly 2g+2 leaf vertices corresponding bijectively to elements of S, then S is in good position, i.e., \u0393(S) = \u27e8s\u2080, ..., s_g\u27e9 is discontinuous and equals the free product \u22c6\u1d62\u27e8s_i\u27e9.",
     "domains": [
       "Algebra",
@@ -1368,7 +1368,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T03:49:23.417787+00:00",
     "title": "Tree Structure Characterization for Good Position in Hyperelliptic Mumford Curves"
   },

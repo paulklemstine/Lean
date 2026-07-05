@@ -691,7 +691,7 @@
       "Jan2023 - Recent work on descendants of n in G_n",
       "Drm2009 - Random recursive trees (d=1 case)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "23007999",
     "description": "For the random recursive DAG G_n with out-degree d ≥ 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n → ∞.",
     "domain_bridges": [
       "Multi-draw Pólya urn processes",
@@ -707,7 +707,7 @@
     "proof_strategy": "Generalize Janson's martingale-based analysis using refined Pólya urn techniques and derive explicit scaling limits through characteristic function methods",
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
