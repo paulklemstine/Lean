@@ -666,7 +666,7 @@
       "Jan2023 - Recent work on descendants of n in G_n",
       "Drm2009 - Random recursive trees (d=1 case)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "23007999",
     "description": "For the random recursive DAG G_n with out-degree d ≥ 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n → ∞.",
     "domain_bridges": [
       "Multi-draw Pólya urn processes",
@@ -682,7 +682,7 @@
     "proof_strategy": "Generalize Janson's martingale-based analysis using refined Pólya urn techniques and derive explicit scaling limits through characteristic function methods",
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
@@ -1203,7 +1203,7 @@
       "GM2009",
       "Bro2021"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d01d52df",
     "description": "Every minimal edge-colored graph (with respect to edge deletion) that does not admit a total rainbow forest must be a single monochromatic cycle (possibly with isolated vertices).",
     "domain_bridges": [
       "matroid intersection",
@@ -1219,7 +1219,7 @@
     "proof_strategy": "Use the rank inequalities to show that any minimal obstruction must contain a monochromatic cycle; argue by edge‑deletion minimality that no other structure can exist.",
     "research_mode": "team",
     "source_exp_id": "2606.31240v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T16:14:00.036969+00:00",
     "title": "Conjecture on the Structure of Minimal Obstructions to Total Rainbow Forests"
   },
@@ -1940,7 +1940,7 @@
       "Optimization Constants repository",
       "Tao's tentative 0.947 improvement"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9ab455c2",
     "description": "There exists a finite family of vector-valued convolution kernels {K_i} such that their weighted combination satisfies a ball-overbag inequality for Sidon sets, with the coefficient γ_0=0.94601 achievable through optimized L² energy distribution across kernels.",
     "domain_bridges": [
       "harmonic analysis",
@@ -1956,7 +1956,7 @@
     "proof_strategy": "Construct explicit vectors K_i in L²(ℤ/ℤ) with bounded support, prove their weighted L² norm combination controls the Sidon set density via Cauchy-Schwarz, and numerically verify the rational certificate for γ_0 using Lean 4's decision procedures.",
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T23:15:13.575664+00:00",
     "title": "Multi-kernel smoothing lemma for Sidon sets"
   },
@@ -2407,7 +2407,7 @@
       "p-adic integration",
       "Tree structures in p-adic geometry"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4ce791a9",
     "description": "For a set S = {a₀, b₀, ..., a_g, b_g} ⊂ ℙ¹(K) of size 2g+2 where K is a finite extension of ℚ_p (p ≠ 2), if the associated tree T(S) constructed from equivalence classes of triples has all internal vertices of degree exactly 3 and exactly 2g+2 leaf vertices corresponding bijectively to elements of S, then S is in good position, i.e., Γ(S) = ⟨s₀, ..., s_g⟩ is discontinuous and equals the free product ⋆ᵢ⟨s_i⟩.",
     "domain_bridges": [
       "p-adic Hodge theory",
@@ -2425,7 +2425,7 @@
     "proof_strategy": "Prove sufficiency by showing that the tree condition ensures the Schottky group Γ(S) acts properly discontinuously on Ω_Γ. Use the correspondence between tree combinatorics and fundamental domains in ℙ¹(C_p). Show that degree-3 vertices correspond to specific geometric configurations that prevent accumulation of group translates, ensuring discontinuity. The leaf count condition ensures the correct rank for the free product structure. Counterexamples would involve constructing sets S where the tree has the specified degree pattern but Γ(S) fails to be a Schottky group.",
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T03:49:23.417787+00:00",
     "title": "Tree Structure Characterization for Good Position in Hyperelliptic Mumford Curves"
   },
@@ -4067,7 +4067,7 @@
       "Kim2000",
       "BlomerKala2018"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "abf4101d",
     "description": "Conjecture that for a squarefree integer D>1, the diagonal octonary form f = x1^2+...+x4^2+ε+(x5^2+...+x8^2) over the ring of integers of K = Q(√D) is universal if and only if D is of the form n^2-1 for some integer n ≥ 2, or D is of the form n^2-4 for some odd integer n ≥ 3.",
     "domain_bridges": [
       "Quadratic Forms",
@@ -4085,7 +4085,7 @@
     "proof_strategy": "Utilize continued-fraction expansions of the totally positive fundamental unit, study convergent denominators to bound representation of positive integers, analyze the Blomer--Kala invariant M_D, and apply a three-consecutive-square-values lemma for primitive quadratic polynomials of positive discriminant.",
     "research_mode": "team",
     "source_exp_id": "2606.29321v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T08:52:07.693913+00:00",
     "title": "If-and-only-if classification of real quadratic fields where Kim's octonary diagonal form is universal"
   },
@@ -5673,7 +5673,7 @@
       "Seymour 1995",
       "Even et al. 1995"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2e971067",
     "description": "Conjecture that a tournament T is cycle Mengerian (CM) if and only if it is cycle ideal (CI), i.e., for every non‑negative integral weight function w on its arcs the minimum weight of a feedback arc set equals the weight of a minimum‑weight feedback arc set in its linear programming relaxation.",
     "domain_bridges": [
       "LP duality",
@@ -5691,7 +5691,7 @@
     "proof_strategy": "Prove both directions: (1) Show that any CM tournament satisfies CI by using the equality ν_w^* = ν_w and the known relation between τ_w^* and ν_w^*; (2) Show that any CI tournament satisfies CM by constructing appropriate weight functions that force ν_w^* = ν_w, leveraging the structural characterization of CM tournaments.",
     "research_mode": "team",
     "source_exp_id": "2606.31565v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T18:35:10.861567+00:00",
     "title": "CM tournaments are precisely the cycle‑ideal tournaments"
   },
@@ -7290,7 +7290,7 @@
       "Yuzvinsky",
       "DimcaSticlaruPascal"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f8ce2785",
     "description": "If a reduced plane curve (or line arrangement) of degree d has minimal Jacobian relation degree mdr(f) strictly less than d/2, then mdr(f) is uniquely determined by the combinatorial data of its intersection lattice (the multiplicities n_k).",
     "domain_bridges": [
       "Intersection lattices",
@@ -7308,7 +7308,7 @@
     "proof_strategy": "Develop a computable combinatorial invariant derived from the intersection lattice that predicts mdr(f); prove the equivalence when mdr(f) < d/2 by analyzing graded Betti numbers and Jacobian syzygies; provide explicit counterexamples to test falsifiability.",
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T04:44:21.963122+00:00",
     "title": "Combinatorial Determinism of Minimal Jacobian Relation Degree for Plane Curve Arrangements"
   },
