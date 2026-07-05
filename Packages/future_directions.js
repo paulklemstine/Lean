@@ -380,7 +380,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "23007999",
     "description": "For the random recursive DAG G_n with out-degree d \u2265 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n \u2192 \u221e.",
     "domains": [
       "Computation"
@@ -389,7 +389,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
@@ -689,7 +689,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tokushige's r-wise intersecting conjecture for non\u2011uniform product measures"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d01d52df",
     "description": "Every minimal edge-colored graph (with respect to edge deletion) that does not admit a total rainbow forest must be a single monochromatic cycle (possibly with isolated vertices).",
     "domains": [
       "Pythagorean"
@@ -698,7 +698,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31240v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T16:14:00.036969+00:00",
     "title": "Conjecture on the Structure of Minimal Obstructions to Total Rainbow Forests"
   },
@@ -1083,7 +1083,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived p-completeness of sheared Witt vectors ensures Dieudonn\u00e9 theory extension"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9ab455c2",
     "description": "There exists a finite family of vector-valued convolution kernels {K_i} such that their weighted combination satisfies a ball-overbag inequality for Sidon sets, with the coefficient \u03b3_0=0.94601 achievable through optimized L\u00b2 energy distribution across kernels.",
     "domains": [
       "Computation",
@@ -1093,7 +1093,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T23:15:13.575664+00:00",
     "title": "Multi-kernel smoothing lemma for Sidon sets"
   },
@@ -1330,7 +1330,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Normality of the trianguline variety outside smooth loci for split reductive groups"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4ce791a9",
     "description": "For a set S = {a\u2080, b\u2080, ..., a_g, b_g} \u2282 \u2119\u00b9(K) of size 2g+2 where K is a finite extension of \u211a_p (p \u2260 2), if the associated tree T(S) constructed from equivalence classes of triples has all internal vertices of degree exactly 3 and exactly 2g+2 leaf vertices corresponding bijectively to elements of S, then S is in good position, i.e., \u0393(S) = \u27e8s\u2080, ..., s_g\u27e9 is discontinuous and equals the free product \u22c6\u1d62\u27e8s_i\u27e9.",
     "domains": [
       "Algebra",
@@ -1340,7 +1340,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T03:49:23.417787+00:00",
     "title": "Tree Structure Characterization for Good Position in Hyperelliptic Mumford Curves"
   },
@@ -2232,7 +2232,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Linear height bound for special points on non-special curves"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "abf4101d",
     "description": "Conjecture that for a squarefree integer D>1, the diagonal octonary form f = x1^2+...+x4^2+\u03b5+(x5^2+...+x8^2) over the ring of integers of K = Q(\u221aD) is universal if and only if D is of the form n^2-1 for some integer n \u2265 2, or D is of the form n^2-4 for some odd integer n \u2265 3.",
     "domains": [
       "Algebra",
@@ -2242,7 +2242,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29321v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T08:52:07.693913+00:00",
     "title": "If-and-only-if classification of real quadratic fields where Kim's octonary diagonal form is universal"
   },
@@ -3106,7 +3106,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on average \u2113\u2011Selmer rank lower bounds via Greenberg\u2013Wiles local factors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2e971067",
     "description": "Conjecture that a tournament T is cycle Mengerian (CM) if and only if it is cycle ideal (CI), i.e., for every non\u2011negative integral weight function w on its arcs the minimum weight of a feedback arc set equals the weight of a minimum\u2011weight feedback arc set in its linear programming relaxation.",
     "domains": [
       "Algebra",
@@ -3116,7 +3116,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31565v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T18:35:10.861567+00:00",
     "title": "CM tournaments are precisely the cycle\u2011ideal tournaments"
   },
@@ -3978,7 +3978,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equivariant Kida formula for spectral resultants of Grover walks on p-group graph covers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f8ce2785",
     "description": "If a reduced plane curve (or line arrangement) of degree d has minimal Jacobian relation degree mdr(f) strictly less than d/2, then mdr(f) is uniquely determined by the combinatorial data of its intersection lattice (the multiplicities n_k).",
     "domains": [
       "Algebra",
@@ -3988,7 +3988,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T04:44:21.963122+00:00",
     "title": "Combinatorial Determinism of Minimal Jacobian Relation Degree for Plane Curve Arrangements"
   },
