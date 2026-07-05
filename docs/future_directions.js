@@ -803,7 +803,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Precise threshold for vertex\u2011Ramsey property in random perturbations"
   },
   {
-    "consumed_by_exp_id": "776d5107",
+    "consumed_by_exp_id": "",
     "description": "There exists a constant K>0 such that for all sufficiently large n, \u03c7_S(n,\u230an/2\u230b,P_4) \u2264 K\u00b7n^{1/2}.",
     "domains": [
       "Pythagorean"
@@ -812,7 +812,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T18:12:21.463153+00:00",
     "title": "Conjecture on the asymptotic growth of \u03c7_S(n,\u230an/2\u230b,P_4)"
   },
@@ -1301,7 +1301,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing the generalized honeymoon Oberwolfach problem in Lean 4"
   },
   {
-    "consumed_by_exp_id": "eb98199f",
+    "consumed_by_exp_id": "",
     "description": "For all m \u2265 1, the refined generating function for intervals in the greedy m-Tamari poset, tracking both the number of elements and the number of leaves (peaks in the corresponding Dyck paths), is equal to the refined generating function for planar (m+1)-constellations tracking the same statistics. This extends the combinatorial proof for m=1 to all m \u2265 1.",
     "domains": [
       "Algebra",
@@ -1311,7 +1311,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01206v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:55:26.518816+00:00",
     "title": "Refined Bijective Enumeration of Greedy Tamari Intervals and Planar (m+1)-Constellations"
   },
@@ -2476,7 +2476,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact 2-adic valuation of coefficients of T(x)^m for m \u2261 1 mod 4"
   },
   {
-    "consumed_by_exp_id": "a41914fd",
+    "consumed_by_exp_id": "",
     "description": "This paper proposes a combinatorial framework to describe the discrete homotopy groups of quasisymmetric cubical sets, extending prior work by Carranza and Kapulkin. It aims to provide a formally verified, leveraging Lean 4, synthetic proof of isomorphism between the homotopy groups of the geometric realization and those of the underlying cubical configuration.",
     "domains": [
       "Algebra",
@@ -2486,7 +2486,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28693v2",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T13:25:20.641906+00:00",
     "title": "Discrete homotopy groups of quasisymmetric cubical sets"
   },
@@ -3470,7 +3470,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Uniqueness failure for signless Laplacian extremal graphs at n=9 for (2K_4)-free graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6db20969",
     "description": "For any integers n \u2265 1 and r \u2265 1, the set of \\(\\binom{n+r}{r}\\) basic r\u2011symmetric tropical polynomials of degree \u2264 n in the variables \\(\\{x_{i,j}\\}_{1\\le i\\le n,1\\le j\\le r}\\) is algebraically independent over the tropical semiring (max\u2011plus). Equivalently, any non\u2011trivial tropical polynomial relation among them must be the tropical zero (the identically \\(-\\infty\\) function). This strengthens the separation result of the paper by asserting that the invariants not only separate orbits but generate a free tropical algebra.",
     "domains": [
       "Algebra",
@@ -3480,7 +3480,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30184v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T01:45:28.530447+00:00",
     "title": "Algebraic Independence of Basic r\u2011Symmetric Tropical Polynomials"
   },
@@ -3891,7 +3891,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Generalized Binomial Formula for d-Balanced e-Regular Partitions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "23fc7cbb",
     "description": "The 2-adic valuation of the shifted Perrin sequence {R_m - 1} admits an explicit piecewise formula for all m \u2265 0, analogous to Theorem TV1 for the Padovan sequence. Specifically, there exists a finite set of congruence conditions modulo powers of 2 and 7 such that \u03bd\u2082(R_m - 1) is determined by linear expressions in \u03bd\u2082(m + c) for certain constants c, leading to a complete classification of all possible valuations. This formula would enable the same type of factorial-growth bounding techniques used in the paper to be applied to the Perrin-Brocard equation.",
     "domains": [
       "Bridges"
@@ -3900,7 +3900,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28577v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T16:20:21.592155+00:00",
     "title": "Explicit Formula for 2-adic Valuation of Shifted Perrin Numbers"
   },
@@ -4210,12 +4210,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "If a reduced plane curve (or line arrangement) of degree d has minimal Jacobian relation degree mdr(f) strictly less than d/2, then mdr(f) is uniquely determined by the combinatorial data of its intersection lattice (the multiplicities n_k).",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0322",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01985v1",
+    "status": "available",
+    "timestamp": "2026-07-05T04:44:21.963122+00:00",
+    "title": "Combinatorial Determinism of Minimal Jacobian Relation Degree for Plane Curve Arrangements"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any squarefree integer N > 1 with an even number of distinct prime factors, the genus of the Atkin\u2013Lehner quotient X_N / \u27e8w_p\u27e9 is zero if and only if N belongs to the finite set {6, 10, 22}.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0322",
+    "id": "fd_0323",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02306v1",
@@ -4230,7 +4245,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0323",
+    "id": "fd_0324",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02419v1",
@@ -4245,7 +4260,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0324",
+    "id": "fd_0325",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02392v1",
@@ -4259,7 +4274,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0325",
+    "id": "fd_0326",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
@@ -4274,7 +4289,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0326",
+    "id": "fd_0327",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02215v1",
@@ -4289,7 +4304,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0327",
+    "id": "fd_0328",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -4304,7 +4319,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0328",
+    "id": "fd_0329",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02226v1",
@@ -4319,7 +4334,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0329",
+    "id": "fd_0330",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02165v1",
@@ -4333,7 +4348,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0330",
+    "id": "fd_0331",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02231v1",
@@ -4348,7 +4363,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0331",
+    "id": "fd_0332",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02035v1",
@@ -4363,7 +4378,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0332",
+    "id": "fd_0333",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01979v1",

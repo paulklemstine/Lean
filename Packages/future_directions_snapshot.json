@@ -1409,7 +1409,7 @@
     "catalog_references": [
       "BurrErdosGrahamSos1989"
     ],
-    "consumed_by_exp_id": "776d5107",
+    "consumed_by_exp_id": "",
     "description": "There exists a constant K>0 such that for all sufficiently large n, χ_S(n,⌊n/2⌋,P_4) ≤ K·n^{1/2}.",
     "domain_bridges": [
       "ramsey_theory",
@@ -1424,7 +1424,7 @@
     "proof_strategy": "density_increment_lemma",
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T18:12:21.463153+00:00",
     "title": "Conjecture on the asymptotic growth of χ_S(n,⌊n/2⌋,P_4)"
   },
@@ -2348,7 +2348,7 @@
       "Bousquet-Mélou and Chapoton's functional equation for greedy Tamari intervals (2024)",
       "Dermenjian's definition of greedy ν-Tamari posets (2023)"
     ],
-    "consumed_by_exp_id": "eb98199f",
+    "consumed_by_exp_id": "",
     "description": "For all m ≥ 1, the refined generating function for intervals in the greedy m-Tamari poset, tracking both the number of elements and the number of leaves (peaks in the corresponding Dyck paths), is equal to the refined generating function for planar (m+1)-constellations tracking the same statistics. This extends the combinatorial proof for m=1 to all m ≥ 1.",
     "domain_bridges": [
       "Bijections between Dyck paths and plane trees",
@@ -2366,7 +2366,7 @@
     "proof_strategy": "Formalize the bijection between greedy Tamari intervals and planar (m+1)-constellations as a type equivalence in Lean, then prove that the pullback of the leaf statistic on constellations equals the peak statistic on Dyck paths. Use structural induction on the recursive decomposition, leveraging the established isomorphism between the combinatorial structures.",
     "research_mode": "team",
     "source_exp_id": "2607.01206v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:55:26.518816+00:00",
     "title": "Refined Bijective Enumeration of Greedy Tamari Intervals and Planar (m+1)-Constellations"
   },
@@ -4516,7 +4516,7 @@
       "Babson et al. (2013), Atkins & Gwilliam",
       "Carranza & Kapulkin (2008)"
     ],
-    "consumed_by_exp_id": "a41914fd",
+    "consumed_by_exp_id": "",
     "description": "This paper proposes a combinatorial framework to describe the discrete homotopy groups of quasisymmetric cubical sets, extending prior work by Carranza and Kapulkin. It aims to provide a formally verified, leveraging Lean 4, synthetic proof of isomorphism between the homotopy groups of the geometric realization and those of the underlying cubical configuration.",
     "domain_bridges": [
       "Combinatorial mathematics",
@@ -4532,7 +4532,7 @@
     "proof_strategy": "Combinatorial construction followed by inductive argument and verifiable lemmas",
     "research_mode": "team",
     "source_exp_id": "2606.28693v2",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T13:25:20.641906+00:00",
     "title": "Discrete homotopy groups of quasisymmetric cubical sets"
   },
@@ -6346,7 +6346,7 @@
       "Derksen–Kemper, \"Computational Invariant Theory\"",
       "Matsui, \"Ultradiscretized Weyl's basic invariants\""
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6db20969",
     "description": "For any integers n ≥ 1 and r ≥ 1, the set of \\(\\binom{n+r}{r}\\) basic r‑symmetric tropical polynomials of degree ≤ n in the variables \\(\\{x_{i,j}\\}_{1\\le i\\le n,1\\le j\\le r}\\) is algebraically independent over the tropical semiring (max‑plus). Equivalently, any non‑trivial tropical polynomial relation among them must be the tropical zero (the identically \\(-\\infty\\) function). This strengthens the separation result of the paper by asserting that the invariants not only separate orbits but generate a free tropical algebra.",
     "domain_bridges": [
       "Algebraic Geometry",
@@ -6363,7 +6363,7 @@
     "proof_strategy": "Show that the valuation map from the usual polynomial ring \\(\\mathbb{R}[x_{i,j}]\\) to the tropical semiring sends the classical elementary symmetric polynomials in the multivariate monomials to the basic r‑symmetric tropical polynomials. Use the known algebraic independence of the classical elementary symmetric polynomials to deduce independence after tropicalization via the fact that tropicalization preserves relations only up to the max‑plus linear span. Alternatively, construct a matrix of tropical Jacobian (the tropical analogue of the Jacobian determinant) and prove that it is non‑degenerate at a generic point, implying no non‑trivial tropical polynomial vanishes identically on the image. The argument can be formalised by: (1) defining the basic r‑symmetric tropical polynomials in Lean (using max and +); (2) proving that any tropical polynomial relation would give a classical polynomial relation after lifting via a generic perturbation; (3) invoking the classical algebraic indepen",
     "research_mode": "team",
     "source_exp_id": "2606.30184v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T01:45:28.530447+00:00",
     "title": "Algebraic Independence of Basic r‑Symmetric Tropical Polynomials"
   },
@@ -7125,7 +7125,7 @@
       "11B39",
       "11D88"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "23fc7cbb",
     "description": "The 2-adic valuation of the shifted Perrin sequence {R_m - 1} admits an explicit piecewise formula for all m ≥ 0, analogous to Theorem TV1 for the Padovan sequence. Specifically, there exists a finite set of congruence conditions modulo powers of 2 and 7 such that ν₂(R_m - 1) is determined by linear expressions in ν₂(m + c) for certain constants c, leading to a complete classification of all possible valuations. This formula would enable the same type of factorial-growth bounding techniques used in the paper to be applied to the Perrin-Brocard equation.",
     "domain_bridges": [
       "p-adic valuation theory",
@@ -7141,7 +7141,7 @@
     "proof_strategy": "Adapt the methods of Batte et al. and Bravo-Irmak to the Perrin recurrence by analyzing the factorization of the companion polynomial X³ - X - 1 modulo 2 and its Newton polygon behavior. The conjecture can be formalized in Lean by stating the explicit piecewise formula for ν₂(R_m - 1) and verifying it through p-adic computation and congruence analysis. A counterexample would consist of finding an m where the formula predicts one valuation but direct computation yields another.",
     "research_mode": "team",
     "source_exp_id": "2606.28577v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T16:20:21.592155+00:00",
     "title": "Explicit Formula for 2-adic Valuation of Shifted Perrin Numbers"
   },
@@ -7717,6 +7717,38 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "DimcaOpen (Conjecture 3.5)",
+      "ADP (homological type)",
+      "AbePOG (plus-one generated)",
+      "Ziegler",
+      "Yuzvinsky",
+      "DimcaSticlaruPascal"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "If a reduced plane curve (or line arrangement) of degree d has minimal Jacobian relation degree mdr(f) strictly less than d/2, then mdr(f) is uniquely determined by the combinatorial data of its intersection lattice (the multiplicities n_k).",
+    "domain_bridges": [
+      "Intersection lattices",
+      "Combinatorial invariants of singularities",
+      "Milnor algebras",
+      "Graded modules"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0322",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Develop a computable combinatorial invariant derived from the intersection lattice that predicts mdr(f); prove the equivalence when mdr(f) < d/2 by analyzing graded Betti numbers and Jacobian syzygies; provide explicit counterexamples to test falsifiability.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01985v1",
+    "status": "available",
+    "timestamp": "2026-07-05T04:44:21.963122+00:00",
+    "title": "Combinatorial Determinism of Minimal Jacobian Relation Degree for Plane Curve Arrangements"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "Ogg1983",
       "CerednikDrinfeld1990",
       "Daas2023"
@@ -7732,7 +7764,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0322",
+    "id": "fd_0323",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the Riemann–Hurwitz formula to the involution w_p on the Shimura curve X_N, compute the exact number of fixed points, and show that the resulting genus vanishes precisely for N = 6, 10, 22; this can be formalized in Lean by constructing the quotient curve and verifying the genus formula.",
@@ -7757,7 +7789,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0323",
+    "id": "fd_0324",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Translate the five equivalent descriptions of strong Δ-matroids from Theorem A of the paper into Lean definitions. 2. Formalise the notion of a peerless antipode directly from the text. 3. Show that the 'peerless antipode equations' (the tropical equations arising from the orthogonal Grassmannian) are equivalent to the absence of peerless antipodes by adapting the algebraic motivation given in the paper. 4. Use the already established equivalence between strong Δ-matroids and the hyperplane/Wenzel exchange properties to close the loop, yielding the desired iff statement.",
@@ -7780,7 +7812,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0324",
+    "id": "fd_0325",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a formal model in Lean 4 to verify convergence properties of the associated Gauss sum sequences.",
@@ -7805,7 +7837,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0325",
+    "id": "fd_0326",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "classify all graphs with exactly T(n) edges, show that only the split graph achieves non-positive curvature, and verify curvature values using Ollivier's formula",
@@ -7832,7 +7864,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0326",
+    "id": "fd_0327",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Develop a Lean library for split connected reductive groups, Tannakian formalism, trianguline modules, and the trianguline variety T_G. Define the regularity condition on triangulation parameters and the crystallinity property for (phi, Gamma_K)-modules with G-structure. Then construct the equivalence by adapting the arguments from the paper, verifying each step using Lean's algebraic geometry and category theory tools. This will require proving lemmas about smoothness, normality, and base change properties of T_G.",
@@ -7859,7 +7891,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0327",
+    "id": "fd_0328",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on the size of S combined with combinatorial analysis of the equivalence relation; check connectivity and absence of cycles; search for counterexamples computationally.",
@@ -7888,7 +7920,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0328",
+    "id": "fd_0329",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Reduce to finite constraint satisfaction; exploit weight-preserving bijections between symmetric colorings and one-dimensional Gallai colorings; verify via exhaustive search for small parameters.",
@@ -7921,7 +7953,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0329",
+    "id": "fd_0330",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof strategy involves three main components: (1) Use the minimal model program to show that a fibration f: X → C with general type generic fiber admits a canonical fibration structure after removing negligible subvarieties; (2) Apply the framework of Vojta's dictionary to construct entire curves on complex conjugates of fibers from rational points of large height; (3) Combine the Xie--Yuan--Gao theorem on varieties admitting finite morphisms to abelian varieties with equidistribution results to show that such constructed entire curves must be contained in proper subvarieties, forcing the rational points to lie in the special loci. Technical tools include potential theory, height machinery, and the arithmetic Simpson correspondence between heights and curvature.",
@@ -7946,7 +7978,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0330",
+    "id": "fd_0331",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive separation with two clear obstruction layers",
@@ -7974,7 +8006,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0331",
+    "id": "fd_0332",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the local characterization theorem to show any automorphism induces a structure-preserving bijection on the underlying quadratic space, then prove this correspondence respects the quadratic form up to scalar multiplication, and finally apply fundamental theorem of projective geometry to conclude the automorphism group is exactly PΓO(V,Q).",
@@ -8007,7 +8039,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0332",
+    "id": "fd_0333",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a directed finite graph analogy and analyze degree sequences to isolate falsifiable conditions.",
