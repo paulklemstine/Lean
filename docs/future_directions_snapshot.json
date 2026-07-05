@@ -8018,6 +8018,61 @@
     "title": "AVD Total Coloring of Central Graphs, Subdivision Graphs, and the Join of Graphs"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Aharoni, S., & Korman, D. (1992). On Ramsey theory for posets.",
+      "Grand, R. H.-J. (1984). Ramsey theory for posets.",
+      "Nešetřil, R., & Ossona de Mendez, P. (2012). Structural set theory."
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For countable FAC posets with no saturated chain $D$ such that $D$ or $D^*$ is isomorphic to $\\bigoplus_{x\\in\\omega} D_x$ with each $D_x$ infinite and co-wellfounded, there exists a chain $C$ partitioning $P$ such that $C$ meets every antichain in the partition.",
+    "domain_bridges": [
+      "chain completion theory",
+      "scattered poset decomposition",
+      "Ramsey theory for posets"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0333",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Utilize scattered poset decomposition to iteratively construct a dominating chain $C$ and partition the poset into antichains intersecting $C$, leveraging structural properties of FAC posets to bypass counterexample constructions.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02500v1",
+    "status": "available",
+    "timestamp": "2026-07-05T04:44:40.497362+00:00",
+    "title": "FAC posets without saturated chains of countable co-wellfounded summands satisfy the Aharoni--Korman conjecture"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "StoneTukey1942",
+      "Rado46:TheoremGeneralMeasure"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "This paper proposes exact semialgebraic algorithms for the ham-sandwich and centerpoint theorems in the context of polytopal measures, translating geometric partition problems into feasibility problems with constructive solutions.",
+    "domain_bridges": [
+      "Computational Geometry",
+      "Order Theory",
+      "Algorithmic Combinatorics"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0333",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "formulate as feasibility problems and apply semialgebraic methodology",
+    "research_mode": "team",
+    "source_exp_id": "2607.02400v1",
+    "status": "available",
+    "timestamp": "2026-07-05T04:44:49.279692+00:00",
+    "title": "From Ham-Sandwich to Centerpoints: Semialgebraic Algorithms for Cutting Polytopal Measures"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "93bf3c15",
