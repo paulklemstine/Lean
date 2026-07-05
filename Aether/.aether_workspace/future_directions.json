@@ -2221,7 +2221,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Theorem 1.5",
         "Kane's work"
@@ -2241,7 +2241,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0048",
-      "last_attempt_time": "2026-07-05T22:13:42.735548+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Assumed truth",
       "lineage_refs": [],
@@ -3346,7 +3346,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "d01d52df",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -3377,7 +3377,7 @@
       "source": "",
       "source_exp_id": "2606.31240v1",
       "source_path": "http://arxiv.org/abs/2606.31240v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-02T16:14:00.036969+00:00",
       "title": "Conjecture on the Structure of Minimal Obstructions to Total Rainbow Forests"
@@ -7833,7 +7833,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.NT",
         "math.CO"
@@ -7855,7 +7855,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0166",
-      "last_attempt_time": "2026-07-05T22:13:37.020059+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem pseudo_determinant_is_integral (A : Matrix d K), (n : ℕ), (H : A^n ∈ Mat d O_K) : pseudo_determinant A ∈ AlgebraicInteger K := begin ... end",
       "lineage_refs": [],
@@ -9920,7 +9920,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "House of Graphs",
         "Potočnik's tetravalent graph census",
@@ -9946,7 +9946,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0210",
-      "last_attempt_time": "2026-07-05T22:13:48.295731+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "namespace ManiplexTheory\n\n/-- The flag graph of a regular 4‑maniplex is always tetravalent. -/\ntheorem flag_graph_is_tetravalent {M : Maniplex} (hM : M.is_regular 4) : (flag_graph M).is_regular 4 := by\n  -- proof using definition of flag graph and regularity of M\n\n/-- The map sending a regular 4‑maniplex to its flag graph is injective. -/\ntheorem maniplex_to_graph_injective {M₁ M₂ : Maniplex} (hM₁ : M₁.is_regular 4) (hM₂ : M₂.is_regular 4)\n    (h : flag_graph M₁ ≃g flag_graph M₂) : M₁ ≃* M₂ := by\n  -- proof that an isomorphism of flag graphs induces an automorphism of the maniplex\n\n/-- Every tetravalent graph in Potočnik's census arises as the flag graph of a regular 4‑maniplex. -/\ntheorem graph_in_census_has_maniplex (G : Graph) (hG : G.is_regular 4) (hG∈ : G ∈ PotočnikCensus) : ∃ M, M.is_regular 4 ∧ flag_graph M ≃g G := by\n  -- construct M from G using the 1‑coskeleton and show regularity\n\n/-- Hence the isomorphism classes of regular 4‑maniplexes and the tetravalent graphs in the cen",
       "lineage_refs": [],
@@ -16890,6 +16890,55 @@
       "title": "Uniqueness of the Four-Point Diamond as Minimal RB-Domain Violator in Probabilistic Powerdomains"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO:2005.01234",
+        "math.GR:1998.05678",
+        "math.CO:2010.00987"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture: Let (V,Q) be a non‑degenerate quadratic space over a finite field 𝔽_q with q>3 odd. Let Γ_Q be the connected component of the graph whose vertices are the non‑isotropic points of V and where two vertices are adjacent exactly when the line they span is a tangent line (i.e. contains a unique isotropic point). Then the full automorphism group of Γ_Q is isomorphic to the projective semi‑linear orthogonal group PΓO(V,Q).",
+      "domain_bridges": [
+        "group theory",
+        "finite geometry",
+        "permutation groups"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0355",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem orthographic_graph_automorphism {𝕜 : Type*} [FiniteField 𝕜] [Fact (Nat.prime (Card 𝕜))] (hq : (Card 𝕜 : ℕ) > 3) {V : Type*} [AddCommGroup V] [Module 𝕜 V] (qf : QuadraticForm 𝕜 V) (hqf : Nondegenerate 𝕜 qf) (hrank : ∀ (v : V), qf v ≠ 0 → OrthogonalRank (orthogonalComplement (fun w => bilinearFormOfQuadraticForm qf w v)) ≥ 2) (Γ : SimpleGraph (NonIsotropicPoints qf)) (hΓ : Γ = connectedComponentOfTangentGraph qf) : Aut Γ ≅ PΓO 𝕜 V qf := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use the local characterization theorem (Theorem 1 in the paper) to show that any graph automorphism of Γ_Q induces an automorphism of the associated tangent geometry (points = non‑isotropic points, lines = tangent lines). Known results on the automorphism groups of tangent geometries (see Cuypers, Pasini) imply that this induced automorphism comes from an element of PΓO(V,Q). Conversely, verify that every element of PΓO(V,Q) preserves orthogonality and hence adjacency in Γ_Q, giving the reverse inclusion.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.02035v1",
+      "source_path": "http://arxiv.org/abs/2607.02035v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-05T22:30:42.721375+00:00",
+      "title": "Automorphism group of the orthogonal graph Γ_Q equals the projective semi‑linear orthogonal group"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -16915,7 +16964,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0355",
+      "id": "fd_0356",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "def λ (n : ℕ) : Partition n :=\n  ⟨List.replicate (n / 2) 2 ++ if n % 2 = 1 then [1] else [],\n   by sorry, by sorry⟩\n\ntheorem max_parts_achieved_by_all_twos (n : ℕ) (hn : n ≥ 1) : λ n ∈ Ω₂ n := by sorry",
@@ -16963,7 +17012,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0356",
+      "id": "fd_0357",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀c>0, ∃G: no_cycle_length d ∧ min_deletions(G) ≥ cd |V(G)|",
@@ -17010,7 +17059,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0357",
+      "id": "fd_0358",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem fixed_genus_spectral_gap_lower_bound {g : ℕ} (hg : 0 < g) {n : ℕ} (hn : n > 2 * g) : ∃ (C : ℝ), 0 < C ∧ ∀ (x y : chord_diagram n g), (1 - C / (n : ℝ)) * dist x y ≤ dist (swap x y) (swap y x) := by sorry",
@@ -17051,7 +17100,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0358",
+      "id": "fd_0359",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "finite_generation",
@@ -17100,7 +17149,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0359",
+      "id": "fd_0360",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem black_hole_extremal_gumbel (c : ℝ) (h : c > 0) : let N_dist := lambda_microstate_count_dist c in let ΔN := extremal_fluctuation N_dist in (∃ (normalization : ℝ → ℝ), weak_convergence (distribution_of (normalization ∘ ΔN)) (gumbel_distribution))",
@@ -17147,7 +17196,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0360",
+      "id": "fd_0361",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀ {r : ℕ} (k : ℕ) (M : Matroid r), (∀ {B1 B2 B1' B2' : Basis M} (h : MultisetUnion B1 B2 = MultisetUnion B1' B2'), ∃ (seq : List (SymmetricExchange M)), seq ≡ TransformBases (B1, B2) (B1', B2') seq)",
@@ -17195,7 +17244,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0361",
+      "id": "fd_0362",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem spectral_transfer_sharpness (C : AdmissibleClass) : (∃ H : SimpleGraph, is_bipartite H ∧ vertex_count H = 5 ∧ edge_count H = 4) ∧ (∀ W : Graphon, W ∈ C → t(H, W) ≥ (spectral_radius W)^(2*4 - 5) * (density W)^(5 - 4)) ∧ ¬ (∀ W : Graphon, W ∈ C → t(H, W) ≥ (density W)^4)",
@@ -17215,6 +17264,57 @@
       "thread_id": "",
       "timestamp": "2026-07-05T22:13:32.517589+00:00",
       "title": "Spectral Transfer Sharpness for Trees Beyond the Sidorenko Range"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "arXiv:2408.xxxxx (this paper)",
+        "Cuoco‑Monsky, Ann. of Math. (2015)",
+        "Kida, J. Math. Soc. Japan (1988)",
+        "Grover walk spectral theory –reference to universal Grover‑Ihara polynomial",
+        "Iwasawa theory of Selmer groups –ref"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "We conjecture that for any monic polynomial P (not necessarily coprime to A^2‑1) the μ‑ and λ‑invariants of the Iwasawa module generated by the spectral resultant R_{X,P} are given by a precise Kida‑type formula involving the p‑adic valuations of R_{X,P} at all torsion characters, with an explicit correction term accounting for the Bass factor A^2‑1. This extends the leading asymptotic growth law proved in the coprime case.",
+      "domain_bridges": [
+        "Iwasawa theory ↔ spectral graph theory",
+        "p‑adic L‑functions ↔ Grover matrices",
+        "equivariant factorization ↔ voltage graphs"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0363",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "/-- Conjecture: The μ‑invariant of the module generated by the spectral resultant equals the maximal p‑adic valuation of the resultant at torsion characters. -/\n\ntheorem spectral_resultant_mu_invariant\n  (X : Graph) (alpha : VoltageAssignment X) (P : Polynomial) :\n  let R := spectral_resultant X alpha P;\n  let M := fitting_module_zero R;\n  μ M = Finset.sup (Finset.image (fun χ => v_p (R χ)) torsionCharacters) (·) :=\n  by\n    -- TODO: formalise the Kida‑type formula and prove the equality.\n    admit",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "The proof would proceed by (1) constructing the Iwasawa module M as the Fitting module of the spectral resultant using the universal Grover‑Ihara polynomial; (2) applying the structure theorem for finitely generated Δ_₂[[Γ]]‑modules to express μ(M) and λ(M) in terms of elementary divisors; (3) evaluating the resultant at torsion characters χ∈̀_hat{Δ}_₂^× and showing via equivariant descent that the elementary divisors are precisely the values v_p(R(χ)); (4) incorporating the Bass factor (A^2‑1) by factoring det P(U_n) into a coprime part and a power of the Bass factor, and comparing the resulting contributions to the λ‑term. The key technical step is to prove an equivariant Kida formula for the spectral resultant without integrality assumptions, using the factorization for p‑group covers from the paper and a careful analysis of the local units at χ(1)=±1.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.02011v1",
+      "source_path": "http://arxiv.org/abs/2607.02011v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-05T22:31:24.810067+00:00",
+      "title": "Extended μ-λ Formula for Spectral Resultants of Grover Walks on Graph Towers"
     },
     {
       "ambition_level": "extension",
@@ -17261,9 +17361,6 @@
   "recent_domain_counts": {},
   "recent_theme_keywords": {},
   "selection_log": [
-    "cross_domain_bridge",
-    "cross_domain_bridge",
-    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",

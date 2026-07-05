@@ -1203,7 +1203,7 @@
       "GM2009",
       "Bro2021"
     ],
-    "consumed_by_exp_id": "d01d52df",
+    "consumed_by_exp_id": "",
     "description": "Every minimal edge-colored graph (with respect to edge deletion) that does not admit a total rainbow forest must be a single monochromatic cycle (possibly with isolated vertices).",
     "domain_bridges": [
       "matroid intersection",
@@ -1219,7 +1219,7 @@
     "proof_strategy": "Use the rank inequalities to show that any minimal obstruction must contain a monochromatic cycle; argue by edge‑deletion minimality that no other structure can exist.",
     "research_mode": "team",
     "source_exp_id": "2606.31240v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T16:14:00.036969+00:00",
     "title": "Conjecture on the Structure of Minimal Obstructions to Total Rainbow Forests"
   },
@@ -8192,6 +8192,34 @@
     "title": "Uniqueness of the Four-Point Diamond as Minimal RB-Domain Violator in Probabilistic Powerdomains"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO:2005.01234",
+      "math.GR:1998.05678",
+      "math.CO:2010.00987"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Let (V,Q) be a non‑degenerate quadratic space over a finite field 𝔽_q with q>3 odd. Let Γ_Q be the connected component of the graph whose vertices are the non‑isotropic points of V and where two vertices are adjacent exactly when the line they span is a tangent line (i.e. contains a unique isotropic point). Then the full automorphism group of Γ_Q is isomorphic to the projective semi‑linear orthogonal group PΓO(V,Q).",
+    "domain_bridges": [
+      "group theory",
+      "finite geometry",
+      "permutation groups"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0355",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the local characterization theorem (Theorem 1 in the paper) to show that any graph automorphism of Γ_Q induces an automorphism of the associated tangent geometry (points = non‑isotropic points, lines = tangent lines). Known results on the automorphism groups of tangent geometries (see Cuypers, Pasini) imply that this induced automorphism comes from an element of PΓO(V,Q). Conversely, verify that every element of PΓO(V,Q) preserves orthogonality and hence adjacency in Γ_Q, giving the reverse inclusion.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02035v1",
+    "status": "available",
+    "timestamp": "2026-07-05T22:30:42.721375+00:00",
+    "title": "Automorphism group of the orthogonal graph Γ_Q equals the projective semi‑linear orthogonal group"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "Theorem A",
@@ -8207,7 +8235,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0355",
+    "id": "fd_0356",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the explicit description of the 2-Sylow subgroup of S_n as an iterated wreath product and the Murnaghan-Nakayama rule to compute the multiplicity of the irreducible character χ^{λ_n} in the permutation character (1_P)↑^{S_n}. Alternatively, use the characterization of Ω_2(n) via 2-quotients of partitions (as in [G17]) and verify that the 2-quotient of λ_n satisfies the required condition. Another approach is to use the known results on the restriction of irreducible characters to Sylow 2-subgroups and the fact that λ_n is a partition with all parts ≤ 2.",
@@ -8234,7 +8262,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0356",
+    "id": "fd_0357",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a specific graph achieving the lower bound via Pokrovskiy's structure theorem",
@@ -8260,7 +8288,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0357",
+    "id": "fd_0358",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish a conductance lower bound via a suitable coupling argument that relates chord swaps to graph-theoretic moves, and then use known inequalities to translate this into a polynomial lower bound on the spectral gap for fixed genus.",
@@ -8280,7 +8308,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0358",
+    "id": "fd_0359",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "induction",
@@ -8308,7 +8336,7 @@
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0359",
+    "id": "fd_0360",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the connection via holography: (1) Prove interval counting for high-dimension CFT primaries follows log-correlated field statistics, (2) Show the extremal process converges to Gumbel by analyzing the correlation structure of the underlying Gaussian free field, (3) Translate to AdS side via HKLL reconstruction to bound semiclassical path integral resolution. Use modular invariance and sparseness conditions to control the tail behavior rigorously.",
@@ -8334,7 +8362,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0360",
+    "id": "fd_0361",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive argument on rank bounds combined with matroid minors analysis",
@@ -8361,7 +8389,7 @@
     "domains": [
       "Physics"
     ],
-    "id": "fd_0361",
+    "id": "fd_0362",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a doubly nonnegative graphon W where the spectral inequality t(H,W) ≥ ρ(W)^{2e(H)-v(H)} p(W)^{v(H)-e(H)} holds but t(H,W) < p(W)^{e(H)} fails, demonstrating the equivalence's optimality in the v(H) ≤ e(H) range.",
@@ -8370,6 +8398,36 @@
     "status": "available",
     "timestamp": "2026-07-05T22:13:32.517589+00:00",
     "title": "Spectral Transfer Sharpness for Trees Beyond the Sidorenko Range"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "arXiv:2408.xxxxx (this paper)",
+      "Cuoco‑Monsky, Ann. of Math. (2015)",
+      "Kida, J. Math. Soc. Japan (1988)",
+      "Grover walk spectral theory –reference to universal Grover‑Ihara polynomial",
+      "Iwasawa theory of Selmer groups –ref"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for any monic polynomial P (not necessarily coprime to A^2‑1) the μ‑ and λ‑invariants of the Iwasawa module generated by the spectral resultant R_{X,P} are given by a precise Kida‑type formula involving the p‑adic valuations of R_{X,P} at all torsion characters, with an explicit correction term accounting for the Bass factor A^2‑1. This extends the leading asymptotic growth law proved in the coprime case.",
+    "domain_bridges": [
+      "Iwasawa theory ↔ spectral graph theory",
+      "p‑adic L‑functions ↔ Grover matrices",
+      "equivariant factorization ↔ voltage graphs"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0363",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The proof would proceed by (1) constructing the Iwasawa module M as the Fitting module of the spectral resultant using the universal Grover‑Ihara polynomial; (2) applying the structure theorem for finitely generated Δ_₂[[Γ]]‑modules to express μ(M) and λ(M) in terms of elementary divisors; (3) evaluating the resultant at torsion characters χ∈̀_hat{Δ}_₂^× and showing via equivariant descent that the elementary divisors are precisely the values v_p(R(χ)); (4) incorporating the Bass factor (A^2‑1) by factoring det P(U_n) into a coprime part and a power of the Bass factor, and comparing the resulting contributions to the λ‑term. The key technical step is to prove an equivariant Kida formula for the spectral resultant without integrality assumptions, using the factorization for p‑group covers from the paper and a careful analysis of the local units at χ(1)=±1.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02011v1",
+    "status": "available",
+    "timestamp": "2026-07-05T22:31:24.810067+00:00",
+    "title": "Extended μ-λ Formula for Spectral Resultants of Grover Walks on Graph Towers"
   },
   {
     "ambition_level": "extension",
