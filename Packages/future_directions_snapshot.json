@@ -1465,7 +1465,7 @@
       "Jarník29",
       "Bugeaud03"
     ],
-    "consumed_by_exp_id": "cd3668cb",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any monotone ψ : ℕ → (0,∞) with Σ_{n≥1} ψ(n)·(q1...qn) < ∞ and lim_{n→∞} log qn / log(q1...qn) = 0, the exact set E_c(ψ) = {x∈[0,1) : x-ω_n(x) < ψ(n)/(q1...qn) i.o.} has Hausdorff dimension dim_H E_c(ψ) = 2 / λ, where λ = liminf_{n→∞} (-log ψ(n)) / log(q1...qn).",
     "domain_bridges": [
       "Dynamical Systems",
@@ -1482,7 +1482,7 @@
     "proof_strategy": "Combine the second Borel-Cantelli lemma with a suitable mass transference principle to estimate Hausdorff measure of cylinder sets defined by the Cantor series, then apply standard dimension formulas.",
     "research_mode": "team",
     "source_exp_id": "2606.30435v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T18:57:50.869620+00:00",
     "title": "Exact Hausdorff dimension of Cantor series exact approximation sets"
   },
@@ -2045,7 +2045,7 @@
       "Optimization Constants repository",
       "Tao's tentative 0.947 improvement"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "47c1c665",
     "description": "There exists a finite family of vector-valued convolution kernels {K_i} such that their weighted combination satisfies a ball-overbag inequality for Sidon sets, with the coefficient γ_0=0.94601 achievable through optimized L² energy distribution across kernels.",
     "domain_bridges": [
       "harmonic analysis",
@@ -2061,7 +2061,7 @@
     "proof_strategy": "Construct explicit vectors K_i in L²(ℤ/ℤ) with bounded support, prove their weighted L² norm combination controls the Sidon set density via Cauchy-Schwarz, and numerically verify the rational certificate for γ_0 using Lean 4's decision procedures.",
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T23:15:13.575664+00:00",
     "title": "Multi-kernel smoothing lemma for Sidon sets"
   },
@@ -4955,7 +4955,7 @@
       "Erdős-Turán Theorem on Sidon Sets",
       "Singer's Construction"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f5e088e2",
     "description": "Formalize the upper bound on the maximum size of a Sidon subset of {0, ..., N-1}, specifically proving that F(N) <= N^{1/2} + 0.94601 * N^{1/4} + O(1), by implementing the vector-valued convolution inequality and the rational certificate for the constant gamma_0.",
     "domain_bridges": [
       "Harmonic Analysis (Convolution Inequalities)",
@@ -4971,7 +4971,7 @@
     "proof_strategy": "1. Define the property of being a Sidon set in Lean 4. 2. Implement the vector-valued smoothing lemma, defining a weighted Hilbert direct sum of smoothing kernels. 3. Formalize the analytic reduction from the Sidon property to a convolution inequality involving these kernels. 4. Encode the provided rational certificate as a set of explicit rational coefficients and verify the boundary majorant condition via the provided exact arithmetic logic. 5. Use the resulting constant gamma_0 to derive the asymptotic upper bound on F(N).",
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T01:56:27.032018+00:00",
     "title": "Upper Bound for the Cardinality of Finite Sidon Sets"
   },
@@ -5964,7 +5964,7 @@
       "Geometric fundamental subgroup π₁(X,D)⁰",
       "Semisimple continuous representations in discrete topology"
     ],
-    "consumed_by_exp_id": "0259a2c1",
+    "consumed_by_exp_id": "",
     "description": "For any prime p (including p=2), any finite field k with char(k) ≠ p, any normal geometrically connected variety X over k, and any n ≥ 1, there exist only finitely many isomorphism classes of continuous semisimple geometric representations ρ: π₁(X,0) → GLₙ(F) where F is algebraically closed of characteristic p. This extends the proven result for odd p to all characteristics in the tame ramification case D=0.",
     "domain_bridges": [
       "Galois representations formalism in Lean",
@@ -5982,7 +5982,7 @@
     "proof_strategy": "Extend Hiranouchi's compactness argument using the smallness of π₁(X,0) and combine with Lang-Weil estimates for varieties over finite fields to control the possible representations. The key is to show the discrete image condition forces finiteness even when p=2 by analyzing the wild ramification constraints more carefully.",
     "research_mode": "team",
     "source_exp_id": "2606.31341v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T19:30:38.483142+00:00",
     "title": "Finiteness of Geometric Semisimple Representations for Arbitrary Characteristic"
   },
@@ -8165,7 +8165,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "93bf3c15",
+    "consumed_by_exp_id": "2bfe7f37",
     "description": "Deja vu — the feeling that you've experienced something before — is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 — a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch — it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
     "domain_bridges": [],
     "domains": [
