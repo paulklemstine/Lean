@@ -4387,6 +4387,36 @@ window.FUTURE_DIRECTIONS = [
     "title": "AVD Total Coloring of Central Graphs, Subdivision Graphs, and the Join of Graphs"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "For countable FAC posets with no saturated chain $D$ such that $D$ or $D^*$ is isomorphic to $\\bigoplus_{x\\in\\omega} D_x$ with each $D_x$ infinite and co-wellfounded, there exists a chain $C$ partitioning $P$ such that $C$ meets every antichain in the partition.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0333",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02500v1",
+    "status": "available",
+    "timestamp": "2026-07-05T04:44:40.497362+00:00",
+    "title": "FAC posets without saturated chains of countable co-wellfounded summands satisfy the Aharoni--Korman conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This paper proposes exact semialgebraic algorithms for the ham-sandwich and centerpoint theorems in the context of polytopal measures, translating geometric partition problems into feasibility problems with constructive solutions.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0333",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02400v1",
+    "status": "available",
+    "timestamp": "2026-07-05T04:44:49.279692+00:00",
+    "title": "From Ham-Sandwich to Centerpoints: Semialgebraic Algorithms for Cutting Polytopal Measures"
+  },
+  {
     "consumed_by_exp_id": "93bf3c15",
     "description": "Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch \u2014 it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
     "domains": [
