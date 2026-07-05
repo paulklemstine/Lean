@@ -8217,6 +8217,59 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "Mathlib.Order.Poset",
+      "Mathlib.Order.Scattered",
+      "Mathlib.Data.Set.Lattice"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that every countable poset satisfying the finite antichain condition can be partitioned into a finite union of scattered subposets. A poset is scattered if it contains no dense suborder isomorphic to the rationals. This statement strengthens the structural results of the paper and is precise enough to be formalized in Lean 4.",
+    "domain_bridges": [
+      "combinatorics",
+      "set_theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0348",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the chain‑equivalence machinery from the paper to construct the extension H(P). Show that in a countable FAC poset the equivalence classes of increasing chains are well‑founded, yielding a finite antichain of such classes. Each class generates a scattered subposet (no copy of Q). By covering P with the unions of these classes we obtain a finite family of scattered subposets whose union is P. The finiteness follows from the fact that a countable FAC poset cannot contain infinitely many pairwise incomparable equivalence classes of increasing chains, otherwise an infinite antichain would arise.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02500v1",
+    "status": "available",
+    "timestamp": "2026-07-05T19:39:27.575740+00:00",
+    "title": "Decomposition of Countable FAC Posets into Finitely Many Scattered Subposets"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Theorem A",
+      "Proposition big"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every positive integer n, the partition λ_n consisting of ⌊n/2⌋ parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set Ω_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound ⌈n/2⌉ on the number of parts of partitions in Ω_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
+    "domain_bridges": [
+      "representation theory of symmetric groups",
+      "combinatorics of partitions",
+      "Sylow permutation characters"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0348",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the explicit description of the 2-Sylow subgroup of S_n as an iterated wreath product and the Murnaghan-Nakayama rule to compute the multiplicity of the irreducible character χ^{λ_n} in the permutation character (1_P)↑^{S_n}. Alternatively, use the characterization of Ω_2(n) via 2-quotients of partitions (as in [G17]) and verify that the 2-quotient of λ_n satisfies the required condition. Another approach is to use the known results on the restriction of irreducible characters to Sylow 2-subgroups and the fact that λ_n is a partition with all parts ≤ 2.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02433v1",
+    "status": "available",
+    "timestamp": "2026-07-05T19:45:16.570930+00:00",
+    "title": "The all-twos partition achieves the maximum number of parts in Ω₂(n)"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions — Congruence Rigidity of Sums of Squares\n\nThis cycle established that the entries of an integer right triangle are forced into\nstrong divisibility patterns — one leg is a multiple of three, the legs jointly carry a\nfactor of four, one entry is a multiple of five — and that a four-dimensional right\n\"box\" (a solution of `a² + b² + c² = d²`) is even more rigid: at most one of its three\nspatial edges can be odd. We also pinned down exactly which whole numbers can serve as a\nleg. These findings point to several bold, testable conjectures.\n\n## 1. The correct modulus for a power of two grows with the power\n**Conjecture.** In any solution of `a² + b² = c²`, the two-adic valuation of the leg\nproduct `a·b` is governed one level deeper than naive reduction suggests: deciding\nwhether `2^k` divides `a·b` is a question about residues modulo `2^{k+1}`, never modulo\n`2^k`.\n*The key insight is* that a difference of two odd squares is always divisible by eight,\nso each additional factor of two in the product must be certified one binary place\nfurther out than one would guess. *Why now?* Having isolated the exact `mod 8`\nobstruction behind the factor of four, we can test the pattern mechanically for `k = 3,\n4, 5` and either confirm a clean \"shift-by-one\" law or expose its first exception.\n\n## 2. A universal super-divisor for higher-dimensional right figures\n**Conjecture.** For every dimension `r`, solutions of `x₁² + ⋯ + x_r² = y²` obey a single\nuniversal divisibility law: there is a constant `D(r)`, depending only on `r`, such that\n`D(r)` divides the product `x₁·x₂·⋯·x_r` for *every* solution, and `D(r)` is the largest\nsuch constant.\n*The key insight is* that reduction to a finite residue ring turns \"for all solutions\"\ninto a finite, decidable statement, so the optimal constant `D(r)` is computable and\nshould grow in a structured (conjecturally multiplicative-over-primes) way. *Why now?*\nThe three-dimensional case already yields `4 ∣ x₁x₂x₃`; comparing it against the planar\nconstant `12` suggests a dimension-indexed sequence worth charting and predicting.\n\n## 3. Parity collapse in higher dimensions\n**Conjecture.** As the number of squared terms increases, the number of edges permitted to\nbe odd stays uniformly bounded: in `x₁² + ⋯ + x_r² = y²` at most three of the `x_i` can be\nodd, regardless of `r`.\n*The key insight is* that the sum of squares equals the count of odd terms modulo four,\nwhile a perfect square is `0` or `1` modulo four, capping the admissible odd-count no\nmatter how many terms are added. *Why now?* We proved the cap is \"at most one\" in three\ndimensions; extending the modular bookkeeping to arbitrary `r` is a self-contained next\nstep that would reveal whether the cap is truly dimension-independent.\n\n## 4. A sharp threshold characterization of legs in every dimension\n**Conjecture.** Just as the whole numbers that are a leg of a right triangle are exactly\nthose `≥ 3`, in each higher dimension there is a sharp finite threshold above which every\ninteger appears as an edge of some right figure, and the finitely many exceptions can be\nlisted explicitly.\n*The key insight is* that a single explicit construction, split according to the parity of\nthe target edge, realizes all sufficiently large values, while the small exceptions are\nforced by a factorization that would otherwise require a vanishing edge. *Why now?* The\nplanar threshold `3` and its sharpness (the failures at `1` and `2`) give a template that\nshould transfer verbatim to the box equation and beyond.\n\n## 5. Divisibility as a sieve against near-solutions\n**Conjecture.** The combined congruence obstructions (`12 ∣ a·b`, `60 ∣ a·b·c`, and their\nhigher-dimensional analogues) are strong enough that a random integer triple satisfying\nthem has a positive, computable probability of being genuinely Pythagorean — i.e. the\ncongruence conditions capture a constant fraction of the \"arithmetic mass\" of true\nsolutions.\n*The key insight is* that each universal divisor removes a fixed proportion of impostors,\nso stacking independent prime-power obstructions multiplies into a sieve of predictable\ndensity. *Why now?* With the exact obstructions in hand for the primes `2, 3, 5`, one can\nimmediately measure how much of the solution set they explain and calibrate whether a few\nmore primes suffice to pin down solutions almost completely.\n",
