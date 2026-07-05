@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "872fa119",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Incoherence Index of Standard Social Decision Frames\n\nDerived from this cycle's findings (`OrderSpectrum.lean`,\n`SpectrumCharacterization.lean`): the incoherence index of a singl",
-      "quality_score": 0.7050400000000001,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-28T15:37:33",
-      "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
-    },
-    {
       "cycle_id": "ce5b4268",
       "domain": "Novelty",
       "key_insight": "# FUTURE DIRECTIONS — Permutation polynomials `x^q + b x^2 + c x + d` over `F_{q^2}`\n\nDerived from this cycle's findings (see\n`Catalog/Novelty/PermutationPolynomialFq2.lean` and\n`Catalog/Novelty/Permu",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-04T22:25:53",
       "title": "Phantom Topologies: Spaces That Change When You Look at Them"
+    },
+    {
+      "cycle_id": "59aff0ea",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThese conjectures grow out of a study of how the coefficients of a power series\nbehave when their large-index asymptotics are governed by an oscillatory term\nattached to a root of",
+      "quality_score": 0.8076800000000002,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-05T21:35:39",
+      "title": "Sign Alternation in q-Hypergeometric Series via Oscillatory Asymptotics Near Roots of Unity"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "53e074b6",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: invariants under purely inseparable base change\n\nThese conjectures are derived from this cycle's findings, namely that the separable degree\n`m_f = (minpoly K θ).natSepDegree` is i",
-      "quality_score": 0.6700199999999998,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-06-28T07:25:03",
-      "title": "Invariance of the field invariant m_f under purely inseparable base change"
-    },
     {
       "cycle_id": "db606ba2",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 39,
       "timestamp": "2026-07-05T21:33:41",
       "title": "Young Conjugation Induces a Measure-Preserving Involution on the Natural Extension of the Triangle M"
+    },
+    {
+      "cycle_id": "59aff0ea",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThese conjectures grow out of a study of how the coefficients of a power series\nbehave when their large-index asymptotics are governed by an oscillatory term\nattached to a root of",
+      "quality_score": 0.8076800000000002,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-05T21:35:39",
+      "title": "Sign Alternation in q-Hypergeometric Series via Oscillatory Asymptotics Near Roots of Unity"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "bfccf79e",
-      "domain": "Bridges",
-      "name": "uses",
-      "quality": 0.712488
-    },
-    {
-      "cycle_id": "bfccf79e",
-      "domain": "Bridges",
-      "name": "dvd_of_zmod",
-      "quality": 0.712488
-    },
-    {
-      "cycle_id": "3e52c27d",
-      "domain": "Novelty",
-      "name": "is",
-      "quality": 0.7916800000000002
-    },
     {
       "cycle_id": "3e52c27d",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "pv_zero_of_even",
       "quality": 0.7258007692307691
+    },
+    {
+      "cycle_id": "59aff0ea",
+      "domain": "Applications",
+      "name": "of",
+      "quality": 0.8076800000000002
+    },
+    {
+      "cycle_id": "59aff0ea",
+      "domain": "Applications",
+      "name": "is",
+      "quality": 0.8076800000000002
+    },
+    {
+      "cycle_id": "59aff0ea",
+      "domain": "Applications",
+      "name": "densityZero_of_count_le",
+      "quality": 0.8076800000000002
     }
   ],
-  "last_updated": "2026-07-05T21:33:41",
+  "last_updated": "2026-07-05T21:35:39",
   "open_questions": [
     {
       "context": "Synthesis (PI): A self-contained, sorry-free description of the hydrogen energy",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "563a1975",
-        "quality": 0.4794705000000001,
-        "theorems": 9,
-        "title": "Sharp Threshold Constant for Cycle Games"
-      },
-      {
         "cycle_id": "e62d479c",
         "quality": 0.30277126000000004,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.6395200000000001,
         "theorems": 17,
         "title": "Characterization of Bipartite Partial Duals of Orientable Hypermaps"
+      },
+      {
+        "cycle_id": "59aff0ea",
+        "quality": 0.8076800000000002,
+        "theorems": 12,
+        "title": "Sign Alternation in q-Hypergeometric Series via Oscillatory Asymptotics Near Roo"
       }
     ],
     "Bridges": [
