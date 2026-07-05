@@ -342,7 +342,7 @@
       "Is There An Ideal Color Wheel? (arXiv:xxxx)",
       "Doyle, Graph Theory"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "547c07d6",
     "description": "We conjecture that the finite Chromonic Lemma extends to infinite, locally finite, strongly connected digraphs. Formally, let G be an infinite directed graph that is strongly connected and locally finite, equipped with a real‑valued weight function on its edges and a color‑blending operation satisfying the Color Blend Axiom. If there exists a vertex coloring c : V → Colors such that for every vertex v, c(v) equals the weighted blend of the colors of its out‑neighbors (i.e., c(v) = π_{(u,p)∈Out(v)} p·c(u) ), then c must be constant. This generalizes the paper’s result from finite graphs to infinite ones and highlights the robustness of the underlying combinatorial principle.",
     "domain_bridges": [
       "Markov chain stopping rule",
@@ -359,7 +359,7 @@
     "proof_strategy": "Extend the finite proof via a compactness/ultraproduct construction: take an increasing sequence of finite subgraphs exhausting G, apply the finite Chromonic Lemma to obtain constant colorings on each subgraph, then use an ultralimit to build a global coloring satisfying the neighbor‑blend condition. The Color Blend Axiom ensures the limit respects blending, and strong connectivity yields a contradiction unless the coloring is constant. Alternatively, formulate the condition as a fixed‑point equation on the space of colorings and apply a Banach‑type contraction argument using the weights and the axiom.",
     "research_mode": "team",
     "source_exp_id": "2606.31908v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T11:14:08.155742+00:00",
     "title": "Infinite Color Wheels: No Nontrivial Neighbor‑Blend Colorings"
   },
@@ -1685,7 +1685,7 @@
     "catalog_references": [
       "math.NT:2405.12345"
     ],
-    "consumed_by_exp_id": "2aa93bab",
+    "consumed_by_exp_id": "",
     "description": "Assuming the Extended Riemann Hypothesis, for a fixed elliptic curve E over a number field K with good ordinary reduction at p, the natural density of p‑cyclic extensions L/K (ordered by the product of ramified primes) such that the Mordell‑Weil rank of E over L exceeds the rank over K by exactly r equals (1/p)*(1−1/p)^r for every integer r ≥ 0.",
     "domain_bridges": [
       "Arithmetic Geometry",
@@ -1701,7 +1701,7 @@
     "proof_strategy": "Translate the condition on rank growth into a condition on the dimension of the 1‑eigenspace of the p‑Selmer group under the Galois action of L/K. Using the Poonen–Rains heuristic model for Selmer groups as random isotropic subspaces, compute the limiting distribution of this dimension via moments obtained from Chebotarev density and the assumed GRH. Show that the moments match those of a geometric distribution with parameter 1/p, yielding the claimed densities.",
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T20:15:14.615812+00:00",
     "title": "Geometric distribution of Mordell-Weil rank growth in p‑cyclic extensions"
   },
@@ -3372,7 +3372,7 @@
       "analytic number theory",
       "prime number theorem"
     ],
-    "consumed_by_exp_id": "71bc6f98",
+    "consumed_by_exp_id": "",
     "description": "The corrected estimator E(x) + C(x) from the proposed algorithm satisfies the error bound |E(x) + C(x) - π(x)| ≤ K√x for some constant K > 0 and all x ≥ 2. This conjecture formalizes the claim that the correction term significantly improves accuracy by reducing the error to O(√x), matching the algorithm's computational complexity.",
     "domain_bridges": [
       "algorithmic number theory",
@@ -3388,7 +3388,7 @@
     "proof_strategy": "1. Formalize the estimator E(x) as a sum over generalized triangular numbers. 2. Express the correction term C(x) mathematically. 3. Derive an upper bound for |E(x) + C(x) - π(x)| using properties of li(x) and error terms in prime counting approximations. 4. Show the bound scales as O(√x) by analyzing the dominant terms.",
     "research_mode": "team",
     "source_exp_id": "2606.31761v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T17:32:19.384043+00:00",
     "title": "Error Bound Conjecture for Corrected Prime Count Estimator"
   },
@@ -4568,7 +4568,7 @@
       "DukeImamogluToth19",
       "BRR3"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "accc7a36",
     "description": "For weight 1/2 sesquiharmonic Maass forms of moderate growth, the weighted Riesz mean of Hurwitz class numbers has an asymptotic expansion of the form ∑_{n≤X} H(n) × weight(n) ∼ C X^α log^k X as X→∞, where C, α, and k depend on the Maass form's spectral parameters.",
     "domain_bridges": [
       "harmonic Maass forms",
@@ -4584,7 +4584,7 @@
     "proof_strategy": "Analyze the spectral decomposition of the introduced L-functions and apply Tauberian techniques to extract coefficients from the Riesz mean.",
     "research_mode": "team",
     "source_exp_id": "2606.28657v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T14:41:26.130876+00:00",
     "title": "Asymptotic Expansion of Weighted Riesz Means for Sesquiharmonic Maass Forms"
   },
@@ -7499,6 +7499,32 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "Ohsugi and Tsuchiya, Conjecture 5.11 (2019)",
+      "Higashitani, Jochemko, Michaëlk, Unimodality of h*-vectors (2015)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For every finite simple graph G, the Ehrhart h*-polynomial of its symmetric edge polytope Q_G is gamma-positive (i.e., all coefficients of its gamma-polynomial are non‑negative).",
+    "domain_bridges": [
+      "Ehrhart theory",
+      "Polytopal gamma-vectors",
+      "Graph theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0314",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct explicit infinite families of graphs (e.g., series‑parallel with prescribed path lengths) and compute their h*-polynomials; verify that for certain parameter choices the gamma-polynomial has a negative coefficient, thereby falsifying the conjecture.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02424v1",
+    "status": "available",
+    "timestamp": "2026-07-05T00:09:41.358047+00:00",
+    "title": "Gamma-positivity of Ehrhart h*-polynomials of symmetric edge polytopes"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "Ogg1983",
       "CerednikDrinfeld1990",
       "Daas2023"
@@ -7514,7 +7540,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0314",
+    "id": "fd_0315",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the Riemann–Hurwitz formula to the involution w_p on the Shimura curve X_N, compute the exact number of fixed points, and show that the resulting genus vanishes precisely for N = 6, 10, 22; this can be formalized in Lean by constructing the quotient curve and verifying the genus formula.",
@@ -7539,7 +7565,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0315",
+    "id": "fd_0316",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Translate the five equivalent descriptions of strong Δ-matroids from Theorem A of the paper into Lean definitions. 2. Formalise the notion of a peerless antipode directly from the text. 3. Show that the 'peerless antipode equations' (the tropical equations arising from the orthogonal Grassmannian) are equivalent to the absence of peerless antipodes by adapting the algebraic motivation given in the paper. 4. Use the already established equivalence between strong Δ-matroids and the hyperplane/Wenzel exchange properties to close the loop, yielding the desired iff statement.",
@@ -7562,7 +7588,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0316",
+    "id": "fd_0317",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a formal model in Lean 4 to verify convergence properties of the associated Gauss sum sequences.",
@@ -7574,8 +7600,33 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "math.DG"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every even integer n ≥ 12, the unique graph on n vertices with exactly T(n) = (n²-3n)/2 - ceil(n/2) + 2 edges that contains an edge of non-positive Ollivier/Lin--Lu--Yau curvature is the complete split graph S_{n/2+1, n/2-1} (i.e., a clique of size n/2+1 joined to an independent set of size n/2-1).",
+    "domain_bridges": [
+      "discrete curvature",
+      "extremal graph theory"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0318",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "classify all graphs with exactly T(n) edges, show that only the split graph achieves non-positive curvature, and verify curvature values using Ollivier's formula",
+    "research_mode": "team",
+    "source_exp_id": "2607.02297v1",
+    "status": "available",
+    "timestamp": "2026-07-05T00:09:57.235649+00:00",
+    "title": "Unique extremal graph for non-positive curvature at the edge-threshold"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ab59ff3c",
+    "consumed_by_exp_id": "da489ec4",
     "description": "Deja vu — the feeling that you've experienced something before — is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 — a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch — it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
     "domain_bridges": [],
     "domains": [

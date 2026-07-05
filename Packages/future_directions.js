@@ -204,7 +204,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Functional Equation Characterizes Primitive Dirichlet Characters"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "547c07d6",
     "description": "We conjecture that the finite Chromonic Lemma extends to infinite, locally finite, strongly connected digraphs. Formally, let G be an infinite directed graph that is strongly connected and locally finite, equipped with a real\u2011valued weight function on its edges and a color\u2011blending operation satisfying the Color Blend Axiom. If there exists a vertex coloring c : V \u2192 Colors such that for every vertex v, c(v) equals the weighted blend of the colors of its out\u2011neighbors (i.e., c(v) = \u03c0_{(u,p)\u2208Out(v)} p\u00b7c(u) ), then c must be constant. This generalizes the paper\u2019s result from finite graphs to infinite ones and highlights the robustness of the underlying combinatorial principle.",
     "domains": [
       "Algebra",
@@ -214,7 +214,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31908v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T11:14:08.155742+00:00",
     "title": "Infinite Color Wheels: No Nontrivial Neighbor\u2011Blend Colorings"
   },
@@ -950,7 +950,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Generalized Honeymoon Oberwolfach Problem with Multiple Round Tables"
   },
   {
-    "consumed_by_exp_id": "2aa93bab",
+    "consumed_by_exp_id": "",
     "description": "Assuming the Extended Riemann Hypothesis, for a fixed elliptic curve E over a number field K with good ordinary reduction at p, the natural density of p\u2011cyclic extensions L/K (ordered by the product of ramified primes) such that the Mordell\u2011Weil rank of E over L exceeds the rank over K by exactly r equals (1/p)*(1\u22121/p)^r for every integer r \u2265 0.",
     "domains": [
       "Pythagorean",
@@ -960,7 +960,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T20:15:14.615812+00:00",
     "title": "Geometric distribution of Mordell-Weil rank growth in p\u2011cyclic extensions"
   },
@@ -1851,7 +1851,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the generic ordinarity bound for the Katz family"
   },
   {
-    "consumed_by_exp_id": "71bc6f98",
+    "consumed_by_exp_id": "",
     "description": "The corrected estimator E(x) + C(x) from the proposed algorithm satisfies the error bound |E(x) + C(x) - \u03c0(x)| \u2264 K\u221ax for some constant K > 0 and all x \u2265 2. This conjecture formalizes the claim that the correction term significantly improves accuracy by reducing the error to O(\u221ax), matching the algorithm's computational complexity.",
     "domains": [
       "Pythagorean",
@@ -1861,7 +1861,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31761v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T17:32:19.384043+00:00",
     "title": "Error Bound Conjecture for Corrected Prime Count Estimator"
   },
@@ -2506,7 +2506,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existenceof a Reduced Planar Convex Body Exceeding Lassak's Area Bound"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "accc7a36",
     "description": "For weight 1/2 sesquiharmonic Maass forms of moderate growth, the weighted Riesz mean of Hurwitz class numbers has an asymptotic expansion of the form \u2211_{n\u2264X} H(n) \u00d7 weight(n) \u223c C X^\u03b1 log^k X as X\u2192\u221e, where C, \u03b1, and k depend on the Maass form's spectral parameters.",
     "domains": [
       "Physics"
@@ -2515,7 +2515,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28657v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T14:41:26.130876+00:00",
     "title": "Asymptotic Expansion of Weighted Riesz Means for Sesquiharmonic Maass Forms"
   },
@@ -4093,12 +4093,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture: For every finite simple graph G, the Ehrhart h*-polynomial of its symmetric edge polytope Q_G is gamma-positive (i.e., all coefficients of its gamma-polynomial are non\u2011negative).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0314",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02424v1",
+    "status": "available",
+    "timestamp": "2026-07-05T00:09:41.358047+00:00",
+    "title": "Gamma-positivity of Ehrhart h*-polynomials of symmetric edge polytopes"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any squarefree integer N > 1 with an even number of distinct prime factors, the genus of the Atkin\u2013Lehner quotient X_N / \u27e8w_p\u27e9 is zero if and only if N belongs to the finite set {6, 10, 22}.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0314",
+    "id": "fd_0315",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02306v1",
@@ -4113,7 +4127,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0315",
+    "id": "fd_0316",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02419v1",
@@ -4128,7 +4142,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0316",
+    "id": "fd_0317",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02392v1",
@@ -4137,7 +4151,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Gauss periods, cyclotomic matrices, and Gauss sums over cyclic groups"
   },
   {
-    "consumed_by_exp_id": "ab59ff3c",
+    "consumed_by_exp_id": "",
+    "description": "For every even integer n \u2265 12, the unique graph on n vertices with exactly T(n) = (n\u00b2-3n)/2 - ceil(n/2) + 2 edges that contains an edge of non-positive Ollivier/Lin--Lu--Yau curvature is the complete split graph S_{n/2+1, n/2-1} (i.e., a clique of size n/2+1 joined to an independent set of size n/2-1).",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0318",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02297v1",
+    "status": "available",
+    "timestamp": "2026-07-05T00:09:57.235649+00:00",
+    "title": "Unique extremal graph for non-positive curvature at the edge-threshold"
+  },
+  {
+    "consumed_by_exp_id": "da489ec4",
     "description": "Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch \u2014 it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
     "domains": [
       "Novelty",
