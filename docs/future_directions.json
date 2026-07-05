@@ -12843,7 +12843,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "arXiv:2305.12345",
         "Derksen–Kemper, \"Computational Invariant Theory\"",
@@ -12868,7 +12868,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0271",
-      "last_attempt_time": "2026-07-05T04:44:47.462186+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem basic_r_symmetric_tropical_polynomials_are_algebraically_independent {n r : ℕ} (hn : n ≥ 1) (hr : r ≥ 1) :\n  AlgebraicIndependent (𝕂 := Tropical ℝ) (basic_r_symmetric_polynomials n r) :=\n  sorry\n",
       "lineage_refs": [],
@@ -13902,7 +13902,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "arXiv:2103.15827 [math.CO] - Main paper referenced",
         "Schur Q-functions: Thibon, Macdonald polynomials: Macdonald",
@@ -13911,7 +13911,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "dd71b4d3",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -13927,7 +13927,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0293",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-05T05:20:39.252254+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem one_row_transition_unimodality (n : ℕ) (μ : strict_partition) :\n  let C := transition_coefficient (single_row n) μ 2 in\n  polynomial.unimodal (C.coeffs) ∧ polynomial.nonneg_coeffs (C.coeffs)",
       "lineage_refs": [],
@@ -13942,7 +13942,7 @@
       "source": "",
       "source_exp_id": "2606.28723v1",
       "source_path": "http://arxiv.org/abs/2606.28723v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-04T12:19:23.572578+00:00",
       "title": "Unimodality of Transition Coefficients for One-Row Shifted t-Schur Functions at M=2"
@@ -14232,7 +14232,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "11B39",
         "11D88"
@@ -14255,7 +14255,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0300",
-      "last_attempt_time": "2026-07-05T04:44:53.191633+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "\\forall m : ℕ, ν₂(R m - 1) = \\text{piecewise expression matching Padovan case but with Perrin-specific constants and congruence classes}",
       "lineage_refs": [],
@@ -15344,6 +15344,52 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "Biedl, Eppstein, Ueckerdt, 2025",
+        "Treewidth literature"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any graph G, the geodesic treewidth of G' (obtained by subdividing each edge |V(G)| times) is greater than or equal to the geodesic treewidth of G.",
+      "domain_bridges": [
+        "row treewidth",
+        "treewidth"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "github_issue": 0,
+      "id": "fd_0323",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "lemma subdivision_preserves_geodesic_treewidth (G : Graph) : geodesic_treewidth (subdivide_edges G |V(G)|) >= geodesic_treewidth G",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Inductive analysis of geodesic partitions under edge subdivision, or counterexample construction if false",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.02098v1",
+      "source_path": "http://arxiv.org/abs/2607.02098v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-05T05:19:29.430000+00:00",
+      "title": "Subdivisionof Edges Does Not Decrease Geodesic Treewidth"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "Ogg1983",
         "CerednikDrinfeld1990",
         "Daas2023"
@@ -15366,7 +15412,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0323",
+      "id": "fd_0324",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem genus_zero_atkin_lehner {N : ℕ} (hN : squarefree N) (h_even : even (Nat.card (primeFactors N))) : genus (quotient_curve X_N (w_p)) = 0 ↔ N = 6 ∨ N = 10 ∨ N = 22 := by sorry",
@@ -15412,7 +15458,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0324",
+      "id": "fd_0325",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem strong_iff_no_peerless_antipode {E : Type*} [Fintype E] [DecidableEq E] (M : DeltaMatroid E) : M.IsStrong ↔ ¬M.HasPeerlessAntipode := by\n  sorry\n",
@@ -15456,7 +15502,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0325",
+      "id": "fd_0326",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem 5.3 – Determinant identities for Dirichlet characters",
@@ -15502,7 +15548,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0326",
+      "id": "fd_0327",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem unique_extremal_nonpos_curvature (n : ℕ) (hn : n ≥ 12) (he : n % 2 = 0) : ∃! (G : SimpleGraph ℕ), G.edges.Count = T n ∧ ∃ e ∈ G.edges, curvature e ≤ 0",
@@ -15550,7 +15596,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0327",
+      "id": "fd_0328",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem trianguline_crystallinity :\n  ∀ (G : SplitConnectedReductiveGroup) (D : ΦΓModuleWithGStructure G),\n    Crystalline D ↔ RegularTriangulationParameter D",
@@ -15598,7 +15644,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0328",
+      "id": "fd_0329",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tree_structure_of_T {K : Type*} [Field K] (S : Finset (BP1 K)) (hS : S.card ≥ 3) : IsTree (graph_of_T S) := by sorry",
@@ -15648,7 +15694,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0329",
+      "id": "fd_0330",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_symmetric_one_weight_threshold (t : ℕ) (S : Finset ℤ) (r : ℕ) : ∀ (col : (Fin t → ℕ) → Fin r), ∃ (n : ℕ), (∀ (line : List ℕ), line ≠ [] → (∃ (a b : ℕ), a ∈ line → b ∈ line → col a = col b) ∧ n ≤ G_r S)",
@@ -15702,7 +15748,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0330",
+      "id": "fd_0331",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem geometric_Bombieri_Lang_fibration {k : Type} [field isChar0] [k algebraicallyClosed] {K : Type} [field (fractionField K)] [finitelyGenerated K k] {C : Scheme} [properSmoothCurve C] {X : Scheme} [projective X] (f : X ⟶ C) (h_gen_type : generalType (genericFiber f K)) : ∃ (S : ClosedSubscheme X), (∨ (λ x : X.valueSet K, x ∈ (X \\ S).points)) ↔ (∨ (λ γ : WholeCurve k, ∃ (Y : ClosedSubscheme X), γ.val.image ⊆ Y.val ∧ Y.val ≤ specialLocus f))",
@@ -15748,7 +15794,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0331",
+      "id": "fd_0332",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The natural representation of deflations as bounded cones over finite-dimensional bases allows extinction of infinite sequences of redefinitions.",
@@ -15797,7 +15843,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0332",
+      "id": "fd_0333",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem automorphism_group_orthogonal_graph (q : ℕ) [hq : q > 3] [hodd : odd q] (V : Type) (Q : quadratic_form V (F_q q)) [non_degenerate Q] : is_simple_connected (Γ_Q V Q) → Aut (Γ_Q V Q) ≃* PΓO (V,Q)",
@@ -15851,7 +15897,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0333",
+      "id": "fd_0334",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "A variant application of induction on graph decomposition to analyze AVD constraints",
@@ -15871,6 +15917,55 @@
       "thread_id": "",
       "timestamp": "2026-07-05T04:10:40.528016+00:00",
       "title": "AVD Total Coloring of Central Graphs, Subdivision Graphs, and the Join of Graphs"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Mathlib.NumberTheory.ThinSets",
+        "Mathlib.FieldTheory.Galois",
+        "Mathlib.Data.ZMod.Basic"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Let \\(F(Y,X_1,\\dots,X_n)\\in\\mathbb{Z}[Y,X_1,\\dots,X_n]\\) be a strongly \\(n\\)-genuine polynomial whose generic Galois group over \\(\\mathbb{Q}(X_1,\\dots,X_n)\\) is a transitive subgroup \\(G\\le S_d\\). Define\n  \\[\\mathcal{S}(B)=\\{\\mathbf{x}\\in\\mathbb{Z}^n:\\|\\mathbf{x}\\|_\\infty\\le B,\\;\\operatorname{Gal}(F(Y,\\mathbf{x})/\\mathbb{Q})\\not\\cong G\\}.\\]\n  The conjecture asserts that \\(\\mathcal{S}(B)\\) is contained in a thin set of type II and therefore satisfies the quantitative bound\n  \\[|\\mathcal{S}(B)|\\ll_{F,\\varepsilon} B^{n-1+\\varepsilon}\\]\n  for every \\(\\varepsilon>0\\). In other words, for a strongly \\(n\\)-genuine polynomial the failure of Galois‑group preservation under specialization occurs only on a set of integer points of codimension at least one, with the expected power‑saving in the counting function. This statement is falsifiable: one can exhibit a concrete strongly \\(n\\)-genuine polynomial and compute (or bound) the number of exceptional specializations up to height \\(B\\).",
+      "domain_bridges": [
+        "Algebraic Geometry → Thin Sets",
+        "Galois Theory → Galois groups of specialized polynomials",
+        "Diophantine Geometry → Height counting"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0335",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.NumberTheory.ThinSet\nimport Mathlib.FieldTheory.Galois\nimport Mathlib.Data.Int.Pointwise\n\nopen Polynomial\nopen scoped BigOperators\n\n/-- A polynomial `F : ℤ[Y, X₁, …, X_n]` is *strongly n‑genuine* if it satisfies the four equivalent\n    characterisations from Bary-Soroker–Liu–Rouse.  For the purpose of this theorem we only need\n    the quantitative control on the number of reducible specialisations given in\n    `strongly_n_genuine.reducible_specialisations_bound`. -/\nstructure StronglyNGenuine (n : ℕ) (F : Polynomial (ℤ[X₁, …, X_n].succ)) where\n  irreducible_generic : Irreducible (F.map (algebraMap ℤ ℚ))\n  reducible_bound : ∀ B : ℕ,\n    (Finset.filter (fun x : (Finset (ℤ) ^ n) =>\n        (F.eval (Finset.unpair x)).IsReducible)) (Finset.Icc 0 B)).card ≤ C * B ^ (n-1)\n\n/-- Let `F` be a strongly `n`‑genuine polynomial with generic Galois group `G`.  Then the set of\n    integer specialisations `x : ℤ^n` with `‖x‖ ≤ B` for which the specialised Galois group is not\n    isomorph",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "1. Formalise the notion of a strongly n‑genuine polynomial in Lean using the four equivalent characterisations from the paper (e.g. control of reducible specialisations). 2. Show that the set of exceptional specialisations \\(E\\subset\\mathbb{A}^n_{\\mathbb{Q}}\\) where the specialised Galois group differs from the generic one is a thin set of type II (no rational section). 3. Use the quantitative Hilbert‑Irreducibility theorem for thin sets already available in Mathlib (or import a recent formalisation) to obtain the bound \\(O(B^{n-1+\\varepsilon})\\) for integer points of bounded height in a type II thin set. 4. Combine steps 1–3 to conclude the desired bound for \\(\\mathcal{S}(B)\\). 5. Provide a concrete example (e.g. \\(F(Y,X_1,X_2)=Y^3+X_1Y+X_2\\)) and verify computationally that the bound holds for small \\(B\\), giving a test case that can falsify the conjecture. ",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.01969v1",
+      "source_path": "http://arxiv.org/abs/2607.01969v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-05T05:20:34.768144+00:00",
+      "title": "Quantitative Thinness of Galois‑Group‑Changing Specializations for Strongly n‑Genuine Polynomials"
     },
     {
       "ambition_level": "extension",
@@ -15917,7 +16012,6 @@
   "recent_domain_counts": {},
   "recent_theme_keywords": {},
   "selection_log": [
-    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",

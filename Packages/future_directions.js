@@ -3790,7 +3790,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Striking progress on the monotonicity of higher-fold representation functions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dd71b4d3",
     "description": "For the cyclotomic specialization at M=2, the transition coefficients C_{\u03bb\u03bc}^{[2]}(t) between one-row shifted t-Schur functions are unimodal with positive coefficients. Specifically, when \u03bb = (1^n) is a one-row strict partition, the polynomial C_{\u03bb\u03bc}(t^2, t) has nonnegative integer coefficients that are unimodal with maximum at the middle degree.",
     "domains": [
       "Algebra"
@@ -3799,7 +3799,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28723v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T12:19:23.572578+00:00",
     "title": "Unimodality of Transition Coefficients for One-Row Shifted t-Schur Functions at M=2"
   },
@@ -4225,12 +4225,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any graph G, the geodesic treewidth of G' (obtained by subdividing each edge |V(G)| times) is greater than or equal to the geodesic treewidth of G.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0323",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02098v1",
+    "status": "available",
+    "timestamp": "2026-07-05T05:19:29.430000+00:00",
+    "title": "Subdivisionof Edges Does Not Decrease Geodesic Treewidth"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any squarefree integer N > 1 with an even number of distinct prime factors, the genus of the Atkin\u2013Lehner quotient X_N / \u27e8w_p\u27e9 is zero if and only if N belongs to the finite set {6, 10, 22}.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0323",
+    "id": "fd_0324",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02306v1",
@@ -4245,7 +4259,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0324",
+    "id": "fd_0325",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02419v1",
@@ -4260,7 +4274,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0325",
+    "id": "fd_0326",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02392v1",
@@ -4274,7 +4288,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0326",
+    "id": "fd_0327",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
@@ -4289,7 +4303,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0327",
+    "id": "fd_0328",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02215v1",
@@ -4304,7 +4318,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0328",
+    "id": "fd_0329",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -4319,7 +4333,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0329",
+    "id": "fd_0330",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02226v1",
@@ -4334,7 +4348,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0330",
+    "id": "fd_0331",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02165v1",
@@ -4348,7 +4362,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0331",
+    "id": "fd_0332",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02231v1",
@@ -4363,7 +4377,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0332",
+    "id": "fd_0333",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02035v1",
@@ -4378,7 +4392,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0333",
+    "id": "fd_0334",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01979v1",
@@ -4388,33 +4402,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For countable FAC posets with no saturated chain $D$ such that $D$ or $D^*$ is isomorphic to $\\bigoplus_{x\\in\\omega} D_x$ with each $D_x$ infinite and co-wellfounded, there exists a chain $C$ partitioning $P$ such that $C$ meets every antichain in the partition.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0333",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02500v1",
-    "status": "available",
-    "timestamp": "2026-07-05T04:44:40.497362+00:00",
-    "title": "FAC posets without saturated chains of countable co-wellfounded summands satisfy the Aharoni--Korman conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "This paper proposes exact semialgebraic algorithms for the ham-sandwich and centerpoint theorems in the context of polytopal measures, translating geometric partition problems into feasibility problems with constructive solutions.",
+    "description": "Let \\(F(Y,X_1,\\dots,X_n)\\in\\mathbb{Z}[Y,X_1,\\dots,X_n]\\) be a strongly \\(n\\)-genuine polynomial whose generic Galois group over \\(\\mathbb{Q}(X_1,\\dots,X_n)\\) is a transitive subgroup \\(G\\le S_d\\). Define\n  \\[\\mathcal{S}(B)=\\{\\mathbf{x}\\in\\mathbb{Z}^n:\\|\\mathbf{x}\\|_\\infty\\le B,\\;\\operatorname{Gal}(F(Y,\\mathbf{x})/\\mathbb{Q})\\not\\cong G\\}.\\]\n  The conjecture asserts that \\(\\mathcal{S}(B)\\) is contained in a thin set of type\u202fII and therefore satisfies the quantitative bound\n  \\[|\\mathcal{S}(B)|\\ll_{F,\\varepsilon} B^{n-1+\\varepsilon}\\]\n  for every \\(\\varepsilon>0\\). In other words, for a strongly \\(n\\)-genuine polynomial the failure of Galois\u2011group preservation under specialization occurs only on a set of integer points of codimension at least one, with the expected power\u2011saving in the counting function. This statement is falsifiable: one can exhibit a concrete strongly \\(n\\)-genuine polynomial and compute (or bound) the number of exceptional specializations up to height \\(B\\).",
     "domains": [
       "Algebra",
-      "Geometry"
+      "Pythagorean"
     ],
-    "id": "fd_0333",
+    "id": "fd_0335",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2607.02400v1",
+    "source_exp_id": "2607.01969v1",
     "status": "available",
-    "timestamp": "2026-07-05T04:44:49.279692+00:00",
-    "title": "From Ham-Sandwich to Centerpoints: Semialgebraic Algorithms for Cutting Polytopal Measures"
+    "timestamp": "2026-07-05T05:20:34.768144+00:00",
+    "title": "Quantitative Thinness of Galois\u2011Group\u2011Changing Specializations for Strongly\u202fn\u2011Genuine Polynomials"
   },
   {
     "consumed_by_exp_id": "93bf3c15",
