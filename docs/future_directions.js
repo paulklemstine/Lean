@@ -380,7 +380,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
   {
-    "consumed_by_exp_id": "23007999",
+    "consumed_by_exp_id": "",
     "description": "For the random recursive DAG G_n with out-degree d \u2265 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n \u2192 \u221e.",
     "domains": [
       "Computation"
@@ -389,12 +389,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
   {
-    "consumed_by_exp_id": "244a22c3",
+    "consumed_by_exp_id": "",
     "description": "The product of primes in the extension field equals its order.",
     "domains": [
       "Pythagorean",
@@ -404,7 +404,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T05:35:59.496154+00:00",
     "title": "Ramified Prime Product Equality"
   },
@@ -1896,7 +1896,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality for exactly one edge subset"
   },
   {
-    "consumed_by_exp_id": "46b08ba4",
+    "consumed_by_exp_id": "",
     "description": "For any d \u00d7 d matrix A over a number field K with ring of integers O_K, if there exists n \u2265 1 such that A^n \u2208 M_d(O_K), then the pseudo-determinant of A is an algebraic integer in K.",
     "domains": [
       "Algebra"
@@ -1905,7 +1905,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30876v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T21:26:19.991104+00:00",
     "title": "Pseudo-determinant of power-integral matrices is an algebraic integer"
   },
@@ -2232,7 +2232,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Linear height bound for special points on non-special curves"
   },
   {
-    "consumed_by_exp_id": "abf4101d",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for a squarefree integer D>1, the diagonal octonary form f = x1^2+...+x4^2+\u03b5+(x5^2+...+x8^2) over the ring of integers of K = Q(\u221aD) is universal if and only if D is of the form n^2-1 for some integer n \u2265 2, or D is of the form n^2-4 for some odd integer n \u2265 3.",
     "domains": [
       "Algebra",
@@ -2242,7 +2242,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29321v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T08:52:07.693913+00:00",
     "title": "If-and-only-if classification of real quadratic fields where Kim's octonary diagonal form is universal"
   },
@@ -2480,7 +2480,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of a fine unit-distance graph with low independence ratio"
   },
   {
-    "consumed_by_exp_id": "e29ffbac",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that the isomorphism classes of regular 4\u2011maniplexes are in bijective correspondence with the isomorphism classes of tetravalent graphs appearing in Poto\u010dnik's census.  Concretely, for each regular 4\u2011maniplex M its flag graph is a tetravalent graph in the census, and conversely every tetravalent graph G in the census determines a unique regular 4\u2011maniplex via its 1\u2011coskeleton.  Hence the number of regular 4\u2011maniplexes up to isomorphism equals the number of tetravalent graphs in the census, giving a complete classification of these objects through existing graph databases.",
     "domains": [
       "Pythagorean",
@@ -2490,7 +2490,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27987v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T17:37:07.759741+00:00",
     "title": "Classification of regular 4\u2011maniplexes via tetravalent graph censuses"
   },
@@ -3165,7 +3165,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "A congruence conjecture for DSOME(n) modulo 4"
   },
   {
-    "consumed_by_exp_id": "f4921e42",
+    "consumed_by_exp_id": "",
     "description": "For any d-dimensional lattice polytope with m vertices, its surface area is bounded below by (d-1)/d times its volume, ensuring a precise upper limit on surface measures despite growth rates, making this inequality falsifiable through counterexamples in higher dimensions.",
     "domains": [
       "Algebra",
@@ -3175,7 +3175,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30856v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T21:26:47.114852+00:00",
     "title": "Surface-to-Volume Bounding Inequality"
   },
@@ -3282,7 +3282,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equivalence of h(\u03b1, \u03b2) and Sieve Integral for Localized Divisors"
   },
   {
-    "consumed_by_exp_id": "e545fdf8",
+    "consumed_by_exp_id": "",
     "description": "For any fixed integer k \u2265 2, the size of the set of common descendants of vertices n, n+1, ..., n+k-1 in G_{n+k-1}, scaled by n^{d/(d+1)}, converges in distribution to a non-degenerate random variable expressible in terms of independent Gamma random variables (or a product of Beta random variables), generalizing the result for k=2 obtained via ancestry processes and multi-draw P\u00f3lya urns.",
     "domains": [
       "Computation"
@@ -3291,7 +3291,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T00:55:11.921809+00:00",
     "title": "Joint descendants of the last k vertices in random d-DAGs"
   },
@@ -3832,7 +3832,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Obstruction\u2011free FAC posets satisfy the Aharoni\u2011Korman conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ee891add",
     "description": "For every integer n \u2265 11 with binary expansion n = 2^{a\u2081} + 2^{a\u2082} + \u2026 + 2^{a_t} where a\u2081 > a\u2082 > \u2026 > a_t \u2265 0, the set \u0394(n,k) of non\u2011hook partitions of n with at most k parts is contained in \u03a9\u2082(n) if and only if k \u2264 a\u2081 + t - 1. Equivalently, the largest integer k for which \u0394(n,k) \u2286 \u03a9\u2082(n) is exactly a\u2081 + t - 1. This refines the theorem of the paper by asserting that the stated bound holds universally (i.e., without the exceptional small\u2011n cases) and predicts a precise formula for the maximal size of such partitions.",
     "domains": [
       "Pythagorean",
@@ -3842,7 +3842,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T23:01:54.640398+00:00",
     "title": "Conjecture on the maximal number of parts of non\u2011hook partitions in \u03a9\u2082(n)"
   },
@@ -3978,7 +3978,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equivariant Kida formula for spectral resultants of Grover walks on p-group graph covers"
   },
   {
-    "consumed_by_exp_id": "f8ce2785",
+    "consumed_by_exp_id": "",
     "description": "If a reduced plane curve (or line arrangement) of degree d has minimal Jacobian relation degree mdr(f) strictly less than d/2, then mdr(f) is uniquely determined by the combinatorial data of its intersection lattice (the multiplicities n_k).",
     "domains": [
       "Algebra",
@@ -3988,7 +3988,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T04:44:21.963122+00:00",
     "title": "Combinatorial Determinism of Minimal Jacobian Relation Degree for Plane Curve Arrangements"
   },
@@ -4478,11 +4478,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any abelian group G and any nonempty weight set \u03a8 \u2286 Hom(F,G) \\ {0}, the weighted Davenport constant D_\u03a8(G) equals the smallest positive integer n such that the union of kernels of all nonzero universal homomorphisms induced by n\u2011tuples from \u03a8 covers the Cartesian power F^n. In particular, D_\u03a8(G) \u2264 n iff F^n is covered by those kernels.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0356",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02132v1",
+    "status": "available",
+    "timestamp": "2026-07-05T22:48:25.874283+00:00",
+    "title": "Conjecture on Kernel-Cover Compactness for Weighted Davenport Constants"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0356",
+    "id": "fd_0357",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -4496,7 +4511,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0357",
+    "id": "fd_0358",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -4511,7 +4526,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0358",
+    "id": "fd_0359",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
@@ -4526,7 +4541,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0359",
+    "id": "fd_0360",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -4541,7 +4556,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0360",
+    "id": "fd_0361",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -4555,7 +4570,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0361",
+    "id": "fd_0362",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -4569,7 +4584,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0362",
+    "id": "fd_0363",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -4584,13 +4599,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0363",
+    "id": "fd_0364",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02011v1",
     "status": "available",
     "timestamp": "2026-07-05T22:31:24.810067+00:00",
     "title": "Extended \u03bc-\u03bb Formula for Spectral Resultants of Grover Walks on Graph Towers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Constructs two nine-line arrangements in \\(\\mathbb{P}^2\\) with isomorphic intersection lattices but distinct minimal degrees of Jacobian relations (mdr). The configurations differ in their homological types, where one is plus-one generated and the other has type 2B, validating distinct Jacobian syzygy structures. The example refutes the conjecture that mdr is combinatorially determined when mdr < d/2.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0365",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01985v1",
+    "status": "available",
+    "timestamp": "2026-07-05T22:48:46.476501+00:00",
+    "title": "Minimal Degree of Jacobian Relations for Arrangements with Isomorphic Intersection Lattices"
   },
   {
     "consumed_by_exp_id": "",
