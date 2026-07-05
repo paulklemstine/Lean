@@ -832,21 +832,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Analyticity of the localized divisor density function"
   },
   {
-    "consumed_by_exp_id": "cd3668cb",
-    "description": "Conjecture that for any monotone \u03c8 : \u2115 \u2192 (0,\u221e) with \u03a3_{n\u22651} \u03c8(n)\u00b7(q1...qn) < \u221e and lim_{n\u2192\u221e} log qn / log(q1...qn) = 0, the exact set E_c(\u03c8) = {x\u2208[0,1) : x-\u03c9_n(x) < \u03c8(n)/(q1...qn) i.o.} has Hausdorff dimension dim_H E_c(\u03c8) = 2 / \u03bb, where \u03bb = liminf_{n\u2192\u221e} (-log \u03c8(n)) / log(q1...qn).",
-    "domains": [
-      "Pythagorean",
-      "MachineLearning"
-    ],
-    "id": "fd_0079",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.30435v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T18:57:50.869620+00:00",
-    "title": "Exact Hausdorff dimension of Cantor series exact approximation sets"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Conjecture that for any fixed prime q there exist infinitely many pairs (t,p) with p prime, p\u2260q such that p divides A_t^{(q)} and s_q((q-1)p) \u2265 (q-1)t, where A_t^{(q)} = binom(q^{t+1}, q^t) - q^{q^t}. This would yield infinitely many n = q^t p satisfying binom(qn,n) \u2261 q^n (mod n).",
     "domains": [
@@ -1301,7 +1286,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing the generalized honeymoon Oberwolfach problem in Lean 4"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fddc2dce",
     "description": "For all m \u2265 1, the refined generating function for intervals in the greedy m-Tamari poset, tracking both the number of elements and the number of leaves (peaks in the corresponding Dyck paths), is equal to the refined generating function for planar (m+1)-constellations tracking the same statistics. This extends the combinatorial proof for m=1 to all m \u2265 1.",
     "domains": [
       "Algebra",
@@ -1311,7 +1296,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01206v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:55:26.518816+00:00",
     "title": "Refined Bijective Enumeration of Greedy Tamari Intervals and Planar (m+1)-Constellations"
   },
@@ -1545,20 +1530,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T09:01:30.241791+00:00",
     "title": "Formalized Rogers\u2013Ramanujan identities for q-Pochhammer symbols"
-  },
-  {
-    "consumed_by_exp_id": "a3e61288",
-    "description": "The row generating functions (RGFs) of the squares of the Eulerian and Delannoy triangles are real-rooted polynomials. Specifically, for each n \u2265 0, let E^{(2)}_{n,k} be the entry in the nth row and kth column of the squared Eulerian triangle, and D^{(2)}_{n,k} be the corresponding entry for the squared Delannoy triangle. Then the polynomials \u2211_{k=0}^{n} E^{(2)}_{n,k} x^k and \u2211_{k=0}^{n} D^{(2)}_{n,k} x^k are real-rooted.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0136",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01572v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T09:25:28.179644+00:00",
-    "title": "Real-rootedness of the Squares of the Eulerian and Delannoy Triangles"
   },
   {
     "consumed_by_exp_id": "",
@@ -1808,7 +1779,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Integrality of the line graph of $BL_n(k-1,k)$ beyond the regular case"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bd099728",
     "description": "For any composition \u03bb = (\u03bb\u2081, \u2026, \u03bb\u2098) of n, the number of deranged unit-interval parking functions of length n with block structure \u03bb is exactly (d\u2098 / m!) times the multinomial coefficient n!/(\u03bb\u2081! \u22ef \u03bb\u2098!), where d\u2098 is the number of derangements of m elements. Equivalently, the deranged condition depends only on the number of blocks m and not on the block sizes, so that the distribution of block sizes in deranged unit-interval parking functions is proportional to the distribution in all unit-interval parking functions.",
     "domains": [
       "Computation"
@@ -1817,7 +1788,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01273v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T16:31:00.209169+00:00",
     "title": "Refinement of Deranged Unit-Interval Parking Functions by Full Block Size Distribution"
   },
@@ -2009,7 +1980,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Spectral radius threshold for fractional ID-$[a,b]$-factor-critical graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "25f6b04b",
     "description": "The conjecture asserts that sum throttling for any graph G is at most twice the product throttling value of its complement, ensuring mathematical consistency.",
     "domains": [
       "Pythagorean",
@@ -2019,7 +1990,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30950v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T22:06:31.480034+00:00",
     "title": "Sum Throttling Bound Upper Limit"
   },
@@ -2082,21 +2053,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic Growth of Sums of Squared Symmetric Power Coefficients over Sums of Squares"
   },
   {
-    "consumed_by_exp_id": "847e72f8",
-    "description": "The conjecture posits that the sharpness of the entropic inequality ensures equality in maximum entropy states when samples align with uniform distributions.",
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "fd_0173",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.30486v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T23:56:26.184055+00:00",
-    "title": "Shareness of Entropic Analogues"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "We conjecture that there exists an explicit isomorphism between the space of G-invariant pseudodifferential operators with parameters (k, m_l, m_r) and the space of Jacobi forms of weight k and index m = m_l + m_r, such that this isomorphism is naturally equivariant with respect to the Jacobi group action. This would generalize Cohen-Manin-Zagier's result for modular forms to the Jacobi setting via the Casimir operator construction.",
     "domains": [
@@ -2127,7 +2083,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Probabilistic lower bounds on weighted weighted sums of Bernoulli variables"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4fe41193",
     "description": "For any positive integers r and k with k >= 2, and any set R \u2286 {1, ..., k}, there exists a constant n_0(k, r) such that every R-graph H on n >= n_0 vertices with minimum r-degree \u03b4_r(H) >= 1 contains a Berge-C_t^r (a Berge-hypergraph based on the t-vertex r-uniform tight cycle) for all t in the range r+1 <= t <= n.",
     "domains": [
       "Bridges"
@@ -2136,7 +2092,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T01:19:19.875599+00:00",
     "title": "Existence of Berge-Tight Cycles in R-Graphs with Positive Minimum r-Degree"
   },
@@ -2302,7 +2258,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Variance of Homomorphism at the Root is Bounded Below by Effective Resistance"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d1843854",
     "description": "Analysis of the maximal number of chains required to cover strict chains in the Boolean lattice, with connections to inclusion-exclusion and logarithmic approximations.",
     "domains": [
       "Cryptography",
@@ -2312,7 +2268,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29385v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T08:04:06.155536+00:00",
     "title": "Chain Covers in the Boolean Lattice"
   },
@@ -3000,7 +2956,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Upper bound conjecture for the cake balancing ratio sequence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "40c1c1bc",
     "description": "For each residue r \u2208 {0,1,2,3,4}, the function k \u21a6 \u03c3\u2085(5k + r) is non\u2011increasing (i.e., \u03c3\u2085(5(k+1)+r) \u2264 \u03c3\u2085(5k+r) for all k \u2208 \u2115).",
     "domains": [
       "Bridges"
@@ -3009,7 +2965,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00825v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T11:40:31.517494+00:00",
     "title": "Monotonicity of the minimal absolute value of sums of fifth roots of unity within each residue class modulo 5"
   },
@@ -3250,7 +3206,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "CM tournaments are precisely the cycle\u2011ideal tournaments"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d1c56f64",
     "description": "For all integers n \u2265 2, the number of labeled partially ordered sets on n points (OEIS A001035) satisfies P(n) \u2261 3 (mod 4). This congruence is verified for n = 2 through 19 (with P(19) = 646099441937791106493755218560442089979 \u2261 3 mod 4) and predicts the same residue for P(20) and beyond. The paper's mention of a 'modular periodicity' check for A001035 suggests such congruences are structurally inherent in the Ern\u00e9-Stege moment reduction.",
     "domains": [
       "Bridges"
@@ -3259,24 +3215,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31526v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T18:54:52.477458+00:00",
     "title": "Constant residue of labeled poset counts modulo 4"
-  },
-  {
-    "consumed_by_exp_id": "0259a2c1",
-    "description": "For any prime p (including p=2), any finite field k with char(k) \u2260 p, any normal geometrically connected variety X over k, and any n \u2265 1, there exist only finitely many isomorphism classes of continuous semisimple geometric representations \u03c1: \u03c0\u2081(X,0) \u2192 GL\u2099(F) where F is algebraically closed of characteristic p. This extends the proven result for odd p to all characteristics in the tame ramification case D=0.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0257",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.31341v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T19:30:38.483142+00:00",
-    "title": "Finiteness of Geometric Semisimple Representations for Arbitrary Characteristic"
   },
   {
     "consumed_by_exp_id": "",
@@ -3455,36 +3396,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Joint descendants of the last k vertices in random d-DAGs"
   },
   {
-    "consumed_by_exp_id": "d111b5f2",
-    "description": "For r=3 and t=1, the graph K_1 \u2228 T_3(8) is not the unique maximizer of the signless Laplacian spectral radius among 2K_4-free graphs of order 9; there exists another non-isomorphic 2K_4-free graph on 9 vertices with identical signless Laplacian spectral radius.",
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_0270",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.30272v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-04T01:20:02.252152+00:00",
-    "title": "Uniqueness failure for signless Laplacian extremal graphs at n=9 for (2K_4)-free graphs"
-  },
-  {
-    "consumed_by_exp_id": "6db20969",
-    "description": "For any integers n \u2265 1 and r \u2265 1, the set of \\(\\binom{n+r}{r}\\) basic r\u2011symmetric tropical polynomials of degree \u2264 n in the variables \\(\\{x_{i,j}\\}_{1\\le i\\le n,1\\le j\\le r}\\) is algebraically independent over the tropical semiring (max\u2011plus). Equivalently, any non\u2011trivial tropical polynomial relation among them must be the tropical zero (the identically \\(-\\infty\\) function). This strengthens the separation result of the paper by asserting that the invariants not only separate orbits but generate a free tropical algebra.",
-    "domains": [
-      "Algebra",
-      "Tropical"
-    ],
-    "id": "fd_0271",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.30184v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-04T01:45:28.530447+00:00",
-    "title": "Algebraic Independence of Basic r\u2011Symmetric Tropical Polynomials"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For an orientable hypermap H defined by permutations (\u03c3, \u03b1), a partial dual H^{E'} with respect to a hyperedge subset E' is bipartite if and only if there exists an all-crossing direction \u03a6 of the medial map M(H) such that E' = C(\u03a6), provided that every hyperedge of H has even length.",
     "domains": [
@@ -3528,7 +3439,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the n/2\u202f+\u202f1/3 exponent for the finite\u2011field Erd\u0151s\u2013Falconer distance problem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f95a8b94",
     "description": "Conjecture that for every integer k \u2265 1 there exists a plane triangulation G on n = 5k + r vertices (r \u2208 {0,1,2,3,4}) such that the maximum size of a P3-packing \u03bb_{P3}(G) equals floor(n/5). This would imply the lower bound \u03bb_{P3}(G) \u2265 floor(n/5) proved in the paper is tight for arbitrarily large triangulations.",
     "domains": [
       "Pythagorean"
@@ -3537,7 +3448,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T04:14:42.891046+00:00",
     "title": "Tightness Conjecture for P3-Packings in Plane Triangulations"
   },
@@ -3790,20 +3701,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Striking progress on the monotonicity of higher-fold representation functions"
   },
   {
-    "consumed_by_exp_id": "dd71b4d3",
-    "description": "For the cyclotomic specialization at M=2, the transition coefficients C_{\u03bb\u03bc}^{[2]}(t) between one-row shifted t-Schur functions are unimodal with positive coefficients. Specifically, when \u03bb = (1^n) is a one-row strict partition, the polynomial C_{\u03bb\u03bc}(t^2, t) has nonnegative integer coefficients that are unimodal with maximum at the middle degree.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0293",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.28723v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-04T12:19:23.572578+00:00",
-    "title": "Unimodality of Transition Coefficients for One-Row Shifted t-Schur Functions at M=2"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For any even integer m \u22655, there exist infinitely many primes p for which 2^n p^m +1 is a Carmichael number for some positive integer n. This conjecture proposes that the finiteness result in the original paper extends only to odd exponents, and that even exponents allow infinitely many primes p to satisfy p^m \u2208 {\\mathcal K}.",
     "domains": [
@@ -3889,20 +3786,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-04T15:53:12.426874+00:00",
     "title": "Generalized Binomial Formula for d-Balanced e-Regular Partitions"
-  },
-  {
-    "consumed_by_exp_id": "23fc7cbb",
-    "description": "The 2-adic valuation of the shifted Perrin sequence {R_m - 1} admits an explicit piecewise formula for all m \u2265 0, analogous to Theorem TV1 for the Padovan sequence. Specifically, there exists a finite set of congruence conditions modulo powers of 2 and 7 such that \u03bd\u2082(R_m - 1) is determined by linear expressions in \u03bd\u2082(m + c) for certain constants c, leading to a complete classification of all possible valuations. This formula would enable the same type of factorial-growth bounding techniques used in the paper to be applied to the Perrin-Brocard equation.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0300",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.28577v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-04T16:20:21.592155+00:00",
-    "title": "Explicit Formula for 2-adic Valuation of Shifted Perrin Numbers"
   },
   {
     "consumed_by_exp_id": "",
@@ -4078,7 +3961,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on the maximal number of parts of non\u2011hook partitions in \u03a9\u2082(n)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b9acc055",
     "description": "For every \\(\\epsilon > 0\\), there exists \\(K > 0\\) such that for all \\(d \\ge K\\) and \\(p \\in [\\epsilon d/\\log n, d/\\log n]\\), a graph \\(G\\) with average degree \\(d\\) satisfies: the random subgraph \\(G_p\\) obtained by retaining each edge of \\(G\\) independently with probability \\(p\\) contains a cycle of length at least \\(d - \\epsilon d\\) asymptotically almost surely as \\(n \\to \\infty\\).",
     "domains": [
       "Computation"
@@ -4087,7 +3970,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T23:36:00.875596+00:00",
     "title": "Persistent Cycles in Randomized Graphs via Hyperstable Structural Constraints"
   },
@@ -4416,19 +4299,33 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantitative Thinness of Galois\u2011Group\u2011Changing Specializations for Strongly\u202fn\u2011Genuine Polynomials"
   },
   {
-    "consumed_by_exp_id": "93bf3c15",
-    "description": "Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch \u2014 it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
+    "consumed_by_exp_id": "",
+    "description": "A countable FAC poset satisfies the Aharoni-Korman conjecture if and only if it does not contain a saturated chain D such that either D or its reverse is a countable direct sum of infinite co-wellfounded posets.",
     "domains": [
-      "Novelty",
-      "Computation"
+      "Pythagorean"
     ],
-    "id": "fd_0117",
-    "priority_score": 0.78,
+    "id": "fd_0336",
+    "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T00:49:27.041847+00:00",
-    "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
+    "source_exp_id": "2607.02500v1",
+    "status": "available",
+    "timestamp": "2026-07-05T16:16:00.227260+00:00",
+    "title": "Characterization of the Aharoni-Korman Conjecture via Saturated Chains"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let N > 1 be a squarefree integer with an even number of prime factors, and let X_N be the associated Shimura curve over \u211a. For each divisor d|N, let w_d be the Atkin-Lehner involution on X_N, and let X_N/\u27e8w_d\u27e9 be the corresponding quotient curve. The conjecture states that the set of all such N for which there exists at least one divisor d|N such that the quotient curve X_N/\u27e8w_d\u27e9 has genus zero is exactly the finite set {6, 10, 14, 15, 21, 22, 26, 33, 34, 35, 38, 39, 46, 51, 55, 57, 58, 62, 65, 69, 74, 77, 82, 85, 86, 87, 91, 93, 94, 95, 106, 111, 115, 118, 119, 122, 123, 129, 133, 134, 141, 142, 143, 145, 146, 155, 158, 159, 161, 166, 177, 178, 183, 185, 187, 194, 201, 202, 203, 205, 206, 209, 213, 214, 215, 217, 218, 219, 221, 226, 235, 237, 247, 249, 253, 254, 259, 262, 265, 267, 274, 278, 287, 291, 295, 298, 299, 301, 302, 303, 305, 309, 314, 319, 321, 323, 326, 327, 329, 334, 335, 339, 341, 346, 355, 358, 362, 365, 371, 377, 381, 382, 386, 391, 393, 394, 395, 398, 403, 407, 411, 413, 415, 417, 422, 427, 437, 445, 446, 447, 451, 453, 454, 458, 466, 469, 471, 473, 478, 481, 482, 485, 489, 493, 497}. (This list is conjectural and based on known classifications of genus-zero Atkin-Lehner quotients of Shimura curves.)",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0337",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02306v1",
+    "status": "available",
+    "timestamp": "2026-07-05T16:21:31.636534+00:00",
+    "title": "Classification of Genus-Zero Atkin-Lehner Quotients of Shimura Curves"
   },
   {
     "consumed_by_exp_id": "",
