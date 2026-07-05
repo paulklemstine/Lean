@@ -1547,7 +1547,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalized Rogers\u2013Ramanujan identities for q-Pochhammer symbols"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a3e61288",
     "description": "The row generating functions (RGFs) of the squares of the Eulerian and Delannoy triangles are real-rooted polynomials. Specifically, for each n \u2265 0, let E^{(2)}_{n,k} be the entry in the nth row and kth column of the squared Eulerian triangle, and D^{(2)}_{n,k} be the corresponding entry for the squared Delannoy triangle. Then the polynomials \u2211_{k=0}^{n} E^{(2)}_{n,k} x^k and \u2211_{k=0}^{n} D^{(2)}_{n,k} x^k are real-rooted.",
     "domains": [
       "Bridges"
@@ -1556,7 +1556,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01572v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T09:25:28.179644+00:00",
     "title": "Real-rootedness of the Squares of the Eulerian and Delannoy Triangles"
   },
@@ -1575,7 +1575,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharp Lower Bounds for Sumsets in L\u2081 Balls in \u2124\u1d48"
   },
   {
-    "consumed_by_exp_id": "ba338a87",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that the upper bound for |\u03b6(1+it)| can be improved further by utilizing smoothing methods. Specifically, we propose that for all t \u2265 3, |\u03b6(1+it)| \u2264 (1/2) log t + 1.5, which would improve the existing bound of (1/2) log t + 1.57. This conjecture is based on extending the analysis in [this paper] to optimize the constants in the smoothed approximation.",
     "domains": [
       "Pythagorean",
@@ -1585,7 +1585,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01424v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T10:19:57.480990+00:00",
     "title": "Sharpening the Constant in the Upper Bound of |\u03b6(1+it)| via Smoothing Techniques"
   },
@@ -2082,7 +2082,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic Growth of Sums of Squared Symmetric Power Coefficients over Sums of Squares"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "847e72f8",
     "description": "The conjecture posits that the sharpness of the entropic inequality ensures equality in maximum entropy states when samples align with uniform distributions.",
     "domains": [
       "Pythagorean",
@@ -2092,7 +2092,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30486v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T23:56:26.184055+00:00",
     "title": "Shareness of Entropic Analogues"
   },
@@ -2347,7 +2347,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "If-and-only-if classification of real quadratic fields where Kim's octonary diagonal form is universal"
   },
   {
-    "consumed_by_exp_id": "2fcfc9fd",
+    "consumed_by_exp_id": "",
     "description": "For every semi-complete digraph G, the directed clique-width of G is at most the cycle rank of G plus 2.",
     "domains": [
       "Bridges"
@@ -2356,7 +2356,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29336v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T09:21:10.954489+00:00",
     "title": "Directed Clique-Width Bound for Semi-Complete Digraphs via Cycle Rank"
   },
@@ -3264,7 +3264,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Constant residue of labeled poset counts modulo 4"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0259a2c1",
     "description": "For any prime p (including p=2), any finite field k with char(k) \u2260 p, any normal geometrically connected variety X over k, and any n \u2265 1, there exist only finitely many isomorphism classes of continuous semisimple geometric representations \u03c1: \u03c0\u2081(X,0) \u2192 GL\u2099(F) where F is algebraically closed of characteristic p. This extends the proven result for odd p to all characteristics in the tame ramification case D=0.",
     "domains": [
       "Algebra",
@@ -3274,7 +3274,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31341v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T19:30:38.483142+00:00",
     "title": "Finiteness of Geometric Semisimple Representations for Arbitrary Characteristic"
   },
@@ -3485,7 +3485,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Algebraic Independence of Basic r\u2011Symmetric Tropical Polynomials"
   },
   {
-    "consumed_by_exp_id": "70677671",
+    "consumed_by_exp_id": "",
     "description": "For an orientable hypermap H defined by permutations (\u03c3, \u03b1), a partial dual H^{E'} with respect to a hyperedge subset E' is bipartite if and only if there exists an all-crossing direction \u03a6 of the medial map M(H) such that E' = C(\u03a6), provided that every hyperedge of H has even length.",
     "domains": [
       "Bridges"
@@ -3494,7 +3494,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30071v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T02:10:40.019984+00:00",
     "title": "Characterization of Bipartite Partial Duals of Orientable Hypermaps"
   },
@@ -4195,12 +4195,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let X be a finite connected symmetric digraph, G a finite p-group acting freely on X, and Y = X(G, \u03b1) the associated voltage graph cover. For a monic polynomial P \u2208 \u211a\u209a[A] coprime to A\u00b2\u22121 such that the spectral resultant R_{X,P}(T) does not vanish at any torsion character, let \u03bb_X, \u03bc_X be the Iwasawa \u03bb- and \u03bc-invariants of R_{X,P}. Then the \u03bb-invariant \u03bb_Y of the resultant R_{Y,P} satisfies \u03bb_Y = |G|\u00b7\u03bb_X + (|G|\u22121)\u00b7\u03bc_X + (|G|\u22121)\u00b7b\u2081(X), where b\u2081(X) = #E(X) \u2212 #V(X) + 1 is the first Betti number of X.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0321",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02011v1",
+    "status": "available",
+    "timestamp": "2026-07-05T04:10:07.418908+00:00",
+    "title": "Equivariant Kida formula for spectral resultants of Grover walks on p-group graph covers"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any squarefree integer N > 1 with an even number of distinct prime factors, the genus of the Atkin\u2013Lehner quotient X_N / \u27e8w_p\u27e9 is zero if and only if N belongs to the finite set {6, 10, 22}.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0321",
+    "id": "fd_0322",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02306v1",
@@ -4215,7 +4230,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0322",
+    "id": "fd_0323",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02419v1",
@@ -4230,7 +4245,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0323",
+    "id": "fd_0324",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02392v1",
@@ -4244,7 +4259,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0324",
+    "id": "fd_0325",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
@@ -4259,7 +4274,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0325",
+    "id": "fd_0326",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02215v1",
@@ -4274,7 +4289,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0326",
+    "id": "fd_0327",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -4289,7 +4304,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0327",
+    "id": "fd_0328",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02226v1",
@@ -4304,7 +4319,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0328",
+    "id": "fd_0329",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02165v1",
@@ -4318,7 +4333,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0329",
+    "id": "fd_0330",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02231v1",
@@ -4333,7 +4348,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0330",
+    "id": "fd_0331",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02035v1",
@@ -4342,7 +4357,22 @@ window.FUTURE_DIRECTIONS = [
     "title": "Automorphism group of orthogonal graphs equals projective semilinear orthogonal group"
   },
   {
-    "consumed_by_exp_id": "5ab8fd19",
+    "consumed_by_exp_id": "",
+    "description": "This paper investigates the AVD-total coloring conjecture for central graphs and explores their structural properties under subdivision and joins.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0332",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01979v1",
+    "status": "available",
+    "timestamp": "2026-07-05T04:10:40.528016+00:00",
+    "title": "AVD Total Coloring of Central Graphs, Subdivision Graphs, and the Join of Graphs"
+  },
+  {
+    "consumed_by_exp_id": "93bf3c15",
     "description": "Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch \u2014 it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
     "domains": [
       "Novelty",

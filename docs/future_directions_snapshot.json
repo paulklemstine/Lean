@@ -2825,7 +2825,7 @@
       "Brenti (1989)",
       "Liu & Wang (2007)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a3e61288",
     "description": "The row generating functions (RGFs) of the squares of the Eulerian and Delannoy triangles are real-rooted polynomials. Specifically, for each n ≥ 0, let E^{(2)}_{n,k} be the entry in the nth row and kth column of the squared Eulerian triangle, and D^{(2)}_{n,k} be the corresponding entry for the squared Delannoy triangle. Then the polynomials ∑_{k=0}^{n} E^{(2)}_{n,k} x^k and ∑_{k=0}^{n} D^{(2)}_{n,k} x^k are real-rooted.",
     "domain_bridges": [
       "Real algebraic geometry",
@@ -2841,7 +2841,7 @@
     "proof_strategy": "Leverage the Narayana transformation framework to show that the squared matrices can be represented as products preserving real-rootedness, or apply rectangular additive convolution criteria directly to the squared RGF sequences.",
     "research_mode": "team",
     "source_exp_id": "2607.01572v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T09:25:28.179644+00:00",
     "title": "Real-rootedness of the Squares of the Eulerian and Delannoy Triangles"
   },
@@ -2878,7 +2878,7 @@
       "Hiary2025",
       "arXiv:2401.12345"
     ],
-    "consumed_by_exp_id": "ba338a87",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that the upper bound for |ζ(1+it)| can be improved further by utilizing smoothing methods. Specifically, we propose that for all t ≥ 3, |ζ(1+it)| ≤ (1/2) log t + 1.5, which would improve the existing bound of (1/2) log t + 1.57. This conjecture is based on extending the analysis in [this paper] to optimize the constants in the smoothed approximation.",
     "domain_bridges": [
       "analytic number theory",
@@ -2894,7 +2894,7 @@
     "proof_strategy": "Optimize parameters in the smooth cutoff function used in the smoothed approximation of ζ(1+it) to minimize the constant term in the bound, leveraging improved estimates for auxiliary exponential sums.",
     "research_mode": "team",
     "source_exp_id": "2607.01424v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T10:19:57.480990+00:00",
     "title": "Sharpening the Constant in the Upper Bound of |ζ(1+it)| via Smoothing Techniques"
   },
@@ -3798,7 +3798,7 @@
       "See MMS Conjecture Foundations",
       "Shannon Entropy Properties"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "847e72f8",
     "description": "The conjecture posits that the sharpness of the entropic inequality ensures equality in maximum entropy states when samples align with uniform distributions.",
     "domain_bridges": "Uniform Sampling Conditions",
     "domains": [
@@ -3811,7 +3811,7 @@
     "proof_strategy": "Direct verification via majorization principles",
     "research_mode": "team",
     "source_exp_id": "2606.30486v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T23:56:26.184055+00:00",
     "title": "Shareness of Entropic Analogues"
   },
@@ -4280,7 +4280,7 @@
       "Gruber (DMTCS 2012)",
       "Giannopoulou, Hunter, and Thilikos (DAM 2012)"
     ],
-    "consumed_by_exp_id": "2fcfc9fd",
+    "consumed_by_exp_id": "",
     "description": "For every semi-complete digraph G, the directed clique-width of G is at most the cycle rank of G plus 2.",
     "domain_bridges": [
       "Parameterized Complexity",
@@ -4295,7 +4295,7 @@
     "proof_strategy": "Prove by induction on the cycle rank. Base cases: acyclic graphs (cr=0) have directed clique-width ≤ 2. For inductive step, use the cycle rank decomposition: when G is strongly connected, remove a vertex v to get G-v with cr(G-v) ≤ cr(G)-1. By inductive hypothesis, cw(G-v) ≤ cr(G-v)+2 ≤ cr(G)+1. Then show that adding v back and reconnecting edges in the semi-complete manner increases the directed clique-width by at most 1.",
     "research_mode": "team",
     "source_exp_id": "2606.29336v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T09:21:10.954489+00:00",
     "title": "Directed Clique-Width Bound for Semi-Complete Digraphs via Cycle Rank"
   },
@@ -5964,7 +5964,7 @@
       "Geometric fundamental subgroup π₁(X,D)⁰",
       "Semisimple continuous representations in discrete topology"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0259a2c1",
     "description": "For any prime p (including p=2), any finite field k with char(k) ≠ p, any normal geometrically connected variety X over k, and any n ≥ 1, there exist only finitely many isomorphism classes of continuous semisimple geometric representations ρ: π₁(X,0) → GLₙ(F) where F is algebraically closed of characteristic p. This extends the proven result for odd p to all characteristics in the tame ramification case D=0.",
     "domain_bridges": [
       "Galois representations formalism in Lean",
@@ -5982,7 +5982,7 @@
     "proof_strategy": "Extend Hiranouchi's compactness argument using the smallness of π₁(X,0) and combine with Lang-Weil estimates for varieties over finite fields to control the possible representations. The key is to show the discrete image condition forces finiteness even when p=2 by analyzing the wild ramification constraints more carefully.",
     "research_mode": "team",
     "source_exp_id": "2606.31341v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T19:30:38.483142+00:00",
     "title": "Finiteness of Geometric Semisimple Representations for Arbitrary Characteristic"
   },
@@ -6374,7 +6374,7 @@
       "ribbon graphs",
       "partial duality"
     ],
-    "consumed_by_exp_id": "70677671",
+    "consumed_by_exp_id": "",
     "description": "For an orientable hypermap H defined by permutations (σ, α), a partial dual H^{E'} with respect to a hyperedge subset E' is bipartite if and only if there exists an all-crossing direction Φ of the medial map M(H) such that E' = C(Φ), provided that every hyperedge of H has even length.",
     "domain_bridges": [
       "group theory (permutation groups)",
@@ -6390,7 +6390,7 @@
     "proof_strategy": "1. Formalize the (σ, α) model of orientable hypermaps as a pair of permutations acting transitively on a finite set. 2. Implement the partial duality operation as a transformation of the α-cycles. 3. Define the medial map M(H) and the notions of 'all-crossing directions' and 'c-type edges'. 4. Establish a bijection between the vertices of H^{E'} and the state circles of the black/white smoothing S_{E'}. 5. Prove that the bipartiteness of H^{E'} is equivalent to the existence of the specified direction Φ, utilizing the parity of state circle lengths and the vertex-adjacency graph Γ(H).",
     "research_mode": "team",
     "source_exp_id": "2606.30071v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T02:10:40.019984+00:00",
     "title": "Characterization of Bipartite Partial Duals of Orientable Hypermaps"
   },
@@ -7692,6 +7692,29 @@
     "title": "Tensor Amplification and Spectral Transfer for Sidorenko-Type Inequalities"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Let X be a finite connected symmetric digraph, G a finite p-group acting freely on X, and Y = X(G, α) the associated voltage graph cover. For a monic polynomial P ∈ ℚₚ[A] coprime to A²−1 such that the spectral resultant R_{X,P}(T) does not vanish at any torsion character, let λ_X, μ_X be the Iwasawa λ- and μ-invariants of R_{X,P}. Then the λ-invariant λ_Y of the resultant R_{Y,P} satisfies λ_Y = |G|·λ_X + (|G|−1)·μ_X + (|G|−1)·b₁(X), where b₁(X) = #E(X) − #V(X) + 1 is the first Betti number of X.",
+    "domain_bridges": [
+      "math.CO",
+      "math.RT"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0321",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the equivariant factorization of spectral resultants for p-group covers (as in the paper) to relate the Fitting ideals of the modules over the Iwasawa algebra for X and Y. Apply the Hopf formula for the Euler characteristic of the covering to compute the correction term, and then translate the relation of Fitting ideals into a relation between λ- and μ-invariants via the structure theorem for finitely generated torsion modules over the Iwasawa algebra.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02011v1",
+    "status": "available",
+    "timestamp": "2026-07-05T04:10:07.418908+00:00",
+    "title": "Equivariant Kida formula for spectral resultants of Grover walks on p-group graph covers"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "Ogg1983",
@@ -7709,7 +7732,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0321",
+    "id": "fd_0322",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the Riemann–Hurwitz formula to the involution w_p on the Shimura curve X_N, compute the exact number of fixed points, and show that the resulting genus vanishes precisely for N = 6, 10, 22; this can be formalized in Lean by constructing the quotient curve and verifying the genus formula.",
@@ -7734,7 +7757,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0322",
+    "id": "fd_0323",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Translate the five equivalent descriptions of strong Δ-matroids from Theorem A of the paper into Lean definitions. 2. Formalise the notion of a peerless antipode directly from the text. 3. Show that the 'peerless antipode equations' (the tropical equations arising from the orthogonal Grassmannian) are equivalent to the absence of peerless antipodes by adapting the algebraic motivation given in the paper. 4. Use the already established equivalence between strong Δ-matroids and the hyperplane/Wenzel exchange properties to close the loop, yielding the desired iff statement.",
@@ -7757,7 +7780,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0323",
+    "id": "fd_0324",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a formal model in Lean 4 to verify convergence properties of the associated Gauss sum sequences.",
@@ -7782,7 +7805,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0324",
+    "id": "fd_0325",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "classify all graphs with exactly T(n) edges, show that only the split graph achieves non-positive curvature, and verify curvature values using Ollivier's formula",
@@ -7809,7 +7832,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0325",
+    "id": "fd_0326",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Develop a Lean library for split connected reductive groups, Tannakian formalism, trianguline modules, and the trianguline variety T_G. Define the regularity condition on triangulation parameters and the crystallinity property for (phi, Gamma_K)-modules with G-structure. Then construct the equivalence by adapting the arguments from the paper, verifying each step using Lean's algebraic geometry and category theory tools. This will require proving lemmas about smoothness, normality, and base change properties of T_G.",
@@ -7836,7 +7859,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0326",
+    "id": "fd_0327",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on the size of S combined with combinatorial analysis of the equivalence relation; check connectivity and absence of cycles; search for counterexamples computationally.",
@@ -7865,7 +7888,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0327",
+    "id": "fd_0328",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Reduce to finite constraint satisfaction; exploit weight-preserving bijections between symmetric colorings and one-dimensional Gallai colorings; verify via exhaustive search for small parameters.",
@@ -7898,7 +7921,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0328",
+    "id": "fd_0329",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof strategy involves three main components: (1) Use the minimal model program to show that a fibration f: X → C with general type generic fiber admits a canonical fibration structure after removing negligible subvarieties; (2) Apply the framework of Vojta's dictionary to construct entire curves on complex conjugates of fibers from rational points of large height; (3) Combine the Xie--Yuan--Gao theorem on varieties admitting finite morphisms to abelian varieties with equidistribution results to show that such constructed entire curves must be contained in proper subvarieties, forcing the rational points to lie in the special loci. Technical tools include potential theory, height machinery, and the arithmetic Simpson correspondence between heights and curvature.",
@@ -7923,7 +7946,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0329",
+    "id": "fd_0330",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive separation with two clear obstruction layers",
@@ -7951,7 +7974,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0330",
+    "id": "fd_0331",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the local characterization theorem to show any automorphism induces a structure-preserving bijection on the underlying quadratic space, then prove this correspondence respects the quadratic form up to scalar multiplication, and finally apply fundamental theorem of projective geometry to conclude the automorphism group is exactly PΓO(V,Q).",
@@ -7962,9 +7985,42 @@
     "title": "Automorphism group of orthogonal graphs equals projective semilinear orthogonal group"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "ZCYLW2005",
+      "Wang2007",
+      "Chen2008",
+      "Lu2017",
+      "PR2014",
+      "CG2009",
+      "LLLM2017",
+      "Ver2007"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "This paper investigates the AVD-total coloring conjecture for central graphs and explores their structural properties under subdivision and joins.",
+    "domain_bridges": [
+      "graph coloring",
+      "subdivision theory",
+      "Average Degree Constraints"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0332",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct a directed finite graph analogy and analyze degree sequences to isolate falsifiable conditions.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01979v1",
+    "status": "available",
+    "timestamp": "2026-07-05T04:10:40.528016+00:00",
+    "title": "AVD Total Coloring of Central Graphs, Subdivision Graphs, and the Join of Graphs"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "5ab8fd19",
+    "consumed_by_exp_id": "93bf3c15",
     "description": "Deja vu — the feeling that you've experienced something before — is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 — a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch — it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
     "domain_bridges": [],
     "domains": [
