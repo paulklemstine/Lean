@@ -97,7 +97,7 @@
       "Brešar (2017)",
       "Chen, Piotrowski, Shreve (1996)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "54d58162",
     "description": "For any graphs G and H, the domination number of their Cartesian product satisfies γ(G□H) ≥ (19 - √73)/18 * γ(G)γ(H).",
     "domain_bridges": [
       "Graph Product Theory",
@@ -112,7 +112,7 @@
     "proof_strategy": "Real-valued optimization of a piecewise maximum function via variable substitution and algebraic manipulation",
     "research_mode": "team",
     "source_exp_id": "2607.01109v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T06:39:03.958610+00:00",
     "title": "Improved Constant for Domination in Cartesian Product of Graphs"
   },
@@ -8619,7 +8619,7 @@
       "Farber1",
       "Farber2"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9632b543",
     "description": "For any matroid of rank r ≤ k, any two pairs of bases with the same multiset union can be transformed into each other via a sequence of symmetric exchanges.",
     "domain_bridges": [
       "matroid theory",
@@ -8634,7 +8634,7 @@
     "proof_strategy": "Inductive argument on rank bounds combined with matroid minors analysis",
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T21:57:06.806565+00:00",
     "title": "Symmetric Exchange Generation in Rank-Bounded Matroids"
   },
