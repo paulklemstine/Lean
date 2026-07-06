@@ -4,6 +4,36 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
+    "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition \u2014 zeros on the critical line means the bulk geometry is stable against perturbations.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0407",
+    "priority_score": 0.91,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-06T05:39:23.840450+00:00",
+    "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0404",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-06T05:39:23.757188+00:00",
+    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domains": [
       "Pythagorean"
@@ -15,6 +45,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T05:18:37.114832+00:00",
     "title": "Deepening: unnamed_concept"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot \u2014 the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0405",
+    "priority_score": 0.81,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-06T05:39:23.784569+00:00",
+    "title": "Knots That Think: Cognition as Braiding in Category Theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -1287,7 +1332,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lower bound conjecture for low moments of Dirichlet character sums"
   },
   {
-    "consumed_by_exp_id": "79fcdf2e",
+    "consumed_by_exp_id": "",
     "description": "For the explicit infinite family of q-hypergeometric series introduced in the paper, the coefficients V(n) satisfy: (1) V(n) = 0 for infinitely many n, and (2) there exists a density-zero set E \u2282 \u2115 such that for all n \u2209 E, V(n+1) and V(n) have opposite signs. This generalizes the proven result for the specific series v\u2082(q), v\u2083(q), v\u2084(q) to their broader family context.",
     "domains": [
       "Pythagorean",
@@ -1297,7 +1342,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T01:56:10.723921+00:00",
     "title": "Alternating Sign Conjecture for Andrews' q-Series Families"
   },
@@ -1563,7 +1608,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Logarithmic bound for generalized Erd\u0151s\u2013Rogers functions: the case F = K_4^3"
   },
   {
-    "consumed_by_exp_id": "c2eb3269",
+    "consumed_by_exp_id": "",
     "description": "For the Maker-Breaker C_k-game on K_n with fixed k \u2265 4, the threshold bias is exactly c_k \u00b7 n^{(k-2)/(k-1)} where c_k = [(k-1)(2(k-1)/k)^{k-2}]^{1/(k-1)}. That is, Maker wins when q < (1-\u03b5)c_k\u00b7n^{(k-2)/(k-1)} and Breaker wins when q > (1+\u03b5)c_k\u00b7n^{(k-2)/(k-1)} for any \u03b5 > 0 and all sufficiently large n.",
     "domains": [
       "Bridges"
@@ -1572,7 +1617,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01294v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T11:40:15.032234+00:00",
     "title": "Sharp Threshold Constant for Cycle Games"
   },
@@ -1840,7 +1885,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-existence of weak Ziegler pairs for high-degree plus-one generated conic-line arrangements with defect three"
   },
   {
-    "consumed_by_exp_id": "66c7a5a0",
+    "consumed_by_exp_id": "",
     "description": "For every integer d \u22657, there exists a simplicial 0/1-polytope in dimension d with exactly 2d vertices that is not centrally symmetric. This generalizes the explicit 7-dimensional counterexample to all higher dimensions, extending the classification beyond the known result for d=7.",
     "domains": [
       "Geometry"
@@ -1849,7 +1894,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31640v2",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T19:30:02.443246+00:00",
     "title": "Existence of Non-Centrally Symmetric Simplicial 0/1-Polytopes for All Dimensions \u22657"
   },
@@ -2799,7 +2844,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on \u03c3_{p,a} being unity for Legendre symbol conditions"
   },
   {
-    "consumed_by_exp_id": "0115cd1f",
+    "consumed_by_exp_id": "",
     "description": "For any finite hypergraph H (not necessarily uniform), let a(H) denote the annihilation number (the largest size of a vertex set A with \\sum_{v\\in A} d_H(v) \\u2264 e(H)), \\u03b1(H) the independence number, and \\u03bd(H) the matching number. We conjecture that for all hypergraphs H with \\u03bd(H) \\u2265 1, the annihilation gap satisfies a(H) - \\u03b1(H) \\u2264 2\\u03bd(H) + 1 - \\u2307\\u221a(6\\u03bd(H)), and that for each integer \\u03bd \\u2265 1 there exists a hypergraph attaining equality.",
     "domains": [
       "Pythagorean"
@@ -2808,7 +2853,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01438v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T10:03:11.589332+00:00",
     "title": "Hypergraph Extension of the Exact Matching-Number Bound for the Annihilation Gap"
   },
@@ -3014,21 +3059,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T15:36:33.626121+00:00",
     "title": "Sharpness of the k_t lower bound given k_s in extremal graphs"
-  },
-  {
-    "consumed_by_exp_id": "e455828e",
-    "description": "Conjecture: In the unramified GU(1,n-1) Rapoport\u2011Zink space of arbitrary parahoric level P, every basic Ekedahl\u2011Kottwitz\u2011Oort\u2011Rapoport (EKOR) stratum is isomorphic (as a scheme over the residue field \ud835\udd3d_q) to a finite disjoint union of copies of a explicitly defined fine Deligne\u2011Lusztig variety X(w_P) attached to a Weyl group element w_P determined by P. Moreover, the number of irreducible components equals the number of vertices in the affine Dynkin diagram of type \u00c3_{n-1} corresponding to the parahoric subgroup P, and each component is smooth and projective.",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0249",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.31940v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T15:54:12.765581+00:00",
-    "title": "Basic EKOR Strata are Disjoint Unions of Fine Deligne-Lusztig Varieties"
   },
   {
     "consumed_by_exp_id": "",
@@ -3732,7 +3762,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equivalenceof Shahidi's Partial Bessel Functions and Partial Bessel Integrals in Exterior Cube \u03b3-factor Stability"
   },
   {
-    "consumed_by_exp_id": "c02bcba5",
+    "consumed_by_exp_id": "",
     "description": "The number of nonzero orbits of Boolean cubic forms in 10 variables under the action of GL(10,2) is exactly 3,691,560. This is the main classification result of the paper, verified by both Burnside's lemma and the orbit-stabilizer theorem.",
     "domains": [
       "Bridges"
@@ -3741,7 +3771,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28473v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T17:47:18.653210+00:00",
     "title": "Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
   },
@@ -5172,6 +5202,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0406",
+    "priority_score": 0.77,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-06T05:39:23.812371+00:00",
+    "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Congruence Rigidity of Sums of Squares\n\nThis cycle established that the entries of an integer right triangle are forced into\nstrong divisibility patterns \u2014 one leg is a multiple of three, the legs jointly carry a\nfactor of four, one entry is a multiple of five \u2014 and that a four-dimensional right\n\"box\" (a solution of `a\u00b2 + b\u00b2 + c\u00b2 = d\u00b2`) is even more rigid: at most one of its three\nspatial edges can be odd. We also pinned down exactly which whole numbers can serve as a\nleg. These findings point to several bold, testable conjectures.\n\n## 1. The correct modulus for a power of two grows with the power\n**Conjecture.** In any solution of `a\u00b2 + b\u00b2 = c\u00b2`, the two-adic valuation of the leg\nproduct `a\u00b7b` is governed one level deeper than naive reduction suggests: deciding\nwhether `2^k` divides `a\u00b7b` is a question about residues modulo `2^{k+1}`, never modulo\n`2^k`.\n*The key insight is* that a difference of two odd squares is always divisible by eight,\nso each additional factor of two in the product must be certified one binary place\nfurther out than one would guess. *Why now?* Having isolated the exact `mod 8`\nobstruction behind the factor of four, we can test the pattern mechanically for `k = 3,\n4, 5` and either confirm a clean \"shift-by-one\" law or expose its first exception.\n\n## 2. A universal super-divisor for higher-dimensional right figures\n**Conjecture.** For every dimension `r`, solutions of `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` obey a single\nuniversal divisibility law: there is a constant `D(r)`, depending only on `r`, such that\n`D(r)` divides the product `x\u2081\u00b7x\u2082\u00b7\u22ef\u00b7x_r` for *every* solution, and `D(r)` is the largest\nsuch constant.\n*The key insight is* that reduction to a finite residue ring turns \"for all solutions\"\ninto a finite, decidable statement, so the optimal constant `D(r)` is computable and\nshould grow in a structured (conjecturally multiplicative-over-primes) way. *Why now?*\nThe three-dimensional case already yields `4 \u2223 x\u2081x\u2082x\u2083`; comparing it against the planar\nconstant `12` suggests a dimension-indexed sequence worth charting and predicting.\n\n## 3. Parity collapse in higher dimensions\n**Conjecture.** As the number of squared terms increases, the number of edges permitted to\nbe odd stays uniformly bounded: in `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` at most three of the `x_i` can be\nodd, regardless of `r`.\n*The key insight is* that the sum of squares equals the count of odd terms modulo four,\nwhile a perfect square is `0` or `1` modulo four, capping the admissible odd-count no\nmatter how many terms are added. *Why now?* We proved the cap is \"at most one\" in three\ndimensions; extending the modular bookkeeping to arbitrary `r` is a self-contained next\nstep that would reveal whether the cap is truly dimension-independent.\n\n## 4. A sharp threshold characterization of legs in every dimension\n**Conjecture.** Just as the whole numbers that are a leg of a right triangle are exactly\nthose `\u2265 3`, in each higher dimension there is a sharp finite threshold above which every\ninteger appears as an edge of some right figure, and the finitely many exceptions can be\nlisted explicitly.\n*The key insight is* that a single explicit construction, split according to the parity of\nthe target edge, realizes all sufficiently large values, while the small exceptions are\nforced by a factorization that would otherwise require a vanishing edge. *Why now?* The\nplanar threshold `3` and its sharpness (the failures at `1` and `2`) give a template that\nshould transfer verbatim to the box equation and beyond.\n\n## 5. Divisibility as a sieve against near-solutions\n**Conjecture.** The combined congruence obstructions (`12 \u2223 a\u00b7b`, `60 \u2223 a\u00b7b\u00b7c`, and their\nhigher-dimensional analogues) are strong enough that a random integer triple satisfying\nthem has a positive, computable probability of being genuinely Pythagorean \u2014 i.e. the\ncongruence conditions capture a constant fraction of the \"arithmetic mass\" of true\nsolutions.\n*The key insight is* that each universal divisor removes a fixed proportion of impostors,\nso stacking independent prime-power obstructions multiplies into a sieve of predictable\ndensity. *Why now?* With the exact obstructions in hand for the primes `2, 3, 5`, one can\nimmediately measure how much of the solution set they explain and calibrate whether a few\nmore primes suffice to pin down solutions almost completely.\n",
     "domains": [
       "Pythagorean",
@@ -5187,6 +5232,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Finite Rogers\u2013Ramanujan machinery\n\n## 1. The second Rogers\u2013Ramanujan polynomial and its Lucas shadow\n\nIntroduce the companion Schur polynomials `E_n` with `E_0 = 1`, `E_1 = 1 + q`,\nand `E_{n+2} = E_{n+1} + q^{n+2} E_n`, the finitization of the *second*\nRogers\u2013Ramanujan identity `\u2211 q^{k\u00b2+k}/(q;q)_k`. Conjecture the closed form\n`E_n = \u2211_k q^{k\u00b2+k} [n-k, k]_q`, and that its `q \u2192 1` specialisation is again a\nFibonacci number, while a suitable signed specialisation `q \u2192 -1` produces a\nperiodic sequence of period 6.\n**The key insight is** that both Rogers\u2013Ramanujan identities share a single\n`q`-Pascal engine, differing only by the quadratic exponent `k\u00b2` versus `k\u00b2+k`,\nso the entire finite theory should transfer verbatim with the shifted weight.\n**Why now?** The first identity's finite core \u2014 a q-Fibonacci recurrence equal to\na weighted Gaussian-binomial sum \u2014 is now nailed down exactly, so the second is a\ncontrolled variation rather than an open-ended search.\n\n## 2. Modulus-5 dissection of the Rogers\u2013Ramanujan polynomials\n\nStudy the coefficients of `D_n` graded by exponent modulo 5. Conjecture that as\n`n \u2192 \u221e` the generating function organises into the product\n`\u220f 1/((1-q^{5j+1})(1-q^{5j+4}))`, and that the finite polynomials `D_n` already\nexhibit a stable \"gap-2\" partition statistic: the coefficient of `q^m` in `D_n`\ncounts partitions of `m` into parts each `\u2264 n` with consecutive parts differing\nby at least 2.\n**The key insight is** that the additive weight `q^{k\u00b2}` encodes exactly the\nminimal staircase `1 + 3 + 5 + \u2026` forced by a difference-\u2265-2 condition, so the\nGaussian-binomial sum is a partition generating function in disguise.\n**Why now?** With the polynomial identity proved, the partition interpretation\nbecomes a bijection to construct rather than an identity to guess.\n\n## 3. Cross-domain bridge: q-Fibonacci meets the Fibonacci gcd law\n\nThe specialisation `D_n(1) = F_{n+1}` links the `q`-series world to the classical\nFibonacci identities. Conjecture a `q`-deformed gcd law: the polynomial\n`gcd(D_m, D_n)` in `\u2124[q]` equals `D_{gcd(m+1,n+1)-1}` up to an explicit power of\n`q`, refining the integer identity `gcd(F_m, F_n) = F_{gcd(m,n)}`.\n**The key insight is** that divisibility structure among Fibonacci numbers should\nlift to a divisibility structure among their `q`-analogues, with the extra\ngrading recording where the common factors sit.\n**Why now?** The exact bridge `D_n(1) = F_{n+1}` is established, giving a rigid\nscaffold on which to test and prove the graded refinement.\n\n## 4. Unimodality and log-concavity of Gaussian binomial coefficients\n\nFor fixed `n, k`, conjecture that the coefficient sequence of `[n, k]_q` (a\npolynomial in `q`) is symmetric and unimodal, and moreover that the Schur\npolynomials `D_n` have log-concave coefficient sequences.\n**The key insight is** that the q-Pascal recurrence `[n+1,k+1] = [n,k] +\nq^{k+1}[n,k+1]` is a positivity-preserving convolution, so structural positivity\nproperties should propagate inductively.\n**Why now?** With both q-Pascal rules formalised, unimodality reduces to an\ninduction that respects exactly those two rules.\n\n## 5. Finite Rogers\u2013Ramanujan continued fraction\n\nDefine the finite continued-fraction convergents `R_n = D_{n-1}/D_n` (as rational\nfunctions in `q`) and conjecture that they converge coefficientwise to the\nRogers\u2013Ramanujan continued fraction `1/(1 + q/(1 + q\u00b2/(1 + \u2026)))`, with the error\n`R_n - R_{n+1}` a single monomial times `1/(D_n D_{n+1})`.\n**The key insight is** that the two-term recurrence `D_{n+2} = D_{n+1} +\nq^{n+1}D_n` is precisely the recurrence generating the convergents of that\ncontinued fraction, so the polynomials `D_n` *are* its denominators.\n**Why now?** The recurrence and its closed form are both proved, so the\ncontinued-fraction claim is a determinant/telescoping computation rather than an\nanalytic limit argument.\n",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_0409",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e92fe2c1",
+    "status": "available",
+    "timestamp": "2026-07-06T05:40:41.215758+00:00",
+    "title": "Introduce the companion Schur polynomials `E_n` with `E_0 = 1`, `E_1 = 1 + q`,"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every real number defines a musical scale: map the digits 0-9 to frequencies f_n = 220 * 2^{n/12} (the A minor pentatonic scale extended). The number pi = 3.14159265... produces the sequence E4, C5, C#5, D5, D#5, F5, E5, A4, G5, C5... \u2014 a melody. Conjecture: The melody of pi is not periodic (because pi is irrational) but has musical structure: the autocorrelation of the digit sequence at lag 12 (one octave) is positive and statistically significant. This means pi has more octave-related notes than expected by chance \u2014 pi 'favors' notes separated by octaves. Similarly, e 'favors' perfect fifths (lag 7) and sqrt(2) 'favors' minor thirds (lag 3). The musical structure of transcendental numbers reflects their continued fraction properties: numbers with bounded partial quotients have more consonant melodies. Test: compute the digit autocorrelation of pi, e, and sqrt(2) at lags 0-12 (representing unison through octave). Perform a chi-squared test comparing to the uniform distribution. Generate the 'music' of each constant and analyze for tonal centers. Impact: transcendental numbers have musical souls \u2014 their digit sequences contain hidden harmonies that reflect their deepest arithmetic properties.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0408",
+    "priority_score": 0.72,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-06T05:39:23.868981+00:00",
+    "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Geometry"
@@ -5198,5 +5273,19 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T04:44:52.457313+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle e92fe2c1 (Q=0.467) proved 9 theorems in Shared but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that the Rogers\u2013Ramanujan identities hold as equalities of formal power series in the variable q with coefficients in \u2115, i.e., for all non\u2011negative integers n the coefficient of q^n in the ",
+    "domains": [
+      "Shared"
+    ],
+    "id": "sorry_fill_e92fe2c1_0789d355",
+    "priority_score": 0.5165034268754077,
+    "research_mode": "team",
+    "source_exp_id": "e92fe2c1",
+    "status": "available",
+    "timestamp": "2026-07-06T05:40:46.796893+00:00",
+    "title": "Close Proofs: Formalized Rogers\u2013Ramanujan identities for q-Pochhammer symbols"
   }
 ];

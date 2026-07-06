@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e5555684",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Hegedűs bound via spectral constraints\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\ncycle. The cycle proved (0 sorries):\n\n* `gram_posDef_card_le`",
-      "quality_score": 0.485834,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-28T08:27:00",
-      "title": "Proof of Hegedçs bound via spectral constraints in combinatorial families"
-    },
-    {
       "cycle_id": "a530b001",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Monotone Circuit Complexity\n\nThis cycle assembled a three-pronged formal toolkit for monotone Boolean circuit\nlower bounds:\n\n* `Basic.lean` — circuits, evaluation, size/depth/var",
@@ -2501,6 +2491,16 @@
       "theorem_count": 2,
       "timestamp": "2026-07-06T03:05:27",
       "title": "Classification of regular 4‑maniplexes via tetravalent graph censuses"
+    },
+    {
+      "cycle_id": "e92fe2c1",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — Finite Rogers–Ramanujan machinery\n\n## 1. The second Rogers–Ramanujan polynomial and its Lucas shadow\n\nIntroduce the companion Schur polynomials `E_n` with `E_0 = 1`, `E_1 = 1 + q",
+      "quality_score": 0.46650342687540775,
+      "sorry_count": 3,
+      "theorem_count": 9,
+      "timestamp": "2026-07-06T05:40:46",
+      "title": "Formalized Rogers–Ramanujan identities for q-Pochhammer symbols"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.8076800000000002
     }
   ],
-  "last_updated": "2026-07-06T03:05:27",
+  "last_updated": "2026-07-06T05:40:46",
   "open_questions": [
-    {
-      "context": "All results are proved with zero `sorry`s.",
-      "cycle_id": "8ed8ca57",
-      "domain": "Novelty",
-      "sorry_count": 1,
-      "timestamp": "2026-06-27T04:13:04"
-    },
     {
       "context": "(sieve mechanism) form a coherent, sorry-free slice of the Maynard–Tao framework.",
       "cycle_id": "f8a707b1",
@@ -3016,6 +3009,13 @@
       "domain": "Combinatorics",
       "sorry_count": 1,
       "timestamp": "2026-07-06T02:02:58"
+    },
+    {
+      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
+      "cycle_id": "e92fe2c1",
+      "domain": "Shared",
+      "sorry_count": 3,
+      "timestamp": "2026-07-06T05:40:46"
     }
   ],
   "research_threads": {
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "47b46667",
-        "quality": 0.4507929497716895,
-        "theorems": 10,
-        "title": "The Library of Babel: Combinatorics of the Universal Library"
-      },
-      {
         "cycle_id": "ab651d5d",
         "quality": 0.4484232,
         "theorems": 16,
@@ -3947,6 +3941,12 @@
         "quality": 0.6876800000000001,
         "theorems": 7,
         "title": "Generalized Honeymoon Oberwolfach Problem with Multiple Round Tables"
+      },
+      {
+        "cycle_id": "e92fe2c1",
+        "quality": 0.46650342687540775,
+        "theorems": 9,
+        "title": "Formalized Rogers–Ramanujan identities for q-Pochhammer symbols"
       }
     ],
     "Tropical": [
