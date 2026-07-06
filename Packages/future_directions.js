@@ -1853,20 +1853,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality for exactly one edge subset"
   },
   {
-    "consumed_by_exp_id": "fed5f716",
-    "description": "For any d \u00d7 d matrix A over a number field K with ring of integers O_K, if there exists n \u2265 1 such that A^n \u2208 M_d(O_K), then the pseudo-determinant of A is an algebraic integer in K.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0166",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.30876v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T21:26:19.991104+00:00",
-    "title": "Pseudo-determinant of power-integral matrices is an algebraic integer"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For a graph $G$ with minimum degree $\\delta(G) \\ge a + r$, if the spectral radius $\\lambda(G)$ is at least $a + r + b$, then $G$ is fractional ID-$[a,b]$-factor-critical.",
     "domains": [
@@ -2319,7 +2305,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Locality of supersingular representations of GL_2 over unramified extensions of Q_p"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8565ba38",
     "description": "This paper proposes a combinatorial framework to describe the discrete homotopy groups of quasisymmetric cubical sets, extending prior work by Carranza and Kapulkin. It aims to provide a formally verified, leveraging Lean 4, synthetic proof of isomorphism between the homotopy groups of the geometric realization and those of the underlying cubical configuration.",
     "domains": [
       "Algebra",
@@ -2329,7 +2315,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28693v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T13:25:20.641906+00:00",
     "title": "Discrete homotopy groups of quasisymmetric cubical sets"
   },
@@ -3003,7 +2989,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non\u2011existence of non\u2011constant colorings satisfying the blend condition on finite strongly connected edge\u2011weighted digraphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7e1d3a87",
     "description": "Let \\(\\mathcal O = \\mathbb Z[\\omega]\\) be an imaginary quadratic order of discriminant \\(D<0\\) and let \\(p\\) be a prime that is inert in the quadratic field \\(K=\\mathbb Q(\\omega)\\). For every \\(\\mathcal O\\)-oriented supersingular elliptic curve \\((E,\\iota)\\) defined over \\(\\mathbb F_{p}\\) there exists a prime \\(\\ell \\neq p\\) such that \\(E\\) admits an \\(\\mathcal O\\)-twisting endomorphism of degree \\(\\ell\\). Moreover, \\(\\ell\\) can be chosen to be any prime that splits completely in the ring class field of \\(\\mathcal O\\) and satisfies \\(\\ell \\equiv 1 \\pmod{4}\\).",
     "domains": [
       "Algebra",
@@ -3013,7 +2999,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31687v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T16:52:17.908749+00:00",
     "title": "Existence of Prime\u2011Degree O\u2011twisting Endomorphisms for Inert Primes"
   },
@@ -3137,21 +3123,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Surface-to-Volume Bounding Inequality"
   },
   {
-    "consumed_by_exp_id": "d3788903",
-    "description": "Conjecture that for any connected graph G on n vertices and any real p>2, the adjacency p-energy satisfies strictly larger than that of the path on n vertices unless G is isomorphic to the path.",
-    "domains": [
-      "Pythagorean",
-      "Physics"
-    ],
-    "id": "fd_0261",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.30996v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T21:44:47.963628+00:00",
-    "title": "Strict adjacency p-energy inequality for non-path connected graphs"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The paper establishes that for any computable coloring \u03c7 of copies of a finite subgraph G in the Henson graph H_{n+1}, there exists a homogeneous copy H' computable in 0^{(2\u03b4(G,n)-1)}, where \u03b4(G,n) is the maximum diary level. Cholak, Dobrinen, and McCoy [CDM] proved that 0^{(|G|-1)} is necessary. This conjecture asserts that the upper bound can be tightened to match the lower bound, i.e., H' can be chosen computable in 0^{(|G|-1)}.",
     "domains": [
@@ -3208,20 +3179,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T23:33:38.013269+00:00",
     "title": "Optimality of the polynomial factor in the Naslund\u2013Sawin bound for sunflower\u2011free families"
-  },
-  {
-    "consumed_by_exp_id": "1427cdbb",
-    "description": "There exists an absolute constant C such that for every d-regular graph G on n vertices with d \u2265 2, the irregularity strength s(G) satisfies s(G) \u2264 n/d + C. Here s(G) is the smallest integer k such that the edges of G can be weighted with integers from {1,\u2026,k} so that all weighted vertex degrees are distinct.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0267",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.30612v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T23:58:16.205238+00:00",
-    "title": "Faudree-Lehel Conjecture on Irregularity Strength of Regular Graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -3981,7 +3938,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Crystallinity criterion via regularity of triangulation parameters"
   },
   {
-    "consumed_by_exp_id": "c5257493",
+    "consumed_by_exp_id": "",
     "description": "For any finite subset S of BP^1(K) with at least three points, the graph T(S) constructed from equivalence classes of triples in S^3 is always a tree (i.e., it is connected and contains no cycles). This conjecture extends known observations in the paper and is falsifiable by providing a counterexample where the graph contains a cycle.",
     "domains": [
       "Pythagorean",
@@ -3991,7 +3948,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T01:19:57.095760+00:00",
     "title": "Conjecture on the tree structure of T(S) for subsets of the projective line"
   },
@@ -5611,7 +5568,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Chromonic Lemma: No Nontrivial Harmonic Colorings Exist on Strongly Connected Digraphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3cc32237",
     "description": "Let F be a CM number field, n \u2265 2, and \u2113 a rational prime. Let \u03c1\u0304 : G_F \u2192 GL_n(F\u0304_\u2113) be a continuous irreducible representation arising from the mod \u2113 Betti cohomology of the locally symmetric space for GL_n/F. Then for every finite place v | \u2113 of F, the restriction \u03c1\u0304|_{G_{F_v}} is de Rham, and its Hodge\u2013Tate weights are determined by the infinitesimal character of the corresponding local component \u03c0_v of the automorphic representation associated to \u03c1\u0304. This extends the paper's local-global compatibility at v \u2224 \u2113 to the much deeper v | \u2113 case.",
     "domains": [
       "Algebra",
@@ -5621,7 +5578,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31698v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T12:12:11.640829+00:00",
     "title": "De Rham Local-Global Compatibility for Torsion Automorphic Forms on GL_n over CM Fields"
   },
@@ -6333,18 +6290,48 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The main theorem of the paper: Let N > 1 be a squarefree integer with an even number of prime factors, and let p be a prime divisor of N. The factorization formula for the norm of the p-adic cross-ratio infinite product of CM points on the Shimura curve X_N holds if the Atkin-Lehner quotient X_N / w_p has genus 0. This extends the original Giampietro-Darmon conjecture, which required the Shimura curve X_N itself to have genus 0 (a condition only satisfied for N in {6, 10, 22}).",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0498",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02306v1",
+    "status": "available",
+    "timestamp": "2026-07-06T22:20:36.514194+00:00",
+    "title": "Atkin-Lehner Genus Zero Criterion for Giampietro-Darmon Factorization"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any full-dimensional convex polytope P in \u211d^d, the set of centerpoints of P (with respect to the uniform Lebesgue measure on P) coincides with the floating body of P at level 1/(d+1). That is, a point c \u2208 \u211d^d is a centerpoint\u2014meaning every closed halfspace containing c captures at least 1/(d+1) of the volume of P\u2014if and only if c belongs to the intersection of all closed halfspaces H\u207a satisfying vol(H\u207a \u2229 P) \u2265 vol(P)/(d+1). This equivalence, proved in the paper for convex polytopes, reveals a fundamental structural identity between a combinatorial-geometric object (centerpoints) and a convex-geometric object (floating bodies). Formalizing even the 2-dimensional case for triangles would require developing substantial infrastructure in convex geometry, measure theory on polytopes, and the centerpoint theorem.",
     "domains": [
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_0498",
+    "id": "fd_0499",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02400v1",
     "status": "available",
     "timestamp": "2026-07-06T21:47:13.598450+00:00",
     "title": "Centerpoint-Floating Body Coincidence for Convex Polytopes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every n \u2265 4 and every integer k with 2 \u2264 k \u2264 \u2308n/2\u2309, there exists a non-hook partition \u03bb of n with exactly k parts such that the irreducible character \u03c7^\u03bb is a constituent of the Sylow 2-permutation character (1_P)\u2191^{S_n}, where P is a Sylow 2-subgroup of S_n. This conjecture asserts that the set of part-counts realized by non-hook constituents of \u03a9\u2082(n) forms the complete interval [2, \u2308n/2\u2309], complementing the paper's Theorem A (which guarantees all part-counts up to a_1+t-1) and Proposition on the maximum part-count \u2308n/2\u2309.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0500",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02433v1",
+    "status": "available",
+    "timestamp": "2026-07-06T22:21:20.880694+00:00",
+    "title": "Full part-count spectrum of the Sylow 2-permutation character of S_n"
   },
   {
     "consumed_by_exp_id": "",
