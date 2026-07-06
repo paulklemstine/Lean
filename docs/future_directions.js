@@ -4551,11 +4551,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every integer k \u2265 6 with k \u2261 2 (mod 4), and for every pair of nonnegative integers (a, b) with a + b = k and a \u2265 1, the number 2^a \u00b7 3^b \u2212 1 is composite. This formalizes the paper's theorem that row k of the principal skeleton L\u2081 contains no primes when k \u2261 2 (mod 4) and k \u2265 6. The proof exploits that k even forces a and b to share parity. When both even, 2^a \u00b7 3^b \u2212 1 = (2^{a/2} \u00b7 3^{b/2} \u2212 1)(2^{a/2} \u00b7 3^{b/2} + 1) via difference of squares, with both factors > 1 for k \u2265 6. When both odd, k \u2261 2 (mod 4) forces a \u2261 b (mod 4), yielding 2^a \u00b7 3^b \u2261 1 (mod 5) so 5 | (2^a \u00b7 3^b \u2212 1), and the cofactor exceeds 1 since k \u2265 6 excludes the case a = b = 1 where the value equals 5.",
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_0361",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01718v1",
+    "status": "available",
+    "timestamp": "2026-07-06T00:45:05.954983+00:00",
+    "title": "No primes in rows k \u2261 2 (mod 4) of the principal Collatz skeleton L\u2081"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0361",
+    "id": "fd_0362",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -4569,7 +4584,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0362",
+    "id": "fd_0363",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -4584,7 +4599,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0363",
+    "id": "fd_0364",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
@@ -4599,7 +4614,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0364",
+    "id": "fd_0365",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -4614,7 +4629,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0365",
+    "id": "fd_0366",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -4628,7 +4643,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0366",
+    "id": "fd_0367",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -4642,7 +4657,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0367",
+    "id": "fd_0368",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -4657,7 +4672,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0368",
+    "id": "fd_0369",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02011v1",
@@ -4672,7 +4687,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0369",
+    "id": "fd_0370",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -4686,7 +4701,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0370",
+    "id": "fd_0371",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02085v1",
@@ -4700,7 +4715,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0371",
+    "id": "fd_0372",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01957v1",
@@ -4715,7 +4730,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0372",
+    "id": "fd_0373",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01956v1",
@@ -4729,13 +4744,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0373",
+    "id": "fd_0374",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01744v1",
     "status": "available",
     "timestamp": "2026-07-06T00:22:25.670501+00:00",
     "title": "Explicit Gross-Zagier Formula for p=7"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The shifted $t$-Schur function $\\mathcal{Q}_\\lambda(X;t)$, generated by the modified odd Greaves--Jing--Zhu operator $\\mathcal{Y}_t(z) = \\mathcal{R}_t \\Phi(z) \\mathcal{R}_t^{-1}$ (where $\\mathcal{R}_t$ rescales each odd power sum $p_n \\mapsto (1-t^n)p_n$ and $\\Phi(z)$ is the classical Schur $Q$ vertex operator), equals the classical Schur $Q$-function $Q_\\lambda$ under the plethystic substitution $X \\mapsto X - tX$. Equivalently, $\\mathcal{R}_t Q_\\lambda(X) = Q_\\lambda[X - tX]$ for every strict partition $\\lambda$ and formal parameter $t$. This encapsulates the conjugation relation and the resulting plethystic interpretation of the modified operator's spectrum.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0375",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01839v1",
+    "status": "available",
+    "timestamp": "2026-07-06T00:45:40.615947+00:00",
+    "title": "Shifted t-Schur plethystic identity via modified odd operator conjugation"
   },
   {
     "consumed_by_exp_id": "",

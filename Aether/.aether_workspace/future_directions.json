@@ -4400,7 +4400,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Drinfeld-Lau 2025",
         "Zink 2003",
@@ -4425,7 +4425,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0094",
-      "last_attempt_time": "2026-07-06T00:22:27.851055+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sheared_witt_colimit (R : Type*) [comm_ring R] [nilperfect R] : \\(\\text{Derived}_{p\\text{-complete}} @\\wedge \\(@\\wedge Loomis-Sikorski) \\(@\\wedge \\(@\\wedge Algebra) \\(@\\wedge \\)\n`",
       "lineage_refs": [],
@@ -17178,6 +17178,55 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "arXiv:2407.collatz-coordinate-system",
+        "Kannan2016",
+        "Ren2023"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every integer k ≥ 6 with k ≡ 2 (mod 4), and for every pair of nonnegative integers (a, b) with a + b = k and a ≥ 1, the number 2^a · 3^b − 1 is composite. This formalizes the paper's theorem that row k of the principal skeleton L₁ contains no primes when k ≡ 2 (mod 4) and k ≥ 6. The proof exploits that k even forces a and b to share parity. When both even, 2^a · 3^b − 1 = (2^{a/2} · 3^{b/2} − 1)(2^{a/2} · 3^{b/2} + 1) via difference of squares, with both factors > 1 for k ≥ 6. When both odd, k ≡ 2 (mod 4) forces a ≡ b (mod 4), yielding 2^a · 3^b ≡ 1 (mod 5) so 5 | (2^a · 3^b − 1), and the cofactor exceeds 1 since k ≥ 6 excludes the case a = b = 1 where the value equals 5.",
+      "domain_bridges": [
+        "computational_number_theory",
+        "formal_verification",
+        "dynamical_systems"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Logic"
+      ],
+      "github_issue": 0,
+      "id": "fd_0361",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem row_k_mod4_eq2_no_primes (k a b : ℕ) (hk : k ≥ 6) (hk_mod : k % 4 = 2) (hab : a + b = k) (ha : a ≥ 1) : ¬Nat.Prime (2^a * 3^b - 1) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Case split on parity of a and b. Since k ≡ 2 (mod 4) is even, a and b have the same parity. Case 1 (both even): apply difference of squares factorization 2^a · 3^b − 1 = (2^{a/2} · 3^{b/2} − 1)(2^{a/2} · 3^{b/2} + 1), verify both factors exceed 1 using k ≥ 6. Case 2 (both odd): from a + b ≡ 2 (mod 4) with a,b odd, deduce a ≡ b (mod 4); compute 2^a · 3^b mod 5 using 2^4 ≡ 3^4 ≡ 1 (mod 5) to show 5 | (2^a · 3^b − 1); verify 2^a · 3^b − 1 > 5 since k ≥ 6 excludes (a,b) = (1,1). Subsume b = 0 into Case 1 since then a = k is even.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.01718v1",
+      "source_path": "http://arxiv.org/abs/2607.01718v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-06T00:45:05.954983+00:00",
+      "title": "No primes in rows k ≡ 2 (mod 4) of the principal Collatz skeleton L₁"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "Theorem A",
         "Proposition big"
       ],
@@ -17198,7 +17247,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0361",
+      "id": "fd_0362",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "def λ (n : ℕ) : Partition n :=\n  ⟨List.replicate (n / 2) 2 ++ if n % 2 = 1 then [1] else [],\n   by sorry, by sorry⟩\n\ntheorem max_parts_achieved_by_all_twos (n : ℕ) (hn : n ≥ 1) : λ n ∈ Ω₂ n := by sorry",
@@ -17246,7 +17295,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0362",
+      "id": "fd_0363",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀c>0, ∃G: no_cycle_length d ∧ min_deletions(G) ≥ cd |V(G)|",
@@ -17293,7 +17342,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0363",
+      "id": "fd_0364",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem fixed_genus_spectral_gap_lower_bound {g : ℕ} (hg : 0 < g) {n : ℕ} (hn : n > 2 * g) : ∃ (C : ℝ), 0 < C ∧ ∀ (x y : chord_diagram n g), (1 - C / (n : ℝ)) * dist x y ≤ dist (swap x y) (swap y x) := by sorry",
@@ -17334,7 +17383,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0364",
+      "id": "fd_0365",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "finite_generation",
@@ -17383,7 +17432,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0365",
+      "id": "fd_0366",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem black_hole_extremal_gumbel (c : ℝ) (h : c > 0) : let N_dist := lambda_microstate_count_dist c in let ΔN := extremal_fluctuation N_dist in (∃ (normalization : ℝ → ℝ), weak_convergence (distribution_of (normalization ∘ ΔN)) (gumbel_distribution))",
@@ -17430,7 +17479,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0366",
+      "id": "fd_0367",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀ {r : ℕ} (k : ℕ) (M : Matroid r), (∀ {B1 B2 B1' B2' : Basis M} (h : MultisetUnion B1 B2 = MultisetUnion B1' B2'), ∃ (seq : List (SymmetricExchange M)), seq ≡ TransformBases (B1, B2) (B1', B2') seq)",
@@ -17478,7 +17527,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0367",
+      "id": "fd_0368",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem spectral_transfer_sharpness (C : AdmissibleClass) : (∃ H : SimpleGraph, is_bipartite H ∧ vertex_count H = 5 ∧ edge_count H = 4) ∧ (∀ W : Graphon, W ∈ C → t(H, W) ≥ (spectral_radius W)^(2*4 - 5) * (density W)^(5 - 4)) ∧ ¬ (∀ W : Graphon, W ∈ C → t(H, W) ≥ (density W)^4)",
@@ -17529,7 +17578,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0368",
+      "id": "fd_0369",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "/-- Conjecture: The μ‑invariant of the module generated by the spectral resultant equals the maximal p‑adic valuation of the resultant at torsion characters. -/\n\ntheorem spectral_resultant_mu_invariant\n  (X : Graph) (alpha : VoltageAssignment X) (P : Polynomial) :\n  let R := spectral_resultant X alpha P;\n  let M := fitting_module_zero R;\n  μ M = Finset.sup (Finset.image (fun χ => v_p (R χ)) torsionCharacters) (·) :=\n  by\n    -- TODO: formalise the Kida‑type formula and prove the equality.\n    admit",
@@ -17579,7 +17628,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0369",
+      "id": "fd_0370",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mdr_counterexample : exists f g : arrangement_of_lines_in_P2, (mdr f = 4) ∧ (mdr g = 5) ∧ (intersection_lattice f = intersection_lattice g) ∧ (degree f = 9) ∧ (mdr f < 9 / 2)",
@@ -17627,7 +17676,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0370",
+      "id": "fd_0371",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem bivariate_egf_snail_race (m : ℕ) (hm : m ≥ 1) : (∑' (n : ℕ), ∑' (k : ℕ), (r_m n k : ℝ) * x ^ n / n! * y ^ k) = 1 / (1 - (∑' (i : ℕ), if 1 ≤ i ∧ i < m then x ^ i / i! else 0) - y * (Real.exp x - 1 - ∑' (i : ℕ), if 1 ≤ i ∧ i < m then x ^ i / i! else 0)) := by sorry",
@@ -17674,7 +17723,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0371",
+      "id": "fd_0372",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem generalized_hurwitz_formula (K : Type*) [nf : NarrowClassNumberOne K] (D : ℤ) [hd : FundamentalDiscriminant D] : ∃ (F : Type*) [ quartic_CM_field F ] [discriminant F = D], H_g K D = (class_number F) / 2",
@@ -17727,7 +17776,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0372",
+      "id": "fd_0373",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem smoothed_sigma_error_integral_negative (x : ℝ) : x ≥ 1 → ∫ (t : ℝ) in 1..x, (∑ n in Finset.range (⌊t⌋ + 1) with 1 ≤ n, σ n - (t^2 * π^2 / 6)) / t^2 < 0",
@@ -17776,7 +17825,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0373",
+      "id": "fd_0374",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem yin_gross_zagier_formula_p7 :\n  let E : EllipticCurve ℚ := ⟨![0, 0, 0, 49 / 4, 0], by decide⟩\n  let P := E.point 84 756 (by decide)\n  L_derivative E 1 / Omega E = (1 / 2) * height ℚ P :=\n  by sorry",
@@ -17796,6 +17845,56 @@
       "thread_id": "",
       "timestamp": "2026-07-06T00:22:25.670501+00:00",
       "title": "Explicit Gross-Zagier Formula for p=7"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO::shifted_Schur_functions",
+        "math.CO::vertex_operators",
+        "math.CO::plethystic_substitution",
+        "math.CO::strict_partitions",
+        "math.CO::Schur_Q_functions"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The shifted $t$-Schur function $\\mathcal{Q}_\\lambda(X;t)$, generated by the modified odd Greaves--Jing--Zhu operator $\\mathcal{Y}_t(z) = \\mathcal{R}_t \\Phi(z) \\mathcal{R}_t^{-1}$ (where $\\mathcal{R}_t$ rescales each odd power sum $p_n \\mapsto (1-t^n)p_n$ and $\\Phi(z)$ is the classical Schur $Q$ vertex operator), equals the classical Schur $Q$-function $Q_\\lambda$ under the plethystic substitution $X \\mapsto X - tX$. Equivalently, $\\mathcal{R}_t Q_\\lambda(X) = Q_\\lambda[X - tX]$ for every strict partition $\\lambda$ and formal parameter $t$. This encapsulates the conjugation relation and the resulting plethystic interpretation of the modified operator's spectrum.",
+      "domain_bridges": [
+        "symmetric_functions::plethystic_calculus",
+        "representation_theory::Hopf_algebra_automorphisms",
+        "probability_theory::measures_on_partitions"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0375",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem shifted_t_schur_plethystic_identity\n    {R : Type*} [CommRing R] [IsDomain R]\n    (λ : StrictPartition) (t : R) :\n    shiftedTSchur λ t =\n      schurQ λ (plethysticSubst (fun ω => ω - t • ω) oddPowerSumAlgebra) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "First formalize the odd power-sum ring $\\Gamma_t = \\mathbb{Q}(t)[p_1, p_3, p_5, \\ldots]$ as a graded Hopf algebra over $\\mathbb{Q}(t)$. Define the diagonal automorphism $\\mathcal{R}_t$ rescaling $p_n \\mapsto (1-t^n)p_n$ for odd $n$, and prove it is a Hopf algebra automorphism. Define the classical Schur $Q$ vertex operator $\\Phi(z)$ via its exponential form in creation/annihilation operators on $\\Gamma_t$. Construct the modified operator $\\mathcal{Y}_t(z)$ and prove the conjugation identity $\\mathcal{Y}_t(z) = \\mathcal{R}_t \\Phi(z) \\mathcal{R}_t^{-1}$ by verifying that $\\mathcal{R}_t p_n \\mathcal{R}_t^{-1} = (1-t^n)p_n$ and $\\mathcal{R}_t (\\partial/p_n) \\mathcal{R}_t^{-1} = (1-t^n)^{-1} \\partial/p_n$. The plethystic identity then follows by applying both sides to the vacuum vector and extracting coefficients indexed by strict partitions, using that $\\mathcal{R}_t^{-1}|0\\rangle = |0\\rangle$.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.01839v1",
+      "source_path": "http://arxiv.org/abs/2607.01839v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-06T00:45:40.615947+00:00",
+      "title": "Shifted t-Schur plethystic identity via modified odd operator conjugation"
     },
     {
       "ambition_level": "extension",
@@ -17842,7 +17941,6 @@
   "recent_domain_counts": {},
   "recent_theme_keywords": {},
   "selection_log": [
-    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",

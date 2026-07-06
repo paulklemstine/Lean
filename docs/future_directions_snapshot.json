@@ -8351,6 +8351,34 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "arXiv:2407.collatz-coordinate-system",
+      "Kannan2016",
+      "Ren2023"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer k ≥ 6 with k ≡ 2 (mod 4), and for every pair of nonnegative integers (a, b) with a + b = k and a ≥ 1, the number 2^a · 3^b − 1 is composite. This formalizes the paper's theorem that row k of the principal skeleton L₁ contains no primes when k ≡ 2 (mod 4) and k ≥ 6. The proof exploits that k even forces a and b to share parity. When both even, 2^a · 3^b − 1 = (2^{a/2} · 3^{b/2} − 1)(2^{a/2} · 3^{b/2} + 1) via difference of squares, with both factors > 1 for k ≥ 6. When both odd, k ≡ 2 (mod 4) forces a ≡ b (mod 4), yielding 2^a · 3^b ≡ 1 (mod 5) so 5 | (2^a · 3^b − 1), and the cofactor exceeds 1 since k ≥ 6 excludes the case a = b = 1 where the value equals 5.",
+    "domain_bridges": [
+      "computational_number_theory",
+      "formal_verification",
+      "dynamical_systems"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_0361",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Case split on parity of a and b. Since k ≡ 2 (mod 4) is even, a and b have the same parity. Case 1 (both even): apply difference of squares factorization 2^a · 3^b − 1 = (2^{a/2} · 3^{b/2} − 1)(2^{a/2} · 3^{b/2} + 1), verify both factors exceed 1 using k ≥ 6. Case 2 (both odd): from a + b ≡ 2 (mod 4) with a,b odd, deduce a ≡ b (mod 4); compute 2^a · 3^b mod 5 using 2^4 ≡ 3^4 ≡ 1 (mod 5) to show 5 | (2^a · 3^b − 1); verify 2^a · 3^b − 1 > 5 since k ≥ 6 excludes (a,b) = (1,1). Subsume b = 0 into Case 1 since then a = k is even.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01718v1",
+    "status": "available",
+    "timestamp": "2026-07-06T00:45:05.954983+00:00",
+    "title": "No primes in rows k ≡ 2 (mod 4) of the principal Collatz skeleton L₁"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Theorem A",
       "Proposition big"
     ],
@@ -8364,7 +8392,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0361",
+    "id": "fd_0362",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the explicit description of the 2-Sylow subgroup of S_n as an iterated wreath product and the Murnaghan-Nakayama rule to compute the multiplicity of the irreducible character χ^{λ_n} in the permutation character (1_P)↑^{S_n}. Alternatively, use the characterization of Ω_2(n) via 2-quotients of partitions (as in [G17]) and verify that the 2-quotient of λ_n satisfies the required condition. Another approach is to use the known results on the restriction of irreducible characters to Sylow 2-subgroups and the fact that λ_n is a partition with all parts ≤ 2.",
@@ -8391,7 +8419,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0362",
+    "id": "fd_0363",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a specific graph achieving the lower bound via Pokrovskiy's structure theorem",
@@ -8417,7 +8445,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0363",
+    "id": "fd_0364",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish a conductance lower bound via a suitable coupling argument that relates chord swaps to graph-theoretic moves, and then use known inequalities to translate this into a polynomial lower bound on the spectral gap for fixed genus.",
@@ -8437,7 +8465,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0364",
+    "id": "fd_0365",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "induction",
@@ -8465,7 +8493,7 @@
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0365",
+    "id": "fd_0366",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the connection via holography: (1) Prove interval counting for high-dimension CFT primaries follows log-correlated field statistics, (2) Show the extremal process converges to Gumbel by analyzing the correlation structure of the underlying Gaussian free field, (3) Translate to AdS side via HKLL reconstruction to bound semiclassical path integral resolution. Use modular invariance and sparseness conditions to control the tail behavior rigorously.",
@@ -8491,7 +8519,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0366",
+    "id": "fd_0367",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive argument on rank bounds combined with matroid minors analysis",
@@ -8518,7 +8546,7 @@
     "domains": [
       "Physics"
     ],
-    "id": "fd_0367",
+    "id": "fd_0368",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a doubly nonnegative graphon W where the spectral inequality t(H,W) ≥ ρ(W)^{2e(H)-v(H)} p(W)^{v(H)-e(H)} holds but t(H,W) < p(W)^{e(H)} fails, demonstrating the equivalence's optimality in the v(H) ≤ e(H) range.",
@@ -8548,7 +8576,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0368",
+    "id": "fd_0369",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof would proceed by (1) constructing the Iwasawa module M as the Fitting module of the spectral resultant using the universal Grover‑Ihara polynomial; (2) applying the structure theorem for finitely generated Δ_₂[[Γ]]‑modules to express μ(M) and λ(M) in terms of elementary divisors; (3) evaluating the resultant at torsion characters χ∈̀_hat{Δ}_₂^× and showing via equivariant descent that the elementary divisors are precisely the values v_p(R(χ)); (4) incorporating the Bass factor (A^2‑1) by factoring det P(U_n) into a coprime part and a power of the Bass factor, and comparing the resulting contributions to the λ‑term. The key technical step is to prove an equivariant Kida formula for the spectral resultant without integrality assumptions, using the factorization for p‑group covers from the paper and a careful analysis of the local units at χ(1)=±1.",
@@ -8577,7 +8605,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0369",
+    "id": "fd_0370",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Explicit construction of arrangements with controlled intersection multiplicities, followed by computation of \\(\\mdr(f)\\) via graded module generation and analysis of Jacobian syzygies using symbolic computation in Lean 4.",
@@ -8604,7 +8632,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0370",
+    "id": "fd_0371",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Interpret r_m(n,k) as counting labelled structures: an ordered partition where each block is either a 'non-tie' of size < m (weight 1) or a 'tie' of size ≥ m (weight y). The exponential generating function for non-tie blocks is A_m(x), for tie blocks is B_m(x). A sequence of such blocks has EGF 1/(1 - (A_m(x) + y B_m(x))). Equating coefficients yields the formula.",
@@ -8630,7 +8658,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0371",
+    "id": "fd_0372",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Verify the conjectured formula by computing class numbers of explicitly constructed quartic CM fields and comparing them to the generalized Hurwitz class numbers defined via the trace formula. This requires formalizing quartic field construction, class group computations, and the definition of H_g(D) in Lean.",
@@ -8662,7 +8690,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0372",
+    "id": "fd_0373",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Verify the conjecture computationally for x ∈ [1, 650) by establishing explicit bounds on D(t) in this range, then combine with the asymptotic result from the paper. The key insight is that the weight (1-x/n) in the smoothed sum eliminates the difficult ψ-term, making the error term fundamentally more tractable than in the classical Walfisz problem.",
@@ -8690,7 +8718,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0373",
+    "id": "fd_0374",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Hasse-Weil L-function derivative at s=1 and the Neron-Tate height of the explicitly defined rational point P_7 = (84, 756) on E_7, and verify their equality using the explicit formula and height computations outlined in Yin's paper.",
@@ -8699,6 +8727,35 @@
     "status": "available",
     "timestamp": "2026-07-06T00:22:25.670501+00:00",
     "title": "Explicit Gross-Zagier Formula for p=7"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO::shifted_Schur_functions",
+      "math.CO::vertex_operators",
+      "math.CO::plethystic_substitution",
+      "math.CO::strict_partitions",
+      "math.CO::Schur_Q_functions"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The shifted $t$-Schur function $\\mathcal{Q}_\\lambda(X;t)$, generated by the modified odd Greaves--Jing--Zhu operator $\\mathcal{Y}_t(z) = \\mathcal{R}_t \\Phi(z) \\mathcal{R}_t^{-1}$ (where $\\mathcal{R}_t$ rescales each odd power sum $p_n \\mapsto (1-t^n)p_n$ and $\\Phi(z)$ is the classical Schur $Q$ vertex operator), equals the classical Schur $Q$-function $Q_\\lambda$ under the plethystic substitution $X \\mapsto X - tX$. Equivalently, $\\mathcal{R}_t Q_\\lambda(X) = Q_\\lambda[X - tX]$ for every strict partition $\\lambda$ and formal parameter $t$. This encapsulates the conjugation relation and the resulting plethystic interpretation of the modified operator's spectrum.",
+    "domain_bridges": [
+      "symmetric_functions::plethystic_calculus",
+      "representation_theory::Hopf_algebra_automorphisms",
+      "probability_theory::measures_on_partitions"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0375",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First formalize the odd power-sum ring $\\Gamma_t = \\mathbb{Q}(t)[p_1, p_3, p_5, \\ldots]$ as a graded Hopf algebra over $\\mathbb{Q}(t)$. Define the diagonal automorphism $\\mathcal{R}_t$ rescaling $p_n \\mapsto (1-t^n)p_n$ for odd $n$, and prove it is a Hopf algebra automorphism. Define the classical Schur $Q$ vertex operator $\\Phi(z)$ via its exponential form in creation/annihilation operators on $\\Gamma_t$. Construct the modified operator $\\mathcal{Y}_t(z)$ and prove the conjugation identity $\\mathcal{Y}_t(z) = \\mathcal{R}_t \\Phi(z) \\mathcal{R}_t^{-1}$ by verifying that $\\mathcal{R}_t p_n \\mathcal{R}_t^{-1} = (1-t^n)p_n$ and $\\mathcal{R}_t (\\partial/p_n) \\mathcal{R}_t^{-1} = (1-t^n)^{-1} \\partial/p_n$. The plethystic identity then follows by applying both sides to the vacuum vector and extracting coefficients indexed by strict partitions, using that $\\mathcal{R}_t^{-1}|0\\rangle = |0\\rangle$.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01839v1",
+    "status": "available",
+    "timestamp": "2026-07-06T00:45:40.615947+00:00",
+    "title": "Shifted t-Schur plethystic identity via modified odd operator conjugation"
   },
   {
     "ambition_level": "extension",
