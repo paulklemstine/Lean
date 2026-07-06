@@ -11374,6 +11374,32 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.PR",
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any natural numbers n, g with n > 2g, the graph whose vertices are chord diagrams (perfect matchings) of genus g on 2n vertices, and whose edges connect diagrams differing by a genus-preserving chord swap, is connected and has diameter at most 100(n + g^2).",
+    "domain_bridges": [
+      "combinatorics",
+      "algebraic_topology",
+      "probability_theory"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0478",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define chord diagrams as perfect matchings on Fin (2*n) and genus via the cycle count of the composition of the matching involution and the canonical cyclic permutation. Construct explicit sequences of genus-preserving swaps to reduce any diagram to a canonical form, bounding the number of swaps by 100(n + g^2) to establish both connectivity and the explicit diameter bound.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02410v1",
+    "status": "available",
+    "timestamp": "2026-07-06T19:08:03.881809+00:00",
+    "title": "Connectedness and Diameter Bound of the Genus-Preserving Chord Swap Graph"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "ham-sandwich_theorem",
       "centerpoint_theorem",
       "semialgebraic_geometry",
@@ -11389,7 +11415,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0478",
+    "id": "fd_0479",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the natural decomposition of the space of oriented hyperplanes based on the combinatorial structure of the intersection P ∩ H_(a,b)^+. Specifically, partition the parameter space into cells where the set of vertices of P lying strictly inside, strictly outside, and on the boundary of the halfspace remains constant. On each such cell, the vertices of the intersection polytope are rational functions of (a,b). Since the volume of a polytope is a sum of determinants of its vertices, the volume function is a rational function of (a,b) on each cell, proving piecewise rationality.",
@@ -11415,7 +11441,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0479",
+    "id": "fd_0480",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on n, utilizing the branching rule for symmetric group characters, properties of the binary expansion of n (specifically relating the highest power of 2 and the Hamming weight to partition structures), and explicit character calculations to verify the base cases and the inductive step.",
@@ -11442,7 +11468,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0480",
+    "id": "fd_0481",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Characterize the extremal graph by analyzing degree sequences and curvature formulas. Show that any graph with T(n) edges achieving the threshold must have exactly the specified degree distribution. Prove uniqueness by demonstrating that any two such extremal graphs are isomorphic via vertex relabeling. Use the relationship between graph curvature and Laplacian eigenvalues to constrain the possible structures.",
@@ -11451,6 +11477,38 @@
     "status": "available",
     "timestamp": "2026-07-06T18:44:49.820406+00:00",
     "title": "Structure of extremal graphs for positive curvature threshold"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "trianguline_variety",
+      "cohen_macaulay_rings",
+      "padic_galois_representations",
+      "reductive_groups",
+      "breuil_kisin_modules",
+      "padic_hodge_theory"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The trianguline variety X^{tri}_G associated to a split connected reductive group G over a p-adic field K is Cohen-Macaulay. Specifically, for every point x in X^{tri}_G with local ring O_{X^{tri}_G,x}, the depth equals the Krull dimension: depth(O_{X^{tri}_G,x}) = dim(O_{X^{tri}_G,x}). This extends the paper's results establishing smoothness on the very regular locus and normality at certain points outside this locus, predicting that all singularities are as mild as possible. Cohen-Macaulayness would imply full normality of X^{tri}_G (since CM implies Serre's condition S2, and the smooth locus has complement of codimension ≥ 2 by the regularity conditions on the triangulation parameter), strengthening the paper's partial normality result. It would also have significant consequences for the deformation theory of p-adic Galois representations with G-structure and for understanding the local Langlands correspondence via the geometry of the trianguline variety.",
+    "domain_bridges": [
+      "p_adic_Hodge_theory--commutative_algebra",
+      "reductive_groups--algebraic_geometry",
+      "deformation_theory--representation_theory",
+      "tannakian_categories--algebraic_groups"
+    ],
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_0482",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The proof would proceed by analyzing the local structure of the trianguline variety at each point. Key steps: (1) On the very regular locus, the variety is smooth (proven in the paper), hence Cohen-Macaulay. (2) At singular points, use the Tannakian formalism developed in the paper to reduce to understanding the tangent cone in terms of root data. (3) The tangent cone at a singular point with parameter δ should be controlled by the roots α for which δ∘α∨ fails to be regular—these correspond to the walls of the Weyl chambers where smoothness breaks down. (4) Show that the defining ideal at each point is generated by a regular sequence of length equal to the codimension, leveraging the crystallinity criterion from the paper to explicitly describe the deformation ring. (5) The root system combinatorics (specifically, the Chevalley commutation relations and the structure of the unipotent radical) should ensure the regular sequence property holds via an inductive argument on the height of r",
+    "research_mode": "team",
+    "source_exp_id": "2607.02215v1",
+    "status": "available",
+    "timestamp": "2026-07-06T19:09:16.916869+00:00",
+    "title": "Cohen-Macaulayness of the Trianguline Variety for Reductive Groups"
   },
   {
     "ambition_level": "extension",

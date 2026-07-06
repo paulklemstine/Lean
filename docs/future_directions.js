@@ -6137,11 +6137,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For any rational polytopal measure P in R^d, the cap-volume function mapping an oriented hyperplane parameterized by (a,b) in R^(d+1) to the volume of P intersected with the halfspace {x | <a, x> <= b} is piecewise rational. Specifically, there exists a finite semialgebraic partition of the parameter space such that on each cell, the cap-volume is given by a rational function of the parameters.",
+    "description": "For any natural numbers n, g with n > 2g, the graph whose vertices are chord diagrams (perfect matchings) of genus g on 2n vertices, and whose edges connect diagrams differing by a genus-preserving chord swap, is connected and has diameter at most 100(n + g^2).",
     "domains": [
       "Algebra"
     ],
     "id": "fd_0478",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02410v1",
+    "status": "available",
+    "timestamp": "2026-07-06T19:08:03.881809+00:00",
+    "title": "Connectedness and Diameter Bound of the Genus-Preserving Chord Swap Graph"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any rational polytopal measure P in R^d, the cap-volume function mapping an oriented hyperplane parameterized by (a,b) in R^(d+1) to the volume of P intersected with the halfspace {x | <a, x> <= b} is piecewise rational. Specifically, there exists a finite semialgebraic partition of the parameter space such that on each cell, the cap-volume is given by a rational function of the parameters.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0479",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02400v1",
@@ -6155,7 +6169,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0479",
+    "id": "fd_0480",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -6169,13 +6183,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0480",
+    "id": "fd_0481",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
     "status": "available",
     "timestamp": "2026-07-06T18:44:49.820406+00:00",
     "title": "Structure of extremal graphs for positive curvature threshold"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The trianguline variety X^{tri}_G associated to a split connected reductive group G over a p-adic field K is Cohen-Macaulay. Specifically, for every point x in X^{tri}_G with local ring O_{X^{tri}_G,x}, the depth equals the Krull dimension: depth(O_{X^{tri}_G,x}) = dim(O_{X^{tri}_G,x}). This extends the paper's results establishing smoothness on the very regular locus and normality at certain points outside this locus, predicting that all singularities are as mild as possible. Cohen-Macaulayness would imply full normality of X^{tri}_G (since CM implies Serre's condition S2, and the smooth locus has complement of codimension \u2265 2 by the regularity conditions on the triangulation parameter), strengthening the paper's partial normality result. It would also have significant consequences for the deformation theory of p-adic Galois representations with G-structure and for understanding the local Langlands correspondence via the geometry of the trianguline variety.",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_0482",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02215v1",
+    "status": "available",
+    "timestamp": "2026-07-06T19:09:16.916869+00:00",
+    "title": "Cohen-Macaulayness of the Trianguline Variety for Reductive Groups"
   },
   {
     "consumed_by_exp_id": "",

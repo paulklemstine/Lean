@@ -1,0 +1,27 @@
+[
+  {
+    "title": "Full real-rootedness of the squared Eulerian row polynomials",
+    "description": "The n-th row generating polynomial of the square of the Eulerian triangle is S_n(x) = sum_k (sum_j A(n,j) A(j,k)) x^k, where A(n,k) is the Eulerian number counting permutations of {1,...,n} with k descents. A structural identity shows S_n(x) = sum_j A(n,j) A_j(x), a nonnegative combination of the classical Eulerian polynomials A_j. Conjecture: S_n has only real (necessarily negative) roots for every n. Proposed approach: establish that the Eulerian polynomials form a compatible interlacing family and that nonnegative combinations of a compatible family remain real-rooted, reducing the problem to compatibility with the weights A(n,.).",
+    "tags": ["Combinatorics", "RealRootedPolynomials", "EulerianNumbers"]
+  },
+  {
+    "title": "Real-rootedness for all matrix powers of the Eulerian triangle",
+    "description": "Let A be the lower-triangular Eulerian array and A^(m) its m-th matrix power. Conjecture: for every m >= 1 and every n, the n-th row generating polynomial of A^(m) has only real roots. Each additional power is a nonnegative combination of the previous power's rows, so the natural attack is induction on the exponent m (not on n): show that if the row polynomials of A^(m) form an interlacing family, then those of A^(m+1) inherit real-rootedness via the same nonnegative-combination-of-a-compatible-family mechanism.",
+    "tags": ["Combinatorics", "TriangularMatrixProducts", "RealRootedPolynomials"]
+  },
+  {
+    "title": "Gamma-positivity of the squared Eulerian row polynomials",
+    "description": "For each n, consider the degree-d polynomial S_n(x) (d = n-2) obtained from the square of the Eulerian triangle. Conjecture: the symmetric components of S_n under the rescaling x -> 1/x expand with nonnegative coefficients in the basis {x^i (1+x)^{d-2i}} (gamma-positivity). Although S_n itself is not palindromic, decomposing it into symmetric and antisymmetric parts may reveal gamma-positive constituents, which would strictly strengthen real-rootedness and explain the tightly interlaced negative spectra observed numerically for small n.",
+    "tags": ["Combinatorics", "GammaPositivity", "EulerianNumbers"]
+  },
+  {
+    "title": "Interlacing of roots between consecutive squared-triangle rows",
+    "description": "Define S_n(x) as the n-th row generating polynomial of the square of the Eulerian triangle. Conjecture: the roots of S_n and S_{n+1} interlace on the negative real axis, i.e. between any two consecutive roots of S_{n+1} lies exactly one root of S_n. This is the natural load-bearing lemma for an inductive proof of full real-rootedness: consecutive rows are linked by a linear recurrence inherited from the Eulerian recurrence A(n,k) = (k+1)A(n-1,k) + (n-k)A(n-1,k-1), and interlacing is exactly the invariant such recurrences propagate.",
+    "tags": ["Combinatorics", "RealRootedPolynomials", "Interlacing"]
+  },
+  {
+    "title": "Asymptotic normality of the squared Eulerian coefficient distribution",
+    "description": "Normalize the coefficients of S_n(x) = sum_k B(n,k) x^k (B the square of the Eulerian triangle, with B(n,0) = n!) to a probability distribution on {0,...,n-2}. Conjecture: the associated random variables, centered and scaled, converge to a standard Gaussian as n -> infinity. Approach: if S_n is real-rooted with nonnegative coefficients, its coefficient sequence is a convolution of independent Bernoulli variables, and a Lindeberg/Harper-Bender central limit criterion then yields the Gaussian limit from control of the roots' magnitudes.",
+    "tags": ["Probability", "Combinatorics", "CentralLimitTheorem"]
+  }
+]
