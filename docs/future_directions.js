@@ -849,7 +849,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Absolute bound for generalized Diophantine tuples over polynomial rings"
   },
   {
-    "consumed_by_exp_id": "03d2d7e4",
+    "consumed_by_exp_id": "",
     "description": "For any perfect $\\mathbb{F}_p$-algebra $R$, the canonical map $\\chW(R) \\to W(R)$ is an isomorphism of rings. This conjecture tests whether the sheared Witt vector construction reduces to the classical Witt vector functor when applied to perfect $\\mathbb{F}_p$-algebras, leveraging the vanishing of the ideal $\\hw(R)$ in such cases.",
     "domains": [
       "Algebra",
@@ -859,7 +859,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01178v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T20:39:15.695833+00:00",
     "title": "Isomorphism of Sheared Witt Vectors for Perfect Algebras"
   },
@@ -1201,7 +1201,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Decomposition of Greedy Tamari Intervals and Bipartite Planar Maps"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "55377efd",
     "description": "Let V_1,..., V_{d+1} be disjoint finite sets and K be the join of spanning k-trees T_1,..., T_{d+1} where each T_i is a simplicial complex on V_i. If A: |\u0394_V| -> R^d is an affine map such that 0 is in the convex hull of the image of each color class A(V_i), then there exists a face \u03c3 in the join of these k-trees such that 0 is in the image of \u03c3.",
     "domains": [
       "Geometry"
@@ -1210,7 +1210,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T23:51:53.327272+00:00",
     "title": "Colorful Carath\u00e9odory Theorem for Spanning k-trees"
   },
@@ -1910,7 +1910,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pseudo-determinant of power-integral matrices is an algebraic integer"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "24598706",
     "description": "For a graph $G$ with minimum degree $\\delta(G) \\ge a + r$, if the spectral radius $\\lambda(G)$ is at least $a + r + b$, then $G$ is fractional ID-$[a,b]$-factor-critical.",
     "domains": [
       "Physics"
@@ -1919,7 +1919,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31064v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T21:44:34.279843+00:00",
     "title": "Spectral radius threshold for fractional ID-$[a,b]$-factor-critical graphs"
   },
@@ -4623,7 +4623,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Penrose Homology Detects Tait Colorability"
   },
   {
-    "consumed_by_exp_id": "af8797da",
+    "consumed_by_exp_id": "",
     "description": "For every connected simple graph G of order at least three, the independence number \u03b1(G) is bounded below by the sum of the annihilation number a(G) and the Havel-Hakimi residue res(G), divided by the maximum degree \u0394(G). That is, \u03b1(G) \u2265 (a(G) + res(G)) / \u0394(G), or equivalently, \u03b1(G) * \u0394(G) \u2265 a(G) + res(G).",
     "domains": [
       "Bridges"
@@ -4632,7 +4632,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01438v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T02:28:03.746874+00:00",
     "title": "TxGraffiti Annihilation-Residue Inequality"
   },
@@ -5058,11 +5058,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For integers $g > k \\ge 2$, the prime divisors of the minimal positive multiple $m_k(g)$ of the minimal class $\\theta_k$ that is algebraic on a very general principally polarized abelian variety of dimension $g$ are exactly the primes $p \\leq (k+1)/2$. This establishes the sharpness of the paper's lower bound, conjecturing that no prime $p > (k+1)/2$ divides $m_k(g)$.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0396",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31894v1",
+    "status": "available",
+    "timestamp": "2026-07-06T12:29:05.153911+00:00",
+    "title": "Sharp Primorial Divisibility of Minimal Classes on Abelian Varieties"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0396",
+    "id": "fd_0397",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -5076,7 +5091,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0397",
+    "id": "fd_0398",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -5091,7 +5106,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0398",
+    "id": "fd_0399",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
@@ -5106,7 +5121,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0399",
+    "id": "fd_0400",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -5121,7 +5136,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0400",
+    "id": "fd_0401",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -5135,7 +5150,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0401",
+    "id": "fd_0402",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -5149,7 +5164,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0402",
+    "id": "fd_0403",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -5164,7 +5179,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0403",
+    "id": "fd_0404",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02011v1",
@@ -5179,7 +5194,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0404",
+    "id": "fd_0405",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -5193,7 +5208,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0405",
+    "id": "fd_0406",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02085v1",
@@ -5207,7 +5222,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0406",
+    "id": "fd_0407",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01957v1",
@@ -5222,7 +5237,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0407",
+    "id": "fd_0408",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01956v1",
@@ -5236,7 +5251,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0408",
+    "id": "fd_0409",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01744v1",
@@ -5250,7 +5265,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0409",
+    "id": "fd_0410",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01839v1",
@@ -5265,7 +5280,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0410",
+    "id": "fd_0411",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01703v1",
@@ -5279,7 +5294,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0411",
+    "id": "fd_0412",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01572v1",
@@ -5293,7 +5308,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0412",
+    "id": "fd_0413",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01680v1",
@@ -5307,7 +5322,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0413",
+    "id": "fd_0414",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01582v1",
@@ -5322,7 +5337,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0414",
+    "id": "fd_0415",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01165v1",
@@ -5337,7 +5352,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0415",
+    "id": "fd_0416",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01184v1",
@@ -5351,7 +5366,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0416",
+    "id": "fd_0417",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -5366,7 +5381,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0417",
+    "id": "fd_0418",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -5381,7 +5396,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0418",
+    "id": "fd_0419",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01028v1",
@@ -5396,7 +5411,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0419",
+    "id": "fd_0420",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00940v1",
@@ -5410,7 +5425,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0420",
+    "id": "fd_0421",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -5424,7 +5439,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0421",
+    "id": "fd_0422",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01059v1",
@@ -5439,7 +5454,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0422",
+    "id": "fd_0423",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
@@ -5453,7 +5468,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0423",
+    "id": "fd_0424",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00934v1",
@@ -5468,7 +5483,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0424",
+    "id": "fd_0425",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00930v1",
@@ -5482,7 +5497,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Logic"
     ],
-    "id": "fd_0425",
+    "id": "fd_0426",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01294v1",
@@ -5496,7 +5511,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0426",
+    "id": "fd_0427",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00814v1",
@@ -5511,7 +5526,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0427",
+    "id": "fd_0428",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00651v1",
@@ -5525,7 +5540,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0428",
+    "id": "fd_0429",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00646v1",
@@ -5539,7 +5554,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0429",
+    "id": "fd_0430",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00592v1",
@@ -5554,7 +5569,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_0430",
+    "id": "fd_0431",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00507v1",
@@ -5568,7 +5583,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0431",
+    "id": "fd_0432",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00608v1",
@@ -5583,7 +5598,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0432",
+    "id": "fd_0433",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00456v1",
@@ -5592,30 +5607,30 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact enumeration of arithmetic Schur-type triples in the Boolean lattice"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "611a6b62",
     "description": "For every fixed graph H that contains at least one edge, the decision problem Chromatic Sum remains NP\u2011complete when restricted to H\u2011free graphs (i.e., graphs that do not contain H as a subgraph). This conjecture is falsifiable because a single counterexample\u2014a graph class H\u2011free for which Chromatic Sum is polynomial\u2011time solvable\u2014 would refute it.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0433",
+    "id": "fd_0434",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00263v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T08:29:25.578468+00:00",
     "title": "Chromatic Sum is NP-complete on H\u2011free graphs for any fixed graph H with at least one edge"
   },
   {
-    "consumed_by_exp_id": "611a6b62",
+    "consumed_by_exp_id": "",
     "description": "For n \u2265 2, any 1-intersecting family F \u2286 S_n (i.e., any two permutations in F agree on at least one point) satisfies |F| \u2264 (n\u22121)!. Equality holds if and only if F is a dictatorship {\u03c3 \u2208 S_n : \u03c3(i) = j} for some i, j. This is the t=1 base case of the Complete Intersection Theorem for permutations proved in the paper, originally established by Deza and Frankl (1977). Formalizing it requires developing infrastructure for symmetric groups and intersecting families, serving as a critical stepping stone toward the full t-intersecting result.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0434",
+    "id": "fd_0435",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00318v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T08:50:20.107124+00:00",
     "title": "Deza-Frankl Theorem: Maximum 1-Intersecting Families in S_n are Dictatorships"
   },
@@ -5625,7 +5640,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0435",
+    "id": "fd_0436",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00282v1",
@@ -5639,7 +5654,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0436",
+    "id": "fd_0437",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00332v1",
@@ -5654,7 +5669,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0437",
+    "id": "fd_0438",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00088v1",
@@ -5669,7 +5684,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0438",
+    "id": "fd_0439",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.32024v1",
@@ -5683,7 +5698,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0439",
+    "id": "fd_0440",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31967v1",
@@ -5697,7 +5712,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_0440",
+    "id": "fd_0441",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00205v1",
@@ -5711,7 +5726,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0441",
+    "id": "fd_0442",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01273v1",
@@ -5726,7 +5741,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0442",
+    "id": "fd_0443",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31908v1",
@@ -5741,13 +5756,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0443",
+    "id": "fd_0444",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31698v1",
     "status": "available",
     "timestamp": "2026-07-06T12:12:11.640829+00:00",
     "title": "De Rham Local-Global Compatibility for Torsion Automorphic Forms on GL_n over CM Fields"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any integer $g \\ge 2$, let $d \\in \\{2g+1, 2g+2\\}$, $\\alpha \\in \\mathbb{Z} \\setminus \\{0\\}$, and let $p$ be a prime such that $p > P^+(d)$ and $p \\nmid \\alpha$, where $P^+(d)$ is the bound from the paper ($d^2-4d+2$ if $d$ is odd, $(d^2-3d+2)/2$ if $d$ is even). Let $M(t)$ be the $g \\times g$ Cartier-Manin matrix of the hyperelliptic curve $y^2 = x^d + \\alpha x + t$ over $\\mathbb{F}_p$. The determinant $\\det(M(t))$ is a nonzero polynomial in $\\mathbb{F}_p[t]$.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0445",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31783v1",
+    "status": "available",
+    "timestamp": "2026-07-06T12:32:30.050041+00:00",
+    "title": "Nonvanishing of Cartier-Manin Determinant for Generic Hyperelliptic Families"
   },
   {
     "consumed_by_exp_id": "",
