@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-06T09:14:00.649371+00:00",
+  "last_updated": "2026-07-06T09:42:27.452602+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -36810,6 +36810,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-06T09:14:00.589176+00:00",
       "title": "Discrete homotopy groups of quasisymmetric cubical sets"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4895,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 37,
+      "domain": "Applications",
+      "duration_seconds": 1238.1717460155487,
+      "end_time": 1783330393.4675975,
+      "files_integrated": 6,
+      "job_id": "e50512ae",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v16",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.86,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.76,
+        "cross_domain": 0.9,
+        "grade": "world_class",
+        "importance": 0.7068,
+        "novelty": 0.95,
+        "proof_depth": 0.6025,
+        "usefulness": 0.7513
+      },
+      "quality_score": 0.74264,
+      "sorry_count": 7,
+      "sorry_density": 0.4666666666666667,
+      "start_time": 1783329155.2958515,
+      "strategy_count": 0,
+      "theorem_count": 15,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 14,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-06T09:42:27.390922+00:00",
+      "title": "Optimality of the polynomial factor in the Naslund\u2013Sawin bound for sunflower\u2011free families"
     }
   ]
 }

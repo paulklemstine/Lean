@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ce5b4268",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE DIRECTIONS — Permutation polynomials `x^q + b x^2 + c x + d` over `F_{q^2}`\n\nDerived from this cycle's findings (see\n`Catalog/Novelty/PermutationPolynomialFq2.lean` and\n`Catalog/Novelty/Permu",
-      "quality_score": 0.71224,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-28T16:59:26",
-      "title": "Complete Characterization of Permutation Polynomials x^q + bx^2 + cx + d over F_{q^2}"
-    },
-    {
       "cycle_id": "8999eb20",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Girth and the codes of bipartite graphs\n\nDerived from the cycle of work formalized in\n`Catalog/Novelty/BipartiteGraphCodeGirth.lean` and\n`Catalog/Novelty/BipartiteGraphCodeGirthA",
@@ -499,19 +489,19 @@
       "theorem_count": 12,
       "timestamp": "2026-07-05T21:35:39",
       "title": "Sign Alternation in q-Hypergeometric Series via Oscillatory Asymptotics Near Roots of Unity"
+    },
+    {
+      "cycle_id": "e50512ae",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures emerging from this cycle's study of set families that avoid a\nthree-petal sunflower (three distinct sets with a common pairwise intersection) and the",
+      "quality_score": 0.74264,
+      "sorry_count": 7,
+      "theorem_count": 15,
+      "timestamp": "2026-07-06T09:42:26",
+      "title": "Optimality of the polynomial factor in the Naslund–Sawin bound for sunflower‑free families"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f6f6439c",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Linear one-set wall–Menger bound\n\nDerived from this cycle's findings (the greedy packing–cover duality\n`packing_cover_duality`/`wall_menger_separator_bound`, the subwall tiling\n`",
-      "quality_score": 0.5631599999999999,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T09:13:33",
-      "title": "Linear one-set wall-Menger bound for elementary walls"
-    },
     {
       "cycle_id": "c8e22e5a",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 7,
       "timestamp": "2026-07-06T09:13:59",
       "title": "Discrete homotopy groups of quasisymmetric cubical sets"
+    },
+    {
+      "cycle_id": "e50512ae",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures emerging from this cycle's study of set families that avoid a\nthree-petal sunflower (three distinct sets with a common pairwise intersection) and the",
+      "quality_score": 0.74264,
+      "sorry_count": 7,
+      "theorem_count": 15,
+      "timestamp": "2026-07-06T09:42:26",
+      "title": "Optimality of the polynomial factor in the Naslund–Sawin bound for sunflower‑free families"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3e52c27d",
-      "domain": "Novelty",
-      "name": "coverCount_one_left",
-      "quality": 0.7916800000000002
-    },
-    {
-      "cycle_id": "3e52c27d",
-      "domain": "Novelty",
-      "name": "coverCount_one_right",
-      "quality": 0.7916800000000002
-    },
-    {
-      "cycle_id": "b714fdc8",
-      "domain": "Applications",
-      "name": "for",
-      "quality": 0.7480399999999999
-    },
     {
       "cycle_id": "b714fdc8",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Applications",
       "name": "densityZero_of_count_le",
       "quality": 0.8076800000000002
+    },
+    {
+      "cycle_id": "e50512ae",
+      "domain": "Applications",
+      "name": "is",
+      "quality": 0.74264
+    },
+    {
+      "cycle_id": "e50512ae",
+      "domain": "Applications",
+      "name": "sliceRankLE_zero",
+      "quality": 0.74264
+    },
+    {
+      "cycle_id": "e50512ae",
+      "domain": "Applications",
+      "name": "SliceRankLE",
+      "quality": 0.74264
     }
   ],
-  "last_updated": "2026-07-06T09:13:59",
+  "last_updated": "2026-07-06T09:42:26",
   "open_questions": [
-    {
-      "context": "(sieve mechanism) form a coherent, sorry-free slice of the Maynard–Tao framework.",
-      "cycle_id": "f8a707b1",
-      "domain": "Novelty",
-      "sorry_count": 1,
-      "timestamp": "2026-06-27T18:43:36"
-    },
     {
       "context": "correct). All statements below are proved without `sorry`.",
       "cycle_id": "bdfd9dbb",
@@ -3016,6 +3009,13 @@
       "domain": "Shared",
       "sorry_count": 3,
       "timestamp": "2026-07-06T05:40:46"
+    },
+    {
+      "context": "## Sorry inventory (genuinely hard sub-steps, all non-circular); proved *without* reference to any sunflower bound.  (Hard; left as `sorry`.) -/; sorry",
+      "cycle_id": "e50512ae",
+      "domain": "Applications",
+      "sorry_count": 7,
+      "timestamp": "2026-07-06T09:42:26"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "e62d479c",
-        "quality": 0.30277126000000004,
-        "theorems": 0,
-        "title": "Knots That Think: Cognition as Braiding in Category Theory"
-      },
-      {
         "cycle_id": "116dddb5",
         "quality": 0.5346635084337349,
         "theorems": 10,
@@ -3141,6 +3135,12 @@
         "quality": 0.8076800000000002,
         "theorems": 12,
         "title": "Sign Alternation in q-Hypergeometric Series via Oscillatory Asymptotics Near Roo"
+      },
+      {
+        "cycle_id": "e50512ae",
+        "quality": 0.74264,
+        "theorems": 15,
+        "title": "Optimality of the polynomial factor in the Naslund–Sawin bound for sunflower‑fre"
       }
     ],
     "Bridges": [

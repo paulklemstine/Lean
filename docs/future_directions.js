@@ -147,7 +147,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Trivial stabilizer for regular unipotent conjugacy classes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9a8b461a",
     "description": "For every integer w \u2265 3, the Chromatic Sum problem is NP-complete on graphs of clique-width at most w. This extends the known result for w=3 and suggests a phase transition at clique-width 2 versus 3, where the problem becomes intractable.",
     "domains": [
       "Bridges"
@@ -156,7 +156,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00263v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T10:07:39.641162+00:00",
     "title": "Chromatic Sum NP-Completeness for Clique-Width at Least 3"
   },
@@ -380,7 +380,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
   {
-    "consumed_by_exp_id": "ea66c257",
+    "consumed_by_exp_id": "",
     "description": "For the random recursive DAG G_n with out-degree d \u2265 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n \u2192 \u221e.",
     "domains": [
       "Computation"
@@ -389,7 +389,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
@@ -1302,7 +1302,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Alternating Sign Conjecture for Andrews' q-Series Families"
   },
   {
-    "consumed_by_exp_id": "fc64247d",
+    "consumed_by_exp_id": "",
     "description": "For any nonnegative integer s and any list of integers m\u2081,\u2026,m_t \u2265 2, let n = s + \u03a3 m_i. If each m_i divides 2n(n\u22121), then there exists a seating schedule for 2n participants consisting of n newlywed couples at s tables of size 2 and t round tables of sizes 2m\u2081,\u2026,2m_t such that each couple sits together every night and each pair of distinct non\u2011spouses sits together exactly once.",
     "domains": [
       "Bridges"
@@ -1311,7 +1311,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01130v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T02:14:54.483527+00:00",
     "title": "Sufficiency of obvious necessary conditions for the generalized honeymoon Oberwolfach problem with multiple round tables"
   },
@@ -2071,7 +2071,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Characterization of Exact Game Values in Team Selection Game with Average-Based Scoring"
   },
   {
-    "consumed_by_exp_id": "164898ae",
+    "consumed_by_exp_id": "",
     "description": "For every integer $d \\geq 3$ and every finite group $G$, there exists a $d$-regular simple graph $\\Gamma$ and a strong embedding $\\beta$ of $\\Gamma$ into a surface such that the group of automorphisms of the graph $\\text{Aut}(\\Gamma)$ and the group of automorphisms of the embedded graph $\\text{Aut}(\\beta(\\Gamma))$ are both isomorphic to $G$.",
     "domains": [
       "Algebra",
@@ -2081,7 +2081,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T03:16:29.014621+00:00",
     "title": "Existence of Regular Graphs with Prescribed Automorphism Groups and Strong Embeddings"
   },
@@ -2202,7 +2202,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Variance of Homomorphism at the Root is Bounded Below by Effective Resistance"
   },
   {
-    "consumed_by_exp_id": "a793b4d3",
+    "consumed_by_exp_id": "",
     "description": "Analysis of the maximal number of chains required to cover strict chains in the Boolean lattice, with connections to inclusion-exclusion and logarithmic approximations.",
     "domains": [
       "Cryptography",
@@ -2212,7 +2212,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29385v2",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T08:04:06.155536+00:00",
     "title": "Chain Covers in the Boolean Lattice"
   },
@@ -3832,7 +3832,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Obstruction\u2011free FAC posets satisfy the Aharoni\u2011Korman conjecture"
   },
   {
-    "consumed_by_exp_id": "72798aec",
+    "consumed_by_exp_id": "",
     "description": "For every integer n \u2265 11 with binary expansion n = 2^{a\u2081} + 2^{a\u2082} + \u2026 + 2^{a_t} where a\u2081 > a\u2082 > \u2026 > a_t \u2265 0, the set \u0394(n,k) of non\u2011hook partitions of n with at most k parts is contained in \u03a9\u2082(n) if and only if k \u2264 a\u2081 + t - 1. Equivalently, the largest integer k for which \u0394(n,k) \u2286 \u03a9\u2082(n) is exactly a\u2081 + t - 1. This refines the theorem of the paper by asserting that the stated bound holds universally (i.e., without the exceptional small\u2011n cases) and predicts a precise formula for the maximal size of such partitions.",
     "domains": [
       "Pythagorean",
@@ -3842,7 +3842,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T23:01:54.640398+00:00",
     "title": "Conjecture on the maximal number of parts of non\u2011hook partitions in \u03a9\u2082(n)"
   },
@@ -4185,7 +4185,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantitative Thinness of Galois\u2011Group\u2011Changing Specializations for Strongly\u202fn\u2011Genuine Polynomials"
   },
   {
-    "consumed_by_exp_id": "2058237b",
+    "consumed_by_exp_id": "",
     "description": "A countable FAC poset satisfies the Aharoni-Korman conjecture if and only if it does not contain a saturated chain D such that either D or its reverse is a countable direct sum of infinite co-wellfounded posets.",
     "domains": [
       "Pythagorean"
@@ -4194,7 +4194,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02500v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T16:16:00.227260+00:00",
     "title": "Characterization of the Aharoni-Korman Conjecture via Saturated Chains"
   },
@@ -4448,7 +4448,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finiteness of Rational Points on General Type Varieties"
   },
   {
-    "consumed_by_exp_id": "98188561",
+    "consumed_by_exp_id": "",
     "description": "Let P be a finite poset. The main theorem shows that V\u2081(P) is an RB-domain iff P has a least element and its undirected Hasse graph is a tree. I conjecture that the four-point diamond (a poset with 4 elements where 2 incomparable elements are both below 2 incomparable maxima) is the unique minimal poset violating this: any finite poset P with fewer than 4 elements has V\u2081(P) an RB-domain, and among 4-element posets, only the four-point diamond violates the RB-domain property. This is falsifiable by either finding a smaller counterexample or proving no other 4-element poset violates the condition.",
     "domains": [
       "Pythagorean"
@@ -4457,7 +4457,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02231v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T22:13:05.785493+00:00",
     "title": "Uniqueness of the Four-Point Diamond as Minimal RB-Domain Violator in Probabilistic Powerdomains"
   },
@@ -4941,11 +4941,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
+    "description": "Any finite group that can be expressed as the product of two dihedral subgroups is solvable. This extends the classical result of Kegel and Wielandt on the solvability of products of two nilpotent groups to the case of dihedral groups, noting that dihedral groups are solvable (specifically, metacyclic) but not necessarily nilpotent.",
     "domains": [
       "Algebra"
     ],
     "id": "fd_0388",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00352v1",
+    "status": "available",
+    "timestamp": "2026-07-06T09:43:33.509330+00:00",
+    "title": "Solvability of Finite Bidihedral Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0389",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -4959,7 +4973,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0389",
+    "id": "fd_0390",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -4974,7 +4988,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0390",
+    "id": "fd_0391",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
@@ -4989,7 +5003,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0391",
+    "id": "fd_0392",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -5004,7 +5018,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0392",
+    "id": "fd_0393",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -5018,7 +5032,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0393",
+    "id": "fd_0394",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -5032,7 +5046,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0394",
+    "id": "fd_0395",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -5047,7 +5061,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0395",
+    "id": "fd_0396",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02011v1",
@@ -5062,7 +5076,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0396",
+    "id": "fd_0397",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -5076,7 +5090,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0397",
+    "id": "fd_0398",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02085v1",
@@ -5090,7 +5104,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0398",
+    "id": "fd_0399",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01957v1",
@@ -5105,7 +5119,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0399",
+    "id": "fd_0400",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01956v1",
@@ -5119,7 +5133,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0400",
+    "id": "fd_0401",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01744v1",
@@ -5133,7 +5147,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0401",
+    "id": "fd_0402",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01839v1",
@@ -5148,7 +5162,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0402",
+    "id": "fd_0403",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01703v1",
@@ -5162,7 +5176,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0403",
+    "id": "fd_0404",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01572v1",
@@ -5176,7 +5190,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0404",
+    "id": "fd_0405",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01680v1",
@@ -5190,7 +5204,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0405",
+    "id": "fd_0406",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01582v1",
@@ -5205,7 +5219,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0406",
+    "id": "fd_0407",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01165v1",
@@ -5220,7 +5234,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0407",
+    "id": "fd_0408",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01184v1",
@@ -5234,7 +5248,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0408",
+    "id": "fd_0409",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -5249,7 +5263,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0409",
+    "id": "fd_0410",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -5264,7 +5278,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0410",
+    "id": "fd_0411",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01028v1",
@@ -5279,7 +5293,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0411",
+    "id": "fd_0412",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00940v1",
@@ -5293,7 +5307,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0412",
+    "id": "fd_0413",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -5307,7 +5321,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0413",
+    "id": "fd_0414",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01059v1",
@@ -5322,7 +5336,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0414",
+    "id": "fd_0415",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
@@ -5336,7 +5350,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0415",
+    "id": "fd_0416",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00934v1",
@@ -5351,7 +5365,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0416",
+    "id": "fd_0417",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00930v1",
@@ -5365,7 +5379,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Logic"
     ],
-    "id": "fd_0417",
+    "id": "fd_0418",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01294v1",
@@ -5379,7 +5393,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0418",
+    "id": "fd_0419",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00814v1",
@@ -5394,7 +5408,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0419",
+    "id": "fd_0420",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00651v1",
@@ -5408,7 +5422,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0420",
+    "id": "fd_0421",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00646v1",
@@ -5422,7 +5436,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0421",
+    "id": "fd_0422",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00592v1",
@@ -5437,7 +5451,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_0422",
+    "id": "fd_0423",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00507v1",
@@ -5451,7 +5465,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0423",
+    "id": "fd_0424",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00608v1",
@@ -5466,7 +5480,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0424",
+    "id": "fd_0425",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00456v1",
@@ -5480,7 +5494,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0425",
+    "id": "fd_0426",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00263v1",
@@ -5494,7 +5508,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0426",
+    "id": "fd_0427",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00318v1",
@@ -5508,13 +5522,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0427",
+    "id": "fd_0428",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00282v1",
     "status": "available",
     "timestamp": "2026-07-06T09:17:14.173732+00:00",
     "title": "One-Third Proportion Conjecture for Critical Zeros of GL(2) Twisted L-functions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Any arithmetic function f : \u2115 \u2192 \u2102 with |f(n)| \u2264 1 for all n, satisfying a completed L-function functional equation \u039b_f(s)=\u03b5 \u039b_f(1-s) for some root of unity \u03b5, and assuming that the minimal conductor N>1 is such that the support of f is contained in {1,\u2026,N}, must be a primitive Dirichlet character modulo N. In particular f must be completely multiplicative, have absolute value 1 on coprime arguments, and its order must divide the parity of \u03b5.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0429",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00332v1",
+    "status": "available",
+    "timestamp": "2026-07-06T09:45:46.630127+00:00",
+    "title": "Functional Equations Characterize Primitive Dirichlet Characters"
   },
   {
     "consumed_by_exp_id": "",
@@ -5532,7 +5560,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "That the entries of an integer right triangle are forced"
   },
   {
-    "consumed_by_exp_id": "6dff48bb",
+    "consumed_by_exp_id": "",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Geometry"
@@ -5541,7 +5569,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:212351",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T04:44:52.457313+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   }
