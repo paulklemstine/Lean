@@ -5119,7 +5119,7 @@
     "catalog_references": [
       "Annihilation, Independence, and Residue: Sharp Matching Bounds for the Annihilation Gap and a TxGraffiti Application"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0115cd1f",
     "description": "For any finite hypergraph H (not necessarily uniform), let a(H) denote the annihilation number (the largest size of a vertex set A with \\sum_{v\\in A} d_H(v) \\u2264 e(H)), \\u03b1(H) the independence number, and \\u03bd(H) the matching number. We conjecture that for all hypergraphs H with \\u03bd(H) \\u2265 1, the annihilation gap satisfies a(H) - \\u03b1(H) \\u2264 2\\u03bd(H) + 1 - \\u2307\\u221a(6\\u03bd(H)), and that for each integer \\u03bd \\u2265 1 there exists a hypergraph attaining equality.",
     "domain_bridges": [
       "Lean formalization of hypergraphs",
@@ -5137,7 +5137,7 @@
     "proof_strategy": "Construct explicit families of hypergraphs (e.g., extensions of the graph constructions that achieve equality for each \\u03bd) and prove the inequality using degree‑sum and counting arguments. Formalize the definitions in Lean and verify the conjecture on small hypergraphs computationally.",
     "research_mode": "team",
     "source_exp_id": "2607.01438v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T10:03:11.589332+00:00",
     "title": "Hypergraph Extension of the Exact Matching-Number Bound for the Annihilation Gap"
   },
@@ -8463,7 +8463,7 @@
       "math.CO",
       "math.GT"
     ],
-    "consumed_by_exp_id": "6ea348cc",
+    "consumed_by_exp_id": "",
     "description": "For any connected trivalent ribbon graph G embedded on a closed surface, the degree-zero Penrose homology group H^{0,*}(G) at the specialization λ = 3 is nonzero if and only if G admits a proper 3-edge coloring (Tait coloring). This refines the classical Penrose criterion—which states P(G;3) > 0 iff G is Tait-colorable—by identifying the specific homological degree that detects colorability, analogous to how Khovanov homology detects the unknot in degree zero.",
     "domain_bridges": [
       "Khovanov homology and knot detection",
@@ -8481,7 +8481,7 @@
     "proof_strategy": "Forward direction: For each Tait coloring c of G, construct an explicit generator of H^{0,*}(G) using the state-sum structure of the Penrose homology cube of resolutions, ensuring distinct colorings yield linearly independent classes. Reverse direction: Show that any nonzero class in H^{0,*}(G) forces the existence of a Tait coloring by analyzing the cobordism maps in the TQFT-valued chain complex and proving that non-colorable graphs have vanishing H^{0,*}. The nonorientable cobordism framework is essential for handling the sign assignments that distinguish colorable from non-colorable configurations.",
     "research_mode": "team",
     "source_exp_id": "2607.01632v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T02:04:59.148843+00:00",
     "title": "Penrose Homology Detects Tait Colorability"
   },
@@ -8651,6 +8651,32 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.CO",
+      "math.SP"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper proves an edge-spectral supersaturation bound with a sharp constant $B_F$ for color-critical graphs $F$ with $\\chi(F) \\ge 4$. A natural open problem is whether the same bound holds for $\\chi(F) = 3$, most notably for triangles ($K_3$). The conjecture states that for every $\\epsilon > 0$, there exist $\\delta > 0$ and $M$ such that for all $m \\ge M$ and $0 < q \\le \\delta \\sqrt{m}$, any graph $G$ with $m$ edges and $\\lambda^2(G) \\ge m + q$ contains at least $(1 - \\epsilon) q \\sqrt{m}$ triangles, corresponding to the sharp constant $B_{K_3} = 1$.",
+    "domain_bridges": [
+      "spectral_graph_theory",
+      "extremal_graph_theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_0372",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt the spectral stability methods used for $\\chi(F) \\ge 4$ to the $\\chi(F)=3$ case. This requires establishing spectral stability for near-bipartite graphs, then applying supersaturation counting arguments within the bipartite structure to find the requisite number of triangles. The bipartite case $r=2$ might require different spectral inequalities or combinatorial reductions since the Li-Liu-Zhang bound was only for $r \\ge 3$.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01073v1",
+    "status": "available",
+    "timestamp": "2026-07-06T04:22:22.147668+00:00",
+    "title": "Edge-Spectral Supersaturation for Triangles"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Theorem A",
       "Proposition big"
     ],
@@ -8664,7 +8690,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0372",
+    "id": "fd_0373",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the explicit description of the 2-Sylow subgroup of S_n as an iterated wreath product and the Murnaghan-Nakayama rule to compute the multiplicity of the irreducible character χ^{λ_n} in the permutation character (1_P)↑^{S_n}. Alternatively, use the characterization of Ω_2(n) via 2-quotients of partitions (as in [G17]) and verify that the 2-quotient of λ_n satisfies the required condition. Another approach is to use the known results on the restriction of irreducible characters to Sylow 2-subgroups and the fact that λ_n is a partition with all parts ≤ 2.",
@@ -8691,7 +8717,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0373",
+    "id": "fd_0374",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a specific graph achieving the lower bound via Pokrovskiy's structure theorem",
@@ -8717,7 +8743,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0374",
+    "id": "fd_0375",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish a conductance lower bound via a suitable coupling argument that relates chord swaps to graph-theoretic moves, and then use known inequalities to translate this into a polynomial lower bound on the spectral gap for fixed genus.",
@@ -8737,7 +8763,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0375",
+    "id": "fd_0376",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "induction",
@@ -8765,7 +8791,7 @@
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0376",
+    "id": "fd_0377",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the connection via holography: (1) Prove interval counting for high-dimension CFT primaries follows log-correlated field statistics, (2) Show the extremal process converges to Gumbel by analyzing the correlation structure of the underlying Gaussian free field, (3) Translate to AdS side via HKLL reconstruction to bound semiclassical path integral resolution. Use modular invariance and sparseness conditions to control the tail behavior rigorously.",
@@ -8791,7 +8817,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0377",
+    "id": "fd_0378",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive argument on rank bounds combined with matroid minors analysis",
@@ -8818,7 +8844,7 @@
     "domains": [
       "Physics"
     ],
-    "id": "fd_0378",
+    "id": "fd_0379",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a doubly nonnegative graphon W where the spectral inequality t(H,W) ≥ ρ(W)^{2e(H)-v(H)} p(W)^{v(H)-e(H)} holds but t(H,W) < p(W)^{e(H)} fails, demonstrating the equivalence's optimality in the v(H) ≤ e(H) range.",
@@ -8848,7 +8874,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0379",
+    "id": "fd_0380",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof would proceed by (1) constructing the Iwasawa module M as the Fitting module of the spectral resultant using the universal Grover‑Ihara polynomial; (2) applying the structure theorem for finitely generated Δ_₂[[Γ]]‑modules to express μ(M) and λ(M) in terms of elementary divisors; (3) evaluating the resultant at torsion characters χ∈̀_hat{Δ}_₂^× and showing via equivariant descent that the elementary divisors are precisely the values v_p(R(χ)); (4) incorporating the Bass factor (A^2‑1) by factoring det P(U_n) into a coprime part and a power of the Bass factor, and comparing the resulting contributions to the λ‑term. The key technical step is to prove an equivariant Kida formula for the spectral resultant without integrality assumptions, using the factorization for p‑group covers from the paper and a careful analysis of the local units at χ(1)=±1.",
@@ -8877,7 +8903,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0380",
+    "id": "fd_0381",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Explicit construction of arrangements with controlled intersection multiplicities, followed by computation of \\(\\mdr(f)\\) via graded module generation and analysis of Jacobian syzygies using symbolic computation in Lean 4.",
@@ -8904,7 +8930,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0381",
+    "id": "fd_0382",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Interpret r_m(n,k) as counting labelled structures: an ordered partition where each block is either a 'non-tie' of size < m (weight 1) or a 'tie' of size ≥ m (weight y). The exponential generating function for non-tie blocks is A_m(x), for tie blocks is B_m(x). A sequence of such blocks has EGF 1/(1 - (A_m(x) + y B_m(x))). Equating coefficients yields the formula.",
@@ -8930,7 +8956,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0382",
+    "id": "fd_0383",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Verify the conjectured formula by computing class numbers of explicitly constructed quartic CM fields and comparing them to the generalized Hurwitz class numbers defined via the trace formula. This requires formalizing quartic field construction, class group computations, and the definition of H_g(D) in Lean.",
@@ -8962,7 +8988,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0383",
+    "id": "fd_0384",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Verify the conjecture computationally for x ∈ [1, 650) by establishing explicit bounds on D(t) in this range, then combine with the asymptotic result from the paper. The key insight is that the weight (1-x/n) in the smoothed sum eliminates the difficult ψ-term, making the error term fundamentally more tractable than in the classical Walfisz problem.",
@@ -8990,7 +9016,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0384",
+    "id": "fd_0385",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Hasse-Weil L-function derivative at s=1 and the Neron-Tate height of the explicitly defined rational point P_7 = (84, 756) on E_7, and verify their equality using the explicit formula and height computations outlined in Yin's paper.",
@@ -9019,7 +9045,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0385",
+    "id": "fd_0386",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the odd power-sum ring $\\Gamma_t = \\mathbb{Q}(t)[p_1, p_3, p_5, \\ldots]$ as a graded Hopf algebra over $\\mathbb{Q}(t)$. Define the diagonal automorphism $\\mathcal{R}_t$ rescaling $p_n \\mapsto (1-t^n)p_n$ for odd $n$, and prove it is a Hopf algebra automorphism. Define the classical Schur $Q$ vertex operator $\\Phi(z)$ via its exponential form in creation/annihilation operators on $\\Gamma_t$. Construct the modified operator $\\mathcal{Y}_t(z)$ and prove the conjugation identity $\\mathcal{Y}_t(z) = \\mathcal{R}_t \\Phi(z) \\mathcal{R}_t^{-1}$ by verifying that $\\mathcal{R}_t p_n \\mathcal{R}_t^{-1} = (1-t^n)p_n$ and $\\mathcal{R}_t (\\partial/p_n) \\mathcal{R}_t^{-1} = (1-t^n)^{-1} \\partial/p_n$. The plethystic identity then follows by applying both sides to the vacuum vector and extracting coefficients indexed by strict partitions, using that $\\mathcal{R}_t^{-1}|0\\rangle = |0\\rangle$.",
@@ -9047,7 +9073,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0386",
+    "id": "fd_0387",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The existing proof relies on GRH via Artin's generalized primitive root conjecture to guarantee the existence of primes with specific norm properties that enable the Euclidean division. An unconditional proof would likely require circumventing GRH by developing new analytic number theory techniques to establish stronger lower bounds on the relevant prime counting functions, or by discovering an alternative algebraic mechanism for constructing the Euclidean norm function for ray classes.",
@@ -9075,7 +9101,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0387",
+    "id": "fd_0388",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Attempt to decompose the Eulerian triangle square as a product of triangles whose individual real-rootedness preservation is known, or extend the rectangular additive convolution framework to construct an interlacing chain for the squared Eulerian row generating functions. Alternatively, establish that the Eulerian triangle square arises from a Narayana-type transformation applied to a suitable real-rooted polynomial.",
@@ -9102,7 +9128,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0388",
+    "id": "fd_0389",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the definitions of K_{s,t}-free graphs and the counting of labeled subgraphs isomorphic to K_{a,b}. Apply the Kővári–Sós–Turán theorem and double counting arguments, bounding the number of K_{a,b} copies by considering the number of common neighbors of a-sets of vertices.",
@@ -9129,7 +9155,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0389",
+    "id": "fd_0390",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage the real-rootedness of the row generating functions (proven by Dilks and Fang-Zhang-Zhao) combined with the theory of multiplier sequences or Pólya frequency sequences to establish the infinite log-concavity of the total sums. Alternatively, employ recurrence relations and induction with tight asymptotic bounds derived from the asymptotic normality of the row sequences.",
@@ -9157,7 +9183,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0390",
+    "id": "fd_0391",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the determinant criterion for Diophantine tuples and generalizations of the Mason-Stothers theorem over polynomial rings. Combine these with the Combinatorial Nullstellensatz to derive a contradiction if |A| > 6 outside the exceptional family.",
@@ -9183,7 +9209,7 @@
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0391",
+    "id": "fd_0392",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the barrier-adjusted Perron integral comparison method from the current paper to obtain precise asymptotics rather than order-of-magnitude bounds. Key steps: (1) show the barrier adjustment in I(χ) contributes at most o(1) to the normalized moment, allowing direct comparison with the unadjusted integral; (2) establish concentration of the character sum moment around its mean using the fourth moment bounds already developed in the paper; (3) identify the limiting constant via the random multiplicative function model by proving the Euler product structure of the moments converges to the random model value, leveraging the fact that for 0<q<1 the moments are dominated by typical rather than extreme behavior.",
@@ -9208,7 +9234,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0392",
+    "id": "fd_0393",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Utilize the paper's result that two triangulations with a common subdivision have a common $\\omega$-stellar subdivision. Then, show that the $\\omega$-stellar subdivision can be reached from the original triangulations via locally finite sequences of bistellar moves, extending Pachner's theorem to infinite complexes by controlling the locality of the inverse stellar moves.",
@@ -9236,7 +9262,7 @@
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0393",
+    "id": "fd_0394",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define Sidon sets and the function F(N). 2. Formalize the multi-kernel smoothing lemma (Lemma 1) which convexifies the boundary covering problem by placing smoothed indicator functions in a weighted Hilbert direct sum. 3. Extract and formalize the specific rational parameters of the finite certificate provided in the paper. 4. Verify the exact arithmetic constraints of the certificate within Lean 4. 5. Combine the smoothing lemma and the verified certificate to establish the asymptotic inequality with the explicit constant 0.94601.",
@@ -9264,7 +9290,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0394",
+    "id": "fd_0395",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The 'if' direction follows from computing the Benson–Krause–Schwede canonical class for Demushkin groups with q ≠ 3, interpreting it as defining systems of higher Massey products (the key innovation for p = 2). The 'only if' direction for q = 3 requires showing the canonical class is nonzero for the pro-3 Demushkin group with q = 3, likely via an explicit cocycle-level computation of the universal triple Massey product or by constructing a non-trivial defining system that obstructs A₃-formality.",
@@ -9294,7 +9320,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0395",
+    "id": "fd_0396",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the ring of symmetric functions, the Hall inner product, and the modified Macdonald basis. Define the nabla operator and the Haglund-Morse-Zabrocki operators $C_\\alpha$. Establish the expansion of $(-1)^{|\\mu|-\\ell(\\mu)}m_\\mu$ in the $C_\\alpha(1)$ basis with nonnegative coefficients in $\\mathbb{Q}_{\\ge 0}[q]$. Finally, combine this expansion with the compositional shuffle theorem and the Schur positivity of LLT polynomials to conclude the nonnegativity of the inner product.",
@@ -9303,6 +9329,33 @@
     "status": "available",
     "timestamp": "2026-07-06T04:03:02.338596+00:00",
     "title": "Generalized BGHT Signed Schur Positivity Conjecture"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "cover1965geometrical",
+      "kruskal_rank",
+      "dichotomy_counting"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any finite set F = {f₁, ..., fₙ} ⊆ ℝᴹ and map Φ: ℝᴹ → ℝᴹ', the number of Φ-separable dichotomies C_F satisfies C(κ, n) ≤ C_F ≤ C(ρ, n), where ρ is the rank and κ is the Kruskal rank of {Φ(fₖ)}ₖ₌₁ⁿ, and C(d, n) = 2·∑_{k=0}^{min(d,n)-1} binom(n-1, k) is Cover's counting function. This generalizes Cover's 1965 result by replacing the general position assumption with structural degeneracy measures.",
+    "domain_bridges": [
+      "learning_theory",
+      "matroid_theory",
+      "hyperplane_arrangements"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0397",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt Cover's inductive argument on point insertion: establish base cases for degenerate configurations, then show that inserting a point whose image under Φ lies in a subspace spanned by k previous images can increase dichotomy count by at most a factor governed by rank ρ, and at least by a factor governed by Kruskal rank κ. The key lemma is that the number of new dichotomies created by inserting a point equals twice the number of existing dichotomies that have the new point on their boundary, which is bounded by C(κ, n-1) from below and C(ρ, n-1) from above.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01010v1",
+    "status": "available",
+    "timestamp": "2026-07-06T04:22:39.874409+00:00",
+    "title": "Kruskal-Rank and Rank Bounds on Separable Dichotomy Counts"
   },
   {
     "ambition_level": "extension",

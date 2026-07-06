@@ -2799,7 +2799,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on \u03c3_{p,a} being unity for Legendre symbol conditions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0115cd1f",
     "description": "For any finite hypergraph H (not necessarily uniform), let a(H) denote the annihilation number (the largest size of a vertex set A with \\sum_{v\\in A} d_H(v) \\u2264 e(H)), \\u03b1(H) the independence number, and \\u03bd(H) the matching number. We conjecture that for all hypergraphs H with \\u03bd(H) \\u2265 1, the annihilation gap satisfies a(H) - \\u03b1(H) \\u2264 2\\u03bd(H) + 1 - \\u2307\\u221a(6\\u03bd(H)), and that for each integer \\u03bd \\u2265 1 there exists a hypergraph attaining equality.",
     "domains": [
       "Pythagorean"
@@ -2808,7 +2808,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01438v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T10:03:11.589332+00:00",
     "title": "Hypergraph Extension of the Exact Matching-Number Bound for the Annihilation Gap"
   },
@@ -4608,7 +4608,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Vanishing Criterion for Legendre Symbol Determinants"
   },
   {
-    "consumed_by_exp_id": "6ea348cc",
+    "consumed_by_exp_id": "",
     "description": "For any connected trivalent ribbon graph G embedded on a closed surface, the degree-zero Penrose homology group H^{0,*}(G) at the specialization \u03bb = 3 is nonzero if and only if G admits a proper 3-edge coloring (Tait coloring). This refines the classical Penrose criterion\u2014which states P(G;3) > 0 iff G is Tait-colorable\u2014by identifying the specific homological degree that detects colorability, analogous to how Khovanov homology detects the unknot in degree zero.",
     "domains": [
       "Geometry",
@@ -4618,7 +4618,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01632v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T02:04:59.148843+00:00",
     "title": "Penrose Homology Detects Tait Colorability"
   },
@@ -4709,11 +4709,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The paper proves an edge-spectral supersaturation bound with a sharp constant $B_F$ for color-critical graphs $F$ with $\\chi(F) \\ge 4$. A natural open problem is whether the same bound holds for $\\chi(F) = 3$, most notably for triangles ($K_3$). The conjecture states that for every $\\epsilon > 0$, there exist $\\delta > 0$ and $M$ such that for all $m \\ge M$ and $0 < q \\le \\delta \\sqrt{m}$, any graph $G$ with $m$ edges and $\\lambda^2(G) \\ge m + q$ contains at least $(1 - \\epsilon) q \\sqrt{m}$ triangles, corresponding to the sharp constant $B_{K_3} = 1$.",
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_0372",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01073v1",
+    "status": "available",
+    "timestamp": "2026-07-06T04:22:22.147668+00:00",
+    "title": "Edge-Spectral Supersaturation for Triangles"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0372",
+    "id": "fd_0373",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -4727,7 +4742,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0373",
+    "id": "fd_0374",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -4742,7 +4757,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0374",
+    "id": "fd_0375",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
@@ -4757,7 +4772,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0375",
+    "id": "fd_0376",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -4772,7 +4787,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0376",
+    "id": "fd_0377",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -4786,7 +4801,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0377",
+    "id": "fd_0378",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -4800,7 +4815,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0378",
+    "id": "fd_0379",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -4815,7 +4830,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0379",
+    "id": "fd_0380",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02011v1",
@@ -4830,7 +4845,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0380",
+    "id": "fd_0381",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -4844,7 +4859,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0381",
+    "id": "fd_0382",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02085v1",
@@ -4858,7 +4873,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0382",
+    "id": "fd_0383",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01957v1",
@@ -4873,7 +4888,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0383",
+    "id": "fd_0384",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01956v1",
@@ -4887,7 +4902,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0384",
+    "id": "fd_0385",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01744v1",
@@ -4901,7 +4916,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0385",
+    "id": "fd_0386",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01839v1",
@@ -4916,7 +4931,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0386",
+    "id": "fd_0387",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01703v1",
@@ -4930,7 +4945,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0387",
+    "id": "fd_0388",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01572v1",
@@ -4944,7 +4959,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0388",
+    "id": "fd_0389",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01680v1",
@@ -4958,7 +4973,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0389",
+    "id": "fd_0390",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01582v1",
@@ -4973,7 +4988,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0390",
+    "id": "fd_0391",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01165v1",
@@ -4988,7 +5003,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0391",
+    "id": "fd_0392",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01184v1",
@@ -5002,7 +5017,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0392",
+    "id": "fd_0393",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -5017,7 +5032,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0393",
+    "id": "fd_0394",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -5032,7 +5047,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0394",
+    "id": "fd_0395",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01028v1",
@@ -5047,13 +5062,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0395",
+    "id": "fd_0396",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00940v1",
     "status": "available",
     "timestamp": "2026-07-06T04:03:02.338596+00:00",
     "title": "Generalized BGHT Signed Schur Positivity Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any finite set F = {f\u2081, ..., f\u2099} \u2286 \u211d\u1d39 and map \u03a6: \u211d\u1d39 \u2192 \u211d\u1d39', the number of \u03a6-separable dichotomies C_F satisfies C(\u03ba, n) \u2264 C_F \u2264 C(\u03c1, n), where \u03c1 is the rank and \u03ba is the Kruskal rank of {\u03a6(f\u2096)}\u2096\u208c\u2081\u207f, and C(d, n) = 2\u00b7\u2211_{k=0}^{min(d,n)-1} binom(n-1, k) is Cover's counting function. This generalizes Cover's 1965 result by replacing the general position assumption with structural degeneracy measures.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0397",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01010v1",
+    "status": "available",
+    "timestamp": "2026-07-06T04:22:39.874409+00:00",
+    "title": "Kruskal-Rank and Rank Bounds on Separable Dichotomy Counts"
   },
   {
     "consumed_by_exp_id": "",
