@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "4bc14309",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Prismatic Purity for F-Crystals (Phase A, cycle 1)\n\nDerived from this cycle's findings in `CodimTwoExtension.lean` and\n`RestrictionEquivalence.lean`. Each conjecture is falsifiab",
-      "quality_score": 0.49242371929824563,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-06-28T12:12:09",
-      "title": "Prismatic Purity for F-Crystals on Regular Schemes"
-    },
-    {
       "cycle_id": "7e2e6a70",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Uniform VC-Dimension Families via Layered Stars\n\nThis cycle verified the **lower-bound / base-layer** side of the layered-star conjecture:\nthe star around a fixed point is a `(d+",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-07-06T19:50:56",
       "title": "Minimal dimension of non-γ-positive symmetric edge polytopes"
+    },
+    {
+      "cycle_id": "7e56c098",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures arising from the study of colorful Carathéodory-type\ntheorems over joins of spanning complexes.\n\n## 1. Nearest-point descent for the higher-dimension",
+      "quality_score": 0.30634774285714284,
+      "sorry_count": 0,
+      "theorem_count": 3,
+      "timestamp": "2026-07-06T21:41:33",
+      "title": "Colorful Carathéodory Theorem for Spanning k-trees"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.70296
     }
   ],
-  "last_updated": "2026-07-06T19:50:56",
+  "last_updated": "2026-07-06T21:41:33",
   "open_questions": [
     {
       "context": "that reduction, constructively and `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "c63aa9e3",
-        "quality": 0.6148,
-        "theorems": 7,
-        "title": "Eventual congruence of misère P‑positions in nuclear escalation ladders"
-      },
-      {
         "cycle_id": "242f16a7",
         "quality": 0.79104,
         "theorems": 16,
@@ -3637,6 +3631,12 @@
         "quality": 0.511,
         "theorems": 7,
         "title": "Discrete homotopy groups of quasisymmetric cubical sets"
+      },
+      {
+        "cycle_id": "7e56c098",
+        "quality": 0.30634774285714284,
+        "theorems": 3,
+        "title": "Colorful Carathéodory Theorem for Spanning k-trees"
       }
     ],
     "NumberTheory": [

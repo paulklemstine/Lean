@@ -1172,20 +1172,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Decomposition of Greedy Tamari Intervals and Bipartite Planar Maps"
   },
   {
-    "consumed_by_exp_id": "7e56c098",
-    "description": "Let V_1,..., V_{d+1} be disjoint finite sets and K be the join of spanning k-trees T_1,..., T_{d+1} where each T_i is a simplicial complex on V_i. If A: |\u0394_V| -> R^d is an affine map such that 0 is in the convex hull of the image of each color class A(V_i), then there exists a face \u03c3 in the join of these k-trees such that 0 is in the image of \u03c3.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "fd_0110",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01143v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T23:51:53.327272+00:00",
-    "title": "Colorful Carath\u00e9odory Theorem for Spanning k-trees"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The coefficients V\u2082(n), V\u2083(n), V\u2084(n) of the q-series v\u2082(q), v\u2083(q), v\u2084(q) satisfy an asymptotic alternating sign property: there exists an explicit oscillatory factor such that (-1)^n V_i(n) > 0 for all sufficiently large n outside a density-zero exceptional set. This means the signs strictly alternate in the limit, with only sparse violations.",
     "domains": [
@@ -5090,7 +5076,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Symmetric Exchange Generation in Rank-Bounded Matroids"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "27f42966",
     "description": "The spectral inequality equivalence for Sidorenko-type inequalities in admissible classes fails for certain bipartite graphs outside the range v(H) \u2264 e(H). Specifically, for the 5-vertex path graph H (a tree with 5 vertices and 4 edges), there exists an admissible class C (e.g., the class of doubly nonnegative graphons) such that the spectral inequality holds for all W \u2208 C, but H is not C-Sidorenko.",
     "domains": [
       "Physics"
@@ -5099,7 +5085,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T22:13:32.517589+00:00",
     "title": "Spectral Transfer Sharpness for Trees Beyond the Sidorenko Range"
   },
@@ -6329,6 +6315,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-06T21:37:11.871492+00:00",
     "title": "Non-Hook Partition Bound for Sylow 2-Permutation Characters"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every countable well-founded poset with the finite antichain condition (FAC) satisfies the Aharoni-Korman property: there exists a chain C and a partition of P into antichains {A_i : i \u2208 I} such that |C \u2229 A_i| = 1 for each i \u2208 I. This is a natural special case of the now-disproved Aharoni-Korman conjecture, restricting to well-founded posets where the rank function provides a canonical antichain partition and a transversal chain can potentially be constructed via a selector argument.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0497",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02500v1",
+    "status": "available",
+    "timestamp": "2026-07-06T21:46:31.311156+00:00",
+    "title": "Aharoni-Korman Property for Countable Well-Founded Posets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any full-dimensional convex polytope P in \u211d^d, the set of centerpoints of P (with respect to the uniform Lebesgue measure on P) coincides with the floating body of P at level 1/(d+1). That is, a point c \u2208 \u211d^d is a centerpoint\u2014meaning every closed halfspace containing c captures at least 1/(d+1) of the volume of P\u2014if and only if c belongs to the intersection of all closed halfspaces H\u207a satisfying vol(H\u207a \u2229 P) \u2265 vol(P)/(d+1). This equivalence, proved in the paper for convex polytopes, reveals a fundamental structural identity between a combinatorial-geometric object (centerpoints) and a convex-geometric object (floating bodies). Formalizing even the 2-dimensional case for triangles would require developing substantial infrastructure in convex geometry, measure theory on polytopes, and the centerpoint theorem.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0498",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02400v1",
+    "status": "available",
+    "timestamp": "2026-07-06T21:47:13.598450+00:00",
+    "title": "Centerpoint-Floating Body Coincidence for Convex Polytopes"
   },
   {
     "consumed_by_exp_id": "",
