@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "5f11db87",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Hadwiger–Debrunner `(p,q)` for convex splinters\n\nDerived from this cycle's findings in `Combinatorial.lean` and `HellyBridge.lean`.\nThis cycle proved (0 sorries) that the `(p,q)`",
-      "quality_score": 0.6981999999999999,
-      "sorry_count": 2,
-      "theorem_count": 8,
-      "timestamp": "2026-06-28T07:58:49",
-      "title": "Hadwiger--Debrunner (p,q) theorem for convex splinters"
-    },
-    {
       "cycle_id": "cff12e07",
       "domain": "Novelty",
       "key_insight": "# FUTURE DIRECTIONS — Symmetric chain decompositions and super-exponential growth\n\nDerived from this cycle's findings (the matching mechanism on a two-level slab,\nthe factorial engine `factorial_super",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-07-05T22:48:10",
       "title": "Conjecture on the Structure of Minimal Obstructions to Total Rainbow Forests"
+    },
+    {
+      "cycle_id": "4591bde2",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — Kernel-cover geometry of weighted Davenport constants\n\n## 1. Kernel-cover formula for finite abelian `p`-groups\n\nFor a finite abelian `p`-group `G = ⊕_j ℤ/p^{e_j}` with weight se",
+      "quality_score": 0.5155438642611684,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-06T01:26:11",
+      "title": "Kernel‑cover characterisation of the weighted Davenport constant"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8076800000000002
     }
   ],
-  "last_updated": "2026-07-05T22:48:10",
+  "last_updated": "2026-07-06T01:26:11",
   "open_questions": [
     {
       "context": "Synthesis (PI): A self-contained, sorry-free description of the hydrogen energy",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "168f9c96",
-        "quality": 0.68184,
-        "theorems": 13,
-        "title": "Conformability remains NP-complete for all fixed independence numbers at least 3"
-      },
-      {
         "cycle_id": "7ae59772",
         "quality": 0.7357199999999999,
         "theorems": 17,
@@ -3079,6 +3073,12 @@
         "quality": 0.73448,
         "theorems": 8,
         "title": "Fan-structure in Selmer group distributions over p-cyclic extensions"
+      },
+      {
+        "cycle_id": "4591bde2",
+        "quality": 0.5155438642611684,
+        "theorems": 8,
+        "title": "Kernel‑cover characterisation of the weighted Davenport constant"
       }
     ],
     "Applications": [
