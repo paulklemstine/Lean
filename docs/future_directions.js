@@ -1273,7 +1273,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Alternating Sign Conjecture for Andrews' q-Series Families"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "62d42242",
     "description": "For any nonnegative integer s and any list of integers m\u2081,\u2026,m_t \u2265 2, let n = s + \u03a3 m_i. If each m_i divides 2n(n\u22121), then there exists a seating schedule for 2n participants consisting of n newlywed couples at s tables of size 2 and t round tables of sizes 2m\u2081,\u2026,2m_t such that each couple sits together every night and each pair of distinct non\u2011spouses sits together exactly once.",
     "domains": [
       "Bridges"
@@ -1282,7 +1282,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01130v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T02:14:54.483527+00:00",
     "title": "Sufficiency of obvious necessary conditions for the generalized honeymoon Oberwolfach problem with multiple round tables"
   },
@@ -4550,20 +4550,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit Upper Bound on the Riemann Zeta Function on the 1-Line via Smoothing"
   },
   {
-    "consumed_by_exp_id": "b802ef79",
-    "description": "Conjectures that the set of indices n for which the coefficients V_2(n) of the q-series v_2(q) = sum_{n>=1} q^{2n^2-n} / (-q; q^2)_n violate the alternating sign pattern (-1)^{n+1} V_2(n) > 0 is finite. The paper proves that this set has natural density zero using an adapted circle method, but finiteness remains open and requires effective bounds on the asymptotic error terms.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0369",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01210v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T03:25:41.012336+00:00",
-    "title": "Finiteness of Sign Exceptions for Andrews' q-Series v_2"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For any prime p, the Markov chain on \u2115 defined by the Klagsbrun-Mazur-Rubin twist process for p-Selmer ranks of even-dimensional Galois modules satisfying the KMR technical conditions is irreducible, aperiodic, and positive recurrent. Its unique stationary distribution \u03c0 assigns strictly positive probability to every rank r \u2208 \u2115, and the distribution of p-Selmer ranks in the twist family ordered by the product of ramified primes converges to \u03c0.",
     "domains": [
@@ -6283,6 +6269,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-06T20:41:09.415093+00:00",
     "title": "Simplicial Stochastic Cone Characterization of RB-Domains in Probabilistic Powerdomains"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every countable well-founded poset with no infinite antichain (a well-founded FAC poset) possesses a chain C and a partition of the ground set into antichains such that C meets every antichain in the partition. This follows from the paper's main result because well-founded posets exclude saturated chains of the form \u2295_{x\u2208\u03c9} D_x with each D_x infinite and co-wellfounded: each such D_x, being infinite and co-wellfounded, contains infinite descending chains, contradicting well-foundedness of the ambient poset.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0491",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02500v1",
+    "status": "available",
+    "timestamp": "2026-07-06T21:01:00.899680+00:00",
+    "title": "Aharoni-Korman Property for Countable Well-Founded FAC Posets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any full-dimensional convex polytope P in R^d, the cap-volume function V(H) = vol(P \u2229 H\u207a), mapping an oriented hyperplane H to the volume of the cap it cuts from P, is piecewise polynomial of degree exactly d on each full-dimensional cell of the arrangement induced by the vertices of P in the dual space of oriented hyperplanes. This strengthens the paper's key observation that V is piecewise rational to the sharper claim that it is piecewise polynomial, with the degree bound d arising from the fact that cap vertices on the hyperplane vary linearly in the hyperplane parameters while simplex volumes are degree-d polynomials in vertex coordinates.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0492",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02400v1",
+    "status": "available",
+    "timestamp": "2026-07-06T21:02:58.080708+00:00",
+    "title": "Piecewise Polynomial Cap-Volume Conjecture for Convex Polytopes"
   },
   {
     "consumed_by_exp_id": "",

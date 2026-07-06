@@ -2306,7 +2306,7 @@
     "catalog_references": [
       "math.CO:2405.XXXX"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "62d42242",
     "description": "For any nonnegative integer s and any list of integers m₁,…,m_t ≥ 2, let n = s + Σ m_i. If each m_i divides 2n(n−1), then there exists a seating schedule for 2n participants consisting of n newlywed couples at s tables of size 2 and t round tables of sizes 2m₁,…,2m_t such that each couple sits together every night and each pair of distinct non‑spouses sits together exactly once.",
     "domain_bridges": [
       "graph decomposition",
@@ -2321,7 +2321,7 @@
     "proof_strategy": "Use an inductive construction based on splitting the set of couples into groups, applying the known solution for one round table (theorem from the paper) as a base case, and combining solutions via pairwise balanced designs and 4-fold graph decompositions to handle additional round tables.",
     "research_mode": "team",
     "source_exp_id": "2607.01130v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T02:14:54.483527+00:00",
     "title": "Sufficiency of obvious necessary conditions for the generalized honeymoon Oberwolfach problem with multiple round tables"
   },
@@ -8363,32 +8363,6 @@
     "title": "Explicit Upper Bound on the Riemann Zeta Function on the 1-Line via Smoothing"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "math.NT",
-      "Ramanujan's Lost Notebook"
-    ],
-    "consumed_by_exp_id": "b802ef79",
-    "description": "Conjectures that the set of indices n for which the coefficients V_2(n) of the q-series v_2(q) = sum_{n>=1} q^{2n^2-n} / (-q; q^2)_n violate the alternating sign pattern (-1)^{n+1} V_2(n) > 0 is finite. The paper proves that this set has natural density zero using an adapted circle method, but finiteness remains open and requires effective bounds on the asymptotic error terms.",
-    "domain_bridges": [
-      "q-series",
-      "Analytic Number Theory",
-      "Effective Asymptotics"
-    ],
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0369",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Obtain effective explicit bounds for the error terms in the asymptotic formulas for V_2(n) derived via the circle method, demonstrating that the main term strictly dominates the error term for all sufficiently large n, thereby forcing the strict alternating sign pattern eventually.",
-    "research_mode": "team",
-    "source_exp_id": "2607.01210v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T03:25:41.012336+00:00",
-    "title": "Finiteness of Sign Exceptions for Andrews' q-Series v_2"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "KMR13",
@@ -11662,6 +11636,64 @@
     "status": "available",
     "timestamp": "2026-07-06T20:41:09.415093+00:00",
     "title": "Simplicial Stochastic Cone Characterization of RB-Domains in Probabilistic Powerdomains"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "IsAntichain",
+      "IsChain",
+      "WellFounded",
+      "Set.Finite",
+      "Countable",
+      "PartialOrder"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every countable well-founded poset with no infinite antichain (a well-founded FAC poset) possesses a chain C and a partition of the ground set into antichains such that C meets every antichain in the partition. This follows from the paper's main result because well-founded posets exclude saturated chains of the form ⊕_{x∈ω} D_x with each D_x infinite and co-wellfounded: each such D_x, being infinite and co-wellfounded, contains infinite descending chains, contradicting well-foundedness of the ambient poset.",
+    "domain_bridges": [
+      "combinatorics",
+      "set_theory",
+      "order_theory"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0491",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First formalize the exclusion argument: well-founded countable FAC posets cannot contain saturated chains isomorphic to ⊕_{x∈ω} D_x with each D_x infinite and co-wellfounded, since co-wellfounded infinite posets contain infinite descending chains within each D_x piece, violating well-foundedness. Then formalize the paper's chain completion H(P) and structural decomposition of countable FAC posets into scattered pieces. Apply the paper's main theorem to the well-founded case to extract the witnessing chain and antichain partition.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02500v1",
+    "status": "available",
+    "timestamp": "2026-07-06T21:01:00.899680+00:00",
+    "title": "Aharoni-Korman Property for Countable Well-Founded FAC Posets"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "52Axx",
+      "14P10",
+      "68U05"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any full-dimensional convex polytope P in R^d, the cap-volume function V(H) = vol(P ∩ H⁺), mapping an oriented hyperplane H to the volume of the cap it cuts from P, is piecewise polynomial of degree exactly d on each full-dimensional cell of the arrangement induced by the vertices of P in the dual space of oriented hyperplanes. This strengthens the paper's key observation that V is piecewise rational to the sharper claim that it is piecewise polynomial, with the degree bound d arising from the fact that cap vertices on the hyperplane vary linearly in the hyperplane parameters while simplex volumes are degree-d polynomials in vertex coordinates.",
+    "domain_bridges": [
+      "Computational Geometry",
+      "Real Algebraic Geometry",
+      "Measure Theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0492",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Fix a full-dimensional cell C of the arrangement in the dual space where the combinatorial type of the cap P ∩ H⁺ is constant. Within C, the vertices of the cap are either original vertices of P (constant) or intersection points of edges of P with H. Show that these intersection points vary linearly in the hyperplane parameters on C. Triangulate the cap into simplices; each simplex volume is a degree-d polynomial in its vertex coordinates. Since each vertex is either constant or linear in the hyperplane parameters, each simplex volume is a degree-d polynomial in the hyperplane parameters on C. Summing over simplices yields a degree-d polynomial for the total cap volume on C. Genericity arguments show the degree is exactly d, not less.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02400v1",
+    "status": "available",
+    "timestamp": "2026-07-06T21:02:58.080708+00:00",
+    "title": "Piecewise Polynomial Cap-Volume Conjecture for Convex Polytopes"
   },
   {
     "ambition_level": "extension",

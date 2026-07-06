@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-06T20:29:10.022194+00:00",
+  "last_updated": "2026-07-06T20:59:31.067952+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -38139,6 +38139,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-06T20:29:09.953879+00:00",
       "title": "At most two large common values for generalized ABC recurrences"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 6,
+      "domain": "Computation",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "b802ef79",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v19",
+      "phase_b_skipped": false,
+      "prompt_version": "v19",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783366398.6651638,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-06T20:59:31.005380+00:00",
+      "title": "Finiteness of Sign Exceptions for Andrews' q-Series v_2"
     }
   ]
 }
