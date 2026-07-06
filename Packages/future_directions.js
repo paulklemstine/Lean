@@ -323,7 +323,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Commutativity of Operator Theorem operators in SR_G"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "acb176be",
     "description": "Conjecture that for coprime positive integers a<b with a>1 and odd exponent n>1, the equation (a^n+1)(b^n+1)=x^2 has no positive integer solutions.",
     "domains": [
       "Pythagorean"
@@ -332,7 +332,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31223v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T16:13:17.108600+00:00",
     "title": "No solutions for odd exponents in the coprime case"
   },
@@ -1910,7 +1910,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pseudo-determinant of power-integral matrices is an algebraic integer"
   },
   {
-    "consumed_by_exp_id": "24598706",
+    "consumed_by_exp_id": "",
     "description": "For a graph $G$ with minimum degree $\\delta(G) \\ge a + r$, if the spectral radius $\\lambda(G)$ is at least $a + r + b$, then $G$ is fractional ID-$[a,b]$-factor-critical.",
     "domains": [
       "Physics"
@@ -1919,7 +1919,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31064v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T21:44:34.279843+00:00",
     "title": "Spectral radius threshold for fractional ID-$[a,b]$-factor-critical graphs"
   },
@@ -5929,18 +5929,48 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a squarefree integer N > 1 with an even number of prime factors, and a positive divisor d | N, let w_d denote the corresponding Atkin-Lehner involution on the Shimura curve X_N. The genus of the quotient X_N / \u27e8w_d\u27e9 is determined by the Riemann-Hurwitz formula applied to the double cover X_N \u2192 X_N / \u27e8w_d\u27e9, where the number of fixed points of w_d equals the number of optimal embeddings of a certain quadratic order into the quaternion order, expressible via class numbers. The conjecture is: X_N / \u27e8w_d\u27e9 has genus zero if and only if (N, d) belongs to an explicit finite list, which strictly contains the list {(6,6), (10,10), (22,22)} arising from genus-zero X_N alone. This classification is the key structural result enabling the extension of the Giampietro-Darmon factorization beyond the original conjecture.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0456",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02306v1",
+    "status": "available",
+    "timestamp": "2026-07-06T14:46:26.353494+00:00",
+    "title": "Genus-Zero Classification of Atkin-Lehner Quotients of Shimura Curves"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any convex polytope P in \u211d^\ufffd (with e = d+1 being the embedding dimension), the set of centerpoints of P coincides with the floating body of P at level 1/(d+1). Specifically, a point x is a centerpoint of P (meaning every closed halfspace containing x contains at least a 1/(d+1) fraction of the volume of P) if and only if x belongs to the floating body F_{1/(d+1)}(P), defined as the intersection of all closed halfspaces H\u207a such that vol(P \\ H\u207a) \u2264 (1/(d+1)) \u00b7 vol(P). The paper establishes this equivalence and further shows that for polytopes this set is semialgebraic.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0456",
+    "id": "fd_0457",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02400v1",
     "status": "available",
     "timestamp": "2026-07-06T14:29:25.661086+00:00",
     "title": "Centerpoint-Floating Body Equivalence for Convex Polytopes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes a precise conjecture about the structural complexity of Sylow 2-permutation characters via bounds on parts of partitions, leveraging the binomial expansion of group orders.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0458",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02433v1",
+    "status": "available",
+    "timestamp": "2026-07-06T14:48:37.647774+00:00",
+    "title": "Bounds on the number of Sylow 2-orbits in binary-partition contexts"
   },
   {
     "consumed_by_exp_id": "",

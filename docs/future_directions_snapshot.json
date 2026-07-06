@@ -561,7 +561,7 @@
       "Noubissie, Togbé and Zhang 2020",
       "Fujita and Le 2024"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "acb176be",
     "description": "Conjecture that for coprime positive integers a<b with a>1 and odd exponent n>1, the equation (a^n+1)(b^n+1)=x^2 has no positive integer solutions.",
     "domain_bridges": [
       "Pell equations",
@@ -577,7 +577,7 @@
     "proof_strategy": "Apply a descent argument combined with effective bounds from linear forms in logarithms to show that for odd n>1 the product (a^n+1)(b^n+1) cannot be a perfect square when a and b are coprime.",
     "research_mode": "team",
     "source_exp_id": "2606.31223v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T16:13:17.108600+00:00",
     "title": "No solutions for odd exponents in the coprime case"
   },
@@ -3485,7 +3485,7 @@
       "BH",
       "LFZ"
     ],
-    "consumed_by_exp_id": "24598706",
+    "consumed_by_exp_id": "",
     "description": "For a graph $G$ with minimum degree $\\delta(G) \\ge a + r$, if the spectral radius $\\lambda(G)$ is at least $a + r + b$, then $G$ is fractional ID-$[a,b]$-factor-critical.",
     "domain_bridges": [
       "Spectral graph theory",
@@ -3501,7 +3501,7 @@
     "proof_strategy": "1. Establish that $\\lambda(G) \\ge a + r + b$ implies sufficient expansion properties via spectral techniques. 2. Show that this expansion guarantees the existence of fractional $[a,b]$-factors in $G-I$ for any independent set $I$ of size $r$. 3. Leverage the minimum degree condition to bound the vertex degrees in $G-I$ within the $[a,b]$ range.",
     "research_mode": "team",
     "source_exp_id": "2606.31064v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T21:44:34.279843+00:00",
     "title": "Spectral radius threshold for fractional ID-$[a,b]$-factor-critical graphs"
   },
@@ -10948,6 +10948,36 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "Shimura_curves",
+      "Atkin-Lehner_involutions",
+      "quaternion_algebras",
+      "CM_points",
+      "Riemann-Hurwitz"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a squarefree integer N > 1 with an even number of prime factors, and a positive divisor d | N, let w_d denote the corresponding Atkin-Lehner involution on the Shimura curve X_N. The genus of the quotient X_N / ⟨w_d⟩ is determined by the Riemann-Hurwitz formula applied to the double cover X_N → X_N / ⟨w_d⟩, where the number of fixed points of w_d equals the number of optimal embeddings of a certain quadratic order into the quaternion order, expressible via class numbers. The conjecture is: X_N / ⟨w_d⟩ has genus zero if and only if (N, d) belongs to an explicit finite list, which strictly contains the list {(6,6), (10,10), (22,22)} arising from genus-zero X_N alone. This classification is the key structural result enabling the extension of the Giampietro-Darmon factorization beyond the original conjecture.",
+    "domain_bridges": [
+      "arithmetic_geometry",
+      "class_field_theory",
+      "p_adic_analysis"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0456",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First formalize the genus formula for Shimura curves X_N of discriminant N (already explicit in the literature, e.g., Ogg). Then formalize the fixed-point count of Atkin-Lehner involutions w_d in terms of class numbers of imaginary quadratic orders via optimal embedding counts. Apply Riemann-Hurwitz to the double cover X_N → X_N/⟨w_d⟩ to obtain the genus of the quotient. Finally, enumerate all pairs (N, d) with N squarefree, ω(N) even, d | N, for which the resulting genus is zero, yielding the explicit finite classification.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02306v1",
+    "status": "available",
+    "timestamp": "2026-07-06T14:46:26.353494+00:00",
+    "title": "Genus-Zero Classification of Atkin-Lehner Quotients of Shimura Curves"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "math.MG",
       "cs.CG",
       "math.CO"
@@ -10961,7 +10991,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0456",
+    "id": "fd_0457",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof proceeds by double inclusion. (⊆): If x is a centerpoint, then every halfspace H⁺ containing x satisfies vol(P ∩ H⁺) ≥ vol(P)/(d+1), equivalently vol(P \\ H⁺) ≤ vol(P)·d/(d+1); but the floating body condition requires vol(P \\ H⁺) ≤ vol(P)/(d+1) for the halfspaces defining it, so one must show that a centerpoint lies in every halfspace whose complementary cap has volume ≤ vol(P)/(d+1). (⊇): Conversely, if x ∈ F_{1/(d+1)}(P), then x lies in every halfspace H⁺ with vol(P \\ H⁺) ≤ vol(P)/(d+1), and one must show this forces every halfspace through x to capture at least 1/(d+1) of the volume. The key technical ingredient is that the cap-volume function is piecewise rational on the arrangement of oriented hyperplanes determined by the polytope's facets, which makes both sets explicitly semialgebraic and allows their coincidence to be verified.",
@@ -10970,6 +11000,34 @@
     "status": "available",
     "timestamp": "2026-07-06T14:29:25.661086+00:00",
     "title": "Centerpoint-Floating Body Equivalence for Convex Polytopes"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "GL1",
+      "MN12",
+      "GL3"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Formalizes a precise conjecture about the structural complexity of Sylow 2-permutation characters via bounds on parts of partitions, leveraging the binomial expansion of group orders.",
+    "domain_bridges": [
+      "partitions of numbers",
+      "combinatorial enumeration",
+      "representation theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0458",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Constructive existence via analytic bounding of character degrees",
+    "research_mode": "team",
+    "source_exp_id": "2607.02433v1",
+    "status": "available",
+    "timestamp": "2026-07-06T14:48:37.647774+00:00",
+    "title": "Bounds on the number of Sylow 2-orbits in binary-partition contexts"
   },
   {
     "ambition_level": "extension",
