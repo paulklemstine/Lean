@@ -1,0 +1,27 @@
+[
+  {
+    "title": "The orientation class equals the mod-2 defining exponent of a Demushkin group",
+    "description": "For a pro-2 Demushkin group G, the mod-2 cohomology H^*(G;F2) is concentrated in degrees 0,1,2 with a nondegenerate symmetric cup-product form b on V = H^1. Over F2 the self-pairing q(x) = b(x,x) is a linear functional, hence represented by a unique 'orientation' (Kummer) class chi with b(chi,x) = b(x,x) for all x. Conjecture: chi = 0 exactly when G is of even type, and this coincides with the defining relation of G having even exponent in its distinguished generator. Proposed approach: express chi in terms of the Gram matrix of b in a minimal generating basis, compare with the standard Demushkin presentation r = x_1^{2^f}[x_1,x_2][x_3,x_4]..., and match chi against the parity of f. Test on the known classification over Q_p and small explicit forms.",
+    "tags": ["Demushkin groups", "Galois cohomology", "Bilinear forms", "Characteristic two"]
+  },
+  {
+    "title": "Nondegenerate alternating forms over F2 have even rank, forcing even-type Demushkin groups to have even rank",
+    "description": "A nondegenerate symmetric bilinear form b over F2 is of 'even type' when it is alternating (b(x,x)=0 for all x). Conjecture: any nondegenerate alternating form over F2 has even dimension, so every even-type pro-2 Demushkin group has even minimal generating rank while odd rank forces the odd type. Proposed approach: strong induction on finrank using a symplectic/hyperbolic splitting: pick v != 0, use nondegeneracy to find w with b(v,w)=1, show span{v,w} is a nondegenerate 2-dimensional subspace, pass to its orthogonal complement (also nondegenerate alternating), and add 2 each step. Mathlib inputs: LinearMap.BilinForm.orthogonal, finrank_add_finrank_orthogonal, and the isCompl of a nondegenerate restriction.",
+    "tags": ["Bilinear forms", "Symplectic geometry", "Demushkin groups", "Linear algebra"]
+  },
+  {
+    "title": "Vanishing of all higher Massey products for pro-2 Demushkin groups (full A-infinity formality)",
+    "description": "The Benson-Krause-Schwede canonical class in HH^2 detects the length-3 (triple Massey) obstruction to formality of the cochain algebra C^*(G;F2). Conjecture: for every pro-2 Demushkin group all higher secondary operations vanish, i.e. the cochain algebra is A-infinity formal, not just A_3-formal. Key structural facts: cohomological dimension 2 kills every operation of length >= 4 for degree reasons (targets are in H^{>=3}=0), and the single length-3 operation V^{ox3} -> H^2 is governed by the nondegenerate cup-product pairing and its orientation class. Proposed approach: build a concrete minimal A-infinity model on the graded algebra F2 (+) V (+) F2, show m_n = 0 for n >= 4 by degree, and prove the length-3 obstruction is a Hochschild coboundary using the perfect pairing (Koszulness / intrinsic formality of the quadratic cohomology algebra).",
+    "tags": ["Massey products", "A-infinity algebras", "Hochschild cohomology", "Demushkin groups"]
+  },
+  {
+    "title": "The isotropy hyperplane as a canonical index-two arithmetic invariant",
+    "description": "For an odd-type pro-2 Demushkin group the set of isotropic classes {x in H^1 : x cup x = 0} is, over F2, a genuine linear subspace equal to the orthogonal complement of the orientation class chi, of codimension exactly one. Conjecture: under the arithmetic realisation of G (e.g. as a maximal pro-2 Galois group), this hyperplane corresponds to a canonical index-two quotient of G that is independent of all choices and is a complete invariant distinguishing the type. Proposed approach: identify the hyperplane {b(chi,x)=0} with the kernel of a distinguished character of G, interpret it via Kummer theory as cutting out a specific quadratic extension, and show choice-independence from uniqueness of chi (kummer_unique).",
+    "tags": ["Demushkin groups", "Galois cohomology", "Quadratic forms", "Field arithmetic"]
+  },
+  {
+    "title": "Even-weight codes as a bridge between isotropy counting and coding theory",
+    "description": "For the dot-product cup form on F2^n the isotropic classes {x : sum x_i = 0} are exactly the codewords of the even-weight [n, n-1] linear code, and there are 2^{n-1} of them. Conjecture: for every odd-type nondegenerate symmetric form over F2 the isotropic locus is dimension-preservingly isomorphic to an even-weight linear code, and this isomorphism transports the code's weight enumerator to a generating function counting isotropic classes by Hamming-type degree; in particular exactly half of all classes are isotropic in every positive dimension. Proposed approach: diagonalise/normalise the form, match the isotropy parity condition b(x,x)=0 with a single parity check, and compare weight enumerators; explore whether even-type forms correspond to doubly-even or self-dual codes.",
+    "tags": ["Coding theory", "Bilinear forms", "Enumerative combinatorics", "Characteristic two"]
+  }
+]

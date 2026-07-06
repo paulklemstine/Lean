@@ -4271,7 +4271,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Extremal Symmetric One-Weight Colorings Must Have Bracket-Regime Structure"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "767ff507",
     "description": "Let N > 1 be a squarefree integer with an even number of prime factors, and let X_N be the associated Shimura curve over \u211a. For each divisor d|N, let w_d be the Atkin-Lehner involution on X_N, and let X_N/\u27e8w_d\u27e9 be the corresponding quotient curve. The conjecture states that the set of all such N for which there exists at least one divisor d|N such that the quotient curve X_N/\u27e8w_d\u27e9 has genus zero is exactly the finite set {6, 10, 14, 15, 21, 22, 26, 33, 34, 35, 38, 39, 46, 51, 55, 57, 58, 62, 65, 69, 74, 77, 82, 85, 86, 87, 91, 93, 94, 95, 106, 111, 115, 118, 119, 122, 123, 129, 133, 134, 141, 142, 143, 145, 146, 155, 158, 159, 161, 166, 177, 178, 183, 185, 187, 194, 201, 202, 203, 205, 206, 209, 213, 214, 215, 217, 218, 219, 221, 226, 235, 237, 247, 249, 253, 254, 259, 262, 265, 267, 274, 278, 287, 291, 295, 298, 299, 301, 302, 303, 305, 309, 314, 319, 321, 323, 326, 327, 329, 334, 335, 339, 341, 346, 355, 358, 362, 365, 371, 377, 381, 382, 386, 391, 393, 394, 395, 398, 403, 407, 411, 413, 415, 417, 422, 427, 437, 445, 446, 447, 451, 453, 454, 458, 466, 469, 471, 473, 478, 481, 482, 485, 489, 493, 497}. (This list is conjectural and based on known classifications of genus-zero Atkin-Lehner quotients of Shimura curves.)",
     "domains": [
       "Pythagorean",
@@ -4281,7 +4281,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02306v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T16:21:31.636534+00:00",
     "title": "Classification of Genus-Zero Atkin-Lehner Quotients of Shimura Curves"
   },
@@ -5609,20 +5609,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fibonacci Lower Bound for Extension-Closed Subcategories of Type A_n"
   },
   {
-    "consumed_by_exp_id": "611a6b62",
-    "description": "For the longest element w_0 in the Coxeter group B_n and any Coxeter element c, the normalized volume of the type B c-Birkhoff polytope equals the number of linear extensions of the heap poset Heap(c, w_0). This follows from the unimodular equivalence established in the paper and the classical result that the normalized volume of an order polytope equals the number of linear extensions of the underlying poset, but making the equality explicit and computable provides a concrete formalization target.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0434",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.00646v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T06:55:48.094525+00:00",
-    "title": "Normalized volume of type B c-Birkhoff polytopes equals linear extension count of heap posets"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The paper proves that the average absolute character sum over y-smooth numbers is o(\u221a\u03a8(x,y)) when q \u2265 x^{1+\u03b5}. This conjecture asserts that the same sub-square-root bound holds at the critical threshold q \u2265 x (i.e., \u03b5 = 0), with a concrete saving factor. Specifically: for every \u03b5 > 0, there exists x\u2080(\u03b5) such that for all x \u2265 x\u2080, all primes q \u2265 x, and all y with (log x)\u2076 \u2264 y \u2264 x^{1/(32 log log x)}, the average absolute smooth character sum satisfies (1/(q-1)) \u03a3_{\u03c7 mod q, \u03c7\u2260\u03c7\u2080} |\u03a3_{n\u2264x, P(n)\u2264y} \u03c7(n)| \u2264 (1\u2212\u03b5)\u221a\u03a8(x,y). This extends the paper's main theorem from q \u2265 x^{1+\u03b5} to the boundary case q \u2265 x, which is the natural threshold where the problem transitions from trivial to nontrivial.",
     "domains": [
@@ -5944,12 +5930,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "A \u0394-matroid (E, F) is strong (i.e., satisfies the symmetric exchange axiom: for all A, B \u2208 F and e \u2208 A\\B, there exists f \u2208 B\\A such that A \u25b3 {e,f} \u2208 F and B \u25b3 {e,f} \u2208 F) if and only if it contains no peerless antipode. Here, an antipode of a feasible set A with respect to an element e is a feasible set B obtained from A by exchanging e for some f, and a peerless antipode is one that is unique in a specific local sense within the feasible set system. This equivalence provides a local obstruction characterization for the global symmetric exchange property, analogous to how local submodularity characterizes global submodularity for rank functions.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0457",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02419v1",
+    "status": "available",
+    "timestamp": "2026-07-06T15:11:22.459533+00:00",
+    "title": "Strong \u0394-matroids are characterized by the absence of peerless antipodes"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any convex polytope P in \u211d^\ufffd (with e = d+1 being the embedding dimension), the set of centerpoints of P coincides with the floating body of P at level 1/(d+1). Specifically, a point x is a centerpoint of P (meaning every closed halfspace containing x contains at least a 1/(d+1) fraction of the volume of P) if and only if x belongs to the floating body F_{1/(d+1)}(P), defined as the intersection of all closed halfspaces H\u207a such that vol(P \\ H\u207a) \u2264 (1/(d+1)) \u00b7 vol(P). The paper establishes this equivalence and further shows that for polytopes this set is semialgebraic.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0457",
+    "id": "fd_0458",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02400v1",
@@ -5964,13 +5965,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0458",
+    "id": "fd_0459",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
     "status": "available",
     "timestamp": "2026-07-06T14:48:37.647774+00:00",
     "title": "Bounds on the number of Sylow 2-orbits in binary-partition contexts"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every c > 0, there exists K such that any n-vertex graph G with average degree d \u2265 K and no cycle of length at least d can be transformed by deleting at most c\u00b7d\u00b7n edges into a graph whose every connected component has a vertex cover of size at most (1+c)\u00b7d.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0460",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02483v1",
+    "status": "available",
+    "timestamp": "2026-07-06T15:11:56.205886+00:00",
+    "title": "Hyperstability of the Erd\u0151s-Gallai Theorem"
   },
   {
     "consumed_by_exp_id": "",

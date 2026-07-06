@@ -7840,7 +7840,7 @@
       "ogg83",
       "oana"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "767ff507",
     "description": "Let N > 1 be a squarefree integer with an even number of prime factors, and let X_N be the associated Shimura curve over ℚ. For each divisor d|N, let w_d be the Atkin-Lehner involution on X_N, and let X_N/⟨w_d⟩ be the corresponding quotient curve. The conjecture states that the set of all such N for which there exists at least one divisor d|N such that the quotient curve X_N/⟨w_d⟩ has genus zero is exactly the finite set {6, 10, 14, 15, 21, 22, 26, 33, 34, 35, 38, 39, 46, 51, 55, 57, 58, 62, 65, 69, 74, 77, 82, 85, 86, 87, 91, 93, 94, 95, 106, 111, 115, 118, 119, 122, 123, 129, 133, 134, 141, 142, 143, 145, 146, 155, 158, 159, 161, 166, 177, 178, 183, 185, 187, 194, 201, 202, 203, 205, 206, 209, 213, 214, 215, 217, 218, 219, 221, 226, 235, 237, 247, 249, 253, 254, 259, 262, 265, 267, 274, 278, 287, 291, 295, 298, 299, 301, 302, 303, 305, 309, 314, 319, 321, 323, 326, 327, 329, 334, 335, 339, 341, 346, 355, 358, 362, 365, 371, 377, 381, 382, 386, 391, 393, 394, 395, 398, 403, 407, 411, 413, 415, 417, 422, 427, 437, 445, 446, 447, 451, 453, 454, 458, 466, 469, 471, 473, 478, 481, 482, 485, 489, 493, 497}. (This list is conjectural and based on known classifications of genus-zero Atkin-Lehner quotients of Shimura curves.)",
     "domain_bridges": [
       "algebraic_geometry",
@@ -7857,7 +7857,7 @@
     "proof_strategy": "Use the genus formula for Atkin-Lehner quotients of Shimura curves, which expresses the genus in terms of class numbers of quaternion orders, fixed point counts of the Atkin-Lehner involutions, and contributions from elliptic points. Systematically evaluate this formula for all squarefree N with an even number of prime factors, leveraging known bounds on class numbers to prove finiteness of the genus-zero cases. The computation reduces to checking a finite list of N up to a computable bound, which can be verified by computer-assisted enumeration of the genus formula.",
     "research_mode": "team",
     "source_exp_id": "2607.02306v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T16:21:31.636534+00:00",
     "title": "Classification of Genus-Zero Atkin-Lehner Quotients of Shimura Curves"
   },
@@ -10328,32 +10328,6 @@
     "title": "Fibonacci Lower Bound for Extension-Closed Subcategories of Type A_n"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "math.CO",
-      "math.AC"
-    ],
-    "consumed_by_exp_id": "611a6b62",
-    "description": "For the longest element w_0 in the Coxeter group B_n and any Coxeter element c, the normalized volume of the type B c-Birkhoff polytope equals the number of linear extensions of the heap poset Heap(c, w_0). This follows from the unimodular equivalence established in the paper and the classical result that the normalized volume of an order polytope equals the number of linear extensions of the underlying poset, but making the equality explicit and computable provides a concrete formalization target.",
-    "domain_bridges": [
-      "polyhedral_geometry",
-      "poset_theory",
-      "coxeter_groups"
-    ],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0434",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "First formalize heap posets Heap(c, w) for Coxeter group B_n, then define the type B c-Birkhoff polytope as the convex hull of appropriate permutation matrices corresponding to elements below w_0 in Bruhat order. Construct the explicit unimodular transformation to the order polytope of Heap(c, w_0). The normalized volume equality then follows from unimodular invariance of Ehrhart polynomials and the Stanley's result that the normalized volume of an order polytope is the number of its linear extensions.",
-    "research_mode": "team",
-    "source_exp_id": "2607.00646v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T06:55:48.094525+00:00",
-    "title": "Normalized volume of type B c-Birkhoff polytopes equals linear extension count of heap posets"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "math.NT",
@@ -10976,6 +10950,35 @@
     "title": "Genus-Zero Classification of Atkin-Lehner Quotients of Shimura Curves"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Wenzel symmetric exchange for Δ-matroids",
+      "Borovik-Gelfand-White hyperplane exchange",
+      "Coxeter matroids",
+      "Δ-matroid antipodes"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "A Δ-matroid (E, F) is strong (i.e., satisfies the symmetric exchange axiom: for all A, B ∈ F and e ∈ A\\B, there exists f ∈ B\\A such that A △ {e,f} ∈ F and B △ {e,f} ∈ F) if and only if it contains no peerless antipode. Here, an antipode of a feasible set A with respect to an element e is a feasible set B obtained from A by exchanging e for some f, and a peerless antipode is one that is unique in a specific local sense within the feasible set system. This equivalence provides a local obstruction characterization for the global symmetric exchange property, analogous to how local submodularity characterizes global submodularity for rank functions.",
+    "domain_bridges": [
+      "Tropical geometry (peerless antipode equations as tropicalization of orthogonal Grassmannian quadratics)",
+      "Algebraic combinatorics (orthogonal Grassmannian)",
+      "Valued matroid theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0457",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Forward direction (strong ⟹ no peerless antipode): Assume symmetric exchange holds and suppose for contradiction that a peerless antipode exists at some feasible set A with element e. Use the symmetric exchange property between A and any other feasible set witnessing the peerless configuration to construct a second antipode, contradicting peerlessness. Backward direction (no peerless antipode ⟹ strong): Assume no peerless antipode exists and suppose symmetric exchange fails for some A, B ∈ F with e ∈ A\\B. Show that the failure produces a peerless antipode: the element e at A has at most one viable exchange partner f ∈ B\\A with A △ {e,f} ∈ F, and the absence of any other witness forces this antipode to be peerless, contradicting the hypothesis.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02419v1",
+    "status": "available",
+    "timestamp": "2026-07-06T15:11:22.459533+00:00",
+    "title": "Strong Δ-matroids are characterized by the absence of peerless antipodes"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "math.MG",
@@ -10991,7 +10994,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0457",
+    "id": "fd_0458",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof proceeds by double inclusion. (⊆): If x is a centerpoint, then every halfspace H⁺ containing x satisfies vol(P ∩ H⁺) ≥ vol(P)/(d+1), equivalently vol(P \\ H⁺) ≤ vol(P)·d/(d+1); but the floating body condition requires vol(P \\ H⁺) ≤ vol(P)/(d+1) for the halfspaces defining it, so one must show that a centerpoint lies in every halfspace whose complementary cap has volume ≤ vol(P)/(d+1). (⊇): Conversely, if x ∈ F_{1/(d+1)}(P), then x lies in every halfspace H⁺ with vol(P \\ H⁺) ≤ vol(P)/(d+1), and one must show this forces every halfspace through x to capture at least 1/(d+1) of the volume. The key technical ingredient is that the cap-volume function is piecewise rational on the arrangement of oriented hyperplanes determined by the polytope's facets, which makes both sets explicitly semialgebraic and allows their coincidence to be verified.",
@@ -11019,7 +11022,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0458",
+    "id": "fd_0459",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive existence via analytic bounding of character degrees",
@@ -11028,6 +11031,33 @@
     "status": "available",
     "timestamp": "2026-07-06T14:48:37.647774+00:00",
     "title": "Bounds on the number of Sylow 2-orbits in binary-partition contexts"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Erdős-Gallai theorem",
+      "hyperstability",
+      "vertex cover",
+      "cycle length",
+      "graph editing distance"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every c > 0, there exists K such that any n-vertex graph G with average degree d ≥ K and no cycle of length at least d can be transformed by deleting at most c·d·n edges into a graph whose every connected component has a vertex cover of size at most (1+c)·d.",
+    "domain_bridges": [
+      "Combinatorics → Structural Graph Theory → Approximation/Stability Theory"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0460",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First formalize the classical Erdős-Gallai theorem (every graph with average degree d contains a cycle of length ≥ d). Then develop infrastructure for vertex covers of graph components and edge-editing distance. The key structural ingredient is Pokrovskiy's decomposition theorem for bounded-degree trees, which must also be formalized. The proof then proceeds by showing that graphs violating the conclusion have a specific block structure that forces a long cycle.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02483v1",
+    "status": "available",
+    "timestamp": "2026-07-06T15:11:56.205886+00:00",
+    "title": "Hyperstability of the Erdős-Gallai Theorem"
   },
   {
     "ambition_level": "extension",
