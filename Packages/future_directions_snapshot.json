@@ -1102,7 +1102,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": "Artin's conjecture on L-functions",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "72277034",
     "description": "An explicit formula for the number of non-trivial zeros of Artin L-functions below height T under Artin's conjecture.",
     "domain_bridges": [],
     "domains": [
@@ -1114,7 +1114,7 @@
     "proof_strategy": "explicit modular form analysis",
     "research_mode": "team",
     "source_exp_id": "2606.31441v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T14:15:54.879802+00:00",
     "title": "Counting Zeros of Artin L-functions"
   },
@@ -5897,7 +5897,7 @@
       "Przybyło, Wei (2023) - Asymptotic solution",
       "Current paper: Nearly-uniform degree distributions in spanning subgraphs (ArXiv)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1427cdbb",
     "description": "There exists an absolute constant C such that for every d-regular graph G on n vertices with d ≥ 2, the irregularity strength s(G) satisfies s(G) ≤ n/d + C. Here s(G) is the smallest integer k such that the edges of G can be weighted with integers from {1,…,k} so that all weighted vertex degrees are distinct.",
     "domain_bridges": [
       "Edge-weighting problems",
@@ -5915,7 +5915,7 @@
     "proof_strategy": "The conjecture has seen significant progress via probabilistic methods and algebraic constructions. A potential proof strategy could involve combining the polynomial method with iterative absorption techniques, or developing a more refined random weighting scheme that ensures distinct weighted degrees while keeping the maximum weight close to n/d. Recent asymptotic results by Przybyło and Wei suggest that a combination of random weighting and careful derandomization might close the gap to an absolute constant.",
     "research_mode": "team",
     "source_exp_id": "2606.30612v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T23:58:16.205238+00:00",
     "title": "Faudree-Lehel Conjecture on Irregularity Strength of Regular Graphs"
   },
