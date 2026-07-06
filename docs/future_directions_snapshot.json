@@ -6805,7 +6805,7 @@
       "Mathlib.Analysis.SpecialFunctions.Logarithm",
       "Mathlib.NumberTheory.Baker"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c4dfeeb0",
     "description": "Let $q>3$ be an integer and $P_1,\\dots,P_{q-1}\\in\\mathbb{Q}[U]$ satisfy the hypotheses of a generalized ABC polynomial. Define the linear recurrences $(a_n)_{n\\ge0}$ and $(b_n)_{n\\ge0}$ by the characteristic polynomials $\\pi_U(X)$ and its reciprocal $X^{q}\\pi_U(1/X)$. Then there exists an effectively computable constant $C>0$ (depending only on $q$ and the $P_i$) such that the set \\[ \\{ n\\ge0 \\mid a_n = b_m \\text{ for some } m\\ge0 \\text{ and } a_n > C \\} \\] has cardinality at most two.",
     "domain_bridges": [
       "AlgebraicNumberTheory",
@@ -6821,7 +6821,7 @@
     "proof_strategy": "Formalise the recurrences as modules over the ring of integers of the splitting field of $\\pi_U$. Use the theory of linear forms in logarithms (Baker's theorem) available in Mathlib to obtain an explicit lower bound for any non‑trivial equality $a_n=b_m$. Translate this bound into an inequality $\\max\\{n,m\\} \\le B$ for some computable $B$. Then a simple case analysis shows that at most two values can exceed the bound, matching the analytic result of the paper. The proof proceeds by:\n1. Defining the companion matrix of $\\pi_U$ and its reciprocal, extracting the closed form $a_n = \\sum_{i=1}^q \\alpha_i \\lambda_i^n$ with algebraic $\\lambda_i$ and $\\alpha_i$.\n2. Proving that the $\\lambda_i$ are multiplicatively independent except for the trivial reciprocal relation, using Galois theory lemmas already in Mathlib.\n3. Applying `baker_lower_bound` (a formalised version of Baker’s theorem) to the linear form $\\log(\\alpha_i) + n\\log(\\lambda_i) - \\log(\\beta_j) - m\\log(\\mu_j)$ arising from $a_n=b_m",
     "research_mode": "team",
     "source_exp_id": "2606.27885v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T18:31:34.889448+00:00",
     "title": "At most two large common values for generalized ABC recurrences"
   },
@@ -7764,7 +7764,7 @@
       "ogg83",
       "oana"
     ],
-    "consumed_by_exp_id": "767ff507",
+    "consumed_by_exp_id": "",
     "description": "Let N > 1 be a squarefree integer with an even number of prime factors, and let X_N be the associated Shimura curve over ℚ. For each divisor d|N, let w_d be the Atkin-Lehner involution on X_N, and let X_N/⟨w_d⟩ be the corresponding quotient curve. The conjecture states that the set of all such N for which there exists at least one divisor d|N such that the quotient curve X_N/⟨w_d⟩ has genus zero is exactly the finite set {6, 10, 14, 15, 21, 22, 26, 33, 34, 35, 38, 39, 46, 51, 55, 57, 58, 62, 65, 69, 74, 77, 82, 85, 86, 87, 91, 93, 94, 95, 106, 111, 115, 118, 119, 122, 123, 129, 133, 134, 141, 142, 143, 145, 146, 155, 158, 159, 161, 166, 177, 178, 183, 185, 187, 194, 201, 202, 203, 205, 206, 209, 213, 214, 215, 217, 218, 219, 221, 226, 235, 237, 247, 249, 253, 254, 259, 262, 265, 267, 274, 278, 287, 291, 295, 298, 299, 301, 302, 303, 305, 309, 314, 319, 321, 323, 326, 327, 329, 334, 335, 339, 341, 346, 355, 358, 362, 365, 371, 377, 381, 382, 386, 391, 393, 394, 395, 398, 403, 407, 411, 413, 415, 417, 422, 427, 437, 445, 446, 447, 451, 453, 454, 458, 466, 469, 471, 473, 478, 481, 482, 485, 489, 493, 497}. (This list is conjectural and based on known classifications of genus-zero Atkin-Lehner quotients of Shimura curves.)",
     "domain_bridges": [
       "algebraic_geometry",
@@ -7781,7 +7781,7 @@
     "proof_strategy": "Use the genus formula for Atkin-Lehner quotients of Shimura curves, which expresses the genus in terms of class numbers of quaternion orders, fixed point counts of the Atkin-Lehner involutions, and contributions from elliptic points. Systematically evaluate this formula for all squarefree N with an even number of prime factors, leveraging known bounds on class numbers to prove finiteness of the genus-zero cases. The computation reduces to checking a finite list of N up to a computable bound, which can be verified by computer-assisted enumeration of the genus formula.",
     "research_mode": "team",
     "source_exp_id": "2607.02306v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T16:21:31.636534+00:00",
     "title": "Classification of Genus-Zero Atkin-Lehner Quotients of Shimura Curves"
   },
@@ -10958,6 +10958,33 @@
     "title": "Overfull Conjecture"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a prime power q and a positive integer n, the maximum codimension of a cyclically covering subspace of F_q^n, denoted h_q(n), is zero if and only if every nonzero cyclic code in F_q^n contains a codeword of full Hamming weight.",
+    "domain_bridges": [
+      "Finite Fields",
+      "Cyclic Codes",
+      "Combinatorics of Vector Spaces"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0461",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish the duality between cyclically covering subspaces and cyclic codes. Show that a subspace failing to cyclically cover F_q^n implies the existence of a vector outside the union of its cyclic shifts, which translates under orthogonal complementation to a nonzero cyclic code lacking any full-weight codeword, and vice versa.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02239v1",
+    "status": "available",
+    "timestamp": "2026-07-06T16:37:22.623666+00:00",
+    "title": "Equivalence of Vanishing Cyclically Covering Codimension and Full-Weight Cyclic Codes"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "math.MG",
@@ -10973,7 +11000,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0461",
+    "id": "fd_0462",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof proceeds by double inclusion. (⊆): If x is a centerpoint, then every halfspace H⁺ containing x satisfies vol(P ∩ H⁺) ≥ vol(P)/(d+1), equivalently vol(P \\ H⁺) ≤ vol(P)·d/(d+1); but the floating body condition requires vol(P \\ H⁺) ≤ vol(P)/(d+1) for the halfspaces defining it, so one must show that a centerpoint lies in every halfspace whose complementary cap has volume ≤ vol(P)/(d+1). (⊇): Conversely, if x ∈ F_{1/(d+1)}(P), then x lies in every halfspace H⁺ with vol(P \\ H⁺) ≤ vol(P)/(d+1), and one must show this forces every halfspace through x to capture at least 1/(d+1) of the volume. The key technical ingredient is that the cap-volume function is piecewise rational on the arrangement of oriented hyperplanes determined by the polytope's facets, which makes both sets explicitly semialgebraic and allows their coincidence to be verified.",
@@ -11001,7 +11028,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0462",
+    "id": "fd_0463",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive existence via analytic bounding of character degrees",
@@ -11028,7 +11055,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0463",
+    "id": "fd_0464",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the classical Erdős-Gallai theorem (every graph with average degree d contains a cycle of length ≥ d). Then develop infrastructure for vertex covers of graph components and edge-editing distance. The key structural ingredient is Pokrovskiy's decomposition theorem for bounded-degree trees, which must also be formalized. The proof then proceeds by showing that graphs violating the conclusion have a specific block structure that forces a long cycle.",
@@ -11056,7 +11083,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0464",
+    "id": "fd_0465",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the Lin-Lu-Yau curvature for a simple graph in Lean. Establish the threshold function T(n). Prove that for any graph G of order n ≥ 8 with |E(G)| > T(n), the optimal coupling between probability measures on the endpoints of any edge has a cost strictly less than 1, yielding positive curvature. This involves demonstrating that such graphs cannot contain edges satisfying deg(x) + deg(y) - |N(x) ∩ N(y)| ≥ n, a necessary condition for non-positive curvature, by characterizing the maximal edge count of graphs containing such edges.",
@@ -11084,7 +11111,7 @@
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_0465",
+    "id": "fd_0466",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Step 1: Formalize the trianguline variety Y^{tri}(G) as a rigid analytic space parameterizing trianguline G-representations with their triangulation data, using the Tannakian formalism for Rep_L(G) developed in the paper. Step 2: Establish that Y^{tri}(G) is regular in codimension ≤ 1 (condition R1) by analyzing the singular locus—its complement is the smooth regular locus characterized by the regularity of the triangulation parameter δ: T(Z_p) → T(E), and the singular locus has codimension ≥ 2 by dimension counting via the root structure of G. Step 3: Prove condition (S2) by showing that for every point x with codim ≥ 2, the local ring O_{Y^{tri},x} satisfies depth ≥ min(2, dim O_{Y^{tri},x}), using the crystallinity criterion for (φ,Γ)-modules with G-structure established in the paper to control the local equations. Step 4: Apply Serre's criterion (R1 + S2 ⟹ normal + CM for equidimensional schemes) to conclude.",
@@ -11114,7 +11141,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0466",
+    "id": "fd_0467",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "(1) Forward direction: Use the known necessary condition via T(T) and the Schottky group structure to show that Γ(T) being a free product of g+1 copies of Z/2Z forces T(T) to have exactly 2g+1 edges with the unique-separation property. (2) Reverse direction: Show the tree-separation condition implies that each involution sᵢ has an attracting/repelling dynamics on P¹(K) with non-overlapping fundamental domains in the Bruhat-Tits tree, then apply results on discontinuous groups (e.g., via reduction maps and the action on the Bruhat-Tits tree) to verify Γ(T) is Schottky. (3) Key tool: Kadziela-type approximation to control the relationship between tree structure and the group action.",
@@ -11123,6 +11150,34 @@
     "status": "available",
     "timestamp": "2026-07-06T16:20:33.232038+00:00",
     "title": "Tree Characterization of Good Position for Hyperelliptic Mumford Curves"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "Hales-Jewett theorem",
+      "Ramsey theory",
+      "symmetric colorings"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every symmetric coloring of the Hales-Jewett cube [t]^n (one invariant under all coordinate permutations) is realized by a radix weight: there exist integers w_1, ..., w_t such that the coloring depends only on the weighted letter sum Σ w_{x_i}. Formally, for all t, n, r ≥ 1, for every function c : Fin n → Fin t → Fin r satisfying c(x) = c(σ ∘ x) for all permutations σ on Fin n, there exists w : Fin t → ℤ such that for all x, y : Fin n → Fin t, (∑ i, w (x i)) = (∑ i, w (y i)) → c x = c y.",
+    "domain_bridges": [
+      "finite group actions on cubes",
+      "permutation-invariant functions factor through weight sums",
+      "integer-valued weight realizations of orbit partitions"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0468",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First formalize the Hales-Jewett cube [t]^n as Fin n → Fin t, coordinate permutations as precomposition with equivalences on Fin n, and symmetric colorings as those invariant under this action. Prove that orbit equivalence (having the same multiset of letters, i.e., the same letter-count vector) is the finest invariant partition. Then construct the radix weight w : Fin t → ℤ by w(j) = (t+1)^j (or any strictly increasing sequence), showing the radix-weighted sum is injective on letter-count vectors, hence the coloring factors through this sum.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02226v1",
+    "status": "available",
+    "timestamp": "2026-07-06T16:37:37.476227+00:00",
+    "title": "Symmetric-Weight Equivalence for Hales-Jewett Colorings"
   },
   {
     "ambition_level": "extension",

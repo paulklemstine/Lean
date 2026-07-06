@@ -3716,7 +3716,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c4dfeeb0",
     "description": "Let $q>3$ be an integer and $P_1,\\dots,P_{q-1}\\in\\mathbb{Q}[U]$ satisfy the hypotheses of a generalized ABC polynomial. Define the linear recurrences $(a_n)_{n\\ge0}$ and $(b_n)_{n\\ge0}$ by the characteristic polynomials $\\pi_U(X)$ and its reciprocal $X^{q}\\pi_U(1/X)$. Then there exists an effectively computable constant $C>0$ (depending only on $q$ and the $P_i$) such that the set \\[ \\{ n\\ge0 \\mid a_n = b_m \\text{ for some } m\\ge0 \\text{ and } a_n > C \\} \\] has cardinality at most two.",
     "domains": [
       "Bridges"
@@ -3725,7 +3725,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27885v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T18:31:34.889448+00:00",
     "title": "At most two large common values for generalized ABC recurrences"
   },
@@ -4227,7 +4227,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Extremal Symmetric One-Weight Colorings Must Have Bracket-Regime Structure"
   },
   {
-    "consumed_by_exp_id": "767ff507",
+    "consumed_by_exp_id": "",
     "description": "Let N > 1 be a squarefree integer with an even number of prime factors, and let X_N be the associated Shimura curve over \u211a. For each divisor d|N, let w_d be the Atkin-Lehner involution on X_N, and let X_N/\u27e8w_d\u27e9 be the corresponding quotient curve. The conjecture states that the set of all such N for which there exists at least one divisor d|N such that the quotient curve X_N/\u27e8w_d\u27e9 has genus zero is exactly the finite set {6, 10, 14, 15, 21, 22, 26, 33, 34, 35, 38, 39, 46, 51, 55, 57, 58, 62, 65, 69, 74, 77, 82, 85, 86, 87, 91, 93, 94, 95, 106, 111, 115, 118, 119, 122, 123, 129, 133, 134, 141, 142, 143, 145, 146, 155, 158, 159, 161, 166, 177, 178, 183, 185, 187, 194, 201, 202, 203, 205, 206, 209, 213, 214, 215, 217, 218, 219, 221, 226, 235, 237, 247, 249, 253, 254, 259, 262, 265, 267, 274, 278, 287, 291, 295, 298, 299, 301, 302, 303, 305, 309, 314, 319, 321, 323, 326, 327, 329, 334, 335, 339, 341, 346, 355, 358, 362, 365, 371, 377, 381, 382, 386, 391, 393, 394, 395, 398, 403, 407, 411, 413, 415, 417, 422, 427, 437, 445, 446, 447, 451, 453, 454, 458, 466, 469, 471, 473, 478, 481, 482, 485, 489, 493, 497}. (This list is conjectural and based on known classifications of genus-zero Atkin-Lehner quotients of Shimura curves.)",
     "domains": [
       "Pythagorean",
@@ -4237,7 +4237,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02306v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T16:21:31.636534+00:00",
     "title": "Classification of Genus-Zero Atkin-Lehner Quotients of Shimura Curves"
   },
@@ -5929,12 +5929,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a prime power q and a positive integer n, the maximum codimension of a cyclically covering subspace of F_q^n, denoted h_q(n), is zero if and only if every nonzero cyclic code in F_q^n contains a codeword of full Hamming weight.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0461",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02239v1",
+    "status": "available",
+    "timestamp": "2026-07-06T16:37:22.623666+00:00",
+    "title": "Equivalence of Vanishing Cyclically Covering Codimension and Full-Weight Cyclic Codes"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any convex polytope P in \u211d^\ufffd (with e = d+1 being the embedding dimension), the set of centerpoints of P coincides with the floating body of P at level 1/(d+1). Specifically, a point x is a centerpoint of P (meaning every closed halfspace containing x contains at least a 1/(d+1) fraction of the volume of P) if and only if x belongs to the floating body F_{1/(d+1)}(P), defined as the intersection of all closed halfspaces H\u207a such that vol(P \\ H\u207a) \u2264 (1/(d+1)) \u00b7 vol(P). The paper establishes this equivalence and further shows that for polytopes this set is semialgebraic.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0461",
+    "id": "fd_0462",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02400v1",
@@ -5949,7 +5964,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0462",
+    "id": "fd_0463",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -5963,7 +5978,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0463",
+    "id": "fd_0464",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -5977,7 +5992,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0464",
+    "id": "fd_0465",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
@@ -5992,7 +6007,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_0465",
+    "id": "fd_0466",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02215v1",
@@ -6007,13 +6022,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0466",
+    "id": "fd_0467",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
     "status": "available",
     "timestamp": "2026-07-06T16:20:33.232038+00:00",
     "title": "Tree Characterization of Good Position for Hyperelliptic Mumford Curves"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every symmetric coloring of the Hales-Jewett cube [t]^n (one invariant under all coordinate permutations) is realized by a radix weight: there exist integers w_1, ..., w_t such that the coloring depends only on the weighted letter sum \u03a3 w_{x_i}. Formally, for all t, n, r \u2265 1, for every function c : Fin n \u2192 Fin t \u2192 Fin r satisfying c(x) = c(\u03c3 \u2218 x) for all permutations \u03c3 on Fin n, there exists w : Fin t \u2192 \u2124 such that for all x, y : Fin n \u2192 Fin t, (\u2211 i, w (x i)) = (\u2211 i, w (y i)) \u2192 c x = c y.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0468",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02226v1",
+    "status": "available",
+    "timestamp": "2026-07-06T16:37:37.476227+00:00",
+    "title": "Symmetric-Weight Equivalence for Hales-Jewett Colorings"
   },
   {
     "consumed_by_exp_id": "",

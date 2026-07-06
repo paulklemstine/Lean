@@ -14522,7 +14522,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Mathlib.NumberTheory.LinearRecurrence",
         "Mathlib.Analysis.SpecialFunctions.Logarithm",
@@ -14530,7 +14530,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "c4dfeeb0",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -14546,7 +14546,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0306",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-06T16:37:42.493800+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.NumberTheory.LinearRecurrence\nimport Mathlib.Analysis.SpecialFunctions.Logarithm\nimport Mathlib.NumberTheory.Baker\n\nopen Polynomial\nopen_locale big_operators\n\n/-- Let `q > 3` and `P : Fin (q - 1) → ℚ[ℤ]` satisfy the hypotheses of a generalized ABC polynomial.\n    Define the linear recurrence sequences `a` and `b` with characteristic polynomials\n    `π_U(X) = X * ∏ i, (X - P i).map (eval₂ (algebraMap ℚ ℝ) u) + 1` and its reciprocal.\n    Then there exists a computable constant `C` such that the set of common values of `a`\n    and `b` larger than `C` has cardinality at most two. -/\ntheorem at_most_two_large_common_values\n    {q : ℕ} (hq : q > 3)\n    (P : Fin (q - 1) → ℚ[ℤ])\n    (hP : Pairwise (fun i j => (P i).map (algebraMap ℚ ℝ) ≠ (P j).map (algebraMap ℚ ℝ)))\n    (a b : ℕ → ℤ) -- the two recurrence sequences defined from the ABC polynomial and its reciprocal\n    (ha : IsLinearRecurrence a (π_U P))\n    (hb : IsLinearRecurrence b (π_U_reciprocal P))\n    : ∃ C : ℤ,\n      (∀ ",
       "lineage_refs": [],
@@ -14561,7 +14561,7 @@
       "source": "",
       "source_exp_id": "2606.27885v1",
       "source_path": "http://arxiv.org/abs/2606.27885v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-04T18:31:34.889448+00:00",
       "title": "At most two large common values for generalized ABC recurrences"
@@ -16270,7 +16270,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "767ff507",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16302,7 +16302,7 @@
       "source": "",
       "source_exp_id": "2607.02306v1",
       "source_path": "http://arxiv.org/abs/2607.02306v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-05T16:21:31.636534+00:00",
       "title": "Classification of Genus-Zero Atkin-Lehner Quotients of Shimura Curves"
@@ -22013,6 +22013,54 @@
       "title": "Overfull Conjecture"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "math.NT"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For a prime power q and a positive integer n, the maximum codimension of a cyclically covering subspace of F_q^n, denoted h_q(n), is zero if and only if every nonzero cyclic code in F_q^n contains a codeword of full Hamming weight.",
+      "domain_bridges": [
+        "Finite Fields",
+        "Cyclic Codes",
+        "Combinatorics of Vector Spaces"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0461",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem hq_eq_zero_iff_all_nonzero_cyclic_codes_have_full_weight_codeword\n  (F : Type*) [Field F] [Fintype F] (n : ℕ) :\n  hq F n = 0 ↔ ∀ C : CyclicCode F n, C ≠ ⊥ → ∃ v : Fin n → F, v ∈ C ∧ weight v = n := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Establish the duality between cyclically covering subspaces and cyclic codes. Show that a subspace failing to cyclically cover F_q^n implies the existence of a vector outside the union of its cyclic shifts, which translates under orthogonal complementation to a nonzero cyclic code lacking any full-weight codeword, and vice versa.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.02239v1",
+      "source_path": "http://arxiv.org/abs/2607.02239v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-06T16:37:22.623666+00:00",
+      "title": "Equivalence of Vanishing Cyclically Covering Codimension and Full-Weight Cyclic Codes"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -22038,7 +22086,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0461",
+      "id": "fd_0462",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem centerpoint_eq_floating_body {d : ℕ} (hd : 0 < d) (P : Polytope (Fin d → ℝ)) (hP : Convex P ∧ IsPolytope P) : centerpointSet P = floatingBody P (1 / (d + 1)) := by\n sorry",
@@ -22087,7 +22135,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0462",
+      "id": "fd_0463",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Leaning on the line-of-control method for iterated sums over partitions",
@@ -22135,7 +22183,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0463",
+      "id": "fd_0464",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hyperstability_erdos_gallai {V : Type*} [Fintype V] [DecidableEq V]\n    (c : ℝ) (hc : 0 < c) :\n    ∃ K : ℕ, ∀ d ≥ K, ∀ (G : SimpleGraph V) [DecidableRel G.Adj],\n      (2 * G.edgeFinset.card : ℝ) / (Fintype.card V : ℝ) = (d : ℝ) →\n      (∀ l ≥ d, ∀ C : List V, ¬G.IsCycle C l) →\n      ∃ H ≤ G,\n        (G.edgeFinset.card - H.edgeFinset.card : ℕ) ≤ ⌈c * d * (Fintype.card V : ℝ)⌉₊ ∧\n        ∀ C (hC : H.ConnectedComponent C),\n          ∃ vc : Finset V,\n            vc.card ≤ ⌈(1 + c) * d⌉₊ ∧\n            ∀ e ∈ H.edgeSet, (e.1 ∈ vc ∨ e.2 ∈ vc)",
@@ -22184,7 +22232,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0464",
+      "id": "fd_0465",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "def T (n : ℕ) : ℕ :=\n  (n * n - 4 * n + if n % 2 = 0 then 4 else 3) / 2\n\ntheorem extremal_positive_ollivier_curvature {V : Type*} [Fintype V] [DecidableEq V]\n    (G : SimpleGraph V) [DecidableRel G.Adj] :\n    let n := Fintype.card V\n    n ≥ 8 → G.edgeFinset.card > T n →\n    ∀ (e : Sym2 V) (he : e ∈ G.edgeSet), G.ollivierCurvature e he > 0 := by\n  sorry",
@@ -22233,7 +22281,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0465",
+      "id": "fd_0466",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem trianguline_variety_cohen_macaulay {G : Type*} [SplitConnectedReductiveGroup G ℚ_p] {B : Subgroup G} [IsBorel B] {T : Subgroup G} [IsMaximalTorus T] : CohenMacaulay (trianguline_variety G) := by\n  sorry",
@@ -22284,7 +22332,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0466",
+      "id": "fd_0467",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tree_criterion_good_position\n    (K : Type*) [Field K] [NormedField K] [CompleteSpace K]\n    {p : ℕ} [Fact (Nat.Prime p)] [Fact (p ≠ 2)]\n    {g : ℕ} (hg : 0 < g)\n    (a b : Fin (g + 1) → ProjectiveLine K)\n    (h_inj : Function.Injective (fun i => (a i, b i)))\n    (h_all_distinct : ∀ i j, (a i ≠ a j ∨ b i ≠ b j) ∨ (a i ≠ b j ∨ b i ≠ a j) ∨ i = j) :\n    GoodPosition a b ↔\n      (treeOfSet (Set.range a ∪ Set.range b)).numEdges = 2 * g + 1 ∧\n      ∀ i : Fin (g + 1),\n        ∃! e : Edge (treeOfSet (Set.range a ∪ Set.range b)),\n          inDifferentComponents (treeOfSet (Set.range a ∪ Set.range b)) e (a i) (b i) :=\n  by sorry",
@@ -22304,6 +22352,55 @@
       "thread_id": "",
       "timestamp": "2026-07-06T16:20:33.232038+00:00",
       "title": "Tree Characterization of Good Position for Hyperelliptic Mumford Curves"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "Hales-Jewett theorem",
+        "Ramsey theory",
+        "symmetric colorings"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Every symmetric coloring of the Hales-Jewett cube [t]^n (one invariant under all coordinate permutations) is realized by a radix weight: there exist integers w_1, ..., w_t such that the coloring depends only on the weighted letter sum Σ w_{x_i}. Formally, for all t, n, r ≥ 1, for every function c : Fin n → Fin t → Fin r satisfying c(x) = c(σ ∘ x) for all permutations σ on Fin n, there exists w : Fin t → ℤ such that for all x, y : Fin n → Fin t, (∑ i, w (x i)) = (∑ i, w (y i)) → c x = c y.",
+      "domain_bridges": [
+        "finite group actions on cubes",
+        "permutation-invariant functions factor through weight sums",
+        "integer-valued weight realizations of orbit partitions"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0468",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem symmetric_iff_oneweight (t n r : ℕ) (c : (Fin n → Fin t) → Fin r) : (∀ (σ : Equiv.Perm (Fin n)) (x : Fin n → Fin t), c x = c (x ∘ σ)) ↔ (∃ (w : Fin t → ℤ), ∀ (x y : Fin n → Fin t), (∑ i : Fin n, w (x i)) = (∑ i : Fin n, w (y i)) → c x = c y) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "First formalize the Hales-Jewett cube [t]^n as Fin n → Fin t, coordinate permutations as precomposition with equivalences on Fin n, and symmetric colorings as those invariant under this action. Prove that orbit equivalence (having the same multiset of letters, i.e., the same letter-count vector) is the finest invariant partition. Then construct the radix weight w : Fin t → ℤ by w(j) = (t+1)^j (or any strictly increasing sequence), showing the radix-weighted sum is injective on letter-count vectors, hence the coloring factors through this sum.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.02226v1",
+      "source_path": "http://arxiv.org/abs/2607.02226v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-06T16:37:37.476227+00:00",
+      "title": "Symmetric-Weight Equivalence for Hales-Jewett Colorings"
     },
     {
       "ambition_level": "extension",
@@ -22350,6 +22447,7 @@
   "recent_domain_counts": {},
   "recent_theme_keywords": {},
   "selection_log": [
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
