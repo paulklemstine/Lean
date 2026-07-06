@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "48d99a4c",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domain_bridges": [],
     "domains": [
@@ -14,7 +14,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "8b6fc6d0",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T05:18:37.114832+00:00",
     "title": "Deepening: unnamed_concept"
   },
@@ -640,7 +640,7 @@
       "Flag varieties and orbit theory",
       "Demazure products and monoid actions"
     ],
-    "consumed_by_exp_id": "91848422",
+    "consumed_by_exp_id": "",
     "description": "For the natural bijection φ from the set of B-orbits on B_n × P^(n-1) to its image in W_(n+1) × W_(n+1), the closure relation on orbits coincides with the restriction of the product Bruhat order: O₁ ⊆ O̅₂ iff φ(O₁) ≤ φ(O₂) in (W_(n+1), ≤_Bruhat) × (W_(n+1), ≤_Bruhat).",
     "domain_bridges": [
       "Algebraic geometry to combinatorics via geometric invariant theory",
@@ -655,7 +655,7 @@
     "proof_strategy": "Construct the explicit parameterization map using double coset representatives, verify it induces a bijection on orbit sets, then prove order-preservation by analyzing the geometric relationship between orbit closures and the algebraic structure of the Bruhat order via rank functions on permutations.",
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T18:30:28.722983+00:00",
     "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
@@ -2134,7 +2134,7 @@
     "catalog_references": [
       "arXiv:math.CO"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7e56c098",
     "description": "Let V_1,..., V_{d+1} be disjoint finite sets and K be the join of spanning k-trees T_1,..., T_{d+1} where each T_i is a simplicial complex on V_i. If A: |Δ_V| -> R^d is an affine map such that 0 is in the convex hull of the image of each color class A(V_i), then there exists a face σ in the join of these k-trees such that 0 is in the image of σ.",
     "domain_bridges": [
       "Simplicial Complex Theory",
@@ -2150,7 +2150,7 @@
     "proof_strategy": "The proof should proceed by induction on the dimension d and the size of the vertex sets, utilizing a combinatorial version of Meshulam's Lemma. One would need to formalize the notion of a'spanning k-tree' in terms of its homology or connectivity properties and show that the join of such complexes maintains sufficient topological connectivity to satisfy the conditions of the colorful Carathéodory-type theorem.",
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T23:51:53.327272+00:00",
     "title": "Colorful Carathéodory Theorem for Spanning k-trees"
   },
@@ -3986,7 +3986,7 @@
       "Dilworth1950",
       "Sperner1928"
     ],
-    "consumed_by_exp_id": "97e90f39",
+    "consumed_by_exp_id": "",
     "description": "Analysis of the maximal number of chains required to cover strict chains in the Boolean lattice, with connections to inclusion-exclusion and logarithmic approximations.",
     "domain_bridges": [
       "Computational Complexity",
@@ -4002,7 +4002,7 @@
     "proof_strategy": "Construct existence via perturbation around known extremals",
     "research_mode": "team",
     "source_exp_id": "2606.29385v2",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T08:04:06.155536+00:00",
     "title": "Chain Covers in the Boolean Lattice"
   },
@@ -7984,7 +7984,7 @@
       "gal",
       "branden-gamma"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "935491ef",
     "description": "The smallest dimension of a symmetric edge polytope whose Ehrhart h*-polynomial fails to be γ-positive is 36. Equivalently, for every connected graph G with |V(G)| ≤ 36, the symmetric edge polytope Q_G has a γ-positive h*-polynomial.",
     "domain_bridges": [
       "Ehrhart theory",
@@ -8001,7 +8001,7 @@
     "proof_strategy": "Combine computational verification for all graphs up to 36 vertices using Ehrhart polynomial computation software (e.g., Normaliz, SageMath) with theoretical analysis of γ-coefficients for graphs with special structure (cones, complete bipartite, series-parallel with few paths). The Ohsugi-Tsuchiya conjecture was verified for small graphs computationally; this conjecture asserts their computation was exhaustive up to dimension 35.",
     "research_mode": "team",
     "source_exp_id": "2607.02424v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T20:44:02.717732+00:00",
     "title": "Minimal dimension of non-γ-positive symmetric edge polytopes"
   },
@@ -10648,7 +10648,7 @@
       "math.NT",
       "math.AG"
     ],
-    "consumed_by_exp_id": "783ff20a",
+    "consumed_by_exp_id": "",
     "description": "For any integer $g \\ge 2$, let $d \\in \\{2g+1, 2g+2\\}$, $\\alpha \\in \\mathbb{Z} \\setminus \\{0\\}$, and let $p$ be a prime such that $p > P^+(d)$ and $p \\nmid \\alpha$, where $P^+(d)$ is the bound from the paper ($d^2-4d+2$ if $d$ is odd, $(d^2-3d+2)/2$ if $d$ is even). Let $M(t)$ be the $g \\times g$ Cartier-Manin matrix of the hyperelliptic curve $y^2 = x^d + \\alpha x + t$ over $\\mathbb{F}_p$. The determinant $\\det(M(t))$ is a nonzero polynomial in $\\mathbb{F}_p[t]$.",
     "domain_bridges": [
       "algebraic_geometry.hyperelliptic_curves",
@@ -10665,7 +10665,7 @@
     "proof_strategy": "Define the Cartier-Manin matrix entries as coefficients of the polynomial $(x^d + \\alpha x + t)^{(p-1)/2}$, compute its determinant as a polynomial in $t$, and show that its degree and leading coefficient modulo $p$ imply nonvanishing, leveraging the bounds on $p$-adic valuations of the terms which hold precisely when $p > P^+(d)$ and $p \\nmid \\alpha$.",
     "research_mode": "team",
     "source_exp_id": "2606.31783v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T12:32:30.050041+00:00",
     "title": "Nonvanishing of Cartier-Manin Determinant for Generic Hyperelliptic Families"
   },
@@ -10987,6 +10987,33 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "Fyodorov_Hiary_Keating_2012",
+      "Arguin_Belius_Harper_2017"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The maximum of the logarithm of the absolute value of the Riemann zeta function on the critical line over the interval [T, 2T], defined as M_T = max_{t ∈ [T, 2T]} log|ζ(1/2 + it)|, satisfies the convergence in distribution: M_T - log(log(T)) + (3/2)log(log(log(T))) converges to the sum of two independent Gumbel random variables as T → ∞. This captures the extreme value statistics of the number-theoretic analogue to the black hole microstate counts proposed in the paper.",
+    "domain_bridges": [
+      "Random Matrix Theory",
+      "Quantum Gravity",
+      "Statistical Mechanics"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_0462",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Model the Riemann zeta function as the characteristic polynomial of a random unitary matrix, establish a Gaussian multiplicative chaos representation for the field, and extend the Circular Unitary Ensemble (CUE) maximum theorem to the number theory setting using correlations of zeros.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02233v1",
+    "status": "available",
+    "timestamp": "2026-07-06T17:00:53.781526+00:00",
+    "title": "Fyodorov-Hiary-Keating Conjecture for the Riemann Zeta Function"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "math.MG",
       "cs.CG",
       "math.CO"
@@ -11000,7 +11027,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0462",
+    "id": "fd_0463",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof proceeds by double inclusion. (⊆): If x is a centerpoint, then every halfspace H⁺ containing x satisfies vol(P ∩ H⁺) ≥ vol(P)/(d+1), equivalently vol(P \\ H⁺) ≤ vol(P)·d/(d+1); but the floating body condition requires vol(P \\ H⁺) ≤ vol(P)/(d+1) for the halfspaces defining it, so one must show that a centerpoint lies in every halfspace whose complementary cap has volume ≤ vol(P)/(d+1). (⊇): Conversely, if x ∈ F_{1/(d+1)}(P), then x lies in every halfspace H⁺ with vol(P \\ H⁺) ≤ vol(P)/(d+1), and one must show this forces every halfspace through x to capture at least 1/(d+1) of the volume. The key technical ingredient is that the cap-volume function is piecewise rational on the arrangement of oriented hyperplanes determined by the polytope's facets, which makes both sets explicitly semialgebraic and allows their coincidence to be verified.",
@@ -11028,7 +11055,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0463",
+    "id": "fd_0464",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive existence via analytic bounding of character degrees",
@@ -11055,7 +11082,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0464",
+    "id": "fd_0465",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the classical Erdős-Gallai theorem (every graph with average degree d contains a cycle of length ≥ d). Then develop infrastructure for vertex covers of graph components and edge-editing distance. The key structural ingredient is Pokrovskiy's decomposition theorem for bounded-degree trees, which must also be formalized. The proof then proceeds by showing that graphs violating the conclusion have a specific block structure that forces a long cycle.",
@@ -11083,7 +11110,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0465",
+    "id": "fd_0466",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the Lin-Lu-Yau curvature for a simple graph in Lean. Establish the threshold function T(n). Prove that for any graph G of order n ≥ 8 with |E(G)| > T(n), the optimal coupling between probability measures on the endpoints of any edge has a cost strictly less than 1, yielding positive curvature. This involves demonstrating that such graphs cannot contain edges satisfying deg(x) + deg(y) - |N(x) ∩ N(y)| ≥ n, a necessary condition for non-positive curvature, by characterizing the maximal edge count of graphs containing such edges.",
@@ -11111,7 +11138,7 @@
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_0466",
+    "id": "fd_0467",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Step 1: Formalize the trianguline variety Y^{tri}(G) as a rigid analytic space parameterizing trianguline G-representations with their triangulation data, using the Tannakian formalism for Rep_L(G) developed in the paper. Step 2: Establish that Y^{tri}(G) is regular in codimension ≤ 1 (condition R1) by analyzing the singular locus—its complement is the smooth regular locus characterized by the regularity of the triangulation parameter δ: T(Z_p) → T(E), and the singular locus has codimension ≥ 2 by dimension counting via the root structure of G. Step 3: Prove condition (S2) by showing that for every point x with codim ≥ 2, the local ring O_{Y^{tri},x} satisfies depth ≥ min(2, dim O_{Y^{tri},x}), using the crystallinity criterion for (φ,Γ)-modules with G-structure established in the paper to control the local equations. Step 4: Apply Serre's criterion (R1 + S2 ⟹ normal + CM for equidimensional schemes) to conclude.",
@@ -11141,7 +11168,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0467",
+    "id": "fd_0468",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "(1) Forward direction: Use the known necessary condition via T(T) and the Schottky group structure to show that Γ(T) being a free product of g+1 copies of Z/2Z forces T(T) to have exactly 2g+1 edges with the unique-separation property. (2) Reverse direction: Show the tree-separation condition implies that each involution sᵢ has an attracting/repelling dynamics on P¹(K) with non-overlapping fundamental domains in the Bruhat-Tits tree, then apply results on discontinuous groups (e.g., via reduction maps and the action on the Bruhat-Tits tree) to verify Γ(T) is Schottky. (3) Key tool: Kadziela-type approximation to control the relationship between tree structure and the group action.",
@@ -11169,7 +11196,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0468",
+    "id": "fd_0469",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the Hales-Jewett cube [t]^n as Fin n → Fin t, coordinate permutations as precomposition with equivalences on Fin n, and symmetric colorings as those invariant under this action. Prove that orbit equivalence (having the same multiset of letters, i.e., the same letter-count vector) is the finest invariant partition. Then construct the radix weight w : Fin t → ℤ by w(j) = (t+1)^j (or any strictly increasing sequence), showing the radix-weighted sum is injective on letter-count vectors, hence the coloring factors through this sum.",
@@ -11178,6 +11205,35 @@
     "status": "available",
     "timestamp": "2026-07-06T16:37:37.476227+00:00",
     "title": "Symmetric-Weight Equivalence for Hales-Jewett Colorings"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.AG",
+      "math.NT",
+      "math.CV"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let K/k be a finitely generated field extension of characteristic zero. Let G be a semiabelian variety over K, and let f: X → G be a finite morphism from a projective variety X of general type. Then the set X(K) of K-rational points is not Zariski dense in X. This extends the recent theorem of Xie-Yuan and Gao (which proves the case where G is an abelian variety) to the broader class of semiabelian varieties — extensions of abelian varieties by algebraic tori G_m^n. The principal new difficulty is the non-compactness of the torus component, which disrupts both the Nevanlinna-theoretic construction of entire curves from high-height rational points and the height theory used in the Vojta dictionary.",
+    "domain_bridges": [
+      "algebraic_geometry",
+      "number_theory",
+      "complex_analysis",
+      "algebraic_groups"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0470",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt the Vojta dictionary framework of Xie-Yuan from abelian to semiabelian varieties in three stages. (1) Reduce to the case where X contains no translate of a positive-dimensional semiabelian subvariety, using the known Mordell-Lang theorem for semiabelian varieties over function fields (McQuillan, 1995). (2) Develop a toric height theory that controls the growth of Néron-Tate heights on the G_m^n component, analogous to the abelian variety height machine but accounting for logarithmic singularities at the boundary of the compactification. (3) Extend the Nevanlinna theory arguments to construct entire curves in complex fibers from high-height rational points, using logarithmic defect relations for non-compact targets. The key technical challenge is that entire curves in G_m^n can accumulate at the boundary, requiring logarithmic Nevanlinna theory with value distribution estimates for meromorphic functions with essential singularities at the torus boundary.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02165v1",
+    "status": "available",
+    "timestamp": "2026-07-06T17:01:56.014125+00:00",
+    "title": "Geometric Bombieri-Lang Conjecture for Finite Covers of Semiabelian Varieties"
   },
   {
     "ambition_level": "extension",

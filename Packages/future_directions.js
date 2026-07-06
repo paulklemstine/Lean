@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "48d99a4c",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domains": [
       "Pythagorean"
@@ -12,7 +12,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8859200000000002,
     "research_mode": "team",
     "source_exp_id": "8b6fc6d0",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T05:18:37.114832+00:00",
     "title": "Deepening: unnamed_concept"
   },
@@ -366,7 +366,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Extension of Snevily-type Permutation Property to p-groups"
   },
   {
-    "consumed_by_exp_id": "91848422",
+    "consumed_by_exp_id": "",
     "description": "For the natural bijection \u03c6 from the set of B-orbits on B_n \u00d7 P^(n-1) to its image in W_(n+1) \u00d7 W_(n+1), the closure relation on orbits coincides with the restriction of the product Bruhat order: O\u2081 \u2286 O\u0305\u2082 iff \u03c6(O\u2081) \u2264 \u03c6(O\u2082) in (W_(n+1), \u2264_Bruhat) \u00d7 (W_(n+1), \u2264_Bruhat).",
     "domains": [
       "Bridges"
@@ -375,7 +375,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T18:30:28.722983+00:00",
     "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
@@ -1186,7 +1186,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Decomposition of Greedy Tamari Intervals and Bipartite Planar Maps"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7e56c098",
     "description": "Let V_1,..., V_{d+1} be disjoint finite sets and K be the join of spanning k-trees T_1,..., T_{d+1} where each T_i is a simplicial complex on V_i. If A: |\u0394_V| -> R^d is an affine map such that 0 is in the convex hull of the image of each color class A(V_i), then there exists a face \u03c3 in the join of these k-trees such that 0 is in the image of \u03c3.",
     "domains": [
       "Geometry"
@@ -1195,7 +1195,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T23:51:53.327272+00:00",
     "title": "Colorful Carath\u00e9odory Theorem for Spanning k-trees"
   },
@@ -2187,7 +2187,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Variance of Homomorphism at the Root is Bounded Below by Effective Resistance"
   },
   {
-    "consumed_by_exp_id": "97e90f39",
+    "consumed_by_exp_id": "",
     "description": "Analysis of the maximal number of chains required to cover strict chains in the Boolean lattice, with connections to inclusion-exclusion and logarithmic approximations.",
     "domains": [
       "Cryptography",
@@ -2197,7 +2197,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29385v2",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T08:04:06.155536+00:00",
     "title": "Chain Covers in the Boolean Lattice"
   },
@@ -4346,7 +4346,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Characterization of Strong \u0394-Matroids via Peerless Antipodes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "935491ef",
     "description": "The smallest dimension of a symmetric edge polytope whose Ehrhart h*-polynomial fails to be \u03b3-positive is 36. Equivalently, for every connected graph G with |V(G)| \u2264 36, the symmetric edge polytope Q_G has a \u03b3-positive h*-polynomial.",
     "domains": [
       "Bridges"
@@ -4355,7 +4355,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02424v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T20:44:02.717732+00:00",
     "title": "Minimal dimension of non-\u03b3-positive symmetric edge polytopes"
   },
@@ -5767,7 +5767,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "De Rham Local-Global Compatibility for Torsion Automorphic Forms on GL_n over CM Fields"
   },
   {
-    "consumed_by_exp_id": "783ff20a",
+    "consumed_by_exp_id": "",
     "description": "For any integer $g \\ge 2$, let $d \\in \\{2g+1, 2g+2\\}$, $\\alpha \\in \\mathbb{Z} \\setminus \\{0\\}$, and let $p$ be a prime such that $p > P^+(d)$ and $p \\nmid \\alpha$, where $P^+(d)$ is the bound from the paper ($d^2-4d+2$ if $d$ is odd, $(d^2-3d+2)/2$ if $d$ is even). Let $M(t)$ be the $g \\times g$ Cartier-Manin matrix of the hyperelliptic curve $y^2 = x^d + \\alpha x + t$ over $\\mathbb{F}_p$. The determinant $\\det(M(t))$ is a nonzero polynomial in $\\mathbb{F}_p[t]$.",
     "domains": [
       "Pythagorean",
@@ -5777,7 +5777,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31783v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T12:32:30.050041+00:00",
     "title": "Nonvanishing of Cartier-Manin Determinant for Generic Hyperelliptic Families"
   },
@@ -5944,12 +5944,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The maximum of the logarithm of the absolute value of the Riemann zeta function on the critical line over the interval [T, 2T], defined as M_T = max_{t \u2208 [T, 2T]} log|\u03b6(1/2 + it)|, satisfies the convergence in distribution: M_T - log(log(T)) + (3/2)log(log(log(T))) converges to the sum of two independent Gumbel random variables as T \u2192 \u221e. This captures the extreme value statistics of the number-theoretic analogue to the black hole microstate counts proposed in the paper.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_0462",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02233v1",
+    "status": "available",
+    "timestamp": "2026-07-06T17:00:53.781526+00:00",
+    "title": "Fyodorov-Hiary-Keating Conjecture for the Riemann Zeta Function"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any convex polytope P in \u211d^\ufffd (with e = d+1 being the embedding dimension), the set of centerpoints of P coincides with the floating body of P at level 1/(d+1). Specifically, a point x is a centerpoint of P (meaning every closed halfspace containing x contains at least a 1/(d+1) fraction of the volume of P) if and only if x belongs to the floating body F_{1/(d+1)}(P), defined as the intersection of all closed halfspaces H\u207a such that vol(P \\ H\u207a) \u2264 (1/(d+1)) \u00b7 vol(P). The paper establishes this equivalence and further shows that for polytopes this set is semialgebraic.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0462",
+    "id": "fd_0463",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02400v1",
@@ -5964,7 +5979,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0463",
+    "id": "fd_0464",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -5978,7 +5993,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0464",
+    "id": "fd_0465",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -5992,7 +6007,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0465",
+    "id": "fd_0466",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
@@ -6007,7 +6022,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_0466",
+    "id": "fd_0467",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02215v1",
@@ -6022,7 +6037,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0467",
+    "id": "fd_0468",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -6036,13 +6051,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0468",
+    "id": "fd_0469",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02226v1",
     "status": "available",
     "timestamp": "2026-07-06T16:37:37.476227+00:00",
     "title": "Symmetric-Weight Equivalence for Hales-Jewett Colorings"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let K/k be a finitely generated field extension of characteristic zero. Let G be a semiabelian variety over K, and let f: X \u2192 G be a finite morphism from a projective variety X of general type. Then the set X(K) of K-rational points is not Zariski dense in X. This extends the recent theorem of Xie-Yuan and Gao (which proves the case where G is an abelian variety) to the broader class of semiabelian varieties \u2014 extensions of abelian varieties by algebraic tori G_m^n. The principal new difficulty is the non-compactness of the torus component, which disrupts both the Nevanlinna-theoretic construction of entire curves from high-height rational points and the height theory used in the Vojta dictionary.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0470",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02165v1",
+    "status": "available",
+    "timestamp": "2026-07-06T17:01:56.014125+00:00",
+    "title": "Geometric Bombieri-Lang Conjecture for Finite Covers of Semiabelian Varieties"
   },
   {
     "consumed_by_exp_id": "",
