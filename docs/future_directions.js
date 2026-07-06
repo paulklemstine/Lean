@@ -323,7 +323,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Commutativity of Operator Theorem operators in SR_G"
   },
   {
-    "consumed_by_exp_id": "acb176be",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for coprime positive integers a<b with a>1 and odd exponent n>1, the equation (a^n+1)(b^n+1)=x^2 has no positive integer solutions.",
     "domains": [
       "Pythagorean"
@@ -332,7 +332,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31223v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T16:13:17.108600+00:00",
     "title": "No solutions for odd exponents in the coprime case"
   },
@@ -1997,7 +1997,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equivariant Isomorphism Between Invariant Pseudodifferential Operators and Jacobi Forms"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5f63f86e",
     "description": "This conjecture establishes a threshold condition linking the probability that a weighted sum exceeds its expectation, connecting to known bounds in probability via a Manickam\u2013Singhi framework.",
     "domains": [
       "Pythagorean",
@@ -2007,7 +2007,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T00:48:34.844529+00:00",
     "title": "Probabilistic lower bounds on weighted weighted sums of Bernoulli variables"
   },
@@ -4213,7 +4213,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of p-adic Schottky groups for hyperelliptic Mumford curves under split multiplicative reduction"
   },
   {
-    "consumed_by_exp_id": "dd5b0b32",
+    "consumed_by_exp_id": "",
     "description": "Every extremal symmetric one-weight coloring achieving the lower bound for HJ(t,r) must consist of a bracket regime combined with a single boundary scale, as observed in the (4,2) case.",
     "domains": [
       "Algebra"
@@ -4222,7 +4222,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02226v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T19:18:57.857280+00:00",
     "title": "Extremal Symmetric One-Weight Colorings Must Have Bracket-Regime Structure"
   },
@@ -5959,12 +5959,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "There exists a matroid M on a finite ground set E and unordered pairs of bases {B\u2081, B\u2082} and {B\u2081', B\u2082'} of M such that the multiset union of B\u2081 and B\u2082 equals the multiset union of B\u2081' and B\u2082', yet no sequence of symmetric exchanges transforms {B\u2081, B\u2082} into {B\u2081', B\u2082'}. This formalizes the counterexample to Farber's conjecture (the s=2 case of White's conjecture part (ii)) presented in the paper, which disproves the widely-believed symmetric exchange connectivity property for unordered pairs of matroid bases.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0463",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02208v1",
+    "status": "available",
+    "timestamp": "2026-07-06T17:18:44.579267+00:00",
+    "title": "Farber's Conjecture Fails: A Matroid Counterexample to the Symmetric Exchange Property for Pairs of Bases"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any convex polytope P in \u211d^\ufffd (with e = d+1 being the embedding dimension), the set of centerpoints of P coincides with the floating body of P at level 1/(d+1). Specifically, a point x is a centerpoint of P (meaning every closed halfspace containing x contains at least a 1/(d+1) fraction of the volume of P) if and only if x belongs to the floating body F_{1/(d+1)}(P), defined as the intersection of all closed halfspaces H\u207a such that vol(P \\ H\u207a) \u2264 (1/(d+1)) \u00b7 vol(P). The paper establishes this equivalence and further shows that for polytopes this set is semialgebraic.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0463",
+    "id": "fd_0464",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02400v1",
@@ -5979,7 +5994,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0464",
+    "id": "fd_0465",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -5993,7 +6008,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0465",
+    "id": "fd_0466",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -6007,7 +6022,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0466",
+    "id": "fd_0467",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
@@ -6022,7 +6037,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_0467",
+    "id": "fd_0468",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02215v1",
@@ -6037,7 +6052,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0468",
+    "id": "fd_0469",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -6051,7 +6066,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0469",
+    "id": "fd_0470",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02226v1",
@@ -6066,13 +6081,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0470",
+    "id": "fd_0471",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02165v1",
     "status": "available",
     "timestamp": "2026-07-06T17:01:56.014125+00:00",
     "title": "Geometric Bombieri-Lang Conjecture for Finite Covers of Semiabelian Varieties"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a finite nonempty poset P, the probabilistic powerdomain V\u2081(P) \u2014 the probability simplex on P ordered by the stochastic order \u2014 is an RB-domain if and only if P has a least element and the undirected Hasse graph of P is a tree. This encompasses two failure modes: (1) if P lacks a least element, the face of probability measures supported on minimal points is fixed pointwise by every deflation below the identity; (2) if the Hasse graph contains a cycle, the local stochastic cone becomes non-simplicial, precluding the finite-valued monotone approximations required by the RB property.",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_0472",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02231v1",
+    "status": "available",
+    "timestamp": "2026-07-06T17:19:05.532662+00:00",
+    "title": "Probabilistic powerdomain RB-domain characterization for finite posets"
   },
   {
     "consumed_by_exp_id": "",

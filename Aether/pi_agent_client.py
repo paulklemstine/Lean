@@ -2299,10 +2299,18 @@ class PiAgentClient:
 
         deliverables_block = textwrap.dedent("""\
             ### Deliverables & Acceptance Criteria
-            1. **Lean 4 files** (2–4 files in the appropriate `Catalog/<domain>/` subtree).
-               - Main theorems must be fully proved (0 sorries).
+            1. **Lean 4 files** (1–3 files in the appropriate `Catalog/<domain>/` subtree).
+               - Target 5–10 fully proved theorems per file. More theorems = higher quality.
+               - **Every theorem MUST be fully proved** — 0 sorries, no stubbed signatures,
+                 no mid-proof cutoffs, no truncated declarations. Complete every proof
+                 before moving to the next theorem. If you run low on budget, prove
+                 fewer theorems completely rather than many theorems partially.
+               - Each file must be **self-contained** (compiles independently with its imports).
                - Each file must contain `-- !-- Lab Notes -- !--` blocks documenting
                  the team loop: Hypothesis, Experiment, Analysis, Critique, Synthesis.
+               - Docstrings and comments must be **publication-ready**: clear mathematical
+                 exposition, no mentions of machine verification, proof assistants, or
+                 formalism implementation details.
             2. **FUTURE_DIRECTIONS.md** with 3–5 bold, falsifiable conjectures derived
                from the cycle's findings. Each must have a "The key insight is..."
                sentence and a "Why now?" justification. Write these as
@@ -2313,6 +2321,9 @@ class PiAgentClient:
             ### Strictly Forbidden in Phase A
             - `ARTICLE.md`, `RESEARCH_PAPER.md`, `demo.py`, HTML widgets, `PACKAGE.json`.
             - Prose for human readers other than Lab Notes and FUTURE_DIRECTIONS.md.
+            - Truncated proofs, stubbed signatures, or incomplete theorem declarations.
+            - Any `sorry` in a main theorem (auxiliary lemmas may use sorry ONLY if
+              clearly marked as work-in-progress in Lab Notes).
         """)
 
         prompt = textwrap.dedent(f"""\
@@ -2583,10 +2594,18 @@ class PiAgentClient:
 
         deliverables_block = textwrap.dedent("""\
             ### Deliverables & Acceptance Criteria
-            1. **Lean 4 files** (2–4 files in the appropriate `Catalog/<domain>/` subtree).
-               - Main theorems must be fully proved (0 sorries).
+            1. **Lean 4 files** (1–3 files in the appropriate `Catalog/<domain>/` subtree).
+               - Target 5–10 fully proved theorems per file. More theorems = higher quality.
+               - **Every theorem MUST be fully proved** — 0 sorries, no stubbed signatures,
+                 no mid-proof cutoffs, no truncated declarations. Complete every proof
+                 before moving to the next theorem. If you run low on budget, prove
+                 fewer theorems completely rather than many theorems partially.
+               - Each file must be **self-contained** (compiles independently with its imports).
                - Each file must contain `-- !-- Lab Notes -- !--` blocks documenting
                  the team loop: Hypothesis, Experiment, Analysis, Critique, Synthesis.
+               - Docstrings and comments must be **publication-ready**: clear mathematical
+                 exposition, no mentions of machine verification, proof assistants, or
+                 formalism implementation details.
             2. **FUTURE_DIRECTIONS.md** with 3–5 bold, falsifiable conjectures derived
                from the cycle's findings. Each must have a "The key insight is..."
                sentence and a "Why now?" justification. Write these as
@@ -2597,6 +2616,9 @@ class PiAgentClient:
             ### Strictly Forbidden in Phase A
             - `ARTICLE.md`, `RESEARCH_PAPER.md`, `demo.py`, HTML widgets, `PACKAGE.json`.
             - Prose for human readers other than Lab Notes and FUTURE_DIRECTIONS.md.
+            - Truncated proofs, stubbed signatures, or incomplete theorem declarations.
+            - Any `sorry` in a main theorem (auxiliary lemmas may use sorry ONLY if
+              clearly marked as work-in-progress in Lab Notes).
         """)
 
         prompt = textwrap.dedent(f"""\

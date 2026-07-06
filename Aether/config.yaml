@@ -17,16 +17,16 @@ pi_agent:
   temperature: 0.85
   top_p: 0.92
   num_predict: 4096
-  # A/B finalized: settle on the single best arm for a while.
-  # Phase A -> v16 (re-pinned by user request)
+  # A/B re-enabled 2026-07-06: test v19/v19a/v19c (best performers,
+  # avg_Q 0.466/0.486/0.511) — v16 (0.234) and v19d (0.238) zeroed.
   phase_a_prompt_weights:
-    v19d: 0.0
-    v19: 0.0
-    v19a: 0.0
+    v19: 0.34
+    v19a: 0.33
+    v19c: 0.33
     v19b: 0.0
-    v19c: 0.0
+    v19d: 0.0
     v15: 0.0
-    v16: 1.0
+    v16: 0.0
     v16a: 0.0
     v16b: 0.0
     v17: 0.0
