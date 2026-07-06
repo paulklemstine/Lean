@@ -1563,7 +1563,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Logarithmic bound for generalized Erd\u0151s\u2013Rogers functions: the case F = K_4^3"
   },
   {
-    "consumed_by_exp_id": "c2eb3269",
+    "consumed_by_exp_id": "",
     "description": "For the Maker-Breaker C_k-game on K_n with fixed k \u2265 4, the threshold bias is exactly c_k \u00b7 n^{(k-2)/(k-1)} where c_k = [(k-1)(2(k-1)/k)^{k-2}]^{1/(k-1)}. That is, Maker wins when q < (1-\u03b5)c_k\u00b7n^{(k-2)/(k-1)} and Breaker wins when q > (1+\u03b5)c_k\u00b7n^{(k-2)/(k-1)} for any \u03b5 > 0 and all sufficiently large n.",
     "domains": [
       "Bridges"
@@ -1572,7 +1572,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01294v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T11:40:15.032234+00:00",
     "title": "Sharp Threshold Constant for Cycle Games"
   },
@@ -1868,7 +1868,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Multiplicity formula for the restriction of GL_3 irreducible representations to the principal SL_2"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8ea1db50",
     "description": "The conjecture posits that if the greatest common divisor of a and b exceeds 1 and the exponent n is even, then no positive integer solutions (a, b, x) with a < b exist for the equation (a^n+1)(b^n+1)=x\u00b2.",
     "domains": [
       "Pythagorean"
@@ -1877,7 +1877,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31223v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T20:15:36.843139+00:00",
     "title": "Non-existence of solutions for (a^n+1)(b^n+1)=x\u00b2 when gcd(a,b) > 1 and n is even"
   },
@@ -4796,11 +4796,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The minimal absolute value \u03c3\u2085(n) of a non-vanishing sum of n fifth roots of unity is monotone non-increasing over congruence classes of n modulo 5. Furthermore, a strict decrease \u03c3\u2085(n) > \u03c3\u2085(n+5) occurs if and only if n+5 is of the form 5F\u2098, L\u2098, or 2L\u2098 for some positive integer m, where F\u2098 and L\u2098 denote the m-th Fibonacci and Lucas numbers, respectively.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0378",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00825v2",
+    "status": "available",
+    "timestamp": "2026-07-06T06:18:12.080116+00:00",
+    "title": "Monotonicity and Jumps of Minimal Absolute Values of Fifth Roots of Unity Sums"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0378",
+    "id": "fd_0379",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -4814,7 +4828,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0379",
+    "id": "fd_0380",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -4829,7 +4843,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0380",
+    "id": "fd_0381",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
@@ -4844,7 +4858,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0381",
+    "id": "fd_0382",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -4859,7 +4873,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0382",
+    "id": "fd_0383",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -4873,7 +4887,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0383",
+    "id": "fd_0384",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -4887,7 +4901,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0384",
+    "id": "fd_0385",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -4902,7 +4916,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0385",
+    "id": "fd_0386",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02011v1",
@@ -4917,7 +4931,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0386",
+    "id": "fd_0387",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -4931,7 +4945,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0387",
+    "id": "fd_0388",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02085v1",
@@ -4945,7 +4959,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0388",
+    "id": "fd_0389",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01957v1",
@@ -4960,7 +4974,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0389",
+    "id": "fd_0390",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01956v1",
@@ -4974,7 +4988,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0390",
+    "id": "fd_0391",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01744v1",
@@ -4988,7 +5002,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0391",
+    "id": "fd_0392",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01839v1",
@@ -5003,7 +5017,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0392",
+    "id": "fd_0393",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01703v1",
@@ -5017,7 +5031,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0393",
+    "id": "fd_0394",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01572v1",
@@ -5031,7 +5045,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0394",
+    "id": "fd_0395",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01680v1",
@@ -5045,7 +5059,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0395",
+    "id": "fd_0396",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01582v1",
@@ -5060,7 +5074,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0396",
+    "id": "fd_0397",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01165v1",
@@ -5075,7 +5089,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0397",
+    "id": "fd_0398",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01184v1",
@@ -5089,7 +5103,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0398",
+    "id": "fd_0399",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -5104,7 +5118,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0399",
+    "id": "fd_0400",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -5119,7 +5133,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0400",
+    "id": "fd_0401",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01028v1",
@@ -5134,7 +5148,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0401",
+    "id": "fd_0402",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00940v1",
@@ -5148,7 +5162,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0402",
+    "id": "fd_0403",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -5162,7 +5176,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0403",
+    "id": "fd_0404",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01059v1",
@@ -5177,7 +5191,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0404",
+    "id": "fd_0405",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
@@ -5191,7 +5205,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0405",
+    "id": "fd_0406",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00934v1",
@@ -5206,7 +5220,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0406",
+    "id": "fd_0407",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00930v1",
@@ -5220,13 +5234,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Logic"
     ],
-    "id": "fd_0407",
+    "id": "fd_0408",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01294v1",
     "status": "available",
     "timestamp": "2026-07-06T05:59:25.887985+00:00",
     "title": "Constructive Breaker Winning Strategies in the Maker-Breaker $C_k$-Game"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The ranges of the lower and upper Wythoff-Fibonacci sequences, A* and B*, form a partition of the set of natural numbers. This means every natural number n >= 1 belongs to exactly one of the two sets.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0409",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00814v1",
+    "status": "available",
+    "timestamp": "2026-07-06T06:18:33.786582+00:00",
+    "title": "Wythoff-Fibonacci Partition of Natural Numbers"
   },
   {
     "consumed_by_exp_id": "",
