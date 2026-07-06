@@ -4593,7 +4593,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "TxGraffiti Annihilation-Residue Inequality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "70bc476d",
     "description": "For all positive integers m and n, the number of intervals in the greedy m-Tamari poset on m-Dyck paths of semi-length n equals the number of rooted planar (m+1)-constellations with n black faces. This generalizes the m=1 case proven in the paper (where greedy Tamari intervals are equinumerous to bipartite planar maps, i.e., 2-constellations) and remains open for m \u2265 2.",
     "domains": [
       "Bridges"
@@ -4602,7 +4602,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01206v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T02:46:47.268188+00:00",
     "title": "Equinumerosity of greedy m-Tamari intervals and planar (m+1)-constellations"
   },
@@ -6103,6 +6103,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-06T17:19:05.532662+00:00",
     "title": "Probabilistic powerdomain RB-domain characterization for finite posets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that the Aharoni-Korman conjecture holds for countable FAC posets containing no saturated chain D such that D or its reverse is of the form \u2a01 D_x (where each D_x is infinite and co-wellfounded). Since any well-founded poset cannot contain such a chain D (as it would entail an infinite descending chain), the theorem implies the conjecture holds for all countable well-founded FAC posets. This conjecture proposes that the result extends to uncountable cardinals: every well-founded poset with no infinite antichains possesses a chain that meets every antichain in some partition of the poset into antichains.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0473",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02500v1",
+    "status": "available",
+    "timestamp": "2026-07-06T17:20:56.835605+00:00",
+    "title": "The Aharoni-Korman Conjecture for Well-Founded FAC Posets"
   },
   {
     "consumed_by_exp_id": "",

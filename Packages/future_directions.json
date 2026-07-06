@@ -17464,7 +17464,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO",
         "enumerative_combinatorics",
@@ -17473,7 +17473,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "70bc476d",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -17489,7 +17489,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0367",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-06T17:21:58.878267+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem greedy_m_tamari_interval_constellation_equinumerosity (m : ℕ) (hm : 1 ≤ m) (n : ℕ) :\n    Fintype.card (GreedyMTamariInterval m n) = Fintype.card (PlanarConstellation (m + 1) n) := by\n  sorry",
       "lineage_refs": [],
@@ -17504,7 +17504,7 @@
       "source": "",
       "source_exp_id": "2607.01206v1",
       "source_path": "http://arxiv.org/abs/2607.01206v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-06T02:46:47.268188+00:00",
       "title": "Equinumerosity of greedy m-Tamari intervals and planar (m+1)-constellations"
@@ -22605,6 +22605,54 @@
       "title": "Probabilistic powerdomain RB-domain characterization for finite posets"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Aharoni_Korman_1992",
+        "FAC_posets_structure"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The paper proves that the Aharoni-Korman conjecture holds for countable FAC posets containing no saturated chain D such that D or its reverse is of the form ⨁ D_x (where each D_x is infinite and co-wellfounded). Since any well-founded poset cannot contain such a chain D (as it would entail an infinite descending chain), the theorem implies the conjecture holds for all countable well-founded FAC posets. This conjecture proposes that the result extends to uncountable cardinals: every well-founded poset with no infinite antichains possesses a chain that meets every antichain in some partition of the poset into antichains.",
+      "domain_bridges": [
+        "set_theory",
+        "combinatorics",
+        "order_theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0473",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem aharoni_korman_well_founded_fac (P : Type*) [PartialOrder P] [IsWellFounded P (· < ·)]\n    (hFAC : ∀ (A : Set P), IsAntichain (· < ·) A → A.Finite) :\n    ∃ (C : Set P) (ι : Type*) (f : ι → Set P), IsChain (· ≤ ·) C ∧ \n    (∀ i, IsAntichain (· < ·) (f i)) ∧ (∀ i j, i ≠ j → Disjoint (f i) (f j)) ∧ \n    (∀ x : P, ∃ i, x ∈ f i) ∧ (∀ i, ∃ c ∈ C, c ∈ f i) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Attempt to generalize the chain completion H(P) and the scattered decomposition to uncountable well-founded FAC posets, showing that the obstruction presented by ⨁ D_x chains is inherently tied to non-well-foundedness regardless of cardinality, or construct a counterexample using an uncountable well-founded FAC poset.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.02500v1",
+      "source_path": "http://arxiv.org/abs/2607.02500v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-06T17:20:56.835605+00:00",
+      "title": "The Aharoni-Korman Conjecture for Well-Founded FAC Posets"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -22649,6 +22697,7 @@
   "recent_domain_counts": {},
   "recent_theme_keywords": {},
   "selection_log": [
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
