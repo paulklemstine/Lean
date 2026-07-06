@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-06T19:31:58.564454+00:00",
+  "last_updated": "2026-07-06T19:53:29.264956+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -37968,6 +37968,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-06T19:31:58.491864+00:00",
       "title": "Real-rootedness of the square of the Eulerian triangle"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.5499,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 11,
+      "domain": "Probability",
+      "duration_seconds": 1363.5927608013153,
+      "end_time": 1783367377.6758018,
+      "files_integrated": 4,
+      "job_id": "935491ef",
+      "outcome_quality": 0.70296,
+      "phase": "complete",
+      "phase_a_prompt_version": "v16",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.46,
+        "applications": 0.86,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.7199,
+        "cross_domain": 0.9,
+        "grade": "world_class",
+        "importance": 0.6327,
+        "novelty": 0.89,
+        "proof_depth": 0.5225,
+        "usefulness": 0.7112
+      },
+      "quality_score": 0.70296,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783366014.083041,
+      "strategy_count": 0,
+      "theorem_count": 14,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 13,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-06T19:53:29.197315+00:00",
+      "title": "Minimal dimension of non-\u03b3-positive symmetric edge polytopes"
     }
   ]
 }

@@ -3,66 +3,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition — zeros on the critical line means the bulk geometry is stable against perturbations.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0488",
-    "lineage_refs": [],
-    "priority_score": 0.91,
-    "proof_strategy": "Define the prime partition function Z(beta) = prod_p (1 - e^{-beta log p})^{-1}. Prove Z(beta) = zeta(s) where beta = Re(s)/log(p) in the saddle-point approximation. Define the holographic dictionary: bulk field phi_s(x) in AdS_3 <-> boundary CFT operator O_{1-s}(y) on S^1. Prove the correspondence: phi_s <-> (1 - p^{-s})^{-1} for each prime p. The functional equation Xi(s) = Xi(1-s) is the holographic duality. Prove: if all zeros of Xi(s) are on Re(s) = 1/2, then the bulk AdS geometry is stable (no tachyonic modes). Conversely, an off-critical-line zero at s = 1/2 + epsilon corresponds to a tachyonic instability in the bulk. Test: compute Z(beta) numerically and verify convergence to zeta(s).",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-06T19:49:20.777101+00:00",
-    "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable — theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements — most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark — they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0485",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "Define a dark theorem of level k as a Pi_2 statement 'for all n, there exist at least k values of m such that P(n,m)' such that PA proves the existential claim but PA does not prove P(n,m) for any specific m. Level 1: Paris-Harrington theorem (the strengthened finite Ramsey theorem). Level 2: the Paris-Harrington theorem for the statement 'there exist at least 2 values of m satisfying the Ramsey property'. Prove strictness: if T is level k+1, then T implies a level-k statement that is independent of PA. Prove density: among all Pi_2 statements provable in ZFC, the fraction that are dark approaches 1 as statement length grows. Test: formalize levels 1-3 in Lean 4 using the Paris-Harrington and Goodstein sequences.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-06T19:49:20.644882+00:00",
-    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot — the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0486",
-    "lineage_refs": [],
-    "priority_score": 0.81,
-    "proof_strategy": "Define cognitive braids: each brain region is a strand, each neural firing sequence is a crossing. A cognitive process is an element of B_n (braid group on n strands). Two thoughts are equivalent if related by Reidemeister moves. Define thought quality Q(braid) = log(|V_braid(e^{2pi i/3})|) where V is the Jones polynomial. Prove Q is a braid invariant. Prove: trivial braid has V = 1 so Q = 0 (trivial thought). Trefoil has V = -t^2+t+1 so Q = log(|V(e^{2pi i/3})|) = log(sqrt(3)) > 0 (creative thought). Figure-eight has Q = log(2) (confused thought with maximum entanglement). Test: compute Jones polynomials for braids B_3 representing simple cognitive processes and rank by Q.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-06T19:49:20.687661+00:00",
-    "title": "Knots That Think: Cognition as Braiding in Category Theory"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "For every m ≥ 1, the generating tree encoding the recursive decomposition of intervals in the greedy m-Tamari poset (on Dyck paths of size n) is isomorphic to the generating tree encoding the recursive decomposition of planar (m+1)-constellations of size n. This conjecture generalizes the m=1 case proved in the paper and would provide a combinatorial proof of the equinumerosity refined by the parameters tracked in the generating tree (e.g., number of valleys in Dyck paths and corresponding statistics in constellations).",
     "domain_bridges": [
       "Algebraic Combinatorics",
@@ -1162,7 +1102,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": "Artin's conjecture on L-functions",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "72277034",
     "description": "An explicit formula for the number of non-trivial zeros of Artin L-functions below height T under Artin's conjecture.",
     "domain_bridges": [],
     "domains": [
@@ -1174,7 +1114,7 @@
     "proof_strategy": "explicit modular form analysis",
     "research_mode": "team",
     "source_exp_id": "2606.31441v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T14:15:54.879802+00:00",
     "title": "Counting Zeros of Artin L-functions"
   },
@@ -2062,7 +2002,7 @@
       "Dieudonné modules for p-divisible groups",
       "Filtered colimits in algebraic K-theory"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "31f89744",
     "description": "The sheared Witt vector functor preserves filtered colimits over nilperfect rings. Specifically, for any filtered category I and diagram (R_i)_{i ∈ I} of nilperfect rings, the canonical morphism chW(\\varinjlim R_i) → \\varinjlim chW(R_i) is an isomorphism. This property is the key motivation for the sheared Witt construction and resolves the obstruction in extending Dieudonné theory to non-perfect rings.",
     "domain_bridges": [
       "Witt vector functoriality",
@@ -2081,7 +2021,7 @@
     "proof_strategy": "The conjecture follows from verifying that the pullback defining chW(R) commutes with filtered colimits. Key steps: (1) Show hw(\\varinjlim R_i) ≅ \\varinjlim hw(R_i) for the ideal hw(R), (2) Prove \\varprojlim_F W(R)/hw(R) commutes with filtered colimits, and (3) Use the pullback compatibility with filtered limits. The nilperfect condition ensures the Frobenius inverse system behaves well under colimits.",
     "research_mode": "team",
     "source_exp_id": "2607.01178v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T23:51:14.163940+00:00",
     "title": "Filtered Colimit Preservation by Sheared Witt Vectors"
   },
@@ -2175,7 +2115,7 @@
     "catalog_references": [
       "arXiv:math.CO"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7e56c098",
     "description": "Let V_1,..., V_{d+1} be disjoint finite sets and K be the join of spanning k-trees T_1,..., T_{d+1} where each T_i is a simplicial complex on V_i. If A: |Δ_V| -> R^d is an affine map such that 0 is in the convex hull of the image of each color class A(V_i), then there exists a face σ in the join of these k-trees such that 0 is in the image of σ.",
     "domain_bridges": [
       "Simplicial Complex Theory",
@@ -2191,7 +2131,7 @@
     "proof_strategy": "The proof should proceed by induction on the dimension d and the size of the vertex sets, utilizing a combinatorial version of Meshulam's Lemma. One would need to formalize the notion of a'spanning k-tree' in terms of its homology or connectivity properties and show that the join of such complexes maintains sufficient topological connectivity to satisfy the conditions of the colorful Carathéodory-type theorem.",
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T23:51:53.327272+00:00",
     "title": "Colorful Carathéodory Theorem for Spanning k-trees"
   },
@@ -3474,7 +3414,7 @@
       "math.NT",
       "math.CO"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fed5f716",
     "description": "For any d × d matrix A over a number field K with ring of integers O_K, if there exists n ≥ 1 such that A^n ∈ M_d(O_K), then the pseudo-determinant of A is an algebraic integer in K.",
     "domain_bridges": [
       "algebraic number theory",
@@ -3489,7 +3429,7 @@
     "proof_strategy": "Show that eigenvalues λ of A satisfy λ^n ∈ O_K (hence algebraic integers) via characteristic polynomial of A^n, then prove their product (pseudo-determinant) is an algebraic integer",
     "research_mode": "team",
     "source_exp_id": "2606.30876v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T21:26:19.991104+00:00",
     "title": "Pseudo-determinant of power-integral matrices is an algebraic integer"
   },
@@ -3500,7 +3440,7 @@
       "BH",
       "LFZ"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "666aafc9",
     "description": "For a graph $G$ with minimum degree $\\delta(G) \\ge a + r$, if the spectral radius $\\lambda(G)$ is at least $a + r + b$, then $G$ is fractional ID-$[a,b]$-factor-critical.",
     "domain_bridges": [
       "Spectral graph theory",
@@ -3516,7 +3456,7 @@
     "proof_strategy": "1. Establish that $\\lambda(G) \\ge a + r + b$ implies sufficient expansion properties via spectral techniques. 2. Show that this expansion guarantees the existence of fractional $[a,b]$-factors in $G-I$ for any independent set $I$ of size $r$. 3. Leverage the minimum degree condition to bound the vertex degrees in $G-I$ within the $[a,b]$ range.",
     "research_mode": "team",
     "source_exp_id": "2606.31064v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T21:44:34.279843+00:00",
     "title": "Spectral radius threshold for fractional ID-$[a,b]$-factor-critical graphs"
   },
@@ -5957,7 +5897,7 @@
       "Przybyło, Wei (2023) - Asymptotic solution",
       "Current paper: Nearly-uniform degree distributions in spanning subgraphs (ArXiv)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1427cdbb",
     "description": "There exists an absolute constant C such that for every d-regular graph G on n vertices with d ≥ 2, the irregularity strength s(G) satisfies s(G) ≤ n/d + C. Here s(G) is the smallest integer k such that the edges of G can be weighted with integers from {1,…,k} so that all weighted vertex degrees are distinct.",
     "domain_bridges": [
       "Edge-weighting problems",
@@ -5975,7 +5915,7 @@
     "proof_strategy": "The conjecture has seen significant progress via probabilistic methods and algebraic constructions. A potential proof strategy could involve combining the polynomial method with iterative absorption techniques, or developing a more refined random weighting scheme that ensures distinct weighted degrees while keeping the maximum weight close to n/d. Recent asymptotic results by Przybyło and Wei suggest that a combination of random weighting and careful derandomization might close the gap to an absolute constant.",
     "research_mode": "team",
     "source_exp_id": "2606.30612v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T23:58:16.205238+00:00",
     "title": "Faudree-Lehel Conjecture on Irregularity Strength of Regular Graphs"
   },
@@ -6823,7 +6763,7 @@
       "Mathlib.Analysis.SpecialFunctions.Logarithm",
       "Mathlib.NumberTheory.Baker"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c4dfeeb0",
     "description": "Let $q>3$ be an integer and $P_1,\\dots,P_{q-1}\\in\\mathbb{Q}[U]$ satisfy the hypotheses of a generalized ABC polynomial. Define the linear recurrences $(a_n)_{n\\ge0}$ and $(b_n)_{n\\ge0}$ by the characteristic polynomials $\\pi_U(X)$ and its reciprocal $X^{q}\\pi_U(1/X)$. Then there exists an effectively computable constant $C>0$ (depending only on $q$ and the $P_i$) such that the set \\[ \\{ n\\ge0 \\mid a_n = b_m \\text{ for some } m\\ge0 \\text{ and } a_n > C \\} \\] has cardinality at most two.",
     "domain_bridges": [
       "AlgebraicNumberTheory",
@@ -6839,7 +6779,7 @@
     "proof_strategy": "Formalise the recurrences as modules over the ring of integers of the splitting field of $\\pi_U$. Use the theory of linear forms in logarithms (Baker's theorem) available in Mathlib to obtain an explicit lower bound for any non‑trivial equality $a_n=b_m$. Translate this bound into an inequality $\\max\\{n,m\\} \\le B$ for some computable $B$. Then a simple case analysis shows that at most two values can exceed the bound, matching the analytic result of the paper. The proof proceeds by:\n1. Defining the companion matrix of $\\pi_U$ and its reciprocal, extracting the closed form $a_n = \\sum_{i=1}^q \\alpha_i \\lambda_i^n$ with algebraic $\\lambda_i$ and $\\alpha_i$.\n2. Proving that the $\\lambda_i$ are multiplicatively independent except for the trivial reciprocal relation, using Galois theory lemmas already in Mathlib.\n3. Applying `baker_lower_bound` (a formalised version of Baker’s theorem) to the linear form $\\log(\\alpha_i) + n\\log(\\lambda_i) - \\log(\\beta_j) - m\\log(\\mu_j)$ arising from $a_n=b_m",
     "research_mode": "team",
     "source_exp_id": "2606.27885v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T18:31:34.889448+00:00",
     "title": "At most two large common values for generalized ABC recurrences"
   },
@@ -7615,7 +7555,7 @@
     "catalog_references": [
       "Erdős–Gallai theorem"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d4e48dec",
     "description": "For every ε∈(0,1) there exists K∈ℕ such that any graph G with average degree d≥K contains a cycle of length at least (1-ε)d.",
     "domain_bridges": [
       "extremal graph theory",
@@ -7630,7 +7570,7 @@
     "proof_strategy": "Use a structural decomposition based on Pokrovskiy's hyperstability of bounded-degree trees, combined with an inductive argument on the average degree and a probabilistic refinement for the random percolation case.",
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T16:58:46.084141+00:00",
     "title": "Conjecture on Cycle Length Relative to Average Degree"
   },
@@ -11433,6 +11373,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Cyclic Codes and Cyclically Covering Subspaces over Finite Fields"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a prime power q and positive integer n, the maximum possible codimension h_q(n) of a cyclically covering subspace in F_q^n is zero if and only if every nonzero cyclic code in F_q^n contains a full-weight codeword.",
+    "domain_bridges": [
+      "finite_fields",
+      "linear_algebra",
+      "cyclic_codes",
+      "hamming_weight"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0480",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define cyclically covering subspaces and their codimension h_q(n), define cyclic codes and full-weight codewords, then show that a subspace fails to be cyclically covering if and only if its dual is a nonzero cyclic code without a full-weight codeword, establishing the equivalence.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02239v1",
+    "status": "available",
+    "timestamp": "2026-07-06T19:54:04.546264+00:00",
+    "title": "Codimension Zero Equivalence for Cyclically Covering Subspaces and Cyclic Codes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "ham-sandwich_theorem",
       "centerpoint_theorem",
       "semialgebraic_geometry",
@@ -11448,7 +11415,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0480",
+    "id": "fd_0481",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the natural decomposition of the space of oriented hyperplanes based on the combinatorial structure of the intersection P ∩ H_(a,b)^+. Specifically, partition the parameter space into cells where the set of vertices of P lying strictly inside, strictly outside, and on the boundary of the halfspace remains constant. On each such cell, the vertices of the intersection polytope are rational functions of (a,b). Since the volume of a polytope is a sum of determinants of its vertices, the volume function is a rational function of (a,b) on each cell, proving piecewise rationality.",
@@ -11474,7 +11441,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0481",
+    "id": "fd_0482",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on n, utilizing the branching rule for symmetric group characters, properties of the binary expansion of n (specifically relating the highest power of 2 and the Hamming weight to partition structures), and explicit character calculations to verify the base cases and the inductive step.",
@@ -11501,7 +11468,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0482",
+    "id": "fd_0483",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Characterize the extremal graph by analyzing degree sequences and curvature formulas. Show that any graph with T(n) edges achieving the threshold must have exactly the specified degree distribution. Prove uniqueness by demonstrating that any two such extremal graphs are isomorphic via vertex relabeling. Use the relationship between graph curvature and Laplacian eigenvalues to constrain the possible structures.",
@@ -11533,7 +11500,7 @@
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_0483",
+    "id": "fd_0484",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof would proceed by analyzing the local structure of the trianguline variety at each point. Key steps: (1) On the very regular locus, the variety is smooth (proven in the paper), hence Cohen-Macaulay. (2) At singular points, use the Tannakian formalism developed in the paper to reduce to understanding the tangent cone in terms of root data. (3) The tangent cone at a singular point with parameter δ should be controlled by the roots α for which δ∘α∨ fails to be regular—these correspond to the walls of the Weyl chambers where smoothness breaks down. (4) Show that the defining ideal at each point is generated by a regular sequence of length equal to the codimension, leveraging the crystallinity criterion from the paper to explicitly describe the deformation ring. (5) The root system combinatorics (specifically, the Chevalley commutation relations and the structure of the unipotent radical) should ensure the regular sequence property holds via an inductive argument on the height of r",
@@ -11564,7 +11531,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0484",
+    "id": "fd_0485",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The forward direction (necessity) follows from the paper's Lemma establishing that good position implies the tree T(T) has the required path structure. The backward direction (sufficiency) requires showing that when T(T) is a path of length 2g+1 and the contraction bounds hold, the group Γ(T) is free on the generators sᵢ: one analyzes the action on the Bruhat-Tits tree of PGL₂(K), showing that the contraction conditions force each reduced word in the sᵢ to act without fixed points in Ω_Γ, precluding any relations beyond sᵢ² = 1. The p-adic analytic estimates on matrix entries control how far the generators move points in the Bruhat-Tits tree, ensuring that compositions cannot create accidental fixed points.",
@@ -11575,24 +11542,32 @@
     "title": "Tree-Contraction Characterization of Good Position for p-adic Schottky Groups"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' — they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Hales-Jewett theorem",
+      "van der Waerden numbers",
+      "Gallai's theorem on homothetic copies",
+      "combinatorial lines in [t]^n"
     ],
-    "id": "fd_0487",
+    "consumed_by_exp_id": "",
+    "description": "For all t ≥ 2 and r ≥ 2, the maximum dimension n for which there exists a line-free r-coloring of the Hales–Jewett cube [t]^n equals the maximum dimension n for which there exists a one-weight (equivalently, symmetric) line-free r-coloring of [t]^n. That is, one-weight colorings are extremal for the lower-bound problem: no arbitrary coloring avoids combinatorial lines in a dimension that no symmetric coloring can.",
+    "domain_bridges": [
+      "Ramsey theory ↔ one-dimensional arithmetic combinatorics (via the coincidence of symmetric and one-weight colorings)",
+      "higher-dimensional combinatorial geometry ↔ integer-weighted counting (via radix weight representation)"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0486",
     "lineage_refs": [],
-    "priority_score": 0.77,
-    "proof_strategy": "Define the periodic table of finite groups: rows indexed by order (atomic number), columns indexed by composition factor pattern (chemical series). Group types: cyclic (noble gases), symmetric (halogens), simple non-abelian (transition metals), nilpotent (alkali metals), solvable non-nilpotent (alkaline earth). Prove: groups in the same column have isomorphic composition factors (Jordan-Holder theorem). Prove: the 'valence' (number of minimal normal subgroups) is determined by the chief factors. Construct the table for order <= 100 and verify periodicity: cyclic groups of prime order form the first column, groups with composition {2,2,3} form the second column, etc. Test: predict properties of groups of order 120 before computing them.",
+    "priority_score": 0.8,
+    "proof_strategy": "Prove the coincidence lemma (symmetric ↔ one-weight, already established in the paper) in Lean. Then show that for any line-free r-coloring c of [t]^n, the symmetrization c_sym(x) = c(σ·x) averaged over all coordinate permutations σ ∈ S_n either inherits line-freeness or can be deformed into a one-weight line-free coloring of the same dimension. The key obstacle is that symmetrization may introduce monochromatic lines; resolving this likely requires constructing an explicit radix weight from the orbit structure of c and showing the induced one-weight coloring avoids lines whenever c does. Falsification reduces to a finite computation: find t, r, n and a line-free r-coloring of [t]^n such that no one-weight r-coloring of [t]^n is line-free.",
     "research_mode": "team",
-    "source_exp_id": "seed",
+    "source_exp_id": "2607.02226v1",
     "status": "available",
-    "timestamp": "2026-07-06T19:49:20.732442+00:00",
-    "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
+    "timestamp": "2026-07-06T19:54:27.554870+00:00",
+    "title": "Symmetric-Extremality Conjecture for Hales–Jewett Lower Bounds"
   },
   {
     "ambition_level": "extension",
@@ -11613,46 +11588,6 @@
     "status": "available",
     "timestamp": "2026-07-02T05:18:03.424231+00:00",
     "title": "That the entries of an integer right triangle are forced"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n## 1. Unimodality is not enough: the persistent gamma-gap of flat symmetric sequences\n\n**Conjecture.** For every degree `n ≥ 2`, the all-ones symmetric polynomial\n`1 + t + t^2 + ⋯ + t^n` — which is palindromic, nonnegative, and unimodal — fails to be\ngamma-positive, and its gamma-expansion forces the second gamma-coefficient to equal\n`1 − n`, growing more negative without bound as the degree increases.\n\nThe key insight is that gamma-positivity is governed by a *triangular* change of basis\nwhose second coordinate reads off `c_1 − n·c_0`; whenever the leading coefficients are\ncomparable, this quantity is negative, so gamma-positivity fails even though every one of\nits classical necessary conditions (symmetry, nonnegativity, unimodality) holds. This\nseparates gamma-positivity strictly from unimodality already in the smallest nontrivial\ndegrees.\n\n**Why now?** The smallest palindromic, unimodal, nonnegative sequences that are not\ngamma-positive can now be pinned down exactly, turning a qualitative \"necessary but not\nsufficient\" folklore statement into a sharp, computable degree-by-degree obstruction.\n\n## 2. The graded cone of gamma-positive polynomials and its extreme rays\n\n**Conjecture.** The gamma-positive polynomials of each order form a convex cone whose\nextreme rays are precisely the basis elements `t^i (1+t)^{n−2i}`, and the family of these\ncones, glued together by the multiplication law\n`t^i(1+t)^{m−2i} · t^j(1+t)^{n−2j} = t^{i+j}(1+t)^{(m+n)−2(i+j)}`,\nforms a graded commutative cone-semiring in which factorization into irreducible\ngamma-positive pieces is unique.\n\nThe key insight is that multiplying two of these building blocks *adds their indices*,\nso gamma-positivity behaves exactly like nonnegativity of coefficients in a graded\npolynomial ring: closed under addition within an order and under multiplication across\norders, with the product coefficients given by an honest nonnegative convolution.\n\n**Why now?** With addition- and multiplication-closure established, the algebraic\nskeleton is in place to ask structural questions — extreme rays, generators, unique\nfactorization — that were previously out of reach when gamma-positivity was treated only\nas an isolated positivity test.\n\n## 3. Real-rootedness as a constructive certificate of gamma-positivity\n\n**Conjecture.** A palindromic polynomial all of whose roots are real and nonpositive is\ngamma-positive, and its gamma-vector can be produced explicitly from the reciprocal\npairing of roots; conversely, the smallest failures of gamma-positivity coincide with the\nappearance of non-real (or unpaired) roots.\n\nThe key insight is that pairing each root with its reciprocal partner converts a real\npalindromic polynomial directly into a nonnegative combination of the `(1+t)`-centered\nbuilding blocks, so real-rootedness is not merely correlated with gamma-positivity but\n*constructs* the certificate — while the palindromic-but-not-gamma-positive examples are\nexactly those forced to carry complex roots.\n\n**Why now?** Explicit low-degree certificates and explicit low-degree counterexamples now\nsit side by side, making it possible to convert the classical analytic sufficient\ncondition into a hands-on, root-to-gamma-vector algorithm and to test its sharpness\nagainst the known obstructions.\n\n## 4. A quantitative gamma-gap invariant for symmetric edge polytopes\n\n**Conjecture.** Assign to each connected graph the most negative entry of the gamma-vector\nof its associated symmetric polynomial (zero exactly when the polynomial is\ngamma-positive). This *gamma-gap* is a well-behaved graph invariant: it vanishes for all\ngraphs below a critical size, first becomes negative at a sharp threshold, and is\ncontrolled — subadditively — under natural graph operations such as joins and edge\nsubdivisions.\n\nThe key insight is to stop treating gamma-positivity as a binary property and instead\nmeasure its failure by a single real number, which can then be bounded, tracked, and\nassembled from the gamma-gaps of smaller building blocks via the multiplication law.\n\n**Why now?** Because gamma-positivity is preserved and quantified under sums and products,\nthe invariant of a large object can be reduced to controlled combinations of certified\nsmall pieces, making a systematic search for the exact critical threshold feasible for the\nfirst time.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0490",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "935491ef",
-    "status": "available",
-    "timestamp": "2026-07-06T19:50:51.801468+00:00",
-    "title": "**Conjecture.** For every degree `n ≥ 2`, the all-ones symmetric polynomial"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Every real number defines a musical scale: map the digits 0-9 to frequencies f_n = 220 * 2^{n/12} (the A minor pentatonic scale extended). The number pi = 3.14159265... produces the sequence E4, C5, C#5, D5, D#5, F5, E5, A4, G5, C5... — a melody. Conjecture: The melody of pi is not periodic (because pi is irrational) but has musical structure: the autocorrelation of the digit sequence at lag 12 (one octave) is positive and statistically significant. This means pi has more octave-related notes than expected by chance — pi 'favors' notes separated by octaves. Similarly, e 'favors' perfect fifths (lag 7) and sqrt(2) 'favors' minor thirds (lag 3). The musical structure of transcendental numbers reflects their continued fraction properties: numbers with bounded partial quotients have more consonant melodies. Test: compute the digit autocorrelation of pi, e, and sqrt(2) at lags 0-12 (representing unison through octave). Perform a chi-squared test comparing to the uniform distribution. Generate the 'music' of each constant and analyze for tonal centers. Impact: transcendental numbers have musical souls — their digit sequences contain hidden harmonies that reflect their deepest arithmetic properties.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0489",
-    "lineage_refs": [],
-    "priority_score": 0.72,
-    "proof_strategy": "Map digits 0-9 to frequencies f_n = 220 * 2^{n/12} Hz (chromatic scale starting at A3). Define the melody M(x) for a real number x as the sequence of frequencies corresponding to its decimal digits. Compute the autocorrelation R(k) = sum_{i} (d_i - 4.5)(d_{i+k} - 4.5) / N for lags k = 0,1,...,12. Under the null hypothesis (digits are uniformly random), R(k) ~ Normal(0, 1/N). Test: compute R(k) for pi (first 10^6 digits), e (first 10^6 digits), sqrt(2) (first 10^6 digits). If R(k) > 2/sqrt(N) for some k, that lag is statistically significant. Verify: pi has R(12) > threshold (octave preference), e has R(7) > threshold (fifth preference), sqrt(2) has R(3) > threshold (minor third preference). Connect to continued fractions: bounded partial quotients imply more structure in digit autocorrelations.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-06T19:49:20.821404+00:00",
-    "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
   },
   {
     "ambition_level": "extension",
