@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-06T12:28:20.697387+00:00",
+  "last_updated": "2026-07-06T13:06:25.099462+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -37270,6 +37270,47 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-06T12:28:20.634223+00:00",
       "title": "Isomorphism of Sheared Witt Vectors for Perfect Algebras"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.3856,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 44,
+      "domain": "Bridges",
+      "duration_seconds": -556.470340013504,
+      "end_time": 1783336948.8958216,
+      "files_integrated": 0,
+      "job_id": "ea66c257",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v16",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.71,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.5,
+        "cross_domain": 0.85,
+        "importance": 0.2753686274509804,
+        "novelty": 0.5,
+        "pegb_compliance": 0.25,
+        "proof_depth": 0.1790980392156863,
+        "usefulness": 0.5145490196078432
+      },
+      "quality_score": 0.3802499607843137,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783337505.3661616,
+      "strategy_count": 0,
+      "theorem_count": 4,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 4,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-06T13:06:25.026232+00:00",
+      "title": "Limit Distribution of Descendants in Random d-DAGs"
     }
   ]
 }

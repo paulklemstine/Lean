@@ -380,7 +380,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
   {
-    "consumed_by_exp_id": "ea66c257",
+    "consumed_by_exp_id": "",
     "description": "For the random recursive DAG G_n with out-degree d \u2265 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n \u2192 \u221e.",
     "domains": [
       "Computation"
@@ -389,7 +389,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
@@ -5088,11 +5088,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture: For every P\u2084\u2011tidy graph G and any two independent sets I, I' of G with |I| = |I'|, there exists a token\u2011sliding sequence transforming I into I'. This would extend the polynomial\u2011time algorithm for the reconfiguration problem on P\u2084\u2011tidy graphs to a structural connectivity result for equal\u2011sized independent sets.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_0398",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31815v1",
+    "status": "available",
+    "timestamp": "2026-07-06T13:09:05.350644+00:00",
+    "title": "Reachability of equal-size independent sets in P\u2084\u2011tidy graphs under token sliding"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0398",
+    "id": "fd_0399",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -5106,7 +5121,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0399",
+    "id": "fd_0400",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -5121,7 +5136,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0400",
+    "id": "fd_0401",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
@@ -5136,7 +5151,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0401",
+    "id": "fd_0402",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -5151,7 +5166,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0402",
+    "id": "fd_0403",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -5165,7 +5180,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0403",
+    "id": "fd_0404",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -5179,7 +5194,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0404",
+    "id": "fd_0405",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -5194,7 +5209,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0405",
+    "id": "fd_0406",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02011v1",
@@ -5209,7 +5224,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0406",
+    "id": "fd_0407",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -5223,7 +5238,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0407",
+    "id": "fd_0408",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02085v1",
@@ -5237,7 +5252,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0408",
+    "id": "fd_0409",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01957v1",
@@ -5252,7 +5267,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0409",
+    "id": "fd_0410",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01956v1",
@@ -5266,7 +5281,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0410",
+    "id": "fd_0411",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01744v1",
@@ -5280,7 +5295,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0411",
+    "id": "fd_0412",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01839v1",
@@ -5295,7 +5310,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0412",
+    "id": "fd_0413",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01703v1",
@@ -5304,16 +5319,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Unconditional Euclidean Systems for Ray Classes in Totally Real Galois Fields"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c7c6cf29",
     "description": "For every n \u2265 0, the n-th row generating function of the square of the Eulerian triangle\u2014defined as the polynomial \u2211_k (\u2211_j A(n,j)\u00b7A(j,k)) x^k where A(n,k) is the Eulerian number counting permutations of [n] with k descents\u2014has only real roots. This extends the paper's results on powers of Pascal, Stirling, and Narayana triangles to the still-open Eulerian case.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0413",
+    "id": "fd_0414",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01572v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T01:27:06.611331+00:00",
     "title": "Real-rootedness of the square of the Eulerian triangle"
   },
@@ -5323,7 +5338,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0414",
+    "id": "fd_0415",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01680v1",
@@ -5337,7 +5352,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0415",
+    "id": "fd_0416",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01582v1",
@@ -5352,7 +5367,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0416",
+    "id": "fd_0417",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01165v1",
@@ -5367,7 +5382,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0417",
+    "id": "fd_0418",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01184v1",
@@ -5381,7 +5396,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0418",
+    "id": "fd_0419",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -5396,7 +5411,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0419",
+    "id": "fd_0420",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -5411,7 +5426,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0420",
+    "id": "fd_0421",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01028v1",
@@ -5426,7 +5441,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0421",
+    "id": "fd_0422",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00940v1",
@@ -5440,7 +5455,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0422",
+    "id": "fd_0423",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -5454,7 +5469,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0423",
+    "id": "fd_0424",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01059v1",
@@ -5469,7 +5484,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0424",
+    "id": "fd_0425",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
@@ -5483,7 +5498,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0425",
+    "id": "fd_0426",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00934v1",
@@ -5498,7 +5513,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0426",
+    "id": "fd_0427",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00930v1",
@@ -5512,7 +5527,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Logic"
     ],
-    "id": "fd_0427",
+    "id": "fd_0428",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01294v1",
@@ -5526,7 +5541,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0428",
+    "id": "fd_0429",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00814v1",
@@ -5541,7 +5556,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0429",
+    "id": "fd_0430",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00651v1",
@@ -5555,7 +5570,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0430",
+    "id": "fd_0431",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00646v1",
@@ -5569,7 +5584,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0431",
+    "id": "fd_0432",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00592v1",
@@ -5584,7 +5599,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_0432",
+    "id": "fd_0433",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00507v1",
@@ -5593,31 +5608,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "DFA State Complexity Lower Bound for the Kochen-Specker Problem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "611a6b62",
     "description": "Every brick distinct from K_4, C_6_bar, and the Petersen graph, in which every b-invariant edge is a forcing edge, is near-bipartite. This conjecture, if true, would reduce the full Lucchesi\u2013Murty characterization problem to the near-bipartite case already solved in this paper, by showing that no non-near-bipartite brick (beyond the three exceptions) can have the property that all its b-invariant edges are forcing edges.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0433",
+    "id": "fd_0434",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00608v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T07:51:38.329200+00:00",
     "title": "Near-bipartite reduction for the Lucchesi\u2013Murty property"
   },
   {
-    "consumed_by_exp_id": "611a6b62",
+    "consumed_by_exp_id": "",
     "description": "For the Boolean lattice B_n, let E_n be the set of triples (S,T,U) with S \u2282 T \u2282 U in B_n such that |S| + |T| = |U|. The conjecture states that |E_n| = C(2n,n) - [x^n](1+x+x^2)^n - 2^n + 1, where [x^n] extracts the coefficient of x^n from the polynomial. This identity connects poset chain counting in Boolean lattices with trinomial coefficient extraction and binomial sums, and is the foundational combinatorial identity underlying the paper's analysis of multiplicity parameters.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0434",
+    "id": "fd_0435",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00456v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T08:10:19.413018+00:00",
     "title": "Exact enumeration of arithmetic Schur-type triples in the Boolean lattice"
   },
@@ -5627,7 +5642,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0435",
+    "id": "fd_0436",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00263v1",
@@ -5641,7 +5656,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0436",
+    "id": "fd_0437",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00318v1",
@@ -5655,7 +5670,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0437",
+    "id": "fd_0438",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00282v1",
@@ -5669,7 +5684,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0438",
+    "id": "fd_0439",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00332v1",
@@ -5684,7 +5699,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0439",
+    "id": "fd_0440",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00088v1",
@@ -5699,7 +5714,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0440",
+    "id": "fd_0441",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.32024v1",
@@ -5713,7 +5728,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0441",
+    "id": "fd_0442",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31967v1",
@@ -5727,7 +5742,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_0442",
+    "id": "fd_0443",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00205v1",
@@ -5741,7 +5756,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0443",
+    "id": "fd_0444",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01273v1",
@@ -5756,7 +5771,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0444",
+    "id": "fd_0445",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31908v1",
@@ -5771,7 +5786,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0445",
+    "id": "fd_0446",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31698v1",
@@ -5786,7 +5801,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0446",
+    "id": "fd_0447",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31783v1",
@@ -5801,7 +5816,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0447",
+    "id": "fd_0448",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31761v1",
