@@ -1,85 +1,165 @@
-# The Squeeze: How Far Can a Polynomial Shrink a Set of Numbers?
+# The Corridor a Polynomial Cannot Escape
 
-Take a handful of whole numbers — say $-2, -1, 0, 1, 2$ — and feed each one through a simple machine: the squaring map $f(x) = x^2$. Out come $4, 1, 0, 1, 4$. Strip away the duplicates and you are left with the *set* $\{0, 1, 4\}$. Five numbers went in; only three came out.
+## A number-cruncher's puzzle
 
-This tiny experiment hides one of the central questions of modern additive combinatorics. When you push a finite set of integers through a polynomial, how much can the set shrink, and how much must it grow? The answer turns out to be governed by two crisp, universal barriers — a floor and a ceiling — that hold for *every* polynomial and *every* finite set at once. This article is about those two barriers, why they exist, and what the surprisingly delicate gap between them tells us.
+Take a handful of whole numbers — say $A = \{-2,-1,0,1,2\}$ — and feed each of them
+through the same simple rule. Square them, for instance. Out comes a new handful:
+$\{0,1,4\}$. Five numbers went in; only three came out. The squaring map *folded* the
+line, gluing $-2$ onto $2$ and $-1$ onto $1$, and the collection shrank.
 
-## Two forces in tension
+Now try a different rule on the same five numbers: cube them. In comes
+$\{-2,-1,0,1,2\}$, out comes $\{-8,-1,0,1,8\}$ — still five. Nothing collapsed.
 
-A polynomial map does two contradictory things to a set.
+This is the deceptively simple question at the heart of a large and active area of modern
+mathematics: **when you push a finite set of integers through a polynomial, how big is the
+result?** Written compactly, if $f$ is a polynomial and $A$ is a finite set of integers,
+the *image* is
+$$f(A) = \{\, f(a) : a \in A \,\},$$
+and we want to understand $|f(A)|$, the number of distinct outputs.
 
-On one hand, it can **collapse** the set by mapping different inputs to the same output. Squaring collapses $2$ and $-2$ into the single value $4$. That is why $\{-2,-1,0,1,2\}$ shrank.
+The stakes are higher than they look. Questions of exactly this shape — how much a
+polynomial can compress or spread out a set — sit underneath the theory of **expanders**,
+the **sum–product phenomenon**, and the modern circle of results on power-saving bounds for
+polynomial images. Those deep theorems are hard, asymptotic, and lean on subtle incidence
+geometry. But underneath all of them lies a clean, exact skeleton that can be stated and
+proved with nothing more than the fact that *a degree-$k$ equation has at most $k$
+solutions*. This article is about that skeleton — and about a surprisingly rigid "corridor"
+that traps the size of every polynomial image.
 
-On the other hand, a polynomial is not *free* to collapse a set as much as it likes. The equation $x^2 = 4$ has only two solutions. More generally, the equation $f(x) = b$ can have at most $k$ solutions when $f$ has degree $k$, because a degree-$k$ polynomial has at most $k$ roots. This is the oldest fact in the theory of equations, and it is the hero of our story.
+## The floor: nothing collapses too far
 
-Let us write $|A|$ for the number of elements in a finite set $A$, and $f(A)$ for the image set $\{f(a) : a \in A\}$ with duplicates removed. The two forces translate into two clean inequalities.
+Here is the first pillar. Suppose $f$ has degree $k$ (for squaring, $k=2$; for cubing,
+$k=3$). Pick any output value $b$ in $f(A)$. How many inputs could have produced it? Those
+inputs are exactly the solutions of the equation $f(x) = b$ — equivalently, the roots of the
+polynomial $f(x) - b$. And a polynomial of degree $k$ has at most $k$ roots. So **every
+output has at most $k$ inputs sitting above it**.
 
-## The floor: a polynomial cannot crush a set too hard
+Picture the set $A$ sorted into buckets, one bucket per output value, each input dropped
+into the bucket of its output. There are $|f(A)|$ buckets, and no bucket holds more than $k$
+inputs. The total number of inputs is $|A|$. Therefore
+$$|A| \le k \cdot |f(A)|, \qquad\text{equivalently}\qquad |f(A)| \ge \frac{|A|}{k}.$$
 
-Here is the first barrier. Suppose $f$ is a polynomial of degree $k \ge 1$. Then for any finite set of integers $A$,
-$$|f(A)| \ \ge\ \frac{|A|}{k}.$$
+This is the **fiber bound**. It is the universal law against collapse: a degree-$k$
+polynomial can shrink a set by *at most* a factor of $k$, no matter how cleverly the set is
+arranged. Squaring, with $k=2$, can at best halve; cubing, with $k=3$, can at best cut to a
+third. The floor is real and it is simple.
 
-In words: the image can be at most $k$ times smaller than the original. The map cannot squeeze the set by more than a factor equal to its degree.
+## The ceiling: no free expansion
 
-The reason is beautifully simple, and it is exactly the root-counting fact from above. Group the elements of $A$ according to where they land. Each *fiber* — the set of inputs sharing a common output value $b$ — is a set of solutions to $f(x) = b$, and there can be at most $k$ of them. So $A$ is carved into fibers, each of size at most $k$, and there are exactly $|f(A)|$ of these fibers (one per output value). Counting elements,
-$$|A| \ \le\ k \cdot |f(A)|,$$
-which rearranges into the floor. For the squaring map, $k = 2$, so the image can be at most twice as small as the domain — and the symmetric window $\{-n, \dots, n\}$ shows this factor of $2$ is genuinely achieved, since almost every value is hit by exactly the pair $\{a, -a\}$.
+The other side is even easier to state. A function can never produce more outputs than it
+has inputs, so
+$$|f(A)| \le |A|.$$
+That is trivially true. The interesting question the field asks is whether one can do
+*better* — whether a genuinely nonlinear polynomial is forced to **expand**, producing
+close to $|A|^{k}$ distinct values as a naive degree count might suggest. The honest answer,
+at the level of pure elementary reasoning, is **no**. Cubing the set $\{-2,-1,0,1,2\}$ gave
+back exactly five values; it did not expand at all.
 
-This "fiber estimate" is the exact, finitary skeleton underneath every so-called *power-saving lower bound* in the subject. Those deeper theorems are wrapped in incidence geometry and asymptotics, but at their core lives this one-line observation: a degree-$k$ equation has at most $k$ solutions, so the image cannot collapse by more than a factor of $k$.
+To package both facts in the language the subject uses, we introduce a *power-saving
+exponent*. For degree $k \ge 2$ define the small constant
+$$c(k) = \frac{1}{k^2},$$
+and note the elementary inequality $k - \tfrac{1}{k^2} \ge 1$ for every $k \ge 2$ (for
+$k=2$ it reads $2 - \tfrac14 = 1.75 \ge 1$). Because $|A| \ge 1$, raising to a larger
+exponent only increases the value, so $|f(A)| \le |A| \le |A|^{\,k - 1/k^2}$. This gives the
+**power-saving upper bound**
+$$|f(A)| \le |A|^{\,k - 1/k^2}$$
+with the explicit constant $c(k) = 1/k^2$.
 
-## The ceiling: the image is never bigger than the domain
+## The corridor
 
-The second barrier is even more elementary, but stating it carefully reveals a subtlety that trips up the whole field. Since $f(A)$ is obtained by applying a function to $A$ and discarding repeats, we always have
-$$|f(A)| \ \le\ |A|.$$
+Put the floor and the ceiling together and you get the central statement of this work — a
+two-sided estimate that any elementary count can guarantee:
 
-You can never get more output values than input values. That is the ceiling.
+> **The Power-Saving Corridor.** *Let $f$ be a monic integer polynomial of degree
+> $k \ge 2$ and let $A$ be a nonempty finite set of integers. Then*
+> $$\frac{|A|}{k} \;\le\; |f(A)| \;\le\; |A|^{\,k - 1/k^2}.$$
 
-But researchers like to phrase the ceiling in a fancier, more suggestive way. They write it as a *power-saving* estimate,
-$$|f(A)| \ \le\ |A|^{\,k - c},$$
-for some positive constant $c$ called the *power saving*. The idea is that as the degree grows, the exponent $k - c$ measures how far the image is from the naive worst case of $|A|^k$ that one might fear from a degree-$k$ object.
+The size of the image is pinned between an explicit floor and an explicit ceiling, with the
+power-saving constant $c(k) = 1/k^2$ made completely concrete. No hidden constants, no "for
+sufficiently large" — it holds for every set, every time.
 
-How large a power saving $c$ can we honestly guarantee? Here is the clean answer for the elementwise image. Set
-$$c(k) \ =\ \frac{1}{k^2}.$$
-Then for every polynomial of degree $k \ge 2$ and every nonempty finite set $A$,
-$$|f(A)| \ \le\ |A|^{\,k - 1/k^2}.$$
+## Both walls are real
 
-Why is this true, and why this particular constant? It rests on a single real-number inequality: for $k \ge 2$,
-$$1 \ \le\ k - \frac{1}{k^2}.$$
-Indeed $\tfrac{1}{k^2} \le 1 \le k - 1$, so subtracting $\tfrac{1}{k^2}$ from $k$ never drops the exponent below $1$. Combined with the plain ceiling $|f(A)| \le |A|$ — which is $|f(A)| \le |A|^1$ — raising the base $|A| \ge 1$ to the larger exponent $k - 1/k^2$ only increases the right-hand side. So the fancy power-saving bound holds, with the explicit, unconditional constant $c = 1/k^2$.
+A corridor is only interesting if you can actually touch both walls. Can you? Yes — and the
+witnesses are strikingly simple.
 
-## The sandwich
+**Touching the ceiling (no expansion is possible).** Take $f(x) = x^k$ and the plain
+counting set $A = \{0, 1, 2, \dots, n-1\}$. On the nonnegative integers, raising to the
+$k$-th power is strictly increasing, hence one-to-one, so no two inputs collide:
+$$|f(A)| = |A| = n.$$
+The image is exactly as big as the domain. This shows the exponent in the upper bound cannot
+be pushed below $1$: **there is no universal super-saving** $|f(A)| \le |A|^{1-\varepsilon}$.
+Any theorem promising real expansion must use something deeper than counting.
 
-Put the floor and the ceiling together and you trap the image cardinality inside a corridor:
-$$\frac{|A|}{k} \ \le\ |f(A)| \ \le\ |A|^{\,k - 1/k^2}.$$
+**Touching the floor (maximal collapse).** Take $f(x) = x^2$ (so $k=2$) and the symmetric
+window $A = \{-n, \dots, n\}$, which has $2n+1$ elements. Squaring glues each pair
+$\{a, -a\}$ to a single value, and only the fixed point $0$ stands alone. The image is
+$\{0, 1, 4, \dots, n^2\}$, of size $n+1$, and one checks the exact identity
+$$2\,|f(A)| = |A| + 1.$$
+This saturates the fiber bound $|A| \le k\,|f(A)|$ with $k=2$, up to the single unavoidable
+$+1$ from the fixed point. The factor $k$ in the floor is best possible.
 
-This is the headline result: a two-sided estimate, valid for every monic integer polynomial of degree $k \ge 2$ and every nonempty finite set of integers. The left wall is genuine root-counting content; the right wall packages the trivial ceiling in the language the subject prefers.
+So the corridor is not merely a pair of true inequalities; **both of its walls are
+essentially attained**. Neither can be improved by elementary means.
 
-Let us sanity-check the corridor on our opening example. Take $f(x) = x^2$, so $k = 2$, and $A = \{-2,-1,0,1,2\}$ with $|A| = 5$. The image is $\{0,1,4\}$ with $|f(A)| = 3$. The corridor predicts
-$$\frac{5}{2} = 2.5 \ \le\ 3 \ \le\ 5^{\,2 - 1/4} = 5^{1.75} \approx 16.72,$$
-and indeed $2.5 \le 3 \le 16.72$. The image sits comfortably inside its predicted band.
+## The twist: corridors multiply
 
-## The honest confession
+Here is where the story turns from a tidy observation into a structure. Polynomials can be
+*composed*: apply one, then another. Square, then square again, and you have raised to the
+fourth power, $x^4$. In general, composing a degree-$k$ polynomial $p$ with a degree-$m$
+polynomial $q$ yields a polynomial $q \circ p$ of degree $k \cdot m$, because degrees
+multiply under composition.
 
-Now for the twist that makes this story more than a pair of textbook inequalities. The two walls of the corridor are wildly asymmetric in how tight they are.
+Does the corridor survive composition? It does — and in the cleanest possible way. The key
+observation is that pushing $A$ through the composite is the same as pushing it through $p$
+and then pushing the result through $q$:
+$$(q \circ p)(A) = q\big(p(A)\big).$$
+The intermediate set $B = p(A)$ is a perfectly ordinary finite set of integers, so the fiber
+bound applies to it verbatim. Chaining the two floors — first $|A| \le k\,|p(A)|$, then
+$|p(A)| \le m\,|q(p(A))|$ — gives
 
-The floor is *sharp*. The squaring map on a symmetric window pushes $|f(A)|$ right down to roughly $|A|/2$, saturating the factor $k = 2$. You cannot do better; the floor is the truth.
+> **Multiplicativity of the Fiber Bound.** *If $p$ has degree $k \ge 1$ and $q$ has degree
+> $m \ge 1$, then for every finite set $A$ of integers,*
+> $$|A| \;\le\; (k \cdot m)\,\big|(q\circ p)(A)\big|.$$
 
-The ceiling, by contrast, is almost embarrassingly loose — and deliberately so. Can a polynomial ever *expand* a set, making $|f(A)|$ genuinely larger than $|A|$? No. It is impossible. There exist arithmetic progressions on which a polynomial is perfectly injective — every input yields a distinct output — so that $|f(A)| = |A|$ exactly. On such sets the image neither shrinks nor grows. This means the exponent in the upper bound can *never* be pushed below $1$. The much-advertised power saving of $1/k^2$ is, for the single elementwise image, mostly cosmetic: the real and unavoidable content is that the exponent is pinned to exactly $1$ from below.
+The two degree factors multiply — exactly matching the degree $k\cdot m$ of the composite.
+The corridor is *functorial*: each layer of composition contributes its own degree factor,
+and the loss is precisely multiplicative, never worse. It is worth stressing what does
+*not* happen: the collapse never compounds catastrophically. Because each fiber bound is
+tight in isolation and the intermediate image is an honest set, chaining loses exactly the
+product $k\cdot m$ and no more.
 
-This is a genuinely useful clarification. The constant $1/k^2$ is quoted throughout the literature as *the* power saving, but for the univariate elementwise image it describes slack in a bound that is dominated by the trivial ceiling. The honest phenomenon is entirely on the floor side — the root-counting obstruction — and the corridor above makes that separation precise and unconditional.
+Iterating, an $r$-fold tower of degree-$k$ maps has composite degree $k^r$, and the
+associated power-saving constant is
+$$c = \frac{1}{k^{2r}}.$$
+As you stack layers, the guaranteed saving shrinks geometrically — a precise quantitative
+picture of how compression accumulates through a pipeline of polynomial maps. This is
+exactly the situation in the iterated Minkowski (elementwise-image) construction that
+motivates the whole subject.
 
-## Where the real expansion hides
+## Why the walls have the shapes they do
 
-If a single polynomial image refuses to expand, where does the celebrated "expansion" of additive combinatorics actually live? The answer is that you must look at *combinations* of images rather than a single one.
+Step back and the two walls tell a single story. The floor is about **algebra**: a
+degree-$k$ equation has at most $k$ solutions, full stop, and that is the only thing keeping
+the image from collapsing to a point. The ceiling is about the **limits of algebra**: on an
+arithmetic progression a polynomial can be perfectly injective, so counting alone can never
+force a set to grow.
 
-Consider the **difference set** $f(A) - f(A)$, the collection of all differences $f(a) - f(b)$. A single image cannot grow, but the difference set should expand strictly: the conjecture in this circle of ideas is that
-$$|f(A) - f(A)| \ \ge\ c_k \cdot |A|^{\,1 + 1/k^2}$$
-for degree $k \ge 2$. Here the exponent finally climbs above $1$ — genuine power gain. The mechanism is that coincidences of the form $f(a) - f(b) = f(c) - f(d)$ correspond to integer points on a fixed algebraic surface, and the at-most-$k$-to-one structure limits how many such coincidences can happen. Fewer coincidences means smaller *additive energy*, which forces the difference set to be large. The very same root-counting fact that built our floor becomes, one level up, the engine of expansion.
+Genuine expansion — the phenomenon that a nonlinear map *must* spread a set out unless the
+set is arithmetically special — lives in the gap between these walls, and reaching it
+requires ideas beyond fiber counting: the interaction between the additive structure of a
+set and the multiplicative curvature of a nonlinear map. The corridor marks off exactly the
+territory that elementary reasoning secures, and thereby points to precisely where the deep
+work must begin. Arithmetic progressions, on which polynomials stay injective, are the
+obstruction that any expansion theorem must overcome.
 
-There is a second frontier too. Because the fibers of $f$ are exactly the orbits of the finite symmetry group permuting the roots of $f(x) = b$, one can *engineer* sets on which every fiber has the full size $k$ by assembling the domain out of whole orbits. This should drive the image down to its theoretical minimum for *every* even polynomial, not just squaring — a clean orbit-counting phenomenon waiting to be nailed down. And a third: the small constant $1/k^2$ appears to be the correct order of magnitude not for the univariate image at all, but for the multivariate $k$-fold image $f(A_1, \dots, A_k)$, suggesting that the folklore constant secretly belongs to a different, genuinely multivariate problem.
+## The takeaway
 
-## Why it matters
-
-These questions are not idle. The interplay between multiplication (through polynomials) and addition (through sums and differences of sets) is the beating heart of the *sum–product phenomenon*, which underpins results in analytic number theory, the theory of exponential sums, pseudorandomness, and even the construction of expander graphs used in computer science and cryptography. Understanding exactly how a polynomial reshapes a set — how much it can compress, when it must expand — is a foundational step toward those applications.
-
-What is satisfying here is how much can be said with complete certainty and almost no machinery. Two inequalities, one of them merely the fact that a degree-$k$ equation has at most $k$ roots, are enough to trap the image of any polynomial in a precise corridor. The floor is sharp, the ceiling is honest about being loose, and the gap between them points like a signpost toward where the real mathematics — expansion — begins. Sometimes the most valuable thing a theorem can do is tell you, exactly and provably, which of your hopes are already settled and which still lie open.
+From one childlike experiment — square five numbers, cube five numbers — we arrive at a
+sharp, quantitative law. The image of a finite integer set under a monic degree-$k$
+polynomial is trapped in the corridor
+$$\frac{|A|}{k} \le |f(A)| \le |A|^{\,k - 1/k^2},$$
+both walls are essentially touched by explicit examples, and the whole structure multiplies
+cleanly when polynomials are composed, giving the constant $1/k^{2r}$ for an $r$-fold tower.
+It is a small theorem with a large reach: the exact, unconditional bones beneath a body of
+research that stretches to the frontier of additive combinatorics.

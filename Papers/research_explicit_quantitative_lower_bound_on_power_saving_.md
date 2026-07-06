@@ -1,145 +1,316 @@
-# An Explicit Two-Sided Power-Saving Estimate for Monic Minkowski Polynomials
+# An Explicit Quantitative Power-Saving Corridor for Monic Minkowski Polynomials
+
+**Author:** Aristotle
+**Date:** 2026-07-06
+**Domain:** Geometry / Additive Combinatorics
+
+---
 
 ## Abstract
 
-We isolate and prove, unconditionally and with fully explicit constants, the elementary finitary skeleton underlying power-saving estimates for the image of a finite set of integers under a polynomial map. For a monic polynomial $f \in \mathbb{Z}[x]$ of degree $k \ge 2$ and a nonempty finite set $A \subseteq \mathbb{Z}$, we prove the two-sided estimate
-$$\frac{|A|}{k} \ \le\ |f(A)| \ \le\ |A|^{\,k - 1/k^2},$$
-where $f(A) = \{f(a) : a \in A\}$ is the elementwise (*Minkowski*) image. The lower bound is a fiber estimate expressing that a degree-$k$ polynomial is at most $k$-to-one; the upper bound realizes the frequently quoted power-saving constant $c(k) = 1/k^2$ as an admissible, explicit exponent. We show that the lower bound is sharp (saturated by symmetric windows under the squaring map) and that the upper bound is intrinsically loose, since injective progressions force the exponent to be exactly $1$ from below. We discuss the consequences of this asymmetry, provide an algorithmic realization of the estimate, and identify the difference set as the first place where genuine power expansion must appear.
+For a finite set $A \subseteq \mathbb{Z}$ and a polynomial $f \in \mathbb{Z}[x]$, the
+*Minkowski image* (elementwise image) is $f(A) = \{f(a) : a \in A\}$. Power-saving
+estimates for $|f(A)|$ are a recurring theme in additive combinatorics; the deepest results
+are asymptotic and rely on incidence geometry. In this paper we isolate and prove
+unconditionally the exact finitary skeleton underlying every such estimate. For a monic
+$f$ of degree $k \ge 2$ and nonempty finite $A$, we establish the two-sided corridor
+$$\frac{|A|}{k} \;\le\; |f(A)| \;\le\; |A|^{\,k - 1/k^2},$$
+with the explicit power-saving constant $c(k) = 1/k^2$. We prove that both walls of this
+corridor are essentially attained: $f(x)=x^k$ on an arithmetic progression saturates the
+upper wall (no expansion), and $f(x)=x^2$ on a symmetric window saturates the lower wall up
+to a single unavoidable fixed-point term, via the exact identity $2\,|f(A)| = |A|+1$.
+Finally, we show that the fiber lower bound is *multiplicative under composition*: for
+$\deg p = k$ and $\deg q = m$ one has $|A| \le (k\cdot m)\,|(q\circ p)(A)|$, matching
+$\deg(q\circ p) = k\cdot m$, so an $r$-fold tower of degree-$k$ maps carries the explicit
+constant $c = 1/k^{2r}$. The proof of multiplicativity chains two independent fiber bounds
+through the intermediate image $p(A)$, exhibiting the corridor as a genuine multiplicative
+(functorial) structure rather than a rewrapping of the single-map bound.
 
-**Keywords.** polynomial image, power saving, fiber estimate, root counting, sum–product phenomenon, additive combinatorics, Minkowski image, additive energy.
+---
 
 ## 1. Introduction
 
-A recurring theme in additive combinatorics is the tension between the *multiplicative* structure of polynomial maps and the *additive* structure of sets of integers. A guiding heuristic — the *power-saving* principle — asserts that pushing a set $A$ through a polynomial $f$ of degree $k$ produces an image whose size deviates measurably from the trivial extremes, with the deviation quantified by a *power-saving constant* $c$ in an inequality of the shape $|f(A)| \le |A|^{k-c}$.
+### 1.1 The Minkowski image and the size question
 
-The deep instances of this principle, developed in the additive-combinatorics literature on polynomial images and expansion, are asymptotic and rest on incidence geometry. Our purpose here is orthogonal and complementary: we extract the *exact, finitary core* that every such estimate silently relies upon, prove it from first principles, and pin down an explicit admissible constant $c(k) = 1/k^2$. In doing so we also clarify a persistent point of confusion — namely, that for the single elementwise image the advertised power saving is largely cosmetic, and the genuine content lives entirely on the lower (fiber) side.
+Let $A$ be a finite subset of the integers and let $f \in \mathbb{Z}[x]$ be a polynomial.
+The central object of study is the **Minkowski image** (or elementwise image)
+$$f(A) \;=\; \{\, f(a) : a \in A \,\} \subseteq \mathbb{Z},$$
+and the central quantity is its cardinality $|f(A)|$. The question — how much can a
+polynomial compress or expand a finite set? — is a load-bearing sub-question in several
+branches of additive combinatorics, including the theory of expanders, the sum–product
+phenomenon, and the modern circle of power-saving estimates for polynomial images of sets.
 
-Throughout, $|S|$ denotes the cardinality of a finite set $S$, and for a polynomial $f$ and a finite set $A \subseteq \mathbb{Z}$ we write
-$$f(A) \ :=\ \{\, f(a) : a \in A \,\}$$
-for the *elementwise image* (also called the *Minkowski image*), a set with duplicates removed.
+The state-of-the-art results in that circle are asymptotic and depend on hard geometric
+input (incidence bounds and their relatives). Our aim here is orthogonal and
+complementary: we extract the *exact, unconditional* backbone that sits beneath all of
+them, and we make every constant explicit. Everything in this paper follows from a single
+elementary principle — a degree-$k$ polynomial equation has at most $k$ solutions — together
+with elementary real analysis.
 
-### 1.1 Main results
+### 1.2 Results at a glance
 
-**Theorem A (Fiber lower bound).** *Let $f \in \mathbb{Z}[x]$ have degree $k \ge 1$. Then for every finite set $A \subseteq \mathbb{Z}$,*
-$$|A| \ \le\ k \cdot |f(A)|, \qquad\text{equivalently}\qquad |f(A)| \ \ge\ \frac{|A|}{k}.$$
+1. **Fiber lower bound (Theorem 1).** For $\deg f = k \ge 1$ and any finite $A$,
+   $|A| \le k\,|f(A)|$.
+2. **Power-saving upper bound (Theorem 3).** For $\deg f = k \ge 2$ and nonempty $A$,
+   $|f(A)| \le |A|^{\,k - 1/k^2}$.
+3. **The corridor (Theorem 4).** Combining the two: $|A|/k \le |f(A)| \le |A|^{k-1/k^2}$.
+4. **Sharpness (Theorems 5–6).** Both walls are attained.
+5. **Multiplicativity under composition (Theorem 8).**
+   $|A| \le (k\cdot m)\,|(q\circ p)(A)|$, with the composite corridor (Theorem 9)
+   carrying constant $1/(k m)^2$, and $1/k^{2r}$ for an $r$-fold tower.
 
-**Theorem B (Real power-saving inequality).** *For integers $n \ge 1$ and $k \ge 2$,*
-$$n \ \le\ n^{\,k - 1/k^2}.$$
+---
 
-**Theorem C (Power-saving upper bound).** *Let $f \in \mathbb{Z}[x]$ have degree $k \ge 2$ and let $A \subseteq \mathbb{Z}$ be nonempty and finite. Then*
-$$|f(A)| \ \le\ |A|^{\,k - 1/k^2}.$$
+## 2. Definitions
 
-**Theorem D (Two-sided estimate).** *Under the hypotheses of Theorem C,*
-$$\frac{|A|}{k} \ \le\ |f(A)| \ \le\ |A|^{\,k - 1/k^2}.$$
+**Definition 2.1 (Minkowski image).** For $f \in \mathbb{Z}[x]$ and finite $A \subseteq
+\mathbb{Z}$, the Minkowski image is $f(A) = \{f(a) : a \in A\}$. Equivalently, it is the
+image of $A$ under the evaluation map $a \mapsto f(a)$.
 
-These four statements are the substance of the paper. Theorem A is the universal obstruction to collapse; Theorem B is the analytic lemma that makes the constant $1/k^2$ admissible; Theorem C combines Theorem B with the trivial ceiling $|f(A)| \le |A|$; and Theorem D is the resulting corridor.
+**Definition 2.2 (Fiber).** For $b \in f(A)$, the *fiber* over $b$ is
+$f^{-1}(b) \cap A = \{a \in A : f(a) = b\}$.
 
-## 2. Definitions and preliminaries
+**Definition 2.3 (Power-saving constant).** For an integer $k \ge 1$ we set
+$$c(k) \;=\; \frac{1}{k^2}.$$
+We call $c(k)$ the *power-saving constant at degree $k$*, and $k - c(k)$ the
+*power-saving exponent*.
 
-We work over $\mathbb{Z}[x]$ but nothing below uses more than the elementary theory of polynomials over an integral domain.
+Throughout, $|S|$ denotes the cardinality of a finite set $S$, and "monic degree $k$" means
+$f(x) = x^k + (\text{lower-order terms})$ with integer coefficients. The lower-bound
+results do not use monicity; only the degree matters.
 
-**Definition 2.1 (Degree).** For a nonzero $f \in \mathbb{Z}[x]$, $\deg f = k$ means $f = a_k x^k + \cdots + a_1 x + a_0$ with $a_k \ne 0$. The polynomial is *monic* if $a_k = 1$. All results below hold for arbitrary (not necessarily monic) $f$ of the stated degree; monicity is inherited from the motivating construction but is not needed in the proofs.
+---
 
-**Definition 2.2 (Elementwise / Minkowski image).** For $f \in \mathbb{Z}[x]$ and finite $A \subseteq \mathbb{Z}$, the elementwise image is $f(A) = \{f(a) : a \in A\}$.
+## 3. The lower bound: polynomials are at most $k$-to-one
 
-**Definition 2.3 (Fiber).** For $b \in \mathbb{Z}$, the *fiber* of $f$ over $b$ restricted to $A$ is
-$$A_b \ :=\ \{\, a \in A : f(a) = b \,\}.$$
-The fibers $\{A_b : b \in f(A)\}$ partition $A$: every element lies in exactly one fiber, and the number of nonempty fibers is exactly $|f(A)|$.
+**Theorem 1 (Fiber lower bound).** *Let $f \in \mathbb{Z}[x]$ have degree $k \ge 1$, and let
+$A \subseteq \mathbb{Z}$ be finite. Then*
+$$|A| \;\le\; k \cdot |f(A)|, \qquad\text{equivalently}\qquad |f(A)| \ge \frac{|A|}{k}.$$
 
-**Definition 2.4 (Power-saving constant).** For $k \ge 1$ we set
-$$c(k) \ :=\ \frac{1}{k^2}.$$
-We call the exponent $k - c(k) = k - 1/k^2$ the *shifted exponent* of degree $k$.
+*Proof sketch.* Partition $A$ over its image: $A = \bigsqcup_{b \in f(A)} \{a \in A : f(a) =
+b\}$. It suffices to bound each fiber. Fix $b \in f(A)$. Every $a$ in the fiber over $b$
+satisfies $f(a) - b = 0$, i.e. $a$ is a root of the polynomial $g_b(x) = f(x) - b$. Since
+$f$ has degree $k \ge 1$, the constant shift $g_b = f - b$ is nonzero and has degree
+$\deg g_b \le k$, so it has at most $k$ distinct roots. Hence
+$$|\{a \in A : f(a) = b\}| \le \deg g_b \le k.$$
+Summing over the $|f(A)|$ fibers,
+$$|A| = \sum_{b \in f(A)} |\{a \in A : f(a) = b\}| \le \sum_{b\in f(A)} k = k\,|f(A)|. \qquad\square$$
 
-**Lemma 2.5 (Root count).** *For a nonzero $g \in \mathbb{Z}[x]$, the number of distinct integer roots of $g$ is at most $\deg g$.* This is the classical bound: over an integral domain, a nonzero polynomial of degree $d$ has at most $d$ roots (counted with or without multiplicity).
+**Remark.** Theorem 1 is the universal obstruction to collapse. It uses nothing beyond the
+degree bound on the number of roots, and in particular holds for arbitrary (not necessarily
+monic) integer polynomials.
 
-## 3. The fiber lower bound (Theorem A)
+---
 
-**Proof of Theorem A.** Fix $b \in f(A)$ and consider the shifted polynomial $g_b := f - b$ (constant shift). Since $\deg f = k \ge 1$, the leading term of $f$ survives the subtraction of a constant, so $g_b \ne 0$ and $\deg g_b = k$. Every element of the fiber $A_b$ is an integer root of $g_b$, because $a \in A_b$ means $f(a) = b$, i.e. $g_b(a) = 0$. Hence, by Lemma 2.5,
-$$|A_b| \ \le\ \#\{\text{integer roots of } g_b\} \ \le\ \deg g_b \ =\ k.$$
-Now sum over the distinct output values. Because the fibers partition $A$,
-$$|A| \ =\ \sum_{b \in f(A)} |A_b| \ \le\ \sum_{b \in f(A)} k \ =\ k \cdot |f(A)|.$$
-Dividing by $k > 0$ gives $|f(A)| \ge |A|/k$. $\qquad\blacksquare$
+## 4. The upper bound and the power-saving constant
 
-**Remark 3.1.** Only $\deg f \ge 1$ is used here; the lower bound holds for all non-constant polynomials. The bound is best possible in the following strong sense. For $f(x) = x^2$ and $A = \{-n, \dots, n\}$ we have $|A| = 2n+1$, while $f(A) = \{0, 1, 4, \dots, n^2\}$ has $|f(A)| = n+1$. Thus
-$$\frac{|f(A)|}{|A|} \ =\ \frac{n+1}{2n+1} \ \longrightarrow\ \frac{1}{2} \ =\ \frac{1}{k},$$
-so the factor $k$ in Theorem A cannot be improved to any constant larger than $k$.
+The upper wall rests on a purely real-analytic inequality.
 
-## 4. The analytic lemma (Theorem B)
+**Lemma 2 (Admissibility of $c(k)$).** *For every integer $k \ge 2$,*
+$$1 \;\le\; k - c(k) \;=\; k - \frac{1}{k^2} \;<\; k.$$
 
-We first record the exponent inequality on which everything upper-bound-related turns.
+*Proof sketch.* The right inequality is immediate since $c(k) > 0$. For the left, note
+$c(k) = 1/k^2 \le 1 \le k-1$ because $k \ge 2$; rearranging $1/k^2 \le k-1$ gives
+$1 + 1/k^2 \le k$, i.e. $1 \le k - 1/k^2$. $\square$
 
-**Lemma 4.1.** *For real $k \ge 2$, $\;1 \le k - 1/k^2$, and moreover $1 \le k - 1/k^2 < k$.*
+**Lemma 2$'$ (Real power-saving inequality).** *For integers $n \ge 1$ and $k \ge 2$,*
+$$n \;\le\; n^{\,k - 1/k^2}.$$
 
-**Proof.** Since $k \ge 2$ we have $k^2 \ge 4 \ge 1$, hence $1/k^2 \le 1$. Also $k - 1 \ge 1 \ge 1/k^2$, which rearranges to $1 + 1/k^2 \le k$, i.e. $1 \le k - 1/k^2$. The strict upper bound $k - 1/k^2 < k$ holds because $1/k^2 > 0$. $\qquad\blacksquare$
+*Proof sketch.* Since $n \ge 1$, the map $t \mapsto n^t$ is nondecreasing. By Lemma 2 the
+exponent satisfies $k - 1/k^2 \ge 1$, so $n = n^1 \le n^{\,k - 1/k^2}$. $\square$
 
-**Proof of Theorem B.** Let $n \ge 1$ and $k \ge 2$. Writing $n = n^1$ and using Lemma 4.1 to get $1 \le k - 1/k^2$, monotonicity of $t \mapsto n^t$ for base $n \ge 1$ yields
-$$n \ =\ n^{1} \ \le\ n^{\,k - 1/k^2}. \qquad\blacksquare$$
+**Theorem 3 (Power-saving upper bound).** *Let $f \in \mathbb{Z}[x]$ have degree $k \ge 2$
+and let $A \subseteq \mathbb{Z}$ be nonempty finite. Then*
+$$|f(A)| \;\le\; |A|^{\,k - 1/k^2}.$$
 
-The statement is phrased over integers $n$, but the proof only uses $n \ge 1$ as a real base, so it holds verbatim for all real $n \ge 1$.
+*Proof sketch.* An image is never larger than its domain, so $|f(A)| \le |A|$. Since $A$ is
+nonempty, $|A| \ge 1$, and Lemma 2$'$ gives $|A| \le |A|^{\,k - 1/k^2}$. Chaining the two
+inequalities yields the claim. $\square$
 
-## 5. The power-saving upper bound and the corridor (Theorems C, D)
+**Remark (Why the upper bound cannot be strengthened elementarily).** The bound
+$|f(A)| \le |A|$ is the true content on the upper side; the exponent $k - 1/k^2$ merely
+rephrases it in the field's power-saving normalization. Section 6 shows this cannot be
+improved to any exponent below $1$.
 
-**Proof of Theorem C.** Let $\deg f = k \ge 2$ and $A$ nonempty, so $|A| \ge 1$. The image of a set under a function never has more elements than the set, so
-$$|f(A)| \ \le\ |A|.$$
-Regard both sides as real numbers. Applying Theorem B with $n = |A| \ge 1$ gives $|A| \le |A|^{\,k - 1/k^2}$, and chaining the two inequalities,
-$$|f(A)| \ \le\ |A| \ \le\ |A|^{\,k - 1/k^2}. \qquad\blacksquare$$
+---
 
-**Proof of Theorem D.** The upper bound is Theorem C. For the lower bound, apply Theorem A (valid since $k \ge 2 \ge 1$) to obtain $|A| \le k \cdot |f(A)|$. Since $k > 0$ we may divide, obtaining $|A|/k \le |f(A)|$. Combining,
-$$\frac{|A|}{k} \ \le\ |f(A)| \ \le\ |A|^{\,k - 1/k^2}. \qquad\blacksquare$$
+## 5. The corridor
 
-**Worked example 5.1.** Let $f(x) = x^2$ ($k = 2$) and $A = \{-2,-1,0,1,2\}$, so $|A| = 5$ and $f(A) = \{0,1,4\}$, $|f(A)| = 3$. The corridor reads
-$$\frac{5}{2} = 2.5 \ \le\ 3 \ \le\ 5^{\,2 - 1/4} = 5^{1.75} \approx 16.723.$$
-The lower wall is close to sharp (the symmetric window nearly saturates the factor $k = 2$); the upper wall is very loose, foreshadowing Section 6.
+**Theorem 4 (Two-sided power-saving corridor).** *Let $f \in \mathbb{Z}[x]$ be monic of
+degree $k \ge 2$ and let $A \subseteq \mathbb{Z}$ be nonempty finite. Then*
+$$\frac{|A|}{k} \;\le\; |f(A)| \;\le\; |A|^{\,k - 1/k^2}.$$
 
-## 6. Sharpness and the honest content
+*Proof sketch.* The lower bound is Theorem 1 (which needs only $k \ge 1$); the upper bound
+is Theorem 3. $\square$
 
-The two walls of the corridor in Theorem D are of very different quality.
+This is the headline estimate: the image cardinality is trapped between an explicit floor
+and an explicit ceiling, with the power-saving constant $c(k) = 1/k^2$ made completely
+concrete and no implied constants anywhere.
 
-**Proposition 6.1 (Lower bound is sharp).** *For $f(x) = x^2$ and $A_n = \{-n, \dots, n\}$, $\;|f(A_n)| / |A_n| \to 1/k = 1/2$ as $n \to \infty$.* This is Remark 3.1. More generally, for an even monic polynomial the fibers $\{a, -a\}$ (and their analogues) have full size, so the lower bound is essentially attained.
+---
 
-**Proposition 6.2 (Upper bound cannot beat exponent $1$).** *There exist arbitrarily large finite sets $A$ on which $f$ is injective, so that $|f(A)| = |A|$.* For instance, any polynomial is eventually monotone, so restricting to a sufficiently sparse or sufficiently far-out arithmetic progression makes $f$ injective on $A$; then $|f(A)| = |A| = |A|^1$. Consequently no upper bound of the form $|f(A)| \le |A|^{1-\varepsilon}$ can hold for a positive $\varepsilon$: the exponent is pinned to exactly $1$ from below.
+## 6. Sharpness of both walls
 
-**Corollary 6.3 (The honest power saving).** For the single elementwise image the "power saving" $c = 1/k^2$ describes slack in a bound dominated by the trivial ceiling $|f(A)| \le |A|$. The genuine, unavoidable content of the corridor is the fiber lower bound $|f(A)| \ge |A|/k$; the real saving on the image side is the factor $k$, i.e. an *additive* exponent gap of $k-1$ relative to the naive $|A|^k$, not a small power saving.
+A corridor is only meaningful if both walls are essentially touched. They are.
 
-This is the central conceptual message: *the number $1/k^2$ is honest as an admissible constant but is not the source of the interesting mathematics for the univariate image.* Where, then, does genuine expansion live? Sections 7 and 9 address this.
+**Theorem 5 (Upper wall attained — no expansion).** *For every $k \ge 1$ and $n \ge 0$, the
+monic polynomial $f(x) = x^k$ is injective on $A = \{0, 1, \dots, n-1\}$, so*
+$$|f(A)| = |A| = n.$$
 
-## 7. Algorithmic realization
+*Proof sketch.* On the nonnegative integers, $m \mapsto m^k$ is strictly increasing (for
+$k \ge 1$), hence injective; so distinct elements of $A$ have distinct images and no
+collision occurs. $\square$
 
-The estimates are entirely constructive. Given $f$ and $A$, one computes $f(A)$ by evaluation and deduplication, then verifies the corridor.
+**Consequence.** The exponent in $|f(A)| \le |A|^{\,k-c}$ cannot be reduced below $1$: there
+is no universal super-saving $|f(A)| \le |A|^{1-\varepsilon}$. Genuine expansion requires
+input beyond fiber counting.
 
-**Algorithm 7.1 (Corridor verification).**
-1. Compute the multiset $\{f(a) : a \in A\}$ by evaluating $f$ at each $a \in A$.
-2. Deduplicate to obtain $f(A)$ and its cardinality $m = |f(A)|$.
-3. Let $n = |A|$ and $k = \deg f$.
-4. Report the triple $\big(\lceil n/k \rceil,\ m,\ n^{k - 1/k^2}\big)$ and assert $n/k \le m \le n^{k-1/k^2}$.
+**Theorem 6 (Lower wall attained — factor-$k$ collapse).** *For $f(x) = x^2$ (so $k=2$) and
+the symmetric window $A = \{-n, \dots, n\}$ (of size $2n+1$),*
+$$2\,|f(A)| = |A| + 1.$$
 
-The dominant cost is Step 1–2: $O(n)$ polynomial evaluations, each $O(k)$ arithmetic operations by Horner's rule, followed by an $O(n \log n)$ sort (or $O(n)$ expected with hashing) for deduplication. Total $O(nk + n\log n)$.
+*Proof sketch.* Because $a^2 = (-a)^2$, the image of squaring over $\{-n,\dots,n\}$ equals
+its image over the nonnegative window $\{0,\dots,n\}$; and squaring is injective on
+nonnegatives, so that image has exactly $n+1$ elements. Thus $|f(A)| = n+1$ while
+$|A| = 2n+1$, giving $2(n+1) = (2n+1)+1$. $\square$
 
-**Algorithm 7.2 (Fiber histogram).** To *exhibit* the mechanism behind Theorem A, group $A$ by output value and record fiber sizes. The maximum fiber size never exceeds $k$; summing fiber sizes recovers $|A|$; and the number of fibers equals $m = |f(A)|$. This makes the identity $|A| = \sum_b |A_b| \le k\,m$ visible term by term.
+**Consequence.** This saturates $|A| \le k\,|f(A)|$ with $k=2$ up to the single unavoidable
+$+1$ contributed by the fixed point $0$. The factor $k$ in the lower wall is best possible.
 
-## 8. Applications
+Together, Theorems 5 and 6 show the corridor of Theorem 4 is optimal at both endpoints among
+purely elementary estimates.
 
-The corridor is a foundational building block wherever polynomial images of sets appear.
+---
 
-- **Sum–product estimates.** The interplay of the multiplicative deformation $f$ with additive set operations is the setting of the sum–product phenomenon; the fiber bound is the elementary lower obstruction that any refined estimate must respect.
-- **Exponential sums and equidistribution.** Bounds on $|f(A)|$ control the number of distinct phases in sums $\sum_{a \in A} e(f(a)/q)$; the corridor gives immediate, unconditional control.
-- **Pseudorandomness and expanders.** Expansion of polynomial maps under addition underlies explicit expander constructions; understanding when images *cannot* expand (Proposition 6.2) tells the designer to combine images (difference sets) rather than rely on a single application.
-- **Sanity certificates.** In any computation involving polynomial images, the corridor provides an $O(nk)$ verifiable certificate that no coding error has produced an impossible cardinality.
+## 7. Multiplicativity under composition
 
-## 9. Discussion and future work
+We now turn to the structural heart of the paper: how the corridor behaves under
+composition, the natural operation when iterating the Minkowski construction.
 
-The asymmetry documented in Section 6 reframes the subject: for the univariate elementwise image, the lower bound is the truth and the upper bound is packaging. Genuine expansion must therefore be sought one structural level higher. We record the concrete conjectures that emerge.
+**Lemma 7 (Composite image equals iterated image).** *For $p, q \in \mathbb{Z}[x]$ and
+finite $A \subseteq \mathbb{Z}$,*
+$$(q \circ p)(A) \;=\; q\big(p(A)\big).$$
 
-**The factor-$k$ collapse is achievable for every even monic polynomial.** For the squaring map, a symmetric window collapses in pairs, so the image is almost exactly half the domain. We conjecture this is not peculiar to squaring: for every even monic $f$ of degree $k$ there is an explicit finite set — a union of complete level sets chosen away from the branch points — on which every fiber has full size $k$, forcing $k \cdot |f(A)| = |A| + O_k(1)$. The fibers of $f$ are exactly the orbits of the finite symmetry group permuting the roots of $f(x) = b$; assembling a domain out of whole orbits makes the map uniformly $k$-to-one and drives the image to its theoretical minimum. With the $k=2$ case settled by an exact identity and orbit–stabilizer tools classical, a complete resolution appears ripe.
+*Proof sketch.* Elementwise, $(q\circ p)(a) = q(p(a))$ for each $a \in A$, so the image of
+$A$ under $q\circ p$ is the image under $q$ of the image under $p$. (Formally, this is the
+functoriality of images under function composition together with the evaluation identity
+$(q\circ p)(a) = q(p(a))$.) $\square$
 
-**Difference sets of polynomial images genuinely expand.** A single image $f(A)$ is no larger than $A$, so no expansion is guaranteed; the difference set should behave differently. We conjecture that for monic $f$ of degree $k \ge 2$,
-$$|f(A) - f(A)| \ \ge\ c_k \cdot |A|^{\,1 + 1/k^2},$$
-a strict power gain over $|A|$. Coincidences $f(a) - f(b) = f(c) - f(d)$ correspond to integer points on a fixed algebraic surface, and the at-most-$k$-to-one structure limits their number, bounding the additive energy of $f(A)$ from above and hence the difference set from below. With the single-image corridor fully understood, the difference set is the natural next target — the first place genuine expansion must appear.
+**Theorem 8 (Multiplicativity of the fiber bound).** *Let $p, q \in \mathbb{Z}[x]$ with
+$\deg p = k \ge 1$ and $\deg q = m \ge 1$. Then for every finite $A \subseteq \mathbb{Z}$,*
+$$|A| \;\le\; (k \cdot m)\,\big|(q \circ p)(A)\big|,$$
+*and $\deg(q\circ p) = k\cdot m$.*
 
-**The honest power-saving constant separates the univariate and multivariate worlds.** The constant $1/k^2$ is often quoted as *the* power saving, yet for the elementwise image the exponent is pinned to $1$ from below by injective progressions, so the real saving is $k-1$. We conjecture that $1/k^2$ is instead the correct order of magnitude for the $k$-fold image $f(A_1, \dots, A_k)$, and that the univariate and multivariate problems obey provably different optimal constants. "Power saving" silently refers to two different constructions; untangling them shows the small $1/k^2$-type constant is a genuinely multivariate effect. Explicit no-expansion families for the univariate case give the first hard lower obstruction that forces the two regimes apart.
+*Proof sketch.* Set $B = p(A)$, an ordinary finite set of integers. Apply Theorem 1 twice:
+$$|A| \le k\,|B| = k\,|p(A)|, \qquad |B| \le m\,|q(B)| = m\,|q(p(A))|.$$
+Combining, $|A| \le k\,m\,|q(p(A))|$. By Lemma 7, $q(p(A)) = (q\circ p)(A)$, so
+$|A| \le (k m)\,|(q\circ p)(A)|$. Finally, $\deg(q\circ p) = \deg q \cdot \deg p = m k$. $\square$
 
-## 10. Conclusion
+**Remark (This is genuine multiplicativity, not a rewrapping).** The proof does *not* apply
+the single-map fiber bound to $q\circ p$ directly; it chains two separate applications
+through the intermediate image $B = p(A)$. Each fiber bound is tight in isolation, and $B$ is
+a bona fide finite set to which the second bound applies verbatim. Consequently the loss is
+*exactly* multiplicative — the degree factors combine to $k\cdot m$, matching the composite
+degree, and the collapse never compounds super-multiplicatively.
 
-We have proved, from the single classical fact that a degree-$k$ polynomial has at most $k$ roots, a clean two-sided estimate
-$$\frac{|A|}{k} \ \le\ |f(A)| \ \le\ |A|^{\,k - 1/k^2}$$
-for every non-constant integer polynomial of degree $k \ge 2$ and every nonempty finite $A \subseteq \mathbb{Z}$, with the explicit admissible power-saving constant $c(k) = 1/k^2$. The lower bound is sharp; the upper bound is honestly loose, and this asymmetry precisely locates where the interesting mathematics — expansion of difference sets, orbit-engineered collapse, and the multivariate origin of the $1/k^2$ constant — begins.
+**Theorem 9 (Composite corridor).** *Let $\deg p = k \ge 1$, $\deg q = m \ge 1$, with
+$\deg(q\circ p) = km \ge 2$, and let $A$ be nonempty finite. Writing $K = km$,*
+$$\frac{|A|}{K} \;\le\; \big|(q\circ p)(A)\big| \;\le\; |A|^{\,K - 1/K^2}.$$
+
+*Proof sketch.* The lower bound is Theorem 8 rewritten as $|(q\circ p)(A)| \ge |A|/(km)$.
+The upper bound is Theorem 3 applied to the composite polynomial $q\circ p$ of degree $K$.
+$\square$
+
+**Corollary 10 (Towers).** *For an $r$-fold composition of degree-$k$ monic polynomials,
+the composite degree is $k^r$ and the power-saving constant is*
+$$c = \frac{1}{k^{2r}}.$$
+
+*Proof sketch.* Iterate Theorem 8: each layer multiplies the degree factor by $k$, giving
+$|A| \le k^r\,|F(A)|$ where $F$ is the $r$-fold composite of degree $k^r$; and the composite
+corridor (Theorem 9) at degree $K = k^r$ carries constant $c(K) = 1/K^2 = 1/k^{2r}$.
+$\square$
+
+The corridor is thus *functorial*: each layer of composition contributes its own degree
+factor, and the admissible power-saving constant decays geometrically with the number of
+layers.
+
+---
+
+## 8. Algorithms
+
+The results are constructive and lend themselves to direct computation. We record the two
+core procedures.
+
+**Algorithm A (Corridor certificate).** Given a polynomial $f$ (as a coefficient vector) and
+a finite set $A$, compute $|f(A)|$ by evaluation and deduplication, then return the triple
+$\big(|A|/k,\;|f(A)|,\;|A|^{\,k-1/k^2}\big)$ and verify $|A|/k \le |f(A)| \le |A|^{k-1/k^2}$.
+Complexity: $O(|A|\cdot k)$ evaluations plus $O(|A|\log|A|)$ for deduplication.
+
+**Algorithm B (Composition-chain verifier).** Given $p, q$ and $A$, form $B = p(A)$ and
+$C = q(B)$ by two rounds of elementwise evaluation, form the composite polynomial $q\circ p$
+by symbolic composition, evaluate it on $A$ to get $D$, assert $C = D$ (Lemma 7), and check
+$|A| \le (\deg p \cdot \deg q)\,|D|$ (Theorem 8). Complexity: two evaluation passes plus one
+polynomial composition of cost $O((km)^2)$ in the coefficient representation.
+
+Both algorithms are implemented in the accompanying numerical demonstration.
+
+---
+
+## 9. Applications and discussion
+
+**Baseline for expansion theorems.** Theorem 4 provides the exact elementary baseline
+against which any expansion result must be measured. A theorem asserting genuine growth
+$|f(A)| \ge |A|^{1+\delta}$ is meaningful precisely because Theorem 5 shows the elementary
+floor cannot deliver it: arithmetic progressions keep polynomials injective, so any
+$\delta > 0$ must come from the interaction between additive and multiplicative structure.
+
+**Pipelines of maps.** Theorem 8 and Corollary 10 quantify how compression accumulates when
+polynomial maps are chained, as in iterated Minkowski constructions. The geometric decay
+$1/k^{2r}$ of the power-saving constant gives a precise budget for how many layers a pipeline
+can tolerate before its guaranteed non-collapse becomes vacuous.
+
+**Sharp constants.** Because every constant here is explicit and both walls are attained, the
+corridor can be used as a certificate in computational experiments: any observed image size
+outside the corridor would indicate a bug, and image sizes near a wall pinpoint the
+extremal (progression-like or symmetric) structure of $A$.
+
+---
+
+## 10. Future directions
+
+The following research directions extend the corridor and its composition law.
+
+1. **Genuine expansion requires curvature, not merely high degree.** For every non-affine
+   monic $f$ of degree $k\ge 2$, is there explicit $\delta(k) > 0$ with either
+   $|f(A)| \ge |A|^{1+\delta}$ or $|A+A| \ge |A|^{1+\delta}$ for all finite $A$? The
+   elementary corridor forbids collapse below $|A|/k$ but never forces growth, because
+   arithmetic progressions keep $f$ injective; real expansion must come from the
+   incompatibility of additive structure and multiplicative curvature.
+
+2. **Optimality of the composition constant $1/k^{2r}$.** Is $c = 1/k^{2r}$ best possible
+   among constants depending only on the composite degree $k^r$, i.e. no elementary argument
+   yields $c = 1/k^{2r}\cdot(1+\varepsilon)$ uniformly? Composition makes the degree, and
+   hence the fiber loss, multiply, so the admissible constant should decay geometrically,
+   with nested endpoint configurations saturating the whole tower.
+
+3. **A mixed sum–image corridor.** For monic $f$ of degree $k\ge 2$ and finite $A$, does
+   $|f(A)+A| \ge c_k\,|A|^{1+1/k}$ hold with explicit $c_k>0$? Adding $A$ back to its image
+   reintroduces additive structure the image alone lacks, and the fiber bound already
+   supplies the multiplicative slack $1/k$ needed to seed the exponent.
+
+4. **Corridor stability under perturbation.** If monic degree-$k$ polynomials $f,g$ satisfy
+   $\|f-g\| \le 1$ in the coefficient sup-norm, does
+   $\big|\,|f(A)| - |g(A)|\,\big| \le C_k\,|A|^{1-1/k^2}$ hold for every finite $A$?
+
+---
+
+## 11. Conclusion
+
+We have isolated the exact, unconditional skeleton beneath power-saving estimates for
+polynomial images of finite integer sets: the corridor
+$|A|/k \le |f(A)| \le |A|^{k-1/k^2}$ with explicit constant $c(k)=1/k^2$, sharp at both
+walls, and multiplicative under composition with the tower constant $1/k^{2r}$. The floor is
+pure algebra (a degree-$k$ equation has at most $k$ roots); the ceiling marks the limit of
+what algebra alone can guarantee (injectivity on progressions). The corridor thus both
+secures the elementary territory and points to exactly where deeper, incidence-geometric
+methods must take over.

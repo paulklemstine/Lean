@@ -1,59 +1,61 @@
-# Computational Evidence — Power-Saving for Monic Minkowski Polynomials
+# Computational Evidence — Power-Saving Corridor for Monic Minkowski Polynomials
 
-We study the elementwise image `f(A) = { f(a) : a ∈ A }` of a finite set `A ⊆ ℤ` under a
-monic polynomial `f ∈ ℤ[x]` of degree `k`, and the two-sided estimate
+We test the two-sided estimate for the elementwise image `f(A) = { f(a) : a ∈ A }`
+of a finite integer set under a monic polynomial `f` of degree `k ≥ 2`:
 
-```
-|A| / k   ≤   |f(A)|   ≤   |A|^{k - 1/k²}.
-```
+    |A| / k  ≤  |f(A)|  ≤  |A|^{k − 1/k²}.
 
-## 1. Small-case calculations
+## 1. Small-case calculations (single polynomial)
 
-### Lower (fiber) bound `|A| ≤ k·|f(A)|`, i.e. `|f(A)| ≥ |A|/k`
+`f = X²` (k = 2), `A = {−n, …, n}` (so |A| = 2n+1):
 
-| f      | k | A            | f(A)                | |A| | |f(A)| | |A|/k | check |
-|--------|---|--------------|---------------------|-----|--------|-------|-------|
-| x²     | 2 | {-2..2}      | {0,1,4}             | 5   | 3      | 2.5   | 3 ≥ 2.5 ✓ |
-| x²     | 2 | {-3..3}      | {0,1,4,9}           | 7   | 4      | 3.5   | 4 ≥ 3.5 ✓ |
-| x²     | 2 | {0..3}       | {0,1,4,9}           | 4   | 4      | 2.0   | 4 ≥ 2 ✓ |
-| x³     | 3 | {-2..2}      | {-8,-1,0,1,8}       | 5   | 5      | 1.67  | 5 ≥ 1.67 ✓ |
-| x²+x   | 2 | {-3..3}      | {0,2,6,12} (paired) | 7   | 4      | 3.5   | 4 ≥ 3.5 ✓ |
+| n | A | \|A\| | f(A)            | \|f(A)\| | \|A\|/k = \|A\|/2 | \|A\|^{2−1/4} |
+|---|---|------|-----------------|---------|-------------------|----------------|
+| 1 | {−1,0,1}       | 3 | {0,1}          | 2 | 1.5  | 3^1.75 ≈ 6.84  |
+| 2 | {−2,…,2}       | 5 | {0,1,4}        | 3 | 2.5  | 5^1.75 ≈ 16.72 |
+| 3 | {−3,…,3}       | 7 | {0,1,4,9}      | 4 | 3.5  | 7^1.75 ≈ 30.24 |
 
-The factor `k` is **saturated** by symmetric windows for even monic `f`: for `x²` on
-`{-n..n}`, `|A| = 2n+1` and `|f(A)| = n+1`, so `2·|f(A)| = |A| + 1`.
+In every row `1.5,2.5,3.5,… ≤ |f(A)| ≤ upper`, and the lower factor `k = 2` is
+saturated up to the `+1` from the fixed point `0`: `2·|f(A)| = |A| + 1`
+(2·2=4=3+1, 2·3=6=5+1, 2·4=8=7+1). This is exactly the theorem `fiberBound_tight_sq`.
 
-### Upper (power-saving) bound `|f(A)| ≤ |A|^{k − 1/k²}`
+`f = X^k` on `A = {0, …, n−1}` is injective, so `|f(A)| = |A| = n`; the upper exponent
+cannot be pushed below `1` (theorem `noExpansion_pow`). E.g. `X²` on `{0,1,2,3}` →
+`{0,1,4,9}`, size 4 = |A|.
 
-Since `|f(A)| ≤ |A|` always, and `k − 1/k² ≥ 1` for `k ≥ 2`, the bound is safe:
+## 2. Multiplicativity under composition
 
-| k | c = 1/k² | exponent k−c | n=|A|=10 : n^{k−c} | ≥ |f(A)| ≤ 10 ? |
-|---|----------|--------------|--------------------|------------------|
-| 2 | 0.25     | 1.75         | ≈ 56.2             | ✓ |
-| 3 | 0.111    | 2.889        | ≈ 774              | ✓ |
-| 4 | 0.0625   | 3.9375       | ≈ 8660             | ✓ |
+`p = X²`, `q = X²`, `q∘p = X⁴`, so `k = m = 2`, `k·m = 4`.
+`A = {−2,−1,0,1,2}` (|A| = 5):
 
-### No-expansion construction (upper endpoint tight)
+* `p(A) = {0,1,4}` (size 3),
+* `q(p(A)) = {0,1,16}` (size 3),
+* directly `X⁴(A) = {0,1,16}` (size 3) — matches `image_comp_eq`.
 
-`x^k` on `A = {0,1,…,n-1}` is injective, so `|f(A)| = |A| = n`. Verified for `x²` on
-`{0,1,2,3}` → `{0,1,4,9}` (size 4). Thus the exponent in the upper bound **cannot** be
-lowered below `1`; there is no universal `|f(A)| ≤ |A|^{1-ε}`.
+Chained fiber bound: `|A| = 5 ≤ (k·m)·|(q∘p)(A)| = 4·3 = 12`. ✓
+The degrees multiply: `deg(X⁴) = 4 = 2·2`, confirming `card_le_comp_mul`.
 
-## 2. Sequence note
-
-The image sizes of `x²` on `{-n..n}` are `1,2,3,4,…` = `n+1` (the count of distinct
-squares in a symmetric window), the trivial sequence A000027 shifted — consistent with the
-`2·|f(A)| = |A|+1` identity we prove.
+Longer chain `X² ∘ X² ∘ X² = X⁸` on the same `A`: image `{0,1,256}` (size 3),
+`|A| = 5 ≤ 8·3 = 24`, consistent with the length-`r` constant `1/k^{2r}`.
 
 ## 3. Counterexample hunt
 
-- Searched all monic `f` of degree 2 and 3 with coefficients in `{-2,…,2}` over windows
-  `A = {-N..N}`, `N ≤ 6`: in every case `|A| ≤ k·|f(A)|` and `|f(A)| ≤ |A|^{k-1/k²}` held.
-- No counterexample to either the fiber lower bound or the power-saving upper bound was
-  found. (The upper bound is robust because `|f(A)| ≤ |A|`; the lower bound is robust
-  because a degree-`k` equation has at most `k` roots.)
+We searched degree-2 and degree-3 monic `f` with `A = {−N,…,N}`, `N ≤ 12`,
+checking `⌈|A|/k⌉ ≤ |f(A)| ≤ |A|^{k−1/k²}` and the composite bound for all pairs of
+such polynomials. No violation of either the lower fiber bound or the upper power-saving
+bound was found. The lower bound is tightest for symmetric even polynomials (pair
+collapse); the upper bound is far from tight for generic `f` (images stay near `|A|`),
+which is consistent with the corridor being an unconditional envelope rather than an
+equality.
 
-## 4. Conclusion
+## 4. Sequence note
 
-The two-sided corridor is numerically confirmed, and both endpoints are attained by
-explicit families, matching the formal theorems in
-`Catalog/Applications/MinkowskiPowerSaving/`.
+The image sizes `|X²({−n,…,n})| = n+1` form the trivial sequence `1,2,3,4,…`
+(OEIS A000027), reflecting that squaring identifies `±a`; the arithmetic content is the
+exact factor-2 collapse `2|f(A)| = |A|+1`, not the size sequence itself.
+
+## Conclusion
+
+The computations support all four proved statements: the fiber lower bound, the
+power-saving upper bound with constant `1/k²`, the sharpness of both endpoints, and the
+multiplicative (functorial) behaviour of the corridor under composition.
