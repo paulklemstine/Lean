@@ -323,7 +323,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Commutativity of Operator Theorem operators in SR_G"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "acb176be",
     "description": "Conjecture that for coprime positive integers a<b with a>1 and odd exponent n>1, the equation (a^n+1)(b^n+1)=x^2 has no positive integer solutions.",
     "domains": [
       "Pythagorean"
@@ -332,7 +332,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31223v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T16:13:17.108600+00:00",
     "title": "No solutions for odd exponents in the coprime case"
   },
@@ -366,7 +366,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Extension of Snevily-type Permutation Property to p-groups"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "91848422",
     "description": "For the natural bijection \u03c6 from the set of B-orbits on B_n \u00d7 P^(n-1) to its image in W_(n+1) \u00d7 W_(n+1), the closure relation on orbits coincides with the restriction of the product Bruhat order: O\u2081 \u2286 O\u0305\u2082 iff \u03c6(O\u2081) \u2264 \u03c6(O\u2082) in (W_(n+1), \u2264_Bruhat) \u00d7 (W_(n+1), \u2264_Bruhat).",
     "domains": [
       "Bridges"
@@ -375,7 +375,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:30:28.722983+00:00",
     "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
@@ -2566,7 +2566,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Positivity of (p,q)-Generalized Stirling Numbers in the (p,q)-Binomial Basis"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea443c2c",
     "description": "Formalize the upper bound on the maximum size of a Sidon subset of {0, ..., N-1}, specifically proving that F(N) <= N^{1/2} + 0.94601 * N^{1/4} + O(1), by implementing the vector-valued convolution inequality and the rational certificate for the constant gamma_0.",
     "domains": [
       "Bridges"
@@ -2575,7 +2575,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T01:56:27.032018+00:00",
     "title": "Upper Bound for the Cardinality of Finite Sidon Sets"
   },
@@ -4126,7 +4126,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "AVD Total Coloring of Central Graphs, Subdivision Graphs, and the Join of Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "06e8731e",
     "description": "Let \\(F(Y,X_1,\\dots,X_n)\\in\\mathbb{Z}[Y,X_1,\\dots,X_n]\\) be a strongly \\(n\\)-genuine polynomial whose generic Galois group over \\(\\mathbb{Q}(X_1,\\dots,X_n)\\) is a transitive subgroup \\(G\\le S_d\\). Define\n  \\[\\mathcal{S}(B)=\\{\\mathbf{x}\\in\\mathbb{Z}^n:\\|\\mathbf{x}\\|_\\infty\\le B,\\;\\operatorname{Gal}(F(Y,\\mathbf{x})/\\mathbb{Q})\\not\\cong G\\}.\\]\n  The conjecture asserts that \\(\\mathcal{S}(B)\\) is contained in a thin set of type\u202fII and therefore satisfies the quantitative bound\n  \\[|\\mathcal{S}(B)|\\ll_{F,\\varepsilon} B^{n-1+\\varepsilon}\\]\n  for every \\(\\varepsilon>0\\). In other words, for a strongly \\(n\\)-genuine polynomial the failure of Galois\u2011group preservation under specialization occurs only on a set of integer points of codimension at least one, with the expected power\u2011saving in the counting function. This statement is falsifiable: one can exhibit a concrete strongly \\(n\\)-genuine polynomial and compute (or bound) the number of exceptional specializations up to height \\(B\\).",
     "domains": [
       "Algebra",
@@ -4136,7 +4136,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01969v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T05:20:34.768144+00:00",
     "title": "Quantitative Thinness of Galois\u2011Group\u2011Changing Specializations for Strongly\u202fn\u2011Genuine Polynomials"
   },
@@ -4227,7 +4227,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Extremal Symmetric One-Weight Colorings Must Have Bracket-Regime Structure"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "767ff507",
     "description": "Let N > 1 be a squarefree integer with an even number of prime factors, and let X_N be the associated Shimura curve over \u211a. For each divisor d|N, let w_d be the Atkin-Lehner involution on X_N, and let X_N/\u27e8w_d\u27e9 be the corresponding quotient curve. The conjecture states that the set of all such N for which there exists at least one divisor d|N such that the quotient curve X_N/\u27e8w_d\u27e9 has genus zero is exactly the finite set {6, 10, 14, 15, 21, 22, 26, 33, 34, 35, 38, 39, 46, 51, 55, 57, 58, 62, 65, 69, 74, 77, 82, 85, 86, 87, 91, 93, 94, 95, 106, 111, 115, 118, 119, 122, 123, 129, 133, 134, 141, 142, 143, 145, 146, 155, 158, 159, 161, 166, 177, 178, 183, 185, 187, 194, 201, 202, 203, 205, 206, 209, 213, 214, 215, 217, 218, 219, 221, 226, 235, 237, 247, 249, 253, 254, 259, 262, 265, 267, 274, 278, 287, 291, 295, 298, 299, 301, 302, 303, 305, 309, 314, 319, 321, 323, 326, 327, 329, 334, 335, 339, 341, 346, 355, 358, 362, 365, 371, 377, 381, 382, 386, 391, 393, 394, 395, 398, 403, 407, 411, 413, 415, 417, 422, 427, 437, 445, 446, 447, 451, 453, 454, 458, 466, 469, 471, 473, 478, 481, 482, 485, 489, 493, 497}. (This list is conjectural and based on known classifications of genus-zero Atkin-Lehner quotients of Shimura curves.)",
     "domains": [
       "Pythagorean",
@@ -4237,7 +4237,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02306v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T16:21:31.636534+00:00",
     "title": "Classification of Genus-Zero Atkin-Lehner Quotients of Shimura Curves"
   },
@@ -5767,7 +5767,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "De Rham Local-Global Compatibility for Torsion Automorphic Forms on GL_n over CM Fields"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "783ff20a",
     "description": "For any integer $g \\ge 2$, let $d \\in \\{2g+1, 2g+2\\}$, $\\alpha \\in \\mathbb{Z} \\setminus \\{0\\}$, and let $p$ be a prime such that $p > P^+(d)$ and $p \\nmid \\alpha$, where $P^+(d)$ is the bound from the paper ($d^2-4d+2$ if $d$ is odd, $(d^2-3d+2)/2$ if $d$ is even). Let $M(t)$ be the $g \\times g$ Cartier-Manin matrix of the hyperelliptic curve $y^2 = x^d + \\alpha x + t$ over $\\mathbb{F}_p$. The determinant $\\det(M(t))$ is a nonzero polynomial in $\\mathbb{F}_p[t]$.",
     "domains": [
       "Pythagorean",
@@ -5777,7 +5777,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31783v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T12:32:30.050041+00:00",
     "title": "Nonvanishing of Cartier-Manin Determinant for Generic Hyperelliptic Families"
   },
