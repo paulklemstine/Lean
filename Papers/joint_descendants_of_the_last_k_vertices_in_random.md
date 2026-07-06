@@ -1,55 +1,47 @@
 # Computational Evidence — Joint descendants of the last `k` vertices in random `d`-DAGs
 
-All checks below were computed exactly over `ℚ` before the formal proofs were written.
-The relevant objects:
+## 1. Telescoping of chained Beta moments (small-case check)
 
-* Integer moment of `Beta(a,b)`: `betaMom a b m = ∏_{j<m} (a+j)/(a+b+j)` (rising-factorial ratio).
-* Ancestry / Pólya-urn expectation: `urnExpected β γ n = ∏_{i<n} (1 + γ/(β+i))`.
+Let `f(α) = Γ(α+p)/Γ(α)`. For a `Beta(α, β)` variable the `p`-th moment is
+`m(α,β) = Γ(α+p)Γ(α+β) / (Γ(α)Γ(α+β+p)) = f(α)/f(α+β)`.
 
-## 1. Beta-chain moment telescoping
+With the chaining `α_{j+1} = α_j + β_j` the product of moments telescopes:
 
-Claim: for a chain `a₀ = 1, b₀ = 2, a₁ = a₀+b₀ = 3, b₁ = 1` (so `a₂ = 4`), the product of the
-two Beta moments equals a single Beta moment with second parameter `∑ bᵢ = 3`:
+| k | product ∏_{j<k} m(α_j,β_j) | closed form f(α_0)/f(α_k) |
+|---|-----------------------------|----------------------------|
+| 1 | f(α_0)/f(α_1)               | f(α_0)/f(α_1) ✓            |
+| 2 | f(α_0)/f(α_1)·f(α_1)/f(α_2) | f(α_0)/f(α_2) ✓            |
+| 3 | …·f(α_2)/f(α_3)             | f(α_0)/f(α_3) ✓            |
 
-```
-betaMom 1 2 3 * betaMom 3 1 3  =  1/20
-betaMom 1 3 3                  =  1/20      ✓ (equal)
-```
+Numerical sanity check with `α_0 = 1`, constant `β_j = 1` (so `α_j = 1 + j`),
+`p = 1`: each `m = α_j/(α_j+1) = (j+1)/(j+2)`, product over `j<k` telescopes to
+`1/(k+1) = f(1)/f(k+1)`, matching `Γ(2)Γ(k+1)/(Γ(1)Γ(k+2)) = 1/(k+1)`. ✓
 
-More generally the double product `∏ᵢ ∏ⱼ (aᵢ+j)/(aᵢ+bᵢ+j)` collapses because the inner product
-over `i` telescopes (`aᵢ + bᵢ = aᵢ₊₁`), leaving `(a₀+j)/(a_r+j)` with `a_r = a₀ + ∑ bᵢ`.
+This is exactly the identity `betaProduct_moment_telescope`.
 
-## 2. Gamma closed form of the urn expectation
+## 2. Pochhammer / rising-factorial closed form
 
-For an **integer** reinforcement `γ = 1` the product telescopes to `(β+n)/β`, a clean sanity
-check of the general Gamma identity `∏_{i<n}(1+γ/(β+i)) = Γ(β)Γ(β+γ+n)/(Γ(β+γ)Γ(β+n))`:
+`Γ(x+n)/Γ(x) = ∏_{i<n}(x+i)`. Check `x=1`: `Γ(1+n)/Γ(1) = n! = ∏_{i<n}(1+i)`. ✓
+This is `Real.Gamma_ratio_eq_prod` and is the deterministic growth factor of the
+ancestry-process expectation, whose leading order produces the `n^{d/(d+1)}`
+scaling exponent (`d/(d+1)` arises from the ratio of successive Pochhammer terms).
 
-```
-urnExpected 2 1 5   =  7/2   =  (β+n)/β = (2+5)/2     ✓
-```
+## 3. Joint-descendant collapse (graph model)
 
-(For non-integer `γ`, e.g. `γ = d/(d+1)`, the same identity holds with genuine Gamma values; it
-is proved by induction using `Γ(x+1) = x·Γ(x)`.)
+Explicit small DAGs where each new vertex attaches to earlier ones (so
+`n ⇝ n+1 ⇝ ⋯`):
 
-## 3. Non-degeneracy (positive variance)
+* Path `0→1→2→3`, last `k=3` vertices `{1,2,3}`:
+  `desc(1)={1,2,3}, desc(2)={2,3}, desc(3)={3}`; intersection `= {3} = desc(3)`. ✓
+* Binary recursive tree (each vertex points to its two later children's parents):
+  the consecutive chain still holds, intersection equals `desc(last)`. ✓
 
-For `Beta(2,3)`:
+Counterexample hunt: dropping the chain hypothesis (a later vertex NOT reachable
+from an earlier one) breaks the collapse — e.g. two incomparable sources have a
+strictly smaller common-descendant set than either descendant set. This confirms
+the chain hypothesis in `jointDescendants_eq_last` is load-bearing, not decorative.
 
-```
-second moment  betaMom 2 3 2      =  1/5   =  5/25
-(first moment)² (betaMom 2 3 1)²  =  4/25
-5/25 > 4/25                                   ✓  ⇒  variance > 0
-```
-
-The strict gap is driven by the extra `+b` term in `(a+1)(a+b) − a(a+b+1) = b > 0`.
-
-## 4. Scaling exponent
-
-`γ_d = d/(d+1)` for `d = 1,2,3,4` gives `1/2, 2/3, 3/4, 4/5`, strictly increasing towards `1`,
-and each is the unique solution of the Malthusian balance `(d+1)·x = d`.
-
-## 5. Counterexample hunt
-
-No counterexamples were found. The telescoping identity was checked on several chains
-(varying `r`, `m`, and the `bᵢ`), the urn identity on integer `γ = 1,2,3`, and the
-non-degeneracy inequality on many `(a,b)` with `a,b > 0`; all agreed with the formulas above.
+## OEIS
+The `p=1`, unit-increment product `1/(k+1)` is the reciprocal of the naturals
+(A000027 shifted); no deeper sequence is claimed. Evidence kept intentionally
+minimal and directly tied to the two formalized theorems.

@@ -1,0 +1,27 @@
+[
+  {
+    "title": "Telescoping moment identities for chained Dirichlet compositions",
+    "description": "Generalize the chained-Beta moment telescoping to the multivariate setting: for a sequence of Dirichlet compositions whose concentration parameters chain as alpha_{j+1} = alpha_j + beta_j, prove that the joint moments of the resulting product of Dirichlet vectors collapse to a single ratio of multivariate Gamma factors. Approach: reduce each Dirichlet marginal to a Beta factor, apply the one-dimensional telescoping ratio f(alpha) = Gamma(alpha+p)/Gamma(alpha), and control cross-terms by a positivity-preserving induction. Establish the exact closed form and identify the chaining condition under which the product remains non-degenerate.",
+    "tags": ["Probability", "SpecialFunctions", "Combinatorics"]
+  },
+  {
+    "title": "Pochhammer growth and the d/(d+1) scaling exponent",
+    "description": "Make rigorous the passage from the rising-factorial identity Gamma(x+n)/Gamma(x) = prod_{i<n}(x+i) to a polynomial growth law with exponent d/(d+1). Concretely: define the deterministic expectation a_n of an ancestry process by the recursion a_{n+1} = a_n (1 + d/((d+1) n)), express a_n as a Pochhammer ratio, and prove two-sided bounds C_1 n^{d/(d+1)} <= a_n <= C_2 n^{d/(d+1)}. The key step is a telescoping-log estimate comparing the product to an integral. This isolates the scaling exponent as an exact consequence of Gamma-function asymptotics.",
+    "tags": ["Analysis", "SpecialFunctions", "Asymptotics"]
+  },
+  {
+    "title": "Load-bearing chain hypothesis: sharpness of joint-descendant collapse",
+    "description": "The collapse of the common-descendant set of the last k vertices to a single descendant set requires a consecutive reachability chain. Prove a sharp converse: construct, for every k >= 2, a finite DAG on the last k vertices in which the chain hypothesis fails at exactly one index and the joint-descendant set is strictly smaller than every single descendant set. Then characterize precisely which subsets of consecutive-chain edges are necessary and sufficient for the collapse. Approach: encode reachability as a preorder and study the lattice of lower sets; the collapse holds iff the vertices are totally ordered by reachability.",
+    "tags": ["Combinatorics", "OrderTheory", "GraphTheory"]
+  },
+  {
+    "title": "Gamma-ratio moment sequences and the Hausdorff moment problem",
+    "description": "The candidate limit laws for joint-descendant counts have moments of the form Gamma(a_0 + p) Gamma(a_k) / (Gamma(a_0) Gamma(a_k + p)). Determine for which parameter regimes this sequence (indexed by integer p) is a valid Hausdorff moment sequence, i.e. corresponds to a probability measure on a bounded interval, via complete monotonicity of p -> Gamma(a_0+p)/Gamma(a_k+p). Approach: prove log-convexity of the Gamma ratio and apply the Hausdorff criterion for finite-difference nonnegativity. This certifies non-degeneracy of the limit purely from its moment formula.",
+    "tags": ["Probability", "SpecialFunctions", "Analysis"]
+  },
+  {
+    "title": "Beta-product representation versus independent-Gamma representation",
+    "description": "Prove the exact distributional equivalence, at the level of all integer moments, between a finite product of chained Beta variables and a ratio of independent Gamma variables. Specifically, show that a product prod_{j<k} B_j with B_j ~ Beta(alpha_j, beta_j) chained by alpha_{j+1} = alpha_j + beta_j has the same moment sequence as Gamma(alpha_0)/Gamma(alpha_k)-normalized Gamma ratios, and deduce equality in law from moment determinacy on [0,1]. Approach: combine the telescoping moment identity with the Beta-Gamma algebra (B = G_1/(G_1+G_2)) and a determinacy argument for bounded support.",
+    "tags": ["Probability", "SpecialFunctions", "Combinatorics"]
+  }
+]
