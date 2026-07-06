@@ -394,7 +394,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
   {
-    "consumed_by_exp_id": "244a22c3",
+    "consumed_by_exp_id": "",
     "description": "The product of primes in the extension field equals its order.",
     "domains": [
       "Pythagorean",
@@ -404,7 +404,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T05:35:59.496154+00:00",
     "title": "Ramified Prime Product Equality"
   },
@@ -995,7 +995,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "A recursive decomposition of greedy Tamari intervals via planar map structures"
   },
   {
-    "consumed_by_exp_id": "56085c43",
+    "consumed_by_exp_id": "",
     "description": "The sheared Witt vector functor \\(\\chW\\) is isomorphic to the filtered colimit of the functors \\(n \\mapsto W(R[p^n])/\\hw(R[p^n])\\) over \\(n \\geq 1\\).",
     "domains": [
       "Bridges"
@@ -1004,7 +1004,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01178v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T22:10:42.305562+00:00",
     "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
   },
@@ -1840,7 +1840,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-existence of weak Ziegler pairs for high-degree plus-one generated conic-line arrangements with defect three"
   },
   {
-    "consumed_by_exp_id": "edf9850d",
+    "consumed_by_exp_id": "",
     "description": "For every integer d \u22657, there exists a simplicial 0/1-polytope in dimension d with exactly 2d vertices that is not centrally symmetric. This generalizes the explicit 7-dimensional counterexample to all higher dimensions, extending the classification beyond the known result for d=7.",
     "domains": [
       "Geometry"
@@ -1849,7 +1849,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31640v2",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T19:30:02.443246+00:00",
     "title": "Existence of Non-Centrally Symmetric Simplicial 0/1-Polytopes for All Dimensions \u22657"
   },
@@ -2480,7 +2480,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of a fine unit-distance graph with low independence ratio"
   },
   {
-    "consumed_by_exp_id": "e29ffbac",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that the isomorphism classes of regular 4\u2011maniplexes are in bijective correspondence with the isomorphism classes of tetravalent graphs appearing in Poto\u010dnik's census.  Concretely, for each regular 4\u2011maniplex M its flag graph is a tetravalent graph in the census, and conversely every tetravalent graph G in the census determines a unique regular 4\u2011maniplex via its 1\u2011coskeleton.  Hence the number of regular 4\u2011maniplexes up to isomorphism equals the number of tetravalent graphs in the census, giving a complete classification of these objects through existing graph databases.",
     "domains": [
       "Pythagorean",
@@ -2490,7 +2490,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27987v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T17:37:07.759741+00:00",
     "title": "Classification of regular 4\u2011maniplexes via tetravalent graph censuses"
   },
@@ -2683,7 +2683,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Kernel\u2011cover characterisation of the weighted Davenport constant"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "672a3abc",
     "description": "Conjecture: Let A be a line arrangement in the complex projective plane of degree d such that every singular point has multiplicity at most 3 (i.e., only double and triple points). If the minimal degree of a Jacobian relation satisfies mdr(A) < d/2, then mdr(A) is combinatorially determined: any other line arrangement B with the same intersection lattice (and hence the same singularity multiplicities) has mdr(B) = mdr(A).",
     "domains": [
       "Algebra",
@@ -2693,7 +2693,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T06:13:22.731805+00:00",
     "title": "Combinatorial determination of mdr for line arrangements with only double and triple points"
   },
@@ -2737,7 +2737,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-07-03T07:37:36.028717+00:00",
     "title": "Existence of a nontrivial cycle of length n-O(n^{2/3}) in Hamiltonian graphs with \u03b4(G) \u2265 3"
   },
@@ -3121,7 +3121,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "CM tournaments are precisely the cycle\u2011ideal tournaments"
   },
   {
-    "consumed_by_exp_id": "36768b27",
+    "consumed_by_exp_id": "",
     "description": "For all integers n \u2265 2, the number of labeled partially ordered sets on n points (OEIS A001035) satisfies P(n) \u2261 3 (mod 4). This congruence is verified for n = 2 through 19 (with P(19) = 646099441937791106493755218560442089979 \u2261 3 mod 4) and predicts the same residue for P(20) and beyond. The paper's mention of a 'modular periodicity' check for A001035 suggests such congruences are structurally inherent in the Ern\u00e9-Stege moment reduction.",
     "domains": [
       "Bridges"
@@ -3130,7 +3130,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31526v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T18:54:52.477458+00:00",
     "title": "Constant residue of labeled poset counts modulo 4"
   },
@@ -4608,7 +4608,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Vanishing Criterion for Legendre Symbol Determinants"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6ea348cc",
     "description": "For any connected trivalent ribbon graph G embedded on a closed surface, the degree-zero Penrose homology group H^{0,*}(G) at the specialization \u03bb = 3 is nonzero if and only if G admits a proper 3-edge coloring (Tait coloring). This refines the classical Penrose criterion\u2014which states P(G;3) > 0 iff G is Tait-colorable\u2014by identifying the specific homological degree that detects colorability, analogous to how Khovanov homology detects the unknot in degree zero.",
     "domains": [
       "Geometry",
@@ -4618,7 +4618,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01632v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T02:04:59.148843+00:00",
     "title": "Penrose Homology Detects Tait Colorability"
   },
@@ -4638,11 +4638,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For all positive integers m and n, the number of intervals in the greedy m-Tamari poset on m-Dyck paths of semi-length n equals the number of rooted planar (m+1)-constellations with n black faces. This generalizes the m=1 case proven in the paper (where greedy Tamari intervals are equinumerous to bipartite planar maps, i.e., 2-constellations) and remains open for m \u2265 2.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0367",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01206v1",
+    "status": "available",
+    "timestamp": "2026-07-06T02:46:47.268188+00:00",
+    "title": "Equinumerosity of greedy m-Tamari intervals and planar (m+1)-constellations"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0367",
+    "id": "fd_0368",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -4656,7 +4670,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0368",
+    "id": "fd_0369",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -4671,7 +4685,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0369",
+    "id": "fd_0370",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
@@ -4680,32 +4694,32 @@ window.FUTURE_DIRECTIONS = [
     "title": "Polynomial spectral gap lower bound for fixed genus chord swap chain"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9632b543",
     "description": "The conjecture posits that the Schottky group W_p for X over \u211a(p) is finitely generated.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0370",
+    "id": "fd_0371",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T21:16:37.395514+00:00",
     "title": "Finitely Generated Schottky Group"
   },
   {
-    "consumed_by_exp_id": "9632b543",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: The properly normalized extremal fluctuations of black hole microstate counts in quantum gravity converge in distribution to the Gumbel extreme value distribution. Specifically, let N(\u039b) denote the count of microstates with energy below \u039b for a holographic CFT with large central charge c. Define the extremal fluctuation \u0394N_c = max_\u039b(N(\u039b) - E[N(\u039b)])/\u221a(Var[N(\u039b)]) over \u039b in an interval. Then as c\u2192\u221e, exp(-e^(-x)) = lim_{c\u2192\u221e} P(\u0394N_c \u2264 x) in distribution. This predicts a universal tail exponent \u03b1=1 for the log-correlated field universality class.",
     "domains": [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0371",
+    "id": "fd_0372",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T21:39:27.004204+00:00",
     "title": "Gumbel Distribution for Black Hole Microstate Extremal Fluctuations"
   },
@@ -4715,7 +4729,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0372",
+    "id": "fd_0373",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -4729,7 +4743,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0373",
+    "id": "fd_0374",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -4744,7 +4758,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0374",
+    "id": "fd_0375",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02011v1",
@@ -4759,7 +4773,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0375",
+    "id": "fd_0376",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -4773,7 +4787,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0376",
+    "id": "fd_0377",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02085v1",
@@ -4787,7 +4801,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0377",
+    "id": "fd_0378",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01957v1",
@@ -4802,7 +4816,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0378",
+    "id": "fd_0379",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01956v1",
@@ -4816,7 +4830,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0379",
+    "id": "fd_0380",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01744v1",
@@ -4830,7 +4844,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0380",
+    "id": "fd_0381",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01839v1",
@@ -4845,7 +4859,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0381",
+    "id": "fd_0382",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01703v1",
@@ -4859,7 +4873,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0382",
+    "id": "fd_0383",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01572v1",
@@ -4873,7 +4887,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0383",
+    "id": "fd_0384",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01680v1",
@@ -4887,7 +4901,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0384",
+    "id": "fd_0385",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01582v1",
@@ -4902,13 +4916,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0385",
+    "id": "fd_0386",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01165v1",
     "status": "available",
     "timestamp": "2026-07-06T02:28:48.571935+00:00",
     "title": "Absolute Bound for Generalized Polynomial Diophantine Tuples"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any fixed 0 < q < 1, as the prime modulus r \u2192 \u221e and x \u2192 \u221e with x \u2264 r^{1/2-\u03b5} for fixed \u03b5 > 0, the normalized 2q-th moment (1/(r-1))\u2211_{\u03c7 mod r} |\u2211_{n\u2264x} \u03c7(n)|^{2q} / x^q converges to an explicit constant C_q equal to the corresponding moment for partial sums of a Steinhaus random multiplicative function. This extends the paper's order-of-magnitude result (which shows the moment is \u0398(x^q)) to a precise asymptotic, confirming the heuristic that short character sums behave like random multiplicative functions in the low-moment regime.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_0387",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01184v1",
+    "status": "available",
+    "timestamp": "2026-07-06T02:47:51.705053+00:00",
+    "title": "Asymptotic equivalence of low moments of character sums and random multiplicative sums"
   },
   {
     "consumed_by_exp_id": "",
