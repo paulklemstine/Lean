@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-06T20:10:43.305636+00:00",
+  "last_updated": "2026-07-06T20:29:10.022194+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -38098,6 +38098,47 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-06T20:10:43.239775+00:00",
       "title": "Counting Zeros of Artin L-functions"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4651,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 9,
+      "domain": "Combinatorics",
+      "duration_seconds": -366.6263647079468,
+      "end_time": 1783364480.4119484,
+      "files_integrated": 0,
+      "job_id": "c4dfeeb0",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v16",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.5,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.8,
+        "cross_domain": 0.5,
+        "importance": 0.6388043749999999,
+        "novelty": 0.65,
+        "pegb_compliance": 0.5,
+        "proof_depth": 0.6340062499999999,
+        "usefulness": 0.5670031249999999
+      },
+      "quality_score": 0.4340487625,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783364847.0383132,
+      "strategy_count": 0,
+      "theorem_count": 6,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 6,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-06T20:29:09.953879+00:00",
+      "title": "At most two large common values for generalized ABC recurrences"
     }
   ]
 }
