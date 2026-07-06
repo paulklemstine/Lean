@@ -666,7 +666,7 @@
       "Jan2023 - Recent work on descendants of n in G_n",
       "Drm2009 - Random recursive trees (d=1 case)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea66c257",
     "description": "For the random recursive DAG G_n with out-degree d ≥ 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n → ∞.",
     "domain_bridges": [
       "Multi-draw Pólya urn processes",
@@ -682,7 +682,7 @@
     "proof_strategy": "Generalize Janson's martingale-based analysis using refined Pólya urn techniques and derive explicit scaling limits through characteristic function methods",
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
@@ -2351,7 +2351,7 @@
     "catalog_references": [
       "math.CO:2405.XXXX"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fc64247d",
     "description": "For any nonnegative integer s and any list of integers m₁,…,m_t ≥ 2, let n = s + Σ m_i. If each m_i divides 2n(n−1), then there exists a seating schedule for 2n participants consisting of n newlywed couples at s tables of size 2 and t round tables of sizes 2m₁,…,2m_t such that each couple sits together every night and each pair of distinct non‑spouses sits together exactly once.",
     "domain_bridges": [
       "graph decomposition",
@@ -2366,7 +2366,7 @@
     "proof_strategy": "Use an inductive construction based on splitting the set of couples into groups, applying the known solution for one round table (theorem from the paper) as a base case, and combining solutions via pairwise balanced designs and 4-fold graph decompositions to handle additional round tables.",
     "research_mode": "team",
     "source_exp_id": "2607.01130v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T02:14:54.483527+00:00",
     "title": "Sufficiency of obvious necessary conditions for the generalized honeymoon Oberwolfach problem with multiple round tables"
   },
@@ -3777,7 +3777,7 @@
       "Sabidussi's Construction",
       "Strong Embeddings of Graphs"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "164898ae",
     "description": "For every integer $d \\geq 3$ and every finite group $G$, there exists a $d$-regular simple graph $\\Gamma$ and a strong embedding $\\beta$ of $\\Gamma$ into a surface such that the group of automorphisms of the graph $\\text{Aut}(\\Gamma)$ and the group of automorphisms of the embedded graph $\\text{Aut}(\\beta(\\Gamma))$ are both isomorphic to $G$.",
     "domain_bridges": [
       "Group Theory",
@@ -3794,7 +3794,7 @@
     "proof_strategy": "1. Formalize the definition of a $d$-regular simple graph and its automorphism group. 2. Implement the Cartesian product of graphs and verify the additive property of vertex degrees. 3. Formalize the notion of a strong embedding $\\beta$ (where the face boundaries are exactly the induced cycles of the graph). 4. Construct a sequence of graphs using the corrected Sabidussi method to ensure the existence of an $\\text{Aut}(\\Gamma)$-invariant proper $d$-edge-colouring. 5. Use the edge-colouring to define a rotation system that induces a strong embedding where the map automorphisms preserve the graph automorphisms.",
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T03:16:29.014621+00:00",
     "title": "Existence of Regular Graphs with Prescribed Automorphism Groups and Strong Embeddings"
   },
@@ -4012,7 +4012,7 @@
       "Dilworth1950",
       "Sperner1928"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a793b4d3",
     "description": "Analysis of the maximal number of chains required to cover strict chains in the Boolean lattice, with connections to inclusion-exclusion and logarithmic approximations.",
     "domain_bridges": [
       "Computational Complexity",
@@ -4028,7 +4028,7 @@
     "proof_strategy": "Construct existence via perturbation around known extremals",
     "research_mode": "team",
     "source_exp_id": "2606.29385v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T08:04:06.155536+00:00",
     "title": "Chain Covers in the Boolean Lattice"
   },
@@ -7017,7 +7017,7 @@
       "G17, 'Hook partitions and 2‑Sylow permutation characters'",
       "GL1, 'Description of Ω_p(n) for odd primes p'"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "72798aec",
     "description": "For every integer n ≥ 11 with binary expansion n = 2^{a₁} + 2^{a₂} + … + 2^{a_t} where a₁ > a₂ > … > a_t ≥ 0, the set Δ(n,k) of non‑hook partitions of n with at most k parts is contained in Ω₂(n) if and only if k ≤ a₁ + t - 1. Equivalently, the largest integer k for which Δ(n,k) ⊆ Ω₂(n) is exactly a₁ + t - 1. This refines the theorem of the paper by asserting that the stated bound holds universally (i.e., without the exceptional small‑n cases) and predicts a precise formula for the maximal size of such partitions.",
     "domain_bridges": [
       "Representation Theory of Finite Groups",
@@ -7033,7 +7033,7 @@
     "proof_strategy": "Induction on n using the branching rule for S_n, analysis of 2‑block decomposition numbers, and reduction to finitely many binary patterns; computational verification for base cases.",
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T23:01:54.640398+00:00",
     "title": "Conjecture on the maximal number of parts of non‑hook partitions in Ω₂(n)"
   },
@@ -7676,7 +7676,7 @@
       "co-wellfounded posets",
       "direct sums of posets"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2058237b",
     "description": "A countable FAC poset satisfies the Aharoni-Korman conjecture if and only if it does not contain a saturated chain D such that either D or its reverse is a countable direct sum of infinite co-wellfounded posets.",
     "domain_bridges": [
       "chain partitions",
@@ -7692,7 +7692,7 @@
     "proof_strategy": "Combine the paper's result (absence of such chains implies the conjecture) with constructing a counterexample poset lacking such chains where the conjecture fails, or proving the reverse implication via structural analysis of H(P) and scattered decompositions.",
     "research_mode": "team",
     "source_exp_id": "2607.02500v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T16:16:00.227260+00:00",
     "title": "Characterization of the Aharoni-Korman Conjecture via Saturated Chains"
   },
@@ -8170,7 +8170,7 @@
       "probabilistic powerdomain via probability simplex",
       "Hasse graph tree characterization"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "98188561",
     "description": "Let P be a finite poset. The main theorem shows that V₁(P) is an RB-domain iff P has a least element and its undirected Hasse graph is a tree. I conjecture that the four-point diamond (a poset with 4 elements where 2 incomparable elements are both below 2 incomparable maxima) is the unique minimal poset violating this: any finite poset P with fewer than 4 elements has V₁(P) an RB-domain, and among 4-element posets, only the four-point diamond violates the RB-domain property. This is falsifiable by either finding a smaller counterexample or proving no other 4-element poset violates the condition.",
     "domain_bridges": [
       "order_theory",
@@ -8187,7 +8187,7 @@
     "proof_strategy": "1) Enumerate all finite posets with ≤3 elements and verify V₁(P) is always RB-domain using the known characterization. 2) Classify all 4-element posets and compute their undirected Hasse graphs. 3) Show that only the four-point diamond has both a least element and a cyclic Hasse graph (specifically, a 4-cycle). 4) Apply the local stochastic cone non-simpliciality argument to prove RB-domain failure for this case.",
     "research_mode": "team",
     "source_exp_id": "2607.02231v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T22:13:05.785493+00:00",
     "title": "Uniqueness of the Four-Point Diamond as Minimal RB-Domain Violator in Probabilistic Powerdomains"
   },
@@ -10243,7 +10243,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6dff48bb",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -10255,7 +10255,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "oeis:212351",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:44:52.457313+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   }
