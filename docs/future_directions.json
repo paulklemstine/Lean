@@ -4400,7 +4400,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Drinfeld-Lau 2025",
         "Zink 2003",
@@ -4409,7 +4409,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "56085c43",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -4425,7 +4425,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0094",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-06T00:22:27.851055+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sheared_witt_colimit (R : Type*) [comm_ring R] [nilperfect R] : \\(\\text{Derived}_{p\\text{-complete}} @\\wedge \\(@\\wedge Loomis-Sikorski) \\(@\\wedge \\(@\\wedge Algebra) \\(@\\wedge \\)\n`",
       "lineage_refs": [],
@@ -4440,7 +4440,7 @@
       "source": "",
       "source_exp_id": "2607.01178v1",
       "source_path": "http://arxiv.org/abs/2607.01178v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-02T22:10:42.305562+00:00",
       "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
@@ -14817,7 +14817,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "ee891add",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -14848,7 +14848,7 @@
       "source": "",
       "source_exp_id": "2607.02433v1",
       "source_path": "http://arxiv.org/abs/2607.02433v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-04T23:01:54.640398+00:00",
       "title": "Conjecture on the maximal number of parts of non‑hook partitions in Ω₂(n)"
@@ -17127,6 +17127,52 @@
       "title": "Nontrivial Units with Large Support in F₂[ G ] for Torsion‑Free CAT(0) Groups"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Any simple graph on n vertices with minimum degree at least 3 that contains a Hamiltonian cycle must contain another cycle (a nontrivial cycle) of length at least n - c for some absolute constant c > 0. This formalizes the primary open conjecture addressed in the paper, which currently only has polynomial error bounds.",
+      "domain_bridges": [
+        "Graph Theory",
+        "Order Theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Physics"
+      ],
+      "github_issue": 0,
+      "id": "fd_0360",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem gkn_conjecture {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj] (hG : G.IsHamiltonian) (hδ : G.minDegree ≥ 3) : ∃ c : ℕ, ∃ (v : V) (C : G.Walk v v), C.IsCycle ∧ C.length ≥ Fintype.card V - c ∧ C.length < Fintype.card V := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize the definitions of Hamiltonian cycles, nontrivial cycles, and minimum degree in Lean. Then, adapt and combine the poset-based constructive methods with the nonconstructive lollipop argument (used for Smith's theorem and related results) to bound the error term by an absolute constant rather than O(n^{2/3}), likely requiring a novel combinatorial insight to overcome the paper's identified limitations of the current two methods.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.01738v1",
+      "source_path": "http://arxiv.org/abs/2607.01738v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-06T00:21:09.674491+00:00",
+      "title": "Girão-Kittipassorn-Narayanan Conjecture on Long Nontrivial Cycles"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -17152,7 +17198,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0360",
+      "id": "fd_0361",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "def λ (n : ℕ) : Partition n :=\n  ⟨List.replicate (n / 2) 2 ++ if n % 2 = 1 then [1] else [],\n   by sorry, by sorry⟩\n\ntheorem max_parts_achieved_by_all_twos (n : ℕ) (hn : n ≥ 1) : λ n ∈ Ω₂ n := by sorry",
@@ -17200,7 +17246,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0361",
+      "id": "fd_0362",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀c>0, ∃G: no_cycle_length d ∧ min_deletions(G) ≥ cd |V(G)|",
@@ -17247,7 +17293,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0362",
+      "id": "fd_0363",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem fixed_genus_spectral_gap_lower_bound {g : ℕ} (hg : 0 < g) {n : ℕ} (hn : n > 2 * g) : ∃ (C : ℝ), 0 < C ∧ ∀ (x y : chord_diagram n g), (1 - C / (n : ℝ)) * dist x y ≤ dist (swap x y) (swap y x) := by sorry",
@@ -17288,7 +17334,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0363",
+      "id": "fd_0364",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "finite_generation",
@@ -17337,7 +17383,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0364",
+      "id": "fd_0365",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem black_hole_extremal_gumbel (c : ℝ) (h : c > 0) : let N_dist := lambda_microstate_count_dist c in let ΔN := extremal_fluctuation N_dist in (∃ (normalization : ℝ → ℝ), weak_convergence (distribution_of (normalization ∘ ΔN)) (gumbel_distribution))",
@@ -17384,7 +17430,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0365",
+      "id": "fd_0366",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀ {r : ℕ} (k : ℕ) (M : Matroid r), (∀ {B1 B2 B1' B2' : Basis M} (h : MultisetUnion B1 B2 = MultisetUnion B1' B2'), ∃ (seq : List (SymmetricExchange M)), seq ≡ TransformBases (B1, B2) (B1', B2') seq)",
@@ -17432,7 +17478,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0366",
+      "id": "fd_0367",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem spectral_transfer_sharpness (C : AdmissibleClass) : (∃ H : SimpleGraph, is_bipartite H ∧ vertex_count H = 5 ∧ edge_count H = 4) ∧ (∀ W : Graphon, W ∈ C → t(H, W) ≥ (spectral_radius W)^(2*4 - 5) * (density W)^(5 - 4)) ∧ ¬ (∀ W : Graphon, W ∈ C → t(H, W) ≥ (density W)^4)",
@@ -17483,7 +17529,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0367",
+      "id": "fd_0368",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "/-- Conjecture: The μ‑invariant of the module generated by the spectral resultant equals the maximal p‑adic valuation of the resultant at torsion characters. -/\n\ntheorem spectral_resultant_mu_invariant\n  (X : Graph) (alpha : VoltageAssignment X) (P : Polynomial) :\n  let R := spectral_resultant X alpha P;\n  let M := fitting_module_zero R;\n  μ M = Finset.sup (Finset.image (fun χ => v_p (R χ)) torsionCharacters) (·) :=\n  by\n    -- TODO: formalise the Kida‑type formula and prove the equality.\n    admit",
@@ -17533,7 +17579,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0368",
+      "id": "fd_0369",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mdr_counterexample : exists f g : arrangement_of_lines_in_P2, (mdr f = 4) ∧ (mdr g = 5) ∧ (intersection_lattice f = intersection_lattice g) ∧ (degree f = 9) ∧ (mdr f < 9 / 2)",
@@ -17581,7 +17627,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0369",
+      "id": "fd_0370",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem bivariate_egf_snail_race (m : ℕ) (hm : m ≥ 1) : (∑' (n : ℕ), ∑' (k : ℕ), (r_m n k : ℝ) * x ^ n / n! * y ^ k) = 1 / (1 - (∑' (i : ℕ), if 1 ≤ i ∧ i < m then x ^ i / i! else 0) - y * (Real.exp x - 1 - ∑' (i : ℕ), if 1 ≤ i ∧ i < m then x ^ i / i! else 0)) := by sorry",
@@ -17628,7 +17674,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0370",
+      "id": "fd_0371",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem generalized_hurwitz_formula (K : Type*) [nf : NarrowClassNumberOne K] (D : ℤ) [hd : FundamentalDiscriminant D] : ∃ (F : Type*) [ quartic_CM_field F ] [discriminant F = D], H_g K D = (class_number F) / 2",
@@ -17681,7 +17727,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0371",
+      "id": "fd_0372",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem smoothed_sigma_error_integral_negative (x : ℝ) : x ≥ 1 → ∫ (t : ℝ) in 1..x, (∑ n in Finset.range (⌊t⌋ + 1) with 1 ≤ n, σ n - (t^2 * π^2 / 6)) / t^2 < 0",
@@ -17701,6 +17747,55 @@
       "thread_id": "",
       "timestamp": "2026-07-06T00:03:24.293418+00:00",
       "title": "Sign of the Smoothed Sum-of-Divisors Error Integral"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.NT",
+        "Gross-Zagier_formula",
+        "Sylvester_conjecture"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For the elliptic curve E_7: y^2 = x^3 + 49/4 over the rational numbers, let P_7 = (84, 756) be the rational point corresponding to the cube sum 2^3 + (-1)^3 = 7. The explicit Gross-Zagier formula from Yin's paper implies that L'(E_7, 1) / Omega_7 = (1/2) * hat_h_Q(P_7), where Omega_7 is the real Neron period of E_7 and hat_h_Q is the Neron-Tate height over Q.",
+      "domain_bridges": [
+        "Elliptic_curves",
+        "L-functions",
+        "Heegner_points",
+        "BSD_conjecture"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry"
+      ],
+      "github_issue": 0,
+      "id": "fd_0373",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem yin_gross_zagier_formula_p7 :\n  let E : EllipticCurve ℚ := ⟨![0, 0, 0, 49 / 4, 0], by decide⟩\n  let P := E.point 84 756 (by decide)\n  L_derivative E 1 / Omega E = (1 / 2) * height ℚ P :=\n  by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Compute the Hasse-Weil L-function derivative at s=1 and the Neron-Tate height of the explicitly defined rational point P_7 = (84, 756) on E_7, and verify their equality using the explicit formula and height computations outlined in Yin's paper.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.01744v1",
+      "source_path": "http://arxiv.org/abs/2607.01744v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-06T00:22:25.670501+00:00",
+      "title": "Explicit Gross-Zagier Formula for p=7"
     },
     {
       "ambition_level": "extension",
@@ -17747,6 +17842,7 @@
   "recent_domain_counts": {},
   "recent_theme_keywords": {},
   "selection_log": [
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
