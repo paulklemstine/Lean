@@ -2291,10 +2291,28 @@ class PiAgentClient:
             - Results whose entire proof is `simp`, `norm_num`, `decide`, or `native_decide`.
             - Wrapper types that rename existing definitions.
             - Re-proving existing catalog theorems with minor notation changes.
+            - **Circular proofs**: a theorem that references itself (directly or
+              transitively) in its own proof. Before finalizing, verify that no
+              theorem's proof depends on the theorem being proved. If a proof
+              seems to need the theorem itself, break it into smaller lemmas that
+              build up independently, then combine them.
+            - **Truncated/stubbed declarations**: theorem or lemma statements
+              with no proof body (no `:=` clause). Every declaration MUST have a
+              complete proof.
 
             Every main theorem must use at least one insight-bearing tactic or
             technique such as `induction`, `by_contra`, `field_simp`, `ring_nf`,
             `omega`, `linarith`, `rcases`, or a custom helper lemma.
+
+            ### Compilation Verification (mandatory before output)
+            Before returning your output, mentally compile-check every file:
+            - Do all imports resolve?
+            - Does every `theorem`/`lemma` have a `:= by ...` proof?
+            - Are there any undefined references?
+            - Does any proof reference the theorem it's trying to prove?
+            If ANY file would not compile, fix it or remove the broken theorem
+            before returning. Do NOT output files with sorries in main theorems,
+            stubbed signatures, or circular dependencies.
         """)
 
         deliverables_block = textwrap.dedent("""\
@@ -2586,10 +2604,28 @@ class PiAgentClient:
             - Results whose entire proof is `simp`, `norm_num`, `decide`, or `native_decide`.
             - Wrapper types that rename existing definitions.
             - Re-proving existing catalog theorems with minor notation changes.
+            - **Circular proofs**: a theorem that references itself (directly or
+              transitively) in its own proof. Before finalizing, verify that no
+              theorem's proof depends on the theorem being proved. If a proof
+              seems to need the theorem itself, break it into smaller lemmas that
+              build up independently, then combine them.
+            - **Truncated/stubbed declarations**: theorem or lemma statements
+              with no proof body (no `:=` clause). Every declaration MUST have a
+              complete proof.
 
             Every main theorem must use at least one insight-bearing tactic or
             technique such as `induction`, `by_contra`, `field_simp`, `ring_nf`,
             `omega`, `linarith`, `rcases`, or a custom helper lemma.
+
+            ### Compilation Verification (mandatory before output)
+            Before returning your output, mentally compile-check every file:
+            - Do all imports resolve?
+            - Does every `theorem`/`lemma` have a `:= by ...` proof?
+            - Are there any undefined references?
+            - Does any proof reference the theorem it's trying to prove?
+            If ANY file would not compile, fix it or remove the broken theorem
+            before returning. Do NOT output files with sorries in main theorems,
+            stubbed signatures, or circular dependencies.
         """)
 
         deliverables_block = textwrap.dedent("""\

@@ -563,7 +563,7 @@ class QualityEvaluator:
                 papers = [arxiv.get_next_paper() for _ in range(2)]
                 papers = [p for p in papers if p]
                 if papers:
-                    abstracts = "\n\n".join(f"Title: {p['title']}\nAbstract: {p['abstract']}" for p in papers)
+                    abstracts = "\n\n".join(f"Title: {p.title}\nAbstract: {p.abstract}" for p in papers)
                     prompt = (
                         f"You are a mathematical novelty evaluator. Evaluate the following mathematical result for novelty "
                         f"against recent arXiv literature.\n\n"
