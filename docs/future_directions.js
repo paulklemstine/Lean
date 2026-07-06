@@ -3382,7 +3382,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on the sl2-multiplicity decomposition of the graph algebra"
   },
   {
-    "consumed_by_exp_id": "ecf65bf0",
+    "consumed_by_exp_id": "",
     "description": "For any monic polynomial f in Z[x] of degree k \u2265 2, the power-saving constant c in the inequality |f(A)| \u2264 |A|^(k-c) can be taken to satisfy c \u2265 1/k\u00b2, where A ranges over finite sets constructed via the Bloom-Sawin-Schildkraut-Zhelezov method.",
     "domains": [
       "Bridges"
@@ -3391,7 +3391,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30690v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T05:42:15.565147+00:00",
     "title": "Explicit Quantitative Lower Bound on Power-Saving for Monic Minkowski Polynomials"
   },
@@ -5132,11 +5132,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every elliptic curve E/Q with analytic rank 0 and every non-trivial finite abelian group G, there exist infinitely many G-extensions F/Q such that E(F) is finite (equivalently, rank E(F) = 0). This removes the 'no exceptional primes' condition from the paper's Corollary 1.3 and the 'sufficiently large prime factors' condition from Theorem 1.1, yielding the full generalization of the David-Fearnley-Kisilevsky conjecture from quadratic to all finite abelian extensions.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0401",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31646v1",
+    "status": "available",
+    "timestamp": "2026-07-06T14:16:36.684109+00:00",
+    "title": "Diophantine Rank Stability for All Abelian Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0401",
+    "id": "fd_0402",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -5150,7 +5165,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0402",
+    "id": "fd_0403",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -5165,7 +5180,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0403",
+    "id": "fd_0404",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
@@ -5180,7 +5195,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0404",
+    "id": "fd_0405",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -5195,7 +5210,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0405",
+    "id": "fd_0406",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -5209,7 +5224,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0406",
+    "id": "fd_0407",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -5223,7 +5238,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0407",
+    "id": "fd_0408",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -5238,7 +5253,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0408",
+    "id": "fd_0409",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02011v1",
@@ -5253,7 +5268,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0409",
+    "id": "fd_0410",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -5267,7 +5282,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0410",
+    "id": "fd_0411",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02085v1",
@@ -5281,7 +5296,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0411",
+    "id": "fd_0412",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01957v1",
@@ -5296,7 +5311,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0412",
+    "id": "fd_0413",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01956v1",
@@ -5305,30 +5320,30 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sign of the Smoothed Sum-of-Divisors Error Integral"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c7c6cf29",
     "description": "For the elliptic curve E_7: y^2 = x^3 + 49/4 over the rational numbers, let P_7 = (84, 756) be the rational point corresponding to the cube sum 2^3 + (-1)^3 = 7. The explicit Gross-Zagier formula from Yin's paper implies that L'(E_7, 1) / Omega_7 = (1/2) * hat_h_Q(P_7), where Omega_7 is the real Neron period of E_7 and hat_h_Q is the Neron-Tate height over Q.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0413",
+    "id": "fd_0414",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01744v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T00:22:25.670501+00:00",
     "title": "Explicit Gross-Zagier Formula for p=7"
   },
   {
-    "consumed_by_exp_id": "c7c6cf29",
+    "consumed_by_exp_id": "",
     "description": "The shifted $t$-Schur function $\\mathcal{Q}_\\lambda(X;t)$, generated by the modified odd Greaves--Jing--Zhu operator $\\mathcal{Y}_t(z) = \\mathcal{R}_t \\Phi(z) \\mathcal{R}_t^{-1}$ (where $\\mathcal{R}_t$ rescales each odd power sum $p_n \\mapsto (1-t^n)p_n$ and $\\Phi(z)$ is the classical Schur $Q$ vertex operator), equals the classical Schur $Q$-function $Q_\\lambda$ under the plethystic substitution $X \\mapsto X - tX$. Equivalently, $\\mathcal{R}_t Q_\\lambda(X) = Q_\\lambda[X - tX]$ for every strict partition $\\lambda$ and formal parameter $t$. This encapsulates the conjugation relation and the resulting plethystic interpretation of the modified operator's spectrum.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0414",
+    "id": "fd_0415",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01839v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T00:45:40.615947+00:00",
     "title": "Shifted t-Schur plethystic identity via modified odd operator conjugation"
   },
@@ -5339,7 +5354,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0415",
+    "id": "fd_0416",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01703v1",
@@ -5353,7 +5368,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0416",
+    "id": "fd_0417",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01572v1",
@@ -5367,7 +5382,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0417",
+    "id": "fd_0418",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01680v1",
@@ -5381,7 +5396,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0418",
+    "id": "fd_0419",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01582v1",
@@ -5396,7 +5411,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0419",
+    "id": "fd_0420",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01165v1",
@@ -5411,7 +5426,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0420",
+    "id": "fd_0421",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01184v1",
@@ -5425,7 +5440,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0421",
+    "id": "fd_0422",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -5440,7 +5455,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0422",
+    "id": "fd_0423",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -5455,7 +5470,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0423",
+    "id": "fd_0424",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01028v1",
@@ -5470,7 +5485,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0424",
+    "id": "fd_0425",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00940v1",
@@ -5484,7 +5499,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0425",
+    "id": "fd_0426",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -5498,7 +5513,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0426",
+    "id": "fd_0427",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01059v1",
@@ -5513,7 +5528,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0427",
+    "id": "fd_0428",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
@@ -5527,7 +5542,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0428",
+    "id": "fd_0429",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00934v1",
@@ -5542,7 +5557,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0429",
+    "id": "fd_0430",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00930v1",
@@ -5556,7 +5571,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Logic"
     ],
-    "id": "fd_0430",
+    "id": "fd_0431",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01294v1",
@@ -5570,7 +5585,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0431",
+    "id": "fd_0432",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00814v1",
@@ -5585,7 +5600,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0432",
+    "id": "fd_0433",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00651v1",
@@ -5594,30 +5609,30 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fibonacci Lower Bound for Extension-Closed Subcategories of Type A_n"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "611a6b62",
     "description": "For the longest element w_0 in the Coxeter group B_n and any Coxeter element c, the normalized volume of the type B c-Birkhoff polytope equals the number of linear extensions of the heap poset Heap(c, w_0). This follows from the unimodular equivalence established in the paper and the classical result that the normalized volume of an order polytope equals the number of linear extensions of the underlying poset, but making the equality explicit and computable provides a concrete formalization target.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0433",
+    "id": "fd_0434",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00646v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T06:55:48.094525+00:00",
     "title": "Normalized volume of type B c-Birkhoff polytopes equals linear extension count of heap posets"
   },
   {
-    "consumed_by_exp_id": "611a6b62",
+    "consumed_by_exp_id": "",
     "description": "The paper proves that the average absolute character sum over y-smooth numbers is o(\u221a\u03a8(x,y)) when q \u2265 x^{1+\u03b5}. This conjecture asserts that the same sub-square-root bound holds at the critical threshold q \u2265 x (i.e., \u03b5 = 0), with a concrete saving factor. Specifically: for every \u03b5 > 0, there exists x\u2080(\u03b5) such that for all x \u2265 x\u2080, all primes q \u2265 x, and all y with (log x)\u2076 \u2264 y \u2264 x^{1/(32 log log x)}, the average absolute smooth character sum satisfies (1/(q-1)) \u03a3_{\u03c7 mod q, \u03c7\u2260\u03c7\u2080} |\u03a3_{n\u2264x, P(n)\u2264y} \u03c7(n)| \u2264 (1\u2212\u03b5)\u221a\u03a8(x,y). This extends the paper's main theorem from q \u2265 x^{1+\u03b5} to the boundary case q \u2265 x, which is the natural threshold where the problem transitions from trivial to nontrivial.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0434",
+    "id": "fd_0435",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00592v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T07:12:40.061772+00:00",
     "title": "Sub-square-root bound for smooth character sums at the critical threshold"
   },
@@ -5628,7 +5643,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_0435",
+    "id": "fd_0436",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00507v1",
@@ -5637,31 +5652,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "DFA State Complexity Lower Bound for the Kochen-Specker Problem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6c708a88",
     "description": "Every brick distinct from K_4, C_6_bar, and the Petersen graph, in which every b-invariant edge is a forcing edge, is near-bipartite. This conjecture, if true, would reduce the full Lucchesi\u2013Murty characterization problem to the near-bipartite case already solved in this paper, by showing that no non-near-bipartite brick (beyond the three exceptions) can have the property that all its b-invariant edges are forcing edges.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0436",
+    "id": "fd_0437",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00608v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T07:51:38.329200+00:00",
     "title": "Near-bipartite reduction for the Lucchesi\u2013Murty property"
   },
   {
-    "consumed_by_exp_id": "6c708a88",
+    "consumed_by_exp_id": "",
     "description": "For the Boolean lattice B_n, let E_n be the set of triples (S,T,U) with S \u2282 T \u2282 U in B_n such that |S| + |T| = |U|. The conjecture states that |E_n| = C(2n,n) - [x^n](1+x+x^2)^n - 2^n + 1, where [x^n] extracts the coefficient of x^n from the polynomial. This identity connects poset chain counting in Boolean lattices with trinomial coefficient extraction and binomial sums, and is the foundational combinatorial identity underlying the paper's analysis of multiplicity parameters.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0437",
+    "id": "fd_0438",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00456v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T08:10:19.413018+00:00",
     "title": "Exact enumeration of arithmetic Schur-type triples in the Boolean lattice"
   },
@@ -5671,7 +5686,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0438",
+    "id": "fd_0439",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00263v1",
@@ -5685,7 +5700,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0439",
+    "id": "fd_0440",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00318v1",
@@ -5699,7 +5714,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0440",
+    "id": "fd_0441",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00282v1",
@@ -5713,7 +5728,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0441",
+    "id": "fd_0442",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00332v1",
@@ -5728,7 +5743,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0442",
+    "id": "fd_0443",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00088v1",
@@ -5743,7 +5758,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0443",
+    "id": "fd_0444",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.32024v1",
@@ -5757,7 +5772,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0444",
+    "id": "fd_0445",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31967v1",
@@ -5771,7 +5786,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_0445",
+    "id": "fd_0446",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00205v1",
@@ -5785,7 +5800,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0446",
+    "id": "fd_0447",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01273v1",
@@ -5800,7 +5815,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0447",
+    "id": "fd_0448",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31908v1",
@@ -5815,7 +5830,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0448",
+    "id": "fd_0449",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31698v1",
@@ -5830,7 +5845,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0449",
+    "id": "fd_0450",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31783v1",
@@ -5845,7 +5860,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0450",
+    "id": "fd_0451",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31761v1",
@@ -5860,7 +5875,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0451",
+    "id": "fd_0452",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31547v1",
@@ -5875,13 +5890,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0452",
+    "id": "fd_0453",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31649v1",
     "status": "available",
     "timestamp": "2026-07-06T13:53:49.731988+00:00",
     "title": "Tamagawa Ratio Criterion for Unbounded Selmer Moments"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A tournament T is cycle Mengerian (CM) if for every nonnegative integral weight function w on arcs, the maximum cycle packing size \u03bd_w(T) equals its fractional relaxation \u03bd*_w(T). T is cycle ideal (CI) if the minimum feedback arc set weight \u03c4_w(T) equals its fractional relaxation \u03c4*_w(T) for all such w. Since \u03bd*_w = \u03c4*_w by LP duality, CM and CI together yield the min-max relation \u03c4_w = \u03bd_w. The conjecture is that these two integrality properties coincide: a tournament is CM if and only if it is CI.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0454",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31565v1",
+    "status": "available",
+    "timestamp": "2026-07-06T14:16:54.372902+00:00",
+    "title": "Cycle Mengerian and Cycle Ideal Equivalence for Tournaments"
   },
   {
     "consumed_by_exp_id": "",
