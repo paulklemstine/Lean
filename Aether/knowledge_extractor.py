@@ -2867,6 +2867,15 @@ Research mode: {concept.research_mode}
                 domain = normalize_domain(job.concept.domain or "MachineLearning")
                 return f"{domain}/{filename}"
 
+            # If domain is "Applications" with NO subdirectory (e.g.
+            # "Applications/Foo.lean"), re-route to the concept's actual
+            # domain. "Applications" is a catch-all that dumps .lean files
+            # at the root — they should go to a proper domain directory.
+            parts_list = [p for p in target_path.replace("\\", "/").split("/") if p]
+            if path_domain == "Applications" and len(parts_list) <= 2:
+                domain = normalize_domain(job.concept.domain or "Algebra")
+                return f"{domain}/{filename}"
+
             # Path looks good — trust Pi's structure
             return target_path
 

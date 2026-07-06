@@ -1,9 +1,0 @@
---- StrongDivPrimitiveCriterion.lean
-+++ StrongDivPrimitiveCriterion.lean
-@@ -1,5 +1,5 @@
- import Mathlib
--import Applications.StrongDivisibilitySequences
-+import Catalog.Applications.StrongDivisibilitySequences
- 
- 
- 
