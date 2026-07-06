@@ -3,46 +3,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition — zeros on the critical line means the bulk geometry is stable against perturbations.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0391",
-    "lineage_refs": [],
-    "priority_score": 0.91,
-    "proof_strategy": "Define the prime partition function Z(beta) = prod_p (1 - e^{-beta log p})^{-1}. Prove Z(beta) = zeta(s) where beta = Re(s)/log(p) in the saddle-point approximation. Define the holographic dictionary: bulk field phi_s(x) in AdS_3 <-> boundary CFT operator O_{1-s}(y) on S^1. Prove the correspondence: phi_s <-> (1 - p^{-s})^{-1} for each prime p. The functional equation Xi(s) = Xi(1-s) is the holographic duality. Prove: if all zeros of Xi(s) are on Re(s) = 1/2, then the bulk AdS geometry is stable (no tachyonic modes). Conversely, an off-critical-line zero at s = 1/2 + epsilon corresponds to a tachyonic instability in the bulk. Test: compute Z(beta) numerically and verify convergence to zeta(s).",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-06T03:03:16.887930+00:00",
-    "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable — theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements — most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark — they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0388",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "Define a dark theorem of level k as a Pi_2 statement 'for all n, there exist at least k values of m such that P(n,m)' such that PA proves the existential claim but PA does not prove P(n,m) for any specific m. Level 1: Paris-Harrington theorem (the strengthened finite Ramsey theorem). Level 2: the Paris-Harrington theorem for the statement 'there exist at least 2 values of m satisfying the Ramsey property'. Prove strictness: if T is level k+1, then T implies a level-k statement that is independent of PA. Prove density: among all Pi_2 statements provable in ZFC, the fraction that are dark approaches 1 as statement length grows. Test: formalize levels 1-3 in Lean 4 using the Paris-Harrington and Goodstein sequences.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-06T03:03:16.788271+00:00",
-    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domain_bridges": [],
     "domains": [
@@ -57,26 +17,6 @@
     "status": "available",
     "timestamp": "2026-07-02T05:18:37.114832+00:00",
     "title": "Deepening: unnamed_concept"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot — the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0389",
-    "lineage_refs": [],
-    "priority_score": 0.81,
-    "proof_strategy": "Define cognitive braids: each brain region is a strand, each neural firing sequence is a crossing. A cognitive process is an element of B_n (braid group on n strands). Two thoughts are equivalent if related by Reidemeister moves. Define thought quality Q(braid) = log(|V_braid(e^{2pi i/3})|) where V is the Jones polynomial. Prove Q is a braid invariant. Prove: trivial braid has V = 1 so Q = 0 (trivial thought). Trefoil has V = -t^2+t+1 so Q = log(|V(e^{2pi i/3})|) = log(sqrt(3)) > 0 (creative thought). Figure-eight has Q = log(2) (confused thought with maximum entanglement). Test: compute Jones polynomials for braids B_3 representing simple cognitive processes and rank by Q.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-06T03:03:16.822092+00:00",
-    "title": "Knots That Think: Cognition as Braiding in Category Theory"
   },
   {
     "ambition_level": "extension",
@@ -157,7 +97,7 @@
       "Brešar (2017)",
       "Chen, Piotrowski, Shreve (1996)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "54d58162",
     "description": "For any graphs G and H, the domination number of their Cartesian product satisfies γ(G□H) ≥ (19 - √73)/18 * γ(G)γ(H).",
     "domain_bridges": [
       "Graph Product Theory",
@@ -172,7 +112,7 @@
     "proof_strategy": "Real-valued optimization of a piecewise maximum function via variable substitution and algebraic manipulation",
     "research_mode": "team",
     "source_exp_id": "2607.01109v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T06:39:03.958610+00:00",
     "title": "Improved Constant for Domination in Cartesian Product of Graphs"
   },
@@ -2754,7 +2694,7 @@
       "Rogers1958",
       "GasperRahman1990"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e92fe2c1",
     "description": "Conjecture that the Rogers–Ramanujan identities hold as equalities of formal power series in the variable q with coefficients in ℕ, i.e., for all non‑negative integers n the coefficient of q^n in the generating function ∑_{k≥0} q^{k(k+1)/2}/(q;q)_k equals the coefficient of q^n in the product ∏_{j≥0} 1/((1−q^{5j+1})(1−q^{5j+4})). This can be expressed as a statement about the equality of two infinite products after truncation to any finite degree, making it falsifiable by checking a finite set of coefficients.",
     "domain_bridges": [
       "math.CO",
@@ -2769,7 +2709,7 @@
     "proof_strategy": "finite_check: verify equality of coefficients up to a bound N and use recurrence to extrapolate; formal proof in Lean will use induction on n with q‑Pochhammer symbol definitions.",
     "research_mode": "team",
     "source_exp_id": "2607.01544v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T09:01:30.241791+00:00",
     "title": "Formalized Rogers–Ramanujan identities for q-Pochhammer symbols"
   },
@@ -2911,7 +2851,7 @@
       "Glazik and Srivastav (2022) - Improved Breaker strategy for C_3",
       "Spencer (2019) - Potential method conjecture"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c2eb3269",
     "description": "For the Maker-Breaker C_k-game on K_n with fixed k ≥ 4, the threshold bias is exactly c_k · n^{(k-2)/(k-1)} where c_k = [(k-1)(2(k-1)/k)^{k-2}]^{1/(k-1)}. That is, Maker wins when q < (1-ε)c_k·n^{(k-2)/(k-1)} and Breaker wins when q > (1+ε)c_k·n^{(k-2)/(k-1)} for any ε > 0 and all sufficiently large n.",
     "domain_bridges": [
       "Probabilistic combinatorics via threshold phenomena",
@@ -2927,7 +2867,7 @@
     "proof_strategy": "The conjecture refines the asymptotic optimality (Θ-bound) of Bednarska-Łuczak by prescribing the exact constant. The paper's potential function method achieves the upper bound; proving the lower bound requires constructing explicit Maker strategies that win below this threshold, closing the gap between their constructive Breaker strategies and the random strategy lower bound.",
     "research_mode": "team",
     "source_exp_id": "2607.01294v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T11:40:15.032234+00:00",
     "title": "Sharp Threshold Constant for Cycle Games"
   },
@@ -4420,7 +4360,7 @@
       "DukeImamogluToth19",
       "BRR3"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9367fe9e",
     "description": "For weight 1/2 sesquiharmonic Maass forms of moderate growth, the weighted Riesz mean of Hurwitz class numbers has an asymptotic expansion of the form ∑_{n≤X} H(n) × weight(n) ∼ C X^α log^k X as X→∞, where C, α, and k depend on the Maass form's spectral parameters.",
     "domain_bridges": [
       "harmonic Maass forms",
@@ -4436,7 +4376,7 @@
     "proof_strategy": "Analyze the spectral decomposition of the introduced L-functions and apply Tauberian techniques to extract coefficients from the Riesz mean.",
     "research_mode": "team",
     "source_exp_id": "2606.28657v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T14:41:26.130876+00:00",
     "title": "Asymptotic Expansion of Weighted Riesz Means for Sesquiharmonic Maass Forms"
   },
@@ -4963,6 +4903,31 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.AG"
+    ],
+    "consumed_by_exp_id": "672a3abc",
+    "description": "Conjecture: Let A be a line arrangement in the complex projective plane of degree d such that every singular point has multiplicity at most 3 (i.e., only double and triple points). If the minimal degree of a Jacobian relation satisfies mdr(A) < d/2, then mdr(A) is combinatorially determined: any other line arrangement B with the same intersection lattice (and hence the same singularity multiplicities) has mdr(B) = mdr(A).",
+    "domain_bridges": [
+      "math.CO",
+      "math.AC"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0225",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the fact that for arrangements with only double and triple points the Jacobian ideal is generated by the partial derivatives of a defining polynomial that is known to be quasi-homogeneous with respect to certain weights. Apply Saito's criterion for freeness and the relation between the exponents of the arrangement and the degrees of minimal syzygies. Show that under the hypothesis mdr < d/2 the arrangement is plus-one generated, which forces the Jacobian syzygy module to have a predictable graded structure determined solely by the intersection lattice. Verify the claim by computing the relevant graded Betti numbers via Gröbner basis techniques in the polynomial ring S = C[x,y,z].",
+    "research_mode": "team",
+    "source_exp_id": "2607.01985v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-03T06:13:22.731805+00:00",
+    "title": "Combinatorial determination of mdr for line arrangements with only double and triple points"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Biedl, Eppstein, Ueckerdt (2025) - Separating Geodesic Structure and Product Structure",
       "Bose et al. (2022) - Layered treewidth vs row treewidth"
     ],
@@ -5041,7 +5006,7 @@
     "proof_strategy": "Establish that all long cycles are blocked by a specific edge, then use a cycle-pairing strategy from poset theory to construct a nontrivial cycle, augmented by a probabilistic counting argument to ensure the existence of a sufficiently long alternative cycle.",
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-07-03T07:37:36.028717+00:00",
     "title": "Existence of a nontrivial cycle of length n-O(n^{2/3}) in Hamiltonian graphs with δ(G) ≥ 3"
   },
@@ -8576,6 +8541,32 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Patel2020",
+      "Hiary2025",
+      "Helfgott"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any real t ≥ 3, the absolute value of the Riemann zeta function on the 1-line is bounded by 1/2 log t + 1.57. This formalizes the primary improved 'trivial' bound from the paper using smoothing techniques, bypassing the need for exponential sum arguments for smaller values of t.",
+    "domain_bridges": [
+      "Real Analysis",
+      "Complex Analysis"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0368",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the smooth approximation of zeta(1+it) using the exponential sum with the kernel exp(-n/X). Decompose the sum, bound the error terms using bounds on |zeta(1/2+it)|, and optimize the parameter X to derive the explicit constant 1.57.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01424v1",
+    "status": "available",
+    "timestamp": "2026-07-06T03:05:44.572503+00:00",
+    "title": "Explicit Upper Bound on the Riemann Zeta Function on the 1-Line via Smoothing"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Theorem A",
       "Proposition big"
     ],
@@ -8589,7 +8580,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0368",
+    "id": "fd_0369",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the explicit description of the 2-Sylow subgroup of S_n as an iterated wreath product and the Murnaghan-Nakayama rule to compute the multiplicity of the irreducible character χ^{λ_n} in the permutation character (1_P)↑^{S_n}. Alternatively, use the characterization of Ω_2(n) via 2-quotients of partitions (as in [G17]) and verify that the 2-quotient of λ_n satisfies the required condition. Another approach is to use the known results on the restriction of irreducible characters to Sylow 2-subgroups and the fact that λ_n is a partition with all parts ≤ 2.",
@@ -8607,7 +8598,7 @@
       "vertex cover",
       "graph modifications"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1e8c0c26",
     "description": "There exists a graph G without a cycle of length d such that at least cd n edge deletions are required to transform G into a graph where each connected component has a vertex cover of size at most (1+c)d.",
     "domain_bridges": [
       "Stability theory in graph algorithms",
@@ -8616,13 +8607,13 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0369",
+    "id": "fd_0370",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a specific graph achieving the lower bound via Pokrovskiy's structure theorem",
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T20:11:01.715515+00:00",
     "title": "Tightness of Edge Deletion Bound in Hyperstability Extension of Erdős-Gallai Theorem"
   },
@@ -8631,7 +8622,7 @@
     "catalog_references": [
       "Lando-Zvonkin, Graphs on Surfaces (2004)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9632b543",
     "description": "Conjecture that for any fixed genus g > 0, there exists a constant C_g > 0 such that the spectral gap γ_{n,g} of the fixed genus chord swap chain on chord diagrams with n chords and genus g satisfies γ_{n,g} ≥ C_g / n for all n > 2g.",
     "domain_bridges": [
       "graph theory",
@@ -8642,33 +8633,33 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0370",
+    "id": "fd_0371",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish a conductance lower bound via a suitable coupling argument that relates chord swaps to graph-theoretic moves, and then use known inequalities to translate this into a polynomial lower bound on the spectral gap for fixed genus.",
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T20:44:48.765213+00:00",
     "title": "Polynomial spectral gap lower bound for fixed genus chord swap chain"
   },
   {
     "ambition_level": "extension",
     "catalog_references": "arXiv:math/XXXX",
-    "consumed_by_exp_id": "9632b543",
+    "consumed_by_exp_id": "",
     "description": "The conjecture posits that the Schottky group W_p for X over ℚ(p) is finitely generated.",
     "domain_bridges": [],
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0371",
+    "id": "fd_0372",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "induction",
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T21:16:37.395514+00:00",
     "title": "Finitely Generated Schottky Group"
   },
@@ -8690,7 +8681,7 @@
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0372",
+    "id": "fd_0373",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the connection via holography: (1) Prove interval counting for high-dimension CFT primaries follows log-correlated field statistics, (2) Show the extremal process converges to Gumbel by analyzing the correlation structure of the underlying Gaussian free field, (3) Translate to AdS side via HKLL reconstruction to bound semiclassical path integral resolution. Use modular invariance and sparseness conditions to control the tail behavior rigorously.",
@@ -8716,7 +8707,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0373",
+    "id": "fd_0374",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive argument on rank bounds combined with matroid minors analysis",
@@ -8743,7 +8734,7 @@
     "domains": [
       "Physics"
     ],
-    "id": "fd_0374",
+    "id": "fd_0375",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a doubly nonnegative graphon W where the spectral inequality t(H,W) ≥ ρ(W)^{2e(H)-v(H)} p(W)^{v(H)-e(H)} holds but t(H,W) < p(W)^{e(H)} fails, demonstrating the equivalence's optimality in the v(H) ≤ e(H) range.",
@@ -8773,7 +8764,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0375",
+    "id": "fd_0376",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof would proceed by (1) constructing the Iwasawa module M as the Fitting module of the spectral resultant using the universal Grover‑Ihara polynomial; (2) applying the structure theorem for finitely generated Δ_₂[[Γ]]‑modules to express μ(M) and λ(M) in terms of elementary divisors; (3) evaluating the resultant at torsion characters χ∈̀_hat{Δ}_₂^× and showing via equivariant descent that the elementary divisors are precisely the values v_p(R(χ)); (4) incorporating the Bass factor (A^2‑1) by factoring det P(U_n) into a coprime part and a power of the Bass factor, and comparing the resulting contributions to the λ‑term. The key technical step is to prove an equivariant Kida formula for the spectral resultant without integrality assumptions, using the factorization for p‑group covers from the paper and a careful analysis of the local units at χ(1)=±1.",
@@ -8802,7 +8793,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0376",
+    "id": "fd_0377",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Explicit construction of arrangements with controlled intersection multiplicities, followed by computation of \\(\\mdr(f)\\) via graded module generation and analysis of Jacobian syzygies using symbolic computation in Lean 4.",
@@ -8829,7 +8820,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0377",
+    "id": "fd_0378",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Interpret r_m(n,k) as counting labelled structures: an ordered partition where each block is either a 'non-tie' of size < m (weight 1) or a 'tie' of size ≥ m (weight y). The exponential generating function for non-tie blocks is A_m(x), for tie blocks is B_m(x). A sequence of such blocks has EGF 1/(1 - (A_m(x) + y B_m(x))). Equating coefficients yields the formula.",
@@ -8855,7 +8846,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0378",
+    "id": "fd_0379",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Verify the conjectured formula by computing class numbers of explicitly constructed quartic CM fields and comparing them to the generalized Hurwitz class numbers defined via the trace formula. This requires formalizing quartic field construction, class group computations, and the definition of H_g(D) in Lean.",
@@ -8887,7 +8878,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0379",
+    "id": "fd_0380",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Verify the conjecture computationally for x ∈ [1, 650) by establishing explicit bounds on D(t) in this range, then combine with the asymptotic result from the paper. The key insight is that the weight (1-x/n) in the smoothed sum eliminates the difficult ψ-term, making the error term fundamentally more tractable than in the classical Walfisz problem.",
@@ -8915,7 +8906,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0380",
+    "id": "fd_0381",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Hasse-Weil L-function derivative at s=1 and the Neron-Tate height of the explicitly defined rational point P_7 = (84, 756) on E_7, and verify their equality using the explicit formula and height computations outlined in Yin's paper.",
@@ -8944,7 +8935,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0381",
+    "id": "fd_0382",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the odd power-sum ring $\\Gamma_t = \\mathbb{Q}(t)[p_1, p_3, p_5, \\ldots]$ as a graded Hopf algebra over $\\mathbb{Q}(t)$. Define the diagonal automorphism $\\mathcal{R}_t$ rescaling $p_n \\mapsto (1-t^n)p_n$ for odd $n$, and prove it is a Hopf algebra automorphism. Define the classical Schur $Q$ vertex operator $\\Phi(z)$ via its exponential form in creation/annihilation operators on $\\Gamma_t$. Construct the modified operator $\\mathcal{Y}_t(z)$ and prove the conjugation identity $\\mathcal{Y}_t(z) = \\mathcal{R}_t \\Phi(z) \\mathcal{R}_t^{-1}$ by verifying that $\\mathcal{R}_t p_n \\mathcal{R}_t^{-1} = (1-t^n)p_n$ and $\\mathcal{R}_t (\\partial/p_n) \\mathcal{R}_t^{-1} = (1-t^n)^{-1} \\partial/p_n$. The plethystic identity then follows by applying both sides to the vacuum vector and extracting coefficients indexed by strict partitions, using that $\\mathcal{R}_t^{-1}|0\\rangle = |0\\rangle$.",
@@ -8972,7 +8963,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0382",
+    "id": "fd_0383",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The existing proof relies on GRH via Artin's generalized primitive root conjecture to guarantee the existence of primes with specific norm properties that enable the Euclidean division. An unconditional proof would likely require circumventing GRH by developing new analytic number theory techniques to establish stronger lower bounds on the relevant prime counting functions, or by discovering an alternative algebraic mechanism for constructing the Euclidean norm function for ray classes.",
@@ -9000,7 +8991,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0383",
+    "id": "fd_0384",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Attempt to decompose the Eulerian triangle square as a product of triangles whose individual real-rootedness preservation is known, or extend the rectangular additive convolution framework to construct an interlacing chain for the squared Eulerian row generating functions. Alternatively, establish that the Eulerian triangle square arises from a Narayana-type transformation applied to a suitable real-rooted polynomial.",
@@ -9027,7 +9018,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0384",
+    "id": "fd_0385",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the definitions of K_{s,t}-free graphs and the counting of labeled subgraphs isomorphic to K_{a,b}. Apply the Kővári–Sós–Turán theorem and double counting arguments, bounding the number of K_{a,b} copies by considering the number of common neighbors of a-sets of vertices.",
@@ -9054,7 +9045,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0385",
+    "id": "fd_0386",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage the real-rootedness of the row generating functions (proven by Dilks and Fang-Zhang-Zhao) combined with the theory of multiplier sequences or Pólya frequency sequences to establish the infinite log-concavity of the total sums. Alternatively, employ recurrence relations and induction with tight asymptotic bounds derived from the asymptotic normality of the row sequences.",
@@ -9082,7 +9073,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0386",
+    "id": "fd_0387",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the determinant criterion for Diophantine tuples and generalizations of the Mason-Stothers theorem over polynomial rings. Combine these with the Combinatorial Nullstellensatz to derive a contradiction if |A| > 6 outside the exceptional family.",
@@ -9108,7 +9099,7 @@
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0387",
+    "id": "fd_0388",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the barrier-adjusted Perron integral comparison method from the current paper to obtain precise asymptotics rather than order-of-magnitude bounds. Key steps: (1) show the barrier adjustment in I(χ) contributes at most o(1) to the normalized moment, allowing direct comparison with the unadjusted integral; (2) establish concentration of the character sum moment around its mean using the fourth moment bounds already developed in the paper; (3) identify the limiting constant via the random multiplicative function model by proving the Euler product structure of the moments converges to the random model value, leveraging the fact that for 0<q<1 the moments are dominated by typical rather than extreme behavior.",
@@ -9119,24 +9110,29 @@
     "title": "Asymptotic equivalence of low moments of character sums and random multiplicative sums"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' — they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.GT",
+      "math.CO"
     ],
-    "id": "fd_0390",
+    "consumed_by_exp_id": "",
+    "description": "Let $M$ be a piecewise-linear manifold of dimension $d \\ge 1$. If $S$ and $T$ are two locally finite triangulations of $M$, then $S$ and $T$ are related by a locally finite sequence of bistellar moves (Pachner moves).",
+    "domain_bridges": [
+      "Geometric Topology",
+      "Combinatorics"
+    ],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_0389",
     "lineage_refs": [],
-    "priority_score": 0.77,
-    "proof_strategy": "Define the periodic table of finite groups: rows indexed by order (atomic number), columns indexed by composition factor pattern (chemical series). Group types: cyclic (noble gases), symmetric (halogens), simple non-abelian (transition metals), nilpotent (alkali metals), solvable non-nilpotent (alkaline earth). Prove: groups in the same column have isomorphic composition factors (Jordan-Holder theorem). Prove: the 'valence' (number of minimal normal subgroups) is determined by the chief factors. Construct the table for order <= 100 and verify periodicity: cyclic groups of prime order form the first column, groups with composition {2,2,3} form the second column, etc. Test: predict properties of groups of order 120 before computing them.",
+    "priority_score": 0.8,
+    "proof_strategy": "Utilize the paper's result that two triangulations with a common subdivision have a common $\\omega$-stellar subdivision. Then, show that the $\\omega$-stellar subdivision can be reached from the original triangulations via locally finite sequences of bistellar moves, extending Pachner's theorem to infinite complexes by controlling the locality of the inverse stellar moves.",
     "research_mode": "team",
-    "source_exp_id": "seed",
+    "source_exp_id": "2607.01349v1",
     "status": "available",
-    "timestamp": "2026-07-06T03:03:16.856350+00:00",
-    "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
+    "timestamp": "2026-07-06T03:06:43.829580+00:00",
+    "title": "Infinite Pachner's Theorem for Locally Finite Triangulations"
   },
   {
     "ambition_level": "extension",
@@ -9157,46 +9153,6 @@
     "status": "available",
     "timestamp": "2026-07-02T05:18:03.424231+00:00",
     "title": "That the entries of an integer right triangle are forced"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions — Maniplexes and tetravalent structures\n\n## 1. Characterising which tetravalent graphs are flag graphs of maniplexes\n\nA tetravalent graph is the flag graph of a rank‑4 maniplex precisely when its\nedges admit a proper colouring by four colours in which each colour class is a\nperfect matching and every pair of non‑adjacent colours decomposes the graph\ninto 4‑gons. We conjecture that a connected tetravalent graph carries such a\ncolouring if and only if it has a fixed‑point‑free automorphism structure whose\ngenerators satisfy the string relations, and that this can be decided in\npolynomial time in the number of vertices.\n*The key insight is* that the \"string\" (4‑gon) condition on non‑adjacent colour\nclasses is a purely local constraint, so admissibility should be checkable by a\nlocal‑to‑global colour‑propagation argument rather than a global search.\n*Why now?* Complete censuses of small tetravalent graphs now exist, giving a\nfinite testbed on which the local characterisation can be exhaustively confirmed\nor refuted before attempting the general theorem.\n\n## 2. Even‑order refinement: the flag count modulo higher powers of two\n\nEvery rank‑4 maniplex has an even number of flags because each colour is a\nfixed‑point‑free involution. We conjecture a sharper statement: the flag count of\na rank‑4 maniplex is always divisible by eight, and by twenty‑four when the\nmaniplex is regular, with the residue class recording how many colour pairs are\nadjacent versus non‑adjacent.\n*The key insight is* that four independent perfect matchings plus the 4‑gon\nstructure of non‑adjacent pairs force nested two‑to‑one pairings of the flags,\ncompounding the factor of two.\n*Why now?* The base evenness result is settled, so the natural next step is to\npin down the exact power of two, and the small‑case data (flag counts\n120, 384, 1152, 14400, all divisible by twenty‑four) already suggests the target.\n\n## 3. From 4‑gons to a full local model of regularity\n\nFor non‑adjacent colour pairs the two matchings bound 4‑gons; for adjacent pairs\nthey bound `2p`‑gons where `p` is a Schläfli‑type parameter. We conjecture that\nthe multiset of these polygon sizes, together with the 4‑gon closure for\nnon‑adjacent pairs, is a complete isomorphism invariant for *regular* rank‑4\nmaniplexes — i.e. two regular 4‑maniplexes are isomorphic iff their colour‑pair\npolygon data agree.\n*The key insight is* that regularity makes the connection group act freely and\ntransitively, so the entire object is reconstructible from the finitely many\nlocal relations among the four generators.\n*Why now?* The 4‑gon result for non‑adjacent pairs is now proved, providing the\nfirst coordinate of the proposed invariant and a template for the adjacent‑pair\npolygons.\n\n## 4. Rank‑`n` generalisation and valence `n`\n\nThe rank‑4 flag graph is 4‑valent because there are four connection involutions.\nWe conjecture that for every rank `n` the flag graph of a rank‑`n` maniplex is\nexactly `n`‑valent and properly `n`‑edge‑coloured, and that the string condition\nforces every non‑adjacent colour pair to bound 4‑gons, so the census\ncorrespondence lifts verbatim from tetravalent graphs to `n`‑valent graphs.\n*The key insight is* that valence, evenness, and the 4‑gon structure each follow\nfrom a single colour‑at‑a‑time argument that does not use the specific value\n`n = 4`.\n*Why now?* With the rank‑4 case fully established, the uniform argument can be\nabstracted over `n`, turning a family of separate census projects into one.\n\n## 5. Counting regular maniplexes by connection‑group order\n\nBecause a regular maniplex has as many flags as its connection group has\nelements, enumerating regular rank‑4 maniplexes reduces to classifying the finite\nquotients of the universal Coxeter‑type string group on four involutions by\ntorsion‑free, string‑preserving normal subgroups. We conjecture that the number\nof regular rank‑4 maniplexes with exactly `N` flags is finite for every `N` and\ngrows subexponentially in `N`.\n*The key insight is* that regularity converts a geometric enumeration into a\ngroup‑theoretic one about normal subgroups of a single finitely presented group.\n*Why now?* The flag‑count = group‑order dictionary is exactly the bridge proved\nhere, and modern computational group theory can generate the required subgroup\nlattices for small `N` to test the growth conjecture.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Bridges"
-    ],
-    "id": "fd_0393",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "e29ffbac",
-    "status": "available",
-    "timestamp": "2026-07-06T03:05:23.108423+00:00",
-    "title": "A tetravalent graph is the flag graph of a rank‑4 maniplex precisely when its"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Every real number defines a musical scale: map the digits 0-9 to frequencies f_n = 220 * 2^{n/12} (the A minor pentatonic scale extended). The number pi = 3.14159265... produces the sequence E4, C5, C#5, D5, D#5, F5, E5, A4, G5, C5... — a melody. Conjecture: The melody of pi is not periodic (because pi is irrational) but has musical structure: the autocorrelation of the digit sequence at lag 12 (one octave) is positive and statistically significant. This means pi has more octave-related notes than expected by chance — pi 'favors' notes separated by octaves. Similarly, e 'favors' perfect fifths (lag 7) and sqrt(2) 'favors' minor thirds (lag 3). The musical structure of transcendental numbers reflects their continued fraction properties: numbers with bounded partial quotients have more consonant melodies. Test: compute the digit autocorrelation of pi, e, and sqrt(2) at lags 0-12 (representing unison through octave). Perform a chi-squared test comparing to the uniform distribution. Generate the 'music' of each constant and analyze for tonal centers. Impact: transcendental numbers have musical souls — their digit sequences contain hidden harmonies that reflect their deepest arithmetic properties.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0392",
-    "lineage_refs": [],
-    "priority_score": 0.72,
-    "proof_strategy": "Map digits 0-9 to frequencies f_n = 220 * 2^{n/12} Hz (chromatic scale starting at A3). Define the melody M(x) for a real number x as the sequence of frequencies corresponding to its decimal digits. Compute the autocorrelation R(k) = sum_{i} (d_i - 4.5)(d_{i+k} - 4.5) / N for lags k = 0,1,...,12. Under the null hypothesis (digits are uniformly random), R(k) ~ Normal(0, 1/N). Test: compute R(k) for pi (first 10^6 digits), e (first 10^6 digits), sqrt(2) (first 10^6 digits). If R(k) > 2/sqrt(N) for some k, that lag is statistically significant. Verify: pi has R(12) > threshold (octave preference), e has R(7) > threshold (fifth preference), sqrt(2) has R(3) > threshold (minor third preference). Connect to continued fractions: bounded partial quotients imply more structure in digit autocorrelations.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-06T03:03:16.923301+00:00",
-    "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
   },
   {
     "ambition_level": "extension",
