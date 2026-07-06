@@ -1839,7 +1839,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-existence of solutions for (a^n+1)(b^n+1)=x\u00b2 when gcd(a,b) > 1 and n is even"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0f585a18",
     "description": "For an edge-colored graph that is a minimal obstruction to total rainbow forests, there exists a unique subset A \u2286 E(G) where r\u2081(A) + r\u2082(E\\A) < t, and this failure is strict for no other subset.",
     "domains": [
       "Bridges"
@@ -1848,7 +1848,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31240v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T20:43:33.710473+00:00",
     "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality for exactly one edge subset"
   },
@@ -6305,12 +6305,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any \u0394-matroid M = (E, F) on a finite ground set E with feasible sets F, M is a strong \u0394-matroid (satisfying Wenzel's symmetric exchange property) if and only if M has no peerless antipodes. An antipode of a feasible set X \u2208 F is a feasible set Y \u2208 F such that X and Y are at maximum Hamming distance among all pairs of feasible sets. A peerless antipode is an antipode that is the unique antipode of its partner feasible set. The peerless antipode property bans the existence of any peerless antipode in the system of feasible sets.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0499",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02419v1",
+    "status": "available",
+    "timestamp": "2026-07-06T22:54:20.046686+00:00",
+    "title": "Equivalence of strong \u0394-matroid and peerless antipode characterizations"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any full-dimensional convex polytope P in \u211d^d, the set of centerpoints of P (with respect to the uniform Lebesgue measure on P) coincides with the floating body of P at level 1/(d+1). That is, a point c \u2208 \u211d^d is a centerpoint\u2014meaning every closed halfspace containing c captures at least 1/(d+1) of the volume of P\u2014if and only if c belongs to the intersection of all closed halfspaces H\u207a satisfying vol(H\u207a \u2229 P) \u2265 vol(P)/(d+1). This equivalence, proved in the paper for convex polytopes, reveals a fundamental structural identity between a combinatorial-geometric object (centerpoints) and a convex-geometric object (floating bodies). Formalizing even the 2-dimensional case for triangles would require developing substantial infrastructure in convex geometry, measure theory on polytopes, and the centerpoint theorem.",
     "domains": [
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_0499",
+    "id": "fd_0500",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02400v1",
@@ -6325,13 +6339,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0500",
+    "id": "fd_0501",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
     "status": "available",
     "timestamp": "2026-07-06T22:21:20.880694+00:00",
     "title": "Full part-count spectrum of the Sylow 2-permutation character of S_n"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The cyclotomic matrix $A_k(\\chi) = [G_N(\\chi^{ki+kj})]$ involving Gauss sums over $\\mathbb{Z}/N\\mathbb{Z}$ (where $N=p^m$ and $n=\\varphi(N)/k$) can be decomposed as the matrix product $W D W^T$, where $W$ is the $n \\times n$ discrete Fourier transform matrix with entries $W_{i,a} = \\omega^{ai}$ ($\\omega$ being a primitive $n$-th root of unity) and $D$ is the diagonal matrix of the $n$ Gauss periods $\\eta_a$ corresponding to the $k$-th power residue cyclotomic cosets.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0502",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02392v1",
+    "status": "available",
+    "timestamp": "2026-07-06T22:55:43.909167+00:00",
+    "title": "Factorization of Cyclotomic Gauss Sum Matrix"
   },
   {
     "consumed_by_exp_id": "",

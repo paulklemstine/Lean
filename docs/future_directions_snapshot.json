@@ -3364,7 +3364,7 @@
       "Edmonds' Matroid Intersection Theorem",
       "Rainbow Forest Inequality"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0f585a18",
     "description": "For an edge-colored graph that is a minimal obstruction to total rainbow forests, there exists a unique subset A ⊆ E(G) where r₁(A) + r₂(E\\A) < t, and this failure is strict for no other subset.",
     "domain_bridges": [
       "Cycle matroid rank function",
@@ -3379,7 +3379,7 @@
     "proof_strategy": "Characterize minimal obstructions by analyzing the structure of subsets A where the inequality fails, leveraging matroid intersection properties to show uniqueness of the critical cut.",
     "research_mode": "team",
     "source_exp_id": "2606.31240v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T20:43:33.710473+00:00",
     "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality for exactly one edge subset"
   },
@@ -11707,6 +11707,32 @@
     "title": "Atkin-Lehner Genus Zero Criterion for Giampietro-Darmon Factorization"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "matroid_theory",
+      "delta_matroids"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any Δ-matroid M = (E, F) on a finite ground set E with feasible sets F, M is a strong Δ-matroid (satisfying Wenzel's symmetric exchange property) if and only if M has no peerless antipodes. An antipode of a feasible set X ∈ F is a feasible set Y ∈ F such that X and Y are at maximum Hamming distance among all pairs of feasible sets. A peerless antipode is an antipode that is the unique antipode of its partner feasible set. The peerless antipode property bans the existence of any peerless antipode in the system of feasible sets.",
+    "domain_bridges": [
+      "tropical_geometry",
+      "algebraic_geometry"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0499",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize Δ-matroids as dependent types on finite sets with feasible set collections. Define the symmetric exchange property (strong), the antipode relation via Hamming distance on symmetric difference, and the peerless antipode predicate. The forward direction proceeds by contradiction: assuming a peerless antipode exists, derive a violation of symmetric exchange. The reverse direction uses the peerless antipode property to construct the required exchange elements by showing that any failure of symmetric exchange would produce a peerless antipode configuration. The tropical algebraic motivation via orthogonal Grassmannian tropicalization may provide alternative algebraic proof strategies.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02419v1",
+    "status": "available",
+    "timestamp": "2026-07-06T22:54:20.046686+00:00",
+    "title": "Equivalence of strong Δ-matroid and peerless antipode characterizations"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "math.MG",
@@ -11724,7 +11750,7 @@
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_0499",
+    "id": "fd_0500",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof proceeds in two parts. (1) Show every point in the floating body Float(P, 1/(d+1)) is a centerpoint: any halfspace containing a point in the floating body captures at least 1/(d+1) of the volume by definition of the floating body. (2) Show every centerpoint lies in the floating body: given a centerpoint c, for any halfspace H⁺ with vol(H⁺ ∩ P) ≥ vol(P)/(d+1), show c ∈ H⁺ by contradiction—if c ∉ H⁺, then the complementary halfspace H⁻ contains c but has volume at most d/(d+1), contradicting the centerpoint property when one constructs a halfplane through c that captures less than 1/(d+1) of the volume. The polytopal structure enters via the piecewise-rational decomposition of the cap-volume function, which ensures the floating body is semialgebraic and the infimum in its definition is attained.",
@@ -11752,7 +11778,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0500",
+    "id": "fd_0501",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use Theorem A to handle k ≤ a_1+t-1 (all such non-hook partitions are automatically in Ω₂(n)). For the range a_1+t ≤ k ≤ ⌈n/2⌉, construct explicit non-hook partitions with k parts that lie in Ω₂(n) by leveraging the branching rule and the structure of the Sylow 2-subgroup as an iterated wreath product of C_2. The upper bound k = ⌈n/2⌉ is covered by the paper's Proposition. The intermediate values require exhibiting witnesses, potentially using two-part partitions (n-k, k) and their relation to Young subgroups.",
@@ -11761,6 +11787,32 @@
     "status": "available",
     "timestamp": "2026-07-06T22:21:20.880694+00:00",
     "title": "Full part-count spectrum of the Sylow 2-permutation character of S_n"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Gauss_sum",
+      "Vandermonde_matrix",
+      "Cyclotomic_field"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The cyclotomic matrix $A_k(\\chi) = [G_N(\\chi^{ki+kj})]$ involving Gauss sums over $\\mathbb{Z}/N\\mathbb{Z}$ (where $N=p^m$ and $n=\\varphi(N)/k$) can be decomposed as the matrix product $W D W^T$, where $W$ is the $n \\times n$ discrete Fourier transform matrix with entries $W_{i,a} = \\omega^{ai}$ ($\\omega$ being a primitive $n$-th root of unity) and $D$ is the diagonal matrix of the $n$ Gauss periods $\\eta_a$ corresponding to the $k$-th power residue cyclotomic cosets.",
+    "domain_bridges": [
+      "Linear_algebra",
+      "Abstract_algebra"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0502",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Rewrite the Gauss sum $G_N(\\chi^{k(i+j)})$ by partitioning the summation over $(\\mathbb{Z}/N\\mathbb{Z})^\\times$ into the $n$ cyclotomic cosets $C_a$ modulo $k$. Express $\\chi^{k(i+j)}(x)$ as $\\omega^{a(i+j)}$ for $x \\in C_a$, pulling the root of unity out of the sum to yield $\\sum_{a=0}^{n-1} \\omega^{a(i+j)} \\eta_a$, which directly translates to the matrix factorization $A_k(\\chi) = W D W^T$.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02392v1",
+    "status": "available",
+    "timestamp": "2026-07-06T22:55:43.909167+00:00",
+    "title": "Factorization of Cyclotomic Gauss Sum Matrix"
   },
   {
     "ambition_level": "extension",

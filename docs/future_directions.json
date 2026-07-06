@@ -7787,14 +7787,14 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Edmonds' Matroid Intersection Theorem",
         "Rainbow Forest Inequality"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "0f585a18",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -7809,7 +7809,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0165",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-06T22:55:46.460693+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem minimal_obstruction_iff_unique_failure (G : EdgeColoredGraph) (t : ℕ) (H : minimal_obstruction G t) : ∃! A ⊆ E G, λA : EdgeSubset G, r1 A + r2 (E \\ A) < t",
       "lineage_refs": [],
@@ -7824,7 +7824,7 @@
       "source": "",
       "source_exp_id": "2606.31240v1",
       "source_path": "http://arxiv.org/abs/2606.31240v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T20:43:33.710473+00:00",
       "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality for exactly one edge subset"
@@ -9487,7 +9487,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Babson et al. (2013), Atkins & Gwilliam",
         "Carranza & Kapulkin (2008)"
@@ -9510,7 +9510,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0201",
-      "last_attempt_time": "2026-07-06T22:21:31.652555+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Formalization of adjunction alignment and naturality conditions in the proof of conclusion",
       "lineage_refs": [],
@@ -11877,7 +11877,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "arXiv:2305.12345",
         "C. P. V. et al., Twisting endomorphisms, J. Number Theory 2021",
@@ -11902,7 +11902,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0251",
-      "last_attempt_time": "2026-07-06T22:21:25.779106+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem exists_prime_degree_O_twisting_endomorphism {p : ℕ} {D : ℤ} (hp : Nat.Prime p) (hD : D < 0) \n  (h_inert : quadratic_char D p = -1) {O : ImaginaryQuadraticOrder D} \n  (E : SupersingularCurve ℱ[p]) (ι : OOrientation E) :\n  ∃ (ℓ : ℕ) (hℓ : Nat.Prime ℓ) (α : Endomorphism E),\n    (α.degree = ℓ) ∧\n    (ι.ω.comp α = α.comp ι.ω) :=\n  sorry",
       "lineage_refs": [],
@@ -21422,7 +21422,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.NT",
         "math.RT"
@@ -21446,7 +21446,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0449",
-      "last_attempt_time": "2026-07-06T22:21:39.750991+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem de_rham_local_global_compat_torsion\n    (F : Type*) [Field F] [NumberField F] [IsCMField F]\n    (n : ℕ) (hn : n ≥ 2) (ℓ : ℕ) [Fact (Nat.Prime ℓ)]\n    (ρ_bar : GaloisGroup F → GL n (Fq_bar ℓ))\n    [Continuous ρ_bar]\n    (h_torsion : ArisesFromModℓBettiCohomology ρ_bar n ℓ)\n    (v : FinitePlace F) (hv : v ∣ ℓ)\n    (π : AutomorphicRepresentation F n)\n    (h_corr : CorrespondsTo ρ_bar π) :\n    IsDeRham (ρ_bar.restrict (GaloisGroup (Completion F v))) ∧\n    HodgeTateWeights (ρ_bar.restrict (GaloisGroup (Completion F v)))\n      = InfinitesimalCharacterWeights π v",
       "lineage_refs": [],
@@ -23899,6 +23899,53 @@
       "title": "Atkin-Lehner Genus Zero Criterion for Giampietro-Darmon Factorization"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "matroid_theory",
+        "delta_matroids"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any Δ-matroid M = (E, F) on a finite ground set E with feasible sets F, M is a strong Δ-matroid (satisfying Wenzel's symmetric exchange property) if and only if M has no peerless antipodes. An antipode of a feasible set X ∈ F is a feasible set Y ∈ F such that X and Y are at maximum Hamming distance among all pairs of feasible sets. A peerless antipode is an antipode that is the unique antipode of its partner feasible set. The peerless antipode property bans the existence of any peerless antipode in the system of feasible sets.",
+      "domain_bridges": [
+        "tropical_geometry",
+        "algebraic_geometry"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0499",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem strong_delta_matroid_iff_no_peerless_antipodes {E : Type*} [Fintype E] [DecidableEq E] (F : Finset (Finset E)) (h_delta : IsDeltaMatroid F) : IsStrongDeltaMatroid F ↔ ¬HasPeerlessAntipode F := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize Δ-matroids as dependent types on finite sets with feasible set collections. Define the symmetric exchange property (strong), the antipode relation via Hamming distance on symmetric difference, and the peerless antipode predicate. The forward direction proceeds by contradiction: assuming a peerless antipode exists, derive a violation of symmetric exchange. The reverse direction uses the peerless antipode property to construct the required exchange elements by showing that any failure of symmetric exchange would produce a peerless antipode configuration. The tropical algebraic motivation via orthogonal Grassmannian tropicalization may provide alternative algebraic proof strategies.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.02419v1",
+      "source_path": "http://arxiv.org/abs/2607.02419v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-06T22:54:20.046686+00:00",
+      "title": "Equivalence of strong Δ-matroid and peerless antipode characterizations"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -23926,7 +23973,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0499",
+      "id": "fd_0500",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem centerpoint_floating_body_coincidence\n    {d : ℕ} {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n    [FiniteDimensional ℝ E] (hd : FiniteDimensional.finrank ℝ E = d + 1)\n    {P : ConvexBody E} (hP : IsPolytope P) :\n    centerpointSet P = floatingBody P (1 / (d + 1 + 1) : ℝ) := by\n  sorry",
@@ -23975,7 +24022,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0500",
+      "id": "fd_0501",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sylow2_parts_spectrum (n : ℕ) (hn : 4 ≤ n) (k : ℕ) (hk : 2 ≤ k ∧ k ≤ (n + 1) / 2) : ∃ λ : Partition n, ¬IsHookPartition λ ∧ λ.length = k ∧ χ λ ∈ Omega2 n := by\n  sorry",
@@ -23995,6 +24042,53 @@
       "thread_id": "",
       "timestamp": "2026-07-06T22:21:20.880694+00:00",
       "title": "Full part-count spectrum of the Sylow 2-permutation character of S_n"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Gauss_sum",
+        "Vandermonde_matrix",
+        "Cyclotomic_field"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The cyclotomic matrix $A_k(\\chi) = [G_N(\\chi^{ki+kj})]$ involving Gauss sums over $\\mathbb{Z}/N\\mathbb{Z}$ (where $N=p^m$ and $n=\\varphi(N)/k$) can be decomposed as the matrix product $W D W^T$, where $W$ is the $n \\times n$ discrete Fourier transform matrix with entries $W_{i,a} = \\omega^{ai}$ ($\\omega$ being a primitive $n$-th root of unity) and $D$ is the diagonal matrix of the $n$ Gauss periods $\\eta_a$ corresponding to the $k$-th power residue cyclotomic cosets.",
+      "domain_bridges": [
+        "Linear_algebra",
+        "Abstract_algebra"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "github_issue": 0,
+      "id": "fd_0502",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem cyclotomic_gauss_matrix_factorization\n    {N : ℕ} {p m k : ℕ} {χ : (ZMod N)ˣ →* Circle} (g : (ZMod N)ˣ)\n    (hN : N = p ^ m) (hk : k ∣ Nat.totient N) (hχ : IsGenerator χ) :\n    let n := (Nat.totient N) / k\n    let ω := χ ^ k g\n    let A := Matrix.of fun i j : Fin n => gaussSum N (χ ^ (k * (i : ℕ) + k * (j : ℕ)))\n    let W := Matrix.of fun i a : Fin n => ω ^ ((a : ℕ) * (i : ℕ))\n    let D := Matrix.diagonal (fun a : Fin n => gaussPeriod N k a)\n    A = W * D * W.transpose :=\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Rewrite the Gauss sum $G_N(\\chi^{k(i+j)})$ by partitioning the summation over $(\\mathbb{Z}/N\\mathbb{Z})^\\times$ into the $n$ cyclotomic cosets $C_a$ modulo $k$. Express $\\chi^{k(i+j)}(x)$ as $\\omega^{a(i+j)}$ for $x \\in C_a$, pulling the root of unity out of the sum to yield $\\sum_{a=0}^{n-1} \\omega^{a(i+j)} \\eta_a$, which directly translates to the matrix factorization $A_k(\\chi) = W D W^T$.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.02392v1",
+      "source_path": "http://arxiv.org/abs/2607.02392v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-06T22:55:43.909167+00:00",
+      "title": "Factorization of Cyclotomic Gauss Sum Matrix"
     },
     {
       "ambition_level": "extension",
@@ -24041,7 +24135,6 @@
   "recent_domain_counts": {},
   "recent_theme_keywords": {},
   "selection_log": [
-    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
