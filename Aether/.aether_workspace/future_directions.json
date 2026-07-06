@@ -5668,7 +5668,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Ramanujan's Lost Notebook (RlostIV, RlostV)",
         "Andrews (1986) 'Questions about partition functions'",
@@ -5678,7 +5678,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "79fcdf2e",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -5696,7 +5696,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0121",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-06T03:43:47.874083+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem andrews_sign_family {F : ℕ → ℚ} [q_hypergeometric_family F] :\n  ∃ E : set ℕ, is_density_zero E ∧\n  (∀ n, F n = 0 ↔ n ∈ {n | F n = 0}) ∧\n  (∀ n ∉ E, ∃ ε : ℚ, ε = ±1 ∧ F (n+1) = -ε * F n)",
       "lineage_refs": [],
@@ -5711,7 +5711,7 @@
       "source": "",
       "source_exp_id": "2607.01210v1",
       "source_path": "http://arxiv.org/abs/2607.01210v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T01:56:10.723921+00:00",
       "title": "Alternating Sign Conjecture for Andrews' q-Series Families"
@@ -11687,7 +11687,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "arXiv:2405.12345"
       ],
@@ -11709,7 +11709,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0247",
-      "last_attempt_time": "2026-07-06T03:26:15.946223+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem FKKK_stability {n : ℕ} (f g : Fin n → Bool) (hf : Monotone f) (hg : Monotone g) (ε : ℝ) (hε : Cov f g ≤ 4 * ∑ s : Finset (Fin n), s.Nonempty, (s.card : ℝ) * (FourierHat f s)^2 * (FourierHat g s)^2 + ε) : (DisjointSupp f g) ∨ (∃ i : Fin n, f = fun x => x i ∧ g = fun x => x i) ∨ (∃ i j : Fin n, i ≠ j ∧ ( (L2Close f (fun x => x i ∧ x j) ε) ∧ (L2Close g (fun x => x i ∨ x j) ε) ) ∨ ( (L2Close f (fun x => x i ∨ x j) ε) ∧ (L2Close g (fun x => x i ∧ x j) ε) )) := by sorry",
       "lineage_refs": [],
@@ -14428,7 +14428,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Classification of Boolean Cubic Forms in Ten Variables"
       ],
@@ -14450,7 +14450,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0304",
-      "last_attempt_time": "2026-07-06T03:26:21.705803+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem main_classification : Finset.card (nonzero_orbits (BooleanCubicForm 10) (GL_action 10)) = 3691560 := by sorry",
       "lineage_refs": [],
@@ -17604,6 +17604,57 @@
       "title": "Finiteness of Sign Exceptions for Andrews' q-Series v_2"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "KMR13",
+        "KMR14",
+        "PR12",
+        "Kane2013"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "1e8c0c26",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any prime p, the Markov chain on ℕ defined by the Klagsbrun-Mazur-Rubin twist process for p-Selmer ranks of even-dimensional Galois modules satisfying the KMR technical conditions is irreducible, aperiodic, and positive recurrent. Its unique stationary distribution π assigns strictly positive probability to every rank r ∈ ℕ, and the distribution of p-Selmer ranks in the twist family ordered by the product of ramified primes converges to π.",
+      "domain_bridges": [
+        "probability_theory",
+        "markov_chains_on_countable_spaces",
+        "galois_cohomology",
+        "class_field_theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Computation"
+      ],
+      "github_issue": 0,
+      "id": "fd_0370",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem kmr_selmer_rank_convergence (p : ℕ) [hp : Fact (Nat.Prime p)] {K : Type*} [Field K] [NumberField K] {M : Type*} [GaloisModule M] [EvenDimensional M p] [KMRConditions M p] : ∃! (π : ℕ → ℝ), IsStationaryDistribution (kmrChain p M) π ∧ (∀ r, 0 < π r) ∧ ∀ r₀, Tendsto (fun n => (kmrChain p M)^n r₀) atTop (π)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "1) Define the KMR Markov chain as an explicit stochastic kernel on ℕ capturing the effect of local twist conditions on p-Selmer ranks. 2) Prove irreducibility by constructing explicit paths from any state to any other via sequences of local twist operations. 3) Prove aperiodicity by exhibiting positive self-loop probability at state 0. 4) Establish positive recurrence via drift analysis or Lyapunov function arguments on the countable state space. 5) Apply the convergence theorem for irreducible aperiodic positive recurrent chains to deduce convergence to the unique stationary distribution. 6) Positivity of π follows from irreducibility.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.01126v1",
+      "source_path": "http://arxiv.org/abs/2607.01126v1",
+      "status": "in_progress",
+      "thread_id": "",
+      "timestamp": "2026-07-06T03:42:58.157244+00:00",
+      "title": "KMR Markov chain convergence and positivity of p-Selmer rank stationary distribution"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -17614,7 +17665,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "1e8c0c26",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -17629,7 +17680,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0370",
+      "id": "fd_0371",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "def λ (n : ℕ) : Partition n :=\n  ⟨List.replicate (n / 2) 2 ++ if n % 2 = 1 then [1] else [],\n   by sorry, by sorry⟩\n\ntheorem max_parts_achieved_by_all_twos (n : ℕ) (hn : n ≥ 1) : λ n ∈ Ω₂ n := by sorry",
@@ -17645,7 +17696,7 @@
       "source": "",
       "source_exp_id": "2607.02433v1",
       "source_path": "http://arxiv.org/abs/2607.02433v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-05T19:45:16.570930+00:00",
       "title": "The all-twos partition achieves the maximum number of parts in Ω₂(n)"
@@ -17677,7 +17728,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0371",
+      "id": "fd_0372",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀c>0, ∃G: no_cycle_length d ∧ min_deletions(G) ≥ cd |V(G)|",
@@ -17724,7 +17775,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0372",
+      "id": "fd_0373",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem fixed_genus_spectral_gap_lower_bound {g : ℕ} (hg : 0 < g) {n : ℕ} (hn : n > 2 * g) : ∃ (C : ℝ), 0 < C ∧ ∀ (x y : chord_diagram n g), (1 - C / (n : ℝ)) * dist x y ≤ dist (swap x y) (swap y x) := by sorry",
@@ -17765,7 +17816,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0373",
+      "id": "fd_0374",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "finite_generation",
@@ -17814,7 +17865,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0374",
+      "id": "fd_0375",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem black_hole_extremal_gumbel (c : ℝ) (h : c > 0) : let N_dist := lambda_microstate_count_dist c in let ΔN := extremal_fluctuation N_dist in (∃ (normalization : ℝ → ℝ), weak_convergence (distribution_of (normalization ∘ ΔN)) (gumbel_distribution))",
@@ -17861,7 +17912,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0375",
+      "id": "fd_0376",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀ {r : ℕ} (k : ℕ) (M : Matroid r), (∀ {B1 B2 B1' B2' : Basis M} (h : MultisetUnion B1 B2 = MultisetUnion B1' B2'), ∃ (seq : List (SymmetricExchange M)), seq ≡ TransformBases (B1, B2) (B1', B2') seq)",
@@ -17909,7 +17960,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0376",
+      "id": "fd_0377",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem spectral_transfer_sharpness (C : AdmissibleClass) : (∃ H : SimpleGraph, is_bipartite H ∧ vertex_count H = 5 ∧ edge_count H = 4) ∧ (∀ W : Graphon, W ∈ C → t(H, W) ≥ (spectral_radius W)^(2*4 - 5) * (density W)^(5 - 4)) ∧ ¬ (∀ W : Graphon, W ∈ C → t(H, W) ≥ (density W)^4)",
@@ -17960,7 +18011,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0377",
+      "id": "fd_0378",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "/-- Conjecture: The μ‑invariant of the module generated by the spectral resultant equals the maximal p‑adic valuation of the resultant at torsion characters. -/\n\ntheorem spectral_resultant_mu_invariant\n  (X : Graph) (alpha : VoltageAssignment X) (P : Polynomial) :\n  let R := spectral_resultant X alpha P;\n  let M := fitting_module_zero R;\n  μ M = Finset.sup (Finset.image (fun χ => v_p (R χ)) torsionCharacters) (·) :=\n  by\n    -- TODO: formalise the Kida‑type formula and prove the equality.\n    admit",
@@ -18010,7 +18061,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0378",
+      "id": "fd_0379",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mdr_counterexample : exists f g : arrangement_of_lines_in_P2, (mdr f = 4) ∧ (mdr g = 5) ∧ (intersection_lattice f = intersection_lattice g) ∧ (degree f = 9) ∧ (mdr f < 9 / 2)",
@@ -18058,7 +18109,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0379",
+      "id": "fd_0380",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem bivariate_egf_snail_race (m : ℕ) (hm : m ≥ 1) : (∑' (n : ℕ), ∑' (k : ℕ), (r_m n k : ℝ) * x ^ n / n! * y ^ k) = 1 / (1 - (∑' (i : ℕ), if 1 ≤ i ∧ i < m then x ^ i / i! else 0) - y * (Real.exp x - 1 - ∑' (i : ℕ), if 1 ≤ i ∧ i < m then x ^ i / i! else 0)) := by sorry",
@@ -18105,7 +18156,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0380",
+      "id": "fd_0381",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem generalized_hurwitz_formula (K : Type*) [nf : NarrowClassNumberOne K] (D : ℤ) [hd : FundamentalDiscriminant D] : ∃ (F : Type*) [ quartic_CM_field F ] [discriminant F = D], H_g K D = (class_number F) / 2",
@@ -18158,7 +18209,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0381",
+      "id": "fd_0382",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem smoothed_sigma_error_integral_negative (x : ℝ) : x ≥ 1 → ∫ (t : ℝ) in 1..x, (∑ n in Finset.range (⌊t⌋ + 1) with 1 ≤ n, σ n - (t^2 * π^2 / 6)) / t^2 < 0",
@@ -18207,7 +18258,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0382",
+      "id": "fd_0383",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem yin_gross_zagier_formula_p7 :\n  let E : EllipticCurve ℚ := ⟨![0, 0, 0, 49 / 4, 0], by decide⟩\n  let P := E.point 84 756 (by decide)\n  L_derivative E 1 / Omega E = (1 / 2) * height ℚ P :=\n  by sorry",
@@ -18257,7 +18308,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0383",
+      "id": "fd_0384",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem shifted_t_schur_plethystic_identity\n    {R : Type*} [CommRing R] [IsDomain R]\n    (λ : StrictPartition) (t : R) :\n    shiftedTSchur λ t =\n      schurQ λ (plethysticSubst (fun ω => ω - t • ω) oddPowerSumAlgebra) := by\n  sorry",
@@ -18306,7 +18357,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0384",
+      "id": "fd_0385",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.NumberTheory.RayClassGroup\n\n-- Conjecture: Unconditional Euclidean Systems for Ray Classes\ntheorem unconditional_euclidean_system_ray_class \n    {K : Type*} [Field K] [NumberField K]\n    [IsGalois K ℚ] [IsTotallyReal K] \n    (h_deg : FiniteDimensional.finrank K ℚ ≥ 3)\n    (p : ℕ) (hp : Nat.Prime p) (hp_odd : Odd p) \n    (h_not_split : ¬ SplitsCompletely p (𝓞 K))\n    {N : ℕ} (hN : 0 < N)\n    (C : Set (RayClassGroup K (Ideal.map (algebraMap ℤ (𝓞 K)) (Ideal.span {(p : ℤ)}) ^ N)))\n    (h_gen : GeneratesRayClassGroup C) :\n    IsEuclideanSystemOfRayClasses C := by\n  sorry",
@@ -18355,7 +18406,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0385",
+      "id": "fd_0386",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "def eulerian (n k : ℕ) : ℕ := sorry\n\ndef eulerianSquare (n k : ℕ) : ℕ :=\n  ∑ j ∈ Finset.range (n + 1), eulerian n j * eulerian j k\n\ndef eulerianSquareRGF (n : ℕ) : Polynomial ℝ :=\n  ∑ k ∈ Finset.range (n + 1), (eulerianSquare n k : ℝ) • Polynomial.X ^ k\n\ntheorem eulerian_square_real_rooted (n : ℕ) :\n    ∀ z : ℂ, (eulerianSquareRGF n).IsRoot z → z.im = 0 := by\n  sorry",
@@ -18403,7 +18454,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0386",
+      "id": "fd_0387",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "def numCopiesK_ab (G : SimpleGraph V) [DecidableRel G.Adj] [Fintype V] [DecidableEq V] (a b : ℕ) : ℕ := \n  (Finset.univ.filter (fun (A : Finset V) => A.card = a)).attach.sum fun A =>\n  (Finset.univ.filter (fun (B : Finset V) => B.card = b ∧ Disjoint A.1 B ∧ ∀ x ∈ A.1, ∀ y ∈ B, G.Adj x y)).card\n\ntheorem upper_bound_ex_K_ab_K_3_b_plus_one (a b : ℕ) (h : 3 ≤ a ∧ a ≤ b) :\n    ∃ C : ℝ, ∀ n : ℕ, ∀ G : SimpleGraph (Fin n) [DecidableRel G.Adj],\n      (∀ (A : Finset (Fin n)) (B : Finset (Fin n)), A.card = 3 → B.card = b + 1 → Disjoint A B →\n        ∃ x ∈ A, ∃ y ∈ B, ¬ G.Adj x y) →\n      (numCopiesK_ab G a b : ℝ) ≤ C * n^3 :=\n  sorry",
@@ -18451,7 +18502,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0387",
+      "id": "fd_0388",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Algebra.BigOperators.Group.Finset.Basic\nimport Mathlib.Data.Nat.Choose.Basic\nimport Mathlib.Tactic\n\n-- Placeholder for the d-Hoggatt entry det(binomial(n+i, k+j))\ndef hoggattEntry (d n k : ℕ) : ℤ := 0\n\n-- Total d-Hoggatt number H_d(n)\ndef totalHoggatt (d n : ℕ) : ℤ :=\n  (Finset.range (n + 1)).sum fun k => hoggattEntry d n k\n\n-- Log-concavity operator on sequences\n@[simp]\ndef logConcavityOp (a : ℕ → ℝ) : ℕ → ℝ := fun n => (a n)^2 - a (n - 1) * a (n + 1)\n\n-- Infinite log-concavity of total Hoggatt numbers\ntheorem infinite_log_concavity_total_hoggatt (d m : ℕ) (n : ℕ) (hn : 1 ≤ n) :\n    (logConcavityOp^[m] (fun k => (totalHoggatt d k : ℝ))) n ≥ 0 := by\n  sorry",
@@ -18500,7 +18551,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0388",
+      "id": "fd_0389",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem abs_bound_diophantine_tuple (F : Type*) [Field F] [IsAlgClosed F] [CharZero F] (k : ℕ) (hk : 18 ≤ k) (n : F[X]) (hn : n ≠ 0) (A : Finset F[X]) (hDk : ∀ a ∈ A, ∀ b ∈ A, a ≠ b → ∃ c : F[X], a * b + n = c ^ k) (h_exc : ¬ (∃ s t : F[X], s ^ 2 = n ∧ n = t ^ k ∧ ∀ a ∈ A, ∃ u : F, a = s * algebraMap F F[X] u)) : A.card ≤ 6 := by sorry",
@@ -18547,7 +18598,7 @@
         "Computation"
       ],
       "github_issue": 0,
-      "id": "fd_0389",
+      "id": "fd_0390",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem low_moment_char_sum_asymptotic (q : ℝ) (hq : 0 < q) (hq' : q < 1) (ε : ℝ) (hε : 0 < ε) :\n    ∃ N : ℕ, ∀ r : ℕ, r.Prime → r ≥ N → ∀ x : ℕ,\n      (1 : ℝ) ≤ x ∧ (x : ℝ) ≤ (r : ℝ)^(1/2 - ε) →\n      abs (((∑ χ : DirichletCharacter (ZMod r),\n          ‖∑ n ∈ Finset.Icc 1 x, χ n‖^(2 * q)) / (r - 1)) / (x : ℝ)^q\n        - randomMultiplicativeMomentConstant q) < ε :=\n  sorry",
@@ -18593,7 +18644,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0390",
+      "id": "fd_0391",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem infinite_pachner_theorem {d : ℕ} {M : PLManifold d} {S T : LocallyFiniteTriangulation M} (hS : Triangulates S M) (hT : Triangulates T M) : ExistsωSequenceBistellarMoves S T",
@@ -18642,7 +18693,7 @@
         "Logic"
       ],
       "github_issue": 0,
-      "id": "fd_0391",
+      "id": "fd_0392",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sidon_bound_secondary_term :\n    ∃ C : ℝ, ∀ N : ℕ, N ≥ 1 →\n    F N ≤ Real.sqrt N + 0.94601 * Real.sqrt (Real.sqrt N) + C :=\n  by sorry",
@@ -18662,6 +18713,55 @@
       "thread_id": "",
       "timestamp": "2026-07-06T03:26:11.699670+00:00",
       "title": "Explicit Secondary Term Bound for Sidon Sets"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.AT",
+        "math.GR",
+        "math.NT"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every prime p and every pro-p Demushkin group G with invariant q(G), the differential graded algebra C(G, 𝔽_p) of continuous cochains is A₃-formal if and only if q(G) ≠ 3. The 'if' direction is established by the present paper (for p = 2) combined with prior work (for odd p), while the 'only if' direction—that the pro-3 Demushkin group with q = 3 fails to be A₃-formal—remains open and would complete the classification.",
+      "domain_bridges": [
+        "Homotopy theory (formality of DGAs)",
+        "Pro-p group classification (Demushkin–Serre–Labute)",
+        "Massey products in Galois cohomology"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0393",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem A3_formality_Demushkin_iff (p : ℕ) [hp : Fact (Nat.Prime p)]\n    (G : Type*) [TopologicalSpace G] [CompactSpace G]\n    [ProPGroup G p] [DemushkinGroup G p] :\n    A3Formal (ContinuousCochainsDGA G (ZMod p)) ↔ invariant_q G hp.out ≠ 3 := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "The 'if' direction follows from computing the Benson–Krause–Schwede canonical class for Demushkin groups with q ≠ 3, interpreting it as defining systems of higher Massey products (the key innovation for p = 2). The 'only if' direction for q = 3 requires showing the canonical class is nonzero for the pro-3 Demushkin group with q = 3, likely via an explicit cocycle-level computation of the universal triple Massey product or by constructing a non-trivial defining system that obstructs A₃-formality.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.01028v1",
+      "source_path": "http://arxiv.org/abs/2607.01028v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-06T03:43:43.202082+00:00",
+      "title": "Complete characterization of A₃-formality for Demushkin groups"
     },
     {
       "ambition_level": "extension",
@@ -18708,7 +18808,6 @@
   "recent_domain_counts": {},
   "recent_theme_keywords": {},
   "selection_log": [
-    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",

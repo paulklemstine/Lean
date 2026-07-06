@@ -1287,7 +1287,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lower bound conjecture for low moments of Dirichlet character sums"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "79fcdf2e",
     "description": "For the explicit infinite family of q-hypergeometric series introduced in the paper, the coefficients V(n) satisfy: (1) V(n) = 0 for infinitely many n, and (2) there exists a density-zero set E \u2282 \u2115 such that for all n \u2209 E, V(n+1) and V(n) have opposite signs. This generalizes the proven result for the specific series v\u2082(q), v\u2083(q), v\u2084(q) to their broader family context.",
     "domains": [
       "Pythagorean",
@@ -1297,7 +1297,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T01:56:10.723921+00:00",
     "title": "Alternating Sign Conjecture for Andrews' q-Series Families"
   },
@@ -4680,15 +4680,30 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "1e8c0c26",
-    "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
+    "description": "For any prime p, the Markov chain on \u2115 defined by the Klagsbrun-Mazur-Rubin twist process for p-Selmer ranks of even-dimensional Galois modules satisfying the KMR technical conditions is irreducible, aperiodic, and positive recurrent. Its unique stationary distribution \u03c0 assigns strictly positive probability to every rank r \u2208 \u2115, and the distribution of p-Selmer ranks in the twist family ordered by the product of ramified primes converges to \u03c0.",
     "domains": [
-      "Algebra"
+      "Algebra",
+      "Computation"
     ],
     "id": "fd_0370",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2607.02433v1",
+    "source_exp_id": "2607.01126v1",
     "status": "in_progress",
+    "timestamp": "2026-07-06T03:42:58.157244+00:00",
+    "title": "KMR Markov chain convergence and positivity of p-Selmer rank stationary distribution"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0371",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02433v1",
+    "status": "available",
     "timestamp": "2026-07-05T19:45:16.570930+00:00",
     "title": "The all-twos partition achieves the maximum number of parts in \u03a9\u2082(n)"
   },
@@ -4698,7 +4713,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0371",
+    "id": "fd_0372",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -4713,7 +4728,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0372",
+    "id": "fd_0373",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
@@ -4728,7 +4743,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0373",
+    "id": "fd_0374",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -4743,7 +4758,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0374",
+    "id": "fd_0375",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -4757,7 +4772,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0375",
+    "id": "fd_0376",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -4771,7 +4786,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0376",
+    "id": "fd_0377",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -4786,7 +4801,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0377",
+    "id": "fd_0378",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02011v1",
@@ -4801,7 +4816,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0378",
+    "id": "fd_0379",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -4815,7 +4830,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0379",
+    "id": "fd_0380",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02085v1",
@@ -4829,7 +4844,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0380",
+    "id": "fd_0381",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01957v1",
@@ -4844,7 +4859,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0381",
+    "id": "fd_0382",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01956v1",
@@ -4858,7 +4873,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0382",
+    "id": "fd_0383",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01744v1",
@@ -4872,7 +4887,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0383",
+    "id": "fd_0384",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01839v1",
@@ -4887,7 +4902,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0384",
+    "id": "fd_0385",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01703v1",
@@ -4901,7 +4916,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0385",
+    "id": "fd_0386",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01572v1",
@@ -4915,7 +4930,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0386",
+    "id": "fd_0387",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01680v1",
@@ -4929,7 +4944,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0387",
+    "id": "fd_0388",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01582v1",
@@ -4944,7 +4959,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0388",
+    "id": "fd_0389",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01165v1",
@@ -4959,7 +4974,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0389",
+    "id": "fd_0390",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01184v1",
@@ -4973,7 +4988,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0390",
+    "id": "fd_0391",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -4988,13 +5003,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0391",
+    "id": "fd_0392",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
     "status": "available",
     "timestamp": "2026-07-06T03:26:11.699670+00:00",
     "title": "Explicit Secondary Term Bound for Sidon Sets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every prime p and every pro-p Demushkin group G with invariant q(G), the differential graded algebra C(G, \ud835\udd3d_p) of continuous cochains is A\u2083-formal if and only if q(G) \u2260 3. The 'if' direction is established by the present paper (for p = 2) combined with prior work (for odd p), while the 'only if' direction\u2014that the pro-3 Demushkin group with q = 3 fails to be A\u2083-formal\u2014remains open and would complete the classification.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0393",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01028v1",
+    "status": "available",
+    "timestamp": "2026-07-06T03:43:43.202082+00:00",
+    "title": "Complete characterization of A\u2083-formality for Demushkin groups"
   },
   {
     "consumed_by_exp_id": "",
