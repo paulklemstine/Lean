@@ -5756,7 +5756,7 @@
       "source": "",
       "source_exp_id": "2607.01130v1",
       "source_path": "http://arxiv.org/abs/2607.01130v1",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-07-03T02:14:54.483527+00:00",
       "title": "Sufficiency of obvious necessary conditions for the generalized honeymoon Oberwolfach problem with multiple round tables"
@@ -5804,7 +5804,7 @@
       "source": "",
       "source_exp_id": "2607.02215v1",
       "source_path": "http://arxiv.org/abs/2607.02215v1",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-07-03T03:32:16.978227+00:00",
       "title": "Normality of the trianguline variety outside smooth loci for split reductive groups"
@@ -6689,7 +6689,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Chvátal and Erdős (1978) - Triangle game threshold",
         "Bednarska and Łuczak (2000) - Asymptotics of threshold bias",
@@ -6698,7 +6698,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "92285bf9",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -6714,7 +6714,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0142",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-06T23:29:39.645387+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem maker_breaker_cycle_threshold (k : ℕ) (hk : k ≥ 4) (ε : ℝ) (hε : 0 < ε) : ∃ n₀, ∀ n ≥ n₀, (∃ M_strategy : maker_strategy n ((1 - ε) * ((k-1) * (2*(k-1)/k)^(k-2) * n^(k-2))^(1/(k-1))), maker_wins M_strategy) ∧ (∃ B_strategy : breaker_strategy n ((1 + ε) * ((k-1) * (2*(k-1)/k)^(k-2) * n^(k-2))^(1/(k-1))), breaker_wins B_strategy)",
       "lineage_refs": [],
@@ -6729,7 +6729,7 @@
       "source": "",
       "source_exp_id": "2607.01294v1",
       "source_path": "http://arxiv.org/abs/2607.01294v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T11:40:15.032234+00:00",
       "title": "Sharp Threshold Constant for Cycle Games"
@@ -7787,7 +7787,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Edmonds' Matroid Intersection Theorem",
         "Rainbow Forest Inequality"
@@ -7809,7 +7809,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0165",
-      "last_attempt_time": "2026-07-06T22:55:46.460693+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem minimal_obstruction_iff_unique_failure (G : EdgeColoredGraph) (t : ℕ) (H : minimal_obstruction G t) : ∃! A ⊆ E G, λA : EdgeSubset G, r1 A + r2 (E \\ A) < t",
       "lineage_refs": [],
@@ -11733,7 +11733,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Khadzhiivanov1978",
         "Bollobas1976complete",
@@ -11741,7 +11741,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "27d50820",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -11758,7 +11758,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0248",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-06T23:29:33.584530+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem k_t_sharp {n s t : ℕ} (hs : 2 ≤ s) (ht : s < t) (G : Graph n) (p_s : ℝ) (hp : p_s = (k_s G : ℝ) / (n : ℝ)^s) : (k_t G : ℝ) / (n : ℝ)^t ≥ F_t (F_s_inv p_s) := by",
       "lineage_refs": [],
@@ -11773,7 +11773,7 @@
       "source": "",
       "source_exp_id": "2606.31967v1",
       "source_path": "http://arxiv.org/abs/2606.31967v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T15:36:33.626121+00:00",
       "title": "Sharpness of the k_t lower bound given k_s in extremal graphs"
@@ -23951,6 +23951,55 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.CO",
+        "Ehrhart theory",
+        "symmetric edge polytopes",
+        "gamma-positivity"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Every symmetric edge polytope of dimension at most 35 has a γ-positive Ehrhart h*-polynomial. Equivalently, 36 is the minimum dimension of a symmetric edge polytope whose Ehrhart h*-polynomial fails to be γ-positive. This would sharpen the paper's existence result by establishing the exact threshold, confirming that no smaller counterexamples to the Ohsugi–Tsuchiya conjecture exist.",
+      "domain_bridges": [
+        "Algebraic Combinatorics",
+        "Polyhedral Geometry",
+        "Graph Theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0500",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem symmetric_edge_polytope_dim_le_35_gamma_positive {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) (h_conn : G.Connected) (h_dim : (symmetricEdgePolytope G).dim ≤ 35) : GammaPositive (ehrhartHStarPoly (symmetricEdgePolytope G)) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Combine exhaustive computational verification of γ-positivity for all connected graphs on at most 9 vertices (covering dimensions ≤ 8) with structural arguments that γ-positivity is preserved under cone, join, and subdivision operations, thereby inductively covering all dimensions up to 35 while using the paper's explicit 36-dimensional counterexample as the lower bound.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.02424v1",
+      "source_path": "http://arxiv.org/abs/2607.02424v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-06T23:28:54.298787+00:00",
+      "title": "Dimension Threshold for Gamma-Positivity of Symmetric Edge Polytopes"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.MG",
         "cs.CG",
         "math.CO"
@@ -23973,7 +24022,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0500",
+      "id": "fd_0501",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem centerpoint_floating_body_coincidence\n    {d : ℕ} {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n    [FiniteDimensional ℝ E] (hd : FiniteDimensional.finrank ℝ E = d + 1)\n    {P : ConvexBody E} (hP : IsPolytope P) :\n    centerpointSet P = floatingBody P (1 / (d + 1 + 1) : ℝ) := by\n  sorry",
@@ -24022,7 +24071,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0501",
+      "id": "fd_0502",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sylow2_parts_spectrum (n : ℕ) (hn : 4 ≤ n) (k : ℕ) (hk : 2 ≤ k ∧ k ≤ (n + 1) / 2) : ∃ λ : Partition n, ¬IsHookPartition λ ∧ λ.length = k ∧ χ λ ∈ Omega2 n := by\n  sorry",
@@ -24069,7 +24118,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0502",
+      "id": "fd_0503",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem cyclotomic_gauss_matrix_factorization\n    {N : ℕ} {p m k : ℕ} {χ : (ZMod N)ˣ →* Circle} (g : (ZMod N)ˣ)\n    (hN : N = p ^ m) (hk : k ∣ Nat.totient N) (hχ : IsGenerator χ) :\n    let n := (Nat.totient N) / k\n    let ω := χ ^ k g\n    let A := Matrix.of fun i j : Fin n => gaussSum N (χ ^ (k * (i : ℕ) + k * (j : ℕ)))\n    let W := Matrix.of fun i a : Fin n => ω ^ ((a : ℕ) * (i : ℕ))\n    let D := Matrix.diagonal (fun a : Fin n => gaussPeriod N k a)\n    A = W * D * W.transpose :=\n  sorry",
@@ -24089,6 +24138,53 @@
       "thread_id": "",
       "timestamp": "2026-07-06T22:55:43.909167+00:00",
       "title": "Factorization of Cyclotomic Gauss Sum Matrix"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Lin-Lu-Yau curvature",
+        "Ollivier curvature",
+        "Extremal graph theory"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any graph of order n ≥ 8, if it contains strictly more than T(n) = (n^2 - 3n)/2 - ⌈n/2⌉ + 2 edges, then every edge in the graph has strictly positive Ollivier/Lin-Lu-Yau curvature.",
+      "domain_bridges": [
+        "Discrete differential geometry",
+        "Optimal transport"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "github_issue": 0,
+      "id": "fd_0504",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem extremal_positive_curvature (n : ℕ) (G : SimpleGraph (Fin n)) (h_n : n ≥ 8)\n    (h_edges : G.edgeFinset.card > T n) :\n    ∀ e ∈ G.edgeFinset, linLuYauCurvature G e > 0 := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize the Lin-Lu-Yau curvature using the 1-Wasserstein distance between probability measures on vertices. Establish structural properties of graphs with non-positive curvature edges, and demonstrate that exceeding the edge threshold T(n) precludes the existence of such subgraphs, thereby forcing all edge curvatures to be strictly positive.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.02297v1",
+      "source_path": "http://arxiv.org/abs/2607.02297v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-06T23:29:27.413260+00:00",
+      "title": "Positive Curvature Threshold for Lin-Lu-Yau Curvature"
     },
     {
       "ambition_level": "extension",
@@ -24135,6 +24231,7 @@
   "recent_domain_counts": {},
   "recent_theme_keywords": {},
   "selection_log": [
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",

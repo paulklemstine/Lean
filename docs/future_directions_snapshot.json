@@ -2279,57 +2279,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
-      "math.CO:2405.XXXX"
-    ],
-    "consumed_by_exp_id": "62d42242",
-    "description": "For any nonnegative integer s and any list of integers m₁,…,m_t ≥ 2, let n = s + Σ m_i. If each m_i divides 2n(n−1), then there exists a seating schedule for 2n participants consisting of n newlywed couples at s tables of size 2 and t round tables of sizes 2m₁,…,2m_t such that each couple sits together every night and each pair of distinct non‑spouses sits together exactly once.",
-    "domain_bridges": [
-      "graph decomposition",
-      "design theory"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0122",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Use an inductive construction based on splitting the set of couples into groups, applying the known solution for one round table (theorem from the paper) as a base case, and combining solutions via pairwise balanced designs and 4-fold graph decompositions to handle additional round tables.",
-    "research_mode": "team",
-    "source_exp_id": "2607.01130v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T02:14:54.483527+00:00",
-    "title": "Sufficiency of obvious necessary conditions for the generalized honeymoon Oberwolfach problem with multiple round tables"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "Breuil, Hellmann, and Schraen, 'The trianguline variety for GL2'",
-      "Deligne and Milne, 'Tannakian Categories'",
-      "Colmez, 'Représentations de GL2(K) et (φ, Γ)-modules isotypiques de rang 2'"
-    ],
-    "consumed_by_exp_id": "412a4a64",
-    "description": "For a split connected reductive group G over a p-adic field K, the trianguline variety T_G is normal at all points lying outside the smooth loci determined by regularity conditions on the triangulation parameter",
-    "domain_bridges": [
-      "p-adic Hodge theory",
-      "algebraic geometry of reductive groups",
-      "moduli spaces of (φ, Γ)-modules"
-    ],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0123",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Generalize the Breuil-Hellmann-Schraen theorem to show that normality holds not just at certain points but at all points outside the smooth loci. Use Tannakian formalism to analyze the structure of the trianguline variety and apply deformation-theoretic techniques to establish normality conditions.",
-    "research_mode": "team",
-    "source_exp_id": "2607.02215v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T03:32:16.978227+00:00",
-    "title": "Normality of the trianguline variety outside smooth loci for split reductive groups"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
       "p-adic uniformization",
       "Schottky groups",
       "Mumford curves",
@@ -2781,7 +2730,7 @@
       "Glazik and Srivastav (2022) - Improved Breaker strategy for C_3",
       "Spencer (2019) - Potential method conjecture"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "92285bf9",
     "description": "For the Maker-Breaker C_k-game on K_n with fixed k ≥ 4, the threshold bias is exactly c_k · n^{(k-2)/(k-1)} where c_k = [(k-1)(2(k-1)/k)^{k-2}]^{1/(k-1)}. That is, Maker wins when q < (1-ε)c_k·n^{(k-2)/(k-1)} and Breaker wins when q > (1+ε)c_k·n^{(k-2)/(k-1)} for any ε > 0 and all sufficiently large n.",
     "domain_bridges": [
       "Probabilistic combinatorics via threshold phenomena",
@@ -2797,7 +2746,7 @@
     "proof_strategy": "The conjecture refines the asymptotic optimality (Θ-bound) of Bednarska-Łuczak by prescribing the exact constant. The paper's potential function method achieves the upper bound; proving the lower bound requires constructing explicit Maker strategies that win below this threshold, closing the gap between their constructive Breaker strategies and the random strategy lower bound.",
     "research_mode": "team",
     "source_exp_id": "2607.01294v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T11:40:15.032234+00:00",
     "title": "Sharp Threshold Constant for Cycle Games"
   },
@@ -5386,7 +5335,7 @@
       "Bollobas1976complete",
       "Reiher2009"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "27d50820",
     "description": "Conjecture that the asymptotically sharp lower bound on k_t(G) derived from the Lovász–Simonovits densities is actually exact for all n‑vertex graphs, i.e., equality is attained for suitable Turán‑type constructions.",
     "domain_bridges": [
       "Extremal graph theory",
@@ -5403,7 +5352,7 @@
     "proof_strategy": "Prove that for every n, s, t with 2 ≤ s < t and every n‑vertex graph G, the inequality becomes equality for a suitable Turán graph or its balanced blow‑up, using induction on n together with Zykov symmetrization to show the bound cannot be improved.",
     "research_mode": "team",
     "source_exp_id": "2606.31967v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T15:36:33.626121+00:00",
     "title": "Sharpness of the k_t lower bound given k_s in extremal graphs"
   },
@@ -11735,6 +11684,34 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "math.CO",
+      "Ehrhart theory",
+      "symmetric edge polytopes",
+      "gamma-positivity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every symmetric edge polytope of dimension at most 35 has a γ-positive Ehrhart h*-polynomial. Equivalently, 36 is the minimum dimension of a symmetric edge polytope whose Ehrhart h*-polynomial fails to be γ-positive. This would sharpen the paper's existence result by establishing the exact threshold, confirming that no smaller counterexamples to the Ohsugi–Tsuchiya conjecture exist.",
+    "domain_bridges": [
+      "Algebraic Combinatorics",
+      "Polyhedral Geometry",
+      "Graph Theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0500",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Combine exhaustive computational verification of γ-positivity for all connected graphs on at most 9 vertices (covering dimensions ≤ 8) with structural arguments that γ-positivity is preserved under cone, join, and subdivision operations, thereby inductively covering all dimensions up to 35 while using the paper's explicit 36-dimensional counterexample as the lower bound.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02424v1",
+    "status": "available",
+    "timestamp": "2026-07-06T23:28:54.298787+00:00",
+    "title": "Dimension Threshold for Gamma-Positivity of Symmetric Edge Polytopes"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "math.MG",
       "cs.CG",
       "math.CO"
@@ -11750,7 +11727,7 @@
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_0500",
+    "id": "fd_0501",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof proceeds in two parts. (1) Show every point in the floating body Float(P, 1/(d+1)) is a centerpoint: any halfspace containing a point in the floating body captures at least 1/(d+1) of the volume by definition of the floating body. (2) Show every centerpoint lies in the floating body: given a centerpoint c, for any halfspace H⁺ with vol(H⁺ ∩ P) ≥ vol(P)/(d+1), show c ∈ H⁺ by contradiction—if c ∉ H⁺, then the complementary halfspace H⁻ contains c but has volume at most d/(d+1), contradicting the centerpoint property when one constructs a halfplane through c that captures less than 1/(d+1) of the volume. The polytopal structure enters via the piecewise-rational decomposition of the cap-volume function, which ensures the floating body is semialgebraic and the infimum in its definition is attained.",
@@ -11778,7 +11755,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0501",
+    "id": "fd_0502",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use Theorem A to handle k ≤ a_1+t-1 (all such non-hook partitions are automatically in Ω₂(n)). For the range a_1+t ≤ k ≤ ⌈n/2⌉, construct explicit non-hook partitions with k parts that lie in Ω₂(n) by leveraging the branching rule and the structure of the Sylow 2-subgroup as an iterated wreath product of C_2. The upper bound k = ⌈n/2⌉ is covered by the paper's Proposition. The intermediate values require exhibiting witnesses, potentially using two-part partitions (n-k, k) and their relation to Young subgroups.",
@@ -11804,7 +11781,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0502",
+    "id": "fd_0503",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Rewrite the Gauss sum $G_N(\\chi^{k(i+j)})$ by partitioning the summation over $(\\mathbb{Z}/N\\mathbb{Z})^\\times$ into the $n$ cyclotomic cosets $C_a$ modulo $k$. Express $\\chi^{k(i+j)}(x)$ as $\\omega^{a(i+j)}$ for $x \\in C_a$, pulling the root of unity out of the sum to yield $\\sum_{a=0}^{n-1} \\omega^{a(i+j)} \\eta_a$, which directly translates to the matrix factorization $A_k(\\chi) = W D W^T$.",
@@ -11813,6 +11790,32 @@
     "status": "available",
     "timestamp": "2026-07-06T22:55:43.909167+00:00",
     "title": "Factorization of Cyclotomic Gauss Sum Matrix"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Lin-Lu-Yau curvature",
+      "Ollivier curvature",
+      "Extremal graph theory"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any graph of order n ≥ 8, if it contains strictly more than T(n) = (n^2 - 3n)/2 - ⌈n/2⌉ + 2 edges, then every edge in the graph has strictly positive Ollivier/Lin-Lu-Yau curvature.",
+    "domain_bridges": [
+      "Discrete differential geometry",
+      "Optimal transport"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0504",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the Lin-Lu-Yau curvature using the 1-Wasserstein distance between probability measures on vertices. Establish structural properties of graphs with non-positive curvature edges, and demonstrate that exceeding the edge threshold T(n) precludes the existence of such subgraphs, thereby forcing all edge curvatures to be strictly positive.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02297v1",
+    "status": "available",
+    "timestamp": "2026-07-06T23:29:27.413260+00:00",
+    "title": "Positive Curvature Threshold for Lin-Lu-Yau Curvature"
   },
   {
     "ambition_level": "extension",
