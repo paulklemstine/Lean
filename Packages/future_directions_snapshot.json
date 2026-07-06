@@ -640,7 +640,7 @@
       "Flag varieties and orbit theory",
       "Demazure products and monoid actions"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "91848422",
     "description": "For the natural bijection φ from the set of B-orbits on B_n × P^(n-1) to its image in W_(n+1) × W_(n+1), the closure relation on orbits coincides with the restriction of the product Bruhat order: O₁ ⊆ O̅₂ iff φ(O₁) ≤ φ(O₂) in (W_(n+1), ≤_Bruhat) × (W_(n+1), ≤_Bruhat).",
     "domain_bridges": [
       "Algebraic geometry to combinatorics via geometric invariant theory",
@@ -655,7 +655,7 @@
     "proof_strategy": "Construct the explicit parameterization map using double coset representatives, verify it induces a bijection on orbit sets, then prove order-preservation by analyzing the geometric relationship between orbit closures and the algebraic structure of the Bruhat order via rank functions on permutations.",
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:30:28.722983+00:00",
     "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
@@ -10648,7 +10648,7 @@
       "math.NT",
       "math.AG"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "783ff20a",
     "description": "For any integer $g \\ge 2$, let $d \\in \\{2g+1, 2g+2\\}$, $\\alpha \\in \\mathbb{Z} \\setminus \\{0\\}$, and let $p$ be a prime such that $p > P^+(d)$ and $p \\nmid \\alpha$, where $P^+(d)$ is the bound from the paper ($d^2-4d+2$ if $d$ is odd, $(d^2-3d+2)/2$ if $d$ is even). Let $M(t)$ be the $g \\times g$ Cartier-Manin matrix of the hyperelliptic curve $y^2 = x^d + \\alpha x + t$ over $\\mathbb{F}_p$. The determinant $\\det(M(t))$ is a nonzero polynomial in $\\mathbb{F}_p[t]$.",
     "domain_bridges": [
       "algebraic_geometry.hyperelliptic_curves",
@@ -10665,7 +10665,7 @@
     "proof_strategy": "Define the Cartier-Manin matrix entries as coefficients of the polynomial $(x^d + \\alpha x + t)^{(p-1)/2}$, compute its determinant as a polynomial in $t$, and show that its degree and leading coefficient modulo $p$ imply nonvanishing, leveraging the bounds on $p$-adic valuations of the terms which hold precisely when $p > P^+(d)$ and $p \\nmid \\alpha$.",
     "research_mode": "team",
     "source_exp_id": "2606.31783v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T12:32:30.050041+00:00",
     "title": "Nonvanishing of Cartier-Manin Determinant for Generic Hyperelliptic Families"
   },
