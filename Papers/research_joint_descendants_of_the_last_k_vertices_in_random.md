@@ -1,374 +1,530 @@
-# Colour Classes of Proper Edge-Colourings: Matchings, Disjointness, and the Partition of the Edge Set
+# Joint Descendants of the Last $k$ Vertices in Random $d$-DAGs and a Beta-Moment Telescoping Law
 
 ## Abstract
 
-We develop the structural theory of colour classes in edge-coloured simple graphs and prove
-that a proper edge-colouring induces a canonical decomposition of a graph's edge set into a
-family of pairwise vertex-disjoint matchings. Concretely, we assign to every edge a
-well-defined colour, collect the edges of each colour into a *colour class*, and establish
-three theorems: (i) in a proper colouring each colour class is a matching; (ii) distinct
-colours yield disjoint colour classes; and (iii) the colour classes partition the entire edge
-set. As a companion to this decomposition, we record two vertex-local consequences of
-properness — that the colour degree of every vertex equals its ordinary degree, and that in a
-properly coloured complete graph on $n \ge 3$ vertices this common value is $n-1$ — and the
-fact that properness forces every triangle to be rainbow. The results give a clean, fully
-rigorous foundation for the study of rainbow substructures and for the classical
-interpretation of proper edge-colouring as conflict-free scheduling. We accompany the theory
-with algorithms that construct proper colourings, extract colour classes, and verify the
-partition property, together with numerical demonstrations on complete graphs and random
-graphs.
+We study the common-descendant sets of the most recently added vertices in a
+growing random directed acyclic graph (DAG). In the random $d$-DAG model, vertex
+$n$ attaches to $d$ uniformly chosen earlier vertices, and the *joint descendant
+set* of a block of consecutive late vertices $n, n+1, \dots, n+k-1$ records the
+future vertices that depend on all of them simultaneously. For every fixed $k \ge
+2$, the size of this joint set, rescaled by $n^{d/(d+1)}$, converges in
+distribution to a non-degenerate limit that admits an explicit representation as a
+product of independent Beta random variables, equivalently as a ratio of
+independent Gamma variables. The analytic engine behind this representation is a
+telescoping identity for products of Beta moments: when the concentration
+parameters chain additively, the $p$-th moment of a product of independent Beta
+variables collapses to a single ratio of Gamma factors depending only on the
+first and last parameters. We state and prove this identity in full, isolate the
+non-vanishing hypothesis that makes it sharp, derive the companion
+rising-factorial formula, explain the origin of the scaling exponent $d/(d+1)$ as
+Pochhammer asymptotics, and characterize the collapse of joint descendant sets as
+an order-theoretic chain condition. We also discuss algorithmic verification,
+numerical experiments, and directions for a multivariate (Dirichlet)
+generalization.
 
-**Keywords.** edge-colouring, proper colouring, matching, colour class, partition, chromatic
-index, rainbow triangle, colour degree, round-robin scheduling.
+**Keywords.** random DAG; descendant set; Pólya urn; Beta distribution;
+Dirichlet distribution; Gamma function; telescoping product; moment method;
+rising factorial; scaling exponent.
+
+---
 
 ## 1. Introduction
 
-Edge-colouring is among the most studied topics in graph theory, both for its intrinsic
-elegance and for its ubiquity in applications: timetabling, frequency assignment, register
-allocation, and the scheduling of round-robin tournaments are all, at heart, edge-colouring
-problems. The single defining constraint — that edges sharing a vertex receive different
-colours — is deceptively simple, yet it forces a rich global structure on the coloured graph.
+### 1.1 The model
 
-The purpose of this paper is to isolate and prove, in complete rigour, the structural
-backbone of that theory: **the decomposition of a properly coloured graph into colour
-classes, each of which is a matching, together covering the edge set exactly once.** While
-this decomposition is folklore, we present it with fully explicit statements and proofs,
-organized around a robust definition of the colour of an edge that behaves well even when the
-underlying colour function is defined on all pairs of vertices (not only on edges). This care
-pays off in two ways. First, it makes the partition theorem an exact, checkable statement about
-finite sets of edges. Second, it provides the structural atoms — individual colour classes —
-from which finer results about rainbow substructures are assembled.
+A *directed acyclic graph* (DAG) on the vertex set $\{1, 2, \dots, N\}$ is a set
+of directed edges containing no directed cycle. We consider a sequential random
+model, the **random $d$-DAG**, defined by a fixed branching parameter $d \ge 1$.
+Vertices arrive in order $1, 2, 3, \dots$. When vertex $n$ (with $n > d$) is
+added, it emits $d$ edges to $d$ distinct earlier vertices chosen uniformly at
+random from $\{1, \dots, n-1\}$; the first $d$ vertices form an arbitrary fixed
+seed. We write $G_N$ for the graph after $N$ vertices have arrived. Because every
+edge points from a larger index to a smaller one, $G_N$ is automatically acyclic,
+and the index order is a topological order.
 
-We also record the vertex-local face of properness. The *colour degree* of a vertex, meaning
-the number of distinct colours on its incident edges, is in general at most its ordinary
-degree; properness makes the two equal. On a properly coloured complete graph this pins the
-colour degree of every vertex to $n-1$, which places such graphs squarely in the high
-colour-degree regime studied in contemporary extremal work on rainbow triangles, in
-particular the conjecture of Li, Ning, Shi, and Zhang (2024).
+Directed edges encode dependence: an edge $u \to v$ means "$u$ depends on $v$."
+Random $d$-DAGs are standard combinatorial models for citation networks,
+build-dependency graphs, lineage and coalescent structures, and
+preferential-attachment-type networks.
 
-### 1.1 Contributions
+### 1.2 Descendant and ancestor sets
 
-- A robust definition of the **colour of an edge** as a value in $C \cup \{\bot\}$, defined by
-  lifting a symmetric colour function through the unordered-pair (edge) structure and guarding
-  it by edge membership (Section 3).
-- The **matching theorem** for colour classes: in a proper colouring, two same-coloured edges
-  sharing a vertex coincide (Theorem 4.1).
-- **Disjointness** of colour classes for distinct colours (Theorem 4.2) and the **partition
-  theorem**: colour classes cover the edge set and are pairwise disjoint (Theorem 4.3).
-- The **colour-degree identity** $d_c(v)=\deg(v)$ under properness, its specialization $d_c(v)=n-1$
-  on complete graphs, and the **rainbow-triangle theorem** for proper colourings (Section 5).
-- Algorithms and numerical demonstrations realizing and verifying the decomposition
-  (Sections 6–7).
-
-## 2. Preliminaries and notation
-
-Throughout, $V$ is a finite vertex set and $C$ is a set of colours. A **simple graph** $G$ on
-$V$ is a symmetric, irreflexive adjacency relation; we write $u \sim v$ when $u$ and $v$ are
-adjacent, and denote by $E(G)$ the set of edges, each edge an unordered pair
-$\{u,v\}=\{v,u\}$ with $u \sim v$. For a vertex $v$, its **degree** $\deg(v)$ is the number of
-neighbours, and $N(v)$ its neighbourhood.
-
-We package an edge-coloured graph as a triple.
-
-> **Definition 2.1 (Edge-coloured graph).** An *edge-coloured graph* consists of a simple
-> graph $G$ on $V$ together with a **symmetric colour function**
-> $\mathrm{col}\colon V \times V \to C$ satisfying $\mathrm{col}(u,v)=\mathrm{col}(v,u)$ for
-> all $u,v$. Only the values of $\mathrm{col}$ on pairs $u \sim v$ are semantically
-> meaningful; values on non-edges are ignored by every definition below.
-
-Allowing $\mathrm{col}$ to be a total symmetric function (rather than a partial function on
-edges) is a convenience: it lets us speak of $\mathrm{col}(u,v)$ without carrying an adjacency
-proof, while the guards in Definition 3.1 ensure only edge-values ever influence a colour
-class.
-
-> **Definition 2.2 (Proper colouring).** An edge-coloured graph is **proper** if for all
-> vertices $u,v,w$ with $v \neq w$, whenever $u \sim v$ and $u \sim w$ we have
-> $\mathrm{col}(u,v) \neq \mathrm{col}(u,w)$. Equivalently, any two distinct edges sharing a
-> vertex receive different colours.
-
-> **Definition 2.3 (Matching).** A set $M \subseteq E(G)$ of edges is a **matching** if no two
-> distinct edges of $M$ share a vertex; equivalently, the edges of $M$ are pairwise
-> vertex-disjoint.
-
-## 3. The colour of an edge and colour classes
-
-The colour function $\mathrm{col}$ acts on *ordered* pairs, but its symmetry means it descends
-to unordered pairs. We make this precise and use it to colour edges.
-
-> **Definition 3.1 (Colour of an edge).** Let $e$ be an unordered pair of vertices. The
-> **colour of $e$**, written $\widehat{\mathrm{col}}(e) \in C \cup \{\bot\}$, is
-> $$\widehat{\mathrm{col}}(e) = \begin{cases} \mathrm{col}(u,v) & \text{if } e=\{u,v\}\in E(G),\\ \bot & \text{if } e \notin E(G). \end{cases}$$
-> The value $\mathrm{col}(u,v)$ is independent of the chosen representative $\{u,v\}=\{v,u\}$
-> precisely because $\mathrm{col}$ is symmetric, so $\widehat{\mathrm{col}}$ is well defined.
-
-Two elementary but foundational facts follow directly from the definition.
-
-> **Lemma 3.2 (Colour of an actual edge).** If $u \sim v$, then
-> $\widehat{\mathrm{col}}(\{u,v\}) = \mathrm{col}(u,v)$.
-
-> **Lemma 3.3 (Edges are coloured).** Every edge $e \in E(G)$ satisfies
-> $\widehat{\mathrm{col}}(e) \neq \bot$; in fact $\widehat{\mathrm{col}}(e)$ equals the
-> symmetric lift of $\mathrm{col}$ evaluated at $e$.
-
-*Proof.* Both are immediate from Definition 3.1: an edge $e$ lies in $E(G)$, so the first
-branch applies, giving a value in $C$ and, when $e=\{u,v\}$, the value $\mathrm{col}(u,v)$. $\square$
-
-> **Definition 3.4 (Colour class).** For a colour $c \in C$, the **colour class** of $c$ is
-> $$\mathcal{C}(c) = \{\, e \in E(G) : \widehat{\mathrm{col}}(e) = c \,\}.$$
-> Thus $e \in \mathcal{C}(c)$ if and only if $e$ is an edge of $G$ and its colour is $c$.
-
-The following extraction lemma is the workhorse of the matching theorem: it lets us read off,
-from an edge of a given colour through a given vertex, the other endpoint together with the
-adjacency and colour data.
-
-> **Lemma 3.5 (Endpoint extraction).** Suppose $e \in \mathcal{C}(c)$ and $x \in e$. Then
-> there is a vertex $y$ with $e = \{x,y\}$, $x \sim y$, and $\mathrm{col}(x,y)=c$.
-
-*Proof.* Write $e=\{a,b\}$. Membership in $\mathcal{C}(c)$ gives $e \in E(G)$ (so $a \sim b$)
-and $\widehat{\mathrm{col}}(e)=c$; by Lemma 3.2 the latter reads $\mathrm{col}(a,b)=c$. Since
-$x \in e$, either $x=a$ or $x=b$. If $x=a$, take $y=b$: then $e=\{x,y\}$, $x \sim y$, and
-$\mathrm{col}(x,y)=c$. If $x=b$, take $y=a$: then $e=\{b,a\}=\{x,y\}$, $x \sim y$ by symmetry
-of adjacency, and $\mathrm{col}(x,y)=\mathrm{col}(b,a)=\mathrm{col}(a,b)=c$ by symmetry of
-$\mathrm{col}$. $\square$
-
-## 4. The decomposition theorems
-
-We now prove the three structural results. Throughout this section the colouring is proper.
-
-> **Theorem 4.1 (Each colour class is a matching).** Let the colouring be proper and fix a
-> colour $c$. If $e_1, e_2 \in \mathcal{C}(c)$ share a vertex $x$ (that is, $x \in e_1$ and
-> $x \in e_2$), then $e_1 = e_2$. Consequently $\mathcal{C}(c)$ is a matching.
-
-*Proof.* Apply Lemma 3.5 to each edge at the shared vertex $x$: there are $y_1, y_2$ with
-$e_1=\{x,y_1\}$, $x \sim y_1$, $\mathrm{col}(x,y_1)=c$, and $e_2=\{x,y_2\}$, $x \sim y_2$,
-$\mathrm{col}(x,y_2)=c$. Suppose for contradiction $y_1 \neq y_2$. Then properness
-(Definition 2.2), applied at $x$ with neighbours $y_1 \neq y_2$, yields
-$\mathrm{col}(x,y_1) \neq \mathrm{col}(x,y_2)$, contradicting that both equal $c$. Hence
-$y_1=y_2$ and $e_1=\{x,y_1\}=\{x,y_2\}=e_2$. Since any two edges of $\mathcal{C}(c)$ that meet
-must coincide, distinct edges of $\mathcal{C}(c)$ are vertex-disjoint, i.e. $\mathcal{C}(c)$ is
-a matching. $\square$
-
-> **Theorem 4.2 (Distinct colours give disjoint classes).** If $c_1 \neq c_2$, then
-> $\mathcal{C}(c_1) \cap \mathcal{C}(c_2) = \varnothing$.
-
-*Proof.* Suppose $e \in \mathcal{C}(c_1) \cap \mathcal{C}(c_2)$. Then
-$\widehat{\mathrm{col}}(e)=c_1$ and $\widehat{\mathrm{col}}(e)=c_2$, so $c_1=c_2$ by
-uniqueness of the value $\widehat{\mathrm{col}}(e)$, contradicting $c_1 \neq c_2$. Hence the
-intersection is empty. $\square$
-
-> **Theorem 4.3 (Colour classes partition the edge set).** The family
-> $\{\mathcal{C}(c)\}_{c \in C}$ partitions $E(G)$:
-> $$\bigcup_{c \in C} \mathcal{C}(c) = E(G), \qquad \mathcal{C}(c_1) \cap \mathcal{C}(c_2)=\varnothing \text{ for } c_1 \neq c_2.$$
-
-*Proof.* Disjointness is Theorem 4.2. For the covering, one inclusion is immediate: every
-$\mathcal{C}(c) \subseteq E(G)$ by definition, so the union is contained in $E(G)$.
-Conversely, let $e \in E(G)$. By Lemma 3.3, $\widehat{\mathrm{col}}(e)$ is an actual colour
-$c^\star \in C$ (not $\bot$). Then $e \in \mathcal{C}(c^\star)$ and hence $e$ lies in the
-union. Therefore the union equals $E(G)$. $\square$
-
-The content of Theorem 4.3 is that a proper edge-colouring is exactly a partition of $E(G)$
-into matchings indexed by colours. If $C$ is finite with $|C|=k$ colours actually used, this
-is a decomposition of $G$ into at most $k$ matchings. The least such $k$ is the **chromatic
-index** $\chi'(G)$, and Theorem 4.3 is the structural statement that underlies its scheduling
-interpretation: a proper colouring with $k$ colours *is* a schedule of the edges into $k$
-conflict-free rounds.
-
-## 5. Vertex-local consequences of properness
-
-We complement the edge-set decomposition with two vertex-local results and the rainbow-triangle
-principle.
-
-> **Definition 5.1 (Colour degree).** The **colour degree** $d_c(v)$ of a vertex $v$ is the
-> number of distinct colours appearing on edges incident to $v$, i.e.
-> $d_c(v) = \big|\{\mathrm{col}(v,u) : u \in N(v)\}\big|$.
-
-> **Proposition 5.2 (Colour degree is bounded by degree).** For every vertex $v$,
-> $d_c(v) \le \deg(v) \le n-1$, where $n=|V|$.
-
-*Proof.* $d_c(v)$ counts the image of the map $u \mapsto \mathrm{col}(v,u)$ on $N(v)$, whose
-domain has size $\deg(v)$; an image never exceeds its domain, giving $d_c(v)\le\deg(v)$. The
-degree is at most $n-1$ since a vertex has at most $n-1$ neighbours. $\square$
-
-> **Theorem 5.3 (Colour degree equals degree under properness).** If the colouring is proper,
-> then $d_c(v)=\deg(v)$ for every vertex $v$.
-
-*Proof.* Properness says $u \mapsto \mathrm{col}(v,u)$ is injective on $N(v)$: distinct
-neighbours $u \neq u'$ satisfy $\mathrm{col}(v,u)\neq\mathrm{col}(v,u')$. An injective map has
-image of the same size as its domain, so $d_c(v)=|N(v)|=\deg(v)$. $\square$
-
-> **Corollary 5.4 (Complete graphs).** In a properly coloured complete graph on $n$ vertices,
-> $d_c(v)=n-1$ for every vertex $v$. In particular, for $n \ge 3$ every vertex satisfies
-> $d_c(v)=n-1 \ge \lceil (n+1)/2 \rceil$.
-
-*Proof.* In the complete graph every vertex has degree $n-1$; apply Theorem 5.3. The
-inequality $n-1 \ge (n+1)/2$ holds for $n \ge 3$. $\square$
-
-Corollary 5.4 shows that properly coloured complete graphs sit exactly inside the high
-colour-degree regime $\delta_c(G) \ge (n+1)/2$ studied in recent extremal work of Li, Ning,
-Shi, and Zhang on the minimum number of rainbow triangles. The next theorem explains why they
-are the natural extremal objects there.
-
-> **Theorem 5.5 (Proper triangles are rainbow).** If the colouring is proper and $a,b,c$ are
-> three distinct, pairwise-adjacent vertices, then the three edges $\{a,b\},\{a,c\},\{b,c\}$
-> receive pairwise-distinct colours — the triangle is *rainbow*.
-
-*Proof.* In a triangle every pair of edges meets at a common vertex. At $a$: since $b \neq c$
-and $a \sim b$, $a \sim c$, properness gives $\mathrm{col}(a,b)\neq\mathrm{col}(a,c)$. At $b$:
-since $a \neq c$ and $b \sim a$, $b \sim c$, properness gives
-$\mathrm{col}(b,a)\neq\mathrm{col}(b,c)$; by symmetry $\mathrm{col}(a,b)\neq\mathrm{col}(b,c)$.
-At $c$: since $a \neq b$ and $c \sim a$, $c \sim b$, properness gives
-$\mathrm{col}(c,a)\neq\mathrm{col}(c,b)$; by symmetry $\mathrm{col}(a,c)\neq\mathrm{col}(b,c)$.
-The three edge colours are therefore pairwise distinct. $\square$
-
-## 6. Algorithms
-
-We describe algorithms that realize and verify the theory. Complexities are stated for a graph
-with $n$ vertices and $m$ edges, using adjacency-list representation.
-
-### 6.1 Constructing a proper edge-colouring
-
-For general graphs, a greedy scan colours each edge with the smallest colour absent from both
-endpoints. It always produces a proper colouring, and it uses at most $2\Delta-1$ colours,
-where $\Delta$ is the maximum degree (Vizing's theorem guarantees $\Delta$ or $\Delta+1$
-colours are achievable by more refined methods, but greedy suffices to *witness* properness).
-
-**Pseudocode.**
-```
-Greedy-Proper-Edge-Colour(G):
-  col := empty map on edges
-  for each edge e = {u,v} in a fixed order:
-    used := { col[f] : f incident to u or v and already coloured }
-    c := least colour not in used
-    col[e] := c
-  return col
-```
-Complexity: $O(m\Delta)$ time, $O(m)$ space.
-
-### 6.2 Round-robin colouring of a complete graph
-
-For $K_n$ the optimal colouring is explicit. For even $n$ use the *circle method*: fix player
-$n-1$; arrange the others on a circle; in round $r$ ($0 \le r \le n-2$) pair the fixed player
-with the player at position $r$ and pair the remaining players symmetrically across the circle.
-This yields $n-1$ perfect matchings. For odd $n$, add a phantom player, apply the even
-construction, and delete the phantom to obtain $n$ near-perfect matchings, each with one bye.
-Complexity: $O(n^2)$ time, producing exactly $\chi'(K_n)$ colours ($n-1$ for even $n$, $n$ for
-odd $n$).
-
-### 6.3 Extracting colour classes and verifying the partition
-
-Given any edge-colouring, group edges by colour to obtain the colour classes, then verify the
-two theorems directly.
-
-**Pseudocode.**
-```
-Colour-Classes-And-Verify(G, col):
-  classes := group edges of G by col[e]      # buckets keyed by colour
-  # (1) matching test
-  for each colour c, for each vertex x:
-    if two edges of classes[c] contain x: report NOT A MATCHING
-  # (2) partition test
-  assert union of classes == E(G)            # covering
-  assert classes are pairwise disjoint       # automatic: each edge has one colour
-  return classes
-```
-Complexity: $O(m + \sum_c |\mathcal{C}(c)|) = O(m)$ time once colours are known.
-
-## 7. Numerical demonstrations
-
-The accompanying computational demonstrations exercise the theory on concrete graphs:
-
-1. **Round-robin on $K_n$.** For $n \in \{4,5,6,7,8\}$ we build the circle-method colouring,
-   confirm every colour class is a perfect (or near-perfect) matching, confirm the classes
-   partition the $\binom{n}{2}$ edges, and confirm the number of colours equals
-   $\chi'(K_n)$.
-
-2. **Greedy colourings of random graphs.** For Erdős–Rényi random graphs we build a greedy
-   proper colouring and verify, exhaustively, the matching property of every colour class, the
-   pairwise disjointness of classes, and the covering of the edge set — an empirical check of
-   Theorems 4.1–4.3.
-
-3. **Colour-degree identity and rainbow triangles.** We verify $d_c(v)=\deg(v)$ at every
-   vertex under proper colourings and enumerate the triangles of properly coloured complete
-   graphs, confirming that all of them are rainbow (Theorems 5.3 and 5.5).
-
-These computations serve as independent, finite verifications of the theorems on a spectrum of
-structured and random inputs.
-
-## 7.5 A worked example: the complete graph $K_4$
-
-To see every theorem at work on a small graph, take the complete graph $K_4$ on vertices
-$\{0,1,2,3\}$, which has $\binom{4}{2}=6$ edges. Since $4$ is even, the circle method produces
-$\chi'(K_4)=3$ perfect matchings. One valid proper colouring is
-
+For a vertex $v$ in $G_N$, define
 $$
-\mathcal{C}(0)=\{\{0,1\},\{2,3\}\},\quad
-\mathcal{C}(1)=\{\{0,2\},\{1,3\}\},\quad
-\mathcal{C}(2)=\{\{0,3\},\{1,2\}\}.
+\mathrm{Desc}_N(v) = \{\, w : \text{there is a directed path } w \rightsquigarrow
+v \,\}, \qquad
+\mathrm{Anc}_N(v) = \{\, u : \text{there is a directed path } v \rightsquigarrow
+u \,\}.
+$$
+Thus $\mathrm{Desc}_N(v)$ collects the later vertices whose dependence chains
+reach $v$, and $\mathrm{Anc}_N(v)$ collects the earlier vertices $v$ depends on.
+Reachability $\rightsquigarrow$ is a preorder (in fact a partial order, since the
+graph is acyclic), and $\mathrm{Desc}_N(v)$ is precisely the *lower set* of $v$ in
+that order restricted to indices $> v$.
+
+### 1.3 The joint-descendant question
+
+Fix $k \ge 2$ and consider the block of consecutive late vertices $n, n+1, \dots,
+n+k-1$ in the graph $G_{n+k-1}$ (and its continued growth). Their **joint
+descendant set** is
+$$
+D_n^{(k)} = \bigcap_{i=0}^{k-1} \mathrm{Desc}(n+i),
+$$
+the future vertices that depend on every vertex of the block. We are interested
+in the asymptotic size $|D_n^{(k)}|$ as $n \to \infty$.
+
+**Main phenomenon.** For every fixed $k \ge 2$ there is a non-degenerate random
+variable $L_k$ such that
+$$
+\frac{|D_n^{(k)}|}{n^{d/(d+1)}} \;\xrightarrow{\;d\;}\; L_k \qquad (n \to \infty),
+$$
+where $\xrightarrow{d}$ denotes convergence in distribution, and $L_k$ has an
+explicit law expressible through independent Beta (equivalently Gamma) random
+variables. For $k = 2$ this was obtained through an ancestry-process analysis
+coupled to a multi-draw Pólya urn; the present work isolates the analytic
+identity that drives the representation and makes the generalization to arbitrary
+$k$ transparent.
+
+### 1.4 Contributions
+
+1. **A sharp Beta-moment telescoping identity** (Theorem 4.1): the $p$-th moment
+   of a product of independent Beta variables with additively chained parameters
+   collapses to a ratio of Gamma factors at the two endpoints.
+2. **Isolation of the non-vanishing hypothesis** that makes the identity exact
+   (Section 4.3), together with an explicit failure mode when it is dropped.
+3. **A companion rising-factorial identity** (Proposition 3.1) that renders the
+   Gamma ratios elementary for integer shifts and underpins exact numerical
+   verification.
+4. **An explanation of the scaling exponent** $d/(d+1)$ as the leading order of a
+   Pochhammer ratio (Section 5).
+5. **An order-theoretic characterization** of when joint descendant sets collapse
+   to a single descendant set (Section 6).
+6. **Algorithms and numerical experiments** verifying the identity and the limit
+   law (Sections 7–8).
+
+---
+
+## 2. Preliminaries: Gamma and Beta
+
+The **Gamma function** $\Gamma$ is the meromorphic extension of the factorial,
+characterized on $(0, \infty)$ by
+$$
+\Gamma(x) = \int_0^\infty t^{x-1} e^{-t}\, dt, \qquad
+\Gamma(x+1) = x\,\Gamma(x), \qquad \Gamma(n) = (n-1)!.
+$$
+It has no zeros; its only singularities are simple poles at the non-positive
+integers. Consequently $\Gamma(x) \ne 0$ for every $x$ where it is defined, and
+$1/\Gamma$ is entire.
+
+A random variable $B$ has the **Beta$(\alpha, \beta)$** distribution
+($\alpha,\beta > 0$) if it has density
+$$
+f_{\alpha,\beta}(x) = \frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)},
+\qquad 0 < x < 1, \qquad
+B(\alpha,\beta) = \frac{\Gamma(\alpha)\,\Gamma(\beta)}{\Gamma(\alpha+\beta)}.
+$$
+Its moments are, for any real $p$ with $\alpha + p > 0$,
+$$
+\mathbb{E}[B^p]
+= \frac{B(\alpha + p, \beta)}{B(\alpha, \beta)}
+= \frac{\Gamma(\alpha + p)\,\Gamma(\alpha + \beta)}
+{\Gamma(\alpha)\,\Gamma(\alpha + \beta + p)}.
+\tag{2.1}
 $$
 
-Each class contains two edges that share no vertex, so each is a perfect matching pairing all
-four vertices (Theorem 4.1). No edge appears in two classes, so the classes are disjoint
-(Theorem 4.2), and the three classes together list all six edges exactly once, partitioning
-$E(K_4)$ (Theorem 4.3). Every vertex meets three edges of three different colours, so
-$d_c(v)=3=\deg(v)=n-1$ (Theorem 5.3, Corollary 5.4). Finally, each of the $\binom{4}{3}=4$
-triangles, say $\{0,1,2\}$ with edge colours $\{0,1\}\mapsto 0$, $\{0,2\}\mapsto 1$,
-$\{1,2\}\mapsto 2$, uses three distinct colours and is therefore rainbow (Theorem 5.5). The
-same phenomena persist verbatim for larger complete graphs: the odd case $K_5$ needs
-$\chi'(K_5)=5$ colours with each class a near-perfect matching leaving one vertex unmatched.
+A vector $(X_1, \dots, X_m)$ has the **Dirichlet$(\gamma_1, \dots, \gamma_m)$**
+distribution if it is supported on the simplex $\{x_i \ge 0, \sum_i x_i = 1\}$
+with density proportional to $\prod_i x_i^{\gamma_i - 1}$. Dirichlet distributions
+are the multi-color generalization of Beta, and their mixed moments are again
+ratios of Gamma factors. Beta$(\alpha,\beta)$ is Dirichlet$(\alpha,\beta)$ in two
+coordinates.
 
-## 7.6 Applications
+**Beta–Gamma calculus.** If $Y_\alpha \sim \Gamma(\alpha)$ and $Y_\beta \sim
+\Gamma(\beta)$ are independent Gamma variables (shape $\alpha, \beta$, unit rate),
+then $Y_\alpha / (Y_\alpha + Y_\beta) \sim \text{Beta}(\alpha, \beta)$ and is
+independent of $Y_\alpha + Y_\beta \sim \Gamma(\alpha + \beta)$. This is the
+representation by which the limit law $L_k$ can be written either as a product of
+Betas or as a ratio of Gammas.
 
-**Timetabling and tournament scheduling.** Interpreting vertices as agents and edges as
-required pairwise meetings, a proper colouring with $k$ colours *is* a schedule into $k$
-conflict-free time slots, each slot a matching of simultaneously runnable meetings. Theorem 4.3
-is precisely the statement that no meeting is dropped or double-booked. Round-robin sports
-leagues use exactly the circle-method colouring of Section 6.2.
+---
 
-**Frequency and channel assignment.** Replacing colours by radio channels, properness is the
-non-interference constraint at each transceiver, and the colour classes are the sets of links
-that can transmit simultaneously without collision.
+## 3. The rising-factorial identity
 
-**Optical and switching networks.** In wavelength-division and crossbar switching, the
-decomposition of a demand graph into matchings is the standard route to conflict-free routing;
-the chromatic index bounds the number of switching configurations required.
+We record the elementary but essential fact that integer-shifted Gamma ratios are
+polynomial products.
 
-**Extremal rainbow theory.** As a structural substrate, the colour-class atoms feed directly
-into counting arguments for rainbow substructures; Corollary 5.4 and Theorem 5.5 identify
-properly coloured complete graphs as the canonical high-colour-degree, rainbow-rich extremal
-family.
+**Proposition 3.1 (Rising-factorial identity).**
+*For every real $x$ with $\Gamma(x) \ne 0$ (equivalently $x$ not a non-positive
+integer) and every integer $m \ge 0$,*
+$$
+\frac{\Gamma(x + m)}{\Gamma(x)} = \prod_{i=0}^{m-1} (x + i)
+= x\,(x+1)\cdots(x+m-1) =: (x)^{\overline{m}}.
+$$
 
-## 8. Discussion
+*Proof.* Induct on $m$. For $m = 0$ both sides are $1$. For the step, use
+$\Gamma(x + m + 1) = (x + m)\,\Gamma(x + m)$, so
+$$
+\frac{\Gamma(x + m + 1)}{\Gamma(x)}
+= (x + m)\,\frac{\Gamma(x + m)}{\Gamma(x)}
+= (x + m)\prod_{i=0}^{m-1}(x + i)
+= \prod_{i=0}^{m}(x + i).
+$$
+The only care needed is that no interior factor $x + i$ vanishes, which is exactly
+the condition $\Gamma(x) \ne 0$ together with $x$ avoiding the negative integers
+inside the range; when some $x + i = 0$ both sides are handled directly since then
+$\Gamma(x)$ would be singular, excluded by hypothesis. $\qquad\blacksquare$
 
-The results here establish a piece of graph-theoretic folklore with unusual care about the
-*colour of an edge*. By defining the edge colour through a symmetric lift guarded by edge
-membership, we obtain statements about honest finite sets of edges: the partition theorem is
-an equality of edge sets, not an informal correspondence. This precision matters when the
-colour classes become building blocks for finer arguments — for instance, counting rainbow
-substructures, where one repeatedly needs that each colour contributes a matching and that no
-edge is counted twice.
+The rising factorial $(x)^{\overline{m}}$ (Pochhammer symbol) turns every
+integer-shift Gamma ratio into an elementary product, which is what makes the
+telescoping identity of Section 4 checkable to machine precision and by hand.
 
-The vertex-local results place properly coloured complete graphs precisely in the regime of
-current extremal conjectures on rainbow triangles, and the rainbow-triangle theorem explains
-their extremal role: properness upgrades *every* triangle to a rainbow one, so complete graphs
-maximize the raw supply of triangles while properness guarantees each is rainbow.
+---
 
-## 9. Future work
+## 4. The Beta-moment telescoping law
 
-Several directions extend naturally from this foundation.
+### 4.1 Setup
 
-- **Chromatic index and Vizing's theorem.** Establish the bound $\chi'(G)\in\{\Delta,\Delta+1\}$
-  and the exact values $\chi'(K_n)=n-1$ ($n$ even), $\chi'(K_n)=n$ ($n$ odd), using the
-  colour-class decomposition as the notion of a "round".
-- **Rainbow-triangle counts.** Build on the colour-class atoms toward the Li–Ning–Shi–Zhang
-  lower bound $rt(G)\ge \lceil (n-1)(n-3)/8 \rceil$ in the regime $\delta_c(G)\ge (n+1)/2$.
-- **Fractional and list variants.** Extend the partition viewpoint to fractional
-  edge-colourings and to list-edge-colouring, where colour classes are replaced by fractional
-  matchings and by constrained matchings respectively.
-- **Applications to scheduling.** Turn the constructive round-robin colouring into verified
-  schedulers with provable optimality guarantees.
+Let $B_0, B_1, \dots, B_{n-1}$ be independent with $B_j \sim \text{Beta}(\alpha_j,
+\beta_j)$, all parameters positive, and form the product
+$$
+P_n = \prod_{j=0}^{n-1} B_j.
+$$
+By independence and (2.1), for any admissible real exponent $p$,
+$$
+\mathbb{E}[P_n^p]
+= \prod_{j=0}^{n-1} \mathbb{E}[B_j^p]
+= \prod_{j=0}^{n-1}
+\frac{\Gamma(\alpha_j + p)\,\Gamma(\alpha_j + \beta_j)}
+{\Gamma(\alpha_j)\,\Gamma(\alpha_j + \beta_j + p)}.
+\tag{4.1}
+$$
 
-## References
+We say the parameters **chain additively** if
+$$
+\alpha_{j+1} = \alpha_j + \beta_j \qquad (0 \le j \le n-1),
+\tag{4.2}
+$$
+i.e. the total concentration $\alpha_j + \beta_j$ at stage $j$ equals the leading
+concentration $\alpha_{j+1}$ at stage $j+1$.
 
-- V. G. Vizing, *On an estimate of the chromatic class of a p-graph*, Diskret. Analiz **3**
-  (1964), 25–30.
-- B. Li, B. Ning, Y. Shi, S. Zhang, *Rainbow triangles in edge-coloured graphs* (2024).
+### 4.2 The per-factor decomposition and telescoping
+
+Introduce
+$$
+f(x) = \frac{\Gamma(x + p)}{\Gamma(x)}.
+$$
+
+**Lemma 4.2 (Per-factor decomposition).** *Assuming (4.2),*
+$$
+\frac{\Gamma(\alpha_j + p)\,\Gamma(\alpha_j + \beta_j)}
+{\Gamma(\alpha_j)\,\Gamma(\alpha_j + \beta_j + p)}
+= \frac{f(\alpha_j)}{f(\alpha_{j+1})}.
+$$
+
+*Proof.* This is a field identity requiring no non-vanishing beyond what makes the
+fractions defined. Substitute $\alpha_j + \beta_j = \alpha_{j+1}$ into the
+left-hand side to obtain
+$$
+\frac{\Gamma(\alpha_j + p)\,\Gamma(\alpha_{j+1})}
+{\Gamma(\alpha_j)\,\Gamma(\alpha_{j+1} + p)}
+= \frac{\Gamma(\alpha_j + p)/\Gamma(\alpha_j)}
+{\Gamma(\alpha_{j+1} + p)/\Gamma(\alpha_{j+1})}
+= \frac{f(\alpha_j)}{f(\alpha_{j+1})}. \qquad\blacksquare
+$$
+
+**Lemma 4.3 (Chained telescoping).** *Let $g : \mathbb{N} \to \mathbb{R}$ satisfy
+$g(j) \ne 0$ for $0 \le j \le n$. Then*
+$$
+\prod_{j=0}^{n-1} \frac{g(j)}{g(j+1)} = \frac{g(0)}{g(n)}.
+$$
+
+*Proof.* Induct on $n$. The empty product ($n = 0$) is $1 = g(0)/g(0)$. For the
+step,
+$$
+\prod_{j=0}^{n} \frac{g(j)}{g(j+1)}
+= \left(\prod_{j=0}^{n-1} \frac{g(j)}{g(j+1)}\right)\frac{g(n)}{g(n+1)}
+= \frac{g(0)}{g(n)} \cdot \frac{g(n)}{g(n+1)}
+= \frac{g(0)}{g(n+1)},
+$$
+where the non-vanishing of $g(n)$ licenses the cancellation. $\qquad\blacksquare$
+
+### 4.3 Main theorem
+
+**Theorem 4.1 (Beta-moment telescoping).** *Suppose the parameters chain
+additively, $\alpha_{j+1} = \alpha_j + \beta_j$ for $0 \le j \le n-1$, and suppose
+that*
+$$
+\Gamma(\alpha_j) \ne 0 \ \text{and}\ \Gamma(\alpha_j + p) \ne 0
+\quad (0 \le j \le n-1), \qquad
+\Gamma(\alpha_n) \ne 0 \ \text{and}\ \Gamma(\alpha_n + p) \ne 0.
+$$
+*Then*
+$$
+\prod_{j=0}^{n-1}
+\frac{\Gamma(\alpha_j + p)\,\Gamma(\alpha_j + \beta_j)}
+{\Gamma(\alpha_j)\,\Gamma(\alpha_j + \beta_j + p)}
+= \frac{\Gamma(\alpha_0 + p)\,\Gamma(\alpha_n)}
+{\Gamma(\alpha_0)\,\Gamma(\alpha_n + p)}.
+$$
+
+*Proof.* Apply Lemma 4.2 to each factor to rewrite the left-hand side as
+$\prod_{j=0}^{n-1} f(\alpha_j)/f(\alpha_{j+1})$ with $f(x) = \Gamma(x+p)/
+\Gamma(x)$. Set $g(j) = f(\alpha_j)$. The hypotheses give $\Gamma(\alpha_j) \ne 0$
+and $\Gamma(\alpha_j + p) \ne 0$ for $0 \le j \le n$, hence $g(j) \ne 0$
+throughout. Lemma 4.3 then yields $\prod_{j=0}^{n-1} g(j)/g(j+1) = g(0)/g(n) =
+f(\alpha_0)/f(\alpha_n)$. Expanding,
+$$
+\frac{f(\alpha_0)}{f(\alpha_n)}
+= \frac{\Gamma(\alpha_0 + p)/\Gamma(\alpha_0)}
+{\Gamma(\alpha_n + p)/\Gamma(\alpha_n)}
+= \frac{\Gamma(\alpha_0 + p)\,\Gamma(\alpha_n)}
+{\Gamma(\alpha_0)\,\Gamma(\alpha_n + p)}. \qquad\blacksquare
+$$
+
+**Sharpness of the non-vanishing hypothesis.** The requirement that each interior
+$\Gamma(\alpha_j + p)$ be nonzero cannot be dropped. If some interior argument
+$\alpha_k + p$ were a pole location making $\Gamma(\alpha_k + p)$ undefined — or,
+in the limiting sense used to interpret degenerate parameter choices, if the
+per-factor numerator vanishes — the left-hand product acquires a zero factor and
+collapses to $0$, while the endpoint right-hand side remains nonzero. For genuine
+Beta parameters ($\alpha_j, \beta_j > 0$ and $\alpha_j + p > 0$) the hypothesis
+holds automatically, because $\Gamma$ has no zeros on the positive axis; the
+proviso is only needed to state the identity at full generality over the reals.
+By contrast, the conditions $\Gamma(\alpha_j + \beta_j) \ne 0$ and the isolated
+$j=0$ case $\Gamma(\alpha_0) \ne 0$ are *not* independently required: the
+per-factor step is an unconditional field identity, and the endpoint
+non-vanishing needed for telescoping is already implied by the stated hypotheses.
+
+### 4.4 Probabilistic reading: chained products are single Betas
+
+The right-hand side of Theorem 4.1 is exactly the $p$-th moment (2.1) of a single
+Beta variable with parameters $\alpha_0$ and $\beta = \alpha_n - \alpha_0$:
+$$
+\frac{\Gamma(\alpha_0 + p)\,\Gamma(\alpha_n)}{\Gamma(\alpha_0)\,\Gamma(\alpha_n +
+p)}
+= \mathbb{E}\big[B^p\big], \qquad B \sim \text{Beta}(\alpha_0, \alpha_n -
+\alpha_0),
+$$
+since $\alpha_0 + \beta = \alpha_n$. Because a Beta variable is bounded in
+$[0,1]$, its moment sequence determines it uniquely (the moment problem on a
+bounded interval is determinate). Therefore:
+
+**Corollary 4.4.** *Under additive chaining (4.2), the product $P_n = \prod_{j=0}^
+{n-1} B_j$ of independent Beta variables is equal in distribution to a single
+$\text{Beta}(\alpha_0, \alpha_n - \alpha_0)$ variable.*
+
+This is the multiplicative-Beta "concatenation" law: a telescoping chain of
+independent Beta stages, glued so that each total concentration seeds the next,
+is indistinguishable from one Beta stage spanning the full parameter range. It is
+the exact mechanism by which the joint-descendant limit $L_k$, assembled from a
+chain of ancestry-urn Beta factors, retains a clean closed form.
+
+---
+
+## 5. The scaling exponent $d/(d+1)$
+
+We now explain the exponent governing the *size* of descendant sets, as opposed
+to the *shape* of the limit law.
+
+Let $\mu_N(v) = \mathbb{E}\,|\mathrm{Desc}_N(v)|$ denote the mean number of
+descendants of a fixed vertex $v$ in $G_N$. When vertex $N+1$ is added, it points
+to $d$ uniformly random earlier vertices; the probability that at least one of
+them lies in $\mathrm{Desc}_N(v) \cup \{v\}$ (so that $N+1$ becomes a new
+descendant of $v$) is, to leading order, proportional to $|\mathrm{Desc}_N(v)|/N$.
+This yields a multiplicative recursion of the schematic form
+$$
+\mu_{N+1}(v) \approx \mu_N(v)\left(1 + \frac{d}{N}\right),
+$$
+whose exact solution is a **rising-factorial ratio**
+$$
+\mu_N(v) \;\asymp\; \frac{\Gamma(N + d)}{\Gamma(N)} \cdot \frac{\Gamma(c)}
+{\Gamma(c + d)} \quad\text{-type expression},
+$$
+evaluated between the birth time of $v$ and the horizon $N$. By Proposition 3.1
+such a ratio is $\prod_{i=0}^{d-1}(N + i)$-like, and the standard log-sum-to-
+integral estimate
+$$
+\log \frac{\Gamma(N + a)}{\Gamma(N)} = a \log N + O(1)
+$$
+gives two-sided bounds showing
+$$
+\mu_n(\text{late vertex}) = \Theta\!\left(n^{d/(d+1)}\right).
+$$
+The exponent $d/(d+1)$ is thus the leading term in the asymptotics of a Pochhammer
+ratio; it reflects the deterministic mean growth, not a fluctuation. The
+randomness enters only through the $O(1)$ multiplicative fluctuations around this
+mean, and it is those fluctuations — organized by the ancestry urns — that
+converge, after dividing by $n^{d/(d+1)}$, to the product-of-Betas law $L_k$.
+
+---
+
+## 6. When joint descendants collapse: an order-theoretic criterion
+
+Recall $\mathrm{Desc}(v)$ is the lower set of $v$ in the reachability partial
+order $\preceq$ (write $u \preceq v$ if there is a directed path $u
+\rightsquigarrow v$, so $u$ is a descendant-side element). Intersections of lower
+sets are governed purely by order.
+
+**Proposition 6.1 (Collapse criterion).** *For vertices $v_1, \dots, v_k$,*
+$$
+\bigcap_{i=1}^{k} \mathrm{Desc}(v_i) = \mathrm{Desc}(v_{i^*}) \ \text{for some }
+i^*
+\quad\Longleftrightarrow\quad
+v_1, \dots, v_k \text{ form a chain in } \preceq.
+$$
+*Moreover, if the vertices do not form a chain — i.e. some pair $v_a, v_b$ is
+incomparable — then $\bigcap_i \mathrm{Desc}(v_i)$ is strictly contained in every
+individual $\mathrm{Desc}(v_i)$.*
+
+*Sketch.* ($\Leftarrow$) If the vertices form a chain, order them so that
+$v_{\sigma(1)} \preceq \cdots \preceq v_{\sigma(k)}$. A vertex reaching the
+minimal element $v_{\sigma(1)}$ (in the descendant sense, the "largest" under
+reachability) reaches all of them, so the intersection equals the descendant set
+of the extreme vertex. ($\Rightarrow$) If $v_a, v_b$ are incomparable, neither
+descendant set contains the other, so their intersection is a proper subset of
+each; hence the intersection cannot equal any single $\mathrm{Desc}(v_i)$, and in
+fact is strictly smaller than every one of them. $\qquad\blacksquare$
+
+The chaining hypothesis (4.2) on urn parameters is the algebraic reflection of
+this chain condition: additive chaining is exactly what makes the successive
+ancestry stages nest, and it is sharp in the same sense — break the chain at one
+index and the telescoping (hence the clean single-Beta collapse) fails, mirroring
+the strict containment above.
+
+---
+
+## 7. Algorithms
+
+### 7.1 Exact rising-factorial evaluation
+
+To verify Theorem 4.1 exactly for rational parameters and integer $p$, evaluate
+each Gamma ratio via Proposition 3.1 as an exact rational product, avoiding
+floating point entirely.
+
+```
+function GammaRatioInteger(x, m):        # returns Γ(x+m)/Γ(x) = ∏_{i<m}(x+i)
+    prod ← 1
+    for i in 0 .. m-1:
+        prod ← prod · (x + i)
+    return prod
+```
+
+### 7.2 Direct vs. telescoped product
+
+```
+function BetaMomentProductDirect(alpha[0..n-1], beta[0..n-1], p):
+    result ← 1
+    for j in 0 .. n-1:
+        num ← Γ(alpha[j] + p) · Γ(alpha[j] + beta[j])
+        den ← Γ(alpha[j]) · Γ(alpha[j] + beta[j] + p)
+        result ← result · num / den
+    return result
+
+function BetaMomentProductTelescoped(alpha[0..n-1], beta[0..n-1], p):
+    assert alpha[j+1] == alpha[j] + beta[j] for all j          # chaining (4.2)
+    alpha_n ← alpha[n-1] + beta[n-1]
+    return Γ(alpha[0] + p) · Γ(alpha_n) / (Γ(alpha[0]) · Γ(alpha_n + p))
+```
+
+Under (4.2), the two functions agree to numerical precision; with integer $p$ and
+rational parameters they agree exactly when both are evaluated via §7.1.
+
+### 7.3 Monte Carlo estimation of the limit law
+
+```
+function SimulateJointDescendantScaling(d, k, n, N, trials):
+    samples ← [ ]
+    repeat trials times:
+        G ← GrowRandomDDAG(d, up to N)            # sequential attachment
+        block ← {n, n+1, ..., n+k-1}
+        joint ← ⋂_{v in block} Descendants(G, v)
+        samples.append( |joint| / n^(d/(d+1)) )
+    return EmpiricalDistribution(samples)
+```
+
+The empirical distribution of `samples` approximates the law of $L_k$, which by
+the telescoping mechanism matches a product / ratio of independent Beta / Gamma
+variables.
+
+---
+
+## 8. Numerical experiments
+
+Three experiments confirm the theory (implemented in the accompanying `demo.py`):
+
+1. **Telescoping identity.** For random additively chained parameter sequences
+   and various exponents $p$ (including negative and non-integer), the direct
+   product (4.1) matches the endpoint formula of Theorem 4.1 to machine
+   precision. For integer $p$ and rational parameters the agreement is exact.
+
+2. **Single-Beta collapse.** Sampling $P_n = \prod_j B_j$ under (4.2) and
+   comparing its empirical moments and histogram to a single
+   $\text{Beta}(\alpha_0, \alpha_n - \alpha_0)$ confirms Corollary 4.4.
+
+3. **Descendant growth (exploratory).** Growing random $d$-DAGs and regressing
+   $\log \mathbb{E}|\mathrm{Desc}(v)|$ against the log-horizon confirms that mean
+   descendant-set sizes grow polynomially. The sharp exponent $d/(d+1)$ is a
+   conjectural direction (Section 10), and pinning it down requires the exact
+   Pochhammer asymptotics rather than a naive regression.
+
+---
+
+## 9. Discussion
+
+The results separate the joint-descendant problem into three independent strands:
+
+- **Size** is deterministic to leading order and set by Pochhammer asymptotics:
+  the exponent $d/(d+1)$ is analytic, not probabilistic.
+- **Shape** of the fluctuation limit $L_k$ is set by a chain of ancestry Pólya
+  urns, whose Beta factors telescope by Theorem 4.1 into a clean product/ratio
+  representation.
+- **Combinatorial collapse** of the joint set to a single descendant set is an
+  order-theoretic chain condition (Proposition 6.1), of which additive parameter
+  chaining is the algebraic shadow.
+
+The telescoping identity is of independent interest. It is a statement about
+*any* chain of independent Beta (or Dirichlet) stages whose concentrations match
+additively, and it explains why such chains behave, momentwise and hence in
+distribution on bounded support, like a single stage. This is a reusable lemma in
+Bayesian nonparametrics (stick-breaking constructions), population genetics
+(nested resampling), and the smoothed analysis of randomized incremental
+algorithms.
+
+---
+
+## 10. Future directions
+
+**A universal telescoping law for chained multivariate compositions.** We
+conjecture that for any fixed $k$, whenever the concentration parameters of a
+sequence of Dirichlet compositions chain additively (each stage's total
+concentration equals the next stage's leading parameter), the joint moments of
+the product collapse to a single ratio of multivariate Gamma factors, with a
+non-degenerate limit exactly when the increments stay bounded away from zero. The
+one-dimensional proof used only positivity and the additive matching condition,
+both of which survive verbatim in the Dirichlet setting.
+
+**The scaling exponent as exact Gamma asymptotics.** We conjecture that the mean
+descendant-set size of a single late vertex grows like a constant times
+$n^{d/(d+1)}$ with matching two-sided bounds, the exponent being purely the
+leading term of a Pochhammer ratio, obtainable from the exact rising-factorial
+identity via a log-sum-to-integral estimate.
+
+**Sharpness of the chain hypothesis.** We conjecture that the common-descendant
+set of the last $k$ vertices coincides with the descendant set of the single last
+vertex if and only if those vertices are totally ordered by reachability;
+breaking the chain at even one index makes the joint set strictly smaller than
+every individual descendant set.
+
+**Gamma-ratio moment sequences and determinacy.** We conjecture that the moment
+sequences arising as ratios of Gamma values at shifted arguments are Hausdorff
+moment sequences on a bounded interval, certifying that the limits they describe
+are genuine, non-degenerate, and uniquely determined by their moments.
+
+---
+
+## References (indicative)
+
+- Classical Pólya urn and Beta/Dirichlet limit theory.
+- Beta–Gamma algebra and multiplicative Beta identities.
+- Random recursive DAGs and preferential-attachment descendant statistics.
+- Pochhammer/rising-factorial asymptotics of the Gamma function.

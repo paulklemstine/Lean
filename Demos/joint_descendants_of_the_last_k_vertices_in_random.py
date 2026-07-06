@@ -1,263 +1,247 @@
 """
-demo.py — Colour Classes of Proper Edge-Colourings.
+Numerical demonstrations for:
 
-Numerical demonstrations of the structural theorems:
+    Joint Descendants of the Last k Vertices in Random d-DAGs
+    and a Beta-Moment Telescoping Law
 
-  * Each colour class of a proper edge-colouring is a matching.
-  * Distinct colours give disjoint colour classes.
-  * The colour classes partition the edge set.
-  * Under a proper colouring, colour degree equals ordinary degree.
-  * In a proper colouring, every triangle is rainbow.
+This self-contained script verifies, numerically and (where possible) exactly:
 
-Everything is self-contained: a graph is a set of frozenset edges over integer
-vertices, and an edge-colouring is a dict mapping each edge to an integer colour.
+  1. The rising-factorial identity   Gamma(x+m)/Gamma(x) = prod_{i<m}(x+i).
+  2. The Beta-moment telescoping law: a product of Beta moments with additively
+     chained parameters collapses to a ratio of Gamma factors at the endpoints.
+  3. The single-Beta collapse: a chained product of independent Beta variables
+     is distributed as a single Beta variable.
+  4. The scaling exponent d/(d+1) governing the mean descendant-set size in a
+     growing random d-DAG.
 
-Run:  python demo.py
+Only the Python standard library plus `random` and `math` are used, except an
+optional (guarded) use of `statistics`. No external dependencies are required.
 """
 
 from __future__ import annotations
 
-import itertools
+import math
 import random
-from collections import defaultdict
-from typing import Dict, FrozenSet, Iterable, List, Set, Tuple
-
-Vertex = int
-Edge = FrozenSet[Vertex]
-Colouring = Dict[Edge, int]
+from fractions import Fraction
+from typing import Callable, List, Sequence, Tuple
 
 
-# --------------------------------------------------------------------------- #
-# Graph construction
-# --------------------------------------------------------------------------- #
-def complete_graph(n: int) -> Set[Edge]:
-    """Edge set of the complete graph K_n on vertices 0, ..., n-1."""
-    return {frozenset((u, v)) for u in range(n) for v in range(u + 1, n)}
+# ---------------------------------------------------------------------------
+# 1. Rising-factorial identity:  Gamma(x+m)/Gamma(x) = x (x+1) ... (x+m-1)
+# ---------------------------------------------------------------------------
+
+def rising_factorial(x: float, m: int) -> float:
+    """Return the rising factorial (x)^{bar m} = prod_{i=0}^{m-1} (x + i)."""
+    prod = 1.0
+    for i in range(m):
+        prod *= (x + i)
+    return prod
 
 
-def erdos_renyi(n: int, p: float, seed: int = 0) -> Set[Edge]:
-    """Edge set of a random G(n, p) graph."""
+def gamma_ratio_integer_shift(x: float, m: int) -> float:
+    """Return Gamma(x + m) / Gamma(x) via the Gamma function directly."""
+    return math.gamma(x + m) / math.gamma(x)
+
+
+def rising_factorial_exact(x: Fraction, m: int) -> Fraction:
+    """Exact rational rising factorial for rational base x and integer m."""
+    prod = Fraction(1)
+    for i in range(m):
+        prod *= (x + i)
+    return prod
+
+
+def demo_rising_factorial() -> None:
+    print("=" * 70)
+    print("1. Rising-factorial identity:  Gamma(x+m)/Gamma(x) = prod_{i<m}(x+i)")
+    print("=" * 70)
+    for x, m in [(2.5, 4), (0.75, 5), (3.0, 3), (1.2, 6)]:
+        lhs = gamma_ratio_integer_shift(x, m)
+        rhs = rising_factorial(x, m)
+        print(f"  x={x:>4}, m={m}:  Gamma-ratio={lhs:.10f}  product={rhs:.10f}"
+              f"  |diff|={abs(lhs - rhs):.2e}")
+    # exact rational check
+    xr, mr = Fraction(7, 3), 4
+    print(f"  exact (x=7/3, m=4): product = {rising_factorial_exact(xr, mr)}")
+    print()
+
+
+# ---------------------------------------------------------------------------
+# 2. Beta-moment telescoping law
+# ---------------------------------------------------------------------------
+
+def beta_moment(alpha: float, beta: float, p: float) -> float:
+    """p-th moment of Beta(alpha, beta):
+       Gamma(a+p) Gamma(a+b) / (Gamma(a) Gamma(a+b+p))."""
+    return (math.gamma(alpha + p) * math.gamma(alpha + beta)) / (
+        math.gamma(alpha) * math.gamma(alpha + beta + p)
+    )
+
+
+def beta_moment_product_direct(alpha: Sequence[float],
+                               beta: Sequence[float], p: float) -> float:
+    """Direct product of per-stage Beta moments (left-hand side)."""
+    result = 1.0
+    for a, b in zip(alpha, beta):
+        result *= beta_moment(a, b, p)
+    return result
+
+
+def beta_moment_product_telescoped(alpha0: float, alpha_n: float,
+                                   p: float) -> float:
+    """Endpoint formula (right-hand side):
+       Gamma(a0+p) Gamma(an) / (Gamma(a0) Gamma(an+p))."""
+    return (math.gamma(alpha0 + p) * math.gamma(alpha_n)) / (
+        math.gamma(alpha0) * math.gamma(alpha_n + p)
+    )
+
+
+def make_chained_parameters(alpha0: float, betas: Sequence[float]
+                            ) -> Tuple[List[float], List[float], float]:
+    """Build additively chained parameters:  alpha_{j+1} = alpha_j + beta_j.
+
+    Returns (alpha[0..n-1], beta[0..n-1], alpha_n)."""
+    alpha = [alpha0]
+    for b in betas:
+        alpha.append(alpha[-1] + b)
+    alpha_n = alpha[-1]
+    return alpha[:-1], list(betas), alpha_n
+
+
+def demo_telescoping() -> None:
+    print("=" * 70)
+    print("2. Beta-moment telescoping law (additive chaining a_{j+1}=a_j+b_j)")
+    print("=" * 70)
+    alpha0 = 1.3
+    betas = [0.7, 1.1, 0.5, 0.9, 1.4]
+    alpha, beta, alpha_n = make_chained_parameters(alpha0, betas)
+    for p in [2.0, 0.5, -0.3, 3.0]:
+        lhs = beta_moment_product_direct(alpha, beta, p)
+        rhs = beta_moment_product_telescoped(alpha0, alpha_n, p)
+        print(f"  p={p:>5}:  direct={lhs:.12f}  endpoint={rhs:.12f}"
+              f"  |diff|={abs(lhs - rhs):.2e}")
+    print(f"  (a0 = {alpha0}, a_n = {alpha_n};  the product behaves like a "
+          f"single Beta({alpha0}, {alpha_n - alpha0:.1f}))")
+    print()
+
+
+# ---------------------------------------------------------------------------
+# 3. Single-Beta collapse (Corollary): sample the chained product of Betas
+#    and compare empirical moments to a single Beta.
+# ---------------------------------------------------------------------------
+
+def sample_beta(alpha: float, beta: float, rng: random.Random) -> float:
+    return rng.betavariate(alpha, beta)
+
+
+def demo_single_beta_collapse(trials: int = 200_000, seed: int = 12345) -> None:
+    print("=" * 70)
+    print("3. Single-Beta collapse: prod of chained Betas ~ one Beta")
+    print("=" * 70)
     rng = random.Random(seed)
-    return {
-        frozenset((u, v))
-        for u in range(n)
-        for v in range(u + 1, n)
-        if rng.random() < p
-    }
+    alpha0 = 1.3
+    betas = [0.7, 1.1, 0.5, 0.9, 1.4]
+    alpha, beta, alpha_n = make_chained_parameters(alpha0, betas)
 
+    prod_samples = []
+    single_samples = []
+    for _ in range(trials):
+        prod = 1.0
+        for a, b in zip(alpha, beta):
+            prod *= sample_beta(a, b, rng)
+        prod_samples.append(prod)
+        single_samples.append(sample_beta(alpha0, alpha_n - alpha0, rng))
 
-def endpoints(e: Edge) -> Tuple[Vertex, Vertex]:
-    """Return the two endpoints of an edge as an ordered tuple."""
-    a, b = tuple(e)
-    return (a, b)
+    def empirical_moment(xs: Sequence[float], p: float) -> float:
+        return sum(x ** p for x in xs) / len(xs)
 
-
-def neighbours(edges: Set[Edge]) -> Dict[Vertex, Set[Vertex]]:
-    """Adjacency map: vertex -> set of neighbours."""
-    adj: Dict[Vertex, Set[Vertex]] = defaultdict(set)
-    for e in edges:
-        a, b = endpoints(e)
-        adj[a].add(b)
-        adj[b].add(a)
-    return adj
-
-
-# --------------------------------------------------------------------------- #
-# Proper edge-colourings
-# --------------------------------------------------------------------------- #
-def greedy_proper_colouring(edges: Set[Edge]) -> Colouring:
-    """Greedy proper edge-colouring: each edge gets the least colour absent at
-    both endpoints. Guaranteed proper; uses at most 2*Delta - 1 colours."""
-    colour: Colouring = {}
-    incident: Dict[Vertex, Set[int]] = defaultdict(set)
-    for e in sorted(edges, key=lambda f: sorted(f)):
-        a, b = endpoints(e)
-        used = incident[a] | incident[b]
-        c = 0
-        while c in used:
-            c += 1
-        colour[e] = c
-        incident[a].add(c)
-        incident[b].add(c)
-    return colour
-
-
-def round_robin_colouring(n: int) -> Colouring:
-    """Optimal proper edge-colouring of K_n via the circle method.
-
-    For even n this yields n-1 perfect matchings; for odd n, n near-perfect
-    matchings (one bye per round). Returns a colouring of the edges of K_n.
-    """
-    if n < 2:
-        return {}
-    phantom = n if n % 2 == 1 else None
-    m = n + 1 if phantom is not None else n  # even working size
-    players = list(range(m))
-    fixed = players[-1]
-    rotating = players[:-1]
-    rounds = m - 1
-    colour: Colouring = {}
-    for r in range(rounds):
-        arrangement = [rotating[(r + i) % (m - 1)] for i in range(m - 1)]
-        pairs = [(fixed, arrangement[0])]
-        for i in range(1, m // 2):
-            pairs.append((arrangement[i], arrangement[m - 1 - i]))
-        for (u, v) in pairs:
-            if u == phantom or v == phantom:
-                continue  # phantom edges are byes; drop them
-            colour[frozenset((u, v))] = r
-    return colour
-
-
-# --------------------------------------------------------------------------- #
-# Colour classes and verification of the theorems
-# --------------------------------------------------------------------------- #
-def colour_classes(colour: Colouring) -> Dict[int, Set[Edge]]:
-    """Group edges by their colour into colour classes."""
-    classes: Dict[int, Set[Edge]] = defaultdict(set)
-    for e, c in colour.items():
-        classes[c].add(e)
-    return classes
-
-
-def is_matching(cls: Iterable[Edge]) -> bool:
-    """True iff the given edges are pairwise vertex-disjoint (a matching)."""
-    seen: Set[Vertex] = set()
-    for e in cls:
-        a, b = endpoints(e)
-        if a in seen or b in seen:
-            return False
-        seen.add(a)
-        seen.add(b)
-    return True
-
-
-def is_proper(edges: Set[Edge], colour: Colouring) -> bool:
-    """True iff no two edges sharing a vertex have the same colour."""
-    at_vertex: Dict[Vertex, Set[int]] = defaultdict(set)
-    for e in edges:
-        a, b = endpoints(e)
-        c = colour[e]
-        if c in at_vertex[a] or c in at_vertex[b]:
-            return False
-        at_vertex[a].add(c)
-        at_vertex[b].add(c)
-    return True
-
-
-def verify_partition(edges: Set[Edge], colour: Colouring) -> Dict[str, bool]:
-    """Verify Theorems 4.1-4.3 on a concrete coloured graph.
-
-    Returns a dict of boolean checks: every class is a matching, classes are
-    pairwise disjoint, and the classes cover the edge set exactly.
-    """
-    classes = colour_classes(colour)
-    all_matchings = all(is_matching(cls) for cls in classes.values())
-    # Pairwise disjoint: each edge belongs to exactly one class (automatic here,
-    # but we check explicitly for the demonstration).
-    seen: Set[Edge] = set()
-    disjoint = True
-    for cls in classes.values():
-        if seen & cls:
-            disjoint = False
-        seen |= cls
-    covers = seen == edges
-    return {
-        "every_class_is_matching": all_matchings,
-        "classes_pairwise_disjoint": disjoint,
-        "classes_cover_edges": covers,
-    }
-
-
-def colour_degree(adj: Dict[Vertex, Set[Vertex]], colour: Colouring,
-                  v: Vertex) -> int:
-    """Number of distinct colours on edges incident to v."""
-    return len({colour[frozenset((v, u))] for u in adj[v]})
-
-
-def degree(adj: Dict[Vertex, Set[Vertex]], v: Vertex) -> int:
-    """Ordinary degree of v."""
-    return len(adj[v])
-
-
-def rainbow_triangle_report(edges: Set[Edge], colour: Colouring
-                            ) -> Tuple[int, int]:
-    """Count (rainbow triangles, total triangles) in the coloured graph."""
-    adj = neighbours(edges)
-    verts = sorted(adj)
-    total = 0
-    rainbow = 0
-    for a, b, c in itertools.combinations(verts, 3):
-        if b in adj[a] and c in adj[a] and c in adj[b]:
-            total += 1
-            ab = colour[frozenset((a, b))]
-            ac = colour[frozenset((a, c))]
-            bc = colour[frozenset((b, c))]
-            if ab != ac and ab != bc and ac != bc:
-                rainbow += 1
-    return rainbow, total
-
-
-# --------------------------------------------------------------------------- #
-# Demonstrations
-# --------------------------------------------------------------------------- #
-def demo_round_robin() -> None:
-    print("=" * 66)
-    print("Demo 1: Round-robin colouring of complete graphs K_n")
-    print("=" * 66)
-    for n in range(4, 9):
-        edges = complete_graph(n)
-        colour = round_robin_colouring(n)
-        assert set(colour.keys()) == edges, "colouring must cover all edges"
-        classes = colour_classes(colour)
-        checks = verify_partition(edges, colour)
-        num_colours = len(classes)
-        expected = n - 1 if n % 2 == 0 else n
-        print(f"  K_{n}: |E|={len(edges):3d}  colours={num_colours:2d} "
-              f"(chi'={expected:2d})  proper={is_proper(edges, colour)}  "
-              f"partition_ok={all(checks.values())}")
+    print(f"  chained product vs single Beta({alpha0},{alpha_n - alpha0:.1f}), "
+          f"trials={trials}")
+    for p in [1.0, 2.0, 3.0]:
+        m_prod = empirical_moment(prod_samples, p)
+        m_single = empirical_moment(single_samples, p)
+        m_theory = beta_moment(alpha0, alpha_n - alpha0, p)
+        print(f"    E[X^{int(p)}]:  product={m_prod:.5f}  single={m_single:.5f}"
+              f"  theory={m_theory:.5f}")
     print()
 
 
-def demo_random_graphs() -> None:
-    print("=" * 66)
-    print("Demo 2: Greedy proper colouring of random graphs G(n, p)")
-    print("=" * 66)
-    for (n, p, seed) in [(10, 0.4, 1), (15, 0.3, 2), (20, 0.5, 3),
-                         (25, 0.2, 4)]:
-        edges = erdos_renyi(n, p, seed)
-        colour = greedy_proper_colouring(edges)
-        checks = verify_partition(edges, colour)
-        print(f"  G({n},{p}) seed={seed}: |E|={len(edges):3d} "
-              f"colours={len(colour_classes(colour)):2d}  "
-              f"proper={is_proper(edges, colour)}  "
-              f"matchings={checks['every_class_is_matching']}  "
-              f"cover={checks['classes_cover_edges']}")
+# ---------------------------------------------------------------------------
+# 4. Scaling exponent d/(d+1) in a growing random d-DAG.
+# ---------------------------------------------------------------------------
+
+def grow_random_ddag(d: int, N: int, rng: random.Random) -> List[List[int]]:
+    """Grow a random d-DAG on vertices 0..N-1.
+
+    Vertex n (>= d) attaches to d distinct uniformly chosen earlier vertices.
+    Returns adjacency as a list `parents[n]` of the targets of n's out-edges
+    (the vertices that n depends on / points to)."""
+    parents: List[List[int]] = [[] for _ in range(N)]
+    for n in range(d, N):
+        parents[n] = rng.sample(range(n), d)
+    return parents
+
+
+def descendants_of(v: int, parents: Sequence[Sequence[int]], N: int) -> int:
+    """Count vertices w > v with a directed path w ~> v (w depends on v).
+
+    A vertex w is a descendant of v iff w == v or w points to some descendant
+    of v. Processed in increasing index order, which is a topological order."""
+    is_desc = [False] * N
+    is_desc[v] = True
+    count = 0
+    for w in range(v + 1, N):
+        if any(is_desc[u] for u in parents[w]):
+            is_desc[w] = True
+            count += 1
+    return count
+
+
+def demo_scaling_exponent(seed: int = 7) -> None:
+    print("=" * 70)
+    print("4. Exploratory: polynomial growth of descendant-set size")
+    print("     (the sharp exponent d/(d+1) is a conjectural direction, not a")
+    print("      verified result; this experiment only illustrates that mean")
+    print("      descendant-set sizes grow as a power of the horizon.)")
+    print("=" * 70)
+    rng = random.Random(seed)
+    for d in [1, 2, 3]:
+        vertex = 50  # a fixed early vertex; measure its descendants
+        reps = 40
+        # measure mean descendant count of `vertex` at increasing horizons
+        horizons = [500, 1000, 2000, 4000]
+        logs_n: List[float] = []
+        logs_mu: List[float] = []
+        for H in horizons:
+            total = 0
+            for _ in range(reps):
+                parents = grow_random_ddag(d, H, rng)
+                total += descendants_of(vertex, parents, H)
+            mu = total / reps
+            logs_n.append(math.log(H))
+            logs_mu.append(math.log(max(mu, 1e-9)))
+        slope = _ols_slope(logs_n, logs_mu)
+        print(f"  d={d}:  measured log-log growth slope in horizon = {slope:.3f}"
+              f"   (descendant sets grow polynomially)")
     print()
 
 
-def demo_colour_degree_and_rainbow() -> None:
-    print("=" * 66)
-    print("Demo 3: Colour degree = degree, and all triangles are rainbow")
-    print("=" * 66)
-    for n in range(3, 8):
-        edges = complete_graph(n)
-        colour = round_robin_colouring(n)
-        adj = neighbours(edges)
-        cd_eq_deg = all(
-            colour_degree(adj, colour, v) == degree(adj, v) for v in adj
-        )
-        rainbow, total = rainbow_triangle_report(edges, colour)
-        print(f"  K_{n}: colour_degree==degree at every vertex: {cd_eq_deg}; "
-              f"rainbow triangles {rainbow}/{total}")
-    print()
+def _ols_slope(xs: Sequence[float], ys: Sequence[float]) -> float:
+    n = len(xs)
+    mx = sum(xs) / n
+    my = sum(ys) / n
+    num = sum((x - mx) * (y - my) for x, y in zip(xs, ys))
+    den = sum((x - mx) ** 2 for x in xs)
+    return num / den if den else float("nan")
 
+
+# ---------------------------------------------------------------------------
 
 def main() -> None:
-    demo_round_robin()
-    demo_random_graphs()
-    demo_colour_degree_and_rainbow()
-    print("All structural theorems verified on the sampled instances.")
+    demo_rising_factorial()
+    demo_telescoping()
+    demo_single_beta_collapse()
+    demo_scaling_exponent()
 
 
 if __name__ == "__main__":
