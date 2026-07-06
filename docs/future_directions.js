@@ -4,36 +4,6 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
-    "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition \u2014 zeros on the critical line means the bulk geometry is stable against perturbations.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0407",
-    "priority_score": 0.91,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-06T05:39:23.840450+00:00",
-    "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0404",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-06T05:39:23.757188+00:00",
-    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domains": [
       "Pythagorean"
@@ -45,21 +15,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T05:18:37.114832+00:00",
     "title": "Deepening: unnamed_concept"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot \u2014 the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0405",
-    "priority_score": 0.81,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-06T05:39:23.784569+00:00",
-    "title": "Knots That Think: Cognition as Braiding in Category Theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -1608,7 +1563,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Logarithmic bound for generalized Erd\u0151s\u2013Rogers functions: the case F = K_4^3"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c2eb3269",
     "description": "For the Maker-Breaker C_k-game on K_n with fixed k \u2265 4, the threshold bias is exactly c_k \u00b7 n^{(k-2)/(k-1)} where c_k = [(k-1)(2(k-1)/k)^{k-2}]^{1/(k-1)}. That is, Maker wins when q < (1-\u03b5)c_k\u00b7n^{(k-2)/(k-1)} and Breaker wins when q > (1+\u03b5)c_k\u00b7n^{(k-2)/(k-1)} for any \u03b5 > 0 and all sufficiently large n.",
     "domains": [
       "Bridges"
@@ -1617,7 +1572,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01294v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T11:40:15.032234+00:00",
     "title": "Sharp Threshold Constant for Cycle Games"
   },
@@ -1885,7 +1840,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-existence of weak Ziegler pairs for high-degree plus-one generated conic-line arrangements with defect three"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "66c7a5a0",
     "description": "For every integer d \u22657, there exists a simplicial 0/1-polytope in dimension d with exactly 2d vertices that is not centrally symmetric. This generalizes the explicit 7-dimensional counterexample to all higher dimensions, extending the classification beyond the known result for d=7.",
     "domains": [
       "Geometry"
@@ -1894,7 +1849,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31640v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T19:30:02.443246+00:00",
     "title": "Existence of Non-Centrally Symmetric Simplicial 0/1-Polytopes for All Dimensions \u22657"
   },
@@ -2815,7 +2770,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Even Harmonic Strength of Antipodal Spherical Designs Contains 2"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c6c9b64a",
     "description": "Formalize the proof that the transformation matrix $H_{\\mathcal{F}}$ associated with the interval subdivision of a finite simplicial complex is totally positive (TP). This requires defining the $h$-vector of a simplicial complex, the interval subdivision operation, the resulting transformation matrix $H_{\\mathcal{F}}$, and proving that all its minors are non-negative.",
     "domains": [
       "Geometry",
@@ -2825,7 +2780,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T09:05:38.885794+00:00",
     "title": "Total Positivity of the Interval Subdivision Transformation Matrix"
   },
@@ -3061,6 +3016,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the k_t lower bound given k_s in extremal graphs"
   },
   {
+    "consumed_by_exp_id": "e455828e",
+    "description": "Conjecture: In the unramified GU(1,n-1) Rapoport\u2011Zink space of arbitrary parahoric level P, every basic Ekedahl\u2011Kottwitz\u2011Oort\u2011Rapoport (EKOR) stratum is isomorphic (as a scheme over the residue field \ud835\udd3d_q) to a finite disjoint union of copies of a explicitly defined fine Deligne\u2011Lusztig variety X(w_P) attached to a Weyl group element w_P determined by P. Moreover, the number of irreducible components equals the number of vertices in the affine Dynkin diagram of type \u00c3_{n-1} corresponding to the parahoric subgroup P, and each component is smooth and projective.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0249",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31940v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-03T15:54:12.765581+00:00",
+    "title": "Basic EKOR Strata are Disjoint Unions of Fine Deligne-Lusztig Varieties"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Conjecture that for every finite strongly connected edge\u2011weighted directed graph G there is no assignment of colors to its vertices such that each vertex\u2019s color is a (weighted) convex combination of the colors of its neighbors, unless all vertices share the same color.",
     "domains": [
@@ -3269,7 +3239,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Characterization of Zero-Preserving Pisot Numerations via Torus Isomorphism"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e50512ae",
     "description": "Conjecture: There exists an absolute constant K>0 such that for every n\u2208\u2115 and every family F\u22862^[n] that is 3\u2011sunflower\u2011free (i.e., contains no three sets with pairwise constant intersection), we have |F| \u2264 K\u00b7n^{1/6}\u00b7(3/2^{2/3})^n.",
     "domains": [
       "Pythagorean"
@@ -3278,7 +3248,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30593v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T23:33:38.013269+00:00",
     "title": "Optimality of the polynomial factor in the Naslund\u2013Sawin bound for sunflower\u2011free families"
   },
@@ -3877,7 +3847,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on the maximal number of parts of non\u2011hook partitions in \u03a9\u2082(n)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "68e5d734",
     "description": "For every \\(\\epsilon > 0\\), there exists \\(K > 0\\) such that for all \\(d \\ge K\\) and \\(p \\in [\\epsilon d/\\log n, d/\\log n]\\), a graph \\(G\\) with average degree \\(d\\) satisfies: the random subgraph \\(G_p\\) obtained by retaining each edge of \\(G\\) independently with probability \\(p\\) contains a cycle of length at least \\(d - \\epsilon d\\) asymptotically almost surely as \\(n \\to \\infty\\).",
     "domains": [
       "Computation"
@@ -3886,7 +3856,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T23:36:00.875596+00:00",
     "title": "Persistent Cycles in Randomized Graphs via Hyperstable Structural Constraints"
   },
@@ -4797,11 +4767,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For integers n, k, t with n >= 3 and 0 <= k <= n-3, any n-vertex graph that is not k-edge Hamiltonian contains at most max(g_t(n, k, 1), g_t(n, k, floor((n-1-k)/2))) t-stars, where g_t(n, k, i) = i * choose(i+k, t) + (n-2*i-k) * choose(n-i-1, t) + (i+k) * choose(n-1, t). This corresponds to the extremal graphs G(n, k, 1) and G(n, k, i_0).",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0376",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00770v2",
+    "status": "available",
+    "timestamp": "2026-07-06T05:41:37.533157+00:00",
+    "title": "Conjecture on the Maximum Number of Stars in Non-k-Edge-Hamiltonian Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0376",
+    "id": "fd_0377",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -4815,7 +4800,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0377",
+    "id": "fd_0378",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -4830,7 +4815,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0378",
+    "id": "fd_0379",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
@@ -4845,7 +4830,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0379",
+    "id": "fd_0380",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -4860,7 +4845,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0380",
+    "id": "fd_0381",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -4874,7 +4859,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0381",
+    "id": "fd_0382",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -4888,7 +4873,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0382",
+    "id": "fd_0383",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -4903,7 +4888,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0383",
+    "id": "fd_0384",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02011v1",
@@ -4918,7 +4903,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0384",
+    "id": "fd_0385",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -4932,7 +4917,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0385",
+    "id": "fd_0386",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02085v1",
@@ -4946,7 +4931,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0386",
+    "id": "fd_0387",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01957v1",
@@ -4961,7 +4946,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0387",
+    "id": "fd_0388",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01956v1",
@@ -4975,7 +4960,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0388",
+    "id": "fd_0389",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01744v1",
@@ -4989,7 +4974,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0389",
+    "id": "fd_0390",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01839v1",
@@ -5004,7 +4989,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0390",
+    "id": "fd_0391",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01703v1",
@@ -5018,7 +5003,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0391",
+    "id": "fd_0392",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01572v1",
@@ -5032,7 +5017,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0392",
+    "id": "fd_0393",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01680v1",
@@ -5046,7 +5031,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0393",
+    "id": "fd_0394",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01582v1",
@@ -5061,7 +5046,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0394",
+    "id": "fd_0395",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01165v1",
@@ -5076,7 +5061,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0395",
+    "id": "fd_0396",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01184v1",
@@ -5090,7 +5075,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0396",
+    "id": "fd_0397",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -5105,7 +5090,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0397",
+    "id": "fd_0398",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -5120,7 +5105,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0398",
+    "id": "fd_0399",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01028v1",
@@ -5135,7 +5120,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0399",
+    "id": "fd_0400",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00940v1",
@@ -5149,7 +5134,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0400",
+    "id": "fd_0401",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -5163,7 +5148,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0401",
+    "id": "fd_0402",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01059v1",
@@ -5178,7 +5163,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0402",
+    "id": "fd_0403",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
@@ -5192,7 +5177,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0403",
+    "id": "fd_0404",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00934v1",
@@ -5202,18 +5187,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
+    "description": "For p an odd prime, k \u2265 2 an even integer, and a_p in the algebraic closure of Q_p with v(a_p) > 0 and v(a_p) not an integer (i.e., the slope is fractional), the mod p semisimplified reduction V\u0304_{k,a_p} of the two-dimensional crystalline representation V_{k,a_p} of G_{Q_p} is irreducible. This folklore conjecture is partially established in the paper for fractional slopes less than p-2 and sufficiently large even weights k under a slope assumption on bad congruence classes of k mod p.",
     "domains": [
-      "Novelty",
-      "Algebra"
+      "Algebra",
+      "Pythagorean"
     ],
-    "id": "fd_0406",
-    "priority_score": 0.77,
+    "id": "fd_0405",
+    "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "seed",
+    "source_exp_id": "2607.00930v1",
     "status": "available",
-    "timestamp": "2026-07-06T05:39:23.812371+00:00",
-    "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
+    "timestamp": "2026-07-06T05:41:57.869825+00:00",
+    "title": "Irreducibility of mod p reductions of crystalline representations at fractional slope and even weight"
   },
   {
     "consumed_by_exp_id": "",
@@ -5232,36 +5217,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Finite Rogers\u2013Ramanujan machinery\n\n## 1. The second Rogers\u2013Ramanujan polynomial and its Lucas shadow\n\nIntroduce the companion Schur polynomials `E_n` with `E_0 = 1`, `E_1 = 1 + q`,\nand `E_{n+2} = E_{n+1} + q^{n+2} E_n`, the finitization of the *second*\nRogers\u2013Ramanujan identity `\u2211 q^{k\u00b2+k}/(q;q)_k`. Conjecture the closed form\n`E_n = \u2211_k q^{k\u00b2+k} [n-k, k]_q`, and that its `q \u2192 1` specialisation is again a\nFibonacci number, while a suitable signed specialisation `q \u2192 -1` produces a\nperiodic sequence of period 6.\n**The key insight is** that both Rogers\u2013Ramanujan identities share a single\n`q`-Pascal engine, differing only by the quadratic exponent `k\u00b2` versus `k\u00b2+k`,\nso the entire finite theory should transfer verbatim with the shifted weight.\n**Why now?** The first identity's finite core \u2014 a q-Fibonacci recurrence equal to\na weighted Gaussian-binomial sum \u2014 is now nailed down exactly, so the second is a\ncontrolled variation rather than an open-ended search.\n\n## 2. Modulus-5 dissection of the Rogers\u2013Ramanujan polynomials\n\nStudy the coefficients of `D_n` graded by exponent modulo 5. Conjecture that as\n`n \u2192 \u221e` the generating function organises into the product\n`\u220f 1/((1-q^{5j+1})(1-q^{5j+4}))`, and that the finite polynomials `D_n` already\nexhibit a stable \"gap-2\" partition statistic: the coefficient of `q^m` in `D_n`\ncounts partitions of `m` into parts each `\u2264 n` with consecutive parts differing\nby at least 2.\n**The key insight is** that the additive weight `q^{k\u00b2}` encodes exactly the\nminimal staircase `1 + 3 + 5 + \u2026` forced by a difference-\u2265-2 condition, so the\nGaussian-binomial sum is a partition generating function in disguise.\n**Why now?** With the polynomial identity proved, the partition interpretation\nbecomes a bijection to construct rather than an identity to guess.\n\n## 3. Cross-domain bridge: q-Fibonacci meets the Fibonacci gcd law\n\nThe specialisation `D_n(1) = F_{n+1}` links the `q`-series world to the classical\nFibonacci identities. Conjecture a `q`-deformed gcd law: the polynomial\n`gcd(D_m, D_n)` in `\u2124[q]` equals `D_{gcd(m+1,n+1)-1}` up to an explicit power of\n`q`, refining the integer identity `gcd(F_m, F_n) = F_{gcd(m,n)}`.\n**The key insight is** that divisibility structure among Fibonacci numbers should\nlift to a divisibility structure among their `q`-analogues, with the extra\ngrading recording where the common factors sit.\n**Why now?** The exact bridge `D_n(1) = F_{n+1}` is established, giving a rigid\nscaffold on which to test and prove the graded refinement.\n\n## 4. Unimodality and log-concavity of Gaussian binomial coefficients\n\nFor fixed `n, k`, conjecture that the coefficient sequence of `[n, k]_q` (a\npolynomial in `q`) is symmetric and unimodal, and moreover that the Schur\npolynomials `D_n` have log-concave coefficient sequences.\n**The key insight is** that the q-Pascal recurrence `[n+1,k+1] = [n,k] +\nq^{k+1}[n,k+1]` is a positivity-preserving convolution, so structural positivity\nproperties should propagate inductively.\n**Why now?** With both q-Pascal rules formalised, unimodality reduces to an\ninduction that respects exactly those two rules.\n\n## 5. Finite Rogers\u2013Ramanujan continued fraction\n\nDefine the finite continued-fraction convergents `R_n = D_{n-1}/D_n` (as rational\nfunctions in `q`) and conjecture that they converge coefficientwise to the\nRogers\u2013Ramanujan continued fraction `1/(1 + q/(1 + q\u00b2/(1 + \u2026)))`, with the error\n`R_n - R_{n+1}` a single monomial times `1/(D_n D_{n+1})`.\n**The key insight is** that the two-term recurrence `D_{n+2} = D_{n+1} +\nq^{n+1}D_n` is precisely the recurrence generating the convergents of that\ncontinued fraction, so the polynomials `D_n` *are* its denominators.\n**Why now?** The recurrence and its closed form are both proved, so the\ncontinued-fraction claim is a determinant/telescoping computation rather than an\nanalytic limit argument.\n",
-    "domains": [
-      "Algebra",
-      "Bridges"
-    ],
-    "id": "fd_0409",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "e92fe2c1",
-    "status": "available",
-    "timestamp": "2026-07-06T05:40:41.215758+00:00",
-    "title": "Introduce the companion Schur polynomials `E_n` with `E_0 = 1`, `E_1 = 1 + q`,"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Every real number defines a musical scale: map the digits 0-9 to frequencies f_n = 220 * 2^{n/12} (the A minor pentatonic scale extended). The number pi = 3.14159265... produces the sequence E4, C5, C#5, D5, D#5, F5, E5, A4, G5, C5... \u2014 a melody. Conjecture: The melody of pi is not periodic (because pi is irrational) but has musical structure: the autocorrelation of the digit sequence at lag 12 (one octave) is positive and statistically significant. This means pi has more octave-related notes than expected by chance \u2014 pi 'favors' notes separated by octaves. Similarly, e 'favors' perfect fifths (lag 7) and sqrt(2) 'favors' minor thirds (lag 3). The musical structure of transcendental numbers reflects their continued fraction properties: numbers with bounded partial quotients have more consonant melodies. Test: compute the digit autocorrelation of pi, e, and sqrt(2) at lags 0-12 (representing unison through octave). Perform a chi-squared test comparing to the uniform distribution. Generate the 'music' of each constant and analyze for tonal centers. Impact: transcendental numbers have musical souls \u2014 their digit sequences contain hidden harmonies that reflect their deepest arithmetic properties.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0408",
-    "priority_score": 0.72,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-06T05:39:23.868981+00:00",
-    "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Geometry"
@@ -5273,19 +5228,5 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T04:44:52.457313+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle e92fe2c1 (Q=0.467) proved 9 theorems in Shared but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that the Rogers\u2013Ramanujan identities hold as equalities of formal power series in the variable q with coefficients in \u2115, i.e., for all non\u2011negative integers n the coefficient of q^n in the ",
-    "domains": [
-      "Shared"
-    ],
-    "id": "sorry_fill_e92fe2c1_0789d355",
-    "priority_score": 0.5165034268754077,
-    "research_mode": "team",
-    "source_exp_id": "e92fe2c1",
-    "status": "available",
-    "timestamp": "2026-07-06T05:40:46.796893+00:00",
-    "title": "Close Proofs: Formalized Rogers\u2013Ramanujan identities for q-Pochhammer symbols"
   }
 ];
