@@ -666,7 +666,7 @@
       "Jan2023 - Recent work on descendants of n in G_n",
       "Drm2009 - Random recursive trees (d=1 case)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea66c257",
     "description": "For the random recursive DAG G_n with out-degree d ≥ 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n → ∞.",
     "domain_bridges": [
       "Multi-draw Pólya urn processes",
@@ -682,7 +682,7 @@
     "proof_strategy": "Generalize Janson's martingale-based analysis using refined Pólya urn techniques and derive explicit scaling limits through characteristic function methods",
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
@@ -1500,7 +1500,7 @@
       "Frobenius morphisms",
       "Filtered colimits"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "03d2d7e4",
     "description": "For any perfect $\\mathbb{F}_p$-algebra $R$, the canonical map $\\chW(R) \\to W(R)$ is an isomorphism of rings. This conjecture tests whether the sheared Witt vector construction reduces to the classical Witt vector functor when applied to perfect $\\mathbb{F}_p$-algebras, leveraging the vanishing of the ideal $\\hw(R)$ in such cases.",
     "domain_bridges": [
       "Decompletion functors",
@@ -1518,7 +1518,7 @@
     "proof_strategy": "1. Prove $\\hw(R) = 0$ for perfect $R$ via the definition of $\\hw(R)$ as Witt vectors with nilpotent components. 2. Show the pullback defining $\\chW(R)$ collapses to $W(R)$ when $\\hw(R) = 0$. 3. Establish the natural isomorphism $\\chW(R) \\cong W(R)$ via universal properties of limits and colimits. 4. Formalize in Lean 4 using the structure of Witt vector rings and perfect field theory.",
     "research_mode": "team",
     "source_exp_id": "2607.01178v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T20:39:15.695833+00:00",
     "title": "Isomorphism of Sheared Witt Vectors for Perfect Algebras"
   },
@@ -2878,7 +2878,7 @@
       "BAH1",
       "NKM"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ec8dee20",
     "description": "For every positive integer $k$, there exists a parameter $s$ in the Lecacheux family such that the $5$-rank of the Pólya group of the corresponding quintic field is exactly $k$.",
     "domain_bridges": [
       "Golod-Shafarevich density theorems",
@@ -2893,7 +2893,7 @@
     "proof_strategy": "Construct explicit Lecacheux parameters $s$ for each $k$ by refining density arguments and leveraging the structure of elementary abelian $5$-groups in Pólya groups.",
     "research_mode": "team",
     "source_exp_id": "2607.00675v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T11:59:32.474562+00:00",
     "title": "Exact 5-Rank Realization in Lecacheux Pólya Groups"
   },
@@ -4012,7 +4012,7 @@
       "Dilworth1950",
       "Sperner1928"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a793b4d3",
     "description": "Analysis of the maximal number of chains required to cover strict chains in the Boolean lattice, with connections to inclusion-exclusion and logarithmic approximations.",
     "domain_bridges": [
       "Computational Complexity",
@@ -4028,7 +4028,7 @@
     "proof_strategy": "Construct existence via perturbation around known extremals",
     "research_mode": "team",
     "source_exp_id": "2606.29385v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T08:04:06.155536+00:00",
     "title": "Chain Covers in the Boolean Lattice"
   },
@@ -4717,7 +4717,7 @@
       "Erdős-Turán Theorem on Sidon Sets",
       "Singer's Construction"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9896d47c",
     "description": "Formalize the upper bound on the maximum size of a Sidon subset of {0, ..., N-1}, specifically proving that F(N) <= N^{1/2} + 0.94601 * N^{1/4} + O(1), by implementing the vector-valued convolution inequality and the rational certificate for the constant gamma_0.",
     "domain_bridges": [
       "Harmonic Analysis (Convolution Inequalities)",
@@ -4733,7 +4733,7 @@
     "proof_strategy": "1. Define the property of being a Sidon set in Lean 4. 2. Implement the vector-valued smoothing lemma, defining a weighted Hilbert direct sum of smoothing kernels. 3. Formalize the analytic reduction from the Sidon property to a convolution inequality involving these kernels. 4. Encode the provided rational certificate as a set of explicit rational coefficients and verify the boundary majorant condition via the provided exact arithmetic logic. 5. Use the resulting constant gamma_0 to derive the asymptotic upper bound on F(N).",
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T01:56:27.032018+00:00",
     "title": "Upper Bound for the Cardinality of Finite Sidon Sets"
   },
@@ -7017,7 +7017,7 @@
       "G17, 'Hook partitions and 2‑Sylow permutation characters'",
       "GL1, 'Description of Ω_p(n) for odd primes p'"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "72798aec",
     "description": "For every integer n ≥ 11 with binary expansion n = 2^{a₁} + 2^{a₂} + … + 2^{a_t} where a₁ > a₂ > … > a_t ≥ 0, the set Δ(n,k) of non‑hook partitions of n with at most k parts is contained in Ω₂(n) if and only if k ≤ a₁ + t - 1. Equivalently, the largest integer k for which Δ(n,k) ⊆ Ω₂(n) is exactly a₁ + t - 1. This refines the theorem of the paper by asserting that the stated bound holds universally (i.e., without the exceptional small‑n cases) and predicts a precise formula for the maximal size of such partitions.",
     "domain_bridges": [
       "Representation Theory of Finite Groups",
@@ -7033,7 +7033,7 @@
     "proof_strategy": "Induction on n using the branching rule for S_n, analysis of 2‑block decomposition numbers, and reduction to finitely many binary patterns; computational verification for base cases.",
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T23:01:54.640398+00:00",
     "title": "Conjecture on the maximal number of parts of non‑hook partitions in Ω₂(n)"
   },
@@ -8707,7 +8707,7 @@
       "math.CO",
       "math.AC"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6f7b276c",
     "description": "For every finite poset P of width at most 2, the Ehrhart h*-polynomial h*(O(P); t) of the order polytope O(P) is real-rooted. This extends the paper's result for generalized snake posets (a proper subclass of width-two posets) to all width-two posets, and would unify real-rootedness phenomena observed across flow polytopes, rook polynomials, and P-Eulerian polynomials for this entire width regime.",
     "domain_bridges": [
       "Order Theory",
@@ -8723,7 +8723,7 @@
     "proof_strategy": "Decompose an arbitrary width-two poset into a union of chains and analyze how its Jordan-Hölder set and P-Eulerian polynomial relate to a generalized non-nesting rook polynomial on an associated Ferrers diagram. The key obstacle is that arbitrary width-two posets need not be generalized snake posets, so the existing rook polynomial correspondence must be extended to handle arbitrary interleavings of two chains, possibly via interlacing root arguments or real-rootedness-preserving operations on the associated generating polynomials.",
     "research_mode": "team",
     "source_exp_id": "2607.00922v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T05:01:57.933891+00:00",
     "title": "Real-rootedness of h*-polynomials for width-two order polytopes"
   },
@@ -10472,7 +10472,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6dff48bb",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -10484,7 +10484,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "oeis:212351",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:44:52.457313+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   }
