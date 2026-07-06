@@ -871,5 +871,6 @@
   "4591bde2": "kernelcover_characterisation_of_the_weighted_daven.json",
   "e545fdf8": "conjecture_on_the_structure_of_minimal_obstruction.json",
   "e29ffbac": "classification_of_regular_4maniplexes_via_tetraval.json",
-  "e92fe2c1": "formalized_rogersramanujan_identities_for_q_pochha.json"
+  "e92fe2c1": "formalized_rogersramanujan_identities_for_q_pochha.json",
+  "1e8c0c26": "tightness_of_edge_deletion_bound_in_hyperstability.json"
 }
