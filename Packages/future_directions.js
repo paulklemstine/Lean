@@ -1113,7 +1113,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Distribution of p-Selmer rank increments in p-cyclic extensions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "048b9775",
     "description": "Conjecture: For every pro-2 Demushkin group G, the Benson--Krause--Schwede canonical class c(G) in the Hochschild cohomology HH^2(C^*(G;\ud835\udd3d\u2082), C^*(G;\ud835\udd3d\u2082)) of the cochain differential graded \ud835\udd3d\u2082-algebra of continuous cochains is zero. This is equivalent to the A\u2083-formality of C^*(G;\ud835\udd3d\u2082).",
     "domains": [
       "Algebra",
@@ -1123,7 +1123,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01028v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T23:15:46.874733+00:00",
     "title": "Vanishing of the Benson--Krause--Schwede canonical class for pro-2 Demushkin groups"
   },
@@ -1577,7 +1577,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharp Threshold Constant for Cycle Games"
   },
   {
-    "consumed_by_exp_id": "ec8dee20",
+    "consumed_by_exp_id": "",
     "description": "For every positive integer $k$, there exists a parameter $s$ in the Lecacheux family such that the $5$-rank of the P\u00f3lya group of the corresponding quintic field is exactly $k$.",
     "domains": [
       "Algebra"
@@ -1586,7 +1586,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00675v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T11:59:32.474562+00:00",
     "title": "Exact 5-Rank Realization in Lecacheux P\u00f3lya Groups"
   },
@@ -2581,7 +2581,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Positivity of (p,q)-Generalized Stirling Numbers in the (p,q)-Binomial Basis"
   },
   {
-    "consumed_by_exp_id": "9896d47c",
+    "consumed_by_exp_id": "",
     "description": "Formalize the upper bound on the maximum size of a Sidon subset of {0, ..., N-1}, specifically proving that F(N) <= N^{1/2} + 0.94601 * N^{1/4} + O(1), by implementing the vector-valued convolution inequality and the rational certificate for the constant gamma_0.",
     "domains": [
       "Bridges"
@@ -2590,7 +2590,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T01:56:27.032018+00:00",
     "title": "Upper Bound for the Cardinality of Finite Sidon Sets"
   },
@@ -3993,7 +3993,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Combinatorial Determinism of Minimal Jacobian Relation Degree for Plane Curve Arrangements"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6dd82d4d",
     "description": "For any graph G, the geodesic treewidth of G' (obtained by subdividing each edge |V(G)| times) is greater than or equal to the geodesic treewidth of G.",
     "domains": [
       "Bridges"
@@ -4002,7 +4002,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02098v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T05:19:29.430000+00:00",
     "title": "Subdivisionof Edges Does Not Decrease Geodesic Treewidth"
   },
@@ -4737,7 +4737,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Complete Solution to the Generalized Honeymoon Oberwolfach Problem with One Round Table"
   },
   {
-    "consumed_by_exp_id": "6f7b276c",
+    "consumed_by_exp_id": "",
     "description": "For every finite poset P of width at most 2, the Ehrhart h*-polynomial h*(O(P); t) of the order polytope O(P) is real-rooted. This extends the paper's result for generalized snake posets (a proper subclass of width-two posets) to all width-two posets, and would unify real-rootedness phenomena observed across flow polytopes, rook polynomials, and P-Eulerian polynomials for this entire width regime.",
     "domains": [
       "Bridges"
@@ -4746,7 +4746,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00922v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T05:01:57.933891+00:00",
     "title": "Real-rootedness of h*-polynomials for width-two order polytopes"
   },
@@ -5043,11 +5043,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every graph G, its line graph L(G) is chromatic-choosable: the list chromatic number of L(G) equals the chromatic number of L(G). Equivalently, for every graph G, the list chromatic index ch'(G) equals the chromatic index \u03c7'(G). This is the List Coloring Conjecture, the central open problem in list-coloring. Galvin (1995) proved the bipartite case using the kernel method, showing ch'(G) = \u0394(G) for bipartite multigraphs, but the general case remains wide open.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0395",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31702v1",
+    "status": "available",
+    "timestamp": "2026-07-06T12:10:55.960530+00:00",
+    "title": "Line Graphs Are Chromatic-Choosable (List Coloring Conjecture)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0395",
+    "id": "fd_0396",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -5061,7 +5076,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0396",
+    "id": "fd_0397",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -5076,7 +5091,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0397",
+    "id": "fd_0398",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
@@ -5091,7 +5106,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0398",
+    "id": "fd_0399",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -5106,7 +5121,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0399",
+    "id": "fd_0400",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -5120,7 +5135,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0400",
+    "id": "fd_0401",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -5134,7 +5149,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0401",
+    "id": "fd_0402",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -5149,7 +5164,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0402",
+    "id": "fd_0403",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02011v1",
@@ -5164,7 +5179,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0403",
+    "id": "fd_0404",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -5178,7 +5193,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0404",
+    "id": "fd_0405",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02085v1",
@@ -5192,7 +5207,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0405",
+    "id": "fd_0406",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01957v1",
@@ -5207,7 +5222,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0406",
+    "id": "fd_0407",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01956v1",
@@ -5221,7 +5236,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0407",
+    "id": "fd_0408",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01744v1",
@@ -5235,7 +5250,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0408",
+    "id": "fd_0409",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01839v1",
@@ -5250,7 +5265,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0409",
+    "id": "fd_0410",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01703v1",
@@ -5264,7 +5279,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0410",
+    "id": "fd_0411",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01572v1",
@@ -5278,7 +5293,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0411",
+    "id": "fd_0412",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01680v1",
@@ -5292,7 +5307,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0412",
+    "id": "fd_0413",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01582v1",
@@ -5307,7 +5322,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0413",
+    "id": "fd_0414",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01165v1",
@@ -5322,7 +5337,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0414",
+    "id": "fd_0415",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01184v1",
@@ -5336,7 +5351,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0415",
+    "id": "fd_0416",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -5351,7 +5366,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0416",
+    "id": "fd_0417",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -5366,7 +5381,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0417",
+    "id": "fd_0418",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01028v1",
@@ -5381,7 +5396,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0418",
+    "id": "fd_0419",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00940v1",
@@ -5395,7 +5410,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0419",
+    "id": "fd_0420",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -5409,7 +5424,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0420",
+    "id": "fd_0421",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01059v1",
@@ -5424,7 +5439,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0421",
+    "id": "fd_0422",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
@@ -5438,7 +5453,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0422",
+    "id": "fd_0423",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00934v1",
@@ -5453,7 +5468,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0423",
+    "id": "fd_0424",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00930v1",
@@ -5467,7 +5482,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Logic"
     ],
-    "id": "fd_0424",
+    "id": "fd_0425",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01294v1",
@@ -5481,7 +5496,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0425",
+    "id": "fd_0426",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00814v1",
@@ -5496,7 +5511,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0426",
+    "id": "fd_0427",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00651v1",
@@ -5510,7 +5525,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0427",
+    "id": "fd_0428",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00646v1",
@@ -5524,7 +5539,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0428",
+    "id": "fd_0429",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00592v1",
@@ -5539,7 +5554,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_0429",
+    "id": "fd_0430",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00507v1",
@@ -5553,7 +5568,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0430",
+    "id": "fd_0431",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00608v1",
@@ -5568,7 +5583,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0431",
+    "id": "fd_0432",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00456v1",
@@ -5582,7 +5597,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0432",
+    "id": "fd_0433",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00263v1",
@@ -5591,16 +5606,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Chromatic Sum is NP-complete on H\u2011free graphs for any fixed graph H with at least one edge"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "611a6b62",
     "description": "For n \u2265 2, any 1-intersecting family F \u2286 S_n (i.e., any two permutations in F agree on at least one point) satisfies |F| \u2264 (n\u22121)!. Equality holds if and only if F is a dictatorship {\u03c3 \u2208 S_n : \u03c3(i) = j} for some i, j. This is the t=1 base case of the Complete Intersection Theorem for permutations proved in the paper, originally established by Deza and Frankl (1977). Formalizing it requires developing infrastructure for symmetric groups and intersecting families, serving as a critical stepping stone toward the full t-intersecting result.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0433",
+    "id": "fd_0434",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00318v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T08:50:20.107124+00:00",
     "title": "Deza-Frankl Theorem: Maximum 1-Intersecting Families in S_n are Dictatorships"
   },
@@ -5610,7 +5625,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0434",
+    "id": "fd_0435",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00282v1",
@@ -5624,7 +5639,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0435",
+    "id": "fd_0436",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00332v1",
@@ -5639,7 +5654,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0436",
+    "id": "fd_0437",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00088v1",
@@ -5654,7 +5669,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0437",
+    "id": "fd_0438",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.32024v1",
@@ -5668,7 +5683,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0438",
+    "id": "fd_0439",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31967v1",
@@ -5682,7 +5697,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_0439",
+    "id": "fd_0440",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00205v1",
@@ -5696,7 +5711,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0440",
+    "id": "fd_0441",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01273v1",
@@ -5711,13 +5726,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0441",
+    "id": "fd_0442",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31908v1",
     "status": "available",
     "timestamp": "2026-07-06T11:54:04.833853+00:00",
     "title": "Chromonic Lemma: No Nontrivial Harmonic Colorings Exist on Strongly Connected Digraphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let F be a CM number field, n \u2265 2, and \u2113 a rational prime. Let \u03c1\u0304 : G_F \u2192 GL_n(F\u0304_\u2113) be a continuous irreducible representation arising from the mod \u2113 Betti cohomology of the locally symmetric space for GL_n/F. Then for every finite place v | \u2113 of F, the restriction \u03c1\u0304|_{G_{F_v}} is de Rham, and its Hodge\u2013Tate weights are determined by the infinitesimal character of the corresponding local component \u03c0_v of the automorphic representation associated to \u03c1\u0304. This extends the paper's local-global compatibility at v \u2224 \u2113 to the much deeper v | \u2113 case.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0443",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31698v1",
+    "status": "available",
+    "timestamp": "2026-07-06T12:12:11.640829+00:00",
+    "title": "De Rham Local-Global Compatibility for Torsion Automorphic Forms on GL_n over CM Fields"
   },
   {
     "consumed_by_exp_id": "",
