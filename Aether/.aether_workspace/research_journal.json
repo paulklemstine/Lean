@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "a530b001",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Monotone Circuit Complexity\n\nThis cycle assembled a three-pronged formal toolkit for monotone Boolean circuit\nlower bounds:\n\n* `Basic.lean` — circuits, evaluation, size/depth/var",
-      "quality_score": 0.7436,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-06-28T08:50:01",
-      "title": "Circuit Complexity: Monotone Lower Bounds"
-    },
-    {
       "cycle_id": "5870167a",
       "domain": "Novelty",
       "key_insight": "# FUTURE DIRECTIONS — incoherence indices of maximal standard frames\n\nDerived from this cycle's findings (see `CofiniteRealization.lean`,\n`BoundaryObstruction.lean`, `ComputationalEvidence.md`). Each",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-07-06T05:40:46",
       "title": "Formalized Rogers–Ramanujan identities for q-Pochhammer symbols"
+    },
+    {
+      "cycle_id": "1e8c0c26",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nDerived from this cycle's finding: the balanced complete bipartite graph\n`K_{t,t}` on `n = 2t` vertices is `C_d`-free for odd `d`, packs `n²/4` edges, and\nrequires at least `cd·n`",
+      "quality_score": 0.420858,
+      "sorry_count": 0,
+      "theorem_count": 3,
+      "timestamp": "2026-07-06T07:50:50",
+      "title": "Tightness of Edge Deletion Bound in Hyperstability Extension of Erdős-Gallai Theorem"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8076800000000002
     }
   ],
-  "last_updated": "2026-07-06T05:40:46",
+  "last_updated": "2026-07-06T07:50:50",
   "open_questions": [
     {
       "context": "(sieve mechanism) form a coherent, sorry-free slice of the Maynard–Tao framework.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "22f3c392",
-        "quality": 0.36398012292358806,
-        "theorems": 0,
-        "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
-      },
-      {
         "cycle_id": "0f872c04",
         "quality": 0.62536,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.642,
         "theorems": 6,
         "title": "Conjecture on the Structure of Minimal Obstructions to Total Rainbow Forests"
+      },
+      {
+        "cycle_id": "1e8c0c26",
+        "quality": 0.420858,
+        "theorems": 3,
+        "title": "Tightness of Edge Deletion Bound in Hyperstability Extension of Erdős-Gallai The"
       }
     ],
     "NumberTheory": [

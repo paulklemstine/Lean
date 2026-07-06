@@ -380,7 +380,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
   {
-    "consumed_by_exp_id": "ea66c257",
+    "consumed_by_exp_id": "",
     "description": "For the random recursive DAG G_n with out-degree d \u2265 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n \u2192 \u221e.",
     "domains": [
       "Computation"
@@ -389,7 +389,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
@@ -746,7 +746,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of Uniform-Scaled Spanning Subgraphs"
   },
   {
-    "consumed_by_exp_id": "ac9e6117",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For any fixed integer r\u22652 and any collection of graphs H1,\u202f\u2026, Hr, let \u03c8 = \u2225_{j=1}^r (\u03c967(Hj)\u20111). Define the critical edge density \u03c0_c = 1\u20111/\u03c8. For a host graph G0 on n vertices with edge density exactly \u03c0_c\u2212\u03b5 (for a fixed \u03b5>0) consider the random\u2011perturbation model where we add m random edges (without replacement). Then the minimal number of edges that forces the perturbed graph to be (H1,\u202f\u2026, Hr)_v\u2011Ramsey satisfies\n\n    m_c(n) = \u03c0_c * (n choose 2) + \u03a8(n^{3/2}),\n\nand there is a sharp threshold: if m = m_c(n) + \u03c9(n^{3/2}) then with high probability the perturbed graph is (H1,\u202f\u2026, Hr)_v\u2011Ramsey; if m = m_c(n) \u2212 \u03c9(n^{3/2}) then with high probability it is not. Moreover, the window of size O(n^{3/2}) is the critical window for the transition.",
     "domains": [
       "Computation",
@@ -756,7 +756,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v2",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T17:52:40.366510+00:00",
     "title": "Precise threshold for vertex\u2011Ramsey property in random perturbations"
   },
@@ -1868,7 +1868,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Multiplicity formula for the restriction of GL_3 irreducible representations to the principal SL_2"
   },
   {
-    "consumed_by_exp_id": "8ea1db50",
+    "consumed_by_exp_id": "",
     "description": "The conjecture posits that if the greatest common divisor of a and b exceeds 1 and the exponent n is even, then no positive integer solutions (a, b, x) with a < b exist for the equation (a^n+1)(b^n+1)=x\u00b2.",
     "domains": [
       "Pythagorean"
@@ -1877,7 +1877,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31223v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T20:15:36.843139+00:00",
     "title": "Non-existence of solutions for (a^n+1)(b^n+1)=x\u00b2 when gcd(a,b) > 1 and n is even"
   },
@@ -2202,7 +2202,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Variance of Homomorphism at the Root is Bounded Below by Effective Resistance"
   },
   {
-    "consumed_by_exp_id": "a793b4d3",
+    "consumed_by_exp_id": "",
     "description": "Analysis of the maximal number of chains required to cover strict chains in the Boolean lattice, with connections to inclusion-exclusion and logarithmic approximations.",
     "domains": [
       "Cryptography",
@@ -2212,7 +2212,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29385v2",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T08:04:06.155536+00:00",
     "title": "Chain Covers in the Boolean Lattice"
   },
@@ -2362,7 +2362,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Locality of supersingular representations of GL_2 over unramified extensions of Q_p"
   },
   {
-    "consumed_by_exp_id": "24d6d8b7",
+    "consumed_by_exp_id": "",
     "description": "This paper proposes a combinatorial framework to describe the discrete homotopy groups of quasisymmetric cubical sets, extending prior work by Carranza and Kapulkin. It aims to provide a formally verified, leveraging Lean 4, synthetic proof of isomorphism between the homotopy groups of the geometric realization and those of the underlying cubical configuration.",
     "domains": [
       "Algebra",
@@ -2372,7 +2372,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28693v2",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T13:25:20.641906+00:00",
     "title": "Discrete homotopy groups of quasisymmetric cubical sets"
   },
@@ -3239,7 +3239,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Characterization of Zero-Preserving Pisot Numerations via Torus Isomorphism"
   },
   {
-    "consumed_by_exp_id": "e50512ae",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: There exists an absolute constant K>0 such that for every n\u2208\u2115 and every family F\u22862^[n] that is 3\u2011sunflower\u2011free (i.e., contains no three sets with pairwise constant intersection), we have |F| \u2264 K\u00b7n^{1/6}\u00b7(3/2^{2/3})^n.",
     "domains": [
       "Pythagorean"
@@ -3248,7 +3248,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30593v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T23:33:38.013269+00:00",
     "title": "Optimality of the polynomial factor in the Naslund\u2013Sawin bound for sunflower\u2011free families"
   },
@@ -4185,7 +4185,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantitative Thinness of Galois\u2011Group\u2011Changing Specializations for Strongly\u202fn\u2011Genuine Polynomials"
   },
   {
-    "consumed_by_exp_id": "2058237b",
+    "consumed_by_exp_id": "",
     "description": "A countable FAC poset satisfies the Aharoni-Korman conjecture if and only if it does not contain a saturated chain D such that either D or its reverse is a countable direct sum of infinite co-wellfounded posets.",
     "domains": [
       "Pythagorean"
@@ -4194,7 +4194,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02500v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T16:16:00.227260+00:00",
     "title": "Characterization of the Aharoni-Korman Conjecture via Saturated Chains"
   },
@@ -4448,7 +4448,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finiteness of Rational Points on General Type Varieties"
   },
   {
-    "consumed_by_exp_id": "98188561",
+    "consumed_by_exp_id": "",
     "description": "Let P be a finite poset. The main theorem shows that V\u2081(P) is an RB-domain iff P has a least element and its undirected Hasse graph is a tree. I conjecture that the four-point diamond (a poset with 4 elements where 2 incomparable elements are both below 2 incomparable maxima) is the unique minimal poset violating this: any finite poset P with fewer than 4 elements has V\u2081(P) an RB-domain, and among 4-element posets, only the four-point diamond violates the RB-domain property. This is falsifiable by either finding a smaller counterexample or proving no other 4-element poset violates the condition.",
     "domains": [
       "Pythagorean"
@@ -4457,7 +4457,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02231v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T22:13:05.785493+00:00",
     "title": "Uniqueness of the Four-Point Diamond as Minimal RB-Domain Violator in Probabilistic Powerdomains"
   },
@@ -4866,11 +4866,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Within the class of distance-hereditary graphs, balanced graphs coincide exactly with hereditary clique-Helly graphs, and equivalently with graphs forbidding the complement of 3K\u2082 as an induced subgraph. This conjecture formalizes the main theorem of the paper: for every distance-hereditary graph G, G is balanced if and only if G contains no induced copy of 3K\u2082 (the complement of three disjoint edges, i.e., the graph on six vertices partitioned into three independent edges, complemented).",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0383",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00730v1",
+    "status": "available",
+    "timestamp": "2026-07-06T07:51:03.772311+00:00",
+    "title": "Balanced equals hereditary clique-Helly within distance-hereditary graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0383",
+    "id": "fd_0384",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -4884,7 +4899,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0384",
+    "id": "fd_0385",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -4899,7 +4914,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0385",
+    "id": "fd_0386",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
@@ -4914,7 +4929,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0386",
+    "id": "fd_0387",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -4929,7 +4944,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0387",
+    "id": "fd_0388",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -4943,7 +4958,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0388",
+    "id": "fd_0389",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -4957,7 +4972,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0389",
+    "id": "fd_0390",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -4972,7 +4987,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0390",
+    "id": "fd_0391",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02011v1",
@@ -4987,7 +5002,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0391",
+    "id": "fd_0392",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -5001,7 +5016,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0392",
+    "id": "fd_0393",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02085v1",
@@ -5015,7 +5030,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0393",
+    "id": "fd_0394",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01957v1",
@@ -5030,7 +5045,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0394",
+    "id": "fd_0395",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01956v1",
@@ -5044,7 +5059,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0395",
+    "id": "fd_0396",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01744v1",
@@ -5058,7 +5073,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0396",
+    "id": "fd_0397",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01839v1",
@@ -5073,7 +5088,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0397",
+    "id": "fd_0398",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01703v1",
@@ -5087,7 +5102,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0398",
+    "id": "fd_0399",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01572v1",
@@ -5101,7 +5116,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0399",
+    "id": "fd_0400",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01680v1",
@@ -5115,7 +5130,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0400",
+    "id": "fd_0401",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01582v1",
@@ -5130,7 +5145,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0401",
+    "id": "fd_0402",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01165v1",
@@ -5145,7 +5160,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0402",
+    "id": "fd_0403",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01184v1",
@@ -5159,7 +5174,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0403",
+    "id": "fd_0404",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -5174,7 +5189,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0404",
+    "id": "fd_0405",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -5189,7 +5204,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0405",
+    "id": "fd_0406",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01028v1",
@@ -5204,7 +5219,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0406",
+    "id": "fd_0407",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00940v1",
@@ -5218,7 +5233,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0407",
+    "id": "fd_0408",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -5232,7 +5247,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0408",
+    "id": "fd_0409",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01059v1",
@@ -5247,7 +5262,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0409",
+    "id": "fd_0410",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
@@ -5261,7 +5276,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0410",
+    "id": "fd_0411",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00934v1",
@@ -5276,7 +5291,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0411",
+    "id": "fd_0412",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00930v1",
@@ -5290,7 +5305,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Logic"
     ],
-    "id": "fd_0412",
+    "id": "fd_0413",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01294v1",
@@ -5304,7 +5319,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0413",
+    "id": "fd_0414",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00814v1",
@@ -5319,7 +5334,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0414",
+    "id": "fd_0415",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00651v1",
@@ -5333,7 +5348,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0415",
+    "id": "fd_0416",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00646v1",
@@ -5347,7 +5362,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0416",
+    "id": "fd_0417",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00592v1",
@@ -5362,13 +5377,27 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_0417",
+    "id": "fd_0418",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00507v1",
     "status": "available",
     "timestamp": "2026-07-06T07:33:08.390636+00:00",
     "title": "DFA State Complexity Lower Bound for the Kochen-Specker Problem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every brick distinct from K_4, C_6_bar, and the Petersen graph, in which every b-invariant edge is a forcing edge, is near-bipartite. This conjecture, if true, would reduce the full Lucchesi\u2013Murty characterization problem to the near-bipartite case already solved in this paper, by showing that no non-near-bipartite brick (beyond the three exceptions) can have the property that all its b-invariant edges are forcing edges.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0419",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00608v1",
+    "status": "available",
+    "timestamp": "2026-07-06T07:51:38.329200+00:00",
+    "title": "Near-bipartite reduction for the Lucchesi\u2013Murty property"
   },
   {
     "consumed_by_exp_id": "",
@@ -5386,7 +5415,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "That the entries of an integer right triangle are forced"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6dff48bb",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Geometry"
@@ -5395,7 +5424,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:212351",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:44:52.457313+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   }
