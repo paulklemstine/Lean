@@ -6178,7 +6178,7 @@
       "BloomSawinSchildkrautZhelezov2026",
       "RocheNewtonRuzsaShenShkredov2019"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ecf65bf0",
     "description": "For any monic polynomial f in Z[x] of degree k ≥ 2, the power-saving constant c in the inequality |f(A)| ≤ |A|^(k-c) can be taken to satisfy c ≥ 1/k², where A ranges over finite sets constructed via the Bloom-Sawin-Schildkraut-Zhelezov method.",
     "domain_bridges": [
       "analytic number theory",
@@ -6193,7 +6193,7 @@
     "proof_strategy": "Trace through the BSSZ construction explicitly to compute the dependence of the power-saving constant c on the polynomial degree k. Establish that the parameter choices in the construction yield c ≥ 1/k² by analyzing the interplay between the dimension of the underlying vector space, the polynomial degree, and the Fourier-analytic estimates used in the proof.",
     "research_mode": "team",
     "source_exp_id": "2606.30690v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T05:42:15.565147+00:00",
     "title": "Explicit Quantitative Lower Bound on Power-Saving for Monic Minkowski Polynomials"
   },
