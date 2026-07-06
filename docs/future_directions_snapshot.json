@@ -666,7 +666,7 @@
       "Jan2023 - Recent work on descendants of n in G_n",
       "Drm2009 - Random recursive trees (d=1 case)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea66c257",
     "description": "For the random recursive DAG G_n with out-degree d ≥ 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n → ∞.",
     "domain_bridges": [
       "Multi-draw Pólya urn processes",
@@ -682,7 +682,7 @@
     "proof_strategy": "Generalize Janson's martingale-based analysis using refined Pólya urn techniques and derive explicit scaling limits through characteristic function methods",
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
@@ -1500,7 +1500,7 @@
       "Frobenius morphisms",
       "Filtered colimits"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "03d2d7e4",
     "description": "For any perfect $\\mathbb{F}_p$-algebra $R$, the canonical map $\\chW(R) \\to W(R)$ is an isomorphism of rings. This conjecture tests whether the sheared Witt vector construction reduces to the classical Witt vector functor when applied to perfect $\\mathbb{F}_p$-algebras, leveraging the vanishing of the ideal $\\hw(R)$ in such cases.",
     "domain_bridges": [
       "Decompletion functors",
@@ -1518,7 +1518,7 @@
     "proof_strategy": "1. Prove $\\hw(R) = 0$ for perfect $R$ via the definition of $\\hw(R)$ as Witt vectors with nilpotent components. 2. Show the pullback defining $\\chW(R)$ collapses to $W(R)$ when $\\hw(R) = 0$. 3. Establish the natural isomorphism $\\chW(R) \\cong W(R)$ via universal properties of limits and colimits. 4. Formalize in Lean 4 using the structure of Witt vector rings and perfect field theory.",
     "research_mode": "team",
     "source_exp_id": "2607.01178v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T20:39:15.695833+00:00",
     "title": "Isomorphism of Sheared Witt Vectors for Perfect Algebras"
   },
@@ -2878,7 +2878,7 @@
       "BAH1",
       "NKM"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ec8dee20",
     "description": "For every positive integer $k$, there exists a parameter $s$ in the Lecacheux family such that the $5$-rank of the Pólya group of the corresponding quintic field is exactly $k$.",
     "domain_bridges": [
       "Golod-Shafarevich density theorems",
@@ -2893,7 +2893,7 @@
     "proof_strategy": "Construct explicit Lecacheux parameters $s$ for each $k$ by refining density arguments and leveraging the structure of elementary abelian $5$-groups in Pólya groups.",
     "research_mode": "team",
     "source_exp_id": "2607.00675v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T11:59:32.474562+00:00",
     "title": "Exact 5-Rank Realization in Lecacheux Pólya Groups"
   },
@@ -4717,7 +4717,7 @@
       "Erdős-Turán Theorem on Sidon Sets",
       "Singer's Construction"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9896d47c",
     "description": "Formalize the upper bound on the maximum size of a Sidon subset of {0, ..., N-1}, specifically proving that F(N) <= N^{1/2} + 0.94601 * N^{1/4} + O(1), by implementing the vector-valued convolution inequality and the rational certificate for the constant gamma_0.",
     "domain_bridges": [
       "Harmonic Analysis (Convolution Inequalities)",
@@ -4733,7 +4733,7 @@
     "proof_strategy": "1. Define the property of being a Sidon set in Lean 4. 2. Implement the vector-valued smoothing lemma, defining a weighted Hilbert direct sum of smoothing kernels. 3. Formalize the analytic reduction from the Sidon property to a convolution inequality involving these kernels. 4. Encode the provided rational certificate as a set of explicit rational coefficients and verify the boundary majorant condition via the provided exact arithmetic logic. 5. Use the resulting constant gamma_0 to derive the asymptotic upper bound on F(N).",
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T01:56:27.032018+00:00",
     "title": "Upper Bound for the Cardinality of Finite Sidon Sets"
   },
@@ -6178,7 +6178,7 @@
       "BloomSawinSchildkrautZhelezov2026",
       "RocheNewtonRuzsaShenShkredov2019"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ecf65bf0",
     "description": "For any monic polynomial f in Z[x] of degree k ≥ 2, the power-saving constant c in the inequality |f(A)| ≤ |A|^(k-c) can be taken to satisfy c ≥ 1/k², where A ranges over finite sets constructed via the Bloom-Sawin-Schildkraut-Zhelezov method.",
     "domain_bridges": [
       "analytic number theory",
@@ -6193,7 +6193,7 @@
     "proof_strategy": "Trace through the BSSZ construction explicitly to compute the dependence of the power-saving constant c on the polynomial degree k. Establish that the parameter choices in the construction yield c ≥ 1/k² by analyzing the interplay between the dimension of the underlying vector space, the polynomial degree, and the Fourier-analytic estimates used in the proof.",
     "research_mode": "team",
     "source_exp_id": "2606.30690v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T05:42:15.565147+00:00",
     "title": "Explicit Quantitative Lower Bound on Power-Saving for Monic Minkowski Polynomials"
   },
@@ -8491,7 +8491,7 @@
       "math.CO",
       "cs.DM"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "af8797da",
     "description": "For every connected simple graph G of order at least three, the independence number α(G) is bounded below by the sum of the annihilation number a(G) and the Havel-Hakimi residue res(G), divided by the maximum degree Δ(G). That is, α(G) ≥ (a(G) + res(G)) / Δ(G), or equivalently, α(G) * Δ(G) ≥ a(G) + res(G).",
     "domain_bridges": [
       "Graph Theory",
@@ -8506,7 +8506,7 @@
     "proof_strategy": "Formalize the annihilation number, Havel-Hakimi residue, and maximum degree for simple graphs. Construct annihilating decompositions and prove the edge count inequality e(A) ≤ e(B) for the partition. Combine this with the classical Havel-Hakimi residue inequality res(G) ≤ α(G) and the Caro-Wei bounds to establish the multiplicative inequality.",
     "research_mode": "team",
     "source_exp_id": "2607.01438v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T02:28:03.746874+00:00",
     "title": "TxGraffiti Annihilation-Residue Inequality"
   },
@@ -8707,7 +8707,7 @@
       "math.CO",
       "math.AC"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6f7b276c",
     "description": "For every finite poset P of width at most 2, the Ehrhart h*-polynomial h*(O(P); t) of the order polytope O(P) is real-rooted. This extends the paper's result for generalized snake posets (a proper subclass of width-two posets) to all width-two posets, and would unify real-rootedness phenomena observed across flow polytopes, rook polynomials, and P-Eulerian polynomials for this entire width regime.",
     "domain_bridges": [
       "Order Theory",
@@ -8723,7 +8723,7 @@
     "proof_strategy": "Decompose an arbitrary width-two poset into a union of chains and analyze how its Jordan-Hölder set and P-Eulerian polynomial relate to a generalized non-nesting rook polynomial on an associated Ferrers diagram. The key obstacle is that arbitrary width-two posets need not be generalized snake posets, so the existing rook polynomial correspondence must be extended to handle arbitrary interleavings of two chains, possibly via interlacing root arguments or real-rootedness-preserving operations on the associated generating polynomials.",
     "research_mode": "team",
     "source_exp_id": "2607.00922v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T05:01:57.933891+00:00",
     "title": "Real-rootedness of h*-polynomials for width-two order polytopes"
   },
@@ -8815,7 +8815,7 @@
       "math.NT",
       "math.CO"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "70354b52",
     "description": "The minimal absolute value σ₅(n) of a non-vanishing sum of n fifth roots of unity is monotone non-increasing over congruence classes of n modulo 5. Furthermore, a strict decrease σ₅(n) > σ₅(n+5) occurs if and only if n+5 is of the form 5Fₘ, Lₘ, or 2Lₘ for some positive integer m, where Fₘ and Lₘ denote the m-th Fibonacci and Lucas numbers, respectively.",
     "domain_bridges": [
       "algebra",
@@ -8832,7 +8832,7 @@
     "proof_strategy": "Define the function σ₅(n) as the infimum of the absolute values of non-vanishing sums of n 5th roots of unity. Prove the monotonicity within congruence classes modulo 5 by constructing appropriate sums. Characterize the strict decreases by relating the problem to rational approximations of the golden ratio via continued fractions, using the specific properties of Fibonacci and Lucas numbers.",
     "research_mode": "team",
     "source_exp_id": "2607.00825v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T06:18:12.080116+00:00",
     "title": "Monotonicity and Jumps of Minimal Absolute Values of Fifth Roots of Unity Sums"
   },

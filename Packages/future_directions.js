@@ -380,7 +380,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea66c257",
     "description": "For the random recursive DAG G_n with out-degree d \u2265 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n \u2192 \u221e.",
     "domains": [
       "Computation"
@@ -389,7 +389,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
@@ -849,7 +849,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Absolute bound for generalized Diophantine tuples over polynomial rings"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "03d2d7e4",
     "description": "For any perfect $\\mathbb{F}_p$-algebra $R$, the canonical map $\\chW(R) \\to W(R)$ is an isomorphism of rings. This conjecture tests whether the sheared Witt vector construction reduces to the classical Witt vector functor when applied to perfect $\\mathbb{F}_p$-algebras, leveraging the vanishing of the ideal $\\hw(R)$ in such cases.",
     "domains": [
       "Algebra",
@@ -859,7 +859,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01178v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T20:39:15.695833+00:00",
     "title": "Isomorphism of Sheared Witt Vectors for Perfect Algebras"
   },
@@ -1577,7 +1577,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharp Threshold Constant for Cycle Games"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ec8dee20",
     "description": "For every positive integer $k$, there exists a parameter $s$ in the Lecacheux family such that the $5$-rank of the P\u00f3lya group of the corresponding quintic field is exactly $k$.",
     "domains": [
       "Algebra"
@@ -1586,7 +1586,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00675v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T11:59:32.474562+00:00",
     "title": "Exact 5-Rank Realization in Lecacheux P\u00f3lya Groups"
   },
@@ -2581,7 +2581,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Positivity of (p,q)-Generalized Stirling Numbers in the (p,q)-Binomial Basis"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9896d47c",
     "description": "Formalize the upper bound on the maximum size of a Sidon subset of {0, ..., N-1}, specifically proving that F(N) <= N^{1/2} + 0.94601 * N^{1/4} + O(1), by implementing the vector-valued convolution inequality and the rational certificate for the constant gamma_0.",
     "domains": [
       "Bridges"
@@ -2590,7 +2590,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T01:56:27.032018+00:00",
     "title": "Upper Bound for the Cardinality of Finite Sidon Sets"
   },
@@ -3382,7 +3382,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on the sl2-multiplicity decomposition of the graph algebra"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ecf65bf0",
     "description": "For any monic polynomial f in Z[x] of degree k \u2265 2, the power-saving constant c in the inequality |f(A)| \u2264 |A|^(k-c) can be taken to satisfy c \u2265 1/k\u00b2, where A ranges over finite sets constructed via the Bloom-Sawin-Schildkraut-Zhelezov method.",
     "domains": [
       "Bridges"
@@ -3391,7 +3391,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30690v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T05:42:15.565147+00:00",
     "title": "Explicit Quantitative Lower Bound on Power-Saving for Monic Minkowski Polynomials"
   },
@@ -4623,7 +4623,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Penrose Homology Detects Tait Colorability"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "af8797da",
     "description": "For every connected simple graph G of order at least three, the independence number \u03b1(G) is bounded below by the sum of the annihilation number a(G) and the Havel-Hakimi residue res(G), divided by the maximum degree \u0394(G). That is, \u03b1(G) \u2265 (a(G) + res(G)) / \u0394(G), or equivalently, \u03b1(G) * \u0394(G) \u2265 a(G) + res(G).",
     "domains": [
       "Bridges"
@@ -4632,7 +4632,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01438v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T02:28:03.746874+00:00",
     "title": "TxGraffiti Annihilation-Residue Inequality"
   },
@@ -4737,7 +4737,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Complete Solution to the Generalized Honeymoon Oberwolfach Problem with One Round Table"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6f7b276c",
     "description": "For every finite poset P of width at most 2, the Ehrhart h*-polynomial h*(O(P); t) of the order polytope O(P) is real-rooted. This extends the paper's result for generalized snake posets (a proper subclass of width-two posets) to all width-two posets, and would unify real-rootedness phenomena observed across flow polytopes, rook polynomials, and P-Eulerian polynomials for this entire width regime.",
     "domains": [
       "Bridges"
@@ -4746,7 +4746,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00922v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T05:01:57.933891+00:00",
     "title": "Real-rootedness of h*-polynomials for width-two order polytopes"
   },
@@ -4795,7 +4795,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Periodic Cake Cutting Phase Ratio"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "70354b52",
     "description": "The minimal absolute value \u03c3\u2085(n) of a non-vanishing sum of n fifth roots of unity is monotone non-increasing over congruence classes of n modulo 5. Furthermore, a strict decrease \u03c3\u2085(n) > \u03c3\u2085(n+5) occurs if and only if n+5 is of the form 5F\u2098, L\u2098, or 2L\u2098 for some positive integer m, where F\u2098 and L\u2098 denote the m-th Fibonacci and Lucas numbers, respectively.",
     "domains": [
       "Bridges"
@@ -4804,7 +4804,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00825v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T06:18:12.080116+00:00",
     "title": "Monotonicity and Jumps of Minimal Absolute Values of Fifth Roots of Unity Sums"
   },
