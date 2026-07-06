@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8999eb20",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Girth and the codes of bipartite graphs\n\nDerived from the cycle of work formalized in\n`Catalog/Novelty/BipartiteGraphCodeGirth.lean` and\n`Catalog/Novelty/BipartiteGraphCodeGirthA",
-      "quality_score": 0.7782,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T17:21:24",
-      "title": "Girth bounds minimum distance of bipartite graph codes"
-    },
-    {
       "cycle_id": "07ec4039",
       "domain": "Applications",
       "key_insight": "# Future Directions — EML Universal Approximation: Density & Depth\n\nDerived from the cycle that produced `Catalog/EML/CubeDensity.lean` (density of the\ncoordinate-exponential EML algebra on `[0,1]ⁿ`,",
@@ -499,19 +489,19 @@
       "theorem_count": 15,
       "timestamp": "2026-07-06T09:42:26",
       "title": "Optimality of the polynomial factor in the Naslund–Sawin bound for sunflower‑free families"
+    },
+    {
+      "cycle_id": "048b9775",
+      "domain": "Computation",
+      "key_insight": "# Future Directions\n\nFive falsifiable conjectures growing out of the study of the characteristic-two\ncup-product form of a pro-2 Demushkin group and its canonical (Kummer/orientation) class.\n\n## 1. Th",
+      "quality_score": 0.7059866666666667,
+      "sorry_count": 4,
+      "theorem_count": 18,
+      "timestamp": "2026-07-06T15:29:27",
+      "title": "Vanishing of the Benson--Krause--Schwede canonical class for pro-2 Demushkin groups"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "00e5c711",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Wall–Menger Separator Optimality\n\nThis cycle established, fully formally (0 sorries), that for the left/right cut of\nthe `(m+1) × (n+1)` grid (wall) graph:\n\n- there exist `m+1` p",
-      "quality_score": 0.61002,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T10:40:03",
-      "title": "Wall-Menger Separator Optimality Conjecture"
-    },
     {
       "cycle_id": "6ac1dc4e",
       "domain": "Applications",
@@ -2501,21 +2491,19 @@
       "theorem_count": 12,
       "timestamp": "2026-07-06T14:28:38",
       "title": "Explicit Quantitative Lower Bound on Power-Saving for Monic Minkowski Polynomials"
+    },
+    {
+      "cycle_id": "048b9775",
+      "domain": "Computation",
+      "key_insight": "# Future Directions\n\nFive falsifiable conjectures growing out of the study of the characteristic-two\ncup-product form of a pro-2 Demushkin group and its canonical (Kummer/orientation) class.\n\n## 1. Th",
+      "quality_score": 0.7059866666666667,
+      "sorry_count": 4,
+      "theorem_count": 18,
+      "timestamp": "2026-07-06T15:29:27",
+      "title": "Vanishing of the Benson--Krause--Schwede canonical class for pro-2 Demushkin groups"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b714fdc8",
-      "domain": "Applications",
-      "name": "on",
-      "quality": 0.7480399999999999
-    },
-    {
-      "cycle_id": "b714fdc8",
-      "domain": "Applications",
-      "name": "pow_five_modEq_self",
-      "quality": 0.7480399999999999
-    },
     {
       "cycle_id": "aad22603",
       "domain": "Probability",
@@ -2803,17 +2791,22 @@
       "domain": "Applications",
       "name": "SliceRankLE",
       "quality": 0.74264
+    },
+    {
+      "cycle_id": "048b9775",
+      "domain": "Computation",
+      "name": "sqForm_apply",
+      "quality": 0.7059866666666667
+    },
+    {
+      "cycle_id": "048b9775",
+      "domain": "Computation",
+      "name": "exists_cup_one",
+      "quality": 0.7059866666666667
     }
   ],
-  "last_updated": "2026-07-06T14:28:38",
+  "last_updated": "2026-07-06T15:29:27",
   "open_questions": [
-    {
-      "context": "therefore left as `sorry` and flagged as open formalization targets in the; sorry; sorry",
-      "cycle_id": "f31c8198",
-      "domain": "Applications",
-      "sorry_count": 4,
-      "timestamp": "2026-06-27T21:36:49"
-    },
     {
       "context": "that reduction, constructively and `sorry`-free.",
       "cycle_id": "8170e958",
@@ -3016,6 +3009,13 @@
       "domain": "Logic",
       "sorry_count": 4,
       "timestamp": "2026-07-06T11:04:35"
+    },
+    {
+      "context": "witnesses, not `sorry`ed placeholders, so the abstract hypotheses are demonstrably; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun",
+      "cycle_id": "048b9775",
+      "domain": "Computation",
+      "sorry_count": 4,
+      "timestamp": "2026-07-06T15:29:27"
     }
   ],
   "research_threads": {
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "f25c8810",
-        "quality": 0.7545600000000001,
-        "theorems": 734,
-        "title": "Alien Number Systems: Beyond Base-N"
-      },
-      {
         "cycle_id": "854c699d",
         "quality": 0.64162,
         "theorems": 10,
@@ -3327,6 +3321,12 @@
         "quality": 0.63344,
         "theorems": 26,
         "title": "Monotonicity and Jumps of Minimal Absolute Values of Fifth Roots of Unity Sums"
+      },
+      {
+        "cycle_id": "048b9775",
+        "quality": 0.7059866666666667,
+        "theorems": 18,
+        "title": "Vanishing of the Benson--Krause--Schwede canonical class for pro-2 Demushkin gro"
       }
     ],
     "Cryptography": [

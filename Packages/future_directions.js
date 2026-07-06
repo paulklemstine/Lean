@@ -323,7 +323,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Commutativity of Operator Theorem operators in SR_G"
   },
   {
-    "consumed_by_exp_id": "acb176be",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for coprime positive integers a<b with a>1 and odd exponent n>1, the equation (a^n+1)(b^n+1)=x^2 has no positive integer solutions.",
     "domains": [
       "Pythagorean"
@@ -332,7 +332,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31223v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T16:13:17.108600+00:00",
     "title": "No solutions for odd exponents in the coprime case"
   },
@@ -1111,21 +1111,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T22:37:45.370140+00:00",
     "title": "Distribution of p-Selmer rank increments in p-cyclic extensions"
-  },
-  {
-    "consumed_by_exp_id": "048b9775",
-    "description": "Conjecture: For every pro-2 Demushkin group G, the Benson--Krause--Schwede canonical class c(G) in the Hochschild cohomology HH^2(C^*(G;\ud835\udd3d\u2082), C^*(G;\ud835\udd3d\u2082)) of the cochain differential graded \ud835\udd3d\u2082-algebra of continuous cochains is zero. This is equivalent to the A\u2083-formality of C^*(G;\ud835\udd3d\u2082).",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0104",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01028v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T23:15:46.874733+00:00",
-    "title": "Vanishing of the Benson--Krause--Schwede canonical class for pro-2 Demushkin groups"
   },
   {
     "consumed_by_exp_id": "",
@@ -2202,7 +2187,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Variance of Homomorphism at the Root is Bounded Below by Effective Resistance"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "97e90f39",
     "description": "Analysis of the maximal number of chains required to cover strict chains in the Boolean lattice, with connections to inclusion-exclusion and logarithmic approximations.",
     "domains": [
       "Cryptography",
@@ -2212,7 +2197,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29385v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T08:04:06.155536+00:00",
     "title": "Chain Covers in the Boolean Lattice"
   },
@@ -2581,7 +2566,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Positivity of (p,q)-Generalized Stirling Numbers in the (p,q)-Binomial Basis"
   },
   {
-    "consumed_by_exp_id": "ea443c2c",
+    "consumed_by_exp_id": "",
     "description": "Formalize the upper bound on the maximum size of a Sidon subset of {0, ..., N-1}, specifically proving that F(N) <= N^{1/2} + 0.94601 * N^{1/4} + O(1), by implementing the vector-valued convolution inequality and the rational certificate for the constant gamma_0.",
     "domains": [
       "Bridges"
@@ -2590,7 +2575,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T01:56:27.032018+00:00",
     "title": "Upper Bound for the Cardinality of Finite Sidon Sets"
   },
@@ -3410,21 +3395,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Grundy Number XOR Conjecture for Three-Pile Halve Nim"
   },
   {
-    "consumed_by_exp_id": "2f207bdb",
-    "description": "The paper proves that for almost all even integers N, the set of Goldbach primes \u2119 \u2229 (N - \u2119) has level of distribution 1/6. We conjecture that this can be improved to 1/3. Specifically, for any A > 0, there exists B > 0 such that for all X > 2, the number of even N \u2208 (X/2, X] for which the Bombieri-Vinogradov error term exceeds X/(log X)^A for moduli up to X^{1/3}/(log X)^B is O(X/(log X)^A).",
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "fd_0280",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.29559v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-04T06:20:35.132859+00:00",
-    "title": "Improved Level of Distribution for Goldbach Primes"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Any simplicial complex whose links satisfy the KKL theorem also satisfies a global KKL-type theorem for influence functions. Formally, if every (d-1)-dimensional link in a simplicial complex K satisfies the KKL condition that low-influence functions on the link must have a coordinate with large influence, then the entire complex K satisfies a global KKL condition for functions on its simplices.",
     "domains": [
@@ -3993,20 +3963,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Combinatorial Determinism of Minimal Jacobian Relation Degree for Plane Curve Arrangements"
   },
   {
-    "consumed_by_exp_id": "6dd82d4d",
-    "description": "For any graph G, the geodesic treewidth of G' (obtained by subdividing each edge |V(G)| times) is greater than or equal to the geodesic treewidth of G.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0323",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02098v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-05T05:19:29.430000+00:00",
-    "title": "Subdivisionof Edges Does Not Decrease Geodesic Treewidth"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Conjecture that for any squarefree integer N > 1 with an even number of distinct prime factors, the genus of the Atkin\u2013Lehner quotient X_N / \u27e8w_p\u27e9 is zero if and only if N belongs to the finite set {6, 10, 22}.",
     "domains": [
@@ -4271,7 +4227,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Extremal Symmetric One-Weight Colorings Must Have Bracket-Regime Structure"
   },
   {
-    "consumed_by_exp_id": "767ff507",
+    "consumed_by_exp_id": "",
     "description": "Let N > 1 be a squarefree integer with an even number of prime factors, and let X_N be the associated Shimura curve over \u211a. For each divisor d|N, let w_d be the Atkin-Lehner involution on X_N, and let X_N/\u27e8w_d\u27e9 be the corresponding quotient curve. The conjecture states that the set of all such N for which there exists at least one divisor d|N such that the quotient curve X_N/\u27e8w_d\u27e9 has genus zero is exactly the finite set {6, 10, 14, 15, 21, 22, 26, 33, 34, 35, 38, 39, 46, 51, 55, 57, 58, 62, 65, 69, 74, 77, 82, 85, 86, 87, 91, 93, 94, 95, 106, 111, 115, 118, 119, 122, 123, 129, 133, 134, 141, 142, 143, 145, 146, 155, 158, 159, 161, 166, 177, 178, 183, 185, 187, 194, 201, 202, 203, 205, 206, 209, 213, 214, 215, 217, 218, 219, 221, 226, 235, 237, 247, 249, 253, 254, 259, 262, 265, 267, 274, 278, 287, 291, 295, 298, 299, 301, 302, 303, 305, 309, 314, 319, 321, 323, 326, 327, 329, 334, 335, 339, 341, 346, 355, 358, 362, 365, 371, 377, 381, 382, 386, 391, 393, 394, 395, 398, 403, 407, 411, 413, 415, 417, 422, 427, 437, 445, 446, 447, 451, 453, 454, 458, 466, 469, 471, 473, 478, 481, 482, 485, 489, 493, 497}. (This list is conjectural and based on known classifications of genus-zero Atkin-Lehner quotients of Shimura curves.)",
     "domains": [
       "Pythagorean",
@@ -4281,7 +4237,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02306v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T16:21:31.636534+00:00",
     "title": "Classification of Genus-Zero Atkin-Lehner Quotients of Shimura Curves"
   },
@@ -5638,20 +5594,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "DFA State Complexity Lower Bound for the Kochen-Specker Problem"
   },
   {
-    "consumed_by_exp_id": "6c708a88",
-    "description": "Every brick distinct from K_4, C_6_bar, and the Petersen graph, in which every b-invariant edge is a forcing edge, is near-bipartite. This conjecture, if true, would reduce the full Lucchesi\u2013Murty characterization problem to the near-bipartite case already solved in this paper, by showing that no non-near-bipartite brick (beyond the three exceptions) can have the property that all its b-invariant edges are forcing edges.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0437",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.00608v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T07:51:38.329200+00:00",
-    "title": "Near-bipartite reduction for the Lucchesi\u2013Murty property"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For the Boolean lattice B_n, let E_n be the set of triples (S,T,U) with S \u2282 T \u2282 U in B_n such that |S| + |T| = |U|. The conjecture states that |E_n| = C(2n,n) - [x^n](1+x+x^2)^n - 2^n + 1, where [x^n] extracts the coefficient of x^n from the polynomial. This identity connects poset chain counting in Boolean lattices with trinomial coefficient extraction and binomial sums, and is the foundational combinatorial identity underlying the paper's analysis of multiplicity parameters.",
     "domains": [
@@ -5945,12 +5887,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every symmetric edge polytope of dimension at most 35 has a gamma-positive Ehrhart h*-polynomial; equivalently, 36 is the minimum dimension in which a symmetric edge polytope can fail to be gamma-positive. This is motivated by the paper's construction of a 36-dimensional counterexample to the Ohsugi-Tsuchiya conjecture and by extensive computational evidence for small graphs.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0458",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02424v1",
+    "status": "available",
+    "timestamp": "2026-07-06T15:33:05.315685+00:00",
+    "title": "Gamma-positivity threshold for symmetric edge polytopes"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any convex polytope P in \u211d^\ufffd (with e = d+1 being the embedding dimension), the set of centerpoints of P coincides with the floating body of P at level 1/(d+1). Specifically, a point x is a centerpoint of P (meaning every closed halfspace containing x contains at least a 1/(d+1) fraction of the volume of P) if and only if x belongs to the floating body F_{1/(d+1)}(P), defined as the intersection of all closed halfspaces H\u207a such that vol(P \\ H\u207a) \u2264 (1/(d+1)) \u00b7 vol(P). The paper establishes this equivalence and further shows that for polytopes this set is semialgebraic.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0458",
+    "id": "fd_0459",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02400v1",
@@ -5965,7 +5921,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0459",
+    "id": "fd_0460",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -5979,13 +5935,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0460",
+    "id": "fd_0461",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
     "status": "available",
     "timestamp": "2026-07-06T15:11:56.205886+00:00",
     "title": "Hyperstability of the Erd\u0151s-Gallai Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every simple graph of order n \u2265 8 with more than T(n) = (n^2 - 3n)/2 - \u2308n/2\u2309 + 2 edges has strictly positive Ollivier/Lin-Lu-Yau curvature on all of its edges, and this threshold is optimal.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0462",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02297v1",
+    "status": "available",
+    "timestamp": "2026-07-06T15:34:18.267621+00:00",
+    "title": "Extremal Threshold for Positive Ollivier/Lin-Lu-Yau Curvature"
   },
   {
     "consumed_by_exp_id": "",
