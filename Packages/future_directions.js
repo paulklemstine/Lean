@@ -5915,12 +5915,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any simple graph G with maximum degree Delta(G) > |V(G)|/3, the chromatic index of G is Delta(G) if and only if G contains no Delta(G)-overfull subgraph. Equivalently, if Delta(G) > |V(G)|/3 and G contains no Delta(G)-overfull subgraph, then G is class 1.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0460",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02270v1",
+    "status": "available",
+    "timestamp": "2026-07-06T16:19:33.206670+00:00",
+    "title": "Overfull Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any convex polytope P in \u211d^\ufffd (with e = d+1 being the embedding dimension), the set of centerpoints of P coincides with the floating body of P at level 1/(d+1). Specifically, a point x is a centerpoint of P (meaning every closed halfspace containing x contains at least a 1/(d+1) fraction of the volume of P) if and only if x belongs to the floating body F_{1/(d+1)}(P), defined as the intersection of all closed halfspaces H\u207a such that vol(P \\ H\u207a) \u2264 (1/(d+1)) \u00b7 vol(P). The paper establishes this equivalence and further shows that for polytopes this set is semialgebraic.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0460",
+    "id": "fd_0461",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02400v1",
@@ -5935,7 +5949,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0461",
+    "id": "fd_0462",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -5949,7 +5963,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0462",
+    "id": "fd_0463",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -5963,7 +5977,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0463",
+    "id": "fd_0464",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
@@ -5978,13 +5992,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_0464",
+    "id": "fd_0465",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02215v1",
     "status": "available",
     "timestamp": "2026-07-06T15:59:59.030542+00:00",
     "title": "Cohen-Macaulay Property of the Trianguline Variety for Reductive Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A set T = {a\u2080,b\u2080,...,a\u2098,b\u2098} \u2282 P\u00b9(K) of 2g+2 distinct points over a finite extension K of Q\u209a (p \u2260 2) is in good position (i.e., \u0393(T) = \u27e8s\u2080,...,s\u2098\u27e9 is discontinuous and equals the free product \u27e8s\u2080\u27e9 * \u22ef * \u27e8s\u2098\u27e9) if and only if the tree T(T) has exactly 2g+1 edges and for each i \u2208 {0,...,g}, the pair {a\u1d62,b\u1d62} is separated by a unique edge e\u1d62 of T(T), meaning a\u1d62 and b\u1d62 lie in different connected components of T(T) \\ {e\u1d62}. This provides the missing necessary and sufficient condition explicitly noted as unknown in the paper.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0466",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02160v1",
+    "status": "available",
+    "timestamp": "2026-07-06T16:20:33.232038+00:00",
+    "title": "Tree Characterization of Good Position for Hyperelliptic Mumford Curves"
   },
   {
     "consumed_by_exp_id": "",

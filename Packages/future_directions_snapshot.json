@@ -10933,6 +10933,33 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "math.CO",
+      "Overfull_Conjecture",
+      "Chetwynd_Hilton"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any simple graph G with maximum degree Delta(G) > |V(G)|/3, the chromatic index of G is Delta(G) if and only if G contains no Delta(G)-overfull subgraph. Equivalently, if Delta(G) > |V(G)|/3 and G contains no Delta(G)-overfull subgraph, then G is class 1.",
+    "domain_bridges": [
+      "combinatorics",
+      "graph_coloring",
+      "matching_theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0460",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Assume G is class 2, meaning chi'(G) = Delta(G) + 1. Analyze the structure of critical subgraphs. Show that a Delta-critical graph with Delta > n/3 must contain an overfull subgraph, deriving a contradiction to the assumption that no overfull subgraph exists.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02270v1",
+    "status": "available",
+    "timestamp": "2026-07-06T16:19:33.206670+00:00",
+    "title": "Overfull Conjecture"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "math.MG",
       "cs.CG",
       "math.CO"
@@ -10946,7 +10973,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0460",
+    "id": "fd_0461",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof proceeds by double inclusion. (⊆): If x is a centerpoint, then every halfspace H⁺ containing x satisfies vol(P ∩ H⁺) ≥ vol(P)/(d+1), equivalently vol(P \\ H⁺) ≤ vol(P)·d/(d+1); but the floating body condition requires vol(P \\ H⁺) ≤ vol(P)/(d+1) for the halfspaces defining it, so one must show that a centerpoint lies in every halfspace whose complementary cap has volume ≤ vol(P)/(d+1). (⊇): Conversely, if x ∈ F_{1/(d+1)}(P), then x lies in every halfspace H⁺ with vol(P \\ H⁺) ≤ vol(P)/(d+1), and one must show this forces every halfspace through x to capture at least 1/(d+1) of the volume. The key technical ingredient is that the cap-volume function is piecewise rational on the arrangement of oriented hyperplanes determined by the polytope's facets, which makes both sets explicitly semialgebraic and allows their coincidence to be verified.",
@@ -10974,7 +11001,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0461",
+    "id": "fd_0462",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive existence via analytic bounding of character degrees",
@@ -11001,7 +11028,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0462",
+    "id": "fd_0463",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the classical Erdős-Gallai theorem (every graph with average degree d contains a cycle of length ≥ d). Then develop infrastructure for vertex covers of graph components and edge-editing distance. The key structural ingredient is Pokrovskiy's decomposition theorem for bounded-degree trees, which must also be formalized. The proof then proceeds by showing that graphs violating the conclusion have a specific block structure that forces a long cycle.",
@@ -11029,7 +11056,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0463",
+    "id": "fd_0464",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the Lin-Lu-Yau curvature for a simple graph in Lean. Establish the threshold function T(n). Prove that for any graph G of order n ≥ 8 with |E(G)| > T(n), the optimal coupling between probability measures on the endpoints of any edge has a cost strictly less than 1, yielding positive curvature. This involves demonstrating that such graphs cannot contain edges satisfying deg(x) + deg(y) - |N(x) ∩ N(y)| ≥ n, a necessary condition for non-positive curvature, by characterizing the maximal edge count of graphs containing such edges.",
@@ -11057,7 +11084,7 @@
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_0464",
+    "id": "fd_0465",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Step 1: Formalize the trianguline variety Y^{tri}(G) as a rigid analytic space parameterizing trianguline G-representations with their triangulation data, using the Tannakian formalism for Rep_L(G) developed in the paper. Step 2: Establish that Y^{tri}(G) is regular in codimension ≤ 1 (condition R1) by analyzing the singular locus—its complement is the smooth regular locus characterized by the regularity of the triangulation parameter δ: T(Z_p) → T(E), and the singular locus has codimension ≥ 2 by dimension counting via the root structure of G. Step 3: Prove condition (S2) by showing that for every point x with codim ≥ 2, the local ring O_{Y^{tri},x} satisfies depth ≥ min(2, dim O_{Y^{tri},x}), using the crystallinity criterion for (φ,Γ)-modules with G-structure established in the paper to control the local equations. Step 4: Apply Serre's criterion (R1 + S2 ⟹ normal + CM for equidimensional schemes) to conclude.",
@@ -11066,6 +11093,36 @@
     "status": "available",
     "timestamp": "2026-07-06T15:59:59.030542+00:00",
     "title": "Cohen-Macaulay Property of the Trianguline Variety for Reductive Groups"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Mumford_curves",
+      "Schottky_groups",
+      "Bruhat-Tits_trees",
+      "p-adic_uniformization",
+      "Free_products_of_groups"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "A set T = {a₀,b₀,...,aₘ,bₘ} ⊂ P¹(K) of 2g+2 distinct points over a finite extension K of Qₚ (p ≠ 2) is in good position (i.e., Γ(T) = ⟨s₀,...,sₘ⟩ is discontinuous and equals the free product ⟨s₀⟩ * ⋯ * ⟨sₘ⟩) if and only if the tree T(T) has exactly 2g+1 edges and for each i ∈ {0,...,g}, the pair {aᵢ,bᵢ} is separated by a unique edge eᵢ of T(T), meaning aᵢ and bᵢ lie in different connected components of T(T) \\ {eᵢ}. This provides the missing necessary and sufficient condition explicitly noted as unknown in the paper.",
+    "domain_bridges": [
+      "Combinatorics_of_trees_and_partitions",
+      "Discrete_group_theory",
+      "p-adic_metric_geometry"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0466",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "(1) Forward direction: Use the known necessary condition via T(T) and the Schottky group structure to show that Γ(T) being a free product of g+1 copies of Z/2Z forces T(T) to have exactly 2g+1 edges with the unique-separation property. (2) Reverse direction: Show the tree-separation condition implies that each involution sᵢ has an attracting/repelling dynamics on P¹(K) with non-overlapping fundamental domains in the Bruhat-Tits tree, then apply results on discontinuous groups (e.g., via reduction maps and the action on the Bruhat-Tits tree) to verify Γ(T) is Schottky. (3) Key tool: Kadziela-type approximation to control the relationship between tree structure and the group action.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02160v1",
+    "status": "available",
+    "timestamp": "2026-07-06T16:20:33.232038+00:00",
+    "title": "Tree Characterization of Good Position for Hyperelliptic Mumford Curves"
   },
   {
     "ambition_level": "extension",

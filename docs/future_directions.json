@@ -16212,7 +16212,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Hales--Jewett numbers",
         "one-weight colorings",
@@ -16236,7 +16236,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0341",
-      "last_attempt_time": "2026-07-06T16:00:04.167295+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "A function to decompose a symmetric one-weight coloring into its bracket and boundary components, then validate against extremal criteria.",
       "lineage_refs": [],
@@ -21970,6 +21970,54 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.CO",
+        "Overfull_Conjecture",
+        "Chetwynd_Hilton"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any simple graph G with maximum degree Delta(G) > |V(G)|/3, the chromatic index of G is Delta(G) if and only if G contains no Delta(G)-overfull subgraph. Equivalently, if Delta(G) > |V(G)|/3 and G contains no Delta(G)-overfull subgraph, then G is class 1.",
+      "domain_bridges": [
+        "combinatorics",
+        "graph_coloring",
+        "matching_theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0460",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem overfull_conjecture\n  {V : Type*} [Fintype V] [DecidableEq V]\n  (G : SimpleGraph V) [DecidableRel G.Adj]\n  (h_delta : G.maxDegree > (Fintype.card V) / 3)\n  (h_no_overfull : ∀ H : G.Subgraph, H.edgeFinset.card ≤ G.maxDegree * (H.vert.card / 2))\n  : G.chromaticIndex = G.maxDegree := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Assume G is class 2, meaning chi'(G) = Delta(G) + 1. Analyze the structure of critical subgraphs. Show that a Delta-critical graph with Delta > n/3 must contain an overfull subgraph, deriving a contradiction to the assumption that no overfull subgraph exists.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.02270v1",
+      "source_path": "http://arxiv.org/abs/2607.02270v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-06T16:19:33.206670+00:00",
+      "title": "Overfull Conjecture"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.MG",
         "cs.CG",
         "math.CO"
@@ -21990,7 +22038,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0460",
+      "id": "fd_0461",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem centerpoint_eq_floating_body {d : ℕ} (hd : 0 < d) (P : Polytope (Fin d → ℝ)) (hP : Convex P ∧ IsPolytope P) : centerpointSet P = floatingBody P (1 / (d + 1)) := by\n sorry",
@@ -22039,7 +22087,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0461",
+      "id": "fd_0462",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Leaning on the line-of-control method for iterated sums over partitions",
@@ -22087,7 +22135,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0462",
+      "id": "fd_0463",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hyperstability_erdos_gallai {V : Type*} [Fintype V] [DecidableEq V]\n    (c : ℝ) (hc : 0 < c) :\n    ∃ K : ℕ, ∀ d ≥ K, ∀ (G : SimpleGraph V) [DecidableRel G.Adj],\n      (2 * G.edgeFinset.card : ℝ) / (Fintype.card V : ℝ) = (d : ℝ) →\n      (∀ l ≥ d, ∀ C : List V, ¬G.IsCycle C l) →\n      ∃ H ≤ G,\n        (G.edgeFinset.card - H.edgeFinset.card : ℕ) ≤ ⌈c * d * (Fintype.card V : ℝ)⌉₊ ∧\n        ∀ C (hC : H.ConnectedComponent C),\n          ∃ vc : Finset V,\n            vc.card ≤ ⌈(1 + c) * d⌉₊ ∧\n            ∀ e ∈ H.edgeSet, (e.1 ∈ vc ∨ e.2 ∈ vc)",
@@ -22136,7 +22184,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0463",
+      "id": "fd_0464",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "def T (n : ℕ) : ℕ :=\n  (n * n - 4 * n + if n % 2 = 0 then 4 else 3) / 2\n\ntheorem extremal_positive_ollivier_curvature {V : Type*} [Fintype V] [DecidableEq V]\n    (G : SimpleGraph V) [DecidableRel G.Adj] :\n    let n := Fintype.card V\n    n ≥ 8 → G.edgeFinset.card > T n →\n    ∀ (e : Sym2 V) (he : e ∈ G.edgeSet), G.ollivierCurvature e he > 0 := by\n  sorry",
@@ -22185,7 +22233,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0464",
+      "id": "fd_0465",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem trianguline_variety_cohen_macaulay {G : Type*} [SplitConnectedReductiveGroup G ℚ_p] {B : Subgroup G} [IsBorel B] {T : Subgroup G} [IsMaximalTorus T] : CohenMacaulay (trianguline_variety G) := by\n  sorry",
@@ -22205,6 +22253,57 @@
       "thread_id": "",
       "timestamp": "2026-07-06T15:59:59.030542+00:00",
       "title": "Cohen-Macaulay Property of the Trianguline Variety for Reductive Groups"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Mumford_curves",
+        "Schottky_groups",
+        "Bruhat-Tits_trees",
+        "p-adic_uniformization",
+        "Free_products_of_groups"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "A set T = {a₀,b₀,...,aₘ,bₘ} ⊂ P¹(K) of 2g+2 distinct points over a finite extension K of Qₚ (p ≠ 2) is in good position (i.e., Γ(T) = ⟨s₀,...,sₘ⟩ is discontinuous and equals the free product ⟨s₀⟩ * ⋯ * ⟨sₘ⟩) if and only if the tree T(T) has exactly 2g+1 edges and for each i ∈ {0,...,g}, the pair {aᵢ,bᵢ} is separated by a unique edge eᵢ of T(T), meaning aᵢ and bᵢ lie in different connected components of T(T) \\ {eᵢ}. This provides the missing necessary and sufficient condition explicitly noted as unknown in the paper.",
+      "domain_bridges": [
+        "Combinatorics_of_trees_and_partitions",
+        "Discrete_group_theory",
+        "p-adic_metric_geometry"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "github_issue": 0,
+      "id": "fd_0466",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem tree_criterion_good_position\n    (K : Type*) [Field K] [NormedField K] [CompleteSpace K]\n    {p : ℕ} [Fact (Nat.Prime p)] [Fact (p ≠ 2)]\n    {g : ℕ} (hg : 0 < g)\n    (a b : Fin (g + 1) → ProjectiveLine K)\n    (h_inj : Function.Injective (fun i => (a i, b i)))\n    (h_all_distinct : ∀ i j, (a i ≠ a j ∨ b i ≠ b j) ∨ (a i ≠ b j ∨ b i ≠ a j) ∨ i = j) :\n    GoodPosition a b ↔\n      (treeOfSet (Set.range a ∪ Set.range b)).numEdges = 2 * g + 1 ∧\n      ∀ i : Fin (g + 1),\n        ∃! e : Edge (treeOfSet (Set.range a ∪ Set.range b)),\n          inDifferentComponents (treeOfSet (Set.range a ∪ Set.range b)) e (a i) (b i) :=\n  by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "(1) Forward direction: Use the known necessary condition via T(T) and the Schottky group structure to show that Γ(T) being a free product of g+1 copies of Z/2Z forces T(T) to have exactly 2g+1 edges with the unique-separation property. (2) Reverse direction: Show the tree-separation condition implies that each involution sᵢ has an attracting/repelling dynamics on P¹(K) with non-overlapping fundamental domains in the Bruhat-Tits tree, then apply results on discontinuous groups (e.g., via reduction maps and the action on the Bruhat-Tits tree) to verify Γ(T) is Schottky. (3) Key tool: Kadziela-type approximation to control the relationship between tree structure and the group action.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.02160v1",
+      "source_path": "http://arxiv.org/abs/2607.02160v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-06T16:20:33.232038+00:00",
+      "title": "Tree Characterization of Good Position for Hyperelliptic Mumford Curves"
     },
     {
       "ambition_level": "extension",
@@ -22251,7 +22350,6 @@
   "recent_domain_counts": {},
   "recent_theme_keywords": {},
   "selection_log": [
-    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
