@@ -4521,11 +4521,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "We conjecture that for any torsion\u2011free CAT(0) group\u00a0G, every unit in the group ring\u00a0\u2131\u2082[\u00a0G\u00a0] whose support containsaj\u0105cych at least three elements must in fact be trivial.  Equivalently, if\u00a0x\u00a0\u2208\u00a0\u2131\u2082[\u00a0G\u00a0] is a unit and\u00a0|supp(x)|\u00a0>\u00a02, then\u00a0x\u00a0equals\u00a0\u00b11.  This statement is falsifiable: a single example of a nontrivial unit with support size\u00a0\u2265\u00a03 in a torsion\u2011free CAT(0) group would refute it, while a general proof would require showing that any such unit would give rise to a finite product structure satisfying orientability\u00a0(\ud835\udd4b\u2081), no\u2011fold\u00a0(\ud835\udd4b\u2082) and triple\u2011girth\u00a0(\ud835\udd4b\u2084), contradicting the obstruction proved in the referenced paper.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0359",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01716v1",
+    "status": "available",
+    "timestamp": "2026-07-06T00:00:51.646656+00:00",
+    "title": "Nontrivial Units with Large Support in F\u2082[ G ] for Torsion\u2011Free CAT(0) Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0359",
+    "id": "fd_0360",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -4539,7 +4554,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0360",
+    "id": "fd_0361",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -4554,7 +4569,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0361",
+    "id": "fd_0362",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
@@ -4569,7 +4584,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0362",
+    "id": "fd_0363",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -4584,7 +4599,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0363",
+    "id": "fd_0364",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -4598,7 +4613,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0364",
+    "id": "fd_0365",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -4612,7 +4627,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0365",
+    "id": "fd_0366",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -4627,7 +4642,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0366",
+    "id": "fd_0367",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02011v1",
@@ -4642,7 +4657,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0367",
+    "id": "fd_0368",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -4656,7 +4671,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0368",
+    "id": "fd_0369",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02085v1",
@@ -4670,13 +4685,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0369",
+    "id": "fd_0370",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01957v1",
     "status": "available",
     "timestamp": "2026-07-05T23:40:00.500243+00:00",
     "title": "Generalized Hurwitz Class Number Formula for Quartic CM Fields"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The integral \u222b\u2081\u02e3 D(t)/t\u00b2 dt remains negative for all x \u2265 1, where D(x) = \u03a3_{n\u2264x} \u03c3(n) - x\u00b2\u03b6(2)/2 represents the error in the average order of the sum-of-divisors function. While the paper proves this for x \u2265 650, we conjecture that the negativity holds universally for all x \u2265 1, indicating a persistent systematic bias in the error term that complements the known asymptotic behavior.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0371",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01956v1",
+    "status": "available",
+    "timestamp": "2026-07-06T00:03:24.293418+00:00",
+    "title": "Sign of the Smoothed Sum-of-Divisors Error Integral"
   },
   {
     "consumed_by_exp_id": "",
