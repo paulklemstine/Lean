@@ -63,9 +63,9 @@ def test_v16_has_team_loop(pi_client, research_concept):
     assert "Critic" in prompt
     assert "Stage 1 — Hypothesize" in prompt
     assert "Stage 2 — Experiment" in prompt
-    assert "Stage 3 — Analyze" in prompt
-    assert "Stage 4 — Critique / Adversarial Review" in prompt
-    assert "Stage 5 — Synthesize" in prompt
+    assert "Stage 3 — Generalize" in prompt
+    assert "Stage 4 — Critique" in prompt
+    assert "Stage 5 — Future" in prompt
 
 
 def test_v16_has_self_critique_checklist(pi_client, research_concept):
