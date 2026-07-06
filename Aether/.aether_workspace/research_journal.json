@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e5dd524d",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — EML Fixed-Point Dynamics\n\nDerived from this cycle's findings in `Applications/EMLIterationSharpRate.lean`\nand `Applications/EMLIterationSharpRateConcrete.lean`, which proved that",
-      "quality_score": 0.3921804000000001,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T11:13:13",
-      "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
-    },
-    {
       "cycle_id": "fdadfe48",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Erdős–Straus, after the unified two-term solver\n\nThis cycle distilled the four classical Erdős–Straus families into one engine,\n`ErdosStraus.Unified.es_two_term` (`4·a = n + r ∧",
@@ -2501,6 +2491,16 @@
       "theorem_count": 4,
       "timestamp": "2026-07-06T18:37:44",
       "title": "Joint descendants of the last k vertices in random d-DAGs"
+    },
+    {
+      "cycle_id": "c7c6cf29",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions: powers of the Eulerian triangle and real-rootedness\n\nThese conjectures grew out of a study of the square of the Eulerian triangle,\nwhose `n`-th row generating polynomial `S_n(x) =",
+      "quality_score": 0.43457572380952386,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-07-06T19:31:57",
+      "title": "Real-rootedness of the square of the Eulerian triangle"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7059866666666667
     }
   ],
-  "last_updated": "2026-07-06T18:37:44",
+  "last_updated": "2026-07-06T19:31:57",
   "open_questions": [
     {
       "context": "that reduction, constructively and `sorry`-free.",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "3718ce68",
-        "quality": 0.71376,
-        "theorems": 10,
-        "title": "Betti-Whittaker Period Relation for Contragredient Representations of GL(n)"
-      },
-      {
         "cycle_id": "0e9a5064",
         "quality": 0.7836800000000002,
         "theorems": 13,
@@ -3699,6 +3693,12 @@
         "quality": 0.45366952380952386,
         "theorems": 4,
         "title": "Joint descendants of the last k vertices in random d-DAGs"
+      },
+      {
+        "cycle_id": "c7c6cf29",
+        "quality": 0.43457572380952386,
+        "theorems": 4,
+        "title": "Real-rootedness of the square of the Eulerian triangle"
       }
     ],
     "Physics": [

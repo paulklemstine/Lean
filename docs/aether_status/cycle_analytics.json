@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-06T18:37:45.721849+00:00",
+  "last_updated": "2026-07-06T19:31:58.564454+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -37925,6 +37925,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-06T18:37:45.655163+00:00",
       "title": "Joint descendants of the last k vertices in random d-DAGs"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.5764,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 65,
+      "domain": "NumberTheory",
+      "duration_seconds": 1231.9409852027893,
+      "end_time": 1783365924.3144333,
+      "files_integrated": 4,
+      "job_id": "c7c6cf29",
+      "outcome_quality": 0.43457572380952386,
+      "phase": "complete",
+      "phase_a_prompt_version": "v16",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.86,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.6714,
+        "cross_domain": 0.9,
+        "grade": "substantial",
+        "importance": 0.5733,
+        "novelty": 0.71,
+        "proof_depth": 0.5147,
+        "usefulness": 0.7074
+      },
+      "quality_score": 0.43457572380952386,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783364692.3734481,
+      "strategy_count": 0,
+      "theorem_count": 4,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 4,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-06T19:31:58.491864+00:00",
+      "title": "Real-rootedness of the square of the Eulerian triangle"
     }
   ]
 }

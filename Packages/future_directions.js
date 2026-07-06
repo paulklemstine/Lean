@@ -631,7 +631,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finiteness conjecture for semisimple geometric representations of Hiranouchi's ramified fundamental group"
   },
   {
-    "consumed_by_exp_id": "72277034",
+    "consumed_by_exp_id": "",
     "description": "An explicit formula for the number of non-trivial zeros of Artin L-functions below height T under Artin's conjecture.",
     "domains": [
       "Pythagorean"
@@ -640,7 +640,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31441v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T14:15:54.879802+00:00",
     "title": "Counting Zeros of Artin L-functions"
   },
@@ -1114,7 +1114,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Absolute bound on size of D_k(n)-tuples over F[x]"
   },
   {
-    "consumed_by_exp_id": "31f89744",
+    "consumed_by_exp_id": "",
     "description": "The sheared Witt vector functor preserves filtered colimits over nilperfect rings. Specifically, for any filtered category I and diagram (R_i)_{i \u2208 I} of nilperfect rings, the canonical morphism chW(\\varinjlim R_i) \u2192 \\varinjlim chW(R_i) is an isomorphism. This property is the key motivation for the sheared Witt construction and resolves the obstruction in extending Dieudonn\u00e9 theory to non-perfect rings.",
     "domains": [
       "Algebra",
@@ -1124,7 +1124,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01178v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T23:51:14.163940+00:00",
     "title": "Filtered Colimit Preservation by Sheared Witt Vectors"
   },
@@ -1867,7 +1867,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality for exactly one edge subset"
   },
   {
-    "consumed_by_exp_id": "fed5f716",
+    "consumed_by_exp_id": "",
     "description": "For any d \u00d7 d matrix A over a number field K with ring of integers O_K, if there exists n \u2265 1 such that A^n \u2208 M_d(O_K), then the pseudo-determinant of A is an algebraic integer in K.",
     "domains": [
       "Algebra"
@@ -1876,12 +1876,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30876v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T21:26:19.991104+00:00",
     "title": "Pseudo-determinant of power-integral matrices is an algebraic integer"
   },
   {
-    "consumed_by_exp_id": "666aafc9",
+    "consumed_by_exp_id": "",
     "description": "For a graph $G$ with minimum degree $\\delta(G) \\ge a + r$, if the spectral radius $\\lambda(G)$ is at least $a + r + b$, then $G$ is fractional ID-$[a,b]$-factor-critical.",
     "domains": [
       "Physics"
@@ -1890,7 +1890,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31064v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T21:44:34.279843+00:00",
     "title": "Spectral radius threshold for fractional ID-$[a,b]$-factor-critical graphs"
   },
@@ -3224,7 +3224,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimality of the polynomial factor in the Naslund\u2013Sawin bound for sunflower\u2011free families"
   },
   {
-    "consumed_by_exp_id": "1427cdbb",
+    "consumed_by_exp_id": "",
     "description": "There exists an absolute constant C such that for every d-regular graph G on n vertices with d \u2265 2, the irregularity strength s(G) satisfies s(G) \u2264 n/d + C. Here s(G) is the smallest integer k such that the edges of G can be weighted with integers from {1,\u2026,k} so that all weighted vertex degrees are distinct.",
     "domains": [
       "Pythagorean"
@@ -3233,7 +3233,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30612v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T23:58:16.205238+00:00",
     "title": "Faudree-Lehel Conjecture on Irregularity Strength of Regular Graphs"
   },
@@ -4578,7 +4578,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit Upper Bound on the Riemann Zeta Function on the 1-Line via Smoothing"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b802ef79",
     "description": "Conjectures that the set of indices n for which the coefficients V_2(n) of the q-series v_2(q) = sum_{n>=1} q^{2n^2-n} / (-q; q^2)_n violate the alternating sign pattern (-1)^{n+1} V_2(n) > 0 is finite. The paper proves that this set has natural density zero using an adapted circle method, but finiteness remains open and requires effective bounds on the asymptotic error terms.",
     "domains": [
       "Pythagorean"
@@ -4587,7 +4587,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T03:25:41.012336+00:00",
     "title": "Finiteness of Sign Exceptions for Andrews' q-Series v_2"
   },
@@ -5231,20 +5231,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-06T00:03:24.293418+00:00",
     "title": "Sign of the Smoothed Sum-of-Divisors Error Integral"
-  },
-  {
-    "consumed_by_exp_id": "c7c6cf29",
-    "description": "For the elliptic curve E_7: y^2 = x^3 + 49/4 over the rational numbers, let P_7 = (84, 756) be the rational point corresponding to the cube sum 2^3 + (-1)^3 = 7. The explicit Gross-Zagier formula from Yin's paper implies that L'(E_7, 1) / Omega_7 = (1/2) * hat_h_Q(P_7), where Omega_7 is the real Neron period of E_7 and hat_h_Q is the Neron-Tate height over Q.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "fd_0414",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01744v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T00:22:25.670501+00:00",
-    "title": "Explicit Gross-Zagier Formula for p=7"
   },
   {
     "consumed_by_exp_id": "",
@@ -6151,11 +6137,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every simple graph G with maximum degree \u0394(G) > |V(G)|/3, the chromatic index \u03c7'(G) equals \u0394(G) if and only if G contains no \u0394(G)-overfull subgraph (a subgraph H with |E(H)| > \u0394(G)\u00b7\u230a|V(H)|/2\u230b). This would yield a polynomial-time algorithm for determining the chromatic index of dense graphs and implies several longstanding conjectures including the 1-Factorization Conjecture for regular graphs.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_0479",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02270v1",
+    "status": "available",
+    "timestamp": "2026-07-06T19:32:27.547792+00:00",
+    "title": "The Overfull Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any rational polytopal measure P in R^d, the cap-volume function mapping an oriented hyperplane parameterized by (a,b) in R^(d+1) to the volume of P intersected with the halfspace {x | <a, x> <= b} is piecewise rational. Specifically, there exists a finite semialgebraic partition of the parameter space such that on each cell, the cap-volume is given by a rational function of the parameters.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0479",
+    "id": "fd_0480",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02400v1",
@@ -6169,7 +6170,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0480",
+    "id": "fd_0481",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -6183,7 +6184,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0481",
+    "id": "fd_0482",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
@@ -6198,13 +6199,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_0482",
+    "id": "fd_0483",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02215v1",
     "status": "available",
     "timestamp": "2026-07-06T19:09:16.916869+00:00",
     "title": "Cohen-Macaulayness of the Trianguline Variety for Reductive Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a prime p \u2260 2, a finite extension K of Q_p, and a set T = {a\u2080, b\u2080, ..., a\u1d4d, b\u1d4d} \u2282 P\u00b9(K) of size 2g+2 with g \u2265 1, the set T is in good position (meaning \u0393(T) = \u27e8s\u2080,...,s\u1d4d\u27e9 is discontinuous and equals the free product \u27e8s\u2080\u27e9*...*\u27e8s\u1d4d\u27e9, where each s\u1d62 has order 2 with fixed points {a\u1d62,b\u1d62}) if and only if: (1) the tree T(T) constructed from the reduction data is a path graph of length 2g+1, and (2) the p-adic valuations of the off-diagonal entries of normalized representatives of the s\u1d62 satisfy explicit contraction bounds ensuring the generators act as sufficiently contracting maps on the respective complementary residue disks in the Bruhat-Tits tree of PGL\u2082(K).",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0484",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02160v1",
+    "status": "available",
+    "timestamp": "2026-07-06T19:33:07.754822+00:00",
+    "title": "Tree-Contraction Characterization of Good Position for p-adic Schottky Groups"
   },
   {
     "consumed_by_exp_id": "",

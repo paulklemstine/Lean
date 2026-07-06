@@ -1102,7 +1102,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": "Artin's conjecture on L-functions",
-    "consumed_by_exp_id": "72277034",
+    "consumed_by_exp_id": "",
     "description": "An explicit formula for the number of non-trivial zeros of Artin L-functions below height T under Artin's conjecture.",
     "domain_bridges": [],
     "domains": [
@@ -1114,7 +1114,7 @@
     "proof_strategy": "explicit modular form analysis",
     "research_mode": "team",
     "source_exp_id": "2606.31441v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T14:15:54.879802+00:00",
     "title": "Counting Zeros of Artin L-functions"
   },
@@ -2002,7 +2002,7 @@
       "Dieudonné modules for p-divisible groups",
       "Filtered colimits in algebraic K-theory"
     ],
-    "consumed_by_exp_id": "31f89744",
+    "consumed_by_exp_id": "",
     "description": "The sheared Witt vector functor preserves filtered colimits over nilperfect rings. Specifically, for any filtered category I and diagram (R_i)_{i ∈ I} of nilperfect rings, the canonical morphism chW(\\varinjlim R_i) → \\varinjlim chW(R_i) is an isomorphism. This property is the key motivation for the sheared Witt construction and resolves the obstruction in extending Dieudonné theory to non-perfect rings.",
     "domain_bridges": [
       "Witt vector functoriality",
@@ -2021,7 +2021,7 @@
     "proof_strategy": "The conjecture follows from verifying that the pullback defining chW(R) commutes with filtered colimits. Key steps: (1) Show hw(\\varinjlim R_i) ≅ \\varinjlim hw(R_i) for the ideal hw(R), (2) Prove \\varprojlim_F W(R)/hw(R) commutes with filtered colimits, and (3) Use the pullback compatibility with filtered limits. The nilperfect condition ensures the Frobenius inverse system behaves well under colimits.",
     "research_mode": "team",
     "source_exp_id": "2607.01178v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T23:51:14.163940+00:00",
     "title": "Filtered Colimit Preservation by Sheared Witt Vectors"
   },
@@ -3414,7 +3414,7 @@
       "math.NT",
       "math.CO"
     ],
-    "consumed_by_exp_id": "fed5f716",
+    "consumed_by_exp_id": "",
     "description": "For any d × d matrix A over a number field K with ring of integers O_K, if there exists n ≥ 1 such that A^n ∈ M_d(O_K), then the pseudo-determinant of A is an algebraic integer in K.",
     "domain_bridges": [
       "algebraic number theory",
@@ -3429,7 +3429,7 @@
     "proof_strategy": "Show that eigenvalues λ of A satisfy λ^n ∈ O_K (hence algebraic integers) via characteristic polynomial of A^n, then prove their product (pseudo-determinant) is an algebraic integer",
     "research_mode": "team",
     "source_exp_id": "2606.30876v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T21:26:19.991104+00:00",
     "title": "Pseudo-determinant of power-integral matrices is an algebraic integer"
   },
@@ -3440,7 +3440,7 @@
       "BH",
       "LFZ"
     ],
-    "consumed_by_exp_id": "666aafc9",
+    "consumed_by_exp_id": "",
     "description": "For a graph $G$ with minimum degree $\\delta(G) \\ge a + r$, if the spectral radius $\\lambda(G)$ is at least $a + r + b$, then $G$ is fractional ID-$[a,b]$-factor-critical.",
     "domain_bridges": [
       "Spectral graph theory",
@@ -3456,7 +3456,7 @@
     "proof_strategy": "1. Establish that $\\lambda(G) \\ge a + r + b$ implies sufficient expansion properties via spectral techniques. 2. Show that this expansion guarantees the existence of fractional $[a,b]$-factors in $G-I$ for any independent set $I$ of size $r$. 3. Leverage the minimum degree condition to bound the vertex degrees in $G-I$ within the $[a,b]$ range.",
     "research_mode": "team",
     "source_exp_id": "2606.31064v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T21:44:34.279843+00:00",
     "title": "Spectral radius threshold for fractional ID-$[a,b]$-factor-critical graphs"
   },
@@ -5897,7 +5897,7 @@
       "Przybyło, Wei (2023) - Asymptotic solution",
       "Current paper: Nearly-uniform degree distributions in spanning subgraphs (ArXiv)"
     ],
-    "consumed_by_exp_id": "1427cdbb",
+    "consumed_by_exp_id": "",
     "description": "There exists an absolute constant C such that for every d-regular graph G on n vertices with d ≥ 2, the irregularity strength s(G) satisfies s(G) ≤ n/d + C. Here s(G) is the smallest integer k such that the edges of G can be weighted with integers from {1,…,k} so that all weighted vertex degrees are distinct.",
     "domain_bridges": [
       "Edge-weighting problems",
@@ -5915,7 +5915,7 @@
     "proof_strategy": "The conjecture has seen significant progress via probabilistic methods and algebraic constructions. A potential proof strategy could involve combining the polynomial method with iterative absorption techniques, or developing a more refined random weighting scheme that ensures distinct weighted degrees while keeping the maximum weight close to n/d. Recent asymptotic results by Przybyło and Wei suggest that a combination of random weighting and careful derandomization might close the gap to an absolute constant.",
     "research_mode": "team",
     "source_exp_id": "2606.30612v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T23:58:16.205238+00:00",
     "title": "Faudree-Lehel Conjecture on Irregularity Strength of Regular Graphs"
   },
@@ -8424,7 +8424,7 @@
       "math.NT",
       "Ramanujan's Lost Notebook"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b802ef79",
     "description": "Conjectures that the set of indices n for which the coefficients V_2(n) of the q-series v_2(q) = sum_{n>=1} q^{2n^2-n} / (-q; q^2)_n violate the alternating sign pattern (-1)^{n+1} V_2(n) > 0 is finite. The paper proves that this set has natural density zero using an adapted circle method, but finiteness remains open and requires effective bounds on the asymptotic error terms.",
     "domain_bridges": [
       "q-series",
@@ -8440,7 +8440,7 @@
     "proof_strategy": "Obtain effective explicit bounds for the error terms in the asymptotic formulas for V_2(n) derived via the circle method, demonstrating that the main term strictly dominates the error term for all sufficiently large n, thereby forcing the strict alternating sign pattern eventually.",
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T03:25:41.012336+00:00",
     "title": "Finiteness of Sign Exceptions for Andrews' q-Series v_2"
   },
@@ -9640,34 +9640,6 @@
     "status": "available",
     "timestamp": "2026-07-06T00:03:24.293418+00:00",
     "title": "Sign of the Smoothed Sum-of-Divisors Error Integral"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "math.NT",
-      "Gross-Zagier_formula",
-      "Sylvester_conjecture"
-    ],
-    "consumed_by_exp_id": "c7c6cf29",
-    "description": "For the elliptic curve E_7: y^2 = x^3 + 49/4 over the rational numbers, let P_7 = (84, 756) be the rational point corresponding to the cube sum 2^3 + (-1)^3 = 7. The explicit Gross-Zagier formula from Yin's paper implies that L'(E_7, 1) / Omega_7 = (1/2) * hat_h_Q(P_7), where Omega_7 is the real Neron period of E_7 and hat_h_Q is the Neron-Tate height over Q.",
-    "domain_bridges": [
-      "Elliptic_curves",
-      "L-functions",
-      "Heegner_points",
-      "BSD_conjecture"
-    ],
-    "domains": [
-      "Geometry"
-    ],
-    "id": "fd_0414",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Compute the Hasse-Weil L-function derivative at s=1 and the Neron-Tate height of the explicitly defined rational point P_7 = (84, 756) on E_7, and verify their equality using the explicit formula and height computations outlined in Yin's paper.",
-    "research_mode": "team",
-    "source_exp_id": "2607.01744v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T00:22:25.670501+00:00",
-    "title": "Explicit Gross-Zagier Formula for p=7"
   },
   {
     "ambition_level": "grand_challenge",
@@ -11398,6 +11370,36 @@
     "title": "Connectedness and Diameter Bound of the Genus-Preserving Chord Swap Graph"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "Vizing's theorem",
+      "Edmonds matching polytope theorem",
+      "Seymour overfull detection",
+      "Niessen overfull enumeration"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every simple graph G with maximum degree Δ(G) > |V(G)|/3, the chromatic index χ'(G) equals Δ(G) if and only if G contains no Δ(G)-overfull subgraph (a subgraph H with |E(H)| > Δ(G)·⌊|V(H)|/2⌋). This would yield a polynomial-time algorithm for determining the chromatic index of dense graphs and implies several longstanding conjectures including the 1-Factorization Conjecture for regular graphs.",
+    "domain_bridges": [
+      "computational complexity (NP-completeness of class 1 recognition)",
+      "polyhedral combinatorics (matching polytope)",
+      "combinatorial optimization (edge coloring algorithms)"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_0479",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First formalize the core graph-theoretic infrastructure (chromatic index, overfull subgraphs, critical graphs). Prove key lemmas: (1) any Δ-overfull subgraph forces class 2, (2) the Petersen-minus-vertex P* is class 2 with no 3-overfull subgraph (showing Δ > |V|/3 is tight), (3) reduction to Δ-critical graphs. Then apply structural decomposition of critical graphs with Δ > |V|/3 to show they must contain overfull subgraphs, extending known results from Δ ≥ |V|−2 inward.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02270v1",
+    "status": "available",
+    "timestamp": "2026-07-06T19:32:27.547792+00:00",
+    "title": "The Overfull Conjecture"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "ham-sandwich_theorem",
@@ -11415,7 +11417,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0479",
+    "id": "fd_0480",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the natural decomposition of the space of oriented hyperplanes based on the combinatorial structure of the intersection P ∩ H_(a,b)^+. Specifically, partition the parameter space into cells where the set of vertices of P lying strictly inside, strictly outside, and on the boundary of the halfspace remains constant. On each such cell, the vertices of the intersection polytope are rational functions of (a,b). Since the volume of a polytope is a sum of determinants of its vertices, the volume function is a rational function of (a,b) on each cell, proving piecewise rationality.",
@@ -11441,7 +11443,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0480",
+    "id": "fd_0481",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on n, utilizing the branching rule for symmetric group characters, properties of the binary expansion of n (specifically relating the highest power of 2 and the Hamming weight to partition structures), and explicit character calculations to verify the base cases and the inductive step.",
@@ -11468,7 +11470,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0481",
+    "id": "fd_0482",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Characterize the extremal graph by analyzing degree sequences and curvature formulas. Show that any graph with T(n) edges achieving the threshold must have exactly the specified degree distribution. Prove uniqueness by demonstrating that any two such extremal graphs are isomorphic via vertex relabeling. Use the relationship between graph curvature and Laplacian eigenvalues to constrain the possible structures.",
@@ -11500,7 +11502,7 @@
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_0482",
+    "id": "fd_0483",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof would proceed by analyzing the local structure of the trianguline variety at each point. Key steps: (1) On the very regular locus, the variety is smooth (proven in the paper), hence Cohen-Macaulay. (2) At singular points, use the Tannakian formalism developed in the paper to reduce to understanding the tangent cone in terms of root data. (3) The tangent cone at a singular point with parameter δ should be controlled by the roots α for which δ∘α∨ fails to be regular—these correspond to the walls of the Weyl chambers where smoothness breaks down. (4) Show that the defining ideal at each point is generated by a regular sequence of length equal to the codimension, leveraging the crystallinity criterion from the paper to explicitly describe the deformation ring. (5) The root system combinatorics (specifically, the Chevalley commutation relations and the structure of the unipotent radical) should ensure the regular sequence property holds via an inductive argument on the height of r",
@@ -11509,6 +11511,37 @@
     "status": "available",
     "timestamp": "2026-07-06T19:09:16.916869+00:00",
     "title": "Cohen-Macaulayness of the Trianguline Variety for Reductive Groups"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Mumford_curves",
+      "p-adic_Schottky_groups",
+      "Kadziela_approximation_theorem",
+      "Bruhat-Tits_tree",
+      "free_products_in_PGL2"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a prime p ≠ 2, a finite extension K of Q_p, and a set T = {a₀, b₀, ..., aᵍ, bᵍ} ⊂ P¹(K) of size 2g+2 with g ≥ 1, the set T is in good position (meaning Γ(T) = ⟨s₀,...,sᵍ⟩ is discontinuous and equals the free product ⟨s₀⟩*...*⟨sᵍ⟩, where each sᵢ has order 2 with fixed points {aᵢ,bᵢ}) if and only if: (1) the tree T(T) constructed from the reduction data is a path graph of length 2g+1, and (2) the p-adic valuations of the off-diagonal entries of normalized representatives of the sᵢ satisfy explicit contraction bounds ensuring the generators act as sufficiently contracting maps on the respective complementary residue disks in the Bruhat-Tits tree of PGL₂(K).",
+    "domain_bridges": [
+      "graph_theory:tree_path_structures",
+      "p_adic_analysis:valuation_bounds",
+      "group_theory:free_product_characterization",
+      "algebraic_geometry:reduction_maps"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0484",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The forward direction (necessity) follows from the paper's Lemma establishing that good position implies the tree T(T) has the required path structure. The backward direction (sufficiency) requires showing that when T(T) is a path of length 2g+1 and the contraction bounds hold, the group Γ(T) is free on the generators sᵢ: one analyzes the action on the Bruhat-Tits tree of PGL₂(K), showing that the contraction conditions force each reduced word in the sᵢ to act without fixed points in Ω_Γ, precluding any relations beyond sᵢ² = 1. The p-adic analytic estimates on matrix entries control how far the generators move points in the Bruhat-Tits tree, ensuring that compositions cannot create accidental fixed points.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02160v1",
+    "status": "available",
+    "timestamp": "2026-07-06T19:33:07.754822+00:00",
+    "title": "Tree-Contraction Characterization of Good Position for p-adic Schottky Groups"
   },
   {
     "ambition_level": "extension",

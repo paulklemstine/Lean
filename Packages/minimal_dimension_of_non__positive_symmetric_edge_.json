@@ -1,0 +1,27 @@
+[
+  {
+    "title": "Unimodality as a genuine intermediate between palindromicity and gamma-positivity",
+    "description": "Consider polynomials p(t) = sum_{k=0}^n c_k t^k with nonnegative real coefficients whose coefficient sequence is palindromic (c_k = c_{n-k}). Three nested properties are of interest: (P) palindromicity, (U) unimodality (there is m with c_0 <= ... <= c_m >= ... >= c_n), and (G) gamma-positivity, i.e. p = sum_{i=0}^{floor(n/2)} gamma_i t^i (1+t)^{n-2i} with all gamma_i >= 0. It is classical that G implies U implies P. The proposed program is to quantify how strict each containment is: for each degree n, determine the smallest number of distinct palindromic-unimodal polynomials (up to scaling, with 0/1 coefficients) that are not gamma-positive, and characterize the 'first obstruction' as the sign pattern of the gamma-vector computed by the triangular change of basis from the monomial basis to the basis {t^i (1+t)^{n-2i}}. Concretely, prove that 1 + t + ... + t^n fails gamma-positivity for every n >= 2 by showing gamma_1 = 1 - n < 0, and classify exactly which 0/1 palindromic-unimodal polynomials of degree n are gamma-positive.",
+    "tags": ["Combinatorics", "Polynomials", "GammaPositivity"]
+  },
+  {
+    "title": "The graded cone of gamma-positive polynomials and its extreme rays",
+    "description": "The gamma-positive polynomials of order n form a convex cone C_n inside the space of polynomials symmetric about n/2; moreover multiplication gives maps C_m x C_n -> C_{m+n} (since t^i(1+t)^{m-2i} * t^j(1+t)^{n-2j} = t^{i+j}(1+t)^{(m+n)-2(i+j)}), making the direct sum of the C_n into a graded commutative cone-semiring. Investigate its structure: identify the extreme rays of C_n (conjecturally exactly the basis elements t^i(1+t)^{n-2i}), prove that the semiring is freely generated in an appropriate sense by the order-1 and order-2 generators, and determine whether every gamma-positive polynomial factors into irreducible gamma-positive factors uniquely. The key computational tool is the additive-index multiplication law together with the convolution formula gamma_l = sum_{i+j=l} a_i b_j for products.",
+    "tags": ["ConvexGeometry", "Semiring", "GammaPositivity"]
+  },
+  {
+    "title": "Real-rootedness forces gamma-positivity: a constructive Branden-type bound",
+    "description": "A symmetric (palindromic) polynomial p of degree n that is real-rooted with only nonpositive real roots is gamma-positive, and its gamma-coefficients are the elementary-symmetric-like data of the paired roots. Formalize a constructive version: given the roots -r_1, ..., -r_n (with the palindromic pairing r_k * r_{n+1-k} = 1), produce an explicit nonnegative gamma-vector and prove sum_i gamma_i t^i (1+t)^{n-2i} = p by induction on the number of root pairs, using that a single palindromic quadratic 1 + c t + t^2 with |c| <= 2 equals (1+t)^2 + (c-2) t and is gamma-positive iff c >= 2, i.e. iff the quadratic has real roots. The key insight is that pairing conjugate reciprocal roots turns real-rootedness directly into the (1+t)-adic expansion. This gives a sufficient condition complementary to the counterexamples where gamma-positivity fails.",
+    "tags": ["RealRootedness", "GammaPositivity", "Analysis"]
+  },
+  {
+    "title": "Gamma-positivity is preserved by join and disjoint-union operations on lattice polytopes",
+    "description": "For lattice polytopes P, Q with Ehrhart h*-polynomials h*_P, h*_Q, the free join P * Q and the Cayley/product constructions induce h*_{P*Q} = h*_P * h*_Q (product of polynomials) up to a known degree shift. Combined with the multiplicativity of gamma-positive polynomials across orders, this predicts that gamma-positivity of h*-polynomials is inherited under these polytope operations. Formalize the polynomial-level statement precisely (which product/shift corresponds to which polytope operation) and prove: if h*_P and h*_Q are gamma-positive then so is h*_{P*Q}. The key insight is that the additive-index multiplication of the gamma-basis mirrors the additivity of dimensions under joins, so a large gamma-positive polytope can be certified from small gamma-positive building blocks.",
+    "tags": ["EhrhartTheory", "Polytopes", "GammaPositivity"]
+  },
+  {
+    "title": "A quantitative gap function for symmetric edge polytopes below the critical dimension",
+    "description": "For a connected graph G on v vertices, the symmetric edge polytope Q_G has a palindromic Ehrhart h*-polynomial of degree v-1. Define the gamma-gap of G as the most negative entry of the gamma-vector of h*_{Q_G} (zero exactly when Q_G is gamma-positive). The mission claim asserts gamma-gap(G) = 0 for all G with v <= 36 and that some graph with v = 37 (dimension 36) achieves gamma-gap < 0. Propose to study the gamma-gap as a graph invariant: compute it for cycles, complete graphs, complete bipartite graphs, and trees, establish monotonicity/subadditivity under edge subdivision and graph join, and prove upper bounds on |gamma-gap| in terms of spectral or degree data. The key insight is to treat gamma-positivity not as a yes/no property but as a real-valued deficiency that can be bounded and tracked across graph operations. Why now: the polynomial-level cone and multiplicativity results make it feasible to reduce the graph invariant to controlled combinations of small certified pieces.",
+    "tags": ["GraphTheory", "SymmetricEdgePolytope", "GammaPositivity"]
+  }
+]
