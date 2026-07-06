@@ -4,6 +4,51 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
+    "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition \u2014 zeros on the critical line means the bulk geometry is stable against perturbations.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0488",
+    "priority_score": 0.91,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-06T19:49:20.777101+00:00",
+    "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0485",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-06T19:49:20.644882+00:00",
+    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot \u2014 the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0486",
+    "priority_score": 0.81,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-06T19:49:20.687661+00:00",
+    "title": "Knots That Think: Cognition as Braiding in Category Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every m \u2265 1, the generating tree encoding the recursive decomposition of intervals in the greedy m-Tamari poset (on Dyck paths of size n) is isomorphic to the generating tree encoding the recursive decomposition of planar (m+1)-constellations of size n. This conjecture generalizes the m=1 case proved in the paper and would provide a combinatorial proof of the equinumerosity refined by the parameters tracked in the generating tree (e.g., number of valleys in Dyck paths and corresponding statistics in constellations).",
     "domains": [
       "Pythagorean",
@@ -631,7 +676,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finiteness conjecture for semisimple geometric representations of Hiranouchi's ramified fundamental group"
   },
   {
-    "consumed_by_exp_id": "72277034",
+    "consumed_by_exp_id": "",
     "description": "An explicit formula for the number of non-trivial zeros of Artin L-functions below height T under Artin's conjecture.",
     "domains": [
       "Pythagorean"
@@ -640,7 +685,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31441v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T14:15:54.879802+00:00",
     "title": "Counting Zeros of Artin L-functions"
   },
@@ -1114,7 +1159,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Absolute bound on size of D_k(n)-tuples over F[x]"
   },
   {
-    "consumed_by_exp_id": "31f89744",
+    "consumed_by_exp_id": "",
     "description": "The sheared Witt vector functor preserves filtered colimits over nilperfect rings. Specifically, for any filtered category I and diagram (R_i)_{i \u2208 I} of nilperfect rings, the canonical morphism chW(\\varinjlim R_i) \u2192 \\varinjlim chW(R_i) is an isomorphism. This property is the key motivation for the sheared Witt construction and resolves the obstruction in extending Dieudonn\u00e9 theory to non-perfect rings.",
     "domains": [
       "Algebra",
@@ -1124,7 +1169,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01178v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T23:51:14.163940+00:00",
     "title": "Filtered Colimit Preservation by Sheared Witt Vectors"
   },
@@ -1172,7 +1217,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Decomposition of Greedy Tamari Intervals and Bipartite Planar Maps"
   },
   {
-    "consumed_by_exp_id": "7e56c098",
+    "consumed_by_exp_id": "",
     "description": "Let V_1,..., V_{d+1} be disjoint finite sets and K be the join of spanning k-trees T_1,..., T_{d+1} where each T_i is a simplicial complex on V_i. If A: |\u0394_V| -> R^d is an affine map such that 0 is in the convex hull of the image of each color class A(V_i), then there exists a face \u03c3 in the join of these k-trees such that 0 is in the image of \u03c3.",
     "domains": [
       "Geometry"
@@ -1181,7 +1226,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T23:51:53.327272+00:00",
     "title": "Colorful Carath\u00e9odory Theorem for Spanning k-trees"
   },
@@ -1867,7 +1912,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality for exactly one edge subset"
   },
   {
-    "consumed_by_exp_id": "fed5f716",
+    "consumed_by_exp_id": "",
     "description": "For any d \u00d7 d matrix A over a number field K with ring of integers O_K, if there exists n \u2265 1 such that A^n \u2208 M_d(O_K), then the pseudo-determinant of A is an algebraic integer in K.",
     "domains": [
       "Algebra"
@@ -1876,12 +1921,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30876v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T21:26:19.991104+00:00",
     "title": "Pseudo-determinant of power-integral matrices is an algebraic integer"
   },
   {
-    "consumed_by_exp_id": "666aafc9",
+    "consumed_by_exp_id": "",
     "description": "For a graph $G$ with minimum degree $\\delta(G) \\ge a + r$, if the spectral radius $\\lambda(G)$ is at least $a + r + b$, then $G$ is fractional ID-$[a,b]$-factor-critical.",
     "domains": [
       "Physics"
@@ -1890,7 +1935,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31064v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T21:44:34.279843+00:00",
     "title": "Spectral radius threshold for fractional ID-$[a,b]$-factor-critical graphs"
   },
@@ -3224,7 +3269,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimality of the polynomial factor in the Naslund\u2013Sawin bound for sunflower\u2011free families"
   },
   {
-    "consumed_by_exp_id": "1427cdbb",
+    "consumed_by_exp_id": "",
     "description": "There exists an absolute constant C such that for every d-regular graph G on n vertices with d \u2265 2, the irregularity strength s(G) satisfies s(G) \u2264 n/d + C. Here s(G) is the smallest integer k such that the edges of G can be weighted with integers from {1,\u2026,k} so that all weighted vertex degrees are distinct.",
     "domains": [
       "Pythagorean"
@@ -3233,7 +3278,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30612v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T23:58:16.205238+00:00",
     "title": "Faudree-Lehel Conjecture on Irregularity Strength of Regular Graphs"
   },
@@ -3688,7 +3733,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
   },
   {
-    "consumed_by_exp_id": "c4dfeeb0",
+    "consumed_by_exp_id": "",
     "description": "Let $q>3$ be an integer and $P_1,\\dots,P_{q-1}\\in\\mathbb{Q}[U]$ satisfy the hypotheses of a generalized ABC polynomial. Define the linear recurrences $(a_n)_{n\\ge0}$ and $(b_n)_{n\\ge0}$ by the characteristic polynomials $\\pi_U(X)$ and its reciprocal $X^{q}\\pi_U(1/X)$. Then there exists an effectively computable constant $C>0$ (depending only on $q$ and the $P_i$) such that the set \\[ \\{ n\\ge0 \\mid a_n = b_m \\text{ for some } m\\ge0 \\text{ and } a_n > C \\} \\] has cardinality at most two.",
     "domains": [
       "Bridges"
@@ -3697,7 +3742,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27885v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T18:31:34.889448+00:00",
     "title": "At most two large common values for generalized ABC recurrences"
   },
@@ -4301,20 +4346,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-05T20:09:50.341886+00:00",
     "title": "Characterization of Strong \u0394-Matroids via Peerless Antipodes"
-  },
-  {
-    "consumed_by_exp_id": "935491ef",
-    "description": "The smallest dimension of a symmetric edge polytope whose Ehrhart h*-polynomial fails to be \u03b3-positive is 36. Equivalently, for every connected graph G with |V(G)| \u2264 36, the symmetric edge polytope Q_G has a \u03b3-positive h*-polynomial.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0350",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02424v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-05T20:44:02.717732+00:00",
-    "title": "Minimal dimension of non-\u03b3-positive symmetric edge polytopes"
   },
   {
     "consumed_by_exp_id": "",
@@ -6224,6 +6255,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0487",
+    "priority_score": 0.77,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-06T19:49:20.732442+00:00",
+    "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Congruence Rigidity of Sums of Squares\n\nThis cycle established that the entries of an integer right triangle are forced into\nstrong divisibility patterns \u2014 one leg is a multiple of three, the legs jointly carry a\nfactor of four, one entry is a multiple of five \u2014 and that a four-dimensional right\n\"box\" (a solution of `a\u00b2 + b\u00b2 + c\u00b2 = d\u00b2`) is even more rigid: at most one of its three\nspatial edges can be odd. We also pinned down exactly which whole numbers can serve as a\nleg. These findings point to several bold, testable conjectures.\n\n## 1. The correct modulus for a power of two grows with the power\n**Conjecture.** In any solution of `a\u00b2 + b\u00b2 = c\u00b2`, the two-adic valuation of the leg\nproduct `a\u00b7b` is governed one level deeper than naive reduction suggests: deciding\nwhether `2^k` divides `a\u00b7b` is a question about residues modulo `2^{k+1}`, never modulo\n`2^k`.\n*The key insight is* that a difference of two odd squares is always divisible by eight,\nso each additional factor of two in the product must be certified one binary place\nfurther out than one would guess. *Why now?* Having isolated the exact `mod 8`\nobstruction behind the factor of four, we can test the pattern mechanically for `k = 3,\n4, 5` and either confirm a clean \"shift-by-one\" law or expose its first exception.\n\n## 2. A universal super-divisor for higher-dimensional right figures\n**Conjecture.** For every dimension `r`, solutions of `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` obey a single\nuniversal divisibility law: there is a constant `D(r)`, depending only on `r`, such that\n`D(r)` divides the product `x\u2081\u00b7x\u2082\u00b7\u22ef\u00b7x_r` for *every* solution, and `D(r)` is the largest\nsuch constant.\n*The key insight is* that reduction to a finite residue ring turns \"for all solutions\"\ninto a finite, decidable statement, so the optimal constant `D(r)` is computable and\nshould grow in a structured (conjecturally multiplicative-over-primes) way. *Why now?*\nThe three-dimensional case already yields `4 \u2223 x\u2081x\u2082x\u2083`; comparing it against the planar\nconstant `12` suggests a dimension-indexed sequence worth charting and predicting.\n\n## 3. Parity collapse in higher dimensions\n**Conjecture.** As the number of squared terms increases, the number of edges permitted to\nbe odd stays uniformly bounded: in `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` at most three of the `x_i` can be\nodd, regardless of `r`.\n*The key insight is* that the sum of squares equals the count of odd terms modulo four,\nwhile a perfect square is `0` or `1` modulo four, capping the admissible odd-count no\nmatter how many terms are added. *Why now?* We proved the cap is \"at most one\" in three\ndimensions; extending the modular bookkeeping to arbitrary `r` is a self-contained next\nstep that would reveal whether the cap is truly dimension-independent.\n\n## 4. A sharp threshold characterization of legs in every dimension\n**Conjecture.** Just as the whole numbers that are a leg of a right triangle are exactly\nthose `\u2265 3`, in each higher dimension there is a sharp finite threshold above which every\ninteger appears as an edge of some right figure, and the finitely many exceptions can be\nlisted explicitly.\n*The key insight is* that a single explicit construction, split according to the parity of\nthe target edge, realizes all sufficiently large values, while the small exceptions are\nforced by a factorization that would otherwise require a vanishing edge. *Why now?* The\nplanar threshold `3` and its sharpness (the failures at `1` and `2`) give a template that\nshould transfer verbatim to the box equation and beyond.\n\n## 5. Divisibility as a sieve against near-solutions\n**Conjecture.** The combined congruence obstructions (`12 \u2223 a\u00b7b`, `60 \u2223 a\u00b7b\u00b7c`, and their\nhigher-dimensional analogues) are strong enough that a random integer triple satisfying\nthem has a positive, computable probability of being genuinely Pythagorean \u2014 i.e. the\ncongruence conditions capture a constant fraction of the \"arithmetic mass\" of true\nsolutions.\n*The key insight is* that each universal divisor removes a fixed proportion of impostors,\nso stacking independent prime-power obstructions multiplies into a sieve of predictable\ndensity. *Why now?* With the exact obstructions in hand for the primes `2, 3, 5`, one can\nimmediately measure how much of the solution set they explain and calibrate whether a few\nmore primes suffice to pin down solutions almost completely.\n",
     "domains": [
       "Pythagorean",
@@ -6236,6 +6282,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T05:18:03.424231+00:00",
     "title": "That the entries of an integer right triangle are forced"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Unimodality is not enough: the persistent gamma-gap of flat symmetric sequences\n\n**Conjecture.** For every degree `n \u2265 2`, the all-ones symmetric polynomial\n`1 + t + t^2 + \u22ef + t^n` \u2014 which is palindromic, nonnegative, and unimodal \u2014 fails to be\ngamma-positive, and its gamma-expansion forces the second gamma-coefficient to equal\n`1 \u2212 n`, growing more negative without bound as the degree increases.\n\nThe key insight is that gamma-positivity is governed by a *triangular* change of basis\nwhose second coordinate reads off `c_1 \u2212 n\u00b7c_0`; whenever the leading coefficients are\ncomparable, this quantity is negative, so gamma-positivity fails even though every one of\nits classical necessary conditions (symmetry, nonnegativity, unimodality) holds. This\nseparates gamma-positivity strictly from unimodality already in the smallest nontrivial\ndegrees.\n\n**Why now?** The smallest palindromic, unimodal, nonnegative sequences that are not\ngamma-positive can now be pinned down exactly, turning a qualitative \"necessary but not\nsufficient\" folklore statement into a sharp, computable degree-by-degree obstruction.\n\n## 2. The graded cone of gamma-positive polynomials and its extreme rays\n\n**Conjecture.** The gamma-positive polynomials of each order form a convex cone whose\nextreme rays are precisely the basis elements `t^i (1+t)^{n\u22122i}`, and the family of these\ncones, glued together by the multiplication law\n`t^i(1+t)^{m\u22122i} \u00b7 t^j(1+t)^{n\u22122j} = t^{i+j}(1+t)^{(m+n)\u22122(i+j)}`,\nforms a graded commutative cone-semiring in which factorization into irreducible\ngamma-positive pieces is unique.\n\nThe key insight is that multiplying two of these building blocks *adds their indices*,\nso gamma-positivity behaves exactly like nonnegativity of coefficients in a graded\npolynomial ring: closed under addition within an order and under multiplication across\norders, with the product coefficients given by an honest nonnegative convolution.\n\n**Why now?** With addition- and multiplication-closure established, the algebraic\nskeleton is in place to ask structural questions \u2014 extreme rays, generators, unique\nfactorization \u2014 that were previously out of reach when gamma-positivity was treated only\nas an isolated positivity test.\n\n## 3. Real-rootedness as a constructive certificate of gamma-positivity\n\n**Conjecture.** A palindromic polynomial all of whose roots are real and nonpositive is\ngamma-positive, and its gamma-vector can be produced explicitly from the reciprocal\npairing of roots; conversely, the smallest failures of gamma-positivity coincide with the\nappearance of non-real (or unpaired) roots.\n\nThe key insight is that pairing each root with its reciprocal partner converts a real\npalindromic polynomial directly into a nonnegative combination of the `(1+t)`-centered\nbuilding blocks, so real-rootedness is not merely correlated with gamma-positivity but\n*constructs* the certificate \u2014 while the palindromic-but-not-gamma-positive examples are\nexactly those forced to carry complex roots.\n\n**Why now?** Explicit low-degree certificates and explicit low-degree counterexamples now\nsit side by side, making it possible to convert the classical analytic sufficient\ncondition into a hands-on, root-to-gamma-vector algorithm and to test its sharpness\nagainst the known obstructions.\n\n## 4. A quantitative gamma-gap invariant for symmetric edge polytopes\n\n**Conjecture.** Assign to each connected graph the most negative entry of the gamma-vector\nof its associated symmetric polynomial (zero exactly when the polynomial is\ngamma-positive). This *gamma-gap* is a well-behaved graph invariant: it vanishes for all\ngraphs below a critical size, first becomes negative at a sharp threshold, and is\ncontrolled \u2014 subadditively \u2014 under natural graph operations such as joins and edge\nsubdivisions.\n\nThe key insight is to stop treating gamma-positivity as a binary property and instead\nmeasure its failure by a single real number, which can then be bounded, tracked, and\nassembled from the gamma-gaps of smaller building blocks via the multiplication law.\n\n**Why now?** Because gamma-positivity is preserved and quantified under sums and products,\nthe invariant of a large object can be reduced to controlled combinations of certified\nsmall pieces, making a systematic search for the exact critical threshold feasible for the\nfirst time.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0490",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "935491ef",
+    "status": "available",
+    "timestamp": "2026-07-06T19:50:51.801468+00:00",
+    "title": "**Conjecture.** For every degree `n \u2265 2`, the all-ones symmetric polynomial"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every real number defines a musical scale: map the digits 0-9 to frequencies f_n = 220 * 2^{n/12} (the A minor pentatonic scale extended). The number pi = 3.14159265... produces the sequence E4, C5, C#5, D5, D#5, F5, E5, A4, G5, C5... \u2014 a melody. Conjecture: The melody of pi is not periodic (because pi is irrational) but has musical structure: the autocorrelation of the digit sequence at lag 12 (one octave) is positive and statistically significant. This means pi has more octave-related notes than expected by chance \u2014 pi 'favors' notes separated by octaves. Similarly, e 'favors' perfect fifths (lag 7) and sqrt(2) 'favors' minor thirds (lag 3). The musical structure of transcendental numbers reflects their continued fraction properties: numbers with bounded partial quotients have more consonant melodies. Test: compute the digit autocorrelation of pi, e, and sqrt(2) at lags 0-12 (representing unison through octave). Perform a chi-squared test comparing to the uniform distribution. Generate the 'music' of each constant and analyze for tonal centers. Impact: transcendental numbers have musical souls \u2014 their digit sequences contain hidden harmonies that reflect their deepest arithmetic properties.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0489",
+    "priority_score": 0.72,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-06T19:49:20.821404+00:00",
+    "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
   },
   {
     "consumed_by_exp_id": "",

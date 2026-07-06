@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "07ec4039",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — EML Universal Approximation: Density & Depth\n\nDerived from the cycle that produced `Catalog/EML/CubeDensity.lean` (density of the\ncoordinate-exponential EML algebra on `[0,1]ⁿ`,",
-      "quality_score": 0.77992,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-06-28T17:25:51",
-      "title": "EML Universal Approximation: Density of EML Functions"
-    },
-    {
       "cycle_id": "333b621d",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Mathematical Foundations of Integrated Information (Φ)\n\nBuilt on `Catalog/Novelty/IntegratedInformation.lean`, which establishes the\ndiscrete IIT core: finite distributions `FinD",
@@ -499,19 +489,19 @@
       "theorem_count": 18,
       "timestamp": "2026-07-06T15:29:27",
       "title": "Vanishing of the Benson--Krause--Schwede canonical class for pro-2 Demushkin groups"
+    },
+    {
+      "cycle_id": "935491ef",
+      "domain": "Probability",
+      "key_insight": "# Future Directions\n\n## 1. Unimodality is not enough: the persistent gamma-gap of flat symmetric sequences\n\n**Conjecture.** For every degree `n ≥ 2`, the all-ones symmetric polynomial\n`1 + t + t^2 + ⋯",
+      "quality_score": 0.70296,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-06T19:50:56",
+      "title": "Minimal dimension of non-γ-positive symmetric edge polytopes"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "fdadfe48",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Erdős–Straus, after the unified two-term solver\n\nThis cycle distilled the four classical Erdős–Straus families into one engine,\n`ErdosStraus.Unified.es_two_term` (`4·a = n + r ∧",
-      "quality_score": 0.5959,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T11:39:22",
-      "title": "The most natural next step is to attack the residue class isolated by the"
-    },
     {
       "cycle_id": "4bc14309",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 4,
       "timestamp": "2026-07-06T19:31:57",
       "title": "Real-rootedness of the square of the Eulerian triangle"
+    },
+    {
+      "cycle_id": "935491ef",
+      "domain": "Probability",
+      "key_insight": "# Future Directions\n\n## 1. Unimodality is not enough: the persistent gamma-gap of flat symmetric sequences\n\n**Conjecture.** For every degree `n ≥ 2`, the all-ones symmetric polynomial\n`1 + t + t^2 + ⋯",
+      "quality_score": 0.70296,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-06T19:50:56",
+      "title": "Minimal dimension of non-γ-positive symmetric edge polytopes"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "aad22603",
-      "domain": "Probability",
-      "name": "by",
-      "quality": 0.8748400000000001
-    },
-    {
-      "cycle_id": "aad22603",
-      "domain": "Probability",
-      "name": "is",
-      "quality": 0.8748400000000001
-    },
-    {
-      "cycle_id": "aad22603",
-      "domain": "Probability",
-      "name": "posEnergy_eq_negEnergy_of_antisymm",
-      "quality": 0.8748400000000001
-    },
     {
       "cycle_id": "bb3ce4ee",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "exists_cup_one",
       "quality": 0.7059866666666667
+    },
+    {
+      "cycle_id": "935491ef",
+      "domain": "Probability",
+      "name": "gammaBasis_coeff",
+      "quality": 0.70296
+    },
+    {
+      "cycle_id": "935491ef",
+      "domain": "Probability",
+      "name": "gammaBasis_coeff_nonneg",
+      "quality": 0.70296
+    },
+    {
+      "cycle_id": "935491ef",
+      "domain": "Probability",
+      "name": "gammaBasis_palindromic",
+      "quality": 0.70296
     }
   ],
-  "last_updated": "2026-07-06T19:31:57",
+  "last_updated": "2026-07-06T19:50:56",
   "open_questions": [
     {
       "context": "that reduction, constructively and `sorry`-free.",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "ef874ad4",
-        "quality": 0.512,
-        "theorems": 22,
-        "title": "Statistical Mechanics: Ising Model Phase Transition"
-      },
-      {
         "cycle_id": "25d6b815",
         "quality": 0.5960000000000001,
         "theorems": 12,
@@ -3823,6 +3817,12 @@
         "quality": 0.6096,
         "theorems": 9,
         "title": "Seymour's second neighborhood conjecture for oriented graphs"
+      },
+      {
+        "cycle_id": "935491ef",
+        "quality": 0.70296,
+        "theorems": 14,
+        "title": "Minimal dimension of non-γ-positive symmetric edge polytopes"
       }
     ],
     "Pythagorean": [
