@@ -380,7 +380,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea66c257",
     "description": "For the random recursive DAG G_n with out-degree d \u2265 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n \u2192 \u221e.",
     "domains": [
       "Computation"
@@ -389,7 +389,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
@@ -746,7 +746,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of Uniform-Scaled Spanning Subgraphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ac9e6117",
     "description": "Conjecture: For any fixed integer r\u22652 and any collection of graphs H1,\u202f\u2026, Hr, let \u03c8 = \u2225_{j=1}^r (\u03c967(Hj)\u20111). Define the critical edge density \u03c0_c = 1\u20111/\u03c8. For a host graph G0 on n vertices with edge density exactly \u03c0_c\u2212\u03b5 (for a fixed \u03b5>0) consider the random\u2011perturbation model where we add m random edges (without replacement). Then the minimal number of edges that forces the perturbed graph to be (H1,\u202f\u2026, Hr)_v\u2011Ramsey satisfies\n\n    m_c(n) = \u03c0_c * (n choose 2) + \u03a8(n^{3/2}),\n\nand there is a sharp threshold: if m = m_c(n) + \u03c9(n^{3/2}) then with high probability the perturbed graph is (H1,\u202f\u2026, Hr)_v\u2011Ramsey; if m = m_c(n) \u2212 \u03c9(n^{3/2}) then with high probability it is not. Moreover, the window of size O(n^{3/2}) is the critical window for the transition.",
     "domains": [
       "Computation",
@@ -756,7 +756,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T17:52:40.366510+00:00",
     "title": "Precise threshold for vertex\u2011Ramsey property in random perturbations"
   },
@@ -2071,7 +2071,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Characterization of Exact Game Values in Team Selection Game with Average-Based Scoring"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "164898ae",
     "description": "For every integer $d \\geq 3$ and every finite group $G$, there exists a $d$-regular simple graph $\\Gamma$ and a strong embedding $\\beta$ of $\\Gamma$ into a surface such that the group of automorphisms of the graph $\\text{Aut}(\\Gamma)$ and the group of automorphisms of the embedded graph $\\text{Aut}(\\beta(\\Gamma))$ are both isomorphic to $G$.",
     "domains": [
       "Algebra",
@@ -2081,7 +2081,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T03:16:29.014621+00:00",
     "title": "Existence of Regular Graphs with Prescribed Automorphism Groups and Strong Embeddings"
   },
@@ -2202,7 +2202,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Variance of Homomorphism at the Root is Bounded Below by Effective Resistance"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a793b4d3",
     "description": "Analysis of the maximal number of chains required to cover strict chains in the Boolean lattice, with connections to inclusion-exclusion and logarithmic approximations.",
     "domains": [
       "Cryptography",
@@ -2212,7 +2212,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29385v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T08:04:06.155536+00:00",
     "title": "Chain Covers in the Boolean Lattice"
   },
@@ -2362,7 +2362,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Locality of supersingular representations of GL_2 over unramified extensions of Q_p"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "24d6d8b7",
     "description": "This paper proposes a combinatorial framework to describe the discrete homotopy groups of quasisymmetric cubical sets, extending prior work by Carranza and Kapulkin. It aims to provide a formally verified, leveraging Lean 4, synthetic proof of isomorphism between the homotopy groups of the geometric realization and those of the underlying cubical configuration.",
     "domains": [
       "Algebra",
@@ -2372,7 +2372,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28693v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T13:25:20.641906+00:00",
     "title": "Discrete homotopy groups of quasisymmetric cubical sets"
   },
@@ -3239,7 +3239,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Characterization of Zero-Preserving Pisot Numerations via Torus Isomorphism"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e50512ae",
     "description": "Conjecture: There exists an absolute constant K>0 such that for every n\u2208\u2115 and every family F\u22862^[n] that is 3\u2011sunflower\u2011free (i.e., contains no three sets with pairwise constant intersection), we have |F| \u2264 K\u00b7n^{1/6}\u00b7(3/2^{2/3})^n.",
     "domains": [
       "Pythagorean"
@@ -3248,7 +3248,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30593v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T23:33:38.013269+00:00",
     "title": "Optimality of the polynomial factor in the Naslund\u2013Sawin bound for sunflower\u2011free families"
   },
@@ -4185,7 +4185,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantitative Thinness of Galois\u2011Group\u2011Changing Specializations for Strongly\u202fn\u2011Genuine Polynomials"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2058237b",
     "description": "A countable FAC poset satisfies the Aharoni-Korman conjecture if and only if it does not contain a saturated chain D such that either D or its reverse is a countable direct sum of infinite co-wellfounded posets.",
     "domains": [
       "Pythagorean"
@@ -4194,7 +4194,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02500v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T16:16:00.227260+00:00",
     "title": "Characterization of the Aharoni-Korman Conjecture via Saturated Chains"
   },
@@ -4448,7 +4448,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finiteness of Rational Points on General Type Varieties"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "98188561",
     "description": "Let P be a finite poset. The main theorem shows that V\u2081(P) is an RB-domain iff P has a least element and its undirected Hasse graph is a tree. I conjecture that the four-point diamond (a poset with 4 elements where 2 incomparable elements are both below 2 incomparable maxima) is the unique minimal poset violating this: any finite poset P with fewer than 4 elements has V\u2081(P) an RB-domain, and among 4-element posets, only the four-point diamond violates the RB-domain property. This is falsifiable by either finding a smaller counterexample or proving no other 4-element poset violates the condition.",
     "domains": [
       "Pythagorean"
@@ -4457,7 +4457,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02231v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T22:13:05.785493+00:00",
     "title": "Uniqueness of the Four-Point Diamond as Minimal RB-Domain Violator in Probabilistic Powerdomains"
   },
