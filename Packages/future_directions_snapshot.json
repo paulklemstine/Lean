@@ -10503,6 +10503,60 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "Aharoni-Korman 1992 conjecture"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every countable well-founded poset P satisfying the finite antichain condition (FAC, i.e., no infinite antichain) possesses a chain C and a partition of P into antichains such that C meets every antichain in the partition. This is a special case of the paper's main theorem, since well-foundedness precludes the forbidden saturated chain configurations.",
+    "domain_bridges": [
+      "set_theory",
+      "combinatorics"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0438",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use well-founded induction on the rank function. The FAC condition ensures each antichain level is finite. Construct the antichain partition via iterated maximal antichain extraction (mirroring Mirsky's theorem for infinite posets). Build the transversal chain C by selecting, at each antichain level, an element comparable with all previously selected elements, leveraging that cofinal segments of well-founded chains have finite incomparability with any fixed element.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02500v1",
+    "status": "available",
+    "timestamp": "2026-07-06T11:14:34.610069+00:00",
+    "title": "Aharoni-Korman property for well-founded countable FAC posets"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.MG",
+      "math.CO",
+      "cs.CG"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any full-dimensional convex polytope P ⊂ ℝ^d with positive Lebesgue measure, the set of centerpoints of P (points x such that every closed halfspace containing x contains at least 1/(d+1) of the volume of P) coincides exactly with the floating body F_{1/(d+1)}(P) (the set obtained by removing from P all caps of volume at most 1/(d+1) · vol(P)). Furthermore, this set is semialgebraic. This bridges convex geometry, measure theory, and real algebraic geometry, and is the key structural result enabling the paper's algorithmic framework.",
+    "domain_bridges": [
+      "Measure Theory on Euclidean Space",
+      "Real Algebraic Geometry / Semialgebraic Sets",
+      "Convex Geometry (floating bodies, cap volume functions)",
+      "Computational Geometry (ham-sandwich, centerpoint theorems)"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0438",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The proof requires three major components to be built in Lean: (1) a theory of floating bodies for convex sets, defining F_δ(K) as the intersection of K minus all caps of volume ≤ δ·vol(K); (2) the centerpoint theorem for Lebesgue measure on convex bodies, establishing that centerpoints exist and form a convex set; (3) the semialgebraicity of the cap-volume function for polytopal measures, showing it is piecewise rational on a natural cell decomposition of the space of oriented hyperplanes. The key step is showing that for polytopes, the condition 'every halfspace through x captures volume ≥ 1/(d+1)' is equivalent to 'x survives removal of all small caps', which reduces to verifying that the infimum of cap volumes through x equals the minimum over finitely many semialgebraic conditions. Tarski–Seidenberg then yields semialgebraicity of the centerpoint set.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02400v1",
+    "status": "available",
+    "timestamp": "2026-07-06T11:15:39.480066+00:00",
+    "title": "Centerpoint-Floating Body Coincidence for Convex Polytopes"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions — Congruence Rigidity of Sums of Squares\n\nThis cycle established that the entries of an integer right triangle are forced into\nstrong divisibility patterns — one leg is a multiple of three, the legs jointly carry a\nfactor of four, one entry is a multiple of five — and that a four-dimensional right\n\"box\" (a solution of `a² + b² + c² = d²`) is even more rigid: at most one of its three\nspatial edges can be odd. We also pinned down exactly which whole numbers can serve as a\nleg. These findings point to several bold, testable conjectures.\n\n## 1. The correct modulus for a power of two grows with the power\n**Conjecture.** In any solution of `a² + b² = c²`, the two-adic valuation of the leg\nproduct `a·b` is governed one level deeper than naive reduction suggests: deciding\nwhether `2^k` divides `a·b` is a question about residues modulo `2^{k+1}`, never modulo\n`2^k`.\n*The key insight is* that a difference of two odd squares is always divisible by eight,\nso each additional factor of two in the product must be certified one binary place\nfurther out than one would guess. *Why now?* Having isolated the exact `mod 8`\nobstruction behind the factor of four, we can test the pattern mechanically for `k = 3,\n4, 5` and either confirm a clean \"shift-by-one\" law or expose its first exception.\n\n## 2. A universal super-divisor for higher-dimensional right figures\n**Conjecture.** For every dimension `r`, solutions of `x₁² + ⋯ + x_r² = y²` obey a single\nuniversal divisibility law: there is a constant `D(r)`, depending only on `r`, such that\n`D(r)` divides the product `x₁·x₂·⋯·x_r` for *every* solution, and `D(r)` is the largest\nsuch constant.\n*The key insight is* that reduction to a finite residue ring turns \"for all solutions\"\ninto a finite, decidable statement, so the optimal constant `D(r)` is computable and\nshould grow in a structured (conjecturally multiplicative-over-primes) way. *Why now?*\nThe three-dimensional case already yields `4 ∣ x₁x₂x₃`; comparing it against the planar\nconstant `12` suggests a dimension-indexed sequence worth charting and predicting.\n\n## 3. Parity collapse in higher dimensions\n**Conjecture.** As the number of squared terms increases, the number of edges permitted to\nbe odd stays uniformly bounded: in `x₁² + ⋯ + x_r² = y²` at most three of the `x_i` can be\nodd, regardless of `r`.\n*The key insight is* that the sum of squares equals the count of odd terms modulo four,\nwhile a perfect square is `0` or `1` modulo four, capping the admissible odd-count no\nmatter how many terms are added. *Why now?* We proved the cap is \"at most one\" in three\ndimensions; extending the modular bookkeeping to arbitrary `r` is a self-contained next\nstep that would reveal whether the cap is truly dimension-independent.\n\n## 4. A sharp threshold characterization of legs in every dimension\n**Conjecture.** Just as the whole numbers that are a leg of a right triangle are exactly\nthose `≥ 3`, in each higher dimension there is a sharp finite threshold above which every\ninteger appears as an edge of some right figure, and the finitely many exceptions can be\nlisted explicitly.\n*The key insight is* that a single explicit construction, split according to the parity of\nthe target edge, realizes all sufficiently large values, while the small exceptions are\nforced by a factorization that would otherwise require a vanishing edge. *Why now?* The\nplanar threshold `3` and its sharpness (the failures at `1` and `2`) give a template that\nshould transfer verbatim to the box equation and beyond.\n\n## 5. Divisibility as a sieve against near-solutions\n**Conjecture.** The combined congruence obstructions (`12 ∣ a·b`, `60 ∣ a·b·c`, and their\nhigher-dimensional analogues) are strong enough that a random integer triple satisfying\nthem has a positive, computable probability of being genuinely Pythagorean — i.e. the\ncongruence conditions capture a constant fraction of the \"arithmetic mass\" of true\nsolutions.\n*The key insight is* that each universal divisor removes a fixed proportion of impostors,\nso stacking independent prime-power obstructions multiplies into a sieve of predictable\ndensity. *Why now?* With the exact obstructions in hand for the primes `2, 3, 5`, one can\nimmediately measure how much of the solution set they explain and calibrate whether a few\nmore primes suffice to pin down solutions almost completely.\n",
