@@ -4691,7 +4691,7 @@
       "Erdős-Turán Theorem on Sidon Sets",
       "Singer's Construction"
     ],
-    "consumed_by_exp_id": "ea443c2c",
+    "consumed_by_exp_id": "",
     "description": "Formalize the upper bound on the maximum size of a Sidon subset of {0, ..., N-1}, specifically proving that F(N) <= N^{1/2} + 0.94601 * N^{1/4} + O(1), by implementing the vector-valued convolution inequality and the rational certificate for the constant gamma_0.",
     "domain_bridges": [
       "Harmonic Analysis (Convolution Inequalities)",
@@ -4707,7 +4707,7 @@
     "proof_strategy": "1. Define the property of being a Sidon set in Lean 4. 2. Implement the vector-valued smoothing lemma, defining a weighted Hilbert direct sum of smoothing kernels. 3. Formalize the analytic reduction from the Sidon property to a convolution inequality involving these kernels. 4. Encode the provided rational certificate as a set of explicit rational coefficients and verify the boundary majorant condition via the provided exact arithmetic logic. 5. Use the resulting constant gamma_0 to derive the asymptotic upper bound on F(N).",
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T01:56:27.032018+00:00",
     "title": "Upper Bound for the Cardinality of Finite Sidon Sets"
   },
@@ -7735,7 +7735,7 @@
       "one-weight colorings",
       "bracket regime"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dd5b0b32",
     "description": "Every extremal symmetric one-weight coloring achieving the lower bound for HJ(t,r) must consist of a bracket regime combined with a single boundary scale, as observed in the (4,2) case.",
     "domain_bridges": [
       "Gallai's theorem",
@@ -7751,7 +7751,7 @@
     "proof_strategy": "Enumerate extremal symmetric one-weight colorings and verify structural constraints via combinatorial induction or SAT-based verification.",
     "research_mode": "team",
     "source_exp_id": "2607.02226v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T19:18:57.857280+00:00",
     "title": "Extremal Symmetric One-Weight Colorings Must Have Bracket-Regime Structure"
   },
@@ -10903,6 +10903,34 @@
     "title": "Gamma-positivity threshold for symmetric edge polytopes"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Polynomial mixing for polygonal side matchings",
+      "Chord diagrams",
+      "Markov chain mixing time",
+      "Graph diameter"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper establishes that the diameter of the connected component of the chord swap graph on chord diagrams of size n and genus g (for n > 2g) is bounded above by C(n + g^2) for some universal constant C > 0. We conjecture that this universal constant can be taken to be exactly 1, yielding a tight diameter upper bound of precisely n + g^2.",
+    "domain_bridges": [
+      "Topological graph theory",
+      "Markov chains",
+      "Combinatorial optimization"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0459",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct explicit short paths between any two chord diagrams by defining a canonical minimal genus diagram and showing that any diagram can be reduced to this canonical form in at most (n + g^2)/2 swaps. This would establish the diameter bound via the triangle inequality. Alternatively, use structural induction on n and g, verifying that the bound holds for base cases and that any valid chord swap preserves the bound.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02410v1",
+    "status": "available",
+    "timestamp": "2026-07-06T15:58:50.998422+00:00",
+    "title": "Optimal Diameter Bound for Fixed Genus Chord Swap Graphs"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "math.MG",
@@ -10918,7 +10946,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0459",
+    "id": "fd_0460",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof proceeds by double inclusion. (⊆): If x is a centerpoint, then every halfspace H⁺ containing x satisfies vol(P ∩ H⁺) ≥ vol(P)/(d+1), equivalently vol(P \\ H⁺) ≤ vol(P)·d/(d+1); but the floating body condition requires vol(P \\ H⁺) ≤ vol(P)/(d+1) for the halfspaces defining it, so one must show that a centerpoint lies in every halfspace whose complementary cap has volume ≤ vol(P)/(d+1). (⊇): Conversely, if x ∈ F_{1/(d+1)}(P), then x lies in every halfspace H⁺ with vol(P \\ H⁺) ≤ vol(P)/(d+1), and one must show this forces every halfspace through x to capture at least 1/(d+1) of the volume. The key technical ingredient is that the cap-volume function is piecewise rational on the arrangement of oriented hyperplanes determined by the polytope's facets, which makes both sets explicitly semialgebraic and allows their coincidence to be verified.",
@@ -10946,7 +10974,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0460",
+    "id": "fd_0461",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive existence via analytic bounding of character degrees",
@@ -10973,7 +11001,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0461",
+    "id": "fd_0462",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the classical Erdős-Gallai theorem (every graph with average degree d contains a cycle of length ≥ d). Then develop infrastructure for vertex covers of graph components and edge-editing distance. The key structural ingredient is Pokrovskiy's decomposition theorem for bounded-degree trees, which must also be formalized. The proof then proceeds by showing that graphs violating the conclusion have a specific block structure that forces a long cycle.",
@@ -11001,7 +11029,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0462",
+    "id": "fd_0463",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the Lin-Lu-Yau curvature for a simple graph in Lean. Establish the threshold function T(n). Prove that for any graph G of order n ≥ 8 with |E(G)| > T(n), the optimal coupling between probability measures on the endpoints of any edge has a cost strictly less than 1, yielding positive curvature. This involves demonstrating that such graphs cannot contain edges satisfying deg(x) + deg(y) - |N(x) ∩ N(y)| ≥ n, a necessary condition for non-positive curvature, by characterizing the maximal edge count of graphs containing such edges.",
@@ -11010,6 +11038,34 @@
     "status": "available",
     "timestamp": "2026-07-06T15:34:18.267621+00:00",
     "title": "Extremal Threshold for Positive Ollivier/Lin-Lu-Yau Curvature"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.NT",
+      "math.AG"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any split connected reductive group G over Q_p with Borel subgroup B and maximal torus T, the trianguline variety Y^{tri}(G) is Cohen-Macaulay. This strengthens the normality results established by Breuil-Hellmann-Schraen (for GL_n) and generalized in this paper (to arbitrary split reductive G, at certain points outside the smooth locus). Since Y^{tri}(G) is smooth of dimension dim(B) = dim(T) + |Φ^+| over the regular locus, Cohen-Macaulayness would follow from Serre's criterion (S2) combined with (R1) regularity in codimension 1. The (S2) condition is the deeper claim: for every point x ∈ Y^{tri}(G) with local ring O_{Y^{tri},x}, and every regular sequence f_1,...,f_d in the maximal ideal, the quotient O_{Y^{tri},x}/(f_1,...,f_d) has depth exactly d. This would imply the existence of well-behaved dualizing complexes and resolve the singularities of Y^{tri}(G) in the sense of local Langlands.",
+    "domain_bridges": [
+      "algebraic_group_theory",
+      "commutative_algebra_CM_rings",
+      "p_adic_galois_representations",
+      "local_Langlands_correspondence"
+    ],
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_0464",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Step 1: Formalize the trianguline variety Y^{tri}(G) as a rigid analytic space parameterizing trianguline G-representations with their triangulation data, using the Tannakian formalism for Rep_L(G) developed in the paper. Step 2: Establish that Y^{tri}(G) is regular in codimension ≤ 1 (condition R1) by analyzing the singular locus—its complement is the smooth regular locus characterized by the regularity of the triangulation parameter δ: T(Z_p) → T(E), and the singular locus has codimension ≥ 2 by dimension counting via the root structure of G. Step 3: Prove condition (S2) by showing that for every point x with codim ≥ 2, the local ring O_{Y^{tri},x} satisfies depth ≥ min(2, dim O_{Y^{tri},x}), using the crystallinity criterion for (φ,Γ)-modules with G-structure established in the paper to control the local equations. Step 4: Apply Serre's criterion (R1 + S2 ⟹ normal + CM for equidimensional schemes) to conclude.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02215v1",
+    "status": "available",
+    "timestamp": "2026-07-06T15:59:59.030542+00:00",
+    "title": "Cohen-Macaulay Property of the Trianguline Variety for Reductive Groups"
   },
   {
     "ambition_level": "extension",

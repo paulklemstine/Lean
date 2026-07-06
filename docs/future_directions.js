@@ -2566,7 +2566,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Positivity of (p,q)-Generalized Stirling Numbers in the (p,q)-Binomial Basis"
   },
   {
-    "consumed_by_exp_id": "ea443c2c",
+    "consumed_by_exp_id": "",
     "description": "Formalize the upper bound on the maximum size of a Sidon subset of {0, ..., N-1}, specifically proving that F(N) <= N^{1/2} + 0.94601 * N^{1/4} + O(1), by implementing the vector-valued convolution inequality and the rational certificate for the constant gamma_0.",
     "domains": [
       "Bridges"
@@ -2575,7 +2575,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T01:56:27.032018+00:00",
     "title": "Upper Bound for the Cardinality of Finite Sidon Sets"
   },
@@ -4213,7 +4213,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of p-adic Schottky groups for hyperelliptic Mumford curves under split multiplicative reduction"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dd5b0b32",
     "description": "Every extremal symmetric one-weight coloring achieving the lower bound for HJ(t,r) must consist of a bracket regime combined with a single boundary scale, as observed in the (4,2) case.",
     "domains": [
       "Algebra"
@@ -4222,7 +4222,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02226v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T19:18:57.857280+00:00",
     "title": "Extremal Symmetric One-Weight Colorings Must Have Bracket-Regime Structure"
   },
@@ -5901,12 +5901,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The paper establishes that the diameter of the connected component of the chord swap graph on chord diagrams of size n and genus g (for n > 2g) is bounded above by C(n + g^2) for some universal constant C > 0. We conjecture that this universal constant can be taken to be exactly 1, yielding a tight diameter upper bound of precisely n + g^2.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0459",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02410v1",
+    "status": "available",
+    "timestamp": "2026-07-06T15:58:50.998422+00:00",
+    "title": "Optimal Diameter Bound for Fixed Genus Chord Swap Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any convex polytope P in \u211d^\ufffd (with e = d+1 being the embedding dimension), the set of centerpoints of P coincides with the floating body of P at level 1/(d+1). Specifically, a point x is a centerpoint of P (meaning every closed halfspace containing x contains at least a 1/(d+1) fraction of the volume of P) if and only if x belongs to the floating body F_{1/(d+1)}(P), defined as the intersection of all closed halfspaces H\u207a such that vol(P \\ H\u207a) \u2264 (1/(d+1)) \u00b7 vol(P). The paper establishes this equivalence and further shows that for polytopes this set is semialgebraic.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0459",
+    "id": "fd_0460",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02400v1",
@@ -5921,7 +5935,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0460",
+    "id": "fd_0461",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -5935,7 +5949,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0461",
+    "id": "fd_0462",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -5949,13 +5963,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0462",
+    "id": "fd_0463",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
     "status": "available",
     "timestamp": "2026-07-06T15:34:18.267621+00:00",
     "title": "Extremal Threshold for Positive Ollivier/Lin-Lu-Yau Curvature"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any split connected reductive group G over Q_p with Borel subgroup B and maximal torus T, the trianguline variety Y^{tri}(G) is Cohen-Macaulay. This strengthens the normality results established by Breuil-Hellmann-Schraen (for GL_n) and generalized in this paper (to arbitrary split reductive G, at certain points outside the smooth locus). Since Y^{tri}(G) is smooth of dimension dim(B) = dim(T) + |\u03a6^+| over the regular locus, Cohen-Macaulayness would follow from Serre's criterion (S2) combined with (R1) regularity in codimension 1. The (S2) condition is the deeper claim: for every point x \u2208 Y^{tri}(G) with local ring O_{Y^{tri},x}, and every regular sequence f_1,...,f_d in the maximal ideal, the quotient O_{Y^{tri},x}/(f_1,...,f_d) has depth exactly d. This would imply the existence of well-behaved dualizing complexes and resolve the singularities of Y^{tri}(G) in the sense of local Langlands.",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_0464",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02215v1",
+    "status": "available",
+    "timestamp": "2026-07-06T15:59:59.030542+00:00",
+    "title": "Cohen-Macaulay Property of the Trianguline Variety for Reductive Groups"
   },
   {
     "consumed_by_exp_id": "",
