@@ -10603,7 +10603,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "4591bde2",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -10635,7 +10635,7 @@
       "source": "",
       "source_exp_id": "2607.02132v1",
       "source_path": "http://arxiv.org/abs/2607.02132v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-03T05:55:53.302394+00:00",
       "title": "Kernel‑cover characterisation of the weighted Davenport constant"
@@ -17227,6 +17227,56 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.KT",
+        "math.AT",
+        "math.CO"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For each n ≥ 1, the map φ_n from the degree-n graded piece of the cone algebra on ℚⁿ to the (n−1)-chains of the ind-triangulation of S^{n−1} at all rational rays, defined on linearly independent tuples (v₁,…,vₙ) by φ_n([C(v₁,…,vₙ)]) = sgn(det(v₁,…,vₙ)) · Δ(ℚv₁,…,ℚvₙ), extends to a GL_n(ℚ)-equivariant isomorphism of ℚ-modules. This identifies the top-degree cone algebra graded piece with the spherical chain module computing H_{n−1}(S^{n−1}; ℚ).",
+      "domain_bridges": [
+        "Milnor K-theory",
+        "Steinberg modules",
+        "simplicial homology of spheres",
+        "polyhedral cones",
+        "Gersten complex"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0362",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem graded_cone_spherical_chain_top_iso (n : ℕ) (hn : 1 ≤ n) :\n    Nonempty (by\n      let M := gradedConeAlgebra n ℚ;\n      let C := sphericalChains n ℚ;\n      have : Module ℚ M.nth_grade n := inferInstance;\n      have : Module ℚ (C.chain (n - 1)) := inferInstance;\n      EquivariantIso (GL n ℚ) M.nth_grade n (C.chain (n - 1))) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Define the cone algebra with its degree filtration and construct the spherical chain complex C(n) from rational rays with the stellar subdivision presentation. Verify well-definedness of φ_n by checking it respects the relations on both sides (stellar subdivision on the chain side, additivity on the cone side). Prove equivariance by direct computation of the GL_n(ℚ)-action on both sides. Establish bijectivity by constructing an explicit inverse using the presentation of C(n)_{n-1} and the identification of simplicial cones with oriented intersections of half-spaces.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.01543v1",
+      "source_path": "http://arxiv.org/abs/2607.01543v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-06T01:04:36.158784+00:00",
+      "title": "GL_n-equivariant isomorphism between graded cone algebra and spherical chains"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "Theorem A",
         "Proposition big"
       ],
@@ -17247,7 +17297,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0362",
+      "id": "fd_0363",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "def λ (n : ℕ) : Partition n :=\n  ⟨List.replicate (n / 2) 2 ++ if n % 2 = 1 then [1] else [],\n   by sorry, by sorry⟩\n\ntheorem max_parts_achieved_by_all_twos (n : ℕ) (hn : n ≥ 1) : λ n ∈ Ω₂ n := by sorry",
@@ -17295,7 +17345,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0363",
+      "id": "fd_0364",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀c>0, ∃G: no_cycle_length d ∧ min_deletions(G) ≥ cd |V(G)|",
@@ -17342,7 +17392,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0364",
+      "id": "fd_0365",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem fixed_genus_spectral_gap_lower_bound {g : ℕ} (hg : 0 < g) {n : ℕ} (hn : n > 2 * g) : ∃ (C : ℝ), 0 < C ∧ ∀ (x y : chord_diagram n g), (1 - C / (n : ℝ)) * dist x y ≤ dist (swap x y) (swap y x) := by sorry",
@@ -17383,7 +17433,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0365",
+      "id": "fd_0366",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "finite_generation",
@@ -17432,7 +17482,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0366",
+      "id": "fd_0367",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem black_hole_extremal_gumbel (c : ℝ) (h : c > 0) : let N_dist := lambda_microstate_count_dist c in let ΔN := extremal_fluctuation N_dist in (∃ (normalization : ℝ → ℝ), weak_convergence (distribution_of (normalization ∘ ΔN)) (gumbel_distribution))",
@@ -17479,7 +17529,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0367",
+      "id": "fd_0368",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀ {r : ℕ} (k : ℕ) (M : Matroid r), (∀ {B1 B2 B1' B2' : Basis M} (h : MultisetUnion B1 B2 = MultisetUnion B1' B2'), ∃ (seq : List (SymmetricExchange M)), seq ≡ TransformBases (B1, B2) (B1', B2') seq)",
@@ -17527,7 +17577,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0368",
+      "id": "fd_0369",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem spectral_transfer_sharpness (C : AdmissibleClass) : (∃ H : SimpleGraph, is_bipartite H ∧ vertex_count H = 5 ∧ edge_count H = 4) ∧ (∀ W : Graphon, W ∈ C → t(H, W) ≥ (spectral_radius W)^(2*4 - 5) * (density W)^(5 - 4)) ∧ ¬ (∀ W : Graphon, W ∈ C → t(H, W) ≥ (density W)^4)",
@@ -17578,7 +17628,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0369",
+      "id": "fd_0370",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "/-- Conjecture: The μ‑invariant of the module generated by the spectral resultant equals the maximal p‑adic valuation of the resultant at torsion characters. -/\n\ntheorem spectral_resultant_mu_invariant\n  (X : Graph) (alpha : VoltageAssignment X) (P : Polynomial) :\n  let R := spectral_resultant X alpha P;\n  let M := fitting_module_zero R;\n  μ M = Finset.sup (Finset.image (fun χ => v_p (R χ)) torsionCharacters) (·) :=\n  by\n    -- TODO: formalise the Kida‑type formula and prove the equality.\n    admit",
@@ -17628,7 +17678,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0370",
+      "id": "fd_0371",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mdr_counterexample : exists f g : arrangement_of_lines_in_P2, (mdr f = 4) ∧ (mdr g = 5) ∧ (intersection_lattice f = intersection_lattice g) ∧ (degree f = 9) ∧ (mdr f < 9 / 2)",
@@ -17676,7 +17726,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0371",
+      "id": "fd_0372",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem bivariate_egf_snail_race (m : ℕ) (hm : m ≥ 1) : (∑' (n : ℕ), ∑' (k : ℕ), (r_m n k : ℝ) * x ^ n / n! * y ^ k) = 1 / (1 - (∑' (i : ℕ), if 1 ≤ i ∧ i < m then x ^ i / i! else 0) - y * (Real.exp x - 1 - ∑' (i : ℕ), if 1 ≤ i ∧ i < m then x ^ i / i! else 0)) := by sorry",
@@ -17723,7 +17773,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0372",
+      "id": "fd_0373",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem generalized_hurwitz_formula (K : Type*) [nf : NarrowClassNumberOne K] (D : ℤ) [hd : FundamentalDiscriminant D] : ∃ (F : Type*) [ quartic_CM_field F ] [discriminant F = D], H_g K D = (class_number F) / 2",
@@ -17776,7 +17826,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0373",
+      "id": "fd_0374",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem smoothed_sigma_error_integral_negative (x : ℝ) : x ≥ 1 → ∫ (t : ℝ) in 1..x, (∑ n in Finset.range (⌊t⌋ + 1) with 1 ≤ n, σ n - (t^2 * π^2 / 6)) / t^2 < 0",
@@ -17825,7 +17875,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0374",
+      "id": "fd_0375",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem yin_gross_zagier_formula_p7 :\n  let E : EllipticCurve ℚ := ⟨![0, 0, 0, 49 / 4, 0], by decide⟩\n  let P := E.point 84 756 (by decide)\n  L_derivative E 1 / Omega E = (1 / 2) * height ℚ P :=\n  by sorry",
@@ -17875,7 +17925,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0375",
+      "id": "fd_0376",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem shifted_t_schur_plethystic_identity\n    {R : Type*} [CommRing R] [IsDomain R]\n    (λ : StrictPartition) (t : R) :\n    shiftedTSchur λ t =\n      schurQ λ (plethysticSubst (fun ω => ω - t • ω) oddPowerSumAlgebra) := by\n  sorry",
@@ -17895,6 +17945,55 @@
       "thread_id": "",
       "timestamp": "2026-07-06T00:45:40.615947+00:00",
       "title": "Shifted t-Schur plethystic identity via modified odd operator conjugation"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Lenstra1979",
+        "Treatman1998",
+        "Euclidean_ideal_class"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The paper proves, assuming the Generalized Riemann Hypothesis (GRH), that if K is a totally real Galois number field of degree n ≥ 3 and p is an odd rational prime which does not split completely in K, then every generating set of the ray class group Cl_K^{(p)^N} with modulus (p)^N is a Euclidean system. This conjecture posits that the GRH assumption can be removed, asserting that the statement holds unconditionally.",
+      "domain_bridges": [
+        "Class Field Theory",
+        "Algebraic Number Theory",
+        "Order Theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0377",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.NumberTheory.RayClassGroup\n\n-- Conjecture: Unconditional Euclidean Systems for Ray Classes\ntheorem unconditional_euclidean_system_ray_class \n    {K : Type*} [Field K] [NumberField K]\n    [IsGalois K ℚ] [IsTotallyReal K] \n    (h_deg : FiniteDimensional.finrank K ℚ ≥ 3)\n    (p : ℕ) (hp : Nat.Prime p) (hp_odd : Odd p) \n    (h_not_split : ¬ SplitsCompletely p (𝓞 K))\n    {N : ℕ} (hN : 0 < N)\n    (C : Set (RayClassGroup K (Ideal.map (algebraMap ℤ (𝓞 K)) (Ideal.span {(p : ℤ)}) ^ N)))\n    (h_gen : GeneratesRayClassGroup C) :\n    IsEuclideanSystemOfRayClasses C := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "The existing proof relies on GRH via Artin's generalized primitive root conjecture to guarantee the existence of primes with specific norm properties that enable the Euclidean division. An unconditional proof would likely require circumventing GRH by developing new analytic number theory techniques to establish stronger lower bounds on the relevant prime counting functions, or by discovering an alternative algebraic mechanism for constructing the Euclidean norm function for ray classes.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.01703v1",
+      "source_path": "http://arxiv.org/abs/2607.01703v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-06T01:05:33.477563+00:00",
+      "title": "Unconditional Euclidean Systems for Ray Classes in Totally Real Galois Fields"
     },
     {
       "ambition_level": "extension",

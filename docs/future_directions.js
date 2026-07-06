@@ -2668,7 +2668,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equality case regularity conjecture for admissible Sidorenko classes"
   },
   {
-    "consumed_by_exp_id": "4591bde2",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any non\u2011empty finite set \u03a8 of non\u2011zero homomorphisms from an abelian group F to G, the weighted Davenport constant D_\u03a8(G) \u2264 n holds precisely when the family of kernels of the induced universal homomorphisms from F^n to G forms a cover of F^n.",
     "domains": [
       "Algebra",
@@ -2678,7 +2678,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02132v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T05:55:53.302394+00:00",
     "title": "Kernel\u2011cover characterisation of the weighted Davenport constant"
   },
@@ -4566,11 +4566,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
+    "description": "For each n \u2265 1, the map \u03c6_n from the degree-n graded piece of the cone algebra on \u211a\u207f to the (n\u22121)-chains of the ind-triangulation of S^{n\u22121} at all rational rays, defined on linearly independent tuples (v\u2081,\u2026,v\u2099) by \u03c6_n([C(v\u2081,\u2026,v\u2099)]) = sgn(det(v\u2081,\u2026,v\u2099)) \u00b7 \u0394(\u211av\u2081,\u2026,\u211av\u2099), extends to a GL_n(\u211a)-equivariant isomorphism of \u211a-modules. This identifies the top-degree cone algebra graded piece with the spherical chain module computing H_{n\u22121}(S^{n\u22121}; \u211a).",
     "domains": [
       "Algebra"
     ],
     "id": "fd_0362",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01543v1",
+    "status": "available",
+    "timestamp": "2026-07-06T01:04:36.158784+00:00",
+    "title": "GL_n-equivariant isomorphism between graded cone algebra and spherical chains"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0363",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -4584,7 +4598,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0363",
+    "id": "fd_0364",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -4599,7 +4613,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0364",
+    "id": "fd_0365",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
@@ -4614,7 +4628,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0365",
+    "id": "fd_0366",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -4629,7 +4643,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0366",
+    "id": "fd_0367",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -4643,7 +4657,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0367",
+    "id": "fd_0368",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -4657,7 +4671,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0368",
+    "id": "fd_0369",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -4672,7 +4686,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0369",
+    "id": "fd_0370",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02011v1",
@@ -4687,7 +4701,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0370",
+    "id": "fd_0371",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -4701,7 +4715,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0371",
+    "id": "fd_0372",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02085v1",
@@ -4715,7 +4729,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0372",
+    "id": "fd_0373",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01957v1",
@@ -4730,7 +4744,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0373",
+    "id": "fd_0374",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01956v1",
@@ -4744,7 +4758,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0374",
+    "id": "fd_0375",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01744v1",
@@ -4758,13 +4772,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0375",
+    "id": "fd_0376",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01839v1",
     "status": "available",
     "timestamp": "2026-07-06T00:45:40.615947+00:00",
     "title": "Shifted t-Schur plethystic identity via modified odd operator conjugation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The paper proves, assuming the Generalized Riemann Hypothesis (GRH), that if K is a totally real Galois number field of degree n \u2265 3 and p is an odd rational prime which does not split completely in K, then every generating set of the ray class group Cl_K^{(p)^N} with modulus (p)^N is a Euclidean system. This conjecture posits that the GRH assumption can be removed, asserting that the statement holds unconditionally.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0377",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01703v1",
+    "status": "available",
+    "timestamp": "2026-07-06T01:05:33.477563+00:00",
+    "title": "Unconditional Euclidean Systems for Ray Classes in Totally Real Galois Fields"
   },
   {
     "consumed_by_exp_id": "",
