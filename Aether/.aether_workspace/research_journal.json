@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "c8e22e5a",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — EML Differential Equations (Riccati Galois Cycle)\n\nDerived from this cycle's findings:\n* `EMLRiccatiMobius.lean` — the Riccati Galois group is `⊆ PGL₂(constants)`; the\n  cross-ra",
-      "quality_score": 0.8043199999999999,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-06-28T09:38:33",
-      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
-    },
-    {
       "cycle_id": "8d0e7e8c",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Excluded minors for Z_n-gainable biased graphs\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle. The formalised\nresults (`ZnGain.lean`, `ZnGainSharp.lean`) s",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-07-06T09:42:26",
       "title": "Optimality of the polynomial factor in the Naslund–Sawin bound for sunflower‑free families"
+    },
+    {
+      "cycle_id": "2058237b",
+      "domain": "Logic",
+      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures growing out of this cycle's study of chains,\nantichains, co-wellfoundedness, and direct sums.\n\n## 1. The two-sided failure of welded co-wellfounded c",
+      "quality_score": 0.49753964866339334,
+      "sorry_count": 4,
+      "theorem_count": 10,
+      "timestamp": "2026-07-06T11:04:35",
+      "title": "Characterization of the Aharoni-Korman Conjecture via Saturated Chains"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.74264
     }
   ],
-  "last_updated": "2026-07-06T09:42:26",
+  "last_updated": "2026-07-06T11:04:35",
   "open_questions": [
-    {
-      "context": "correct). All statements below are proved without `sorry`.",
-      "cycle_id": "bdfd9dbb",
-      "domain": "Physics",
-      "sorry_count": 1,
-      "timestamp": "2026-06-27T19:41:28"
-    },
     {
       "context": "therefore left as `sorry` and flagged as open formalization targets in the; sorry; sorry",
       "cycle_id": "f31c8198",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 7,
       "timestamp": "2026-07-06T09:42:26"
+    },
+    {
+      "context": "the still-open Aharoni–Korman conjecture and is left as `sorry`.; sorry -- FALSE: refuted by `obstruction_direction_false`; is the genuinely open content (a form of the Aharoni–Korman conjecture), lef",
+      "cycle_id": "2058237b",
+      "domain": "Logic",
+      "sorry_count": 4,
+      "timestamp": "2026-07-06T11:04:35"
     }
   ],
   "research_threads": {
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "fe4ab5a6",
-        "quality": 0.85612,
-        "theorems": 5,
-        "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
-      },
-      {
         "cycle_id": "3e68faef",
         "quality": 0.52278,
         "theorems": 129,
@@ -3513,6 +3507,12 @@
         "quality": 0.6976800000000001,
         "theorems": 11,
         "title": "Conjecture on Absolute Boundedness of Polynomial Diophantine Tuples"
+      },
+      {
+        "cycle_id": "2058237b",
+        "quality": 0.49753964866339334,
+        "theorems": 10,
+        "title": "Characterization of the Aharoni-Korman Conjecture via Saturated Chains"
       }
     ],
     "MachineLearning": [
