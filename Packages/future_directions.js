@@ -3,20 +3,6 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "48d99a4c",
-    "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "push_8b6fc6d0_11f0e387",
-    "priority_score": 0.8859200000000002,
-    "research_mode": "team",
-    "source_exp_id": "8b6fc6d0",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T05:18:37.114832+00:00",
-    "title": "Deepening: unnamed_concept"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For every m \u2265 1, the generating tree encoding the recursive decomposition of intervals in the greedy m-Tamari poset (on Dyck paths of size n) is isomorphic to the generating tree encoding the recursive decomposition of planar (m+1)-constellations of size n. This conjecture generalizes the m=1 case proved in the paper and would provide a combinatorial proof of the equinumerosity refined by the parameters tracked in the generating tree (e.g., number of valleys in Dyck paths and corresponding statistics in constellations).",
     "domains": [
@@ -1881,7 +1867,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality for exactly one edge subset"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fed5f716",
     "description": "For any d \u00d7 d matrix A over a number field K with ring of integers O_K, if there exists n \u2265 1 such that A^n \u2208 M_d(O_K), then the pseudo-determinant of A is an algebraic integer in K.",
     "domains": [
       "Algebra"
@@ -1890,7 +1876,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30876v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T21:26:19.991104+00:00",
     "title": "Pseudo-determinant of power-integral matrices is an algebraic integer"
   },
@@ -1997,7 +1983,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equivariant Isomorphism Between Invariant Pseudodifferential Operators and Jacobi Forms"
   },
   {
-    "consumed_by_exp_id": "5f63f86e",
+    "consumed_by_exp_id": "",
     "description": "This conjecture establishes a threshold condition linking the probability that a weighted sum exceeds its expectation, connecting to known bounds in probability via a Manickam\u2013Singhi framework.",
     "domains": [
       "Pythagorean",
@@ -2007,7 +1993,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T00:48:34.844529+00:00",
     "title": "Probabilistic lower bounds on weighted weighted sums of Bernoulli variables"
   },
@@ -3267,20 +3253,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equivalence of h(\u03b1, \u03b2) and Sieve Integral for Localized Divisors"
   },
   {
-    "consumed_by_exp_id": "c1fb9afb",
-    "description": "For any fixed integer k \u2265 2, the size of the set of common descendants of vertices n, n+1, ..., n+k-1 in G_{n+k-1}, scaled by n^{d/(d+1)}, converges in distribution to a non-degenerate random variable expressible in terms of independent Gamma random variables (or a product of Beta random variables), generalizing the result for k=2 obtained via ancestry processes and multi-draw P\u00f3lya urns.",
-    "domains": [
-      "Computation"
-    ],
-    "id": "fd_0269",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.30475v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-04T00:55:11.921809+00:00",
-    "title": "Joint descendants of the last k vertices in random d-DAGs"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For an orientable hypermap H defined by permutations (\u03c3, \u03b1), a partial dual H^{E'} with respect to a hyperedge subset E' is bipartite if and only if there exists an all-crossing direction \u03a6 of the medial map M(H) such that E' = C(\u03a6), provided that every hyperedge of H has even length.",
     "domains": [
@@ -4126,21 +4098,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "AVD Total Coloring of Central Graphs, Subdivision Graphs, and the Join of Graphs"
   },
   {
-    "consumed_by_exp_id": "06e8731e",
-    "description": "Let \\(F(Y,X_1,\\dots,X_n)\\in\\mathbb{Z}[Y,X_1,\\dots,X_n]\\) be a strongly \\(n\\)-genuine polynomial whose generic Galois group over \\(\\mathbb{Q}(X_1,\\dots,X_n)\\) is a transitive subgroup \\(G\\le S_d\\). Define\n  \\[\\mathcal{S}(B)=\\{\\mathbf{x}\\in\\mathbb{Z}^n:\\|\\mathbf{x}\\|_\\infty\\le B,\\;\\operatorname{Gal}(F(Y,\\mathbf{x})/\\mathbb{Q})\\not\\cong G\\}.\\]\n  The conjecture asserts that \\(\\mathcal{S}(B)\\) is contained in a thin set of type\u202fII and therefore satisfies the quantitative bound\n  \\[|\\mathcal{S}(B)|\\ll_{F,\\varepsilon} B^{n-1+\\varepsilon}\\]\n  for every \\(\\varepsilon>0\\). In other words, for a strongly \\(n\\)-genuine polynomial the failure of Galois\u2011group preservation under specialization occurs only on a set of integer points of codimension at least one, with the expected power\u2011saving in the counting function. This statement is falsifiable: one can exhibit a concrete strongly \\(n\\)-genuine polynomial and compute (or bound) the number of exceptional specializations up to height \\(B\\).",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0335",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01969v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-05T05:20:34.768144+00:00",
-    "title": "Quantitative Thinness of Galois\u2011Group\u2011Changing Specializations for Strongly\u202fn\u2011Genuine Polynomials"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "A countable FAC poset satisfies the Aharoni-Korman conjecture if and only if it does not contain a saturated chain D such that either D or its reverse is a countable direct sum of infinite co-wellfounded posets.",
     "domains": [
@@ -4593,7 +4550,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "TxGraffiti Annihilation-Residue Inequality"
   },
   {
-    "consumed_by_exp_id": "70bc476d",
+    "consumed_by_exp_id": "",
     "description": "For all positive integers m and n, the number of intervals in the greedy m-Tamari poset on m-Dyck paths of semi-length n equals the number of rooted planar (m+1)-constellations with n black faces. This generalizes the m=1 case proven in the paper (where greedy Tamari intervals are equinumerous to bipartite planar maps, i.e., 2-constellations) and remains open for m \u2265 2.",
     "domains": [
       "Bridges"
@@ -4602,7 +4559,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01206v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T02:46:47.268188+00:00",
     "title": "Equinumerosity of greedy m-Tamari intervals and planar (m+1)-constellations"
   },
@@ -6136,20 +6093,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For any rational polytopal measure P in R^d, the cap-volume function mapping an oriented hyperplane parameterized by (a,b) in R^(d+1) to the volume of P intersected with the halfspace {x | <a, x> <= b} is piecewise rational. Specifically, there exists a finite semialgebraic partition of the parameter space such that on each cell, the cap-volume is given by a rational function of the parameters.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0474",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02400v1",
-    "status": "available",
-    "timestamp": "2026-07-06T17:29:08.101031+00:00",
-    "title": "Piecewise Rationality of the Polytopal Cap-Volume Function"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "If the Atkin-Lehner quotient of a Shimura curve of level N has genus zero, then the norm of certain algebraic numbers (defined via p-adic cross-ratios of CM points) equals the product conjectured by Giampietro and Darmon.",
     "domains": [
       "Algebra",
@@ -6165,20 +6108,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For any integer n >= 11, let a_1 = floor(log_2 n) and t be the number of ones in the binary expansion of n. A non-hook partition of n with at most k parts is an irreducible constituent of the 2-Sylow permutation character of S_n if and only if k <= a_1 + t - 1.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0475",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02433v1",
-    "status": "available",
-    "timestamp": "2026-07-06T17:55:10.632227+00:00",
-    "title": "Exact Bound for Non-Hook Partitions in the Sylow 2-Permutation Character"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "For a \u0394-matroid on a finite ground set E with feasible set family F, the following are equivalent: (1) the \u0394-matroid is strong, i.e., satisfies Wenzel's symmetric exchange property (for all B\u2081, B\u2082 \u2208 F, if e \u2208 B\u2081 \\ B\u2082 and f \u2208 B\u2082 \\ B\u2081, then there exists g \u2208 (B\u2081 \u0394 B\u2082) \\ {e,f} such that exactly one of B\u2081 \u0394 {e,g} or B\u2082 \u0394 {f,g} is in F, or B\u2081 \u0394 {e,f} \u2208 F and B\u2082 \u0394 {e,f} \u2208 F); and (2) the \u0394-matroid has no peerless antipode (no feasible set B has an antipode A\u2014maximizing |B \u0394 A|\u2014that is peerless, meaning it is the unique antipode of B satisfying a certain local maximality condition within the antipode system). This equivalence bridges the classical exchange-axiom framework with the novel antipode-combinatorial characterization introduced in the paper.",
     "domains": [
       "Algebra",
@@ -6191,6 +6120,62 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-06T18:14:02.454162+00:00",
     "title": "Equivalence of Wenzel symmetric exchange and no peerless antipodes for \u0394-matroids"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For the family of series-parallel graphs G(a) obtained by joining two distinguished vertices s and t with m disjoint paths of lengths a_1, ..., a_m, the paper shows that gamma-positivity of the h*-polynomial of Q_G fails for m >= 5. The conjecture is that for m <= 4, gamma-positivity always holds: for every vector a in Z_{>=1}^4, the h*-polynomial of Q_{G(a)} is gamma-positive. This would yield a complete classification of gamma-positivity for this family.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0477",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02424v1",
+    "status": "available",
+    "timestamp": "2026-07-06T18:40:26.791668+00:00",
+    "title": "Gamma-positivity of symmetric edge polytopes for series-parallel graphs with at most four paths"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any rational polytopal measure P in R^d, the cap-volume function mapping an oriented hyperplane parameterized by (a,b) in R^(d+1) to the volume of P intersected with the halfspace {x | <a, x> <= b} is piecewise rational. Specifically, there exists a finite semialgebraic partition of the parameter space such that on each cell, the cap-volume is given by a rational function of the parameters.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0478",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02400v1",
+    "status": "available",
+    "timestamp": "2026-07-06T17:29:08.101031+00:00",
+    "title": "Piecewise Rationality of the Polytopal Cap-Volume Function"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any integer n >= 11, let a_1 = floor(log_2 n) and t be the number of ones in the binary expansion of n. A non-hook partition of n with at most k parts is an irreducible constituent of the 2-Sylow permutation character of S_n if and only if k <= a_1 + t - 1.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0479",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02433v1",
+    "status": "available",
+    "timestamp": "2026-07-06T17:55:10.632227+00:00",
+    "title": "Exact Bound for Non-Hook Partitions in the Sylow 2-Permutation Character"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For even n \u2265 12, the unique extremal graph with T(n) edges and an edge of non-positive curvature has exactly two vertices of degree n-2 (forming the non-positive curvature edge) and all other vertices have degree n-1. This graph is obtained by removing n/2-2 disjoint edges from K_n such that no two removed edges share a vertex, and the two vertices of degree n-2 are adjacent.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0480",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02297v1",
+    "status": "available",
+    "timestamp": "2026-07-06T18:44:49.820406+00:00",
+    "title": "Structure of extremal graphs for positive curvature threshold"
   },
   {
     "consumed_by_exp_id": "",

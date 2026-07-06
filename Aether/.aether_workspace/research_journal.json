@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "6ac1dc4e",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS — Rainbow triangle density (`LiNingShiZhang2024`)\n\nThese conjectures are derived from this cycle's findings: a full formal framework for\nedge-coloured graphs (`Defs.lean`), the ext",
-      "quality_score": 0.34884000000000004,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T10:41:07",
-      "title": "Rainbow triangle density lower bound conjecture"
-    },
-    {
       "cycle_id": "e5dd524d",
       "domain": "Applications",
       "key_insight": "# Future Directions — EML Fixed-Point Dynamics\n\nDerived from this cycle's findings in `Applications/EMLIterationSharpRate.lean`\nand `Applications/EMLIterationSharpRateConcrete.lean`, which proved that",
@@ -2501,6 +2491,16 @@
       "theorem_count": 18,
       "timestamp": "2026-07-06T15:29:27",
       "title": "Vanishing of the Benson--Krause--Schwede canonical class for pro-2 Demushkin groups"
+    },
+    {
+      "cycle_id": "c1fb9afb",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures derived from this cycle's findings on the joint\ndescendants of the last `k` vertices in growing random directed acyclic graphs.\n\n## 1. A universal te",
+      "quality_score": 0.45366952380952386,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-07-06T18:37:44",
+      "title": "Joint descendants of the last k vertices in random d-DAGs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7059866666666667
     }
   ],
-  "last_updated": "2026-07-06T15:29:27",
+  "last_updated": "2026-07-06T18:37:44",
   "open_questions": [
     {
       "context": "that reduction, constructively and `sorry`-free.",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "292d0525",
-        "quality": 0.54302,
-        "theorems": 10,
-        "title": "Quadratic Reciprocity: Five Proofs Formalized"
-      },
-      {
         "cycle_id": "3718ce68",
         "quality": 0.71376,
         "theorems": 10,
@@ -3699,6 +3693,12 @@
         "quality": 0.573804028436019,
         "theorems": 16,
         "title": "Every b‑invariant edge is forcing exactly for near‑bipartite bricks (up to the t"
+      },
+      {
+        "cycle_id": "c1fb9afb",
+        "quality": 0.45366952380952386,
+        "theorems": 4,
+        "title": "Joint descendants of the last k vertices in random d-DAGs"
       }
     ],
     "Physics": [
