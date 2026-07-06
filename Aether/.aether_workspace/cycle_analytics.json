@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-06T05:01:27.695008+00:00",
+  "last_updated": "2026-07-06T05:22:13.061348+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -36362,6 +36362,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-06T05:01:27.639070+00:00",
       "title": "Stability of the sharp diagonal spectral correlation inequality for monotone Boolean functions"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 23,
+      "domain": "Tropical",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "672a3abc",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v16",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783310345.96828,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-06T05:22:13.010922+00:00",
+      "title": "Combinatorial determination of mdr for line arrangements with only double and triple points"
     }
   ]
 }

@@ -1476,7 +1476,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Positivity of Structure Constants in Shifted t-Schur Function Expansions"
   },
   {
-    "consumed_by_exp_id": "e92fe2c1",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that the Rogers\u2013Ramanujan identities hold as equalities of formal power series in the variable q with coefficients in \u2115, i.e., for all non\u2011negative integers n the coefficient of q^n in the generating function \u2211_{k\u22650} q^{k(k+1)/2}/(q;q)_k equals the coefficient of q^n in the product \u220f_{j\u22650} 1/((1\u2212q^{5j+1})(1\u2212q^{5j+4})). This can be expressed as a statement about the equality of two infinite products after truncation to any finite degree, making it falsifiable by checking a finite set of coefficients.",
     "domains": [
       "Pythagorean"
@@ -1485,7 +1485,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01544v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T09:01:30.241791+00:00",
     "title": "Formalized Rogers\u2013Ramanujan identities for q-Pochhammer symbols"
   },
@@ -2683,7 +2683,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Kernel\u2011cover characterisation of the weighted Davenport constant"
   },
   {
-    "consumed_by_exp_id": "672a3abc",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: Let A be a line arrangement in the complex projective plane of degree d such that every singular point has multiplicity at most 3 (i.e., only double and triple points). If the minimal degree of a Jacobian relation satisfies mdr(A) < d/2, then mdr(A) is combinatorially determined: any other line arrangement B with the same intersection lattice (and hence the same singularity multiplicities) has mdr(B) = mdr(A).",
     "domains": [
       "Algebra",
@@ -2693,7 +2693,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T06:13:22.731805+00:00",
     "title": "Combinatorial determination of mdr for line arrangements with only double and triple points"
   },
@@ -3016,7 +3016,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the k_t lower bound given k_s in extremal graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e455828e",
     "description": "Conjecture: In the unramified GU(1,n-1) Rapoport\u2011Zink space of arbitrary parahoric level P, every basic Ekedahl\u2011Kottwitz\u2011Oort\u2011Rapoport (EKOR) stratum is isomorphic (as a scheme over the residue field \ud835\udd3d_q) to a finite disjoint union of copies of a explicitly defined fine Deligne\u2011Lusztig variety X(w_P) attached to a Weyl group element w_P determined by P. Moreover, the number of irreducible components equals the number of vertices in the affine Dynkin diagram of type \u00c3_{n-1} corresponding to the parahoric subgroup P, and each component is smooth and projective.",
     "domains": [
       "Algebra",
@@ -3026,7 +3026,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31940v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T15:54:12.765581+00:00",
     "title": "Basic EKOR Strata are Disjoint Unions of Fine Deligne-Lusztig Varieties"
   },
@@ -3746,7 +3746,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "365dfbe0",
     "description": "Let $q>3$ be an integer and $P_1,\\dots,P_{q-1}\\in\\mathbb{Q}[U]$ satisfy the hypotheses of a generalized ABC polynomial. Define the linear recurrences $(a_n)_{n\\ge0}$ and $(b_n)_{n\\ge0}$ by the characteristic polynomials $\\pi_U(X)$ and its reciprocal $X^{q}\\pi_U(1/X)$. Then there exists an effectively computable constant $C>0$ (depending only on $q$ and the $P_i$) such that the set \\[ \\{ n\\ge0 \\mid a_n = b_m \\text{ for some } m\\ge0 \\text{ and } a_n > C \\} \\] has cardinality at most two.",
     "domains": [
       "Bridges"
@@ -3755,7 +3755,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27885v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T18:31:34.889448+00:00",
     "title": "At most two large common values for generalized ABC recurrences"
   },
@@ -4752,11 +4752,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The paper establishes the upper bound $f_{F,G}(n) \\le C(\\log n)^{\\beta_F}$ for $r$-uniform hypergraphs. This conjecture proposes that this bound is asymptotically tight, meaning there exists a constant $c > 0$ such that $f_{F,G}(n) \\ge c(\\log n)^{\\beta_F}$ for any non-empty $r$-graph $F$ and $2$-tightly connected $r$-graph $G$ with no homomorphism from $G$ to $F$, thereby completely determining the polylogarithmic exponent $\\beta_F$.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0375",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00732v1",
+    "status": "available",
+    "timestamp": "2026-07-06T05:22:49.897106+00:00",
+    "title": "Matching Lower Bound for Generalized Erd\u0151s\u2013Rogers Functions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0375",
+    "id": "fd_0376",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -4770,7 +4785,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0376",
+    "id": "fd_0377",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -4785,7 +4800,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0377",
+    "id": "fd_0378",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
@@ -4800,7 +4815,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0378",
+    "id": "fd_0379",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -4815,7 +4830,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0379",
+    "id": "fd_0380",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -4829,7 +4844,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0380",
+    "id": "fd_0381",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -4843,7 +4858,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0381",
+    "id": "fd_0382",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -4858,7 +4873,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0382",
+    "id": "fd_0383",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02011v1",
@@ -4873,7 +4888,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0383",
+    "id": "fd_0384",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -4887,7 +4902,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0384",
+    "id": "fd_0385",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02085v1",
@@ -4901,7 +4916,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0385",
+    "id": "fd_0386",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01957v1",
@@ -4916,7 +4931,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0386",
+    "id": "fd_0387",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01956v1",
@@ -4930,7 +4945,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0387",
+    "id": "fd_0388",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01744v1",
@@ -4944,7 +4959,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0388",
+    "id": "fd_0389",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01839v1",
@@ -4959,7 +4974,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0389",
+    "id": "fd_0390",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01703v1",
@@ -4973,7 +4988,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0390",
+    "id": "fd_0391",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01572v1",
@@ -4987,7 +5002,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0391",
+    "id": "fd_0392",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01680v1",
@@ -5001,7 +5016,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0392",
+    "id": "fd_0393",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01582v1",
@@ -5016,7 +5031,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0393",
+    "id": "fd_0394",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01165v1",
@@ -5031,7 +5046,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0394",
+    "id": "fd_0395",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01184v1",
@@ -5045,7 +5060,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0395",
+    "id": "fd_0396",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -5060,7 +5075,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0396",
+    "id": "fd_0397",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -5075,7 +5090,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0397",
+    "id": "fd_0398",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01028v1",
@@ -5090,7 +5105,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0398",
+    "id": "fd_0399",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00940v1",
@@ -5104,7 +5119,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0399",
+    "id": "fd_0400",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -5118,7 +5133,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0400",
+    "id": "fd_0401",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01059v1",
@@ -5133,13 +5148,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0401",
+    "id": "fd_0402",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
     "status": "available",
     "timestamp": "2026-07-06T05:04:38.595703+00:00",
     "title": "Linear Resolutions Dimension"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Extended 1-2-3 Conjecture posits that for any finite nonempty set $A \\subseteq \\mathbb{N}$ and any positive integer $n$, the symmetric difference $A \\Delta 2A \\Delta \\cdots \\Delta nA$ contains at least $n$ elements. While recently proven for all $n$ sufficiently large (specifically $n \\ge 2(3^{80}-321)$) and for $n \\le 6$, the conjecture remains open in general, particularly for intermediate values of $n$.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0403",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00934v1",
+    "status": "available",
+    "timestamp": "2026-07-06T05:23:45.839293+00:00",
+    "title": "Extended 1-2-3 Conjecture for Symmetric Differences"
   },
   {
     "consumed_by_exp_id": "",
