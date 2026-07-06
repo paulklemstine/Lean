@@ -380,7 +380,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea66c257",
     "description": "For the random recursive DAG G_n with out-degree d \u2265 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n \u2192 \u221e.",
     "domains": [
       "Computation"
@@ -389,7 +389,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
@@ -849,7 +849,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Absolute bound for generalized Diophantine tuples over polynomial rings"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "03d2d7e4",
     "description": "For any perfect $\\mathbb{F}_p$-algebra $R$, the canonical map $\\chW(R) \\to W(R)$ is an isomorphism of rings. This conjecture tests whether the sheared Witt vector construction reduces to the classical Witt vector functor when applied to perfect $\\mathbb{F}_p$-algebras, leveraging the vanishing of the ideal $\\hw(R)$ in such cases.",
     "domains": [
       "Algebra",
@@ -859,7 +859,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01178v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T20:39:15.695833+00:00",
     "title": "Isomorphism of Sheared Witt Vectors for Perfect Algebras"
   },
@@ -1577,7 +1577,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharp Threshold Constant for Cycle Games"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ec8dee20",
     "description": "For every positive integer $k$, there exists a parameter $s$ in the Lecacheux family such that the $5$-rank of the P\u00f3lya group of the corresponding quintic field is exactly $k$.",
     "domains": [
       "Algebra"
@@ -1586,7 +1586,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00675v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T11:59:32.474562+00:00",
     "title": "Exact 5-Rank Realization in Lecacheux P\u00f3lya Groups"
   },
@@ -2202,7 +2202,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Variance of Homomorphism at the Root is Bounded Below by Effective Resistance"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a793b4d3",
     "description": "Analysis of the maximal number of chains required to cover strict chains in the Boolean lattice, with connections to inclusion-exclusion and logarithmic approximations.",
     "domains": [
       "Cryptography",
@@ -2212,7 +2212,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29385v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T08:04:06.155536+00:00",
     "title": "Chain Covers in the Boolean Lattice"
   },
@@ -2581,7 +2581,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Positivity of (p,q)-Generalized Stirling Numbers in the (p,q)-Binomial Basis"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9896d47c",
     "description": "Formalize the upper bound on the maximum size of a Sidon subset of {0, ..., N-1}, specifically proving that F(N) <= N^{1/2} + 0.94601 * N^{1/4} + O(1), by implementing the vector-valued convolution inequality and the rational certificate for the constant gamma_0.",
     "domains": [
       "Bridges"
@@ -2590,7 +2590,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T01:56:27.032018+00:00",
     "title": "Upper Bound for the Cardinality of Finite Sidon Sets"
   },
@@ -3832,7 +3832,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Obstruction\u2011free FAC posets satisfy the Aharoni\u2011Korman conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "72798aec",
     "description": "For every integer n \u2265 11 with binary expansion n = 2^{a\u2081} + 2^{a\u2082} + \u2026 + 2^{a_t} where a\u2081 > a\u2082 > \u2026 > a_t \u2265 0, the set \u0394(n,k) of non\u2011hook partitions of n with at most k parts is contained in \u03a9\u2082(n) if and only if k \u2264 a\u2081 + t - 1. Equivalently, the largest integer k for which \u0394(n,k) \u2286 \u03a9\u2082(n) is exactly a\u2081 + t - 1. This refines the theorem of the paper by asserting that the stated bound holds universally (i.e., without the exceptional small\u2011n cases) and predicts a precise formula for the maximal size of such partitions.",
     "domains": [
       "Pythagorean",
@@ -3842,7 +3842,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T23:01:54.640398+00:00",
     "title": "Conjecture on the maximal number of parts of non\u2011hook partitions in \u03a9\u2082(n)"
   },
@@ -4737,7 +4737,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Complete Solution to the Generalized Honeymoon Oberwolfach Problem with One Round Table"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6f7b276c",
     "description": "For every finite poset P of width at most 2, the Ehrhart h*-polynomial h*(O(P); t) of the order polytope O(P) is real-rooted. This extends the paper's result for generalized snake posets (a proper subclass of width-two posets) to all width-two posets, and would unify real-rootedness phenomena observed across flow polytopes, rook polynomials, and P-Eulerian polynomials for this entire width regime.",
     "domains": [
       "Bridges"
@@ -4746,7 +4746,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00922v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T05:01:57.933891+00:00",
     "title": "Real-rootedness of h*-polynomials for width-two order polytopes"
   },
@@ -5677,7 +5677,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "That the entries of an integer right triangle are forced"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6dff48bb",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Geometry"
@@ -5686,7 +5686,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:212351",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:44:52.457313+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   }
