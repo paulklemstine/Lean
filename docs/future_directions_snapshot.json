@@ -11325,6 +11325,65 @@
     "title": "The Aharoni-Korman Conjecture for Well-Founded FAC Posets"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "aharoni_korman_conjecture",
+      "fac_posets",
+      "mirsky_theorem",
+      "dilworth_decomposition",
+      "well_founded_posets"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every well-founded partially ordered set satisfying the finite antichain condition (FAC) has the Aharoni-Korman property: there exists a chain C and a partition of the poset into antichains such that C intersects every antichain in the partition. The paper proves the Aharoni-Korman conjecture for countable FAC posets avoiding a specific chain obstruction (saturated chains of the form ⊕_{x∈ω} D_x with each D_x infinite and co-wellfounded). This conjecture extends the result to all well-founded FAC posets, regardless of cardinality, since well-foundedness eliminates infinite descending obstructing chains and structurally constrains ascending ones.",
+    "domain_bridges": [
+      "set_theory/well_founded_recursion",
+      "order_theory/antichain_partitions",
+      "combinatorics/chain_antichain_duality",
+      "order_theory/scattered_posets"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0474",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Stratify the well-founded poset by rank into well-ordered levels. Apply the paper's countable decomposition and scattered poset analysis within each stratum. Use transfinite induction on the rank function to construct the witnessing chain and antichain partition globally, ensuring the chain meets every antichain in the partition at each inductive stage. The key insight is that well-foundedness provides a rank function that naturally organizes the construction and prevents the specific chain obstruction identified in the paper.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02500v1",
+    "status": "available",
+    "timestamp": "2026-07-06T17:28:10.847473+00:00",
+    "title": "Aharoni-Korman Property for Well-Founded FAC Posets"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "ham-sandwich_theorem",
+      "centerpoint_theorem",
+      "semialgebraic_geometry",
+      "convex_polytopes"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any rational polytopal measure P in R^d, the cap-volume function mapping an oriented hyperplane parameterized by (a,b) in R^(d+1) to the volume of P intersected with the halfspace {x | <a, x> <= b} is piecewise rational. Specifically, there exists a finite semialgebraic partition of the parameter space such that on each cell, the cap-volume is given by a rational function of the parameters.",
+    "domain_bridges": [
+      "algebraic_geometry",
+      "convex_geometry",
+      "measure_theory"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0474",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define the natural decomposition of the space of oriented hyperplanes based on the combinatorial structure of the intersection P ∩ H_(a,b)^+. Specifically, partition the parameter space into cells where the set of vertices of P lying strictly inside, strictly outside, and on the boundary of the halfspace remains constant. On each such cell, the vertices of the intersection polytope are rational functions of (a,b). Since the volume of a polytope is a sum of determinants of its vertices, the volume function is a rational function of (a,b) on each cell, proving piecewise rationality.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02400v1",
+    "status": "available",
+    "timestamp": "2026-07-06T17:29:08.101031+00:00",
+    "title": "Piecewise Rationality of the Polytopal Cap-Volume Function"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
