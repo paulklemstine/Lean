@@ -4795,7 +4795,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Periodic Cake Cutting Phase Ratio"
   },
   {
-    "consumed_by_exp_id": "70354b52",
+    "consumed_by_exp_id": "",
     "description": "The minimal absolute value \u03c3\u2085(n) of a non-vanishing sum of n fifth roots of unity is monotone non-increasing over congruence classes of n modulo 5. Furthermore, a strict decrease \u03c3\u2085(n) > \u03c3\u2085(n+5) occurs if and only if n+5 is of the form 5F\u2098, L\u2098, or 2L\u2098 for some positive integer m, where F\u2098 and L\u2098 denote the m-th Fibonacci and Lucas numbers, respectively.",
     "domains": [
       "Bridges"
@@ -4804,7 +4804,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00825v2",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T06:18:12.080116+00:00",
     "title": "Monotonicity and Jumps of Minimal Absolute Values of Fifth Roots of Unity Sums"
   },
@@ -5103,11 +5103,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "A real quadratic field K = Q(\u221aD) satisfies Hammarhjelm's condition if its ring of integers has unique factorization and the Minkowski lattice f(O_K) contains no point in the open rectangle (1, \u03bb) \u00d7 (-1, 1), where \u03bb > 1 is the fundamental unit. The theorem states that exactly seven such fields exist, corresponding to squarefree D \u2208 {2, 5, 13, 29, 53, 173, 293}.",
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_0399",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31544v1",
+    "status": "available",
+    "timestamp": "2026-07-06T13:31:42.777088+00:00",
+    "title": "Classification of real quadratic fields satisfying Hammarhjelm's condition"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0399",
+    "id": "fd_0400",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -5121,7 +5136,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0400",
+    "id": "fd_0401",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -5136,7 +5151,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0401",
+    "id": "fd_0402",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
@@ -5151,7 +5166,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0402",
+    "id": "fd_0403",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -5166,7 +5181,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0403",
+    "id": "fd_0404",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -5180,7 +5195,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0404",
+    "id": "fd_0405",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -5194,7 +5209,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0405",
+    "id": "fd_0406",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -5209,7 +5224,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0406",
+    "id": "fd_0407",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02011v1",
@@ -5224,7 +5239,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0407",
+    "id": "fd_0408",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -5238,7 +5253,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0408",
+    "id": "fd_0409",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02085v1",
@@ -5252,7 +5267,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0409",
+    "id": "fd_0410",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01957v1",
@@ -5267,7 +5282,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0410",
+    "id": "fd_0411",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01956v1",
@@ -5281,7 +5296,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0411",
+    "id": "fd_0412",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01744v1",
@@ -5295,7 +5310,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0412",
+    "id": "fd_0413",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01839v1",
@@ -5304,31 +5319,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "Shifted t-Schur plethystic identity via modified odd operator conjugation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c7c6cf29",
     "description": "The paper proves, assuming the Generalized Riemann Hypothesis (GRH), that if K is a totally real Galois number field of degree n \u2265 3 and p is an odd rational prime which does not split completely in K, then every generating set of the ray class group Cl_K^{(p)^N} with modulus (p)^N is a Euclidean system. This conjecture posits that the GRH assumption can be removed, asserting that the statement holds unconditionally.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0413",
+    "id": "fd_0414",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01703v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T01:05:33.477563+00:00",
     "title": "Unconditional Euclidean Systems for Ray Classes in Totally Real Galois Fields"
   },
   {
-    "consumed_by_exp_id": "c7c6cf29",
+    "consumed_by_exp_id": "",
     "description": "For every n \u2265 0, the n-th row generating function of the square of the Eulerian triangle\u2014defined as the polynomial \u2211_k (\u2211_j A(n,j)\u00b7A(j,k)) x^k where A(n,k) is the Eulerian number counting permutations of [n] with k descents\u2014has only real roots. This extends the paper's results on powers of Pascal, Stirling, and Narayana triangles to the still-open Eulerian case.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0414",
+    "id": "fd_0415",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01572v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T01:27:06.611331+00:00",
     "title": "Real-rootedness of the square of the Eulerian triangle"
   },
@@ -5338,7 +5353,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0415",
+    "id": "fd_0416",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01680v1",
@@ -5352,7 +5367,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0416",
+    "id": "fd_0417",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01582v1",
@@ -5367,7 +5382,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0417",
+    "id": "fd_0418",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01165v1",
@@ -5382,7 +5397,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0418",
+    "id": "fd_0419",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01184v1",
@@ -5396,7 +5411,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0419",
+    "id": "fd_0420",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -5411,7 +5426,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0420",
+    "id": "fd_0421",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -5426,7 +5441,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0421",
+    "id": "fd_0422",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01028v1",
@@ -5441,7 +5456,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0422",
+    "id": "fd_0423",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00940v1",
@@ -5455,7 +5470,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0423",
+    "id": "fd_0424",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -5469,7 +5484,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0424",
+    "id": "fd_0425",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01059v1",
@@ -5484,7 +5499,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0425",
+    "id": "fd_0426",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
@@ -5498,7 +5513,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0426",
+    "id": "fd_0427",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00934v1",
@@ -5513,7 +5528,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0427",
+    "id": "fd_0428",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00930v1",
@@ -5527,7 +5542,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Logic"
     ],
-    "id": "fd_0428",
+    "id": "fd_0429",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01294v1",
@@ -5541,7 +5556,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0429",
+    "id": "fd_0430",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00814v1",
@@ -5556,7 +5571,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0430",
+    "id": "fd_0431",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00651v1",
@@ -5570,7 +5585,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0431",
+    "id": "fd_0432",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00646v1",
@@ -5584,7 +5599,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0432",
+    "id": "fd_0433",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00592v1",
@@ -5593,31 +5608,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sub-square-root bound for smooth character sums at the critical threshold"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "611a6b62",
     "description": "Any deterministic finite automaton (DFA) that correctly solves the Kochen-Specker problem (KSP) for a simple exclusivity graph G must possess at least \u03c7(G) internal states. The KSP is defined as a language recognition task over the vertices of G, where strings of identical vertices are accepted, and strings of adjacent vertices are rejected.",
     "domains": [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_0433",
+    "id": "fd_0434",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00507v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T07:33:08.390636+00:00",
     "title": "DFA State Complexity Lower Bound for the Kochen-Specker Problem"
   },
   {
-    "consumed_by_exp_id": "611a6b62",
+    "consumed_by_exp_id": "",
     "description": "Every brick distinct from K_4, C_6_bar, and the Petersen graph, in which every b-invariant edge is a forcing edge, is near-bipartite. This conjecture, if true, would reduce the full Lucchesi\u2013Murty characterization problem to the near-bipartite case already solved in this paper, by showing that no non-near-bipartite brick (beyond the three exceptions) can have the property that all its b-invariant edges are forcing edges.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0434",
+    "id": "fd_0435",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00608v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T07:51:38.329200+00:00",
     "title": "Near-bipartite reduction for the Lucchesi\u2013Murty property"
   },
@@ -5628,7 +5643,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0435",
+    "id": "fd_0436",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00456v1",
@@ -5642,7 +5657,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0436",
+    "id": "fd_0437",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00263v1",
@@ -5656,7 +5671,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0437",
+    "id": "fd_0438",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00318v1",
@@ -5670,7 +5685,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0438",
+    "id": "fd_0439",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00282v1",
@@ -5684,7 +5699,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0439",
+    "id": "fd_0440",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00332v1",
@@ -5699,7 +5714,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0440",
+    "id": "fd_0441",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00088v1",
@@ -5714,7 +5729,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0441",
+    "id": "fd_0442",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.32024v1",
@@ -5728,7 +5743,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0442",
+    "id": "fd_0443",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31967v1",
@@ -5742,7 +5757,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_0443",
+    "id": "fd_0444",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00205v1",
@@ -5756,7 +5771,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0444",
+    "id": "fd_0445",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01273v1",
@@ -5771,7 +5786,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0445",
+    "id": "fd_0446",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31908v1",
@@ -5786,7 +5801,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0446",
+    "id": "fd_0447",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31698v1",
@@ -5801,7 +5816,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0447",
+    "id": "fd_0448",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31783v1",
@@ -5816,13 +5831,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0448",
+    "id": "fd_0449",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31761v1",
     "status": "available",
     "timestamp": "2026-07-06T12:49:53.574502+00:00",
     "title": "Corrected Triangular-Partition Estimator Asymptotically Matches the Logarithmic Integral"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For pro-p groups A and B, the F_p-cup radical of their free pro-p product decomposes as R_p(A *_p B) \u2245 R_p(A) \u2295 R_p(B), under the natural Mayer-Vietoris identification H^1(A *_p B, F_p) \u2245 H^1(A, F_p) \u2295 H^1(B, F_p). Equivalently, R_p(A *_p B) = res_A^{-1}(R_p(A)) \u2229 res_B^{-1}(R_p(B)), where res_A and res_B are the restriction maps. This captures the stability of the cup radical under free pro-p products, a key structural result underlying the paper's proof that the p-Kijima-Nishi property is preserved under free pro-p product constructions.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0450",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31547v1",
+    "status": "available",
+    "timestamp": "2026-07-06T13:33:29.229513+00:00",
+    "title": "Cup Radical Decomposition for Free Pro-p Products"
   },
   {
     "consumed_by_exp_id": "",
