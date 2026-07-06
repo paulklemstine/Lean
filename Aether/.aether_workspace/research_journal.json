@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "8d0e7e8c",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Excluded minors for Z_n-gainable biased graphs\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle. The formalised\nresults (`ZnGain.lean`, `ZnGainSharp.lean`) s",
-      "quality_score": 0.7360800000000001,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T09:42:01",
-      "title": "Excluded minors for Z_n-gainable biased graphs"
-    },
-    {
       "cycle_id": "ce8c041d",
       "domain": "Applications",
       "key_insight": "# Future Directions — Certified Dequantization of Neural Classifiers\n\nThese directions grow out of an under-exploited structural coincidence in the\ncatalog: three independently verified files already",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-07-06T11:04:35",
       "title": "Characterization of the Aharoni-Korman Conjecture via Saturated Chains"
+    },
+    {
+      "cycle_id": "a793b4d3",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Chain Covers in the Boolean Lattice\n\nFive bold, falsifiable conjectures growing out of this cycle's findings on the\nminimum number of chains needed to cover the lattice of subset",
+      "quality_score": 0.5242404210526316,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-07-06T11:53:24",
+      "title": "Chain Covers in the Boolean Lattice"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.74264
     }
   ],
-  "last_updated": "2026-07-06T11:04:35",
+  "last_updated": "2026-07-06T11:53:24",
   "open_questions": [
     {
       "context": "therefore left as `sorry` and flagged as open formalization targets in the; sorry; sorry",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "bd1f81a7",
-        "quality": 0.80372,
-        "theorems": 6,
-        "title": "Pólya tree coefficient divisor-sum recurrence"
-      },
-      {
         "cycle_id": "0cb84107",
         "quality": 0.506378,
         "theorems": 10,
@@ -3389,6 +3383,12 @@
         "quality": 0.7779935103225806,
         "theorems": 11,
         "title": "Torsion local-global compatibility at p = ℓ for GL_n over CM fields"
+      },
+      {
+        "cycle_id": "a793b4d3",
+        "quality": 0.5242404210526316,
+        "theorems": 4,
+        "title": "Chain Covers in the Boolean Lattice"
       }
     ],
     "Geometry": [
