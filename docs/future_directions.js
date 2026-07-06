@@ -60,7 +60,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "54d58162",
     "description": "For any graphs G and H, the domination number of their Cartesian product satisfies \u03b3(G\u25a1H) \u2265 (19 - \u221a73)/18 * \u03b3(G)\u03b3(H).",
     "domains": [
       "Bridges"
@@ -69,7 +69,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01109v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T06:39:03.958610+00:00",
     "title": "Improved Constant for Domination in Cartesian Product of Graphs"
   },
@@ -394,7 +394,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "244a22c3",
     "description": "The product of primes in the extension field equals its order.",
     "domains": [
       "Pythagorean",
@@ -404,7 +404,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T05:35:59.496154+00:00",
     "title": "Ramified Prime Product Equality"
   },
@@ -995,7 +995,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "A recursive decomposition of greedy Tamari intervals via planar map structures"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "56085c43",
     "description": "The sheared Witt vector functor \\(\\chW\\) is isomorphic to the filtered colimit of the functors \\(n \\mapsto W(R[p^n])/\\hw(R[p^n])\\) over \\(n \\geq 1\\).",
     "domains": [
       "Bridges"
@@ -1004,7 +1004,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01178v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T22:10:42.305562+00:00",
     "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
   },
@@ -1840,7 +1840,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-existence of weak Ziegler pairs for high-degree plus-one generated conic-line arrangements with defect three"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "edf9850d",
     "description": "For every integer d \u22657, there exists a simplicial 0/1-polytope in dimension d with exactly 2d vertices that is not centrally symmetric. This generalizes the explicit 7-dimensional counterexample to all higher dimensions, extending the classification beyond the known result for d=7.",
     "domains": [
       "Geometry"
@@ -1849,7 +1849,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31640v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T19:30:02.443246+00:00",
     "title": "Existence of Non-Centrally Symmetric Simplicial 0/1-Polytopes for All Dimensions \u22657"
   },
@@ -1910,7 +1910,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pseudo-determinant of power-integral matrices is an algebraic integer"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f28e546d",
     "description": "For a graph $G$ with minimum degree $\\delta(G) \\ge a + r$, if the spectral radius $\\lambda(G)$ is at least $a + r + b$, then $G$ is fractional ID-$[a,b]$-factor-critical.",
     "domains": [
       "Physics"
@@ -1919,7 +1919,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31064v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T21:44:34.279843+00:00",
     "title": "Spectral radius threshold for fractional ID-$[a,b]$-factor-critical graphs"
   },
@@ -2480,7 +2480,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of a fine unit-distance graph with low independence ratio"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e29ffbac",
     "description": "We conjecture that the isomorphism classes of regular 4\u2011maniplexes are in bijective correspondence with the isomorphism classes of tetravalent graphs appearing in Poto\u010dnik's census.  Concretely, for each regular 4\u2011maniplex M its flag graph is a tetravalent graph in the census, and conversely every tetravalent graph G in the census determines a unique regular 4\u2011maniplex via its 1\u2011coskeleton.  Hence the number of regular 4\u2011maniplexes up to isomorphism equals the number of tetravalent graphs in the census, giving a complete classification of these objects through existing graph databases.",
     "domains": [
       "Pythagorean",
@@ -2490,7 +2490,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27987v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T17:37:07.759741+00:00",
     "title": "Classification of regular 4\u2011maniplexes via tetravalent graph censuses"
   },
@@ -3121,7 +3121,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "CM tournaments are precisely the cycle\u2011ideal tournaments"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "36768b27",
     "description": "For all integers n \u2265 2, the number of labeled partially ordered sets on n points (OEIS A001035) satisfies P(n) \u2261 3 (mod 4). This congruence is verified for n = 2 through 19 (with P(19) = 646099441937791106493755218560442089979 \u2261 3 mod 4) and predicts the same residue for P(20) and beyond. The paper's mention of a 'modular periodicity' check for A001035 suggests such congruences are structurally inherent in the Ern\u00e9-Stege moment reduction.",
     "domains": [
       "Bridges"
@@ -3130,7 +3130,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31526v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T18:54:52.477458+00:00",
     "title": "Constant residue of labeled poset counts modulo 4"
   },
@@ -4696,7 +4696,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Gumbel Distribution for Black Hole Microstate Extremal Fluctuations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9632b543",
     "description": "For any matroid of rank r \u2264 k, any two pairs of bases with the same multiset union can be transformed into each other via a sequence of symmetric exchanges.",
     "domains": [
       "Algebra"
@@ -4705,7 +4705,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T21:57:06.806565+00:00",
     "title": "Symmetric Exchange Generation in Rank-Bounded Matroids"
   },

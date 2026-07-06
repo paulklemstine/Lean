@@ -97,7 +97,7 @@
       "Brešar (2017)",
       "Chen, Piotrowski, Shreve (1996)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "54d58162",
     "description": "For any graphs G and H, the domination number of their Cartesian product satisfies γ(G□H) ≥ (19 - √73)/18 * γ(G)γ(H).",
     "domain_bridges": [
       "Graph Product Theory",
@@ -112,7 +112,7 @@
     "proof_strategy": "Real-valued optimization of a piecewise maximum function via variable substitution and algebraic manipulation",
     "research_mode": "team",
     "source_exp_id": "2607.01109v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T06:39:03.958610+00:00",
     "title": "Improved Constant for Domination in Cartesian Product of Graphs"
   },
@@ -692,7 +692,7 @@
       "Theorem 1.5",
       "Kane's work"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "244a22c3",
     "description": "The product of primes in the extension field equals its order.",
     "domain_bridges": "extension",
     "domains": [
@@ -705,7 +705,7 @@
     "proof_strategy": "Direct arithmetic verification",
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T05:35:59.496154+00:00",
     "title": "Ramified Prime Product Equality"
   },
@@ -1776,7 +1776,7 @@
       "Lau 2010",
       "Hoff-Lau 2026"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "56085c43",
     "description": "The sheared Witt vector functor \\(\\chW\\) is isomorphic to the filtered colimit of the functors \\(n \\mapsto W(R[p^n])/\\hw(R[p^n])\\) over \\(n \\geq 1\\).",
     "domain_bridges": [
       "Witt vector theory",
@@ -1792,7 +1792,7 @@
     "proof_strategy": "Construct a natural transformation \\(\\gamma_n: W(R) \\to W(R[p^n])/\\hw(R[p^n])\\) and verify it induces an isomorphism on colimits using properties of nilpotent Witt components and filtered limits of free modules.",
     "research_mode": "team",
     "source_exp_id": "2607.01178v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T22:10:42.305562+00:00",
     "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
   },
@@ -3350,7 +3350,7 @@
       "Aichholzer2000",
       "KortenkampRichterGebertSarangarajanZiegler1997"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "edf9850d",
     "description": "For every integer d ≥7, there exists a simplicial 0/1-polytope in dimension d with exactly 2d vertices that is not centrally symmetric. This generalizes the explicit 7-dimensional counterexample to all higher dimensions, extending the classification beyond the known result for d=7.",
     "domain_bridges": [
       "convex polytopes",
@@ -3369,7 +3369,7 @@
     "proof_strategy": "Generalize the 7-dimensional construction by iteratively adding antipodal vertex pairs while preserving simpliciality and breaking central symmetry. For each d >7, construct a base example from the d=7 case and extend it via controlled vertex additions. Formal verification would require proving simpliciality (all facets are simplices), dimension preservation, and the absence of central symmetry through combinatorial analysis of vertex sets.",
     "research_mode": "team",
     "source_exp_id": "2606.31640v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T19:30:02.443246+00:00",
     "title": "Existence of Non-Centrally Symmetric Simplicial 0/1-Polytopes for All Dimensions ≥7"
   },
@@ -3485,7 +3485,7 @@
       "BH",
       "LFZ"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f28e546d",
     "description": "For a graph $G$ with minimum degree $\\delta(G) \\ge a + r$, if the spectral radius $\\lambda(G)$ is at least $a + r + b$, then $G$ is fractional ID-$[a,b]$-factor-critical.",
     "domain_bridges": [
       "Spectral graph theory",
@@ -3501,7 +3501,7 @@
     "proof_strategy": "1. Establish that $\\lambda(G) \\ge a + r + b$ implies sufficient expansion properties via spectral techniques. 2. Show that this expansion guarantees the existence of fractional $[a,b]$-factors in $G-I$ for any independent set $I$ of size $r$. 3. Leverage the minimum degree condition to bound the vertex degrees in $G-I$ within the $[a,b]$ range.",
     "research_mode": "team",
     "source_exp_id": "2606.31064v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T21:44:34.279843+00:00",
     "title": "Spectral radius threshold for fractional ID-$[a,b]$-factor-critical graphs"
   },
@@ -4528,7 +4528,7 @@
       "Potočnik's tetravalent graph census",
       "regular 4‑maniplex dataset"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e29ffbac",
     "description": "We conjecture that the isomorphism classes of regular 4‑maniplexes are in bijective correspondence with the isomorphism classes of tetravalent graphs appearing in Potočnik's census.  Concretely, for each regular 4‑maniplex M its flag graph is a tetravalent graph in the census, and conversely every tetravalent graph G in the census determines a unique regular 4‑maniplex via its 1‑coskeleton.  Hence the number of regular 4‑maniplexes up to isomorphism equals the number of tetravalent graphs in the census, giving a complete classification of these objects through existing graph databases.",
     "domain_bridges": [
       "Maniplex theory",
@@ -4546,7 +4546,7 @@
     "proof_strategy": "Using the existing datasets we will compute canonical forms (flag graph, 1‑skeleton, 1‑coskeleton) for each regular 4‑maniplex and compare them with the tetravalent graphs in the census.  By exploiting properties of maniplex automorphisms and graph isomorphism we will prove injectivity and surjectivity of the maps between the two classes.  The definitions of maniplex, regularity, flag graph and the canonical representation are formalized in Lean; then the bijection theorem is proved by constructing the inverse maps from the lemmas.",
     "research_mode": "team",
     "source_exp_id": "2606.27987v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T17:37:07.759741+00:00",
     "title": "Classification of regular 4‑maniplexes via tetravalent graph censuses"
   },
@@ -5700,7 +5700,7 @@
     "catalog_references": [
       "OEIS A001035"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "36768b27",
     "description": "For all integers n ≥ 2, the number of labeled partially ordered sets on n points (OEIS A001035) satisfies P(n) ≡ 3 (mod 4). This congruence is verified for n = 2 through 19 (with P(19) = 646099441937791106493755218560442089979 ≡ 3 mod 4) and predicts the same residue for P(20) and beyond. The paper's mention of a 'modular periodicity' check for A001035 suggests such congruences are structurally inherent in the Erné-Stege moment reduction.",
     "domain_bridges": [
       "math.NT"
@@ -5714,7 +5714,7 @@
     "proof_strategy": "Analyze the Erné-Stege moment reduction modulo 4. Show that the moments G(m,k) = Σ 𝔡(Q)^k satisfy G(m,k) ≡ 0 (mod 4) for all relevant m,k in the expression for P(n) when n ≥ 3, except for a constant term that yields 3 mod 4. Alternatively, use the known recurrence P(n) = Σ_{k=1}^n S(n,k) P(k-1) (Stirling transform) and prove by induction that P(n) ≡ 3 (mod 4) for n ≥ 2, leveraging the congruence properties of Stirling numbers of the second kind modulo 4.",
     "research_mode": "team",
     "source_exp_id": "2606.31526v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T18:54:52.477458+00:00",
     "title": "Constant residue of labeled poset counts modulo 4"
   },
@@ -8619,7 +8619,7 @@
       "Farber1",
       "Farber2"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9632b543",
     "description": "For any matroid of rank r ≤ k, any two pairs of bases with the same multiset union can be transformed into each other via a sequence of symmetric exchanges.",
     "domain_bridges": [
       "matroid theory",
@@ -8634,7 +8634,7 @@
     "proof_strategy": "Inductive argument on rank bounds combined with matroid minors analysis",
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T21:57:06.806565+00:00",
     "title": "Symmetric Exchange Generation in Rank-Bounded Matroids"
   },
