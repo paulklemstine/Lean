@@ -52,7 +52,7 @@
     "catalog_references": [
       "arXiv:2310.12345 (hypothetical reference for the paper)"
     ],
-    "consumed_by_exp_id": "6c71fe84",
+    "consumed_by_exp_id": "",
     "description": "There exists a finite set of vectors in l² satisfying specific convolution inequalities such that their weighted average achieves the coefficient γ₀=0.94601 in the bound F(N) ≤ N^{1/2} + γ₀N^{1/4} + O(1), and no smaller coefficient is achievable via this method.",
     "domain_bridges": [
       "l² spaces",
@@ -68,7 +68,7 @@
     "proof_strategy": "Construct a minimal vector family and verify convolution bounds via exact arithmetic",
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T06:22:13.488931+00:00",
     "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
   },
@@ -7327,7 +7327,7 @@
       "math.NT",
       "math.AG"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c5257493",
     "description": "For any finite subset S of BP^1(K) with at least three points, the graph T(S) constructed from equivalence classes of triples in S^3 is always a tree (i.e., it is connected and contains no cycles). This conjecture extends known observations in the paper and is falsifiable by providing a counterexample where the graph contains a cycle.",
     "domain_bridges": [
       "math.NT",
@@ -7343,7 +7343,7 @@
     "proof_strategy": "Induction on the size of S combined with combinatorial analysis of the equivalence relation; check connectivity and absence of cycles; search for counterexamples computationally.",
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T01:19:57.095760+00:00",
     "title": "Conjecture on the tree structure of T(S) for subsets of the projective line"
   },
@@ -11694,6 +11694,63 @@
     "status": "available",
     "timestamp": "2026-07-06T21:02:58.080708+00:00",
     "title": "Piecewise Polynomial Cap-Volume Conjecture for Convex Polytopes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "FAC_posets",
+      "Aharoni-Korman_conjecture",
+      "scattered_posets",
+      "chain_antichain_partitions"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every countable scattered FAC poset satisfies the Aharoni-Korman property. Specifically: if P is a countable poset with no infinite antichain (FAC) and no dense subposet (scattered, meaning no subposet S where for all x < y in S there exists z in S with x < z < y), then there exists a chain C ⊆ P and a partition of P into antichains {A_i}_{i ∈ I} such that C ∩ A_i ≠ ∅ for every i ∈ I. This conjecture naturally extends the paper's result that AK holds for countable FAC posets avoiding certain saturated chains of the form ⊕_{x∈ω} D_x, and is motivated by the paper's central structural theorem that countable FAC posets decompose into scattered pieces.",
+    "domain_bridges": [
+      "infinite_combinatorics",
+      "order_topology",
+      "descriptive_set_theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0493",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Leverage the paper's decomposition theorem to express a countable scattered FAC poset as a structured sum of its scattered components. For each scattered component, construct a witnessing chain and antichain partition using the paper's techniques for avoiding ⊕_{x∈ω} D_x-type obstructions (which scatteredness should prevent). Then combine these local witnesses via a transfinite or inductive construction, ensuring the union chain meets every antichain in the global partition. The key step is showing that scatteredness rules out the saturated chain obstructions that produce AK counterexamples.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02500v1",
+    "status": "available",
+    "timestamp": "2026-07-06T21:15:05.361921+00:00",
+    "title": "Scattered Countable FAC Posets Satisfy the Aharoni-Korman Property"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.MG",
+      "cs.CG",
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that the set of centerpoints of a convex polytope P ⊂ ℝᵈ coincides with its floating body at level 1/(d+1) and is therefore semialgebraic, leveraging the piecewise-rational structure of the cap-volume function. This conjecture extends that result: for any compact convex semialgebraic set K ⊂ ℝᵈ with nonempty interior, the set of centerpoints of K (with respect to Lebesgue measure restricted to K) is a convex semialgebraic set. For polytopes, piecewise-rationality of the cap-volume function gives semialgebraicity directly, but for general convex semialgebraic bodies the cap-volume function may not be piecewise rational, so new arguments (e.g., via o-minimal geometry or quantifier elimination over real closed fields with volume integrals) are needed.",
+    "domain_bridges": [
+      "real_algebraic_geometry",
+      "measure_theory",
+      "o_minimal_geometry"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0494",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt the paper's semialgebraic feasibility framework: show that for a compact convex semialgebraic set K, the function mapping a hyperplane (parametrized by unit normal u ∈ S^{d-1} and offset t ∈ ℝ) to vol(K ∩ H_{u,t}) is a semialgebraic function of (u,t). This follows from cylindrical algebraic decomposition since K ∩ H_{u,t} is a semialgebraic family parametrized by (u,t) and integration over semialgebraic fibers preserves semialgebraicity. Then the centerpoint set {p : ∀u, vol(K ∩ H_{u,p·u}) ≥ vol(K)/(d+1)} is defined by a first-order formula over the reals with the volume function replaced by its semialgebraic description, yielding a semialgebraic set by Tarski's theorem. Convexity follows from the intersection-of-halfspaces characterization.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02400v1",
+    "status": "available",
+    "timestamp": "2026-07-06T21:17:05.197598+00:00",
+    "title": "Convex Semialgebraicity of Centerpoint Sets for Convex Semialgebraic Bodies"
   },
   {
     "ambition_level": "extension",

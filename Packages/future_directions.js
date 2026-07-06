@@ -32,7 +32,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lower Bound for Low Moments of Dirichlet Character Sums"
   },
   {
-    "consumed_by_exp_id": "6c71fe84",
+    "consumed_by_exp_id": "",
     "description": "There exists a finite set of vectors in l\u00b2 satisfying specific convolution inequalities such that their weighted average achieves the coefficient \u03b3\u2080=0.94601 in the bound F(N) \u2264 N^{1/2} + \u03b3\u2080N^{1/4} + O(1), and no smaller coefficient is achievable via this method.",
     "domains": [
       "Bridges"
@@ -41,7 +41,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T06:22:13.488931+00:00",
     "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
   },
@@ -3995,7 +3995,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Crystallinity criterion via regularity of triangulation parameters"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c5257493",
     "description": "For any finite subset S of BP^1(K) with at least three points, the graph T(S) constructed from equivalence classes of triples in S^3 is always a tree (i.e., it is connected and contains no cycles). This conjecture extends known observations in the paper and is falsifiable by providing a counterexample where the graph contains a cycle.",
     "domains": [
       "Pythagorean",
@@ -4005,7 +4005,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T01:19:57.095760+00:00",
     "title": "Conjecture on the tree structure of T(S) for subsets of the projective line"
   },
@@ -6298,6 +6298,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-06T21:02:58.080708+00:00",
     "title": "Piecewise Polynomial Cap-Volume Conjecture for Convex Polytopes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every countable scattered FAC poset satisfies the Aharoni-Korman property. Specifically: if P is a countable poset with no infinite antichain (FAC) and no dense subposet (scattered, meaning no subposet S where for all x < y in S there exists z in S with x < z < y), then there exists a chain C \u2286 P and a partition of P into antichains {A_i}_{i \u2208 I} such that C \u2229 A_i \u2260 \u2205 for every i \u2208 I. This conjecture naturally extends the paper's result that AK holds for countable FAC posets avoiding certain saturated chains of the form \u2295_{x\u2208\u03c9} D_x, and is motivated by the paper's central structural theorem that countable FAC posets decompose into scattered pieces.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0493",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02500v1",
+    "status": "available",
+    "timestamp": "2026-07-06T21:15:05.361921+00:00",
+    "title": "Scattered Countable FAC Posets Satisfy the Aharoni-Korman Property"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that the set of centerpoints of a convex polytope P \u2282 \u211d\u1d48 coincides with its floating body at level 1/(d+1) and is therefore semialgebraic, leveraging the piecewise-rational structure of the cap-volume function. This conjecture extends that result: for any compact convex semialgebraic set K \u2282 \u211d\u1d48 with nonempty interior, the set of centerpoints of K (with respect to Lebesgue measure restricted to K) is a convex semialgebraic set. For polytopes, piecewise-rationality of the cap-volume function gives semialgebraicity directly, but for general convex semialgebraic bodies the cap-volume function may not be piecewise rational, so new arguments (e.g., via o-minimal geometry or quantifier elimination over real closed fields with volume integrals) are needed.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0494",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02400v1",
+    "status": "available",
+    "timestamp": "2026-07-06T21:17:05.197598+00:00",
+    "title": "Convex Semialgebraicity of Centerpoint Sets for Convex Semialgebraic Bodies"
   },
   {
     "consumed_by_exp_id": "",
