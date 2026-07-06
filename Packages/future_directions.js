@@ -1840,7 +1840,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-existence of weak Ziegler pairs for high-degree plus-one generated conic-line arrangements with defect three"
   },
   {
-    "consumed_by_exp_id": "66c7a5a0",
+    "consumed_by_exp_id": "",
     "description": "For every integer d \u22657, there exists a simplicial 0/1-polytope in dimension d with exactly 2d vertices that is not centrally symmetric. This generalizes the explicit 7-dimensional counterexample to all higher dimensions, extending the classification beyond the known result for d=7.",
     "domains": [
       "Geometry"
@@ -1849,7 +1849,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31640v2",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T19:30:02.443246+00:00",
     "title": "Existence of Non-Centrally Symmetric Simplicial 0/1-Polytopes for All Dimensions \u22657"
   },
@@ -2202,7 +2202,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Variance of Homomorphism at the Root is Bounded Below by Effective Resistance"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a793b4d3",
     "description": "Analysis of the maximal number of chains required to cover strict chains in the Boolean lattice, with connections to inclusion-exclusion and logarithmic approximations.",
     "domains": [
       "Cryptography",
@@ -2212,7 +2212,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29385v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T08:04:06.155536+00:00",
     "title": "Chain Covers in the Boolean Lattice"
   },
@@ -3016,7 +3016,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the k_t lower bound given k_s in extremal graphs"
   },
   {
-    "consumed_by_exp_id": "e455828e",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: In the unramified GU(1,n-1) Rapoport\u2011Zink space of arbitrary parahoric level P, every basic Ekedahl\u2011Kottwitz\u2011Oort\u2011Rapoport (EKOR) stratum is isomorphic (as a scheme over the residue field \ud835\udd3d_q) to a finite disjoint union of copies of a explicitly defined fine Deligne\u2011Lusztig variety X(w_P) attached to a Weyl group element w_P determined by P. Moreover, the number of irreducible components equals the number of vertices in the affine Dynkin diagram of type \u00c3_{n-1} corresponding to the parahoric subgroup P, and each component is smooth and projective.",
     "domains": [
       "Algebra",
@@ -3026,7 +3026,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31940v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T15:54:12.765581+00:00",
     "title": "Basic EKOR Strata are Disjoint Unions of Fine Deligne-Lusztig Varieties"
   },
@@ -3746,7 +3746,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
   },
   {
-    "consumed_by_exp_id": "365dfbe0",
+    "consumed_by_exp_id": "",
     "description": "Let $q>3$ be an integer and $P_1,\\dots,P_{q-1}\\in\\mathbb{Q}[U]$ satisfy the hypotheses of a generalized ABC polynomial. Define the linear recurrences $(a_n)_{n\\ge0}$ and $(b_n)_{n\\ge0}$ by the characteristic polynomials $\\pi_U(X)$ and its reciprocal $X^{q}\\pi_U(1/X)$. Then there exists an effectively computable constant $C>0$ (depending only on $q$ and the $P_i$) such that the set \\[ \\{ n\\ge0 \\mid a_n = b_m \\text{ for some } m\\ge0 \\text{ and } a_n > C \\} \\] has cardinality at most two.",
     "domains": [
       "Bridges"
@@ -3755,7 +3755,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27885v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T18:31:34.889448+00:00",
     "title": "At most two large common values for generalized ABC recurrences"
   },
@@ -4185,7 +4185,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantitative Thinness of Galois\u2011Group\u2011Changing Specializations for Strongly\u202fn\u2011Genuine Polynomials"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2058237b",
     "description": "A countable FAC poset satisfies the Aharoni-Korman conjecture if and only if it does not contain a saturated chain D such that either D or its reverse is a countable direct sum of infinite co-wellfounded posets.",
     "domains": [
       "Pythagorean"
@@ -4194,7 +4194,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02500v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T16:16:00.227260+00:00",
     "title": "Characterization of the Aharoni-Korman Conjecture via Saturated Chains"
   },
@@ -4448,7 +4448,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finiteness of Rational Points on General Type Varieties"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "98188561",
     "description": "Let P be a finite poset. The main theorem shows that V\u2081(P) is an RB-domain iff P has a least element and its undirected Hasse graph is a tree. I conjecture that the four-point diamond (a poset with 4 elements where 2 incomparable elements are both below 2 incomparable maxima) is the unique minimal poset violating this: any finite poset P with fewer than 4 elements has V\u2081(P) an RB-domain, and among 4-element posets, only the four-point diamond violates the RB-domain property. This is falsifiable by either finding a smaller counterexample or proving no other 4-element poset violates the condition.",
     "domains": [
       "Pythagorean"
@@ -4457,7 +4457,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02231v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T22:13:05.785493+00:00",
     "title": "Uniqueness of the Four-Point Diamond as Minimal RB-Domain Violator in Probabilistic Powerdomains"
   },
@@ -4824,11 +4824,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For the morphisms $\\phi$ (where $\\phi(a)=abc, \\phi(b)=ac, \\phi(c)=b$) and $\\mu$ (where $\\mu(a)=a, \\mu(b)=b, \\mu(c)=cbbbc$), let $x'_k = \\phi^k(a)$ and $x_k = \\mu(x'_k)$. The conjecture states that for any $k \\ge 0$, if a $3^+$-parameterized square $w = uv$ with $|u|=|v| \\ge 3$ exists as a subword of $x_k$, then $u=v$, meaning there are no non-standard $3^+$-parameterized squares.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0380",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00674v1",
+    "status": "available",
+    "timestamp": "2026-07-06T06:55:33.590982+00:00",
+    "title": "Absence of Non-Standard 3+-Parameterized Squares in x_k"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0380",
+    "id": "fd_0381",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -4842,7 +4856,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0381",
+    "id": "fd_0382",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -4857,7 +4871,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0382",
+    "id": "fd_0383",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
@@ -4872,7 +4886,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0383",
+    "id": "fd_0384",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -4887,7 +4901,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0384",
+    "id": "fd_0385",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -4901,7 +4915,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0385",
+    "id": "fd_0386",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -4915,7 +4929,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0386",
+    "id": "fd_0387",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -4930,7 +4944,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0387",
+    "id": "fd_0388",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02011v1",
@@ -4945,7 +4959,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0388",
+    "id": "fd_0389",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -4959,7 +4973,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0389",
+    "id": "fd_0390",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02085v1",
@@ -4973,7 +4987,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0390",
+    "id": "fd_0391",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01957v1",
@@ -4988,7 +5002,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0391",
+    "id": "fd_0392",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01956v1",
@@ -5002,7 +5016,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0392",
+    "id": "fd_0393",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01744v1",
@@ -5016,7 +5030,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0393",
+    "id": "fd_0394",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01839v1",
@@ -5031,7 +5045,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0394",
+    "id": "fd_0395",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01703v1",
@@ -5045,7 +5059,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0395",
+    "id": "fd_0396",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01572v1",
@@ -5059,7 +5073,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0396",
+    "id": "fd_0397",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01680v1",
@@ -5073,7 +5087,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0397",
+    "id": "fd_0398",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01582v1",
@@ -5088,7 +5102,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0398",
+    "id": "fd_0399",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01165v1",
@@ -5103,7 +5117,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0399",
+    "id": "fd_0400",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01184v1",
@@ -5117,7 +5131,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0400",
+    "id": "fd_0401",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -5132,7 +5146,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0401",
+    "id": "fd_0402",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -5147,7 +5161,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0402",
+    "id": "fd_0403",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01028v1",
@@ -5162,7 +5176,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0403",
+    "id": "fd_0404",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00940v1",
@@ -5176,7 +5190,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0404",
+    "id": "fd_0405",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -5190,7 +5204,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0405",
+    "id": "fd_0406",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01059v1",
@@ -5205,7 +5219,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0406",
+    "id": "fd_0407",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
@@ -5219,7 +5233,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0407",
+    "id": "fd_0408",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00934v1",
@@ -5234,7 +5248,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0408",
+    "id": "fd_0409",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00930v1",
@@ -5248,7 +5262,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Logic"
     ],
-    "id": "fd_0409",
+    "id": "fd_0410",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01294v1",
@@ -5262,7 +5276,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0410",
+    "id": "fd_0411",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00814v1",
@@ -5277,13 +5291,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0411",
+    "id": "fd_0412",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00651v1",
     "status": "available",
     "timestamp": "2026-07-06T06:35:54.308705+00:00",
     "title": "Fibonacci Lower Bound for Extension-Closed Subcategories of Type A_n"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For the longest element w_0 in the Coxeter group B_n and any Coxeter element c, the normalized volume of the type B c-Birkhoff polytope equals the number of linear extensions of the heap poset Heap(c, w_0). This follows from the unimodular equivalence established in the paper and the classical result that the normalized volume of an order polytope equals the number of linear extensions of the underlying poset, but making the equality explicit and computable provides a concrete formalization target.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0413",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00646v1",
+    "status": "available",
+    "timestamp": "2026-07-06T06:55:48.094525+00:00",
+    "title": "Normalized volume of type B c-Birkhoff polytopes equals linear extension count of heap posets"
   },
   {
     "consumed_by_exp_id": "",
