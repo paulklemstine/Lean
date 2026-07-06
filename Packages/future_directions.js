@@ -4624,11 +4624,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every connected simple graph G of order at least three, the independence number \u03b1(G) is bounded below by the sum of the annihilation number a(G) and the Havel-Hakimi residue res(G), divided by the maximum degree \u0394(G). That is, \u03b1(G) \u2265 (a(G) + res(G)) / \u0394(G), or equivalently, \u03b1(G) * \u0394(G) \u2265 a(G) + res(G).",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0366",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01438v1",
+    "status": "available",
+    "timestamp": "2026-07-06T02:28:03.746874+00:00",
+    "title": "TxGraffiti Annihilation-Residue Inequality"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0366",
+    "id": "fd_0367",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -4642,7 +4656,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0367",
+    "id": "fd_0368",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -4657,7 +4671,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0368",
+    "id": "fd_0369",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
@@ -4672,7 +4686,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0369",
+    "id": "fd_0370",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -4681,31 +4695,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finitely Generated Schottky Group"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9632b543",
     "description": "Conjecture: The properly normalized extremal fluctuations of black hole microstate counts in quantum gravity converge in distribution to the Gumbel extreme value distribution. Specifically, let N(\u039b) denote the count of microstates with energy below \u039b for a holographic CFT with large central charge c. Define the extremal fluctuation \u0394N_c = max_\u039b(N(\u039b) - E[N(\u039b)])/\u221a(Var[N(\u039b)]) over \u039b in an interval. Then as c\u2192\u221e, exp(-e^(-x)) = lim_{c\u2192\u221e} P(\u0394N_c \u2264 x) in distribution. This predicts a universal tail exponent \u03b1=1 for the log-correlated field universality class.",
     "domains": [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0370",
+    "id": "fd_0371",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T21:39:27.004204+00:00",
     "title": "Gumbel Distribution for Black Hole Microstate Extremal Fluctuations"
   },
   {
-    "consumed_by_exp_id": "9632b543",
+    "consumed_by_exp_id": "",
     "description": "For any matroid of rank r \u2264 k, any two pairs of bases with the same multiset union can be transformed into each other via a sequence of symmetric exchanges.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0371",
+    "id": "fd_0372",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T21:57:06.806565+00:00",
     "title": "Symmetric Exchange Generation in Rank-Bounded Matroids"
   },
@@ -4715,7 +4729,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0372",
+    "id": "fd_0373",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -4730,7 +4744,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0373",
+    "id": "fd_0374",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02011v1",
@@ -4745,7 +4759,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0374",
+    "id": "fd_0375",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -4759,7 +4773,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0375",
+    "id": "fd_0376",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02085v1",
@@ -4773,7 +4787,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0376",
+    "id": "fd_0377",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01957v1",
@@ -4788,7 +4802,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0377",
+    "id": "fd_0378",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01956v1",
@@ -4802,7 +4816,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0378",
+    "id": "fd_0379",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01744v1",
@@ -4816,7 +4830,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0379",
+    "id": "fd_0380",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01839v1",
@@ -4831,7 +4845,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0380",
+    "id": "fd_0381",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01703v1",
@@ -4845,7 +4859,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0381",
+    "id": "fd_0382",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01572v1",
@@ -4859,7 +4873,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0382",
+    "id": "fd_0383",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01680v1",
@@ -4873,13 +4887,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0383",
+    "id": "fd_0384",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01582v1",
     "status": "available",
     "timestamp": "2026-07-06T02:05:47.460015+00:00",
     "title": "Infinite Log-Concavity of Total d-Hoggatt Numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For an algebraically closed field F of characteristic 0, integer k \u2265 18, and nonzero polynomial n \u2208 F[X], any finite set A \u2282 F[X] with property D_k(n) (meaning ab+n is a k-th power for all distinct a,b \u2208 A) satisfies |A| \u2264 6, unless n is a k-th power and A consists of scalar multiples of a square root of n.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0385",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01165v1",
+    "status": "available",
+    "timestamp": "2026-07-06T02:28:48.571935+00:00",
+    "title": "Absolute Bound for Generalized Polynomial Diophantine Tuples"
   },
   {
     "consumed_by_exp_id": "",
