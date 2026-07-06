@@ -9201,14 +9201,14 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "arXiv:2203.08506",
         "arXiv:1609.06334"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "d4da731c",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -9220,7 +9220,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0195",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-06T05:59:30.699061+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Lie algebra relations",
       "lineage_refs": [],
@@ -9235,7 +9235,7 @@
       "source": "",
       "source_exp_id": "2606.28945v1",
       "source_path": "http://arxiv.org/abs/2606.28945v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-04T10:31:32.090166+00:00",
       "title": "Conjecture on Leading Term Cancellation"
@@ -10931,7 +10931,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.CO",
         "Total Positivity",
@@ -10956,7 +10956,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0231",
-      "last_attempt_time": "2026-07-06T05:42:02.409221+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem interval_subdivision_matrix_is_tp (d : ℕ) (H_F : Matrix (Fin (d + 1)) (Fin (d + 1)) ℝ) : \n  ∀ (k : ℕ), k ≤ d → ∀ (I : Finset (Fin (d + 1))), I.card = k → ∀ (J : Finset (Fin (d + 1))), J.card = k → \n  (H_F.minor I J).det ≥ 0 := sorry",
       "lineage_refs": [],
@@ -12607,7 +12607,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Naslund–Sawin (2017)",
         "Erdős–Rado Sunflower Conjecture"
@@ -12630,7 +12630,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0266",
-      "last_attempt_time": "2026-07-06T05:42:07.518564+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sunflower_free_bound {n : ℕ} (F : Finset (Finset ℕ)) (h : ∀ (A B C : Finset ℕ), A ∈ F → B ∈ F → C ∈ F → (A ∩ B ∩ C) = (A ∩ C)) : F.card ≤ (K : ℝ) * (n : ℝ) ^ (1/6 : ℝ) * (3 / (2 : ℝ) ^ (2/3 : ℝ)) ^ n := by sorry",
       "lineage_refs": [],
@@ -14857,7 +14857,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "arXiv:2310.12345 [math.CO]"
       ],
@@ -14879,7 +14879,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0313",
-      "last_attempt_time": "2026-07-06T05:42:12.766381+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "\\(\\text{theorem main} \\ (G \\ : \\text{Graph}) \\ (d \\ : \\mathbb{N}) \\ (\\epsilon \\ : \\mathbb{Q}^+) \\ (p \\ : \\mathbb{Q}) \\ (n \\ : \\mathbb{N}) \\ \\text{Hypothesis} \\ \\text{(Hyp1: } \\text{average_degree G = d}) \\ \\text{(Hyp2: } p \\ge \\epsilon d / \\log n) \\ \\text{(Hyp3: } p \\le d / \\log n) \\ \\text{(Hyp4: } n \\ge K(\\epsilon, d)) \\ \\text{conclude} \\ \\text{(exists}\\ C \\ : \\text{Cycle}) \\ \\text{(cycle_length C) \\ge (1 - \\epsilon) \\* d}) \\\\)",
       "lineage_refs": [],
@@ -17950,6 +17950,52 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.CO",
+        "De Bruijn and Erdős cake cutting"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any recipe σ of length p and r ≥ 1, if the number of periods m is at least 2⌈r/p⌉, then the asymptotic maximum-to-minimum ratio μ_r(σ) equals the greatest ratio that occurs during the phase with m periods.",
+      "domain_bridges": [
+        "Combinatorics",
+        "Real Analysis"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0377",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem cake_cutting_phase_ratio {p : ℕ} (σ : Equiv.Perm (Fin p)) {r : ℕ} (hr : 0 < r) {m : ℕ} \n    (hm : m ≥ 2 * ((r + p - 1) / p)) :\n    μ_r σ r = (⨆ k ∈ Icc p (m * p + p), μ_n_r σ k r) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize the sequence of cuts for a recipe σ, define the ratio μ_n_r of max to min sizes of r consecutive pieces, and show that the limsup μ_r equals the supremum of μ_n_r over the finite range of n corresponding to the phase with m periods.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.00775v1",
+      "source_path": "http://arxiv.org/abs/2607.00775v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-06T05:58:50.737632+00:00",
+      "title": "Periodic Cake Cutting Phase Ratio"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "Theorem A",
         "Proposition big"
       ],
@@ -17970,7 +18016,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0377",
+      "id": "fd_0378",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "def λ (n : ℕ) : Partition n :=\n  ⟨List.replicate (n / 2) 2 ++ if n % 2 = 1 then [1] else [],\n   by sorry, by sorry⟩\n\ntheorem max_parts_achieved_by_all_twos (n : ℕ) (hn : n ≥ 1) : λ n ∈ Ω₂ n := by sorry",
@@ -18018,7 +18064,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0378",
+      "id": "fd_0379",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀c>0, ∃G: no_cycle_length d ∧ min_deletions(G) ≥ cd |V(G)|",
@@ -18065,7 +18111,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0379",
+      "id": "fd_0380",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem fixed_genus_spectral_gap_lower_bound {g : ℕ} (hg : 0 < g) {n : ℕ} (hn : n > 2 * g) : ∃ (C : ℝ), 0 < C ∧ ∀ (x y : chord_diagram n g), (1 - C / (n : ℝ)) * dist x y ≤ dist (swap x y) (swap y x) := by sorry",
@@ -18106,7 +18152,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0380",
+      "id": "fd_0381",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "finite_generation",
@@ -18155,7 +18201,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0381",
+      "id": "fd_0382",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem black_hole_extremal_gumbel (c : ℝ) (h : c > 0) : let N_dist := lambda_microstate_count_dist c in let ΔN := extremal_fluctuation N_dist in (∃ (normalization : ℝ → ℝ), weak_convergence (distribution_of (normalization ∘ ΔN)) (gumbel_distribution))",
@@ -18202,7 +18248,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0382",
+      "id": "fd_0383",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀ {r : ℕ} (k : ℕ) (M : Matroid r), (∀ {B1 B2 B1' B2' : Basis M} (h : MultisetUnion B1 B2 = MultisetUnion B1' B2'), ∃ (seq : List (SymmetricExchange M)), seq ≡ TransformBases (B1, B2) (B1', B2') seq)",
@@ -18250,7 +18296,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0383",
+      "id": "fd_0384",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem spectral_transfer_sharpness (C : AdmissibleClass) : (∃ H : SimpleGraph, is_bipartite H ∧ vertex_count H = 5 ∧ edge_count H = 4) ∧ (∀ W : Graphon, W ∈ C → t(H, W) ≥ (spectral_radius W)^(2*4 - 5) * (density W)^(5 - 4)) ∧ ¬ (∀ W : Graphon, W ∈ C → t(H, W) ≥ (density W)^4)",
@@ -18301,7 +18347,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0384",
+      "id": "fd_0385",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "/-- Conjecture: The μ‑invariant of the module generated by the spectral resultant equals the maximal p‑adic valuation of the resultant at torsion characters. -/\n\ntheorem spectral_resultant_mu_invariant\n  (X : Graph) (alpha : VoltageAssignment X) (P : Polynomial) :\n  let R := spectral_resultant X alpha P;\n  let M := fitting_module_zero R;\n  μ M = Finset.sup (Finset.image (fun χ => v_p (R χ)) torsionCharacters) (·) :=\n  by\n    -- TODO: formalise the Kida‑type formula and prove the equality.\n    admit",
@@ -18351,7 +18397,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0385",
+      "id": "fd_0386",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mdr_counterexample : exists f g : arrangement_of_lines_in_P2, (mdr f = 4) ∧ (mdr g = 5) ∧ (intersection_lattice f = intersection_lattice g) ∧ (degree f = 9) ∧ (mdr f < 9 / 2)",
@@ -18399,7 +18445,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0386",
+      "id": "fd_0387",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem bivariate_egf_snail_race (m : ℕ) (hm : m ≥ 1) : (∑' (n : ℕ), ∑' (k : ℕ), (r_m n k : ℝ) * x ^ n / n! * y ^ k) = 1 / (1 - (∑' (i : ℕ), if 1 ≤ i ∧ i < m then x ^ i / i! else 0) - y * (Real.exp x - 1 - ∑' (i : ℕ), if 1 ≤ i ∧ i < m then x ^ i / i! else 0)) := by sorry",
@@ -18446,7 +18492,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0387",
+      "id": "fd_0388",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem generalized_hurwitz_formula (K : Type*) [nf : NarrowClassNumberOne K] (D : ℤ) [hd : FundamentalDiscriminant D] : ∃ (F : Type*) [ quartic_CM_field F ] [discriminant F = D], H_g K D = (class_number F) / 2",
@@ -18499,7 +18545,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0388",
+      "id": "fd_0389",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem smoothed_sigma_error_integral_negative (x : ℝ) : x ≥ 1 → ∫ (t : ℝ) in 1..x, (∑ n in Finset.range (⌊t⌋ + 1) with 1 ≤ n, σ n - (t^2 * π^2 / 6)) / t^2 < 0",
@@ -18548,7 +18594,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0389",
+      "id": "fd_0390",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem yin_gross_zagier_formula_p7 :\n  let E : EllipticCurve ℚ := ⟨![0, 0, 0, 49 / 4, 0], by decide⟩\n  let P := E.point 84 756 (by decide)\n  L_derivative E 1 / Omega E = (1 / 2) * height ℚ P :=\n  by sorry",
@@ -18598,7 +18644,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0390",
+      "id": "fd_0391",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem shifted_t_schur_plethystic_identity\n    {R : Type*} [CommRing R] [IsDomain R]\n    (λ : StrictPartition) (t : R) :\n    shiftedTSchur λ t =\n      schurQ λ (plethysticSubst (fun ω => ω - t • ω) oddPowerSumAlgebra) := by\n  sorry",
@@ -18647,7 +18693,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0391",
+      "id": "fd_0392",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.NumberTheory.RayClassGroup\n\n-- Conjecture: Unconditional Euclidean Systems for Ray Classes\ntheorem unconditional_euclidean_system_ray_class \n    {K : Type*} [Field K] [NumberField K]\n    [IsGalois K ℚ] [IsTotallyReal K] \n    (h_deg : FiniteDimensional.finrank K ℚ ≥ 3)\n    (p : ℕ) (hp : Nat.Prime p) (hp_odd : Odd p) \n    (h_not_split : ¬ SplitsCompletely p (𝓞 K))\n    {N : ℕ} (hN : 0 < N)\n    (C : Set (RayClassGroup K (Ideal.map (algebraMap ℤ (𝓞 K)) (Ideal.span {(p : ℤ)}) ^ N)))\n    (h_gen : GeneratesRayClassGroup C) :\n    IsEuclideanSystemOfRayClasses C := by\n  sorry",
@@ -18696,7 +18742,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0392",
+      "id": "fd_0393",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "def eulerian (n k : ℕ) : ℕ := sorry\n\ndef eulerianSquare (n k : ℕ) : ℕ :=\n  ∑ j ∈ Finset.range (n + 1), eulerian n j * eulerian j k\n\ndef eulerianSquareRGF (n : ℕ) : Polynomial ℝ :=\n  ∑ k ∈ Finset.range (n + 1), (eulerianSquare n k : ℝ) • Polynomial.X ^ k\n\ntheorem eulerian_square_real_rooted (n : ℕ) :\n    ∀ z : ℂ, (eulerianSquareRGF n).IsRoot z → z.im = 0 := by\n  sorry",
@@ -18744,7 +18790,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0393",
+      "id": "fd_0394",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "def numCopiesK_ab (G : SimpleGraph V) [DecidableRel G.Adj] [Fintype V] [DecidableEq V] (a b : ℕ) : ℕ := \n  (Finset.univ.filter (fun (A : Finset V) => A.card = a)).attach.sum fun A =>\n  (Finset.univ.filter (fun (B : Finset V) => B.card = b ∧ Disjoint A.1 B ∧ ∀ x ∈ A.1, ∀ y ∈ B, G.Adj x y)).card\n\ntheorem upper_bound_ex_K_ab_K_3_b_plus_one (a b : ℕ) (h : 3 ≤ a ∧ a ≤ b) :\n    ∃ C : ℝ, ∀ n : ℕ, ∀ G : SimpleGraph (Fin n) [DecidableRel G.Adj],\n      (∀ (A : Finset (Fin n)) (B : Finset (Fin n)), A.card = 3 → B.card = b + 1 → Disjoint A B →\n        ∃ x ∈ A, ∃ y ∈ B, ¬ G.Adj x y) →\n      (numCopiesK_ab G a b : ℝ) ≤ C * n^3 :=\n  sorry",
@@ -18792,7 +18838,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0394",
+      "id": "fd_0395",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Algebra.BigOperators.Group.Finset.Basic\nimport Mathlib.Data.Nat.Choose.Basic\nimport Mathlib.Tactic\n\n-- Placeholder for the d-Hoggatt entry det(binomial(n+i, k+j))\ndef hoggattEntry (d n k : ℕ) : ℤ := 0\n\n-- Total d-Hoggatt number H_d(n)\ndef totalHoggatt (d n : ℕ) : ℤ :=\n  (Finset.range (n + 1)).sum fun k => hoggattEntry d n k\n\n-- Log-concavity operator on sequences\n@[simp]\ndef logConcavityOp (a : ℕ → ℝ) : ℕ → ℝ := fun n => (a n)^2 - a (n - 1) * a (n + 1)\n\n-- Infinite log-concavity of total Hoggatt numbers\ntheorem infinite_log_concavity_total_hoggatt (d m : ℕ) (n : ℕ) (hn : 1 ≤ n) :\n    (logConcavityOp^[m] (fun k => (totalHoggatt d k : ℝ))) n ≥ 0 := by\n  sorry",
@@ -18841,7 +18887,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0395",
+      "id": "fd_0396",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem abs_bound_diophantine_tuple (F : Type*) [Field F] [IsAlgClosed F] [CharZero F] (k : ℕ) (hk : 18 ≤ k) (n : F[X]) (hn : n ≠ 0) (A : Finset F[X]) (hDk : ∀ a ∈ A, ∀ b ∈ A, a ≠ b → ∃ c : F[X], a * b + n = c ^ k) (h_exc : ¬ (∃ s t : F[X], s ^ 2 = n ∧ n = t ^ k ∧ ∀ a ∈ A, ∃ u : F, a = s * algebraMap F F[X] u)) : A.card ≤ 6 := by sorry",
@@ -18888,7 +18934,7 @@
         "Computation"
       ],
       "github_issue": 0,
-      "id": "fd_0396",
+      "id": "fd_0397",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem low_moment_char_sum_asymptotic (q : ℝ) (hq : 0 < q) (hq' : q < 1) (ε : ℝ) (hε : 0 < ε) :\n    ∃ N : ℕ, ∀ r : ℕ, r.Prime → r ≥ N → ∀ x : ℕ,\n      (1 : ℝ) ≤ x ∧ (x : ℝ) ≤ (r : ℝ)^(1/2 - ε) →\n      abs (((∑ χ : DirichletCharacter (ZMod r),\n          ‖∑ n ∈ Finset.Icc 1 x, χ n‖^(2 * q)) / (r - 1)) / (x : ℝ)^q\n        - randomMultiplicativeMomentConstant q) < ε :=\n  sorry",
@@ -18934,7 +18980,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0397",
+      "id": "fd_0398",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem infinite_pachner_theorem {d : ℕ} {M : PLManifold d} {S T : LocallyFiniteTriangulation M} (hS : Triangulates S M) (hT : Triangulates T M) : ExistsωSequenceBistellarMoves S T",
@@ -18983,7 +19029,7 @@
         "Logic"
       ],
       "github_issue": 0,
-      "id": "fd_0398",
+      "id": "fd_0399",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sidon_bound_secondary_term :\n    ∃ C : ℝ, ∀ N : ℕ, N ≥ 1 →\n    F N ≤ Real.sqrt N + 0.94601 * Real.sqrt (Real.sqrt N) + C :=\n  by sorry",
@@ -19032,7 +19078,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0399",
+      "id": "fd_0400",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem A3_formality_Demushkin_iff (p : ℕ) [hp : Fact (Nat.Prime p)]\n    (G : Type*) [TopologicalSpace G] [CompactSpace G]\n    [ProPGroup G p] [DemushkinGroup G p] :\n    A3Formal (ContinuousCochainsDGA G (ZMod p)) ↔ invariant_q G hp.out ≠ 3 := by\n  sorry",
@@ -19083,7 +19129,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0400",
+      "id": "fd_0401",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem generalized_BGHT_signed_schur_positivity (n r : ℕ) (μ λ : YoungPartition) (hμ : μ.size = n) (hλ : λ.size = n) :\n  ∀ i j : ℕ, ((-1 : ℤ)^(μ.size - μ.numParts)) * (innerProduct (nablaPow r (m μ)) (s λ)).coeff i j ≥ 0 := by\n  sorry",
@@ -19131,7 +19177,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0401",
+      "id": "fd_0402",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem dichotomy_count_rank_bounds {M M' n : ℕ} {E : Set (Fin n → ℝ)} (hE : E.Finite) (Φ : (Fin n → ℝ) → Fin M' → ℝ) (r s : ℕ) (hr : r = FiniteField.rank (Fin.map Φ ∘ Subtype.val '' E)) (hs : s = kruskal_rank (Fin.map Φ ∘ Subtype.val '' E)) (hs_le : s ≤ r) : cover_count s n ≤ dichotomy_count Φ E ∧ dichotomy_count Φ E ≤ cover_count r n := by\n  sorry\n\ndef cover_count (d n : ℕ) : ℕ := 2 * (Finset.range (min d n)).sum (fun k => Nat.choose (n - 1) k)\n\ndef kruskal_rank {m n : ℕ} (v : Fin m → Fin n → ℝ) : ℕ := Finset.sup (Finset.range m) (fun s => if ∀ (S : Finset (Fin m)), S.card = s + 1 → LinearIndependent ℝ (fun i => v i) then s + 1 else 0)",
@@ -19176,7 +19222,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0402",
+      "id": "fd_0403",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tightness_3Δ_minus_1 : ∀ Δ : ℕ, Δ ≥ 1 → ∃ (G : SimpleGraph ℕ), G.max_degree = Δ ∧ min_agents_SD_EF1 G = 3 * Δ - 1",
@@ -19217,7 +19263,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0403",
+      "id": "fd_0404",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "dimension formula involving $p$",
@@ -19265,7 +19311,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0404",
+      "id": "fd_0405",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Finset.SymmDiff\n\ntheorem extended_1_2_3_conjecture (A : Finset ℕ) (n : ℕ) (hA : A.Nonempty) :\n    (Finset.fold Finset.symmDiff ∅\n      (Finset.image (fun k => Finset.image (fun a => (k + 1) * a) A) (Finset.range n))).card ≥ n := by\n  sorry",
@@ -19314,7 +19360,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0405",
+      "id": "fd_0406",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem folklore_irreducibility_fractional_slope_even_weight (p : ℕ) [hp : Fact (Nat.Prime p ∧ Odd p)] (k : ℕ) (hk : Even k ∧ 2 ≤ k) (a_p : ¯Q_p) (h_frac : 0 < v a_p ∧ v a_p ∉ ℤ) : Irreducible (mod_p_reduction (V_cryst k a_p)) := by sorry",
@@ -19334,6 +19380,55 @@
       "thread_id": "",
       "timestamp": "2026-07-06T05:41:57.869825+00:00",
       "title": "Irreducibility of mod p reductions of crystalline representations at fractional slope and even weight"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "05C57",
+        "91A43",
+        "05C38"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any fixed $k \\ge 4$, there exists a natural number $N$ such that for all $n \\ge N$ and integers $q$, if $q > \\sqrt[k-1]{(k-1)\\left(\\frac{2(k-1)}{k}\\right)^{k-2}n^{k-2}}$, then Breaker has a constructive winning strategy in the Maker-Breaker $C_k$-game on the complete graph $K_n$ with bias $q$.",
+      "domain_bridges": [
+        "combinatorial_games",
+        "graph_theory",
+        "constructive_mathematics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Logic"
+      ],
+      "github_issue": 0,
+      "id": "fd_0407",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem breaker_wins_Ck_game (k : ℕ) (hk : k ≥ 4) :\n    ∃ N : ℕ, ∀ n q : ℕ, n ≥ N → \n    (q : ℝ) > (k - 1 : ℝ)^(1/(k - 1)) * ((2*(k - 1) : ℝ)/(k : ℝ))^((k - 2)/(k - 1)) * (n : ℝ)^((k - 2)/(k - 1)) →\n    BreakerWins (maker_breaker_Ck_game k n q) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Define the Maker-Breaker game state as a pair of disjoint edge subsets of $K_n$. Formalize the specific potential function $\\Phi$ for $C_k$ introduced by Glazik and Srivastav. Prove that Breaker's constructive strategy of selecting edges to minimize the potential guarantees that the potential remains bounded, which strictly implies that Maker cannot claim all edges of any copy of $C_k$.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.01294v1",
+      "source_path": "http://arxiv.org/abs/2607.01294v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-06T05:59:25.887985+00:00",
+      "title": "Constructive Breaker Winning Strategies in the Maker-Breaker $C_k$-Game"
     },
     {
       "ambition_level": "extension",
@@ -19380,8 +19475,6 @@
   "recent_domain_counts": {},
   "recent_theme_keywords": {},
   "selection_log": [
-    "cross_domain_bridge",
-    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
