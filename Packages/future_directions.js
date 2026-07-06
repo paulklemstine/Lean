@@ -2392,7 +2392,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existenceof a Reduced Planar Convex Body Exceeding Lassak's Area Bound"
   },
   {
-    "consumed_by_exp_id": "9367fe9e",
+    "consumed_by_exp_id": "",
     "description": "For weight 1/2 sesquiharmonic Maass forms of moderate growth, the weighted Riesz mean of Hurwitz class numbers has an asymptotic expansion of the form \u2211_{n\u2264X} H(n) \u00d7 weight(n) \u223c C X^\u03b1 log^k X as X\u2192\u221e, where C, \u03b1, and k depend on the Maass form's spectral parameters.",
     "domains": [
       "Physics"
@@ -2401,7 +2401,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28657v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T14:41:26.130876+00:00",
     "title": "Asymptotic Expansion of Weighted Riesz Means for Sesquiharmonic Maass Forms"
   },
@@ -2987,7 +2987,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Functional Equations Enforce Primitivity of Coefficients"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ca07a019",
     "description": "For increasing Boolean functions f,g:{0,1}^n\u2192{0,1}, if the covariance exceeds the right-hand side of the FKKK inequality by at most a small \u03b5, then either f and g depend on disjoint sets of coordinates, or they are both dictatorships on the same coordinate, or after permuting coordinates and possibly swapping f,g they are L^2-close to the two-coordinate AND-OR pair (x_i x_j, x_i \u2228 x_j).",
     "domains": [
       "Physics"
@@ -2996,7 +2996,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.32024v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T15:19:41.775801+00:00",
     "title": "Stability of the sharp diagonal spectral correlation inequality for monotone Boolean functions"
   },
@@ -3732,7 +3732,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equivalenceof Shahidi's Partial Bessel Functions and Partial Bessel Integrals in Exterior Cube \u03b3-factor Stability"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c02bcba5",
     "description": "The number of nonzero orbits of Boolean cubic forms in 10 variables under the action of GL(10,2) is exactly 3,691,560. This is the main classification result of the paper, verified by both Burnside's lemma and the orbit-stabilizer theorem.",
     "domains": [
       "Bridges"
@@ -3741,7 +3741,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28473v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T17:47:18.653210+00:00",
     "title": "Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
   },
@@ -4666,44 +4666,58 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
+    "description": "Conjectures that the set of indices n for which the coefficients V_2(n) of the q-series v_2(q) = sum_{n>=1} q^{2n^2-n} / (-q; q^2)_n violate the alternating sign pattern (-1)^{n+1} V_2(n) > 0 is finite. The paper proves that this set has natural density zero using an adapted circle method, but finiteness remains open and requires effective bounds on the asymptotic error terms.",
     "domains": [
-      "Algebra"
+      "Pythagorean"
     ],
     "id": "fd_0369",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2607.02433v1",
+    "source_exp_id": "2607.01210v1",
     "status": "available",
-    "timestamp": "2026-07-05T19:45:16.570930+00:00",
-    "title": "The all-twos partition achieves the maximum number of parts in \u03a9\u2082(n)"
+    "timestamp": "2026-07-06T03:25:41.012336+00:00",
+    "title": "Finiteness of Sign Exceptions for Andrews' q-Series v_2"
   },
   {
     "consumed_by_exp_id": "1e8c0c26",
-    "description": "There exists a graph G without a cycle of length d such that at least cd n edge deletions are required to transform G into a graph where each connected component has a vertex cover of size at most (1+c)d.",
+    "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
     "domains": [
-      "Bridges"
+      "Algebra"
     ],
     "id": "fd_0370",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2607.02483v1",
+    "source_exp_id": "2607.02433v1",
     "status": "in_progress",
+    "timestamp": "2026-07-05T19:45:16.570930+00:00",
+    "title": "The all-twos partition achieves the maximum number of parts in \u03a9\u2082(n)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "There exists a graph G without a cycle of length d such that at least cd n edge deletions are required to transform G into a graph where each connected component has a vertex cover of size at most (1+c)d.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0371",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02483v1",
+    "status": "available",
     "timestamp": "2026-07-05T20:11:01.715515+00:00",
     "title": "Tightness of Edge Deletion Bound in Hyperstability Extension of Erd\u0151s-Gallai Theorem"
   },
   {
-    "consumed_by_exp_id": "9632b543",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any fixed genus g > 0, there exists a constant C_g > 0 such that the spectral gap \u03b3_{n,g} of the fixed genus chord swap chain on chord diagrams with n chords and genus g satisfies \u03b3_{n,g} \u2265 C_g / n for all n > 2g.",
     "domains": [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0371",
+    "id": "fd_0372",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T20:44:48.765213+00:00",
     "title": "Polynomial spectral gap lower bound for fixed genus chord swap chain"
   },
@@ -4714,7 +4728,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0372",
+    "id": "fd_0373",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -4729,7 +4743,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0373",
+    "id": "fd_0374",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -4743,7 +4757,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0374",
+    "id": "fd_0375",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -4757,7 +4771,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0375",
+    "id": "fd_0376",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -4772,7 +4786,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0376",
+    "id": "fd_0377",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02011v1",
@@ -4787,7 +4801,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0377",
+    "id": "fd_0378",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -4801,7 +4815,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0378",
+    "id": "fd_0379",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02085v1",
@@ -4815,7 +4829,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0379",
+    "id": "fd_0380",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01957v1",
@@ -4830,7 +4844,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0380",
+    "id": "fd_0381",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01956v1",
@@ -4844,7 +4858,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0381",
+    "id": "fd_0382",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01744v1",
@@ -4858,7 +4872,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0382",
+    "id": "fd_0383",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01839v1",
@@ -4873,7 +4887,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0383",
+    "id": "fd_0384",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01703v1",
@@ -4887,7 +4901,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0384",
+    "id": "fd_0385",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01572v1",
@@ -4901,7 +4915,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0385",
+    "id": "fd_0386",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01680v1",
@@ -4915,7 +4929,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0386",
+    "id": "fd_0387",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01582v1",
@@ -4930,7 +4944,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0387",
+    "id": "fd_0388",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01165v1",
@@ -4945,7 +4959,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0388",
+    "id": "fd_0389",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01184v1",
@@ -4959,13 +4973,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0389",
+    "id": "fd_0390",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
     "status": "available",
     "timestamp": "2026-07-06T03:06:43.829580+00:00",
     "title": "Infinite Pachner's Theorem for Locally Finite Triangulations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The maximum cardinality F(N) of a Sidon subset of {0, 1, ..., N-1} satisfies F(N) \u2264 N^(1/2) + 0.94601 N^(1/4) + O(1). This conjecture proposes formalizing this main theorem, which improves the previously best-known coefficient of the N^(1/4) term from 0.97633 to 0.94601. The proof relies on a vector-valued smoothing lemma and a finite rational certificate verified by exact arithmetic, both of which are highly amenable to formalization in Lean 4.",
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_0391",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01169v1",
+    "status": "available",
+    "timestamp": "2026-07-06T03:26:11.699670+00:00",
+    "title": "Explicit Secondary Term Bound for Sidon Sets"
   },
   {
     "consumed_by_exp_id": "",

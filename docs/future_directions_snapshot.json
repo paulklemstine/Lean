@@ -4360,7 +4360,7 @@
       "DukeImamogluToth19",
       "BRR3"
     ],
-    "consumed_by_exp_id": "9367fe9e",
+    "consumed_by_exp_id": "",
     "description": "For weight 1/2 sesquiharmonic Maass forms of moderate growth, the weighted Riesz mean of Hurwitz class numbers has an asymptotic expansion of the form ∑_{n≤X} H(n) × weight(n) ∼ C X^α log^k X as X→∞, where C, α, and k depend on the Maass form's spectral parameters.",
     "domain_bridges": [
       "harmonic Maass forms",
@@ -4376,7 +4376,7 @@
     "proof_strategy": "Analyze the spectral decomposition of the introduced L-functions and apply Tauberian techniques to extract coefficients from the Riesz mean.",
     "research_mode": "team",
     "source_exp_id": "2606.28657v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T14:41:26.130876+00:00",
     "title": "Asymptotic Expansion of Weighted Riesz Means for Sesquiharmonic Maass Forms"
   },
@@ -5454,7 +5454,7 @@
     "catalog_references": [
       "arXiv:2405.12345"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ca07a019",
     "description": "For increasing Boolean functions f,g:{0,1}^n→{0,1}, if the covariance exceeds the right-hand side of the FKKK inequality by at most a small ε, then either f and g depend on disjoint sets of coordinates, or they are both dictatorships on the same coordinate, or after permuting coordinates and possibly swapping f,g they are L^2-close to the two-coordinate AND-OR pair (x_i x_j, x_i ∨ x_j).",
     "domain_bridges": [
       "Fourier analysis on the Boolean cube",
@@ -5470,7 +5470,7 @@
     "proof_strategy": "Use the inductive four-restriction scheme from the original proof to isolate the deficit term, apply a sharp Bonami-Beckner inequality to control higher-degree Fourier mass, and invoke an invariance principle to reduce to Gaussian space where the extremal configurations are classified via Ehrhard-type inequalities.",
     "research_mode": "team",
     "source_exp_id": "2606.32024v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T15:19:41.775801+00:00",
     "title": "Stability of the sharp diagonal spectral correlation inequality for monotone Boolean functions"
   },
@@ -6829,7 +6829,7 @@
     "catalog_references": [
       "Classification of Boolean Cubic Forms in Ten Variables"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c02bcba5",
     "description": "The number of nonzero orbits of Boolean cubic forms in 10 variables under the action of GL(10,2) is exactly 3,691,560. This is the main classification result of the paper, verified by both Burnside's lemma and the orbit-stabilizer theorem.",
     "domain_bridges": [
       "alternating trilinear forms",
@@ -6845,7 +6845,7 @@
     "proof_strategy": "Formalize the rank-stratified enumeration algorithm used in the paper, including the construction of representatives, computation of stabilizers, and verification via Burnside's lemma and orbit-stabilizer identity. This requires developing a library for Boolean cubic forms, the action of GL(10,2), and efficient orbit enumeration.",
     "research_mode": "team",
     "source_exp_id": "2606.28473v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T17:47:18.653210+00:00",
     "title": "Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
   },
@@ -8567,10 +8567,36 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.NT",
+      "Ramanujan's Lost Notebook"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjectures that the set of indices n for which the coefficients V_2(n) of the q-series v_2(q) = sum_{n>=1} q^{2n^2-n} / (-q; q^2)_n violate the alternating sign pattern (-1)^{n+1} V_2(n) > 0 is finite. The paper proves that this set has natural density zero using an adapted circle method, but finiteness remains open and requires effective bounds on the asymptotic error terms.",
+    "domain_bridges": [
+      "q-series",
+      "Analytic Number Theory",
+      "Effective Asymptotics"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0369",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Obtain effective explicit bounds for the error terms in the asymptotic formulas for V_2(n) derived via the circle method, demonstrating that the main term strictly dominates the error term for all sufficiently large n, thereby forcing the strict alternating sign pattern eventually.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01210v1",
+    "status": "available",
+    "timestamp": "2026-07-06T03:25:41.012336+00:00",
+    "title": "Finiteness of Sign Exceptions for Andrews' q-Series v_2"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Theorem A",
       "Proposition big"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1e8c0c26",
     "description": "For every positive integer n, the partition λ_n consisting of ⌊n/2⌋ parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set Ω_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound ⌈n/2⌉ on the number of parts of partitions in Ω_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
     "domain_bridges": [
       "representation theory of symmetric groups",
@@ -8580,13 +8606,13 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0369",
+    "id": "fd_0370",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the explicit description of the 2-Sylow subgroup of S_n as an iterated wreath product and the Murnaghan-Nakayama rule to compute the multiplicity of the irreducible character χ^{λ_n} in the permutation character (1_P)↑^{S_n}. Alternatively, use the characterization of Ω_2(n) via 2-quotients of partitions (as in [G17]) and verify that the 2-quotient of λ_n satisfies the required condition. Another approach is to use the known results on the restriction of irreducible characters to Sylow 2-subgroups and the fact that λ_n is a partition with all parts ≤ 2.",
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T19:45:16.570930+00:00",
     "title": "The all-twos partition achieves the maximum number of parts in Ω₂(n)"
   },
@@ -8598,7 +8624,7 @@
       "vertex cover",
       "graph modifications"
     ],
-    "consumed_by_exp_id": "1e8c0c26",
+    "consumed_by_exp_id": "",
     "description": "There exists a graph G without a cycle of length d such that at least cd n edge deletions are required to transform G into a graph where each connected component has a vertex cover of size at most (1+c)d.",
     "domain_bridges": [
       "Stability theory in graph algorithms",
@@ -8607,13 +8633,13 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0370",
+    "id": "fd_0371",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a specific graph achieving the lower bound via Pokrovskiy's structure theorem",
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T20:11:01.715515+00:00",
     "title": "Tightness of Edge Deletion Bound in Hyperstability Extension of Erdős-Gallai Theorem"
   },
@@ -8622,7 +8648,7 @@
     "catalog_references": [
       "Lando-Zvonkin, Graphs on Surfaces (2004)"
     ],
-    "consumed_by_exp_id": "9632b543",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any fixed genus g > 0, there exists a constant C_g > 0 such that the spectral gap γ_{n,g} of the fixed genus chord swap chain on chord diagrams with n chords and genus g satisfies γ_{n,g} ≥ C_g / n for all n > 2g.",
     "domain_bridges": [
       "graph theory",
@@ -8633,13 +8659,13 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0371",
+    "id": "fd_0372",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish a conductance lower bound via a suitable coupling argument that relates chord swaps to graph-theoretic moves, and then use known inequalities to translate this into a polynomial lower bound on the spectral gap for fixed genus.",
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T20:44:48.765213+00:00",
     "title": "Polynomial spectral gap lower bound for fixed genus chord swap chain"
   },
@@ -8653,7 +8679,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0372",
+    "id": "fd_0373",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "induction",
@@ -8681,7 +8707,7 @@
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0373",
+    "id": "fd_0374",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the connection via holography: (1) Prove interval counting for high-dimension CFT primaries follows log-correlated field statistics, (2) Show the extremal process converges to Gumbel by analyzing the correlation structure of the underlying Gaussian free field, (3) Translate to AdS side via HKLL reconstruction to bound semiclassical path integral resolution. Use modular invariance and sparseness conditions to control the tail behavior rigorously.",
@@ -8707,7 +8733,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0374",
+    "id": "fd_0375",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive argument on rank bounds combined with matroid minors analysis",
@@ -8734,7 +8760,7 @@
     "domains": [
       "Physics"
     ],
-    "id": "fd_0375",
+    "id": "fd_0376",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a doubly nonnegative graphon W where the spectral inequality t(H,W) ≥ ρ(W)^{2e(H)-v(H)} p(W)^{v(H)-e(H)} holds but t(H,W) < p(W)^{e(H)} fails, demonstrating the equivalence's optimality in the v(H) ≤ e(H) range.",
@@ -8764,7 +8790,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0376",
+    "id": "fd_0377",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof would proceed by (1) constructing the Iwasawa module M as the Fitting module of the spectral resultant using the universal Grover‑Ihara polynomial; (2) applying the structure theorem for finitely generated Δ_₂[[Γ]]‑modules to express μ(M) and λ(M) in terms of elementary divisors; (3) evaluating the resultant at torsion characters χ∈̀_hat{Δ}_₂^× and showing via equivariant descent that the elementary divisors are precisely the values v_p(R(χ)); (4) incorporating the Bass factor (A^2‑1) by factoring det P(U_n) into a coprime part and a power of the Bass factor, and comparing the resulting contributions to the λ‑term. The key technical step is to prove an equivariant Kida formula for the spectral resultant without integrality assumptions, using the factorization for p‑group covers from the paper and a careful analysis of the local units at χ(1)=±1.",
@@ -8793,7 +8819,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0377",
+    "id": "fd_0378",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Explicit construction of arrangements with controlled intersection multiplicities, followed by computation of \\(\\mdr(f)\\) via graded module generation and analysis of Jacobian syzygies using symbolic computation in Lean 4.",
@@ -8820,7 +8846,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0378",
+    "id": "fd_0379",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Interpret r_m(n,k) as counting labelled structures: an ordered partition where each block is either a 'non-tie' of size < m (weight 1) or a 'tie' of size ≥ m (weight y). The exponential generating function for non-tie blocks is A_m(x), for tie blocks is B_m(x). A sequence of such blocks has EGF 1/(1 - (A_m(x) + y B_m(x))). Equating coefficients yields the formula.",
@@ -8846,7 +8872,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0379",
+    "id": "fd_0380",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Verify the conjectured formula by computing class numbers of explicitly constructed quartic CM fields and comparing them to the generalized Hurwitz class numbers defined via the trace formula. This requires formalizing quartic field construction, class group computations, and the definition of H_g(D) in Lean.",
@@ -8878,7 +8904,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0380",
+    "id": "fd_0381",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Verify the conjecture computationally for x ∈ [1, 650) by establishing explicit bounds on D(t) in this range, then combine with the asymptotic result from the paper. The key insight is that the weight (1-x/n) in the smoothed sum eliminates the difficult ψ-term, making the error term fundamentally more tractable than in the classical Walfisz problem.",
@@ -8906,7 +8932,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0381",
+    "id": "fd_0382",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Hasse-Weil L-function derivative at s=1 and the Neron-Tate height of the explicitly defined rational point P_7 = (84, 756) on E_7, and verify their equality using the explicit formula and height computations outlined in Yin's paper.",
@@ -8935,7 +8961,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0382",
+    "id": "fd_0383",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the odd power-sum ring $\\Gamma_t = \\mathbb{Q}(t)[p_1, p_3, p_5, \\ldots]$ as a graded Hopf algebra over $\\mathbb{Q}(t)$. Define the diagonal automorphism $\\mathcal{R}_t$ rescaling $p_n \\mapsto (1-t^n)p_n$ for odd $n$, and prove it is a Hopf algebra automorphism. Define the classical Schur $Q$ vertex operator $\\Phi(z)$ via its exponential form in creation/annihilation operators on $\\Gamma_t$. Construct the modified operator $\\mathcal{Y}_t(z)$ and prove the conjugation identity $\\mathcal{Y}_t(z) = \\mathcal{R}_t \\Phi(z) \\mathcal{R}_t^{-1}$ by verifying that $\\mathcal{R}_t p_n \\mathcal{R}_t^{-1} = (1-t^n)p_n$ and $\\mathcal{R}_t (\\partial/p_n) \\mathcal{R}_t^{-1} = (1-t^n)^{-1} \\partial/p_n$. The plethystic identity then follows by applying both sides to the vacuum vector and extracting coefficients indexed by strict partitions, using that $\\mathcal{R}_t^{-1}|0\\rangle = |0\\rangle$.",
@@ -8963,7 +8989,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0383",
+    "id": "fd_0384",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The existing proof relies on GRH via Artin's generalized primitive root conjecture to guarantee the existence of primes with specific norm properties that enable the Euclidean division. An unconditional proof would likely require circumventing GRH by developing new analytic number theory techniques to establish stronger lower bounds on the relevant prime counting functions, or by discovering an alternative algebraic mechanism for constructing the Euclidean norm function for ray classes.",
@@ -8991,7 +9017,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0384",
+    "id": "fd_0385",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Attempt to decompose the Eulerian triangle square as a product of triangles whose individual real-rootedness preservation is known, or extend the rectangular additive convolution framework to construct an interlacing chain for the squared Eulerian row generating functions. Alternatively, establish that the Eulerian triangle square arises from a Narayana-type transformation applied to a suitable real-rooted polynomial.",
@@ -9018,7 +9044,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0385",
+    "id": "fd_0386",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the definitions of K_{s,t}-free graphs and the counting of labeled subgraphs isomorphic to K_{a,b}. Apply the Kővári–Sós–Turán theorem and double counting arguments, bounding the number of K_{a,b} copies by considering the number of common neighbors of a-sets of vertices.",
@@ -9045,7 +9071,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0386",
+    "id": "fd_0387",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage the real-rootedness of the row generating functions (proven by Dilks and Fang-Zhang-Zhao) combined with the theory of multiplier sequences or Pólya frequency sequences to establish the infinite log-concavity of the total sums. Alternatively, employ recurrence relations and induction with tight asymptotic bounds derived from the asymptotic normality of the row sequences.",
@@ -9073,7 +9099,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0387",
+    "id": "fd_0388",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the determinant criterion for Diophantine tuples and generalizations of the Mason-Stothers theorem over polynomial rings. Combine these with the Combinatorial Nullstellensatz to derive a contradiction if |A| > 6 outside the exceptional family.",
@@ -9099,7 +9125,7 @@
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0388",
+    "id": "fd_0389",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the barrier-adjusted Perron integral comparison method from the current paper to obtain precise asymptotics rather than order-of-magnitude bounds. Key steps: (1) show the barrier adjustment in I(χ) contributes at most o(1) to the normalized moment, allowing direct comparison with the unadjusted integral; (2) establish concentration of the character sum moment around its mean using the fourth moment bounds already developed in the paper; (3) identify the limiting constant via the random multiplicative function model by proving the Euler product structure of the moments converges to the random model value, leveraging the fact that for 0<q<1 the moments are dominated by typical rather than extreme behavior.",
@@ -9124,7 +9150,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0389",
+    "id": "fd_0390",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Utilize the paper's result that two triangulations with a common subdivision have a common $\\omega$-stellar subdivision. Then, show that the $\\omega$-stellar subdivision can be reached from the original triangulations via locally finite sequences of bistellar moves, extending Pachner's theorem to infinite complexes by controlling the locality of the inverse stellar moves.",
@@ -9133,6 +9159,34 @@
     "status": "available",
     "timestamp": "2026-07-06T03:06:43.829580+00:00",
     "title": "Infinite Pachner's Theorem for Locally Finite Triangulations"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "Sidon sets",
+      "Erdős–Turán bounds"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The maximum cardinality F(N) of a Sidon subset of {0, 1, ..., N-1} satisfies F(N) ≤ N^(1/2) + 0.94601 N^(1/4) + O(1). This conjecture proposes formalizing this main theorem, which improves the previously best-known coefficient of the N^(1/4) term from 0.97633 to 0.94601. The proof relies on a vector-valued smoothing lemma and a finite rational certificate verified by exact arithmetic, both of which are highly amenable to formalization in Lean 4.",
+    "domain_bridges": [
+      "Convolution inequalities",
+      "Hilbert space theory",
+      "Exact arithmetic verification"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_0391",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "1. Define Sidon sets and the function F(N). 2. Formalize the multi-kernel smoothing lemma (Lemma 1) which convexifies the boundary covering problem by placing smoothed indicator functions in a weighted Hilbert direct sum. 3. Extract and formalize the specific rational parameters of the finite certificate provided in the paper. 4. Verify the exact arithmetic constraints of the certificate within Lean 4. 5. Combine the smoothing lemma and the verified certificate to establish the asymptotic inequality with the explicit constant 0.94601.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01169v1",
+    "status": "available",
+    "timestamp": "2026-07-06T03:26:11.699670+00:00",
+    "title": "Explicit Secondary Term Bound for Sidon Sets"
   },
   {
     "ambition_level": "extension",
