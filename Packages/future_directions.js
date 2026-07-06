@@ -1910,7 +1910,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pseudo-determinant of power-integral matrices is an algebraic integer"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f28e546d",
     "description": "For a graph $G$ with minimum degree $\\delta(G) \\ge a + r$, if the spectral radius $\\lambda(G)$ is at least $a + r + b$, then $G$ is fractional ID-$[a,b]$-factor-critical.",
     "domains": [
       "Physics"
@@ -1919,7 +1919,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31064v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T21:44:34.279843+00:00",
     "title": "Spectral radius threshold for fractional ID-$[a,b]$-factor-critical graphs"
   },
@@ -3282,7 +3282,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equivalence of h(\u03b1, \u03b2) and Sieve Integral for Localized Divisors"
   },
   {
-    "consumed_by_exp_id": "e545fdf8",
+    "consumed_by_exp_id": "",
     "description": "For any fixed integer k \u2265 2, the size of the set of common descendants of vertices n, n+1, ..., n+k-1 in G_{n+k-1}, scaled by n^{d/(d+1)}, converges in distribution to a non-degenerate random variable expressible in terms of independent Gamma random variables (or a product of Beta random variables), generalizing the result for k=2 obtained via ancestry processes and multi-draw P\u00f3lya urns.",
     "domains": [
       "Computation"
@@ -3291,7 +3291,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T00:55:11.921809+00:00",
     "title": "Joint descendants of the last k vertices in random d-DAGs"
   },
@@ -3978,7 +3978,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equivariant Kida formula for spectral resultants of Grover walks on p-group graph covers"
   },
   {
-    "consumed_by_exp_id": "f8ce2785",
+    "consumed_by_exp_id": "",
     "description": "If a reduced plane curve (or line arrangement) of degree d has minimal Jacobian relation degree mdr(f) strictly less than d/2, then mdr(f) is uniquely determined by the combinatorial data of its intersection lattice (the multiplicities n_k).",
     "domains": [
       "Algebra",
@@ -3988,7 +3988,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T04:44:21.963122+00:00",
     "title": "Combinatorial Determinism of Minimal Jacobian Relation Degree for Plane Curve Arrangements"
   },
@@ -4595,11 +4595,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For an odd prime p, let n = (p-1)/2 and \u03c7 be the Legendre symbol modulo p. For a \u2208 F_p^\u00d7, define D_a(0) = det_{1 \u2264 i,j \u2264 n}(\u03c7(i^2 - a*j)). Then D_a(0) = 0 if and only if p \u2261 3 (mod 4) and \u03c7(a * n!) = 1.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0364",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01695v1",
+    "status": "available",
+    "timestamp": "2026-07-06T01:45:53.933542+00:00",
+    "title": "Vanishing Criterion for Legendre Symbol Determinants"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0364",
+    "id": "fd_0365",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -4613,7 +4627,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0365",
+    "id": "fd_0366",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -4628,7 +4642,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0366",
+    "id": "fd_0367",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
@@ -4643,7 +4657,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0367",
+    "id": "fd_0368",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -4658,7 +4672,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0368",
+    "id": "fd_0369",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -4672,7 +4686,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0369",
+    "id": "fd_0370",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -4686,7 +4700,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0370",
+    "id": "fd_0371",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -4701,7 +4715,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0371",
+    "id": "fd_0372",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02011v1",
@@ -4716,7 +4730,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0372",
+    "id": "fd_0373",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -4730,7 +4744,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0373",
+    "id": "fd_0374",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02085v1",
@@ -4744,7 +4758,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0374",
+    "id": "fd_0375",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01957v1",
@@ -4759,7 +4773,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0375",
+    "id": "fd_0376",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01956v1",
@@ -4773,7 +4787,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0376",
+    "id": "fd_0377",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01744v1",
@@ -4787,7 +4801,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0377",
+    "id": "fd_0378",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01839v1",
@@ -4802,7 +4816,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0378",
+    "id": "fd_0379",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01703v1",
@@ -4816,13 +4830,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0379",
+    "id": "fd_0380",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01572v1",
     "status": "available",
     "timestamp": "2026-07-06T01:27:06.611331+00:00",
     "title": "Real-rootedness of the square of the Eulerian triangle"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For all integers a, b with 3 \u2264 a \u2264 b, there exists a constant C > 0 such that for any n-vertex graph G that is K_{3,b+1}-free, the number of labeled copies of K_{a,b} in G is at most C * n^3. This captures the main asymptotic upper bound result of the paper, resolving the generalized Tur\u00e1n problem for these parameters.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0381",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01680v1",
+    "status": "available",
+    "timestamp": "2026-07-06T01:46:23.166235+00:00",
+    "title": "Upper Bound on Generalized Tur\u00e1n Number ex(n, K_{a,b}, K_{3,b+1})"
   },
   {
     "consumed_by_exp_id": "",

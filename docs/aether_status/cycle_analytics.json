@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-06T01:26:12.626027+00:00",
+  "last_updated": "2026-07-06T01:45:31.671182+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -35880,6 +35880,47 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-06T01:26:12.560390+00:00",
       "title": "Kernel\u2011cover characterisation of the weighted Davenport constant"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.74,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 8,
+      "domain": "NumberTheory",
+      "duration_seconds": -120.15951943397522,
+      "end_time": 1783297115.9704359,
+      "files_integrated": 0,
+      "job_id": "f8ce2785",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v16",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.8,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.8,
+        "cross_domain": 1.0,
+        "importance": 0.881037037037037,
+        "novelty": 0.9500000000000001,
+        "pegb_compliance": 0.5,
+        "proof_depth": 0.8514814814814814,
+        "usefulness": 0.9257407407407408
+      },
+      "quality_score": 0.5149807407407407,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783297236.1299553,
+      "strategy_count": 0,
+      "theorem_count": 9,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 9,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-06T01:45:31.610301+00:00",
+      "title": "Combinatorial Determinism of Minimal Jacobian Relation Degree for Plane Curve Arrangements"
     }
   ]
 }
