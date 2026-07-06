@@ -747,6 +747,13 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
 
         # ── Two-phase dispatch: gate Phase B on Phase A quality ──
 
+        # INTEGRATE FIRST: write Phase A Lean files to Catalog.
+        # This populates job.integrated_paths so Phase B's _build_project_dir
+        # can use ONLY the Phase A Lean files (not the full Catalog).
+        # Without this, Phase B falls back to the full 1185-file Catalog.
+        job = await extractor.integrate_async(job)
+        extractor._save_inflight()
+
         # Phase A was just evaluated. If the math is good enough, dispatch
         # Phase B to package it. Otherwise mark as A_only and integrate
         # the Lean files directly (no article/paper/widgets).
@@ -811,9 +818,6 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                     job.phase_b_skipped_reason = "phase_a_failed"
                 print(f"[Tick] Phase A Q={phase_a_q:.3f} < {phase_b_threshold:.3f} — "
                       f"skipping Phase B, integrating Lean only ({job.job_id[:8]})")
-
-        job = await extractor.integrate_async(job)
-        extractor._save_inflight()
 
         # Extract future directions
         extractor._extract_future_directions(job)
