@@ -666,7 +666,7 @@
       "Jan2023 - Recent work on descendants of n in G_n",
       "Drm2009 - Random recursive trees (d=1 case)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea66c257",
     "description": "For the random recursive DAG G_n with out-degree d ≥ 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n → ∞.",
     "domain_bridges": [
       "Multi-draw Pólya urn processes",
@@ -682,7 +682,7 @@
     "proof_strategy": "Generalize Janson's martingale-based analysis using refined Pólya urn techniques and derive explicit scaling limits through characteristic function methods",
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
@@ -5069,7 +5069,7 @@
       "Simplicial Complexes",
       "h-vectors"
     ],
-    "consumed_by_exp_id": "c6c9b64a",
+    "consumed_by_exp_id": "",
     "description": "Formalize the proof that the transformation matrix $H_{\\mathcal{F}}$ associated with the interval subdivision of a finite simplicial complex is totally positive (TP). This requires defining the $h$-vector of a simplicial complex, the interval subdivision operation, the resulting transformation matrix $H_{\\mathcal{F}}$, and proving that all its minors are non-negative.",
     "domain_bridges": [
       "Linear Algebra",
@@ -5085,7 +5085,7 @@
     "proof_strategy": "1. Define the structure of a finite simplicial complex and the $h$-vector as a function of the $f$-vector. 2. Implement the $\\mathcal{F}$-uniform subdivision framework specifically for the interval subdivision to derive the explicit entries of the transformation matrix $H_{\\mathcal{F}}$. 3. Use the Lindström-Gessel-Viennot (LGV) lemma or a similar combinatorial path-counting method to show that the determinants of all minors are non-negative, leveraging the combinatorial proof provided in the paper.",
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T09:05:38.885794+00:00",
     "title": "Total Positivity of the Interval Subdivision Transformation Matrix"
   },
@@ -8890,6 +8890,31 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.NT",
+      "hep-th"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The regularized coupling of two vector-valued weight 3/2 mock Eisenstein series (which individually yield depth one mock modular forms) produces a depth two mock modular form of weight 3. Specifically, the completion of this coupled object satisfies a $\\bar{\\partial}$-equation whose shadow is a linear combination of tensor products of depth one mock Eisenstein series and holomorphic modular forms.",
+    "domain_bridges": [
+      "Mathematical Physics",
+      "Algebraic Geometry"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0381",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the definition of depth two mock modular forms and the Eisenstein coupling operator. Compute the Fourier expansion of the coupled series and verify its $\\bar{\\partial}$-equation using the known analytic properties of mock Eisenstein series and Rankin-Selberg integrals.",
+    "research_mode": "team",
+    "source_exp_id": "2607.00643v1",
+    "status": "available",
+    "timestamp": "2026-07-06T07:12:09.495101+00:00",
+    "title": "Depth Two Mock Modularity of Coupled Mock Eisenstein Series"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Theorem A",
       "Proposition big"
     ],
@@ -8903,7 +8928,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0381",
+    "id": "fd_0382",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the explicit description of the 2-Sylow subgroup of S_n as an iterated wreath product and the Murnaghan-Nakayama rule to compute the multiplicity of the irreducible character χ^{λ_n} in the permutation character (1_P)↑^{S_n}. Alternatively, use the characterization of Ω_2(n) via 2-quotients of partitions (as in [G17]) and verify that the 2-quotient of λ_n satisfies the required condition. Another approach is to use the known results on the restriction of irreducible characters to Sylow 2-subgroups and the fact that λ_n is a partition with all parts ≤ 2.",
@@ -8930,7 +8955,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0382",
+    "id": "fd_0383",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a specific graph achieving the lower bound via Pokrovskiy's structure theorem",
@@ -8956,7 +8981,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0383",
+    "id": "fd_0384",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish a conductance lower bound via a suitable coupling argument that relates chord swaps to graph-theoretic moves, and then use known inequalities to translate this into a polynomial lower bound on the spectral gap for fixed genus.",
@@ -8976,7 +9001,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0384",
+    "id": "fd_0385",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "induction",
@@ -9004,7 +9029,7 @@
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0385",
+    "id": "fd_0386",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the connection via holography: (1) Prove interval counting for high-dimension CFT primaries follows log-correlated field statistics, (2) Show the extremal process converges to Gumbel by analyzing the correlation structure of the underlying Gaussian free field, (3) Translate to AdS side via HKLL reconstruction to bound semiclassical path integral resolution. Use modular invariance and sparseness conditions to control the tail behavior rigorously.",
@@ -9030,7 +9055,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0386",
+    "id": "fd_0387",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive argument on rank bounds combined with matroid minors analysis",
@@ -9057,7 +9082,7 @@
     "domains": [
       "Physics"
     ],
-    "id": "fd_0387",
+    "id": "fd_0388",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a doubly nonnegative graphon W where the spectral inequality t(H,W) ≥ ρ(W)^{2e(H)-v(H)} p(W)^{v(H)-e(H)} holds but t(H,W) < p(W)^{e(H)} fails, demonstrating the equivalence's optimality in the v(H) ≤ e(H) range.",
@@ -9087,7 +9112,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0388",
+    "id": "fd_0389",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof would proceed by (1) constructing the Iwasawa module M as the Fitting module of the spectral resultant using the universal Grover‑Ihara polynomial; (2) applying the structure theorem for finitely generated Δ_₂[[Γ]]‑modules to express μ(M) and λ(M) in terms of elementary divisors; (3) evaluating the resultant at torsion characters χ∈̀_hat{Δ}_₂^× and showing via equivariant descent that the elementary divisors are precisely the values v_p(R(χ)); (4) incorporating the Bass factor (A^2‑1) by factoring det P(U_n) into a coprime part and a power of the Bass factor, and comparing the resulting contributions to the λ‑term. The key technical step is to prove an equivariant Kida formula for the spectral resultant without integrality assumptions, using the factorization for p‑group covers from the paper and a careful analysis of the local units at χ(1)=±1.",
@@ -9116,7 +9141,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0389",
+    "id": "fd_0390",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Explicit construction of arrangements with controlled intersection multiplicities, followed by computation of \\(\\mdr(f)\\) via graded module generation and analysis of Jacobian syzygies using symbolic computation in Lean 4.",
@@ -9143,7 +9168,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0390",
+    "id": "fd_0391",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Interpret r_m(n,k) as counting labelled structures: an ordered partition where each block is either a 'non-tie' of size < m (weight 1) or a 'tie' of size ≥ m (weight y). The exponential generating function for non-tie blocks is A_m(x), for tie blocks is B_m(x). A sequence of such blocks has EGF 1/(1 - (A_m(x) + y B_m(x))). Equating coefficients yields the formula.",
@@ -9169,7 +9194,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0391",
+    "id": "fd_0392",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Verify the conjectured formula by computing class numbers of explicitly constructed quartic CM fields and comparing them to the generalized Hurwitz class numbers defined via the trace formula. This requires formalizing quartic field construction, class group computations, and the definition of H_g(D) in Lean.",
@@ -9201,7 +9226,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0392",
+    "id": "fd_0393",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Verify the conjecture computationally for x ∈ [1, 650) by establishing explicit bounds on D(t) in this range, then combine with the asymptotic result from the paper. The key insight is that the weight (1-x/n) in the smoothed sum eliminates the difficult ψ-term, making the error term fundamentally more tractable than in the classical Walfisz problem.",
@@ -9229,7 +9254,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0393",
+    "id": "fd_0394",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Hasse-Weil L-function derivative at s=1 and the Neron-Tate height of the explicitly defined rational point P_7 = (84, 756) on E_7, and verify their equality using the explicit formula and height computations outlined in Yin's paper.",
@@ -9258,7 +9283,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0394",
+    "id": "fd_0395",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the odd power-sum ring $\\Gamma_t = \\mathbb{Q}(t)[p_1, p_3, p_5, \\ldots]$ as a graded Hopf algebra over $\\mathbb{Q}(t)$. Define the diagonal automorphism $\\mathcal{R}_t$ rescaling $p_n \\mapsto (1-t^n)p_n$ for odd $n$, and prove it is a Hopf algebra automorphism. Define the classical Schur $Q$ vertex operator $\\Phi(z)$ via its exponential form in creation/annihilation operators on $\\Gamma_t$. Construct the modified operator $\\mathcal{Y}_t(z)$ and prove the conjugation identity $\\mathcal{Y}_t(z) = \\mathcal{R}_t \\Phi(z) \\mathcal{R}_t^{-1}$ by verifying that $\\mathcal{R}_t p_n \\mathcal{R}_t^{-1} = (1-t^n)p_n$ and $\\mathcal{R}_t (\\partial/p_n) \\mathcal{R}_t^{-1} = (1-t^n)^{-1} \\partial/p_n$. The plethystic identity then follows by applying both sides to the vacuum vector and extracting coefficients indexed by strict partitions, using that $\\mathcal{R}_t^{-1}|0\\rangle = |0\\rangle$.",
@@ -9286,7 +9311,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0395",
+    "id": "fd_0396",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The existing proof relies on GRH via Artin's generalized primitive root conjecture to guarantee the existence of primes with specific norm properties that enable the Euclidean division. An unconditional proof would likely require circumventing GRH by developing new analytic number theory techniques to establish stronger lower bounds on the relevant prime counting functions, or by discovering an alternative algebraic mechanism for constructing the Euclidean norm function for ray classes.",
@@ -9314,7 +9339,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0396",
+    "id": "fd_0397",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Attempt to decompose the Eulerian triangle square as a product of triangles whose individual real-rootedness preservation is known, or extend the rectangular additive convolution framework to construct an interlacing chain for the squared Eulerian row generating functions. Alternatively, establish that the Eulerian triangle square arises from a Narayana-type transformation applied to a suitable real-rooted polynomial.",
@@ -9341,7 +9366,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0397",
+    "id": "fd_0398",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the definitions of K_{s,t}-free graphs and the counting of labeled subgraphs isomorphic to K_{a,b}. Apply the Kővári–Sós–Turán theorem and double counting arguments, bounding the number of K_{a,b} copies by considering the number of common neighbors of a-sets of vertices.",
@@ -9368,7 +9393,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0398",
+    "id": "fd_0399",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage the real-rootedness of the row generating functions (proven by Dilks and Fang-Zhang-Zhao) combined with the theory of multiplier sequences or Pólya frequency sequences to establish the infinite log-concavity of the total sums. Alternatively, employ recurrence relations and induction with tight asymptotic bounds derived from the asymptotic normality of the row sequences.",
@@ -9396,7 +9421,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0399",
+    "id": "fd_0400",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the determinant criterion for Diophantine tuples and generalizations of the Mason-Stothers theorem over polynomial rings. Combine these with the Combinatorial Nullstellensatz to derive a contradiction if |A| > 6 outside the exceptional family.",
@@ -9422,7 +9447,7 @@
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0400",
+    "id": "fd_0401",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the barrier-adjusted Perron integral comparison method from the current paper to obtain precise asymptotics rather than order-of-magnitude bounds. Key steps: (1) show the barrier adjustment in I(χ) contributes at most o(1) to the normalized moment, allowing direct comparison with the unadjusted integral; (2) establish concentration of the character sum moment around its mean using the fourth moment bounds already developed in the paper; (3) identify the limiting constant via the random multiplicative function model by proving the Euler product structure of the moments converges to the random model value, leveraging the fact that for 0<q<1 the moments are dominated by typical rather than extreme behavior.",
@@ -9447,7 +9472,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0401",
+    "id": "fd_0402",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Utilize the paper's result that two triangulations with a common subdivision have a common $\\omega$-stellar subdivision. Then, show that the $\\omega$-stellar subdivision can be reached from the original triangulations via locally finite sequences of bistellar moves, extending Pachner's theorem to infinite complexes by controlling the locality of the inverse stellar moves.",
@@ -9475,7 +9500,7 @@
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0402",
+    "id": "fd_0403",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define Sidon sets and the function F(N). 2. Formalize the multi-kernel smoothing lemma (Lemma 1) which convexifies the boundary covering problem by placing smoothed indicator functions in a weighted Hilbert direct sum. 3. Extract and formalize the specific rational parameters of the finite certificate provided in the paper. 4. Verify the exact arithmetic constraints of the certificate within Lean 4. 5. Combine the smoothing lemma and the verified certificate to establish the asymptotic inequality with the explicit constant 0.94601.",
@@ -9503,7 +9528,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0403",
+    "id": "fd_0404",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The 'if' direction follows from computing the Benson–Krause–Schwede canonical class for Demushkin groups with q ≠ 3, interpreting it as defining systems of higher Massey products (the key innovation for p = 2). The 'only if' direction for q = 3 requires showing the canonical class is nonzero for the pro-3 Demushkin group with q = 3, likely via an explicit cocycle-level computation of the universal triple Massey product or by constructing a non-trivial defining system that obstructs A₃-formality.",
@@ -9533,7 +9558,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0404",
+    "id": "fd_0405",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the ring of symmetric functions, the Hall inner product, and the modified Macdonald basis. Define the nabla operator and the Haglund-Morse-Zabrocki operators $C_\\alpha$. Establish the expansion of $(-1)^{|\\mu|-\\ell(\\mu)}m_\\mu$ in the $C_\\alpha(1)$ basis with nonnegative coefficients in $\\mathbb{Q}_{\\ge 0}[q]$. Finally, combine this expansion with the compositional shuffle theorem and the Schur positivity of LLT polynomials to conclude the nonnegativity of the inner product.",
@@ -9560,7 +9585,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0405",
+    "id": "fd_0406",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt Cover's inductive argument on point insertion: establish base cases for degenerate configurations, then show that inserting a point whose image under Φ lies in a subspace spanned by k previous images can increase dichotomy count by at most a factor governed by rank ρ, and at least by a factor governed by Kruskal rank κ. The key lemma is that the number of new dichotomies created by inserting a point equals twice the number of existing dichotomies that have the new point on their boundary, which is bounded by C(κ, n-1) from below and C(ρ, n-1) from above.",
@@ -9584,7 +9609,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0406",
+    "id": "fd_0407",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit family of graphs with maximum degree Δ whose first-level strong chromatic number (which characterizes SD-EF1) equals 3Δ - 1, using the hierarchy of strong chromatic number variants introduced in the paper. Verify that no SD-EF1 allocation exists for fewer than 3Δ - 1 agents by leveraging the exact characterization of SD-EF1 in terms of this graph parameter.",
@@ -9604,7 +9629,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0407",
+    "id": "fd_0408",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "combinatorial combinatorial argument",
@@ -9631,7 +9656,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0408",
+    "id": "fd_0409",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the known small cases ($n \\le 6$) and the asymptotic result, then bridge the remaining gap $7 \\le n < 2(3^{80}-321)$ by either refining the analytic bounds on rough numbers to lower the constant $N$, or developing new combinatorial arguments for intermediate values of $n$.",
@@ -9659,7 +9684,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0409",
+    "id": "fd_0410",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize filtered phi-modules and the equivalence between crystalline representations and admissible filtered phi-modules (Fontaine's theory). Then build the mod p local Langlands correspondence for GL_2(Q_p) in Lean, establishing the correspondence between Galois representations and representations of GL_2(F_p). The irreducibility for even weight and fractional slope follows by analyzing which mod p representations of GL_2(Q_p) can arise via the correspondence, showing that reducible reductions correspond to integer slopes when k is even.",
@@ -9687,7 +9712,7 @@
     "domains": [
       "Logic"
     ],
-    "id": "fd_0410",
+    "id": "fd_0411",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the Maker-Breaker game state as a pair of disjoint edge subsets of $K_n$. Formalize the specific potential function $\\Phi$ for $C_k$ introduced by Glazik and Srivastav. Prove that Breaker's constructive strategy of selecting edges to minimize the potential guarantees that the potential remains bounded, which strictly implies that Maker cannot claim all edges of any copy of $C_k$.",
@@ -9714,7 +9739,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0411",
+    "id": "fd_0412",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the Beatty sequences a(n) and b(n) using the golden ratio floor functions, define the epsilon correction using Fibonacci numbers, and establish the partition property by proving disjointness and covering, leveraging the lemma relating a(F_k), b(F_{k-1}), and b(F_k), a(F_{k+1}).",
@@ -9741,7 +9766,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0412",
+    "id": "fd_0413",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Proceed by strong induction on n. The base cases n = 0, 1, 2 are verified by direct computation using the known initial values of R_n and F_{2n+2}. For the inductive step, use the recurrence R_n = Σ_{k=0}^{n+1} r(n,k) from the paper together with the recurrence for r(n,k) in Proposition 3.2. Lower-bound each r(n,k) term using the inductive hypothesis applied to the sub-quantities r(n-j-2,i) and p(j,k), then compare against the Fibonacci doubling identity F_{2n+2} = F_{2n+1} + F_{2n} = 3F_{2n-2} + 2F_{2n-3} to close the induction.",
@@ -9767,7 +9792,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0413",
+    "id": "fd_0414",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize heap posets Heap(c, w) for Coxeter group B_n, then define the type B c-Birkhoff polytope as the convex hull of appropriate permutation matrices corresponding to elements below w_0 in Bruhat order. Construct the explicit unimodular transformation to the order polytope of Heap(c, w_0). The normalized volume equality then follows from unimodular invariance of Ehrhart polynomials and the Stanley's result that the normalized volume of an order polytope is the number of its linear extensions.",
@@ -9776,6 +9801,31 @@
     "status": "available",
     "timestamp": "2026-07-06T06:55:48.094525+00:00",
     "title": "Normalized volume of type B c-Birkhoff polytopes equals linear extension count of heap posets"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.NT",
+      "math.PR"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that the average absolute character sum over y-smooth numbers is o(√Ψ(x,y)) when q ≥ x^{1+ε}. This conjecture asserts that the same sub-square-root bound holds at the critical threshold q ≥ x (i.e., ε = 0), with a concrete saving factor. Specifically: for every ε > 0, there exists x₀(ε) such that for all x ≥ x₀, all primes q ≥ x, and all y with (log x)⁶ ≤ y ≤ x^{1/(32 log log x)}, the average absolute smooth character sum satisfies (1/(q-1)) Σ_{χ mod q, χ≠χ₀} |Σ_{n≤x, P(n)≤y} χ(n)| ≤ (1−ε)√Ψ(x,y). This extends the paper's main theorem from q ≥ x^{1+ε} to the boundary case q ≥ x, which is the natural threshold where the problem transitions from trivial to nontrivial.",
+    "domain_bridges": [
+      "probability_theory",
+      "combinatorics"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0415",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt the paper's connection between character sums and Steinhaus random multiplicative functions. The key step is establishing the moment identity (1/φ(q))Σ_χ|Σ_{n≤x,P(n)≤y}χ(n)|^{2k} = E|Σ_{n≤x,P(n)≤y,(n,q)=1}f(n)|^{2k} for q ≥ x, which requires careful treatment of the coprimality condition at the boundary. Then leverage the authors' prior result on random multiplicative functions over smooths to extract the sub-square-root saving, combined with Harper's hypercontractivity machinery to control higher moments at the critical regime.",
+    "research_mode": "team",
+    "source_exp_id": "2607.00592v1",
+    "status": "available",
+    "timestamp": "2026-07-06T07:12:40.061772+00:00",
+    "title": "Sub-square-root bound for smooth character sums at the critical threshold"
   },
   {
     "ambition_level": "extension",
