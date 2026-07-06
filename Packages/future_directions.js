@@ -4,6 +4,36 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
+    "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition \u2014 zeros on the critical line means the bulk geometry is stable against perturbations.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0391",
+    "priority_score": 0.91,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-06T03:03:16.887930+00:00",
+    "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0388",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-06T03:03:16.788271+00:00",
+    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domains": [
       "Pythagorean"
@@ -15,6 +45,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T05:18:37.114832+00:00",
     "title": "Deepening: unnamed_concept"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot \u2014 the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0389",
+    "priority_score": 0.81,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-06T03:03:16.822092+00:00",
+    "title": "Knots That Think: Cognition as Braiding in Category Theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -60,7 +105,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
   },
   {
-    "consumed_by_exp_id": "54d58162",
+    "consumed_by_exp_id": "",
     "description": "For any graphs G and H, the domination number of their Cartesian product satisfies \u03b3(G\u25a1H) \u2265 (19 - \u221a73)/18 * \u03b3(G)\u03b3(H).",
     "domains": [
       "Bridges"
@@ -69,7 +114,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01109v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T06:39:03.958610+00:00",
     "title": "Improved Constant for Domination in Cartesian Product of Graphs"
   },
@@ -1910,7 +1955,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pseudo-determinant of power-integral matrices is an algebraic integer"
   },
   {
-    "consumed_by_exp_id": "f28e546d",
+    "consumed_by_exp_id": "",
     "description": "For a graph $G$ with minimum degree $\\delta(G) \\ge a + r$, if the spectral radius $\\lambda(G)$ is at least $a + r + b$, then $G$ is fractional ID-$[a,b]$-factor-critical.",
     "domains": [
       "Physics"
@@ -1919,7 +1964,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31064v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T21:44:34.279843+00:00",
     "title": "Spectral radius threshold for fractional ID-$[a,b]$-factor-critical graphs"
   },
@@ -2392,7 +2437,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existenceof a Reduced Planar Convex Body Exceeding Lassak's Area Bound"
   },
   {
-    "consumed_by_exp_id": "9367fe9e",
+    "consumed_by_exp_id": "",
     "description": "For weight 1/2 sesquiharmonic Maass forms of moderate growth, the weighted Riesz mean of Hurwitz class numbers has an asymptotic expansion of the form \u2211_{n\u2264X} H(n) \u00d7 weight(n) \u223c C X^\u03b1 log^k X as X\u2192\u221e, where C, \u03b1, and k depend on the Maass form's spectral parameters.",
     "domains": [
       "Physics"
@@ -2401,7 +2446,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28657v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T14:41:26.130876+00:00",
     "title": "Asymptotic Expansion of Weighted Riesz Means for Sesquiharmonic Maass Forms"
   },
@@ -2681,21 +2726,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T05:55:53.302394+00:00",
     "title": "Kernel\u2011cover characterisation of the weighted Davenport constant"
-  },
-  {
-    "consumed_by_exp_id": "672a3abc",
-    "description": "Conjecture: Let A be a line arrangement in the complex projective plane of degree d such that every singular point has multiplicity at most 3 (i.e., only double and triple points). If the minimal degree of a Jacobian relation satisfies mdr(A) < d/2, then mdr(A) is combinatorially determined: any other line arrangement B with the same intersection lattice (and hence the same singularity multiplicities) has mdr(B) = mdr(A).",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0225",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01985v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T06:13:22.731805+00:00",
-    "title": "Combinatorial determination of mdr for line arrangements with only double and triple points"
   },
   {
     "consumed_by_exp_id": "",
@@ -4941,6 +4971,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0390",
+    "priority_score": 0.77,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-06T03:03:16.856350+00:00",
+    "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Congruence Rigidity of Sums of Squares\n\nThis cycle established that the entries of an integer right triangle are forced into\nstrong divisibility patterns \u2014 one leg is a multiple of three, the legs jointly carry a\nfactor of four, one entry is a multiple of five \u2014 and that a four-dimensional right\n\"box\" (a solution of `a\u00b2 + b\u00b2 + c\u00b2 = d\u00b2`) is even more rigid: at most one of its three\nspatial edges can be odd. We also pinned down exactly which whole numbers can serve as a\nleg. These findings point to several bold, testable conjectures.\n\n## 1. The correct modulus for a power of two grows with the power\n**Conjecture.** In any solution of `a\u00b2 + b\u00b2 = c\u00b2`, the two-adic valuation of the leg\nproduct `a\u00b7b` is governed one level deeper than naive reduction suggests: deciding\nwhether `2^k` divides `a\u00b7b` is a question about residues modulo `2^{k+1}`, never modulo\n`2^k`.\n*The key insight is* that a difference of two odd squares is always divisible by eight,\nso each additional factor of two in the product must be certified one binary place\nfurther out than one would guess. *Why now?* Having isolated the exact `mod 8`\nobstruction behind the factor of four, we can test the pattern mechanically for `k = 3,\n4, 5` and either confirm a clean \"shift-by-one\" law or expose its first exception.\n\n## 2. A universal super-divisor for higher-dimensional right figures\n**Conjecture.** For every dimension `r`, solutions of `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` obey a single\nuniversal divisibility law: there is a constant `D(r)`, depending only on `r`, such that\n`D(r)` divides the product `x\u2081\u00b7x\u2082\u00b7\u22ef\u00b7x_r` for *every* solution, and `D(r)` is the largest\nsuch constant.\n*The key insight is* that reduction to a finite residue ring turns \"for all solutions\"\ninto a finite, decidable statement, so the optimal constant `D(r)` is computable and\nshould grow in a structured (conjecturally multiplicative-over-primes) way. *Why now?*\nThe three-dimensional case already yields `4 \u2223 x\u2081x\u2082x\u2083`; comparing it against the planar\nconstant `12` suggests a dimension-indexed sequence worth charting and predicting.\n\n## 3. Parity collapse in higher dimensions\n**Conjecture.** As the number of squared terms increases, the number of edges permitted to\nbe odd stays uniformly bounded: in `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` at most three of the `x_i` can be\nodd, regardless of `r`.\n*The key insight is* that the sum of squares equals the count of odd terms modulo four,\nwhile a perfect square is `0` or `1` modulo four, capping the admissible odd-count no\nmatter how many terms are added. *Why now?* We proved the cap is \"at most one\" in three\ndimensions; extending the modular bookkeeping to arbitrary `r` is a self-contained next\nstep that would reveal whether the cap is truly dimension-independent.\n\n## 4. A sharp threshold characterization of legs in every dimension\n**Conjecture.** Just as the whole numbers that are a leg of a right triangle are exactly\nthose `\u2265 3`, in each higher dimension there is a sharp finite threshold above which every\ninteger appears as an edge of some right figure, and the finitely many exceptions can be\nlisted explicitly.\n*The key insight is* that a single explicit construction, split according to the parity of\nthe target edge, realizes all sufficiently large values, while the small exceptions are\nforced by a factorization that would otherwise require a vanishing edge. *Why now?* The\nplanar threshold `3` and its sharpness (the failures at `1` and `2`) give a template that\nshould transfer verbatim to the box equation and beyond.\n\n## 5. Divisibility as a sieve against near-solutions\n**Conjecture.** The combined congruence obstructions (`12 \u2223 a\u00b7b`, `60 \u2223 a\u00b7b\u00b7c`, and their\nhigher-dimensional analogues) are strong enough that a random integer triple satisfying\nthem has a positive, computable probability of being genuinely Pythagorean \u2014 i.e. the\ncongruence conditions capture a constant fraction of the \"arithmetic mass\" of true\nsolutions.\n*The key insight is* that each universal divisor removes a fixed proportion of impostors,\nso stacking independent prime-power obstructions multiplies into a sieve of predictable\ndensity. *Why now?* With the exact obstructions in hand for the primes `2, 3, 5`, one can\nimmediately measure how much of the solution set they explain and calibrate whether a few\nmore primes suffice to pin down solutions almost completely.\n",
     "domains": [
       "Pythagorean",
@@ -4953,6 +4998,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T05:18:03.424231+00:00",
     "title": "That the entries of an integer right triangle are forced"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Maniplexes and tetravalent structures\n\n## 1. Characterising which tetravalent graphs are flag graphs of maniplexes\n\nA tetravalent graph is the flag graph of a rank\u20114 maniplex precisely when its\nedges admit a proper colouring by four colours in which each colour class is a\nperfect matching and every pair of non\u2011adjacent colours decomposes the graph\ninto 4\u2011gons. We conjecture that a connected tetravalent graph carries such a\ncolouring if and only if it has a fixed\u2011point\u2011free automorphism structure whose\ngenerators satisfy the string relations, and that this can be decided in\npolynomial time in the number of vertices.\n*The key insight is* that the \"string\" (4\u2011gon) condition on non\u2011adjacent colour\nclasses is a purely local constraint, so admissibility should be checkable by a\nlocal\u2011to\u2011global colour\u2011propagation argument rather than a global search.\n*Why now?* Complete censuses of small tetravalent graphs now exist, giving a\nfinite testbed on which the local characterisation can be exhaustively confirmed\nor refuted before attempting the general theorem.\n\n## 2. Even\u2011order refinement: the flag count modulo higher powers of two\n\nEvery rank\u20114 maniplex has an even number of flags because each colour is a\nfixed\u2011point\u2011free involution. We conjecture a sharper statement: the flag count of\na rank\u20114 maniplex is always divisible by eight, and by twenty\u2011four when the\nmaniplex is regular, with the residue class recording how many colour pairs are\nadjacent versus non\u2011adjacent.\n*The key insight is* that four independent perfect matchings plus the 4\u2011gon\nstructure of non\u2011adjacent pairs force nested two\u2011to\u2011one pairings of the flags,\ncompounding the factor of two.\n*Why now?* The base evenness result is settled, so the natural next step is to\npin down the exact power of two, and the small\u2011case data (flag counts\n120, 384, 1152, 14400, all divisible by twenty\u2011four) already suggests the target.\n\n## 3. From 4\u2011gons to a full local model of regularity\n\nFor non\u2011adjacent colour pairs the two matchings bound 4\u2011gons; for adjacent pairs\nthey bound `2p`\u2011gons where `p` is a Schl\u00e4fli\u2011type parameter. We conjecture that\nthe multiset of these polygon sizes, together with the 4\u2011gon closure for\nnon\u2011adjacent pairs, is a complete isomorphism invariant for *regular* rank\u20114\nmaniplexes \u2014 i.e. two regular 4\u2011maniplexes are isomorphic iff their colour\u2011pair\npolygon data agree.\n*The key insight is* that regularity makes the connection group act freely and\ntransitively, so the entire object is reconstructible from the finitely many\nlocal relations among the four generators.\n*Why now?* The 4\u2011gon result for non\u2011adjacent pairs is now proved, providing the\nfirst coordinate of the proposed invariant and a template for the adjacent\u2011pair\npolygons.\n\n## 4. Rank\u2011`n` generalisation and valence `n`\n\nThe rank\u20114 flag graph is 4\u2011valent because there are four connection involutions.\nWe conjecture that for every rank `n` the flag graph of a rank\u2011`n` maniplex is\nexactly `n`\u2011valent and properly `n`\u2011edge\u2011coloured, and that the string condition\nforces every non\u2011adjacent colour pair to bound 4\u2011gons, so the census\ncorrespondence lifts verbatim from tetravalent graphs to `n`\u2011valent graphs.\n*The key insight is* that valence, evenness, and the 4\u2011gon structure each follow\nfrom a single colour\u2011at\u2011a\u2011time argument that does not use the specific value\n`n = 4`.\n*Why now?* With the rank\u20114 case fully established, the uniform argument can be\nabstracted over `n`, turning a family of separate census projects into one.\n\n## 5. Counting regular maniplexes by connection\u2011group order\n\nBecause a regular maniplex has as many flags as its connection group has\nelements, enumerating regular rank\u20114 maniplexes reduces to classifying the finite\nquotients of the universal Coxeter\u2011type string group on four involutions by\ntorsion\u2011free, string\u2011preserving normal subgroups. We conjecture that the number\nof regular rank\u20114 maniplexes with exactly `N` flags is finite for every `N` and\ngrows subexponentially in `N`.\n*The key insight is* that regularity converts a geometric enumeration into a\ngroup\u2011theoretic one about normal subgroups of a single finitely presented group.\n*Why now?* The flag\u2011count = group\u2011order dictionary is exactly the bridge proved\nhere, and modern computational group theory can generate the required subgroup\nlattices for small `N` to test the growth conjecture.\n",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_0393",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e29ffbac",
+    "status": "available",
+    "timestamp": "2026-07-06T03:05:23.108423+00:00",
+    "title": "A tetravalent graph is the flag graph of a rank\u20114 maniplex precisely when its"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every real number defines a musical scale: map the digits 0-9 to frequencies f_n = 220 * 2^{n/12} (the A minor pentatonic scale extended). The number pi = 3.14159265... produces the sequence E4, C5, C#5, D5, D#5, F5, E5, A4, G5, C5... \u2014 a melody. Conjecture: The melody of pi is not periodic (because pi is irrational) but has musical structure: the autocorrelation of the digit sequence at lag 12 (one octave) is positive and statistically significant. This means pi has more octave-related notes than expected by chance \u2014 pi 'favors' notes separated by octaves. Similarly, e 'favors' perfect fifths (lag 7) and sqrt(2) 'favors' minor thirds (lag 3). The musical structure of transcendental numbers reflects their continued fraction properties: numbers with bounded partial quotients have more consonant melodies. Test: compute the digit autocorrelation of pi, e, and sqrt(2) at lags 0-12 (representing unison through octave). Perform a chi-squared test comparing to the uniform distribution. Generate the 'music' of each constant and analyze for tonal centers. Impact: transcendental numbers have musical souls \u2014 their digit sequences contain hidden harmonies that reflect their deepest arithmetic properties.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0392",
+    "priority_score": 0.72,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-06T03:03:16.923301+00:00",
+    "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
   },
   {
     "consumed_by_exp_id": "",

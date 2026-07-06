@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "9a7cbc8b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Plethystic Triviality of the Shifted t-Schur Basis\n\nDerived from this cycle's findings:\n- Headline identity `S^t_λ = φ_t(Q_λ)` (`Sfun_eq_phiT_Qfun`) and its strict-partition form",
-      "quality_score": 0.7861499999999999,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-28T08:11:13",
-      "title": "Plethystic Triviality of the Shifted t-Schur Basis"
-    },
-    {
       "cycle_id": "e5555684",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Hegedűs bound via spectral constraints\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\ncycle. The cycle proved (0 sorries):\n\n* `gram_posDef_card_le`",
@@ -2501,6 +2491,16 @@
       "theorem_count": 7,
       "timestamp": "2026-07-06T02:02:58",
       "title": "Joint descendants of the last k vertices in random d-DAGs"
+    },
+    {
+      "cycle_id": "e29ffbac",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — Maniplexes and tetravalent structures\n\n## 1. Characterising which tetravalent graphs are flag graphs of maniplexes\n\nA tetravalent graph is the flag graph of a rank‑4 maniplex pre",
+      "quality_score": 0.3793292235294118,
+      "sorry_count": 0,
+      "theorem_count": 2,
+      "timestamp": "2026-07-06T03:05:27",
+      "title": "Classification of regular 4‑maniplexes via tetravalent graph censuses"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8076800000000002
     }
   ],
-  "last_updated": "2026-07-06T02:02:58",
+  "last_updated": "2026-07-06T03:05:27",
   "open_questions": [
     {
       "context": "All results are proved with zero `sorry`s.",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "e56a1e16",
-        "quality": 0.86528,
-        "theorems": 20,
-        "title": "EML Universal Approximation: Density of EML Functions"
-      },
-      {
         "cycle_id": "72ef5a59",
         "quality": 0.6934400000000001,
         "theorems": 13,
@@ -4009,6 +4003,12 @@
         "quality": 0.67304,
         "theorems": 10,
         "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
+      },
+      {
+        "cycle_id": "e29ffbac",
+        "quality": 0.3793292235294118,
+        "theorems": 2,
+        "title": "Classification of regular 4‑maniplexes via tetravalent graph censuses"
       }
     ]
   }
