@@ -4810,11 +4810,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
+    "description": "For every positive integer k, there exist infinitely many odd integers s such that the 5-rank of the P\u00f3lya group Po(K_s) of the Lecacheux quintic field K_s equals k. This strengthens the paper's result from '5-rank at least k for a set of positive density' to '5-rank exactly k for infinitely many parameters', providing a complete stratification of achievable 5-ranks in this family.",
     "domains": [
       "Algebra"
     ],
     "id": "fd_0379",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00675v1",
+    "status": "available",
+    "timestamp": "2026-07-06T06:35:07.675729+00:00",
+    "title": "Exact 5-Rank Realization for P\u00f3lya Groups of Lecacheux Quintic Fields"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0380",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -4828,7 +4842,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0380",
+    "id": "fd_0381",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -4843,7 +4857,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0381",
+    "id": "fd_0382",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
@@ -4858,7 +4872,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0382",
+    "id": "fd_0383",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -4873,7 +4887,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0383",
+    "id": "fd_0384",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -4887,7 +4901,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0384",
+    "id": "fd_0385",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -4901,7 +4915,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0385",
+    "id": "fd_0386",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -4916,7 +4930,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0386",
+    "id": "fd_0387",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02011v1",
@@ -4931,7 +4945,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0387",
+    "id": "fd_0388",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -4945,7 +4959,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0388",
+    "id": "fd_0389",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02085v1",
@@ -4959,7 +4973,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0389",
+    "id": "fd_0390",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01957v1",
@@ -4974,7 +4988,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0390",
+    "id": "fd_0391",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01956v1",
@@ -4988,7 +5002,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0391",
+    "id": "fd_0392",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01744v1",
@@ -5002,7 +5016,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0392",
+    "id": "fd_0393",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01839v1",
@@ -5017,7 +5031,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0393",
+    "id": "fd_0394",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01703v1",
@@ -5031,7 +5045,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0394",
+    "id": "fd_0395",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01572v1",
@@ -5045,7 +5059,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0395",
+    "id": "fd_0396",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01680v1",
@@ -5059,7 +5073,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0396",
+    "id": "fd_0397",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01582v1",
@@ -5074,7 +5088,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0397",
+    "id": "fd_0398",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01165v1",
@@ -5089,7 +5103,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0398",
+    "id": "fd_0399",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01184v1",
@@ -5103,7 +5117,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0399",
+    "id": "fd_0400",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -5118,7 +5132,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0400",
+    "id": "fd_0401",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -5133,7 +5147,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0401",
+    "id": "fd_0402",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01028v1",
@@ -5148,7 +5162,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0402",
+    "id": "fd_0403",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00940v1",
@@ -5162,7 +5176,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0403",
+    "id": "fd_0404",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -5176,7 +5190,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0404",
+    "id": "fd_0405",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01059v1",
@@ -5191,7 +5205,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0405",
+    "id": "fd_0406",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
@@ -5205,7 +5219,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0406",
+    "id": "fd_0407",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00934v1",
@@ -5220,7 +5234,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0407",
+    "id": "fd_0408",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00930v1",
@@ -5234,7 +5248,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Logic"
     ],
-    "id": "fd_0408",
+    "id": "fd_0409",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01294v1",
@@ -5248,13 +5262,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0409",
+    "id": "fd_0410",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00814v1",
     "status": "available",
     "timestamp": "2026-07-06T06:18:33.786582+00:00",
     "title": "Wythoff-Fibonacci Partition of Natural Numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For the uniformly oriented A_n quiver, the number R_n of extension-closed additive subcategories of its representation category satisfies R_n \u2265 F_{2n+2} for all n \u2265 0, where F_k is the k-th Fibonacci number (F_0 = 0, F_1 = 1). This conjecture strengthens the informal connection between OEIS A393920 and the Fibonacci sequence A000045 established in the paper, asserting a concrete exponential lower bound that reflects the shared growth structure. The recurrence in Proposition 3.2 and the combinatorial decomposition of R(n)_k suggest an inductive proof strategy comparing the recurrence for R_n against the Fibonacci doubling identity.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0411",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00651v1",
+    "status": "available",
+    "timestamp": "2026-07-06T06:35:54.308705+00:00",
+    "title": "Fibonacci Lower Bound for Extension-Closed Subcategories of Type A_n"
   },
   {
     "consumed_by_exp_id": "",
