@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-06T13:52:44.897844+00:00",
+  "last_updated": "2026-07-06T14:28:39.749176+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -37383,6 +37383,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-06T13:52:44.821342+00:00",
       "title": "Monotonicity and Jumps of Minimal Absolute Values of Fifth Roots of Unity Sums"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.5284,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 59,
+      "domain": "Geometry",
+      "duration_seconds": 699.4275217056274,
+      "end_time": 1783347814.8708518,
+      "files_integrated": 8,
+      "job_id": "ecf65bf0",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v16",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.86,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.6609,
+        "cross_domain": 0.9,
+        "grade": "substantial",
+        "importance": 0.5146,
+        "novelty": 0.71,
+        "proof_depth": 0.4309,
+        "usefulness": 0.6654
+      },
+      "quality_score": 0.6173599999999999,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783347115.44333,
+      "strategy_count": 0,
+      "theorem_count": 12,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 12,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-06T14:28:39.696194+00:00",
+      "title": "Explicit Quantitative Lower Bound on Power-Saving for Monic Minkowski Polynomials"
     }
   ]
 }

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "bac3bfcc",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Statistical Mechanics: Ising Model Phase Transition\n\nThis cycle added `Catalog/Physics/IsingCorrelation.lean`, which proves from first\nprinciples (directly from the configuration",
-      "quality_score": 0.562048,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T10:10:55",
-      "title": "Statistical Mechanics: Ising Model Phase Transition"
-    },
-    {
       "cycle_id": "00e5c711",
       "domain": "Applications",
       "key_insight": "# Future Directions — Wall–Menger Separator Optimality\n\nThis cycle established, fully formally (0 sorries), that for the left/right cut of\nthe `(m+1) × (n+1)` grid (wall) graph:\n\n- there exist `m+1` p",
@@ -2501,6 +2491,16 @@
       "theorem_count": 26,
       "timestamp": "2026-07-06T13:52:43",
       "title": "Monotonicity and Jumps of Minimal Absolute Values of Fifth Roots of Unity Sums"
+    },
+    {
+      "cycle_id": "ecf65bf0",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Power-Saving for Polynomial Images of Finite Sets\n\nThese conjectures grow out of the corridor `|A|/k ≤ |f(A)| ≤ |A|^{k−1/k²}` established for\na monic degree-`k` integer polynomia",
+      "quality_score": 0.6173599999999999,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-06T14:28:38",
+      "title": "Explicit Quantitative Lower Bound on Power-Saving for Monic Minkowski Polynomials"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.74264
     }
   ],
-  "last_updated": "2026-07-06T13:52:43",
+  "last_updated": "2026-07-06T14:28:38",
   "open_questions": [
     {
       "context": "therefore left as `sorry` and flagged as open formalization targets in the; sorry; sorry",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "146bc8b0",
-        "quality": 0.48341799999999996,
-        "theorems": 9,
-        "title": "Homotopy Type Theory Foundations"
-      },
-      {
         "cycle_id": "81f9ab1d",
         "quality": 0.702,
         "theorems": 10,
@@ -3451,6 +3445,12 @@
         "quality": 0.7083999999999999,
         "theorems": 9,
         "title": "Phantom Topologies: Spaces That Change When You Look at Them"
+      },
+      {
+        "cycle_id": "ecf65bf0",
+        "quality": 0.6173599999999999,
+        "theorems": 12,
+        "title": "Explicit Quantitative Lower Bound on Power-Saving for Monic Minkowski Polynomial"
       }
     ],
     "Logic": [

@@ -2581,7 +2581,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Positivity of (p,q)-Generalized Stirling Numbers in the (p,q)-Binomial Basis"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea443c2c",
     "description": "Formalize the upper bound on the maximum size of a Sidon subset of {0, ..., N-1}, specifically proving that F(N) <= N^{1/2} + 0.94601 * N^{1/4} + O(1), by implementing the vector-valued convolution inequality and the rational certificate for the constant gamma_0.",
     "domains": [
       "Bridges"
@@ -2590,7 +2590,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T01:56:27.032018+00:00",
     "title": "Upper Bound for the Cardinality of Finite Sidon Sets"
   },
@@ -5912,6 +5912,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-06T14:16:54.372902+00:00",
     "title": "Cycle Mengerian and Cycle Ideal Equivalence for Tournaments"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that a countable FAC poset P satisfies the Aharoni-Korman conjecture if P contains no saturated chain D such that either D or its reverse D* is of the form \u2295_{x\u2208\u03c9} D_x, where each D_x is infinite and co-wellfounded. The conjecture asserts that this condition is also necessary: if a countable FAC poset P does contain such a saturated chain, then P fails to satisfy the Aharoni-Korman conjecture. This would yield a complete characterization of which countable FAC posets satisfy the Aharoni-Korman conjecture.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0455",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02500v1",
+    "status": "available",
+    "timestamp": "2026-07-06T14:29:04.615567+00:00",
+    "title": "Necessity of the forbidden chain condition for the Aharoni-Korman conjecture on countable FAC posets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any convex polytope P in \u211d^\ufffd (with e = d+1 being the embedding dimension), the set of centerpoints of P coincides with the floating body of P at level 1/(d+1). Specifically, a point x is a centerpoint of P (meaning every closed halfspace containing x contains at least a 1/(d+1) fraction of the volume of P) if and only if x belongs to the floating body F_{1/(d+1)}(P), defined as the intersection of all closed halfspaces H\u207a such that vol(P \\ H\u207a) \u2264 (1/(d+1)) \u00b7 vol(P). The paper establishes this equivalence and further shows that for polytopes this set is semialgebraic.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0456",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02400v1",
+    "status": "available",
+    "timestamp": "2026-07-06T14:29:25.661086+00:00",
+    "title": "Centerpoint-Floating Body Equivalence for Convex Polytopes"
   },
   {
     "consumed_by_exp_id": "",
