@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "cff12e07",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE DIRECTIONS — Symmetric chain decompositions and super-exponential growth\n\nDerived from this cycle's findings (the matching mechanism on a two-level slab,\nthe factorial engine `factorial_super",
-      "quality_score": 0.6639999999999999,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-28T08:05:45",
-      "title": "Super-exponential growth of the number of symmetric chain decompositions of M(n)"
-    },
-    {
       "cycle_id": "9a7cbc8b",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Plethystic Triviality of the Shifted t-Schur Basis\n\nDerived from this cycle's findings:\n- Headline identity `S^t_λ = φ_t(Q_λ)` (`Sfun_eq_phiT_Qfun`) and its strict-partition form",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-07-06T01:26:11",
       "title": "Kernel‑cover characterisation of the weighted Davenport constant"
+    },
+    {
+      "cycle_id": "e545fdf8",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\nDerived from this cycle's findings on the joint descendants of the last `k` vertices in random\n`d`-DAGs: the product-of-Beta limit collapses under an additive chain condition, the",
+      "quality_score": 0.3599485585714286,
+      "sorry_count": 1,
+      "theorem_count": 7,
+      "timestamp": "2026-07-06T02:02:58",
+      "title": "Joint descendants of the last k vertices in random d-DAGs"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.8076800000000002
     }
   ],
-  "last_updated": "2026-07-06T01:26:11",
+  "last_updated": "2026-07-06T02:02:58",
   "open_questions": [
-    {
-      "context": "Synthesis (PI): A self-contained, sorry-free description of the hydrogen energy",
-      "cycle_id": "5077231f",
-      "domain": "Applications",
-      "sorry_count": 1,
-      "timestamp": "2026-06-26T16:46:34"
-    },
     {
       "context": "All results are proved with zero `sorry`s.",
       "cycle_id": "8ed8ca57",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 1,
       "timestamp": "2026-07-05T21:33:41"
+    },
+    {
+      "context": "Critique (Critic): All proofs are `sorry`-free and reuse the `EdgeColoring` API from `Defs`.",
+      "cycle_id": "e545fdf8",
+      "domain": "Combinatorics",
+      "sorry_count": 1,
+      "timestamp": "2026-07-06T02:02:58"
     }
   ],
   "research_threads": {
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "48b7f4af",
-        "quality": 0.42770230303030304,
-        "theorems": 4,
-        "title": "Universal n^{-7/2} asymptotic for unlabelled connected cubic planar graphs"
-      },
-      {
         "cycle_id": "d1c9c6b9",
         "quality": 0.60268,
         "theorems": 6,
@@ -3265,6 +3259,12 @@
         "quality": 0.5680000000000001,
         "theorems": 16,
         "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+      },
+      {
+        "cycle_id": "e545fdf8",
+        "quality": 0.3599485585714286,
+        "theorems": 7,
+        "title": "Joint descendants of the last k vertices in random d-DAGs"
       }
     ],
     "Computation": [

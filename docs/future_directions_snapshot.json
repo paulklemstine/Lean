@@ -692,7 +692,7 @@
       "Theorem 1.5",
       "Kane's work"
     ],
-    "consumed_by_exp_id": "244a22c3",
+    "consumed_by_exp_id": "",
     "description": "The product of primes in the extension field equals its order.",
     "domain_bridges": "extension",
     "domains": [
@@ -705,7 +705,7 @@
     "proof_strategy": "Direct arithmetic verification",
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T05:35:59.496154+00:00",
     "title": "Ramified Prime Product Equality"
   },
@@ -1776,7 +1776,7 @@
       "Lau 2010",
       "Hoff-Lau 2026"
     ],
-    "consumed_by_exp_id": "56085c43",
+    "consumed_by_exp_id": "",
     "description": "The sheared Witt vector functor \\(\\chW\\) is isomorphic to the filtered colimit of the functors \\(n \\mapsto W(R[p^n])/\\hw(R[p^n])\\) over \\(n \\geq 1\\).",
     "domain_bridges": [
       "Witt vector theory",
@@ -1792,7 +1792,7 @@
     "proof_strategy": "Construct a natural transformation \\(\\gamma_n: W(R) \\to W(R[p^n])/\\hw(R[p^n])\\) and verify it induces an isomorphism on colimits using properties of nilpotent Witt components and filtered limits of free modules.",
     "research_mode": "team",
     "source_exp_id": "2607.01178v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T22:10:42.305562+00:00",
     "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
   },
@@ -3350,7 +3350,7 @@
       "Aichholzer2000",
       "KortenkampRichterGebertSarangarajanZiegler1997"
     ],
-    "consumed_by_exp_id": "edf9850d",
+    "consumed_by_exp_id": "",
     "description": "For every integer d ≥7, there exists a simplicial 0/1-polytope in dimension d with exactly 2d vertices that is not centrally symmetric. This generalizes the explicit 7-dimensional counterexample to all higher dimensions, extending the classification beyond the known result for d=7.",
     "domain_bridges": [
       "convex polytopes",
@@ -3369,7 +3369,7 @@
     "proof_strategy": "Generalize the 7-dimensional construction by iteratively adding antipodal vertex pairs while preserving simpliciality and breaking central symmetry. For each d >7, construct a base example from the d=7 case and extend it via controlled vertex additions. Formal verification would require proving simpliciality (all facets are simplices), dimension preservation, and the absence of central symmetry through combinatorial analysis of vertex sets.",
     "research_mode": "team",
     "source_exp_id": "2606.31640v2",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T19:30:02.443246+00:00",
     "title": "Existence of Non-Centrally Symmetric Simplicial 0/1-Polytopes for All Dimensions ≥7"
   },
@@ -3485,7 +3485,7 @@
       "BH",
       "LFZ"
     ],
-    "consumed_by_exp_id": "f28e546d",
+    "consumed_by_exp_id": "",
     "description": "For a graph $G$ with minimum degree $\\delta(G) \\ge a + r$, if the spectral radius $\\lambda(G)$ is at least $a + r + b$, then $G$ is fractional ID-$[a,b]$-factor-critical.",
     "domain_bridges": [
       "Spectral graph theory",
@@ -3501,7 +3501,7 @@
     "proof_strategy": "1. Establish that $\\lambda(G) \\ge a + r + b$ implies sufficient expansion properties via spectral techniques. 2. Show that this expansion guarantees the existence of fractional $[a,b]$-factors in $G-I$ for any independent set $I$ of size $r$. 3. Leverage the minimum degree condition to bound the vertex degrees in $G-I$ within the $[a,b]$ range.",
     "research_mode": "team",
     "source_exp_id": "2606.31064v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T21:44:34.279843+00:00",
     "title": "Spectral radius threshold for fractional ID-$[a,b]$-factor-critical graphs"
   },
@@ -4360,7 +4360,7 @@
       "DukeImamogluToth19",
       "BRR3"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9367fe9e",
     "description": "For weight 1/2 sesquiharmonic Maass forms of moderate growth, the weighted Riesz mean of Hurwitz class numbers has an asymptotic expansion of the form ∑_{n≤X} H(n) × weight(n) ∼ C X^α log^k X as X→∞, where C, α, and k depend on the Maass form's spectral parameters.",
     "domain_bridges": [
       "harmonic Maass forms",
@@ -4376,7 +4376,7 @@
     "proof_strategy": "Analyze the spectral decomposition of the introduced L-functions and apply Tauberian techniques to extract coefficients from the Riesz mean.",
     "research_mode": "team",
     "source_exp_id": "2606.28657v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T14:41:26.130876+00:00",
     "title": "Asymptotic Expansion of Weighted Riesz Means for Sesquiharmonic Maass Forms"
   },
@@ -4528,7 +4528,7 @@
       "Potočnik's tetravalent graph census",
       "regular 4‑maniplex dataset"
     ],
-    "consumed_by_exp_id": "e29ffbac",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that the isomorphism classes of regular 4‑maniplexes are in bijective correspondence with the isomorphism classes of tetravalent graphs appearing in Potočnik's census.  Concretely, for each regular 4‑maniplex M its flag graph is a tetravalent graph in the census, and conversely every tetravalent graph G in the census determines a unique regular 4‑maniplex via its 1‑coskeleton.  Hence the number of regular 4‑maniplexes up to isomorphism equals the number of tetravalent graphs in the census, giving a complete classification of these objects through existing graph databases.",
     "domain_bridges": [
       "Maniplex theory",
@@ -4546,7 +4546,7 @@
     "proof_strategy": "Using the existing datasets we will compute canonical forms (flag graph, 1‑skeleton, 1‑coskeleton) for each regular 4‑maniplex and compare them with the tetravalent graphs in the census.  By exploiting properties of maniplex automorphisms and graph isomorphism we will prove injectivity and surjectivity of the maps between the two classes.  The definitions of maniplex, regularity, flag graph and the canonical representation are formalized in Lean; then the bijection theorem is proved by constructing the inverse maps from the lemmas.",
     "research_mode": "team",
     "source_exp_id": "2606.27987v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T17:37:07.759741+00:00",
     "title": "Classification of regular 4‑maniplexes via tetravalent graph censuses"
   },
@@ -5700,7 +5700,7 @@
     "catalog_references": [
       "OEIS A001035"
     ],
-    "consumed_by_exp_id": "36768b27",
+    "consumed_by_exp_id": "",
     "description": "For all integers n ≥ 2, the number of labeled partially ordered sets on n points (OEIS A001035) satisfies P(n) ≡ 3 (mod 4). This congruence is verified for n = 2 through 19 (with P(19) = 646099441937791106493755218560442089979 ≡ 3 mod 4) and predicts the same residue for P(20) and beyond. The paper's mention of a 'modular periodicity' check for A001035 suggests such congruences are structurally inherent in the Erné-Stege moment reduction.",
     "domain_bridges": [
       "math.NT"
@@ -5714,7 +5714,7 @@
     "proof_strategy": "Analyze the Erné-Stege moment reduction modulo 4. Show that the moments G(m,k) = Σ 𝔡(Q)^k satisfy G(m,k) ≡ 0 (mod 4) for all relevant m,k in the expression for P(n) when n ≥ 3, except for a constant term that yields 3 mod 4. Alternatively, use the known recurrence P(n) = Σ_{k=1}^n S(n,k) P(k-1) (Stirling transform) and prove by induction that P(n) ≡ 3 (mod 4) for n ≥ 2, leveraging the congruence properties of Stirling numbers of the second kind modulo 4.",
     "research_mode": "team",
     "source_exp_id": "2606.31526v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T18:54:52.477458+00:00",
     "title": "Constant residue of labeled poset counts modulo 4"
   },
@@ -5777,7 +5777,7 @@
     "catalog_references": [
       "arxiv:math/xxx"
     ],
-    "consumed_by_exp_id": "f4921e42",
+    "consumed_by_exp_id": "",
     "description": "For any d-dimensional lattice polytope with m vertices, its surface area is bounded below by (d-1)/d times its volume, ensuring a precise upper limit on surface measures despite growth rates, making this inequality falsifiable through counterexamples in higher dimensions.",
     "domain_bridges": "d-dimensional lattice bounds",
     "domains": [
@@ -5790,7 +5790,7 @@
     "proof_strategy": "Elementary volume comparisons under linear transformations",
     "research_mode": "team",
     "source_exp_id": "2606.30856v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T21:26:47.114852+00:00",
     "title": "Surface-to-Volume Bounding Inequality"
   },
@@ -7560,7 +7560,7 @@
       "Jung 1989",
       "Jung-Tix 1998"
     ],
-    "consumed_by_exp_id": "6780d0c8",
+    "consumed_by_exp_id": "",
     "description": "This paper investigates the structural constraints under which a finite poset admits a probabilistic powerdomain isomorphic to an RB-domain. The key claim is that such a domain must inherit a least element and possess a tree-like Hasse graph structure.",
     "domain_bridges": [
       "finite-binary-channel coding",
@@ -7575,7 +7575,7 @@
     "proof_strategy": "Constructive separation with two clear obstruction layers",
     "research_mode": "team",
     "source_exp_id": "2607.02231v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T03:01:13.702884+00:00",
     "title": "Characterizing finite posets whose probabilistic powerdomain is an RB-domain"
   },
@@ -8457,6 +8457,35 @@
     "title": "Vanishing Criterion for Legendre Symbol Determinants"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.AT",
+      "math.CO",
+      "math.GT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any connected trivalent ribbon graph G embedded on a closed surface, the degree-zero Penrose homology group H^{0,*}(G) at the specialization λ = 3 is nonzero if and only if G admits a proper 3-edge coloring (Tait coloring). This refines the classical Penrose criterion—which states P(G;3) > 0 iff G is Tait-colorable—by identifying the specific homological degree that detects colorability, analogous to how Khovanov homology detects the unknot in degree zero.",
+    "domain_bridges": [
+      "Khovanov homology and knot detection",
+      "Four-color theorem and Tait coloring",
+      "Nonorientable TQFT",
+      "Penrose polynomial"
+    ],
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0365",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Forward direction: For each Tait coloring c of G, construct an explicit generator of H^{0,*}(G) using the state-sum structure of the Penrose homology cube of resolutions, ensuring distinct colorings yield linearly independent classes. Reverse direction: Show that any nonzero class in H^{0,*}(G) forces the existence of a Tait coloring by analyzing the cobordism maps in the TQFT-valued chain complex and proving that non-colorable graphs have vanishing H^{0,*}. The nonorientable cobordism framework is essential for handling the sign assignments that distinguish colorable from non-colorable configurations.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01632v1",
+    "status": "available",
+    "timestamp": "2026-07-06T02:04:59.148843+00:00",
+    "title": "Penrose Homology Detects Tait Colorability"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "Theorem A",
@@ -8472,7 +8501,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0365",
+    "id": "fd_0366",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the explicit description of the 2-Sylow subgroup of S_n as an iterated wreath product and the Murnaghan-Nakayama rule to compute the multiplicity of the irreducible character χ^{λ_n} in the permutation character (1_P)↑^{S_n}. Alternatively, use the characterization of Ω_2(n) via 2-quotients of partitions (as in [G17]) and verify that the 2-quotient of λ_n satisfies the required condition. Another approach is to use the known results on the restriction of irreducible characters to Sylow 2-subgroups and the fact that λ_n is a partition with all parts ≤ 2.",
@@ -8499,7 +8528,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0366",
+    "id": "fd_0367",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a specific graph achieving the lower bound via Pokrovskiy's structure theorem",
@@ -8525,7 +8554,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0367",
+    "id": "fd_0368",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish a conductance lower bound via a suitable coupling argument that relates chord swaps to graph-theoretic moves, and then use known inequalities to translate this into a polynomial lower bound on the spectral gap for fixed genus.",
@@ -8545,7 +8574,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0368",
+    "id": "fd_0369",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "induction",
@@ -8573,7 +8602,7 @@
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0369",
+    "id": "fd_0370",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the connection via holography: (1) Prove interval counting for high-dimension CFT primaries follows log-correlated field statistics, (2) Show the extremal process converges to Gumbel by analyzing the correlation structure of the underlying Gaussian free field, (3) Translate to AdS side via HKLL reconstruction to bound semiclassical path integral resolution. Use modular invariance and sparseness conditions to control the tail behavior rigorously.",
@@ -8599,7 +8628,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0370",
+    "id": "fd_0371",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive argument on rank bounds combined with matroid minors analysis",
@@ -8626,7 +8655,7 @@
     "domains": [
       "Physics"
     ],
-    "id": "fd_0371",
+    "id": "fd_0372",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a doubly nonnegative graphon W where the spectral inequality t(H,W) ≥ ρ(W)^{2e(H)-v(H)} p(W)^{v(H)-e(H)} holds but t(H,W) < p(W)^{e(H)} fails, demonstrating the equivalence's optimality in the v(H) ≤ e(H) range.",
@@ -8656,7 +8685,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0372",
+    "id": "fd_0373",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof would proceed by (1) constructing the Iwasawa module M as the Fitting module of the spectral resultant using the universal Grover‑Ihara polynomial; (2) applying the structure theorem for finitely generated Δ_₂[[Γ]]‑modules to express μ(M) and λ(M) in terms of elementary divisors; (3) evaluating the resultant at torsion characters χ∈̀_hat{Δ}_₂^× and showing via equivariant descent that the elementary divisors are precisely the values v_p(R(χ)); (4) incorporating the Bass factor (A^2‑1) by factoring det P(U_n) into a coprime part and a power of the Bass factor, and comparing the resulting contributions to the λ‑term. The key technical step is to prove an equivariant Kida formula for the spectral resultant without integrality assumptions, using the factorization for p‑group covers from the paper and a careful analysis of the local units at χ(1)=±1.",
@@ -8685,7 +8714,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0373",
+    "id": "fd_0374",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Explicit construction of arrangements with controlled intersection multiplicities, followed by computation of \\(\\mdr(f)\\) via graded module generation and analysis of Jacobian syzygies using symbolic computation in Lean 4.",
@@ -8712,7 +8741,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0374",
+    "id": "fd_0375",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Interpret r_m(n,k) as counting labelled structures: an ordered partition where each block is either a 'non-tie' of size < m (weight 1) or a 'tie' of size ≥ m (weight y). The exponential generating function for non-tie blocks is A_m(x), for tie blocks is B_m(x). A sequence of such blocks has EGF 1/(1 - (A_m(x) + y B_m(x))). Equating coefficients yields the formula.",
@@ -8738,7 +8767,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0375",
+    "id": "fd_0376",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Verify the conjectured formula by computing class numbers of explicitly constructed quartic CM fields and comparing them to the generalized Hurwitz class numbers defined via the trace formula. This requires formalizing quartic field construction, class group computations, and the definition of H_g(D) in Lean.",
@@ -8770,7 +8799,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0376",
+    "id": "fd_0377",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Verify the conjecture computationally for x ∈ [1, 650) by establishing explicit bounds on D(t) in this range, then combine with the asymptotic result from the paper. The key insight is that the weight (1-x/n) in the smoothed sum eliminates the difficult ψ-term, making the error term fundamentally more tractable than in the classical Walfisz problem.",
@@ -8798,7 +8827,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0377",
+    "id": "fd_0378",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Hasse-Weil L-function derivative at s=1 and the Neron-Tate height of the explicitly defined rational point P_7 = (84, 756) on E_7, and verify their equality using the explicit formula and height computations outlined in Yin's paper.",
@@ -8827,7 +8856,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0378",
+    "id": "fd_0379",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the odd power-sum ring $\\Gamma_t = \\mathbb{Q}(t)[p_1, p_3, p_5, \\ldots]$ as a graded Hopf algebra over $\\mathbb{Q}(t)$. Define the diagonal automorphism $\\mathcal{R}_t$ rescaling $p_n \\mapsto (1-t^n)p_n$ for odd $n$, and prove it is a Hopf algebra automorphism. Define the classical Schur $Q$ vertex operator $\\Phi(z)$ via its exponential form in creation/annihilation operators on $\\Gamma_t$. Construct the modified operator $\\mathcal{Y}_t(z)$ and prove the conjugation identity $\\mathcal{Y}_t(z) = \\mathcal{R}_t \\Phi(z) \\mathcal{R}_t^{-1}$ by verifying that $\\mathcal{R}_t p_n \\mathcal{R}_t^{-1} = (1-t^n)p_n$ and $\\mathcal{R}_t (\\partial/p_n) \\mathcal{R}_t^{-1} = (1-t^n)^{-1} \\partial/p_n$. The plethystic identity then follows by applying both sides to the vacuum vector and extracting coefficients indexed by strict partitions, using that $\\mathcal{R}_t^{-1}|0\\rangle = |0\\rangle$.",
@@ -8855,7 +8884,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0379",
+    "id": "fd_0380",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The existing proof relies on GRH via Artin's generalized primitive root conjecture to guarantee the existence of primes with specific norm properties that enable the Euclidean division. An unconditional proof would likely require circumventing GRH by developing new analytic number theory techniques to establish stronger lower bounds on the relevant prime counting functions, or by discovering an alternative algebraic mechanism for constructing the Euclidean norm function for ray classes.",
@@ -8883,7 +8912,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0380",
+    "id": "fd_0381",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Attempt to decompose the Eulerian triangle square as a product of triangles whose individual real-rootedness preservation is known, or extend the rectangular additive convolution framework to construct an interlacing chain for the squared Eulerian row generating functions. Alternatively, establish that the Eulerian triangle square arises from a Narayana-type transformation applied to a suitable real-rooted polynomial.",
@@ -8910,7 +8939,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0381",
+    "id": "fd_0382",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the definitions of K_{s,t}-free graphs and the counting of labeled subgraphs isomorphic to K_{a,b}. Apply the Kővári–Sós–Turán theorem and double counting arguments, bounding the number of K_{a,b} copies by considering the number of common neighbors of a-sets of vertices.",
@@ -8919,6 +8948,33 @@
     "status": "available",
     "timestamp": "2026-07-06T01:46:23.166235+00:00",
     "title": "Upper Bound on Generalized Turán Number ex(n, K_{a,b}, K_{3,b+1})"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "infinite log-concavity",
+      "Baxter permutations",
+      "Narayana numbers"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The sequence of total d-Hoggatt numbers, defined as the row sums H_d(n) = sum_{k=0}^n H_d(n,k), is infinitely log-concave for all d >= 1. The paper proves the infinite log-concavity of the row and column sequences of the d-Hoggatt triangle. However, the infinite log-concavity of the total d-Hoggatt numbers remains open, encompassing the unresolved infinite log-concavity of the Baxter numbers for d=3 and Catalan numbers for d=2.",
+    "domain_bridges": [
+      "Linear Algebra",
+      "Real Analysis"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0383",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Leverage the real-rootedness of the row generating functions (proven by Dilks and Fang-Zhang-Zhao) combined with the theory of multiplier sequences or Pólya frequency sequences to establish the infinite log-concavity of the total sums. Alternatively, employ recurrence relations and induction with tight asymptotic bounds derived from the asymptotic normality of the row sequences.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01582v1",
+    "status": "available",
+    "timestamp": "2026-07-06T02:05:47.460015+00:00",
+    "title": "Infinite Log-Concavity of Total d-Hoggatt Numbers"
   },
   {
     "ambition_level": "extension",

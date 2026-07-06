@@ -394,7 +394,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
   {
-    "consumed_by_exp_id": "244a22c3",
+    "consumed_by_exp_id": "",
     "description": "The product of primes in the extension field equals its order.",
     "domains": [
       "Pythagorean",
@@ -404,7 +404,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T05:35:59.496154+00:00",
     "title": "Ramified Prime Product Equality"
   },
@@ -995,7 +995,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "A recursive decomposition of greedy Tamari intervals via planar map structures"
   },
   {
-    "consumed_by_exp_id": "56085c43",
+    "consumed_by_exp_id": "",
     "description": "The sheared Witt vector functor \\(\\chW\\) is isomorphic to the filtered colimit of the functors \\(n \\mapsto W(R[p^n])/\\hw(R[p^n])\\) over \\(n \\geq 1\\).",
     "domains": [
       "Bridges"
@@ -1004,7 +1004,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01178v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T22:10:42.305562+00:00",
     "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
   },
@@ -1840,7 +1840,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-existence of weak Ziegler pairs for high-degree plus-one generated conic-line arrangements with defect three"
   },
   {
-    "consumed_by_exp_id": "edf9850d",
+    "consumed_by_exp_id": "",
     "description": "For every integer d \u22657, there exists a simplicial 0/1-polytope in dimension d with exactly 2d vertices that is not centrally symmetric. This generalizes the explicit 7-dimensional counterexample to all higher dimensions, extending the classification beyond the known result for d=7.",
     "domains": [
       "Geometry"
@@ -1849,7 +1849,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31640v2",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T19:30:02.443246+00:00",
     "title": "Existence of Non-Centrally Symmetric Simplicial 0/1-Polytopes for All Dimensions \u22657"
   },
@@ -1910,7 +1910,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pseudo-determinant of power-integral matrices is an algebraic integer"
   },
   {
-    "consumed_by_exp_id": "f28e546d",
+    "consumed_by_exp_id": "",
     "description": "For a graph $G$ with minimum degree $\\delta(G) \\ge a + r$, if the spectral radius $\\lambda(G)$ is at least $a + r + b$, then $G$ is fractional ID-$[a,b]$-factor-critical.",
     "domains": [
       "Physics"
@@ -1919,7 +1919,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31064v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T21:44:34.279843+00:00",
     "title": "Spectral radius threshold for fractional ID-$[a,b]$-factor-critical graphs"
   },
@@ -2392,7 +2392,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existenceof a Reduced Planar Convex Body Exceeding Lassak's Area Bound"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9367fe9e",
     "description": "For weight 1/2 sesquiharmonic Maass forms of moderate growth, the weighted Riesz mean of Hurwitz class numbers has an asymptotic expansion of the form \u2211_{n\u2264X} H(n) \u00d7 weight(n) \u223c C X^\u03b1 log^k X as X\u2192\u221e, where C, \u03b1, and k depend on the Maass form's spectral parameters.",
     "domains": [
       "Physics"
@@ -2401,7 +2401,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28657v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T14:41:26.130876+00:00",
     "title": "Asymptotic Expansion of Weighted Riesz Means for Sesquiharmonic Maass Forms"
   },
@@ -2480,7 +2480,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of a fine unit-distance graph with low independence ratio"
   },
   {
-    "consumed_by_exp_id": "e29ffbac",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that the isomorphism classes of regular 4\u2011maniplexes are in bijective correspondence with the isomorphism classes of tetravalent graphs appearing in Poto\u010dnik's census.  Concretely, for each regular 4\u2011maniplex M its flag graph is a tetravalent graph in the census, and conversely every tetravalent graph G in the census determines a unique regular 4\u2011maniplex via its 1\u2011coskeleton.  Hence the number of regular 4\u2011maniplexes up to isomorphism equals the number of tetravalent graphs in the census, giving a complete classification of these objects through existing graph databases.",
     "domains": [
       "Pythagorean",
@@ -2490,7 +2490,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27987v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T17:37:07.759741+00:00",
     "title": "Classification of regular 4\u2011maniplexes via tetravalent graph censuses"
   },
@@ -3121,7 +3121,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "CM tournaments are precisely the cycle\u2011ideal tournaments"
   },
   {
-    "consumed_by_exp_id": "36768b27",
+    "consumed_by_exp_id": "",
     "description": "For all integers n \u2265 2, the number of labeled partially ordered sets on n points (OEIS A001035) satisfies P(n) \u2261 3 (mod 4). This congruence is verified for n = 2 through 19 (with P(19) = 646099441937791106493755218560442089979 \u2261 3 mod 4) and predicts the same residue for P(20) and beyond. The paper's mention of a 'modular periodicity' check for A001035 suggests such congruences are structurally inherent in the Ern\u00e9-Stege moment reduction.",
     "domains": [
       "Bridges"
@@ -3130,7 +3130,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31526v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T18:54:52.477458+00:00",
     "title": "Constant residue of labeled poset counts modulo 4"
   },
@@ -3165,7 +3165,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "A congruence conjecture for DSOME(n) modulo 4"
   },
   {
-    "consumed_by_exp_id": "f4921e42",
+    "consumed_by_exp_id": "",
     "description": "For any d-dimensional lattice polytope with m vertices, its surface area is bounded below by (d-1)/d times its volume, ensuring a precise upper limit on surface measures despite growth rates, making this inequality falsifiable through counterexamples in higher dimensions.",
     "domains": [
       "Algebra",
@@ -3175,7 +3175,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30856v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T21:26:47.114852+00:00",
     "title": "Surface-to-Volume Bounding Inequality"
   },
@@ -4126,7 +4126,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Geometric Bombieri--Lang Conjecture for Varieties Fibered Over Curves with Generic Fiber of General Type"
   },
   {
-    "consumed_by_exp_id": "6780d0c8",
+    "consumed_by_exp_id": "",
     "description": "This paper investigates the structural constraints under which a finite poset admits a probabilistic powerdomain isomorphic to an RB-domain. The key claim is that such a domain must inherit a least element and possess a tree-like Hasse graph structure.",
     "domains": [
       "Bridges"
@@ -4135,7 +4135,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02231v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T03:01:13.702884+00:00",
     "title": "Characterizing finite posets whose probabilistic powerdomain is an RB-domain"
   },
@@ -4609,11 +4609,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any connected trivalent ribbon graph G embedded on a closed surface, the degree-zero Penrose homology group H^{0,*}(G) at the specialization \u03bb = 3 is nonzero if and only if G admits a proper 3-edge coloring (Tait coloring). This refines the classical Penrose criterion\u2014which states P(G;3) > 0 iff G is Tait-colorable\u2014by identifying the specific homological degree that detects colorability, analogous to how Khovanov homology detects the unknot in degree zero.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0365",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01632v1",
+    "status": "available",
+    "timestamp": "2026-07-06T02:04:59.148843+00:00",
+    "title": "Penrose Homology Detects Tait Colorability"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every positive integer n, the partition \u03bb_n consisting of \u230an/2\u230b parts of size 2 and, if n is odd, one additional part of size 1, belongs to the set \u03a9_2(n) of irreducible constituents of the 2-Sylow permutation character of the symmetric group S_n. This would show that the upper bound \u2308n/2\u2309 on the number of parts of partitions in \u03a9_2(n) (Proposition big) is sharp and is attained by this explicit partition.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0365",
+    "id": "fd_0366",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -4627,7 +4642,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0366",
+    "id": "fd_0367",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
@@ -4642,7 +4657,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0367",
+    "id": "fd_0368",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
@@ -4657,7 +4672,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0368",
+    "id": "fd_0369",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02160v1",
@@ -4672,7 +4687,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0369",
+    "id": "fd_0370",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -4686,7 +4701,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0370",
+    "id": "fd_0371",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -4700,7 +4715,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0371",
+    "id": "fd_0372",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -4715,7 +4730,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0372",
+    "id": "fd_0373",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02011v1",
@@ -4730,7 +4745,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0373",
+    "id": "fd_0374",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -4744,7 +4759,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0374",
+    "id": "fd_0375",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02085v1",
@@ -4758,7 +4773,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0375",
+    "id": "fd_0376",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01957v1",
@@ -4773,7 +4788,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0376",
+    "id": "fd_0377",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01956v1",
@@ -4787,7 +4802,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0377",
+    "id": "fd_0378",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01744v1",
@@ -4801,7 +4816,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0378",
+    "id": "fd_0379",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01839v1",
@@ -4816,7 +4831,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0379",
+    "id": "fd_0380",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01703v1",
@@ -4830,7 +4845,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0380",
+    "id": "fd_0381",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01572v1",
@@ -4844,13 +4859,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0381",
+    "id": "fd_0382",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01680v1",
     "status": "available",
     "timestamp": "2026-07-06T01:46:23.166235+00:00",
     "title": "Upper Bound on Generalized Tur\u00e1n Number ex(n, K_{a,b}, K_{3,b+1})"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The sequence of total d-Hoggatt numbers, defined as the row sums H_d(n) = sum_{k=0}^n H_d(n,k), is infinitely log-concave for all d >= 1. The paper proves the infinite log-concavity of the row and column sequences of the d-Hoggatt triangle. However, the infinite log-concavity of the total d-Hoggatt numbers remains open, encompassing the unresolved infinite log-concavity of the Baxter numbers for d=3 and Catalan numbers for d=2.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0383",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01582v1",
+    "status": "available",
+    "timestamp": "2026-07-06T02:05:47.460015+00:00",
+    "title": "Infinite Log-Concavity of Total d-Hoggatt Numbers"
   },
   {
     "consumed_by_exp_id": "",
