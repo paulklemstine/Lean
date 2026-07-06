@@ -1113,7 +1113,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Distribution of p-Selmer rank increments in p-cyclic extensions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "048b9775",
     "description": "Conjecture: For every pro-2 Demushkin group G, the Benson--Krause--Schwede canonical class c(G) in the Hochschild cohomology HH^2(C^*(G;\ud835\udd3d\u2082), C^*(G;\ud835\udd3d\u2082)) of the cochain differential graded \ud835\udd3d\u2082-algebra of continuous cochains is zero. This is equivalent to the A\u2083-formality of C^*(G;\ud835\udd3d\u2082).",
     "domains": [
       "Algebra",
@@ -1123,7 +1123,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01028v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T23:15:46.874733+00:00",
     "title": "Vanishing of the Benson--Krause--Schwede canonical class for pro-2 Demushkin groups"
   },
@@ -1910,7 +1910,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pseudo-determinant of power-integral matrices is an algebraic integer"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "24598706",
     "description": "For a graph $G$ with minimum degree $\\delta(G) \\ge a + r$, if the spectral radius $\\lambda(G)$ is at least $a + r + b$, then $G$ is fractional ID-$[a,b]$-factor-critical.",
     "domains": [
       "Physics"
@@ -1919,7 +1919,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31064v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T21:44:34.279843+00:00",
     "title": "Spectral radius threshold for fractional ID-$[a,b]$-factor-critical graphs"
   },
@@ -3282,7 +3282,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equivalence of h(\u03b1, \u03b2) and Sieve Integral for Localized Divisors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c1fb9afb",
     "description": "For any fixed integer k \u2265 2, the size of the set of common descendants of vertices n, n+1, ..., n+k-1 in G_{n+k-1}, scaled by n^{d/(d+1)}, converges in distribution to a non-degenerate random variable expressible in terms of independent Gamma random variables (or a product of Beta random variables), generalizing the result for k=2 obtained via ancestry processes and multi-draw P\u00f3lya urns.",
     "domains": [
       "Computation"
@@ -3291,7 +3291,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T00:55:11.921809+00:00",
     "title": "Joint descendants of the last k vertices in random d-DAGs"
   },
@@ -3382,7 +3382,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on the sl2-multiplicity decomposition of the graph algebra"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ecf65bf0",
     "description": "For any monic polynomial f in Z[x] of degree k \u2265 2, the power-saving constant c in the inequality |f(A)| \u2264 |A|^(k-c) can be taken to satisfy c \u2265 1/k\u00b2, where A ranges over finite sets constructed via the Bloom-Sawin-Schildkraut-Zhelezov method.",
     "domains": [
       "Bridges"
@@ -3391,7 +3391,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30690v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T05:42:15.565147+00:00",
     "title": "Explicit Quantitative Lower Bound on Power-Saving for Monic Minkowski Polynomials"
   },
@@ -3410,7 +3410,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Grundy Number XOR Conjecture for Three-Pile Halve Nim"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2f207bdb",
     "description": "The paper proves that for almost all even integers N, the set of Goldbach primes \u2119 \u2229 (N - \u2119) has level of distribution 1/6. We conjecture that this can be improved to 1/3. Specifically, for any A > 0, there exists B > 0 such that for all X > 2, the number of even N \u2208 (X/2, X] for which the Bombieri-Vinogradov error term exceeds X/(log X)^A for moduli up to X^{1/3}/(log X)^B is O(X/(log X)^A).",
     "domains": [
       "Pythagorean",
@@ -3420,7 +3420,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29559v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T06:20:35.132859+00:00",
     "title": "Improved Level of Distribution for Goldbach Primes"
   },
@@ -3993,7 +3993,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Combinatorial Determinism of Minimal Jacobian Relation Degree for Plane Curve Arrangements"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6dd82d4d",
     "description": "For any graph G, the geodesic treewidth of G' (obtained by subdividing each edge |V(G)| times) is greater than or equal to the geodesic treewidth of G.",
     "domains": [
       "Bridges"
@@ -4002,7 +4002,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02098v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T05:19:29.430000+00:00",
     "title": "Subdivisionof Edges Does Not Decrease Geodesic Treewidth"
   },
@@ -5319,7 +5319,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit Gross-Zagier Formula for p=7"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c7c6cf29",
     "description": "The shifted $t$-Schur function $\\mathcal{Q}_\\lambda(X;t)$, generated by the modified odd Greaves--Jing--Zhu operator $\\mathcal{Y}_t(z) = \\mathcal{R}_t \\Phi(z) \\mathcal{R}_t^{-1}$ (where $\\mathcal{R}_t$ rescales each odd power sum $p_n \\mapsto (1-t^n)p_n$ and $\\Phi(z)$ is the classical Schur $Q$ vertex operator), equals the classical Schur $Q$-function $Q_\\lambda$ under the plethystic substitution $X \\mapsto X - tX$. Equivalently, $\\mathcal{R}_t Q_\\lambda(X) = Q_\\lambda[X - tX]$ for every strict partition $\\lambda$ and formal parameter $t$. This encapsulates the conjugation relation and the resulting plethystic interpretation of the modified operator's spectrum.",
     "domains": [
       "Algebra"
@@ -5328,7 +5328,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01839v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T00:45:40.615947+00:00",
     "title": "Shifted t-Schur plethystic identity via modified odd operator conjugation"
   },
@@ -5608,7 +5608,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Normalized volume of type B c-Birkhoff polytopes equals linear extension count of heap posets"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "611a6b62",
     "description": "The paper proves that the average absolute character sum over y-smooth numbers is o(\u221a\u03a8(x,y)) when q \u2265 x^{1+\u03b5}. This conjecture asserts that the same sub-square-root bound holds at the critical threshold q \u2265 x (i.e., \u03b5 = 0), with a concrete saving factor. Specifically: for every \u03b5 > 0, there exists x\u2080(\u03b5) such that for all x \u2265 x\u2080, all primes q \u2265 x, and all y with (log x)\u2076 \u2264 y \u2264 x^{1/(32 log log x)}, the average absolute smooth character sum satisfies (1/(q-1)) \u03a3_{\u03c7 mod q, \u03c7\u2260\u03c7\u2080} |\u03a3_{n\u2264x, P(n)\u2264y} \u03c7(n)| \u2264 (1\u2212\u03b5)\u221a\u03a8(x,y). This extends the paper's main theorem from q \u2265 x^{1+\u03b5} to the boundary case q \u2265 x, which is the natural threshold where the problem transitions from trivial to nontrivial.",
     "domains": [
       "Pythagorean"
@@ -5617,7 +5617,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00592v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T07:12:40.061772+00:00",
     "title": "Sub-square-root bound for smooth character sums at the critical threshold"
   },
