@@ -2979,7 +2979,7 @@
       "analytic number theory",
       "prime number theorem"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f05cfd02",
     "description": "The corrected estimator E(x) + C(x) from the proposed algorithm satisfies the error bound |E(x) + C(x) - π(x)| ≤ K√x for some constant K > 0 and all x ≥ 2. This conjecture formalizes the claim that the correction term significantly improves accuracy by reducing the error to O(√x), matching the algorithm's computational complexity.",
     "domain_bridges": [
       "algorithmic number theory",
@@ -2995,7 +2995,7 @@
     "proof_strategy": "1. Formalize the estimator E(x) as a sum over generalized triangular numbers. 2. Express the correction term C(x) mathematically. 3. Derive an upper bound for |E(x) + C(x) - π(x)| using properties of li(x) and error terms in prime counting approximations. 4. Show the bound scales as O(√x) by analyzing the dominant terms.",
     "research_mode": "team",
     "source_exp_id": "2606.31761v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T17:32:19.384043+00:00",
     "title": "Error Bound Conjecture for Corrected Prime Count Estimator"
   },
