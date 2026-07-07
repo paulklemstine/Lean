@@ -9704,7 +9704,7 @@
       "math.CO",
       "math.PR"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "88055acd",
     "description": "The main result establishing the exact exponential growth rate of the ρ-th moment of constrained guesswork G_coset for a random binary linear code of rate R under i.i.d. Bernoulli(p) noise. It demonstrates that the exponent shifts down by exactly ρ(1-R) relative to the unconstrained Arıkan--Merhav exponent, yielding a closed-form limit expressed in terms of the binary Rényi entropy.",
     "domain_bridges": [
       "math.PR",
@@ -9720,7 +9720,7 @@
     "proof_strategy": "Define the probability space for random binary linear codes and the constrained guesswork rank. Prove the universality theorem, expressing the guesswork exponent as a functional of the weight-enumerator growth rate: (1+ρ)ψ_{1/(1+ρ)}(g) - ρψ_1(g). Then, evaluate this Legendre-type transform for the specific weight-enumerator growth rate of random linear codes to derive the closed-form exponent ρ h_{1/(1+ρ)}(p) + ρ(R-1).",
     "research_mode": "team",
     "source_exp_id": "2607.00205v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T11:06:30.434239+00:00",
     "title": "Exact Exponent for Constrained Coset Guesswork"
   },
@@ -13160,7 +13160,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f38e0202",
     "description": "The Moebius band M is obtained from [0,1] x R by identifying (0, y) ~ (1, -y). Define arithmetic on M: a point (x, y) on M represents the number y * (2x - 1) where x in [0,1] gives the sign and magnitude, and y gives the scale. This creates a number system where going around the band flips the sign. Define the Moebius integers Z_M as the image of Z in M under the embedding n -> (1/2 + 1/(2n), |n|). Then 1 and -1 are identified at the twist point (1, 1) = (0, -1), making Z_M a one-point compactification of Z with a single infinity. Conjecture: Z_M is a ring under the induced operations from R x R / ~, but it is NOT an integral domain because (1, 0) * (0, 1) = (0, 0) but neither factor is zero in Z_M. The prime factorization in Z_M has a unique 'twist prime' that encodes orientation, and every non-zero Moebius integer has a factorization of the form ±p_1^{a_1} * ... * p_k^{a_k} where the overall sign is the twist. Test: factor the Moebius integers 6, -6, and 0 in Z_M. Verify that 6 = 2_+ * 3_+ and -6 = 2_- * 3_- = 2_+ * 3_+ * (-1) where -1 is the twist prime. Impact: arithmetic on a non-orientable surface creates a number system where orientation IS a prime — a number-theoretic analog of spin in physics.",
     "domain_bridges": [],
     "domains": [
@@ -13173,7 +13173,7 @@
     "proof_strategy": "Define Z_M as the image of Z in the Moebius band M = [0,1] x R / ~ where (0,y) ~ (1,-y). Embed n -> (1/(1+|n|), n) for n >= 0 and n -> (1/(1+|n|), -|n|) for n < 0. Define addition and multiplication coordinatewise on M. Prove Z_M is a ring: (a,b) + (c,d) = ((a+c mod 1), b+d with sign from twist). Prove Z_M is not an integral domain: find zero divisors. Prove the twist prime theorem: every Moebius integer n has a unique factorization n = epsilon * p_1^{a_1} * ... * p_k^{a_k} where epsilon = +1 or -1 is the twist, and p_i are ordinary primes. Test: factor 6 = +1 * 2 * 3, -6 = -1 * 2 * 3. Verify multiplication: 2_+ * 3_+ = 6_+ and 2_- * 3_- = 6_+ (two twists cancel). Verify that -1 is prime: if -1 = a*b in Z_M, then a or b must be the twist.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T20:47:00.188304+00:00",
     "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
   },
