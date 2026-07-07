@@ -2874,7 +2874,7 @@
     "catalog_references": [
       "Construction of Generically Ordinary Families of Hyperelliptic Curves"
     ],
-    "consumed_by_exp_id": "74938150",
+    "consumed_by_exp_id": "",
     "description": "For every integer d ≥ 5 such that d = 2g+1 or d = 2g+2 for some g ≥ 2, the Katz family of hyperelliptic curves y² = x^d - d x + t over the t-line is NOT generically ordinary at the prime p = P⁺(d), where P⁺(d) = d² - 4d + 2 if d is odd and P⁺(d) = (d² - 3d + 2)/2 if d is even. This conjecture generalizes the explicit counterexamples (d,p) = (21,359), (31,839), (51,2399) given in the paper and would show that the bound in Theorem 1.1 is optimal for the Katz family.",
     "domain_bridges": [
       "math.AG"
@@ -2889,7 +2889,7 @@
     "proof_strategy": "Compute the Cartier–Manin matrix of the curve y² = x^d - d x + t over 𝔽_p with p = P⁺(d). The matrix entries are given by certain coefficients of (x^d - d x + t)^{(p-1)/2}. Show that the determinant of this matrix vanishes identically as a polynomial in t by exploiting combinatorial properties of binomial coefficients modulo p. This requires analyzing the p-adic valuations of the relevant coefficients and using the specific form of P⁺(d).",
     "research_mode": "team",
     "source_exp_id": "2606.31783v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T17:14:59.029177+00:00",
     "title": "Sharpness of the generic ordinarity bound for the Katz family"
   },
@@ -5443,7 +5443,7 @@
     "catalog_references": [
       "arXiv:2405.XXXXX"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "771c3b70",
     "description": "For d ≥ 3, every discrete d-pseudomanifold with exactly 2d+7 vertices that is not a simplicial d-sphere is flag normal and isomorphic to the (d-2)-fold suspension of the 6-vertex triangulation of ℝP². This extends the optimality result in the paper by characterizing all non-sphere examples at the threshold number of vertices.",
     "domain_bridges": [
       "Geometric Topology (math.GT)",
@@ -5458,7 +5458,7 @@
     "proof_strategy": "Use induction on d. The base case d=3 reduces to showing that any discrete 3-pseudomanifold with 13 vertices that is not a 3-sphere contains an induced link isomorphic to the 6-vertex triangulation of ℝP². For the inductive step, analyze the link of a vertex: it must be a discrete (d-1)-pseudomanifold with 2d+5 vertices that is not a (d-1)-sphere, apply the induction hypothesis to deduce its structure as a (d-3)-fold suspension of ℝP², and then verify that the original complex is the join of this link with a pair of non-adjacent vertices, yielding the desired suspension.",
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T03:17:14.082596+00:00",
     "title": "Classification of Discrete d-Pseudomanifolds with 2d+7 Vertices"
   },
@@ -5852,7 +5852,7 @@
       "GrinbergPrincipal",
       "ProblemB52021"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f228301b",
     "description": "This conjecture formalizes the structural constraint on matrix powers imposed by uniform vanishing of cyclic products of principal minors, generalizing the classical Problem B5 and extending it across diverse ring structures.",
     "domain_bridges": [
       "regular rings",
@@ -5870,7 +5870,7 @@
     "proof_strategy": "Construct a modular condition on entries using cyclic determinants; leverage Grinberg-type principles; utilize Maxwell identities analogously.",
     "research_mode": "team",
     "source_exp_id": "2606.28976v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T10:31:38.067590+00:00",
     "title": "Strongly 1-principled matrices via vanishing cyclic products"
   },
@@ -9103,7 +9103,7 @@
       "math.GR",
       "math.NT"
     ],
-    "consumed_by_exp_id": "5640c2cf",
+    "consumed_by_exp_id": "",
     "description": "For every prime p and every pro-p Demushkin group G with invariant q(G), the differential graded algebra C(G, 𝔽_p) of continuous cochains is A₃-formal if and only if q(G) ≠ 3. The 'if' direction is established by the present paper (for p = 2) combined with prior work (for odd p), while the 'only if' direction—that the pro-3 Demushkin group with q = 3 fails to be A₃-formal—remains open and would complete the classification.",
     "domain_bridges": [
       "Homotopy theory (formality of DGAs)",
@@ -9120,7 +9120,7 @@
     "proof_strategy": "The 'if' direction follows from computing the Benson–Krause–Schwede canonical class for Demushkin groups with q ≠ 3, interpreting it as defining systems of higher Massey products (the key innovation for p = 2). The 'only if' direction for q = 3 requires showing the canonical class is nonzero for the pro-3 Demushkin group with q = 3, likely via an explicit cocycle-level computation of the universal triple Massey product or by constructing a non-trivial defining system that obstructs A₃-formality.",
     "research_mode": "team",
     "source_exp_id": "2607.01028v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T03:43:43.202082+00:00",
     "title": "Complete characterization of A₃-formality for Demushkin groups"
   },
@@ -12340,6 +12340,31 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.CO",
+      "math.GR"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Any non-trivial point-imprimitive 2-(v,k,λ) design admitting a flag-transitive automorphism group with socle PSL(2,q) (where q=p^f≥4) must have design parameters (v,k,λ) belonging to the finite set {(15,12,11), (85,80,79), (36,8,4)}, corresponding to the complements of PG(3,2), PG(3,4), and the Devillers-Praeger 2-(36,8,4) design, respectively.",
+    "domain_bridges": [
+      "group_theory",
+      "finite_geometry"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0550",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define 2-designs, flag-transitive actions, point-imprimitive actions, and group socles in Lean. Translate the group-theoretic constraints (specifically the orbit structures of PSL(2,q)) and combinatorial design parameters to computationally eliminate all possible parameter sets except the three identified triples.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05067v1",
+    "status": "available",
+    "timestamp": "2026-07-07T14:24:50.022688+00:00",
+    "title": "Point-Imprimitive Flag-Transitive 2-Design Parameter Classification"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.MG",
       "math.CO",
       "magnitude_of_metric_spaces",
@@ -12358,7 +12383,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0550",
+    "id": "fd_0551",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Exploit the energy minimization characterization: the microscopic weighting minimizes the energy integral E(w) = Σ w(x)w(y)d(x,y) over signed measures of total mass 1. For trees, the distance matrix has recursive structure amenable to leaf-removal induction. Show that any signed measure of mass 1 on a tree with a negative-weight vertex can be modified to decrease energy, contradicting optimality. Alternatively, use the Schoenberg embedding characterization: the microscopic weighting corresponds to the closest point to the origin in the affine hull of the embedded vertices, and for trees this convex hull might be shown to contain the origin's projection with all positive barycentric coordinates.",
@@ -12385,7 +12410,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0551",
+    "id": "fd_0552",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The upper bound μ₂ ≤ 1+ρ follows from the paper's construction and Proposition 1 on cyclic factor avoidance. The lower bound μ₂ ≥ 1+ρ requires showing that no infinite sequence of cuts can achieve a ratio strictly less than 1+ρ. This likely requires analyzing the combinatorial constraints on infinite words over the alphabet {0,1,2,3} with ratios 1:ρ:ρ²:ρ³, proving that any such word avoiding equal adjacent letters must contain a portion with ratio at least (1+ρ)/(ρ²+ρ³) = 1+ρ. A potential approach uses the substitution system properties: the map sending 0↦23 (or 32), 1↦0, 2↦1, 3↦2 shows that any valid infinite sequence must eventually approximate the fixed point, forcing portions near the extremal ratio.",
@@ -12412,7 +12437,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0552",
+    "id": "fd_0553",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize simplicial complexes and vertex decomposability in Lean, then define PF_t(G) as the simplicial complex of vertex subsets with no induced P_t. Define complete multipartite graphs and their part-size ordering. The forward direction (t ≥ 2n_{m-1}-1 ⟹ vertex decomposable) requires formalizing the explicit structural decomposition of PF_t(G) as a union of join complexes with a size-truncation term, then proving each join component is vertex decomposable and that the union preserves this property. The reverse direction (t ≤ 2n_{m-1}-2 ⟹ not sequentially Cohen-Macaulay) requires constructing a specific non-Cohen-Macaulay witness face or showing the homology fails the sequential Cohen-Macaulay condition, potentially via a Mayer-Vietoris spectral sequence argument.",
@@ -12437,7 +12462,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0553",
+    "id": "fd_0554",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Demonstrate that each necklace corresponds to exactly k quasinecklaces via rotational symmetry or quasinecklace construction rules.",
@@ -12446,6 +12471,38 @@
     "status": "available",
     "timestamp": "2026-07-07T13:52:08.430147+00:00",
     "title": "Proportionality of quasinecklaces to necklaces"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "finite_fields",
+      "permutation_polynomials",
+      "monodromy_groups",
+      "riemann_hurwitz",
+      "dickson_polynomials",
+      "redei_functions"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every exceptional rational function of degree 5 over F_q, where char(F_q) ∉ {2, 5}, is Möbius-equivalent to exactly one of four families: (1) the monomial X^5 (cyclic monodromy, single branch point), (2) a Rédei function of degree 5 (cyclic monodromy, two branch points), (3) a Dickson polynomial D_5(X, a) for some a ∈ F_q^× (dihedral monodromy with an F_q-rational branch point), or (4) a specific non-polynomial rational function arising from a rational 5-isogeny of an elliptic curve (dihedral monodromy without F_q-rational branch point). The monodromy group structure (cyclic vs. dihedral) and branch point rationality completely determine the function type.",
+    "domain_bridges": [
+      "algebraic_geometry",
+      "group_theory",
+      "galois_theory",
+      "elliptic_curves"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0555",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the key definitions: exceptional rational functions (permuting P^1(F_{q^m}) for infinitely many m via the Fried–Schur–Saxon criterion), Möbius equivalence, and arithmetic/geometric monodromy groups as permutation groups on 5 elements. Case-split by geometric monodromy group: cyclic case uses classification of transitive cyclic subgroups of S_5 with Riemann–Hurwitz constraining ramification to yield monomials and Rédei functions; dihedral case analyzes inertia subgroups of D_5 within S_5 and branch point rationality to derive Dickson polynomials and the elliptic isogeny family. Key intermediate lemma: for degree 5, the Riemann–Hurwitz formula restricts the possible ramification configurations to finitely many cases for each monodromy type.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05075v1",
+    "status": "available",
+    "timestamp": "2026-07-07T14:25:29.437993+00:00",
+    "title": "Classification of Exceptional Rational Functions of Degree 5 over Finite Fields"
   },
   {
     "ambition_level": "extension",

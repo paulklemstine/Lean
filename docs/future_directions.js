@@ -1577,7 +1577,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The list chromatic number of 3-colorable planar graphs is at most 4"
   },
   {
-    "consumed_by_exp_id": "74938150",
+    "consumed_by_exp_id": "",
     "description": "For every integer d \u2265 5 such that d = 2g+1 or d = 2g+2 for some g \u2265 2, the Katz family of hyperelliptic curves y\u00b2 = x^d - d x + t over the t-line is NOT generically ordinary at the prime p = P\u207a(d), where P\u207a(d) = d\u00b2 - 4d + 2 if d is odd and P\u207a(d) = (d\u00b2 - 3d + 2)/2 if d is even. This conjecture generalizes the explicit counterexamples (d,p) = (21,359), (31,839), (51,2399) given in the paper and would show that the bound in Theorem 1.1 is optimal for the Katz family.",
     "domains": [
       "Pythagorean",
@@ -1587,7 +1587,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31783v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T17:14:59.029177+00:00",
     "title": "Sharpness of the generic ordinarity bound for the Katz family"
   },
@@ -2978,7 +2978,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Characterization of Bipartite Partial Duals of Orientable Hypermaps"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "771c3b70",
     "description": "For d \u2265 3, every discrete d-pseudomanifold with exactly 2d+7 vertices that is not a simplicial d-sphere is flag normal and isomorphic to the (d-2)-fold suspension of the 6-vertex triangulation of \u211dP\u00b2. This extends the optimality result in the paper by characterizing all non-sphere examples at the threshold number of vertices.",
     "domains": [
       "Geometry"
@@ -2987,7 +2987,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T03:17:14.082596+00:00",
     "title": "Classification of Discrete d-Pseudomanifolds with 2d+7 Vertices"
   },
@@ -3195,7 +3195,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finite Exceptions for Zero-Sum Ramsey Numbers of Complete Bipartite Graphs Over Z_q"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f228301b",
     "description": "This conjecture formalizes the structural constraint on matrix powers imposed by uniform vanishing of cyclic products of principal minors, generalizing the classical Problem B5 and extending it across diverse ring structures.",
     "domains": [
       "Pythagorean",
@@ -3205,7 +3205,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28976v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T10:31:38.067590+00:00",
     "title": "Strongly 1-principled matrices via vanishing cyclic products"
   },
@@ -4945,7 +4945,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit Secondary Term Bound for Sidon Sets"
   },
   {
-    "consumed_by_exp_id": "5640c2cf",
+    "consumed_by_exp_id": "",
     "description": "For every prime p and every pro-p Demushkin group G with invariant q(G), the differential graded algebra C(G, \ud835\udd3d_p) of continuous cochains is A\u2083-formal if and only if q(G) \u2260 3. The 'if' direction is established by the present paper (for p = 2) combined with prior work (for odd p), while the 'only if' direction\u2014that the pro-3 Demushkin group with q = 3 fails to be A\u2083-formal\u2014remains open and would complete the classification.",
     "domains": [
       "Algebra",
@@ -4955,7 +4955,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01028v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T03:43:43.202082+00:00",
     "title": "Complete characterization of A\u2083-formality for Demushkin groups"
   },
@@ -6638,12 +6638,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Any non-trivial point-imprimitive 2-(v,k,\u03bb) design admitting a flag-transitive automorphism group with socle PSL(2,q) (where q=p^f\u22654) must have design parameters (v,k,\u03bb) belonging to the finite set {(15,12,11), (85,80,79), (36,8,4)}, corresponding to the complements of PG(3,2), PG(3,4), and the Devillers-Praeger 2-(36,8,4) design, respectively.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0550",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05067v1",
+    "status": "available",
+    "timestamp": "2026-07-07T14:24:50.022688+00:00",
+    "title": "Point-Imprimitive Flag-Transitive 2-Design Parameter Classification"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every finite tree T (viewed as a metric space with the shortest-path distance), the microscopic weighting assigns strictly positive weight to every vertex. The paper establishes that finite trees are of strictly negative type and hence admit a microscopic weighting, and that this weighting emphasizes boundary points and distributes mass widely. The open question is whether all vertex weights are necessarily positive \u2014 i.e., whether the signed measure is in fact a positive measure for trees. A counterexample would reveal a tree whose interior vertices receive negative microscopic weight, while a proof would show that the 'mass redistribution' from boundary emphasis never forces interior weights below zero.",
     "domains": [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0550",
+    "id": "fd_0551",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05349v1",
@@ -6657,7 +6671,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0551",
+    "id": "fd_0552",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05330v1",
@@ -6671,7 +6685,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0552",
+    "id": "fd_0553",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05358v1",
@@ -6685,13 +6699,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0553",
+    "id": "fd_0554",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05324v1",
     "status": "available",
     "timestamp": "2026-07-07T13:52:08.430147+00:00",
     "title": "Proportionality of quasinecklaces to necklaces"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every exceptional rational function of degree 5 over F_q, where char(F_q) \u2209 {2, 5}, is M\u00f6bius-equivalent to exactly one of four families: (1) the monomial X^5 (cyclic monodromy, single branch point), (2) a R\u00e9dei function of degree 5 (cyclic monodromy, two branch points), (3) a Dickson polynomial D_5(X, a) for some a \u2208 F_q^\u00d7 (dihedral monodromy with an F_q-rational branch point), or (4) a specific non-polynomial rational function arising from a rational 5-isogeny of an elliptic curve (dihedral monodromy without F_q-rational branch point). The monodromy group structure (cyclic vs. dihedral) and branch point rationality completely determine the function type.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0555",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05075v1",
+    "status": "available",
+    "timestamp": "2026-07-07T14:25:29.437993+00:00",
+    "title": "Classification of Exceptional Rational Functions of Degree 5 over Finite Fields"
   },
   {
     "consumed_by_exp_id": "",
