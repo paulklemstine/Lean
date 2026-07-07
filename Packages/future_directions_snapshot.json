@@ -11872,6 +11872,59 @@
     "title": "Symmetric Colorings of Hales-Jewett Cubes Coincide with One-Weight Colorings"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "roberson2022oddomorphisms"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "A class of finite graphs is homomorphism distinguishing closed if and only if it is closed under homomorphic equivalence, disjoint unions, and taking split-off minors. This conjecture proposes a corrected version of the Strong Roberson Conjecture by substituting the minor relation with the newly introduced split-off minor relation.",
+    "domain_bridges": [
+      "homomorphism_indistinguishability",
+      "graph_minors",
+      "finite_model_theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0509",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "For the backward direction, generalize the existing proof that closure under split-off minors and disjoint unions implies homomorphism distinguishing closed. For the forward direction, assume a class is homomorphism distinguishing closed and demonstrate it must be closed under split-off minors by showing that if G is a split-off minor of F in the class, excluding G would alter the homomorphism indistinguishability relation, leveraging the connection between oddomorphisms and split-off minors.",
+    "research_mode": "team",
+    "source_exp_id": "2607.03405v1",
+    "status": "available",
+    "timestamp": "2026-07-07T01:27:39.230020+00:00",
+    "title": "Split-Off Minor Characterization of Homomorphism Distinguishing Closed Classes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Elekes-Szabó theorem",
+      "degenerate polynomials",
+      "polynomial factorization",
+      "MvPolynomial"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "An irreducible polynomial F in K[x_1,...,x_d] over an algebraically closed field K of characteristic zero is algebraically degenerate (i.e., F divides a sum of non-constant univariate polynomials f_1(x_1)+...+f_d(x_d)) if and only if there exist non-zero polynomials G and univariate alpha_{1,j}, alpha_{2,i} such that for each i, the partial derivative F_{x_i} is congruent to G * alpha_{2,i}(x_i) * prod_{j!=i} alpha_{1,j}(x_j) modulo F. This translates the local analytic characterization of Theorem 2.3 into a global algebraic setting.",
+    "domain_bridges": [
+      "combinatorial geometry",
+      "commutative algebra"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0509",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt the local analytic proof from the paper to the global algebraic setting using properties of algebraic curves and irreducibility, leveraging the fact that for polynomials over algebraically closed fields, local divisibility implies global divisibility, and applying Hilbert's Nullstellensatz to bridge the local zero sets to the global ideal structure.",
+    "research_mode": "team",
+    "source_exp_id": "2607.03366v1",
+    "status": "available",
+    "timestamp": "2026-07-07T01:28:54.258990+00:00",
+    "title": "Global Algebraic Degeneracy Criterion for Multivariate Polynomials"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
