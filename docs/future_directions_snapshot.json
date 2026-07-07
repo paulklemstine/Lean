@@ -3285,7 +3285,7 @@
       "Edmonds' Matroid Intersection Theorem",
       "Rainbow Forest Inequality"
     ],
-    "consumed_by_exp_id": "0f585a18",
+    "consumed_by_exp_id": "",
     "description": "For an edge-colored graph that is a minimal obstruction to total rainbow forests, there exists a unique subset A ⊆ E(G) where r₁(A) + r₂(E\\A) < t, and this failure is strict for no other subset.",
     "domain_bridges": [
       "Cycle matroid rank function",
@@ -3300,7 +3300,7 @@
     "proof_strategy": "Characterize minimal obstructions by analyzing the structure of subsets A where the inequality fails, leveraging matroid intersection properties to show uniqueness of the critical cut.",
     "research_mode": "team",
     "source_exp_id": "2606.31240v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T20:43:33.710473+00:00",
     "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality for exactly one edge subset"
   },
@@ -5081,7 +5081,7 @@
       "math.NT:11B39",
       "math.CO:05A15"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "333ab8bd",
     "description": "For each residue r ∈ {0,1,2,3,4}, the function k ↦ σ₅(5k + r) is non‑increasing (i.e., σ₅(5(k+1)+r) ≤ σ₅(5k+r) for all k ∈ ℕ).",
     "domain_bridges": [
       "Combinatorics",
@@ -5096,7 +5096,7 @@
     "proof_strategy": "Use the connection with rational approximations to the golden ratio φ and the theory of continued fractions to show that any potential decrease would produce a better approximation than a convergent, contradicting optimality of convergents.",
     "research_mode": "team",
     "source_exp_id": "2607.00825v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T11:40:31.517494+00:00",
     "title": "Monotonicity of the minimal absolute value of sums of fifth roots of unity within each residue class modulo 5"
   },
@@ -5307,7 +5307,7 @@
       "Bollobas1976complete",
       "Reiher2009"
     ],
-    "consumed_by_exp_id": "27d50820",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that the asymptotically sharp lower bound on k_t(G) derived from the Lovász–Simonovits densities is actually exact for all n‑vertex graphs, i.e., equality is attained for suitable Turán‑type constructions.",
     "domain_bridges": [
       "Extremal graph theory",
@@ -5324,7 +5324,7 @@
     "proof_strategy": "Prove that for every n, s, t with 2 ≤ s < t and every n‑vertex graph G, the inequality becomes equality for a suitable Turán graph or its balanced blow‑up, using induction on n together with Zykov symmetrization to show the bound cannot be improved.",
     "research_mode": "team",
     "source_exp_id": "2606.31967v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T15:36:33.626121+00:00",
     "title": "Sharpness of the k_t lower bound given k_s in extremal graphs"
   },
@@ -11410,7 +11410,7 @@
       "14P10",
       "68U05"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "360de7b6",
     "description": "For any full-dimensional convex polytope P in R^d, the cap-volume function V(H) = vol(P ∩ H⁺), mapping an oriented hyperplane H to the volume of the cap it cuts from P, is piecewise polynomial of degree exactly d on each full-dimensional cell of the arrangement induced by the vertices of P in the dual space of oriented hyperplanes. This strengthens the paper's key observation that V is piecewise rational to the sharper claim that it is piecewise polynomial, with the degree bound d arising from the fact that cap vertices on the hyperplane vary linearly in the hyperplane parameters while simplex volumes are degree-d polynomials in vertex coordinates.",
     "domain_bridges": [
       "Computational Geometry",
@@ -11427,7 +11427,7 @@
     "proof_strategy": "Fix a full-dimensional cell C of the arrangement in the dual space where the combinatorial type of the cap P ∩ H⁺ is constant. Within C, the vertices of the cap are either original vertices of P (constant) or intersection points of edges of P with H. Show that these intersection points vary linearly in the hyperplane parameters on C. Triangulate the cap into simplices; each simplex volume is a degree-d polynomial in its vertex coordinates. Since each vertex is either constant or linear in the hyperplane parameters, each simplex volume is a degree-d polynomial in the hyperplane parameters on C. Summing over simplices yields a degree-d polynomial for the total cap volume on C. Genericity arguments show the degree is exactly d, not less.",
     "research_mode": "team",
     "source_exp_id": "2607.02400v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T21:02:58.080708+00:00",
     "title": "Piecewise Polynomial Cap-Volume Conjecture for Convex Polytopes"
   },
@@ -11709,6 +11709,33 @@
     "title": "Rigidity Implies Monoidal Natural Transformations Are Isomorphisms"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any odd prime q ≥ 3 and integer m ≥ 4, the maximum codimension of a cyclically covering subspace of 𝔽_q^n, denoted h_q(n), is strictly positive when n = (q^m+1)/2. This is equivalent to the existence of a proper subspace of 𝔽_q^n whose union of cyclic shifts covers the entire vector space.",
+    "domain_bridges": [
+      "Finite Fields",
+      "Cyclic Codes",
+      "Linear Algebra"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0503",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Translate the condition h_q(n) > 0 into the existence of a non-zero cyclic code without a full-weight codeword. Explicitly construct such a cyclic code in 𝔽_q^n for n = (q^m+1)/2 by defining its generator polynomial using the properties of the multiplicative group of 𝔽_{q^m}, and prove that no codeword in this code has full weight.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02239v1",
+    "status": "available",
+    "timestamp": "2026-07-07T01:09:30.885950+00:00",
+    "title": "Positivity of Cyclically Covering Subspace Codimension for (q^m+1)/2"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "math.MG",
@@ -11726,7 +11753,7 @@
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_0503",
+    "id": "fd_0504",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof proceeds in two parts. (1) Show every point in the floating body Float(P, 1/(d+1)) is a centerpoint: any halfspace containing a point in the floating body captures at least 1/(d+1) of the volume by definition of the floating body. (2) Show every centerpoint lies in the floating body: given a centerpoint c, for any halfspace H⁺ with vol(H⁺ ∩ P) ≥ vol(P)/(d+1), show c ∈ H⁺ by contradiction—if c ∉ H⁺, then the complementary halfspace H⁻ contains c but has volume at most d/(d+1), contradicting the centerpoint property when one constructs a halfplane through c that captures less than 1/(d+1) of the volume. The polytopal structure enters via the piecewise-rational decomposition of the cap-volume function, which ensures the floating body is semialgebraic and the infimum in its definition is attained.",
@@ -11754,7 +11781,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0504",
+    "id": "fd_0505",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use Theorem A to handle k ≤ a_1+t-1 (all such non-hook partitions are automatically in Ω₂(n)). For the range a_1+t ≤ k ≤ ⌈n/2⌉, construct explicit non-hook partitions with k parts that lie in Ω₂(n) by leveraging the branching rule and the structure of the Sylow 2-subgroup as an iterated wreath product of C_2. The upper bound k = ⌈n/2⌉ is covered by the paper's Proposition. The intermediate values require exhibiting witnesses, potentially using two-part partitions (n-k, k) and their relation to Young subgroups.",
@@ -11780,7 +11807,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0505",
+    "id": "fd_0506",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Rewrite the Gauss sum $G_N(\\chi^{k(i+j)})$ by partitioning the summation over $(\\mathbb{Z}/N\\mathbb{Z})^\\times$ into the $n$ cyclotomic cosets $C_a$ modulo $k$. Express $\\chi^{k(i+j)}(x)$ as $\\omega^{a(i+j)}$ for $x \\in C_a$, pulling the root of unity out of the sum to yield $\\sum_{a=0}^{n-1} \\omega^{a(i+j)} \\eta_a$, which directly translates to the matrix factorization $A_k(\\chi) = W D W^T$.",
@@ -11806,7 +11833,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0506",
+    "id": "fd_0507",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the Lin-Lu-Yau curvature using the 1-Wasserstein distance between probability measures on vertices. Establish structural properties of graphs with non-positive curvature edges, and demonstrate that exceeding the edge threshold T(n) precludes the existence of such subgraphs, thereby forcing all edge curvatures to be strictly positive.",
@@ -11815,6 +11842,34 @@
     "status": "available",
     "timestamp": "2026-07-06T23:29:27.413260+00:00",
     "title": "Positive Curvature Threshold for Lin-Lu-Yau Curvature"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "Hales-Jewett theorem",
+      "Gallai homothety numbers",
+      "van der Waerden numbers"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every symmetric r-coloring of the Hales-Jewett cube [t]^n — one invariant under all coordinate permutations of the word — is a one-weight coloring: there exist integer weights w_1, ..., w_t such that the color of a word x ∈ [t]^n depends only on the weighted sum ∑_i w_{x_i}. Conversely, every one-weight coloring is symmetric. This equivalence reduces the symmetric lower-bound problem for Hales-Jewett numbers to the d=1 case of Gallai's theorem on homothetic copies of a t-point set in Z.",
+    "domain_bridges": [
+      "Permutation invariance on finite multisets",
+      "Integer-weighted letter sums as complete invariants",
+      "Combinatorial lines under weight projections"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0508",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The forward direction (one-weight ⇒ symmetric) is immediate since permuting coordinates preserves the multiset of letters and hence the weighted sum. For the converse, given a symmetric coloring c, construct the radix weight by examining how c distinguishes words that differ only in letter substitution: define w_j - w_1 as the minimal coordinate substitution that changes the color class when swapping a letter 1 for letter j in a fixed position. Show that the orbit of any word under coordinate permutations is determined by its letter-count vector, and that c factors through the weighted sum because symmetry forces c to depend only on the letter-count, which the radix weight encodes injectively modulo the kernel of c. The key combinatorial lemma is that the color partition of Z induced by the weighted sum is well-defined and independent of the choice of representative word.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02226v1",
+    "status": "available",
+    "timestamp": "2026-07-07T01:10:01.018167+00:00",
+    "title": "Symmetric Colorings of Hales-Jewett Cubes Coincide with One-Weight Colorings"
   },
   {
     "ambition_level": "extension",

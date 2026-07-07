@@ -1796,7 +1796,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-existence of solutions for (a^n+1)(b^n+1)=x\u00b2 when gcd(a,b) > 1 and n is even"
   },
   {
-    "consumed_by_exp_id": "0f585a18",
+    "consumed_by_exp_id": "",
     "description": "For an edge-colored graph that is a minimal obstruction to total rainbow forests, there exists a unique subset A \u2286 E(G) where r\u2081(A) + r\u2082(E\\A) < t, and this failure is strict for no other subset.",
     "domains": [
       "Bridges"
@@ -1805,7 +1805,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31240v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T20:43:33.710473+00:00",
     "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality for exactly one edge subset"
   },
@@ -2771,7 +2771,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Upper bound conjecture for the cake balancing ratio sequence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "333ab8bd",
     "description": "For each residue r \u2208 {0,1,2,3,4}, the function k \u21a6 \u03c3\u2085(5k + r) is non\u2011increasing (i.e., \u03c3\u2085(5(k+1)+r) \u2264 \u03c3\u2085(5k+r) for all k \u2208 \u2115).",
     "domains": [
       "Bridges"
@@ -2780,7 +2780,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00825v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T11:40:31.517494+00:00",
     "title": "Monotonicity of the minimal absolute value of sums of fifth roots of unity within each residue class modulo 5"
   },
@@ -2901,7 +2901,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stability of the sharp diagonal spectral correlation inequality for monotone Boolean functions"
   },
   {
-    "consumed_by_exp_id": "27d50820",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that the asymptotically sharp lower bound on k_t(G) derived from the Lov\u00e1sz\u2013Simonovits densities is actually exact for all n\u2011vertex graphs, i.e., equality is attained for suitable Tur\u00e1n\u2011type constructions.",
     "domains": [
       "Pythagorean",
@@ -2911,7 +2911,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31967v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T15:36:33.626121+00:00",
     "title": "Sharpness of the k_t lower bound given k_s in extremal graphs"
   },
@@ -6142,7 +6142,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Aharoni-Korman Property for Countable Well-Founded FAC Posets"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "360de7b6",
     "description": "For any full-dimensional convex polytope P in R^d, the cap-volume function V(H) = vol(P \u2229 H\u207a), mapping an oriented hyperplane H to the volume of the cap it cuts from P, is piecewise polynomial of degree exactly d on each full-dimensional cell of the arrangement induced by the vertices of P in the dual space of oriented hyperplanes. This strengthens the paper's key observation that V is piecewise rational to the sharper claim that it is piecewise polynomial, with the degree bound d arising from the fact that cap vertices on the hyperplane vary linearly in the hyperplane parameters while simplex volumes are degree-d polynomials in vertex coordinates.",
     "domains": [
       "Pythagorean",
@@ -6152,7 +6152,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02400v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T21:02:58.080708+00:00",
     "title": "Piecewise Polynomial Cap-Volume Conjecture for Convex Polytopes"
   },
@@ -6304,12 +6304,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any odd prime q \u2265 3 and integer m \u2265 4, the maximum codimension of a cyclically covering subspace of \ud835\udd3d_q^n, denoted h_q(n), is strictly positive when n = (q^m+1)/2. This is equivalent to the existence of a proper subspace of \ud835\udd3d_q^n whose union of cyclic shifts covers the entire vector space.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0503",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02239v1",
+    "status": "available",
+    "timestamp": "2026-07-07T01:09:30.885950+00:00",
+    "title": "Positivity of Cyclically Covering Subspace Codimension for (q^m+1)/2"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any full-dimensional convex polytope P in \u211d^d, the set of centerpoints of P (with respect to the uniform Lebesgue measure on P) coincides with the floating body of P at level 1/(d+1). That is, a point c \u2208 \u211d^d is a centerpoint\u2014meaning every closed halfspace containing c captures at least 1/(d+1) of the volume of P\u2014if and only if c belongs to the intersection of all closed halfspaces H\u207a satisfying vol(H\u207a \u2229 P) \u2265 vol(P)/(d+1). This equivalence, proved in the paper for convex polytopes, reveals a fundamental structural identity between a combinatorial-geometric object (centerpoints) and a convex-geometric object (floating bodies). Formalizing even the 2-dimensional case for triangles would require developing substantial infrastructure in convex geometry, measure theory on polytopes, and the centerpoint theorem.",
     "domains": [
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_0503",
+    "id": "fd_0504",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02400v1",
@@ -6324,7 +6339,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0504",
+    "id": "fd_0505",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -6338,7 +6353,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0505",
+    "id": "fd_0506",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02392v1",
@@ -6352,13 +6367,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0506",
+    "id": "fd_0507",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
     "status": "available",
     "timestamp": "2026-07-06T23:29:27.413260+00:00",
     "title": "Positive Curvature Threshold for Lin-Lu-Yau Curvature"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every symmetric r-coloring of the Hales-Jewett cube [t]^n \u2014 one invariant under all coordinate permutations of the word \u2014 is a one-weight coloring: there exist integer weights w_1, ..., w_t such that the color of a word x \u2208 [t]^n depends only on the weighted sum \u2211_i w_{x_i}. Conversely, every one-weight coloring is symmetric. This equivalence reduces the symmetric lower-bound problem for Hales-Jewett numbers to the d=1 case of Gallai's theorem on homothetic copies of a t-point set in Z.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0508",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02226v1",
+    "status": "available",
+    "timestamp": "2026-07-07T01:10:01.018167+00:00",
+    "title": "Symmetric Colorings of Hales-Jewett Cubes Coincide with One-Weight Colorings"
   },
   {
     "consumed_by_exp_id": "",
