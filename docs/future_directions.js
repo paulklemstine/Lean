@@ -1069,7 +1069,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived p-completeness of sheared Witt vectors ensures Dieudonn\u00e9 theory extension"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e686a08c",
     "description": "There exists a finite family of vector-valued convolution kernels {K_i} such that their weighted combination satisfies a ball-overbag inequality for Sidon sets, with the coefficient \u03b3_0=0.94601 achievable through optimized L\u00b2 energy distribution across kernels.",
     "domains": [
       "Computation",
@@ -1079,7 +1079,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T23:15:13.575664+00:00",
     "title": "Multi-kernel smoothing lemma for Sidon sets"
   },
@@ -1127,21 +1127,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T23:51:14.163940+00:00",
     "title": "Filtered Colimit Preservation by Sheared Witt Vectors"
-  },
-  {
-    "consumed_by_exp_id": "fc6c8817",
-    "description": "The $(p,q)$-deformed generalized Weyl algebra's rook-theoretic combinatorial model predicts that the $(p,q)$-generalized Stirling numbers $\\mathfrak{S}_{s;h}(n,k|p,q)$ equal the $s$-rook polynomial on a staircase board of size $(n,k)$ with entries weighted by $p$ and $q$ via $XY\\mapsto qYX\\mapsto q^{s}Y^sZ_pX$. This conjecture seeks to formalize the link between the algebra's normal ordering and rook placements with $(p,q)$-coefficients.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0107",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01141v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T00:16:02.557642+00:00",
-    "title": "Combinatorial Interpretation of $s$-Rook Polynomials via $(p,q)$-Deformed Normal Ordering"
   },
   {
     "consumed_by_exp_id": "",
@@ -1433,7 +1418,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharp Lower Bounds for Sumsets in L\u2081 Balls in \u2124\u1d48"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a8577162",
     "description": "We conjecture that the upper bound for |\u03b6(1+it)| can be improved further by utilizing smoothing methods. Specifically, we propose that for all t \u2265 3, |\u03b6(1+it)| \u2264 (1/2) log t + 1.5, which would improve the existing bound of (1/2) log t + 1.57. This conjecture is based on extending the analysis in [this paper] to optimize the constants in the smoothed approximation.",
     "domains": [
       "Pythagorean",
@@ -1443,7 +1428,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01424v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T10:19:57.480990+00:00",
     "title": "Sharpening the Constant in the Upper Bound of |\u03b6(1+it)| via Smoothing Techniques"
   },
@@ -2277,7 +2262,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Locality of supersingular representations of GL_2 over unramified extensions of Q_p"
   },
   {
-    "consumed_by_exp_id": "8565ba38",
+    "consumed_by_exp_id": "",
     "description": "This paper proposes a combinatorial framework to describe the discrete homotopy groups of quasisymmetric cubical sets, extending prior work by Carranza and Kapulkin. It aims to provide a formally verified, leveraging Lean 4, synthetic proof of isomorphism between the homotopy groups of the geometric realization and those of the underlying cubical configuration.",
     "domains": [
       "Algebra",
@@ -2287,7 +2272,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28693v2",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T13:25:20.641906+00:00",
     "title": "Discrete homotopy groups of quasisymmetric cubical sets"
   },
@@ -2961,7 +2946,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non\u2011existence of non\u2011constant colorings satisfying the blend condition on finite strongly connected edge\u2011weighted digraphs"
   },
   {
-    "consumed_by_exp_id": "7e1d3a87",
+    "consumed_by_exp_id": "",
     "description": "Let \\(\\mathcal O = \\mathbb Z[\\omega]\\) be an imaginary quadratic order of discriminant \\(D<0\\) and let \\(p\\) be a prime that is inert in the quadratic field \\(K=\\mathbb Q(\\omega)\\). For every \\(\\mathcal O\\)-oriented supersingular elliptic curve \\((E,\\iota)\\) defined over \\(\\mathbb F_{p}\\) there exists a prime \\(\\ell \\neq p\\) such that \\(E\\) admits an \\(\\mathcal O\\)-twisting endomorphism of degree \\(\\ell\\). Moreover, \\(\\ell\\) can be chosen to be any prime that splits completely in the ring class field of \\(\\mathcal O\\) and satisfies \\(\\ell \\equiv 1 \\pmod{4}\\).",
     "domains": [
       "Algebra",
@@ -2971,7 +2956,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31687v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T16:52:17.908749+00:00",
     "title": "Existence of Prime\u2011Degree O\u2011twisting Endomorphisms for Inert Primes"
   },
@@ -4101,7 +4086,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Determinant Formula for the Cyclotomic Matrix of Gauss Sums over Prime Powers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4231f6a2",
     "description": "For all even n \u2265 12, the unique graph with T(n) = (n\u00b2-3n)/2 - \u2308n/2\u2309 + 2 edges that contains an edge with non-positive Lin--Lu--Yau curvature is the join of a perfect matching on n/2 vertices and a complete graph on n/2 vertices, K\u2082 plus K_{n/2}. This structure is characterized by: (1) vertex partition into two sets A and B each of size n/2, (2) A induces a perfect matching, B induces a complete graph, (3) every vertex in A is adjacent to every vertex in B, and (4) the unique edge with non-positive curvature lies within the matchings. This conjecture generalizes the uniqueness result and provides an explicit structural description.",
     "domains": [
       "Algebra",
@@ -4111,7 +4096,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T17:33:31.047466+00:00",
     "title": "Characterization of Extremal Graphs for Positive Lin--Lu--Yau Curvature"
   },
@@ -4976,7 +4961,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finitely Generated Schottky Group"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f563c305",
     "description": "Conjecture: The properly normalized extremal fluctuations of black hole microstate counts in quantum gravity converge in distribution to the Gumbel extreme value distribution. Specifically, let N(\u039b) denote the count of microstates with energy below \u039b for a holographic CFT with large central charge c. Define the extremal fluctuation \u0394N_c = max_\u039b(N(\u039b) - E[N(\u039b)])/\u221a(Var[N(\u039b)]) over \u039b in an interval. Then as c\u2192\u221e, exp(-e^(-x)) = lim_{c\u2192\u221e} P(\u0394N_c \u2264 x) in distribution. This predicts a universal tail exponent \u03b1=1 for the log-correlated field universality class.",
     "domains": [
       "Algebra",
@@ -4986,7 +4971,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T21:39:27.004204+00:00",
     "title": "Gumbel Distribution for Black Hole Microstate Extremal Fluctuations"
   },
@@ -5005,7 +4990,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Symmetric Exchange Generation in Rank-Bounded Matroids"
   },
   {
-    "consumed_by_exp_id": "27f42966",
+    "consumed_by_exp_id": "",
     "description": "The spectral inequality equivalence for Sidorenko-type inequalities in admissible classes fails for certain bipartite graphs outside the range v(H) \u2264 e(H). Specifically, for the 5-vertex path graph H (a tree with 5 vertices and 4 edges), there exists an admissible class C (e.g., the class of doubly nonnegative graphons) such that the spectral inequality holds for all W \u2208 C, but H is not C-Sidorenko.",
     "domains": [
       "Physics"
@@ -5014,7 +4999,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T22:13:32.517589+00:00",
     "title": "Spectral Transfer Sharpness for Trees Beyond the Sidorenko Range"
   },
@@ -6305,12 +6290,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For the fixed genus chord swap Markov chain on chord diagrams with n chords and genus g, the spectral gap \u03b3_{n,g} satisfies \u03b3_{n,g} = \u0398(n^{-3}) when g is fixed and n \u2192 \u221e. This sharpens the paper's polynomial lower bound to a precise exponent and matches the n^{-3} scaling observed in related swap chains on perfect matchings.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_0501",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02410v1",
+    "status": "available",
+    "timestamp": "2026-07-07T00:02:19.658603+00:00",
+    "title": "Tight spectral gap exponent for the fixed-genus chord swap chain"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any full-dimensional convex polytope P in \u211d^d, the set of centerpoints of P (with respect to the uniform Lebesgue measure on P) coincides with the floating body of P at level 1/(d+1). That is, a point c \u2208 \u211d^d is a centerpoint\u2014meaning every closed halfspace containing c captures at least 1/(d+1) of the volume of P\u2014if and only if c belongs to the intersection of all closed halfspaces H\u207a satisfying vol(H\u207a \u2229 P) \u2265 vol(P)/(d+1). This equivalence, proved in the paper for convex polytopes, reveals a fundamental structural identity between a combinatorial-geometric object (centerpoints) and a convex-geometric object (floating bodies). Formalizing even the 2-dimensional case for triangles would require developing substantial infrastructure in convex geometry, measure theory on polytopes, and the centerpoint theorem.",
     "domains": [
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_0501",
+    "id": "fd_0502",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02400v1",
@@ -6325,7 +6324,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0502",
+    "id": "fd_0503",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -6339,7 +6338,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0503",
+    "id": "fd_0504",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02392v1",
@@ -6353,7 +6352,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0504",
+    "id": "fd_0505",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",

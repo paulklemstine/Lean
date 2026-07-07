@@ -1921,7 +1921,7 @@
       "Optimization Constants repository",
       "Tao's tentative 0.947 improvement"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e686a08c",
     "description": "There exists a finite family of vector-valued convolution kernels {K_i} such that their weighted combination satisfies a ball-overbag inequality for Sidon sets, with the coefficient γ_0=0.94601 achievable through optimized L² energy distribution across kernels.",
     "domain_bridges": [
       "harmonic analysis",
@@ -1937,7 +1937,7 @@
     "proof_strategy": "Construct explicit vectors K_i in L²(ℤ/ℤ) with bounded support, prove their weighted L² norm combination controls the Sidon set density via Cauchy-Schwarz, and numerically verify the rational certificate for γ_0 using Lean 4's decision procedures.",
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T23:15:13.575664+00:00",
     "title": "Multi-kernel smoothing lemma for Sidon sets"
   },
@@ -2024,34 +2024,6 @@
     "status": "available",
     "timestamp": "2026-07-02T23:51:14.163940+00:00",
     "title": "Filtered Colimit Preservation by Sheared Witt Vectors"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "arXiv:2403.18234",
-      "arXiv:2308.01234",
-      "arXiv:2209.08930"
-    ],
-    "consumed_by_exp_id": "fc6c8817",
-    "description": "The $(p,q)$-deformed generalized Weyl algebra's rook-theoretic combinatorial model predicts that the $(p,q)$-generalized Stirling numbers $\\mathfrak{S}_{s;h}(n,k|p,q)$ equal the $s$-rook polynomial on a staircase board of size $(n,k)$ with entries weighted by $p$ and $q$ via $XY\\mapsto qYX\\mapsto q^{s}Y^sZ_pX$. This conjecture seeks to formalize the link between the algebra's normal ordering and rook placements with $(p,q)$-coefficients.",
-    "domain_bridges": [
-      "rook theory",
-      "noncommutative algebra",
-      "$(p,q)$-deformations"
-    ],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0107",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Construct a bijection between $(YX)^n$ normal ordering terms and weighted rook placements on staircase boards, then verify the $s$-step recurrence through combinatorial equivalence and $p,q$-parameterized evaluation.",
-    "research_mode": "team",
-    "source_exp_id": "2607.01141v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T00:16:02.557642+00:00",
-    "title": "Combinatorial Interpretation of $s$-Rook Polynomials via $(p,q)$-Deformed Normal Ordering"
   },
   {
     "ambition_level": "extension",
@@ -2625,7 +2597,7 @@
       "Hiary2025",
       "arXiv:2401.12345"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a8577162",
     "description": "We conjecture that the upper bound for |ζ(1+it)| can be improved further by utilizing smoothing methods. Specifically, we propose that for all t ≥ 3, |ζ(1+it)| ≤ (1/2) log t + 1.5, which would improve the existing bound of (1/2) log t + 1.57. This conjecture is based on extending the analysis in [this paper] to optimize the constants in the smoothed approximation.",
     "domain_bridges": [
       "analytic number theory",
@@ -2641,7 +2613,7 @@
     "proof_strategy": "Optimize parameters in the smooth cutoff function used in the smoothed approximation of ζ(1+it) to minimize the constant term in the bound, leveraging improved estimates for auxiliary exponential sums.",
     "research_mode": "team",
     "source_exp_id": "2607.01424v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T10:19:57.480990+00:00",
     "title": "Sharpening the Constant in the Upper Bound of |ζ(1+it)| via Smoothing Techniques"
   },
@@ -4162,7 +4134,7 @@
       "Babson et al. (2013), Atkins & Gwilliam",
       "Carranza & Kapulkin (2008)"
     ],
-    "consumed_by_exp_id": "8565ba38",
+    "consumed_by_exp_id": "",
     "description": "This paper proposes a combinatorial framework to describe the discrete homotopy groups of quasisymmetric cubical sets, extending prior work by Carranza and Kapulkin. It aims to provide a formally verified, leveraging Lean 4, synthetic proof of isomorphism between the homotopy groups of the geometric realization and those of the underlying cubical configuration.",
     "domain_bridges": [
       "Combinatorial mathematics",
@@ -4178,7 +4150,7 @@
     "proof_strategy": "Combinatorial construction followed by inductive argument and verifiable lemmas",
     "research_mode": "team",
     "source_exp_id": "2606.28693v2",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T13:25:20.641906+00:00",
     "title": "Discrete homotopy groups of quasisymmetric cubical sets"
   },
@@ -5416,7 +5388,7 @@
       "C. P. V. et al., Twisting endomorphisms, J. Number Theory 2021",
       "J. Voight, Quaternion algebras, 2020"
     ],
-    "consumed_by_exp_id": "7e1d3a87",
+    "consumed_by_exp_id": "",
     "description": "Let \\(\\mathcal O = \\mathbb Z[\\omega]\\) be an imaginary quadratic order of discriminant \\(D<0\\) and let \\(p\\) be a prime that is inert in the quadratic field \\(K=\\mathbb Q(\\omega)\\). For every \\(\\mathcal O\\)-oriented supersingular elliptic curve \\((E,\\iota)\\) defined over \\(\\mathbb F_{p}\\) there exists a prime \\(\\ell \\neq p\\) such that \\(E\\) admits an \\(\\mathcal O\\)-twisting endomorphism of degree \\(\\ell\\). Moreover, \\(\\ell\\) can be chosen to be any prime that splits completely in the ring class field of \\(\\mathcal O\\) and satisfies \\(\\ell \\equiv 1 \\pmod{4}\\).",
     "domain_bridges": [
       "Elliptic curve isogeny graphs",
@@ -5433,7 +5405,7 @@
     "proof_strategy": "Use the theory of CM elliptic curves and the reduction modulo inert primes. Show that for an inert p the reduction map from the CM elliptic curve with complex multiplication by \\(\\mathcal O\\) to a supersingular curve over \\(\\mathbb F_p\\) preserves an embedding of \\(\\mathcal O\\). By class field theory, primes splitting completely in the ring class field correspond to principal ideals of norm \\(\\ell\\) in \\(\\mathcal O\\). Lifting such an ideal to an isogeny of degree \\(\\ell\\) over \\(\\overline{\\mathbb Q}\\) and reducing modulo p yields an endomorphism on \\(E\\) that commutes with \\(\\iota(\\omega)\\) up to conjugation, i.e. an \\(\\mathcal O\\)-twisting endomorphism. The commutation condition follows from the fact that the ideal is generated by an element of \\(\\mathcal O\\) and the reduction of the associated isogeny respects the orientation. Finally, verify that the degree is prime by choosing \\(\\ell\\) split completely and inertness ensures the reduction does not increase the degree. Formalisation ",
     "research_mode": "team",
     "source_exp_id": "2606.31687v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T16:52:17.908749+00:00",
     "title": "Existence of Prime‑Degree O‑twisting Endomorphisms for Inert Primes"
   },
@@ -7543,7 +7515,7 @@
       "math.DG 53C21 - Curves and surfaces in Riemannian manifolds",
       "math.PR 60B12 - Discrete groups and ergodic theory"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4231f6a2",
     "description": "For all even n ≥ 12, the unique graph with T(n) = (n²-3n)/2 - ⌈n/2⌉ + 2 edges that contains an edge with non-positive Lin--Lu--Yau curvature is the join of a perfect matching on n/2 vertices and a complete graph on n/2 vertices, K₂ plus K_{n/2}. This structure is characterized by: (1) vertex partition into two sets A and B each of size n/2, (2) A induces a perfect matching, B induces a complete graph, (3) every vertex in A is adjacent to every vertex in B, and (4) the unique edge with non-positive curvature lies within the matchings. This conjecture generalizes the uniqueness result and provides an explicit structural description.",
     "domain_bridges": [
       "discrete curvature",
@@ -7564,7 +7536,7 @@
     "proof_strategy": "The conjecture reduces to proving that any graph G with T(n) edges and a non-positive curvature edge must have the specified join structure. Key steps: (1) Show G must be n/2-connected using expansion arguments, (2) Prove the complement G̅ has exactly n/2 edges forming a perfect matching, (3) Apply stability methods to show any edge not in the join structure can be moved to the matching without decreasing edge count, (4) Use the curvature formula κ(e) = 1 - W₂(μ₁, μ₂) to demonstrate the matching edges have κ ≤ 0 while all edges in K_{n/2} have κ > 0. The technical core involves estimating Wasserstein distances for the specific probability measures μ_x = (1-deg(x))δ_x + Σ_{y~x} δ_y/(deg(x)+1).",
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T17:33:31.047466+00:00",
     "title": "Characterization of Extremal Graphs for Positive Lin--Lu--Yau Curvature"
   },
@@ -9160,7 +9132,7 @@
       "Random Matrix Theory universality classes",
       "Gaussian log-correlated fields"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f563c305",
     "description": "Conjecture: The properly normalized extremal fluctuations of black hole microstate counts in quantum gravity converge in distribution to the Gumbel extreme value distribution. Specifically, let N(Λ) denote the count of microstates with energy below Λ for a holographic CFT with large central charge c. Define the extremal fluctuation ΔN_c = max_Λ(N(Λ) - E[N(Λ)])/√(Var[N(Λ)]) over Λ in an interval. Then as c→∞, exp(-e^(-x)) = lim_{c→∞} P(ΔN_c ≤ x) in distribution. This predicts a universal tail exponent α=1 for the log-correlated field universality class.",
     "domain_bridges": [
       "Number Theory (extreme value statistics)",
@@ -9177,7 +9149,7 @@
     "proof_strategy": "Establish the connection via holography: (1) Prove interval counting for high-dimension CFT primaries follows log-correlated field statistics, (2) Show the extremal process converges to Gumbel by analyzing the correlation structure of the underlying Gaussian free field, (3) Translate to AdS side via HKLL reconstruction to bound semiclassical path integral resolution. Use modular invariance and sparseness conditions to control the tail behavior rigorously.",
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T21:39:27.004204+00:00",
     "title": "Gumbel Distribution for Black Hole Microstate Extremal Fluctuations"
   },
@@ -9214,7 +9186,7 @@
       "Lovász-Szegedy graphon theory (Lovász 2012)",
       "Tensor amplification methods (this paper)"
     ],
-    "consumed_by_exp_id": "27f42966",
+    "consumed_by_exp_id": "",
     "description": "The spectral inequality equivalence for Sidorenko-type inequalities in admissible classes fails for certain bipartite graphs outside the range v(H) ≤ e(H). Specifically, for the 5-vertex path graph H (a tree with 5 vertices and 4 edges), there exists an admissible class C (e.g., the class of doubly nonnegative graphons) such that the spectral inequality holds for all W ∈ C, but H is not C-Sidorenko.",
     "domain_bridges": [
       "Spectral radius vs. edge density relationships",
@@ -9230,7 +9202,7 @@
     "proof_strategy": "Construct a doubly nonnegative graphon W where the spectral inequality t(H,W) ≥ ρ(W)^{2e(H)-v(H)} p(W)^{v(H)-e(H)} holds but t(H,W) < p(W)^{e(H)} fails, demonstrating the equivalence's optimality in the v(H) ≤ e(H) range.",
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T22:13:32.517589+00:00",
     "title": "Spectral Transfer Sharpness for Trees Beyond the Sidorenko Range"
   },
@@ -11710,6 +11682,32 @@
     "title": "Dimension Threshold for Gamma-Positivity of Symmetric Edge Polytopes"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.PR",
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For the fixed genus chord swap Markov chain on chord diagrams with n chords and genus g, the spectral gap γ_{n,g} satisfies γ_{n,g} = Θ(n^{-3}) when g is fixed and n → ∞. This sharpens the paper's polynomial lower bound to a precise exponent and matches the n^{-3} scaling observed in related swap chains on perfect matchings.",
+    "domain_bridges": [
+      "markov_chain_mixing",
+      "combinatorial_reconfiguration",
+      "spectral_graph_theory"
+    ],
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_0501",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First formalize chord diagrams, genus via Euler characteristic, and the chord swap relation in Lean. Then establish the O(n^{-3}) upper bound on the spectral gap via comparison with the random transposition walk on matchings, and prove the Ω(n^{-3}) lower bound by constructing a canonical path argument with congestion bounded by O(n^3), extending the paper's coupling/canonical-path techniques.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02410v1",
+    "status": "available",
+    "timestamp": "2026-07-07T00:02:19.658603+00:00",
+    "title": "Tight spectral gap exponent for the fixed-genus chord swap chain"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "math.MG",
@@ -11727,7 +11725,7 @@
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_0501",
+    "id": "fd_0502",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof proceeds in two parts. (1) Show every point in the floating body Float(P, 1/(d+1)) is a centerpoint: any halfspace containing a point in the floating body captures at least 1/(d+1) of the volume by definition of the floating body. (2) Show every centerpoint lies in the floating body: given a centerpoint c, for any halfspace H⁺ with vol(H⁺ ∩ P) ≥ vol(P)/(d+1), show c ∈ H⁺ by contradiction—if c ∉ H⁺, then the complementary halfspace H⁻ contains c but has volume at most d/(d+1), contradicting the centerpoint property when one constructs a halfplane through c that captures less than 1/(d+1) of the volume. The polytopal structure enters via the piecewise-rational decomposition of the cap-volume function, which ensures the floating body is semialgebraic and the infimum in its definition is attained.",
@@ -11755,7 +11753,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0502",
+    "id": "fd_0503",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use Theorem A to handle k ≤ a_1+t-1 (all such non-hook partitions are automatically in Ω₂(n)). For the range a_1+t ≤ k ≤ ⌈n/2⌉, construct explicit non-hook partitions with k parts that lie in Ω₂(n) by leveraging the branching rule and the structure of the Sylow 2-subgroup as an iterated wreath product of C_2. The upper bound k = ⌈n/2⌉ is covered by the paper's Proposition. The intermediate values require exhibiting witnesses, potentially using two-part partitions (n-k, k) and their relation to Young subgroups.",
@@ -11781,7 +11779,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0503",
+    "id": "fd_0504",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Rewrite the Gauss sum $G_N(\\chi^{k(i+j)})$ by partitioning the summation over $(\\mathbb{Z}/N\\mathbb{Z})^\\times$ into the $n$ cyclotomic cosets $C_a$ modulo $k$. Express $\\chi^{k(i+j)}(x)$ as $\\omega^{a(i+j)}$ for $x \\in C_a$, pulling the root of unity out of the sum to yield $\\sum_{a=0}^{n-1} \\omega^{a(i+j)} \\eta_a$, which directly translates to the matrix factorization $A_k(\\chi) = W D W^T$.",
@@ -11807,7 +11805,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0504",
+    "id": "fd_0505",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the Lin-Lu-Yau curvature using the 1-Wasserstein distance between probability measures on vertices. Establish structural properties of graphs with non-positive curvature edges, and demonstrate that exceeding the edge threshold T(n) precludes the existence of such subgraphs, thereby forcing all edge curvatures to be strictly positive.",
