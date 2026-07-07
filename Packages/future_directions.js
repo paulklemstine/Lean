@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ee36b082",
     "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition \u2014 zeros on the critical line means the bulk geometry is stable against perturbations.",
     "domains": [
       "Novelty",
@@ -13,7 +13,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T16:56:44.710027+00:00",
     "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
   },
@@ -1711,7 +1711,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-existence of weak Ziegler pairs for high-degree plus-one generated conic-line arrangements with defect three"
   },
   {
-    "consumed_by_exp_id": "ed4ffa8f",
+    "consumed_by_exp_id": "",
     "description": "For any dominant integral weight \u03bb of GL_3(C), the restriction of the irreducible polynomial representation V(\u03bb) to the principal SL_2(C) decomposes as a direct sum of symmetric powers Sym^j(C^2) with multiplicities m_j that can be computed combinatorially: m_j equals the number of positive roots \u03b1 such that 2\u27e8\u03bb+\u03c1,\u03b1\u2228\u27e9 - 2\u27e8\u03c1,\u03b1\u2228\u27e9 = j. This explicit formula determines the Jordan block sizes of the image of a regular unipotent element under V(\u03bb) and is falsifiable by checking concrete weight examples.",
     "domains": [
       "Algebra"
@@ -1720,7 +1720,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31398v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T19:54:37.674342+00:00",
     "title": "Multiplicity formula for the restriction of GL_3 irreducible representations to the principal SL_2"
   },
@@ -6867,12 +6867,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any finite metric space (X, d) of strictly negative type, the microscopic weighting exists and is the unique probability measure on X minimizing the energy functional E(\u03bc) = \u2211_{x,y \u2208 X} d(x,y) \u00b7 \u03bc(x) \u00b7 \u03bc(y). This formalizes the paper's central characterization: the microscopic weighting, defined as the small-scale limit of magnitude weightings, coincides with the unique energy-minimizing probability measure on strictly negative-type spaces.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0569",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05349v1",
+    "status": "available",
+    "timestamp": "2026-07-07T17:50:23.800729+00:00",
+    "title": "Energy Minimization Characterization of Microscopic Weighting on Negative-Type Spaces"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every fixed integer $r \\geq 2$ and every $\\varepsilon > 0$, there exists $\\Delta_0$ such that for all $\\Delta \\geq \\Delta_0$, every uncrowded $(r+1)$-uniform hypergraph of maximum degree $\\Delta$ has list chromatic number at most $(1+\\varepsilon)(\\Delta/\\log\\Delta)^{1/r}$. This conjectures that the leading constant $r^{1/r}$ in the authors' theorem can be further improved to 1, matching the optimal asymptotic bound for $r=1$ (graphs) due to Molloy and the known lower bounds from random hypergraphs.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0569",
+    "id": "fd_0570",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05256v1",

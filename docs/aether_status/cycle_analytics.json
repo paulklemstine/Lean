@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-07T17:01:21.865195+00:00",
+  "last_updated": "2026-07-07T17:49:59.042791+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -40468,6 +40468,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-07T17:01:21.767212+00:00",
       "title": "Infinite Log-Concavity of Total d-Hoggatt Numbers"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 14,
+      "domain": "Novelty",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "ed4ffa8f",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v19a",
+      "phase_b_skipped": false,
+      "prompt_version": "v19a",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783439462.1774697,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-07T17:49:58.934758+00:00",
+      "title": "Multiplicity formula for the restriction of GL_3 irreducible representations to the principal SL_2"
     }
   ]
 }
