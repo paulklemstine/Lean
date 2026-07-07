@@ -2820,7 +2820,7 @@
     "catalog_references": [
       "math.NT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "347d7d7b",
     "description": "Formulate a statement asserting that for a self-dual cuspidal automorphic representation $\\Pi_0$ of $\\text{PGL}_3(\\mathbb{A}_{\\mathbb{Q}})$, the proportion of zeros of the twisted $L$-function $L(s, \\Pi_0 \\times \\chi)$ lying on the critical line $\\text{Re}(s) = 1/2$ is at least $1/9$ as the conductor $Q$ of the Dirichlet character $\\chi$ tends to infinity.",
     "domain_bridges": [
       "Automorphic Representations",
@@ -2837,7 +2837,7 @@
     "proof_strategy": "The proof requires formalizing the theory of automorphic $L$-functions for $\\text{GL}_3$, the Dirichlet-series-based mollification method, and Levinson's method for zero-detection. One would need to define the density of zeros using the argument principle and show that the mollified mean value of the $L$-function derivative satisfies specific asymptotic inequalities that force zeros onto the line $\\sigma = 1/2$.",
     "research_mode": "team",
     "source_exp_id": "2607.00282v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T14:51:08.118719+00:00",
     "title": "Lower Bound for the Proportion of Zeros on the Critical Line for PGL(3) L-functions"
   },
@@ -2979,7 +2979,7 @@
       "analytic number theory",
       "prime number theorem"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f05cfd02",
     "description": "The corrected estimator E(x) + C(x) from the proposed algorithm satisfies the error bound |E(x) + C(x) - π(x)| ≤ K√x for some constant K > 0 and all x ≥ 2. This conjecture formalizes the claim that the correction term significantly improves accuracy by reducing the error to O(√x), matching the algorithm's computational complexity.",
     "domain_bridges": [
       "algorithmic number theory",
@@ -2995,7 +2995,7 @@
     "proof_strategy": "1. Formalize the estimator E(x) as a sum over generalized triangular numbers. 2. Express the correction term C(x) mathematically. 3. Derive an upper bound for |E(x) + C(x) - π(x)| using properties of li(x) and error terms in prime counting approximations. 4. Show the bound scales as O(√x) by analyzing the dominant terms.",
     "research_mode": "team",
     "source_exp_id": "2606.31761v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T17:32:19.384043+00:00",
     "title": "Error Bound Conjecture for Corrected Prime Count Estimator"
   },
@@ -4247,7 +4247,7 @@
       "Negami2024main",
       "Negami1988PCC"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "29810562",
     "description": "A connected bipartite graph admits a planar rotation-compatible covering, ensuring all rotational constraints are satisfied.",
     "domain_bridges": "true",
     "domains": [
@@ -4259,7 +4259,7 @@
     "proof_strategy": "Combinatorial consistency verification",
     "research_mode": "team",
     "source_exp_id": "2606.27703v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T18:30:48.905815+00:00",
     "title": "Bipartition Imply Planar Cover"
   },
@@ -10128,7 +10128,7 @@
       "Dilworth_theorem",
       "antichain_partition"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ff7a6b9b",
     "description": "The paper proves that a countable FAC poset P satisfies the Aharoni-Korman conjecture if P contains no saturated chain D such that either D or its reverse D* is of the form ⊕_{x∈ω} D_x, where each D_x is infinite and co-wellfounded. The conjecture asserts that this condition is also necessary: if a countable FAC poset P does contain such a saturated chain, then P fails to satisfy the Aharoni-Korman conjecture. This would yield a complete characterization of which countable FAC posets satisfy the Aharoni-Korman conjecture.",
     "domain_bridges": [
       "ordinal_arithmetic",
@@ -10144,7 +10144,7 @@
     "proof_strategy": "Construct an explicit countable FAC poset P containing a saturated chain of the forbidden form, then show that no chain in P can simultaneously meet every antichain in any antichain partition of P. The construction likely involves adapting the known counterexamples to the original Aharoni-Korman conjecture, using the specific structure of ⊕_{x∈ω} D_x to control all possible chain-antichain interactions.",
     "research_mode": "team",
     "source_exp_id": "2607.02500v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T14:29:04.615567+00:00",
     "title": "Necessity of the forbidden chain condition for the Aharoni-Korman conjecture on countable FAC posets"
   },
@@ -11385,7 +11385,7 @@
       "math.PR",
       "math.CO"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e3b1b1a2",
     "description": "For the fixed genus chord swap Markov chain on chord diagrams with n chords and genus g, the spectral gap γ_{n,g} satisfies γ_{n,g} = Θ(n^{-3}) when g is fixed and n → ∞. This sharpens the paper's polynomial lower bound to a precise exponent and matches the n^{-3} scaling observed in related swap chains on perfect matchings.",
     "domain_bridges": [
       "markov_chain_mixing",
@@ -11401,7 +11401,7 @@
     "proof_strategy": "First formalize chord diagrams, genus via Euler characteristic, and the chord swap relation in Lean. Then establish the O(n^{-3}) upper bound on the spectral gap via comparison with the random transposition walk on matchings, and prove the Ω(n^{-3}) lower bound by constructing a canonical path argument with congestion bounded by O(n^3), extending the paper's coupling/canonical-path techniques.",
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T00:02:19.658603+00:00",
     "title": "Tight spectral gap exponent for the fixed-genus chord swap chain"
   },
@@ -11790,7 +11790,7 @@
       "alternating_Hurwitz_zeta",
       "Euler_polynomials"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1e37bc68",
     "description": "For every positive integer n and positive reals α, β with αβ = π², the alternating Hurwitz zeta function ζ_E(s, x) = Σ_{k=0}^∞ (-1)^k / (k + x)^s satisfies a Ramanujan-type identity generalizing Ramanujan's classical formula for ζ(2n+1). Specifically, the alternating Hurwitz kernel K_E^{2n+1}(α, x) := ½ζ_E(2n+1, x) + Σ_{m=1}^∞ m^{-2n-1}/(e^{2αm} + 1) obeys: α^{-n}·K_E^{2n+1}(α, x) − (−β)^{-n}·K_E^{2n+1}(β, 1−x) = 2^{2n} Σ_{k=0}^{n+1} (−1)^{k−1} E_{2k}(x) B_{2n−2k+2} / ((2k)!(2n−2k+2)!) · α^{n−k+1} β^k, where E_{2k}(x) are Euler polynomials and B_{2k} are Bernoulli numbers. This replaces the Bernoulli numbers B_{2k} in Ramanujan's original identity with Euler polynomials E_{2k}(x), reflecting the alternating (sign-twisted) structure.",
     "domain_bridges": [
       "Bernoulli_numbers_to_Euler_polynomials",
@@ -11806,7 +11806,7 @@
     "proof_strategy": "Adapt the classical proof of Ramanujan's identity via modular symmetry: (1) Define the alternating Hurwitz kernel K_E^s(α, x) and establish its meromorphic continuation using the contour integral representation of ζ_E(s, x); (2) Apply Poisson summation or Mellin transform techniques to derive the modular transformation α → π²/α on K_E, exploiting the functional symmetry x ↔ 1−x inherent to the alternating series; (3) Express the residues and poles of the transformed kernel in terms of Euler polynomials E_{2k}(x) via their generating function sech(t)·exp(xt) = Σ E_n(x) t^n/n!, matching the Bernoulli generating function t/(e^t−1) used in the classical proof; (4) Compare both sides as meromorphic functions of α, verifying equality at all poles and residues.",
     "research_mode": "team",
     "source_exp_id": "2607.03490v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T04:28:18.009557+00:00",
     "title": "Alternating Hurwitz–Ramanujan Identity with Euler Polynomials"
   },
