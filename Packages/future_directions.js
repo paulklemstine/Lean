@@ -1069,21 +1069,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived p-completeness of sheared Witt vectors ensures Dieudonn\u00e9 theory extension"
   },
   {
-    "consumed_by_exp_id": "e686a08c",
-    "description": "There exists a finite family of vector-valued convolution kernels {K_i} such that their weighted combination satisfies a ball-overbag inequality for Sidon sets, with the coefficient \u03b3_0=0.94601 achievable through optimized L\u00b2 energy distribution across kernels.",
-    "domains": [
-      "Computation",
-      "Physics"
-    ],
-    "id": "fd_0101",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T23:15:13.575664+00:00",
-    "title": "Multi-kernel smoothing lemma for Sidon sets"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Conjecture that for a fixed elliptic curve E over Q and an odd prime p, the proportion of p-cyclic extensions L/Q (ordered by discriminant) for which the p-Selmer rank increment equals k converges to (1-1/p)\u00b7(1/p)^k as the discriminant bound tends to infinity.",
     "domains": [
@@ -1418,21 +1403,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharp Lower Bounds for Sumsets in L\u2081 Balls in \u2124\u1d48"
   },
   {
-    "consumed_by_exp_id": "a8577162",
-    "description": "We conjecture that the upper bound for |\u03b6(1+it)| can be improved further by utilizing smoothing methods. Specifically, we propose that for all t \u2265 3, |\u03b6(1+it)| \u2264 (1/2) log t + 1.5, which would improve the existing bound of (1/2) log t + 1.57. This conjecture is based on extending the analysis in [this paper] to optimize the constants in the smoothed approximation.",
-    "domains": [
-      "Pythagorean",
-      "MachineLearning"
-    ],
-    "id": "fd_0138",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01424v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T10:19:57.480990+00:00",
-    "title": "Sharpening the Constant in the Upper Bound of |\u03b6(1+it)| via Smoothing Techniques"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The conjecture asserts that for any partitions \u03bc, \u03bb, the coefficients in the expansion of (-1)^{|\u03bc|-\u2113(\u03bc)}\u27e8\u2207m\u03bc, s\u03bb\u27e9 are non-negative integers.",
     "domains": [
@@ -1475,20 +1445,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T11:16:28.209290+00:00",
     "title": "Logarithmic bound for generalized Erd\u0151s\u2013Rogers functions: the case F = K_4^3"
-  },
-  {
-    "consumed_by_exp_id": "92285bf9",
-    "description": "For the Maker-Breaker C_k-game on K_n with fixed k \u2265 4, the threshold bias is exactly c_k \u00b7 n^{(k-2)/(k-1)} where c_k = [(k-1)(2(k-1)/k)^{k-2}]^{1/(k-1)}. That is, Maker wins when q < (1-\u03b5)c_k\u00b7n^{(k-2)/(k-1)} and Breaker wins when q > (1+\u03b5)c_k\u00b7n^{(k-2)/(k-1)} for any \u03b5 > 0 and all sufficiently large n.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0142",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01294v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T11:40:15.032234+00:00",
-    "title": "Sharp Threshold Constant for Cycle Games"
   },
   {
     "consumed_by_exp_id": "",
@@ -4277,7 +4233,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "3-Colouring Graphs Excluding a Fixed Minor"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d90c5b41",
     "description": "For any bipartite planar map in the ETH planar map model with q-deformed face weights, the total weight of all maps with a fixed perimeter is a function solely of the crossing number of the associated geodesic chord diagram; i.e., two maps with the same crossing number have equal combined weight regardless of other structural features.",
     "domains": [
       "Pythagorean"
@@ -4286,7 +4242,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01995v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T23:39:20.019705+00:00",
     "title": "Conjecture: Weight of DSSYK planar maps depends only on crossing number of associated geodesic chord diagram"
   },
@@ -5525,7 +5481,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Chromonic Lemma: No Nontrivial Harmonic Colorings Exist on Strongly Connected Digraphs"
   },
   {
-    "consumed_by_exp_id": "3cc32237",
+    "consumed_by_exp_id": "",
     "description": "Let F be a CM number field, n \u2265 2, and \u2113 a rational prime. Let \u03c1\u0304 : G_F \u2192 GL_n(F\u0304_\u2113) be a continuous irreducible representation arising from the mod \u2113 Betti cohomology of the locally symmetric space for GL_n/F. Then for every finite place v | \u2113 of F, the restriction \u03c1\u0304|_{G_{F_v}} is de Rham, and its Hodge\u2013Tate weights are determined by the infinitesimal character of the corresponding local component \u03c0_v of the automorphic representation associated to \u03c1\u0304. This extends the paper's local-global compatibility at v \u2224 \u2113 to the much deeper v | \u2113 case.",
     "domains": [
       "Algebra",
@@ -5535,7 +5491,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31698v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T12:12:11.640829+00:00",
     "title": "De Rham Local-Global Compatibility for Torsion Automorphic Forms on GL_n over CM Fields"
   },
@@ -6410,13 +6366,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0509",
+    "id": "fd_0510",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03366v1",
     "status": "available",
     "timestamp": "2026-07-07T01:28:54.258990+00:00",
     "title": "Global Algebraic Degeneracy Criterion for Multivariate Polynomials"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Theorem 2.3 of the referenced paper establishes that an irreducible polynomial $F \\in \\mathbb{R}[x_1, \\ldots, x_d]$ is degenerate if and only if, near each coordinate regular point $p \\in Z(F)$, the partial derivatives admit a separated analytic factorization $F_{x_i} = G \\cdot \\alpha_{2,i}(x_i) \\prod_{j \\neq i} \\alpha_{1,j}(x_j)$ on $Z(F)$, where $G$ and $\\alpha_{k,j}$ are real analytic. This conjecture asserts that when $F$ is degenerate, the analytic factorization can be promoted to a global polynomial congruence: there exist polynomials $\\tilde{G} \\in \\mathbb{R}[x_1, \\ldots, x_d]$ and $\\tilde{\\alpha}_{k,j} \\in \\mathbb{R}[t]$ such that $F_{x_k} \\equiv \\tilde{G} \\cdot \\tilde{\\alpha}_{2,k}(x_k) \\cdot \\prod_{j \\neq k} \\tilde{\\alpha}_{1,j}(x_j) \\pmod{\\langle F \\rangle}$ for each $k = 1, \\ldots, d$. This would yield a purely algebraic (and effectively computable) criterion for degeneracy, replacing the local analytic characterization with a global polynomial one.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0511",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.03366v1",
+    "status": "available",
+    "timestamp": "2026-07-07T01:51:28.472806+00:00",
+    "title": "Polynomial Lifting of the Separated Factorization for Degenerate Polynomials"
   },
   {
     "consumed_by_exp_id": "",

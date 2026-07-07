@@ -1915,33 +1915,6 @@
     "title": "Derived p-completeness of sheared Witt vectors ensures Dieudonné theory extension"
   },
   {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "Carter et al. 2023",
-      "Optimization Constants repository",
-      "Tao's tentative 0.947 improvement"
-    ],
-    "consumed_by_exp_id": "e686a08c",
-    "description": "There exists a finite family of vector-valued convolution kernels {K_i} such that their weighted combination satisfies a ball-overbag inequality for Sidon sets, with the coefficient γ_0=0.94601 achievable through optimized L² energy distribution across kernels.",
-    "domain_bridges": [
-      "harmonic analysis",
-      "computational verification of rational certificates"
-    ],
-    "domains": [
-      "Computation",
-      "Physics"
-    ],
-    "id": "fd_0101",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Construct explicit vectors K_i in L²(ℤ/ℤ) with bounded support, prove their weighted L² norm combination controls the Sidon set density via Cauchy-Schwarz, and numerically verify the rational certificate for γ_0 using Lean 4's decision procedures.",
-    "research_mode": "team",
-    "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T23:15:13.575664+00:00",
-    "title": "Multi-kernel smoothing lemma for Sidon sets"
-  },
-  {
     "ambition_level": "extension",
     "catalog_references": [
       "KMR13",
@@ -2593,33 +2566,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
-      "Patel2020",
-      "Hiary2025",
-      "arXiv:2401.12345"
-    ],
-    "consumed_by_exp_id": "a8577162",
-    "description": "We conjecture that the upper bound for |ζ(1+it)| can be improved further by utilizing smoothing methods. Specifically, we propose that for all t ≥ 3, |ζ(1+it)| ≤ (1/2) log t + 1.5, which would improve the existing bound of (1/2) log t + 1.57. This conjecture is based on extending the analysis in [this paper] to optimize the constants in the smoothed approximation.",
-    "domain_bridges": [
-      "analytic number theory",
-      "exponential sum techniques"
-    ],
-    "domains": [
-      "Pythagorean",
-      "MachineLearning"
-    ],
-    "id": "fd_0138",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Optimize parameters in the smooth cutoff function used in the smoothed approximation of ζ(1+it) to minimize the constant term in the bound, leveraging improved estimates for auxiliary exponential sums.",
-    "research_mode": "team",
-    "source_exp_id": "2607.01424v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T10:19:57.480990+00:00",
-    "title": "Sharpening the Constant in the Upper Bound of |ζ(1+it)| via Smoothing Techniques"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
       "Haiman's work on diagonal harmonics",
       "Bergeron-Garsia-Haiman theorem",
       "Schur positivity results"
@@ -2693,34 +2639,6 @@
     "status": "available",
     "timestamp": "2026-07-03T11:16:28.209290+00:00",
     "title": "Logarithmic bound for generalized Erdős–Rogers functions: the case F = K_4^3"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "Chvátal and Erdős (1978) - Triangle game threshold",
-      "Bednarska and Łuczak (2000) - Asymptotics of threshold bias",
-      "Glazik and Srivastav (2022) - Improved Breaker strategy for C_3",
-      "Spencer (2019) - Potential method conjecture"
-    ],
-    "consumed_by_exp_id": "92285bf9",
-    "description": "For the Maker-Breaker C_k-game on K_n with fixed k ≥ 4, the threshold bias is exactly c_k · n^{(k-2)/(k-1)} where c_k = [(k-1)(2(k-1)/k)^{k-2}]^{1/(k-1)}. That is, Maker wins when q < (1-ε)c_k·n^{(k-2)/(k-1)} and Breaker wins when q > (1+ε)c_k·n^{(k-2)/(k-1)} for any ε > 0 and all sufficiently large n.",
-    "domain_bridges": [
-      "Probabilistic combinatorics via threshold phenomena",
-      "Potential method analysis for positional games",
-      "Constructive vs probabilistic strategies in Maker-Breaker games"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0142",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "The conjecture refines the asymptotic optimality (Θ-bound) of Bednarska-Łuczak by prescribing the exact constant. The paper's potential function method achieves the upper bound; proving the lower bound requires constructing explicit Maker strategies that win below this threshold, closing the gap between their constructive Breaker strategies and the random strategy lower bound.",
-    "research_mode": "team",
-    "source_exp_id": "2607.01294v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T11:40:15.032234+00:00",
-    "title": "Sharp Threshold Constant for Cycle Games"
   },
   {
     "ambition_level": "grand_challenge",
@@ -7865,7 +7783,7 @@
       "hep-th/2301.09876",
       "math-ph/2210.00112"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d90c5b41",
     "description": "For any bipartite planar map in the ETH planar map model with q-deformed face weights, the total weight of all maps with a fixed perimeter is a function solely of the crossing number of the associated geodesic chord diagram; i.e., two maps with the same crossing number have equal combined weight regardless of other structural features.",
     "domain_bridges": [
       "quantum gravity",
@@ -7881,7 +7799,7 @@
     "proof_strategy": "Construct an explicit counterexample or prove equivalence via combinatorial bijection; falsifiable by exhaustive enumeration for small perimeters.",
     "research_mode": "team",
     "source_exp_id": "2607.01995v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T23:39:20.019705+00:00",
     "title": "Conjecture: Weight of DSSYK planar maps depends only on crossing number of associated geodesic chord diagram"
   },
@@ -10203,7 +10121,7 @@
       "math.NT",
       "math.RT"
     ],
-    "consumed_by_exp_id": "3cc32237",
+    "consumed_by_exp_id": "",
     "description": "Let F be a CM number field, n ≥ 2, and ℓ a rational prime. Let ρ̄ : G_F → GL_n(F̄_ℓ) be a continuous irreducible representation arising from the mod ℓ Betti cohomology of the locally symmetric space for GL_n/F. Then for every finite place v | ℓ of F, the restriction ρ̄|_{G_{F_v}} is de Rham, and its Hodge–Tate weights are determined by the infinitesimal character of the corresponding local component π_v of the automorphic representation associated to ρ̄. This extends the paper's local-global compatibility at v ∤ ℓ to the much deeper v | ℓ case.",
     "domain_bridges": [
       "algebraic_geometry",
@@ -10220,7 +10138,7 @@
     "proof_strategy": "Combine p-adic deformation theory of Galois representations with mod ℓ local Langlands correspondences. Key steps: (1) Establish that torsion Galois representations from Betti cohomology admit integral p-adic lifts to characteristic zero via patching arguments generalizing the Taylor–Wiles method. (2) Prove these lifts are geometric (de Rham) at v | ℓ by relating their filtered (φ, N)-modules to the Breuil–Mézard compatibilities for the mod ℓ representation. (3) Match Hodge–Tate weights with the infinitesimal character using the compatibility of the group determinant at v | ℓ, extending Scholze's construction via perfectoid Shimura varieties and the Hodge–Tate period map.",
     "research_mode": "team",
     "source_exp_id": "2606.31698v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T12:12:11.640829+00:00",
     "title": "De Rham Local-Global Compatibility for Torsion Automorphic Forms on GL_n over CM Fields"
   },
@@ -11914,7 +11832,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0509",
+    "id": "fd_0510",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the local analytic proof from the paper to the global algebraic setting using properties of algebraic curves and irreducibility, leveraging the fact that for polynomials over algebraically closed fields, local divisibility implies global divisibility, and applying Hilbert's Nullstellensatz to bridge the local zero sets to the global ideal structure.",
@@ -11923,6 +11841,33 @@
     "status": "available",
     "timestamp": "2026-07-07T01:28:54.258990+00:00",
     "title": "Global Algebraic Degeneracy Criterion for Multivariate Polynomials"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "math.AG"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Theorem 2.3 of the referenced paper establishes that an irreducible polynomial $F \\in \\mathbb{R}[x_1, \\ldots, x_d]$ is degenerate if and only if, near each coordinate regular point $p \\in Z(F)$, the partial derivatives admit a separated analytic factorization $F_{x_i} = G \\cdot \\alpha_{2,i}(x_i) \\prod_{j \\neq i} \\alpha_{1,j}(x_j)$ on $Z(F)$, where $G$ and $\\alpha_{k,j}$ are real analytic. This conjecture asserts that when $F$ is degenerate, the analytic factorization can be promoted to a global polynomial congruence: there exist polynomials $\\tilde{G} \\in \\mathbb{R}[x_1, \\ldots, x_d]$ and $\\tilde{\\alpha}_{k,j} \\in \\mathbb{R}[t]$ such that $F_{x_k} \\equiv \\tilde{G} \\cdot \\tilde{\\alpha}_{2,k}(x_k) \\cdot \\prod_{j \\neq k} \\tilde{\\alpha}_{1,j}(x_j) \\pmod{\\langle F \\rangle}$ for each $k = 1, \\ldots, d$. This would yield a purely algebraic (and effectively computable) criterion for degeneracy, replacing the local analytic characterization with a global polynomial one.",
+    "domain_bridges": [
+      "combinatorial_geometry",
+      "commutative_algebra",
+      "differential_algebra"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0511",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Since $F$ is irreducible, $\\langle F \\rangle$ is prime and the quotient $R = \\mathbb{R}[x_1,\\ldots,x_d]/\\langle F \\rangle$ is an integral domain whose fraction field $K$ embeds into the field of meromorphic functions on any Zariski-open subset of the smooth locus of $Z(F)$. The analytic factorization from Theorem 2.3 forces each $\\alpha_{i,j}$, viewed as a function on $Z(F)$, to satisfy algebraic relations over $K$. Since $F_{x_i} \\in R$ and the factorization holds identically on an open dense subset, the $\\alpha_{i,j}$ must be rational functions on $Z(F)$, hence elements of $K$. Clearing denominators yields the polynomial congruence modulo $F$. The key subtlety is ensuring the single-variable structure is preserved when lifting from analytic to algebraic, which requires showing that if a rational function on $Z(F)$ restricts to a function of $x_j$ alone on a Zariski-dense set, then it equals a rational function of $x_j$ in $K$.",
+    "research_mode": "team",
+    "source_exp_id": "2607.03366v1",
+    "status": "available",
+    "timestamp": "2026-07-07T01:51:28.472806+00:00",
+    "title": "Polynomial Lifting of the Separated Factorization for Degenerate Polynomials"
   },
   {
     "ambition_level": "extension",

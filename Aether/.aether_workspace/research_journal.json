@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "7e2e6a70",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Uniform VC-Dimension Families via Layered Stars\n\nThis cycle verified the **lower-bound / base-layer** side of the layered-star conjecture:\nthe star around a fixed point is a `(d+",
-      "quality_score": 0.36300923636363636,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T12:42:06",
-      "title": "A Sharp Upper Bound for Uniform VC‑Dimension Families via Layered Stars"
-    },
-    {
       "cycle_id": "ef629b7b",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Riordan Array Row Sums and Fibonacci Bisections\n\nDerived from the cycle that proved `Σ_{k=0}^{n} C(n+k, 2k) = F(2n+1)` and the\ncompanion `Σ_{k=0}^{n} C(n+1+k, 2k+1) = F(2n+2)` vi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 3,
       "timestamp": "2026-07-06T21:41:33",
       "title": "Colorful Carathéodory Theorem for Spanning k-trees"
+    },
+    {
+      "cycle_id": "92285bf9",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — Sharp Threshold Constant for Cycle Games\n\nThis cycle established the quantitative envelope of the sharp threshold constant\n\n    c_k = ((k-1)·(2(k-1)/k)^{k-2})^{1/(k-1)}\n\nfor the",
+      "quality_score": 0.57296,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-07T01:48:47",
+      "title": "Sharp Threshold Constant for Cycle Games"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.70296
     }
   ],
-  "last_updated": "2026-07-06T21:41:33",
+  "last_updated": "2026-07-07T01:48:47",
   "open_questions": [
     {
       "context": "that reduction, constructively and `sorry`-free.",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "d1c9c6b9",
-        "quality": 0.60268,
-        "theorems": 6,
-        "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theo"
-      },
-      {
         "cycle_id": "f9dc8407",
         "quality": 0.6342000000000001,
         "theorems": 3,
@@ -3265,6 +3259,12 @@
         "quality": 0.3599485585714286,
         "theorems": 7,
         "title": "Joint descendants of the last k vertices in random d-DAGs"
+      },
+      {
+        "cycle_id": "92285bf9",
+        "quality": 0.57296,
+        "theorems": 15,
+        "title": "Sharp Threshold Constant for Cycle Games"
       }
     ],
     "Computation": [
