@@ -1490,7 +1490,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Character sums over smooth numbers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3b621fb7",
     "description": "We conjecture that for every finite simple graph G, the following are equivalent: (i) G is balanced (its clique\u2011matrix contains no odd square submatrix with exactly two 1's in each row and each column); (ii) G is hereditary clique\u2011Helly (every induced subgraph has the Helly property for cliques); and (iii) G contains no induced copy of the complement of 3K2 (i.e., \\u03c3\u03052K2). This extends the result of [arXiv:xxxx] from distance\u2011hereditary graphs to all graphs, providing a single forbidden induced subgraph characterization of balancedness.",
     "domains": [
       "Pythagorean"
@@ -1499,7 +1499,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00730v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T13:24:03.491700+00:00",
     "title": "Conjecture: Balanced graphs coincide with hereditary clique\u2011Helly graphs"
   },
@@ -1636,7 +1636,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the generic ordinarity bound for the Katz family"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f05cfd02",
     "description": "The corrected estimator E(x) + C(x) from the proposed algorithm satisfies the error bound |E(x) + C(x) - \u03c0(x)| \u2264 K\u221ax for some constant K > 0 and all x \u2265 2. This conjecture formalizes the claim that the correction term significantly improves accuracy by reducing the error to O(\u221ax), matching the algorithm's computational complexity.",
     "domains": [
       "Pythagorean",
@@ -1646,7 +1646,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31761v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T17:32:19.384043+00:00",
     "title": "Error Bound Conjecture for Corrected Prime Count Estimator"
   },
@@ -1766,7 +1766,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality for exactly one edge subset"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7e1c8f60",
     "description": "For a graph $G$ with minimum degree $\\delta(G) \\ge a + r$, if the spectral radius $\\lambda(G)$ is at least $a + r + b$, then $G$ is fractional ID-$[a,b]$-factor-critical.",
     "domains": [
       "Physics"
@@ -1775,7 +1775,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31064v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T21:44:34.279843+00:00",
     "title": "Spectral radius threshold for fractional ID-$[a,b]$-factor-critical graphs"
   },
@@ -2000,7 +2000,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Degree Bound for the Relation Module of Drinfeld Modules"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e108bc5a",
     "description": "The conjecture asserts that for all n \u2265 1, the positive anti-Wick density satisfies the required conditions in the finite-core reduction, directly contradicting the paper's claim of obstruction.",
     "domains": [
       "Pythagorean"
@@ -2009,7 +2009,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29555v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T05:59:25.492247+00:00",
     "title": "Positive Anti-Wick Obstruction Confirmation"
   },
@@ -3544,7 +3544,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "A structural decomposition theorem for countable FAC posets via scattered components"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3e9ddacc",
     "description": "The subset \u03a9\u2082(n) restricts partitions to have at most a\u2081 + t -1 parts, where a\u2081 is the highest power of 2 in n's binary expansion, t the number of non-zero terms.",
     "domains": [
       "Algebra"
@@ -3553,7 +3553,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T19:59:12.431800+00:00",
     "title": "Partition Part Size Bound"
   },
@@ -6330,7 +6330,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Convergence and Correctness of Integer Newton-Raphson for Integer Roots"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1e37bc68",
     "description": "For every positive integer n and positive reals \u03b1, \u03b2 with \u03b1\u03b2 = \u03c0\u00b2, the alternating Hurwitz zeta function \u03b6_E(s, x) = \u03a3_{k=0}^\u221e (-1)^k / (k + x)^s satisfies a Ramanujan-type identity generalizing Ramanujan's classical formula for \u03b6(2n+1). Specifically, the alternating Hurwitz kernel K_E^{2n+1}(\u03b1, x) := \u00bd\u03b6_E(2n+1, x) + \u03a3_{m=1}^\u221e m^{-2n-1}/(e^{2\u03b1m} + 1) obeys: \u03b1^{-n}\u00b7K_E^{2n+1}(\u03b1, x) \u2212 (\u2212\u03b2)^{-n}\u00b7K_E^{2n+1}(\u03b2, 1\u2212x) = 2^{2n} \u03a3_{k=0}^{n+1} (\u22121)^{k\u22121} E_{2k}(x) B_{2n\u22122k+2} / ((2k)!(2n\u22122k+2)!) \u00b7 \u03b1^{n\u2212k+1} \u03b2^k, where E_{2k}(x) are Euler polynomials and B_{2k} are Bernoulli numbers. This replaces the Bernoulli numbers B_{2k} in Ramanujan's original identity with Euler polynomials E_{2k}(x), reflecting the alternating (sign-twisted) structure.",
     "domains": [
       "Pythagorean"
@@ -6339,7 +6339,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03490v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T04:28:18.009557+00:00",
     "title": "Alternating Hurwitz\u2013Ramanujan Identity with Euler Polynomials"
   },
@@ -6502,7 +6502,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Polynomial Decay of Simultaneous Hasse Principle Failure Density in Thue Equations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e5bb2c7b",
     "description": "# Future Directions \u2014 Congruence Rigidity of Sums of Squares\n\nThis cycle established that the entries of an integer right triangle are forced into\nstrong divisibility patterns \u2014 one leg is a multiple of three, the legs jointly carry a\nfactor of four, one entry is a multiple of five \u2014 and that a four-dimensional right\n\"box\" (a solution of `a\u00b2 + b\u00b2 + c\u00b2 = d\u00b2`) is even more rigid: at most one of its three\nspatial edges can be odd. We also pinned down exactly which whole numbers can serve as a\nleg. These findings point to several bold, testable conjectures.\n\n## 1. The correct modulus for a power of two grows with the power\n**Conjecture.** In any solution of `a\u00b2 + b\u00b2 = c\u00b2`, the two-adic valuation of the leg\nproduct `a\u00b7b` is governed one level deeper than naive reduction suggests: deciding\nwhether `2^k` divides `a\u00b7b` is a question about residues modulo `2^{k+1}`, never modulo\n`2^k`.\n*The key insight is* that a difference of two odd squares is always divisible by eight,\nso each additional factor of two in the product must be certified one binary place\nfurther out than one would guess. *Why now?* Having isolated the exact `mod 8`\nobstruction behind the factor of four, we can test the pattern mechanically for `k = 3,\n4, 5` and either confirm a clean \"shift-by-one\" law or expose its first exception.\n\n## 2. A universal super-divisor for higher-dimensional right figures\n**Conjecture.** For every dimension `r`, solutions of `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` obey a single\nuniversal divisibility law: there is a constant `D(r)`, depending only on `r`, such that\n`D(r)` divides the product `x\u2081\u00b7x\u2082\u00b7\u22ef\u00b7x_r` for *every* solution, and `D(r)` is the largest\nsuch constant.\n*The key insight is* that reduction to a finite residue ring turns \"for all solutions\"\ninto a finite, decidable statement, so the optimal constant `D(r)` is computable and\nshould grow in a structured (conjecturally multiplicative-over-primes) way. *Why now?*\nThe three-dimensional case already yields `4 \u2223 x\u2081x\u2082x\u2083`; comparing it against the planar\nconstant `12` suggests a dimension-indexed sequence worth charting and predicting.\n\n## 3. Parity collapse in higher dimensions\n**Conjecture.** As the number of squared terms increases, the number of edges permitted to\nbe odd stays uniformly bounded: in `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` at most three of the `x_i` can be\nodd, regardless of `r`.\n*The key insight is* that the sum of squares equals the count of odd terms modulo four,\nwhile a perfect square is `0` or `1` modulo four, capping the admissible odd-count no\nmatter how many terms are added. *Why now?* We proved the cap is \"at most one\" in three\ndimensions; extending the modular bookkeeping to arbitrary `r` is a self-contained next\nstep that would reveal whether the cap is truly dimension-independent.\n\n## 4. A sharp threshold characterization of legs in every dimension\n**Conjecture.** Just as the whole numbers that are a leg of a right triangle are exactly\nthose `\u2265 3`, in each higher dimension there is a sharp finite threshold above which every\ninteger appears as an edge of some right figure, and the finitely many exceptions can be\nlisted explicitly.\n*The key insight is* that a single explicit construction, split according to the parity of\nthe target edge, realizes all sufficiently large values, while the small exceptions are\nforced by a factorization that would otherwise require a vanishing edge. *Why now?* The\nplanar threshold `3` and its sharpness (the failures at `1` and `2`) give a template that\nshould transfer verbatim to the box equation and beyond.\n\n## 5. Divisibility as a sieve against near-solutions\n**Conjecture.** The combined congruence obstructions (`12 \u2223 a\u00b7b`, `60 \u2223 a\u00b7b\u00b7c`, and their\nhigher-dimensional analogues) are strong enough that a random integer triple satisfying\nthem has a positive, computable probability of being genuinely Pythagorean \u2014 i.e. the\ncongruence conditions capture a constant fraction of the \"arithmetic mass\" of true\nsolutions.\n*The key insight is* that each universal divisor removes a fixed proportion of impostors,\nso stacking independent prime-power obstructions multiplies into a sieve of predictable\ndensity. *Why now?* With the exact obstructions in hand for the primes `2, 3, 5`, one can\nimmediately measure how much of the solution set they explain and calibrate whether a few\nmore primes suffice to pin down solutions almost completely.\n",
     "domains": [
       "Pythagorean",
@@ -6512,7 +6512,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "8b6fc6d0",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T05:18:03.424231+00:00",
     "title": "That the entries of an integer right triangle are forced"
   },
