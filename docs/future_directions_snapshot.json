@@ -10627,32 +10627,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
-      "math.MG",
-      "cs.CG",
-      "math.CO"
-    ],
-    "consumed_by_exp_id": "7e62ea36",
-    "description": "For any convex polytope P in ℝ^� (with e = d+1 being the embedding dimension), the set of centerpoints of P coincides with the floating body of P at level 1/(d+1). Specifically, a point x is a centerpoint of P (meaning every closed halfspace containing x contains at least a 1/(d+1) fraction of the volume of P) if and only if x belongs to the floating body F_{1/(d+1)}(P), defined as the intersection of all closed halfspaces H⁺ such that vol(P \\ H⁺) ≤ (1/(d+1)) · vol(P). The paper establishes this equivalence and further shows that for polytopes this set is semialgebraic.",
-    "domain_bridges": [
-      "Convex geometry ↔ Combinatorial topology ↔ Semialgebraic geometry ↔ Measure theory on polytopes"
-    ],
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0464",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "The proof proceeds by double inclusion. (⊆): If x is a centerpoint, then every halfspace H⁺ containing x satisfies vol(P ∩ H⁺) ≥ vol(P)/(d+1), equivalently vol(P \\ H⁺) ≤ vol(P)·d/(d+1); but the floating body condition requires vol(P \\ H⁺) ≤ vol(P)/(d+1) for the halfspaces defining it, so one must show that a centerpoint lies in every halfspace whose complementary cap has volume ≤ vol(P)/(d+1). (⊇): Conversely, if x ∈ F_{1/(d+1)}(P), then x lies in every halfspace H⁺ with vol(P \\ H⁺) ≤ vol(P)/(d+1), and one must show this forces every halfspace through x to capture at least 1/(d+1) of the volume. The key technical ingredient is that the cap-volume function is piecewise rational on the arrangement of oriented hyperplanes determined by the polytope's facets, which makes both sets explicitly semialgebraic and allows their coincidence to be verified.",
-    "research_mode": "team",
-    "source_exp_id": "2607.02400v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T14:29:25.661086+00:00",
-    "title": "Centerpoint-Floating Body Equivalence for Convex Polytopes"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
       "GL1",
       "MN12",
       "GL3"
@@ -10885,7 +10859,7 @@
       "Aharoni_Korman_1992",
       "FAC_posets_structure"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5156da6e",
     "description": "The paper proves that the Aharoni-Korman conjecture holds for countable FAC posets containing no saturated chain D such that D or its reverse is of the form ⨁ D_x (where each D_x is infinite and co-wellfounded). Since any well-founded poset cannot contain such a chain D (as it would entail an infinite descending chain), the theorem implies the conjecture holds for all countable well-founded FAC posets. This conjecture proposes that the result extends to uncountable cardinals: every well-founded poset with no infinite antichains possesses a chain that meets every antichain in some partition of the poset into antichains.",
     "domain_bridges": [
       "set_theory",
@@ -10902,7 +10876,7 @@
     "proof_strategy": "Attempt to generalize the chain completion H(P) and the scattered decomposition to uncountable well-founded FAC posets, showing that the obstruction presented by ⨁ D_x chains is inherently tied to non-well-foundedness regardless of cardinality, or construct a counterexample using an uncountable well-founded FAC poset.",
     "research_mode": "team",
     "source_exp_id": "2607.02500v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T17:20:56.835605+00:00",
     "title": "The Aharoni-Korman Conjecture for Well-Founded FAC Posets"
   },
@@ -11708,6 +11682,33 @@
     "title": "Tight spectral gap exponent for the fixed-genus chord swap chain"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Deligne-Milne Proposition 1.13",
+      "Tannakian Categories",
+      "Rigid Tensor Categories"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let C be a rigid tensor category and D be a tensor category. Any monoidal natural transformation α : F ⟶ G between two tensor functors F, G : C ⥤ D is an isomorphism. This formalizes Proposition 1.13 of Deligne-Milne, which the paper explicitly invokes to equate the tensor automorphism functor with the tensor homomorphism functor (uAut^⊗ = uHom^⊗) for rigid categories.",
+    "domain_bridges": [
+      "Mathlib.CategoryTheory.Monoidal.Rigid",
+      "Mathlib.CategoryTheory.Monoidal.NaturalTransformation"
+    ],
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_0502",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct the inverse natural transformation β : G ⟶ F using the duality data of the rigid category C. For an object X in C, define β_X as the composite G(X) ≅ G(X) ⊗ I ⟶ G(X) ⊗ F(Xᵛ ⊗ X) ≅ G(X) ⊗ (F(Xᵛ) ⊗ F(X)) ≅ (G(X) ⊗ F(Xᵛ)) ⊗ F(X) ⟶ (F(Xᵛ) ⊗ G(X)) ⊗ F(X) ⟶ (F(Xᵛ) ⊗ F(X)) ⊗ G(X) ⟶ ... utilizing the evaluation and coevaluation maps of the dual Xᵛ, along with the monoidal structure of F, G, and α. Prove that β is a monoidal natural transformation and the two-sided inverse of α.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02215v1",
+    "status": "available",
+    "timestamp": "2026-07-07T00:35:47.371210+00:00",
+    "title": "Rigidity Implies Monoidal Natural Transformations Are Isomorphisms"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "math.MG",
@@ -11725,7 +11726,7 @@
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_0502",
+    "id": "fd_0503",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof proceeds in two parts. (1) Show every point in the floating body Float(P, 1/(d+1)) is a centerpoint: any halfspace containing a point in the floating body captures at least 1/(d+1) of the volume by definition of the floating body. (2) Show every centerpoint lies in the floating body: given a centerpoint c, for any halfspace H⁺ with vol(H⁺ ∩ P) ≥ vol(P)/(d+1), show c ∈ H⁺ by contradiction—if c ∉ H⁺, then the complementary halfspace H⁻ contains c but has volume at most d/(d+1), contradicting the centerpoint property when one constructs a halfplane through c that captures less than 1/(d+1) of the volume. The polytopal structure enters via the piecewise-rational decomposition of the cap-volume function, which ensures the floating body is semialgebraic and the infimum in its definition is attained.",
@@ -11753,7 +11754,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0503",
+    "id": "fd_0504",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use Theorem A to handle k ≤ a_1+t-1 (all such non-hook partitions are automatically in Ω₂(n)). For the range a_1+t ≤ k ≤ ⌈n/2⌉, construct explicit non-hook partitions with k parts that lie in Ω₂(n) by leveraging the branching rule and the structure of the Sylow 2-subgroup as an iterated wreath product of C_2. The upper bound k = ⌈n/2⌉ is covered by the paper's Proposition. The intermediate values require exhibiting witnesses, potentially using two-part partitions (n-k, k) and their relation to Young subgroups.",
@@ -11779,7 +11780,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0504",
+    "id": "fd_0505",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Rewrite the Gauss sum $G_N(\\chi^{k(i+j)})$ by partitioning the summation over $(\\mathbb{Z}/N\\mathbb{Z})^\\times$ into the $n$ cyclotomic cosets $C_a$ modulo $k$. Express $\\chi^{k(i+j)}(x)$ as $\\omega^{a(i+j)}$ for $x \\in C_a$, pulling the root of unity out of the sum to yield $\\sum_{a=0}^{n-1} \\omega^{a(i+j)} \\eta_a$, which directly translates to the matrix factorization $A_k(\\chi) = W D W^T$.",
@@ -11805,7 +11806,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0505",
+    "id": "fd_0506",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the Lin-Lu-Yau curvature using the 1-Wasserstein distance between probability measures on vertices. Establish structural properties of graphs with non-positive curvature edges, and demonstrate that exceeding the edge threshold T(n) precludes the existence of such subgraphs, thereby forcing all edge curvatures to be strictly positive.",

@@ -5746,21 +5746,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Farber's Conjecture Fails: A Matroid Counterexample to the Symmetric Exchange Property for Pairs of Bases"
   },
   {
-    "consumed_by_exp_id": "7e62ea36",
-    "description": "For any convex polytope P in \u211d^\ufffd (with e = d+1 being the embedding dimension), the set of centerpoints of P coincides with the floating body of P at level 1/(d+1). Specifically, a point x is a centerpoint of P (meaning every closed halfspace containing x contains at least a 1/(d+1) fraction of the volume of P) if and only if x belongs to the floating body F_{1/(d+1)}(P), defined as the intersection of all closed halfspaces H\u207a such that vol(P \\ H\u207a) \u2264 (1/(d+1)) \u00b7 vol(P). The paper establishes this equivalence and further shows that for polytopes this set is semialgebraic.",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0464",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02400v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T14:29:25.661086+00:00",
-    "title": "Centerpoint-Floating Body Equivalence for Convex Polytopes"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalizes a precise conjecture about the structural complexity of Sylow 2-permutation characters via bounds on parts of partitions, leveraging the binomial expansion of group orders.",
     "domains": [
@@ -5878,7 +5863,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Probabilistic powerdomain RB-domain characterization for finite posets"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5156da6e",
     "description": "The paper proves that the Aharoni-Korman conjecture holds for countable FAC posets containing no saturated chain D such that D or its reverse is of the form \u2a01 D_x (where each D_x is infinite and co-wellfounded). Since any well-founded poset cannot contain such a chain D (as it would entail an infinite descending chain), the theorem implies the conjecture holds for all countable well-founded FAC posets. This conjecture proposes that the result extends to uncountable cardinals: every well-founded poset with no infinite antichains possesses a chain that meets every antichain in some partition of the poset into antichains.",
     "domains": [
       "Pythagorean",
@@ -5888,7 +5873,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02500v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T17:20:56.835605+00:00",
     "title": "The Aharoni-Korman Conjecture for Well-Founded FAC Posets"
   },
@@ -6304,12 +6289,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let C be a rigid tensor category and D be a tensor category. Any monoidal natural transformation \u03b1 : F \u27f6 G between two tensor functors F, G : C \u2964 D is an isomorphism. This formalizes Proposition 1.13 of Deligne-Milne, which the paper explicitly invokes to equate the tensor automorphism functor with the tensor homomorphism functor (uAut^\u2297 = uHom^\u2297) for rigid categories.",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_0502",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02215v1",
+    "status": "available",
+    "timestamp": "2026-07-07T00:35:47.371210+00:00",
+    "title": "Rigidity Implies Monoidal Natural Transformations Are Isomorphisms"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any full-dimensional convex polytope P in \u211d^d, the set of centerpoints of P (with respect to the uniform Lebesgue measure on P) coincides with the floating body of P at level 1/(d+1). That is, a point c \u2208 \u211d^d is a centerpoint\u2014meaning every closed halfspace containing c captures at least 1/(d+1) of the volume of P\u2014if and only if c belongs to the intersection of all closed halfspaces H\u207a satisfying vol(H\u207a \u2229 P) \u2265 vol(P)/(d+1). This equivalence, proved in the paper for convex polytopes, reveals a fundamental structural identity between a combinatorial-geometric object (centerpoints) and a convex-geometric object (floating bodies). Formalizing even the 2-dimensional case for triangles would require developing substantial infrastructure in convex geometry, measure theory on polytopes, and the centerpoint theorem.",
     "domains": [
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_0502",
+    "id": "fd_0503",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02400v1",
@@ -6324,7 +6324,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0503",
+    "id": "fd_0504",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
@@ -6338,7 +6338,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0504",
+    "id": "fd_0505",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02392v1",
@@ -6352,7 +6352,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0505",
+    "id": "fd_0506",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
