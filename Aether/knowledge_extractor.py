@@ -1890,10 +1890,15 @@ Research mode: {concept.research_mode}
         # shadowing the module-level re used elsewhere in this function.)
         if job.result_lean:
             job.sorry_count = len(re.findall(r'\bsorry\b', job.result_lean))
-            # Match `theorem name`, `lemma name`, `example :` at start of line
-            # (zero indentation, allowing tabs/spaces at the file's top level).
-            # Excludes nested declarations inside def/class bodies.
-            theorem_pattern = re.compile(r'^(?:theorem|lemma|nonrec theorem|protected theorem|private theorem|example)\s+\w', re.MULTILINE)
+            # Match ALL top-level Lean 4 declarations: theorem, lemma, def,
+            # structure, instance, inductive, abbrev, example, nonrec/protected/
+            # private variants. Counts mathematical output, not just proofs.
+            theorem_pattern = re.compile(
+                r'^(?:theorem|lemma|def|structure|instance|inductive|abbrev|'
+                r'nonrec\s+theorem|protected\s+theorem|private\s+theorem|'
+                r'nonrec\s+lemma|protected\s+lemma|private\s+lemma|example)\s+',
+                re.MULTILINE
+            )
             matches = theorem_pattern.findall(job.result_lean)
             job.theorem_count = len(matches)
 
@@ -2708,7 +2713,7 @@ Research mode: {concept.research_mode}
             content = part.get("content", "")
             has_sorry = self._lean_contains_sorry(content)
             # Reject sorry-dense trivial files (>50% sorry, <3 theorems)
-            theorem_count = content.count("theorem ") + content.count("lemma ")
+            theorem_count = len(re.findall(r'^(?:theorem|lemma|def|structure|instance|inductive|abbrev|example)\s+', content, re.MULTILINE))
             sorry_count = content.count("sorry")
             lines = content.count("\n") + 1
             if has_sorry and sorry_count > 0:
@@ -3760,7 +3765,7 @@ Research mode: {concept.research_mode}
                             "file": fname,
                             "name": fname,
                             "code": code,
-                            "theorems": code.count("theorem ") + code.count("lemma "),
+                            "theorems": len(re.findall(r'^(?:theorem|lemma|def|structure|instance|inductive|abbrev|example)\s+', code, re.MULTILINE)),
                             "description": f"Lean 4 proof file from research cycle"
                         })
                         existing_files.add(basename)

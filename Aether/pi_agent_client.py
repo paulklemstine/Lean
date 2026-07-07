@@ -2291,11 +2291,17 @@ class PiAgentClient:
             - Results whose entire proof is `simp`, `norm_num`, `decide`, or `native_decide`.
             - Wrapper types that rename existing definitions.
             - Re-proving existing catalog theorems with minor notation changes.
-            - **Circular proofs**: a theorem that references itself (directly or
-              transitively) in its own proof. Before finalizing, verify that no
-              theorem's proof depends on the theorem being proved. If a proof
-              seems to need the theorem itself, break it into smaller lemmas that
-              build up independently, then combine them.
+            - **Circular proofs** (CRITICAL): a theorem that references itself
+              (directly or transitively) in its own proof. This is the #1 quality
+              failure. To prevent it:
+              1. Write each theorem's proof using ONLY lemmas that appear ABOVE it
+                 in the file (already defined/proved).
+              2. Never reference a theorem by name inside its own proof body.
+              3. If you need a result to prove itself, split it: prove a weaker
+                 lemma first (without referencing the target), then derive the
+                 target from the lemma.
+              4. Before outputting, scan each proof body for any reference to the
+                 theorem being proved — if found, REWRITE that proof.
             - **Truncated/stubbed declarations**: theorem or lemma statements
               with no proof body (no `:=` clause). Every declaration MUST have a
               complete proof.
@@ -2607,11 +2613,17 @@ class PiAgentClient:
             - Results whose entire proof is `simp`, `norm_num`, `decide`, or `native_decide`.
             - Wrapper types that rename existing definitions.
             - Re-proving existing catalog theorems with minor notation changes.
-            - **Circular proofs**: a theorem that references itself (directly or
-              transitively) in its own proof. Before finalizing, verify that no
-              theorem's proof depends on the theorem being proved. If a proof
-              seems to need the theorem itself, break it into smaller lemmas that
-              build up independently, then combine them.
+            - **Circular proofs** (CRITICAL): a theorem that references itself
+              (directly or transitively) in its own proof. This is the #1 quality
+              failure. To prevent it:
+              1. Write each theorem's proof using ONLY lemmas that appear ABOVE it
+                 in the file (already defined/proved).
+              2. Never reference a theorem by name inside its own proof body.
+              3. If you need a result to prove itself, split it: prove a weaker
+                 lemma first (without referencing the target), then derive the
+                 target from the lemma.
+              4. Before outputting, scan each proof body for any reference to the
+                 theorem being proved — if found, REWRITE that proof.
             - **Truncated/stubbed declarations**: theorem or lemma statements
               with no proof body (no `:=` clause). Every declaration MUST have a
               complete proof.
