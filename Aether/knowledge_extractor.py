@@ -1482,8 +1482,6 @@ Research mode: {concept.research_mode}
                         print(f"[Poll] {pid[:8]} IDLE (no files yet) — keeping as idle_pending, "
                               f"slot freed for new dispatch but will keep polling")
                     job.status = "idle_pending"
-                    # Do NOT append to completed — keep in inflight for re-polling
-                        pass
                     completed.append(job)
                 elif status == "RUNNING":
                     # Secondary checkpoint-based stall signal. The authoritative
