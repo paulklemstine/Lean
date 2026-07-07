@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-07T03:17:15.355694+00:00",
+  "last_updated": "2026-07-07T03:54:10.715281+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -38938,6 +38938,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-07T03:17:15.171204+00:00",
       "title": "Characterization of Extremal Graphs for Positive Lin--Lu--Yau Curvature"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Probability",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "d90c5b41",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v19a",
+      "phase_b_skipped": false,
+      "prompt_version": "v19a",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783393983.4496665,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-07T03:54:10.614093+00:00",
+      "title": "Conjecture: Weight of DSSYK planar maps depends only on crossing number of associated geodesic chord"
     }
   ]
 }

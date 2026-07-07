@@ -1549,7 +1549,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proving the Existence of a Sufficiently Large Extremal Family"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "347d7d7b",
     "description": "Formulate a statement asserting that for a self-dual cuspidal automorphic representation $\\Pi_0$ of $\\text{PGL}_3(\\mathbb{A}_{\\mathbb{Q}})$, the proportion of zeros of the twisted $L$-function $L(s, \\Pi_0 \\times \\chi)$ lying on the critical line $\\text{Re}(s) = 1/2$ is at least $1/9$ as the conductor $Q$ of the Dirichlet character $\\chi$ tends to infinity.",
     "domains": [
       "Algebra"
@@ -1558,7 +1558,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00282v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T14:51:08.118719+00:00",
     "title": "Lower Bound for the Proportion of Zeros on the Critical Line for PGL(3) L-functions"
   },
@@ -4189,20 +4189,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "3-Colouring Graphs Excluding a Fixed Minor"
   },
   {
-    "consumed_by_exp_id": "d90c5b41",
-    "description": "For any bipartite planar map in the ETH planar map model with q-deformed face weights, the total weight of all maps with a fixed perimeter is a function solely of the crossing number of the associated geodesic chord diagram; i.e., two maps with the same crossing number have equal combined weight regardless of other structural features.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0358",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01995v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-05T23:39:20.019705+00:00",
-    "title": "Conjecture: Weight of DSSYK planar maps depends only on crossing number of associated geodesic chord diagram"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "We conjecture that for any torsion\u2011free CAT(0) group\u00a0G, every unit in the group ring\u00a0\u2131\u2082[\u00a0G\u00a0] whose support containsaj\u0105cych at least three elements must in fact be trivial.  Equivalently, if\u00a0x\u00a0\u2208\u00a0\u2131\u2082[\u00a0G\u00a0] is a unit and\u00a0|supp(x)|\u00a0>\u00a02, then\u00a0x\u00a0equals\u00a0\u00b11.  This statement is falsifiable: a single example of a nontrivial unit with support size\u00a0\u2265\u00a03 in a torsion\u2011free CAT(0) group would refute it, while a general proof would require showing that any such unit would give rise to a finite product structure satisfying orientability\u00a0(\ud835\udd4b\u2081), no\u2011fold\u00a0(\ud835\udd4b\u2082) and triple\u2011girth\u00a0(\ud835\udd4b\u2084), contradicting the obstruction proved in the referenced paper.",
     "domains": [
@@ -6360,11 +6346,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For any field K with char(K) \u2260 2 and quadratic polynomials v, w \u2208 K[x], the classical Wronskian v'w - vw' is exactly equal to the derivative-free Remainder-Polynomial Route (RPR) formulation. Specifically, v'w - vw' = 2x \u00b7 Sres\u2081(v, w) + (v\u2081w - w\u2081v), where Sres\u2081(v,w) = v\u2082w - w\u2082v is the first subresultant of v and w, and v\u1d62, w\u1d62 are the coefficients of x\u2071 in v, w respectively. This identity generalizes symmetrically to the full Richelot triple (U, V, W), proving that RPR yields identical codomain polynomials not merely up to scalar units, but as an exact polynomial equality.",
+    "description": "For natural numbers y > 2 and m > 1, the sequence defined by the initial value x_0 = 2^(1 + floor(ceil(log2 y) / m)) and the integer Newton-Raphson iteration x_{i+1} = x_i + floor((y - x_i^m) / (m * x_i^(m-1))) converges to the floor of y^(1/m). Specifically, there exists a natural number k such that for all j >= k, x_j = floor(y^(1/m)).",
     "domains": [
       "Algebra"
     ],
     "id": "fd_0515",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.03462v1",
+    "status": "available",
+    "timestamp": "2026-07-07T03:54:34.974607+00:00",
+    "title": "Convergence and Correctness of Integer Newton-Raphson for Integer Roots"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any field K with char(K) \u2260 2 and quadratic polynomials v, w \u2208 K[x], the classical Wronskian v'w - vw' is exactly equal to the derivative-free Remainder-Polynomial Route (RPR) formulation. Specifically, v'w - vw' = 2x \u00b7 Sres\u2081(v, w) + (v\u2081w - w\u2081v), where Sres\u2081(v,w) = v\u2082w - w\u2082v is the first subresultant of v and w, and v\u1d62, w\u1d62 are the coefficients of x\u2071 in v, w respectively. This identity generalizes symmetrically to the full Richelot triple (U, V, W), proving that RPR yields identical codomain polynomials not merely up to scalar units, but as an exact polynomial equality.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0516",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03376v1",
@@ -6378,7 +6378,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0516",
+    "id": "fd_0517",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03500v1",
@@ -6393,13 +6393,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0517",
+    "id": "fd_0518",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03354v1",
     "status": "available",
     "timestamp": "2026-07-07T03:19:32.834620+00:00",
     "title": "Ergodicity of Dynamical Systems Induced from Berggren Trees"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any simple graph G with n vertices and m edges, and for any 1 \u2264 k \u2264 n-1, the sum of the k largest Laplacian eigenvalues s_k(G) equals m + binom(k+1, 2) if and only if G is a threshold graph with clique number k+1.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0519",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.03388v1",
+    "status": "available",
+    "timestamp": "2026-07-07T03:55:00.492813+00:00",
+    "title": "Full Brouwer's Laplacian Conjecture Equality Characterization"
   },
   {
     "consumed_by_exp_id": "",

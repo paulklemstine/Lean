@@ -7060,13 +7060,13 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.NT"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "347d7d7b",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -7083,7 +7083,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0150",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-07T03:55:08.475777+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem pgl3_zero_proportion (Π₀ : CuspidalAutomorphicRep PGL3) (is_self_dual : IsSelfDual Π₀) : \n  lim_{Q → ∞} (1 / |{χ : conductor(χ) ≤ Q}|) * \n  ∑_{χ ∈ PrimitiveCharacters(Q)} (proportion_of_zeros_on_critical_line (L_function Π₀ ⊗ χ)) ≥ 1/9 := \nsorry",
       "lineage_refs": [],
@@ -7098,7 +7098,7 @@
       "source": "",
       "source_exp_id": "2607.00282v1",
       "source_path": "http://arxiv.org/abs/2607.00282v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T14:51:08.118719+00:00",
       "title": "Lower Bound for the Proportion of Zeros on the Critical Line for PGL(3) L-functions"
@@ -7394,7 +7394,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.NT",
         "analytic number theory",
@@ -7418,7 +7418,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0157",
-      "last_attempt_time": "2026-07-07T03:19:50.528031+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem prime_count_error_bound (x : ℕ) (K : ℝ) (hK : K > 0) : ∃ (E C : ℝ → ℝ) (hE : IsGeneralizedTriangularEstimator E) (hC : IsCorrectionTerm C), |E x + C x - π x| ≤ K * Real.sqrt x",
       "lineage_refs": [],
@@ -10021,7 +10021,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Negami2024main",
         "Negami1988PCC"
@@ -10040,7 +10040,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0212",
-      "last_attempt_time": "2026-07-07T03:19:37.531440+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Bipartite graphs inherently satisfy planar conditions under rotational equivalence",
       "lineage_refs": [],
@@ -17073,7 +17073,7 @@
       "source": "",
       "source_exp_id": "2607.01995v1",
       "source_path": "http://arxiv.org/abs/2607.01995v1",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-07-05T23:39:20.019705+00:00",
       "title": "Conjecture: Weight of DSSYK planar maps depends only on crossing number of associated geodesic chord diagram"
@@ -24672,6 +24672,52 @@
       "attempt_count": 0,
       "catalog_references": [
         "math.NT",
+        "cs.DS"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For natural numbers y > 2 and m > 1, the sequence defined by the initial value x_0 = 2^(1 + floor(ceil(log2 y) / m)) and the integer Newton-Raphson iteration x_{i+1} = x_i + floor((y - x_i^m) / (m * x_i^(m-1))) converges to the floor of y^(1/m). Specifically, there exists a natural number k such that for all j >= k, x_j = floor(y^(1/m)).",
+      "domain_bridges": [
+        "Numerical Analysis",
+        "Algorithm Verification"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0515",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem int_newton_raphson_floor_root_convergence (y m : ℕ) (hy : y > 2) (hm : m > 1) :\n  ∃ k, ∀ j ≥ k, int_nr_seq y m j hy hm = ⌊(y : ℝ) ^ ((1 : ℝ) / (m : ℝ))⌋ := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Establish bounds for the initial value x_0 such that y^(1/m) <= x_0 <= 4 * y^(1/m). Then, prove by induction that the sequence monotonically decreases and remains greater than or equal to floor(y^(1/m)) until it reaches a fixed point. Finally, show that the only fixed point of the iteration in this range is floor(y^(1/m)).",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.03462v1",
+      "source_path": "http://arxiv.org/abs/2607.03462v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-07T03:54:34.974607+00:00",
+      "title": "Convergence and Correctness of Integer Newton-Raphson for Integer Roots"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.NT",
         "cs.SC"
       ],
       "category": "cross_domain_bridge",
@@ -24690,7 +24736,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0515",
+      "id": "fd_0516",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Algebra.Polynomial.Basic\nimport Mathlib.Algebra.Polynomial.Derivative\n\nvariable {K : Type*} [Field K] (v w : K[X])\n\ntheorem rpr_exact_identity (hchar : (2 : K) ≠ 0) (hv : v.natDegree ≤ 2) (hw : w.natDegree ≤ 2) :\n    Polynomial.deriv v * w - v * Polynomial.deriv w =\n    2 * (Polynomial.X : K[X]) * (v.coeff 2 • w - w.coeff 2 • v) +\n    (v.coeff 1 • w - w.coeff 1 • v) := by\n  sorry",
@@ -24740,7 +24786,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0516",
+      "id": "fd_0517",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem svd_generalized_star_config_eq_lcm_range\n    {k : Type*} [Field k] {n h : ℕ} (hn : h < n)\n    (forms : Fin n → Polynomial k)\n    (hreg : ∀ s : Finset (Fin n), s.card = h → IsRegularSeq (s.map forms))\n    (I : Ideal (Polynomial k))\n    (hI : I = ⨅ s : Finset (Fin n), (_ : s.card = h) → Ideal.span (s.map forms)) :\n    svd I = Finset.lcm (Finset.Icc 1 h) id :=\n  sorry",
@@ -24788,7 +24834,7 @@
         "Computation"
       ],
       "github_issue": 0,
-      "id": "fd_0517",
+      "id": "fd_0518",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ergodicity_of_berggren_system {Q : TernaryQuadraticForm ℤ} (h_nondeg : Q.Nondegenerate) (h_has_rational_point : ∃ p : Fin 3 → ℚ, Q.eval p = 0 ∧ p ≠ 0) : Ergodic (berggren_map Q) (berggren_invariant_measure Q) := by\n  sorry",
@@ -24808,6 +24854,52 @@
       "thread_id": "",
       "timestamp": "2026-07-07T03:19:32.834620+00:00",
       "title": "Ergodicity of Dynamical Systems Induced from Berggren Trees"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "math.SP"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any simple graph G with n vertices and m edges, and for any 1 ≤ k ≤ n-1, the sum of the k largest Laplacian eigenvalues s_k(G) equals m + binom(k+1, 2) if and only if G is a threshold graph with clique number k+1.",
+      "domain_bridges": [
+        "Linear Algebra",
+        "Graph Theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0519",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem full_brouwer_conjecture\n    (n m k : ℕ) (G : SimpleGraph (Fin n)) (h_m : G.edgeCount = m) (h_k : 0 < k ∧ k < n) :\n    sum_k_largest_laplacian_eigenvalues G k = m + (k + 1) * k / 2 ↔\n    IsThresholdGraph G ∧ CliqueNumber G = k + 1 := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Reduce the problem to the Grone-Merris-Bai theorem, which states s_k(G) ≤ ∑_{i=1}^k d_i^*(G) where d* is the conjugate degree sequence. Show that equality in Brouwer's bound implies equality in Grone-Merris-Bai, forcing the degree sequence to match the Laplacian eigenvalue sequence. Use the characterization of threshold graphs via their degree sequences and the specific sum m + binom(k+1, 2) to conclude that G must be a threshold graph with clique number k+1.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.03388v1",
+      "source_path": "http://arxiv.org/abs/2607.03388v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-07T03:55:00.492813+00:00",
+      "title": "Full Brouwer's Laplacian Conjecture Equality Characterization"
     },
     {
       "ambition_level": "extension",

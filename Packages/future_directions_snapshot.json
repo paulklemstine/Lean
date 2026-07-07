@@ -2820,7 +2820,7 @@
     "catalog_references": [
       "math.NT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "347d7d7b",
     "description": "Formulate a statement asserting that for a self-dual cuspidal automorphic representation $\\Pi_0$ of $\\text{PGL}_3(\\mathbb{A}_{\\mathbb{Q}})$, the proportion of zeros of the twisted $L$-function $L(s, \\Pi_0 \\times \\chi)$ lying on the critical line $\\text{Re}(s) = 1/2$ is at least $1/9$ as the conductor $Q$ of the Dirichlet character $\\chi$ tends to infinity.",
     "domain_bridges": [
       "Automorphic Representations",
@@ -2837,7 +2837,7 @@
     "proof_strategy": "The proof requires formalizing the theory of automorphic $L$-functions for $\\text{GL}_3$, the Dirichlet-series-based mollification method, and Levinson's method for zero-detection. One would need to define the density of zeros using the argument principle and show that the mollified mean value of the $L$-function derivative satisfies specific asymptotic inequalities that force zeros onto the line $\\sigma = 1/2$.",
     "research_mode": "team",
     "source_exp_id": "2607.00282v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T14:51:08.118719+00:00",
     "title": "Lower Bound for the Proportion of Zeros on the Critical Line for PGL(3) L-functions"
   },
@@ -7693,33 +7693,6 @@
     "title": "3-Colouring Graphs Excluding a Fixed Minor"
   },
   {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "arXiv:2305.12345",
-      "hep-th/2301.09876",
-      "math-ph/2210.00112"
-    ],
-    "consumed_by_exp_id": "d90c5b41",
-    "description": "For any bipartite planar map in the ETH planar map model with q-deformed face weights, the total weight of all maps with a fixed perimeter is a function solely of the crossing number of the associated geodesic chord diagram; i.e., two maps with the same crossing number have equal combined weight regardless of other structural features.",
-    "domain_bridges": [
-      "quantum gravity",
-      "random geometry",
-      "matrix models"
-    ],
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0358",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Construct an explicit counterexample or prove equivalence via combinatorial bijection; falsifiable by exhaustive enumeration for small perimeters.",
-    "research_mode": "team",
-    "source_exp_id": "2607.01995v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-05T23:39:20.019705+00:00",
-    "title": "Conjecture: Weight of DSSYK planar maps depends only on crossing number of associated geodesic chord diagram"
-  },
-  {
     "ambition_level": "extension",
     "catalog_references": [
       "arXiv:2407.XXXXX",
@@ -11814,6 +11787,31 @@
     "ambition_level": "extension",
     "catalog_references": [
       "math.NT",
+      "cs.DS"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For natural numbers y > 2 and m > 1, the sequence defined by the initial value x_0 = 2^(1 + floor(ceil(log2 y) / m)) and the integer Newton-Raphson iteration x_{i+1} = x_i + floor((y - x_i^m) / (m * x_i^(m-1))) converges to the floor of y^(1/m). Specifically, there exists a natural number k such that for all j >= k, x_j = floor(y^(1/m)).",
+    "domain_bridges": [
+      "Numerical Analysis",
+      "Algorithm Verification"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0515",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish bounds for the initial value x_0 such that y^(1/m) <= x_0 <= 4 * y^(1/m). Then, prove by induction that the sequence monotonically decreases and remains greater than or equal to floor(y^(1/m)) until it reaches a fixed point. Finally, show that the only fixed point of the iteration in this range is floor(y^(1/m)).",
+    "research_mode": "team",
+    "source_exp_id": "2607.03462v1",
+    "status": "available",
+    "timestamp": "2026-07-07T03:54:34.974607+00:00",
+    "title": "Convergence and Correctness of Integer Newton-Raphson for Integer Roots"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.NT",
       "cs.SC"
     ],
     "consumed_by_exp_id": "",
@@ -11825,7 +11823,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0515",
+    "id": "fd_0516",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Expand both sides of the identity v'w - vw' = 2x(v₂w - w₂v) + (v₁w - w₁v) using the standard definition of the formal derivative v' = 2v₂x + v₁. Distributing the terms on the right-hand side and collecting coefficients of x², x, and 1 directly yields the expanded left-hand side, (v₂w₁ - v₁w₂)x² + 2(v₂w₀ - v₀w₂)x + (v₁w₀ - v₀w₁), proving the exact polynomial equality purely through algebraic manipulation without relying on scalar units or characteristic restrictions beyond char(K) ≠ 2.",
@@ -11854,7 +11852,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0516",
+    "id": "fd_0517",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the monomial star configuration result svd(I_{n,h}) = lcm(1,…,h) using the Diophantine condition M framework. Then extend to generalized star configurations by showing the Diophantine structure governing symbolic powers is invariant under regular sequences of forms—potentially via initial ideal arguments preserving svd, or by establishing that the symbolic Rees algebra of a generalized star configuration has the same Veronese structure as its monomial specialization.",
@@ -11881,7 +11879,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0517",
+    "id": "fd_0518",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "For each quadratic form Q, construct the Romik-type map T_Q as a piecewise fractional linear transformation on [0,1] derived from the Berggren matrices. Show T_Q admits a Markov partition with the Gibbs-Markov property. Compute the invariant density using Keane's method (tracking how the quadratic form coefficients transform under the Berggren matrices). Apply the Hopf argument adapted to infinite measure spaces to establish ergodicity, and verify conservativity via the ratio ergodic theorem by checking integrability of the density against the return time function.",
@@ -11890,6 +11888,31 @@
     "status": "available",
     "timestamp": "2026-07-07T03:19:32.834620+00:00",
     "title": "Ergodicity of Dynamical Systems Induced from Berggren Trees"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "math.SP"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any simple graph G with n vertices and m edges, and for any 1 ≤ k ≤ n-1, the sum of the k largest Laplacian eigenvalues s_k(G) equals m + binom(k+1, 2) if and only if G is a threshold graph with clique number k+1.",
+    "domain_bridges": [
+      "Linear Algebra",
+      "Graph Theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0519",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Reduce the problem to the Grone-Merris-Bai theorem, which states s_k(G) ≤ ∑_{i=1}^k d_i^*(G) where d* is the conjugate degree sequence. Show that equality in Brouwer's bound implies equality in Grone-Merris-Bai, forcing the degree sequence to match the Laplacian eigenvalue sequence. Use the characterization of threshold graphs via their degree sequences and the specific sum m + binom(k+1, 2) to conclude that G must be a threshold graph with clique number k+1.",
+    "research_mode": "team",
+    "source_exp_id": "2607.03388v1",
+    "status": "available",
+    "timestamp": "2026-07-07T03:55:00.492813+00:00",
+    "title": "Full Brouwer's Laplacian Conjecture Equality Characterization"
   },
   {
     "ambition_level": "extension",
