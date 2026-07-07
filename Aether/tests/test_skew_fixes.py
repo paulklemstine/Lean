@@ -89,6 +89,7 @@ def test_domain_auto_alignment(tmp_path):
     # Should be auto-aligned to Bridges
     assert enriched_data["domain"] == "Bridges"
 
+@pytest.mark.skip(reason="In-place package merging disabled — once published, it is canon")
 def test_in_place_package_merging(tmp_path):
     # Set up Package directories
     pkg_dir = tmp_path / "Packages"
