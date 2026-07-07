@@ -1142,7 +1142,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Decomposition of Greedy Tamari Intervals and Bipartite Planar Maps"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9127697d",
     "description": "The coefficients V\u2082(n), V\u2083(n), V\u2084(n) of the q-series v\u2082(q), v\u2083(q), v\u2084(q) satisfy an asymptotic alternating sign property: there exists an explicit oscillatory factor such that (-1)^n V_i(n) > 0 for all sufficiently large n outside a density-zero exceptional set. This means the signs strictly alternate in the limit, with only sparse violations.",
     "domains": [
       "Pythagorean"
@@ -1151,7 +1151,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:16:17.133115+00:00",
     "title": "Asymptotic alternating sign conjecture for Andrews q-series v\u2082(q), v\u2083(q), v\u2084(q)"
   },
@@ -2725,20 +2725,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T11:19:24.185282+00:00",
     "title": "Upper bound conjecture for the cake balancing ratio sequence"
-  },
-  {
-    "consumed_by_exp_id": "333ab8bd",
-    "description": "For each residue r \u2208 {0,1,2,3,4}, the function k \u21a6 \u03c3\u2085(5k + r) is non\u2011increasing (i.e., \u03c3\u2085(5(k+1)+r) \u2264 \u03c3\u2085(5k+r) for all k \u2208 \u2115).",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0238",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.00825v2",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T11:40:31.517494+00:00",
-    "title": "Monotonicity of the minimal absolute value of sums of fifth roots of unity within each residue class modulo 5"
   },
   {
     "consumed_by_exp_id": "",
@@ -6098,21 +6084,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Aharoni-Korman Property for Countable Well-Founded FAC Posets"
   },
   {
-    "consumed_by_exp_id": "360de7b6",
-    "description": "For any full-dimensional convex polytope P in R^d, the cap-volume function V(H) = vol(P \u2229 H\u207a), mapping an oriented hyperplane H to the volume of the cap it cuts from P, is piecewise polynomial of degree exactly d on each full-dimensional cell of the arrangement induced by the vertices of P in the dual space of oriented hyperplanes. This strengthens the paper's key observation that V is piecewise rational to the sharper claim that it is piecewise polynomial, with the degree bound d arising from the fact that cap vertices on the hyperplane vary linearly in the hyperplane parameters while simplex volumes are degree-d polynomials in vertex coordinates.",
-    "domains": [
-      "Pythagorean",
-      "Geometry"
-    ],
-    "id": "fd_0492",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02400v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T21:02:58.080708+00:00",
-    "title": "Piecewise Polynomial Cap-Volume Conjecture for Convex Polytopes"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Every countable scattered FAC poset satisfies the Aharoni-Korman property. Specifically: if P is a countable poset with no infinite antichain (FAC) and no dense subposet (scattered, meaning no subposet S where for all x < y in S there exists z in S with x < z < y), then there exists a chain C \u2286 P and a partition of P into antichains {A_i}_{i \u2208 I} such that C \u2229 A_i \u2260 \u2205 for every i \u2208 I. This conjecture naturally extends the paper's result that AK holds for countable FAC posets avoiding certain saturated chains of the form \u2295_{x\u2208\u03c9} D_x, and is motivated by the paper's central structural theorem that countable FAC posets decompose into scattered pieces.",
     "domains": [
@@ -6230,7 +6201,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dimension Threshold for Gamma-Positivity of Symmetric Edge Polytopes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e3b1b1a2",
     "description": "For the fixed genus chord swap Markov chain on chord diagrams with n chords and genus g, the spectral gap \u03b3_{n,g} satisfies \u03b3_{n,g} = \u0398(n^{-3}) when g is fixed and n \u2192 \u221e. This sharpens the paper's polynomial lower bound to a precise exponent and matches the n^{-3} scaling observed in related swap chains on perfect matchings.",
     "domains": [
       "Physics"
@@ -6239,7 +6210,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T00:02:19.658603+00:00",
     "title": "Tight spectral gap exponent for the fixed-genus chord swap chain"
   },
@@ -6405,17 +6376,45 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let k be an algebraically closed field of characteristic zero and let F \u2208 k[x\u2081,\u2026,x_d] be irreducible. Then F = H(f\u2081(x\u2081)+\u22ef+f_d(x_d)) for some H \u2208 k[t] with deg(H) \u2265 2 and f\u1d62 \u2208 k[t] if and only if there exist rational functions \u03b1\u2081,\u2c7c \u2208 k(x\u2c7c), \u03b1\u2082,\u1d62 \u2208 k(x\u1d62), and G \u2208 k(x\u2081,\u2026,x_d) such that for every i \u2208 {1,\u2026,d}: \u2202F/\u2202x\u1d62 \u2261 G \u00b7 \u03b1\u2082,\u1d62(x\u1d62) \u00b7 \u220f_{j\u2260i} \u03b1\u2081,\u2c7c(x\u2c7c) (mod \u27e8F\u27e9), where crucially the \u03b1\u2081,\u2c7c factors are independent of i. This is the algebraic analogue of Theorem 2.3, replacing analytic isomorphisms with rational function substitutions and local neighborhoods with Zariski-open conditions.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0513",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.03366v1",
+    "status": "available",
+    "timestamp": "2026-07-07T02:39:41.753443+00:00",
+    "title": "Algebraic Degeneracy Factorization Criterion"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any field K with char(K) \u2260 2 and quadratic polynomials v, w \u2208 K[x], the classical Wronskian v'w - vw' is exactly equal to the derivative-free Remainder-Polynomial Route (RPR) formulation. Specifically, v'w - vw' = 2x \u00b7 Sres\u2081(v, w) + (v\u2081w - w\u2081v), where Sres\u2081(v,w) = v\u2082w - w\u2082v is the first subresultant of v and w, and v\u1d62, w\u1d62 are the coefficients of x\u2071 in v, w respectively. This identity generalizes symmetrically to the full Richelot triple (U, V, W), proving that RPR yields identical codomain polynomials not merely up to scalar units, but as an exact polynomial equality.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0512",
+    "id": "fd_0514",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03376v1",
     "status": "available",
     "timestamp": "2026-07-07T02:04:38.025643+00:00",
     "title": "Exact Identity of Wronskian and Subresultant Richelot Formulations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any generalized star configuration ideal I of height h defined by n \u2265 h+1 forms f\u2081,\u2026,f\u2099 in a polynomial ring over a field, where any h of the forms constitute a regular sequence, the standard Veronese degree svd(I) equals lcm(1, 2, \u2026, h). This extends the paper's main theorem for monomial star configurations to the generalized setting, predicting that the Veronese degree depends only on h, not on the specific choice of forms or the ambient polynomial ring.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0515",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.03500v1",
+    "status": "available",
+    "timestamp": "2026-07-07T02:40:53.587303+00:00",
+    "title": "Standard Veronese Degree of Generalized Star Configurations Equals lcm(1,\u2026,h)"
   },
   {
     "consumed_by_exp_id": "",

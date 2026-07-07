@@ -2063,7 +2063,7 @@
       "Folsom, A. et al. (2015). A new identity for partitions involving delta symbols. Ramanujan J.",
       "Rademacher, F. (1938). On the partition function p(n). Proc. London Math. Soc."
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9127697d",
     "description": "The coefficients V₂(n), V₃(n), V₄(n) of the q-series v₂(q), v₃(q), v₄(q) satisfy an asymptotic alternating sign property: there exists an explicit oscillatory factor such that (-1)^n V_i(n) > 0 for all sufficiently large n outside a density-zero exceptional set. This means the signs strictly alternate in the limit, with only sparse violations.",
     "domain_bridges": [
       "q-Hypergeometric series",
@@ -2081,7 +2081,7 @@
     "proof_strategy": "Adapt the circle method framework from Folsom-Males-Rolen-Storzer to handle the generalized q-hypergeometric families. Establish uniform asymptotic expansions for V_i(n) near primitive roots of unity, identify the dominant oscillatory factor, and prove that the remainder terms do not disrupt the alternating sign structure outside a sparse exceptional set.",
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:16:17.133115+00:00",
     "title": "Asymptotic alternating sign conjecture for Andrews q-series v₂(q), v₃(q), v₄(q)"
   },
@@ -4992,31 +4992,6 @@
     "status": "available",
     "timestamp": "2026-07-03T11:19:24.185282+00:00",
     "title": "Upper bound conjecture for the cake balancing ratio sequence"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "math.NT:11B39",
-      "math.CO:05A15"
-    ],
-    "consumed_by_exp_id": "333ab8bd",
-    "description": "For each residue r ∈ {0,1,2,3,4}, the function k ↦ σ₅(5k + r) is non‑increasing (i.e., σ₅(5(k+1)+r) ≤ σ₅(5k+r) for all k ∈ ℕ).",
-    "domain_bridges": [
-      "Combinatorics",
-      "Diophantine approximation"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0238",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Use the connection with rational approximations to the golden ratio φ and the theory of continued fractions to show that any potential decrease would produce a better approximation than a convergent, contradicting optimality of convergents.",
-    "research_mode": "team",
-    "source_exp_id": "2607.00825v2",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T11:40:31.517494+00:00",
-    "title": "Monotonicity of the minimal absolute value of sums of fifth roots of unity within each residue class modulo 5"
   },
   {
     "ambition_level": "grand_challenge",
@@ -11324,34 +11299,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
-      "52Axx",
-      "14P10",
-      "68U05"
-    ],
-    "consumed_by_exp_id": "360de7b6",
-    "description": "For any full-dimensional convex polytope P in R^d, the cap-volume function V(H) = vol(P ∩ H⁺), mapping an oriented hyperplane H to the volume of the cap it cuts from P, is piecewise polynomial of degree exactly d on each full-dimensional cell of the arrangement induced by the vertices of P in the dual space of oriented hyperplanes. This strengthens the paper's key observation that V is piecewise rational to the sharper claim that it is piecewise polynomial, with the degree bound d arising from the fact that cap vertices on the hyperplane vary linearly in the hyperplane parameters while simplex volumes are degree-d polynomials in vertex coordinates.",
-    "domain_bridges": [
-      "Computational Geometry",
-      "Real Algebraic Geometry",
-      "Measure Theory"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Geometry"
-    ],
-    "id": "fd_0492",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Fix a full-dimensional cell C of the arrangement in the dual space where the combinatorial type of the cap P ∩ H⁺ is constant. Within C, the vertices of the cap are either original vertices of P (constant) or intersection points of edges of P with H. Show that these intersection points vary linearly in the hyperplane parameters on C. Triangulate the cap into simplices; each simplex volume is a degree-d polynomial in its vertex coordinates. Since each vertex is either constant or linear in the hyperplane parameters, each simplex volume is a degree-d polynomial in the hyperplane parameters on C. Summing over simplices yields a degree-d polynomial for the total cap volume on C. Genericity arguments show the degree is exactly d, not less.",
-    "research_mode": "team",
-    "source_exp_id": "2607.02400v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T21:02:58.080708+00:00",
-    "title": "Piecewise Polynomial Cap-Volume Conjecture for Convex Polytopes"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
       "FAC_posets",
       "Aharoni-Korman_conjecture",
       "scattered_posets",
@@ -11579,7 +11526,7 @@
       "math.PR",
       "math.CO"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e3b1b1a2",
     "description": "For the fixed genus chord swap Markov chain on chord diagrams with n chords and genus g, the spectral gap γ_{n,g} satisfies γ_{n,g} = Θ(n^{-3}) when g is fixed and n → ∞. This sharpens the paper's polynomial lower bound to a precise exponent and matches the n^{-3} scaling observed in related swap chains on perfect matchings.",
     "domain_bridges": [
       "markov_chain_mixing",
@@ -11595,7 +11542,7 @@
     "proof_strategy": "First formalize chord diagrams, genus via Euler characteristic, and the chord swap relation in Lean. Then establish the O(n^{-3}) upper bound on the spectral gap via comparison with the random transposition walk on matchings, and prove the Ω(n^{-3}) lower bound by constructing a canonical path argument with congestion bounded by O(n^3), extending the paper's coupling/canonical-path techniques.",
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T00:02:19.658603+00:00",
     "title": "Tight spectral gap exponent for the fixed-genus chord swap chain"
   },
@@ -11899,6 +11846,32 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.CO",
+      "math.AG"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let k be an algebraically closed field of characteristic zero and let F ∈ k[x₁,…,x_d] be irreducible. Then F = H(f₁(x₁)+⋯+f_d(x_d)) for some H ∈ k[t] with deg(H) ≥ 2 and fᵢ ∈ k[t] if and only if there exist rational functions α₁,ⱼ ∈ k(xⱼ), α₂,ᵢ ∈ k(xᵢ), and G ∈ k(x₁,…,x_d) such that for every i ∈ {1,…,d}: ∂F/∂xᵢ ≡ G · α₂,ᵢ(xᵢ) · ∏_{j≠i} α₁,ⱼ(xⱼ) (mod ⟨F⟩), where crucially the α₁,ⱼ factors are independent of i. This is the algebraic analogue of Theorem 2.3, replacing analytic isomorphisms with rational function substitutions and local neighborhoods with Zariski-open conditions.",
+    "domain_bridges": [
+      "combinatorial_geometry",
+      "commutative_algebra",
+      "differential_algebra"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0513",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Forward direction: If F = H(f₁+⋯+f_d), then ∂F/∂xᵢ = H'(f₁+⋯+f_d)·f'ᵢ(xᵢ). On Z(F) where H(f₁+⋯+f_d)=0, set G = H'(f₁+⋯+f_d), α₂,ᵢ = f'ᵢ, α₁,ⱼ = 1. Reverse direction: The separated factorization implies F_{x_i}/F_{x_j} = (α₂,ᵢ(xᵢ)·α₁,ⱼ(xⱼ))/(α₂,ⱼ(xⱼ)·α₁,ᵢ(xᵢ)), forcing the logarithmic derivatives ∂(log F_{x_i})/∂x_j to vanish modulo F for i≠j. Use irreducibility and Zariski density to show the implicit function on Z(F) has additive separable structure, then integrate via differential algebra (Risch-like arguments) to obtain the polynomial form H(f₁+⋯+f_d).",
+    "research_mode": "team",
+    "source_exp_id": "2607.03366v1",
+    "status": "available",
+    "timestamp": "2026-07-07T02:39:41.753443+00:00",
+    "title": "Algebraic Degeneracy Factorization Criterion"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.NT",
       "cs.SC"
     ],
@@ -11911,7 +11884,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0512",
+    "id": "fd_0514",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Expand both sides of the identity v'w - vw' = 2x(v₂w - w₂v) + (v₁w - w₁v) using the standard definition of the formal derivative v' = 2v₂x + v₁. Distributing the terms on the right-hand side and collecting coefficients of x², x, and 1 directly yields the expanded left-hand side, (v₂w₁ - v₁w₂)x² + 2(v₂w₀ - v₀w₂)x + (v₁w₀ - v₀w₁), proving the exact polynomial equality purely through algebraic manipulation without relying on scalar units or characteristic restrictions beyond char(K) ≠ 2.",
@@ -11920,6 +11893,35 @@
     "status": "available",
     "timestamp": "2026-07-07T02:04:38.025643+00:00",
     "title": "Exact Identity of Wronskian and Subresultant Richelot Formulations"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "standard_Veronese_degree",
+      "star_configuration",
+      "symbolic_power",
+      "Rees_algebra",
+      "regular_sequence"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any generalized star configuration ideal I of height h defined by n ≥ h+1 forms f₁,…,fₙ in a polynomial ring over a field, where any h of the forms constitute a regular sequence, the standard Veronese degree svd(I) equals lcm(1, 2, …, h). This extends the paper's main theorem for monomial star configurations to the generalized setting, predicting that the Veronese degree depends only on h, not on the specific choice of forms or the ambient polynomial ring.",
+    "domain_bridges": [
+      "diophantine_equations",
+      "lattice_theory",
+      "number_theory"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0515",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First formalize the monomial star configuration result svd(I_{n,h}) = lcm(1,…,h) using the Diophantine condition M framework. Then extend to generalized star configurations by showing the Diophantine structure governing symbolic powers is invariant under regular sequences of forms—potentially via initial ideal arguments preserving svd, or by establishing that the symbolic Rees algebra of a generalized star configuration has the same Veronese structure as its monomial specialization.",
+    "research_mode": "team",
+    "source_exp_id": "2607.03500v1",
+    "status": "available",
+    "timestamp": "2026-07-07T02:40:53.587303+00:00",
+    "title": "Standard Veronese Degree of Generalized Star Configurations Equals lcm(1,…,h)"
   },
   {
     "ambition_level": "extension",
