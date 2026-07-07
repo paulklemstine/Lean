@@ -1114,7 +1114,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Filtered Colimit Preservation by Sheared Witt Vectors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5b5a056c",
     "description": "Conjecture that for all sufficiently large N, the maximal size F(N) of a Sidon subset of {0,\u2026,N-1} satisfies F(N) \u2264 N^{1/2} + 0.94601\u00b7N^{1/4} + O(1).",
     "domains": [
       "Pythagorean"
@@ -1123,7 +1123,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:33:08.950460+00:00",
     "title": "Vector-valued smoothing for finite Sidon sets"
   },
@@ -2000,7 +2000,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Degree Bound for the Relation Module of Drinfeld Modules"
   },
   {
-    "consumed_by_exp_id": "e108bc5a",
+    "consumed_by_exp_id": "",
     "description": "The conjecture asserts that for all n \u2265 1, the positive anti-Wick density satisfies the required conditions in the finite-core reduction, directly contradicting the paper's claim of obstruction.",
     "domains": [
       "Pythagorean"
@@ -2009,7 +2009,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29555v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T05:59:25.492247+00:00",
     "title": "Positive Anti-Wick Obstruction Confirmation"
   },
@@ -2160,7 +2160,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Eventual congruence of mis\u00e8re P\u2011positions in nuclear escalation ladders"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8bd8b322",
     "description": "There exists an infinite family of graphs with maximum degree d such that for any signing \u03c3, the spectral radius \u03c1(A_\u03c3) \u2265 2\u221a(3(d-1)).",
     "domains": [
       "Physics"
@@ -2169,7 +2169,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28797v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T11:59:32.982186+00:00",
     "title": "Tightness of the 3-Constant in the Spectral Radius Bound for Signed Adjacency Matrices"
   },
@@ -5178,7 +5178,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Constructive Breaker Winning Strategies in the Maker-Breaker $C_k$-Game"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fd5c10db",
     "description": "The ranges of the lower and upper Wythoff-Fibonacci sequences, A* and B*, form a partition of the set of natural numbers. This means every natural number n >= 1 belongs to exactly one of the two sets.",
     "domains": [
       "Algebra"
@@ -5187,7 +5187,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00814v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T06:18:33.786582+00:00",
     "title": "Wythoff-Fibonacci Partition of Natural Numbers"
   },
@@ -5893,20 +5893,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Bound for Non-Hook Partitions in the Sylow 2-Permutation Character"
   },
   {
-    "consumed_by_exp_id": "938b7ce0",
-    "description": "For even n \u2265 12, the unique extremal graph with T(n) edges and an edge of non-positive curvature has exactly two vertices of degree n-2 (forming the non-positive curvature edge) and all other vertices have degree n-1. This graph is obtained by removing n/2-2 disjoint edges from K_n such that no two removed edges share a vertex, and the two vertices of degree n-2 are adjacent.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0485",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02297v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T18:44:49.820406+00:00",
-    "title": "Structure of extremal graphs for positive curvature threshold"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The trianguline variety X^{tri}_G associated to a split connected reductive group G over a p-adic field K is Cohen-Macaulay. Specifically, for every point x in X^{tri}_G with local ring O_{X^{tri}_G,x}, the depth equals the Krull dimension: depth(O_{X^{tri}_G,x}) = dim(O_{X^{tri}_G,x}). This extends the paper's results establishing smoothness on the very regular locus and normality at certain points outside this locus, predicting that all singularities are as mild as possible. Cohen-Macaulayness would imply full normality of X^{tri}_G (since CM implies Serre's condition S2, and the smooth locus has complement of codimension \u2265 2 by the regularity conditions on the triangulation parameter), strengthening the paper's partial normality result. It would also have significant consequences for the deformation theory of p-adic Galois representations with G-structure and for understanding the local Langlands correspondence via the geometry of the trianguline variety.",
     "domains": [
@@ -6330,7 +6316,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Convergence and Correctness of Integer Newton-Raphson for Integer Roots"
   },
   {
-    "consumed_by_exp_id": "1e37bc68",
+    "consumed_by_exp_id": "",
     "description": "For every positive integer n and positive reals \u03b1, \u03b2 with \u03b1\u03b2 = \u03c0\u00b2, the alternating Hurwitz zeta function \u03b6_E(s, x) = \u03a3_{k=0}^\u221e (-1)^k / (k + x)^s satisfies a Ramanujan-type identity generalizing Ramanujan's classical formula for \u03b6(2n+1). Specifically, the alternating Hurwitz kernel K_E^{2n+1}(\u03b1, x) := \u00bd\u03b6_E(2n+1, x) + \u03a3_{m=1}^\u221e m^{-2n-1}/(e^{2\u03b1m} + 1) obeys: \u03b1^{-n}\u00b7K_E^{2n+1}(\u03b1, x) \u2212 (\u2212\u03b2)^{-n}\u00b7K_E^{2n+1}(\u03b2, 1\u2212x) = 2^{2n} \u03a3_{k=0}^{n+1} (\u22121)^{k\u22121} E_{2k}(x) B_{2n\u22122k+2} / ((2k)!(2n\u22122k+2)!) \u00b7 \u03b1^{n\u2212k+1} \u03b2^k, where E_{2k}(x) are Euler polynomials and B_{2k} are Bernoulli numbers. This replaces the Bernoulli numbers B_{2k} in Ramanujan's original identity with Euler polynomials E_{2k}(x), reflecting the alternating (sign-twisted) structure.",
     "domains": [
       "Pythagorean"
@@ -6339,7 +6325,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03490v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T04:28:18.009557+00:00",
     "title": "Alternating Hurwitz\u2013Ramanujan Identity with Euler Polynomials"
   },
@@ -6388,11 +6374,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For natural numbers m, a, and d, the sum over all weak compositions (i_1, ..., i_m) of d into m nonnegative parts of the product \u220f_{j=1}^m C(a+i_j, i_j) equals C(ma + d + m - 1, d). The case m=3 appears in the paper as a key lemma simplifying the Bogart\u2013Longyear formula for L_{3,n}, and the case m=2 is the classical Chu\u2013Vandermonde identity. The general form underpins Gessel's formula for m-row Latin rectangles and its 3D rook polynomial generalization.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "fd_0520",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05214v1",
+    "status": "available",
+    "timestamp": "2026-07-07T06:57:53.985724+00:00",
+    "title": "Multivariate Vandermonde Identity for Binomial-Product Sums over Compositions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any field K with char(K) \u2260 2 and quadratic polynomials v, w \u2208 K[x], the classical Wronskian v'w - vw' is exactly equal to the derivative-free Remainder-Polynomial Route (RPR) formulation. Specifically, v'w - vw' = 2x \u00b7 Sres\u2081(v, w) + (v\u2081w - w\u2081v), where Sres\u2081(v,w) = v\u2082w - w\u2082v is the first subresultant of v and w, and v\u1d62, w\u1d62 are the coefficients of x\u2071 in v, w respectively. This identity generalizes symmetrically to the full Richelot triple (U, V, W), proving that RPR yields identical codomain polynomials not merely up to scalar units, but as an exact polynomial equality.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0520",
+    "id": "fd_0521",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03376v1",
@@ -6406,7 +6406,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0521",
+    "id": "fd_0522",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03500v1",
@@ -6421,7 +6421,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0522",
+    "id": "fd_0523",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03354v1",
@@ -6435,7 +6435,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0523",
+    "id": "fd_0524",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03388v1",
@@ -6449,7 +6449,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0524",
+    "id": "fd_0525",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05067v1",
@@ -6463,7 +6463,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0525",
+    "id": "fd_0526",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05233v1",
@@ -6478,7 +6478,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0526",
+    "id": "fd_0527",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05083v1",
@@ -6493,13 +6493,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0527",
+    "id": "fd_0528",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05234v1",
     "status": "available",
     "timestamp": "2026-07-07T06:17:00.580529+00:00",
     "title": "Polynomial Decay of Simultaneous Hasse Principle Failure Density in Thue Equations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every number field K with ring of integers O_K, and every effective divisor D on the open unit disk \ud835\udd3b, there exists a holomorphic function f on \ud835\udd3b whose Taylor coefficients all lie in O_K (viewed as a subring of \u2102 via a fixed embedding \u03c3 : K \u21aa \u2102) and whose zero divisor is exactly D. This directly generalizes the paper's Theorem 2.1 (the Gaussian-integer case O_K = \u2124[i]) to arbitrary rings of integers. The paper's proof for \u2124[i] exploits the Euclidean domain structure for an inductive rounding scheme; for general O_K, the full-rank lattice structure O_K \u2245 \u2124^n should permit analogous nearest-lattice-point rounding within the jet-correction framework, but the non-uniqueness of rounding in non-Euclidean rings introduces subtleties that require new arguments.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0529",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05213v1",
+    "status": "available",
+    "timestamp": "2026-07-07T06:59:43.965594+00:00",
+    "title": "General Ring of Integers Divisor Realization on the Unit Disk"
   },
   {
     "consumed_by_exp_id": "e5bb2c7b",

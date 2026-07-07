@@ -2010,7 +2010,7 @@
       "Tao2023",
       "OptimizationConstants"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5b5a056c",
     "description": "Conjecture that for all sufficiently large N, the maximal size F(N) of a Sidon subset of {0,…,N-1} satisfies F(N) ≤ N^{1/2} + 0.94601·N^{1/4} + O(1).",
     "domain_bridges": [
       "Additive Combinatorics",
@@ -2026,7 +2026,7 @@
     "proof_strategy": "Combine a finite family of smoothing kernels in a weighted Hilbert direct sum, average their L^2 energies via Cauchy–Schwarz, and verify the final constant with an exact rational certificate.",
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:33:08.950460+00:00",
     "title": "Vector-valued smoothing for finite Sidon sets"
   },
@@ -3654,7 +3654,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "e108bc5a",
+    "consumed_by_exp_id": "",
     "description": "The conjecture asserts that for all n ≥ 1, the positive anti-Wick density satisfies the required conditions in the finite-core reduction, directly contradicting the paper's claim of obstruction.",
     "domain_bridges": "none",
     "domains": [
@@ -3666,7 +3666,7 @@
     "proof_strategy": "Numerical validation against heat-deconvolution test results",
     "research_mode": "team",
     "source_exp_id": "2606.29555v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T05:59:25.492247+00:00",
     "title": "Positive Anti-Wick Obstruction Confirmation"
   },
@@ -3946,7 +3946,7 @@
       "Marcus, Spielman & Srivastava (2008, 2019)",
       "Bownik (2016)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8bd8b322",
     "description": "There exists an infinite family of graphs with maximum degree d such that for any signing σ, the spectral radius ρ(A_σ) ≥ 2√(3(d-1)).",
     "domain_bridges": [
       "Spectral graph theory",
@@ -3961,7 +3961,7 @@
     "proof_strategy": "Construct explicit graph families (e.g., Ramanujan-like graphs or expander graphs) where all signings fail to achieve ρ(A_σ) < 2√(3(d-1)), leveraging interlacing polynomials to analyze eigenvalue distributions.",
     "research_mode": "team",
     "source_exp_id": "2606.28797v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T11:59:32.982186+00:00",
     "title": "Tightness of the 3-Constant in the Spectral Radius Bound for Signed Adjacency Matrices"
   },
@@ -9538,7 +9538,7 @@
       "Beatty sequences",
       "Fibonacci numbers"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fd5c10db",
     "description": "The ranges of the lower and upper Wythoff-Fibonacci sequences, A* and B*, form a partition of the set of natural numbers. This means every natural number n >= 1 belongs to exactly one of the two sets.",
     "domain_bridges": [
       "Beatty sequences",
@@ -9554,7 +9554,7 @@
     "proof_strategy": "Formalize the Beatty sequences a(n) and b(n) using the golden ratio floor functions, define the epsilon correction using Fibonacci numbers, and establish the partition property by proving disjointness and covering, leveraging the lemma relating a(F_k), b(F_{k-1}), and b(F_k), a(F_{k+1}).",
     "research_mode": "team",
     "source_exp_id": "2607.00814v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T06:18:33.786582+00:00",
     "title": "Wythoff-Fibonacci Partition of Natural Numbers"
   },
@@ -10918,33 +10918,6 @@
     "title": "Exact Bound for Non-Hook Partitions in the Sylow 2-Permutation Character"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "Ollivier curvature",
-      "Lin-Lu-Yau curvature",
-      "extremal graph theory",
-      "curvature of graphs"
-    ],
-    "consumed_by_exp_id": "938b7ce0",
-    "description": "For even n ≥ 12, the unique extremal graph with T(n) edges and an edge of non-positive curvature has exactly two vertices of degree n-2 (forming the non-positive curvature edge) and all other vertices have degree n-1. This graph is obtained by removing n/2-2 disjoint edges from K_n such that no two removed edges share a vertex, and the two vertices of degree n-2 are adjacent.",
-    "domain_bridges": [
-      "discrete_differential_geometry",
-      "spectral_graph_theory"
-    ],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0485",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Characterize the extremal graph by analyzing degree sequences and curvature formulas. Show that any graph with T(n) edges achieving the threshold must have exactly the specified degree distribution. Prove uniqueness by demonstrating that any two such extremal graphs are isomorphic via vertex relabeling. Use the relationship between graph curvature and Laplacian eigenvalues to constrain the possible structures.",
-    "research_mode": "team",
-    "source_exp_id": "2607.02297v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T18:44:49.820406+00:00",
-    "title": "Structure of extremal graphs for positive curvature threshold"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "trianguline_variety",
@@ -11763,7 +11736,7 @@
       "alternating_Hurwitz_zeta",
       "Euler_polynomials"
     ],
-    "consumed_by_exp_id": "1e37bc68",
+    "consumed_by_exp_id": "",
     "description": "For every positive integer n and positive reals α, β with αβ = π², the alternating Hurwitz zeta function ζ_E(s, x) = Σ_{k=0}^∞ (-1)^k / (k + x)^s satisfies a Ramanujan-type identity generalizing Ramanujan's classical formula for ζ(2n+1). Specifically, the alternating Hurwitz kernel K_E^{2n+1}(α, x) := ½ζ_E(2n+1, x) + Σ_{m=1}^∞ m^{-2n-1}/(e^{2αm} + 1) obeys: α^{-n}·K_E^{2n+1}(α, x) − (−β)^{-n}·K_E^{2n+1}(β, 1−x) = 2^{2n} Σ_{k=0}^{n+1} (−1)^{k−1} E_{2k}(x) B_{2n−2k+2} / ((2k)!(2n−2k+2)!) · α^{n−k+1} β^k, where E_{2k}(x) are Euler polynomials and B_{2k} are Bernoulli numbers. This replaces the Bernoulli numbers B_{2k} in Ramanujan's original identity with Euler polynomials E_{2k}(x), reflecting the alternating (sign-twisted) structure.",
     "domain_bridges": [
       "Bernoulli_numbers_to_Euler_polynomials",
@@ -11779,7 +11752,7 @@
     "proof_strategy": "Adapt the classical proof of Ramanujan's identity via modular symmetry: (1) Define the alternating Hurwitz kernel K_E^s(α, x) and establish its meromorphic continuation using the contour integral representation of ζ_E(s, x); (2) Apply Poisson summation or Mellin transform techniques to derive the modular transformation α → π²/α on K_E, exploiting the functional symmetry x ↔ 1−x inherent to the alternating series; (3) Express the residues and poles of the transformed kernel in terms of Euler polynomials E_{2k}(x) via their generating function sech(t)·exp(xt) = Σ E_n(x) t^n/n!, matching the Bernoulli generating function t/(e^t−1) used in the classical proof; (4) Compare both sides as meromorphic functions of α, verifying equality at all poles and residues.",
     "research_mode": "team",
     "source_exp_id": "2607.03490v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T04:28:18.009557+00:00",
     "title": "Alternating Hurwitz–Ramanujan Identity with Euler Polynomials"
   },
@@ -11869,6 +11842,34 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.CO",
+      "Gessel_Latin_rectangles",
+      "Chu-Vandermonde_identity",
+      "multisymmetric_functions"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For natural numbers m, a, and d, the sum over all weak compositions (i_1, ..., i_m) of d into m nonnegative parts of the product ∏_{j=1}^m C(a+i_j, i_j) equals C(ma + d + m - 1, d). The case m=3 appears in the paper as a key lemma simplifying the Bogart–Longyear formula for L_{3,n}, and the case m=2 is the classical Chu–Vandermonde identity. The general form underpins Gessel's formula for m-row Latin rectangles and its 3D rook polynomial generalization.",
+    "domain_bridges": [
+      "combinatorics",
+      "algebra",
+      "generating_functions"
+    ],
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "fd_0520",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Induction on m: the base case m=1 is trivial, and the inductive step applies the Chu–Vandermonde identity to collapse one variable at a time. Equivalently, extract the coefficient of x^d from ((1-x)^{-(a+1)})^m = (1-x)^{-(ma+m)} and apply the binomial series expansion, yielding the right-hand side directly.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05214v1",
+    "status": "available",
+    "timestamp": "2026-07-07T06:57:53.985724+00:00",
+    "title": "Multivariate Vandermonde Identity for Binomial-Product Sums over Compositions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.NT",
       "cs.SC"
     ],
@@ -11881,7 +11882,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0520",
+    "id": "fd_0521",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Expand both sides of the identity v'w - vw' = 2x(v₂w - w₂v) + (v₁w - w₁v) using the standard definition of the formal derivative v' = 2v₂x + v₁. Distributing the terms on the right-hand side and collecting coefficients of x², x, and 1 directly yields the expanded left-hand side, (v₂w₁ - v₁w₂)x² + 2(v₂w₀ - v₀w₂)x + (v₁w₀ - v₀w₁), proving the exact polynomial equality purely through algebraic manipulation without relying on scalar units or characteristic restrictions beyond char(K) ≠ 2.",
@@ -11910,7 +11911,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0521",
+    "id": "fd_0522",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the monomial star configuration result svd(I_{n,h}) = lcm(1,…,h) using the Diophantine condition M framework. Then extend to generalized star configurations by showing the Diophantine structure governing symbolic powers is invariant under regular sequences of forms—potentially via initial ideal arguments preserving svd, or by establishing that the symbolic Rees algebra of a generalized star configuration has the same Veronese structure as its monomial specialization.",
@@ -11937,7 +11938,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0522",
+    "id": "fd_0523",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "For each quadratic form Q, construct the Romik-type map T_Q as a piecewise fractional linear transformation on [0,1] derived from the Berggren matrices. Show T_Q admits a Markov partition with the Gibbs-Markov property. Compute the invariant density using Keane's method (tracking how the quadratic form coefficients transform under the Berggren matrices). Apply the Hopf argument adapted to infinite measure spaces to establish ergodicity, and verify conservativity via the ratio ergodic theorem by checking integrability of the density against the return time function.",
@@ -11962,7 +11963,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0523",
+    "id": "fd_0524",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Reduce the problem to the Grone-Merris-Bai theorem, which states s_k(G) ≤ ∑_{i=1}^k d_i^*(G) where d* is the conjugate degree sequence. Show that equality in Brouwer's bound implies equality in Grone-Merris-Bai, forcing the degree sequence to match the Laplacian eigenvalue sequence. Use the characterization of threshold graphs via their degree sequences and the specific sum m + binom(k+1, 2) to conclude that G must be a threshold graph with clique number k+1.",
@@ -11989,7 +11990,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0524",
+    "id": "fd_0525",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Formalize 2-designs, automorphism groups, flag-transitivity, and point-imprimitivity in Lean. 2) Develop the subgroup structure of PSL(2,q) — specifically the classification of maximal subgroups (dihedral, parabolic, A4, S4, A5 subgroups). 3) Use the imprimitivity assumption to decompose the point set into blocks of imprimitivity, constraining v via the subgroup lattice. 4) Apply combinatorial parameter constraints (Fisher's inequality, divisibility relations r(k-1) = λ(v-1), bk = vr) together with the orbit-stabilizer theorem under PSL(2,q). 5) Case analysis on the possible systems of imprimitivity yields only v = 15, 36, 85.",
@@ -12013,7 +12014,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0525",
+    "id": "fd_0526",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the region T_n and its dual graph G_n. Define the bipartite adjacency matrix M_n of G_n. Prove that the number of perfect matchings of G_n equals the absolute value of the determinant of M_n. Diagonalize M_n to compute its determinant, and verify that the resulting expression matches the given product formula.",
@@ -12039,7 +12040,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0526",
+    "id": "fd_0527",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the in-degree and out-degree of vertices. Prove that for any arc x -> y, the in-neighbors of x and out-neighbors of y are disjoint, hence in-deg(x) + out-deg(y) <= n. Sum over all arcs to get 2 * sum(d^+ * d^-) <= |E| * n. Apply Cauchy-Schwarz on the sum of total degrees squared to relate 4|E|^2 / n to 2|E|^2 / n + |E| n, and solve the quadratic inequality to conclude |E| <= n^2 / 2.",
@@ -12068,7 +12069,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0527",
+    "id": "fd_0528",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the Akhtari-Bhargava construction by tracking the m-dependence in the local solubility conditions and the Győry-type upper bounds on Thue inequality solutions. The key is to show that the proportion of forms excluded by each additional constraint h = k (for k ≤ m) shrinks as O(1/k^{n-1}), so the cumulative constraint for all h ≤ m leaves a proportion of order 1/m^{n-2}. This requires uniform estimates on the density of forms with prescribed local behavior at finitely many primes, combined with the sieving framework already present in the paper.",
@@ -12077,6 +12078,36 @@
     "status": "available",
     "timestamp": "2026-07-07T06:17:00.580529+00:00",
     "title": "Polynomial Decay of Simultaneous Hasse Principle Failure Density in Thue Equations"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Weierstrass_product_theorem",
+      "Ring_of_integers",
+      "Effective_divisor",
+      "Lattice_rounding",
+      "Jet_correction_operators"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every number field K with ring of integers O_K, and every effective divisor D on the open unit disk 𝔻, there exists a holomorphic function f on 𝔻 whose Taylor coefficients all lie in O_K (viewed as a subring of ℂ via a fixed embedding σ : K ↪ ℂ) and whose zero divisor is exactly D. This directly generalizes the paper's Theorem 2.1 (the Gaussian-integer case O_K = ℤ[i]) to arbitrary rings of integers. The paper's proof for ℤ[i] exploits the Euclidean domain structure for an inductive rounding scheme; for general O_K, the full-rank lattice structure O_K ≅ ℤ^n should permit analogous nearest-lattice-point rounding within the jet-correction framework, but the non-uniqueness of rounding in non-Euclidean rings introduces subtleties that require new arguments.",
+    "domain_bridges": [
+      "Complex analysis ↔ Algebraic number theory (holomorphic functions with algebraic integer coefficients)",
+      "Commutative algebra ↔ Complex analysis (divisor theory in restricted coefficient rings)",
+      "Diophantine approximation ↔ Complex analysis (lattice rounding in jet-correction schemes)"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0529",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt the paper's modified Weierstrass product with jet-correction operators. Step 1: Construct one-parameter deformations of Weierstrass elementary factors whose Taylor coefficients lie in O_K and which act as jet-correction operators preserving coefficients up to degree n while shifting the (n+1)-th coefficient by a controlled O_K-valued affine amount. Step 2: Since O_K ≅ ℤ^n as a ℤ-module, use nearest-lattice-point rounding (via the Minkowski theorem or LLL-type estimates) in place of the coordinate-wise rounding used for ℤ[i] ≅ ℤ². Step 3: Verify that the triangular structure of the coefficient map and the convergence bounds from canonical-product theory carry through unchanged, since the lattice rounding errors are bounded by the covering radius of O_K.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05213v1",
+    "status": "available",
+    "timestamp": "2026-07-07T06:59:43.965594+00:00",
+    "title": "General Ring of Integers Divisor Realization on the Unit Disk"
   },
   {
     "ambition_level": "extension",
