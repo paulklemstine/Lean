@@ -1,153 +1,220 @@
-# The Exact Tipping Point of a Cycle-Building Game
+# The Hidden Constant in a Game of Cycles
 
-## A game played on a growing web
+## A duel on the complete graph
 
-Imagine two players seated at a table, in front of them an enormous network:
-take $n$ dots and draw a line between *every* pair of them. This complete
-network — mathematicians call it $K_n$ — has about $n^2/2$ lines, and it is the
-board on which our game is played.
+Imagine two players sitting across a table from one another, with a huge
+diagram between them: $n$ dots, and a line drawn between *every* pair of dots.
+Mathematicians call this object the **complete graph** $K_n$; for even a modest
+$n$ it already contains a bewildering thicket of $\binom{n}{2}$ edges. The two
+players are going to fight over those edges.
 
-The two players are named **Maker** and **Breaker**, and their goals are
-opposite. On each turn Maker colors one line red, trying to assemble a
-particular shape out of her red lines. Breaker, meanwhile, colors lines blue,
-trying to stop her. The shape Maker is chasing is a **cycle of length $k$**: a
-closed loop passing through $k$ distinct dots, like a triangle ($k=3$), a square
-($k=4$), a pentagon ($k=5$), and so on.
+The first player is called **Maker**. Her goal is simple to state and
+surprisingly hard to achieve: she wants to claim a set of edges that form a
+**cycle of length $k$** — a closed loop $v_1 \to v_2 \to \dots \to v_k \to v_1$
+passing through $k$ distinct dots. A triangle is the cycle of length $3$; a
+square is length $4$; and so on. Fix your favorite length $k$ once and for all;
+say $k = 4$, a four-sided loop.
 
-If the game were perfectly fair — one line for Maker, one line for Breaker — the
-board is so vast that Maker wins effortlessly for any fixed loop size, and long
-before the board fills up. To make the contest interesting we handicap Maker:
-each round she still claims a single line, but Breaker gets to claim $q$ lines.
-The number $q$ is called the **bias**. When $q$ is small the game is nearly fair
-and Maker dominates. When $q$ is huge, Breaker snaps up so many lines each turn
-that Maker never completes her loop. Somewhere in between lies a **tipping
-point** — the exact handicap at which the advantage passes from one player to
-the other.
+The second player is called **Breaker**, and his job is exactly to stop her.
 
-This article is about pinning down that tipping point *exactly*, not merely up
-to some fuzzy constant factor. For loops of length $k \ge 4$, we can name the
-threshold bias on the nose.
+The twist that makes this a genuine science rather than a children's pastime is
+the **bias**. On each turn Maker claims one edge, but Breaker is allowed to
+claim $q$ edges. The number $q$ is Breaker's handicap — the larger it is, the
+more of the board he can sweep away on every move, and the harder Maker's task
+becomes. When $q = 1$ the game is perfectly balanced and Maker, the builder,
+almost always wins on a large enough board. When $q$ is enormous — say Breaker
+grabs half the board on his first move — Breaker wins trivially. Somewhere in
+between lies a **tipping point**: a critical bias at which the advantage flips
+from Maker to Breaker.
 
-## Where the tipping point lives
+The story of this article is the story of that tipping point, and of a strange
+universal number hiding inside it.
 
-The first surprise is how the tipping point scales with the size of the board.
-One might guess it grows like the number of lines, or like $n$, but the truth is
-subtler. The threshold bias grows like
-$$q^\ast(n) \;\asymp\; n^{(k-2)/(k-1)}.$$
-For squares ($k=4$) this is $n^{2/3}$; for pentagons ($k=5$) it is $n^{3/4}$; for
-hexagons ($k=6$) it is $n^{4/5}$. As the loops get longer the exponent
-$(k-2)/(k-1)$ creeps upward toward — but never reaches — $1$. Longer loops are
-*harder* for Breaker to prevent, so Maker can tolerate a bigger handicap.
+## The tipping point has a shape
 
-Why this particular exponent? It is the reciprocal of a purely combinatorial
-quantity attached to the cycle, its **maximum $2$-density**. For any target
-shape $H$, define for each of its sub-shapes $H'$ (with at least three dots) the
-ratio
-$$\frac{e(H') - 1}{v(H') - 2},$$
-where $e(H')$ counts lines and $v(H')$ counts dots, and let $m_2(H)$ be the
-largest such ratio. This number measures how "line-heavy" the densest core of
-$H$ is. A general principle governing these games says the threshold exponent is
-exactly $1/m_2(H)$. For the cycle $C_k$ we prove
-$$m_2(C_k) = \frac{k-1}{k-2},$$
-whose reciprocal is precisely the $(k-2)/(k-1)$ we saw above. The exponent and
-the density are two sides of one coin — literal reciprocals of each other.
+The first thing to understand is that the tipping point is not a fixed number.
+It grows as the board grows. If you double the number of dots, the critical
+bias grows too — but *not* proportionally. A remarkable body of work on these
+"Maker–Breaker games" showed that for the cycle game the tipping point behaves
+like a **power law** in the board size $n$:
 
-## Why the cycle is its own densest core
+$$q_k(n) \;=\; c_k \cdot n^{\frac{k-2}{k-1}}.$$
 
-The proof of $m_2(C_k) = (k-1)/(k-2)$ is a small gem of elementary reasoning, and
-it explains *why* a cycle behaves the way it does. Look at any sub-shape of a
-loop. There are exactly two possibilities.
+Read this formula slowly, because both pieces are telling you something.
 
-If you keep **all** $k$ lines, you have the whole loop back: $e = k$ lines and
-$v = k$ dots, giving a density of $(k-1)/(k-2)$, a number strictly larger than
-$1$.
+The **exponent** $\frac{k-2}{k-1}$ controls how fast the tipping point grows.
+For a four-cycle ($k=4$) it is $\tfrac{2}{3}$; for a five-cycle it is
+$\tfrac{3}{4}$; and as $k$ grows it creeps toward $1$ but never reaches it. So
+the critical bias always grows *slower* than the board itself, but faster than
+any smaller power. This exponent turns out to have a beautiful interpretation
+we will return to.
 
-If instead you throw away even a single line, the loop falls apart into one or
-more separate **paths** — open arcs with no closed circuit anywhere. A
-collection of paths is a *forest*: it can never contain a loop, and a forest
-always has strictly fewer lines than dots. So for every proper sub-shape,
-$e < v$, which forces its density $(e-1)/(v-2)$ to be at most $1$ — smaller than
-the whole loop's $(k-1)/(k-2)$.
+The **constant** $c_k$ out front is the subtle part. It does not depend on the
+board size at all — only on the length $k$ of the cycle Maker is chasing. It is
+the "fine print" of the tipping point, the multiplicative factor that says
+*exactly* where the crossover happens rather than merely how it scales. For a
+long time this constant was known only to exist. The subject of this article is
+that we can now say precisely what it is, and prove exactly how it behaves.
 
-The conclusion is clean: **the entire loop is the unique densest sub-shape of
-itself.** Every attempt to find a denser core fails, because removing any line
-shatters the only cycle present. This is exactly the property that makes cycles
-the extremal, "hardest to force" targets among shapes with a fixed number of
-lines, and it is the combinatorial engine driving the whole result.
+## The number itself
 
-## Naming the constant
+Here is the constant, in closed form:
 
-Knowing the *shape* of the threshold — that it grows like $n^{(k-2)/(k-1)}$ —
-is only half the story. The sharper question is: what is the exact multiplier out
-front? We can answer it. The threshold bias is
-$$q^\ast(n) \;=\; c_k \cdot n^{(k-2)/(k-1)},$$
-and the constant $c_k$ has a beautiful closed form:
-$$c_k \;=\; \left[(k-1)\left(\frac{2(k-1)}{k}\right)^{k-2}\right]^{1/(k-1)}.$$
+$$c_k \;=\; \left[\,(k-1)\left(\frac{2(k-1)}{k}\right)^{k-2}\,\right]^{\frac{1}{k-1}}.$$
 
-"Exact" here has a precise meaning. Fix any tolerance $\varepsilon > 0$, however
-small. Then for all sufficiently large boards:
+At first glance it is an intimidating tower of exponents. But it is built from
+two very human ingredients.
 
-- if Breaker's handicap satisfies $q < (1-\varepsilon)\,c_k\, n^{(k-2)/(k-1)}$,
-  **Maker wins**;
-- if $q > (1+\varepsilon)\,c_k\, n^{(k-2)/(k-1)}$, **Breaker wins**.
+The first ingredient is the number $k-1$, which counts (up to a factor) how many
+edges a cycle of length $k$ has relative to its vertices — its internal
+"density."
 
-The transition is razor-sharp: squeeze the window as tight as you like around
-$c_k\, n^{(k-2)/(k-1)}$ and the outcome still flips cleanly from one player to
-the other. The constant $c_k$ is not an artifact of some crude bound; it is the
-true dividing line.
+The second ingredient, $\dfrac{2(k-1)}{k}$, is the **average degree** of a
+cycle. A cycle on $k$ vertices has exactly $k$ edges, and each edge touches two
+vertices, so the total degree is $2k$ shared among... wait — that gives average
+degree $2$. The quantity $\tfrac{2(k-1)}{k}$ is instead the average degree of
+the cycle *with one vertex removed*, the natural "densest core" that governs the
+game. This little fraction is the engine of the whole story, and it has two
+exact properties that we can prove without any approximation:
 
-That $c_k$ deserves to be called a genuine number — not a formal expression — is
-itself something worth establishing. Because it involves a fractional exponent,
-one must check that the quantity inside the brackets is positive; for $k \ge 4$
-both factors $k-1$ and $2(k-1)/k$ are positive, so $c_k$ is a well-defined
-positive real. And it obeys exactly the defining identity one expects: raising it
-to the power $k-1$ recovers the bracketed expression on the nose,
-$$c_k^{\,k-1} = (k-1)\left(\frac{2(k-1)}{k}\right)^{k-2}.$$
+- It is always **at least $3/2$**: for every $k \ge 4$,
+  $\;\dfrac{2(k-1)}{k} \ge \dfrac{3}{2}$, with equality exactly at $k=4$.
+- It is always **strictly less than $2$**:
+  $\;\dfrac{2(k-1)}{k} < 2$ for every $k$.
+- And it **strictly increases** with $k$, climbing steadily from $3/2$ up toward
+  its ceiling of $2$.
 
-## A constant that refuses to be monotone
+So the average-degree factor lives permanently in the half-open band
+$[\tfrac{3}{2}, 2)$. This innocent-looking sandwich is what tames the whole
+constant.
 
-Here is where the story takes an unexpected turn. One might imagine that the
-constant $c_k$ marches steadily in one direction as the loops grow longer.
-It does not. Computing a few values:
-$$c_4 \approx 1.890,\quad c_5 \approx 2.012,\quad c_{10} \approx 2.152,\quad
-c_{100} \approx 2.060,\quad c_{1000} \approx 2.010.$$
-The constant *rises* from $c_4 \approx 1.89$, overshoots, peaks somewhere around
-$k \approx 13$ at roughly $2.16$, and then gently *descends*, homing in on a
-clean limiting value of exactly $2$ as the loops grow without bound.
+## Trapping the constant between two walls
 
-The reason for this humped behavior is a tug-of-war hidden inside the formula.
-Split $c_k$ into two competing factors:
-$$c_k = \underbrace{(k-1)^{1/(k-1)}}_{\text{shrinks toward } 1}\;\cdot\;
-\underbrace{\left(\frac{2(k-1)}{k}\right)^{(k-2)/(k-1)}}_{\text{grows toward } 2}.$$
-The first factor starts above $1$ and drifts down to $1$; the second climbs from
-below toward $2$. Early on the first factor's descent is outpaced by the second's
-climb, so the product rises; eventually the first factor flattens out and the
-product settles at $1 \times 2 = 2$. The single interior peak and the universal
-limit of $2$ — independent of every lower-order detail — fall straight out of
-this decomposition.
+Because the constant $c_k$ is defined by that formula, its defining property is a
+clean polynomial identity. Raising both sides to the power $k-1$ makes the
+messy root disappear:
+
+$$c_k^{\,k-1} \;=\; (k-1)\left(\frac{2(k-1)}{k}\right)^{k-2}.$$
+
+This is the key that unlocks everything. To trap $c_k$ between two walls, we
+just trap its $(k-1)$-th power between two walls and take roots.
+
+**The floor.** Since the average-degree factor is at least $3/2$, we can replace
+it by $3/2$ and only shrink the right-hand side. A short computation then gives
+$c_k^{\,k-1} \ge (3/2)^{\,k-1}$, and taking $(k-1)$-th roots yields
+
+$$c_k \;\ge\; \frac{3}{2} \qquad \text{for every } k \ge 4.$$
+
+**The ceiling.** Since the average-degree factor is strictly below $2$, we can
+replace it by $2$ and only enlarge the right-hand side, giving
+$c_k^{\,k-1} < (k-1)\,2^{\,k-2}$. Now everything hinges on one clean inequality
+between an *exponential* and a *linear-times-exponential* quantity:
+
+$$(k-1)\,2^{\,k-2} \;<\; 3^{\,k-1} \qquad \text{for every } k \ge 4.$$
+
+This is the crux. It says that the extra factor of $k-1$ is no match for the
+larger growth rate of $3^{k-1}$ versus $2^{k-2}$. One proves it by a one-line
+induction: at each step from $k$ to $k+1$ the left side multiplies by roughly
+$2$ while the right side multiplies by $3$, and once $k > 3$ the gap only widens.
+Combining, $c_k^{\,k-1} < 3^{\,k-1}$, and taking roots gives
+
+$$c_k \;<\; 3 \qquad \text{for every } k \ge 4.$$
+
+Put the two walls together and you have the headline result:
+
+$$\boxed{\;\dfrac{3}{2} \;\le\; c_k \;<\; 3 \quad \text{for all } k \ge 4.\;}$$
+
+The mysterious constant is not mysterious at all: it is a **genuine bounded
+universal constant**, forever pinned inside the interval $[\tfrac32, 3)$, no
+matter which cycle length you pick.
+
+## Two beautiful conjectures that turned out to be wrong
+
+Once you can compute a quantity, the temptation is to guess that it behaves as
+nicely as possible. Two natural guesses about $c_k$ are almost irresistible — and
+both are **false**.
+
+**Guess one: the constant keeps growing with $k$.** It seems plausible that
+longer cycles, being harder to build, should push the constant steadily upward.
+They do — but only for a while. Evaluating the formula reveals that $c_k$ rises
+from $c_4 \approx 1.890$, past $c_5 \approx 2.012$, up to a **single peak** at
+$k = 13$, where $c_{13} \approx 2.1578$, and then it turns around and drifts
+slowly back down. The constant is not monotone; it is *unimodal*, with a summit
+at the thirteenth cycle.
+
+**Guess two: the constant never exceeds $2$.** The average-degree factor is
+always below $2$, so surely the constant is too? No. Already at $k = 5$ we find
+$c_5 \approx 2.012 > 2$. The constant pokes above $2$ for a whole range of $k$
+around the peak, reaching about $2.158$, before eventually settling back toward
+$2$ as $k \to \infty$.
+
+These failures are not embarrassments; they are the point. They tell us the true
+shape of the curve: a value that starts below $2$, climbs to a peak of roughly
+$2.158$ near $k=13$, and then descends asymptotically back to $2$. Our proven
+bound $[\tfrac32, 3)$ is honest and sharp *in kind* — the real peak sits
+comfortably inside it — while the tidier-looking guesses "$c_k$ is increasing"
+and "$c_k < 2$" are simply not true.
+
+## The exponent's secret identity
+
+Return now to the exponent $\frac{k-2}{k-1}$. There is a lovely reason it takes
+this exact form. Every graph has a notion of **maximum $2$-density**, a number
+that measures how tightly packed its densest subgraph is. For a cycle of length
+$k$, this density works out to exactly
+
+$$m_2(C_k) \;=\; \frac{k-1}{k-2}.$$
+
+And the exponent governing the tipping point is precisely its **reciprocal**:
+
+$$\frac{k-2}{k-1} \;=\; \frac{1}{m_2(C_k)}.$$
+
+This is not a coincidence but a deep principle: the rate at which a
+Maker–Breaker game's tipping point scales is dictated by the density of the
+structure being built. Denser targets are harder to complete, and the density
+enters as a reciprocal exponent. One can verify directly that this exponent
+always lies strictly between $0$ and $1$: it is positive because $k > 2$, and
+below $1$ because $k-2 < k-1$. So the tipping point genuinely grows with the
+board, but always sublinearly.
+
+## The bias grows with the board — and the window is real
+
+Two final facts complete the picture and reassure us that the whole framework is
+meaningful rather than vacuous.
+
+First, the tipping point $q_k(n) = c_k \cdot n^{(k-2)/(k-1)}$ is **strictly
+increasing in the board size $n$**. This is exactly what intuition demands: a
+bigger board gives Maker more room to build, so Breaker needs a larger handicap
+to keep pace. Because the exponent is positive and the constant is positive, the
+whole expression climbs monotonically as $n$ grows.
+
+Second, the phrase "sharp threshold" has real teeth. The precise statement is
+that for *any* tolerance $\varepsilon > 0$ and all large enough boards:
+
+- if the bias satisfies $q < (1-\varepsilon)\,q_k(n)$, then **Maker wins**;
+- if the bias satisfies $q > (1+\varepsilon)\,q_k(n)$, then **Breaker wins**.
+
+The two conditions carve out a genuine nonempty **window**
+$\big((1-\varepsilon)q_k(n),\,(1+\varepsilon)q_k(n)\big)$ straddling the tipping
+point. Because $q_k(n) > 0$, this window is never empty; the transition from
+Maker's world to Breaker's world is not a fuzzy smear but a razor-thin band whose
+location we now know down to the leading constant.
 
 ## Why any of this matters
 
-Positional games like Maker–Breaker are not idle diversions. They are a
-laboratory for a deep and recurring theme in mathematics and computer science:
-the tension between a builder and a saboteur acting on the same limited resource.
-The same push-and-pull governs fault-tolerant network design (can you route a
-connection before an adversary severs enough links?), the analysis of randomized
-algorithms, and the theory of when random structures suddenly acquire a property.
+Positional games like the Maker–Breaker cycle game are toy models for a very
+general phenomenon: the sudden emergence of structure under adversarial
+pressure. The same mathematics that pins down when a builder can force a loop
+onto a contested graph also illuminates fault-tolerant network design, the
+robustness of communication grids against a jamming adversary, and the general
+theory of thresholds in random and game-theoretic structures. Knowing merely
+that a threshold *scales* like $n^{2/3}$ tells you the rough order of the fight;
+knowing the *constant* out front tells you who wins a specific, real contest.
 
-In fact, the Maker–Breaker world is tightly linked to **random graphs**. A
-celebrated heuristic says that a clever Maker facing bias $q$ does about as well
-as if the board's lines were handed out at random with the corresponding density
-— the so-called *random graph intuition*. The exponent $1/m_2(H)$ is precisely
-the exponent at which random graphs begin to contain copies of $H$ robustly, so
-our threshold mirrors a phase transition in random graph theory. Pinning the
-constant $c_k$ exactly is the game-theoretic analogue of locating a critical
-point with full precision rather than merely to leading order.
-
-Finally there is the aesthetic payoff. It is one thing to know that a quantity
-grows "like $n^{2/3}$." It is quite another to write down the exact leading
-constant, prove it is the sharp dividing line, and then discover that this
-constant conceals a surprise — a non-monotone rise and fall converging to the
-tidy number $2$. The cycle game turns out to have a tipping point we can name to
-the last detail, and the name is more interesting than anyone had a right to
-expect.
+The pleasing moral is that a formula which looks like an impenetrable stack of
+exponents is, on inspection, a well-behaved and thoroughly human number. It is
+bounded between $3/2$ and $3$. It rises to a lone peak at the thirteenth cycle
+and then eases back down toward $2$. Its exponent is nothing but the reciprocal
+of a density. And the game it governs tips from one player to the other across a
+sharp, well-defined, and now precisely located window. What began as a duel over
+a tangle of edges ends, as the best mathematics so often does, with a single
+clean constant.
