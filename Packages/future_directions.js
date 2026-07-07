@@ -1317,7 +1317,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tightness of clustered 3-colouring bound for H-minor-free graphs"
   },
   {
-    "consumed_by_exp_id": "a61d27db",
+    "consumed_by_exp_id": "",
     "description": "A precise conjecture relating generalized Hurwitz class numbers and the distribution of traces of Hecke operators, with applications to number fields and arithmetic geometry.",
     "domains": [
       "Pythagorean",
@@ -1327,7 +1327,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01957v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T07:02:29.975116+00:00",
     "title": "The Eichler--Selberg trace formula for Hilbert cusp forms in class number problems"
   },
@@ -4961,7 +4961,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Unconditional Euclidean Systems for Ray Classes in Totally Real Galois Fields"
   },
   {
-    "consumed_by_exp_id": "07b6a0a5",
+    "consumed_by_exp_id": "",
     "description": "For every n \u2265 0, the n-th row generating function of the square of the Eulerian triangle\u2014defined as the polynomial \u2211_k (\u2211_j A(n,j)\u00b7A(j,k)) x^k where A(n,k) is the Eulerian number counting permutations of [n] with k descents\u2014has only real roots. This extends the paper's results on powers of Pascal, Stirling, and Narayana triangles to the still-open Eulerian case.",
     "domains": [
       "Bridges"
@@ -4970,7 +4970,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01572v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T01:27:06.611331+00:00",
     "title": "Real-rootedness of the square of the Eulerian triangle"
   },
@@ -4989,7 +4989,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Upper Bound on Generalized Tur\u00e1n Number ex(n, K_{a,b}, K_{3,b+1})"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "236b0246",
     "description": "The sequence of total d-Hoggatt numbers, defined as the row sums H_d(n) = sum_{k=0}^n H_d(n,k), is infinitely log-concave for all d >= 1. The paper proves the infinite log-concavity of the row and column sequences of the d-Hoggatt triangle. However, the infinite log-concavity of the total d-Hoggatt numbers remains open, encompassing the unresolved infinite log-concavity of the Baxter numbers for d=3 and Catalan numbers for d=2.",
     "domains": [
       "Bridges"
@@ -4998,7 +4998,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01582v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T02:05:47.460015+00:00",
     "title": "Infinite Log-Concavity of Total d-Hoggatt Numbers"
   },
@@ -5178,7 +5178,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Constructive Breaker Winning Strategies in the Maker-Breaker $C_k$-Game"
   },
   {
-    "consumed_by_exp_id": "fd5c10db",
+    "consumed_by_exp_id": "",
     "description": "The ranges of the lower and upper Wythoff-Fibonacci sequences, A* and B*, form a partition of the set of natural numbers. This means every natural number n >= 1 belongs to exactly one of the two sets.",
     "domains": [
       "Algebra"
@@ -5187,7 +5187,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00814v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T06:18:33.786582+00:00",
     "title": "Wythoff-Fibonacci Partition of Natural Numbers"
   },
@@ -5630,7 +5630,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bounds on the number of Sylow 2-orbits in binary-partition contexts"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "26981a88",
     "description": "For every c > 0, there exists K such that any n-vertex graph G with average degree d \u2265 K and no cycle of length at least d can be transformed by deleting at most c\u00b7d\u00b7n edges into a graph whose every connected component has a vertex cover of size at most (1+c)\u00b7d.",
     "domains": [
       "Bridges"
@@ -5639,7 +5639,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T15:11:56.205886+00:00",
     "title": "Hyperstability of the Erd\u0151s-Gallai Theorem"
   },
@@ -6373,7 +6373,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit Threshold for No-(k+1)-in-line: f_k(n) = kn for all k \u2265 3 and n \u2265 k"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "14a95e47",
     "description": "For natural numbers m, a, and d, the sum over all weak compositions (i_1, ..., i_m) of d into m nonnegative parts of the product \u220f_{j=1}^m C(a+i_j, i_j) equals C(ma + d + m - 1, d). The case m=3 appears in the paper as a key lemma simplifying the Bogart\u2013Longyear formula for L_{3,n}, and the case m=2 is the classical Chu\u2013Vandermonde identity. The general form underpins Gessel's formula for m-row Latin rectangles and its 3D rook polynomial generalization.",
     "domains": [
       "MachineLearning"
@@ -6382,7 +6382,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05214v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T06:57:53.985724+00:00",
     "title": "Multivariate Vandermonde Identity for Binomial-Product Sums over Compositions"
   },
@@ -6446,11 +6446,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a cocompact Fuchsian group \u0393 with signature (g; m\u2081, \u2026, m\u209b) where g \u2265 2 (allowing elliptic elements, so the quotient H/\u0393 is a hyperbolic orbifold rather than a surface), a \u0393-gain graph (G, \u03c8) is \u0393-isostatic in the hyperbolic plane H if and only if it satisfies the (2, 3, 1+s, 0)-gain tightness condition. This extends the paper's main theorem from surface groups (s=0, yielding (2,3,1,0)-gain tightness) to general cocompact Fuchsian groups, predicting that each elliptic generator shifts the sparsity parameter by one.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0525",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05023v1",
+    "status": "available",
+    "timestamp": "2026-07-07T09:50:06.003500+00:00",
+    "title": "Orbifold Rigidity Characterization for Fuchsian Groups with Torsion"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any field K with char(K) \u2260 2 and quadratic polynomials v, w \u2208 K[x], the classical Wronskian v'w - vw' is exactly equal to the derivative-free Remainder-Polynomial Route (RPR) formulation. Specifically, v'w - vw' = 2x \u00b7 Sres\u2081(v, w) + (v\u2081w - w\u2081v), where Sres\u2081(v,w) = v\u2082w - w\u2082v is the first subresultant of v and w, and v\u1d62, w\u1d62 are the coefficients of x\u2071 in v, w respectively. This identity generalizes symmetrically to the full Richelot triple (U, V, W), proving that RPR yields identical codomain polynomials not merely up to scalar units, but as an exact polynomial equality.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0525",
+    "id": "fd_0526",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03376v1",
@@ -6464,7 +6479,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0526",
+    "id": "fd_0527",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03500v1",
@@ -6479,7 +6494,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0527",
+    "id": "fd_0528",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03354v1",
@@ -6493,7 +6508,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0528",
+    "id": "fd_0529",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03388v1",
@@ -6507,7 +6522,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0529",
+    "id": "fd_0530",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05067v1",
@@ -6521,7 +6536,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0530",
+    "id": "fd_0531",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05233v1",
@@ -6536,7 +6551,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0531",
+    "id": "fd_0532",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05083v1",
@@ -6551,7 +6566,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0532",
+    "id": "fd_0533",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05234v1",
@@ -6566,7 +6581,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0533",
+    "id": "fd_0534",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05213v1",
@@ -6581,7 +6596,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0534",
+    "id": "fd_0535",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.04999v1",
@@ -6596,7 +6611,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Tropical"
     ],
-    "id": "fd_0535",
+    "id": "fd_0536",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.04960v1",
@@ -6610,7 +6625,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0536",
+    "id": "fd_0537",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05027v1",
@@ -6625,13 +6640,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0537",
+    "id": "fd_0538",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05043v1",
     "status": "available",
     "timestamp": "2026-07-07T09:15:51.127203+00:00",
     "title": "Symplectic cover graphs with difference set parameters are divisible design graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let z and X be indeterminates. Define the two polynomials in t: f(t) = z(t+256)^3 - 1728t^2 and g(t) = X(t+64)^2 - 256t, viewed as elements of (Z[z,X])[t]. Define the bridge polynomial \u03a6(z,X) = 729z\u00b2X\u00b3 + 3888z\u00b2X\u00b2 + 6912z\u00b2X + 4096z\u00b2 - 1458zX\u00b3 + 22356zX\u00b2 - 27648zX + 729X\u00b3. Then the resultant of f and g with respect to t equals 2^36 \u00b7 \u03a6(z,X). This identity is the algebraic backbone of the paper, establishing the explicit polynomial relation between the level-one j-invariant parameter z = 1728/j and the Fricke parameter X = 256t/(t+64)\u00b2, and is verified by a direct resultant computation.",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_0539",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05028v1",
+    "status": "available",
+    "timestamp": "2026-07-07T09:50:23.449450+00:00",
+    "title": "Fricke Bridge Resultant Identity"
   },
   {
     "consumed_by_exp_id": "",
