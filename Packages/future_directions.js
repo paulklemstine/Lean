@@ -1712,7 +1712,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hammarhjelm's condition and the classification of real quadratic fields"
   },
   {
-    "consumed_by_exp_id": "ea22db3c",
+    "consumed_by_exp_id": "",
     "description": "A partial cube that is a Cartesian product of two partial cubes satisfies the opposite-semicube Helly property if and only if both factors are harmonic-even.",
     "domains": [
       "Bridges"
@@ -1721,7 +1721,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31468v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T18:13:48.357153+00:00",
     "title": "The opposite-semicube Helly property characterizes harmonic-evenness in Cartesian products of partial cubes"
   },
@@ -7013,18 +7013,46 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any finite subset X of \u211d\u207f equipped with the Euclidean metric, the microscopic weighting \u03bc exists and satisfies: \u03bc(x) > 0 if and only if x is a vertex (extreme point) of conv(X), and \u03bc(x) \u2264 0 for every non-extreme point of X. This formalizes the heuristic that the microscopic weighting emphasizes boundary points and assigns greater weight to outlying regions.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0584",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05349v1",
+    "status": "available",
+    "timestamp": "2026-07-07T21:33:24.349961+00:00",
+    "title": "Sign Characterization of Microscopic Weighting on Euclidean Subsets"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every integer r \u2265 2 and real \u03b5 > 0, there exists \u0394\u2080 such that for every (r+1)-uniform hypergraph H with girth at least 5 and maximum degree \u0394 \u2265 \u0394\u2080, the list chromatic number \u03c7_\u2113(H) satisfies \u03c7_\u2113(H) \u2264 \u2308(1+\u03b5)(r\u0394 / ln \u0394)^(1/r)\u2309. This conjecture formalizes the main theorem of the paper, improving Iliopoulos's bound of (1+o(1))r(\u0394/ln \u0394)^(1/r) by reducing the leading constant from r to r^(1/r) via a semi-random nibble argument combined with a Rosenfeld-style counting completion.",
     "domains": [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0584",
+    "id": "fd_0585",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05256v1",
     "status": "available",
     "timestamp": "2026-07-07T20:55:28.462579+00:00",
     "title": "List Chromatic Number Bound for Uncrowded Uniform Hypergraphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every primitive holomorphic newform f of weight k \u2265 4, level N, and nebentypus \u03c7, and for every non-negative integer m, all zeros of the derivative period polynomial P\u207d\u1d50\u207e_f(z) = \u03a3_{j=0}^{k-2} C(k-2,j) \u00b7 \u039b\u207d\u1d50\u207e(f, j+1) \u00b7 z^j lie on the unit circle, where \u039b(f,s) denotes the completed L-function. This confirms and extends the Diamantis\u2013Rolen conjecture to arbitrary level, nebentypus, and derivative order. The core mechanism is a sharp circular sampling theorem: for balanced polynomials p with zeros in \u03a9_d = {a+ib : a\u00b2 \u2212 b\u00b2/(d\u22121) \u2264 d/4}, the centered binomial sample B_d[p] has all zeros on the unit circle.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0586",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05262v1",
+    "status": "available",
+    "timestamp": "2026-07-07T21:33:49.349517+00:00",
+    "title": "Derivative Period Polynomial Unit-Circle Theorem for Primitive Holomorphic Newforms"
   },
   {
     "consumed_by_exp_id": "006f75ea",
