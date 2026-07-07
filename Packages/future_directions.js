@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "ee36b082",
+    "consumed_by_exp_id": "10d512eb",
     "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition \u2014 zeros on the critical line means the bulk geometry is stable against perturbations.",
     "domains": [
       "Novelty",
@@ -6866,12 +6866,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Among all non-trivial 2-(v,k,\u03bb) designs admitting a flag-transitive automorphism group with socle PSL(2,q) that are not Witt-Bose-Shrikhande linear spaces, the maximum number of points is v=496, achieved uniquely (up to isomorphism) by the sporadic linear space with block size k=4 admitting P\u0393L(2,2\u2075) as its flag-transitive automorphism group. This conjecture asserts that the missing example identified in this paper represents the extremal case among all sporadic such designs, and that the complete list of 48 sporadic examples attains no larger v.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0572",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05067v1",
+    "status": "available",
+    "timestamp": "2026-07-07T19:36:40.792878+00:00",
+    "title": "Maximality of the 496-point sporadic design among non-WBS flag-transitive designs with PSL(2,q) socle"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every fixed integer $r \\geq 2$ and every $\\varepsilon > 0$, there exists $\\Delta_0$ such that for all $\\Delta \\geq \\Delta_0$, every uncrowded $(r+1)$-uniform hypergraph of maximum degree $\\Delta$ has list chromatic number at most $(1+\\varepsilon)(\\Delta/\\log\\Delta)^{1/r}$. This conjectures that the leading constant $r^{1/r}$ in the authors' theorem can be further improved to 1, matching the optimal asymptotic bound for $r=1$ (graphs) due to Molloy and the known lower bounds from random hypergraphs.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0572",
+    "id": "fd_0573",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05256v1",
@@ -6886,7 +6901,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0573",
+    "id": "fd_0574",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05305v1",
@@ -6901,7 +6916,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0574",
+    "id": "fd_0575",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05357v1",

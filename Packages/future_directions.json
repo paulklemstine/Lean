@@ -13421,7 +13421,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Hilbert–Polya conjecture",
         "Riemann zeta zeros",
@@ -13445,7 +13445,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0283",
-      "last_attempt_time": "2026-07-07T19:02:10.658446+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": " theorem hilbert_polya_via_spin_model :\n  ∃ (H : QuantumOperator), is_selfadjoint H ∧\n    (∀ n : ℕ, ∃ λ ∈ spectrum H, λ = imag_part (ζ_zero n)) ∧\n    (∀ λ ∈ spectrum H, ∃ n, λ = imag_part (ζ_zero n)) := by\n  -- Placeholder for the full proof construction.\n  admit",
       "lineage_refs": [],
@@ -27038,7 +27038,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -27055,7 +27055,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0564",
-      "last_attempt_time": "2026-07-07T19:02:03.162039+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -27079,11 +27079,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "ee36b082",
+      "consumed_by_exp_id": "10d512eb",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -27096,7 +27096,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0565",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-07T19:36:46.502736+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -27391,6 +27391,54 @@
       "title": "Vertex Decomposability of Path-Free Complexes of Complete Multipartite Graphs"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "math.GR"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Among all non-trivial 2-(v,k,λ) designs admitting a flag-transitive automorphism group with socle PSL(2,q) that are not Witt-Bose-Shrikhande linear spaces, the maximum number of points is v=496, achieved uniquely (up to isomorphism) by the sporadic linear space with block size k=4 admitting PΓL(2,2⁵) as its flag-transitive automorphism group. This conjecture asserts that the missing example identified in this paper represents the extremal case among all sporadic such designs, and that the complete list of 48 sporadic examples attains no larger v.",
+      "domain_bridges": [
+        "finite_group_theory",
+        "permutation_group_actions",
+        "projective_geometry"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0572",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem max_v_sporadic_flag_transitive_PSL2q : ∀ (D : Design ℕ) (q : ℕ) (hq : q ≥ 4) (h_soc : socle (autGroup D) ≅ PSL2 q) (h_ft : FlagTransitive (autGroup D) D) (h_nontriv : NontrivialDesign D) (h_not_WBS : ¬ IsWBSLinearSpace D), D.v ≤ 496 ∧ (D.v = 496 → D.k = 4 ∧ q = 32) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Verify the conjecture by exhaustive computation over the 48 sporadic examples classified in the paper, confirming that v=496 is maximal. Then establish that no further sporadic examples exist beyond those listed, leveraging the parameter bounds (v = (q+1)q(q-1)/m for appropriate divisors m) and the subgroup structure of PSL(2,q) acting on its subdegrees. The key step is proving that for q > 32, any point-primitive flag-transitive 2-design with socle PSL(2,q) that is not a WBS linear space must have v ≤ 256 or reduce to a previously enumerated case.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.05067v1",
+      "source_path": "http://arxiv.org/abs/2607.05067v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-07T19:36:40.792878+00:00",
+      "title": "Maximality of the 496-point sporadic design among non-WBS flag-transitive designs with PSL(2,q) socle"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -27417,7 +27465,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0572",
+      "id": "fd_0573",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem list_chrom_uncrowded_hypergraph_optimal (r : ℕ) (hr : r ≥ 2) (ε : ℝ) (hε : ε > 0) :\n    ∃ Δ₀ : ℕ, ∀ Δ ≥ Δ₀, ∀ (G : Hypergraph) [Uncrowded G 5] [Uniform G (r + 1)] [MaxDegree G Δ],\n    listChromaticNumber G ≤ (1 + ε) * (Δ / Real.log Δ) ^ (1 / (r : ℝ)) := by\n  sorry",
@@ -27467,7 +27515,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0573",
+      "id": "fd_0574",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sprung_lambda_invariant_difference_formula\n  (E : EllipticCurve ℚ) (hE_ss : SupersingularReduction E 2) (hE_sf : Squarefree (conductor E))\n  (D : ℤ) (hD_sf : Squarefree D) (hD_pos : 0 < D) (hD_mod : D % 4 = 1)\n  (star : SharpFlat) (i : Fin 2) (h_mu_zero : mu_invariant E star i = 0) :\n  lambda_invariant (quadratic_twist E D) star i = lambda_invariant E star i +\n    (prime_divisors D).sum fun ell =>\n      if (ell : ℤ) ∣ conductor E then 2^(padicVal 2 ((ell^2 - 1) / 8))\n      else if 2 ∣ (E.reduce ell).card then 2^(padicVal 2 ((ell^2 - 1) / 8) + 1)\n      else 0 :=\nby sorry",
@@ -27518,7 +27566,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0574",
+      "id": "fd_0575",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem odd_int_not_p_2a_2b_lower_bound (η : ℝ) (hη : η > 0) : ∃ x₀ : ℝ, ∀ x : ℝ, x ≥ x₀ → N x ≥ x * Real.exp (-(4 + η) * (Real.log (Real.log (Real.log x)) / Real.log (Real.log x)) * Real.log x) := by sorry",
@@ -27629,6 +27677,6 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "cross_domain_bridge"
+    "famous_subtask"
   ]
 }

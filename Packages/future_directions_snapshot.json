@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ee36b082",
+    "consumed_by_exp_id": "10d512eb",
     "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition — zeros on the critical line means the bulk geometry is stable against perturbations.",
     "domain_bridges": [],
     "domains": [
@@ -12756,6 +12756,33 @@
     "title": "Vertex Decomposability of Path-Free Complexes of Complete Multipartite Graphs"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "math.GR"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Among all non-trivial 2-(v,k,λ) designs admitting a flag-transitive automorphism group with socle PSL(2,q) that are not Witt-Bose-Shrikhande linear spaces, the maximum number of points is v=496, achieved uniquely (up to isomorphism) by the sporadic linear space with block size k=4 admitting PΓL(2,2⁵) as its flag-transitive automorphism group. This conjecture asserts that the missing example identified in this paper represents the extremal case among all sporadic such designs, and that the complete list of 48 sporadic examples attains no larger v.",
+    "domain_bridges": [
+      "finite_group_theory",
+      "permutation_group_actions",
+      "projective_geometry"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0572",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Verify the conjecture by exhaustive computation over the 48 sporadic examples classified in the paper, confirming that v=496 is maximal. Then establish that no further sporadic examples exist beyond those listed, leveraging the parameter bounds (v = (q+1)q(q-1)/m for appropriate divisors m) and the subgroup structure of PSL(2,q) acting on its subdegrees. The key step is proving that for q > 32, any point-primitive flag-transitive 2-design with socle PSL(2,q) that is not a WBS linear space must have v ≤ 256 or reduce to a previously enumerated case.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05067v1",
+    "status": "available",
+    "timestamp": "2026-07-07T19:36:40.792878+00:00",
+    "title": "Maximality of the 496-point sporadic design among non-WBS flag-transitive designs with PSL(2,q) socle"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "Johansson-Molloy theorem",
@@ -12772,7 +12799,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0572",
+    "id": "fd_0573",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the semi-random nibble method to maintain tighter control on the residual degrees and color lists, potentially using an improved differential equation analysis or a more refined counting argument for the final sparse stage to eliminate the factor of $r^{1/r}$.",
@@ -12801,7 +12828,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0573",
+    "id": "fd_0574",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize quadratic twists of elliptic curves, the reduction of elliptic curves modulo primes, the order of the finite group of rational points, and the definition of Sprung's sharp/flat 2-adic L-functions. Then establish the explicit difference formula for the lambda-invariants by evaluating the sum over the prime divisors of D using the local properties of the 2-adic L-function under quadratic twists.",
@@ -12831,7 +12858,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0574",
+    "id": "fd_0575",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize N(x) as a counting function over odd n ≤ x excluding those with ∃p∈Primes, ∃a,b∈ℕ, n = p + 2^a + 2^b. The key construction uses Fermat numbers to restrict to pairs with b - a = t·2^m, then applies Stewart's theorem on prime divisors q_d | Φ_d(2) with ord_{q_d}(2) = d to build a covering system. The density bound follows from sieve-type estimates on the residue classes avoided by primes congruent to specific values modulo these primes q_d. The asymptotic exp factor arises from Mertens-type product estimates over the cyclotomic primes.",
