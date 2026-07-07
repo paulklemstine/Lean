@@ -1069,7 +1069,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived p-completeness of sheared Witt vectors ensures Dieudonn\u00e9 theory extension"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "579c097e",
     "description": "Conjecture that for a fixed elliptic curve E over Q and an odd prime p, the proportion of p-cyclic extensions L/Q (ordered by discriminant) for which the p-Selmer rank increment equals k converges to (1-1/p)\u00b7(1/p)^k as the discriminant bound tends to infinity.",
     "domains": [
       "Pythagorean",
@@ -1079,7 +1079,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T22:37:45.370140+00:00",
     "title": "Distribution of p-Selmer rank increments in p-cyclic extensions"
   },
@@ -2626,7 +2626,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Alexander's Conjecture for Infinite Simplicial Complexes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b1b5d77f",
     "description": "The lower and upper bounds on the number of \u03a6-separable dichotomies C_F given in Theorem 1 (in terms of N, r = rank(\u03a6(F)), and s = kruskal_rank(\u03a6(F))) are tight for every achievable pair (r, s). That is, for any N \u2208 \u2115 and any integers r, s with 1 \u2264 s \u2264 r \u2264 min(N, M'), there exists a point set F \u2286 \u211d^M of size N and a linear map \u03a6: \u211d^M \u2192 \u211d^{M'} such that rank(\u03a6(F)) = r, kruskal_rank(\u03a6(F)) = s, and C_F achieves the lower bound; similarly, there exists a configuration achieving the upper bound.",
     "domains": [
       "Bridges"
@@ -2635,7 +2635,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T10:39:12.276840+00:00",
     "title": "Tightness of Function-Counting Bounds for All Rank-Kruskal Rank Pairs"
   },
@@ -6230,7 +6230,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equivalence of Oddomorphism and Split-Off Minor"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "246be7f8",
     "description": "Let k be an algebraically closed field of characteristic zero and let F \u2208 k[x\u2081,\u2026,x_d] be irreducible. Then F = H(f\u2081(x\u2081)+\u22ef+f_d(x_d)) for some H \u2208 k[t] with deg(H) \u2265 2 and f\u1d62 \u2208 k[t] if and only if there exist rational functions \u03b1\u2081,\u2c7c \u2208 k(x\u2c7c), \u03b1\u2082,\u1d62 \u2208 k(x\u1d62), and G \u2208 k(x\u2081,\u2026,x_d) such that for every i \u2208 {1,\u2026,d}: \u2202F/\u2202x\u1d62 \u2261 G \u00b7 \u03b1\u2082,\u1d62(x\u1d62) \u00b7 \u220f_{j\u2260i} \u03b1\u2081,\u2c7c(x\u2c7c) (mod \u27e8F\u27e9), where crucially the \u03b1\u2081,\u2c7c factors are independent of i. This is the algebraic analogue of Theorem 2.3, replacing analytic isomorphisms with rational function substitutions and local neighborhoods with Zariski-open conditions.",
     "domains": [
       "Algebra"
@@ -6239,7 +6239,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03366v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T02:39:41.753443+00:00",
     "title": "Algebraic Degeneracy Factorization Criterion"
   },
@@ -6532,7 +6532,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Directed Mantel's Theorem for Loopless Digraphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "19191ea2",
     "description": "For every integer n \u2265 3, there exists a constant c_n > 0 such that for every positive integer m, the density of primitive maximal binary forms of degree n (ordered by height) that simultaneously fail the integral Hasse principle for all F(x,y) = h with 1 \u2264 h \u2264 m is at least c_n / m^{n\u22122}. This refines the paper's result that this density is merely positive for each fixed m, conjecturing an explicit polynomial decay rate in m governed by the degree.",
     "domains": [
       "Algebra",
@@ -6542,7 +6542,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05234v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T06:17:00.580529+00:00",
     "title": "Polynomial Decay of Simultaneous Hasse Principle Failure Density in Thue Equations"
   },

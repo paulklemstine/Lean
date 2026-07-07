@@ -1921,7 +1921,7 @@
       "KMR14",
       "PT25"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "579c097e",
     "description": "Conjecture that for a fixed elliptic curve E over Q and an odd prime p, the proportion of p-cyclic extensions L/Q (ordered by discriminant) for which the p-Selmer rank increment equals k converges to (1-1/p)·(1/p)^k as the discriminant bound tends to infinity.",
     "domain_bridges": [
       "EllipticCurves",
@@ -1938,7 +1938,7 @@
     "proof_strategy": "analytic_number_theory combined with probabilistic model of Selmer groups",
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T22:37:45.370140+00:00",
     "title": "Distribution of p-Selmer rank increments in p-cyclic extensions"
   },
@@ -4805,7 +4805,7 @@
       "Cover1965",
       "FunctionCounting2024"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b1b5d77f",
     "description": "The lower and upper bounds on the number of Φ-separable dichotomies C_F given in Theorem 1 (in terms of N, r = rank(Φ(F)), and s = kruskal_rank(Φ(F))) are tight for every achievable pair (r, s). That is, for any N ∈ ℕ and any integers r, s with 1 ≤ s ≤ r ≤ min(N, M'), there exists a point set F ⊆ ℝ^M of size N and a linear map Φ: ℝ^M → ℝ^{M'} such that rank(Φ(F)) = r, kruskal_rank(Φ(F)) = s, and C_F achieves the lower bound; similarly, there exists a configuration achieving the upper bound.",
     "domain_bridges": [
       "stat.ML",
@@ -4821,7 +4821,7 @@
     "proof_strategy": "Construct explicit point configurations and linear maps for each (r, s) pair. For the upper bound, use points in general position within an r-dimensional subspace. For the lower bound, design configurations with controlled linear dependencies that minimize separable dichotomies while fixing r and s. Use induction on N and properties of the counting function C(·,·).",
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T10:39:12.276840+00:00",
     "title": "Tightness of Function-Counting Bounds for All Rank-Kruskal Rank Pairs"
   },
@@ -11568,7 +11568,7 @@
       "math.CO",
       "math.AG"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "246be7f8",
     "description": "Let k be an algebraically closed field of characteristic zero and let F ∈ k[x₁,…,x_d] be irreducible. Then F = H(f₁(x₁)+⋯+f_d(x_d)) for some H ∈ k[t] with deg(H) ≥ 2 and fᵢ ∈ k[t] if and only if there exist rational functions α₁,ⱼ ∈ k(xⱼ), α₂,ᵢ ∈ k(xᵢ), and G ∈ k(x₁,…,x_d) such that for every i ∈ {1,…,d}: ∂F/∂xᵢ ≡ G · α₂,ᵢ(xᵢ) · ∏_{j≠i} α₁,ⱼ(xⱼ) (mod ⟨F⟩), where crucially the α₁,ⱼ factors are independent of i. This is the algebraic analogue of Theorem 2.3, replacing analytic isomorphisms with rational function substitutions and local neighborhoods with Zariski-open conditions.",
     "domain_bridges": [
       "combinatorial_geometry",
@@ -11584,7 +11584,7 @@
     "proof_strategy": "Forward direction: If F = H(f₁+⋯+f_d), then ∂F/∂xᵢ = H'(f₁+⋯+f_d)·f'ᵢ(xᵢ). On Z(F) where H(f₁+⋯+f_d)=0, set G = H'(f₁+⋯+f_d), α₂,ᵢ = f'ᵢ, α₁,ⱼ = 1. Reverse direction: The separated factorization implies F_{x_i}/F_{x_j} = (α₂,ᵢ(xᵢ)·α₁,ⱼ(xⱼ))/(α₂,ⱼ(xⱼ)·α₁,ᵢ(xᵢ)), forcing the logarithmic derivatives ∂(log F_{x_i})/∂x_j to vanish modulo F for i≠j. Use irreducibility and Zariski density to show the implicit function on Z(F) has additive separable structure, then integrate via differential algebra (Risch-like arguments) to obtain the polynomial form H(f₁+⋯+f_d).",
     "research_mode": "team",
     "source_exp_id": "2607.03366v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T02:39:41.753443+00:00",
     "title": "Algebraic Degeneracy Factorization Criterion"
   },
@@ -12144,7 +12144,7 @@
       "Thue_equation",
       "binary_forms"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "19191ea2",
     "description": "For every integer n ≥ 3, there exists a constant c_n > 0 such that for every positive integer m, the density of primitive maximal binary forms of degree n (ordered by height) that simultaneously fail the integral Hasse principle for all F(x,y) = h with 1 ≤ h ≤ m is at least c_n / m^{n−2}. This refines the paper's result that this density is merely positive for each fixed m, conjecturing an explicit polynomial decay rate in m governed by the degree.",
     "domain_bridges": [
       "analytic_number_theory",
@@ -12161,7 +12161,7 @@
     "proof_strategy": "Extend the Akhtari-Bhargava construction by tracking the m-dependence in the local solubility conditions and the Győry-type upper bounds on Thue inequality solutions. The key is to show that the proportion of forms excluded by each additional constraint h = k (for k ≤ m) shrinks as O(1/k^{n-1}), so the cumulative constraint for all h ≤ m leaves a proportion of order 1/m^{n-2}. This requires uniform estimates on the density of forms with prescribed local behavior at finitely many primes, combined with the sieving framework already present in the paper.",
     "research_mode": "team",
     "source_exp_id": "2607.05234v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T06:17:00.580529+00:00",
     "title": "Polynomial Decay of Simultaneous Hasse Principle Failure Density in Thue Equations"
   },
