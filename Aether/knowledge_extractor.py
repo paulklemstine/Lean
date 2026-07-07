@@ -2384,93 +2384,11 @@ Research mode: {concept.research_mode}
             if job.result_algorithms or job.result_demo:
                 enriched_pkg = self._enrich_json_package(job.result_json_package, job)
 
-            # If sorry_fill research mode, check if there is an existing package JSON that tracks these Lean files
+            # Every package gets its own unique filename — once published, it is canon.
+            # The in-place merge system (sorry_fill mode merging into existing packages)
+            # has been removed: each Phase B produces a fresh, standalone package.
             target_pkg_path = f"Packages/{self._derive_artifact_name(job.concept, 'json')}"
-            if job.concept.research_mode == "sorry_fill":
-                updated_lean_files = []
-                for p in parts:
-                    if p["path"].endswith(".lean"):
-                        # normalize path
-                        fname = p["path"].replace("Catalog/", "")
-                        updated_lean_files.append(fname)
-                        updated_lean_files.append(fname.split("/")[-1]) # also add basename
-                
-                # Search Packages directory for a matching package
-                pkg_dir = self.catalog_root.parent / "Packages"
-                matched_pkg_file = None
-                if pkg_dir.exists():
-                    for f in pkg_dir.glob("*.json"):
-                        if f.name in ("index.json", "package.json", "lineage.json", "future_directions.json", "statement.json", "future_directions_snapshot.json"):
-                            continue
-                        try:
-                            pkg_data = json.loads(f.read_text(encoding="utf-8"))
-                            pkg_lean_files = []
-                            for lf in pkg_data.get("lean_files", []) or []:
-                                pkg_lean_files.append(lf.replace("Catalog/", ""))
-                                pkg_lean_files.append(lf.split("/")[-1])
-                            lp_field = pkg_data.get("lean_proofs", [])
-                            if isinstance(lp_field, list):
-                                for lp in lp_field:
-                                    if isinstance(lp, dict):
-                                        f_val = lp.get("file") or lp.get("name", "")
-                                        pkg_lean_files.append(f_val.replace("Catalog/", ""))
-                                        pkg_lean_files.append(f_val.split("/")[-1])
-                                    elif isinstance(lp, str):
-                                        pkg_lean_files.append(lp.replace("Catalog/", ""))
-                                        pkg_lean_files.append(lp.split("/")[-1])
-                                    
-                            if any(lf in pkg_lean_files for lf in updated_lean_files if lf):
-                                matched_pkg_file = f
-                                break
-                        except Exception:
-                            pass
-                            
-                if matched_pkg_file:
-                    print(f"[Integrate] sorry_fill cycle: found existing parent package {matched_pkg_file.name}")
-                    target_pkg_path = f"Packages/{matched_pkg_file.name}"
-                    try:
-                        old_pkg = json.loads(matched_pkg_file.read_text(encoding="utf-8"))
-                        new_pkg = json.loads(enriched_pkg)
-                        
-                        # Merge metadata
-                        old_pkg["date"] = new_pkg.get("date", old_pkg.get("date"))
-                        old_pkg["exp_id"] = new_pkg.get("exp_id", old_pkg.get("exp_id"))
-                        if "source_exp_ids" in new_pkg:
-                            old_pkg["source_exp_ids"] = list(set(old_pkg.get("source_exp_ids", []) + new_pkg["source_exp_ids"]))
-                            
-                        # Update lean_proofs: merge matching files
-                        old_lp = old_pkg.get("lean_proofs", [])
-                        new_lp = new_pkg.get("lean_proofs", [])
-                        if isinstance(old_lp, list) and isinstance(new_lp, list):
-                            old_lp_dict = {}
-                            for e in old_lp:
-                                if isinstance(e, dict):
-                                    old_lp_dict[e.get("file", "").split("/")[-1]] = e
-                            for e in new_lp:
-                                if isinstance(e, dict):
-                                    base = e.get("file", "").split("/")[-1]
-                                    if base in old_lp_dict:
-                                        old_lp_dict[base]["code"] = e.get("code", old_lp_dict[base].get("code"))
-                                        old_lp_dict[base]["theorems"] = e.get("theorems", old_lp_dict[base].get("theorems"))
-                                        old_lp_dict[base]["description"] = "Lean 4 proof file (repaired and sorry-free)"
-                                    else:
-                                        old_lp.append(e)
-                            old_pkg["lean_proofs"] = old_lp
-                            
-                        # Update key_results and keywords
-                        old_pkg["key_results"] = list(set(old_pkg.get("key_results", []) + new_pkg.get("key_results", [])))
-                        old_pkg["keywords"] = list(set(old_pkg.get("keywords", []) + new_pkg.get("keywords", [])))
-                        
-                        # Merge modules
-                        if "modules" in new_pkg:
-                            old_modules = old_pkg.get("modules", {})
-                            old_modules.update(new_pkg["modules"])
-                            old_pkg["modules"] = old_modules
-                            
-                        enriched_pkg = json.dumps(old_pkg, indent=2, ensure_ascii=False)
-                    except Exception as e:
-                        print(f"[Integrate] Error merging into existing package JSON: {e}")
-                        
+
             parts.append({"type": "new", "path": target_pkg_path, "content": enriched_pkg})
 
         if job.result_discussion:
