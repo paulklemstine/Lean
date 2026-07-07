@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a8488433",
     "description": "Suppose we had an oracle that computes L(s, chi) for any L-function and any complex s in O(1) time. What theorems would follow? Conjecture: The L-function oracle implies (1) The Riemann Hypothesis (compute zeros directly), (2) The BSD conjecture (compute the order of vanishing at s=1), (3) The Sato-Tate conjecture (compute the distribution of a_p), (4) Langlands functoriality (compare L-functions on both sides of the functoriality lift), and (5) A polynomial-time algorithm for factoring (the L-function of an elliptic curve E over Z/nZ detects factors of n). But the oracle also implies IMPOSSIBILITY results: (6) P != NP (because NP-complete problems would reduce to L-function computations that the oracle solves in O(1), contradicting the time hierarchy theorem if P = NP). Wait — the oracle solves L-function computations in O(1), so if P = NP, then NP problems can be encoded as L-function computations and solved instantly, but the oracle's existence is an axiom, not a theorem. The correct statement: the L-function oracle collapses the polynomial hierarchy to L-function computations. Test: prove that the Riemann Hypothesis follows from the oracle. Prove that BSD follows. Prove that factoring is in P given the oracle. Impact: understanding what an L-function oracle implies tells us exactly how powerful L-functions are — and how far we are from proving things about them.",
     "domain_bridges": [],
     "domains": [
@@ -15,14 +15,14 @@
     "proof_strategy": "Define the L-oracle O(s, chi) = L(s, chi) for any L-function chi and complex s. RH: compute all zeros of zeta(s) by evaluating zeta(s) on a fine grid and checking sign changes — O(R^2) oracle calls for zeros up to height R. BSD: compute L(E, 1) and check if it's zero (rank >= 1) or compute the Taylor expansion around s=1 to get the order of vanishing. Sato-Tate: compute a_p(E) for all p up to N by evaluating L(s, E) at s = it for varying t, and extract a_p from the Euler product. Factoring: given n = pq, define E: y^2 = x^3 + ax + b over Z/nZ. The oracle computes L(s, E/nZ), which has different values for different factorizations. Binary search on a to find p. P != NP: if the oracle exists as a physical device, then L-function computations are O(1), but the oracle itself cannot solve NP problems unless P = NP.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T20:47:00.132224+00:00",
     "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d431d7ed",
+    "consumed_by_exp_id": "44d92b62",
     "description": "Mathematics is full of impossibility theorems — things that CANNOT be done. But impossibility theorems are themselves beautiful mathematical objects. Catalog and interconnect the great impossibilities: (1) Squaring the circle (pi is transcendental, Lindemann 1882). (2) Trisecting the angle (cos 20 degrees has degree 3 over Q, Wantzel 1837). (3) Doubling the cube (cube root of 2 has degree 3, Wantzel 1837). (4) Solving the quintic by radicals (A_5 is not solvable, Abel-Ruffini 1824). (5) The Borsuk-Ulam impossibility (every continuous map S^n -> R^n has a point where f(x) = f(-x)). (6) Arrow's impossibility (no voting system is simultaneously fair, complete, and non-dictatorial). (7) Heisenberg's uncertainty (Delta x * Delta p >= hbar/2). Conjecture: These impossibility theorems are connected by a deep structural principle — each one arises because a certain group action is not free. Squaring the circle fails because Gal(Q(pi)/Q) acts freely. Solving the quintic fails because A_5 acts freely on the roots. Arrow's theorem fails because the symmetric group acts freely on preferences. Heisenberg fails because the Heisenberg group acts freely on phase space. The unified principle: a task is impossible iff the relevant group action is free. Test: verify that each impossibility theorem corresponds to a free group action. Prove the converse: if a group G acts freely on a set X, then there exists a G-equivariant task that is impossible on X. Impact: all impossibility is the same impossibility — every CAN'T is a reflection of a free group action.",
     "domain_bridges": [],
     "domains": [
@@ -13028,6 +13028,32 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "math.NT",
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Erdős repeatedly asked whether there exists an absolute constant c_0 > 0 such that for all sufficiently large x, the number N(x) of odd integers n ≤ x which cannot be written as p + 2^a + 2^b (with p a prime and a, b natural numbers) satisfies N(x) > c_0 * x. This asserts that a positive proportion of odd integers are not of this form, upgrading the current x^{1-o(1)} lower bounds to a positive density.",
+    "domain_bridges": [
+      "additive_number_theory",
+      "analytic_number_theory",
+      "covering_congruences"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0586",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish that the set of odd integers not representable in this form has positive lower asymptotic density. This likely requires bypassing the exponential bounds produced by covering congruence systems, perhaps by demonstrating that a positive proportion of integers fall into residue classes that are fundamentally excluded by the structure of cyclotomic prime divisors, or by applying additive combinatorics to bound the density of the sumset.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05357v1",
+    "status": "available",
+    "timestamp": "2026-07-07T22:44:52.634560+00:00",
+    "title": "Positive Lower Asymptotic Density of Odd Integers Not Representable as p + 2^a + 2^b"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "math.CO",
       "hypergraph_coloring",
       "list_coloring",
@@ -13044,7 +13070,7 @@
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0586",
+    "id": "fd_0587",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the semi-random nibble in two phases: (1) define the nibble process on the hypergraph with active edge-color constraints, proving concentration of residual degrees via Chernoff-type binomial bounds (requiring Measure Theory / Probability bridges), (2) establish a sparse terminal state condition, (3) complete the coloring via a Rosenfeld-style counting argument (injection from list assignments to proper colorings). The girth ≥ 5 (uncrowded) hypothesis controls dependency structures and should be encoded as a locality condition on the hypergraph's Berge-cycle structure. Start with r = 2 (3-uniform case) to simplify the exponent.",
@@ -13077,7 +13103,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0587",
+    "id": "fd_0588",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Stage 1: Formalize the sharp circular sampling theorem for balanced polynomials — if p is balanced (p = ω·J(p) with |ω|=1, where J(F)(s) = conj(F(-conj(s)))) and Z(p) ⊆ Ω_{d,δ}, then all zeros of B_{d,δ}[p](z) = Σ C(d,j)·p(δ(j−d/2))·z^j lie on the unit circle, with Ω_{d,δ} maximal. Stage 2: Build completed L-function infrastructure for primitive holomorphic newforms, establishing the functional equation (supplying the balancing symmetry) and the Euler-product zero-free half-plane (placing reflected zeros in the required strip). Stage 3: Apply the sampling theorem with de Bruijn strip contraction and projective HKO theory to transport completed-zero geometry to derivative period polynomial circularity, simplicity, and strict interlacing.",
@@ -13107,7 +13133,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0588",
+    "id": "fd_0589",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the vanishing of algebraic μ-invariants for the signed (♯/♭) Selmer groups via control theorems and the structure of torsion in Mordell–Weil groups over the cyclotomic Z₂-extension. Then invoke the Iwasawa main conjecture for supersingular primes (proved by Kobayashi, Sprung, etc.) to transfer vanishing from the algebraic to the analytic side. The supersingular condition at 2, combined with square-free conductor, constrains the 2-adic torsion structure sufficiently to force μ=0.",
@@ -13120,7 +13146,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "006f75ea",
+    "consumed_by_exp_id": "",
     "description": "Bitcoin mining requires finding a nonce n such that SHA256(block_header || n) < target. What if we replaced SHA256 with a tropical hash? Define tropical SHA as: TSHA(m) = min over all i of (m_i + h_i) where m = (m_1,...,m_k) is the message, h = (h_1,...,h_k) is the tropical hash key, and all operations are in the min-plus semiring (a tropical plus b = min(a,b), a tropical times b = a + b). Conjecture: TSHA is a one-way function in the tropical sense: computing TSHA(m) given m and h is O(k) (trivial), but finding m given TSHA(m) and h is NP-hard (it reduces to a tropical shortest path problem). More precisely, the tropical preimage problem — given y and h, find m such that min_i(m_i + h_i) = y — requires checking O(e^{k}) tropical paths in the worst case. But there's a twist: tropical hash collisions are COMMON because min(a,b) = min(b,a). To fix this, define TSHA2(m) = (min_i(m_i + h_i), min_i(m_i + h'_i)) where h and h' are two independent tropical keys. Conjecture: TSHA2 is collision-resistant with probability 1 - O(1/k). Test: implement TSHA and TSHA2, measure collision resistance, and compare mining difficulty to SHA256 for block sizes k = 32, 64, 128. Impact: a cryptocurrency where mining is solving tropical optimization problems instead of brute-force hash searches — mining IS mathematics.",
     "domain_bridges": [],
     "domains": [
@@ -13133,7 +13159,7 @@
     "proof_strategy": "Define TSHA(m, h) = min_{i=1..k} (m_i + h_i) in the min-plus semiring. Prove: TSHA is O(k) to compute (single pass). Prove: finding m given TSHA(m,h) = y and h is NP-hard by reduction from the tropical shortest path problem. Reduction: given a weighted graph G, let h encode the edge weights and let m encode the path. Then TSHA(m,h) = length of shortest path. Finding m that achieves a given TSHA value equals finding the shortest path. Prove TSHA2 collision resistance: P(TSHA2(m) = TSHA2(m')) = O(1/k) for random h, h'. Test: implement TSHA, TSHA2, compare collision rates with SHA256 for k = 32, 64, 128. Measure mining time as function of difficulty.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T20:47:00.059968+00:00",
     "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
   },
