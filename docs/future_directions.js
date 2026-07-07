@@ -1114,7 +1114,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Filtered Colimit Preservation by Sheared Witt Vectors"
   },
   {
-    "consumed_by_exp_id": "5b5a056c",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for all sufficiently large N, the maximal size F(N) of a Sidon subset of {0,\u2026,N-1} satisfies F(N) \u2264 N^{1/2} + 0.94601\u00b7N^{1/4} + O(1).",
     "domains": [
       "Pythagorean"
@@ -1123,7 +1123,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:33:08.950460+00:00",
     "title": "Vector-valued smoothing for finite Sidon sets"
   },
@@ -1710,7 +1710,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-existence of weak Ziegler pairs for high-degree plus-one generated conic-line arrangements with defect three"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b1e57363",
     "description": "For every integer d \u22657, there exists a simplicial 0/1-polytope in dimension d with exactly 2d vertices that is not centrally symmetric. This generalizes the explicit 7-dimensional counterexample to all higher dimensions, extending the classification beyond the known result for d=7.",
     "domains": [
       "Geometry"
@@ -1719,7 +1719,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31640v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T19:30:02.443246+00:00",
     "title": "Existence of Non-Centrally Symmetric Simplicial 0/1-Polytopes for All Dimensions \u22657"
   },
@@ -2160,7 +2160,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Eventual congruence of mis\u00e8re P\u2011positions in nuclear escalation ladders"
   },
   {
-    "consumed_by_exp_id": "8bd8b322",
+    "consumed_by_exp_id": "daa54fd7",
     "description": "There exists an infinite family of graphs with maximum degree d such that for any signing \u03c3, the spectral radius \u03c1(A_\u03c3) \u2265 2\u221a(3(d-1)).",
     "domains": [
       "Physics"
@@ -6431,11 +6431,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a p-adic field F and a generic representation \u03c0 of GL_r(F), the exterior square \u03b5-factor defined via the Jacquet\u2013Shalika local functional equation coincides with the exterior square \u03b5-factor defined via the Langlands\u2013Shahidi method: \u03b5^{JS}(\u03c0, \u2227\u00b2, \u03c8) = \u03b5^{Sh}(\u03c0, \u2227\u00b2, \u03c8). This is the main theorem (Theorem 1.1) of the paper. Formalizing it requires developing the theories of generic representations of GL_r over p-adic fields, both integral-representation (Jacquet\u2013Shalika) and Langlands\u2013Shahidi constructions of L- and \u03b5-factors, and the local functional equation for the Jacquet\u2013Shalika exterior square integrals.",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_0524",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.04908v1",
+    "status": "available",
+    "timestamp": "2026-07-07T09:14:15.198921+00:00",
+    "title": "Equality of Jacquet\u2013Shalika and Langlands\u2013Shahidi exterior square \u03b5-factors for GL_n over p-adic fields"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any field K with char(K) \u2260 2 and quadratic polynomials v, w \u2208 K[x], the classical Wronskian v'w - vw' is exactly equal to the derivative-free Remainder-Polynomial Route (RPR) formulation. Specifically, v'w - vw' = 2x \u00b7 Sres\u2081(v, w) + (v\u2081w - w\u2081v), where Sres\u2081(v,w) = v\u2082w - w\u2082v is the first subresultant of v and w, and v\u1d62, w\u1d62 are the coefficients of x\u2071 in v, w respectively. This identity generalizes symmetrically to the full Richelot triple (U, V, W), proving that RPR yields identical codomain polynomials not merely up to scalar units, but as an exact polynomial equality.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0524",
+    "id": "fd_0525",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03376v1",
@@ -6449,7 +6464,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0525",
+    "id": "fd_0526",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03500v1",
@@ -6464,7 +6479,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0526",
+    "id": "fd_0527",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03354v1",
@@ -6478,7 +6493,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0527",
+    "id": "fd_0528",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03388v1",
@@ -6492,7 +6507,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0528",
+    "id": "fd_0529",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05067v1",
@@ -6506,7 +6521,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0529",
+    "id": "fd_0530",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05233v1",
@@ -6521,7 +6536,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0530",
+    "id": "fd_0531",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05083v1",
@@ -6536,7 +6551,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0531",
+    "id": "fd_0532",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05234v1",
@@ -6551,7 +6566,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0532",
+    "id": "fd_0533",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05213v1",
@@ -6566,7 +6581,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0533",
+    "id": "fd_0534",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.04999v1",
@@ -6581,7 +6596,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Tropical"
     ],
-    "id": "fd_0534",
+    "id": "fd_0535",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.04960v1",
@@ -6595,13 +6610,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0535",
+    "id": "fd_0536",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05027v1",
     "status": "available",
     "timestamp": "2026-07-07T08:42:48.388297+00:00",
     "title": "Explicit constant for bipartite-hole Hamilton cycle packing upper bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any prime power q, positive integer t, subgroup A of index r > 1 in (F_q, +), and (v,k,\u03bb) difference set D in the quotient group F_q^+/A, the graph \u0393_D(2t,q,A,r) with vertex set (F_q^+/A) \u00d7 V where V is a 2t-dimensional symplectic space over F_q, and adjacency (\u03b1\u0304,x) ~ (\u03b2\u0304,y) iff B(x,y) \u2208 \u03b1\u0304 - \u03b2\u0304 + D (viewed in F_q^+/A), is a divisible design graph with parameters (n, K, \u03bb\u2081, \u03bb\u2082) computable from (q, t, r, k, \u03bb). Moreover, when q = 2^s, this graph is a Cayley graph over the elementary abelian 2-group (Z/2Z)^{2st + log\u2082(r)}. This extends the known result that complements of symplectic covers (using subgroups A) are divisible design graphs to the case where A is replaced by a difference set.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0537",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05043v1",
+    "status": "available",
+    "timestamp": "2026-07-07T09:15:51.127203+00:00",
+    "title": "Symplectic cover graphs with difference set parameters are divisible design graphs"
   },
   {
     "consumed_by_exp_id": "",

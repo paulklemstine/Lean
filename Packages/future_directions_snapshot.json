@@ -2010,7 +2010,7 @@
       "Tao2023",
       "OptimizationConstants"
     ],
-    "consumed_by_exp_id": "5b5a056c",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for all sufficiently large N, the maximal size F(N) of a Sidon subset of {0,…,N-1} satisfies F(N) ≤ N^{1/2} + 0.94601·N^{1/4} + O(1).",
     "domain_bridges": [
       "Additive Combinatorics",
@@ -2026,7 +2026,7 @@
     "proof_strategy": "Combine a finite family of smoothing kernels in a weighted Hilbert direct sum, average their L^2 energies via Cauchy–Schwarz, and verify the final constant with an exact rational certificate.",
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:33:08.950460+00:00",
     "title": "Vector-valued smoothing for finite Sidon sets"
   },
@@ -3119,7 +3119,7 @@
       "Aichholzer2000",
       "KortenkampRichterGebertSarangarajanZiegler1997"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b1e57363",
     "description": "For every integer d ≥7, there exists a simplicial 0/1-polytope in dimension d with exactly 2d vertices that is not centrally symmetric. This generalizes the explicit 7-dimensional counterexample to all higher dimensions, extending the classification beyond the known result for d=7.",
     "domain_bridges": [
       "convex polytopes",
@@ -3138,7 +3138,7 @@
     "proof_strategy": "Generalize the 7-dimensional construction by iteratively adding antipodal vertex pairs while preserving simpliciality and breaking central symmetry. For each d >7, construct a base example from the d=7 case and extend it via controlled vertex additions. Formal verification would require proving simpliciality (all facets are simplices), dimension preservation, and the absence of central symmetry through combinatorial analysis of vertex sets.",
     "research_mode": "team",
     "source_exp_id": "2606.31640v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T19:30:02.443246+00:00",
     "title": "Existence of Non-Centrally Symmetric Simplicial 0/1-Polytopes for All Dimensions ≥7"
   },
@@ -3946,7 +3946,7 @@
       "Marcus, Spielman & Srivastava (2008, 2019)",
       "Bownik (2016)"
     ],
-    "consumed_by_exp_id": "8bd8b322",
+    "consumed_by_exp_id": "daa54fd7",
     "description": "There exists an infinite family of graphs with maximum degree d such that for any signing σ, the spectral radius ρ(A_σ) ≥ 2√(3(d-1)).",
     "domain_bridges": [
       "Spectral graph theory",
@@ -11953,6 +11953,37 @@
     "title": "Matching Number of Arbitrary Graph Joins"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.NT",
+      "automorphic_L_functions",
+      "local_Langlands",
+      "epsilon_factors",
+      "Jacquet_Shalika"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a p-adic field F and a generic representation π of GL_r(F), the exterior square ε-factor defined via the Jacquet–Shalika local functional equation coincides with the exterior square ε-factor defined via the Langlands–Shahidi method: ε^{JS}(π, ∧², ψ) = ε^{Sh}(π, ∧², ψ). This is the main theorem (Theorem 1.1) of the paper. Formalizing it requires developing the theories of generic representations of GL_r over p-adic fields, both integral-representation (Jacquet–Shalika) and Langlands–Shahidi constructions of L- and ε-factors, and the local functional equation for the Jacquet–Shalika exterior square integrals.",
+    "domain_bridges": [
+      "p_adic_analysis",
+      "representation_theory_reductive_groups",
+      "harmonic_analysis_padic",
+      "local_class_field_theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_0524",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The original proof uses global methods: (1) construct a global automorphic representation whose local component at a designated p-adic place v is the given π, (2) exploit the equality of global ε-factors computed via both methods (using the global functional equation and the theory of global integrals), and (3) deduce the local equality by comparing local factors at all places, invoking the archimedean result of Jiang–Liu–Sun–Tian and the known equality ε^{Sh} = ε^{Gal} from Cogdell–Shahidi–Tsai. A formalization would need to first develop the local theories (Jacquet–Shalika integrals, Langlands–Shahidi L-functions, local ε-factors) and then formalize the globalization argument.",
+    "research_mode": "team",
+    "source_exp_id": "2607.04908v1",
+    "status": "available",
+    "timestamp": "2026-07-07T09:14:15.198921+00:00",
+    "title": "Equality of Jacquet–Shalika and Langlands–Shahidi exterior square ε-factors for GL_n over p-adic fields"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "math.NT",
@@ -11967,7 +11998,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0524",
+    "id": "fd_0525",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Expand both sides of the identity v'w - vw' = 2x(v₂w - w₂v) + (v₁w - w₁v) using the standard definition of the formal derivative v' = 2v₂x + v₁. Distributing the terms on the right-hand side and collecting coefficients of x², x, and 1 directly yields the expanded left-hand side, (v₂w₁ - v₁w₂)x² + 2(v₂w₀ - v₀w₂)x + (v₁w₀ - v₀w₁), proving the exact polynomial equality purely through algebraic manipulation without relying on scalar units or characteristic restrictions beyond char(K) ≠ 2.",
@@ -11996,7 +12027,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0525",
+    "id": "fd_0526",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the monomial star configuration result svd(I_{n,h}) = lcm(1,…,h) using the Diophantine condition M framework. Then extend to generalized star configurations by showing the Diophantine structure governing symbolic powers is invariant under regular sequences of forms—potentially via initial ideal arguments preserving svd, or by establishing that the symbolic Rees algebra of a generalized star configuration has the same Veronese structure as its monomial specialization.",
@@ -12023,7 +12054,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0526",
+    "id": "fd_0527",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "For each quadratic form Q, construct the Romik-type map T_Q as a piecewise fractional linear transformation on [0,1] derived from the Berggren matrices. Show T_Q admits a Markov partition with the Gibbs-Markov property. Compute the invariant density using Keane's method (tracking how the quadratic form coefficients transform under the Berggren matrices). Apply the Hopf argument adapted to infinite measure spaces to establish ergodicity, and verify conservativity via the ratio ergodic theorem by checking integrability of the density against the return time function.",
@@ -12048,7 +12079,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0527",
+    "id": "fd_0528",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Reduce the problem to the Grone-Merris-Bai theorem, which states s_k(G) ≤ ∑_{i=1}^k d_i^*(G) where d* is the conjugate degree sequence. Show that equality in Brouwer's bound implies equality in Grone-Merris-Bai, forcing the degree sequence to match the Laplacian eigenvalue sequence. Use the characterization of threshold graphs via their degree sequences and the specific sum m + binom(k+1, 2) to conclude that G must be a threshold graph with clique number k+1.",
@@ -12075,7 +12106,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0528",
+    "id": "fd_0529",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Formalize 2-designs, automorphism groups, flag-transitivity, and point-imprimitivity in Lean. 2) Develop the subgroup structure of PSL(2,q) — specifically the classification of maximal subgroups (dihedral, parabolic, A4, S4, A5 subgroups). 3) Use the imprimitivity assumption to decompose the point set into blocks of imprimitivity, constraining v via the subgroup lattice. 4) Apply combinatorial parameter constraints (Fisher's inequality, divisibility relations r(k-1) = λ(v-1), bk = vr) together with the orbit-stabilizer theorem under PSL(2,q). 5) Case analysis on the possible systems of imprimitivity yields only v = 15, 36, 85.",
@@ -12099,7 +12130,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0529",
+    "id": "fd_0530",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the region T_n and its dual graph G_n. Define the bipartite adjacency matrix M_n of G_n. Prove that the number of perfect matchings of G_n equals the absolute value of the determinant of M_n. Diagonalize M_n to compute its determinant, and verify that the resulting expression matches the given product formula.",
@@ -12125,7 +12156,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0530",
+    "id": "fd_0531",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the in-degree and out-degree of vertices. Prove that for any arc x -> y, the in-neighbors of x and out-neighbors of y are disjoint, hence in-deg(x) + out-deg(y) <= n. Sum over all arcs to get 2 * sum(d^+ * d^-) <= |E| * n. Apply Cauchy-Schwarz on the sum of total degrees squared to relate 4|E|^2 / n to 2|E|^2 / n + |E| n, and solve the quadratic inequality to conclude |E| <= n^2 / 2.",
@@ -12154,7 +12185,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0531",
+    "id": "fd_0532",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the Akhtari-Bhargava construction by tracking the m-dependence in the local solubility conditions and the Győry-type upper bounds on Thue inequality solutions. The key is to show that the proportion of forms excluded by each additional constraint h = k (for k ≤ m) shrinks as O(1/k^{n-1}), so the cumulative constraint for all h ≤ m leaves a proportion of order 1/m^{n-2}. This requires uniform estimates on the density of forms with prescribed local behavior at finitely many primes, combined with the sieving framework already present in the paper.",
@@ -12184,7 +12215,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0532",
+    "id": "fd_0533",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the paper's modified Weierstrass product with jet-correction operators. Step 1: Construct one-parameter deformations of Weierstrass elementary factors whose Taylor coefficients lie in O_K and which act as jet-correction operators preserving coefficients up to degree n while shifting the (n+1)-th coefficient by a controlled O_K-valued affine amount. Step 2: Since O_K ≅ ℤ^n as a ℤ-module, use nearest-lattice-point rounding (via the Minkowski theorem or LLL-type estimates) in place of the coordinate-wise rounding used for ℤ[i] ≅ ℤ². Step 3: Verify that the triangular structure of the coefficient map and the convergence bounds from canonical-product theory carry through unchanged, since the lattice rounding errors are bounded by the covering radius of O_K.",
@@ -12211,7 +12242,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0533",
+    "id": "fd_0534",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the cluster parking function complex and its dihedral automorphism group generated by R and S satisfying R^{n+2} = (RS)^2 = S^2 = 1. Compute the character of the reduced homology under the combined I_2(n+2) × S_n action. On the other side, leverage Haiman's n! theorem for the diagonal coinvariant character. Verify that the sign twist ε aligns the dihedral group characters, and check that the S_n-characters match via the parking function area/bounce statistics that index the bigraded Frobenius character.",
@@ -12240,7 +12271,7 @@
       "Algebra",
       "Tropical"
     ],
-    "id": "fd_0534",
+    "id": "fd_0535",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the quasi-shuffle product recursively on words via aw * bv = a(w * bv) + b(aw * v) + (a ⊕ b)(w * v) with a ⊕ b = z_{i+j} for letters z_i, z_j. Establish that z_0 is merge-idempotent (z_0 ⊕ z_0 = z_0). Prove by induction on p: base case p=0 is trivial (1 = 1); inductive step multiplies both sides by z_0, applies the quasi-shuffle recursion to get z_0^{*(p+1)} = Σ_k S(p,k)·k!·((k+1)z_0^{k+1} + k·z_0^k), then reindexes and applies the Stirling recurrence S(p+1,k) = S(p,k-1) + k·S(p,k) to close the induction.",
@@ -12268,7 +12299,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0535",
+    "id": "fd_0536",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the bipartite-hole deletion lemma and the McDiarmid-Yolov Hamiltonicity theorem as intermediate results, then construct the greedy packing argument with explicit bookkeeping of degree deficits at each stage. The key is tracking how the bipartite-hole number and minimum degree evolve after deleting each Hamilton cycle, showing the deficit is bounded by a factor of 2 times the target expression.",
@@ -12277,6 +12308,35 @@
     "status": "available",
     "timestamp": "2026-07-07T08:42:48.388297+00:00",
     "title": "Explicit constant for bipartite-hole Hamilton cycle packing upper bound"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "math.GR",
+      "math.RA"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any prime power q, positive integer t, subgroup A of index r > 1 in (F_q, +), and (v,k,λ) difference set D in the quotient group F_q^+/A, the graph Γ_D(2t,q,A,r) with vertex set (F_q^+/A) × V where V is a 2t-dimensional symplectic space over F_q, and adjacency (ᾱ,x) ~ (β̄,y) iff B(x,y) ∈ ᾱ - β̄ + D (viewed in F_q^+/A), is a divisible design graph with parameters (n, K, λ₁, λ₂) computable from (q, t, r, k, λ). Moreover, when q = 2^s, this graph is a Cayley graph over the elementary abelian 2-group (Z/2Z)^{2st + log₂(r)}. This extends the known result that complements of symplectic covers (using subgroups A) are divisible design graphs to the case where A is replaced by a difference set.",
+    "domain_bridges": [
+      "Difference sets in finite abelian groups",
+      "Symplectic forms over finite fields",
+      "Cayley graphs of elementary abelian groups",
+      "Antipodal distance-regular graphs"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0537",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt the proof that complements of symplectic covers are divisible design graphs (Corollary 2.2 in the paper). Key steps: (1) Establish regularity by counting neighbors using difference set properties: the number of neighbors of a vertex depends on whether the difference set condition is satisfied, leveraging the identity D*D^{-1} = k·{e} + λ·(G\\{e}). (2) Partition vertices into classes based on the second coordinate and compute common neighbors for same-class and different-class vertex pairs using symplectic form properties and difference set parameters. (3) For characteristic 2, note that F_q^+ with q=2^s is an elementary abelian 2-group, so the vertex set inherits this structure, and verify translation-invariance of adjacency.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05043v1",
+    "status": "available",
+    "timestamp": "2026-07-07T09:15:51.127203+00:00",
+    "title": "Symplectic cover graphs with difference set parameters are divisible design graphs"
   },
   {
     "ambition_level": "extension",
