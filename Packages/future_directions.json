@@ -17130,13 +17130,13 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "55b8bae9",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -17152,7 +17152,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0360",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-07T22:11:43.781854+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem gkn_conjecture {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj] (hG : G.IsHamiltonian) (hδ : G.minDegree ≥ 3) : ∃ c : ℕ, ∃ (v : V) (C : G.Walk v v), C.IsCycle ∧ C.length ≥ Fintype.card V - c ∧ C.length < Fintype.card V := by sorry",
       "lineage_refs": [],
@@ -17167,7 +17167,7 @@
       "source": "",
       "source_exp_id": "2607.01738v1",
       "source_path": "http://arxiv.org/abs/2607.01738v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-06T00:21:09.674491+00:00",
       "title": "Girão-Kittipassorn-Narayanan Conjecture on Long Nontrivial Cycles"
@@ -19064,7 +19064,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "4aec9d8b",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -19094,7 +19094,7 @@
       "source": "",
       "source_exp_id": "2606.31468v1",
       "source_path": "http://arxiv.org/abs/2606.31468v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-06T13:53:12.762795+00:00",
       "title": "Antipodality Characterization via Opposite-Semicube Helly Property"
@@ -21928,7 +21928,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "45ea8f94",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -21959,7 +21959,7 @@
       "source": "",
       "source_exp_id": "2607.02410v1",
       "source_path": "http://arxiv.org/abs/2607.02410v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-06T15:58:50.998422+00:00",
       "title": "Optimal Diameter Bound for Fixed Genus Chord Swap Graphs"
@@ -26988,7 +26988,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-07-07T16:56:44.460450+00:00",
       "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
@@ -27111,7 +27111,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-07-07T16:56:44.710027+00:00",
       "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
@@ -27690,7 +27690,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "d431d7ed",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -27718,7 +27718,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-07T20:46:59.942760+00:00",
       "title": "Impossibility Results for Fun: Things That Cannot Be Done (But We Try Anyway)"
@@ -27772,7 +27772,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "006f75ea",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -27800,7 +27800,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-07T20:47:00.059968+00:00",
       "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
@@ -27992,6 +27992,55 @@
       "attempt_count": 0,
       "catalog_references": [
         "math.CO",
+        "cake-cutting",
+        "fair division",
+        "combinatorics on words"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The paper proves that μ₂ ≤ 1 + ρ, where μ₂ is the infimum over all infinite sequences of radial cuts of the supremum of the ratio of maximum to minimum portion (adjacent-pair) sizes, and ρ ≈ 0.75488 is the unique real root of x² + x³ = 1 in (0,1). Korsky proved μ₂ ≥ 5/3. The conjecture asserts that the paper's upper bound is tight: μ₂ = 1 + ρ. This would require showing that no cutting strategy can achieve a ratio strictly less than 1 + ρ in the limit, which likely demands a structural impossibility argument about the combinatorics of slice-size configurations.",
+      "domain_bridges": [
+        "Combinatorics on words",
+        "Real algebraic numbers",
+        "Optimization over infinite sequences"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0585",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.Data.Real.Basic\nimport Mathlib.Tactic\n\n-- The unique real root of x² + x³ = 1 in (0, 1)\nnoncomputable def ρ : ℝ := sorry  -- Real.root (fun x => x^2 + x^3 - 1) 0\n\n-- A Cake after n cuts is a cyclic list of positive reals summing to 1\n-- A Portion is the sum of two adjacent slices\n-- μ₂ is the infimum over all infinite sequences of cuts of\n-- the supremum over n of (max portion / min portion)\nnoncomputable def μ₂ : ℝ := sorry\n\n-- Conjecture: the upper bound from Theorem 1 is tight\ntheorem mu2_eq_one_plus_rho : μ₂ = 1 + ρ := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "To prove μ₂ ≥ 1 + ρ, one must show that for any infinite cutting strategy and any ε > 0, there exists some n such that the ratio of maximum to minimum portion size after n cuts is at least 1 + ρ - ε. A possible approach: (1) characterize the set of achievable slice-size configurations as words over a finite alphabet of size classes, (2) show via a combinatorial/entropy argument that any long word avoiding the forbidden patterns from Proposition 2 must contain a factor whose portion ratio approaches 1 + ρ, or (3) use a potential function argument showing that any deviation from the ρ² : ρ³ splitting rule inevitably creates worse imbalances.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.05330v1",
+      "source_path": "http://arxiv.org/abs/2607.05330v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-07T22:10:51.857266+00:00",
+      "title": "Tightness of the adjacent-pair cake-cutting bound: μ₂ = 1 + ρ"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
         "hypergraph_coloring",
         "list_coloring",
         "nibble_method"
@@ -28014,7 +28063,7 @@
         "Computation"
       ],
       "github_issue": 0,
-      "id": "fd_0585",
+      "id": "fd_0586",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem list_chromatic_uncrowded_hypergraph {r : ℕ} (hr : r ≥ 2) (ε : ℝ) (hε : ε > 0) : ∃ Δ₀ : ℕ, ∀ Δ ≥ Δ₀, ∀ (H : SimpleHypergraph) (huniform : H.uniform (r + 1)) (hgirth : H.girth ≥ 5) (hdeg : H.max_degree ≤ Δ), H.list_chromatic_number ≤ ⌈(1 + ε) * (r * Δ / Real.log Δ) ^ (1 / r : ℝ)⌉₊ := by\n  sorry",
@@ -28068,7 +28117,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0586",
+      "id": "fd_0587",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem derivative_period_poly_all_zeros_on_unit_circle\n    {N : ℕ} {k : ℕ} {χ : DirichletCharacter N}\n    (hk : k ≥ 4)\n    (f : Newform N k χ)\n    (hf : f.IsPrimitive)\n    (m : ℕ) :\n    ∀ z ∈ (derivativePeriodPoly f m hk).roots,\n      Complex.abs z = 1 := by\n  sorry",
@@ -28088,6 +28137,57 @@
       "thread_id": "",
       "timestamp": "2026-07-07T21:33:49.349517+00:00",
       "title": "Derivative Period Polynomial Unit-Circle Theorem for Primitive Holomorphic Newforms"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Greenberg μ=0 conjecture",
+        "Sprung sharp/flat p-adic L-functions",
+        "Iwasawa invariants of power series",
+        "supersingular reduction elliptic curves"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every elliptic curve E/Q with good supersingular reduction at 2 and square-free conductor, the sharp and flat μ-invariants of Sprung's 2-adic L-functions vanish: μ₂^♯(E,ωⁱ) = μ₂^♭(E,ωⁱ) = 0 for all i ∈ {0,1}. This is a 2-adic supersingular analogue of Greenberg's μ=0 conjecture. Its truth would render the λ-invariant difference formula in the paper unconditional, extending Matsuno-type formulas completely to the supersingular setting at p=2.",
+      "domain_bridges": [
+        "p-adic analysis",
+        "algebraic number theory",
+        "arithmetic of elliptic curves",
+        "Iwasawa main conjecture"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Geometry"
+      ],
+      "github_issue": 0,
+      "id": "fd_0588",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem sharp_flat_mu_vanish_supersingular_2 (E : EllipticCurve ℚ) (h_ss : GoodSupersingularReductionAt E 2) (h_sf : SquareFree (conductor E)) (i : Fin 2) : muInvariant (signedPadicLFunction E 2 SignType.sharp i) = 0 ∧ muInvariant (signedPadicLFunction E 2 SignType.flat i) = 0 := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Establish the vanishing of algebraic μ-invariants for the signed (♯/♭) Selmer groups via control theorems and the structure of torsion in Mordell–Weil groups over the cyclotomic Z₂-extension. Then invoke the Iwasawa main conjecture for supersingular primes (proved by Kobayashi, Sprung, etc.) to transfer vanishing from the algebraic to the analytic side. The supersingular condition at 2, combined with square-free conductor, constrains the 2-adic torsion structure sufficiently to force μ=0.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.05305v1",
+      "source_path": "http://arxiv.org/abs/2607.05305v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-07T22:11:39.008176+00:00",
+      "title": "Vanishing of sharp/flat 2-adic μ-invariants for semistable supersingular elliptic curves"
     },
     {
       "ambition_level": "extension",
@@ -28178,7 +28278,7 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "cross_domain_bridge",
-    "famous_subtask"
+    "famous_subtask",
+    "cross_domain_bridge"
   ]
 }

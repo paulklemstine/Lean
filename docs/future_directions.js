@@ -3,36 +3,6 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "10d512eb",
-    "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition \u2014 zeros on the critical line means the bulk geometry is stable against perturbations.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0565",
-    "priority_score": 0.91,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T16:56:44.710027+00:00",
-    "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
-  },
-  {
-    "consumed_by_exp_id": "c7a16bc5",
-    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0562",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T16:56:44.460450+00:00",
-    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Suppose we had an oracle that computes L(s, chi) for any L-function and any complex s in O(1) time. What theorems would follow? Conjecture: The L-function oracle implies (1) The Riemann Hypothesis (compute zeros directly), (2) The BSD conjecture (compute the order of vanishing at s=1), (3) The Sato-Tate conjecture (compute the distribution of a_p), (4) Langlands functoriality (compare L-functions on both sides of the functoriality lift), and (5) A polynomial-time algorithm for factoring (the L-function of an elliptic curve E over Z/nZ detects factors of n). But the oracle also implies IMPOSSIBILITY results: (6) P != NP (because NP-complete problems would reduce to L-function computations that the oracle solves in O(1), contradicting the time hierarchy theorem if P = NP). Wait \u2014 the oracle solves L-function computations in O(1), so if P = NP, then NP problems can be encoded as L-function computations and solved instantly, but the oracle's existence is an axiom, not a theorem. The correct statement: the L-function oracle collapses the polynomial hierarchy to L-function computations. Test: prove that the Riemann Hypothesis follows from the oracle. Prove that BSD follows. Prove that factoring is in P given the oracle. Impact: understanding what an L-function oracle implies tells us exactly how powerful L-functions are \u2014 and how far we are from proving things about them.",
     "domains": [
@@ -48,7 +18,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
   },
   {
-    "consumed_by_exp_id": "d431d7ed",
+    "consumed_by_exp_id": "",
     "description": "Mathematics is full of impossibility theorems \u2014 things that CANNOT be done. But impossibility theorems are themselves beautiful mathematical objects. Catalog and interconnect the great impossibilities: (1) Squaring the circle (pi is transcendental, Lindemann 1882). (2) Trisecting the angle (cos 20 degrees has degree 3 over Q, Wantzel 1837). (3) Doubling the cube (cube root of 2 has degree 3, Wantzel 1837). (4) Solving the quintic by radicals (A_5 is not solvable, Abel-Ruffini 1824). (5) The Borsuk-Ulam impossibility (every continuous map S^n -> R^n has a point where f(x) = f(-x)). (6) Arrow's impossibility (no voting system is simultaneously fair, complete, and non-dictatorial). (7) Heisenberg's uncertainty (Delta x * Delta p >= hbar/2). Conjecture: These impossibility theorems are connected by a deep structural principle \u2014 each one arises because a certain group action is not free. Squaring the circle fails because Gal(Q(pi)/Q) acts freely. Solving the quintic fails because A_5 acts freely on the roots. Arrow's theorem fails because the symmetric group acts freely on preferences. Heisenberg fails because the Heisenberg group acts freely on phase space. The unified principle: a task is impossible iff the relevant group action is free. Test: verify that each impossibility theorem corresponds to a free group action. Prove the converse: if a group G acts freely on a set X, then there exists a G-equivariant task that is impossible on X. Impact: all impossibility is the same impossibility \u2014 every CAN'T is a reflection of a free group action.",
     "domains": [
       "Novelty",
@@ -58,7 +28,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T20:46:59.942760+00:00",
     "title": "Impossibility Results for Fun: Things That Cannot Be Done (But We Try Anyway)"
   },
@@ -4163,7 +4133,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Nontrivial Units with Large Support in F\u2082[ G ] for Torsion\u2011Free CAT(0) Groups"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "55b8bae9",
     "description": "Any simple graph on n vertices with minimum degree at least 3 that contains a Hamiltonian cycle must contain another cycle (a nontrivial cycle) of length at least n - c for some absolute constant c > 0. This formalizes the primary open conjecture addressed in the paper, which currently only has polynomial error bounds.",
     "domains": [
       "Pythagorean",
@@ -4173,7 +4143,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T00:21:09.674491+00:00",
     "title": "Gir\u00e3o-Kittipassorn-Narayanan Conjecture on Long Nontrivial Cycles"
   },
@@ -4716,7 +4686,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reachability of equal-size independent sets in P\u2084\u2011tidy graphs under token sliding"
   },
   {
-    "consumed_by_exp_id": "4aec9d8b",
+    "consumed_by_exp_id": "",
     "description": "A finite partial cube satisfying the opposite-semicube Helly property is antipodal if and only if its opposite semicubes are pairwise isomorphic.",
     "domains": [
       "Bridges"
@@ -4725,7 +4695,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31468v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T13:53:12.762795+00:00",
     "title": "Antipodality Characterization via Opposite-Semicube Helly Property"
   },
@@ -5500,7 +5470,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Gamma-positivity threshold for symmetric edge polytopes"
   },
   {
-    "consumed_by_exp_id": "45ea8f94",
+    "consumed_by_exp_id": "",
     "description": "The paper establishes that the diameter of the connected component of the chord swap graph on chord diagrams of size n and genus g (for n > 2g) is bounded above by C(n + g^2) for some universal constant C > 0. We conjecture that this universal constant can be taken to be exactly 1, yielding a tight diameter upper bound of precisely n + g^2.",
     "domains": [
       "Pythagorean"
@@ -5509,7 +5479,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T15:58:50.998422+00:00",
     "title": "Optimal Diameter Bound for Fixed Genus Chord Swap Graphs"
   },
@@ -7027,12 +6997,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The paper proves that \u03bc\u2082 \u2264 1 + \u03c1, where \u03bc\u2082 is the infimum over all infinite sequences of radial cuts of the supremum of the ratio of maximum to minimum portion (adjacent-pair) sizes, and \u03c1 \u2248 0.75488 is the unique real root of x\u00b2 + x\u00b3 = 1 in (0,1). Korsky proved \u03bc\u2082 \u2265 5/3. The conjecture asserts that the paper's upper bound is tight: \u03bc\u2082 = 1 + \u03c1. This would require showing that no cutting strategy can achieve a ratio strictly less than 1 + \u03c1 in the limit, which likely demands a structural impossibility argument about the combinatorics of slice-size configurations.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0585",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05330v1",
+    "status": "available",
+    "timestamp": "2026-07-07T22:10:51.857266+00:00",
+    "title": "Tightness of the adjacent-pair cake-cutting bound: \u03bc\u2082 = 1 + \u03c1"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every integer r \u2265 2 and real \u03b5 > 0, there exists \u0394\u2080 such that for every (r+1)-uniform hypergraph H with girth at least 5 and maximum degree \u0394 \u2265 \u0394\u2080, the list chromatic number \u03c7_\u2113(H) satisfies \u03c7_\u2113(H) \u2264 \u2308(1+\u03b5)(r\u0394 / ln \u0394)^(1/r)\u2309. This conjecture formalizes the main theorem of the paper, improving Iliopoulos's bound of (1+o(1))r(\u0394/ln \u0394)^(1/r) by reducing the leading constant from r to r^(1/r) via a semi-random nibble argument combined with a Rosenfeld-style counting completion.",
     "domains": [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0585",
+    "id": "fd_0586",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05256v1",
@@ -7046,7 +7030,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0586",
+    "id": "fd_0587",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05262v1",
@@ -7055,7 +7039,22 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derivative Period Polynomial Unit-Circle Theorem for Primitive Holomorphic Newforms"
   },
   {
-    "consumed_by_exp_id": "006f75ea",
+    "consumed_by_exp_id": "",
+    "description": "For every elliptic curve E/Q with good supersingular reduction at 2 and square-free conductor, the sharp and flat \u03bc-invariants of Sprung's 2-adic L-functions vanish: \u03bc\u2082^\u266f(E,\u03c9\u2071) = \u03bc\u2082^\u266d(E,\u03c9\u2071) = 0 for all i \u2208 {0,1}. This is a 2-adic supersingular analogue of Greenberg's \u03bc=0 conjecture. Its truth would render the \u03bb-invariant difference formula in the paper unconditional, extending Matsuno-type formulas completely to the supersingular setting at p=2.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0588",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05305v1",
+    "status": "available",
+    "timestamp": "2026-07-07T22:11:39.008176+00:00",
+    "title": "Vanishing of sharp/flat 2-adic \u03bc-invariants for semistable supersingular elliptic curves"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Bitcoin mining requires finding a nonce n such that SHA256(block_header || n) < target. What if we replaced SHA256 with a tropical hash? Define tropical SHA as: TSHA(m) = min over all i of (m_i + h_i) where m = (m_1,...,m_k) is the message, h = (h_1,...,h_k) is the tropical hash key, and all operations are in the min-plus semiring (a tropical plus b = min(a,b), a tropical times b = a + b). Conjecture: TSHA is a one-way function in the tropical sense: computing TSHA(m) given m and h is O(k) (trivial), but finding m given TSHA(m) and h is NP-hard (it reduces to a tropical shortest path problem). More precisely, the tropical preimage problem \u2014 given y and h, find m such that min_i(m_i + h_i) = y \u2014 requires checking O(e^{k}) tropical paths in the worst case. But there's a twist: tropical hash collisions are COMMON because min(a,b) = min(b,a). To fix this, define TSHA2(m) = (min_i(m_i + h_i), min_i(m_i + h'_i)) where h and h' are two independent tropical keys. Conjecture: TSHA2 is collision-resistant with probability 1 - O(1/k). Test: implement TSHA and TSHA2, measure collision resistance, and compare mining difficulty to SHA256 for block sizes k = 32, 64, 128. Impact: a cryptocurrency where mining is solving tropical optimization problems instead of brute-force hash searches \u2014 mining IS mathematics.",
     "domains": [
       "Novelty",
@@ -7065,7 +7064,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.79,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T20:47:00.059968+00:00",
     "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
   },

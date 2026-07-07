@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "0eb9ce9e",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Degree-one triviality threshold for Grassmann schemes\n\nDerived from this cycle's findings in `Catalog/Novelty/GrassmannDegreeOne.lean`\n(Gaussian-binomial backbone: `qBinom_one`,",
-      "quality_score": 0.63032,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T14:41:11",
-      "title": "Degree-one triviality threshold for Grassmann schemes"
-    },
-    {
       "cycle_id": "72418ed5",
       "domain": "Novelty",
       "key_insight": "# FUTURE DIRECTIONS — Spectral radius bounds for signed graphs\n\nBuilding on `Catalog/Novelty/SignedGraphSpectralEquality.lean`, which establishes\nthe Δ-bound `|μ| ≤ Δ` for signed adjacency matrices to",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-07-07T17:01:19",
       "title": "Infinite Log-Concavity of Total d-Hoggatt Numbers"
+    },
+    {
+      "cycle_id": "ea22db3c",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Semicubes, Helly numbers, and Cartesian products\n\nThis cycle established three anchors: semicubes of a hypercube have the Helly property\nwith Helly number `2`, the only obstructi",
+      "quality_score": 0.40624133333333334,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-07-07T22:10:09",
+      "title": "The opposite-semicube Helly property characterizes harmonic-evenness in Cartesian products of partia"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.70296
     }
   ],
-  "last_updated": "2026-07-07T17:01:19",
+  "last_updated": "2026-07-07T22:10:09",
   "open_questions": [
     {
       "context": "`sorry`-free Lean proof of Sabidussi's theorem.",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "70e63d82",
-        "quality": 0.47904,
-        "theorems": 11,
-        "title": "Bridge: Galois Connections Between Order Theory and Topology"
-      },
-      {
         "cycle_id": "0dfef380",
         "quality": 0.7484,
         "theorems": 14,
@@ -3203,6 +3197,12 @@
         "quality": 0.78952,
         "theorems": 8,
         "title": "Characterization of Balanced Distance-Hereditary Graphs by the Complement of 3-M"
+      },
+      {
+        "cycle_id": "ea22db3c",
+        "quality": 0.40624133333333334,
+        "theorems": 4,
+        "title": "The opposite-semicube Helly property characterizes harmonic-evenness in Cartesia"
       }
     ],
     "Combinatorics": [
