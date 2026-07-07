@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-07T22:43:47.613771+00:00",
+  "last_updated": "2026-07-07T23:17:19.473770+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -40999,6 +40999,47 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-07T22:43:47.422341+00:00",
       "title": "Impossibility Results for Fun: Things That Cannot Be Done (But We Try Anyway)"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.688,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "Applications",
+      "duration_seconds": -113.53632736206055,
+      "end_time": 1783459632.4668272,
+      "files_integrated": 0,
+      "job_id": "c738bf63",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v19a",
+      "phase_b_skipped": false,
+      "prompt_version": "v19a",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.8,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.5,
+        "cross_domain": 1.0,
+        "importance": 0.7446870629370628,
+        "novelty": 0.95,
+        "pegb_compliance": 0.5,
+        "proof_depth": 0.6566958041958041,
+        "usefulness": 0.8283479020979021
+      },
+      "quality_score": 0.40821688811188805,
+      "sorry_count": 4,
+      "sorry_density": 0.5,
+      "start_time": 1783459746.0031545,
+      "strategy_count": 0,
+      "theorem_count": 8,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 4,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-07T23:17:19.300621+00:00",
+      "title": "Knots That Think: Cognition as Braiding in Category Theory"
     }
   ]
 }

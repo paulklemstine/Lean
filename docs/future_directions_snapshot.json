@@ -62,26 +62,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c738bf63",
-    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot — the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0563",
-    "lineage_refs": [],
-    "priority_score": 0.81,
-    "proof_strategy": "Define cognitive braids: each brain region is a strand, each neural firing sequence is a crossing. A cognitive process is an element of B_n (braid group on n strands). Two thoughts are equivalent if related by Reidemeister moves. Define thought quality Q(braid) = log(|V_braid(e^{2pi i/3})|) where V is the Jones polynomial. Prove Q is a braid invariant. Prove: trivial braid has V = 1 so Q = 0 (trivial thought). Trefoil has V = -t^2+t+1 so Q = log(|V(e^{2pi i/3})|) = log(sqrt(3)) > 0 (creative thought). Figure-eight has Q = log(2) (confused thought with maximum entanglement). Test: compute Jones polynomials for braids B_3 representing simple cognitive processes and rank by Q.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T16:56:44.538367+00:00",
-    "title": "Knots That Think: Cognition as Braiding in Category Theory"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "For every m ≥ 1, the generating tree encoding the recursive decomposition of intervals in the greedy m-Tamari poset (on Dyck paths of size n) is isomorphic to the generating tree encoding the recursive decomposition of planar (m+1)-constellations of size n. This conjecture generalizes the m=1 case proved in the paper and would provide a combinatorial proof of the equinumerosity refined by the parameters tracked in the generating tree (e.g., number of valleys in Dyck paths and corresponding statistics in constellations).",
     "domain_bridges": [
@@ -13052,6 +13032,35 @@
     "title": "Positive Lower Asymptotic Density of Odd Integers Not Representable as p + 2^a + 2^b"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "cs.DS",
+      "necklaces",
+      "Lyndon_words",
+      "de_Bruijn_sequences"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every alphabet size k ≥ 2, the number Q_k(n) of length-n quasinecklaces over Σ_k is Θ(N_k(n)) as a function of n, meaning there exist constants c₁, c₂ > 0 depending only on k such that c₁ · N_k(n) ≤ Q_k(n) ≤ c₂ · N_k(n) for all n ≥ 1. This proportionality is the key property enabling constant-amortized-time generation of necklaces via quasinecklace filtering.",
+    "domain_bridges": [
+      "formal_languages",
+      "computational_combinatorics",
+      "asymptotic_analysis"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0587",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First formalize the definitions: necklaces (words minimal among all rotations under lex order), Lyndon words (primitive necklaces), and quasinecklaces (the novel superset class from the paper). Then establish the containment necklace ⊆ quasinecklace. Derive or formalize the explicit formula for Q_k(n) and use the known necklace-counting formula N_k(n) = (1/n) Σ_{d|n} φ(d) k^{n/d} together with asymptotic estimates to show the ratio Q_k(n)/N_k(n) is bounded above and below by constants depending only on k.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05324v1",
+    "status": "available",
+    "timestamp": "2026-07-07T23:17:37.193652+00:00",
+    "title": "Quasinecklace-Necklace Proportionality Bound"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "math.CO",
@@ -13070,7 +13079,7 @@
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0587",
+    "id": "fd_0588",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the semi-random nibble in two phases: (1) define the nibble process on the hypergraph with active edge-color constraints, proving concentration of residual degrees via Chernoff-type binomial bounds (requiring Measure Theory / Probability bridges), (2) establish a sparse terminal state condition, (3) complete the coloring via a Rosenfeld-style counting argument (injection from list assignments to proper colorings). The girth ≥ 5 (uncrowded) hypothesis controls dependency structures and should be encoded as a locality condition on the hypergraph's Berge-cycle structure. Start with r = 2 (3-uniform case) to simplify the exponent.",
@@ -13103,7 +13112,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0588",
+    "id": "fd_0589",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Stage 1: Formalize the sharp circular sampling theorem for balanced polynomials — if p is balanced (p = ω·J(p) with |ω|=1, where J(F)(s) = conj(F(-conj(s)))) and Z(p) ⊆ Ω_{d,δ}, then all zeros of B_{d,δ}[p](z) = Σ C(d,j)·p(δ(j−d/2))·z^j lie on the unit circle, with Ω_{d,δ} maximal. Stage 2: Build completed L-function infrastructure for primitive holomorphic newforms, establishing the functional equation (supplying the balancing symmetry) and the Euler-product zero-free half-plane (placing reflected zeros in the required strip). Stage 3: Apply the sampling theorem with de Bruijn strip contraction and projective HKO theory to transport completed-zero geometry to derivative period polynomial circularity, simplicity, and strict interlacing.",
@@ -13133,7 +13142,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0589",
+    "id": "fd_0590",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the vanishing of algebraic μ-invariants for the signed (♯/♭) Selmer groups via control theorems and the structure of torsion in Mordell–Weil groups over the cyclotomic Z₂-extension. Then invoke the Iwasawa main conjecture for supersingular primes (proved by Kobayashi, Sprung, etc.) to transfer vanishing from the algebraic to the analytic side. The supersingular condition at 2, combined with square-free conductor, constrains the 2-adic torsion structure sufficiently to force μ=0.",
@@ -13145,8 +13154,33 @@
   },
   {
     "ambition_level": "extension",
-    "catalog_references": [],
+    "catalog_references": [
+      "math.CO",
+      "math.GR"
+    ],
     "consumed_by_exp_id": "",
+    "description": "There exists a unique 2-(496, 4, 1) design (linear space) admitting a flag-transitive automorphism group with socle isomorphic to PSL(2, 32). This resolves the specific missing example in the 1990 classification of flag-transitive linear spaces by Buekenhout et al.",
+    "domain_bridges": [
+      "Finite Geometries",
+      "Permutation Groups"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0591",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the construction of the design from the coset action of PΓL(2, 2^5) on the normalizer of a dihedral subgroup of order 66 in PSL(2, 2^5). Then, prove that any 2-(496, 4, 1) design with a flag-transitive automorphism group having socle PSL(2, 32) must be isomorphic to this specific construction by analyzing the orbit structures and stabilizer chains.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05067v1",
+    "status": "available",
+    "timestamp": "2026-07-07T23:18:09.043624+00:00",
+    "title": "Uniqueness of the 2-(496, 4, 1) Flag-Transitive Linear Space with Socle PSL(2, 32)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "d9ca63e8",
     "description": "Bitcoin mining requires finding a nonce n such that SHA256(block_header || n) < target. What if we replaced SHA256 with a tropical hash? Define tropical SHA as: TSHA(m) = min over all i of (m_i + h_i) where m = (m_1,...,m_k) is the message, h = (h_1,...,h_k) is the tropical hash key, and all operations are in the min-plus semiring (a tropical plus b = min(a,b), a tropical times b = a + b). Conjecture: TSHA is a one-way function in the tropical sense: computing TSHA(m) given m and h is O(k) (trivial), but finding m given TSHA(m) and h is NP-hard (it reduces to a tropical shortest path problem). More precisely, the tropical preimage problem — given y and h, find m such that min_i(m_i + h_i) = y — requires checking O(e^{k}) tropical paths in the worst case. But there's a twist: tropical hash collisions are COMMON because min(a,b) = min(b,a). To fix this, define TSHA2(m) = (min_i(m_i + h_i), min_i(m_i + h'_i)) where h and h' are two independent tropical keys. Conjecture: TSHA2 is collision-resistant with probability 1 - O(1/k). Test: implement TSHA and TSHA2, measure collision resistance, and compare mining difficulty to SHA256 for block sizes k = 32, 64, 128. Impact: a cryptocurrency where mining is solving tropical optimization problems instead of brute-force hash searches — mining IS mathematics.",
     "domain_bridges": [],
     "domains": [
@@ -13159,7 +13193,7 @@
     "proof_strategy": "Define TSHA(m, h) = min_{i=1..k} (m_i + h_i) in the min-plus semiring. Prove: TSHA is O(k) to compute (single pass). Prove: finding m given TSHA(m,h) = y and h is NP-hard by reduction from the tropical shortest path problem. Reduction: given a weighted graph G, let h encode the edge weights and let m encode the path. Then TSHA(m,h) = length of shortest path. Finding m that achieves a given TSHA value equals finding the shortest path. Prove TSHA2 collision resistance: P(TSHA2(m) = TSHA2(m')) = O(1/k) for random h, h'. Test: implement TSHA, TSHA2, compare collision rates with SHA256 for k = 32, 64, 128. Measure mining time as function of difficulty.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T20:47:00.059968+00:00",
     "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
   },

@@ -48,21 +48,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
   },
   {
-    "consumed_by_exp_id": "c738bf63",
-    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot \u2014 the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0563",
-    "priority_score": 0.81,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T16:56:44.538367+00:00",
-    "title": "Knots That Think: Cognition as Braiding in Category Theory"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For every m \u2265 1, the generating tree encoding the recursive decomposition of intervals in the greedy m-Tamari poset (on Dyck paths of size n) is isomorphic to the generating tree encoding the recursive decomposition of planar (m+1)-constellations of size n. This conjecture generalizes the m=1 case proved in the paper and would provide a combinatorial proof of the equinumerosity refined by the parameters tracked in the generating tree (e.g., number of valleys in Dyck paths and corresponding statistics in constellations).",
     "domains": [
@@ -7025,12 +7010,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every alphabet size k \u2265 2, the number Q_k(n) of length-n quasinecklaces over \u03a3_k is \u0398(N_k(n)) as a function of n, meaning there exist constants c\u2081, c\u2082 > 0 depending only on k such that c\u2081 \u00b7 N_k(n) \u2264 Q_k(n) \u2264 c\u2082 \u00b7 N_k(n) for all n \u2265 1. This proportionality is the key property enabling constant-amortized-time generation of necklaces via quasinecklace filtering.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0587",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05324v1",
+    "status": "available",
+    "timestamp": "2026-07-07T23:17:37.193652+00:00",
+    "title": "Quasinecklace-Necklace Proportionality Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every integer r \u2265 2 and real \u03b5 > 0, there exists \u0394\u2080 such that for every (r+1)-uniform hypergraph H with girth at least 5 and maximum degree \u0394 \u2265 \u0394\u2080, the list chromatic number \u03c7_\u2113(H) satisfies \u03c7_\u2113(H) \u2264 \u2308(1+\u03b5)(r\u0394 / ln \u0394)^(1/r)\u2309. This conjecture formalizes the main theorem of the paper, improving Iliopoulos's bound of (1+o(1))r(\u0394/ln \u0394)^(1/r) by reducing the leading constant from r to r^(1/r) via a semi-random nibble argument combined with a Rosenfeld-style counting completion.",
     "domains": [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0587",
+    "id": "fd_0588",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05256v1",
@@ -7044,7 +7043,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0588",
+    "id": "fd_0589",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05262v1",
@@ -7059,7 +7058,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0589",
+    "id": "fd_0590",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05305v1",
@@ -7069,6 +7068,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "There exists a unique 2-(496, 4, 1) design (linear space) admitting a flag-transitive automorphism group with socle isomorphic to PSL(2, 32). This resolves the specific missing example in the 1990 classification of flag-transitive linear spaces by Buekenhout et al.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0591",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05067v1",
+    "status": "available",
+    "timestamp": "2026-07-07T23:18:09.043624+00:00",
+    "title": "Uniqueness of the 2-(496, 4, 1) Flag-Transitive Linear Space with Socle PSL(2, 32)"
+  },
+  {
+    "consumed_by_exp_id": "d9ca63e8",
     "description": "Bitcoin mining requires finding a nonce n such that SHA256(block_header || n) < target. What if we replaced SHA256 with a tropical hash? Define tropical SHA as: TSHA(m) = min over all i of (m_i + h_i) where m = (m_1,...,m_k) is the message, h = (h_1,...,h_k) is the tropical hash key, and all operations are in the min-plus semiring (a tropical plus b = min(a,b), a tropical times b = a + b). Conjecture: TSHA is a one-way function in the tropical sense: computing TSHA(m) given m and h is O(k) (trivial), but finding m given TSHA(m) and h is NP-hard (it reduces to a tropical shortest path problem). More precisely, the tropical preimage problem \u2014 given y and h, find m such that min_i(m_i + h_i) = y \u2014 requires checking O(e^{k}) tropical paths in the worst case. But there's a twist: tropical hash collisions are COMMON because min(a,b) = min(b,a). To fix this, define TSHA2(m) = (min_i(m_i + h_i), min_i(m_i + h'_i)) where h and h' are two independent tropical keys. Conjecture: TSHA2 is collision-resistant with probability 1 - O(1/k). Test: implement TSHA and TSHA2, measure collision resistance, and compare mining difficulty to SHA256 for block sizes k = 32, 64, 128. Impact: a cryptocurrency where mining is solving tropical optimization problems instead of brute-force hash searches \u2014 mining IS mathematics.",
     "domains": [
       "Novelty",
@@ -7078,7 +7091,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.79,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T20:47:00.059968+00:00",
     "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
   },
