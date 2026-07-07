@@ -3040,7 +3040,7 @@
       "serre2025zeroscaracteres",
       "steinberg-ihes"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ed4ffa8f",
     "description": "For any dominant integral weight λ of GL_3(C), the restriction of the irreducible polynomial representation V(λ) to the principal SL_2(C) decomposes as a direct sum of symmetric powers Sym^j(C^2) with multiplicities m_j that can be computed combinatorially: m_j equals the number of positive roots α such that 2⟨λ+ρ,α∨⟩ - 2⟨ρ,α∨⟩ = j. This explicit formula determines the Jordan block sizes of the image of a regular unipotent element under V(λ) and is falsifiable by checking concrete weight examples.",
     "domain_bridges": [
       "lie-theory",
@@ -3056,7 +3056,7 @@
     "proof_strategy": "character_expansion_and_root_counting",
     "research_mode": "team",
     "source_exp_id": "2606.31398v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T19:54:37.674342+00:00",
     "title": "Multiplicity formula for the restriction of GL_3 irreducible representations to the principal SL_2"
   },
@@ -4984,7 +4984,7 @@
       "math.NT: 11G18",
       "arXiv:2405.12345"
     ],
-    "consumed_by_exp_id": "782351e0",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: In the unramified GU(1,n-1) Rapoport‑Zink space of arbitrary parahoric level P, every basic Ekedahl‑Kottwitz‑Oort‑Rapoport (EKOR) stratum is isomorphic (as a scheme over the residue field 𝔽_q) to a finite disjoint union of copies of a explicitly defined fine Deligne‑Lusztig variety X(w_P) attached to a Weyl group element w_P determined by P. Moreover, the number of irreducible components equals the number of vertices in the affine Dynkin diagram of type Ã_{n-1} corresponding to the parahoric subgroup P, and each component is smooth and projective.",
     "domain_bridges": [
       "Representation Theory",
@@ -5001,7 +5001,7 @@
     "proof_strategy": "Use the description of EKOR strata via G‑zips and mixed‑characteristic local shtukas to identify the basic stratum with a quotient of a Deligne‑Lusztig variety by a finite group action. Then apply the Künneth formula for ℓ‑adic cohomology and the known point‑count formulas for Deligne‑Lusztig varieties to compute the number of geometric components. Finally, invoke the smoothness criterion for Schubert varieties in the affine flag manifold to deduce smoothness of each component.",
     "research_mode": "team",
     "source_exp_id": "2606.31940v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T15:54:12.765581+00:00",
     "title": "Basic EKOR Strata are Disjoint Unions of Fine Deligne-Lusztig Varieties"
   },
@@ -12394,6 +12394,32 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "BrownHarary1970ExtremalDigraphs",
+      "Mantel1907"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let adj be an irreflexive directed adjacency relation on n vertices (encoded as a predicate on Fin n × Fin n, with opposite arcs u→v and v→u both allowed). If the resulting digraph contains no directed triangle (no u→v→w→u), then the total number of arcs is at most ⌊n²/2⌋. This is the key combinatorial ingredient used in the paper to bound the measure of spherical sets avoiding x+y+z=0 via a probabilistic argument over SO(d), and it generalizes Mantel's theorem to directed graphs.",
+    "domain_bridges": [
+      "extremal_graph_theory",
+      "additive_combinatorics",
+      "sphere_measure_bounds"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0552",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt the appendix proof: show there exists a vertex v with total degree t(v) ≤ n (even n) or t(v) ≤ n−1 (odd n), then induct on n by removing v and applying the inductive hypothesis to the remaining digraph. The degree bound follows from the observation that for any arc x→y, the in-neighborhood of x and out-neighborhood of y are disjoint (else a directed triangle exists).",
+    "research_mode": "team",
+    "source_exp_id": "2607.05083v1",
+    "status": "available",
+    "timestamp": "2026-07-07T15:49:47.588011+00:00",
+    "title": "Extremal arc count in digraphs without directed triangles (Brown–Harary theorem)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.MG",
       "math.CO",
       "magnitude_of_metric_spaces",
@@ -12412,7 +12438,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0552",
+    "id": "fd_0553",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Exploit the energy minimization characterization: the microscopic weighting minimizes the energy integral E(w) = Σ w(x)w(y)d(x,y) over signed measures of total mass 1. For trees, the distance matrix has recursive structure amenable to leaf-removal induction. Show that any signed measure of mass 1 on a tree with a negative-weight vertex can be modified to decrease energy, contradicting optimality. Alternatively, use the Schoenberg embedding characterization: the microscopic weighting corresponds to the closest point to the origin in the affine hull of the embedded vertices, and for trees this convex hull might be shown to contain the origin's projection with all positive barycentric coordinates.",
@@ -12439,7 +12465,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0553",
+    "id": "fd_0554",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The upper bound μ₂ ≤ 1+ρ follows from the paper's construction and Proposition 1 on cyclic factor avoidance. The lower bound μ₂ ≥ 1+ρ requires showing that no infinite sequence of cuts can achieve a ratio strictly less than 1+ρ. This likely requires analyzing the combinatorial constraints on infinite words over the alphabet {0,1,2,3} with ratios 1:ρ:ρ²:ρ³, proving that any such word avoiding equal adjacent letters must contain a portion with ratio at least (1+ρ)/(ρ²+ρ³) = 1+ρ. A potential approach uses the substitution system properties: the map sending 0↦23 (or 32), 1↦0, 2↦1, 3↦2 shows that any valid infinite sequence must eventually approximate the fixed point, forcing portions near the extremal ratio.",
@@ -12466,7 +12492,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0554",
+    "id": "fd_0555",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize simplicial complexes and vertex decomposability in Lean, then define PF_t(G) as the simplicial complex of vertex subsets with no induced P_t. Define complete multipartite graphs and their part-size ordering. The forward direction (t ≥ 2n_{m-1}-1 ⟹ vertex decomposable) requires formalizing the explicit structural decomposition of PF_t(G) as a union of join complexes with a size-truncation term, then proving each join component is vertex decomposable and that the union preserves this property. The reverse direction (t ≤ 2n_{m-1}-2 ⟹ not sequentially Cohen-Macaulay) requires constructing a specific non-Cohen-Macaulay witness face or showing the homology fails the sequential Cohen-Macaulay condition, potentially via a Mayer-Vietoris spectral sequence argument.",
@@ -12491,7 +12517,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0555",
+    "id": "fd_0556",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Demonstrate that each necklace corresponds to exactly k quasinecklaces via rotational symmetry or quasinecklace construction rules.",
@@ -12523,7 +12549,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0556",
+    "id": "fd_0557",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the key definitions: exceptional rational functions (permuting P^1(F_{q^m}) for infinitely many m via the Fried–Schur–Saxon criterion), Möbius equivalence, and arithmetic/geometric monodromy groups as permutation groups on 5 elements. Case-split by geometric monodromy group: cyclic case uses classification of transitive cyclic subgroups of S_5 with Riemann–Hurwitz constraining ramification to yield monomials and Rédei functions; dihedral case analyzes inertia subgroups of D_5 within S_5 and branch point rationality to derive Dickson polynomials and the elliptic isogeny family. Key intermediate lemma: for degree 5, the Riemann–Hurwitz formula restricts the possible ramification configurations to finitely many cases for each monodromy type.",
@@ -12550,7 +12576,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0557",
+    "id": "fd_0558",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt Babai's probabilistic method as used in the paper: for a doubly regular tournament T, randomly sample k = 2⌈log₂ n⌉ vertices as a resolving set candidate. Compute the probability that two distinct vertices u, v receive the same distance vector from the sampled set. Use the strong regularity properties of doubly regular tournaments—specifically that every pair of vertices has exactly (n-3)/4 common out-neighbours—to bound the collision probability per pair by 1/2^k. Apply a union bound over all n(n-1)/2 pairs, choosing k so that the union bound is < 1, yielding a resolving set of size at most 2⌈log₂ n⌉.",
@@ -12559,6 +12585,32 @@
     "status": "available",
     "timestamp": "2026-07-07T15:17:08.798903+00:00",
     "title": "Logarithmic metric dimension of doubly regular tournaments"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "math.MG",
+      "brass-knauer-03"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that for $k \\ge 3$ and sufficiently large $n$, the maximum size of a subset of the $n \\times n$ grid with no $k+1$ collinear points is exactly $kn$. This conjecture posits that the condition 'sufficiently large $n$' can be relaxed to $n > k$, meaning $f_k(n) = kn$ holds for all $k \\ge 3$ and $n > k$. This would unify the trivial case ($n \\le k$, where $f_k(n) = n^2$) and the asymptotic regime.",
+    "domain_bridges": [
+      "Discrete Geometry",
+      "Hypergraph Matchings"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0559",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Either refine the probabilistic and pseudorandom hypergraph matching arguments to explicitly compute the threshold $N(k)$ and show it is $k+1$, or find a constructive algebraic or combinatorial proof that works uniformly for all $n > k$.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05255v1",
+    "status": "available",
+    "timestamp": "2026-07-07T15:50:50.927745+00:00",
+    "title": "Exact Threshold for No-$(k+1)$-in-line Problem"
   },
   {
     "ambition_level": "extension",

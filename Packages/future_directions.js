@@ -1666,7 +1666,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-existence of weak Ziegler pairs for high-degree plus-one generated conic-line arrangements with defect three"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ed4ffa8f",
     "description": "For any dominant integral weight \u03bb of GL_3(C), the restriction of the irreducible polynomial representation V(\u03bb) to the principal SL_2(C) decomposes as a direct sum of symmetric powers Sym^j(C^2) with multiplicities m_j that can be computed combinatorially: m_j equals the number of positive roots \u03b1 such that 2\u27e8\u03bb+\u03c1,\u03b1\u2228\u27e9 - 2\u27e8\u03c1,\u03b1\u2228\u27e9 = j. This explicit formula determines the Jordan block sizes of the image of a regular unipotent element under V(\u03bb) and is falsifiable by checking concrete weight examples.",
     "domains": [
       "Algebra"
@@ -1675,7 +1675,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31398v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T19:54:37.674342+00:00",
     "title": "Multiplicity formula for the restriction of GL_3 irreducible representations to the principal SL_2"
   },
@@ -2727,7 +2727,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the k_t lower bound given k_s in extremal graphs"
   },
   {
-    "consumed_by_exp_id": "782351e0",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: In the unramified GU(1,n-1) Rapoport\u2011Zink space of arbitrary parahoric level P, every basic Ekedahl\u2011Kottwitz\u2011Oort\u2011Rapoport (EKOR) stratum is isomorphic (as a scheme over the residue field \ud835\udd3d_q) to a finite disjoint union of copies of a explicitly defined fine Deligne\u2011Lusztig variety X(w_P) attached to a Weyl group element w_P determined by P. Moreover, the number of irreducible components equals the number of vertices in the affine Dynkin diagram of type \u00c3_{n-1} corresponding to the parahoric subgroup P, and each component is smooth and projective.",
     "domains": [
       "Algebra",
@@ -2737,7 +2737,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31940v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T15:54:12.765581+00:00",
     "title": "Basic EKOR Strata are Disjoint Unions of Fine Deligne-Lusztig Varieties"
   },
@@ -6666,12 +6666,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let adj be an irreflexive directed adjacency relation on n vertices (encoded as a predicate on Fin n \u00d7 Fin n, with opposite arcs u\u2192v and v\u2192u both allowed). If the resulting digraph contains no directed triangle (no u\u2192v\u2192w\u2192u), then the total number of arcs is at most \u230an\u00b2/2\u230b. This is the key combinatorial ingredient used in the paper to bound the measure of spherical sets avoiding x+y+z=0 via a probabilistic argument over SO(d), and it generalizes Mantel's theorem to directed graphs.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0552",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05083v1",
+    "status": "available",
+    "timestamp": "2026-07-07T15:49:47.588011+00:00",
+    "title": "Extremal arc count in digraphs without directed triangles (Brown\u2013Harary theorem)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every finite tree T (viewed as a metric space with the shortest-path distance), the microscopic weighting assigns strictly positive weight to every vertex. The paper establishes that finite trees are of strictly negative type and hence admit a microscopic weighting, and that this weighting emphasizes boundary points and distributes mass widely. The open question is whether all vertex weights are necessarily positive \u2014 i.e., whether the signed measure is in fact a positive measure for trees. A counterexample would reveal a tree whose interior vertices receive negative microscopic weight, while a proof would show that the 'mass redistribution' from boundary emphasis never forces interior weights below zero.",
     "domains": [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0552",
+    "id": "fd_0553",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05349v1",
@@ -6685,7 +6699,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0553",
+    "id": "fd_0554",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05330v1",
@@ -6699,7 +6713,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0554",
+    "id": "fd_0555",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05358v1",
@@ -6713,7 +6727,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0555",
+    "id": "fd_0556",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05324v1",
@@ -6728,7 +6742,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0556",
+    "id": "fd_0557",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05075v1",
@@ -6742,13 +6756,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0557",
+    "id": "fd_0558",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05152v1",
     "status": "available",
     "timestamp": "2026-07-07T15:17:08.798903+00:00",
     "title": "Logarithmic metric dimension of doubly regular tournaments"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that for $k \\ge 3$ and sufficiently large $n$, the maximum size of a subset of the $n \\times n$ grid with no $k+1$ collinear points is exactly $kn$. This conjecture posits that the condition 'sufficiently large $n$' can be relaxed to $n > k$, meaning $f_k(n) = kn$ holds for all $k \\ge 3$ and $n > k$. This would unify the trivial case ($n \\le k$, where $f_k(n) = n^2$) and the asymptotic regime.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0559",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05255v1",
+    "status": "available",
+    "timestamp": "2026-07-07T15:50:50.927745+00:00",
+    "title": "Exact Threshold for No-$(k+1)$-in-line Problem"
   },
   {
     "consumed_by_exp_id": "",
