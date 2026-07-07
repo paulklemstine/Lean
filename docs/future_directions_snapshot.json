@@ -22,7 +22,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "7c938265",
+    "consumed_by_exp_id": "c7a16bc5",
     "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable — theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements — most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark — they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
     "domain_bridges": [],
     "domains": [
@@ -12783,6 +12783,30 @@
     "title": "Maximality of the 496-point sporadic design among non-WBS flag-transitive designs with PSL(2,q) socle"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Over a finite field F_q of characteristic not equal to 2 or 5, any exceptional rational function of degree 5 with cyclic monodromy is Möbius equivalent to either the monomial X^5 or a Rédei function R_5(X, a) for some a in F_q.",
+    "domain_bridges": [
+      "algebraic_geometry",
+      "group_theory"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0573",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define exceptional rational functions, cyclic monodromy groups, and Rédei functions. Apply the Riemann-Hurwitz formula and analyze the ramification structure of the cover to show that the branch points and inertia groups restrict the function to the monomial or Rédei function equivalence classes.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05075v1",
+    "status": "available",
+    "timestamp": "2026-07-07T20:13:00.163334+00:00",
+    "title": "Cyclic Monodromy Classification for Degree 5 Exceptional Rational Functions"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "Johansson-Molloy theorem",
@@ -12799,7 +12823,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0573",
+    "id": "fd_0574",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the semi-random nibble method to maintain tighter control on the residual degrees and color lists, potentially using an improved differential equation analysis or a more refined counting argument for the final sparse stage to eliminate the factor of $r^{1/r}$.",
@@ -12828,7 +12852,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0574",
+    "id": "fd_0575",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize quadratic twists of elliptic curves, the reduction of elliptic curves modulo primes, the order of the finite group of rational points, and the definition of Sprung's sharp/flat 2-adic L-functions. Then establish the explicit difference formula for the lambda-invariants by evaluating the sum over the prime divisors of D using the local properties of the 2-adic L-function under quadratic twists.",
@@ -12858,7 +12882,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0575",
+    "id": "fd_0576",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize N(x) as a counting function over odd n ≤ x excluding those with ∃p∈Primes, ∃a,b∈ℕ, n = p + 2^a + 2^b. The key construction uses Fermat numbers to restrict to pairs with b - a = t·2^m, then applies Stewart's theorem on prime divisors q_d | Φ_d(2) with ord_{q_d}(2) = d to build a covering system. The density bound follows from sieve-type estimates on the residue classes avoided by primes congruent to specific values modulo these primes q_d. The asymptotic exp factor arises from Mertens-type product estimates over the cyclotomic primes.",
@@ -12867,6 +12891,35 @@
     "status": "available",
     "timestamp": "2026-07-07T19:01:58.391075+00:00",
     "title": "Asymptotic lower bound for odd integers not representable as p + 2^a + 2^b"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Ciucu, A. & Krattenthaler, P. (2002). Lozenge tilings of a triangular region. arXiv:math/0206123.",
+      "Propp, J. (2002). The many faces of alternating-sign matrices. SIAM Review, 44(2), 323–343.",
+      "Kasteleyn, P. W. (1961). Graphs and simple pairwise interactions. Physica, 27, 1209‑1223.",
+      "Temperley, H. N. V., & Fisher, M. E. (1961). Dimer problem in statistical mechanics‑an exact result. Philosophical Magazine, 6(68), 1061‑1062.",
+      "MacMahon, A. M. (1978). Plane partitions. In Combinatorial Mathematics (pp. 199‑212). Springer."
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for every positive integer n, the signed adjacency matrix M_n of the dual graph of the triangular region T_n has eigenvalues exactly π_k = 2 cos(π k/(3n+3)) for k = 1,2,…,3n+2, excluding k = n+1 and k = 2n+2. Consequently, the determinant of M_n (which counts lozenge tilings) equals the product ∏_{k∈S_n} π_k, matching the product formula proved in the paper.",
+    "domain_bridges": [
+      "combinatorics ⇒ algebraic graph theory",
+      "number theory ⇒ enumerative combinatorics",
+      "complex analysis ⇒ discrete mathematics"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0577",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Apply discrete Fourier transform on the cyclic group ℤ_{3n+3} to diagonalize M_n. The eigenvectors are given by characters χ_j(v) = ζ^{jv} where ζ = e^{2πi/(3n+3)}. Computing M_n·χ_j yields eigenvalue π_j = ζ^a + ζ^b + ζ^{-a-b} for appropriate a,b, which simplifies to 2 cos(π j/(3n+3)). The exceptional pair (n+1,2n+2) corresponds to a zero eigenvalue, which is omitted from the spectrum. Hence the eigenvalues are exactly the claimed cosines, and the determinant matches the product formula.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05233v1",
+    "status": "available",
+    "timestamp": "2026-07-07T20:21:26.769029+00:00",
+    "title": "Eigenvalue conjecture for the signed adjacency matrix M_n of the triangular region's dual graph"
   },
   {
     "ambition_level": "extension",
@@ -12931,7 +12984,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "909edf7d",
+    "consumed_by_exp_id": "5a890f39",
     "description": "Every real number defines a musical scale: map the digits 0-9 to frequencies f_n = 220 * 2^{n/12} (the A minor pentatonic scale extended). The number pi = 3.14159265... produces the sequence E4, C5, C#5, D5, D#5, F5, E5, A4, G5, C5... — a melody. Conjecture: The melody of pi is not periodic (because pi is irrational) but has musical structure: the autocorrelation of the digit sequence at lag 12 (one octave) is positive and statistically significant. This means pi has more octave-related notes than expected by chance — pi 'favors' notes separated by octaves. Similarly, e 'favors' perfect fifths (lag 7) and sqrt(2) 'favors' minor thirds (lag 3). The musical structure of transcendental numbers reflects their continued fraction properties: numbers with bounded partial quotients have more consonant melodies. Test: compute the digit autocorrelation of pi, e, and sqrt(2) at lags 0-12 (representing unison through octave). Perform a chi-squared test comparing to the uniform distribution. Generate the 'music' of each constant and analyze for tonal centers. Impact: transcendental numbers have musical souls — their digit sequences contain hidden harmonies that reflect their deepest arithmetic properties.",
     "domain_bridges": [],
     "domains": [

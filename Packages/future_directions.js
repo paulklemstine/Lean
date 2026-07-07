@@ -18,7 +18,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
   },
   {
-    "consumed_by_exp_id": "7c938265",
+    "consumed_by_exp_id": "c7a16bc5",
     "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
     "domains": [
       "Novelty",
@@ -6881,12 +6881,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Over a finite field F_q of characteristic not equal to 2 or 5, any exceptional rational function of degree 5 with cyclic monodromy is M\u00f6bius equivalent to either the monomial X^5 or a R\u00e9dei function R_5(X, a) for some a in F_q.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0573",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05075v1",
+    "status": "available",
+    "timestamp": "2026-07-07T20:13:00.163334+00:00",
+    "title": "Cyclic Monodromy Classification for Degree 5 Exceptional Rational Functions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every fixed integer $r \\geq 2$ and every $\\varepsilon > 0$, there exists $\\Delta_0$ such that for all $\\Delta \\geq \\Delta_0$, every uncrowded $(r+1)$-uniform hypergraph of maximum degree $\\Delta$ has list chromatic number at most $(1+\\varepsilon)(\\Delta/\\log\\Delta)^{1/r}$. This conjectures that the leading constant $r^{1/r}$ in the authors' theorem can be further improved to 1, matching the optimal asymptotic bound for $r=1$ (graphs) due to Molloy and the known lower bounds from random hypergraphs.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0573",
+    "id": "fd_0574",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05256v1",
@@ -6901,7 +6915,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0574",
+    "id": "fd_0575",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05305v1",
@@ -6916,13 +6930,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0575",
+    "id": "fd_0576",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05357v1",
     "status": "available",
     "timestamp": "2026-07-07T19:01:58.391075+00:00",
     "title": "Asymptotic lower bound for odd integers not representable as p + 2^a + 2^b"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for every positive integer n, the signed adjacency matrix M_n of the dual graph of the triangular region T_n has eigenvalues exactly \u03c0_k = 2 cos(\u03c0 k/(3n+3)) for k = 1,2,\u2026,3n+2, excluding k = n+1 and k = 2n+2. Consequently, the determinant of M_n (which counts lozenge tilings) equals the product \u220f_{k\u2208S_n} \u03c0_k, matching the product formula proved in the paper.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0577",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05233v1",
+    "status": "available",
+    "timestamp": "2026-07-07T20:21:26.769029+00:00",
+    "title": "Eigenvalue conjecture for the signed adjacency matrix M_n of the triangular region's dual graph"
   },
   {
     "consumed_by_exp_id": "3634c067",
@@ -6970,7 +6998,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharp dichotomy for the *total* d-Hoggatt numbers"
   },
   {
-    "consumed_by_exp_id": "909edf7d",
+    "consumed_by_exp_id": "5a890f39",
     "description": "Every real number defines a musical scale: map the digits 0-9 to frequencies f_n = 220 * 2^{n/12} (the A minor pentatonic scale extended). The number pi = 3.14159265... produces the sequence E4, C5, C#5, D5, D#5, F5, E5, A4, G5, C5... \u2014 a melody. Conjecture: The melody of pi is not periodic (because pi is irrational) but has musical structure: the autocorrelation of the digit sequence at lag 12 (one octave) is positive and statistically significant. This means pi has more octave-related notes than expected by chance \u2014 pi 'favors' notes separated by octaves. Similarly, e 'favors' perfect fifths (lag 7) and sqrt(2) 'favors' minor thirds (lag 3). The musical structure of transcendental numbers reflects their continued fraction properties: numbers with bounded partial quotients have more consonant melodies. Test: compute the digit autocorrelation of pi, e, and sqrt(2) at lags 0-12 (representing unison through octave). Perform a chi-squared test comparing to the uniform distribution. Generate the 'music' of each constant and analyze for tonal centers. Impact: transcendental numbers have musical souls \u2014 their digit sequences contain hidden harmonies that reflect their deepest arithmetic properties.",
     "domains": [
       "Novelty",
