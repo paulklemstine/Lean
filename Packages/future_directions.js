@@ -323,20 +323,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "No solutions for odd exponents in the coprime case"
   },
   {
-    "consumed_by_exp_id": "5056d274",
-    "description": "Conjecture that for any normalized Hecke eigenform f of even weight for SL(2,Z), any integer j \u2265 1, and any even m with 2 \u2264 m \u2264 12, the number of sign changes of the j-th symmetric power L-function coefficient \u03bb_sym^j f(n) as n runs over integers representable as a sum of m squares up to x is at least C\u00b7x/(log x) for some constant C>0 depending only on f, j, and m.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0039",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.30603v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T17:31:40.243045+00:00",
-    "title": "Sign changes of symmetric power L-function coefficients along sums of squares"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Let G be a finite group of order p^m where p is prime. For any k < p, and any two sequences a_1,..., a_k and b_1,..., b_k in G where the a_i are distinct, there exists a permutation sigma of {1,..., k} such that the products a_i * b_sigma(i) are all distinct.",
     "domains": [
@@ -482,21 +468,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T09:49:21.006265+00:00",
     "title": "Perfect Pairings in Periodic Riemann Functions Yield Serre-Type Duality"
-  },
-  {
-    "consumed_by_exp_id": "2a9630f8",
-    "description": "Every admissible graph (i.e., graph with no pendant path of length two) admits a strong majority edge-coloring using at most four colors. This directly addresses the conjecture from Kalinowski, Kamyczura, Pil\u015bniak, and Wo\u017aniak that 4 colors always suffice, improving upon the current upper bound of five colors proven in this paper.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0058",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.00212v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T10:08:08.933718+00:00",
-    "title": "Four Colors Suffice for Strong Majority Edge-Coloring of Admissible Graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -1621,7 +1592,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The list chromatic number of 3-colorable planar graphs is at most 4"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "74938150",
     "description": "For every integer d \u2265 5 such that d = 2g+1 or d = 2g+2 for some g \u2265 2, the Katz family of hyperelliptic curves y\u00b2 = x^d - d x + t over the t-line is NOT generically ordinary at the prime p = P\u207a(d), where P\u207a(d) = d\u00b2 - 4d + 2 if d is odd and P\u207a(d) = (d\u00b2 - 3d + 2)/2 if d is even. This conjecture generalizes the explicit counterexamples (d,p) = (21,359), (31,839), (51,2399) given in the paper and would show that the bound in Theorem 1.1 is optimal for the Katz family.",
     "domains": [
       "Pythagorean",
@@ -1631,7 +1602,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31783v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T17:14:59.029177+00:00",
     "title": "Sharpness of the generic ordinarity bound for the Katz family"
   },
@@ -1752,7 +1723,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality for exactly one edge subset"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8899a051",
     "description": "For a graph $G$ with minimum degree $\\delta(G) \\ge a + r$, if the spectral radius $\\lambda(G)$ is at least $a + r + b$, then $G$ is fractional ID-$[a,b]$-factor-critical.",
     "domains": [
       "Physics"
@@ -1761,7 +1732,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31064v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T21:44:34.279843+00:00",
     "title": "Spectral radius threshold for fractional ID-$[a,b]$-factor-critical graphs"
   },
@@ -3809,21 +3780,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture: Gallai homothety numbers characterize symmetric one-weight HJ thresholds"
   },
   {
-    "consumed_by_exp_id": "c9560f28",
-    "description": "Let K/k be a finitely generated extension of characteristic zero, and let f: X \u2192 C be a dominant morphism from a smooth projective variety X over K to a smooth projective curve C over k, such that the generic fiber X_\u03b7 is of general type over the function field K(C) = K. Then, after removing a proper Zariski closed subset S \u2282 X, all K-rational points of X lie in the union of fibered components and constant families parametrized by subvarieties of C. In particular, X(K) \u2229 (X \\ S) is not Zariski dense in X.",
-    "domains": [
-      "Geometry",
-      "Pythagorean"
-    ],
-    "id": "fd_0331",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02165v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-05T02:27:15.905526+00:00",
-    "title": "Geometric Bombieri--Lang Conjecture for Varieties Fibered Over Curves with Generic Fiber of General Type"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "This paper investigates the structural constraints under which a finite poset admits a probabilistic powerdomain isomorphic to an RB-domain. The key claim is that such a domain must inherit a least element and possess a tree-like Hasse graph structure.",
     "domains": [
@@ -5033,7 +4989,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit Secondary Term Bound for Sidon Sets"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5640c2cf",
     "description": "For every prime p and every pro-p Demushkin group G with invariant q(G), the differential graded algebra C(G, \ud835\udd3d_p) of continuous cochains is A\u2083-formal if and only if q(G) \u2260 3. The 'if' direction is established by the present paper (for p = 2) combined with prior work (for odd p), while the 'only if' direction\u2014that the pro-3 Demushkin group with q = 3 fails to be A\u2083-formal\u2014remains open and would complete the classification.",
     "domains": [
       "Algebra",
@@ -5043,7 +4999,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01028v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T03:43:43.202082+00:00",
     "title": "Complete characterization of A\u2083-formality for Demushkin groups"
   },
@@ -6711,18 +6667,46 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every integer d \u2265 2, if p \u2208 \u2102[s] is a nonzero balanced polynomial (satisfying p(s) = \u03c9\u00b7conj(p(\u2212conj(s))) for some |\u03c9| = 1) whose zeros all lie in the region \u03a9_d = {a+ib : a\u00b2 \u2212 b\u00b2/(d\u22121) \u2264 d/4}, then the centered binomial sample B_d[p](z) = \u03a3_{j=0}^{d} C(d,j)\u00b7p(j\u2212d/2)\u00b7z^j has all its zeros on the unit circle. Furthermore, \u03a9_d is the maximal reflection-invariant set with this property: for any reflection-invariant S \u228b \u03a9_d, there exists a balanced polynomial with zeros in S whose binomial sample has a zero off the unit circle. This is the polynomial case of the paper's main sampling theorem, which then drives the derivative-period-polynomial unit-circle theorem for L-functions of newforms.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0547",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05262v1",
+    "status": "available",
+    "timestamp": "2026-07-07T12:37:41.794289+00:00",
+    "title": "Sharp Circular Sampling for Balanced Polynomials"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every finite tree T (viewed as a metric space with the shortest-path distance), the microscopic weighting assigns strictly positive weight to every vertex. The paper establishes that finite trees are of strictly negative type and hence admit a microscopic weighting, and that this weighting emphasizes boundary points and distributes mass widely. The open question is whether all vertex weights are necessarily positive \u2014 i.e., whether the signed measure is in fact a positive measure for trees. A counterexample would reveal a tree whose interior vertices receive negative microscopic weight, while a proof would show that the 'mass redistribution' from boundary emphasis never forces interior weights below zero.",
     "domains": [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0546",
+    "id": "fd_0548",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05349v1",
     "status": "available",
     "timestamp": "2026-07-07T12:02:15.303850+00:00",
     "title": "Positivity of Microscopic Weighting on Finite Trees"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The infimum \u03bc\u2082 over all infinite sequences of radial cuts of the ratio between the maximum and minimum portion (adjacent pair of slices) sizes equals 1+\u03c1, where \u03c1 is the unique real root of \u03c1\u00b2+\u03c1\u00b3=1 in (0,1). The paper proves \u03bc\u2082 \u2264 1+\u03c1 \u2248 1.75488 and Korsky proved \u03bc\u2082 \u2265 5/3 \u2248 1.66667, but the exact value remains open.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0549",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05330v1",
+    "status": "available",
+    "timestamp": "2026-07-07T12:37:59.021602+00:00",
+    "title": "Optimality of the cake-cutting constant \u03bc\u2082"
   },
   {
     "consumed_by_exp_id": "",
