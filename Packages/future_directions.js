@@ -4,6 +4,51 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
+    "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition \u2014 zeros on the critical line means the bulk geometry is stable against perturbations.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0565",
+    "priority_score": 0.91,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-07T16:56:44.710027+00:00",
+    "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0562",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-07T16:56:44.460450+00:00",
+    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
+  },
+  {
+    "consumed_by_exp_id": "c738bf63",
+    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot \u2014 the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0563",
+    "priority_score": 0.81,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-07T16:56:44.538367+00:00",
+    "title": "Knots That Think: Cognition as Braiding in Category Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every m \u2265 1, the generating tree encoding the recursive decomposition of intervals in the greedy m-Tamari poset (on Dyck paths of size n) is isomorphic to the generating tree encoding the recursive decomposition of planar (m+1)-constellations of size n. This conjecture generalizes the m=1 case proved in the paper and would provide a combinatorial proof of the equinumerosity refined by the parameters tracked in the generating tree (e.g., number of valleys in Dyck paths and corresponding statistics in constellations).",
     "domains": [
       "Pythagorean",
@@ -2159,7 +2204,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Every $\u03c4_k$-maximal graph on $n$ vertices has exactly $(k+1)(n-1)-1$ edges for $n \u2265 2k+2$"
   },
   {
-    "consumed_by_exp_id": "046a0495",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that the Maximum Edge Open Packing Problem is solvable in polynomial time for chordal bipartite graphs, leveraging their intersection of chordality and bipartiteness. The proof strategy involves a dynamic programming approach based on a clique-width decomposition, utilizing the graph's structure to manage conflicts efficiently.",
     "domains": [
       "Pythagorean",
@@ -2169,7 +2214,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28599v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T16:18:57.324227+00:00",
     "title": "Maximum Edge Open Packing in Chordal Bipartite Graphs"
   },
@@ -4872,7 +4917,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Upper Bound on Generalized Tur\u00e1n Number ex(n, K_{a,b}, K_{3,b+1})"
   },
   {
-    "consumed_by_exp_id": "236b0246",
+    "consumed_by_exp_id": "",
     "description": "The sequence of total d-Hoggatt numbers, defined as the row sums H_d(n) = sum_{k=0}^n H_d(n,k), is infinitely log-concave for all d >= 1. The paper proves the infinite log-concavity of the row and column sequences of the d-Hoggatt triangle. However, the infinite log-concavity of the total d-Hoggatt numbers remains open, encompassing the unresolved infinite log-concavity of the Baxter numbers for d=3 and Catalan numbers for d=2.",
     "domains": [
       "Bridges"
@@ -4881,7 +4926,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01582v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T02:05:47.460015+00:00",
     "title": "Infinite Log-Concavity of Total d-Hoggatt Numbers"
   },
@@ -5425,7 +5470,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Gamma-positivity threshold for symmetric edge polytopes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "45ea8f94",
     "description": "The paper establishes that the diameter of the connected component of the chord swap graph on chord diagrams of size n and genus g (for n > 2g) is bounded above by C(n + g^2) for some universal constant C > 0. We conjecture that this universal constant can be taken to be exactly 1, yielding a tight diameter upper bound of precisely n + g^2.",
     "domains": [
       "Pythagorean"
@@ -5434,7 +5479,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T15:58:50.998422+00:00",
     "title": "Optimal Diameter Bound for Fixed Genus Chord Swap Graphs"
   },
@@ -6316,7 +6361,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stable range theta lift preserves unitarity for compact smaller groups"
   },
   {
-    "consumed_by_exp_id": "0da92e61",
+    "consumed_by_exp_id": "",
     "description": "For any natural numbers n, l, r such that n >= (l+1)*r + l, there exists an interval packing of maximum possible size (n choose l) in the Boolean lattice restricted to levels l through l+r. This can be formulated as the existence of a function f mapping each l-sized subset T of [n] to an r-sized subset C_T disjoint from T, such that for any distinct l-sized subsets T1, T2, T1 is not contained in T2 union C_T2 and T2 is not contained in T1 union C_T1.",
     "domains": [
       "Cryptography"
@@ -6325,7 +6370,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.04794v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T11:01:58.641433+00:00",
     "title": "Engel's Interval Packing Theorem"
   },
@@ -6808,6 +6853,50 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "There exists a constant \u03b4 > 0 such that for every n \u2265 2, there is a set P of n points in \u211d\u00b2 where every subset A \u2286 P of size \u2265 2 contains a distance occurring at least \u2308|A|\u00b2/n^(1\u2212\u03b4)\u2309 times as an ordered pair. This is the main theorem of the paper, establishing that Minkowski grids derived from number fields of high degree have robustly many repeated distances, vertically amplifying the Croot\u2013Mao\u2013Pohoata\u2013Sheffer\u2013Yip robust Ramanujan estimate for the ordinary square grid.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0568",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05374v1",
+    "status": "available",
+    "timestamp": "2026-07-07T17:17:46.050823+00:00",
+    "title": "Minkowski Grid Robust Distance Multiplicity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every fixed integer $r \\geq 2$ and every $\\varepsilon > 0$, there exists $\\Delta_0$ such that for all $\\Delta \\geq \\Delta_0$, every uncrowded $(r+1)$-uniform hypergraph of maximum degree $\\Delta$ has list chromatic number at most $(1+\\varepsilon)(\\Delta/\\log\\Delta)^{1/r}$. This conjectures that the leading constant $r^{1/r}$ in the authors' theorem can be further improved to 1, matching the optimal asymptotic bound for $r=1$ (graphs) due to Molloy and the known lower bounds from random hypergraphs.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0569",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05256v1",
+    "status": "available",
+    "timestamp": "2026-07-07T17:18:05.484316+00:00",
+    "title": "Optimal leading constant for list coloring uncrowded hypergraphs"
+  },
+  {
+    "consumed_by_exp_id": "71c94528",
+    "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0564",
+    "priority_score": 0.77,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-07T16:56:44.628941+00:00",
+    "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Congruence Rigidity of Sums of Squares\n\nThis cycle established that the entries of an integer right triangle are forced into\nstrong divisibility patterns \u2014 one leg is a multiple of three, the legs jointly carry a\nfactor of four, one entry is a multiple of five \u2014 and that a four-dimensional right\n\"box\" (a solution of `a\u00b2 + b\u00b2 + c\u00b2 = d\u00b2`) is even more rigid: at most one of its three\nspatial edges can be odd. We also pinned down exactly which whole numbers can serve as a\nleg. These findings point to several bold, testable conjectures.\n\n## 1. The correct modulus for a power of two grows with the power\n**Conjecture.** In any solution of `a\u00b2 + b\u00b2 = c\u00b2`, the two-adic valuation of the leg\nproduct `a\u00b7b` is governed one level deeper than naive reduction suggests: deciding\nwhether `2^k` divides `a\u00b7b` is a question about residues modulo `2^{k+1}`, never modulo\n`2^k`.\n*The key insight is* that a difference of two odd squares is always divisible by eight,\nso each additional factor of two in the product must be certified one binary place\nfurther out than one would guess. *Why now?* Having isolated the exact `mod 8`\nobstruction behind the factor of four, we can test the pattern mechanically for `k = 3,\n4, 5` and either confirm a clean \"shift-by-one\" law or expose its first exception.\n\n## 2. A universal super-divisor for higher-dimensional right figures\n**Conjecture.** For every dimension `r`, solutions of `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` obey a single\nuniversal divisibility law: there is a constant `D(r)`, depending only on `r`, such that\n`D(r)` divides the product `x\u2081\u00b7x\u2082\u00b7\u22ef\u00b7x_r` for *every* solution, and `D(r)` is the largest\nsuch constant.\n*The key insight is* that reduction to a finite residue ring turns \"for all solutions\"\ninto a finite, decidable statement, so the optimal constant `D(r)` is computable and\nshould grow in a structured (conjecturally multiplicative-over-primes) way. *Why now?*\nThe three-dimensional case already yields `4 \u2223 x\u2081x\u2082x\u2083`; comparing it against the planar\nconstant `12` suggests a dimension-indexed sequence worth charting and predicting.\n\n## 3. Parity collapse in higher dimensions\n**Conjecture.** As the number of squared terms increases, the number of edges permitted to\nbe odd stays uniformly bounded: in `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` at most three of the `x_i` can be\nodd, regardless of `r`.\n*The key insight is* that the sum of squares equals the count of odd terms modulo four,\nwhile a perfect square is `0` or `1` modulo four, capping the admissible odd-count no\nmatter how many terms are added. *Why now?* We proved the cap is \"at most one\" in three\ndimensions; extending the modular bookkeeping to arbitrary `r` is a self-contained next\nstep that would reveal whether the cap is truly dimension-independent.\n\n## 4. A sharp threshold characterization of legs in every dimension\n**Conjecture.** Just as the whole numbers that are a leg of a right triangle are exactly\nthose `\u2265 3`, in each higher dimension there is a sharp finite threshold above which every\ninteger appears as an edge of some right figure, and the finitely many exceptions can be\nlisted explicitly.\n*The key insight is* that a single explicit construction, split according to the parity of\nthe target edge, realizes all sufficiently large values, while the small exceptions are\nforced by a factorization that would otherwise require a vanishing edge. *Why now?* The\nplanar threshold `3` and its sharpness (the failures at `1` and `2`) give a template that\nshould transfer verbatim to the box equation and beyond.\n\n## 5. Divisibility as a sieve against near-solutions\n**Conjecture.** The combined congruence obstructions (`12 \u2223 a\u00b7b`, `60 \u2223 a\u00b7b\u00b7c`, and their\nhigher-dimensional analogues) are strong enough that a random integer triple satisfying\nthem has a positive, computable probability of being genuinely Pythagorean \u2014 i.e. the\ncongruence conditions capture a constant fraction of the \"arithmetic mass\" of true\nsolutions.\n*The key insight is* that each universal divisor removes a fixed proportion of impostors,\nso stacking independent prime-power obstructions multiplies into a sieve of predictable\ndensity. *Why now?* With the exact obstructions in hand for the primes `2, 3, 5`, one can\nimmediately measure how much of the solution set they explain and calibrate whether a few\nmore primes suffice to pin down solutions almost completely.\n",
     "domains": [
       "Pythagorean",
@@ -6820,6 +6909,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T05:18:03.424231+00:00",
     "title": "That the entries of an integer right triangle are forced"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Log-Concavity in the d-Hoggatt Hierarchy\n\nThis cycle established a sharp dichotomy for the *total* d-Hoggatt numbers\n`H_d(n) = \u2211_k H_d(n,k)`: the `d = 1` totals `2^n` are infinitely log-concave\n(indeed log-linear), while the `d = 2` totals (Catalan numbers) are strictly\nlog-convex, and the `d = 3` totals (Baxter numbers) are empirically log-convex.\nThe following conjectures are the natural next targets.\n\n## Conjecture 1 \u2014 Universal log-convexity of the totals for d \u2265 2\n\nFor every `d \u2265 2`, the total d-Hoggatt numbers are strictly log-convex:\n`H_d(n+1)\u00b2 < H_d(n) \u00b7 H_d(n+2)` for all `n \u2265 0`.\n\nThe key insight is that each `H_d(n)` is a positively weighted sum of products\nof binomial coefficients whose dominant growth ratio increases with `n`, so the\ntotals inherit the log-convexity of the Catalan case rather than the\nlog-concavity of the individual rows. Why now? The Catalan (`d = 2`) case is now\nsettled from a two-term recurrence, and the Baxter (`d = 3`) case matches it\nterm-by-term in the computed data, suggesting a single recurrence-driven\nargument covers the whole family.\n\n## Conjecture 2 \u2014 Row-sum log-convexity is a summation phenomenon\n\nIf `T(n,k)` is any triangle whose rows are log-concave and whose row-ratio\n`T(n+1,k)/T(n,k)` is nondecreasing in `n`, then the row sums `S(n) = \u2211_k T(n,k)`\nare log-convex.\n\nThe key insight is that log-convexity of the totals is not special to Hoggatt\ntriangles but follows from monotone amplification of a common growth factor\nacross rows, a Chebyshev-sum / rearrangement effect. Why now? Having seen the\nsame negative discriminant `\u0394_n < 0` for both Catalan and Baxter totals, the\nphenomenon is clearly structural rather than coincidental and deserves a triangle\n-level hypothesis.\n\n## Conjecture 3 \u2014 Infinite log-concavity of the rows\n\nFor every `d \u2265 1`, each fixed row `k \u21a6 H_d(n,k)` of the d-Hoggatt triangle is\ninfinitely log-concave.\n\nThe key insight is that the log-concavity operator, when applied to a finite\npositive log-concave row with the golden-ratio-squared safety factor\n`a_k\u00b2 \u2265 ((3+\u221a5)/2) \u00b7 a_{k-1} a_{k+1}`, reproduces that same safety factor, so a\nsingle closure lemma propagates through all iterates. Why now? The threshold\nconstant `(3+\u221a5)/2` is exactly the fixed point of the operator's worst-case\nratio, and the toolkit built this cycle (the operator `\ud835\udcdb`, its annihilation of\nlog-linear sequences, and closure under products) already contains the moving\nparts needed to attack the closure lemma.\n\n## Conjecture 4 \u2014 A log-concave \"renormalization\" of the totals\n\nFor every `d \u2265 2` there is an explicit positive normalizing sequence `w_d(n)`\n(e.g. a ratio of factorials) such that the renormalized totals\n`H_d(n) / w_d(n)` are infinitely log-concave, even though the raw totals are\nlog-convex.\n\nThe key insight is that log-convexity of the totals is caused by a smooth,\npredictable growth factor which can be divided out, leaving a residual sequence\ngoverned by the same infinite-log-concavity mechanism as the rows. Why now? The\nexact growth ratio `(n+2)(2n+3)/((2n+1)(n+3))` for the Catalan totals is now\nknown in closed form, giving a concrete first candidate for `w_2` and a template\nfor higher `d`.\n\n## Conjecture 5 \u2014 Tropical dequantization of the dichotomy\n\nUnder the tropical (min-plus) limit that sends a positive sequence `a_n` to its\nvaluations `v_n = \u2212log a_n`, log-concavity becomes convexity of `v` and\nlog-linearity becomes affinity of `v`. The `d = 1`/`d \u2265 2` dichotomy then reads:\n`v` is affine for `d = 1` and strictly concave for `d \u2265 2`.\n\nThe key insight is that the log-concavity operator degenerates, in the tropical\nlimit, to a second finite difference, so infinite log-concavity corresponds to a\nsequence of iterated finite differences retaining a fixed sign \u2014 a purely\npiecewise-linear, tropical-geometric condition. Why now? Casting the numeric\ndichotomy in the min-plus semiring links this combinatorial question to tropical\nconvexity, where second-difference sign conditions are the natural objects and\npowerful piecewise-linear tools are available.\n",
+    "domains": [
+      "Tropical",
+      "Geometry"
+    ],
+    "id": "fd_0567",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "236b0246",
+    "status": "available",
+    "timestamp": "2026-07-07T17:01:12.860686+00:00",
+    "title": "Sharp dichotomy for the *total* d-Hoggatt numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every real number defines a musical scale: map the digits 0-9 to frequencies f_n = 220 * 2^{n/12} (the A minor pentatonic scale extended). The number pi = 3.14159265... produces the sequence E4, C5, C#5, D5, D#5, F5, E5, A4, G5, C5... \u2014 a melody. Conjecture: The melody of pi is not periodic (because pi is irrational) but has musical structure: the autocorrelation of the digit sequence at lag 12 (one octave) is positive and statistically significant. This means pi has more octave-related notes than expected by chance \u2014 pi 'favors' notes separated by octaves. Similarly, e 'favors' perfect fifths (lag 7) and sqrt(2) 'favors' minor thirds (lag 3). The musical structure of transcendental numbers reflects their continued fraction properties: numbers with bounded partial quotients have more consonant melodies. Test: compute the digit autocorrelation of pi, e, and sqrt(2) at lags 0-12 (representing unison through octave). Perform a chi-squared test comparing to the uniform distribution. Generate the 'music' of each constant and analyze for tonal centers. Impact: transcendental numbers have musical souls \u2014 their digit sequences contain hidden harmonies that reflect their deepest arithmetic properties.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0566",
+    "priority_score": 0.72,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-07T16:56:44.777909+00:00",
+    "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
   },
   {
     "consumed_by_exp_id": "",

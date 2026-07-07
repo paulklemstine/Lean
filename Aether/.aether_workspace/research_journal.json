@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "bc81b3a8",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Optimal Transport & Wasserstein Distances\n\nThis cycle established, fully formally (0 sorries, only standard axioms), the 1D\ndiscrete theory of the 1-Wasserstein distance `W₁` via",
-      "quality_score": 0.5376,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T14:33:30",
-      "title": "Optimal Transport and Wasserstein Distances"
-    },
-    {
       "cycle_id": "0eb9ce9e",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Degree-one triviality threshold for Grassmann schemes\n\nDerived from this cycle's findings in `Catalog/Novelty/GrassmannDegreeOne.lean`\n(Gaussian-binomial backbone: `qBinom_one`,",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-07-07T11:35:28",
       "title": "Conjecture: Balanced graphs coincide with hereditary clique‑Helly graphs"
+    },
+    {
+      "cycle_id": "236b0246",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions: Log-Concavity in the d-Hoggatt Hierarchy\n\nThis cycle established a sharp dichotomy for the *total* d-Hoggatt numbers\n`H_d(n) = ∑_k H_d(n,k)`: the `d = 1` totals `2^n` are infinite",
+      "quality_score": 0.4996542252252253,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-07T17:01:19",
+      "title": "Infinite Log-Concavity of Total d-Hoggatt Numbers"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.70296
     }
   ],
-  "last_updated": "2026-07-07T11:35:28",
+  "last_updated": "2026-07-07T17:01:19",
   "open_questions": [
     {
       "context": "`sorry`-free Lean proof of Sabidussi's theorem.",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "72ef5a59",
-        "quality": 0.6934400000000001,
-        "theorems": 13,
-        "title": "Interpolation of Partial-Twuality Polynomials in Binary Delta-Matroids"
-      },
-      {
         "cycle_id": "1d985141",
         "quality": 0.751851,
         "theorems": 12,
@@ -4009,6 +4003,12 @@
         "quality": 0.3793292235294118,
         "theorems": 2,
         "title": "Classification of regular 4‑maniplexes via tetravalent graph censuses"
+      },
+      {
+        "cycle_id": "236b0246",
+        "quality": 0.4996542252252253,
+        "theorems": 14,
+        "title": "Infinite Log-Concavity of Total d-Hoggatt Numbers"
       }
     ]
   }
