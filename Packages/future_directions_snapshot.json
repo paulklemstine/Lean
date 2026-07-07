@@ -12953,6 +12953,60 @@
     "title": "Asymptotic lower bound for odd integers not representable as p + 2^a + 2^b"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "math.MG",
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any positive integer n, there exists a set P of n points in the Euclidean plane such that for every subset A of P with at least two points, the maximum number of ordered pairs of distinct points in A separated by a single distance is at least a constant times |A|^2 / n^(1-δ) for some absolute constant δ > 0. This captures the core vertical amplification result of the Minkowski grid construction, proving that robust distance multiplicity can be guaranteed for all subsets, not just the whole set.",
+    "domain_bridges": [
+      "Metric geometry",
+      "Additive combinatorics",
+      "Algebraic number theory"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0576",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the definition of distance multiplicity μ(A), define the Minkowski grid over an algebraic number field, and establish the robust Ramanujan estimate for r_2(m) to lower bound the distance multiplicity for all subsets. The proof bridges algebraic number theory to construct the grid and combinatorial sieve methods to bound the multiplicity from below.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05374v1",
+    "status": "available",
+    "timestamp": "2026-07-07T20:35:12.325706+00:00",
+    "title": "Robust Distance Multiplicity in Minkowski Grids"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO:list_coloring",
+      "math.CO:hypergraph_coloring",
+      "math.CO:semi-random_nibble",
+      "math.CO:chromatic_number_sparse"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every fixed integer r ≥ 2 and every ε > 0, every sufficiently large finite uncrowded (r+1)-uniform hypergraph of maximum degree Δ has list chromatic number at most (1+ε)(Δ/log Δ)^{1/r}. This conjectures that the r^{1/r} factor in the paper's bound (1+ε)(rΔ/log Δ)^{1/r} can be removed, yielding leading constant 1 as in the graph case (r=1) established by Molloy. The r^{1/r} factor arises from the nibble analysis controlling residual degrees via binomial bounds; removing it likely requires a tighter variance analysis or a different encoding of active edge-color constraints in the nibble phase.",
+    "domain_bridges": [
+      "math.CO:probabilistic_method",
+      "math.CO:independence_number_hypergraphs"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0576",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Improve the semi-random nibble variance analysis to avoid the r^{1/r} loss that arises when bounding residual list sizes through binomial degree control. Specifically, refine the active edge-color constraint encoding so that the nibble phase terminates with lists of size at least (1+ε)(Δ/log Δ)^{1/r} relative to the residual maximum degree, then apply the Rosenfeld counting argument to complete the coloring. Alternatively, develop a DP-coloring formulation (following Bernshteyn's approach for graphs) which may allow tighter local density control.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05256v1",
+    "status": "available",
+    "timestamp": "2026-07-07T20:35:42.890569+00:00",
+    "title": "Optimal leading constant for uncrowded hypergraph list chromatic number"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "Ciucu, A. & Krattenthaler, P. (2002). Lozenge tilings of a triangular region. arXiv:math/0206123.",
