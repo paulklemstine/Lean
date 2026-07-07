@@ -2597,20 +2597,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Alexander's Conjecture for Infinite Simplicial Complexes"
   },
   {
-    "consumed_by_exp_id": "b1b5d77f",
-    "description": "The lower and upper bounds on the number of \u03a6-separable dichotomies C_F given in Theorem 1 (in terms of N, r = rank(\u03a6(F)), and s = kruskal_rank(\u03a6(F))) are tight for every achievable pair (r, s). That is, for any N \u2208 \u2115 and any integers r, s with 1 \u2264 s \u2264 r \u2264 min(N, M'), there exists a point set F \u2286 \u211d^M of size N and a linear map \u03a6: \u211d^M \u2192 \u211d^{M'} such that rank(\u03a6(F)) = r, kruskal_rank(\u03a6(F)) = s, and C_F achieves the lower bound; similarly, there exists a configuration achieving the upper bound.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0235",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01010v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T10:39:12.276840+00:00",
-    "title": "Tightness of Function-Counting Bounds for All Rank-Kruskal Rank Pairs"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For a 1-dimensional flag simplicial complex $\\Delta$ and its Stanley-Reisner ideal $I_\\Delta$, the squarefree power $I_\\Delta^{[p]}$ has a linear resolution if and only if the Krull dimension of $S/I_\\Delta^{[p]}$ equals $2p$. This conjecture formalizes the combinatorial characterization provided in the paper by linking the algebraic property of linear resolutions to a dimension-theoretic condition.",
     "domains": [
@@ -3852,7 +3838,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Gamma-positivity of Symmetric Edge Polytopes is Equivalent to the Graph Being a Cone"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "44f4c719",
     "description": "Conjecture that the trianguline variety associated to a de Rham (\u03c6,\u0393)-module with G-structure (for a split connected reductive group G over a p-adic field) is a normal scheme. This extends the normality results proved in the paper for certain points outside the smooth locus to the whole variety.",
     "domains": [
       "Algebra",
@@ -3862,7 +3848,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02215v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T18:07:18.823870+00:00",
     "title": "Normality of the trianguline variety for split reductive groups"
   },
@@ -6143,7 +6129,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Split-Off Minor Characterization of Homomorphism Distinguishing Closed Classes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b3fc7b5f",
     "description": "An irreducible polynomial F in K[x_1,...,x_d] over an algebraically closed field K of characteristic zero is algebraically degenerate (i.e., F divides a sum of non-constant univariate polynomials f_1(x_1)+...+f_d(x_d)) if and only if there exist non-zero polynomials G and univariate alpha_{1,j}, alpha_{2,i} such that for each i, the partial derivative F_{x_i} is congruent to G * alpha_{2,i}(x_i) * prod_{j!=i} alpha_{1,j}(x_j) modulo F. This translates the local analytic characterization of Theorem 2.3 into a global algebraic setting.",
     "domains": [
       "Algebra"
@@ -6152,7 +6138,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03366v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T01:28:54.258990+00:00",
     "title": "Global Algebraic Degeneracy Criterion for Multivariate Polynomials"
   },
@@ -6184,20 +6170,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-07T02:03:09.912711+00:00",
     "title": "Equivalence of Oddomorphism and Split-Off Minor"
-  },
-  {
-    "consumed_by_exp_id": "246be7f8",
-    "description": "Let k be an algebraically closed field of characteristic zero and let F \u2208 k[x\u2081,\u2026,x_d] be irreducible. Then F = H(f\u2081(x\u2081)+\u22ef+f_d(x_d)) for some H \u2208 k[t] with deg(H) \u2265 2 and f\u1d62 \u2208 k[t] if and only if there exist rational functions \u03b1\u2081,\u2c7c \u2208 k(x\u2c7c), \u03b1\u2082,\u1d62 \u2208 k(x\u1d62), and G \u2208 k(x\u2081,\u2026,x_d) such that for every i \u2208 {1,\u2026,d}: \u2202F/\u2202x\u1d62 \u2261 G \u00b7 \u03b1\u2082,\u1d62(x\u1d62) \u00b7 \u220f_{j\u2260i} \u03b1\u2081,\u2c7c(x\u2c7c) (mod \u27e8F\u27e9), where crucially the \u03b1\u2081,\u2c7c factors are independent of i. This is the algebraic analogue of Theorem 2.3, replacing analytic isomorphisms with rational function substitutions and local neighborhoods with Zariski-open conditions.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0513",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.03366v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T02:39:41.753443+00:00",
-    "title": "Algebraic Degeneracy Factorization Criterion"
   },
   {
     "consumed_by_exp_id": "",
@@ -6681,12 +6653,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For an elliptic curve E over Q with good supersingular reduction at 2 and square-free conductor, if the mu-invariant of its sharp/flat 2-adic L-function vanishes, then the lambda-invariant of the quadratic twist E^D (for square-free D > 0 with D \u2261 1 mod 4) differs from that of E by an explicit sum over the prime factors of D involving the 2-adic valuation of (\u2113^2 - 1)/8 and the parity of the number of points on E modulo \u2113.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0548",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05305v1",
+    "status": "available",
+    "timestamp": "2026-07-07T13:10:59.578604+00:00",
+    "title": "Supersingular Iwasawa Lambda Invariant Difference Formula"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every finite tree T (viewed as a metric space with the shortest-path distance), the microscopic weighting assigns strictly positive weight to every vertex. The paper establishes that finite trees are of strictly negative type and hence admit a microscopic weighting, and that this weighting emphasizes boundary points and distributes mass widely. The open question is whether all vertex weights are necessarily positive \u2014 i.e., whether the signed measure is in fact a positive measure for trees. A counterexample would reveal a tree whose interior vertices receive negative microscopic weight, while a proof would show that the 'mass redistribution' from boundary emphasis never forces interior weights below zero.",
     "domains": [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0548",
+    "id": "fd_0549",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05349v1",
@@ -6700,13 +6687,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0549",
+    "id": "fd_0550",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05330v1",
     "status": "available",
     "timestamp": "2026-07-07T12:37:59.021602+00:00",
     "title": "Optimality of the cake-cutting constant \u03bc\u2082"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a complete multipartite graph G = K_{n_1,...,n_m} with n_1 \u2264 ... \u2264 n_m, the path-free complex PF_t(G) is vertex decomposable if and only if t \u2265 2n_{m-1} - 1. Equivalently, this is exactly the range where PF_t(G) is shellable and sequentially Cohen-Macaulay. For t \u2264 2n_{m-1} - 2, the complex fails to be sequentially Cohen-Macaulay.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0551",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05358v1",
+    "status": "available",
+    "timestamp": "2026-07-07T13:11:19.325737+00:00",
+    "title": "Vertex decomposability threshold for path-free complexes of complete multipartite graphs"
   },
   {
     "consumed_by_exp_id": "",

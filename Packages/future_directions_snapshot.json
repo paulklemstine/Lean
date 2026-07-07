@@ -4751,32 +4751,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
-      "Cover1965",
-      "FunctionCounting2024"
-    ],
-    "consumed_by_exp_id": "b1b5d77f",
-    "description": "The lower and upper bounds on the number of Φ-separable dichotomies C_F given in Theorem 1 (in terms of N, r = rank(Φ(F)), and s = kruskal_rank(Φ(F))) are tight for every achievable pair (r, s). That is, for any N ∈ ℕ and any integers r, s with 1 ≤ s ≤ r ≤ min(N, M'), there exists a point set F ⊆ ℝ^M of size N and a linear map Φ: ℝ^M → ℝ^{M'} such that rank(Φ(F)) = r, kruskal_rank(Φ(F)) = s, and C_F achieves the lower bound; similarly, there exists a configuration achieving the upper bound.",
-    "domain_bridges": [
-      "stat.ML",
-      "cs.LG",
-      "math.CA"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0235",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Construct explicit point configurations and linear maps for each (r, s) pair. For the upper bound, use points in general position within an r-dimensional subspace. For the lower bound, design configurations with controlled linear dependencies that minimize separable dichotomies while fixing r and s. Use induction on N and properties of the counting function C(·,·).",
-    "research_mode": "team",
-    "source_exp_id": "2607.01010v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T10:39:12.276840+00:00",
-    "title": "Tightness of Function-Counting Bounds for All Rank-Kruskal Rank Pairs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
       "On the Linearity of Squarefree Powers of Edge Ideals (arXiv:2204.12345)"
     ],
     "consumed_by_exp_id": "",
@@ -7070,7 +7044,7 @@
       "11S25",
       "14G20"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "44f4c719",
     "description": "Conjecture that the trianguline variety associated to a de Rham (φ,Γ)-module with G-structure (for a split connected reductive group G over a p-adic field) is a normal scheme. This extends the normality results proved in the paper for certain points outside the smooth locus to the whole variety.",
     "domain_bridges": [
       "Representation theory",
@@ -7087,7 +7061,7 @@
     "proof_strategy": "Use Serre's criterion (R1 + S2). Show that the trianguline variety is regular in codimension 1 by analyzing the stratification coming from the triangulation parameter and applying the smoothness results on the regular loci. Then verify the S2 condition by demonstrating that the variety is Cohen‑Macaulay, which follows from its construction as a quotient of a smooth scheme by a finite group action or from the existence of a dualizing complex compatible with the trianguline structure.",
     "research_mode": "team",
     "source_exp_id": "2607.02215v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T18:07:18.823870+00:00",
     "title": "Normality of the trianguline variety for split reductive groups"
   },
@@ -11405,7 +11379,7 @@
       "polynomial factorization",
       "MvPolynomial"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b3fc7b5f",
     "description": "An irreducible polynomial F in K[x_1,...,x_d] over an algebraically closed field K of characteristic zero is algebraically degenerate (i.e., F divides a sum of non-constant univariate polynomials f_1(x_1)+...+f_d(x_d)) if and only if there exist non-zero polynomials G and univariate alpha_{1,j}, alpha_{2,i} such that for each i, the partial derivative F_{x_i} is congruent to G * alpha_{2,i}(x_i) * prod_{j!=i} alpha_{1,j}(x_j) modulo F. This translates the local analytic characterization of Theorem 2.3 into a global algebraic setting.",
     "domain_bridges": [
       "combinatorial geometry",
@@ -11420,7 +11394,7 @@
     "proof_strategy": "Adapt the local analytic proof from the paper to the global algebraic setting using properties of algebraic curves and irreducibility, leveraging the fact that for polynomials over algebraically closed fields, local divisibility implies global divisibility, and applying Hilbert's Nullstellensatz to bridge the local zero sets to the global ideal structure.",
     "research_mode": "team",
     "source_exp_id": "2607.03366v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T01:28:54.258990+00:00",
     "title": "Global Algebraic Degeneracy Criterion for Multivariate Polynomials"
   },
@@ -11477,32 +11451,6 @@
     "status": "available",
     "timestamp": "2026-07-07T02:03:09.912711+00:00",
     "title": "Equivalence of Oddomorphism and Split-Off Minor"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "math.CO",
-      "math.AG"
-    ],
-    "consumed_by_exp_id": "246be7f8",
-    "description": "Let k be an algebraically closed field of characteristic zero and let F ∈ k[x₁,…,x_d] be irreducible. Then F = H(f₁(x₁)+⋯+f_d(x_d)) for some H ∈ k[t] with deg(H) ≥ 2 and fᵢ ∈ k[t] if and only if there exist rational functions α₁,ⱼ ∈ k(xⱼ), α₂,ᵢ ∈ k(xᵢ), and G ∈ k(x₁,…,x_d) such that for every i ∈ {1,…,d}: ∂F/∂xᵢ ≡ G · α₂,ᵢ(xᵢ) · ∏_{j≠i} α₁,ⱼ(xⱼ) (mod ⟨F⟩), where crucially the α₁,ⱼ factors are independent of i. This is the algebraic analogue of Theorem 2.3, replacing analytic isomorphisms with rational function substitutions and local neighborhoods with Zariski-open conditions.",
-    "domain_bridges": [
-      "combinatorial_geometry",
-      "commutative_algebra",
-      "differential_algebra"
-    ],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0513",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Forward direction: If F = H(f₁+⋯+f_d), then ∂F/∂xᵢ = H'(f₁+⋯+f_d)·f'ᵢ(xᵢ). On Z(F) where H(f₁+⋯+f_d)=0, set G = H'(f₁+⋯+f_d), α₂,ᵢ = f'ᵢ, α₁,ⱼ = 1. Reverse direction: The separated factorization implies F_{x_i}/F_{x_j} = (α₂,ᵢ(xᵢ)·α₁,ⱼ(xⱼ))/(α₂,ⱼ(xⱼ)·α₁,ᵢ(xᵢ)), forcing the logarithmic derivatives ∂(log F_{x_i})/∂x_j to vanish modulo F for i≠j. Use irreducibility and Zariski density to show the implicit function on Z(F) has additive separable structure, then integrate via differential algebra (Risch-like arguments) to obtain the polynomial form H(f₁+⋯+f_d).",
-    "research_mode": "team",
-    "source_exp_id": "2607.03366v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T02:39:41.753443+00:00",
-    "title": "Algebraic Degeneracy Factorization Criterion"
   },
   {
     "ambition_level": "extension",
@@ -12417,6 +12365,33 @@
     "title": "Sharp Circular Sampling for Balanced Polynomials"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Iwasawa theory",
+      "Elliptic curves",
+      "p-adic L-functions"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For an elliptic curve E over Q with good supersingular reduction at 2 and square-free conductor, if the mu-invariant of its sharp/flat 2-adic L-function vanishes, then the lambda-invariant of the quadratic twist E^D (for square-free D > 0 with D ≡ 1 mod 4) differs from that of E by an explicit sum over the prime factors of D involving the 2-adic valuation of (ℓ^2 - 1)/8 and the parity of the number of points on E modulo ℓ.",
+    "domain_bridges": [
+      "Algebraic Number Theory",
+      "p-adic Analysis"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0548",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Decompose the variation of the sharp/flat 2-adic L-functions under quadratic twists by analyzing their interpolation properties and the local Euler factors at primes dividing D. Compare the resulting power series to deduce the difference in their Iwasawa invariants, adapting Matsuno's ordinary case methodology to the supersingular setting via Sprung's logarithmic matrices.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05305v1",
+    "status": "available",
+    "timestamp": "2026-07-07T13:10:59.578604+00:00",
+    "title": "Supersingular Iwasawa Lambda Invariant Difference Formula"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "math.MG",
@@ -12437,7 +12412,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0548",
+    "id": "fd_0549",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Exploit the energy minimization characterization: the microscopic weighting minimizes the energy integral E(w) = Σ w(x)w(y)d(x,y) over signed measures of total mass 1. For trees, the distance matrix has recursive structure amenable to leaf-removal induction. Show that any signed measure of mass 1 on a tree with a negative-weight vertex can be modified to decrease energy, contradicting optimality. Alternatively, use the Schoenberg embedding characterization: the microscopic weighting corresponds to the closest point to the origin in the affine hull of the embedded vertices, and for trees this convex hull might be shown to contain the origin's projection with all positive barycentric coordinates.",
@@ -12464,7 +12439,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0549",
+    "id": "fd_0550",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The upper bound μ₂ ≤ 1+ρ follows from the paper's construction and Proposition 1 on cyclic factor avoidance. The lower bound μ₂ ≥ 1+ρ requires showing that no infinite sequence of cuts can achieve a ratio strictly less than 1+ρ. This likely requires analyzing the combinatorial constraints on infinite words over the alphabet {0,1,2,3} with ratios 1:ρ:ρ²:ρ³, proving that any such word avoiding equal adjacent letters must contain a portion with ratio at least (1+ρ)/(ρ²+ρ³) = 1+ρ. A potential approach uses the substitution system properties: the map sending 0↦23 (or 32), 1↦0, 2↦1, 3↦2 shows that any valid infinite sequence must eventually approximate the fixed point, forcing portions near the extremal ratio.",
@@ -12473,6 +12448,33 @@
     "status": "available",
     "timestamp": "2026-07-07T12:37:59.021602+00:00",
     "title": "Optimality of the cake-cutting constant μ₂"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "math.AT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a complete multipartite graph G = K_{n_1,...,n_m} with n_1 ≤ ... ≤ n_m, the path-free complex PF_t(G) is vertex decomposable if and only if t ≥ 2n_{m-1} - 1. Equivalently, this is exactly the range where PF_t(G) is shellable and sequentially Cohen-Macaulay. For t ≤ 2n_{m-1} - 2, the complex fails to be sequentially Cohen-Macaulay.",
+    "domain_bridges": [
+      "simplicial_complexes",
+      "graph_theory",
+      "combinatorial_topology",
+      "commutative_algebra"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0551",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize simplicial complexes and vertex decomposability in Lean, then define PF_t(G) as the simplicial complex of vertex subsets with no induced P_t. Define complete multipartite graphs and their part-size ordering. The forward direction (t ≥ 2n_{m-1}-1 ⟹ vertex decomposable) requires formalizing the explicit structural decomposition of PF_t(G) as a union of join complexes with a size-truncation term, then proving each join component is vertex decomposable and that the union preserves this property. The reverse direction (t ≤ 2n_{m-1}-2 ⟹ not sequentially Cohen-Macaulay) requires constructing a specific non-Cohen-Macaulay witness face or showing the homology fails the sequential Cohen-Macaulay condition, potentially via a Mayer-Vietoris spectral sequence argument.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05358v1",
+    "status": "available",
+    "timestamp": "2026-07-07T13:11:19.325737+00:00",
+    "title": "Vertex decomposability threshold for path-free complexes of complete multipartite graphs"
   },
   {
     "ambition_level": "extension",
