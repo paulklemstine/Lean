@@ -2710,7 +2710,7 @@
     "catalog_references": [
       "https://arxiv.org/abs/xxxx"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3b621fb7",
     "description": "We conjecture that for every finite simple graph G, the following are equivalent: (i) G is balanced (its clique‑matrix contains no odd square submatrix with exactly two 1's in each row and each column); (ii) G is hereditary clique‑Helly (every induced subgraph has the Helly property for cliques); and (iii) G contains no induced copy of the complement of 3K2 (i.e., \\u03c3̅2K2). This extends the result of [arXiv:xxxx] from distance‑hereditary graphs to all graphs, providing a single forbidden induced subgraph characterization of balancedness.",
     "domain_bridges": [
       "balanced graphs",
@@ -2728,7 +2728,7 @@
     "proof_strategy": "To prove the conjecture we would: (1) develop a decomposition of hereditary clique‑Helly graphs into distance‑hereditary components using a tree decomposition (e.g., a 2‑tree or split‑decomposition). (2) Apply the linear‑time recognition algorithm from the paper to each component to show that none can be unbalanced. (3) Demonstrate that the presence of an induced \\u03c3\\u0305K2 would contradict the hereditary clique‑Helly property, hence no such subgraph can appear. The combination yields balancedness. Formalisation in Lean would define balancedness, hereditary clique‑Helly, and induced subgraph relations, then prove the two implications.",
     "research_mode": "team",
     "source_exp_id": "2607.00730v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T13:24:03.491700+00:00",
     "title": "Conjecture: Balanced graphs coincide with hereditary clique‑Helly graphs"
   },
@@ -2820,7 +2820,7 @@
     "catalog_references": [
       "math.NT"
     ],
-    "consumed_by_exp_id": "347d7d7b",
+    "consumed_by_exp_id": "",
     "description": "Formulate a statement asserting that for a self-dual cuspidal automorphic representation $\\Pi_0$ of $\\text{PGL}_3(\\mathbb{A}_{\\mathbb{Q}})$, the proportion of zeros of the twisted $L$-function $L(s, \\Pi_0 \\times \\chi)$ lying on the critical line $\\text{Re}(s) = 1/2$ is at least $1/9$ as the conductor $Q$ of the Dirichlet character $\\chi$ tends to infinity.",
     "domain_bridges": [
       "Automorphic Representations",
@@ -2837,7 +2837,7 @@
     "proof_strategy": "The proof requires formalizing the theory of automorphic $L$-functions for $\\text{GL}_3$, the Dirichlet-series-based mollification method, and Levinson's method for zero-detection. One would need to define the density of zeros using the argument principle and show that the mollified mean value of the $L$-function derivative satisfies specific asymptotic inequalities that force zeros onto the line $\\sigma = 1/2$.",
     "research_mode": "team",
     "source_exp_id": "2607.00282v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T14:51:08.118719+00:00",
     "title": "Lower Bound for the Proportion of Zeros on the Critical Line for PGL(3) L-functions"
   },
@@ -3229,7 +3229,7 @@
       "BH",
       "LFZ"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7e1c8f60",
     "description": "For a graph $G$ with minimum degree $\\delta(G) \\ge a + r$, if the spectral radius $\\lambda(G)$ is at least $a + r + b$, then $G$ is fractional ID-$[a,b]$-factor-critical.",
     "domain_bridges": [
       "Spectral graph theory",
@@ -3245,7 +3245,7 @@
     "proof_strategy": "1. Establish that $\\lambda(G) \\ge a + r + b$ implies sufficient expansion properties via spectral techniques. 2. Show that this expansion guarantees the existence of fractional $[a,b]$-factors in $G-I$ for any independent set $I$ of size $r$. 3. Leverage the minimum degree condition to bound the vertex degrees in $G-I$ within the $[a,b]$ range.",
     "research_mode": "team",
     "source_exp_id": "2606.31064v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T21:44:34.279843+00:00",
     "title": "Spectral radius threshold for fractional ID-$[a,b]$-factor-critical graphs"
   },
@@ -4247,7 +4247,7 @@
       "Negami2024main",
       "Negami1988PCC"
     ],
-    "consumed_by_exp_id": "29810562",
+    "consumed_by_exp_id": "",
     "description": "A connected bipartite graph admits a planar rotation-compatible covering, ensuring all rotational constraints are satisfied.",
     "domain_bridges": "true",
     "domains": [
@@ -4259,7 +4259,7 @@
     "proof_strategy": "Combinatorial consistency verification",
     "research_mode": "team",
     "source_exp_id": "2606.27703v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T18:30:48.905815+00:00",
     "title": "Bipartition Imply Planar Cover"
   },
@@ -6503,7 +6503,7 @@
     "catalog_references": [
       "The paper cited in the context"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3e9ddacc",
     "description": "The subset Ω₂(n) restricts partitions to have at most a₁ + t -1 parts, where a₁ is the highest power of 2 in n's binary expansion, t the number of non-zero terms.",
     "domain_bridges": "Theoretical Combinatorics",
     "domains": [
@@ -6515,7 +6515,7 @@
     "proof_strategy": "Direct argument using binary decompositions",
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T19:59:12.431800+00:00",
     "title": "Partition Part Size Bound"
   },
@@ -11385,7 +11385,7 @@
       "math.PR",
       "math.CO"
     ],
-    "consumed_by_exp_id": "e3b1b1a2",
+    "consumed_by_exp_id": "",
     "description": "For the fixed genus chord swap Markov chain on chord diagrams with n chords and genus g, the spectral gap γ_{n,g} satisfies γ_{n,g} = Θ(n^{-3}) when g is fixed and n → ∞. This sharpens the paper's polynomial lower bound to a precise exponent and matches the n^{-3} scaling observed in related swap chains on perfect matchings.",
     "domain_bridges": [
       "markov_chain_mixing",
@@ -11401,7 +11401,7 @@
     "proof_strategy": "First formalize chord diagrams, genus via Euler characteristic, and the chord swap relation in Lean. Then establish the O(n^{-3}) upper bound on the spectral gap via comparison with the random transposition walk on matchings, and prove the Ω(n^{-3}) lower bound by constructing a canonical path argument with congestion bounded by O(n^3), extending the paper's coupling/canonical-path techniques.",
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T00:02:19.658603+00:00",
     "title": "Tight spectral gap exponent for the fixed-genus chord swap chain"
   },
@@ -11842,6 +11842,34 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.CO",
+      "05C12",
+      "05C20",
+      "05C85"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every doubly regular tournament on n vertices (where n ≡ 3 mod 4 and n ≥ 3), the metric dimension β(G) is at most ⌈3·log₂(n)⌉. This provides an explicit constant in the O(log n) bound established for related families in the paper, extending the probabilistic method of Babai to the directed tournament setting with a constructive resolvability guarantee.",
+    "domain_bridges": [
+      "graph_theory",
+      "probabilistic_method",
+      "design_theory"
+    ],
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_0518",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt Babai's probabilistic method: for a doubly regular tournament on n=4k+3 vertices, every vertex has out-degree 2k+1 and every pair of distinct vertices shares exactly k common out-neighbours. Sample a random set S of size ⌈3·log₂(n)⌉ vertices. For any pair (u,v) of distinct vertices, compute the probability over the random choice of S that all s ∈ S give d(s,u)=d(s,v). Use the strong regularity properties to bound this probability below 1/n², then take a union bound over all pairs. The key structural lemma is that in a doubly regular tournament, for any distinct u,v, the set {s : d(s,u) ≠ d(s,v)} has size at least n/3, giving each sample at least a 1/3 chance of distinguishing u from v.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05152v1",
+    "status": "available",
+    "timestamp": "2026-07-07T05:40:17.241598+00:00",
+    "title": "Explicit logarithmic bound on metric dimension of doubly regular tournaments"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.NT",
       "cs.SC"
     ],
@@ -11854,7 +11882,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0518",
+    "id": "fd_0519",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Expand both sides of the identity v'w - vw' = 2x(v₂w - w₂v) + (v₁w - w₁v) using the standard definition of the formal derivative v' = 2v₂x + v₁. Distributing the terms on the right-hand side and collecting coefficients of x², x, and 1 directly yields the expanded left-hand side, (v₂w₁ - v₁w₂)x² + 2(v₂w₀ - v₀w₂)x + (v₁w₀ - v₀w₁), proving the exact polynomial equality purely through algebraic manipulation without relying on scalar units or characteristic restrictions beyond char(K) ≠ 2.",
@@ -11883,7 +11911,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0519",
+    "id": "fd_0520",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the monomial star configuration result svd(I_{n,h}) = lcm(1,…,h) using the Diophantine condition M framework. Then extend to generalized star configurations by showing the Diophantine structure governing symbolic powers is invariant under regular sequences of forms—potentially via initial ideal arguments preserving svd, or by establishing that the symbolic Rees algebra of a generalized star configuration has the same Veronese structure as its monomial specialization.",
@@ -11910,7 +11938,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0520",
+    "id": "fd_0521",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "For each quadratic form Q, construct the Romik-type map T_Q as a piecewise fractional linear transformation on [0,1] derived from the Berggren matrices. Show T_Q admits a Markov partition with the Gibbs-Markov property. Compute the invariant density using Keane's method (tracking how the quadratic form coefficients transform under the Berggren matrices). Apply the Hopf argument adapted to infinite measure spaces to establish ergodicity, and verify conservativity via the ratio ergodic theorem by checking integrability of the density against the return time function.",
@@ -11935,7 +11963,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0521",
+    "id": "fd_0522",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Reduce the problem to the Grone-Merris-Bai theorem, which states s_k(G) ≤ ∑_{i=1}^k d_i^*(G) where d* is the conjugate degree sequence. Show that equality in Brouwer's bound implies equality in Grone-Merris-Bai, forcing the degree sequence to match the Laplacian eigenvalue sequence. Use the characterization of threshold graphs via their degree sequences and the specific sum m + binom(k+1, 2) to conclude that G must be a threshold graph with clique number k+1.",
@@ -11962,7 +11990,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0522",
+    "id": "fd_0523",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Formalize 2-designs, automorphism groups, flag-transitivity, and point-imprimitivity in Lean. 2) Develop the subgroup structure of PSL(2,q) — specifically the classification of maximal subgroups (dihedral, parabolic, A4, S4, A5 subgroups). 3) Use the imprimitivity assumption to decompose the point set into blocks of imprimitivity, constraining v via the subgroup lattice. 4) Apply combinatorial parameter constraints (Fisher's inequality, divisibility relations r(k-1) = λ(v-1), bk = vr) together with the orbit-stabilizer theorem under PSL(2,q). 5) Case analysis on the possible systems of imprimitivity yields only v = 15, 36, 85.",
@@ -11986,7 +12014,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0523",
+    "id": "fd_0524",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the region T_n and its dual graph G_n. Define the bipartite adjacency matrix M_n of G_n. Prove that the number of perfect matchings of G_n equals the absolute value of the determinant of M_n. Diagonalize M_n to compute its determinant, and verify that the resulting expression matches the given product formula.",
@@ -11995,6 +12023,32 @@
     "status": "available",
     "timestamp": "2026-07-07T05:05:28.072260+00:00",
     "title": "Exact Enumeration of Lozenge Tilings of Triangular Regions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Brown & Harary 1970 ExtremalDigraphs",
+      "Mantel 1907"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The maximum number of arcs in a loopless digraph on n vertices (allowing anti-parallel arcs) without a directed triangle is floor(n^2/2). This is the key combinatorial lemma (Theorem 1.1) from the paper, which bypasses the measure-theoretic difficulties of Bukh's original conjecture while capturing the core extremal insight.",
+    "domain_bridges": [
+      "Extremal graph theory",
+      "Additive combinatorics"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0525",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define the in-degree and out-degree of vertices. Prove that for any arc x -> y, the in-neighbors of x and out-neighbors of y are disjoint, hence in-deg(x) + out-deg(y) <= n. Sum over all arcs to get 2 * sum(d^+ * d^-) <= |E| * n. Apply Cauchy-Schwarz on the sum of total degrees squared to relate 4|E|^2 / n to 2|E|^2 / n + |E| n, and solve the quadratic inequality to conclude |E| <= n^2 / 2.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05083v1",
+    "status": "available",
+    "timestamp": "2026-07-07T05:41:22.365492+00:00",
+    "title": "Directed Mantel's Theorem for Loopless Digraphs"
   },
   {
     "ambition_level": "extension",

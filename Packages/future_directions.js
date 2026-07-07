@@ -1490,7 +1490,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Character sums over smooth numbers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3b621fb7",
     "description": "We conjecture that for every finite simple graph G, the following are equivalent: (i) G is balanced (its clique\u2011matrix contains no odd square submatrix with exactly two 1's in each row and each column); (ii) G is hereditary clique\u2011Helly (every induced subgraph has the Helly property for cliques); and (iii) G contains no induced copy of the complement of 3K2 (i.e., \\u03c3\u03052K2). This extends the result of [arXiv:xxxx] from distance\u2011hereditary graphs to all graphs, providing a single forbidden induced subgraph characterization of balancedness.",
     "domains": [
       "Pythagorean"
@@ -1499,7 +1499,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00730v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T13:24:03.491700+00:00",
     "title": "Conjecture: Balanced graphs coincide with hereditary clique\u2011Helly graphs"
   },
@@ -1549,7 +1549,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proving the Existence of a Sufficiently Large Extremal Family"
   },
   {
-    "consumed_by_exp_id": "347d7d7b",
+    "consumed_by_exp_id": "",
     "description": "Formulate a statement asserting that for a self-dual cuspidal automorphic representation $\\Pi_0$ of $\\text{PGL}_3(\\mathbb{A}_{\\mathbb{Q}})$, the proportion of zeros of the twisted $L$-function $L(s, \\Pi_0 \\times \\chi)$ lying on the critical line $\\text{Re}(s) = 1/2$ is at least $1/9$ as the conductor $Q$ of the Dirichlet character $\\chi$ tends to infinity.",
     "domains": [
       "Algebra"
@@ -1558,7 +1558,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00282v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T14:51:08.118719+00:00",
     "title": "Lower Bound for the Proportion of Zeros on the Critical Line for PGL(3) L-functions"
   },
@@ -1766,7 +1766,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality for exactly one edge subset"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7e1c8f60",
     "description": "For a graph $G$ with minimum degree $\\delta(G) \\ge a + r$, if the spectral radius $\\lambda(G)$ is at least $a + r + b$, then $G$ is fractional ID-$[a,b]$-factor-critical.",
     "domains": [
       "Physics"
@@ -1775,7 +1775,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31064v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T21:44:34.279843+00:00",
     "title": "Spectral radius threshold for fractional ID-$[a,b]$-factor-critical graphs"
   },
@@ -2322,7 +2322,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Classification of regular 4\u2011maniplexes via tetravalent graph censuses"
   },
   {
-    "consumed_by_exp_id": "29810562",
+    "consumed_by_exp_id": "",
     "description": "A connected bipartite graph admits a planar rotation-compatible covering, ensuring all rotational constraints are satisfied.",
     "domains": [
       "Algebra"
@@ -2331,7 +2331,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27703v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T18:30:48.905815+00:00",
     "title": "Bipartition Imply Planar Cover"
   },
@@ -3544,7 +3544,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "A structural decomposition theorem for countable FAC posets via scattered components"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3e9ddacc",
     "description": "The subset \u03a9\u2082(n) restricts partitions to have at most a\u2081 + t -1 parts, where a\u2081 is the highest power of 2 in n's binary expansion, t the number of non-zero terms.",
     "domains": [
       "Algebra"
@@ -3553,7 +3553,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T19:59:12.431800+00:00",
     "title": "Partition Part Size Bound"
   },
@@ -6128,7 +6128,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dimension Threshold for Gamma-Positivity of Symmetric Edge Polytopes"
   },
   {
-    "consumed_by_exp_id": "e3b1b1a2",
+    "consumed_by_exp_id": "",
     "description": "For the fixed genus chord swap Markov chain on chord diagrams with n chords and genus g, the spectral gap \u03b3_{n,g} satisfies \u03b3_{n,g} = \u0398(n^{-3}) when g is fixed and n \u2192 \u221e. This sharpens the paper's polynomial lower bound to a precise exponent and matches the n^{-3} scaling observed in related swap chains on perfect matchings.",
     "domains": [
       "Physics"
@@ -6137,7 +6137,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T00:02:19.658603+00:00",
     "title": "Tight spectral gap exponent for the fixed-genus chord swap chain"
   },
@@ -6375,11 +6375,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every doubly regular tournament on n vertices (where n \u2261 3 mod 4 and n \u2265 3), the metric dimension \u03b2(G) is at most \u23083\u00b7log\u2082(n)\u2309. This provides an explicit constant in the O(log n) bound established for related families in the paper, extending the probabilistic method of Babai to the directed tournament setting with a constructive resolvability guarantee.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_0518",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05152v1",
+    "status": "available",
+    "timestamp": "2026-07-07T05:40:17.241598+00:00",
+    "title": "Explicit logarithmic bound on metric dimension of doubly regular tournaments"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any field K with char(K) \u2260 2 and quadratic polynomials v, w \u2208 K[x], the classical Wronskian v'w - vw' is exactly equal to the derivative-free Remainder-Polynomial Route (RPR) formulation. Specifically, v'w - vw' = 2x \u00b7 Sres\u2081(v, w) + (v\u2081w - w\u2081v), where Sres\u2081(v,w) = v\u2082w - w\u2082v is the first subresultant of v and w, and v\u1d62, w\u1d62 are the coefficients of x\u2071 in v, w respectively. This identity generalizes symmetrically to the full Richelot triple (U, V, W), proving that RPR yields identical codomain polynomials not merely up to scalar units, but as an exact polynomial equality.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0518",
+    "id": "fd_0519",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03376v1",
@@ -6393,7 +6407,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0519",
+    "id": "fd_0520",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03500v1",
@@ -6408,7 +6422,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0520",
+    "id": "fd_0521",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03354v1",
@@ -6422,7 +6436,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0521",
+    "id": "fd_0522",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03388v1",
@@ -6436,7 +6450,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0522",
+    "id": "fd_0523",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05067v1",
@@ -6450,13 +6464,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0523",
+    "id": "fd_0524",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05233v1",
     "status": "available",
     "timestamp": "2026-07-07T05:05:28.072260+00:00",
     "title": "Exact Enumeration of Lozenge Tilings of Triangular Regions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The maximum number of arcs in a loopless digraph on n vertices (allowing anti-parallel arcs) without a directed triangle is floor(n^2/2). This is the key combinatorial lemma (Theorem 1.1) from the paper, which bypasses the measure-theoretic difficulties of Bukh's original conjecture while capturing the core extremal insight.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0525",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05083v1",
+    "status": "available",
+    "timestamp": "2026-07-07T05:41:22.365492+00:00",
+    "title": "Directed Mantel's Theorem for Loopless Digraphs"
   },
   {
     "consumed_by_exp_id": "",
