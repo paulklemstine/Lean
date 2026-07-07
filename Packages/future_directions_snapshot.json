@@ -12396,6 +12396,63 @@
     "title": "Fricke Bridge Resultant Identity"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "math.MG",
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "There exist absolute constants $\\delta > 0$ and $C > 0$ such that for every integer $n \\ge 1$, there exists a finite set $P \\subset \\mathbb{R}^2$ of $n$ points with the following property: for every subset $A \\subseteq P$ of size at least 2, the maximum multiplicity of a nonzero distance in $A$ is at least $C |A|^2 / n^{1-\\delta}$.",
+    "domain_bridges": [
+      "finite_set",
+      "euclidean_distance",
+      "real_numbers",
+      "cardinality"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0540",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct the point set P using number fields of high degree to vertically amplify the Ramanujan estimate, and bound the distance multiplicity for all subsets using a combinatorial large sieve method over the Minkowski grid.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05374v1",
+    "status": "available",
+    "timestamp": "2026-07-07T10:10:16.631333+00:00",
+    "title": "Robust Distance Multiplicity in Minkowski Grids"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "Bernshteyn DP-coloring",
+      "Johansson-Molloy theorem",
+      "semi-random nibble method"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every fixed integer r ≥ 2 and every ε > 0, there exists Δ₀ = Δ₀(r, ε) such that for all Δ ≥ Δ₀, every uncrowded (r+1)-uniform hypergraph of maximum degree Δ has DP-chromatic number at most (1+ε)(rΔ/log Δ)^{1/r}. This extends the paper's main theorem from list coloring to DP-coloring (correspondence coloring), paralleling Bernshteyn's extension of the Johansson–Molloy theorem for triangle-free graphs.",
+    "domain_bridges": [
+      "probabilistic combinatorics",
+      "hypergraph theory",
+      "DP-coloring / correspondence coloring"
+    ],
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_0540",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt the paper's semi-random nibble on the original hypergraph to the DP-coloring (cover) setting. Replace the list-coloring nibble step with a DP-coloring nibble where each vertex maintains a set of available cover-nodes, tracking active edge-color constraints as in the paper. The Rosenfeld-style counting argument for the sparse terminal state must be generalized to count independent transversals in the cover graph rather than proper list colorings, using a Lopsided Lovász Local Lemma or entropy-based argument for the completion phase.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05256v1",
+    "status": "available",
+    "timestamp": "2026-07-07T10:10:41.479139+00:00",
+    "title": "DP-Chromatic Number of Uncrowded Hypergraphs Matches the List Chromatic Bound"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
