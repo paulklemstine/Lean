@@ -1864,34 +1864,6 @@
     "title": "Derived p-completeness of sheared Witt vectors ensures Dieudonné theory extension"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "KMR13",
-      "KMR14",
-      "PT25"
-    ],
-    "consumed_by_exp_id": "579c097e",
-    "description": "Conjecture that for a fixed elliptic curve E over Q and an odd prime p, the proportion of p-cyclic extensions L/Q (ordered by discriminant) for which the p-Selmer rank increment equals k converges to (1-1/p)·(1/p)^k as the discriminant bound tends to infinity.",
-    "domain_bridges": [
-      "EllipticCurves",
-      "SelmerGroups",
-      "CyclicExtensions"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Geometry"
-    ],
-    "id": "fd_0102",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "analytic_number_theory combined with probabilistic model of Selmer groups",
-    "research_mode": "team",
-    "source_exp_id": "2607.01126v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T22:37:45.370140+00:00",
-    "title": "Distribution of p-Selmer rank increments in p-cyclic extensions"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "arXiv:2509.12345"
@@ -3884,32 +3856,6 @@
     "title": "Locality of supersingular representations of GL_2 over unramified extensions of Q_p"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "Babson et al. (2013), Atkins & Gwilliam",
-      "Carranza & Kapulkin (2008)"
-    ],
-    "consumed_by_exp_id": "d93b0c72",
-    "description": "This paper proposes a combinatorial framework to describe the discrete homotopy groups of quasisymmetric cubical sets, extending prior work by Carranza and Kapulkin. It aims to provide a formally verified, leveraging Lean 4, synthetic proof of isomorphism between the homotopy groups of the geometric realization and those of the underlying cubical configuration.",
-    "domain_bridges": [
-      "Combinatorial mathematics",
-      "Combinatorial topology"
-    ],
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0201",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Combinatorial construction followed by inductive argument and verifiable lemmas",
-    "research_mode": "team",
-    "source_exp_id": "2606.28693v2",
-    "status": "in_progress",
-    "timestamp": "2026-07-04T13:25:20.641906+00:00",
-    "title": "Discrete homotopy groups of quasisymmetric cubical sets"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "Lassak's conjecture on area-thickness bounds for reduced bodies"
@@ -3997,7 +3943,7 @@
       "FPT Algorithms",
       "Clique-width"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "046a0495",
     "description": "We conjecture that the Maximum Edge Open Packing Problem is solvable in polynomial time for chordal bipartite graphs, leveraging their intersection of chordality and bipartiteness. The proof strategy involves a dynamic programming approach based on a clique-width decomposition, utilizing the graph's structure to manage conflicts efficiently.",
     "domain_bridges": [
       "biconvex bipartite graphs",
@@ -4013,7 +3959,7 @@
     "proof_strategy": "A clique-width-based decomposition of chordal bipartite graphs combined with a dynamic programming algorithm to count non-conflicting edge sets. The decomposition ensures that conflicts are localized to small substructures, enabling efficient computation.",
     "research_mode": "team",
     "source_exp_id": "2606.28599v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T16:18:57.324227+00:00",
     "title": "Maximum Edge Open Packing in Chordal Bipartite Graphs"
   },
@@ -5038,7 +4984,7 @@
       "math.NT: 11G18",
       "arXiv:2405.12345"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "782351e0",
     "description": "Conjecture: In the unramified GU(1,n-1) Rapoport‑Zink space of arbitrary parahoric level P, every basic Ekedahl‑Kottwitz‑Oort‑Rapoport (EKOR) stratum is isomorphic (as a scheme over the residue field 𝔽_q) to a finite disjoint union of copies of a explicitly defined fine Deligne‑Lusztig variety X(w_P) attached to a Weyl group element w_P determined by P. Moreover, the number of irreducible components equals the number of vertices in the affine Dynkin diagram of type Ã_{n-1} corresponding to the parahoric subgroup P, and each component is smooth and projective.",
     "domain_bridges": [
       "Representation Theory",
@@ -5055,7 +5001,7 @@
     "proof_strategy": "Use the description of EKOR strata via G‑zips and mixed‑characteristic local shtukas to identify the basic stratum with a quotient of a Deligne‑Lusztig variety by a finite group action. Then apply the Künneth formula for ℓ‑adic cohomology and the known point‑count formulas for Deligne‑Lusztig varieties to compute the number of geometric components. Finally, invoke the smoothness criterion for Schubert varieties in the affine flag manifold to deduce smoothness of each component.",
     "research_mode": "team",
     "source_exp_id": "2606.31940v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T15:54:12.765581+00:00",
     "title": "Basic EKOR Strata are Disjoint Unions of Fine Deligne-Lusztig Varieties"
   },
@@ -8671,7 +8617,7 @@
       "vertex cover",
       "graph modifications"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b3ed6051",
     "description": "There exists a graph G without a cycle of length d such that at least cd n edge deletions are required to transform G into a graph where each connected component has a vertex cover of size at most (1+c)d.",
     "domain_bridges": [
       "Stability theory in graph algorithms",
@@ -8686,7 +8632,7 @@
     "proof_strategy": "Construct a specific graph achieving the lower bound via Pokrovskiy's structure theorem",
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T20:11:01.715515+00:00",
     "title": "Tightness of Edge Deletion Bound in Hyperstability Extension of Erdős-Gallai Theorem"
   },
@@ -12003,35 +11949,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
-      "math.NT",
-      "Hasse_principle",
-      "Thue_equation",
-      "binary_forms"
-    ],
-    "consumed_by_exp_id": "19191ea2",
-    "description": "For every integer n ≥ 3, there exists a constant c_n > 0 such that for every positive integer m, the density of primitive maximal binary forms of degree n (ordered by height) that simultaneously fail the integral Hasse principle for all F(x,y) = h with 1 ≤ h ≤ m is at least c_n / m^{n−2}. This refines the paper's result that this density is merely positive for each fixed m, conjecturing an explicit polynomial decay rate in m governed by the degree.",
-    "domain_bridges": [
-      "analytic_number_theory",
-      "algebraic_geometry",
-      "p_adic_analysis"
-    ],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0535",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Extend the Akhtari-Bhargava construction by tracking the m-dependence in the local solubility conditions and the Győry-type upper bounds on Thue inequality solutions. The key is to show that the proportion of forms excluded by each additional constraint h = k (for k ≤ m) shrinks as O(1/k^{n-1}), so the cumulative constraint for all h ≤ m leaves a proportion of order 1/m^{n-2}. This requires uniform estimates on the density of forms with prescribed local behavior at finitely many primes, combined with the sieving framework already present in the paper.",
-    "research_mode": "team",
-    "source_exp_id": "2607.05234v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T06:17:00.580529+00:00",
-    "title": "Polynomial Decay of Simultaneous Hasse Principle Failure Density in Thue Equations"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
       "Weierstrass_product_theorem",
       "Ring_of_integers",
       "Effective_divisor",
@@ -12394,6 +12311,35 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Pan_2011",
+      "Crocker_1961",
+      "Erdos_covering_systems",
+      "Stewart_cyclotomic"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that the count N(x) of odd integers up to x not representable as p+2^a+2^b is at least x * exp(-(4+η) * (logloglogx / loglogx) * logx). This conjecture posits that the constant 4 in the exponent is an artifact of the Fermat number construction and can be replaced by any arbitrarily small epsilon > 0, yielding a lower bound of x * exp(-ε * (logloglogx / loglogx) * logx). This would substantially bridge the gap to Erdős's grand challenge conjecture that N(x) > c_0 * x for some constant c_0 > 0.",
+    "domain_bridges": [
+      "additive_combinatorics",
+      "analytic_number_theory",
+      "diophantine_approximation"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Bridges"
+    ],
+    "id": "fd_0549",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Improve the covering congruence system construction by replacing the reliance on Fermat numbers with a more general system of cyclotomic polynomials or finding a denser set of congruences that reduces the multiplicative constant penalty from 4 to an arbitrarily small epsilon.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05357v1",
+    "status": "available",
+    "timestamp": "2026-07-07T13:48:50.799030+00:00",
+    "title": "Epsilon-Constant Reduction for Odd Integers Not of the Form p+2^a+2^b"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.MG",
       "math.CO",
       "magnitude_of_metric_spaces",
@@ -12412,7 +12358,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0549",
+    "id": "fd_0550",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Exploit the energy minimization characterization: the microscopic weighting minimizes the energy integral E(w) = Σ w(x)w(y)d(x,y) over signed measures of total mass 1. For trees, the distance matrix has recursive structure amenable to leaf-removal induction. Show that any signed measure of mass 1 on a tree with a negative-weight vertex can be modified to decrease energy, contradicting optimality. Alternatively, use the Schoenberg embedding characterization: the microscopic weighting corresponds to the closest point to the origin in the affine hull of the embedded vertices, and for trees this convex hull might be shown to contain the origin's projection with all positive barycentric coordinates.",
@@ -12439,7 +12385,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0550",
+    "id": "fd_0551",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The upper bound μ₂ ≤ 1+ρ follows from the paper's construction and Proposition 1 on cyclic factor avoidance. The lower bound μ₂ ≥ 1+ρ requires showing that no infinite sequence of cuts can achieve a ratio strictly less than 1+ρ. This likely requires analyzing the combinatorial constraints on infinite words over the alphabet {0,1,2,3} with ratios 1:ρ:ρ²:ρ³, proving that any such word avoiding equal adjacent letters must contain a portion with ratio at least (1+ρ)/(ρ²+ρ³) = 1+ρ. A potential approach uses the substitution system properties: the map sending 0↦23 (or 32), 1↦0, 2↦1, 3↦2 shows that any valid infinite sequence must eventually approximate the fixed point, forcing portions near the extremal ratio.",
@@ -12466,7 +12412,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0551",
+    "id": "fd_0552",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize simplicial complexes and vertex decomposability in Lean, then define PF_t(G) as the simplicial complex of vertex subsets with no induced P_t. Define complete multipartite graphs and their part-size ordering. The forward direction (t ≥ 2n_{m-1}-1 ⟹ vertex decomposable) requires formalizing the explicit structural decomposition of PF_t(G) as a union of join complexes with a size-truncation term, then proving each join component is vertex decomposable and that the union preserves this property. The reverse direction (t ≤ 2n_{m-1}-2 ⟹ not sequentially Cohen-Macaulay) requires constructing a specific non-Cohen-Macaulay witness face or showing the homology fails the sequential Cohen-Macaulay condition, potentially via a Mayer-Vietoris spectral sequence argument.",
@@ -12475,6 +12421,31 @@
     "status": "available",
     "timestamp": "2026-07-07T13:11:19.325737+00:00",
     "title": "Vertex decomposability threshold for path-free complexes of complete multipartite graphs"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "A000031 (necklaces with 2 colors)",
+      "A001037 (Lyndon words with 2 colors)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The number of length-n quasinecklaces Q_k(n) is exactly k times the number of length-n necklaces N_k(n) for all k ≥ 2 and n ≥ 1.",
+    "domain_bridges": [
+      "Constant-amortized-time algorithms",
+      "Combinatorial superset properties"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0553",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Demonstrate that each necklace corresponds to exactly k quasinecklaces via rotational symmetry or quasinecklace construction rules.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05324v1",
+    "status": "available",
+    "timestamp": "2026-07-07T13:52:08.430147+00:00",
+    "title": "Proportionality of quasinecklaces to necklaces"
   },
   {
     "ambition_level": "extension",
