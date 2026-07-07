@@ -575,8 +575,8 @@ class QualityEvaluator:
                         f"Return ONLY a float between 0.0 and 1.0 representing the novelty score (1.0 = highly novel, 0.0 = completely derivative). "
                         f"Do not return any other text."
                     )
-                    # We pass simple system prompt directly or let _call_llm handle it
-                    response = self.pi_agent._call_llm(prompt, temperature=0.0)
+                    # We pass simple system prompt directly or let _call_ollama handle it
+                    response = self.pi_agent._call_ollama("", prompt, category="other")
                     try:
                         import ast
                         llm_score = float(ast.literal_eval(response.strip()))

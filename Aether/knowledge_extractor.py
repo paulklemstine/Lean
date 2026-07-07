@@ -1147,8 +1147,13 @@ Research mode: {concept.research_mode}
             for fpath in phase_a_files:
                 p = Path(fpath)
                 if not p.is_absolute():
-                    # integrated_paths are relative to repo root (e.g., "Catalog/Algebra/Foo.lean")
-                    p = self.catalog_root.parent / p
+                    # integrated_paths are Catalog-relative (the "Catalog/" prefix
+                    # was stripped by _authorize_integration_path). Resolve
+                    # against catalog_root, NOT repo root.
+                    if str(fpath).startswith("Catalog/"):
+                        p = self.catalog_root.parent / fpath
+                    else:
+                        p = self.catalog_root / fpath
                 if p.exists():
                     files_to_copy.append(p)
             print(f"[Project] Phase B detected: pruning workspace to {len(files_to_copy)} files from Phase A")

@@ -2317,12 +2317,14 @@ class PiAgentClient:
 
         deliverables_block = textwrap.dedent("""\
             ### Deliverables & Acceptance Criteria
-            1. **Lean 4 files** (1–3 files in the appropriate `Catalog/<domain>/` subtree).
-               - Target 5–10 fully proved theorems per file. More theorems = higher quality.
+            1. **Lean 4 files** (1–2 files in the appropriate `Catalog/<domain>/` subtree).
+               - **Prove exactly 1–2 deep theorems** with full proofs and detailed Lab Notes.
+                 Focus ALL your compute on depth, not breadth. One fully proved deep theorem
+                 with non-trivial insight beats 50 truncated stubs.
+               - **Do NOT produce more than 2 main theorems.** If you finish 2 theorems
+                 with complete proofs, STOP. Do not start a third.
                - **Every theorem MUST be fully proved** — 0 sorries, no stubbed signatures,
-                 no mid-proof cutoffs, no truncated declarations. Complete every proof
-                 before moving to the next theorem. If you run low on budget, prove
-                 fewer theorems completely rather than many theorems partially.
+                 no mid-proof cutoffs, no truncated declarations.
                - Each file must be **self-contained** (compiles independently with its imports).
                - Each file must contain `-- !-- Lab Notes -- !--` blocks documenting
                  the team loop: Hypothesis, Experiment, Analysis, Critique, Synthesis.
@@ -2342,6 +2344,7 @@ class PiAgentClient:
             - Truncated proofs, stubbed signatures, or incomplete theorem declarations.
             - Any `sorry` in a main theorem (auxiliary lemmas may use sorry ONLY if
               clearly marked as work-in-progress in Lab Notes).
+            - More than 2 main theorems. Quality over quantity.
         """)
 
         prompt = textwrap.dedent(f"""\
@@ -2630,12 +2633,14 @@ class PiAgentClient:
 
         deliverables_block = textwrap.dedent("""\
             ### Deliverables & Acceptance Criteria
-            1. **Lean 4 files** (1–3 files in the appropriate `Catalog/<domain>/` subtree).
-               - Target 5–10 fully proved theorems per file. More theorems = higher quality.
+            1. **Lean 4 files** (1–2 files in the appropriate `Catalog/<domain>/` subtree).
+               - **Prove exactly 1–2 deep theorems** with full proofs and detailed Lab Notes.
+                 Focus ALL your compute on depth, not breadth. One fully proved deep theorem
+                 with non-trivial insight beats 50 truncated stubs.
+               - **Do NOT produce more than 2 main theorems.** If you finish 2 theorems
+                 with complete proofs, STOP. Do not start a third.
                - **Every theorem MUST be fully proved** — 0 sorries, no stubbed signatures,
-                 no mid-proof cutoffs, no truncated declarations. Complete every proof
-                 before moving to the next theorem. If you run low on budget, prove
-                 fewer theorems completely rather than many theorems partially.
+                 no mid-proof cutoffs, no truncated declarations.
                - Each file must be **self-contained** (compiles independently with its imports).
                - Each file must contain `-- !-- Lab Notes -- !--` blocks documenting
                  the team loop: Hypothesis, Experiment, Analysis, Critique, Synthesis.
@@ -2655,6 +2660,7 @@ class PiAgentClient:
             - Truncated proofs, stubbed signatures, or incomplete theorem declarations.
             - Any `sorry` in a main theorem (auxiliary lemmas may use sorry ONLY if
               clearly marked as work-in-progress in Lab Notes).
+            - More than 2 main theorems. Quality over quantity.
         """)
 
         prompt = textwrap.dedent(f"""\
