@@ -32,7 +32,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lower Bound for Low Moments of Dirichlet Character Sums"
   },
   {
-    "consumed_by_exp_id": "33467c07",
+    "consumed_by_exp_id": "",
     "description": "There exists a finite set of vectors in l\u00b2 satisfying specific convolution inequalities such that their weighted average achieves the coefficient \u03b3\u2080=0.94601 in the bound F(N) \u2264 N^{1/2} + \u03b3\u2080N^{1/4} + O(1), and no smaller coefficient is achievable via this method.",
     "domains": [
       "Bridges"
@@ -41,7 +41,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T06:22:13.488931+00:00",
     "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
   },
@@ -323,7 +323,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "No solutions for odd exponents in the coprime case"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5056d274",
     "description": "Conjecture that for any normalized Hecke eigenform f of even weight for SL(2,Z), any integer j \u2265 1, and any even m with 2 \u2264 m \u2264 12, the number of sign changes of the j-th symmetric power L-function coefficient \u03bb_sym^j f(n) as n runs over integers representable as a sum of m squares up to x is at least C\u00b7x/(log x) for some constant C>0 depending only on f, j, and m.",
     "domains": [
       "Pythagorean"
@@ -332,7 +332,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T17:31:40.243045+00:00",
     "title": "Sign changes of symmetric power L-function coefficients along sums of squares"
   },
@@ -6027,7 +6027,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Convex Semialgebraicity of Centerpoint Sets for Convex Semialgebraic Bodies"
   },
   {
-    "consumed_by_exp_id": "c20f970f",
+    "consumed_by_exp_id": "",
     "description": "Let $n \\ge 11$ be a natural number with binary expansion $n = 2^{a_1} + 2^{a_2} + \\dots + 2^{a_t}$ where $a_1 > a_2 > \\dots > a_t \\ge 0$. Let $\\Delta(n,k)$ be the set of non-hook partitions of $n$ with at most $k$ parts, and let $\\Omega_2(n)$ be the set of partitions labelling the irreducible constituents of the Sylow 2-permutation character of $S_n$. Then $\\Delta(n,k) \\subseteq \\Omega_2(n)$ if and only if $k \\le a_1 + t - 1$.",
     "domains": [
       "Algebra"
@@ -6036,7 +6036,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T21:37:11.871492+00:00",
     "title": "Non-Hook Partition Bound for Sylow 2-Permutation Characters"
   },
@@ -6461,11 +6461,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a stable range dual pair (G', G) with G the smaller compact member (excluding (O_{2n,2n}, Sp_{2n})), every irreducible unitary representation \u03c0 of G has a nonzero theta lift \u03b8(\u03c0) that is also an irreducible unitary representation of G'. This is the compact-group specialization of Li's theorem (Theorem 2.2 in the paper), where the convergence and non-negativity of the Li form (Eq. 2) are automatic, yielding a clean statement: the full unitary dual of G embeds into the unitary dual of G' via theta correspondence.",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_0526",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.04933v1",
+    "status": "available",
+    "timestamp": "2026-07-07T10:23:55.607487+00:00",
+    "title": "Stable range theta lift preserves unitarity for compact smaller groups"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any field K with char(K) \u2260 2 and quadratic polynomials v, w \u2208 K[x], the classical Wronskian v'w - vw' is exactly equal to the derivative-free Remainder-Polynomial Route (RPR) formulation. Specifically, v'w - vw' = 2x \u00b7 Sres\u2081(v, w) + (v\u2081w - w\u2081v), where Sres\u2081(v,w) = v\u2082w - w\u2082v is the first subresultant of v and w, and v\u1d62, w\u1d62 are the coefficients of x\u2071 in v, w respectively. This identity generalizes symmetrically to the full Richelot triple (U, V, W), proving that RPR yields identical codomain polynomials not merely up to scalar units, but as an exact polynomial equality.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0526",
+    "id": "fd_0527",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03376v1",
@@ -6479,7 +6494,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0527",
+    "id": "fd_0528",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03500v1",
@@ -6494,7 +6509,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0528",
+    "id": "fd_0529",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03354v1",
@@ -6508,7 +6523,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0529",
+    "id": "fd_0530",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03388v1",
@@ -6522,7 +6537,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0530",
+    "id": "fd_0531",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05067v1",
@@ -6536,7 +6551,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0531",
+    "id": "fd_0532",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05233v1",
@@ -6551,7 +6566,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0532",
+    "id": "fd_0533",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05083v1",
@@ -6566,7 +6581,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0533",
+    "id": "fd_0534",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05234v1",
@@ -6581,7 +6596,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0534",
+    "id": "fd_0535",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05213v1",
@@ -6596,7 +6611,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0535",
+    "id": "fd_0536",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.04999v1",
@@ -6611,7 +6626,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Tropical"
     ],
-    "id": "fd_0536",
+    "id": "fd_0537",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.04960v1",
@@ -6625,7 +6640,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0537",
+    "id": "fd_0538",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05027v1",
@@ -6640,7 +6655,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0538",
+    "id": "fd_0539",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05043v1",
@@ -6655,13 +6670,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_0539",
+    "id": "fd_0540",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05028v1",
     "status": "available",
     "timestamp": "2026-07-07T09:50:23.449450+00:00",
     "title": "Fricke Bridge Resultant Identity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let G be a finite group and let \u03c3 be a cyclic permutation of G representing a directed Hamiltonian cycle. If left translations by a and b both preserve the undirected cycle (i.e., L_a \u2218 \u03c3 \u2218 L_a^{-1} \u2208 {\u03c3, \u03c3^{-1}} and L_b \u2218 \u03c3 \u2218 L_b^{-1} \u2208 {\u03c3, \u03c3^{-1}}), and the order of a is at least 3, then b conjugates a to either a or a^{-1} (i.e., b * a * b^{-1} \u2208 {a, a^{-1}}).",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_0541",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.04658v1",
+    "status": "available",
+    "timestamp": "2026-07-07T10:24:39.371499+00:00",
+    "title": "Cyclic-Order Rigidity for Hamiltonian Cycles in Finite Groups"
   },
   {
     "consumed_by_exp_id": "",

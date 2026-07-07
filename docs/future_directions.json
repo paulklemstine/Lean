@@ -600,7 +600,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "33467c07",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -631,7 +631,7 @@
       "source": "",
       "source_exp_id": "2607.01169v1",
       "source_path": "http://arxiv.org/abs/2607.01169v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-02T06:22:13.488931+00:00",
       "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
@@ -1810,13 +1810,13 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.NT"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "5056d274",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -1832,7 +1832,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0039",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-07T10:24:44.307059+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sign_changes_sym_power_L_coeff_sums_of_squares\n  {λ : ℕ → ℝ} (hλ_multiplicative : Multiplicative λ) (hλ_bound : ∀ ε > 0, ∀ n : ℕ, n ≥ 1 → |λ n| ≤ n^ε)\n  (j : ℕ) (hm : Even m ∧ 2 ≤ m ∧ m ≤ 12) :\n  ∃ (C : ℝ), C > 0 ∧ ∀ (x : ℝ), x ≥ 2 →\n    (Nat.card { n : ℕ | n ≤ ⌊x⌋ ∧ IsSumOfSquares m n ∧ λ n * λ (n + 1) < 0 }) ≥ C * x / Real.log x := by\n  sorry",
       "lineage_refs": [],
@@ -1847,7 +1847,7 @@
       "source": "",
       "source_exp_id": "2606.30603v1",
       "source_path": "http://arxiv.org/abs/2606.30603v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-02T17:31:40.243045+00:00",
       "title": "Sign changes of symmetric power L-function coefficients along sums of squares"
@@ -19973,7 +19973,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.CO",
         "infinite log-concavity",
@@ -19997,7 +19997,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0419",
-      "last_attempt_time": "2026-07-07T09:50:50.353339+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Algebra.BigOperators.Group.Finset.Basic\nimport Mathlib.Data.Nat.Choose.Basic\nimport Mathlib.Tactic\n\n-- Placeholder for the d-Hoggatt entry det(binomial(n+i, k+j))\ndef hoggattEntry (d n k : ℕ) : ℤ := 0\n\n-- Total d-Hoggatt number H_d(n)\ndef totalHoggatt (d n : ℕ) : ℤ :=\n  (Finset.range (n + 1)).sum fun k => hoggattEntry d n k\n\n-- Log-concavity operator on sequences\n@[simp]\ndef logConcavityOp (a : ℕ → ℝ) : ℕ → ℝ := fun n => (a n)^2 - a (n - 1) * a (n + 1)\n\n-- Infinite log-concavity of total Hoggatt numbers\ntheorem infinite_log_concavity_total_hoggatt (d m : ℕ) (n : ℕ) (hn : 1 ≤ n) :\n    (logConcavityOp^[m] (fun k => (totalHoggatt d k : ℝ))) n ≥ 0 := by\n  sorry",
       "lineage_refs": [],
@@ -22260,7 +22260,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Erdős-Gallai theorem",
         "hyperstability",
@@ -22284,7 +22284,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0466",
-      "last_attempt_time": "2026-07-07T09:50:39.208052+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hyperstability_erdos_gallai {V : Type*} [Fintype V] [DecidableEq V]\n    (c : ℝ) (hc : 0 < c) :\n    ∃ K : ℕ, ∀ d ≥ K, ∀ (G : SimpleGraph V) [DecidableRel G.Adj],\n      (2 * G.edgeFinset.card : ℝ) / (Fintype.card V : ℝ) = (d : ℝ) →\n      (∀ l ≥ d, ∀ C : List V, ¬G.IsCycle C l) →\n      ∃ H ≤ G,\n        (G.edgeFinset.card - H.edgeFinset.card : ℕ) ≤ ⌈c * d * (Fintype.card V : ℝ)⌉₊ ∧\n        ∀ C (hC : H.ConnectedComponent C),\n          ∃ vc : Finset V,\n            vc.card ≤ ⌈(1 + c) * d⌉₊ ∧\n            ∀ e ∈ H.edgeSet, (e.1 ∈ vc ∨ e.2 ∈ vc)",
       "lineage_refs": [],
@@ -23761,7 +23761,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "c20f970f",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -23792,7 +23792,7 @@
       "source": "",
       "source_exp_id": "2607.02433v1",
       "source_path": "http://arxiv.org/abs/2607.02433v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-06T21:37:11.871492+00:00",
       "title": "Non-Hook Partition Bound for Sylow 2-Permutation Characters"
@@ -24911,7 +24911,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.CO",
         "Gessel_Latin_rectangles",
@@ -24936,7 +24936,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0520",
-      "last_attempt_time": "2026-07-07T09:50:29.270210+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem multivariate_vandermonde (m a d : ℕ) :\n    (∑ f in compositions_of_size d m,\n      ∏ i : Fin m, Nat.choose (a + f i) (f i))\n    = Nat.choose (m * a + d + m - 1) d := by\n  sorry",
       "lineage_refs": [],
@@ -25211,6 +25211,55 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.RT",
+        "math.NT",
+        "math.OA"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For a stable range dual pair (G', G) with G the smaller compact member (excluding (O_{2n,2n}, Sp_{2n})), every irreducible unitary representation π of G has a nonzero theta lift θ(π) that is also an irreducible unitary representation of G'. This is the compact-group specialization of Li's theorem (Theorem 2.2 in the paper), where the convergence and non-negativity of the Li form (Eq. 2) are automatic, yielding a clean statement: the full unitary dual of G embeds into the unitary dual of G' via theta correspondence.",
+      "domain_bridges": [
+        "C*-algebras and Hilbert C*-modules",
+        "Harmonic analysis on reductive groups",
+        "Symplectic representations and dual pairs"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Bridges"
+      ],
+      "github_issue": 0,
+      "id": "fd_0526",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem stable_range_theta_lift_preserves_unitarity\n    {F : Type*} [CommRing F]\n    {G' G : Type*} [TopologicalSpace G'] [TopologicalSpace G]\n    [CompactSpace G]\n    [MeasurableSpace G'] [MeasurableSpace G]\n    (dual_pair : StableRangeDualPair G' G)\n    (not_exceptional : ¬IsExceptionalPair G' G)\n    (π : IrreducibleUnitaryRep G) :\n    Nonempty (IrreducibleUnitaryRep G') ∧\n    ∀ (θ_π : UnitaryRep G'), IsThetaLift θ_π (dual_repr π) →\n      IsIrreducible θ_π ∧ IsUnitary θ_π := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize the Li form on S(U) ⊗ V_π^∞ for compact G, prove convergence via compactness (continuous integrand on compact domain), establish G'-invariance and non-negativity, show L(π) ≠ 0 using the stable range isotropic subspace dimension condition, then invoke the algebraic characterization of theta lift as maximal semisimple quotient of big theta lift (Proposition 2.1) to conclude L(π) ≅ θ(π*).",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.04933v1",
+      "source_path": "http://arxiv.org/abs/2607.04933v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-07T10:23:55.607487+00:00",
+      "title": "Stable range theta lift preserves unitarity for compact smaller groups"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.NT",
         "cs.SC"
       ],
@@ -25230,7 +25279,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0526",
+      "id": "fd_0527",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Algebra.Polynomial.Basic\nimport Mathlib.Algebra.Polynomial.Derivative\n\nvariable {K : Type*} [Field K] (v w : K[X])\n\ntheorem rpr_exact_identity (hchar : (2 : K) ≠ 0) (hv : v.natDegree ≤ 2) (hw : w.natDegree ≤ 2) :\n    Polynomial.deriv v * w - v * Polynomial.deriv w =\n    2 * (Polynomial.X : K[X]) * (v.coeff 2 • w - w.coeff 2 • v) +\n    (v.coeff 1 • w - w.coeff 1 • v) := by\n  sorry",
@@ -25280,7 +25329,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0527",
+      "id": "fd_0528",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem svd_generalized_star_config_eq_lcm_range\n    {k : Type*} [Field k] {n h : ℕ} (hn : h < n)\n    (forms : Fin n → Polynomial k)\n    (hreg : ∀ s : Finset (Fin n), s.card = h → IsRegularSeq (s.map forms))\n    (I : Ideal (Polynomial k))\n    (hI : I = ⨅ s : Finset (Fin n), (_ : s.card = h) → Ideal.span (s.map forms)) :\n    svd I = Finset.lcm (Finset.Icc 1 h) id :=\n  sorry",
@@ -25328,7 +25377,7 @@
         "Computation"
       ],
       "github_issue": 0,
-      "id": "fd_0528",
+      "id": "fd_0529",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ergodicity_of_berggren_system {Q : TernaryQuadraticForm ℤ} (h_nondeg : Q.Nondegenerate) (h_has_rational_point : ∃ p : Fin 3 → ℚ, Q.eval p = 0 ∧ p ≠ 0) : Ergodic (berggren_map Q) (berggren_invariant_measure Q) := by\n  sorry",
@@ -25374,7 +25423,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0529",
+      "id": "fd_0530",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem full_brouwer_conjecture\n    (n m k : ℕ) (G : SimpleGraph (Fin n)) (h_m : G.edgeCount = m) (h_k : 0 < k ∧ k < n) :\n    sum_k_largest_laplacian_eigenvalues G k = m + (k + 1) * k / 2 ↔\n    IsThresholdGraph G ∧ CliqueNumber G = k + 1 := by sorry",
@@ -25422,7 +25471,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0530",
+      "id": "fd_0531",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem point_imprimitive_PSL2q_designs_finite\n    {q : ℕ} (hq : ∃ p f, q = p ^ f ∧ p.Prime ∧ f ≥ 1) (hq4 : q ≥ 4)\n    {v k λ : ℕ} (D : TwoDesign v k λ) (hD : D.Nontrivial)\n    (G : D.AutomorphismGroup) (hsoc : Socle G ≅ PSL2 q)\n    (hft : G.FlagTransitive D) (himpr : G.PointImprimitive D) :\n    v ∈ {15, 36, 85}",
@@ -25467,7 +25516,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0531",
+      "id": "fd_0532",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tiling_count_Tn_formula (n : ℕ) (hn : 0 < n) :\n  tilingCount n = Finset.prod {ab : ℕ × ℕ // ab.1 ≤ 3*n+2 ∧ ab.2 ≤ 3*n+2 ∧ ab.1 < ab.2 ∧ ab ≠ (n+1, 2*n+2)} \n  (fun ab => Real.abs (1 + (zeta (3*n+3)) ab.1 + (zeta (3*n+3)) ab.2) ^ (1 / 3)) := by\n  sorry",
@@ -25514,7 +25563,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0532",
+      "id": "fd_0533",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem directed_mantel {α : Type*} [Fintype α] [DecidableEq α]\n    (r : α → α → Prop) [DecidableRel r]\n    (h_no_loops : ∀ x, ¬ r x x)\n    (h_no_dir_tri : ∀ x y z, r x y → r y z → r z x → False) :\n    (∑ x, ∑ y, if r x y then (1 : ℕ) else 0) ≤ (Fintype.card α)^2 / 2 :=\n  by sorry",
@@ -25564,7 +25613,7 @@
         "Computation"
       ],
       "github_issue": 0,
-      "id": "fd_0533",
+      "id": "fd_0534",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "conjecture hasse_principle_failure_density {n : ℕ} (hn : n ≥ 3) :\n  ∃ c : ℝ, c > 0 ∧ ∀ m : ℕ, m > 0 →\n    let N := primitive_maximal_binary_forms_of_degree_and_height_le n m_\n    let N_fail := forms_failing_integral_hasse_for_all_le n m_\n    liminf (fun X => N_fail X m / N X) ≥ c / m ^ (n - 2)",
@@ -25615,7 +25664,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0534",
+      "id": "fd_0535",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ring_of_integers_divisor_realization {K : Type*} [Field K] [NumberField K] (σ : K →+* ℂ) (D : EffectiveDivisor (Metric.ball (0 : ℂ) 1)) : ∃ (f : FormalPowerSeries ℂ) (h_conv : HasRadiusOfConvergence f 1) (h_holo : IsHolomorphicOn f (Metric.ball 0 1)) (h_coeffs : ∀ n : ℕ, ∃ (a : (𝓞 K)), f.coeff n = σ (a : K)), (zeroDivisor_of_holomorphic f h_holo) = D := by sorry",
@@ -25663,7 +25712,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0535",
+      "id": "fd_0536",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem cluster_parking_homology_iso_diagonal_coinvariants (n : ℕ) (hn : 0 < n) :\n    ∃ (φ : (reducedHomology ℂ (clusterParkingComplex n) (n - 2)) ⊗[ℂ] (signRep ℂ (I2 (n + 2))) ≃ₗ[ℂ] diagonalCoinvariants n),\n      ∀ (g : I2 (n + 2) × Sym n) (x : _),\n        φ (g • x) = g • φ x :=\n  sorry",
@@ -25713,7 +25762,7 @@
         "Tropical"
       ],
       "github_issue": 0,
-      "id": "fd_0536",
+      "id": "fd_0537",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem z0_quasi_shuffle_power_eq_stirling_sum\n    {R : Type*} [CommRing R]\n    (p : ℕ)\n    (z0 : FreeAlgebra R ℤ)  -- generator corresponding to integer 0\n    (quasi_shuffle : FreeAlgebra R ℤ → FreeAlgebra R ℤ → FreeAlgebra R ℤ)\n    (quasi_shuffle_pow : FreeAlgebra R ℤ → ℕ → FreeAlgebra R ℤ)\n    (concat_pow : FreeAlgebra R ℤ → ℕ → FreeAlgebra R ℤ)\n    (h_merge_idem : quasi_shuffle z0 z0 = 2 • (concat_pow z0 2) + z0)\n    (h_pow_def : ∀ w n, quasi_shuffle_pow w n.succ = quasi_shuffle w (quasi_shuffle_pow w n)) :\n    quasi_shuffle_pow z0 p =\n      Finset.sum (Finset.range (p + 1)) fun k =>\n        (Nat.stirling2 p k * k.factorial : R) • concat_pow z0 k := by\n  sorry",
@@ -25762,7 +25811,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0537",
+      "id": "fd_0538",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem bipartite_hole_hamilton_packing_upper_bound (a k : ℕ) (hk : k ≥ 2) (ha : a ≥ 2) :\n    ∀ (G : SimpleGraph V) (n : ℕ), n ≥ 3 → G.bipartite_hole_number ≤ a → G.min_degree ≥ 2*a + 2*k + Nat.ceil (2*(a*k : ℝ) / Real.log (k + 2)) →\n    ∃ (cycles : Fin k → G.HamiltonCycle), cycles.PairwiseDisjointEdge := by\n  sorry",
@@ -25812,7 +25861,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0538",
+      "id": "fd_0539",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem symplectic_diffset_divisible_design {q : ℕ} (hq : Fact (Nat.PrimeFactors q).prod > 0) (t : ℕ) (ht : t > 0) (V : Type*) [Fintype V] [Module (ZMod q) V] (B : V → V → ZMod q) (hB : IsNondegenerateSymplecticForm B) (A : Subgroup (Additive (ZMod q))) (r : ℕ) (hr : A.index = r) (hr_pos : r > 1) (D : Set A.quotient) {v k λ : ℕ} (hD : IsDifferenceSet D v k λ) : IsDivisibleDesignGraph (symplecticDiffSetGraph D B A) := by sorry",
@@ -25862,7 +25911,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0539",
+      "id": "fd_0540",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Algebra.Polynomial.Resultant\nimport Mathlib.Algebra.MvPolynomial.Basic\n\nopen MvPolynomial\n\n/-- The Fricke bridge polynomial Φ(z, X) -/\ndef frickeBridgePoly : MvPolynomial (Fin 2) ℤ :=\n  let z := MvPolynomial.x 0\n  let X := MvPolynomial.x 1\n  729*z^2*X^3 + 3888*z^2*X^2 + 6912*z^2*X + 4096*z^2\n    - 1458*z*X^3 + 22356*z*X^2 - 27648*z*X + 729*X^3\n\ntheorem fricke_bridge_resultant :\n    let R := MvPolynomial (Fin 2) ℤ\n    let z := MvPolynomial.x (0 : Fin 2)\n    let X := MvPolynomial.x (1 : Fin 2)\n    -- f(t) = z*(t+256)^3 - 1728*t^2  as a polynomial in t over R\n    let f : Polynomial R := _\n    -- g(t) = X*(t+64)^2 - 256*t  as a polynomial in t over R\n    let g : Polynomial R := _\n    Polynomial.resultant f g = 2^36 • frickeBridgePoly := by\n  sorry",
@@ -25882,6 +25931,52 @@
       "thread_id": "",
       "timestamp": "2026-07-07T09:50:23.449450+00:00",
       "title": "Fricke Bridge Resultant Identity"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "The Left-Regular Stabilizer of Zaks' Hamiltonian Cycle in the Pancake Graph"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Let G be a finite group and let σ be a cyclic permutation of G representing a directed Hamiltonian cycle. If left translations by a and b both preserve the undirected cycle (i.e., L_a ∘ σ ∘ L_a^{-1} ∈ {σ, σ^{-1}} and L_b ∘ σ ∘ L_b^{-1} ∈ {σ, σ^{-1}}), and the order of a is at least 3, then b conjugates a to either a or a^{-1} (i.e., b * a * b^{-1} ∈ {a, a^{-1}}).",
+      "domain_bridges": [
+        "Group Theory",
+        "Graph Theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Physics"
+      ],
+      "github_issue": 0,
+      "id": "fd_0541",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem cyclic_order_rigidity {G : Type*} [Fintype G] [Group G] [DecidableEq G]\n    (σ : Equiv.Perm G) (hσ : Equiv.Perm.IsCycle σ) (a b : G)\n    (ha : a ≠ 1 ∧ a ^ 2 ≠ 1)\n    (ha_σ : (∀ g, a * σ g = σ (a * g)) ∨ (∀ g, a * σ g = σ⁻¹ (a * g)))\n    (hb_σ : (∀ g, b * σ g = σ (b * g)) ∨ (∀ g, b * σ g = σ⁻¹ (b * g)))\n    : b * a * b⁻¹ = a ∨ b * a * b⁻¹ = a⁻¹ := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Translate the preservation of the undirected Hamiltonian cycle into the condition that left translations conjugate the cyclic permutation σ to either σ or σ^{-1}. Analyze the relation between a and b by evaluating the conjugation relations on the elements of G, using the fact that σ is a full cycle and the order of a is ≥ 3 to restrict the possible conjugation actions of b on a.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.04658v1",
+      "source_path": "http://arxiv.org/abs/2607.04658v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-07T10:24:39.371499+00:00",
+      "title": "Cyclic-Order Rigidity for Hamiltonian Cycles in Finite Groups"
     },
     {
       "ambition_level": "extension",
