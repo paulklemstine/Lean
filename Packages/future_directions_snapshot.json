@@ -12447,6 +12447,63 @@
     "title": "Optimal Constant Conjecture for Uncrowded Hypergraph List Coloring"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "math.PR"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that the list chromatic number of an uncrowded $(r+1)$-uniform hypergraph of maximum degree $\\Delta$ is at most $(1+o(1))(r\\Delta/\\log\\Delta)^{1/r}$. We conjecture that the constant factor $r$ inside the $1/r$-th power can be replaced by 1, yielding a tight upper bound of $(1+o(1))(\\Delta/\\log\\Delta)^{1/r}$. This would match the known asymptotic behavior of the chromatic number of random uncrowded hypergraphs and parallel the $r=1$ case (triangle-free graphs) where the bound $(1+o(1))\\Delta/\\log\\Delta$ is optimal. The factor $r$ in the current bound arises from tracking active edge-color constraints in the semi-random nibble; removing it likely requires bypassing this $r$-fold residual degree inflation.",
+    "domain_bridges": [
+      "Hypergraph Coloring",
+      "Random Structures"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0546",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Develop an entropy-increment-based list-coloring algorithm or a more refined nibble that tracks residual hypergraph degrees directly, avoiding the $r$-fold inflation from active edge-color constraints. An alternative approach could involve proving a tight lower bound on the independence number and applying a randomized coloring strategy that matches this bound.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05256v1",
+    "status": "available",
+    "timestamp": "2026-07-07T12:00:59.384179+00:00",
+    "title": "Optimality of the Leading Constant in Uncrowded Hypergraph List Coloring"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.MG",
+      "math.CO",
+      "magnitude_of_metric_spaces",
+      "negative_type_metric_spaces",
+      "Schoenberg_embedding"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every finite tree T (viewed as a metric space with the shortest-path distance), the microscopic weighting assigns strictly positive weight to every vertex. The paper establishes that finite trees are of strictly negative type and hence admit a microscopic weighting, and that this weighting emphasizes boundary points and distributes mass widely. The open question is whether all vertex weights are necessarily positive — i.e., whether the signed measure is in fact a positive measure for trees. A counterexample would reveal a tree whose interior vertices receive negative microscopic weight, while a proof would show that the 'mass redistribution' from boundary emphasis never forces interior weights below zero.",
+    "domain_bridges": [
+      "graph_theory",
+      "metric_geometry",
+      "linear_algebra",
+      "convex_optimization"
+    ],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0546",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Exploit the energy minimization characterization: the microscopic weighting minimizes the energy integral E(w) = Σ w(x)w(y)d(x,y) over signed measures of total mass 1. For trees, the distance matrix has recursive structure amenable to leaf-removal induction. Show that any signed measure of mass 1 on a tree with a negative-weight vertex can be modified to decrease energy, contradicting optimality. Alternatively, use the Schoenberg embedding characterization: the microscopic weighting corresponds to the closest point to the origin in the affine hull of the embedded vertices, and for trees this convex hull might be shown to contain the origin's projection with all positive barycentric coordinates.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05349v1",
+    "status": "available",
+    "timestamp": "2026-07-07T12:02:15.303850+00:00",
+    "title": "Positivity of Microscopic Weighting on Finite Trees"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
