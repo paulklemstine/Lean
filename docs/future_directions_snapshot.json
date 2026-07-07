@@ -2820,7 +2820,7 @@
     "catalog_references": [
       "math.NT"
     ],
-    "consumed_by_exp_id": "347d7d7b",
+    "consumed_by_exp_id": "",
     "description": "Formulate a statement asserting that for a self-dual cuspidal automorphic representation $\\Pi_0$ of $\\text{PGL}_3(\\mathbb{A}_{\\mathbb{Q}})$, the proportion of zeros of the twisted $L$-function $L(s, \\Pi_0 \\times \\chi)$ lying on the critical line $\\text{Re}(s) = 1/2$ is at least $1/9$ as the conductor $Q$ of the Dirichlet character $\\chi$ tends to infinity.",
     "domain_bridges": [
       "Automorphic Representations",
@@ -2837,7 +2837,7 @@
     "proof_strategy": "The proof requires formalizing the theory of automorphic $L$-functions for $\\text{GL}_3$, the Dirichlet-series-based mollification method, and Levinson's method for zero-detection. One would need to define the density of zeros using the argument principle and show that the mollified mean value of the $L$-function derivative satisfies specific asymptotic inequalities that force zeros onto the line $\\sigma = 1/2$.",
     "research_mode": "team",
     "source_exp_id": "2607.00282v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T14:51:08.118719+00:00",
     "title": "Lower Bound for the Proportion of Zeros on the Critical Line for PGL(3) L-functions"
   },
@@ -2979,7 +2979,7 @@
       "analytic number theory",
       "prime number theorem"
     ],
-    "consumed_by_exp_id": "f05cfd02",
+    "consumed_by_exp_id": "",
     "description": "The corrected estimator E(x) + C(x) from the proposed algorithm satisfies the error bound |E(x) + C(x) - π(x)| ≤ K√x for some constant K > 0 and all x ≥ 2. This conjecture formalizes the claim that the correction term significantly improves accuracy by reducing the error to O(√x), matching the algorithm's computational complexity.",
     "domain_bridges": [
       "algorithmic number theory",
@@ -2995,7 +2995,7 @@
     "proof_strategy": "1. Formalize the estimator E(x) as a sum over generalized triangular numbers. 2. Express the correction term C(x) mathematically. 3. Derive an upper bound for |E(x) + C(x) - π(x)| using properties of li(x) and error terms in prime counting approximations. 4. Show the bound scales as O(√x) by analyzing the dominant terms.",
     "research_mode": "team",
     "source_exp_id": "2606.31761v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T17:32:19.384043+00:00",
     "title": "Error Bound Conjecture for Corrected Prime Count Estimator"
   },
@@ -3654,7 +3654,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e108bc5a",
     "description": "The conjecture asserts that for all n ≥ 1, the positive anti-Wick density satisfies the required conditions in the finite-core reduction, directly contradicting the paper's claim of obstruction.",
     "domain_bridges": "none",
     "domains": [
@@ -3666,7 +3666,7 @@
     "proof_strategy": "Numerical validation against heat-deconvolution test results",
     "research_mode": "team",
     "source_exp_id": "2606.29555v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T05:59:25.492247+00:00",
     "title": "Positive Anti-Wick Obstruction Confirmation"
   },
@@ -3937,33 +3937,6 @@
     "status": "available",
     "timestamp": "2026-07-04T10:58:20.247042+00:00",
     "title": "Eventual congruence of misère P‑positions in nuclear escalation ladders"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "MB",
-      "IS95",
-      "vanLint84"
-    ],
-    "consumed_by_exp_id": "eb8019d8",
-    "description": "For n ≡ 2 mod 4, there exists an optimal equidistant binary code EC(n, (n-2)/2, m*) equivalent to a symmetric BIBD with parameters (v, k, λ) where v = 12u² + 8u + 2, k = 6u² + u, and λ = (k(k-1))/(v-1) for some integer u, which has not been previously characterized in prior work.",
-    "domain_bridges": [
-      "Hadamard matrices",
-      "Symmetric BIBDs",
-      "Plotkin bound"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0197",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Construct the BIBD explicitly or verify its existence via combinatorial arguments, leveraging Lean 4's theorem proving capabilities to formalize parameter constraints and code equivalence.",
-    "research_mode": "team",
-    "source_exp_id": "2606.29022v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-04T11:32:06.586125+00:00",
-    "title": "Existence of Optimal Equidistant Codes for n ≡ 2 mod 4 with Unidentified Subcase Structure"
   },
   {
     "ambition_level": "grand_challenge",
@@ -4274,7 +4247,7 @@
       "Negami2024main",
       "Negami1988PCC"
     ],
-    "consumed_by_exp_id": "29810562",
+    "consumed_by_exp_id": "",
     "description": "A connected bipartite graph admits a planar rotation-compatible covering, ensuring all rotational constraints are satisfied.",
     "domain_bridges": "true",
     "domains": [
@@ -4286,7 +4259,7 @@
     "proof_strategy": "Combinatorial consistency verification",
     "research_mode": "team",
     "source_exp_id": "2606.27703v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T18:30:48.905815+00:00",
     "title": "Bipartition Imply Planar Cover"
   },
@@ -8994,7 +8967,7 @@
       "Grover walk spectral theory –reference to universal Grover‑Ihara polynomial",
       "Iwasawa theory of Selmer groups –ref"
     ],
-    "consumed_by_exp_id": "8305aabb",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for any monic polynomial P (not necessarily coprime to A^2‑1) the μ‑ and λ‑invariants of the Iwasawa module generated by the spectral resultant R_{X,P} are given by a precise Kida‑type formula involving the p‑adic valuations of R_{X,P} at all torsion characters, with an explicit correction term accounting for the Bass factor A^2‑1. This extends the leading asymptotic growth law proved in the coprime case.",
     "domain_bridges": [
       "Iwasawa theory ↔ spectral graph theory",
@@ -9011,7 +8984,7 @@
     "proof_strategy": "The proof would proceed by (1) constructing the Iwasawa module M as the Fitting module of the spectral resultant using the universal Grover‑Ihara polynomial; (2) applying the structure theorem for finitely generated Δ_₂[[Γ]]‑modules to express μ(M) and λ(M) in terms of elementary divisors; (3) evaluating the resultant at torsion characters χ∈̀_hat{Δ}_₂^× and showing via equivariant descent that the elementary divisors are precisely the values v_p(R(χ)); (4) incorporating the Bass factor (A^2‑1) by factoring det P(U_n) into a coprime part and a power of the Bass factor, and comparing the resulting contributions to the λ‑term. The key technical step is to prove an equivariant Kida formula for the spectral resultant without integrality assumptions, using the factorization for p‑group covers from the paper and a careful analysis of the local units at χ(1)=±1.",
     "research_mode": "team",
     "source_exp_id": "2607.02011v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T22:31:24.810067+00:00",
     "title": "Extended μ-λ Formula for Spectral Resultants of Grover Walks on Graph Towers"
   },
@@ -10155,7 +10128,7 @@
       "Dilworth_theorem",
       "antichain_partition"
     ],
-    "consumed_by_exp_id": "ff7a6b9b",
+    "consumed_by_exp_id": "",
     "description": "The paper proves that a countable FAC poset P satisfies the Aharoni-Korman conjecture if P contains no saturated chain D such that either D or its reverse D* is of the form ⊕_{x∈ω} D_x, where each D_x is infinite and co-wellfounded. The conjecture asserts that this condition is also necessary: if a countable FAC poset P does contain such a saturated chain, then P fails to satisfy the Aharoni-Korman conjecture. This would yield a complete characterization of which countable FAC posets satisfy the Aharoni-Korman conjecture.",
     "domain_bridges": [
       "ordinal_arithmetic",
@@ -10171,7 +10144,7 @@
     "proof_strategy": "Construct an explicit countable FAC poset P containing a saturated chain of the forbidden form, then show that no chain in P can simultaneously meet every antichain in any antichain partition of P. The construction likely involves adapting the known counterexamples to the original Aharoni-Korman conjecture, using the specific structure of ⊕_{x∈ω} D_x to control all possible chain-antichain interactions.",
     "research_mode": "team",
     "source_exp_id": "2607.02500v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T14:29:04.615567+00:00",
     "title": "Necessity of the forbidden chain condition for the Aharoni-Korman conjecture on countable FAC posets"
   },
@@ -11412,7 +11385,7 @@
       "math.PR",
       "math.CO"
     ],
-    "consumed_by_exp_id": "e3b1b1a2",
+    "consumed_by_exp_id": "",
     "description": "For the fixed genus chord swap Markov chain on chord diagrams with n chords and genus g, the spectral gap γ_{n,g} satisfies γ_{n,g} = Θ(n^{-3}) when g is fixed and n → ∞. This sharpens the paper's polynomial lower bound to a precise exponent and matches the n^{-3} scaling observed in related swap chains on perfect matchings.",
     "domain_bridges": [
       "markov_chain_mixing",
@@ -11428,7 +11401,7 @@
     "proof_strategy": "First formalize chord diagrams, genus via Euler characteristic, and the chord swap relation in Lean. Then establish the O(n^{-3}) upper bound on the spectral gap via comparison with the random transposition walk on matchings, and prove the Ω(n^{-3}) lower bound by constructing a canonical path argument with congestion bounded by O(n^3), extending the paper's coupling/canonical-path techniques.",
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T00:02:19.658603+00:00",
     "title": "Tight spectral gap exponent for the fixed-genus chord swap chain"
   },
@@ -11841,6 +11814,35 @@
     "ambition_level": "extension",
     "catalog_references": [
       "math.NT",
+      "finite_field_permutations",
+      "monodromy_classification",
+      "Riemann_Hurwitz"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any finite field 𝔽_q with char(𝔽_q) ∉ {2, 5}, every exceptional rational function f ∈ 𝔽_q(X) of degree 5 has geometric monodromy group isomorphic to either C₅ (cyclic of order 5) or D₅ (dihedral of order 10). This rules out A₅, S₅, F₂₀ (Frobenius group of order 20), and all other transitive subgroups of S₅ as geometric monodromy groups for such functions.",
+    "domain_bridges": [
+      "Galois_theory",
+      "group_theory_transitive_subgroups_S5",
+      "algebraic_curves_covers"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0517",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Enumerate all transitive subgroups of S₅ (C₅, D₅, F₂₀, A₅, S₅). For each non-cyclic non-dihedral group, use the Riemann-Hurwitz formula applied to the cover φ: P¹ → P¹ defined by f to derive contradictions with the ramification structure imposed by the group's conjugacy class data and the exceptionality condition (which forces the arithmetic monodromy group to act as a sharply transitive group on a fiber). The key inequality from Riemann-Hurwitz, combined with the branch cycle description of inertia groups, eliminates F₂₀, A₅, and S₅ as possibilities for the geometric monodromy group when char ∉ {2,5} and deg = 5.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05075v1",
+    "status": "available",
+    "timestamp": "2026-07-07T05:04:57.352363+00:00",
+    "title": "Geometric monodromy groups of exceptional degree-5 rational functions are cyclic or dihedral"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.NT",
       "cs.SC"
     ],
     "consumed_by_exp_id": "",
@@ -11852,7 +11854,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0517",
+    "id": "fd_0518",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Expand both sides of the identity v'w - vw' = 2x(v₂w - w₂v) + (v₁w - w₁v) using the standard definition of the formal derivative v' = 2v₂x + v₁. Distributing the terms on the right-hand side and collecting coefficients of x², x, and 1 directly yields the expanded left-hand side, (v₂w₁ - v₁w₂)x² + 2(v₂w₀ - v₀w₂)x + (v₁w₀ - v₀w₁), proving the exact polynomial equality purely through algebraic manipulation without relying on scalar units or characteristic restrictions beyond char(K) ≠ 2.",
@@ -11881,7 +11883,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0518",
+    "id": "fd_0519",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the monomial star configuration result svd(I_{n,h}) = lcm(1,…,h) using the Diophantine condition M framework. Then extend to generalized star configurations by showing the Diophantine structure governing symbolic powers is invariant under regular sequences of forms—potentially via initial ideal arguments preserving svd, or by establishing that the symbolic Rees algebra of a generalized star configuration has the same Veronese structure as its monomial specialization.",
@@ -11908,7 +11910,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0519",
+    "id": "fd_0520",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "For each quadratic form Q, construct the Romik-type map T_Q as a piecewise fractional linear transformation on [0,1] derived from the Berggren matrices. Show T_Q admits a Markov partition with the Gibbs-Markov property. Compute the invariant density using Keane's method (tracking how the quadratic form coefficients transform under the Berggren matrices). Apply the Hopf argument adapted to infinite measure spaces to establish ergodicity, and verify conservativity via the ratio ergodic theorem by checking integrability of the density against the return time function.",
@@ -11933,7 +11935,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0520",
+    "id": "fd_0521",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Reduce the problem to the Grone-Merris-Bai theorem, which states s_k(G) ≤ ∑_{i=1}^k d_i^*(G) where d* is the conjugate degree sequence. Show that equality in Brouwer's bound implies equality in Grone-Merris-Bai, forcing the degree sequence to match the Laplacian eigenvalue sequence. Use the characterization of threshold graphs via their degree sequences and the specific sum m + binom(k+1, 2) to conclude that G must be a threshold graph with clique number k+1.",
@@ -11960,7 +11962,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0521",
+    "id": "fd_0522",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Formalize 2-designs, automorphism groups, flag-transitivity, and point-imprimitivity in Lean. 2) Develop the subgroup structure of PSL(2,q) — specifically the classification of maximal subgroups (dihedral, parabolic, A4, S4, A5 subgroups). 3) Use the imprimitivity assumption to decompose the point set into blocks of imprimitivity, constraining v via the subgroup lattice. 4) Apply combinatorial parameter constraints (Fisher's inequality, divisibility relations r(k-1) = λ(v-1), bk = vr) together with the orbit-stabilizer theorem under PSL(2,q). 5) Case analysis on the possible systems of imprimitivity yields only v = 15, 36, 85.",
@@ -11969,6 +11971,30 @@
     "status": "available",
     "timestamp": "2026-07-07T04:29:20.984857+00:00",
     "title": "Point-Imprimitive 2-Designs with PSL(2,q) Socle Have Bounded Point Counts"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The number of lozenge tilings of the triangular region T_n equals the product over all 1 ≤ a < b ≤ 3n+2 with (a,b) ≠ (n+1,2n+2) of |1 + ζ^a + ζ^b|^(1/3), where ζ = exp(2πi/(3n+3)).",
+    "domain_bridges": [
+      "Linear Algebra",
+      "Complex Analysis"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0523",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define the region T_n and its dual graph G_n. Define the bipartite adjacency matrix M_n of G_n. Prove that the number of perfect matchings of G_n equals the absolute value of the determinant of M_n. Diagonalize M_n to compute its determinant, and verify that the resulting expression matches the given product formula.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05233v1",
+    "status": "available",
+    "timestamp": "2026-07-07T05:05:28.072260+00:00",
+    "title": "Exact Enumeration of Lozenge Tilings of Triangular Regions"
   },
   {
     "ambition_level": "extension",

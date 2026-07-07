@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "42ce6f47",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Jacobian Conjecture formalization\n\nDerived from this cycle's verified results in `Core.lean`, `Druzkowski.lean`,\n`DegreeTwo.lean`, and `Counterexamples.lean`.\n\n## 1. General tria",
-      "quality_score": 0.518,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T13:09:12",
-      "title": "Jacobian Conjecture: Degree 2 and 3 Cases"
-    },
-    {
       "cycle_id": "6dda8a29",
       "domain": "Applications",
       "key_insight": "# FUTURE_DIRECTIONS\n\nDerived from this cycle's work closing `sorry` placeholders in the catalog. The\ncycle completed the cross-domain bridge\n`Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-07-07T03:17:13",
       "title": "Characterization of Extremal Graphs for Positive Lin--Lu--Yau Curvature"
+    },
+    {
+      "cycle_id": "eb8019d8",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Pell-indexed symmetric designs from equidistant codes\n\nDerived from the analysis of the family\n`v = 12u²+8u+2`, `k = 6u²+u`, `λ = 3u²−u`, order `k−λ = u(3u+2)`,\nwhose admissible",
+      "quality_score": 0.49735784528301885,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-07T05:04:32",
+      "title": "Existence of Optimal Equidistant Codes for n ≡ 2 mod 4 with Unidentified Subcase Structure"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.70296
     }
   ],
-  "last_updated": "2026-07-07T03:17:13",
+  "last_updated": "2026-07-07T05:04:32",
   "open_questions": [
     {
       "context": "`sorry`-free Lean proof of Sabidussi's theorem.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "605be963",
-        "quality": 0.6772,
-        "theorems": 6,
-        "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
-      },
-      {
         "cycle_id": "0a41cc78",
         "quality": 0.7258007692307691,
         "theorems": 13,
@@ -3637,6 +3631,12 @@
         "quality": 0.50904,
         "theorems": 12,
         "title": "Characterization of Extremal Graphs for Positive Lin--Lu--Yau Curvature"
+      },
+      {
+        "cycle_id": "eb8019d8",
+        "quality": 0.49735784528301885,
+        "theorems": 14,
+        "title": "Existence of Optimal Equidistant Codes for n ≡ 2 mod 4 with Unidentified Subcase"
       }
     ],
     "NumberTheory": [
