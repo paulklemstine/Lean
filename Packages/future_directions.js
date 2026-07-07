@@ -48,7 +48,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d431d7ed",
     "description": "Mathematics is full of impossibility theorems \u2014 things that CANNOT be done. But impossibility theorems are themselves beautiful mathematical objects. Catalog and interconnect the great impossibilities: (1) Squaring the circle (pi is transcendental, Lindemann 1882). (2) Trisecting the angle (cos 20 degrees has degree 3 over Q, Wantzel 1837). (3) Doubling the cube (cube root of 2 has degree 3, Wantzel 1837). (4) Solving the quintic by radicals (A_5 is not solvable, Abel-Ruffini 1824). (5) The Borsuk-Ulam impossibility (every continuous map S^n -> R^n has a point where f(x) = f(-x)). (6) Arrow's impossibility (no voting system is simultaneously fair, complete, and non-dictatorial). (7) Heisenberg's uncertainty (Delta x * Delta p >= hbar/2). Conjecture: These impossibility theorems are connected by a deep structural principle \u2014 each one arises because a certain group action is not free. Squaring the circle fails because Gal(Q(pi)/Q) acts freely. Solving the quintic fails because A_5 acts freely on the roots. Arrow's theorem fails because the symmetric group acts freely on preferences. Heisenberg fails because the Heisenberg group acts freely on phase space. The unified principle: a task is impossible iff the relevant group action is free. Test: verify that each impossibility theorem corresponds to a free group action. Prove the converse: if a group G acts freely on a set X, then there exists a G-equivariant task that is impossible on X. Impact: all impossibility is the same impossibility \u2014 every CAN'T is a reflection of a free group action.",
     "domains": [
       "Novelty",
@@ -58,7 +58,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T20:46:59.942760+00:00",
     "title": "Impossibility Results for Fun: Things That Cannot Be Done (But We Try Anyway)"
   },
@@ -1712,7 +1712,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hammarhjelm's condition and the classification of real quadratic fields"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea22db3c",
     "description": "A partial cube that is a Cartesian product of two partial cubes satisfies the opposite-semicube Helly property if and only if both factors are harmonic-even.",
     "domains": [
       "Bridges"
@@ -1721,7 +1721,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31468v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T18:13:48.357153+00:00",
     "title": "The opposite-semicube Helly property characterizes harmonic-evenness in Cartesian products of partial cubes"
   },
@@ -4716,7 +4716,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reachability of equal-size independent sets in P\u2084\u2011tidy graphs under token sliding"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4aec9d8b",
     "description": "A finite partial cube satisfying the opposite-semicube Helly property is antipodal if and only if its opposite semicubes are pairwise isomorphic.",
     "domains": [
       "Bridges"
@@ -4725,7 +4725,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31468v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T13:53:12.762795+00:00",
     "title": "Antipodality Characterization via Opposite-Semicube Helly Property"
   },
@@ -5500,7 +5500,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Gamma-positivity threshold for symmetric edge polytopes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "45ea8f94",
     "description": "The paper establishes that the diameter of the connected component of the chord swap graph on chord diagrams of size n and genus g (for n > 2g) is bounded above by C(n + g^2) for some universal constant C > 0. We conjecture that this universal constant can be taken to be exactly 1, yielding a tight diameter upper bound of precisely n + g^2.",
     "domains": [
       "Pythagorean"
@@ -5509,7 +5509,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T15:58:50.998422+00:00",
     "title": "Optimal Diameter Bound for Fixed Genus Chord Swap Graphs"
   },
@@ -6999,6 +6999,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "There exists a constant \u03b4 > 0 such that for every integer n \u2265 2, there exists a finite set P \u2282 \u211d\u00b2 of n points where the most frequent nonzero distance occurs at least n^(1+\u03b4) times among ordered pairs. This is the core quantitative claim of the paper: the Minkowski grid construction vertically amplifies the one-dimensional Ramanujan estimate for r\u2082 to produce point sets whose distance multiplicity is superlinear, thereby yielding counterexamples to Erd\u0151s's unit distance conjecture under scaling.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0583",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05374v1",
+    "status": "available",
+    "timestamp": "2026-07-07T20:55:03.794049+00:00",
+    "title": "Superlinear distance multiplicity in Minkowski grids"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer r \u2265 2 and real \u03b5 > 0, there exists \u0394\u2080 such that for every (r+1)-uniform hypergraph H with girth at least 5 and maximum degree \u0394 \u2265 \u0394\u2080, the list chromatic number \u03c7_\u2113(H) satisfies \u03c7_\u2113(H) \u2264 \u2308(1+\u03b5)(r\u0394 / ln \u0394)^(1/r)\u2309. This conjecture formalizes the main theorem of the paper, improving Iliopoulos's bound of (1+o(1))r(\u0394/ln \u0394)^(1/r) by reducing the leading constant from r to r^(1/r) via a semi-random nibble argument combined with a Rosenfeld-style counting completion.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_0584",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05256v1",
+    "status": "available",
+    "timestamp": "2026-07-07T20:55:28.462579+00:00",
+    "title": "List Chromatic Number Bound for Uncrowded Uniform Hypergraphs"
+  },
+  {
+    "consumed_by_exp_id": "006f75ea",
     "description": "Bitcoin mining requires finding a nonce n such that SHA256(block_header || n) < target. What if we replaced SHA256 with a tropical hash? Define tropical SHA as: TSHA(m) = min over all i of (m_i + h_i) where m = (m_1,...,m_k) is the message, h = (h_1,...,h_k) is the tropical hash key, and all operations are in the min-plus semiring (a tropical plus b = min(a,b), a tropical times b = a + b). Conjecture: TSHA is a one-way function in the tropical sense: computing TSHA(m) given m and h is O(k) (trivial), but finding m given TSHA(m) and h is NP-hard (it reduces to a tropical shortest path problem). More precisely, the tropical preimage problem \u2014 given y and h, find m such that min_i(m_i + h_i) = y \u2014 requires checking O(e^{k}) tropical paths in the worst case. But there's a twist: tropical hash collisions are COMMON because min(a,b) = min(b,a). To fix this, define TSHA2(m) = (min_i(m_i + h_i), min_i(m_i + h'_i)) where h and h' are two independent tropical keys. Conjecture: TSHA2 is collision-resistant with probability 1 - O(1/k). Test: implement TSHA and TSHA2, measure collision resistance, and compare mining difficulty to SHA256 for block sizes k = 32, 64, 128. Impact: a cryptocurrency where mining is solving tropical optimization problems instead of brute-force hash searches \u2014 mining IS mathematics.",
     "domains": [
       "Novelty",
@@ -7008,7 +7037,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.79,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T20:47:00.059968+00:00",
     "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
   },
