@@ -6391,6 +6391,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For all finite graphs F and G, there exists an oddomorphism from F to G if and only if G is a split-off minor of F. The forward direction is established in the paper; the converse remains open.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0512",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.03405v1",
+    "status": "available",
+    "timestamp": "2026-07-07T02:03:09.912711+00:00",
+    "title": "Equivalence of Oddomorphism and Split-Off Minor"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any field K with char(K) \u2260 2 and quadratic polynomials v, w \u2208 K[x], the classical Wronskian v'w - vw' is exactly equal to the derivative-free Remainder-Polynomial Route (RPR) formulation. Specifically, v'w - vw' = 2x \u00b7 Sres\u2081(v, w) + (v\u2081w - w\u2081v), where Sres\u2081(v,w) = v\u2082w - w\u2082v is the first subresultant of v and w, and v\u1d62, w\u1d62 are the coefficients of x\u2071 in v, w respectively. This identity generalizes symmetrically to the full Richelot triple (U, V, W), proving that RPR yields identical codomain polynomials not merely up to scalar units, but as an exact polynomial equality.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0512",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.03376v1",
+    "status": "available",
+    "timestamp": "2026-07-07T02:04:38.025643+00:00",
+    "title": "Exact Identity of Wronskian and Subresultant Richelot Formulations"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Congruence Rigidity of Sums of Squares\n\nThis cycle established that the entries of an integer right triangle are forced into\nstrong divisibility patterns \u2014 one leg is a multiple of three, the legs jointly carry a\nfactor of four, one entry is a multiple of five \u2014 and that a four-dimensional right\n\"box\" (a solution of `a\u00b2 + b\u00b2 + c\u00b2 = d\u00b2`) is even more rigid: at most one of its three\nspatial edges can be odd. We also pinned down exactly which whole numbers can serve as a\nleg. These findings point to several bold, testable conjectures.\n\n## 1. The correct modulus for a power of two grows with the power\n**Conjecture.** In any solution of `a\u00b2 + b\u00b2 = c\u00b2`, the two-adic valuation of the leg\nproduct `a\u00b7b` is governed one level deeper than naive reduction suggests: deciding\nwhether `2^k` divides `a\u00b7b` is a question about residues modulo `2^{k+1}`, never modulo\n`2^k`.\n*The key insight is* that a difference of two odd squares is always divisible by eight,\nso each additional factor of two in the product must be certified one binary place\nfurther out than one would guess. *Why now?* Having isolated the exact `mod 8`\nobstruction behind the factor of four, we can test the pattern mechanically for `k = 3,\n4, 5` and either confirm a clean \"shift-by-one\" law or expose its first exception.\n\n## 2. A universal super-divisor for higher-dimensional right figures\n**Conjecture.** For every dimension `r`, solutions of `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` obey a single\nuniversal divisibility law: there is a constant `D(r)`, depending only on `r`, such that\n`D(r)` divides the product `x\u2081\u00b7x\u2082\u00b7\u22ef\u00b7x_r` for *every* solution, and `D(r)` is the largest\nsuch constant.\n*The key insight is* that reduction to a finite residue ring turns \"for all solutions\"\ninto a finite, decidable statement, so the optimal constant `D(r)` is computable and\nshould grow in a structured (conjecturally multiplicative-over-primes) way. *Why now?*\nThe three-dimensional case already yields `4 \u2223 x\u2081x\u2082x\u2083`; comparing it against the planar\nconstant `12` suggests a dimension-indexed sequence worth charting and predicting.\n\n## 3. Parity collapse in higher dimensions\n**Conjecture.** As the number of squared terms increases, the number of edges permitted to\nbe odd stays uniformly bounded: in `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` at most three of the `x_i` can be\nodd, regardless of `r`.\n*The key insight is* that the sum of squares equals the count of odd terms modulo four,\nwhile a perfect square is `0` or `1` modulo four, capping the admissible odd-count no\nmatter how many terms are added. *Why now?* We proved the cap is \"at most one\" in three\ndimensions; extending the modular bookkeeping to arbitrary `r` is a self-contained next\nstep that would reveal whether the cap is truly dimension-independent.\n\n## 4. A sharp threshold characterization of legs in every dimension\n**Conjecture.** Just as the whole numbers that are a leg of a right triangle are exactly\nthose `\u2265 3`, in each higher dimension there is a sharp finite threshold above which every\ninteger appears as an edge of some right figure, and the finitely many exceptions can be\nlisted explicitly.\n*The key insight is* that a single explicit construction, split according to the parity of\nthe target edge, realizes all sufficiently large values, while the small exceptions are\nforced by a factorization that would otherwise require a vanishing edge. *Why now?* The\nplanar threshold `3` and its sharpness (the failures at `1` and `2`) give a template that\nshould transfer verbatim to the box equation and beyond.\n\n## 5. Divisibility as a sieve against near-solutions\n**Conjecture.** The combined congruence obstructions (`12 \u2223 a\u00b7b`, `60 \u2223 a\u00b7b\u00b7c`, and their\nhigher-dimensional analogues) are strong enough that a random integer triple satisfying\nthem has a positive, computable probability of being genuinely Pythagorean \u2014 i.e. the\ncongruence conditions capture a constant fraction of the \"arithmetic mass\" of true\nsolutions.\n*The key insight is* that each universal divisor removes a fixed proportion of impostors,\nso stacking independent prime-power obstructions multiplies into a sieve of predictable\ndensity. *Why now?* With the exact obstructions in hand for the primes `2, 3, 5`, one can\nimmediately measure how much of the solution set they explain and calibrate whether a few\nmore primes suffice to pin down solutions almost completely.\n",
     "domains": [
       "Pythagorean",
