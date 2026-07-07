@@ -2355,17 +2355,30 @@ Research mode: {concept.research_mode}
         if job.result_research_paper:
             parts.append({"type": "new", "path": f"Papers/research_{self._derive_artifact_name(job.concept, 'md')}", "content": job.result_research_paper})
         if job.result_json_package:
-            # Validate: the JSON package must be a dict (object), not a list or
-            # other type. Aristotle sometimes returns a list of future directions
-            # instead of a package object — reject those.
+            # If Aristotle returned a list instead of a dict (sometimes happens —
+            # it returns a list of future directions), convert it to a proper
+            # package object by wrapping it with the concept's metadata.
             try:
                 _pkg_check = json.loads(job.result_json_package)
-                if not isinstance(_pkg_check, dict):
-                    print(f"[Integrate] Rejecting JSON package: not a dict (got {type(_pkg_check).__name__})")
-                    job.result_json_package = None
+                if isinstance(_pkg_check, list):
+                    print(f"[Integrate] JSON package is a list (len={len(_pkg_check)}), wrapping as package object")
+                    _pkg_check = {
+                        "title": job.concept.title,
+                        "domain": job.concept.domain,
+                        "description": job.concept.concept_description[:200],
+                        "authors": ["Aristotle"],
+                        "date": datetime.now(timezone.utc).isoformat()[:19] + "Z",
+                        "key_results": [item.get("title", "") for item in _pkg_check if isinstance(item, dict)],
+                        "keywords": [],
+                        "article": "",
+                        "research_paper": "",
+                        "lean_proofs": job.result_lean or "",
+                        "future_directions": json.dumps(_pkg_check, ensure_ascii=False),
+                        "exp_id": job.job_id,
+                    }
+                    job.result_json_package = json.dumps(_pkg_check, indent=2, ensure_ascii=False)
             except Exception:
                 pass
-        if job.result_json_package:
             # Enrich JSON package with executable module code for Pyodide
             enriched_pkg = job.result_json_package
             if job.result_algorithms or job.result_demo:
