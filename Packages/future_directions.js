@@ -18,7 +18,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7c938265",
     "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
     "domains": [
       "Novelty",
@@ -28,7 +28,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T16:56:44.460450+00:00",
     "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
   },
@@ -4671,21 +4671,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reachability of equal-size independent sets in P\u2084\u2011tidy graphs under token sliding"
   },
   {
-    "consumed_by_exp_id": "f08e35ed",
-    "description": "A real quadratic field K = Q(\u221aD) satisfies Hammarhjelm's condition if its ring of integers has unique factorization and the Minkowski lattice f(O_K) contains no point in the open rectangle (1, \u03bb) \u00d7 (-1, 1), where \u03bb > 1 is the fundamental unit. The theorem states that exactly seven such fields exist, corresponding to squarefree D \u2208 {2, 5, 13, 29, 53, 173, 293}.",
-    "domains": [
-      "Algebra",
-      "Cryptography"
-    ],
-    "id": "fd_0399",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.31544v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T13:31:42.777088+00:00",
-    "title": "Classification of real quadratic fields satisfying Hammarhjelm's condition"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "A finite partial cube satisfying the opposite-semicube Helly property is antipodal if and only if its opposite semicubes are pairwise isomorphic.",
     "domains": [
@@ -6710,20 +6695,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Simplified binomial product formula for lozenge tilings of the triangular region T_n"
   },
   {
-    "consumed_by_exp_id": "29079d28",
-    "description": "Let adj be an irreflexive directed adjacency relation on n vertices (encoded as a predicate on Fin n \u00d7 Fin n, with opposite arcs u\u2192v and v\u2192u both allowed). If the resulting digraph contains no directed triangle (no u\u2192v\u2192w\u2192u), then the total number of arcs is at most \u230an\u00b2/2\u230b. This is the key combinatorial ingredient used in the paper to bound the measure of spherical sets avoiding x+y+z=0 via a probabilistic argument over SO(d), and it generalizes Mantel's theorem to directed graphs.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0552",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.05083v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T15:49:47.588011+00:00",
-    "title": "Extremal arc count in digraphs without directed triangles (Brown\u2013Harary theorem)"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For each integer n \u2265 3, there exists a constant c_n > 0 independent of m such that, when primitive maximal binary forms of degree n are ordered by height, the proportion failing the integral Hasse principle simultaneously for every 1 \u2264 h \u2264 m is at least c_n. This strengthens the paper's Theorem 1, which guarantees a positive proportion depending on m, by asserting the proportion does not decay to zero as m \u2192 \u221e.",
     "domains": [
@@ -6882,18 +6853,47 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The constant \u03bc\u2082 is defined as the infimum over all infinite sequences of radial cuts of a unit circular cake of the supremum over n of the ratio (maximum portion size)/(minimum portion size) after n cuts, where a portion is an adjacent pair of slices. The paper proves \u03bc\u2082 \u2264 1 + \u03c1 where \u03c1 \u2248 0.75488 is the unique real root of \u03c1\u00b2 + \u03c1\u00b3 = 1. The conjecture asserts this bound is tight: \u03bc\u2082 = 1 + \u03c1, meaning no cutting strategy can achieve a worst-case portion ratio strictly below 1 + \u03c1. This would also establish \u03bc\u2082 as irrational, since \u03c1 is irrational.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0570",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05330v1",
+    "status": "available",
+    "timestamp": "2026-07-07T18:26:42.696541+00:00",
+    "title": "The optimal portion ratio \u03bc\u2082 equals 1 + \u03c1"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every fixed integer $r \\geq 2$ and every $\\varepsilon > 0$, there exists $\\Delta_0$ such that for all $\\Delta \\geq \\Delta_0$, every uncrowded $(r+1)$-uniform hypergraph of maximum degree $\\Delta$ has list chromatic number at most $(1+\\varepsilon)(\\Delta/\\log\\Delta)^{1/r}$. This conjectures that the leading constant $r^{1/r}$ in the authors' theorem can be further improved to 1, matching the optimal asymptotic bound for $r=1$ (graphs) due to Molloy and the known lower bounds from random hypergraphs.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0570",
+    "id": "fd_0571",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05256v1",
     "status": "available",
     "timestamp": "2026-07-07T17:18:05.484316+00:00",
     "title": "Optimal leading constant for list coloring uncrowded hypergraphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For an elliptic curve E over Q with good supersingular reduction at 2 and square-free conductor N_E, and a square-free integer D > 0 congruent to 1 mod 4, the difference between the sharp/flat 2-adic Iwasawa lambda-invariants of the quadratic twist E^D and E (assuming the mu-invariant is 0) is given by the sum over prime divisors ell of D of 2^{n_ell} (if ell divides N_E) or 2^{n_ell+1} (if ell does not divide N_E and 2 divides the order of E modulo ell), where n_ell is the 2-adic valuation of (ell^2 - 1)/8.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0572",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05305v1",
+    "status": "available",
+    "timestamp": "2026-07-07T18:27:12.191464+00:00",
+    "title": "Matsuno-type Formula for Supersingular Iwasawa Lambda-Invariants"
   },
   {
     "consumed_by_exp_id": "71c94528",
@@ -6941,7 +6941,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharp dichotomy for the *total* d-Hoggatt numbers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "909edf7d",
     "description": "Every real number defines a musical scale: map the digits 0-9 to frequencies f_n = 220 * 2^{n/12} (the A minor pentatonic scale extended). The number pi = 3.14159265... produces the sequence E4, C5, C#5, D5, D#5, F5, E5, A4, G5, C5... \u2014 a melody. Conjecture: The melody of pi is not periodic (because pi is irrational) but has musical structure: the autocorrelation of the digit sequence at lag 12 (one octave) is positive and statistically significant. This means pi has more octave-related notes than expected by chance \u2014 pi 'favors' notes separated by octaves. Similarly, e 'favors' perfect fifths (lag 7) and sqrt(2) 'favors' minor thirds (lag 3). The musical structure of transcendental numbers reflects their continued fraction properties: numbers with bounded partial quotients have more consonant melodies. Test: compute the digit autocorrelation of pi, e, and sqrt(2) at lags 0-12 (representing unison through octave). Perform a chi-squared test comparing to the uniform distribution. Generate the 'music' of each constant and analyze for tonal centers. Impact: transcendental numbers have musical souls \u2014 their digit sequences contain hidden harmonies that reflect their deepest arithmetic properties.",
     "domains": [
       "Novelty",
@@ -6951,7 +6951,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.72,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T16:56:44.777909+00:00",
     "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
   },

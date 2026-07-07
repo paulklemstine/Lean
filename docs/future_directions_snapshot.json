@@ -22,7 +22,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7c938265",
     "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable — theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements — most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark — they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
     "domain_bridges": [],
     "domains": [
@@ -35,7 +35,7 @@
     "proof_strategy": "Define a dark theorem of level k as a Pi_2 statement 'for all n, there exist at least k values of m such that P(n,m)' such that PA proves the existential claim but PA does not prove P(n,m) for any specific m. Level 1: Paris-Harrington theorem (the strengthened finite Ramsey theorem). Level 2: the Paris-Harrington theorem for the statement 'there exist at least 2 values of m satisfying the Ramsey property'. Prove strictness: if T is level k+1, then T implies a level-k statement that is independent of PA. Prove density: among all Pi_2 statements provable in ZFC, the fraction that are dark approaches 1 as statement length grows. Test: formalize levels 1-3 in Lean 4 using the Paris-Harrington and Goodstein sequences.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T16:56:44.460450+00:00",
     "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
   },
@@ -8566,34 +8566,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
-      "math.NT",
-      "math.DS"
-    ],
-    "consumed_by_exp_id": "f08e35ed",
-    "description": "A real quadratic field K = Q(√D) satisfies Hammarhjelm's condition if its ring of integers has unique factorization and the Minkowski lattice f(O_K) contains no point in the open rectangle (1, λ) × (-1, 1), where λ > 1 is the fundamental unit. The theorem states that exactly seven such fields exist, corresponding to squarefree D ∈ {2, 5, 13, 29, 53, 173, 293}.",
-    "domain_bridges": [
-      "lattice_geometry",
-      "unit_groups",
-      "class_number_formula",
-      "genus_theory"
-    ],
-    "domains": [
-      "Algebra",
-      "Cryptography"
-    ],
-    "id": "fd_0399",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "First build infrastructure for Minkowski embeddings of rings of integers of real quadratic fields, fundamental units, and the class number formula. Verify the seven cases individually (computable). For the finiteness/classification, formalize the regulator bound implied by Condition H, apply the class number formula to force large class numbers, and reduce to Biro's classification of class number one fields in Yokoi's family for the critical case.",
-    "research_mode": "team",
-    "source_exp_id": "2606.31544v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T13:31:42.777088+00:00",
-    "title": "Classification of real quadratic fields satisfying Hammarhjelm's condition"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
       "math.CO"
     ],
     "consumed_by_exp_id": "",
@@ -12452,32 +12424,6 @@
     "title": "Simplified binomial product formula for lozenge tilings of the triangular region T_n"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "BrownHarary1970ExtremalDigraphs",
-      "Mantel1907"
-    ],
-    "consumed_by_exp_id": "29079d28",
-    "description": "Let adj be an irreflexive directed adjacency relation on n vertices (encoded as a predicate on Fin n × Fin n, with opposite arcs u→v and v→u both allowed). If the resulting digraph contains no directed triangle (no u→v→w→u), then the total number of arcs is at most ⌊n²/2⌋. This is the key combinatorial ingredient used in the paper to bound the measure of spherical sets avoiding x+y+z=0 via a probabilistic argument over SO(d), and it generalizes Mantel's theorem to directed graphs.",
-    "domain_bridges": [
-      "extremal_graph_theory",
-      "additive_combinatorics",
-      "sphere_measure_bounds"
-    ],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0552",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Adapt the appendix proof: show there exists a vertex v with total degree t(v) ≤ n (even n) or t(v) ≤ n−1 (odd n), then induct on n by removing v and applying the inductive hypothesis to the remaining digraph. The degree bound follows from the observation that for any arc x→y, the in-neighborhood of x and out-neighborhood of y are disjoint (else a directed triangle exists).",
-    "research_mode": "team",
-    "source_exp_id": "2607.05083v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T15:49:47.588011+00:00",
-    "title": "Extremal arc count in digraphs without directed triangles (Brown–Harary theorem)"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "Akhtari-Bhargava Thue Hasse principle",
@@ -12788,6 +12734,32 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "Korsky_conjecture_mu2_equals_2",
+      "cake_cutting_portion_bounds"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The constant μ₂ is defined as the infimum over all infinite sequences of radial cuts of a unit circular cake of the supremum over n of the ratio (maximum portion size)/(minimum portion size) after n cuts, where a portion is an adjacent pair of slices. The paper proves μ₂ ≤ 1 + ρ where ρ ≈ 0.75488 is the unique real root of ρ² + ρ³ = 1. The conjecture asserts this bound is tight: μ₂ = 1 + ρ, meaning no cutting strategy can achieve a worst-case portion ratio strictly below 1 + ρ. This would also establish μ₂ as irrational, since ρ is irrational.",
+    "domain_bridges": [
+      "math.CO",
+      "math.RA",
+      "combinatorics_on_words"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0570",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The upper bound μ₂ ≤ 1 + ρ is proven constructively via a specific cutting algorithm and a word-avoidance argument over {0,1,2,3}. The lower bound μ₂ ≥ 1 + ρ remains wide open (only μ₂ ≥ 5/3 is known). A plausible approach: (1) Show that any infinite cutting sequence achieving ratio < 1 + ρ must, after sufficient normalization, produce slices whose sizes lie in ratios from {1, ρ, ρ², ρ³}, (2) Prove that the corresponding word over {0,1,2,3} must avoid all factors in the forbidden set A from Proposition O, (3) Show by combinatorial or automata-theoretic means that no infinite word cyclically avoiding A can have all adjacent-pair sums below 1 + ρ times the minimum adjacent-pair sum. Alternatively, a potential-function argument tracking the distribution of slice sizes could force a lower bound.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05330v1",
+    "status": "available",
+    "timestamp": "2026-07-07T18:26:42.696541+00:00",
+    "title": "The optimal portion ratio μ₂ equals 1 + ρ"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "Johansson-Molloy theorem",
       "Ajtai-Komlos-Szemeredi",
       "Rosenfeld counting argument"
@@ -12802,7 +12774,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0570",
+    "id": "fd_0571",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the semi-random nibble method to maintain tighter control on the residual degrees and color lists, potentially using an improved differential equation analysis or a more refined counting argument for the final sparse stage to eliminate the factor of $r^{1/r}$.",
@@ -12811,6 +12783,35 @@
     "status": "available",
     "timestamp": "2026-07-07T17:18:05.484316+00:00",
     "title": "Optimal leading constant for list coloring uncrowded hypergraphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.NT",
+      "Iwasawa theory",
+      "Elliptic curves",
+      "p-adic L-functions"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For an elliptic curve E over Q with good supersingular reduction at 2 and square-free conductor N_E, and a square-free integer D > 0 congruent to 1 mod 4, the difference between the sharp/flat 2-adic Iwasawa lambda-invariants of the quadratic twist E^D and E (assuming the mu-invariant is 0) is given by the sum over prime divisors ell of D of 2^{n_ell} (if ell divides N_E) or 2^{n_ell+1} (if ell does not divide N_E and 2 divides the order of E modulo ell), where n_ell is the 2-adic valuation of (ell^2 - 1)/8.",
+    "domain_bridges": [
+      "Arithmetic of elliptic curves",
+      "p-adic analysis",
+      "Algebraic geometry"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0572",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize quadratic twists of elliptic curves, the reduction of elliptic curves modulo primes, the order of the finite group of rational points, and the definition of Sprung's sharp/flat 2-adic L-functions. Then establish the explicit difference formula for the lambda-invariants by evaluating the sum over the prime divisors of D using the local properties of the 2-adic L-function under quadratic twists.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05305v1",
+    "status": "available",
+    "timestamp": "2026-07-07T18:27:12.191464+00:00",
+    "title": "Matsuno-type Formula for Supersingular Iwasawa Lambda-Invariants"
   },
   {
     "ambition_level": "extension",
@@ -12875,7 +12876,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "909edf7d",
     "description": "Every real number defines a musical scale: map the digits 0-9 to frequencies f_n = 220 * 2^{n/12} (the A minor pentatonic scale extended). The number pi = 3.14159265... produces the sequence E4, C5, C#5, D5, D#5, F5, E5, A4, G5, C5... — a melody. Conjecture: The melody of pi is not periodic (because pi is irrational) but has musical structure: the autocorrelation of the digit sequence at lag 12 (one octave) is positive and statistically significant. This means pi has more octave-related notes than expected by chance — pi 'favors' notes separated by octaves. Similarly, e 'favors' perfect fifths (lag 7) and sqrt(2) 'favors' minor thirds (lag 3). The musical structure of transcendental numbers reflects their continued fraction properties: numbers with bounded partial quotients have more consonant melodies. Test: compute the digit autocorrelation of pi, e, and sqrt(2) at lags 0-12 (representing unison through octave). Perform a chi-squared test comparing to the uniform distribution. Generate the 'music' of each constant and analyze for tonal centers. Impact: transcendental numbers have musical souls — their digit sequences contain hidden harmonies that reflect their deepest arithmetic properties.",
     "domain_bridges": [],
     "domains": [
@@ -12888,7 +12889,7 @@
     "proof_strategy": "Map digits 0-9 to frequencies f_n = 220 * 2^{n/12} Hz (chromatic scale starting at A3). Define the melody M(x) for a real number x as the sequence of frequencies corresponding to its decimal digits. Compute the autocorrelation R(k) = sum_{i} (d_i - 4.5)(d_{i+k} - 4.5) / N for lags k = 0,1,...,12. Under the null hypothesis (digits are uniformly random), R(k) ~ Normal(0, 1/N). Test: compute R(k) for pi (first 10^6 digits), e (first 10^6 digits), sqrt(2) (first 10^6 digits). If R(k) > 2/sqrt(N) for some k, that lag is statistically significant. Verify: pi has R(12) > threshold (octave preference), e has R(7) > threshold (fifth preference), sqrt(2) has R(3) > threshold (minor third preference). Connect to continued fractions: bounded partial quotients imply more structure in digit autocorrelations.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T16:56:44.777909+00:00",
     "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
   },
