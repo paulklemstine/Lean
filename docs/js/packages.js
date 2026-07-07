@@ -176,6 +176,28 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('pkg-title').textContent = data.title || 'Untitled Research';
         document.getElementById('pkg-domain').textContent = data.domain || 'General';
 
+        // Quality tier badge + percentage
+        const tierEl = document.getElementById('pkg-quality-tier');
+        if (tierEl) {
+            const pkgMeta = window.PACKAGE_INDEX ? window.PACKAGE_INDEX.find(p => p.filename === filename) : null;
+            const tier = pkgMeta ? pkgMeta.quality_tier : null;
+            const score = pkgMeta ? pkgMeta.quality_score : null;
+            const tierSymbols = { gold: '\u{1F947}', silver: '\u{1F948}', bronze: '\u{1F948}', unrated: '' };
+            const tierColors = { gold: '#FFD700', silver: '#C0C0C0', bronze: '#CD7F32', unrated: '#888' };
+            if (tier && tier !== 'unrated') {
+                tierEl.innerHTML = `<span style="font-size:1.2em">${tierSymbols[tier] || ''}</span>` +
+                    `<span style="color:${tierColors[tier] || '#888'};font-weight:bold;margin-left:4px">` +
+                    `${tier.toUpperCase()}</span>` +
+                    (score != null ? `<span style="color:var(--text-muted);margin-left:8px">${Math.round(score * 100)}%</span>` : '');
+                tierEl.style.display = 'inline';
+            } else if (score != null) {
+                tierEl.innerHTML = `<span style="color:var(--text-muted)">${Math.round(score * 100)}%</span>`;
+                tierEl.style.display = 'inline';
+            } else {
+                tierEl.style.display = 'none';
+            }
+        }
+
         let dateStr = 'Recent';
         let timeStr = '';
         if (window.PACKAGE_INDEX) {

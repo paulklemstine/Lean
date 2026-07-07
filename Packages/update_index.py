@@ -199,6 +199,15 @@ def update_index():
         qs_entry = quality_scores.get(exp_id, None) if exp_id else None
         quality_score = qs_entry["quality_score"] if qs_entry else None
         quality_label = qs_entry["quality"] if qs_entry else "unrated"
+        # Compute quality tier: gold (Q>=0.7), silver (Q>=0.4), bronze (Q<0.4)
+        if quality_score is None:
+            quality_tier = "unrated"
+        elif quality_score >= 0.7:
+            quality_tier = "gold"
+        elif quality_score >= 0.4:
+            quality_tier = "silver"
+        else:
+            quality_tier = "bronze"
 
         # Extract visualizations into real files, replace data with file paths
         if data.get("visualizations"):
@@ -299,6 +308,7 @@ def update_index():
             "exp_id": data.get("exp_id", ""),
             "quality_score": quality_score,
             "quality": quality_label,
+            "quality_tier": quality_tier,
         })
 
         # Lightweight index for lineage links (no big text fields)

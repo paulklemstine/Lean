@@ -2394,6 +2394,21 @@ Research mode: {concept.research_mode}
             # has been removed: each Phase B produces a fresh, standalone package.
             target_pkg_path = f"Packages/{self._derive_artifact_name(job.concept, 'json')}"
 
+            # Add quality tier to the package JSON
+            try:
+                _pkg = json.loads(enriched_pkg)
+                _qs = getattr(job, "quality_score", None)
+                if _qs is not None:
+                    _pkg["quality_score"] = _qs
+                    if _qs >= 0.7:
+                        _pkg["quality_tier"] = "gold"
+                    elif _qs >= 0.4:
+                        _pkg["quality_tier"] = "silver"
+                    else:
+                        _pkg["quality_tier"] = "bronze"
+                enriched_pkg = json.dumps(_pkg, indent=2, ensure_ascii=False)
+            except Exception:
+                pass
             parts.append({"type": "new", "path": target_pkg_path, "content": enriched_pkg})
 
         if job.result_discussion:

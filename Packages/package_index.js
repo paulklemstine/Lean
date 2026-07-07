@@ -11,6 +11,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 317,
     "quality": "partial",
     "quality_score": 0.4996542252252253,
+    "quality_tier": "silver",
     "title": "A Log-Concavity Dichotomy for the Total d-Hoggatt Numbers"
   },
   {
@@ -21,6 +22,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 316,
     "quality": "partial",
     "quality_score": 0.39727681,
+    "quality_tier": "bronze",
     "title": "The Octahedron as the Minimal Obstruction to Hereditary Clique-Helliness"
   },
   {
@@ -31,6 +33,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 315,
     "quality": "partial",
     "quality_score": 0.5183991264367817,
+    "quality_tier": "silver",
     "title": "The Aharoni\u2013Korman Property for Well-Founded FAC Posets"
   },
   {
@@ -41,6 +44,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 314,
     "quality": "partial",
     "quality_score": 0.49735784528301885,
+    "quality_tier": "silver",
     "title": "A Pell Obstruction to a Proposed Family of Optimal Equidistant Codes"
   },
   {
@@ -51,6 +55,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 313,
     "quality": "partial",
     "quality_score": 0.50904,
+    "quality_tier": "silver",
     "title": "Characterization of Extremal Graphs for Positive Lin-Lu-Yau Curvature"
   },
   {
@@ -61,6 +66,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 312,
     "quality": "partial",
     "quality_score": 0.57296,
+    "quality_tier": "silver",
     "title": "The Sharp Threshold Constant of the Maker-Breaker Cycle Game"
   },
   {
@@ -71,6 +77,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 311,
     "quality": "substantial",
     "quality_score": 0.70296,
+    "quality_tier": "gold",
     "title": "Minimal Dimension of Non-Gamma-Positive Symmetric Edge Polytopes"
   },
   {
@@ -81,6 +88,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 310,
     "quality": "partial",
     "quality_score": 0.43457572380952386,
+    "quality_tier": "silver",
     "title": "Real-Rootedness of the Square of the Eulerian Triangle"
   },
   {
@@ -91,6 +99,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 309,
     "quality": "partial",
     "quality_score": 0.45366952380952386,
+    "quality_tier": "silver",
     "title": "Joint Descendants of the Last k Vertices in Random d-DAGs: A Beta-Moment Telescoping Law"
   },
   {
@@ -101,6 +110,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 308,
     "quality": "substantial",
     "quality_score": 0.7059866666666667,
+    "quality_tier": "gold",
     "title": "The Kummer Orientation Class of a Pro-2 Demushkin Group"
   },
   {
@@ -111,6 +121,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 307,
     "quality": "partial",
     "quality_score": 0.6173599999999999,
+    "quality_tier": "silver",
     "title": "Explicit Quantitative Power-Saving Corridor for Monic Minkowski Polynomials"
   },
   {
@@ -121,6 +132,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 306,
     "quality": "partial",
     "quality_score": 0.63344,
+    "quality_tier": "silver",
     "title": "Monotonicity and Jumps of Minimal Absolute Values of Fifth-Root-of-Unity Sums"
   },
   {
@@ -131,6 +143,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 305,
     "quality": "partial",
     "quality_score": 0.5242404210526316,
+    "quality_tier": "silver",
     "title": "Chain Covers in the Boolean Lattice"
   },
   {
@@ -141,6 +154,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 304,
     "quality": "partial",
     "quality_score": 0.49753964866339334,
+    "quality_tier": "silver",
     "title": "Characterization of the Aharoni-Korman Property via Saturated Chains: Structural Lemmas and a Refutation of the Obstruction Direction"
   },
   {
@@ -151,6 +165,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 303,
     "quality": "substantial",
     "quality_score": 0.74264,
+    "quality_tier": "gold",
     "title": "Optimality of the Polynomial Factor in the Sunflower-Free Bound"
   },
   {
@@ -161,6 +176,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 302,
     "quality": "partial",
     "quality_score": 0.511,
+    "quality_tier": "silver",
     "title": "Discrete Homotopy Groups of Quasisymmetric Cubical Sets"
   },
   {
@@ -171,6 +187,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 301,
     "quality": "partial",
     "quality_score": 0.420858,
+    "quality_tier": "silver",
     "title": "Tightness of the Edge-Deletion Bound in a Hyperstability Extension of the Erdos-Gallai Theorem"
   },
   {
@@ -181,6 +198,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 300,
     "quality": "partial",
     "quality_score": 0.46650342687540775,
+    "quality_tier": "silver",
     "title": "The Finite Core of the Rogers-Ramanujan Identities: Schur Polynomials, Gaussian Binomials, and a Fibonacci Bridge"
   },
   {
@@ -191,6 +209,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 299,
     "quality": "partial",
     "quality_score": 0.3793292235294118,
+    "quality_tier": "bronze",
     "title": "Classification of Regular 4-Maniplexes via Tetravalent Graph Censuses"
   },
   {
@@ -201,6 +220,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 298,
     "quality": "partial",
     "quality_score": 0.3599485585714286,
+    "quality_tier": "bronze",
     "title": "Minimal Obstructions to Total Rainbow Forests Are Single Monochromatic Cycles"
   },
   {
@@ -211,6 +231,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 297,
     "quality": "partial",
     "quality_score": 0.5155438642611684,
+    "quality_tier": "silver",
     "title": "Kernel-Cover Characterization of the Weighted Davenport Constant"
   },
   {
@@ -221,6 +242,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 296,
     "quality": "substantial",
     "quality_score": 0.8076800000000002,
+    "quality_tier": "gold",
     "title": "Sign Alternation in q-Hypergeometric Series via Oscillatory Asymptotics Near Roots of Unity"
   },
   {
@@ -231,6 +253,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 295,
     "quality": "partial",
     "quality_score": 0.5295662942477877,
+    "quality_tier": "silver",
     "title": "Young Conjugation as a Measure-Preserving Klein Four-Group on the Natural Extension of the Triangle Map"
   },
   {
@@ -241,6 +264,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 294,
     "quality": "partial",
     "quality_score": 0.5940000000000001,
+    "quality_tier": "silver",
     "title": "Exact 2-adic Valuations of the Coefficients of T(x)^m: the m=5 Law and the Failure of a Universal Formula"
   },
   {
@@ -251,6 +275,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 293,
     "quality": "partial",
     "quality_score": 0.6096,
+    "quality_tier": "silver",
     "title": "Structural Base Cases for Seymour's Second Neighborhood Conjecture"
   },
   {
@@ -261,6 +286,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 292,
     "quality": "substantial",
     "quality_score": 0.83176,
+    "quality_tier": "gold",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
   {
@@ -271,6 +297,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 291,
     "quality": "partial",
     "quality_score": 0.4514887166666668,
+    "quality_tier": "silver",
     "title": "Non-Existence of Non-Constant Blend Colorings on Strongly Connected Weighted Digraphs"
   },
   {
@@ -281,6 +308,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 290,
     "quality": "substantial",
     "quality_score": 0.7258007692307691,
+    "quality_tier": "gold",
     "title": "Explicit 2-adic Valuation of the Shifted Perrin Sequence"
   },
   {
@@ -291,6 +319,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 289,
     "quality": "partial",
     "quality_score": 0.6395200000000001,
+    "quality_tier": "silver",
     "title": "Characterization of Bipartite Partial Duals of Orientable Hypermaps"
   },
   {
@@ -301,6 +330,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 288,
     "quality": "substantial",
     "quality_score": 0.8344800000000001,
+    "quality_tier": "gold",
     "title": "Anabelomorphic Equivalence: Rigidity of the GL(1) Residue Torus"
   },
   {
@@ -311,6 +341,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 287,
     "quality": "partial",
     "quality_score": 0.69479,
+    "quality_tier": "silver",
     "title": "Escher Staircases in Algebra: Infinite Ascending Ideal Chains That Loop Back"
   },
   {
@@ -321,6 +352,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 286,
     "quality": "partial",
     "quality_score": 0.6772,
+    "quality_tier": "silver",
     "title": "The Anti-Fibonacci Sequence: Quadratic Growth, Cubic Sums, and a Perfect-Square Spectrum"
   },
   {
@@ -331,6 +363,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 285,
     "quality": "substantial",
     "quality_score": 0.79104,
+    "quality_tier": "gold",
     "title": "Sufficiency of the Obvious Necessary Conditions for the Generalized Honeymoon Oberwolfach Problem with Multiple Round Tables"
   },
   {
@@ -341,6 +374,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 284,
     "quality": "substantial",
     "quality_score": 0.8009580000000001,
+    "quality_tier": "gold",
     "title": "The Stabilizer of a Regular Unipotent Class under the Center of the Simply Connected Cover"
   },
   {
@@ -351,6 +385,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 283,
     "quality": "substantial",
     "quality_score": 0.7998400000000001,
+    "quality_tier": "gold",
     "title": "Classification of Discrete d-Pseudomanifolds at the Vertex Threshold via the Minimal Projective Plane"
   },
   {
@@ -361,6 +396,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 282,
     "quality": "partial",
     "quality_score": 0.6148,
+    "quality_tier": "silver",
     "title": "Eventual Congruence of Mis\u00e8re P-Positions in Escalation Ladders"
   },
   {
@@ -371,6 +407,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 281,
     "quality": "partial",
     "quality_score": 0.62536,
+    "quality_tier": "silver",
     "title": "The Vanishing Pentagon: Residue-Class Monotonicity of the Minimal Modulus of Sums of Fifth Roots of Unity"
   },
   {
@@ -381,6 +418,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 280,
     "quality": "partial",
     "quality_score": 0.4724886610169492,
+    "quality_tier": "silver",
     "title": "Toroidal Constructions and Hall-Type Repair for the n-Queens Completion Problem"
   },
   {
@@ -391,6 +429,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 279,
     "quality": "partial",
     "quality_score": 0.50004,
+    "quality_tier": "silver",
     "title": "Recursive Decomposition Isomorphism for General m-Tamari Intervals and Planar Constellations"
   },
   {
@@ -401,6 +440,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 278,
     "quality": "partial",
     "quality_score": 0.30277126000000004,
+    "quality_tier": "bronze",
     "title": "Knots That Think: The Writhe as a Well-Defined Invariant of Cognitive Braids"
   },
   {
@@ -411,6 +451,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 277,
     "quality": "substantial",
     "quality_score": 0.75424,
+    "quality_tier": "gold",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
   {
@@ -421,6 +462,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 276,
     "quality": "partial",
     "quality_score": 0.65567,
+    "quality_tier": "silver",
     "title": "A Lower Bound for the Proportion of Critical-Line Zeros of PGL(3) Twisted L-functions"
   },
   {
@@ -431,6 +473,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 275,
     "quality": "partial",
     "quality_score": 0.4546,
+    "quality_tier": "silver",
     "title": "Colorability Does Not Control Choosability: A Complete Planar Witness at k=2"
   },
   {
@@ -441,6 +484,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 274,
     "quality": "partial",
     "quality_score": 0.6341600000000001,
+    "quality_tier": "silver",
     "title": "No Perfect Squares from Products of Shifted Odd Powers"
   },
   {
@@ -451,6 +495,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 273,
     "quality": "partial",
     "quality_score": 0.6449999999999999,
+    "quality_tier": "silver",
     "title": "Dark Mathematics: A Strict Hierarchy of Theorems With Provable but Unfindable Witnesses"
   },
   {
@@ -461,6 +506,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 272,
     "quality": "partial",
     "quality_score": 0.44295649681528665,
+    "quality_tier": "silver",
     "title": "A Multi-Kernel Support Law for Sidon Sets: Exact Difference-Set Cardinality and a Sharp Characterization"
   },
   {
@@ -471,6 +517,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 271,
     "quality": "partial",
     "quality_score": 0.573804028436019,
+    "quality_tier": "silver",
     "title": "Every b-invariant Edge is Forcing Exactly for Near-Bipartite Bricks (Up to Three Classical Exceptions)"
   },
   {
@@ -481,6 +528,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 270,
     "quality": "partial",
     "quality_score": 0.5266726923076923,
+    "quality_tier": "silver",
     "title": "Even Harmonic Strength of Antipodal Spherical Designs Contains 2"
   },
   {
@@ -491,6 +539,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 269,
     "quality": "substantial",
     "quality_score": 0.7903600000000002,
+    "quality_tier": "gold",
     "title": "Prime-Base Binomial Congruences: The Prime Fibre and the Composite Frontier"
   },
   {
@@ -501,6 +550,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 268,
     "quality": "substantial",
     "quality_score": 0.8257369999999999,
+    "quality_tier": "gold",
     "title": "The Exact Value of the Three-Color Gallai Homothety Number of {0,2,5}"
   },
   {
@@ -511,6 +561,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 267,
     "quality": "partial",
     "quality_score": 0.6012985714285713,
+    "quality_tier": "silver",
     "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
   },
   {
@@ -521,6 +572,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 266,
     "quality": "substantial",
     "quality_score": 0.8246161538461538,
+    "quality_tier": "gold",
     "title": "The Fixed-Point Bridge: Large Extremal t-Intersecting Families of Permutations"
   },
   {
@@ -531,6 +583,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 265,
     "quality": "partial",
     "quality_score": 0.66208,
+    "quality_tier": "silver",
     "title": "Sheared Witt Vectors Are the Filtered Colimit of Truncated Witt Vectors"
   },
   {
@@ -541,6 +594,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 264,
     "quality": "substantial",
     "quality_score": 0.73448,
+    "quality_tier": "gold",
     "title": "The Selmer Fan: Parity Rigidity and Gaussian-Binomial Rank Distributions"
   },
   {
@@ -551,6 +605,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 263,
     "quality": "partial",
     "quality_score": 0.6876800000000001,
+    "quality_tier": "silver",
     "title": "A Shift-Invariant Row-Sum Law for the Extended Eulerian Numbers"
   },
   {
@@ -561,6 +616,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 262,
     "quality": "substantial",
     "quality_score": 0.78952,
+    "quality_tier": "gold",
     "title": "Characterization of Balanced Distance-Hereditary Graphs by the Complement of a 3-Matching"
   },
   {
@@ -571,6 +627,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 261,
     "quality": "partial",
     "quality_score": 0.4398394666666667,
+    "quality_tier": "silver",
     "title": "The Difference-Set Method for Sidon Sets: Sharp Bounds and the Convolution-Kernel Programme"
   },
   {
@@ -581,6 +638,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 260,
     "quality": "substantial",
     "quality_score": 0.7779935103225806,
+    "quality_tier": "gold",
     "title": "The Mirror in the Weights: Purity and Central Hodge-Tate Weights for Polarized Representations over CM Fields"
   },
   {
@@ -591,6 +649,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 259,
     "quality": "partial",
     "quality_score": 0.5129090000000001,
+    "quality_tier": "silver",
     "title": "Isomorphisms of Generating Trees and Refined Equinumerosity for m-Tamari Intervals and (m+1)-Constellations"
   },
   {
@@ -601,6 +660,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 258,
     "quality": "partial",
     "quality_score": 0.6757399999999999,
+    "quality_tier": "silver",
     "title": "Filtered-Colimit Preservation by Sheared Witt Vectors: A Finite-Support Dichotomy"
   },
   {
@@ -611,6 +671,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 257,
     "quality": "partial",
     "quality_score": 0.6976800000000001,
+    "quality_tier": "silver",
     "title": "Structural Constraints on Polynomial Diophantine Tuples with a k-th Power Condition"
   },
   {
@@ -621,6 +682,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 256,
     "quality": "partial",
     "quality_score": 0.47561819905213276,
+    "quality_tier": "silver",
     "title": "The Fifth-Power Congruence Modulo Five and Its Pythagorean Consequences"
   },
   {
@@ -631,6 +693,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 255,
     "quality": "substantial",
     "quality_score": 0.7916800000000002,
+    "quality_tier": "gold",
     "title": "Manifold-Constrained Kruskal Rank Bounds on Dichotomy Counts"
   },
   {
@@ -641,6 +704,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 254,
     "quality": "partial",
     "quality_score": 0.4437857425742574,
+    "quality_tier": "silver",
     "title": "Zero-Knowledge Theorem Proving: Local Checkability and Multi-Round Soundness Amplification"
   },
   {
@@ -651,6 +715,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 253,
     "quality": "partial",
     "quality_score": 0.68521,
+    "quality_tier": "silver",
     "title": "Stern's Diatomic Sequence: Coprimality, Counting, and a Fibonacci Bridge"
   },
   {
@@ -661,6 +726,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 252,
     "quality": "partial",
     "quality_score": 0.562938,
+    "quality_tier": "silver",
     "title": "An Improved Vizing-Type Constant for Domination in Cartesian Products of Graphs"
   },
   {
@@ -671,6 +737,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 251,
     "quality": "partial",
     "quality_score": 0.6896399999999999,
+    "quality_tier": "silver",
     "title": "Integer Structures on the Hyperbolic Disk: Arithmetic on Curved Space"
   },
   {
@@ -681,6 +748,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 250,
     "quality": "partial",
     "quality_score": 0.45987362,
+    "quality_tier": "silver",
     "title": "Entanglement-Inspired Algorithmic Complexity in Noncommutative Spaces: A Transfer-Operator View of Fibonacci Correlations"
   },
   {
@@ -691,6 +759,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 249,
     "quality": "substantial",
     "quality_score": 0.7906799999999999,
+    "quality_tier": "gold",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
   {
@@ -701,6 +770,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 248,
     "quality": "substantial",
     "quality_score": 0.7303200000000001,
+    "quality_tier": "gold",
     "title": "The Good-Manifold Count of an n-Nice Polytope: An Exceptional Head and an Exponential Tail"
   },
   {
@@ -711,6 +781,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 247,
     "quality": "partial",
     "quality_score": 0.389,
+    "quality_tier": "bronze",
     "title": "The Valley Statistic Bridge: Greedy Tamari Intervals and Bipartite Planar Maps"
   },
   {
@@ -721,6 +792,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 246,
     "quality": "partial",
     "quality_score": 0.3795434181818182,
+    "quality_tier": "bronze",
     "title": "Quantum Surreal Numbers: Superposition over Non-Archimedean Value Fields"
   },
   {
@@ -731,6 +803,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 245,
     "quality": "partial",
     "quality_score": 0.6913,
+    "quality_tier": "silver",
     "title": "Exact Realizability of Finite Concepts by Single-Neuron Networks with Polynomial Read-outs"
   },
   {
@@ -741,6 +814,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 244,
     "quality": "substantial",
     "quality_score": 0.7859200000000002,
+    "quality_tier": "gold",
     "title": "Congruence Rigidity of Sums of Squares: Legs and Divisibility Laws of Pythagorean Triples and Quadruples"
   },
   {
@@ -751,6 +825,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 243,
     "quality": "partial",
     "quality_score": 0.6341419999999999,
+    "quality_tier": "silver",
     "title": "Atomicity of Prime-Class-Number Hilbert Class Fields"
   },
   {
@@ -761,6 +836,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 242,
     "quality": "substantial",
     "quality_score": 0.87056,
+    "quality_tier": "gold",
     "title": "Non-embeddability of the Petersen Graph into Tropical Abelian Cayley Graphs"
   },
   {
@@ -771,6 +847,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 241,
     "quality": "substantial",
     "quality_score": 0.7176246153846154,
+    "quality_tier": "gold",
     "title": "A Degree Criterion for Dominant Weights lambda_{D,I} = 2rho - beta_I - beta_D in the Simply-Laced Case"
   },
   {
@@ -781,6 +858,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 240,
     "quality": "substantial",
     "quality_score": 0.79052,
+    "quality_tier": "gold",
     "title": "No-Stretching of GF(2) Quotient Labelings from Edge Partitions"
   },
   {
@@ -791,6 +869,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 239,
     "quality": "partial",
     "quality_score": 0.6813500000000001,
+    "quality_tier": "silver",
     "title": "Uniqueness of the Critical Two-Vertex Augmentation of G27"
   },
   {
@@ -801,6 +880,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 238,
     "quality": "substantial",
     "quality_score": 0.7700800000000001,
+    "quality_tier": "gold",
     "title": "Uniform Extremality for Siblings of the Coupon Collector"
   },
   {
@@ -811,6 +891,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 237,
     "quality": "partial",
     "quality_score": 0.557,
+    "quality_tier": "silver",
     "title": "Balla's Conjecture for the Angle arccos(1/3): A Rank-Multiplicity Reduction"
   },
   {
@@ -821,6 +902,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 236,
     "quality": "partial",
     "quality_score": 0.6399900000000001,
+    "quality_tier": "silver",
     "title": "Improved Bilu-Linial Spectral Bound via Interlacing Families: The Unbalanced 4-Cycle Witness"
   },
   {
@@ -831,6 +913,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 235,
     "quality": "substantial",
     "quality_score": 0.84436,
+    "quality_tier": "gold",
     "title": "Hilbert 12: A Kronecker-Weber Generalization via Explicit Reciprocity"
   },
   {
@@ -841,6 +924,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 234,
     "quality": "partial",
     "quality_score": 0.46884433623188404,
+    "quality_tier": "silver",
     "title": "Exact Sign Law for the Coefficients of Ramanujan's Third Order Mock Theta Function rho(q)"
   },
   {
@@ -851,6 +935,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 233,
     "quality": "partial",
     "quality_score": 0.527476,
+    "quality_tier": "silver",
     "title": "The Minimum Independence Ratio Constraint: A Reciprocal Bridge Between Coloring and Independence"
   },
   {
@@ -861,6 +946,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 232,
     "quality": "substantial",
     "quality_score": 0.7976880000000001,
+    "quality_tier": "gold",
     "title": "Petersen Graph Non-Embeddability into Bipartite Abelian Cayley Graphs"
   },
   {
@@ -871,6 +957,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 231,
     "quality": "partial",
     "quality_score": 0.6437080000000001,
+    "quality_tier": "silver",
     "title": "Verified Proof Automation: Sound Tactics for Tropical Algebra, Primality, and Spectral Bounds"
   },
   {
@@ -881,6 +968,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 230,
     "quality": "partial",
     "quality_score": 0.65944,
+    "quality_tier": "silver",
     "title": "Infinite Sign Changes of Symmetric Power L-Function Coefficients over Sums of m Squares for All Even m"
   },
   {
@@ -891,6 +979,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 229,
     "quality": "partial",
     "quality_score": 0.61208,
+    "quality_tier": "silver",
     "title": "Non-3-Colorability of C4-Free Diameter-Two Graphs with Maximum Degree at Least 17"
   },
   {
@@ -901,6 +990,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 228,
     "quality": "partial",
     "quality_score": 0.6195219999999999,
+    "quality_tier": "silver",
     "title": "The Width Invariant of Z2 x (Z2)^n and Its Tropical Dual"
   },
   {
@@ -911,6 +1001,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 227,
     "quality": "substantial",
     "quality_score": 0.8322400000000001,
+    "quality_tier": "gold",
     "title": "The Independence Ratio and the Fractional Chromatic Number: A Sharp 1/4 Threshold for Unit-Distance Graphs"
   },
   {
@@ -921,6 +1012,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 226,
     "quality": "partial",
     "quality_score": 0.6964000000000001,
+    "quality_tier": "silver",
     "title": "Franke Decomposition for SL(2, Z) Automorphic Forms"
   },
   {
@@ -931,6 +1023,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 225,
     "quality": "partial",
     "quality_score": 0.45374800000000004,
+    "quality_tier": "silver",
     "title": "The Independence-Ratio Certificate: A 29-Vertex Threshold for the Fractional Chromatic Number of the Plane"
   },
   {
@@ -941,6 +1034,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 224,
     "quality": "partial",
     "quality_score": 0.48355851612903233,
+    "quality_tier": "silver",
     "title": "The Spectral Core of the Sensitivity Conjecture: Signed Adjacency Matrices of the Hypercube"
   },
   {
@@ -951,6 +1045,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 223,
     "quality": "partial",
     "quality_score": 0.456932,
+    "quality_tier": "silver",
     "title": "Learning with Errors: The Analytic and Algebraic Core of the Hardness Reduction"
   },
   {
@@ -961,6 +1056,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 222,
     "quality": "partial",
     "quality_score": 0.6772579999999999,
+    "quality_tier": "silver",
     "title": "Digit Sums of Repeating Fractions 1/p: Full-Reptend and Half-Period Laws"
   },
   {
@@ -971,6 +1067,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 221,
     "quality": "partial",
     "quality_score": 0.65777,
+    "quality_tier": "silver",
     "title": "Digit Sum Formula for Prime Reciprocals with Half-Order Periods"
   },
   {
@@ -981,6 +1078,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 220,
     "quality": "substantial",
     "quality_score": 0.759526,
+    "quality_tier": "gold",
     "title": "Clique Counts in Latin Square Graphs and the Role of Intercalates"
   },
   {
@@ -991,6 +1089,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 219,
     "quality": "substantial",
     "quality_score": 0.8091999999999999,
+    "quality_tier": "gold",
     "title": "The Independence-Ratio Engine: A 29-Point Witness that the Plane's Fractional Chromatic Number Exceeds Four"
   },
   {
@@ -1001,6 +1100,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 218,
     "quality": "partial",
     "quality_score": 0.6812400000000001,
+    "quality_tier": "silver",
     "title": "The Signed Total Roman Domatic Number: A Structural Collapse Forced by Low-Degree Vertices"
   },
   {
@@ -1011,6 +1111,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 217,
     "quality": "partial",
     "quality_score": 0.63296,
+    "quality_tier": "silver",
     "title": "Reflection Duality for d-Balanced Partitions"
   },
   {
@@ -1021,6 +1122,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 216,
     "quality": "partial",
     "quality_score": 0.5029119272727274,
+    "quality_tier": "silver",
     "title": "An Euler Product for the Autocorrelation of Simultaneously Visible Lattice Points"
   },
   {
@@ -1031,6 +1133,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 215,
     "quality": "partial",
     "quality_score": 0.3972276,
+    "quality_tier": "bronze",
     "title": "Quadratic Reciprocity Through Five Windows: The Supplementary Laws"
   },
   {
@@ -1041,6 +1144,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 214,
     "quality": "partial",
     "quality_score": 0.3699978030769231,
+    "quality_tier": "bronze",
     "title": "Projective Plane Coupon Collection Slowness"
   },
   {
@@ -1051,6 +1155,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 213,
     "quality": "substantial",
     "quality_score": 0.74152,
+    "quality_tier": "gold",
     "title": "Zero-Knowledge Proofs for Graph 3-Colouring: Completeness, Soundness Amplification, and Perfect Simulation"
   },
   {
@@ -1061,6 +1166,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 212,
     "quality": "partial",
     "quality_score": 0.516675,
+    "quality_tier": "silver",
     "title": "Convex Position Minimizes Plane Graphs"
   },
   {
@@ -1071,6 +1177,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 211,
     "quality": "partial",
     "quality_score": 0.45705761904761916,
+    "quality_tier": "silver",
     "title": "Stereographic Fourier Analysis: The Chordal Metric Identity and Harmonic Analysis on Spheres"
   },
   {
@@ -1081,6 +1188,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 210,
     "quality": "partial",
     "quality_score": 0.4328038727272727,
+    "quality_tier": "silver",
     "title": "Square-Root Cancellation for GL(2) Triple Correlation Sums: The Deligne Chebyshev Envelope"
   },
   {
@@ -1091,6 +1199,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 209,
     "quality": "partial",
     "quality_score": 0.60704,
+    "quality_tier": "silver",
     "title": "Fourier Analysis on Finite Cyclic Groups: Convolution, Parseval, and the Donoho-Stark Uncertainty Principle"
   },
   {
@@ -1101,6 +1210,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 208,
     "quality": "partial",
     "quality_score": 0.41286596521739133,
+    "quality_tier": "silver",
     "title": "A Reflection Principle for Goldbach Representation Counts"
   },
   {
@@ -1111,6 +1221,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 207,
     "quality": "partial",
     "quality_score": 0.4285765151515152,
+    "quality_tier": "silver",
     "title": "A Sharp Tur\u00e1n\u2013Caro\u2013Wei Lower Bound on the Independence Number"
   },
   {
@@ -1121,6 +1232,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 206,
     "quality": "partial",
     "quality_score": 0.682396,
+    "quality_tier": "silver",
     "title": "Elliptic Curve Cryptography: The Weil Pairing and BLS Signatures"
   },
   {
@@ -1131,6 +1243,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 205,
     "quality": "partial",
     "quality_score": 0.65752,
+    "quality_tier": "silver",
     "title": "Universal Approximation for ReLU Networks: A Tropical Correspondence with Quantitative Bounds"
   },
   {
@@ -1141,6 +1254,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 204,
     "quality": "partial",
     "quality_score": 0.455,
+    "quality_tier": "silver",
     "title": "The Gaussian Integer Parametrization of Pythagorean Triples"
   },
   {
@@ -1151,6 +1265,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 203,
     "quality": "partial",
     "quality_score": 0.40141157142857153,
+    "quality_tier": "silver",
     "title": "Sums of Three Cubes: The Modular Obstruction and the Density Conjecture"
   },
   {
@@ -1161,6 +1276,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 202,
     "quality": "partial",
     "quality_score": 0.6049599999999999,
+    "quality_tier": "silver",
     "title": "Zero-Knowledge Proofs: The Algebraic Core of the Schnorr Protocol"
   },
   {
@@ -1171,6 +1287,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 201,
     "quality": "substantial",
     "quality_score": 0.76576,
+    "quality_tier": "gold",
     "title": "Certified Adversarial Robustness via Sheaf Cohomology"
   },
   {
@@ -1181,6 +1298,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 200,
     "quality": "partial",
     "quality_score": 0.29062540000000003,
+    "quality_tier": "bronze",
     "title": "The Euler Characteristic of a Covered Complex: Exact Inclusion-Exclusion and the Numerical Shadow of Nerve Reconstruction"
   },
   {
@@ -1191,6 +1309,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 199,
     "quality": "partial",
     "quality_score": 0.44923399999999997,
+    "quality_tier": "silver",
     "title": "Extremality of Projective-Plane Designs in the Coupon Collector's Problem"
   },
   {
@@ -1201,6 +1320,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 198,
     "quality": "partial",
     "quality_score": 0.5186266666666667,
+    "quality_tier": "silver",
     "title": "Complete Solutions to the 14-gonal Fourth-Power Diophantine Equation 6n^2 - 5n = t^4"
   },
   {
@@ -1211,6 +1331,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 197,
     "quality": "partial",
     "quality_score": 0.6648000000000001,
+    "quality_tier": "silver",
     "title": "K\u00e4hler\u2013Einstein Metrics and K-Stability: The Toric Balance Criterion"
   },
   {
@@ -1221,6 +1342,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 196,
     "quality": "substantial",
     "quality_score": 0.73856,
+    "quality_tier": "gold",
     "title": "Proof Complexity: Resolution, Restrictions, and Cutting Planes"
   },
   {
@@ -1231,6 +1353,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 195,
     "quality": "partial",
     "quality_score": 0.6155999999999999,
+    "quality_tier": "silver",
     "title": "Unramified Obstruction Equals Descent Obstruction for Rationally Connected Varieties over p-adic Function Fields"
   },
   {
@@ -1241,6 +1364,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 194,
     "quality": "partial",
     "quality_score": 0.4432100000000001,
+    "quality_tier": "silver",
     "title": "Classification of Perfect Cubes in 14-gonal Numbers"
   },
   {
@@ -1251,6 +1375,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 193,
     "quality": "partial",
     "quality_score": 0.624552,
+    "quality_tier": "silver",
     "title": "Why Airy's Equation Has No Polynomial Solutions: A Degree-Counting Proof"
   },
   {
@@ -1261,6 +1386,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 192,
     "quality": "unrated",
     "quality_score": null,
+    "quality_tier": "unrated",
     "title": "Close Proofs for Existential Theorem"
   },
   {
@@ -1271,6 +1397,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 191,
     "quality": "partial",
     "quality_score": 0.452,
+    "quality_tier": "silver",
     "title": "The Euler-Mascheroni Constant: Series, Integral, and Irrationality Approaches"
   },
   {
@@ -1281,6 +1408,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 190,
     "quality": "partial",
     "quality_score": 0.4133402545454546,
+    "quality_tier": "silver",
     "title": "Excluded Minors for Z/n-Gainable Biased Graphs: The Parallel-Class Slice and a Divisibility Law"
   },
   {
@@ -1291,6 +1419,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 189,
     "quality": "partial",
     "quality_score": 0.4367097362637363,
+    "quality_tier": "silver",
     "title": "Density Forces Structure: Turan, Kruskal-Katona, and Roth in Extremal Combinatorics"
   },
   {
@@ -1301,6 +1430,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 188,
     "quality": "substantial",
     "quality_score": 0.79664,
+    "quality_tier": "gold",
     "title": "Complete Characterization of Minimal Forbidden Partial-Cube Minors for Daisy Cubes"
   },
   {
@@ -1311,6 +1441,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 187,
     "quality": "partial",
     "quality_score": 0.6807300000000001,
+    "quality_tier": "silver",
     "title": "Six of Seven: The Fano-Plane Threshold for Strong Blocking Sets (h = 1)"
   },
   {
@@ -1321,6 +1452,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 186,
     "quality": "partial",
     "quality_score": 0.6244,
+    "quality_tier": "silver",
     "title": "EML Universal Approximation: Density Meets Kolmogorov Incompressibility"
   },
   {
@@ -1331,6 +1463,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 185,
     "quality": "partial",
     "quality_score": 0.3726553552511416,
+    "quality_tier": "bronze",
     "title": "Tightness of the Density Threshold for Configurations in Linear Hypergraphs"
   },
   {
@@ -1341,6 +1474,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 184,
     "quality": "partial",
     "quality_score": 0.65976,
+    "quality_tier": "silver",
     "title": "Finite Optimal Transport and Wasserstein Distances"
   },
   {
@@ -1351,6 +1485,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 183,
     "quality": "partial",
     "quality_score": 0.57392,
+    "quality_tier": "silver",
     "title": "Ramsey Theory: The Ramsey Number as a Computable Function with Exact Values and Bounds"
   },
   {
@@ -1361,6 +1496,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 182,
     "quality": "partial",
     "quality_score": 0.44995,
+    "quality_tier": "silver",
     "title": "The Non-Existence of New Factorial Square Solutions: Brocard's Problem"
   },
   {
@@ -1371,6 +1507,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 181,
     "quality": "substantial",
     "quality_score": 0.7327899999999999,
+    "quality_tier": "gold",
     "title": "EML Interpolation Theory: Stone\u2013Weierstrass Density and Jackson-Type Rates for Exponential\u2013Logarithmic Networks"
   },
   {
@@ -1381,6 +1518,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 180,
     "quality": "partial",
     "quality_score": 0.69949,
+    "quality_tier": "silver",
     "title": "A Diophantine Sufficient Condition for Wang-Stripe Aperiodicity"
   },
   {
@@ -1391,6 +1529,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 179,
     "quality": "substantial",
     "quality_score": 0.8119999999999999,
+    "quality_tier": "gold",
     "title": "Contragredient Period Sign Formula for Betti\u2013Whittaker Periods of GL(n)"
   },
   {
@@ -1401,6 +1540,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 178,
     "quality": "partial",
     "quality_score": 0.59432,
+    "quality_tier": "silver",
     "title": "EML Kolmogorov\u2013Arnold Separable Rank: Counting Outer exp Terms by Matrix Sampling"
   },
   {
@@ -1411,6 +1551,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 177,
     "quality": "substantial",
     "quality_score": 0.72324,
+    "quality_tier": "gold",
     "title": "Consciousness as Integrated Information: A Maximum Co-Active Coalition Model and Its NP-Hardness"
   },
   {
@@ -1421,6 +1562,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 176,
     "quality": "partial",
     "quality_score": 0.5920639999999999,
+    "quality_tier": "silver",
     "title": "Verified Binary Search as Threshold Finding, with a Bridge to the Factorial Number System"
   },
   {
@@ -1431,6 +1573,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 175,
     "quality": "partial",
     "quality_score": 0.5333106912442396,
+    "quality_tier": "silver",
     "title": "Logic\u2013Physics Bridge: The Proof-Theoretic Consistency of Physical Theories"
   },
   {
@@ -1441,6 +1584,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 174,
     "quality": "partial",
     "quality_score": 0.5948,
+    "quality_tier": "silver",
     "title": "Continued Fractions and Diophantine Approximation: The Lagrange Constant"
   },
   {
@@ -1451,6 +1595,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 173,
     "quality": "partial",
     "quality_score": 0.65133,
+    "quality_tier": "silver",
     "title": "ML Universal Approximation: A Two-Sided Depth-Width Separation via the Tent Map"
   },
   {
@@ -1461,6 +1606,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 172,
     "quality": "partial",
     "quality_score": 0.68208,
+    "quality_tier": "silver",
     "title": "Frankl's Union-Closed Conjecture: Partial Results"
   },
   {
@@ -1471,6 +1617,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 171,
     "quality": "partial",
     "quality_score": 0.69956,
+    "quality_tier": "silver",
     "title": "Random Graphs: Erd\u0151s\u2013R\u00e9nyi Threshold Phenomena via the First and Second Moment Methods"
   },
   {
@@ -1481,6 +1628,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 170,
     "quality": "partial",
     "quality_score": 0.650914,
+    "quality_tier": "silver",
     "title": "The EML Fixed-Point Operator as a Certified ResNet Residual Layer"
   },
   {
@@ -1491,6 +1639,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 169,
     "quality": "partial",
     "quality_score": 0.39200000000000007,
+    "quality_tier": "bronze",
     "title": "Existence of Non-Trivial Boolean Degree-One Functions on the Grassmann Scheme J_q(n,2)"
   },
   {
@@ -1501,6 +1650,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 168,
     "quality": "substantial",
     "quality_score": 0.77992,
+    "quality_tier": "gold",
     "title": "EML Universal Approximation on the Unit Cube: Coordinate-Exponential Density and Depth Compression of Monomials"
   },
   {
@@ -1511,6 +1661,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 167,
     "quality": "substantial",
     "quality_score": 0.7782,
+    "quality_tier": "gold",
     "title": "Girth Bounds the Minimum Distance of a Bipartite Graph Code"
   },
   {
@@ -1521,6 +1672,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 166,
     "quality": "substantial",
     "quality_score": 0.71224,
+    "quality_tier": "gold",
     "title": "A Norm Criterion for Linearized Frobenius Permutation Polynomials over F_{p^2}"
   },
   {
@@ -1531,6 +1683,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 165,
     "quality": "partial",
     "quality_score": 0.643006,
+    "quality_tier": "silver",
     "title": "The Tallest Staircase: Extremal L1 Mass of Normalized 1-Lipschitz Grid Height Functions"
   },
   {
@@ -1541,6 +1694,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 164,
     "quality": "partial",
     "quality_score": 0.37835341176470594,
+    "quality_tier": "bronze",
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
   {
@@ -1551,6 +1705,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 163,
     "quality": "substantial",
     "quality_score": 0.7050400000000001,
+    "quality_tier": "gold",
     "title": "The Incoherence Index as an Arithmetic Invariant: Order Formula and Realizable Spectrum"
   },
   {
@@ -1561,6 +1716,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 162,
     "quality": "partial",
     "quality_score": 0.56128,
+    "quality_tier": "silver",
     "title": "A One-Parameter Deformation of the Eulerian Numbers and Its Recurrence"
   },
   {
@@ -1571,6 +1727,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 161,
     "quality": "partial",
     "quality_score": 0.43096,
+    "quality_tier": "silver",
     "title": "Equality Cases for the Maximum-Degree Spectral Bound of Signed Graphs"
   },
   {
@@ -1581,6 +1738,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 160,
     "quality": "partial",
     "quality_score": 0.63032,
+    "quality_tier": "silver",
     "title": "Degree-One Triviality Threshold for Grassmann Schemes: A Verified Gaussian-Binomial Backbone"
   },
   {
@@ -1591,6 +1749,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 159,
     "quality": "partial",
     "quality_score": 0.5751195652173913,
+    "quality_tier": "silver",
     "title": "Inverse Sprugnoli Arrays with Closed-Form Coefficients and Odd-Indexed Fibonacci Row Sums"
   },
   {
@@ -1601,6 +1760,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 158,
     "quality": "partial",
     "quality_score": 0.6926119999999999,
+    "quality_tier": "silver",
     "title": "Primitive Prime Divisors of Fibonacci Numbers: A Hybrid Proof of Carmichael's Theorem"
   },
   {
@@ -1611,6 +1771,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 157,
     "quality": "partial",
     "quality_score": 0.518,
+    "quality_tier": "silver",
     "title": "The Jacobian Conjecture: A Verified Bridge Theorem with Degree-2 and Cubic-Linear Cases"
   },
   {
@@ -1621,6 +1782,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 156,
     "quality": "substantial",
     "quality_score": 0.722996,
+    "quality_tier": "gold",
     "title": "Row Sum Fibonacci Property of the Pascal-like Riordan Array"
   },
   {
@@ -1631,6 +1793,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 155,
     "quality": "partial",
     "quality_score": 0.36300923636363636,
+    "quality_tier": "bronze",
     "title": "A Sharp Upper Bound for Uniform VC-Dimension Families via Layered Stars"
   },
   {
@@ -1641,6 +1804,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 154,
     "quality": "partial",
     "quality_score": 0.49242371929824563,
+    "quality_tier": "silver",
     "title": "Prismatic Purity for F-Crystals on Regular Schemes"
   },
   {
@@ -1651,6 +1815,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 153,
     "quality": "partial",
     "quality_score": 0.5959,
+    "quality_tier": "silver",
     "title": "One Known Solution Linearizes the Riccati Equation"
   },
   {
@@ -1661,6 +1826,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 152,
     "quality": "partial",
     "quality_score": 0.34884000000000004,
+    "quality_tier": "bronze",
     "title": "Rainbow Triangle Density: The Extremal Bound \u2308(n-1)(n-3)/8\u2309"
   },
   {
@@ -1671,6 +1837,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 151,
     "quality": "partial",
     "quality_score": 0.61002,
+    "quality_tier": "silver",
     "title": "Wall-Menger Separator Optimality: Tight Min-Cut / Max-Disjoint-Paths for Grid Graphs"
   },
   {
@@ -1681,6 +1848,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 150,
     "quality": "partial",
     "quality_score": 0.562048,
+    "quality_tier": "silver",
     "title": "Statistical Mechanics: The Exact Two-Point Correlation of the 1D Ising Chain"
   },
   {
@@ -1691,6 +1859,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 149,
     "quality": "partial",
     "quality_score": 0.5816,
+    "quality_tier": "silver",
     "title": "EML Transseries: A Real-Exponent Hahn-Series Model with Dominance, Asymptotic Comparison, and Ingredients of Real Closure"
   },
   {
@@ -1701,6 +1870,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 148,
     "quality": "partial",
     "quality_score": 0.5631599999999999,
+    "quality_tier": "silver",
     "title": "Linear One-Set Wall-Menger Bound for Elementary Walls"
   },
   {
@@ -1711,6 +1881,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 147,
     "quality": "partial",
     "quality_score": 0.69256,
+    "quality_tier": "silver",
     "title": "Cofinite Realization and the Boundary Obstruction of Even Incoherence Indices in Maximal Standard Frames"
   },
   {
@@ -1721,6 +1892,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 146,
     "quality": "substantial",
     "quality_score": 0.7436,
+    "quality_tier": "gold",
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
   {
@@ -1731,6 +1903,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 145,
     "quality": "partial",
     "quality_score": 0.485834,
+    "quality_tier": "silver",
     "title": "The Spectral Fisher Bound: Uniform Set Families via Heged\u0171s' Eigenvalue Condition"
   },
   {
@@ -1741,6 +1914,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 144,
     "quality": "substantial",
     "quality_score": 0.7861499999999999,
+    "quality_tier": "gold",
     "title": "Plethystic Triviality of the Shifted t-Schur Basis"
   },
   {
@@ -1751,6 +1925,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 143,
     "quality": "partial",
     "quality_score": 0.6639999999999999,
+    "quality_tier": "silver",
     "title": "Super-Exponential Growth of Symmetric Chain Decomposition Counts: A Bounded-vs-Growing-Arity Dichotomy"
   },
   {
@@ -1761,6 +1936,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 142,
     "quality": "partial",
     "quality_score": 0.6981999999999999,
+    "quality_tier": "silver",
     "title": "Hadwiger\u2013Debrunner (p,q) Theorem for Convex Splinters"
   },
   {
@@ -1771,6 +1947,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 141,
     "quality": "partial",
     "quality_score": 0.6228,
+    "quality_tier": "silver",
     "title": "Exact Local Threshold for Monochromatic Stars in Multicolored Graphs"
   },
   {
@@ -1781,6 +1958,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 140,
     "quality": "partial",
     "quality_score": 0.6700199999999998,
+    "quality_tier": "silver",
     "title": "Invariance of the Separable Invariant m_f under Purely Inseparable Base Change"
   },
   {
@@ -1791,6 +1969,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 139,
     "quality": "partial",
     "quality_score": 0.63496,
+    "quality_tier": "silver",
     "title": "A Sharp Elementary Sieve Bound for the Smooth-Number Counting Function L(x, y) under Hypothesis U"
   },
   {
@@ -1801,6 +1980,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 138,
     "quality": "substantial",
     "quality_score": 0.8251200000000001,
+    "quality_tier": "gold",
     "title": "Exact Lower Semi-Inducibility Profile for the Red-Blue Star S_{2,1}"
   },
   {
@@ -1811,6 +1991,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 137,
     "quality": "partial",
     "quality_score": 0.69204,
+    "quality_tier": "silver",
     "title": "The Join of Gorenstein Polytopes Is Always Gorenstein"
   },
   {
@@ -1821,6 +2002,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 136,
     "quality": "substantial",
     "quality_score": 0.76734,
+    "quality_tier": "gold",
     "title": "Balanced Side Lengths Maximize Spanning Trees in Free-Boundary Product Grids"
   },
   {
@@ -1831,6 +2013,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 135,
     "quality": "partial",
     "quality_score": 0.631596,
+    "quality_tier": "silver",
     "title": "Exact Ratio Spectrum of Lagrange Constants under Integer Linear Fractional Transformations"
   },
   {
@@ -1841,6 +2024,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 134,
     "quality": "substantial",
     "quality_score": 0.73264,
+    "quality_tier": "gold",
     "title": "Random Matrices at the Spectral Edge: Structure and Positivity of the Christoffel-Darboux Airy Kernel"
   },
   {
@@ -1851,6 +2035,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 133,
     "quality": "partial",
     "quality_score": 0.642034,
+    "quality_tier": "silver",
     "title": "Torsionness of Iwasawa Modules Finitely Generated Over the Coefficient Ring"
   },
   {
@@ -1861,6 +2046,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 132,
     "quality": "substantial",
     "quality_score": 0.70384,
+    "quality_tier": "gold",
     "title": "A Natural Boundary for the Prime-Ideal Zeta Function of Imaginary Quadratic Fields"
   },
   {
@@ -1871,6 +2057,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 131,
     "quality": "substantial",
     "quality_score": 0.7800670000000001,
+    "quality_tier": "gold",
     "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs"
   },
   {
@@ -1881,6 +2068,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 130,
     "quality": "partial",
     "quality_score": 0.48585960124610594,
+    "quality_tier": "silver",
     "title": "The Fibonacci Law of Apparition: alpha(p) Divides p-1 or p+1"
   },
   {
@@ -1891,6 +2079,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 129,
     "quality": "partial",
     "quality_score": 0.38602000000000003,
+    "quality_tier": "bronze",
     "title": "Binary Digit-Reversal Invariance of Cusick Densities (Exact Five-Bit Instances)"
   },
   {
@@ -1901,6 +2090,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 128,
     "quality": "partial",
     "quality_score": 0.5835454545454546,
+    "quality_tier": "silver",
     "title": "Regularized Sum of Primes via Analytic Continuation Beyond the Natural Boundary"
   },
   {
@@ -1911,6 +2101,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 127,
     "quality": "substantial",
     "quality_score": 0.71552,
+    "quality_tier": "gold",
     "title": "Multiplicability of Upho Posets from Vertex-Transitive Graphs"
   },
   {
@@ -1921,6 +2112,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 126,
     "quality": "substantial",
     "quality_score": 0.79596,
+    "quality_tier": "gold",
     "title": "Brualdi\u2013Quinn\u2013Massey Strong Chromatic Index: Tightness and a Fibonacci\u2013Riordan Bridge"
   },
   {
@@ -1931,6 +2123,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 125,
     "quality": "partial",
     "quality_score": 0.49606231111111115,
+    "quality_tier": "silver",
     "title": "Falsifiability of the Multigraded Regularity Conjecture for Schubert Varieties via Bruhat Rank and Smooth Pattern Avoidance"
   },
   {
@@ -1941,6 +2134,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 124,
     "quality": "substantial",
     "quality_score": 0.7798419999999999,
+    "quality_tier": "gold",
     "title": "Cycle-Containing Families of Vectors: Girth Thresholds and Binary Shattering"
   },
   {
@@ -1951,6 +2145,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 123,
     "quality": "partial",
     "quality_score": 0.39061,
+    "quality_tier": "bronze",
     "title": "RSA Factorization with Partial p+q Knowledge and Small Private Exponent"
   },
   {
@@ -1961,6 +2156,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 122,
     "quality": "substantial",
     "quality_score": 0.7623499999999999,
+    "quality_tier": "gold",
     "title": "Idempotent Probability: Large Deviations and the Donsker\u2013Varadhan Variational Principle"
   },
   {
@@ -1971,6 +2167,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 121,
     "quality": "substantial",
     "quality_score": 0.7665600000000001,
+    "quality_tier": "gold",
     "title": "Extremal Signed Determinant of the Resistance Matrix of a Connected Graph"
   },
   {
@@ -1981,6 +2178,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 120,
     "quality": "substantial",
     "quality_score": 0.70122,
+    "quality_tier": "gold",
     "title": "Arithmetic Mirror Symmetry for Calabi-Yau: The Hodge Involution, SYZ T-Duality, and Zeta Reciprocity"
   },
   {
@@ -1991,6 +2189,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 119,
     "quality": "partial",
     "quality_score": 0.5594,
+    "quality_tier": "silver",
     "title": "Collision Resistance from Hard Problems: The Claw-Free Route through Merkle-Damgard"
   },
   {
@@ -2001,6 +2200,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 118,
     "quality": "substantial",
     "quality_score": 0.7938000000000001,
+    "quality_tier": "gold",
     "title": "Complement-Split Constructions Beat the Quasi-Clique/Quasi-Star Envelope for Semi-Induced Stars S_{k,1}"
   },
   {
@@ -2011,6 +2211,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 117,
     "quality": "partial",
     "quality_score": 0.6115200000000001,
+    "quality_tier": "silver",
     "title": "A Prime-Power Criterion for the GCD of the Interior of a Pascal Row"
   },
   {
@@ -2021,6 +2222,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 116,
     "quality": "partial",
     "quality_score": 0.3683071607142858,
+    "quality_tier": "bronze",
     "title": "Global Label Min-Cut: A Verified Foundation and the Limits of a Fast-Algorithm Conjecture"
   },
   {
@@ -2031,6 +2233,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 115,
     "quality": "partial",
     "quality_score": 0.484642,
+    "quality_tier": "silver",
     "title": "The Character Class Contradiction: A Rank-One Zeta Computation"
   },
   {
@@ -2041,6 +2244,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 114,
     "quality": "partial",
     "quality_score": 0.6490400000000001,
+    "quality_tier": "silver",
     "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
   },
   {
@@ -2051,6 +2255,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 113,
     "quality": "substantial",
     "quality_score": 0.7756646153846154,
+    "quality_tier": "gold",
     "title": "Twin Prime Gaps: The Combinatorial Core of the Zhang\u2013Maynard\u2013Tao Theorem"
   },
   {
@@ -2061,6 +2266,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 112,
     "quality": "partial",
     "quality_score": 0.5884799999999999,
+    "quality_tier": "silver",
     "title": "Characterization of Modular Rank-Four Nahm Sums via the Discriminant Condition"
   },
   {
@@ -2071,6 +2277,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 111,
     "quality": "partial",
     "quality_score": 0.41604728262910795,
+    "quality_tier": "silver",
     "title": "Girth-Expansion Equivalence for Optimal Small-Set Expanders"
   },
   {
@@ -2081,6 +2288,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 110,
     "quality": "partial",
     "quality_score": 0.66648,
+    "quality_tier": "silver",
     "title": "Algebraic Characterization of Panmagic Affine Permutations over Z_n"
   },
   {
@@ -2091,6 +2299,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 109,
     "quality": "partial",
     "quality_score": 0.64325,
+    "quality_tier": "silver",
     "title": "Explicit GL(1) Langlands over Q: Cyclotomic Reciprocity and the Idele Class Group"
   },
   {
@@ -2101,6 +2310,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 108,
     "quality": "partial",
     "quality_score": 0.6839200000000001,
+    "quality_tier": "silver",
     "title": "Pfaffian Giambelli Formula for Shifted t-Schur Functions"
   },
   {
@@ -2111,6 +2321,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 107,
     "quality": "partial",
     "quality_score": 0.463,
+    "quality_tier": "silver",
     "title": "Excluded Minors for Biased Graphs Gainable over Cyclic Groups Z/p: the Parallel-Class Obstruction (p+1)K\u2082"
   },
   {
@@ -2121,6 +2332,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 106,
     "quality": "partial",
     "quality_score": 0.5954,
+    "quality_tier": "silver",
     "title": "Uniqueness of Extremal Graphons in Sparse Threshold Problems: The Fractional Independence Number and Its Sandwich"
   },
   {
@@ -2131,6 +2343,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 105,
     "quality": "partial",
     "quality_score": 0.3646502272727273,
+    "quality_tier": "bronze",
     "title": "The Maximum Size of a Family of Mutually Orthogonal Italian Squares is n-1, Attained at Prime Powers"
   },
   {
@@ -2141,6 +2354,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 104,
     "quality": "partial",
     "quality_score": 0.5150000000000001,
+    "quality_tier": "silver",
     "title": "Defant's Stack-Sorting Depth Constant: lambda = (3/5)(7 - 8 ln 2)"
   },
   {
@@ -2151,6 +2365,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 103,
     "quality": "substantial",
     "quality_score": 0.8360800000000002,
+    "quality_tier": "gold",
     "title": "Riemann-Roch Theory for Finite Graphs: Chip-Firing and Baker-Norine Rank"
   },
   {
@@ -2161,6 +2376,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 102,
     "quality": "partial",
     "quality_score": 0.5405,
+    "quality_tier": "silver",
     "title": "Birkhoff Polytopes Have the Clique-Face Property Only in Dimensions n <= 2"
   },
   {
@@ -2171,6 +2387,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 101,
     "quality": "partial",
     "quality_score": 0.6837600000000001,
+    "quality_tier": "silver",
     "title": "Carry Reformulation and Exact Densities for Cusick's Binary Sum-of-Digits Problem"
   },
   {
@@ -2181,6 +2398,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 100,
     "quality": "partial",
     "quality_score": 0.69727,
+    "quality_tier": "silver",
     "title": "Langlands for GL\u2082 over \u211a: Eichler\u2013Shimura Structure and Deligne's Weil Bound"
   },
   {
@@ -2191,6 +2409,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 99,
     "quality": "partial",
     "quality_score": 0.69727,
+    "quality_tier": "silver",
     "title": "Sharp Deterministic Approximate Caratheodory and Iterated Delaunay Refinement"
   },
   {
@@ -2201,6 +2420,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 98,
     "quality": "partial",
     "quality_score": 0.38911390243902444,
+    "quality_tier": "bronze",
     "title": "Perfect Numbers: The Abundancy Index and the Structure of Even Perfects"
   },
   {
@@ -2211,6 +2431,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 97,
     "quality": "partial",
     "quality_score": 0.35044872340425537,
+    "quality_tier": "bronze",
     "title": "Exponential Information Complexity Lower Bound for Periodic L_p-Discrepancy via a Duality Framework"
   },
   {
@@ -2221,6 +2442,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 96,
     "quality": "partial",
     "quality_score": 0.4269881818181818,
+    "quality_tier": "silver",
     "title": "Unconditional Cycle Obstructions for the Collatz Step Map"
   },
   {
@@ -2231,6 +2453,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 95,
     "quality": "partial",
     "quality_score": 0.6261199999999999,
+    "quality_tier": "silver",
     "title": "Effective Computability of the Erd\u0151s\u2013Ginzburg\u2013Ziv Threshold for Cyclic Groups"
   },
   {
@@ -2241,6 +2464,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 94,
     "quality": "substantial",
     "quality_score": 0.71552,
+    "quality_tier": "gold",
     "title": "Exponential Diameter Contraction under Noisy Minicenter Delaunay Refinement"
   },
   {
@@ -2251,6 +2475,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 93,
     "quality": "substantial",
     "quality_score": 0.7796,
+    "quality_tier": "gold",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
@@ -2261,6 +2486,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 92,
     "quality": "partial",
     "quality_score": 0.505788,
+    "quality_tier": "silver",
     "title": "Proof Strategy Mining: The Primitive Divisor Schema for Strong Divisibility Sequences"
   },
   {
@@ -2271,6 +2497,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 91,
     "quality": "partial",
     "quality_score": 0.5924299999999999,
+    "quality_tier": "silver",
     "title": "Exact Asymptotics of Stack-Sorting Depth: Invariants, Fixed Points, and the Catalan Law"
   },
   {
@@ -2281,6 +2508,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 90,
     "quality": "partial",
     "quality_score": 0.57899,
+    "quality_tier": "silver",
     "title": "Strange Attractors as Algebraic Objects: A Finite-Nerve Obstruction for the Dyadic Solenoid"
   },
   {
@@ -2291,6 +2519,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 89,
     "quality": "partial",
     "quality_score": 0.6666400000000001,
+    "quality_tier": "silver",
     "title": "Transmission Zero Forcing vs. Domination on Trees: The Exact Domination Number of the Path"
   },
   {
@@ -2301,6 +2530,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 88,
     "quality": "partial",
     "quality_score": 0.53432,
+    "quality_tier": "silver",
     "title": "Navier-Stokes: Abstract Energy Theory for 2D Regularity and Partial 3D Results"
   },
   {
@@ -2311,6 +2541,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 87,
     "quality": "partial",
     "quality_score": 0.6950400000000001,
+    "quality_tier": "silver",
     "title": "Tightness of the Unit-Shift Bound for Euler's Totient Function"
   },
   {
@@ -2321,6 +2552,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 86,
     "quality": "partial",
     "quality_score": 0.5740799999999999,
+    "quality_tier": "silver",
     "title": "Resolution of the Foundational Cases of Erdos Problem 550 (Tree vs. Complete Multipartite Ramsey Numbers)"
   },
   {
@@ -2331,6 +2563,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 85,
     "quality": "substantial",
     "quality_score": 0.72888,
+    "quality_tier": "gold",
     "title": "Symmetric-Key Cryptanalysis: Four Rounds of AES Have at Least 25 Active S-boxes"
   },
   {
@@ -2341,6 +2574,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 84,
     "quality": "partial",
     "quality_score": 0.5579999999999999,
+    "quality_tier": "silver",
     "title": "Alien Number Systems: Beyond Base-N (Mixed-Radix Positional Systems)"
   },
   {
@@ -2351,6 +2585,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 83,
     "quality": "substantial",
     "quality_score": 0.73028,
+    "quality_tier": "gold",
     "title": "Maximum Rank of Self-Dual String C-Groups for the Alternating Groups A_{4m+3}"
   },
   {
@@ -2361,6 +2596,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 82,
     "quality": "partial",
     "quality_score": 0.50863,
+    "quality_tier": "silver",
     "title": "The Kakeya Problem in the Finite-Field Model: Bush Counts, Incidences, and Sumset Growth"
   },
   {
@@ -2371,6 +2607,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 81,
     "quality": "partial",
     "quality_score": 0.5449999999999999,
+    "quality_tier": "silver",
     "title": "Lambda Calculus: Church-Rosser and Normalization"
   },
   {
@@ -2381,6 +2618,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 80,
     "quality": "partial",
     "quality_score": 0.3990000000000001,
+    "quality_tier": "bronze",
     "title": "Optimality of the Density Threshold for Linear r-Uniform Hypergraphs"
   },
   {
@@ -2391,6 +2629,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 79,
     "quality": "partial",
     "quality_score": 0.5980399999999999,
+    "quality_tier": "silver",
     "title": "A 4k+4 Order Bound for Connectivity-Preserving Hamiltonian Prescribed-End Paths"
   },
   {
@@ -2401,6 +2640,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 78,
     "quality": "partial",
     "quality_score": 0.54535,
+    "quality_tier": "silver",
     "title": "Tight \u0398(n^{2w}) Bound for Strict Alternating Cycles in Width-w Posets"
   },
   {
@@ -2411,6 +2651,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 77,
     "quality": "partial",
     "quality_score": 0.67947,
+    "quality_tier": "silver",
     "title": "Quadratic-Irrational Density in the Ratio Spectrum: The Topological Floor"
   },
   {
@@ -2421,6 +2662,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 76,
     "quality": "partial",
     "quality_score": 0.45104400000000006,
+    "quality_tier": "silver",
     "title": "Representation Theory: The Shape of the S_n Character Table via Partitions"
   },
   {
@@ -2431,6 +2673,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 75,
     "quality": "substantial",
     "quality_score": 0.73672,
+    "quality_tier": "gold",
     "title": "Certified Novelty Detection for Theorem Provers"
   },
   {
@@ -2441,6 +2684,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 74,
     "quality": "substantial",
     "quality_score": 0.78512,
+    "quality_tier": "gold",
     "title": "Mountain-Valley Configurations and the Hypercube Flip Graph of the Miura-ori"
   },
   {
@@ -2451,6 +2695,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 73,
     "quality": "substantial",
     "quality_score": 0.80792,
+    "quality_tier": "gold",
     "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
   },
   {
@@ -2461,6 +2706,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 72,
     "quality": "partial",
     "quality_score": 0.6544800000000001,
+    "quality_tier": "silver",
     "title": "Multilateral Cross-Intersecting Product Bound: The Skeleton of the Frankl-Wang Conjecture"
   },
   {
@@ -2471,6 +2717,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 71,
     "quality": "partial",
     "quality_score": 0.62096,
+    "quality_tier": "silver",
     "title": "Join-Saturation Equality for Matchings with Isolated Vertices"
   },
   {
@@ -2481,6 +2728,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 70,
     "quality": "partial",
     "quality_score": 0.56304,
+    "quality_tier": "silver",
     "title": "The Natural Proofs Barrier as a Self-Dual Counting Law"
   },
   {
@@ -2491,6 +2739,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 69,
     "quality": "partial",
     "quality_score": 0.6837200000000001,
+    "quality_tier": "silver",
     "title": "Quantum Mechanics: Spectral Theory of the Hydrogen Atom"
   },
   {
@@ -2501,6 +2750,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 68,
     "quality": "partial",
     "quality_score": 0.571318,
+    "quality_tier": "silver",
     "title": "Alien Number Systems: Mixed-Radix Positional Systems Beyond Base-N"
   },
   {
@@ -2511,6 +2761,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 67,
     "quality": "partial",
     "quality_score": 0.4444762417582418,
+    "quality_tier": "silver",
     "title": "Realization of All Even Incoherence Indices \u2265 4 by Maximal Standard Frames"
   },
   {
@@ -2521,6 +2772,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 66,
     "quality": "partial",
     "quality_score": 0.5050399999999999,
+    "quality_tier": "silver",
     "title": "Row-Exchange Invariance under Eventual Contraction for the Infinite Asymmetric Five-Vertex Half-Strip"
   },
   {
@@ -2531,6 +2783,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 65,
     "quality": "substantial",
     "quality_score": 0.70551,
+    "quality_tier": "gold",
     "title": "Cryptography from the Collatz Conjecture: One-Way Functions and a Verified Hash-Collision Separation"
   },
   {
@@ -2541,6 +2794,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 64,
     "quality": "partial",
     "quality_score": 0.6968799999999999,
+    "quality_tier": "silver",
     "title": "No Non-Trivial Extensions of Maximal Symplectic Groups on the Superspecial K3 Surface: Arithmetic Tameness in Characteristic p > 11"
   },
   {
@@ -2551,6 +2805,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 63,
     "quality": "partial",
     "quality_score": 0.531112,
+    "quality_tier": "silver",
     "title": "Discriminant of the Hermitian Bianchi Lattice S_K = Herm\u2082(O_K)"
   },
   {
@@ -2561,6 +2816,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 62,
     "quality": "substantial",
     "quality_score": 0.7510892307692308,
+    "quality_tier": "gold",
     "title": "Asymptotic Tightness of the Alon-Frankl-Lovasz Matching Bound for Random-Like Hypergraphs"
   },
   {
@@ -2571,6 +2827,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 61,
     "quality": "substantial",
     "quality_score": 0.7694400000000001,
+    "quality_tier": "gold",
     "title": "HH\u2080 of a Group Algebra is the Free Module on Conjugacy Classes"
   },
   {
@@ -2581,6 +2838,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 60,
     "quality": "substantial",
     "quality_score": 0.7836800000000002,
+    "quality_tier": "gold",
     "title": "Sun's Truncated Legendre-Symbol Determinant: Affine Collapse and a Perfect-Square Coefficient"
   },
   {
@@ -2591,6 +2849,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 59,
     "quality": "partial",
     "quality_score": 0.6521899999999999,
+    "quality_tier": "silver",
     "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
   },
   {
@@ -2601,6 +2860,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 58,
     "quality": "partial",
     "quality_score": 0.51904,
+    "quality_tier": "silver",
     "title": "Chromatic Counting, Deletion-Contraction, and the Sharpness of the Greedy Bound"
   },
   {
@@ -2611,6 +2871,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 57,
     "quality": "substantial",
     "quality_score": 0.71376,
+    "quality_tier": "gold",
     "title": "Betti-Whittaker Period Relation for Contragredient Representations of GL(n)"
   },
   {
@@ -2621,6 +2882,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 56,
     "quality": "partial",
     "quality_score": 0.5496381818181819,
+    "quality_tier": "silver",
     "title": "Homotopy Equivalence of Line-Transversal Spaces to Spheres"
   },
   {
@@ -2631,6 +2893,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 55,
     "quality": "partial",
     "quality_score": 0.6776,
+    "quality_tier": "silver",
     "title": "Rademacher Complexity of Neural Networks: Exact Depth Scaling and Weight Normalization"
   },
   {
@@ -2641,6 +2904,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 54,
     "quality": "partial",
     "quality_score": 0.67919,
+    "quality_tier": "silver",
     "title": "Domain Finiteness Bridge: From Pigeonhole Counting to Field Structure"
   },
   {
@@ -2651,6 +2915,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 53,
     "quality": "partial",
     "quality_score": 0.55696,
+    "quality_tier": "silver",
     "title": "Signless Laplacian Spectral Radius of Pure Simplicial Complexes with Vanishing Link Homology"
   },
   {
@@ -2661,6 +2926,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 52,
     "quality": "partial",
     "quality_score": 0.52355,
+    "quality_tier": "silver",
     "title": "Two Anti-Blowup Mechanisms Unified: Viscous Energy Dissipation and Tropical Idempotency"
   },
   {
@@ -2671,6 +2937,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 51,
     "quality": "partial",
     "quality_score": 0.49574803827751207,
+    "quality_tier": "silver",
     "title": "Duality of Sublevel-Set Homotopy Types for RC Functions on Finite-Dimensional Banach Spaces"
   },
   {
@@ -2681,6 +2948,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 50,
     "quality": "partial",
     "quality_score": 0.554,
+    "quality_tier": "silver",
     "title": "Exact Value of the Binomial GCD in OEIS A080170"
   },
   {
@@ -2691,6 +2959,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 49,
     "quality": "partial",
     "quality_score": 0.52704,
+    "quality_tier": "silver",
     "title": "Generalized Gawron\u2013Miska\u2013Ulas Unboundedness for Arbitrary Integer Bases"
   },
   {
@@ -2701,6 +2970,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 48,
     "quality": "partial",
     "quality_score": 0.5960000000000001,
+    "quality_tier": "silver",
     "title": "Central Gaussian Coefficient Maximizes Binary 2-Binomial Class Size"
   },
   {
@@ -2711,6 +2981,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 47,
     "quality": "substantial",
     "quality_score": 0.7400800000000001,
+    "quality_tier": "gold",
     "title": "The Discrete Cube as a Dimension-Free Isotropic Body: A Verified Model for Bourgain's Slicing Problem"
   },
   {
@@ -2721,6 +2992,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 46,
     "quality": "partial",
     "quality_score": 0.66768,
+    "quality_tier": "silver",
     "title": "Noether's Theorem: Symmetries and Conservation Laws of the Kepler Problem"
   },
   {
@@ -2731,6 +3003,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 45,
     "quality": "substantial",
     "quality_score": 0.7725600000000001,
+    "quality_tier": "gold",
     "title": "Discrepancy of Random Linear Codes for All Hamming Balls: The Unconditional Kernel"
   },
   {
@@ -2741,6 +3014,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 44,
     "quality": "partial",
     "quality_score": 0.6236999999999999,
+    "quality_tier": "silver",
     "title": "Interval Property for Connected Slice-Projections of Polymatroids: A Finite-Discrepancy Tropical Fourier Criterion"
   },
   {
@@ -2751,6 +3025,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 43,
     "quality": "unrated",
     "quality_score": null,
+    "quality_tier": "unrated",
     "title": "The Erd\u0151s\u2013Straus Conjecture: Parametric Families and a Prime-Core Reduction"
   },
   {
@@ -2761,6 +3036,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 42,
     "quality": "partial",
     "quality_score": 0.56056,
+    "quality_tier": "silver",
     "title": "Existence of a Satisfactory Multiplier Vector for 2D Lacunary Distance Graphs"
   },
   {
@@ -2771,6 +3047,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 41,
     "quality": "partial",
     "quality_score": 0.506378,
+    "quality_tier": "silver",
     "title": "Primes of the Form n\u00b2 + 1: The Verified Local Arithmetic Behind Landau's Problem"
   },
   {
@@ -2781,6 +3058,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 40,
     "quality": "partial",
     "quality_score": 0.550667741935484,
+    "quality_tier": "silver",
     "title": "Irrational Densities from Parabola-Circumscribed Quadrilaterals in Aperiodic Tilings"
   },
   {
@@ -2791,6 +3069,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 39,
     "quality": "partial",
     "quality_score": 0.45116,
+    "quality_tier": "silver",
     "title": "Tropical Differential Equations: Power-Series Solutions"
   },
   {
@@ -2801,6 +3080,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 38,
     "quality": "partial",
     "quality_score": 0.57649,
+    "quality_tier": "silver",
     "title": "EML Differential Algebra: Closure Properties of Log-Free Exponential Polynomials"
   },
   {
@@ -2811,6 +3091,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 37,
     "quality": "substantial",
     "quality_score": 0.7357199999999999,
+    "quality_tier": "gold",
     "title": "The Democracy of Digits: A Combinatorial Theory of Simple Normality"
   },
   {
@@ -2821,6 +3102,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 36,
     "quality": "substantial",
     "quality_score": 0.78684,
+    "quality_tier": "gold",
     "title": "P\u00f3lya Tree Coefficient Recurrence: A Divisor Bridge"
   },
   {
@@ -2831,6 +3113,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 35,
     "quality": "partial",
     "quality_score": 0.30151606086956523,
+    "quality_tier": "bronze",
     "title": "Brocard-Ramanujan Triangular Classification: Factorials Are Almost Never Squares"
   },
   {
@@ -2841,6 +3124,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 34,
     "quality": "substantial",
     "quality_score": 0.80372,
+    "quality_tier": "gold",
     "title": "P\u00f3lya Tree Coefficients and the Divisor-Sum (Euler-Transform) Recurrence"
   },
   {
@@ -2851,6 +3135,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 33,
     "quality": "partial",
     "quality_score": 0.64162,
+    "quality_tier": "silver",
     "title": "Spectral Modular Signatures of Finite Graphs: The Component-Kernel Theorem"
   },
   {
@@ -2861,6 +3146,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 32,
     "quality": "partial",
     "quality_score": 0.69548,
+    "quality_tier": "silver",
     "title": "Diffusion Models as Stochastic Differential Equations: Exact Fokker\u2013Planck Dynamics for the Ornstein\u2013Uhlenbeck Process"
   },
   {
@@ -2871,6 +3157,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 31,
     "quality": "substantial",
     "quality_score": 0.8125600000000002,
+    "quality_tier": "gold",
     "title": "Cutting Corners: The Polygon / Associahedron Model of the Finite Type A Cluster Algebra of Gr(2, m)"
   },
   {
@@ -2881,6 +3168,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 30,
     "quality": "partial",
     "quality_score": 0.4658475833333334,
+    "quality_tier": "silver",
     "title": "Minimal Minor-Closed Classes Below Density 3/2 Have Single Forbidden Minors"
   },
   {
@@ -2891,6 +3179,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 29,
     "quality": "substantial",
     "quality_score": 0.886574,
+    "quality_tier": "gold",
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology: Exact Betti-Count Recovery from Noisy Barcodes"
   },
   {
@@ -2901,6 +3190,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 28,
     "quality": "partial",
     "quality_score": 0.5380114482758622,
+    "quality_tier": "silver",
     "title": "Regularity-Free Functional Equation for Betti\u2013Whittaker Periods and Contragredients of GL(n)"
   },
   {
@@ -2911,6 +3201,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 27,
     "quality": "substantial",
     "quality_score": 0.7545600000000001,
+    "quality_tier": "gold",
     "title": "Alien Number Systems: A Direct Uniqueness Proof for the Factorial Number System"
   },
   {
@@ -2921,6 +3212,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 26,
     "quality": "substantial",
     "quality_score": 0.708,
+    "quality_tier": "gold",
     "title": "The Pentagon Census: C5-Decomposition Divisibility and the 5/8 Threshold"
   },
   {
@@ -2931,6 +3223,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 25,
     "quality": "partial",
     "quality_score": 0.57117,
+    "quality_tier": "silver",
     "title": "Galois Connections as a Bridge Between Order Theory and Topology"
   },
   {
@@ -2941,6 +3234,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 24,
     "quality": "substantial",
     "quality_score": 0.7496,
+    "quality_tier": "gold",
     "title": "Stability of Cayley Digraphs of Abelian Groups of Odd Order"
   },
   {
@@ -2951,6 +3245,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 23,
     "quality": "substantial",
     "quality_score": 0.77328,
+    "quality_tier": "gold",
     "title": "Cusick's Sum-of-Digits Explicit Bound: A Carry-Counting Reformulation"
   },
   {
@@ -2961,6 +3256,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 22,
     "quality": "partial",
     "quality_score": 0.6934400000000001,
+    "quality_tier": "silver",
     "title": "Interpolation of Partial-Twuality Polynomials in Binary Delta-Matroids"
   },
   {
@@ -2971,6 +3267,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 21,
     "quality": "partial",
     "quality_score": 0.42325214328358207,
+    "quality_tier": "silver",
     "title": "The Uniform Witness Bound for (d+1)-Uniform Families with Prescribed Missing-Trace Size"
   },
   {
@@ -2981,6 +3278,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 20,
     "quality": "partial",
     "quality_score": 0.49653899999999995,
+    "quality_tier": "silver",
     "title": "Necessity of a Homological Condition for an Extremal Spectral-Radius Bound: The Cone Mechanism"
   },
   {
@@ -2991,6 +3289,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 19,
     "quality": "substantial",
     "quality_score": 0.7684399999999999,
+    "quality_tier": "gold",
     "title": "Brocard's Problem n! + 1 = m^2: A Borel-Cantelli Finiteness Theorem"
   },
   {
@@ -3001,6 +3300,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 18,
     "quality": "substantial",
     "quality_score": 0.7276800000000001,
+    "quality_tier": "gold",
     "title": "Lattice Cryptography: A Gaussian-Integer (Pythagorean) Bridge for Ring-LWE Hardness and Correctness"
   },
   {
@@ -3011,6 +3311,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 17,
     "quality": "partial",
     "quality_score": 0.5303045714285715,
+    "quality_tier": "silver",
     "title": "The Shape of Nothing: Symmetrized Monomial Identities of Acyclic Path Algebras"
   },
   {
@@ -3021,6 +3322,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 16,
     "quality": "partial",
     "quality_score": 0.68184,
+    "quality_tier": "silver",
     "title": "The Odd-Clique Obstruction for Conformability of Odd-Order Regular Graphs"
   },
   {
@@ -3031,6 +3333,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 15,
     "quality": "partial",
     "quality_score": 0.51744,
+    "quality_tier": "silver",
     "title": "Degree-Normalized Linked Tree-Cut Decompositions for Locally Finite Graphs"
   },
   {
@@ -3041,6 +3344,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 14,
     "quality": "partial",
     "quality_score": 0.67432,
+    "quality_tier": "silver",
     "title": "Integrated Information (Phi): A Formally Verified Structural Core"
   },
   {
@@ -3051,6 +3355,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 13,
     "quality": "partial",
     "quality_score": 0.4162,
+    "quality_tier": "silver",
     "title": "The Three-Quarter Generation Ceiling for the Symmetric Group"
   },
   {
@@ -3061,6 +3366,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 12,
     "quality": "partial",
     "quality_score": 0.63257,
+    "quality_tier": "silver",
     "title": "Cubical Foundations: A Set-Level Quotient Model of the Circle and Torus"
   },
   {
@@ -3071,6 +3377,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 11,
     "quality": "substantial",
     "quality_score": 0.729932,
+    "quality_tier": "gold",
     "title": "The Whitehead Problem: The ZFC-Provable Skeleton via Projectivity and the Cyclic Obstruction"
   },
   {
@@ -3081,6 +3388,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 10,
     "quality": "partial",
     "quality_score": 0.6342000000000001,
+    "quality_tier": "silver",
     "title": "Tropical Curves and Chip-Firing: Degree Invariance and the Canonical Genus Formula"
   },
   {
@@ -3091,6 +3399,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 9,
     "quality": "partial",
     "quality_score": 0.48341799999999996,
+    "quality_tier": "silver",
     "title": "Homotopy Type Theory Foundations: Identity Types, Higher Inductive Types, and the Boundary of Univalence"
   },
   {
@@ -3101,6 +3410,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 8,
     "quality": "partial",
     "quality_score": 0.49160000000000004,
+    "quality_tier": "silver",
     "title": "Quantum Key Distribution: A Formally Verified BB84 Security Proof"
   },
   {
@@ -3111,6 +3421,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 7,
     "quality": "partial",
     "quality_score": 0.5094479615384615,
+    "quality_tier": "silver",
     "title": "The Knife-Edge of Chaos: Continuous-Valued Cellular Automata, the Diffusion Threshold, and Rucker's Gnarl"
   },
   {
@@ -3121,6 +3432,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 6,
     "quality": "partial",
     "quality_score": 0.48476875555555554,
+    "quality_tier": "silver",
     "title": "Orderly Friedman Numbers: A Formal Theory of Digit Expressions in Reading Order"
   },
   {
@@ -3131,6 +3443,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 5,
     "quality": "partial",
     "quality_score": 0.5811999999999999,
+    "quality_tier": "silver",
     "title": "Sierpinski Numbers via Covering Systems: A Certificate Framework"
   },
   {
@@ -3141,6 +3454,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 4,
     "quality": "partial",
     "quality_score": 0.4446527272727273,
+    "quality_tier": "silver",
     "title": "Convex-Hull Confinement and Log-Partition Bounds for Softmax Self-Attention"
   },
   {
@@ -3151,6 +3465,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 3,
     "quality": "partial",
     "quality_score": 0.6288,
+    "quality_tier": "silver",
     "title": "Sperner's Lemma Implies Brouwer & Nash: Combinatorial Fixed Points in Game Theory"
   },
   {
@@ -3161,6 +3476,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 2,
     "quality": "partial",
     "quality_score": 0.56159,
+    "quality_tier": "silver",
     "title": "Convex Geometry: The One-Dimensional Brunn\u2013Minkowski Inequality"
   },
   {
@@ -3171,6 +3487,7 @@ window.PACKAGE_INDEX = [
     "pkg_num": 1,
     "quality": "unrated",
     "quality_score": null,
+    "quality_tier": "unrated",
     "title": "Primality Testing: A Formally Verified AKS Polynomial Criterion"
   }
 ];
