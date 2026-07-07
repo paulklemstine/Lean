@@ -173,7 +173,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const qs = pkg.quality_score;
             const quality = pkg.quality || 'unrated';
+            const tier = pkg.quality_tier || 'unrated';
             const scorePct = qs != null ? Math.round(qs * 100) : null;
+            const tierEmojis = { gold: '\u{1F947}', silver: '\u{1F948}', bronze: '\u{1F948}', unrated: '' };
+            const tierEmoji = tierEmojis[tier] || '';
             const standout = qs != null && qs >= 0.75;
             if (standout) li.classList.add('standout');
 
@@ -193,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="nav-item-title">${pkgNum ? pkgNum + '. ' : ''}${pkg.title || 'Untitled Research'}</div>
                     ${qs != null ? `<div class="nav-item-score" data-quality="${quality}">
                         <div class="score-bar"><div class="score-bar-fill" style="width:${scorePct}%;background:${scoreColor}"></div></div>
-                        <span class="score-label" style="color:${scoreColor}">${scorePct}%</span>
+                        <span class="score-label" style="color:${scoreColor}">${scorePct}%${tierEmoji ? ' ' + tierEmoji : ''}</span>
                     </div>` : ''}
                     <div class="nav-item-meta">
                         <span>${pkg.domain || 'General'}</span>
