@@ -1810,7 +1810,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.NT"
       ],
@@ -1832,7 +1832,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0039",
-      "last_attempt_time": "2026-07-07T10:24:44.307059+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sign_changes_sym_power_L_coeff_sums_of_squares\n  {λ : ℕ → ℝ} (hλ_multiplicative : Multiplicative λ) (hλ_bound : ∀ ε > 0, ∀ n : ℕ, n ≥ 1 → |λ n| ≤ n^ε)\n  (j : ℕ) (hm : Even m ∧ 2 ≤ m ∧ m ≤ 12) :\n  ∃ (C : ℝ), C > 0 ∧ ∀ (x : ℝ), x ≥ 2 →\n    (Nat.card { n : ℕ | n ≤ ⌊x⌋ ∧ IsSumOfSquares m n ∧ λ n * λ (n + 1) < 0 }) ≥ C * x / Real.log x := by\n  sorry",
       "lineage_refs": [],
@@ -2691,14 +2691,14 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "KKPW",
         "bock2023majority"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "2a9630f8",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -2714,7 +2714,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0058",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-07T11:02:53.273529+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem strong_majority_edge_coloring_four_colors (G : SimpleGraph) (h : Admissible G) : ∃ (c : G.edges → Fin 4), StrongMajorityEdgeColoring c",
       "lineage_refs": [],
@@ -2729,7 +2729,7 @@
       "source": "",
       "source_exp_id": "2607.00212v1",
       "source_path": "http://arxiv.org/abs/2607.00212v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-02T10:08:08.933718+00:00",
       "title": "Four Colors Suffice for Strong Majority Edge-Coloring of Admissible Graphs"
@@ -6872,7 +6872,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "3b621fb7",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -6905,7 +6905,7 @@
       "source": "",
       "source_exp_id": "2607.00730v1",
       "source_path": "http://arxiv.org/abs/2607.00730v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-03T13:24:03.491700+00:00",
       "title": "Conjecture: Balanced graphs coincide with hereditary clique‑Helly graphs"
@@ -9355,7 +9355,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "daa54fd7",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -9385,7 +9385,7 @@
       "source": "",
       "source_exp_id": "2606.28797v1",
       "source_path": "http://arxiv.org/abs/2606.28797v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-04T11:59:32.982186+00:00",
       "title": "Tightness of the 3-Constant in the Spectral Radius Bound for Signed Adjacency Matrices"
@@ -15719,7 +15719,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Bombieri, G. 'La question de Mittag-Leffler et les courbes algébriques', 1982",
         "Lang, S. 'Fundamentals of Diophantine geometry', 1983",
@@ -15730,7 +15730,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "c9560f28",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -15749,7 +15749,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0331",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-07T11:02:41.713266+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem geometric_Bombieri_Lang_fibration {k : Type} [field isChar0] [k algebraicallyClosed] {K : Type} [field (fractionField K)] [finitelyGenerated K k] {C : Scheme} [properSmoothCurve C] {X : Scheme} [projective X] (f : X ⟶ C) (h_gen_type : generalType (genericFiber f K)) : ∃ (S : ClosedSubscheme X), (∨ (λ x : X.valueSet K, x ∈ (X \\ S).points)) ↔ (∨ (λ γ : WholeCurve k, ∃ (Y : ClosedSubscheme X), γ.val.image ⊆ Y.val ∧ Y.val ≤ specialLocus f))",
       "lineage_refs": [],
@@ -15764,7 +15764,7 @@
       "source": "",
       "source_exp_id": "2607.02165v1",
       "source_path": "http://arxiv.org/abs/2607.02165v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-05T02:27:15.905526+00:00",
       "title": "Geometric Bombieri--Lang Conjecture for Varieties Fibered Over Curves with Generic Fiber of General Type"
@@ -25260,6 +25260,55 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.CO",
+        "Engel's interval packing problem",
+        "Boolean lattice",
+        "Set systems"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any natural numbers n, l, r such that n >= (l+1)*r + l, there exists an interval packing of maximum possible size (n choose l) in the Boolean lattice restricted to levels l through l+r. This can be formulated as the existence of a function f mapping each l-sized subset T of [n] to an r-sized subset C_T disjoint from T, such that for any distinct l-sized subsets T1, T2, T1 is not contained in T2 union C_T2 and T2 is not contained in T1 union C_T1.",
+      "domain_bridges": [
+        "Set theory",
+        "Combinatorics",
+        "Order theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Cryptography"
+      ],
+      "github_issue": 0,
+      "id": "fd_0527",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem engel_interval_packing {n l r : ℕ} (h_n : n ≥ (l + 1) * r + l) :\n    ∃ (f : {T : Finset (Fin n) // T.card = l} → Finset (Fin n)),\n      (∀ T, (f T).card = r ∧ Disjoint (T : Finset (Fin n)) (f T)) ∧\n      (∀ T T', T ≠ T' → ¬((T : Finset (Fin n)) ⊆ T' ∪ f T') ∧ ¬(T' ⊆ T ∪ f T)) :=\n  by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Define the explicit construction of the function f mapping each l-set T to an r-set C_T using the cyclic sequence method described in the paper. Subsequently, prove that the resulting intervals [T, T ∪ C_T] are pairwise disjoint by showing that for any two distinct l-sets T1, T2, neither T1 ⊆ T2 ∪ C_{T2} nor T2 ⊆ T1 ∪ C_{T1} holds.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.04794v1",
+      "source_path": "http://arxiv.org/abs/2607.04794v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-07T11:01:58.641433+00:00",
+      "title": "Engel's Interval Packing Theorem"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.NT",
         "cs.SC"
       ],
@@ -25279,7 +25328,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0527",
+      "id": "fd_0528",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Algebra.Polynomial.Basic\nimport Mathlib.Algebra.Polynomial.Derivative\n\nvariable {K : Type*} [Field K] (v w : K[X])\n\ntheorem rpr_exact_identity (hchar : (2 : K) ≠ 0) (hv : v.natDegree ≤ 2) (hw : w.natDegree ≤ 2) :\n    Polynomial.deriv v * w - v * Polynomial.deriv w =\n    2 * (Polynomial.X : K[X]) * (v.coeff 2 • w - w.coeff 2 • v) +\n    (v.coeff 1 • w - w.coeff 1 • v) := by\n  sorry",
@@ -25329,7 +25378,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0528",
+      "id": "fd_0529",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem svd_generalized_star_config_eq_lcm_range\n    {k : Type*} [Field k] {n h : ℕ} (hn : h < n)\n    (forms : Fin n → Polynomial k)\n    (hreg : ∀ s : Finset (Fin n), s.card = h → IsRegularSeq (s.map forms))\n    (I : Ideal (Polynomial k))\n    (hI : I = ⨅ s : Finset (Fin n), (_ : s.card = h) → Ideal.span (s.map forms)) :\n    svd I = Finset.lcm (Finset.Icc 1 h) id :=\n  sorry",
@@ -25377,7 +25426,7 @@
         "Computation"
       ],
       "github_issue": 0,
-      "id": "fd_0529",
+      "id": "fd_0530",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ergodicity_of_berggren_system {Q : TernaryQuadraticForm ℤ} (h_nondeg : Q.Nondegenerate) (h_has_rational_point : ∃ p : Fin 3 → ℚ, Q.eval p = 0 ∧ p ≠ 0) : Ergodic (berggren_map Q) (berggren_invariant_measure Q) := by\n  sorry",
@@ -25423,7 +25472,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0530",
+      "id": "fd_0531",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem full_brouwer_conjecture\n    (n m k : ℕ) (G : SimpleGraph (Fin n)) (h_m : G.edgeCount = m) (h_k : 0 < k ∧ k < n) :\n    sum_k_largest_laplacian_eigenvalues G k = m + (k + 1) * k / 2 ↔\n    IsThresholdGraph G ∧ CliqueNumber G = k + 1 := by sorry",
@@ -25471,7 +25520,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0531",
+      "id": "fd_0532",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem point_imprimitive_PSL2q_designs_finite\n    {q : ℕ} (hq : ∃ p f, q = p ^ f ∧ p.Prime ∧ f ≥ 1) (hq4 : q ≥ 4)\n    {v k λ : ℕ} (D : TwoDesign v k λ) (hD : D.Nontrivial)\n    (G : D.AutomorphismGroup) (hsoc : Socle G ≅ PSL2 q)\n    (hft : G.FlagTransitive D) (himpr : G.PointImprimitive D) :\n    v ∈ {15, 36, 85}",
@@ -25516,7 +25565,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0532",
+      "id": "fd_0533",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tiling_count_Tn_formula (n : ℕ) (hn : 0 < n) :\n  tilingCount n = Finset.prod {ab : ℕ × ℕ // ab.1 ≤ 3*n+2 ∧ ab.2 ≤ 3*n+2 ∧ ab.1 < ab.2 ∧ ab ≠ (n+1, 2*n+2)} \n  (fun ab => Real.abs (1 + (zeta (3*n+3)) ab.1 + (zeta (3*n+3)) ab.2) ^ (1 / 3)) := by\n  sorry",
@@ -25563,7 +25612,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0533",
+      "id": "fd_0534",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem directed_mantel {α : Type*} [Fintype α] [DecidableEq α]\n    (r : α → α → Prop) [DecidableRel r]\n    (h_no_loops : ∀ x, ¬ r x x)\n    (h_no_dir_tri : ∀ x y z, r x y → r y z → r z x → False) :\n    (∑ x, ∑ y, if r x y then (1 : ℕ) else 0) ≤ (Fintype.card α)^2 / 2 :=\n  by sorry",
@@ -25613,7 +25662,7 @@
         "Computation"
       ],
       "github_issue": 0,
-      "id": "fd_0534",
+      "id": "fd_0535",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "conjecture hasse_principle_failure_density {n : ℕ} (hn : n ≥ 3) :\n  ∃ c : ℝ, c > 0 ∧ ∀ m : ℕ, m > 0 →\n    let N := primitive_maximal_binary_forms_of_degree_and_height_le n m_\n    let N_fail := forms_failing_integral_hasse_for_all_le n m_\n    liminf (fun X => N_fail X m / N X) ≥ c / m ^ (n - 2)",
@@ -25664,7 +25713,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0535",
+      "id": "fd_0536",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ring_of_integers_divisor_realization {K : Type*} [Field K] [NumberField K] (σ : K →+* ℂ) (D : EffectiveDivisor (Metric.ball (0 : ℂ) 1)) : ∃ (f : FormalPowerSeries ℂ) (h_conv : HasRadiusOfConvergence f 1) (h_holo : IsHolomorphicOn f (Metric.ball 0 1)) (h_coeffs : ∀ n : ℕ, ∃ (a : (𝓞 K)), f.coeff n = σ (a : K)), (zeroDivisor_of_holomorphic f h_holo) = D := by sorry",
@@ -25712,7 +25761,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0536",
+      "id": "fd_0537",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem cluster_parking_homology_iso_diagonal_coinvariants (n : ℕ) (hn : 0 < n) :\n    ∃ (φ : (reducedHomology ℂ (clusterParkingComplex n) (n - 2)) ⊗[ℂ] (signRep ℂ (I2 (n + 2))) ≃ₗ[ℂ] diagonalCoinvariants n),\n      ∀ (g : I2 (n + 2) × Sym n) (x : _),\n        φ (g • x) = g • φ x :=\n  sorry",
@@ -25762,7 +25811,7 @@
         "Tropical"
       ],
       "github_issue": 0,
-      "id": "fd_0537",
+      "id": "fd_0538",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem z0_quasi_shuffle_power_eq_stirling_sum\n    {R : Type*} [CommRing R]\n    (p : ℕ)\n    (z0 : FreeAlgebra R ℤ)  -- generator corresponding to integer 0\n    (quasi_shuffle : FreeAlgebra R ℤ → FreeAlgebra R ℤ → FreeAlgebra R ℤ)\n    (quasi_shuffle_pow : FreeAlgebra R ℤ → ℕ → FreeAlgebra R ℤ)\n    (concat_pow : FreeAlgebra R ℤ → ℕ → FreeAlgebra R ℤ)\n    (h_merge_idem : quasi_shuffle z0 z0 = 2 • (concat_pow z0 2) + z0)\n    (h_pow_def : ∀ w n, quasi_shuffle_pow w n.succ = quasi_shuffle w (quasi_shuffle_pow w n)) :\n    quasi_shuffle_pow z0 p =\n      Finset.sum (Finset.range (p + 1)) fun k =>\n        (Nat.stirling2 p k * k.factorial : R) • concat_pow z0 k := by\n  sorry",
@@ -25811,7 +25860,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0538",
+      "id": "fd_0539",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem bipartite_hole_hamilton_packing_upper_bound (a k : ℕ) (hk : k ≥ 2) (ha : a ≥ 2) :\n    ∀ (G : SimpleGraph V) (n : ℕ), n ≥ 3 → G.bipartite_hole_number ≤ a → G.min_degree ≥ 2*a + 2*k + Nat.ceil (2*(a*k : ℝ) / Real.log (k + 2)) →\n    ∃ (cycles : Fin k → G.HamiltonCycle), cycles.PairwiseDisjointEdge := by\n  sorry",
@@ -25861,7 +25910,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0539",
+      "id": "fd_0540",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem symplectic_diffset_divisible_design {q : ℕ} (hq : Fact (Nat.PrimeFactors q).prod > 0) (t : ℕ) (ht : t > 0) (V : Type*) [Fintype V] [Module (ZMod q) V] (B : V → V → ZMod q) (hB : IsNondegenerateSymplecticForm B) (A : Subgroup (Additive (ZMod q))) (r : ℕ) (hr : A.index = r) (hr_pos : r > 1) (D : Set A.quotient) {v k λ : ℕ} (hD : IsDifferenceSet D v k λ) : IsDivisibleDesignGraph (symplecticDiffSetGraph D B A) := by sorry",
@@ -25911,7 +25960,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0540",
+      "id": "fd_0541",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Algebra.Polynomial.Resultant\nimport Mathlib.Algebra.MvPolynomial.Basic\n\nopen MvPolynomial\n\n/-- The Fricke bridge polynomial Φ(z, X) -/\ndef frickeBridgePoly : MvPolynomial (Fin 2) ℤ :=\n  let z := MvPolynomial.x 0\n  let X := MvPolynomial.x 1\n  729*z^2*X^3 + 3888*z^2*X^2 + 6912*z^2*X + 4096*z^2\n    - 1458*z*X^3 + 22356*z*X^2 - 27648*z*X + 729*X^3\n\ntheorem fricke_bridge_resultant :\n    let R := MvPolynomial (Fin 2) ℤ\n    let z := MvPolynomial.x (0 : Fin 2)\n    let X := MvPolynomial.x (1 : Fin 2)\n    -- f(t) = z*(t+256)^3 - 1728*t^2  as a polynomial in t over R\n    let f : Polynomial R := _\n    -- g(t) = X*(t+64)^2 - 256*t  as a polynomial in t over R\n    let g : Polynomial R := _\n    Polynomial.resultant f g = 2^36 • frickeBridgePoly := by\n  sorry",
@@ -25957,7 +26006,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0541",
+      "id": "fd_0542",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem cyclic_order_rigidity {G : Type*} [Fintype G] [Group G] [DecidableEq G]\n    (σ : Equiv.Perm G) (hσ : Equiv.Perm.IsCycle σ) (a b : G)\n    (ha : a ≠ 1 ∧ a ^ 2 ≠ 1)\n    (ha_σ : (∀ g, a * σ g = σ (a * g)) ∨ (∀ g, a * σ g = σ⁻¹ (a * g)))\n    (hb_σ : (∀ g, b * σ g = σ (b * g)) ∨ (∀ g, b * σ g = σ⁻¹ (b * g)))\n    : b * a * b⁻¹ = a ∨ b * a * b⁻¹ = a⁻¹ := by\n  sorry",
@@ -25977,6 +26026,54 @@
       "thread_id": "",
       "timestamp": "2026-07-07T10:24:39.371499+00:00",
       "title": "Cyclic-Order Rigidity for Hamiltonian Cycles in Finite Groups"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "math.DG",
+        "math.GR"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The paper establishes a directed analogue of the Bonnet-Myers theorem: for a strongly connected, r-regular simple digraph G with in-curvature κ⁻(v) ≥ κ₀ > 0 at every vertex, the directed diameter is bounded above by 2r/κ₀. The natural rigidity conjecture is that equality in this bound forces G to be a directed cycle. Specifically, if G is a strongly connected, r-regular simple digraph with in-curvature κ⁻(v) ≥ κ₀ > 0 for all v, and the directed diameter satisfies ⟶diam(G) = 2r/κ₀, then G is isomorphic to a directed cycle C_n (where n = 2r/κ₀ + 1). This mirrors Obata's rigidity theorem for the classical Lichnerowicz inequality and would complete the directed Bonnet-Myers picture.",
+      "domain_bridges": [
+        "Riemannian_geometry→Digraph_theory",
+        "Spectral_graph_theory→Directed_curvature",
+        "Cayley_graphs→Directed_curvature"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0543",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem directed_bonnet_myers_rigidity {n r : ℕ} {κ₀ : ℝ} (hκ : 0 < κ₀) (G : SimpleDigraph (Fin n)) [StronglyConnected G] [Regular G r] (h_curv : ∀ v, inCurvature G v ≥ κ₀) (h_diam : directedDiam G = (2 * r : ℝ) / κ₀) : ∃ (h : n = 2 * r / κ₀.toNat + 1), IsIsomorphicDigraph G (directedCycle n) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Adapt Obata's rigidity argument from Riemannian geometry: (1) Formalize the directed Bonnet-Myers inequality from the paper in Lean, establishing the diameter bound. (2) Analyze the equality case by studying the structure of shortest directed paths achieving maximum distance. (3) Show that equality forces every vertex to lie on a unique longest directed geodesic, and that the out-neighborhood structure is rigid enough to force the directed cycle topology. (4) Use the permutation relation between in- and out-curvature (Theorem from the paper) to constrain the local structure at extremal vertices. (5) The key technical step is proving that any deviation from the directed cycle structure strictly increases the effective resistance / decreases curvature below κ₀, contradicting the equality assumption.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.04878v1",
+      "source_path": "http://arxiv.org/abs/2607.04878v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-07T11:02:36.500679+00:00",
+      "title": "Directed Bonnet-Myers Rigidity: Equality Characterizes Directed Cycles"
     },
     {
       "ambition_level": "extension",

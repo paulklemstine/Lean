@@ -484,7 +484,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Perfect Pairings in Periodic Riemann Functions Yield Serre-Type Duality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2a9630f8",
     "description": "Every admissible graph (i.e., graph with no pendant path of length two) admits a strong majority edge-coloring using at most four colors. This directly addresses the conjecture from Kalinowski, Kamyczura, Pil\u015bniak, and Wo\u017aniak that 4 colors always suffice, improving upon the current upper bound of five colors proven in this paper.",
     "domains": [
       "Pythagorean",
@@ -494,7 +494,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00212v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T10:08:08.933718+00:00",
     "title": "Four Colors Suffice for Strong Majority Edge-Coloring of Admissible Graphs"
   },
@@ -1490,7 +1490,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Character sums over smooth numbers"
   },
   {
-    "consumed_by_exp_id": "3b621fb7",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for every finite simple graph G, the following are equivalent: (i) G is balanced (its clique\u2011matrix contains no odd square submatrix with exactly two 1's in each row and each column); (ii) G is hereditary clique\u2011Helly (every induced subgraph has the Helly property for cliques); and (iii) G contains no induced copy of the complement of 3K2 (i.e., \\u03c3\u03052K2). This extends the result of [arXiv:xxxx] from distance\u2011hereditary graphs to all graphs, providing a single forbidden induced subgraph characterization of balancedness.",
     "domains": [
       "Pythagorean"
@@ -1499,7 +1499,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00730v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T13:24:03.491700+00:00",
     "title": "Conjecture: Balanced graphs coincide with hereditary clique\u2011Helly graphs"
   },
@@ -2160,7 +2160,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Eventual congruence of mis\u00e8re P\u2011positions in nuclear escalation ladders"
   },
   {
-    "consumed_by_exp_id": "daa54fd7",
+    "consumed_by_exp_id": "",
     "description": "There exists an infinite family of graphs with maximum degree d such that for any signing \u03c3, the spectral radius \u03c1(A_\u03c3) \u2265 2\u221a(3(d-1)).",
     "domains": [
       "Physics"
@@ -2169,7 +2169,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28797v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T11:59:32.982186+00:00",
     "title": "Tightness of the 3-Constant in the Spectral Radius Bound for Signed Adjacency Matrices"
   },
@@ -3838,7 +3838,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture: Gallai homothety numbers characterize symmetric one-weight HJ thresholds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c9560f28",
     "description": "Let K/k be a finitely generated extension of characteristic zero, and let f: X \u2192 C be a dominant morphism from a smooth projective variety X over K to a smooth projective curve C over k, such that the generic fiber X_\u03b7 is of general type over the function field K(C) = K. Then, after removing a proper Zariski closed subset S \u2282 X, all K-rational points of X lie in the union of fibered components and constant families parametrized by subvarieties of C. In particular, X(K) \u2229 (X \\ S) is not Zariski dense in X.",
     "domains": [
       "Geometry",
@@ -3848,7 +3848,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02165v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T02:27:15.905526+00:00",
     "title": "Geometric Bombieri--Lang Conjecture for Varieties Fibered Over Curves with Generic Fiber of General Type"
   },
@@ -6476,11 +6476,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any natural numbers n, l, r such that n >= (l+1)*r + l, there exists an interval packing of maximum possible size (n choose l) in the Boolean lattice restricted to levels l through l+r. This can be formulated as the existence of a function f mapping each l-sized subset T of [n] to an r-sized subset C_T disjoint from T, such that for any distinct l-sized subsets T1, T2, T1 is not contained in T2 union C_T2 and T2 is not contained in T1 union C_T1.",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "fd_0527",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.04794v1",
+    "status": "available",
+    "timestamp": "2026-07-07T11:01:58.641433+00:00",
+    "title": "Engel's Interval Packing Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any field K with char(K) \u2260 2 and quadratic polynomials v, w \u2208 K[x], the classical Wronskian v'w - vw' is exactly equal to the derivative-free Remainder-Polynomial Route (RPR) formulation. Specifically, v'w - vw' = 2x \u00b7 Sres\u2081(v, w) + (v\u2081w - w\u2081v), where Sres\u2081(v,w) = v\u2082w - w\u2082v is the first subresultant of v and w, and v\u1d62, w\u1d62 are the coefficients of x\u2071 in v, w respectively. This identity generalizes symmetrically to the full Richelot triple (U, V, W), proving that RPR yields identical codomain polynomials not merely up to scalar units, but as an exact polynomial equality.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0527",
+    "id": "fd_0528",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03376v1",
@@ -6494,7 +6508,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0528",
+    "id": "fd_0529",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03500v1",
@@ -6509,7 +6523,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0529",
+    "id": "fd_0530",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03354v1",
@@ -6523,7 +6537,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0530",
+    "id": "fd_0531",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03388v1",
@@ -6537,7 +6551,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0531",
+    "id": "fd_0532",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05067v1",
@@ -6551,7 +6565,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0532",
+    "id": "fd_0533",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05233v1",
@@ -6566,7 +6580,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0533",
+    "id": "fd_0534",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05083v1",
@@ -6581,7 +6595,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0534",
+    "id": "fd_0535",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05234v1",
@@ -6596,7 +6610,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0535",
+    "id": "fd_0536",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05213v1",
@@ -6611,7 +6625,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0536",
+    "id": "fd_0537",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.04999v1",
@@ -6626,7 +6640,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Tropical"
     ],
-    "id": "fd_0537",
+    "id": "fd_0538",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.04960v1",
@@ -6640,7 +6654,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0538",
+    "id": "fd_0539",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05027v1",
@@ -6655,7 +6669,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0539",
+    "id": "fd_0540",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05043v1",
@@ -6670,7 +6684,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_0540",
+    "id": "fd_0541",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05028v1",
@@ -6685,13 +6699,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0541",
+    "id": "fd_0542",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.04658v1",
     "status": "available",
     "timestamp": "2026-07-07T10:24:39.371499+00:00",
     "title": "Cyclic-Order Rigidity for Hamiltonian Cycles in Finite Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The paper establishes a directed analogue of the Bonnet-Myers theorem: for a strongly connected, r-regular simple digraph G with in-curvature \u03ba\u207b(v) \u2265 \u03ba\u2080 > 0 at every vertex, the directed diameter is bounded above by 2r/\u03ba\u2080. The natural rigidity conjecture is that equality in this bound forces G to be a directed cycle. Specifically, if G is a strongly connected, r-regular simple digraph with in-curvature \u03ba\u207b(v) \u2265 \u03ba\u2080 > 0 for all v, and the directed diameter satisfies \u27f6diam(G) = 2r/\u03ba\u2080, then G is isomorphic to a directed cycle C_n (where n = 2r/\u03ba\u2080 + 1). This mirrors Obata's rigidity theorem for the classical Lichnerowicz inequality and would complete the directed Bonnet-Myers picture.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0543",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.04878v1",
+    "status": "available",
+    "timestamp": "2026-07-07T11:02:36.500679+00:00",
+    "title": "Directed Bonnet-Myers Rigidity: Equality Characterizes Directed Cycles"
   },
   {
     "consumed_by_exp_id": "",

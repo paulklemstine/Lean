@@ -853,7 +853,7 @@
       "KKPW",
       "bock2023majority"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2a9630f8",
     "description": "Every admissible graph (i.e., graph with no pendant path of length two) admits a strong majority edge-coloring using at most four colors. This directly addresses the conjecture from Kalinowski, Kamyczura, Pilśniak, and Woźniak that 4 colors always suffice, improving upon the current upper bound of five colors proven in this paper.",
     "domain_bridges": [
       "combinatorics",
@@ -869,7 +869,7 @@
     "proof_strategy": "Constructive proof via graph decomposition and case analysis on maximum degree configurations, building upon techniques from [KKPW] while leveraging constraints from the adjacency condition to reduce color requirements below 5.",
     "research_mode": "team",
     "source_exp_id": "2607.00212v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T10:08:08.933718+00:00",
     "title": "Four Colors Suffice for Strong Majority Edge-Coloring of Admissible Graphs"
   },
@@ -2710,7 +2710,7 @@
     "catalog_references": [
       "https://arxiv.org/abs/xxxx"
     ],
-    "consumed_by_exp_id": "3b621fb7",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for every finite simple graph G, the following are equivalent: (i) G is balanced (its clique‑matrix contains no odd square submatrix with exactly two 1's in each row and each column); (ii) G is hereditary clique‑Helly (every induced subgraph has the Helly property for cliques); and (iii) G contains no induced copy of the complement of 3K2 (i.e., \\u03c3̅2K2). This extends the result of [arXiv:xxxx] from distance‑hereditary graphs to all graphs, providing a single forbidden induced subgraph characterization of balancedness.",
     "domain_bridges": [
       "balanced graphs",
@@ -2728,7 +2728,7 @@
     "proof_strategy": "To prove the conjecture we would: (1) develop a decomposition of hereditary clique‑Helly graphs into distance‑hereditary components using a tree decomposition (e.g., a 2‑tree or split‑decomposition). (2) Apply the linear‑time recognition algorithm from the paper to each component to show that none can be unbalanced. (3) Demonstrate that the presence of an induced \\u03c3\\u0305K2 would contradict the hereditary clique‑Helly property, hence no such subgraph can appear. The combination yields balancedness. Formalisation in Lean would define balancedness, hereditary clique‑Helly, and induced subgraph relations, then prove the two implications.",
     "research_mode": "team",
     "source_exp_id": "2607.00730v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T13:24:03.491700+00:00",
     "title": "Conjecture: Balanced graphs coincide with hereditary clique‑Helly graphs"
   },
@@ -3946,7 +3946,7 @@
       "Marcus, Spielman & Srivastava (2008, 2019)",
       "Bownik (2016)"
     ],
-    "consumed_by_exp_id": "daa54fd7",
+    "consumed_by_exp_id": "",
     "description": "There exists an infinite family of graphs with maximum degree d such that for any signing σ, the spectral radius ρ(A_σ) ≥ 2√(3(d-1)).",
     "domain_bridges": [
       "Spectral graph theory",
@@ -3961,7 +3961,7 @@
     "proof_strategy": "Construct explicit graph families (e.g., Ramanujan-like graphs or expander graphs) where all signings fail to achieve ρ(A_σ) < 2√(3(d-1)), leveraging interlacing polynomials to analyze eigenvalue distributions.",
     "research_mode": "team",
     "source_exp_id": "2606.28797v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T11:59:32.982186+00:00",
     "title": "Tightness of the 3-Constant in the Spectral Radius Bound for Signed Adjacency Matrices"
   },
@@ -7041,7 +7041,7 @@
       "Xie, G.; Yuan, X. 'On the geometric Bombieri--Lang conjecture over function fields', 2022",
       "Gao, G. 'Rational points and geometric invariant theory', 2023"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c9560f28",
     "description": "Let K/k be a finitely generated extension of characteristic zero, and let f: X → C be a dominant morphism from a smooth projective variety X over K to a smooth projective curve C over k, such that the generic fiber X_η is of general type over the function field K(C) = K. Then, after removing a proper Zariski closed subset S ⊂ X, all K-rational points of X lie in the union of fibered components and constant families parametrized by subvarieties of C. In particular, X(K) ∩ (X \\ S) is not Zariski dense in X.",
     "domain_bridges": [
       "Vojta's dictionary between Nevanlinna theory and Diophantine approximation",
@@ -7060,7 +7060,7 @@
     "proof_strategy": "The proof strategy involves three main components: (1) Use the minimal model program to show that a fibration f: X → C with general type generic fiber admits a canonical fibration structure after removing negligible subvarieties; (2) Apply the framework of Vojta's dictionary to construct entire curves on complex conjugates of fibers from rational points of large height; (3) Combine the Xie--Yuan--Gao theorem on varieties admitting finite morphisms to abelian varieties with equidistribution results to show that such constructed entire curves must be contained in proper subvarieties, forcing the rational points to lie in the special loci. Technical tools include potential theory, height machinery, and the arithmetic Simpson correspondence between heights and curvature.",
     "research_mode": "team",
     "source_exp_id": "2607.02165v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T02:27:15.905526+00:00",
     "title": "Geometric Bombieri--Lang Conjecture for Varieties Fibered Over Curves with Generic Fiber of General Type"
   },
@@ -12042,6 +12042,34 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.CO",
+      "Engel's interval packing problem",
+      "Boolean lattice",
+      "Set systems"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any natural numbers n, l, r such that n >= (l+1)*r + l, there exists an interval packing of maximum possible size (n choose l) in the Boolean lattice restricted to levels l through l+r. This can be formulated as the existence of a function f mapping each l-sized subset T of [n] to an r-sized subset C_T disjoint from T, such that for any distinct l-sized subsets T1, T2, T1 is not contained in T2 union C_T2 and T2 is not contained in T1 union C_T1.",
+    "domain_bridges": [
+      "Set theory",
+      "Combinatorics",
+      "Order theory"
+    ],
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "fd_0527",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define the explicit construction of the function f mapping each l-set T to an r-set C_T using the cyclic sequence method described in the paper. Subsequently, prove that the resulting intervals [T, T ∪ C_T] are pairwise disjoint by showing that for any two distinct l-sets T1, T2, neither T1 ⊆ T2 ∪ C_{T2} nor T2 ⊆ T1 ∪ C_{T1} holds.",
+    "research_mode": "team",
+    "source_exp_id": "2607.04794v1",
+    "status": "available",
+    "timestamp": "2026-07-07T11:01:58.641433+00:00",
+    "title": "Engel's Interval Packing Theorem"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.NT",
       "cs.SC"
     ],
@@ -12054,7 +12082,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0527",
+    "id": "fd_0528",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Expand both sides of the identity v'w - vw' = 2x(v₂w - w₂v) + (v₁w - w₁v) using the standard definition of the formal derivative v' = 2v₂x + v₁. Distributing the terms on the right-hand side and collecting coefficients of x², x, and 1 directly yields the expanded left-hand side, (v₂w₁ - v₁w₂)x² + 2(v₂w₀ - v₀w₂)x + (v₁w₀ - v₀w₁), proving the exact polynomial equality purely through algebraic manipulation without relying on scalar units or characteristic restrictions beyond char(K) ≠ 2.",
@@ -12083,7 +12111,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0528",
+    "id": "fd_0529",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the monomial star configuration result svd(I_{n,h}) = lcm(1,…,h) using the Diophantine condition M framework. Then extend to generalized star configurations by showing the Diophantine structure governing symbolic powers is invariant under regular sequences of forms—potentially via initial ideal arguments preserving svd, or by establishing that the symbolic Rees algebra of a generalized star configuration has the same Veronese structure as its monomial specialization.",
@@ -12110,7 +12138,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0529",
+    "id": "fd_0530",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "For each quadratic form Q, construct the Romik-type map T_Q as a piecewise fractional linear transformation on [0,1] derived from the Berggren matrices. Show T_Q admits a Markov partition with the Gibbs-Markov property. Compute the invariant density using Keane's method (tracking how the quadratic form coefficients transform under the Berggren matrices). Apply the Hopf argument adapted to infinite measure spaces to establish ergodicity, and verify conservativity via the ratio ergodic theorem by checking integrability of the density against the return time function.",
@@ -12135,7 +12163,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0530",
+    "id": "fd_0531",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Reduce the problem to the Grone-Merris-Bai theorem, which states s_k(G) ≤ ∑_{i=1}^k d_i^*(G) where d* is the conjugate degree sequence. Show that equality in Brouwer's bound implies equality in Grone-Merris-Bai, forcing the degree sequence to match the Laplacian eigenvalue sequence. Use the characterization of threshold graphs via their degree sequences and the specific sum m + binom(k+1, 2) to conclude that G must be a threshold graph with clique number k+1.",
@@ -12162,7 +12190,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0531",
+    "id": "fd_0532",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Formalize 2-designs, automorphism groups, flag-transitivity, and point-imprimitivity in Lean. 2) Develop the subgroup structure of PSL(2,q) — specifically the classification of maximal subgroups (dihedral, parabolic, A4, S4, A5 subgroups). 3) Use the imprimitivity assumption to decompose the point set into blocks of imprimitivity, constraining v via the subgroup lattice. 4) Apply combinatorial parameter constraints (Fisher's inequality, divisibility relations r(k-1) = λ(v-1), bk = vr) together with the orbit-stabilizer theorem under PSL(2,q). 5) Case analysis on the possible systems of imprimitivity yields only v = 15, 36, 85.",
@@ -12186,7 +12214,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0532",
+    "id": "fd_0533",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the region T_n and its dual graph G_n. Define the bipartite adjacency matrix M_n of G_n. Prove that the number of perfect matchings of G_n equals the absolute value of the determinant of M_n. Diagonalize M_n to compute its determinant, and verify that the resulting expression matches the given product formula.",
@@ -12212,7 +12240,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0533",
+    "id": "fd_0534",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the in-degree and out-degree of vertices. Prove that for any arc x -> y, the in-neighbors of x and out-neighbors of y are disjoint, hence in-deg(x) + out-deg(y) <= n. Sum over all arcs to get 2 * sum(d^+ * d^-) <= |E| * n. Apply Cauchy-Schwarz on the sum of total degrees squared to relate 4|E|^2 / n to 2|E|^2 / n + |E| n, and solve the quadratic inequality to conclude |E| <= n^2 / 2.",
@@ -12241,7 +12269,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0534",
+    "id": "fd_0535",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the Akhtari-Bhargava construction by tracking the m-dependence in the local solubility conditions and the Győry-type upper bounds on Thue inequality solutions. The key is to show that the proportion of forms excluded by each additional constraint h = k (for k ≤ m) shrinks as O(1/k^{n-1}), so the cumulative constraint for all h ≤ m leaves a proportion of order 1/m^{n-2}. This requires uniform estimates on the density of forms with prescribed local behavior at finitely many primes, combined with the sieving framework already present in the paper.",
@@ -12271,7 +12299,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0535",
+    "id": "fd_0536",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the paper's modified Weierstrass product with jet-correction operators. Step 1: Construct one-parameter deformations of Weierstrass elementary factors whose Taylor coefficients lie in O_K and which act as jet-correction operators preserving coefficients up to degree n while shifting the (n+1)-th coefficient by a controlled O_K-valued affine amount. Step 2: Since O_K ≅ ℤ^n as a ℤ-module, use nearest-lattice-point rounding (via the Minkowski theorem or LLL-type estimates) in place of the coordinate-wise rounding used for ℤ[i] ≅ ℤ². Step 3: Verify that the triangular structure of the coefficient map and the convergence bounds from canonical-product theory carry through unchanged, since the lattice rounding errors are bounded by the covering radius of O_K.",
@@ -12298,7 +12326,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0536",
+    "id": "fd_0537",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the cluster parking function complex and its dihedral automorphism group generated by R and S satisfying R^{n+2} = (RS)^2 = S^2 = 1. Compute the character of the reduced homology under the combined I_2(n+2) × S_n action. On the other side, leverage Haiman's n! theorem for the diagonal coinvariant character. Verify that the sign twist ε aligns the dihedral group characters, and check that the S_n-characters match via the parking function area/bounce statistics that index the bigraded Frobenius character.",
@@ -12327,7 +12355,7 @@
       "Algebra",
       "Tropical"
     ],
-    "id": "fd_0537",
+    "id": "fd_0538",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the quasi-shuffle product recursively on words via aw * bv = a(w * bv) + b(aw * v) + (a ⊕ b)(w * v) with a ⊕ b = z_{i+j} for letters z_i, z_j. Establish that z_0 is merge-idempotent (z_0 ⊕ z_0 = z_0). Prove by induction on p: base case p=0 is trivial (1 = 1); inductive step multiplies both sides by z_0, applies the quasi-shuffle recursion to get z_0^{*(p+1)} = Σ_k S(p,k)·k!·((k+1)z_0^{k+1} + k·z_0^k), then reindexes and applies the Stirling recurrence S(p+1,k) = S(p,k-1) + k·S(p,k) to close the induction.",
@@ -12355,7 +12383,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0538",
+    "id": "fd_0539",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the bipartite-hole deletion lemma and the McDiarmid-Yolov Hamiltonicity theorem as intermediate results, then construct the greedy packing argument with explicit bookkeeping of degree deficits at each stage. The key is tracking how the bipartite-hole number and minimum degree evolve after deleting each Hamilton cycle, showing the deficit is bounded by a factor of 2 times the target expression.",
@@ -12384,7 +12412,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0539",
+    "id": "fd_0540",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the proof that complements of symplectic covers are divisible design graphs (Corollary 2.2 in the paper). Key steps: (1) Establish regularity by counting neighbors using difference set properties: the number of neighbors of a vertex depends on whether the difference set condition is satisfied, leveraging the identity D*D^{-1} = k·{e} + λ·(G\\{e}). (2) Partition vertices into classes based on the second coordinate and compute common neighbors for same-class and different-class vertex pairs using symplectic form properties and difference set parameters. (3) For characteristic 2, note that F_q^+ with q=2^s is an elementary abelian 2-group, so the vertex set inherits this structure, and verify translation-invariance of adjacency.",
@@ -12413,7 +12441,7 @@
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_0540",
+    "id": "fd_0541",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof is a direct computation. Formalize polynomials f and g in MvPolynomial (Fin 2) ℤ adjoined with a variable t, compute the resultant with respect to t using the Sylvester matrix determinant (already available in Mathlib's Polynomial.resultant), and verify the result equals 2^36 · Φ(z,X). The entire verification reduces to polynomial arithmetic over ℤ[z,X,t], which is decidable and computationally feasible.",
@@ -12422,63 +12450,6 @@
     "status": "available",
     "timestamp": "2026-07-07T09:50:23.449450+00:00",
     "title": "Fricke Bridge Resultant Identity"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "math.CO",
-      "math.MG",
-      "math.NT"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "There exist absolute constants $\\delta > 0$ and $C > 0$ such that for every integer $n \\ge 1$, there exists a finite set $P \\subset \\mathbb{R}^2$ of $n$ points with the following property: for every subset $A \\subseteq P$ of size at least 2, the maximum multiplicity of a nonzero distance in $A$ is at least $C |A|^2 / n^{1-\\delta}$.",
-    "domain_bridges": [
-      "finite_set",
-      "euclidean_distance",
-      "real_numbers",
-      "cardinality"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0540",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Construct the point set P using number fields of high degree to vertically amplify the Ramanujan estimate, and bound the distance multiplicity for all subsets using a combinatorial large sieve method over the Minkowski grid.",
-    "research_mode": "team",
-    "source_exp_id": "2607.05374v1",
-    "status": "available",
-    "timestamp": "2026-07-07T10:10:16.631333+00:00",
-    "title": "Robust Distance Multiplicity in Minkowski Grids"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "math.CO",
-      "Bernshteyn DP-coloring",
-      "Johansson-Molloy theorem",
-      "semi-random nibble method"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "For every fixed integer r ≥ 2 and every ε > 0, there exists Δ₀ = Δ₀(r, ε) such that for all Δ ≥ Δ₀, every uncrowded (r+1)-uniform hypergraph of maximum degree Δ has DP-chromatic number at most (1+ε)(rΔ/log Δ)^{1/r}. This extends the paper's main theorem from list coloring to DP-coloring (correspondence coloring), paralleling Bernshteyn's extension of the Johansson–Molloy theorem for triangle-free graphs.",
-    "domain_bridges": [
-      "probabilistic combinatorics",
-      "hypergraph theory",
-      "DP-coloring / correspondence coloring"
-    ],
-    "domains": [
-      "Algebra",
-      "Bridges"
-    ],
-    "id": "fd_0540",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Adapt the paper's semi-random nibble on the original hypergraph to the DP-coloring (cover) setting. Replace the list-coloring nibble step with a DP-coloring nibble where each vertex maintains a set of available cover-nodes, tracking active edge-color constraints as in the paper. The Rosenfeld-style counting argument for the sparse terminal state must be generalized to count independent transversals in the cover graph rather than proper list colorings, using a Lopsided Lovász Local Lemma or entropy-based argument for the completion phase.",
-    "research_mode": "team",
-    "source_exp_id": "2607.05256v1",
-    "status": "available",
-    "timestamp": "2026-07-07T10:10:41.479139+00:00",
-    "title": "DP-Chromatic Number of Uncrowded Hypergraphs Matches the List Chromatic Bound"
   },
   {
     "ambition_level": "extension",
@@ -12495,7 +12466,7 @@
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0541",
+    "id": "fd_0542",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Translate the preservation of the undirected Hamiltonian cycle into the condition that left translations conjugate the cyclic permutation σ to either σ or σ^{-1}. Analyze the relation between a and b by evaluating the conjugation relations on the elements of G, using the fact that σ is a full cycle and the order of a is ≥ 3 to restrict the possible conjugation actions of b on a.",
@@ -12504,6 +12475,33 @@
     "status": "available",
     "timestamp": "2026-07-07T10:24:39.371499+00:00",
     "title": "Cyclic-Order Rigidity for Hamiltonian Cycles in Finite Groups"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "math.DG",
+      "math.GR"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper establishes a directed analogue of the Bonnet-Myers theorem: for a strongly connected, r-regular simple digraph G with in-curvature κ⁻(v) ≥ κ₀ > 0 at every vertex, the directed diameter is bounded above by 2r/κ₀. The natural rigidity conjecture is that equality in this bound forces G to be a directed cycle. Specifically, if G is a strongly connected, r-regular simple digraph with in-curvature κ⁻(v) ≥ κ₀ > 0 for all v, and the directed diameter satisfies ⟶diam(G) = 2r/κ₀, then G is isomorphic to a directed cycle C_n (where n = 2r/κ₀ + 1). This mirrors Obata's rigidity theorem for the classical Lichnerowicz inequality and would complete the directed Bonnet-Myers picture.",
+    "domain_bridges": [
+      "Riemannian_geometry→Digraph_theory",
+      "Spectral_graph_theory→Directed_curvature",
+      "Cayley_graphs→Directed_curvature"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0543",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt Obata's rigidity argument from Riemannian geometry: (1) Formalize the directed Bonnet-Myers inequality from the paper in Lean, establishing the diameter bound. (2) Analyze the equality case by studying the structure of shortest directed paths achieving maximum distance. (3) Show that equality forces every vertex to lie on a unique longest directed geodesic, and that the out-neighborhood structure is rigid enough to force the directed cycle topology. (4) Use the permutation relation between in- and out-curvature (Theorem from the paper) to constrain the local structure at extremal vertices. (5) The key technical step is proving that any deviation from the directed cycle structure strictly increases the effective resistance / decreases curvature below κ₀, contradicting the equality assumption.",
+    "research_mode": "team",
+    "source_exp_id": "2607.04878v1",
+    "status": "available",
+    "timestamp": "2026-07-07T11:02:36.500679+00:00",
+    "title": "Directed Bonnet-Myers Rigidity: Equality Characterizes Directed Cycles"
   },
   {
     "ambition_level": "extension",
