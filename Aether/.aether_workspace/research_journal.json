@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "3f134ce6",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Inverse Sprugnoli/Riordan Arrays\n\nBuilding on `Catalog/Novelty/InverseSprugnoliArray.lean` (closed-form inverse of the\nPascal-like array `C(n+k,2k)`, both orthogonality direction",
-      "quality_score": 0.5751195652173913,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-06-28T14:31:11",
-      "title": "Existence of Inverse Sprugnoli Arrays with Closed-Form Coefficients"
-    },
-    {
       "cycle_id": "bc81b3a8",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Optimal Transport & Wasserstein Distances\n\nThis cycle established, fully formally (0 sorries, only standard axioms), the 1D\ndiscrete theory of the 1-Wasserstein distance `W₁` via",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-07-07T06:15:43",
       "title": "The Aharoni-Korman Conjecture for Well-Founded FAC Posets"
+    },
+    {
+      "cycle_id": "3b621fb7",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\nThese conjectures grow out of the observation that the octahedron `\\overline{3K₂}` is the\nsmallest obstruction to the Helly property for cliques, and that the implication\n\"heredit",
+      "quality_score": 0.39727681,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-07-07T11:35:28",
+      "title": "Conjecture: Balanced graphs coincide with hereditary clique‑Helly graphs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.70296
     }
   ],
-  "last_updated": "2026-07-07T06:15:43",
+  "last_updated": "2026-07-07T11:35:28",
   "open_questions": [
     {
       "context": "`sorry`-free Lean proof of Sabidussi's theorem.",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "62850b85",
-        "quality": 0.4446527272727273,
-        "theorems": 8,
-        "title": "Attention Mechanisms: Mathematical Properties"
-      },
-      {
         "cycle_id": "d9f17c93",
         "quality": 0.3829593469387754,
         "theorems": 11,
@@ -3575,6 +3569,12 @@
         "quality": 0.5940000000000001,
         "theorems": 20,
         "title": "Exact 2-adic valuation of coefficients of T(x)^m for m ≡ 1 mod 4"
+      },
+      {
+        "cycle_id": "3b621fb7",
+        "quality": 0.39727681,
+        "theorems": 6,
+        "title": "Conjecture: Balanced graphs coincide with hereditary clique‑Helly graphs"
       }
     ],
     "Novelty": [
