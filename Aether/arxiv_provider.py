@@ -109,9 +109,17 @@ class ArxivTexProvider:
 
         papers = []
         try:
-            response = urllib.request.urlopen(url, timeout=30)
-            xml_data = response.read()
-            root = ET.fromstring(xml_data)
+            for attempt in range(3):
+                try:
+                    response = urllib.request.urlopen(url, timeout=60)
+                    xml_data = response.read()
+                    root = ET.fromstring(xml_data)
+                    break
+                except Exception as fetch_err:
+                    if attempt < 2:
+                        time.sleep(5 * (attempt + 1))
+                        continue
+                    raise fetch_err
 
             for entry in root.findall('atom:entry', self.namespace):
                 paper_id = entry.find('atom:id', self.namespace).text.split('/abs/')[-1]
