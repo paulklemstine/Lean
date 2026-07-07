@@ -2324,7 +2324,7 @@ class PiAgentClient:
         deliverables_block = textwrap.dedent("""\
             ### Deliverables & Acceptance Criteria
             1. **Lean 4 files** (1–2 files in the appropriate `Catalog/<domain>/` subtree).
-               - **Prove exactly 3 deep theorems** with full proofs and detailed Lab Notes.
+               - **Prove 2–3 deep theorems** with full proofs and detailed Lab Notes.
                  Focus ALL your compute on depth, not breadth. One fully proved deep theorem
                  with non-trivial insight beats 50 truncated stubs.
                - **Do NOT produce more than 2 main theorems.** If you finish 2 theorems
@@ -2646,7 +2646,7 @@ class PiAgentClient:
         deliverables_block = textwrap.dedent("""\
             ### Deliverables & Acceptance Criteria
             1. **Lean 4 files** (1–2 files in the appropriate `Catalog/<domain>/` subtree).
-               - **Prove exactly 3 deep theorems** with full proofs and detailed Lab Notes.
+               - **Prove 2–3 deep theorems** with full proofs and detailed Lab Notes.
                  Focus ALL your compute on depth, not breadth. One fully proved deep theorem
                  with non-trivial insight beats 50 truncated stubs.
                - **Do NOT produce more than 2 main theorems.** If you finish 2 theorems
