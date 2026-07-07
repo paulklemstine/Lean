@@ -1142,7 +1142,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Decomposition of Greedy Tamari Intervals and Bipartite Planar Maps"
   },
   {
-    "consumed_by_exp_id": "9127697d",
+    "consumed_by_exp_id": "",
     "description": "The coefficients V\u2082(n), V\u2083(n), V\u2084(n) of the q-series v\u2082(q), v\u2083(q), v\u2084(q) satisfy an asymptotic alternating sign property: there exists an explicit oscillatory factor such that (-1)^n V_i(n) > 0 for all sufficiently large n outside a density-zero exceptional set. This means the signs strictly alternate in the limit, with only sparse violations.",
     "domains": [
       "Pythagorean"
@@ -1151,7 +1151,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:16:17.133115+00:00",
     "title": "Asymptotic alternating sign conjecture for Andrews q-series v\u2082(q), v\u2083(q), v\u2084(q)"
   },
@@ -5498,7 +5498,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cycle Mengerian and Cycle Ideal Equivalence for Tournaments"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ff7a6b9b",
     "description": "The paper proves that a countable FAC poset P satisfies the Aharoni-Korman conjecture if P contains no saturated chain D such that either D or its reverse D* is of the form \u2295_{x\u2208\u03c9} D_x, where each D_x is infinite and co-wellfounded. The conjecture asserts that this condition is also necessary: if a countable FAC poset P does contain such a saturated chain, then P fails to satisfy the Aharoni-Korman conjecture. This would yield a complete characterization of which countable FAC posets satisfy the Aharoni-Korman conjecture.",
     "domains": [
       "Pythagorean"
@@ -5507,7 +5507,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02500v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T14:29:04.615567+00:00",
     "title": "Necessity of the forbidden chain condition for the Aharoni-Korman conjecture on countable FAC posets"
   },
@@ -6360,11 +6360,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every positive integer n and positive reals \u03b1, \u03b2 with \u03b1\u03b2 = \u03c0\u00b2, the alternating Hurwitz zeta function \u03b6_E(s, x) = \u03a3_{k=0}^\u221e (-1)^k / (k + x)^s satisfies a Ramanujan-type identity generalizing Ramanujan's classical formula for \u03b6(2n+1). Specifically, the alternating Hurwitz kernel K_E^{2n+1}(\u03b1, x) := \u00bd\u03b6_E(2n+1, x) + \u03a3_{m=1}^\u221e m^{-2n-1}/(e^{2\u03b1m} + 1) obeys: \u03b1^{-n}\u00b7K_E^{2n+1}(\u03b1, x) \u2212 (\u2212\u03b2)^{-n}\u00b7K_E^{2n+1}(\u03b2, 1\u2212x) = 2^{2n} \u03a3_{k=0}^{n+1} (\u22121)^{k\u22121} E_{2k}(x) B_{2n\u22122k+2} / ((2k)!(2n\u22122k+2)!) \u00b7 \u03b1^{n\u2212k+1} \u03b2^k, where E_{2k}(x) are Euler polynomials and B_{2k} are Bernoulli numbers. This replaces the Bernoulli numbers B_{2k} in Ramanujan's original identity with Euler polynomials E_{2k}(x), reflecting the alternating (sign-twisted) structure.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0516",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.03490v1",
+    "status": "available",
+    "timestamp": "2026-07-07T04:28:18.009557+00:00",
+    "title": "Alternating Hurwitz\u2013Ramanujan Identity with Euler Polynomials"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any field K with char(K) \u2260 2 and quadratic polynomials v, w \u2208 K[x], the classical Wronskian v'w - vw' is exactly equal to the derivative-free Remainder-Polynomial Route (RPR) formulation. Specifically, v'w - vw' = 2x \u00b7 Sres\u2081(v, w) + (v\u2081w - w\u2081v), where Sres\u2081(v,w) = v\u2082w - w\u2082v is the first subresultant of v and w, and v\u1d62, w\u1d62 are the coefficients of x\u2071 in v, w respectively. This identity generalizes symmetrically to the full Richelot triple (U, V, W), proving that RPR yields identical codomain polynomials not merely up to scalar units, but as an exact polynomial equality.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0516",
+    "id": "fd_0517",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03376v1",
@@ -6378,7 +6392,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0517",
+    "id": "fd_0518",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03500v1",
@@ -6393,7 +6407,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0518",
+    "id": "fd_0519",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03354v1",
@@ -6407,13 +6421,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0519",
+    "id": "fd_0520",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03388v1",
     "status": "available",
     "timestamp": "2026-07-07T03:55:00.492813+00:00",
     "title": "Full Brouwer's Laplacian Conjecture Equality Characterization"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every non-trivial 2-(v,k,\u03bb) design admitting a flag-transitive automorphism group with socle PSL(2,q) (where q = p^f \u2265 4) that acts point-imprimitively on the design must satisfy v \u2208 {15, 36, 85}, corresponding to exactly three isomorphism classes: the complementary design of PG(3,2), the complementary design of PG(3,4), and the Devillers\u2013Praeger 2-(36,8,4) design. This captures the complete point-imprimitive classification proven in the paper and requires substantial design-theoretic and group-theoretic infrastructure to formalize.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0521",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05067v1",
+    "status": "available",
+    "timestamp": "2026-07-07T04:29:20.984857+00:00",
+    "title": "Point-Imprimitive 2-Designs with PSL(2,q) Socle Have Bounded Point Counts"
   },
   {
     "consumed_by_exp_id": "",

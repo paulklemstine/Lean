@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-07T03:54:10.715281+00:00",
+  "last_updated": "2026-07-07T04:27:42.556178+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -38967,6 +38967,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-07T03:54:10.614093+00:00",
       "title": "Conjecture: Weight of DSSYK planar maps depends only on crossing number of associated geodesic chord"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "MachineLearning",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "9127697d",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v19",
+      "phase_b_skipped": false,
+      "prompt_version": "v19",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783392062.5361044,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-07T04:27:42.358382+00:00",
+      "title": "Asymptotic alternating sign conjecture for Andrews q-series v\u2082(q), v\u2083(q), v\u2084(q)"
     }
   ]
 }
