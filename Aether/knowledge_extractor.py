@@ -2355,6 +2355,17 @@ Research mode: {concept.research_mode}
         if job.result_research_paper:
             parts.append({"type": "new", "path": f"Papers/research_{self._derive_artifact_name(job.concept, 'md')}", "content": job.result_research_paper})
         if job.result_json_package:
+            # Validate: the JSON package must be a dict (object), not a list or
+            # other type. Aristotle sometimes returns a list of future directions
+            # instead of a package object — reject those.
+            try:
+                _pkg_check = json.loads(job.result_json_package)
+                if not isinstance(_pkg_check, dict):
+                    print(f"[Integrate] Rejecting JSON package: not a dict (got {type(_pkg_check).__name__})")
+                    job.result_json_package = None
+            except Exception:
+                pass
+        if job.result_json_package:
             # Enrich JSON package with executable module code for Pyodide
             enriched_pkg = job.result_json_package
             if job.result_algorithms or job.result_demo:
