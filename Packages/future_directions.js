@@ -32,7 +32,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lower Bound for Low Moments of Dirichlet Character Sums"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "33467c07",
     "description": "There exists a finite set of vectors in l\u00b2 satisfying specific convolution inequalities such that their weighted average achieves the coefficient \u03b3\u2080=0.94601 in the bound F(N) \u2264 N^{1/2} + \u03b3\u2080N^{1/4} + O(1), and no smaller coefficient is achievable via this method.",
     "domains": [
       "Bridges"
@@ -41,7 +41,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T06:22:13.488931+00:00",
     "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
   },
@@ -1636,7 +1636,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the generic ordinarity bound for the Katz family"
   },
   {
-    "consumed_by_exp_id": "f05cfd02",
+    "consumed_by_exp_id": "",
     "description": "The corrected estimator E(x) + C(x) from the proposed algorithm satisfies the error bound |E(x) + C(x) - \u03c0(x)| \u2264 K\u221ax for some constant K > 0 and all x \u2265 2. This conjecture formalizes the claim that the correction term significantly improves accuracy by reducing the error to O(\u221ax), matching the algorithm's computational complexity.",
     "domains": [
       "Pythagorean",
@@ -1646,7 +1646,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31761v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T17:32:19.384043+00:00",
     "title": "Error Bound Conjecture for Corrected Prime Count Estimator"
   },
@@ -2814,7 +2814,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stability of the sharp diagonal spectral correlation inequality for monotone Boolean functions"
   },
   {
-    "consumed_by_exp_id": "ebfc4ebc",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that the asymptotically sharp lower bound on k_t(G) derived from the Lov\u00e1sz\u2013Simonovits densities is actually exact for all n\u2011vertex graphs, i.e., equality is attained for suitable Tur\u00e1n\u2011type constructions.",
     "domains": [
       "Pythagorean",
@@ -2824,7 +2824,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31967v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T15:36:33.626121+00:00",
     "title": "Sharpness of the k_t lower bound given k_s in extremal graphs"
   },
@@ -6027,7 +6027,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Convex Semialgebraicity of Centerpoint Sets for Convex Semialgebraic Bodies"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c20f970f",
     "description": "Let $n \\ge 11$ be a natural number with binary expansion $n = 2^{a_1} + 2^{a_2} + \\dots + 2^{a_t}$ where $a_1 > a_2 > \\dots > a_t \\ge 0$. Let $\\Delta(n,k)$ be the set of non-hook partitions of $n$ with at most $k$ parts, and let $\\Omega_2(n)$ be the set of partitions labelling the irreducible constituents of the Sylow 2-permutation character of $S_n$. Then $\\Delta(n,k) \\subseteq \\Omega_2(n)$ if and only if $k \\le a_1 + t - 1$.",
     "domains": [
       "Algebra"
@@ -6036,7 +6036,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T21:37:11.871492+00:00",
     "title": "Non-Hook Partition Bound for Sylow 2-Permutation Characters"
   },
@@ -6417,11 +6417,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For any field K with char(K) \u2260 2 and quadratic polynomials v, w \u2208 K[x], the classical Wronskian v'w - vw' is exactly equal to the derivative-free Remainder-Polynomial Route (RPR) formulation. Specifically, v'w - vw' = 2x \u00b7 Sres\u2081(v, w) + (v\u2081w - w\u2081v), where Sres\u2081(v,w) = v\u2082w - w\u2082v is the first subresultant of v and w, and v\u1d62, w\u1d62 are the coefficients of x\u2071 in v, w respectively. This identity generalizes symmetrically to the full Richelot triple (U, V, W), proving that RPR yields identical codomain polynomials not merely up to scalar units, but as an exact polynomial equality.",
+    "description": "For finite simple graphs G and H on disjoint vertex sets, the matching number of their join G\u2217H satisfies \u03bd(G\u2217H) = min(\u03bd(G) + |V(H)|, \u03bd(H) + |V(G)|, \u230a(|V(G)| + |V(H)|)/2\u230b). This is the foundational combinatorial theorem of the paper, proved via the Tutte-Berge formula, and underpins all subsequent results on squarefree powers of edge ideals of wheel, fan, and friendship graphs.",
     "domains": [
       "Algebra"
     ],
     "id": "fd_0523",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.04964v1",
+    "status": "available",
+    "timestamp": "2026-07-07T08:42:19.596016+00:00",
+    "title": "Matching Number of Arbitrary Graph Joins"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any field K with char(K) \u2260 2 and quadratic polynomials v, w \u2208 K[x], the classical Wronskian v'w - vw' is exactly equal to the derivative-free Remainder-Polynomial Route (RPR) formulation. Specifically, v'w - vw' = 2x \u00b7 Sres\u2081(v, w) + (v\u2081w - w\u2081v), where Sres\u2081(v,w) = v\u2082w - w\u2082v is the first subresultant of v and w, and v\u1d62, w\u1d62 are the coefficients of x\u2071 in v, w respectively. This identity generalizes symmetrically to the full Richelot triple (U, V, W), proving that RPR yields identical codomain polynomials not merely up to scalar units, but as an exact polynomial equality.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0524",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03376v1",
@@ -6435,7 +6449,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0524",
+    "id": "fd_0525",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03500v1",
@@ -6450,7 +6464,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0525",
+    "id": "fd_0526",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03354v1",
@@ -6464,7 +6478,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0526",
+    "id": "fd_0527",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03388v1",
@@ -6478,7 +6492,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0527",
+    "id": "fd_0528",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05067v1",
@@ -6492,7 +6506,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0528",
+    "id": "fd_0529",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05233v1",
@@ -6507,7 +6521,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0529",
+    "id": "fd_0530",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05083v1",
@@ -6522,7 +6536,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0530",
+    "id": "fd_0531",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05234v1",
@@ -6537,7 +6551,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0531",
+    "id": "fd_0532",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05213v1",
@@ -6552,7 +6566,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0532",
+    "id": "fd_0533",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.04999v1",
@@ -6567,13 +6581,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Tropical"
     ],
-    "id": "fd_0533",
+    "id": "fd_0534",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.04960v1",
     "status": "available",
     "timestamp": "2026-07-07T08:06:41.902134+00:00",
     "title": "Stirling Number Formula for Quasi-Shuffle Powers of Zero in the Extended Quasi-Symmetric Algebra"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The paper establishes that f(a,k) = \u0398(a + k + ak/log(k+2)), where f(a,k) is the minimum degree threshold forcing k edge-disjoint Hamilton cycles in graphs with bipartite-hole number at most a. This conjecture proposes that the implicit constant in the upper bound can be taken to be 2, i.e., f(a,k) \u2264 2a + 2k + \u23082ak / log(k+2)\u2309 for all integers a,k \u2265 2. This would make the asymptotic result fully explicit and represents a natural strengthening of the paper's greedy-packing upper bound argument.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0535",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05027v1",
+    "status": "available",
+    "timestamp": "2026-07-07T08:42:48.388297+00:00",
+    "title": "Explicit constant for bipartite-hole Hamilton cycle packing upper bound"
   },
   {
     "consumed_by_exp_id": "",
