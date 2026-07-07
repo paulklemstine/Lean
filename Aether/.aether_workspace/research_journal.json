@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ef629b7b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Riordan Array Row Sums and Fibonacci Bisections\n\nDerived from the cycle that proved `Σ_{k=0}^{n} C(n+k, 2k) = F(2n+1)` and the\ncompanion `Σ_{k=0}^{n} C(n+1+k, 2k+1) = F(2n+2)` vi",
-      "quality_score": 0.722996,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-06-28T13:04:38",
-      "title": "Row Sum Fibonacci Property of Pascal-like Riordan Array"
-    },
-    {
       "cycle_id": "42ce6f47",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Jacobian Conjecture formalization\n\nDerived from this cycle's verified results in `Core.lean`, `Druzkowski.lean`,\n`DegreeTwo.lean`, and `Counterexamples.lean`.\n\n## 1. General tria",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-07-07T01:48:47",
       "title": "Sharp Threshold Constant for Cycle Games"
+    },
+    {
+      "cycle_id": "4231f6a2",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: extremal graphs for positive Lin–Lu–Yau curvature\n\nThis cycle studied the *balanced matching–clique join* `H(k)` on `n = 4k` vertices as a\ncandidate extremal graph for the questio",
+      "quality_score": 0.50904,
+      "sorry_count": 4,
+      "theorem_count": 12,
+      "timestamp": "2026-07-07T03:17:13",
+      "title": "Characterization of Extremal Graphs for Positive Lin--Lu--Yau Curvature"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.70296
     }
   ],
-  "last_updated": "2026-07-07T01:48:47",
+  "last_updated": "2026-07-07T03:17:13",
   "open_questions": [
-    {
-      "context": "that reduction, constructively and `sorry`-free.",
-      "cycle_id": "8170e958",
-      "domain": "Applications",
-      "sorry_count": 1,
-      "timestamp": "2026-06-27T22:08:34"
-    },
     {
       "context": "`sorry`-free Lean proof of Sabidussi's theorem.",
       "cycle_id": "2f2206c6",
@@ -3016,6 +3009,13 @@
       "domain": "Computation",
       "sorry_count": 4,
       "timestamp": "2026-07-06T15:29:27"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "4231f6a2",
+      "domain": "Novelty",
+      "sorry_count": 4,
+      "timestamp": "2026-07-07T03:17:13"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "242f16a7",
-        "quality": 0.79104,
-        "theorems": 16,
-        "title": "Sufficiency of obvious necessary conditions for the generalized honeymoon Oberwo"
-      },
-      {
         "cycle_id": "605be963",
         "quality": 0.6772,
         "theorems": 6,
@@ -3637,6 +3631,12 @@
         "quality": 0.30634774285714284,
         "theorems": 3,
         "title": "Colorful Carathéodory Theorem for Spanning k-trees"
+      },
+      {
+        "cycle_id": "4231f6a2",
+        "quality": 0.50904,
+        "theorems": 12,
+        "title": "Characterization of Extremal Graphs for Positive Lin--Lu--Yau Curvature"
       }
     ],
     "NumberTheory": [

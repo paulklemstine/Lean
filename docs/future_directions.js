@@ -1142,7 +1142,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Decomposition of Greedy Tamari Intervals and Bipartite Planar Maps"
   },
   {
-    "consumed_by_exp_id": "9127697d",
+    "consumed_by_exp_id": "",
     "description": "The coefficients V\u2082(n), V\u2083(n), V\u2084(n) of the q-series v\u2082(q), v\u2083(q), v\u2084(q) satisfy an asymptotic alternating sign property: there exists an explicit oscillatory factor such that (-1)^n V_i(n) > 0 for all sufficiently large n outside a density-zero exceptional set. This means the signs strictly alternate in the limit, with only sparse violations.",
     "domains": [
       "Pythagorean"
@@ -1151,7 +1151,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:16:17.133115+00:00",
     "title": "Asymptotic alternating sign conjecture for Andrews q-series v\u2082(q), v\u2083(q), v\u2084(q)"
   },
@@ -2058,21 +2058,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Variance of Homomorphism at the Root is Bounded Below by Effective Resistance"
   },
   {
-    "consumed_by_exp_id": "cd73f9b2",
-    "description": "Analysis of the maximal number of chains required to cover strict chains in the Boolean lattice, with connections to inclusion-exclusion and logarithmic approximations.",
-    "domains": [
-      "Cryptography",
-      "MachineLearning"
-    ],
-    "id": "fd_0189",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.29385v2",
-    "status": "in_progress",
-    "timestamp": "2026-07-04T08:04:06.155536+00:00",
-    "title": "Chain Covers in the Boolean Lattice"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Conjecture that for any geometrically irreducible non\u2011special algebraic curve V \u2282 \ud835\udd38\u00b2 defined over a number field L there exists a constant C(L) depending only on L (and not on the degrees of the coordinate functions) such that for every special point (x, y) \u2208 V one has max{h(x), h(y)} \u2264 C(L)\u00b7h(V).",
     "domains": [
@@ -2351,7 +2336,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Classification of regular 4\u2011maniplexes via tetravalent graph censuses"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "29810562",
     "description": "A connected bipartite graph admits a planar rotation-compatible covering, ensuring all rotational constraints are satisfied.",
     "domains": [
       "Algebra"
@@ -2360,7 +2345,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27703v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T18:30:48.905815+00:00",
     "title": "Bipartition Imply Planar Cover"
   },
@@ -4028,21 +4013,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Determinant Formula for the Cyclotomic Matrix of Gauss Sums over Prime Powers"
   },
   {
-    "consumed_by_exp_id": "4231f6a2",
-    "description": "For all even n \u2265 12, the unique graph with T(n) = (n\u00b2-3n)/2 - \u2308n/2\u2309 + 2 edges that contains an edge with non-positive Lin--Lu--Yau curvature is the join of a perfect matching on n/2 vertices and a complete graph on n/2 vertices, K\u2082 plus K_{n/2}. This structure is characterized by: (1) vertex partition into two sets A and B each of size n/2, (2) A induces a perfect matching, B induces a complete graph, (3) every vertex in A is adjacent to every vertex in B, and (4) the unique edge with non-positive curvature lies within the matchings. This conjecture generalizes the uniqueness result and provides an explicit structural description.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0344",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02297v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-05T17:33:31.047466+00:00",
-    "title": "Characterization of Extremal Graphs for Positive Lin--Lu--Yau Curvature"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The conjecture predicts that a graph with maximum degree exceeding one-third of its vertex count must contain a \u0394(G)-overfull subgraph, linking colorable constraints to structural thresholds.",
     "domains": [
@@ -4901,21 +4871,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-05T21:16:37.395514+00:00",
     "title": "Finitely Generated Schottky Group"
-  },
-  {
-    "consumed_by_exp_id": "f563c305",
-    "description": "Conjecture: The properly normalized extremal fluctuations of black hole microstate counts in quantum gravity converge in distribution to the Gumbel extreme value distribution. Specifically, let N(\u039b) denote the count of microstates with energy below \u039b for a holographic CFT with large central charge c. Define the extremal fluctuation \u0394N_c = max_\u039b(N(\u039b) - E[N(\u039b)])/\u221a(Var[N(\u039b)]) over \u039b in an interval. Then as c\u2192\u221e, exp(-e^(-x)) = lim_{c\u2192\u221e} P(\u0394N_c \u2264 x) in distribution. This predicts a universal tail exponent \u03b1=1 for the log-correlated field universality class.",
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_0406",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02233v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-05T21:39:27.004204+00:00",
-    "title": "Gumbel Distribution for Black Hole Microstate Extremal Fluctuations"
   },
   {
     "consumed_by_exp_id": "",
@@ -6201,7 +6156,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dimension Threshold for Gamma-Positivity of Symmetric Edge Polytopes"
   },
   {
-    "consumed_by_exp_id": "e3b1b1a2",
+    "consumed_by_exp_id": "",
     "description": "For the fixed genus chord swap Markov chain on chord diagrams with n chords and genus g, the spectral gap \u03b3_{n,g} satisfies \u03b3_{n,g} = \u0398(n^{-3}) when g is fixed and n \u2192 \u221e. This sharpens the paper's polynomial lower bound to a precise exponent and matches the n^{-3} scaling observed in related swap chains on perfect matchings.",
     "domains": [
       "Physics"
@@ -6210,7 +6165,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T00:02:19.658603+00:00",
     "title": "Tight spectral gap exponent for the fixed-genus chord swap chain"
   },
@@ -6390,11 +6345,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any prime power q and integers 2 \u2264 m \u2264 n, the multilinear forms Cayley graph \u0393(F_q^{2\u00d7m\u00d7n}) generated by rank-one tensors has exactly m+1 distinct eigenvalues, in one-to-one correspondence with the possible ranks r \u2208 {0, 1, ..., m} of m\u00d7n matrices over F_q. This generalizes the complete spectrum computation for 2\u00d73\u00d73 tensors established in the paper, where m=3 yields 4 distinct eigenvalues determined by the rank distribution of 3\u00d73 matrices. Despite the graph failing to be distance-regular for order-3 tensors, the spectral structure for the 2\u00d7m\u00d7n format remains governed entirely by the rank-metric code distribution.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_0514",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.03479v1",
+    "status": "available",
+    "timestamp": "2026-07-07T03:18:54.344983+00:00",
+    "title": "Distinct Eigenvalue Count for 2\u00d7m\u00d7n Multilinear Forms Cayley Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any field K with char(K) \u2260 2 and quadratic polynomials v, w \u2208 K[x], the classical Wronskian v'w - vw' is exactly equal to the derivative-free Remainder-Polynomial Route (RPR) formulation. Specifically, v'w - vw' = 2x \u00b7 Sres\u2081(v, w) + (v\u2081w - w\u2081v), where Sres\u2081(v,w) = v\u2082w - w\u2082v is the first subresultant of v and w, and v\u1d62, w\u1d62 are the coefficients of x\u2071 in v, w respectively. This identity generalizes symmetrically to the full Richelot triple (U, V, W), proving that RPR yields identical codomain polynomials not merely up to scalar units, but as an exact polynomial equality.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0514",
+    "id": "fd_0515",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03376v1",
@@ -6408,13 +6378,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0515",
+    "id": "fd_0516",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03500v1",
     "status": "available",
     "timestamp": "2026-07-07T02:40:53.587303+00:00",
     "title": "Standard Veronese Degree of Generalized Star Configurations Equals lcm(1,\u2026,h)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any non-degenerate homogeneous quadratic form Q in 3 variables over \u2124 whose zero set in \u2119\u00b2(\u211a) is nonempty, the dynamical system on [0,1] constructed by applying Romik's stereographic projection method to the Berggren tree of Q is ergodic and conservative with respect to its absolutely continuous invariant measure obtained via Keane's adaptation.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0517",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.03354v1",
+    "status": "available",
+    "timestamp": "2026-07-07T03:19:32.834620+00:00",
+    "title": "Ergodicity of Dynamical Systems Induced from Berggren Trees"
   },
   {
     "consumed_by_exp_id": "",
