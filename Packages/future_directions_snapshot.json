@@ -2409,7 +2409,7 @@
       "Trace formulas and Hecke operators (cite.Eic55, Sel56, Lan76)",
       "Arithmetic of modular forms (cite.Zag77)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a61d27db",
     "description": "A precise conjecture relating generalized Hurwitz class numbers and the distribution of traces of Hecke operators, with applications to number fields and arithmetic geometry.",
     "domain_bridges": [
       "number theory",
@@ -2427,7 +2427,7 @@
     "proof_strategy": "Constructive approach leveraging the Eichler-Selberg trace formula and algebraic geometry tools",
     "research_mode": "team",
     "source_exp_id": "2607.01957v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T07:02:29.975116+00:00",
     "title": "The Eichler--Selberg trace formula for Hilbert cusp forms in class number problems"
   },
@@ -3229,7 +3229,7 @@
       "BH",
       "LFZ"
     ],
-    "consumed_by_exp_id": "7e1c8f60",
+    "consumed_by_exp_id": "",
     "description": "For a graph $G$ with minimum degree $\\delta(G) \\ge a + r$, if the spectral radius $\\lambda(G)$ is at least $a + r + b$, then $G$ is fractional ID-$[a,b]$-factor-critical.",
     "domain_bridges": [
       "Spectral graph theory",
@@ -3245,7 +3245,7 @@
     "proof_strategy": "1. Establish that $\\lambda(G) \\ge a + r + b$ implies sufficient expansion properties via spectral techniques. 2. Show that this expansion guarantees the existence of fractional $[a,b]$-factors in $G-I$ for any independent set $I$ of size $r$. 3. Leverage the minimum degree condition to bound the vertex degrees in $G-I$ within the $[a,b]$ range.",
     "research_mode": "team",
     "source_exp_id": "2606.31064v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T21:44:34.279843+00:00",
     "title": "Spectral radius threshold for fractional ID-$[a,b]$-factor-critical graphs"
   },
@@ -6503,7 +6503,7 @@
     "catalog_references": [
       "The paper cited in the context"
     ],
-    "consumed_by_exp_id": "3e9ddacc",
+    "consumed_by_exp_id": "",
     "description": "The subset Ω₂(n) restricts partitions to have at most a₁ + t -1 parts, where a₁ is the highest power of 2 in n's binary expansion, t the number of non-zero terms.",
     "domain_bridges": "Theoretical Combinatorics",
     "domains": [
@@ -6515,7 +6515,7 @@
     "proof_strategy": "Direct argument using binary decompositions",
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T19:59:12.431800+00:00",
     "title": "Partition Part Size Bound"
   },
@@ -9138,7 +9138,7 @@
       "Eulerian numbers",
       "triangular matrix products"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "07b6a0a5",
     "description": "For every n ≥ 0, the n-th row generating function of the square of the Eulerian triangle—defined as the polynomial ∑_k (∑_j A(n,j)·A(j,k)) x^k where A(n,k) is the Eulerian number counting permutations of [n] with k descents—has only real roots. This extends the paper's results on powers of Pascal, Stirling, and Narayana triangles to the still-open Eulerian case.",
     "domain_bridges": [
       "Polynomial real-rootedness",
@@ -9154,7 +9154,7 @@
     "proof_strategy": "Attempt to decompose the Eulerian triangle square as a product of triangles whose individual real-rootedness preservation is known, or extend the rectangular additive convolution framework to construct an interlacing chain for the squared Eulerian row generating functions. Alternatively, establish that the Eulerian triangle square arises from a Narayana-type transformation applied to a suitable real-rooted polynomial.",
     "research_mode": "team",
     "source_exp_id": "2607.01572v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T01:27:06.611331+00:00",
     "title": "Real-rootedness of the square of the Eulerian triangle"
   },
@@ -11868,6 +11868,34 @@
     "title": "Multivariate Vandermonde Identity for Binomial-Product Sums over Compositions"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Mathlib.Analysis.InnerProductSpace.Sphere",
+      "Mathlib.MeasureTheory.Measure.Haar",
+      "Mathlib.Combinatorics.Additive"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every d ≥ 3, the supremum of normalized surface measures of zero-sum-free measurable subsets of the unit sphere S^{d-1} in ℝ^d equals exactly 1/2. Equivalently, every measurable zero-sum-free A ⊆ S^{d-1} satisfies σ_{d-1}(A) ≤ 1/2, with equality achieved (only) by open hemispheres. The paper establishes the asymptotic bound m_d ≤ 1/2 + O(1/d), but the exact value m_d = 1/2 remains open.",
+    "domain_bridges": [
+      "Cap set problem and polynomial method (Croot-Lev-Pach / Ellenberg-Gijswijt)",
+      "Spherical harmonics and spectral analysis on S^{d-1}",
+      "Sum-free sets in continuous settings"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0521",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The paper establishes m_d ≤ ⌊(d+1)²/2⌋/(d(d+1)) = 1/2 + O(1/d) using spherical harmonics and a polynomial method argument. To prove the exact bound m_d = 1/2, one must close the O(1/d) gap. A potential strategy: (1) characterize the near-extremal sets more precisely using the spherical harmonic analysis already developed, (2) show that any set exceeding measure 1/2 + ε must have structural properties forcing it to contain a zero-sum triple, possibly by developing a spherical analogue of the slice-rank/polynomial method that yields exact rather than asymptotic bounds, or (3) establish a stability result showing near-hemisphere sets must be close to hemispheres, then use this rigidity to exclude the O(1/d) excess.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05099v1",
+    "status": "available",
+    "timestamp": "2026-07-07T07:31:22.446580+00:00",
+    "title": "Bukh's Exact Zero-Sum-Free Density Conjecture"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "math.NT",
@@ -11882,7 +11910,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0521",
+    "id": "fd_0522",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Expand both sides of the identity v'w - vw' = 2x(v₂w - w₂v) + (v₁w - w₁v) using the standard definition of the formal derivative v' = 2v₂x + v₁. Distributing the terms on the right-hand side and collecting coefficients of x², x, and 1 directly yields the expanded left-hand side, (v₂w₁ - v₁w₂)x² + 2(v₂w₀ - v₀w₂)x + (v₁w₀ - v₀w₁), proving the exact polynomial equality purely through algebraic manipulation without relying on scalar units or characteristic restrictions beyond char(K) ≠ 2.",
@@ -11911,7 +11939,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0522",
+    "id": "fd_0523",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the monomial star configuration result svd(I_{n,h}) = lcm(1,…,h) using the Diophantine condition M framework. Then extend to generalized star configurations by showing the Diophantine structure governing symbolic powers is invariant under regular sequences of forms—potentially via initial ideal arguments preserving svd, or by establishing that the symbolic Rees algebra of a generalized star configuration has the same Veronese structure as its monomial specialization.",
@@ -11938,7 +11966,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0523",
+    "id": "fd_0524",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "For each quadratic form Q, construct the Romik-type map T_Q as a piecewise fractional linear transformation on [0,1] derived from the Berggren matrices. Show T_Q admits a Markov partition with the Gibbs-Markov property. Compute the invariant density using Keane's method (tracking how the quadratic form coefficients transform under the Berggren matrices). Apply the Hopf argument adapted to infinite measure spaces to establish ergodicity, and verify conservativity via the ratio ergodic theorem by checking integrability of the density against the return time function.",
@@ -11963,7 +11991,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0524",
+    "id": "fd_0525",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Reduce the problem to the Grone-Merris-Bai theorem, which states s_k(G) ≤ ∑_{i=1}^k d_i^*(G) where d* is the conjugate degree sequence. Show that equality in Brouwer's bound implies equality in Grone-Merris-Bai, forcing the degree sequence to match the Laplacian eigenvalue sequence. Use the characterization of threshold graphs via their degree sequences and the specific sum m + binom(k+1, 2) to conclude that G must be a threshold graph with clique number k+1.",
@@ -11990,7 +12018,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0525",
+    "id": "fd_0526",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Formalize 2-designs, automorphism groups, flag-transitivity, and point-imprimitivity in Lean. 2) Develop the subgroup structure of PSL(2,q) — specifically the classification of maximal subgroups (dihedral, parabolic, A4, S4, A5 subgroups). 3) Use the imprimitivity assumption to decompose the point set into blocks of imprimitivity, constraining v via the subgroup lattice. 4) Apply combinatorial parameter constraints (Fisher's inequality, divisibility relations r(k-1) = λ(v-1), bk = vr) together with the orbit-stabilizer theorem under PSL(2,q). 5) Case analysis on the possible systems of imprimitivity yields only v = 15, 36, 85.",
@@ -12014,7 +12042,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0526",
+    "id": "fd_0527",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the region T_n and its dual graph G_n. Define the bipartite adjacency matrix M_n of G_n. Prove that the number of perfect matchings of G_n equals the absolute value of the determinant of M_n. Diagonalize M_n to compute its determinant, and verify that the resulting expression matches the given product formula.",
@@ -12040,7 +12068,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0527",
+    "id": "fd_0528",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the in-degree and out-degree of vertices. Prove that for any arc x -> y, the in-neighbors of x and out-neighbors of y are disjoint, hence in-deg(x) + out-deg(y) <= n. Sum over all arcs to get 2 * sum(d^+ * d^-) <= |E| * n. Apply Cauchy-Schwarz on the sum of total degrees squared to relate 4|E|^2 / n to 2|E|^2 / n + |E| n, and solve the quadratic inequality to conclude |E| <= n^2 / 2.",
@@ -12069,7 +12097,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0528",
+    "id": "fd_0529",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the Akhtari-Bhargava construction by tracking the m-dependence in the local solubility conditions and the Győry-type upper bounds on Thue inequality solutions. The key is to show that the proportion of forms excluded by each additional constraint h = k (for k ≤ m) shrinks as O(1/k^{n-1}), so the cumulative constraint for all h ≤ m leaves a proportion of order 1/m^{n-2}. This requires uniform estimates on the density of forms with prescribed local behavior at finitely many primes, combined with the sieving framework already present in the paper.",
@@ -12099,7 +12127,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0529",
+    "id": "fd_0530",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the paper's modified Weierstrass product with jet-correction operators. Step 1: Construct one-parameter deformations of Weierstrass elementary factors whose Taylor coefficients lie in O_K and which act as jet-correction operators preserving coefficients up to degree n while shifting the (n+1)-th coefficient by a controlled O_K-valued affine amount. Step 2: Since O_K ≅ ℤ^n as a ℤ-module, use nearest-lattice-point rounding (via the Minkowski theorem or LLL-type estimates) in place of the coordinate-wise rounding used for ℤ[i] ≅ ℤ². Step 3: Verify that the triangular structure of the coefficient map and the convergence bounds from canonical-product theory carry through unchanged, since the lattice rounding errors are bounded by the covering radius of O_K.",
@@ -12108,6 +12136,33 @@
     "status": "available",
     "timestamp": "2026-07-07T06:59:43.965594+00:00",
     "title": "General Ring of Integers Divisor Realization on the Unit Disk"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "math.RT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For the symmetric group S_n with Coxeter number h=n, the reduced homology H̃_{n-2}(Δ(CPF_n)) of the cluster parking function complex, tensored with the sign character ε of the dihedral group I_2(n+2), is isomorphic as a representation of I_2(n+2) × S_n to the diagonal coinvariant ring DR_n = ℂ[x_1,...,x_n,y_1,...,y_n]/(e_1,...,e_n), where e_i are the elementary symmetric polynomials in x and y separately. This is equivalent to a dihedral sieving phenomenon on cluster parking functions.",
+    "domain_bridges": [
+      "Representation Theory",
+      "Topological Combinatorics",
+      "Combinatorial Algebraic Geometry"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0531",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define the cluster parking function complex and its dihedral automorphism group generated by R and S satisfying R^{n+2} = (RS)^2 = S^2 = 1. Compute the character of the reduced homology under the combined I_2(n+2) × S_n action. On the other side, leverage Haiman's n! theorem for the diagonal coinvariant character. Verify that the sign twist ε aligns the dihedral group characters, and check that the S_n-characters match via the parking function area/bounce statistics that index the bigraded Frobenius character.",
+    "research_mode": "team",
+    "source_exp_id": "2607.04999v1",
+    "status": "available",
+    "timestamp": "2026-07-07T07:32:17.890714+00:00",
+    "title": "Dihedral-Coinvariant Isomorphism for Cluster Parking Function Homology"
   },
   {
     "ambition_level": "extension",

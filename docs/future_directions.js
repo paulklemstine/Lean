@@ -1317,7 +1317,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tightness of clustered 3-colouring bound for H-minor-free graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a61d27db",
     "description": "A precise conjecture relating generalized Hurwitz class numbers and the distribution of traces of Hecke operators, with applications to number fields and arithmetic geometry.",
     "domains": [
       "Pythagorean",
@@ -1327,7 +1327,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01957v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T07:02:29.975116+00:00",
     "title": "The Eichler--Selberg trace formula for Hilbert cusp forms in class number problems"
   },
@@ -1766,7 +1766,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality for exactly one edge subset"
   },
   {
-    "consumed_by_exp_id": "7e1c8f60",
+    "consumed_by_exp_id": "",
     "description": "For a graph $G$ with minimum degree $\\delta(G) \\ge a + r$, if the spectral radius $\\lambda(G)$ is at least $a + r + b$, then $G$ is fractional ID-$[a,b]$-factor-critical.",
     "domains": [
       "Physics"
@@ -1775,7 +1775,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31064v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T21:44:34.279843+00:00",
     "title": "Spectral radius threshold for fractional ID-$[a,b]$-factor-critical graphs"
   },
@@ -3544,7 +3544,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "A structural decomposition theorem for countable FAC posets via scattered components"
   },
   {
-    "consumed_by_exp_id": "3e9ddacc",
+    "consumed_by_exp_id": "",
     "description": "The subset \u03a9\u2082(n) restricts partitions to have at most a\u2081 + t -1 parts, where a\u2081 is the highest power of 2 in n's binary expansion, t the number of non-zero terms.",
     "domains": [
       "Algebra"
@@ -3553,7 +3553,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T19:59:12.431800+00:00",
     "title": "Partition Part Size Bound"
   },
@@ -4961,7 +4961,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Unconditional Euclidean Systems for Ray Classes in Totally Real Galois Fields"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "07b6a0a5",
     "description": "For every n \u2265 0, the n-th row generating function of the square of the Eulerian triangle\u2014defined as the polynomial \u2211_k (\u2211_j A(n,j)\u00b7A(j,k)) x^k where A(n,k) is the Eulerian number counting permutations of [n] with k descents\u2014has only real roots. This extends the paper's results on powers of Pascal, Stirling, and Narayana triangles to the still-open Eulerian case.",
     "domains": [
       "Bridges"
@@ -4970,7 +4970,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01572v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T01:27:06.611331+00:00",
     "title": "Real-rootedness of the square of the Eulerian triangle"
   },
@@ -6388,11 +6388,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every d \u2265 3, the supremum of normalized surface measures of zero-sum-free measurable subsets of the unit sphere S^{d-1} in \u211d^d equals exactly 1/2. Equivalently, every measurable zero-sum-free A \u2286 S^{d-1} satisfies \u03c3_{d-1}(A) \u2264 1/2, with equality achieved (only) by open hemispheres. The paper establishes the asymptotic bound m_d \u2264 1/2 + O(1/d), but the exact value m_d = 1/2 remains open.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0521",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05099v1",
+    "status": "available",
+    "timestamp": "2026-07-07T07:31:22.446580+00:00",
+    "title": "Bukh's Exact Zero-Sum-Free Density Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any field K with char(K) \u2260 2 and quadratic polynomials v, w \u2208 K[x], the classical Wronskian v'w - vw' is exactly equal to the derivative-free Remainder-Polynomial Route (RPR) formulation. Specifically, v'w - vw' = 2x \u00b7 Sres\u2081(v, w) + (v\u2081w - w\u2081v), where Sres\u2081(v,w) = v\u2082w - w\u2082v is the first subresultant of v and w, and v\u1d62, w\u1d62 are the coefficients of x\u2071 in v, w respectively. This identity generalizes symmetrically to the full Richelot triple (U, V, W), proving that RPR yields identical codomain polynomials not merely up to scalar units, but as an exact polynomial equality.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0521",
+    "id": "fd_0522",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03376v1",
@@ -6406,7 +6421,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0522",
+    "id": "fd_0523",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03500v1",
@@ -6421,7 +6436,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0523",
+    "id": "fd_0524",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03354v1",
@@ -6435,7 +6450,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0524",
+    "id": "fd_0525",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03388v1",
@@ -6449,7 +6464,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0525",
+    "id": "fd_0526",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05067v1",
@@ -6463,7 +6478,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0526",
+    "id": "fd_0527",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05233v1",
@@ -6478,7 +6493,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0527",
+    "id": "fd_0528",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05083v1",
@@ -6493,7 +6508,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0528",
+    "id": "fd_0529",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05234v1",
@@ -6508,13 +6523,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0529",
+    "id": "fd_0530",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05213v1",
     "status": "available",
     "timestamp": "2026-07-07T06:59:43.965594+00:00",
     "title": "General Ring of Integers Divisor Realization on the Unit Disk"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For the symmetric group S_n with Coxeter number h=n, the reduced homology H\u0303_{n-2}(\u0394(CPF_n)) of the cluster parking function complex, tensored with the sign character \u03b5 of the dihedral group I_2(n+2), is isomorphic as a representation of I_2(n+2) \u00d7 S_n to the diagonal coinvariant ring DR_n = \u2102[x_1,...,x_n,y_1,...,y_n]/(e_1,...,e_n), where e_i are the elementary symmetric polynomials in x and y separately. This is equivalent to a dihedral sieving phenomenon on cluster parking functions.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0531",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.04999v1",
+    "status": "available",
+    "timestamp": "2026-07-07T07:32:17.890714+00:00",
+    "title": "Dihedral-Coinvariant Isomorphism for Cluster Parking Function Homology"
   },
   {
     "consumed_by_exp_id": "e5bb2c7b",
