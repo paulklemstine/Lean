@@ -2,6 +2,46 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "046e3876",
+    "description": "Einstein showed that gravity is the curvature of spacetime. But WHY does spacetime curve? Conjecture: Spacetime IS a quantum error-correcting code, and gravity IS the syndrome of that code. The code is a [[n,k,d]] stabilizer code where n = number of Planck areas on a spatial slice, k = number of logical qubits (which equals the Bekenstein-Hawking entropy S = A/4G in natural units), and d = code distance (which equals the minimal geodesic length through the bulk). The key identity: S(A) = Area(gamma_A) / (4G) is EXACTLY the quantum Singleton bound n - k <= 2(d-1) rearranged as k = n - 2d + 2 = A/(4G) when n = A/l_P^2 and d = L/(2l_P). This means the Bekenstein-Hawking entropy formula is a quantum coding theorem, and the holographic principle is a coding constraint. Test: for AdS_3 with boundary CFT_2, the code is a [[n, k, d]] = [[L/l_P, S, L/(2l_P)]] code. Verify that the Singleton bound n - k <= 2(d-1) becomes L/l_P - S <= L/l_P - 1, which simplifies to S >= 1 (trivially true). The NON-TRIVIAL content is that the Ryu-Takayanagi formula S = A/(4G) is the exact quantum information identity. Impact: spacetime is not curved by matter — spacetime IS a code, and matter IS a syndrome. Gravity is not a force; it's error correction.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0595",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "Define the spacetime code: qubits = Planck areas on a spatial slice, stabilizers = boundary terms of the Einstein-Hilbert action, logical operators = bulk geodesics. Prove the Bekenstein-Hawking identity: S = A/(4G) equals the quantum coding bound k = n - 2d + 2. Derive: n = A/l_P^2 (number of Planck areas), k = S = A/(4G) (logical qubits from Bekenstein-Hawking), d = L/(2l_P) (distance from minimal geodesic). Check: k = n - 2d + 2 = A/l_P^2 - L/l_P + 2. For AdS_3, A = 2*pi*R and L = 2*pi*R, so k = 2*pi*R/l_P^2 - 2*pi*R/l_P + 2 = 2*pi*R/(l_P^2) * (1 - l_P/R) + 2. For R >> l_P, this gives k ≈ 2*pi*R/l_P^2 = A/l_P^2 which matches S = A/(4G). The correction terms are quantum corrections of order l_P/R. Test: verify for AdS_3 with BTZ black holes.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-07T23:49:58.188617+00:00",
+    "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the j-function is just the TIP of the iceberg. Conjecture: The full moonshine correspondence associates to each conjugacy class g in M a McKay-Thompson series T_g(q) = sum a_n(g) q^n that is a modular function of a specific level, and the product over all g in M of T_g(q) equals a modular form of weight |M|/24 that encodes the complete character table of M. The secret message: the Monster group IS a modular form, and every property of M (its order, its character table, its maximal subgroups) can be read off from the q-expansion of this product. Test: compute the first 100 coefficients of T_g(q) for each conjugacy class of M and verify they match the known character values. Prove that the product of all T_g(q) converges to a modular form. Impact: the Monster is not just connected to modular forms — it IS a modular form. The 194 conjugacy classes of M correspond to 194 modular forms, and their product encodes everything.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0594",
+    "lineage_refs": [],
+    "priority_score": 0.89,
+    "proof_strategy": "State the moonshine conjecture (proved by Borcherds): each conjugacy class g of M has a McKay-Thompson series T_g(q) that is a Hauptmodul of genus 0 for a specific modular curve. Extend: define the Monster product P(q) = prod_{g in Conj(M)} T_g(q)^{1/|C(g)|} where C(g) is the conjugacy class. Prove P(q) converges: log P(q) = sum_g (1/|C(g)|) * log T_g(q) = sum_g sum_n (1/|C(g)|) * a_n(g)/n * q^n. Each term is bounded by |a_n(g)|/n * |q|^n which is O(n^{3/2}) by Deligne's bound. Prove P(q) is a modular form of weight |M|/24 = 8 * 10^{53}/24 by checking it transforms correctly under each level. Test: compute P(q) mod q^{100} and compare with the character table of M.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-07T23:49:58.048338+00:00",
+    "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "a8488433",
     "description": "Suppose we had an oracle that computes L(s, chi) for any L-function and any complex s in O(1) time. What theorems would follow? Conjecture: The L-function oracle implies (1) The Riemann Hypothesis (compute zeros directly), (2) The BSD conjecture (compute the order of vanishing at s=1), (3) The Sato-Tate conjecture (compute the distribution of a_p), (4) Langlands functoriality (compare L-functions on both sides of the functoriality lift), and (5) A polynomial-time algorithm for factoring (the L-function of an elliptic curve E over Z/nZ detects factors of n). But the oracle also implies IMPOSSIBILITY results: (6) P != NP (because NP-complete problems would reduce to L-function computations that the oracle solves in O(1), contradicting the time hierarchy theorem if P = NP). Wait — the oracle solves L-function computations in O(1), so if P = NP, then NP problems can be encoded as L-function computations and solved instantly, but the oracle's existence is an axiom, not a theorem. The correct statement: the L-function oracle collapses the polynomial hierarchy to L-function computations. Test: prove that the Riemann Hypothesis follows from the oracle. Prove that BSD follows. Prove that factoring is in P given the oracle. Impact: understanding what an L-function oracle implies tells us exactly how powerful L-functions are — and how far we are from proving things about them.",
     "domain_bridges": [],
@@ -58,6 +98,26 @@
     "status": "available",
     "timestamp": "2026-07-07T20:46:59.999874+00:00",
     "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The shadowing lemma says that near an approximate orbit of a chaotic system, there exists a true orbit. In other words, every 'almost correct' trajectory of a chaotic map has a 'truly correct' trajectory nearby. This means that numerical errors in chaotic simulations are not bugs — they are SHADOWS of real trajectories. Conjecture: Every program that computes a chaotic map f: R^n -> R^n has the property that its floating-point output is shadowed by a true orbit of f. More precisely, for every epsilon > 0, there exists delta > 0 such that if x_0, x_1, ..., x_N is a delta-pseudo-orbit (|x_{n+1} - f(x_n)| < delta for all n), then there exists a true orbit y_0, y_1, ..., y_N with |x_n - y_n| < epsilon for all n. The shadowing time N(epsilon, delta) grows at most polynomially in 1/delta for hyperbolic maps. Test: implement the logistic map f(x) = 4x(1-x) in floating-point and compute 10^6 iterations. For each floating-point orbit, use binary search to find the shadowing true orbit. Verify that the shadowing distance is at most 10^{-10} for floating-point precision 10^{-16}. Impact: numerical chaos is not error — it is a computable shadow of mathematical truth. Your computer's rounding errors are tracing out REAL orbits of the chaotic system.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0593",
+    "lineage_refs": [],
+    "priority_score": 0.83,
+    "proof_strategy": "State the Anosov shadowing lemma: for a hyperbolic map f on a compact manifold, for every epsilon > 0 there exists delta > 0 such that every delta-pseudo-orbit is epsilon-shadowed by a true orbit. Prove the conjecture: every floating-point computation of f is a delta-pseudo-orbit with delta = machine epsilon. By shadowing, there exists a true orbit within epsilon. The shadowing distance epsilon is at most C * delta^(1/s) where s is the expansion rate and C depends on the map. For the logistic map at r=4, s = 4 and epsilon = O(delta^{1/4}). Compute the shadowing orbit: given floating-point orbit x_0, ..., x_N, define y_0 = x_0 and y_{n+1} = f(y_n). Then |y_n - x_n| <= C * delta * (s^n - 1)/(s - 1). For N = 10^6 and delta = 10^{-16}, epsilon <= C * 10^{-16} * (4^{10^6} - 1)/3 which is too large. But for the shadowing lemma, we get epsilon = O(delta^{1/4}) = O(10^{-4}). Test: verify with numerical computation.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-07T23:49:57.915548+00:00",
+    "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
   },
   {
     "ambition_level": "extension",
@@ -2551,7 +2611,7 @@
       "Bergeron-Garsia-Haiman theorem",
       "Schur positivity results"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f113c7a2",
     "description": "The conjecture asserts that for any partitions μ, λ, the coefficients in the expansion of (-1)^{|μ|-ℓ(μ)}⟨∇mμ, sλ⟩ are non-negative integers.",
     "domain_bridges": "Previous results on symmetric function expansions and recursion relations",
     "domains": [
@@ -2564,7 +2624,7 @@
     "proof_strategy": "Recursive expansion using recursion relations from the conjectured framework",
     "research_mode": "team",
     "source_exp_id": "2607.00940v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T10:38:18.237447+00:00",
     "title": "Nonnegativity of Schur Positivity"
   },
@@ -9684,7 +9744,7 @@
       "math.CO",
       "math.PR"
     ],
-    "consumed_by_exp_id": "88055acd",
+    "consumed_by_exp_id": "",
     "description": "The main result establishing the exact exponential growth rate of the ρ-th moment of constrained guesswork G_coset for a random binary linear code of rate R under i.i.d. Bernoulli(p) noise. It demonstrates that the exponent shifts down by exactly ρ(1-R) relative to the unconstrained Arıkan--Merhav exponent, yielding a closed-form limit expressed in terms of the binary Rényi entropy.",
     "domain_bridges": [
       "math.PR",
@@ -9700,7 +9760,7 @@
     "proof_strategy": "Define the probability space for random binary linear codes and the constrained guesswork rank. Prove the universality theorem, expressing the guesswork exponent as a functional of the weight-enumerator growth rate: (1+ρ)ψ_{1/(1+ρ)}(g) - ρψ_1(g). Then, evaluate this Legendre-type transform for the specific weight-enumerator growth rate of random linear codes to derive the closed-form exponent ρ h_{1/(1+ρ)}(p) + ρ(R-1).",
     "research_mode": "team",
     "source_exp_id": "2607.00205v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T11:06:30.434239+00:00",
     "title": "Exact Exponent for Constrained Coset Guesswork"
   },
@@ -13180,6 +13240,82 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Ramanujan's constant e^{pi*sqrt(163)} is remarkably close to an integer: it equals 262537412640768743.99999999999925... — just 7.5 * 10^{-13} away from 262537412640768744. This is not a coincidence: 163 is the largest Heegner number, and the near-integer property follows from the j-function and the fact that Q(sqrt(-163)) has class number 1. But 163 appears EVERYWHERE: it is prime, it is the smallest p such that Q(sqrt(-p)) has class number 1 and p > 2, it is a Chen prime, a lucky prime, a strongly prime, and the 38th prime. Conjecture: 163 is the unique integer n such that e^{pi*sqrt(n)} is within 10^{-6} of an integer. More generally, the Heegner numbers (1, 2, 3, 7, 11, 19, 43, 67, 163) are exactly the n for which Q(sqrt(-n)) has class number 1, and e^{pi*sqrt(n)} is near-integer for each. The 'magic' of 163 is that it is the LAST Heegner number — the final class number 1 imaginary quadratic field. Test: prove that e^{pi*sqrt(n)} is within 10^{-6} of an integer only for Heegner numbers. Compute e^{pi*sqrt(67)} and e^{pi*sqrt(43)} and verify near-integer behavior. Prove that 163 is the largest Heegner number (Stark-Heegner theorem). Impact: 163 is not magic — it is the climax of a deep theorem in algebraic number theory. The near-integer property of e^{pi*sqrt(163)} is the shadow of the class number 1 condition.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0592",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "State the Stark-Heegner theorem: the imaginary quadratic fields Q(sqrt(-d)) with class number 1 are exactly d = 1, 2, 3, 7, 11, 19, 43, 67, 163. Prove e^{pi*sqrt(d)} is near-integer for each Heegner number: by the j-function expansion, j((1+sqrt(-d))/2) is an algebraic integer, and e^{pi*sqrt(d)} = (j/1728 + ... )^{1/3} * 12. For d = 163, j((1+sqrt(-163))/2) = -640320^3, so e^{pi*sqrt(163)} = 640320^3 + 744 - error. Prove uniqueness: for non-Heegner d, the class number h(-d) >= 2, so j((1+sqrt(-d))/2) has degree h(-d) >= 2 over Q, and e^{pi*sqrt(d)} is not near-integer. Test: compute e^{pi*sqrt(d)} for d = 1,2,3,7,11,19,43,67,163 and verify near-integer behavior. Compute for d = 5,6,10,14 to verify non-near-integer behavior.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-07T23:49:57.790919+00:00",
+    "title": "The Unreasonable Effectiveness of the Number 163"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "math.MG",
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The supremum of achievable vertical amplification parameters δ in the paper's main theorem equals 1/3. Precisely: for every ε > 0, there exist infinitely many n ∈ ℕ and finite sets P ⊂ ℝ² with |P| = n such that for every A ⊆ P with |A| ≥ 2, the maximum distance multiplicity μ(A) ≥ |A|² / n^(2/3 + ε). This would be optimal given the O(n^{4/3}) Szemerédi–Trotter upper bound on unit distances, which forces δ ≤ 1/3. The paper establishes existence of some δ > 0; this conjectures δ can approach 1/3 via increasingly high-degree number field constructions.",
+    "domain_bridges": [
+      "Incidence Geometry",
+      "Algebraic Number Theory",
+      "Metric Geometry"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0596",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Extend the vertical amplification technique using number fields of degree d → ∞, combining the robust Ramanujan-type estimates from Croot-Mao-Pohoata-Sheffer-Yip with Minkowski lattice constructions from number fields with rich representations of integers as sums of squares. The key is to show that as the degree d grows, the amplification factor δ_d approaches 1/3, matching the Szemerédi–Trotter barrier. A potential approach involves cyclotomic fields or more general number fields where the class number and unit structure provide increasingly many representations.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05374v1",
+    "status": "available",
+    "timestamp": "2026-07-07T23:56:40.123410+00:00",
+    "title": "Optimal Vertical Amplification Conjecture for Planar Point Sets"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "Johansson",
+      "Molloy19",
+      "Fotis2021hyper"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any fixed integer $r \\ge 2$ and $\\varepsilon > 0$, every sufficiently large finite uncrowded $(r+1)$-uniform hypergraph of maximum degree $\\Delta$ has list chromatic number at most $(1+\\varepsilon)(r\\Delta/\\log\\Delta)^{1/r}$. This captures the paper's main theorem, improving the leading constant from $r$ to $r^{1/r}$ over prior work by Iliopoulos.",
+    "domain_bridges": [
+      "Graph Theory",
+      "Probability Theory",
+      "Asymptotic Analysis"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0597",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the semi-random list-coloring nibble method directly on the hypergraph, defining active edge-color constraints to track residual sizes. Establish a binomial degree bound to maintain invariants during the nibble phase, then apply a Rosenfeld-style counting argument to complete the coloring in the sparse terminal state.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05256v1",
+    "status": "available",
+    "timestamp": "2026-07-07T23:57:07.311357+00:00",
+    "title": "Asymptotic List Chromatic Number of Uncrowded Uniform Hypergraphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "d9ca63e8",
     "description": "Bitcoin mining requires finding a nonce n such that SHA256(block_header || n) < target. What if we replaced SHA256 with a tropical hash? Define tropical SHA as: TSHA(m) = min over all i of (m_i + h_i) where m = (m_1,...,m_k) is the message, h = (h_1,...,h_k) is the tropical hash key, and all operations are in the min-plus semiring (a tropical plus b = min(a,b), a tropical times b = a + b). Conjecture: TSHA is a one-way function in the tropical sense: computing TSHA(m) given m and h is O(k) (trivial), but finding m given TSHA(m) and h is NP-hard (it reduces to a tropical shortest path problem). More precisely, the tropical preimage problem — given y and h, find m such that min_i(m_i + h_i) = y — requires checking O(e^{k}) tropical paths in the worst case. But there's a twist: tropical hash collisions are COMMON because min(a,b) = min(b,a). To fix this, define TSHA2(m) = (min_i(m_i + h_i), min_i(m_i + h'_i)) where h and h' are two independent tropical keys. Conjecture: TSHA2 is collision-resistant with probability 1 - O(1/k). Test: implement TSHA and TSHA2, measure collision resistance, and compare mining difficulty to SHA256 for block sizes k = 32, 64, 128. Impact: a cryptocurrency where mining is solving tropical optimization problems instead of brute-force hash searches — mining IS mathematics.",
     "domain_bridges": [],
@@ -13220,7 +13356,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f38e0202",
+    "consumed_by_exp_id": "",
     "description": "The Moebius band M is obtained from [0,1] x R by identifying (0, y) ~ (1, -y). Define arithmetic on M: a point (x, y) on M represents the number y * (2x - 1) where x in [0,1] gives the sign and magnitude, and y gives the scale. This creates a number system where going around the band flips the sign. Define the Moebius integers Z_M as the image of Z in M under the embedding n -> (1/2 + 1/(2n), |n|). Then 1 and -1 are identified at the twist point (1, 1) = (0, -1), making Z_M a one-point compactification of Z with a single infinity. Conjecture: Z_M is a ring under the induced operations from R x R / ~, but it is NOT an integral domain because (1, 0) * (0, 1) = (0, 0) but neither factor is zero in Z_M. The prime factorization in Z_M has a unique 'twist prime' that encodes orientation, and every non-zero Moebius integer has a factorization of the form ±p_1^{a_1} * ... * p_k^{a_k} where the overall sign is the twist. Test: factor the Moebius integers 6, -6, and 0 in Z_M. Verify that 6 = 2_+ * 3_+ and -6 = 2_- * 3_- = 2_+ * 3_+ * (-1) where -1 is the twist prime. Impact: arithmetic on a non-orientable surface creates a number system where orientation IS a prime — a number-theoretic analog of spin in physics.",
     "domain_bridges": [],
     "domains": [
@@ -13233,7 +13369,7 @@
     "proof_strategy": "Define Z_M as the image of Z in the Moebius band M = [0,1] x R / ~ where (0,y) ~ (1,-y). Embed n -> (1/(1+|n|), n) for n >= 0 and n -> (1/(1+|n|), -|n|) for n < 0. Define addition and multiplication coordinatewise on M. Prove Z_M is a ring: (a,b) + (c,d) = ((a+c mod 1), b+d with sign from twist). Prove Z_M is not an integral domain: find zero divisors. Prove the twist prime theorem: every Moebius integer n has a unique factorization n = epsilon * p_1^{a_1} * ... * p_k^{a_k} where epsilon = +1 or -1 is the twist, and p_i are ordinary primes. Test: factor 6 = +1 * 2 * 3, -6 = -1 * 2 * 3. Verify multiplication: 2_+ * 3_+ = 6_+ and 2_- * 3_- = 6_+ (two twists cancel). Verify that -1 is prime: if -1 = a*b in Z_M, then a or b must be the twist.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T20:47:00.188304+00:00",
     "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
   },
@@ -13280,7 +13416,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "5a890f39",
+    "consumed_by_exp_id": "fd9c7c7d",
     "description": "Every real number defines a musical scale: map the digits 0-9 to frequencies f_n = 220 * 2^{n/12} (the A minor pentatonic scale extended). The number pi = 3.14159265... produces the sequence E4, C5, C#5, D5, D#5, F5, E5, A4, G5, C5... — a melody. Conjecture: The melody of pi is not periodic (because pi is irrational) but has musical structure: the autocorrelation of the digit sequence at lag 12 (one octave) is positive and statistically significant. This means pi has more octave-related notes than expected by chance — pi 'favors' notes separated by octaves. Similarly, e 'favors' perfect fifths (lag 7) and sqrt(2) 'favors' minor thirds (lag 3). The musical structure of transcendental numbers reflects their continued fraction properties: numbers with bounded partial quotients have more consonant melodies. Test: compute the digit autocorrelation of pi, e, and sqrt(2) at lags 0-12 (representing unison through octave). Perform a chi-squared test comparing to the uniform distribution. Generate the 'music' of each constant and analyze for tonal centers. Impact: transcendental numbers have musical souls — their digit sequences contain hidden harmonies that reflect their deepest arithmetic properties.",
     "domain_bridges": [],
     "domains": [
