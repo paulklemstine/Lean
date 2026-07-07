@@ -2952,7 +2952,7 @@
       "Djoković-Winkler theorem",
       "Polat's theorem"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea22db3c",
     "description": "A partial cube that is a Cartesian product of two partial cubes satisfies the opposite-semicube Helly property if and only if both factors are harmonic-even.",
     "domain_bridges": [
       "Cartesian product of partial cubes",
@@ -2967,7 +2967,7 @@
     "proof_strategy": "Analyze the Helly property in Cartesian products by decomposing opposite semicubes into factors and leveraging harmonic-even embeddings in each component.",
     "research_mode": "team",
     "source_exp_id": "2606.31468v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T18:13:48.357153+00:00",
     "title": "The opposite-semicube Helly property characterizes harmonic-evenness in Cartesian products of partial cubes"
   },
@@ -3120,7 +3120,7 @@
       "BH",
       "LFZ"
     ],
-    "consumed_by_exp_id": "8899a051",
+    "consumed_by_exp_id": "bb6819f2",
     "description": "For a graph $G$ with minimum degree $\\delta(G) \\ge a + r$, if the spectral radius $\\lambda(G)$ is at least $a + r + b$, then $G$ is fractional ID-$[a,b]$-factor-critical.",
     "domain_bridges": [
       "Spectral graph theory",
@@ -6990,7 +6990,7 @@
       "11S25",
       "14G20"
     ],
-    "consumed_by_exp_id": "44f4c719",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that the trianguline variety associated to a de Rham (φ,Γ)-module with G-structure (for a split connected reductive group G over a p-adic field) is a normal scheme. This extends the normality results proved in the paper for certain points outside the smooth locus to the whole variety.",
     "domain_bridges": [
       "Representation theory",
@@ -7007,7 +7007,7 @@
     "proof_strategy": "Use Serre's criterion (R1 + S2). Show that the trianguline variety is regular in codimension 1 by analyzing the stratification coming from the triangulation parameter and applying the smoothness results on the regular loci. Then verify the S2 condition by demonstrating that the variety is Cohen‑Macaulay, which follows from its construction as a quotient of a smooth scheme by a finite group action or from the existence of a dualizing complex compatible with the trianguline structure.",
     "research_mode": "team",
     "source_exp_id": "2607.02215v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T18:07:18.823870+00:00",
     "title": "Normality of the trianguline variety for split reductive groups"
   },
@@ -11325,7 +11325,7 @@
       "polynomial factorization",
       "MvPolynomial"
     ],
-    "consumed_by_exp_id": "b3fc7b5f",
+    "consumed_by_exp_id": "",
     "description": "An irreducible polynomial F in K[x_1,...,x_d] over an algebraically closed field K of characteristic zero is algebraically degenerate (i.e., F divides a sum of non-constant univariate polynomials f_1(x_1)+...+f_d(x_d)) if and only if there exist non-zero polynomials G and univariate alpha_{1,j}, alpha_{2,i} such that for each i, the partial derivative F_{x_i} is congruent to G * alpha_{2,i}(x_i) * prod_{j!=i} alpha_{1,j}(x_j) modulo F. This translates the local analytic characterization of Theorem 2.3 into a global algebraic setting.",
     "domain_bridges": [
       "combinatorial geometry",
@@ -11340,7 +11340,7 @@
     "proof_strategy": "Adapt the local analytic proof from the paper to the global algebraic setting using properties of algebraic curves and irreducibility, leveraging the fact that for polynomials over algebraically closed fields, local divisibility implies global divisibility, and applying Hilbert's Nullstellensatz to bridge the local zero sets to the global ideal structure.",
     "research_mode": "team",
     "source_exp_id": "2607.03366v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T01:28:54.258990+00:00",
     "title": "Global Algebraic Degeneracy Criterion for Multivariate Polynomials"
   },
@@ -11743,7 +11743,7 @@
       "Boolean lattice",
       "Set systems"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0da92e61",
     "description": "For any natural numbers n, l, r such that n >= (l+1)*r + l, there exists an interval packing of maximum possible size (n choose l) in the Boolean lattice restricted to levels l through l+r. This can be formulated as the existence of a function f mapping each l-sized subset T of [n] to an r-sized subset C_T disjoint from T, such that for any distinct l-sized subsets T1, T2, T1 is not contained in T2 union C_T2 and T2 is not contained in T1 union C_T1.",
     "domain_bridges": [
       "Set theory",
@@ -11759,7 +11759,7 @@
     "proof_strategy": "Define the explicit construction of the function f mapping each l-set T to an r-set C_T using the cyclic sequence method described in the paper. Subsequently, prove that the resulting intervals [T, T ∪ C_T] are pairwise disjoint by showing that for any two distinct l-sets T1, T2, neither T1 ⊆ T2 ∪ C_{T2} nor T2 ⊆ T1 ∪ C_{T1} holds.",
     "research_mode": "team",
     "source_exp_id": "2607.04794v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T11:01:58.641433+00:00",
     "title": "Engel's Interval Packing Theorem"
   },
@@ -12365,6 +12365,35 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Ciucu-Krattenthaler problem",
+      "Exact enumeration of lozenge tilings of a triangular region",
+      "Plane partitions",
+      "Perfect matchings"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper gives an exact product formula for the number of lozenge tilings T_n of a triangular region T_n involving complex roots of unity: T_n = ∏_{1≤a<b≤3n+2, (a,b)≠(n+1,2n+2)} |1+ζ^a+ζ^b|^{1/3} with ζ = e^{2πi/(3n+3)}. This conjecture states that this complicated product simplifies to a product of binomial coefficients: T_n = ∏_{k=1}^n (3k-1 choose k). This is a precise, falsifiable identity that can be checked for small n and would provide a much simpler closed form.",
+    "domain_bridges": [
+      "algebraic combinatorics",
+      "statistical mechanics",
+      "special functions",
+      "determinant evaluations"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0551",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The paper reduces T_n to the determinant of a bipartite adjacency matrix M_n and diagonalizes it. The eigenvalues are the factors |1+ζ^a+ζ^b|. One could attempt to simplify the product of these eigenvalues using trigonometric identities and known product formulas for binomial coefficients. Alternatively, compute T_n for small n to guess the recurrence, then prove the recurrence holds for the binomial product and matches the determinant formula via creative telescoping or the holonomic systems approach.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05233v1",
+    "status": "available",
+    "timestamp": "2026-07-07T15:16:48.038780+00:00",
+    "title": "Simplified binomial product formula for lozenge tilings of the triangular region T_n"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.MG",
       "math.CO",
       "magnitude_of_metric_spaces",
@@ -12383,7 +12412,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0551",
+    "id": "fd_0552",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Exploit the energy minimization characterization: the microscopic weighting minimizes the energy integral E(w) = Σ w(x)w(y)d(x,y) over signed measures of total mass 1. For trees, the distance matrix has recursive structure amenable to leaf-removal induction. Show that any signed measure of mass 1 on a tree with a negative-weight vertex can be modified to decrease energy, contradicting optimality. Alternatively, use the Schoenberg embedding characterization: the microscopic weighting corresponds to the closest point to the origin in the affine hull of the embedded vertices, and for trees this convex hull might be shown to contain the origin's projection with all positive barycentric coordinates.",
@@ -12410,7 +12439,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0552",
+    "id": "fd_0553",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The upper bound μ₂ ≤ 1+ρ follows from the paper's construction and Proposition 1 on cyclic factor avoidance. The lower bound μ₂ ≥ 1+ρ requires showing that no infinite sequence of cuts can achieve a ratio strictly less than 1+ρ. This likely requires analyzing the combinatorial constraints on infinite words over the alphabet {0,1,2,3} with ratios 1:ρ:ρ²:ρ³, proving that any such word avoiding equal adjacent letters must contain a portion with ratio at least (1+ρ)/(ρ²+ρ³) = 1+ρ. A potential approach uses the substitution system properties: the map sending 0↦23 (or 32), 1↦0, 2↦1, 3↦2 shows that any valid infinite sequence must eventually approximate the fixed point, forcing portions near the extremal ratio.",
@@ -12437,7 +12466,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0553",
+    "id": "fd_0554",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize simplicial complexes and vertex decomposability in Lean, then define PF_t(G) as the simplicial complex of vertex subsets with no induced P_t. Define complete multipartite graphs and their part-size ordering. The forward direction (t ≥ 2n_{m-1}-1 ⟹ vertex decomposable) requires formalizing the explicit structural decomposition of PF_t(G) as a union of join complexes with a size-truncation term, then proving each join component is vertex decomposable and that the union preserves this property. The reverse direction (t ≤ 2n_{m-1}-2 ⟹ not sequentially Cohen-Macaulay) requires constructing a specific non-Cohen-Macaulay witness face or showing the homology fails the sequential Cohen-Macaulay condition, potentially via a Mayer-Vietoris spectral sequence argument.",
@@ -12462,7 +12491,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0554",
+    "id": "fd_0555",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Demonstrate that each necklace corresponds to exactly k quasinecklaces via rotational symmetry or quasinecklace construction rules.",
@@ -12494,7 +12523,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0555",
+    "id": "fd_0556",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the key definitions: exceptional rational functions (permuting P^1(F_{q^m}) for infinitely many m via the Fried–Schur–Saxon criterion), Möbius equivalence, and arithmetic/geometric monodromy groups as permutation groups on 5 elements. Case-split by geometric monodromy group: cyclic case uses classification of transitive cyclic subgroups of S_5 with Riemann–Hurwitz constraining ramification to yield monomials and Rédei functions; dihedral case analyzes inertia subgroups of D_5 within S_5 and branch point rationality to derive Dickson polynomials and the elliptic isogeny family. Key intermediate lemma: for degree 5, the Riemann–Hurwitz formula restricts the possible ramification configurations to finitely many cases for each monodromy type.",
@@ -12503,6 +12532,33 @@
     "status": "available",
     "timestamp": "2026-07-07T14:25:29.437993+00:00",
     "title": "Classification of Exceptional Rational Functions of Degree 5 over Finite Fields"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "graph_metrics",
+      "tournament_theory"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every doubly regular tournament T on n vertices (where n ≡ 3 mod 4, n ≥ 3), the metric dimension β(T) ≤ 2⌈log₂ n⌉. This extends the paper's O(log n) bound proven for certain doubly regular team tournaments to the classical and well-studied family of doubly regular tournaments, which are regular tournaments with parameters (n, (n-1)/2, (n-3)/4). The conjecture posits an explicit constant of 2, making it directly falsifiable by computing metric dimensions of small doubly regular tournaments (n = 3, 7, 11, 19, ...) and checking against the bound.",
+    "domain_bridges": [
+      "probabilistic_method",
+      "design_theory",
+      "combinatorial_games"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0557",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt Babai's probabilistic method as used in the paper: for a doubly regular tournament T, randomly sample k = 2⌈log₂ n⌉ vertices as a resolving set candidate. Compute the probability that two distinct vertices u, v receive the same distance vector from the sampled set. Use the strong regularity properties of doubly regular tournaments—specifically that every pair of vertices has exactly (n-3)/4 common out-neighbours—to bound the collision probability per pair by 1/2^k. Apply a union bound over all n(n-1)/2 pairs, choosing k so that the union bound is < 1, yielding a resolving set of size at most 2⌈log₂ n⌉.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05152v1",
+    "status": "available",
+    "timestamp": "2026-07-07T15:17:08.798903+00:00",
+    "title": "Logarithmic metric dimension of doubly regular tournaments"
   },
   {
     "ambition_level": "extension",

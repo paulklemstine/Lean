@@ -1622,7 +1622,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hammarhjelm's condition and the classification of real quadratic fields"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea22db3c",
     "description": "A partial cube that is a Cartesian product of two partial cubes satisfies the opposite-semicube Helly property if and only if both factors are harmonic-even.",
     "domains": [
       "Bridges"
@@ -1631,7 +1631,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31468v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T18:13:48.357153+00:00",
     "title": "The opposite-semicube Helly property characterizes harmonic-evenness in Cartesian products of partial cubes"
   },
@@ -1708,7 +1708,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality for exactly one edge subset"
   },
   {
-    "consumed_by_exp_id": "8899a051",
+    "consumed_by_exp_id": "bb6819f2",
     "description": "For a graph $G$ with minimum degree $\\delta(G) \\ge a + r$, if the spectral radius $\\lambda(G)$ is at least $a + r + b$, then $G$ is fractional ID-$[a,b]$-factor-critical.",
     "domains": [
       "Physics"
@@ -3808,7 +3808,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Gamma-positivity of Symmetric Edge Polytopes is Equivalent to the Graph Being a Cone"
   },
   {
-    "consumed_by_exp_id": "44f4c719",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that the trianguline variety associated to a de Rham (\u03c6,\u0393)-module with G-structure (for a split connected reductive group G over a p-adic field) is a normal scheme. This extends the normality results proved in the paper for certain points outside the smooth locus to the whole variety.",
     "domains": [
       "Algebra",
@@ -3818,7 +3818,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02215v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T18:07:18.823870+00:00",
     "title": "Normality of the trianguline variety for split reductive groups"
   },
@@ -6099,7 +6099,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Split-Off Minor Characterization of Homomorphism Distinguishing Closed Classes"
   },
   {
-    "consumed_by_exp_id": "b3fc7b5f",
+    "consumed_by_exp_id": "",
     "description": "An irreducible polynomial F in K[x_1,...,x_d] over an algebraically closed field K of characteristic zero is algebraically degenerate (i.e., F divides a sum of non-constant univariate polynomials f_1(x_1)+...+f_d(x_d)) if and only if there exist non-zero polynomials G and univariate alpha_{1,j}, alpha_{2,i} such that for each i, the partial derivative F_{x_i} is congruent to G * alpha_{2,i}(x_i) * prod_{j!=i} alpha_{1,j}(x_j) modulo F. This translates the local analytic characterization of Theorem 2.3 into a global algebraic setting.",
     "domains": [
       "Algebra"
@@ -6108,7 +6108,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03366v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T01:28:54.258990+00:00",
     "title": "Global Algebraic Degeneracy Criterion for Multivariate Polynomials"
   },
@@ -6316,7 +6316,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stable range theta lift preserves unitarity for compact smaller groups"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0da92e61",
     "description": "For any natural numbers n, l, r such that n >= (l+1)*r + l, there exists an interval packing of maximum possible size (n choose l) in the Boolean lattice restricted to levels l through l+r. This can be formulated as the existence of a function f mapping each l-sized subset T of [n] to an r-sized subset C_T disjoint from T, such that for any distinct l-sized subsets T1, T2, T1 is not contained in T2 union C_T2 and T2 is not contained in T1 union C_T1.",
     "domains": [
       "Cryptography"
@@ -6325,7 +6325,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.04794v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T11:01:58.641433+00:00",
     "title": "Engel's Interval Packing Theorem"
   },
@@ -6652,12 +6652,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The paper gives an exact product formula for the number of lozenge tilings T_n of a triangular region T_n involving complex roots of unity: T_n = \u220f_{1\u2264a<b\u22643n+2, (a,b)\u2260(n+1,2n+2)} |1+\u03b6^a+\u03b6^b|^{1/3} with \u03b6 = e^{2\u03c0i/(3n+3)}. This conjecture states that this complicated product simplifies to a product of binomial coefficients: T_n = \u220f_{k=1}^n (3k-1 choose k). This is a precise, falsifiable identity that can be checked for small n and would provide a much simpler closed form.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0551",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05233v1",
+    "status": "available",
+    "timestamp": "2026-07-07T15:16:48.038780+00:00",
+    "title": "Simplified binomial product formula for lozenge tilings of the triangular region T_n"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every finite tree T (viewed as a metric space with the shortest-path distance), the microscopic weighting assigns strictly positive weight to every vertex. The paper establishes that finite trees are of strictly negative type and hence admit a microscopic weighting, and that this weighting emphasizes boundary points and distributes mass widely. The open question is whether all vertex weights are necessarily positive \u2014 i.e., whether the signed measure is in fact a positive measure for trees. A counterexample would reveal a tree whose interior vertices receive negative microscopic weight, while a proof would show that the 'mass redistribution' from boundary emphasis never forces interior weights below zero.",
     "domains": [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0551",
+    "id": "fd_0552",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05349v1",
@@ -6671,7 +6685,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0552",
+    "id": "fd_0553",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05330v1",
@@ -6685,7 +6699,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0553",
+    "id": "fd_0554",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05358v1",
@@ -6699,7 +6713,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0554",
+    "id": "fd_0555",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05324v1",
@@ -6714,13 +6728,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0555",
+    "id": "fd_0556",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05075v1",
     "status": "available",
     "timestamp": "2026-07-07T14:25:29.437993+00:00",
     "title": "Classification of Exceptional Rational Functions of Degree 5 over Finite Fields"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every doubly regular tournament T on n vertices (where n \u2261 3 mod 4, n \u2265 3), the metric dimension \u03b2(T) \u2264 2\u2308log\u2082 n\u2309. This extends the paper's O(log n) bound proven for certain doubly regular team tournaments to the classical and well-studied family of doubly regular tournaments, which are regular tournaments with parameters (n, (n-1)/2, (n-3)/4). The conjecture posits an explicit constant of 2, making it directly falsifiable by computing metric dimensions of small doubly regular tournaments (n = 3, 7, 11, 19, ...) and checking against the bound.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0557",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05152v1",
+    "status": "available",
+    "timestamp": "2026-07-07T15:17:08.798903+00:00",
+    "title": "Logarithmic metric dimension of doubly regular tournaments"
   },
   {
     "consumed_by_exp_id": "",
