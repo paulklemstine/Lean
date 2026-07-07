@@ -11568,7 +11568,7 @@
       "math.CO",
       "math.AG"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "246be7f8",
     "description": "Let k be an algebraically closed field of characteristic zero and let F ∈ k[x₁,…,x_d] be irreducible. Then F = H(f₁(x₁)+⋯+f_d(x_d)) for some H ∈ k[t] with deg(H) ≥ 2 and fᵢ ∈ k[t] if and only if there exist rational functions α₁,ⱼ ∈ k(xⱼ), α₂,ᵢ ∈ k(xᵢ), and G ∈ k(x₁,…,x_d) such that for every i ∈ {1,…,d}: ∂F/∂xᵢ ≡ G · α₂,ᵢ(xᵢ) · ∏_{j≠i} α₁,ⱼ(xⱼ) (mod ⟨F⟩), where crucially the α₁,ⱼ factors are independent of i. This is the algebraic analogue of Theorem 2.3, replacing analytic isomorphisms with rational function substitutions and local neighborhoods with Zariski-open conditions.",
     "domain_bridges": [
       "combinatorial_geometry",
@@ -11584,7 +11584,7 @@
     "proof_strategy": "Forward direction: If F = H(f₁+⋯+f_d), then ∂F/∂xᵢ = H'(f₁+⋯+f_d)·f'ᵢ(xᵢ). On Z(F) where H(f₁+⋯+f_d)=0, set G = H'(f₁+⋯+f_d), α₂,ᵢ = f'ᵢ, α₁,ⱼ = 1. Reverse direction: The separated factorization implies F_{x_i}/F_{x_j} = (α₂,ᵢ(xᵢ)·α₁,ⱼ(xⱼ))/(α₂,ⱼ(xⱼ)·α₁,ᵢ(xᵢ)), forcing the logarithmic derivatives ∂(log F_{x_i})/∂x_j to vanish modulo F for i≠j. Use irreducibility and Zariski density to show the implicit function on Z(F) has additive separable structure, then integrate via differential algebra (Risch-like arguments) to obtain the polynomial form H(f₁+⋯+f_d).",
     "research_mode": "team",
     "source_exp_id": "2607.03366v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T02:39:41.753443+00:00",
     "title": "Algebraic Degeneracy Factorization Criterion"
   },
