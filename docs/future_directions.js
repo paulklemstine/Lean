@@ -1490,7 +1490,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Character sums over smooth numbers"
   },
   {
-    "consumed_by_exp_id": "3b621fb7",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for every finite simple graph G, the following are equivalent: (i) G is balanced (its clique\u2011matrix contains no odd square submatrix with exactly two 1's in each row and each column); (ii) G is hereditary clique\u2011Helly (every induced subgraph has the Helly property for cliques); and (iii) G contains no induced copy of the complement of 3K2 (i.e., \\u03c3\u03052K2). This extends the result of [arXiv:xxxx] from distance\u2011hereditary graphs to all graphs, providing a single forbidden induced subgraph characterization of balancedness.",
     "domains": [
       "Pythagorean"
@@ -1499,7 +1499,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00730v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T13:24:03.491700+00:00",
     "title": "Conjecture: Balanced graphs coincide with hereditary clique\u2011Helly graphs"
   },
@@ -1636,7 +1636,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the generic ordinarity bound for the Katz family"
   },
   {
-    "consumed_by_exp_id": "f05cfd02",
+    "consumed_by_exp_id": "",
     "description": "The corrected estimator E(x) + C(x) from the proposed algorithm satisfies the error bound |E(x) + C(x) - \u03c0(x)| \u2264 K\u221ax for some constant K > 0 and all x \u2265 2. This conjecture formalizes the claim that the correction term significantly improves accuracy by reducing the error to O(\u221ax), matching the algorithm's computational complexity.",
     "domains": [
       "Pythagorean",
@@ -1646,7 +1646,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31761v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T17:32:19.384043+00:00",
     "title": "Error Bound Conjecture for Corrected Prime Count Estimator"
   },
@@ -1766,7 +1766,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality for exactly one edge subset"
   },
   {
-    "consumed_by_exp_id": "7e1c8f60",
+    "consumed_by_exp_id": "",
     "description": "For a graph $G$ with minimum degree $\\delta(G) \\ge a + r$, if the spectral radius $\\lambda(G)$ is at least $a + r + b$, then $G$ is fractional ID-$[a,b]$-factor-critical.",
     "domains": [
       "Physics"
@@ -1775,7 +1775,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31064v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T21:44:34.279843+00:00",
     "title": "Spectral radius threshold for fractional ID-$[a,b]$-factor-critical graphs"
   },
@@ -2000,7 +2000,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Degree Bound for the Relation Module of Drinfeld Modules"
   },
   {
-    "consumed_by_exp_id": "e108bc5a",
+    "consumed_by_exp_id": "",
     "description": "The conjecture asserts that for all n \u2265 1, the positive anti-Wick density satisfies the required conditions in the finite-core reduction, directly contradicting the paper's claim of obstruction.",
     "domains": [
       "Pythagorean"
@@ -2009,7 +2009,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29555v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T05:59:25.492247+00:00",
     "title": "Positive Anti-Wick Obstruction Confirmation"
   },
@@ -2814,7 +2814,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stability of the sharp diagonal spectral correlation inequality for monotone Boolean functions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ebfc4ebc",
     "description": "Conjecture that the asymptotically sharp lower bound on k_t(G) derived from the Lov\u00e1sz\u2013Simonovits densities is actually exact for all n\u2011vertex graphs, i.e., equality is attained for suitable Tur\u00e1n\u2011type constructions.",
     "domains": [
       "Pythagorean",
@@ -2824,7 +2824,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31967v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T15:36:33.626121+00:00",
     "title": "Sharpness of the k_t lower bound given k_s in extremal graphs"
   },
@@ -3544,7 +3544,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "A structural decomposition theorem for countable FAC posets via scattered components"
   },
   {
-    "consumed_by_exp_id": "3e9ddacc",
+    "consumed_by_exp_id": "",
     "description": "The subset \u03a9\u2082(n) restricts partitions to have at most a\u2081 + t -1 parts, where a\u2081 is the highest power of 2 in n's binary expansion, t the number of non-zero terms.",
     "domains": [
       "Algebra"
@@ -3553,7 +3553,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02433v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T19:59:12.431800+00:00",
     "title": "Partition Part Size Bound"
   },
@@ -5484,7 +5484,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cycle Mengerian and Cycle Ideal Equivalence for Tournaments"
   },
   {
-    "consumed_by_exp_id": "ff7a6b9b",
+    "consumed_by_exp_id": "",
     "description": "The paper proves that a countable FAC poset P satisfies the Aharoni-Korman conjecture if P contains no saturated chain D such that either D or its reverse D* is of the form \u2295_{x\u2208\u03c9} D_x, where each D_x is infinite and co-wellfounded. The conjecture asserts that this condition is also necessary: if a countable FAC poset P does contain such a saturated chain, then P fails to satisfy the Aharoni-Korman conjecture. This would yield a complete characterization of which countable FAC posets satisfy the Aharoni-Korman conjecture.",
     "domains": [
       "Pythagorean"
@@ -5493,7 +5493,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02500v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T14:29:04.615567+00:00",
     "title": "Necessity of the forbidden chain condition for the Aharoni-Korman conjecture on countable FAC posets"
   },
@@ -5730,21 +5730,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-06T17:19:05.532662+00:00",
     "title": "Probabilistic powerdomain RB-domain characterization for finite posets"
-  },
-  {
-    "consumed_by_exp_id": "5156da6e",
-    "description": "The paper proves that the Aharoni-Korman conjecture holds for countable FAC posets containing no saturated chain D such that D or its reverse is of the form \u2a01 D_x (where each D_x is infinite and co-wellfounded). Since any well-founded poset cannot contain such a chain D (as it would entail an infinite descending chain), the theorem implies the conjecture holds for all countable well-founded FAC posets. This conjecture proposes that the result extends to uncountable cardinals: every well-founded poset with no infinite antichains possesses a chain that meets every antichain in some partition of the poset into antichains.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0473",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02500v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T17:20:56.835605+00:00",
-    "title": "The Aharoni-Korman Conjecture for Well-Founded FAC Posets"
   },
   {
     "consumed_by_exp_id": "",
@@ -6345,7 +6330,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Convergence and Correctness of Integer Newton-Raphson for Integer Roots"
   },
   {
-    "consumed_by_exp_id": "1e37bc68",
+    "consumed_by_exp_id": "",
     "description": "For every positive integer n and positive reals \u03b1, \u03b2 with \u03b1\u03b2 = \u03c0\u00b2, the alternating Hurwitz zeta function \u03b6_E(s, x) = \u03a3_{k=0}^\u221e (-1)^k / (k + x)^s satisfies a Ramanujan-type identity generalizing Ramanujan's classical formula for \u03b6(2n+1). Specifically, the alternating Hurwitz kernel K_E^{2n+1}(\u03b1, x) := \u00bd\u03b6_E(2n+1, x) + \u03a3_{m=1}^\u221e m^{-2n-1}/(e^{2\u03b1m} + 1) obeys: \u03b1^{-n}\u00b7K_E^{2n+1}(\u03b1, x) \u2212 (\u2212\u03b2)^{-n}\u00b7K_E^{2n+1}(\u03b2, 1\u2212x) = 2^{2n} \u03a3_{k=0}^{n+1} (\u22121)^{k\u22121} E_{2k}(x) B_{2n\u22122k+2} / ((2k)!(2n\u22122k+2)!) \u00b7 \u03b1^{n\u2212k+1} \u03b2^k, where E_{2k}(x) are Euler polynomials and B_{2k} are Bernoulli numbers. This replaces the Bernoulli numbers B_{2k} in Ramanujan's original identity with Euler polynomials E_{2k}(x), reflecting the alternating (sign-twisted) structure.",
     "domains": [
       "Pythagorean"
@@ -6354,7 +6339,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03490v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T04:28:18.009557+00:00",
     "title": "Alternating Hurwitz\u2013Ramanujan Identity with Euler Polynomials"
   },
@@ -6389,11 +6374,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The paper proves that for k \u2265 3 and sufficiently large n, the maximum number of points in an n \u00d7 n grid with no k+1 collinear points equals kn. This conjecture asserts that 'sufficiently large' can be replaced by the explicit threshold n \u2265 k. Note that for n \u2264 k the whole grid has no k+1 collinear points so f_k(n) = n\u00b2, and for n = k we get f_k(k) = k\u00b2 = k\u00b7k, making n \u2265 k the natural boundary. The conjecture predicts that for all k \u2265 3 and n \u2265 k, the trivial upper bound kn is always achievable.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0519",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05255v1",
+    "status": "available",
+    "timestamp": "2026-07-07T06:16:15.118766+00:00",
+    "title": "Explicit Threshold for No-(k+1)-in-line: f_k(n) = kn for all k \u2265 3 and n \u2265 k"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any field K with char(K) \u2260 2 and quadratic polynomials v, w \u2208 K[x], the classical Wronskian v'w - vw' is exactly equal to the derivative-free Remainder-Polynomial Route (RPR) formulation. Specifically, v'w - vw' = 2x \u00b7 Sres\u2081(v, w) + (v\u2081w - w\u2081v), where Sres\u2081(v,w) = v\u2082w - w\u2082v is the first subresultant of v and w, and v\u1d62, w\u1d62 are the coefficients of x\u2071 in v, w respectively. This identity generalizes symmetrically to the full Richelot triple (U, V, W), proving that RPR yields identical codomain polynomials not merely up to scalar units, but as an exact polynomial equality.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0519",
+    "id": "fd_0520",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03376v1",
@@ -6407,7 +6406,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0520",
+    "id": "fd_0521",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03500v1",
@@ -6422,7 +6421,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0521",
+    "id": "fd_0522",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03354v1",
@@ -6436,7 +6435,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0522",
+    "id": "fd_0523",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03388v1",
@@ -6450,7 +6449,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0523",
+    "id": "fd_0524",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05067v1",
@@ -6464,7 +6463,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0524",
+    "id": "fd_0525",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05233v1",
@@ -6479,13 +6478,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0525",
+    "id": "fd_0526",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05083v1",
     "status": "available",
     "timestamp": "2026-07-07T05:41:22.365492+00:00",
     "title": "Directed Mantel's Theorem for Loopless Digraphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer n \u2265 3, there exists a constant c_n > 0 such that for every positive integer m, the density of primitive maximal binary forms of degree n (ordered by height) that simultaneously fail the integral Hasse principle for all F(x,y) = h with 1 \u2264 h \u2264 m is at least c_n / m^{n\u22122}. This refines the paper's result that this density is merely positive for each fixed m, conjecturing an explicit polynomial decay rate in m governed by the degree.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0527",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05234v1",
+    "status": "available",
+    "timestamp": "2026-07-07T06:17:00.580529+00:00",
+    "title": "Polynomial Decay of Simultaneous Hasse Principle Failure Density in Thue Equations"
   },
   {
     "consumed_by_exp_id": "",

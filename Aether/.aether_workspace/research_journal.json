@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "6dda8a29",
-      "domain": "Applications",
-      "key_insight": "# FUTURE_DIRECTIONS\n\nDerived from this cycle's work closing `sorry` placeholders in the catalog. The\ncycle completed the cross-domain bridge\n`Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge",
-      "quality_score": 0.6926119999999999,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T13:40:59",
-      "title": "Close Proofs: These conjectures continue the research cycle begun in"
-    },
-    {
       "cycle_id": "3f134ce6",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Inverse Sprugnoli/Riordan Arrays\n\nBuilding on `Catalog/Novelty/InverseSprugnoliArray.lean` (closed-form inverse of the\nPascal-like array `C(n+k,2k)`, both orthogonality direction",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-07-07T05:04:32",
       "title": "Existence of Optimal Equidistant Codes for n ≡ 2 mod 4 with Unidentified Subcase Structure"
+    },
+    {
+      "cycle_id": "5156da6e",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — the Aharoni–Korman property beyond finiteness\n\nThe finite case establishes an *explicit* Aharoni–Korman witness built from the height\nfunction. The following conjectures push the",
+      "quality_score": 0.5183991264367817,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-07T06:15:43",
+      "title": "The Aharoni-Korman Conjecture for Well-Founded FAC Posets"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.70296
     }
   ],
-  "last_updated": "2026-07-07T05:04:32",
+  "last_updated": "2026-07-07T06:15:43",
   "open_questions": [
     {
       "context": "`sorry`-free Lean proof of Sabidussi's theorem.",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "25d6b815",
-        "quality": 0.5960000000000001,
-        "theorems": 12,
-        "title": "Central Gaussian coefficient maximizes binary 2-binomial class size"
-      },
-      {
         "cycle_id": "0a73d6d7",
         "quality": 0.73856,
         "theorems": 9,
@@ -3823,6 +3817,12 @@
         "quality": 0.70296,
         "theorems": 14,
         "title": "Minimal dimension of non-γ-positive symmetric edge polytopes"
+      },
+      {
+        "cycle_id": "5156da6e",
+        "quality": 0.5183991264367817,
+        "theorems": 12,
+        "title": "The Aharoni-Korman Conjecture for Well-Founded FAC Posets"
       }
     ],
     "Pythagorean": [
