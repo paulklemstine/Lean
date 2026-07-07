@@ -2058,7 +2058,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Variance of Homomorphism at the Root is Bounded Below by Effective Resistance"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cd73f9b2",
     "description": "Analysis of the maximal number of chains required to cover strict chains in the Boolean lattice, with connections to inclusion-exclusion and logarithmic approximations.",
     "domains": [
       "Cryptography",
@@ -2068,7 +2068,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29385v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T08:04:06.155536+00:00",
     "title": "Chain Covers in the Boolean Lattice"
   },
@@ -2175,7 +2175,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Eventual congruence of mis\u00e8re P\u2011positions in nuclear escalation ladders"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eb8019d8",
     "description": "For n \u2261 2 mod 4, there exists an optimal equidistant binary code EC(n, (n-2)/2, m*) equivalent to a symmetric BIBD with parameters (v, k, \u03bb) where v = 12u\u00b2 + 8u + 2, k = 6u\u00b2 + u, and \u03bb = (k(k-1))/(v-1) for some integer u, which has not been previously characterized in prior work.",
     "domains": [
       "Bridges"
@@ -2184,7 +2184,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29022v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T11:32:06.586125+00:00",
     "title": "Existence of Optimal Equidistant Codes for n \u2261 2 mod 4 with Unidentified Subcase Structure"
   },
@@ -5995,7 +5995,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Bound for Non-Hook Partitions in the Sylow 2-Permutation Character"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "938b7ce0",
     "description": "For even n \u2265 12, the unique extremal graph with T(n) edges and an edge of non-positive curvature has exactly two vertices of degree n-2 (forming the non-positive curvature edge) and all other vertices have degree n-1. This graph is obtained by removing n/2-2 disjoint edges from K_n such that no two removed edges share a vertex, and the two vertices of degree n-2 are adjacent.",
     "domains": [
       "Algebra"
@@ -6004,7 +6004,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T18:44:49.820406+00:00",
     "title": "Structure of extremal graphs for positive curvature threshold"
   },

@@ -3756,7 +3756,7 @@
       "Dilworth1950",
       "Sperner1928"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cd73f9b2",
     "description": "Analysis of the maximal number of chains required to cover strict chains in the Boolean lattice, with connections to inclusion-exclusion and logarithmic approximations.",
     "domain_bridges": [
       "Computational Complexity",
@@ -3772,7 +3772,7 @@
     "proof_strategy": "Construct existence via perturbation around known extremals",
     "research_mode": "team",
     "source_exp_id": "2606.29385v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T08:04:06.155536+00:00",
     "title": "Chain Covers in the Boolean Lattice"
   },
@@ -3971,7 +3971,7 @@
       "IS95",
       "vanLint84"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eb8019d8",
     "description": "For n ≡ 2 mod 4, there exists an optimal equidistant binary code EC(n, (n-2)/2, m*) equivalent to a symmetric BIBD with parameters (v, k, λ) where v = 12u² + 8u + 2, k = 6u² + u, and λ = (k(k-1))/(v-1) for some integer u, which has not been previously characterized in prior work.",
     "domain_bridges": [
       "Hadamard matrices",
@@ -3987,7 +3987,7 @@
     "proof_strategy": "Construct the BIBD explicitly or verify its existence via combinatorial arguments, leveraging Lean 4's theorem proving capabilities to formalize parameter constraints and code equivalence.",
     "research_mode": "team",
     "source_exp_id": "2606.29022v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T11:32:06.586125+00:00",
     "title": "Existence of Optimal Equidistant Codes for n ≡ 2 mod 4 with Unidentified Subcase Structure"
   },
@@ -11118,7 +11118,7 @@
       "extremal graph theory",
       "curvature of graphs"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "938b7ce0",
     "description": "For even n ≥ 12, the unique extremal graph with T(n) edges and an edge of non-positive curvature has exactly two vertices of degree n-2 (forming the non-positive curvature edge) and all other vertices have degree n-1. This graph is obtained by removing n/2-2 disjoint edges from K_n such that no two removed edges share a vertex, and the two vertices of degree n-2 are adjacent.",
     "domain_bridges": [
       "discrete_differential_geometry",
@@ -11133,7 +11133,7 @@
     "proof_strategy": "Characterize the extremal graph by analyzing degree sequences and curvature formulas. Show that any graph with T(n) edges achieving the threshold must have exactly the specified degree distribution. Prove uniqueness by demonstrating that any two such extremal graphs are isomorphic via vertex relabeling. Use the relationship between graph curvature and Laplacian eigenvalues to constrain the possible structures.",
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T18:44:49.820406+00:00",
     "title": "Structure of extremal graphs for positive curvature threshold"
   },
