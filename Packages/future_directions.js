@@ -1549,7 +1549,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proving the Existence of a Sufficiently Large Extremal Family"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "347d7d7b",
     "description": "Formulate a statement asserting that for a self-dual cuspidal automorphic representation $\\Pi_0$ of $\\text{PGL}_3(\\mathbb{A}_{\\mathbb{Q}})$, the proportion of zeros of the twisted $L$-function $L(s, \\Pi_0 \\times \\chi)$ lying on the critical line $\\text{Re}(s) = 1/2$ is at least $1/9$ as the conductor $Q$ of the Dirichlet character $\\chi$ tends to infinity.",
     "domains": [
       "Algebra"
@@ -1558,7 +1558,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00282v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T14:51:08.118719+00:00",
     "title": "Lower Bound for the Proportion of Zeros on the Critical Line for PGL(3) L-functions"
   },
@@ -1636,7 +1636,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the generic ordinarity bound for the Katz family"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f05cfd02",
     "description": "The corrected estimator E(x) + C(x) from the proposed algorithm satisfies the error bound |E(x) + C(x) - \u03c0(x)| \u2264 K\u221ax for some constant K > 0 and all x \u2265 2. This conjecture formalizes the claim that the correction term significantly improves accuracy by reducing the error to O(\u221ax), matching the algorithm's computational complexity.",
     "domains": [
       "Pythagorean",
@@ -1646,7 +1646,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31761v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T17:32:19.384043+00:00",
     "title": "Error Bound Conjecture for Corrected Prime Count Estimator"
   },
@@ -2322,7 +2322,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Classification of regular 4\u2011maniplexes via tetravalent graph censuses"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "29810562",
     "description": "A connected bipartite graph admits a planar rotation-compatible covering, ensuring all rotational constraints are satisfied.",
     "domains": [
       "Algebra"
@@ -2331,7 +2331,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27703v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T18:30:48.905815+00:00",
     "title": "Bipartition Imply Planar Cover"
   },
@@ -5484,7 +5484,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cycle Mengerian and Cycle Ideal Equivalence for Tournaments"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ff7a6b9b",
     "description": "The paper proves that a countable FAC poset P satisfies the Aharoni-Korman conjecture if P contains no saturated chain D such that either D or its reverse D* is of the form \u2295_{x\u2208\u03c9} D_x, where each D_x is infinite and co-wellfounded. The conjecture asserts that this condition is also necessary: if a countable FAC poset P does contain such a saturated chain, then P fails to satisfy the Aharoni-Korman conjecture. This would yield a complete characterization of which countable FAC posets satisfy the Aharoni-Korman conjecture.",
     "domains": [
       "Pythagorean"
@@ -5493,7 +5493,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02500v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T14:29:04.615567+00:00",
     "title": "Necessity of the forbidden chain condition for the Aharoni-Korman conjecture on countable FAC posets"
   },
@@ -6128,7 +6128,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dimension Threshold for Gamma-Positivity of Symmetric Edge Polytopes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e3b1b1a2",
     "description": "For the fixed genus chord swap Markov chain on chord diagrams with n chords and genus g, the spectral gap \u03b3_{n,g} satisfies \u03b3_{n,g} = \u0398(n^{-3}) when g is fixed and n \u2192 \u221e. This sharpens the paper's polynomial lower bound to a precise exponent and matches the n^{-3} scaling observed in related swap chains on perfect matchings.",
     "domains": [
       "Physics"
@@ -6137,7 +6137,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T00:02:19.658603+00:00",
     "title": "Tight spectral gap exponent for the fixed-genus chord swap chain"
   },
@@ -6345,7 +6345,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Convergence and Correctness of Integer Newton-Raphson for Integer Roots"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1e37bc68",
     "description": "For every positive integer n and positive reals \u03b1, \u03b2 with \u03b1\u03b2 = \u03c0\u00b2, the alternating Hurwitz zeta function \u03b6_E(s, x) = \u03a3_{k=0}^\u221e (-1)^k / (k + x)^s satisfies a Ramanujan-type identity generalizing Ramanujan's classical formula for \u03b6(2n+1). Specifically, the alternating Hurwitz kernel K_E^{2n+1}(\u03b1, x) := \u00bd\u03b6_E(2n+1, x) + \u03a3_{m=1}^\u221e m^{-2n-1}/(e^{2\u03b1m} + 1) obeys: \u03b1^{-n}\u00b7K_E^{2n+1}(\u03b1, x) \u2212 (\u2212\u03b2)^{-n}\u00b7K_E^{2n+1}(\u03b2, 1\u2212x) = 2^{2n} \u03a3_{k=0}^{n+1} (\u22121)^{k\u22121} E_{2k}(x) B_{2n\u22122k+2} / ((2k)!(2n\u22122k+2)!) \u00b7 \u03b1^{n\u2212k+1} \u03b2^k, where E_{2k}(x) are Euler polynomials and B_{2k} are Bernoulli numbers. This replaces the Bernoulli numbers B_{2k} in Ramanujan's original identity with Euler polynomials E_{2k}(x), reflecting the alternating (sign-twisted) structure.",
     "domains": [
       "Pythagorean"
@@ -6354,7 +6354,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03490v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T04:28:18.009557+00:00",
     "title": "Alternating Hurwitz\u2013Ramanujan Identity with Euler Polynomials"
   },
