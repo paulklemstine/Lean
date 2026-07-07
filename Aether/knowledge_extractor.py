@@ -518,7 +518,7 @@ class KnowledgeExtractor:
         """Count jobs currently occupying Aristotle slots."""
         return len([
             j for j in self.inflight.values()
-            if j.status not in ("completed", "failed", "integrated", "rejected")
+            if j.status not in ("completed", "failed", "integrated", "rejected", "idle_pending")
         ])
 
     async def dispatch_retry_async(self, job: "ResearchJob", retry_suggestion: Dict[str, Any], max_inflight: int = 9) -> "ResearchJob":
@@ -1301,7 +1301,7 @@ Research mode: {concept.research_mode}
         completed = []
         now = time.time()
         for pid, job in list(self.inflight.items()):
-            if job.status in ("completed", "failed", "integrated", "rejected"):
+            if job.status in ("completed", "failed", "integrated", "rejected", "idle_pending"):
                 continue
 
             # Preparing timeout: a job still in 'preparing' past the bound was
@@ -1396,7 +1396,7 @@ Research mode: {concept.research_mode}
             # Skip jobs already in terminal status — they were returned in a
             # previous poll and either processed or about to be pruned.
             # Including them again causes duplicate integration.
-            if job.status in ("completed", "failed", "integrated", "rejected"):
+            if job.status in ("completed", "failed", "integrated", "rejected", "idle_pending"):
                 continue
 
             try:
@@ -1474,18 +1474,15 @@ Research mode: {concept.research_mode}
                         pass
                     completed.append(job)
                 elif status == "IDLE" and not has_files:
-                    print(f"[Poll] {pid[:8]} FAILED (IDLE, no files)")
-                    job.status = "failed"
-                    job.error_message = "Aristotle status: IDLE with no result files"
-                    self.failed_count += 1
-                    # Final reasoning log entry
-                    try:
-                        rlog = ReasoningLog(self.workspace, pid, job.job_id)
-                        rlog.record_completion(
-                            status="FAILED", percent=percent, has_files=False,
-                            error="IDLE with no result files",
-                        )
-                    except Exception:
+                    # Aristotle says IDLE (not running) but no files yet — don't
+                    # abandon it. The job may still complete eventually. Free
+                    # the slot (set to idle_pending, excluded from max_inflight
+                    # count) but keep polling for completion.
+                    if job.status != "idle_pending":
+                        print(f"[Poll] {pid[:8]} IDLE (no files yet) — keeping as idle_pending, "
+                              f"slot freed for new dispatch but will keep polling")
+                    job.status = "idle_pending"
+                    # Do NOT append to completed — keep in inflight for re-polling
                         pass
                     completed.append(job)
                 elif status == "RUNNING":

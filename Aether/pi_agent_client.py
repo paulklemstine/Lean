@@ -2318,7 +2318,7 @@ class PiAgentClient:
         deliverables_block = textwrap.dedent("""\
             ### Deliverables & Acceptance Criteria
             1. **Lean 4 files** (1–2 files in the appropriate `Catalog/<domain>/` subtree).
-               - **Prove exactly 1–2 deep theorems** with full proofs and detailed Lab Notes.
+               - **Prove exactly 3 deep theorems** with full proofs and detailed Lab Notes.
                  Focus ALL your compute on depth, not breadth. One fully proved deep theorem
                  with non-trivial insight beats 50 truncated stubs.
                - **Do NOT produce more than 2 main theorems.** If you finish 2 theorems
@@ -2344,7 +2344,7 @@ class PiAgentClient:
             - Truncated proofs, stubbed signatures, or incomplete theorem declarations.
             - Any `sorry` in a main theorem (auxiliary lemmas may use sorry ONLY if
               clearly marked as work-in-progress in Lab Notes).
-            - More than 2 main theorems. Quality over quantity.
+            - More than 3 main theorems. Quality over quantity.
         """)
 
         prompt = textwrap.dedent(f"""\
@@ -2634,7 +2634,7 @@ class PiAgentClient:
         deliverables_block = textwrap.dedent("""\
             ### Deliverables & Acceptance Criteria
             1. **Lean 4 files** (1–2 files in the appropriate `Catalog/<domain>/` subtree).
-               - **Prove exactly 1–2 deep theorems** with full proofs and detailed Lab Notes.
+               - **Prove exactly 3 deep theorems** with full proofs and detailed Lab Notes.
                  Focus ALL your compute on depth, not breadth. One fully proved deep theorem
                  with non-trivial insight beats 50 truncated stubs.
                - **Do NOT produce more than 2 main theorems.** If you finish 2 theorems
@@ -2660,7 +2660,7 @@ class PiAgentClient:
             - Truncated proofs, stubbed signatures, or incomplete theorem declarations.
             - Any `sorry` in a main theorem (auxiliary lemmas may use sorry ONLY if
               clearly marked as work-in-progress in Lab Notes).
-            - More than 2 main theorems. Quality over quantity.
+            - More than 3 main theorems. Quality over quantity.
         """)
 
         prompt = textwrap.dedent(f"""\
