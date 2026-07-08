@@ -14978,6 +14978,36 @@
     "title": "Exact asymptotic growth of \\u03c7^r_F(d) for the balanced‑triangle family"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Katz and Sarnak, 'Random matrices, Frobenius eigenvalues, and monodromy', 1991",
+      "Keating and Snaith, 'Random matrix theory and L-functions', 2000",
+      "Andrade, Jung, and Shamesaldeen, 'n-level densities for families of L-functions', 2020",
+      "Mason and Snaith, 'Correlation functions for families of L-functions in function fields', 2007"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that the n-level density of zeros for families of quadratic Dirichlet L-functions associated with hyperelliptic curves of genus g over F_q in the limit as q→∞ converges to the eigenvalue distribution of the symplectic ensemble USp(2n), with explicit error terms depending on g and q. This extends the work of Andrade, Jung, and Shamesaldeen to all n≥2 and provides the functional field analogue of the Katz-Sarnak symplectic symmetry prediction.",
+    "domain_bridges": [
+      "Katz-Sarnak symmetry conjectures",
+      "Mason-Snaith method in function fields",
+      "random matrix theory universality",
+      "hyperelliptic curve families over finite fields"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0669",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt Mason and Snaith's method to compute higher-order correlation sums explicitly for the hyperelliptic family, establish uniform asymptotic formulas as q→∞ with effective error bounds, and verify convergence to USp(2n) characteristic polynomial statistics via Fourier transform analysis of the limiting measure.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06022v1",
+    "status": "available",
+    "timestamp": "2026-07-08T22:49:16.287378+00:00",
+    "title": "Extension of the symplectic symmetry n-level density conjecture to families of quadratic Dirichlet L-functions over function fields"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "VR filtrations and metric spaces",
@@ -14995,7 +15025,7 @@
     "domains": [
       "MachineLearning"
     ],
-    "id": "fd_0669",
+    "id": "fd_0670",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Construct an explicit infinite family of finite metric spaces Xₙ (e.g., using ℓ₁-spheres or Hamming cube constructions) with controlled geometric properties. 2. Prove that these spaces have unbounded doubling dimension. 3. Use combinatorial arguments to show that any c-approximation must encode sufficient information to distinguish between exponentially many distinct metric configurations. 4. Establish the quantitative bound on γ(c) by analyzing the homomorphism density needed in the approximation maps. 5. Verify the limit behavior as c approaches √2 from below using asymptotic analysis.",
@@ -15021,7 +15051,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0670",
+    "id": "fd_0671",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Flatly spread the cycles A1-A2 and B1-B2 over the valuation ring, compute their intersection product in the Chow ring, and observe that the valuation of the cross‑ratio is the order of the determinant of the pairing of generators, which matches this intersection product; formalize the equality in Lean using the Chow ring and valuation homomorphism.",
@@ -15048,7 +15078,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0671",
+    "id": "fd_0672",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Initialize H via the threshold random subgraph model (independent uniform labels, keep edge uv if x_u+x_v ≥ 1). This yields asymptotic degree counts. Then apply a sequence of single-edge switches (swaps along anti-diagonals) to drive the twofold prefix norm of the degree-count error to zero while preserving the parity constraint. A full proof would need a uniform edge-atom probability bound valid for all d ≤ n and stronger concentration of the prefix norm, possibly via spectral graph theory or martingale methods.",
@@ -15074,7 +15104,7 @@
     "domains": [
       "Physics"
     ],
-    "id": "fd_0672",
+    "id": "fd_0673",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the paper's β-closed walk framework and linear programming approach to search for a walk-realizable {P₄}-supporter. If such a supporter exists, the LP feasibility problem will certify generalized spectral closedness. If no supporter exists, attempt to construct a counterexample by finding a cograph G and a non-cograph H with identical generalized spectra, possibly using the paper's induced-subgraph expansion formulas for β-closed walk counts.",
@@ -15100,7 +15130,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0673",
+    "id": "fd_0674",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use a strengthened sparse regularity lemma for K_{2,t}-free graphs to obtain a regular bipartite subgraph with strong expansion, then embed an induced subdivision of K_h via greedy path routing that exploits the forbidden K_{2,t} to control common neighborhoods and avoid extra edges, eliminating the logarithmic overcounting present in the original proof.",
@@ -15125,7 +15155,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0674",
+    "id": "fd_0675",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the arithmetic intersection numbers of special cycles using the theory of arithmetic Chow groups on the associated arithmetic surface, and compute the Fourier coefficients of the Eisenstein derivative via Fourier-Jacobi expansions and Kronecker limit formulas. Verify the equality for m up to a Sturm bound by explicit formulas involving class numbers of binary quadratic forms and representation numbers of ternary quadratic forms, then invoke Sturm's principle to extend to all m.",
@@ -15152,7 +15182,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0675",
+    "id": "fd_0676",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the structure theorem for prime-order {-1,0,1}-diagonalizable graphs using Lean's library of linear algebra and graph theory, then verify the theorem against the paper's computational results via proof automation and case analysis.",
@@ -15180,7 +15210,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0676",
+    "id": "fd_0677",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Start from the explicit counterexample for k=3 given in the paper (a specific non-representable matroid where the two definitions diverge). For k>3, use the matroidal multilinearity duality: take the direct sum of the 3rd-power counterexample with a uniform matroid of rank k-3 (or add loops) and exploit the concatenation product properties to show the discrepancy persists in the k-th symmetric power. Formalize the rank formulas and prove non-equality by exhibiting a circuit or rank difference.",
@@ -15208,7 +15238,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0677",
+    "id": "fd_0678",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Utilize the reduced-word edge ordering from the paper: first-occurrence edges form a spanning forest, repeated edges correspond to cyclomatic number. Show each 321 or 3412 pattern forces at least one independent cycle or repeated edge; induct on cyclomatic number by deleting leaf vertices of the inversion graph, using the proven forest case where both pattern counts are zero.",
@@ -15236,7 +15266,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0678",
+    "id": "fd_0679",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the equality by constructing explicit injective mappings between the sets of admissible output words in both models, then use combinatorial arguments on the structure of insertion balls in ℤ_q^n. Leverage the symmetry of single insertion operations and analyze the intersection patterns of insertion neighborhoods. The proof would require formalizing the notion of insertion distance, defining the reconstruction models precisely, and proving that identical output multisets imply identical output sequences for t=1.",
@@ -15262,7 +15292,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0679",
+    "id": "fd_0680",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the regularity theorem approach from Filipin-Jurasić to characterize all possible triples containing 1. Show that the conditions imposed by the seven-square requirement force the elements to align with the given family structure, possibly via analyzing the factorization properties of the polynomials and leveraging the constraints imposed by the squares.",
@@ -15291,7 +15321,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0680",
+    "id": "fd_0681",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish necessity by showing that (E,C)-reducibility forces the inequality conditions in Prop 2.1. Prove sufficiency by constructing explicit optimal solutions in C + p^E Z_p^{dim(ℓ)} when conditions (1)-(2) hold, using compactness of p-adic balls and continuity of ℓ.",
@@ -15303,8 +15333,37 @@
   },
   {
     "ambition_level": "extension",
-    "catalog_references": [],
+    "catalog_references": [
+      "Theorem 1 (R_m ≤ 128)",
+      "Theorem 2 (R_{8p^2} ≤ 32)",
+      "Chen's Theorem (R_{2p^2} ≤ 48)",
+      "Ruzsa's original bounded construction"
+    ],
     "consumed_by_exp_id": "",
+    "description": "We conjecture that the Ruzsa number R_m, the minimal possible maximal number of ordered sum representations for an additive basis A of Z_m, satisfies R_m ≤ 64 for every positive integer m. This would exactly halve the current best known upper bound of 128 from the present paper and suggests that the two-layer construction modulo 8p^2 can be optimized by a factor of two.",
+    "domain_bridges": [
+      "finite cyclic groups",
+      "additive basis theory",
+      "combinatorial optimization"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0682",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Refine the paper's two-layer construction by increasing the number of quadratic residue graphs or by using a modulus 16p^2 with four small integer sets covering {0,...,16}, thereby reducing the per-prime contribution from 32 to 16. Then apply the standard covering reduction lemma (as used to lift R_{kp^2} bounds to all m) which multiplies by 4, yielding R_m ≤ 64. Computational verification for small m would handle remaining cases.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06167v1",
+    "status": "available",
+    "timestamp": "2026-07-08T22:52:55.497049+00:00",
+    "title": "Conjecture: Uniform bound R_m ≤ 64 for all moduli"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "e158da3a",
     "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers — anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension — they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property — it's not about content quality but about the sheaf cohomology of the social network.",
     "domain_bridges": [],
     "domains": [
@@ -15317,7 +15376,7 @@
     "proof_strategy": "Define the meme sheaf M on social network G: for each community C_i (cluster in G), M(C_i) is the set of interpretations of the meme in community i. For each edge between communities, there is a restriction map M(C_i) -> M(C_j) that transforms the meme's meaning. Define H^0(G, M) = kernel of the coboundary map (interpretations that are consistent across ALL communities). Define H^1(G, M) = cokernel (obstructions to consistent interpretation). Prove: dim(H^0) = number of universal interpretations. Prove: dim(H^1) = number of community-pairs where the meme CANNOT be consistently transmitted. Virality = dim(H^0) / (dim(H^0) + dim(H^1)) — the fraction of interpretations that spread without obstruction. Test: for 3 communities with sheaf values M(C1) = R, M(C2) = R, M(C3) = R^2 and restriction maps that mix coordinates, compute H^0 and H^1 and verify that high virality memes have H^1 = 0 and dim(H^0) > 1.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.584485+00:00",
     "title": "The Mathematics of Memes: Viral Information Topology"
   },

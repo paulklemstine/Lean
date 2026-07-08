@@ -8009,11 +8009,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture that the n-level density of zeros for families of quadratic Dirichlet L-functions associated with hyperelliptic curves of genus g over F_q in the limit as q\u2192\u221e converges to the eigenvalue distribution of the symplectic ensemble USp(2n), with explicit error terms depending on g and q. This extends the work of Andrade, Jung, and Shamesaldeen to all n\u22652 and provides the functional field analogue of the Katz-Sarnak symplectic symmetry prediction.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0669",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06022v1",
+    "status": "available",
+    "timestamp": "2026-07-08T22:49:16.287378+00:00",
+    "title": "Extension of the symplectic symmetry n-level density conjecture to families of quadratic Dirichlet L-functions over function fields"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "There exists an effectively computable constant \u03b3 > 0 such that for every c \u2208 [1, \u221a2), there exists an infinite family of finite metric spaces {X\u2099} indexed by n \u2208 \u2115 where any finitely presented c-approximation to the Vietoris-Rips filtration VR(X\u2099) requires at least 2^(\u03b3\u00b7n) simplices, and moreover \u03b3 can be taken to satisfy \u03b3 = \u03b3(c) with lim_{c\u2192\u221a2\u207b} \u03b3(c) = 0.",
     "domains": [
       "MachineLearning"
     ],
-    "id": "fd_0669",
+    "id": "fd_0670",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06524v1",
@@ -8027,7 +8042,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0670",
+    "id": "fd_0671",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06477v1",
@@ -8041,7 +8056,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0671",
+    "id": "fd_0672",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06465v1",
@@ -8055,7 +8070,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0672",
+    "id": "fd_0673",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06455v1",
@@ -8069,7 +8084,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0673",
+    "id": "fd_0674",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06444v1",
@@ -8084,7 +8099,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0674",
+    "id": "fd_0675",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
@@ -8099,7 +8114,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0675",
+    "id": "fd_0676",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06336v1",
@@ -8114,7 +8129,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0676",
+    "id": "fd_0677",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06228v1",
@@ -8128,7 +8143,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0677",
+    "id": "fd_0678",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06198v1",
@@ -8143,7 +8158,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0678",
+    "id": "fd_0679",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06181v1",
@@ -8157,7 +8172,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0679",
+    "id": "fd_0680",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06227v1",
@@ -8172,7 +8187,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0680",
+    "id": "fd_0681",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06092v1",
@@ -8182,6 +8197,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "We conjecture that the Ruzsa number R_m, the minimal possible maximal number of ordered sum representations for an additive basis A of Z_m, satisfies R_m \u2264 64 for every positive integer m. This would exactly halve the current best known upper bound of 128 from the present paper and suggests that the two-layer construction modulo 8p^2 can be optimized by a factor of two.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0682",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06167v1",
+    "status": "available",
+    "timestamp": "2026-07-08T22:52:55.497049+00:00",
+    "title": "Conjecture: Uniform bound R_m \u2264 64 for all moduli"
+  },
+  {
+    "consumed_by_exp_id": "e158da3a",
     "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers \u2014 anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension \u2014 they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property \u2014 it's not about content quality but about the sheaf cohomology of the social network.",
     "domains": [
       "Novelty",
@@ -8191,7 +8221,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.77,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.584485+00:00",
     "title": "The Mathematics of Memes: Viral Information Topology"
   },
