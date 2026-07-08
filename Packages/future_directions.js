@@ -29,7 +29,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-08T16:25:39.146664+00:00",
+    "timestamp": "2026-07-08T16:01:43.876173+00:00",
     "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
   },
   {
@@ -74,7 +74,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "in_progress",
-    "timestamp": "2026-07-08T16:25:39.070206+00:00",
+    "timestamp": "2026-07-08T16:01:43.810023+00:00",
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
   },
   {
@@ -89,7 +89,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "in_progress",
-    "timestamp": "2026-07-08T16:25:38.989863+00:00",
+    "timestamp": "2026-07-08T16:01:43.730052+00:00",
     "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
   },
   {
@@ -6911,21 +6911,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For an elliptic curve E over Q with good supersingular reduction at 2 and square-free conductor N_E, and a square-free integer D > 0 congruent to 1 mod 4, the difference between the sharp/flat 2-adic Iwasawa lambda-invariants of the quadratic twist E^D and E (assuming the mu-invariant is 0) is given by the sum over prime divisors ell of D of 2^{n_ell} (if ell divides N_E) or 2^{n_ell+1} (if ell does not divide N_E and 2 divides the order of E modulo ell), where n_ell is the 2-adic valuation of (ell^2 - 1)/8.",
-    "domains": [
-      "Pythagorean",
-      "Geometry"
-    ],
-    "id": "fd_0575",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.05305v1",
-    "status": "available",
-    "timestamp": "2026-07-07T18:27:12.191464+00:00",
-    "title": "Matsuno-type Formula for Supersingular Iwasawa Lambda-Invariants"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "For any \u03b7 > 0, there exists x\u2080(\u03b7) such that for all x \u2265 x\u2080(\u03b7), the count N(x) of odd integers n \u2264 x that cannot be written as p + 2^a + 2^b (with p prime and a,b \u2208 \u2115) satisfies N(x) \u2265 x \u00b7 exp(-(4+\u03b7) \u00b7 (log log log x / log log x) \u00b7 log x). This improves Pan's exponent factor from (log log log log x)/(log log log x) to (log log log x)/(log log x), using a refined covering construction via Fermat numbers and Stewart's theorem on large prime divisors of cyclotomic values.",
     "domains": [
       "Pythagorean",
@@ -7487,26 +7472,12 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For the wild dimensional regime (2r > d), a saturated set S \u2286 \ud835\udd3e(r,V) is a disjoint union of k spines if and only if the corresponding core k-planes \u03c0\u2081, ..., \u03c0\u2096 satisfy dim(\u03c0\u1d62 \u2229 \u03c0\u2c7c) \u2264 2r - d for all i \u2260 j, with the bound 2r - d being sharp (achieved by some configuration).",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0624",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.05706v1",
-    "status": "available",
-    "timestamp": "2026-07-08T16:25:17.256947+00:00",
-    "title": "Mutual Separation Bound for Multiple Spine Decompositions in Wild Dimensional Regime"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Conjecture that for any finite metric space X of strictly negative type there exists exactly one signed measure \u03bc of total mass 1 that minimizes the energy functional E(\u03bc)=\u2211_{x,y\u2208X}d(x,y)\u03bc(x)\u03bc(y); moreover \u03bc can be characterized as the unique optimizer of this strictly convex quadratic program.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0625",
+    "id": "fd_0624",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05349v1",
@@ -7520,7 +7491,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0626",
+    "id": "fd_0625",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05305v1",
@@ -7534,7 +7505,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0627",
+    "id": "fd_0626",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05324v1",
@@ -7548,7 +7519,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0628",
+    "id": "fd_0627",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06443v1",
@@ -7563,7 +7534,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0629",
+    "id": "fd_0628",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06396v1",
@@ -7577,7 +7548,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Cryptography"
     ],
-    "id": "fd_0630",
+    "id": "fd_0629",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
@@ -7591,7 +7562,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0631",
+    "id": "fd_0630",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06336v1",
@@ -7605,7 +7576,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0632",
+    "id": "fd_0631",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06351v1",
@@ -7620,7 +7591,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0633",
+    "id": "fd_0632",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06263v1",
@@ -7635,7 +7606,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0634",
+    "id": "fd_0633",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06228v1",
@@ -7650,7 +7621,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0635",
+    "id": "fd_0634",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06198v1",
@@ -7664,7 +7635,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0636",
+    "id": "fd_0635",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06181v1",
@@ -7679,7 +7650,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0637",
+    "id": "fd_0636",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06082v1",
@@ -7694,7 +7665,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_0638",
+    "id": "fd_0637",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06022v1",
@@ -7708,7 +7679,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0639",
+    "id": "fd_0638",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06073v1",
@@ -7722,7 +7693,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0640",
+    "id": "fd_0639",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06061v1",
@@ -7737,7 +7708,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0641",
+    "id": "fd_0640",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05926v1",
@@ -7751,7 +7722,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0642",
+    "id": "fd_0641",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05961v1",
@@ -7766,7 +7737,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0643",
+    "id": "fd_0642",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05835v1",
@@ -7780,7 +7751,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0644",
+    "id": "fd_0643",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05823v1",
@@ -7795,7 +7766,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0645",
+    "id": "fd_0644",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05767v1",
@@ -7810,7 +7781,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0646",
+    "id": "fd_0645",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05592v1",
@@ -7824,7 +7795,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0647",
+    "id": "fd_0646",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05688v1",
@@ -7839,7 +7810,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0648",
+    "id": "fd_0647",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05739v1",
@@ -7854,7 +7825,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0649",
+    "id": "fd_0648",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05707v1",
@@ -7868,7 +7839,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0650",
+    "id": "fd_0649",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05589v1",
@@ -7878,52 +7849,67 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "This conjecture proposes a precise algorithm to compute the asymptotic resurgence number of a pair of graded families of ideals in a $\\mathbb{K}$-domain by leveraging the containment properties of their associated Newton-Okounkov regions. The algorithm formalizes the containment relations between Newton-Okounkov regions using convex geometric properties and Attouch--Wets topology, providing a computable upper bound via the supremum of limit ratios of containment thresholds.",
-    "domains": [
-      "Geometry",
-      "Pythagorean"
-    ],
-    "id": "fd_0651",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.05556v1",
-    "status": "available",
-    "timestamp": "2026-07-08T16:25:34.677190+00:00",
-    "title": "Asymptotic Resurgence Through Newton-Okounkov Containment: A Rigorous Algorithm"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Conjecture: Every finite simple outerplanar graph with maximum degree at most 4 admits a crumby coloring, i.e., a red-blue vertex partition where the blue-induced subgraph has maximum degree at most 1 and the red-induced subgraph has no isolated vertices and no simple path on three edges. This extends the paper's main theorem (\u0394\u22643) and probes the boundary of the rooted grammar method.",
+    "description": "Formalize that every finite simple subcubic outerplanar graph admits a crumby coloring: a red-blue vertex partition where the blue vertices induce a subgraph of maximum degree at most one, and the red vertices induce a subgraph with minimum degree at least one and no induced path on four vertices (P\u2084). This resolves the Bar\u00e1t\u2013Bl\u00e1zsik\u2013Dam\u00e1sdi conjecture and extends their result from 2-connected to all subcubic outerplanar graphs. The proof introduces a rooted grammatical decomposition of subcubic outerplanar graphs into rooted branches and two-terminal path fragments, extends crumby colorings to crumby-admissible colorings that permit temporary defects at boundary vertices, and reduces the inductive verification to checking an explicit finite family of certificates.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0656",
+    "id": "fd_0650",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06515v1",
     "status": "available",
-    "timestamp": "2026-07-08T17:33:23.375213+00:00",
-    "title": "Crumby colorings for outerplanar graphs of maximum degree four"
+    "timestamp": "2026-07-08T15:56:47.377407+00:00",
+    "title": "Every subcubic outerplanar graph admits a crumby coloring"
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The leading constant c(H) in Malle's conjecture for Galois H\u2011extensions of \u211a, where H is the 3\u00d73 Heisenberg group over \ud835\udd3d\u2084, is predicted to equal the sum of two distinct Euler products: one arising from the normal subgroup of H and the other from the quotient H/Z(H), each expressed as a product over all primes p of explicit local factors depending on the Frobenius class of p in H.",
+    "description": "The paper proves that for any fixed c \u2208 [1, \u221a2), there exist finite metric spaces requiring exponentially large finitely presented c-approximations of the Vietoris-Rips filtration, and that for any c \u2265 1, superlinear size is necessary. This conjecture posits that \u221a2 is the sharp threshold between exponential and polynomial approximability: for every fixed c \u2265 \u221a2, there exists a polynomial p_c such that every finite metric space X admits a finitely presented c-approximation to VR(X) of size at most p_c(|X|). This would yield a complete dichotomy\u2014exponential below \u221a2, polynomial at or above \u221a2\u2014matching the natural geometric breakpoint where the Rips complex becomes the full simplex on any metric space with all distances \u2264 2r.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0657",
+    "id": "fd_0651",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2607.06476v1",
+    "source_exp_id": "2607.06524v1",
     "status": "available",
-    "timestamp": "2026-07-08T18:11:27.075105+00:00",
-    "title": "Conjecture on the leading constant for the 3\u00d73 Heisenberg group over \ud835\udd3d\u2084 in Malle's conjecture"
+    "timestamp": "2026-07-08T15:57:12.890675+00:00",
+    "title": "The \u221a2-Threshold Conjecture for Rips Filtration Approximation"
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The minimum rank formula mr^F(I(n,k)) = n-2k+2 holds not only for infinite fields but also for finite fields F when |F| exceeds an explicit threshold depending on n and k. Specifically, we conjecture that there exists a function f(n,k) such that for all finite fields F with |F| > f(n,k), the minimum rank of the intersection graph I(n,k) equals n-2k+2, matching the infinite field case.",
+    "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card \u2014 you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier \u2014 it's an opportunity. You can WIN at the game of undecidability.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0656",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-08T16:01:43.960880+00:00",
+    "title": "Godel's Casino: Incomplete but Winnable Games"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every finite simple subcubic outerplanar graph admits a vertex partition (R,B) such that the blue vertices induce a graph of maximum degree at most one, the red vertices induce a graph with no isolated vertices and containing no simple path of three edges, and the red subgraph has minimum degree at least one.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0657",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06515v1",
+    "status": "available",
+    "timestamp": "2026-07-08T17:00:53.382706+00:00",
+    "title": "Crumby coloring conjecture for subcubic outerplanar graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For the 3\u00d73 Heisenberg group H over F_4 with its octic permutation representation, the leading constant c(H) in Malle's conjecture equals \u03b1(H)\u00b7(\u220f_v C_MB,v(H) + \u2211_v D_v(H)\u00b7\u220f_{u\u2260v} C_MB,u(H)) where \u03b1(H) \u2208 Q_{>0}, C_MB,v(H) are the standard local factors, and D_v(H) represents a correction term arising from concentration effects at primes dividing the group order.",
     "domains": [
       "Pythagorean",
       "Algebra"
@@ -7931,54 +7917,123 @@ window.FUTURE_DIRECTIONS = [
     "id": "fd_0658",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2607.06480v1",
+    "source_exp_id": "2607.06476v1",
     "status": "available",
-    "timestamp": "2026-07-08T18:47:46.963526+00:00",
-    "title": "Minimum rank of I(n,k) over sufficiently large finite fields"
+    "timestamp": "2026-07-08T17:50:12.869463+00:00",
+    "title": "Sum of Two Euler Products Formula for Heisenberg Group Malle Constant"
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For any fixed approximation factor $c\\in[1,\\sqrt{2})$ there exists an infinite family $(X_n)_{n\\in\\mathbb N}$ of finite metric spaces such that any finitely presented $c$\u2011approximation of the Vietoris\u2013Rips filtration of $X_n$ (i.e. a simplicial filtration $\\mathcal A$ with $\\mathcal A_r\\preceq_c\\operatorname{Rips}(X_n)_r$ for all $r\\ge0$) contains at least $2^{\\Omega(n)}$ simplices. Consequently, no sub\u2011exponential size $c$\u2011approximation exists for $c<\\sqrt2$.",
+    "description": "The paper proves that for every infinite field \ud835\udd3d and integers n,k with 2 \u2264 k \u2264 n/2, the symmetric minimum rank of the intersection graph I(n,k) (complement of the Kneser graph KG(n,k)) is exactly n-2k+2. The case of finite fields is not addressed. This conjecture posits that the same formula holds for all finite fields.",
     "domains": [
-      "Geometry",
-      "MachineLearning"
+      "Pythagorean",
+      "Algebra"
     ],
     "id": "fd_0659",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2607.06524v1",
+    "source_exp_id": "2607.06480v1",
     "status": "available",
-    "timestamp": "2026-07-08T17:33:37.024548+00:00",
-    "title": "Exponential lower bound for $c$\u2011approximations of the Vietoris\u2013Rips filtration below $\\sqrt{2}$"
+    "timestamp": "2026-07-08T18:19:51.269239+00:00",
+    "title": "Symmetric Minimum Rank of Intersection Graphs over Finite Fields"
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For every 3 \u2264 s < r, there exists an explicit piecewise polynomial function f_{s,r} : [0, x_s,max] \u2192 [0,1] such that the minimum possible K_r-density among all graphons W with prescribed K_s-density x equals f_{s,r}(x). This function is given by f_{s,r}(x) = max_{k=0}^{s-1} p_{s,r,k}(x) where each p_{s,r,k} is a computable (s-r+1)-nomial derived from the edge-to-clique multipartite profile, and the maximum is achieved precisely when W is equivalent to an (r-k)-partite graphon under cut distance.",
+    "description": "Conjecture that the optimal exponential rate at the Dirac boundary established for n/2-regular graphs extends to all graphs with minimum degree at least n/2. Specifically, every n-vertex graph G with minimum degree \u03b4(G) \u2265 n/2 satisfies Cyc(G) \u2265 2^{(1-o(1))n}, which is sharp up to a subexponential factor as witnessed by K_{n/2,n/2}.",
     "domains": [
-      "Bridges"
+      "Pythagorean"
     ],
     "id": "fd_0660",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2607.06545v1",
+    "source_exp_id": "2607.06551v1",
     "status": "available",
-    "timestamp": "2026-07-08T18:12:50.955097+00:00",
-    "title": "Explicit Formula for Higher-Order Clique Density Lower Envelope"
+    "timestamp": "2026-07-08T18:40:30.271481+00:00",
+    "title": "Dirac Boundary Cyclic Subset Bound for Minimum Degree Graphs"
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For any finite simple d\u2011regular graph G on n vertices, every integer vector q = (q_0,\u2026,q_d) satisfying \u03a3 q_i = n, \u03a3 i\u00b7q_i even, and |q_i \u2212 n/(d+1)| \u2264 1 (0 \u2264 i \u2264 d) can be realized as the exact degree\u2011count vector of a spanning subgraph of G. The paper proves this for d \u2264 n^{1/12\u2212\u03b5}, but the conjecture is that it holds for all d (i.e., for every n and d).",
+    "description": "For any k \u22653 and 1\u2264\u2113<k, and any two accumulation points \u03b1, \u03b2 in \u03a0^k_\u2113, there exists a transfer function f such that f(\u03b1) = \u03b2.",
     "domains": [
-      "Pythagorean",
-      "Computation"
+      "Bridges"
     ],
     "id": "fd_0661",
     "priority_score": 0.8,
     "research_mode": "team",
+    "source_exp_id": "2607.06518v1",
+    "status": "available",
+    "timestamp": "2026-07-08T19:01:40.311474+00:00",
+    "title": "Universality of Transfer Functions Among Accumulation Points"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "There exists an effectively computable constant \u03b3 > 0 such that for every c \u2208 [1, \u221a2), there exists an infinite family of finite metric spaces {X\u2099} indexed by n \u2208 \u2115 where any finitely presented c-approximation to the Vietoris-Rips filtration VR(X\u2099) requires at least 2^(\u03b3\u00b7n) simplices, and moreover \u03b3 can be taken to satisfy \u03b3 = \u03b3(c) with lim_{c\u2192\u221a2\u207b} \u03b3(c) = 0.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "fd_0662",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06524v1",
+    "status": "available",
+    "timestamp": "2026-07-08T17:01:42.923851+00:00",
+    "title": "Explicit exponential lower bound for Vietoris-Rips approximations below \u221a2 threshold"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any complementary configuration of type (k,n) over a discretely valued field K with valuation ring O, the valuation of the cross\u2011ratio (A1,A2;B1,B2) equals the intersection product (A1\u2212A2)\u00b7(B1\u2212B2) in the Chow group of codimension k+1 cycles on \u2119\u207f.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0663",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06477v1",
+    "status": "available",
+    "timestamp": "2026-07-08T17:50:38.342442+00:00",
+    "title": "Valuation of the Generalised Cross\u2011Ratio Equals the Intersection Number of the Associated Cycles"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every d-regular simple graph G on n vertices, there exists a spanning subgraph H such that for each i \u2208 {0,\u2026,d}, the count m(H,i) of vertices with degree i in H satisfies |m(H,i) - n/(d+1)| \u2264 2. This is the original conjecture of Alon and Wei, proven in the cited paper only for fixed d or for d \u2264 n^{1/12\u2212\u03b5}.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0664",
+    "priority_score": 0.8,
+    "research_mode": "team",
     "source_exp_id": "2607.06465v1",
     "status": "available",
-    "timestamp": "2026-07-08T18:48:07.530965+00:00",
-    "title": "Exact Alon\u2013Wei degree distribution conjecture"
+    "timestamp": "2026-07-08T18:20:41.047271+00:00",
+    "title": "Alon\u2013Wei Conjecture for Arbitrary Regular Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The class of cographs (Forb(P\u2084)) is generalized spectrally closed: if G is a cograph and H is generalized cospectral with G (i.e., G and H have the same adjacency spectrum and the same complement spectrum), then H must also be a cograph. This extends the paper's result for threshold graphs (Forb(2K\u2082, P\u2084, C\u2084)) to the larger class of cographs.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_0665",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06455v1",
+    "status": "available",
+    "timestamp": "2026-07-08T18:43:29.811729+00:00",
+    "title": "Cographs are generalized spectrally closed"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For every integer t \u2265 2 there exists a constant C_t > 0 such that every K_{2,t}-free graph with average degree at least C_t h^2 contains an induced subdivision of K_h. This would remove the \u03a9(h^2 log^7 h) factor established in the paper and confirm that the exponent 2 is optimal without logarithmic penalties.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0666",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06444v1",
+    "status": "available",
+    "timestamp": "2026-07-08T19:03:31.172624+00:00",
+    "title": "Logarithm-free bound for induced clique subdivisions in K_{2,t}-free graphs"
   },
   {
     "consumed_by_exp_id": "edee947a",
@@ -8007,7 +8062,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "in_progress",
-    "timestamp": "2026-07-08T16:25:38.891319+00:00",
+    "timestamp": "2026-07-08T16:01:43.584485+00:00",
     "title": "The Mathematics of Memes: Viral Information Topology"
   },
   {
