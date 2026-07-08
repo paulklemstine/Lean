@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "333b621d",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Mathematical Foundations of Integrated Information (Φ)\n\nBuilt on `Catalog/Novelty/IntegratedInformation.lean`, which establishes the\ndiscrete IIT core: finite distributions `FinD",
-      "quality_score": 0.72324,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T21:21:11",
-      "title": "Consciousness as Integrated Information: Mathematical Foundations"
-    },
-    {
       "cycle_id": "dfab202e",
       "domain": "Applications",
       "key_insight": "# Future Directions — Betti–Whittaker contragredient periods\n\nDerived from this cycle's findings (`BottomDegreeParity.lean`, `PeriodAlgebra.lean`): the\ncontragredient sign `(-1)^{b(F,n)}` is governed",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-06T19:50:56",
       "title": "Minimal dimension of non-γ-positive symmetric edge polytopes"
+    },
+    {
+      "cycle_id": "0c573935",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Surreal Topology\n\n## What was proved\n\nThe surreal-topology deliverable establishes a cross-domain bridge between\nConway's surreal numbers (combinatorial game theory / set theory)",
+      "quality_score": 0.7426819999999998,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-08T20:32:40",
+      "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "28bd8499",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Extremal L1 mass of 1-Lipschitz grid height functions\n\nDerived from the verified results in\n`Catalog/Novelty/GridLipschitzMass.lean` (sharp bound `gridMass_le`, attainment\n`gridM",
-      "quality_score": 0.643006,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T16:11:06",
-      "title": "Extremal L1 mass of normalized 1-Lipschitz grid height differences"
-    },
     {
       "cycle_id": "ce5b4268",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 15,
       "timestamp": "2026-07-08T18:11:11",
       "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
+    },
+    {
+      "cycle_id": "0c573935",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Surreal Topology\n\n## What was proved\n\nThe surreal-topology deliverable establishes a cross-domain bridge between\nConway's surreal numbers (combinatorial game theory / set theory)",
+      "quality_score": 0.7426819999999998,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-08T20:32:40",
+      "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "bb3ce4ee",
-      "domain": "Computation",
-      "name": "gives",
-      "quality": 0.7902000000000001
-    },
-    {
-      "cycle_id": "bb3ce4ee",
-      "domain": "Computation",
-      "name": "is",
-      "quality": 0.7902000000000001
-    },
-    {
-      "cycle_id": "583299ca",
-      "domain": "Cryptography",
-      "name": "dim_dual",
-      "quality": 0.7779935103225806
-    },
     {
       "cycle_id": "f91c88c3",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "gammaBasis_palindromic",
       "quality": 0.70296
+    },
+    {
+      "cycle_id": "0c573935",
+      "domain": "Bridges",
+      "name": "exists_gt_natCast",
+      "quality": 0.7426819999999998
+    },
+    {
+      "cycle_id": "0c573935",
+      "domain": "Bridges",
+      "name": "finiteSurreals_isOpen",
+      "quality": 0.7426819999999998
+    },
+    {
+      "cycle_id": "0c573935",
+      "domain": "Bridges",
+      "name": "finiteSurreals_isClosed",
+      "quality": 0.7426819999999998
     }
   ],
-  "last_updated": "2026-07-08T18:11:11",
+  "last_updated": "2026-07-08T20:32:40",
   "open_questions": [
     {
       "context": "`sorry`-free Lean proof of Sabidussi's theorem.",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "cd0ef092",
-        "quality": 0.7045299999999999,
-        "theorems": 10,
-        "title": "Proof Automation: Custom Lean 4 Tactics"
-      },
-      {
         "cycle_id": "701dddb6",
         "quality": 0.78684,
         "theorems": 6,
@@ -3203,6 +3197,12 @@
         "quality": 0.542,
         "theorems": 20,
         "title": "Antipodality Characterization via Opposite-Semicube Helly Property"
+      },
+      {
+        "cycle_id": "0c573935",
+        "quality": 0.7426819999999998,
+        "theorems": 19,
+        "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
       }
     ],
     "Combinatorics": [
