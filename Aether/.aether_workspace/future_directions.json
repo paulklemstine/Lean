@@ -28787,6 +28787,55 @@
       "title": "Inexpressibility of Partial Dominating Set as Quantifier-Free FO Value"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Mader67",
+        "BollobasThomason98",
+        "KomlosSzemeredi96",
+        "KuhnOsthus06Girth"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every integer k ≥ 3, there exists a constant c_k > 0 such that every C_{2k}-free graph with average degree at least c_k · h contains an induced subdivision of K_h. This conjectures that the polylogarithmic factor in the authors' bound of Ω_k(h log^5 h) can be eliminated, making the threshold purely linear in h, which would be tight up to the constant factor.",
+      "domain_bridges": [
+        "Structural graph theory",
+        "Sparse hereditary graph classes",
+        "Topological graph theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0602",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem induced_subdivision_linear_threshold {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) (k h : ℕ) (hk : 3 ≤ k) : ∃ c : ℝ, 0 < c ∧ G.IsC2kFree k → (2 * G.edgeFinset.card : ℝ) / (Fintype.card V) ≥ c * h → ∃ H ≤ G, H.IsInducedSubdivisionOf (completeGraph (Fin h)) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Refine the embedding techniques from the paper to eliminate the logarithmic factors introduced during iterative path-finding and pseudorandomness exploitation. Key insight: C_{2k}-free graphs have stronger pseudo-random properties than currently exploited, and more careful use of the dependent random choice or balanced-supergraph techniques could yield path systems that directly give induced subdivisions without the logarithmic overhead from iterative refinement.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.06444v1",
+      "source_path": "http://arxiv.org/abs/2607.06444v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-08T03:53:15.930333+00:00",
+      "title": "Linear threshold for induced clique subdivisions in even-cycle-free graphs"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -28812,7 +28861,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0602",
+      "id": "fd_0603",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem exists_unique_microscopic_weighting {X : Type} [Fintype X] [MetricSpace X] (h : StrictNegativeType X) : ∃! (μ : Finsupp ℝ X), (∑ i, μ i) = 1 ∧ (∀ (x y : X), μ x * μ y = - (d x y)^2 / 2)",
@@ -28861,7 +28910,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0603",
+      "id": "fd_0604",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem: If μ²(E, ω^i) ≠ 0, then λ²*(E^D, ω^i) = λ²*(E, ω^i) + Σ_{ℓ|D} [terms] + c ⋅ μ²(E, ω^i) for some constant c ∈ Z_2.",
@@ -28912,7 +28961,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0604",
+      "id": "fd_0605",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "-- Define the Möbius function (available in mathlib)\ndef Q (k n : ℕ) : ℕ := sorry\n\ntheorem Q_formula (k n : ℕ) (hk : 2 ≤ k) (hn : 0 < n) :\n  Q k n = π (d : ℕ) in Finset.range (n + 1), (d | n) → μ d * k ^ (n / d)",
@@ -28959,7 +29008,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0605",
+      "id": "fd_0606",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem product_hilton_milner_large_n {n k ℓ : ℕ} (hn : n > 100 * ℓ * k ^ 2) (hℓ : 3 ≤ ℓ) (hk : ℓ < k) (F : Finset (Finset (Fin n))) (G : Finset (Finset (Fin n))) (hF : ∀ f ∈ F, f.card = k) (hG : ∀ g ∈ G, g.card = ℓ) (hcross : ∀ f ∈ F, ∀ g ∈ G, (f ∩ g).Nonempty) (hnF : (Finset.sInter F).card = 0) (hnG : (Finset.sInter G).card = 0) : F.card * G.card ≤ (Nat.choose (n - 1) (k - 1) - Nat.choose (n - k - 1) (k - 1) + 1) * Nat.choose (n - 1) (ℓ - 1) := by sorry",
@@ -28979,6 +29028,54 @@
       "thread_id": "",
       "timestamp": "2026-07-08T03:16:37.289057+00:00",
       "title": "Product Hilton-Milner theorem for large n"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Petersen_coloring_conjecture",
+        "Sylvester_coloring",
+        "cubic_graph_edge_coloring"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every bridgeless cubic multigraph G, there exists a mapping f: E(G) → E(S₁₀) such that |V(f)| ≥ (6/7)·|V(G)|, where V(f) is the set of vertices v ∈ V(G) for which f(∂_G(v)) = ∂_{S₁₀}(x) for some x ∈ V(S₁₀). This would improve the 5/6-bound established in the paper for all cubic multigraphs, leveraging the additional structure of bridgeless graphs.",
+      "domain_bridges": [
+        "graph_theory_to_combinatorial_optimization",
+        "matching_theory_to_structural_graph_theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0607",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem sylvester_S10_bridgeless_bound (G : CubicMultigraph) (h_cubic : G.IsCubic) (h_bridgeless : G.Bridgeless) (h_connected : G.Connected) : ∃ f : G.Edge → S10.Edge, (VProper G S10 f).card * 7 ≥ 6 * (Finset.univ : Finset G.Vertex).card := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Adapt the S₁₀-construction from the paper, exploiting the absence of bridges to handle end-block decomposition more efficiently. Since bridgeless cubic graphs admit perfect matchings (Petersen's theorem), combine the S₁₂-technique achieving 4/5 for graphs with perfect matchings with the triangle-replacement structure of S₁₀ to gain the additional 1/42 fraction, using the fact that bridgeless graphs avoid the trivial-bridge obstructions that limit the 5/6 bound.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.06396v1",
+      "source_path": "http://arxiv.org/abs/2607.06396v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-08T03:53:42.083077+00:00",
+      "title": "Bridgeless Sylvester S₁₀-Coloring Improvement Conjecture"
     },
     {
       "ambition_level": "extension",

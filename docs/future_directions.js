@@ -7154,12 +7154,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every integer k \u2265 3, there exists a constant c_k > 0 such that every C_{2k}-free graph with average degree at least c_k \u00b7 h contains an induced subdivision of K_h. This conjectures that the polylogarithmic factor in the authors' bound of \u03a9_k(h log^5 h) can be eliminated, making the threshold purely linear in h, which would be tight up to the constant factor.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0602",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06444v1",
+    "status": "available",
+    "timestamp": "2026-07-08T03:53:15.930333+00:00",
+    "title": "Linear threshold for induced clique subdivisions in even-cycle-free graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any finite metric space X of strictly negative type there exists exactly one signed measure \u03bc of total mass 1 that minimizes the energy functional E(\u03bc)=\u2211_{x,y\u2208X}d(x,y)\u03bc(x)\u03bc(y); moreover \u03bc can be characterized as the unique optimizer of this strictly convex quadratic program.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0602",
+    "id": "fd_0603",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05349v1",
@@ -7173,7 +7187,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0603",
+    "id": "fd_0604",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05305v1",
@@ -7187,7 +7201,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0604",
+    "id": "fd_0605",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05324v1",
@@ -7201,13 +7215,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0605",
+    "id": "fd_0606",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06443v1",
     "status": "available",
     "timestamp": "2026-07-08T03:16:37.289057+00:00",
     "title": "Product Hilton-Milner theorem for large n"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every bridgeless cubic multigraph G, there exists a mapping f: E(G) \u2192 E(S\u2081\u2080) such that |V(f)| \u2265 (6/7)\u00b7|V(G)|, where V(f) is the set of vertices v \u2208 V(G) for which f(\u2202_G(v)) = \u2202_{S\u2081\u2080}(x) for some x \u2208 V(S\u2081\u2080). This would improve the 5/6-bound established in the paper for all cubic multigraphs, leveraging the additional structure of bridgeless graphs.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0607",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06396v1",
+    "status": "available",
+    "timestamp": "2026-07-08T03:53:42.083077+00:00",
+    "title": "Bridgeless Sylvester S\u2081\u2080-Coloring Improvement Conjecture"
   },
   {
     "consumed_by_exp_id": "d9ca63e8",

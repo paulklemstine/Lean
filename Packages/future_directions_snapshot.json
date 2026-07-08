@@ -13309,6 +13309,34 @@
     "title": "Inexpressibility of Partial Dominating Set as Quantifier-Free FO Value"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Mader67",
+      "BollobasThomason98",
+      "KomlosSzemeredi96",
+      "KuhnOsthus06Girth"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer k ≥ 3, there exists a constant c_k > 0 such that every C_{2k}-free graph with average degree at least c_k · h contains an induced subdivision of K_h. This conjectures that the polylogarithmic factor in the authors' bound of Ω_k(h log^5 h) can be eliminated, making the threshold purely linear in h, which would be tight up to the constant factor.",
+    "domain_bridges": [
+      "Structural graph theory",
+      "Sparse hereditary graph classes",
+      "Topological graph theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0602",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Refine the embedding techniques from the paper to eliminate the logarithmic factors introduced during iterative path-finding and pseudorandomness exploitation. Key insight: C_{2k}-free graphs have stronger pseudo-random properties than currently exploited, and more careful use of the dependent random choice or balanced-supergraph techniques could yield path systems that directly give induced subdivisions without the logarithmic overhead from iterative refinement.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06444v1",
+    "status": "available",
+    "timestamp": "2026-07-08T03:53:15.930333+00:00",
+    "title": "Linear threshold for induced clique subdivisions in even-cycle-free graphs"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "magnitude_of_metric_spaces",
@@ -13324,7 +13352,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0602",
+    "id": "fd_0603",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formulate the problem as a strictly convex quadratic optimization over the affine subspace of signed measures with total mass 1; strict convexity guarantees a unique minimizer, and strict negative type ensures that the quadratic form is positive definite on the relevant subspace.",
@@ -13352,7 +13380,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0603",
+    "id": "fd_0604",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the existing formula by analyzing the μ-invariant's contribution through local-global principles and modular forms.",
@@ -13382,7 +13410,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0604",
+    "id": "fd_0605",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "We would prove the conjecture by establishing a bijection between quasinecklaces and primitive words, or by showing that the recurrence defining quasinecklaces derived in the paper matches the Möbius inversion of the total word count. A proof by induction on n using divisor decomposition and properties of the Möbius function can be formalized in Lean, leveraging existing libraries for arithmetic functions and finite sums.",
@@ -13408,7 +13436,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0605",
+    "id": "fd_0606",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the classical Hilton-Milner theorem as a lemma. Then formalize the notion of cross-intersecting families and non-triviality. The key structural insight from the paper is analyzing 2-cover graphs of cross-intersecting families and bounding the size of families with small minimal covers. The proof proceeds by case analysis on the structure of minimal covers of F and G, showing that non-HM-type configurations yield strictly smaller products when n > 100ℓk².",
@@ -13417,6 +13445,33 @@
     "status": "available",
     "timestamp": "2026-07-08T03:16:37.289057+00:00",
     "title": "Product Hilton-Milner theorem for large n"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Petersen_coloring_conjecture",
+      "Sylvester_coloring",
+      "cubic_graph_edge_coloring"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every bridgeless cubic multigraph G, there exists a mapping f: E(G) → E(S₁₀) such that |V(f)| ≥ (6/7)·|V(G)|, where V(f) is the set of vertices v ∈ V(G) for which f(∂_G(v)) = ∂_{S₁₀}(x) for some x ∈ V(S₁₀). This would improve the 5/6-bound established in the paper for all cubic multigraphs, leveraging the additional structure of bridgeless graphs.",
+    "domain_bridges": [
+      "graph_theory_to_combinatorial_optimization",
+      "matching_theory_to_structural_graph_theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0607",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt the S₁₀-construction from the paper, exploiting the absence of bridges to handle end-block decomposition more efficiently. Since bridgeless cubic graphs admit perfect matchings (Petersen's theorem), combine the S₁₂-technique achieving 4/5 for graphs with perfect matchings with the triangle-replacement structure of S₁₀ to gain the additional 1/42 fraction, using the fact that bridgeless graphs avoid the trivial-bridge obstructions that limit the 5/6 bound.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06396v1",
+    "status": "available",
+    "timestamp": "2026-07-08T03:53:42.083077+00:00",
+    "title": "Bridgeless Sylvester S₁₀-Coloring Improvement Conjecture"
   },
   {
     "ambition_level": "extension",
