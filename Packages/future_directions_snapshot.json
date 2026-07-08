@@ -42,7 +42,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "a61ac536",
+    "consumed_by_exp_id": "",
     "description": "The shadowing lemma says that near an approximate orbit of a chaotic system, there exists a true orbit. In other words, every 'almost correct' trajectory of a chaotic map has a 'truly correct' trajectory nearby. This means that numerical errors in chaotic simulations are not bugs — they are SHADOWS of real trajectories. Conjecture: Every program that computes a chaotic map f: R^n -> R^n has the property that its floating-point output is shadowed by a true orbit of f. More precisely, for every epsilon > 0, there exists delta > 0 such that if x_0, x_1, ..., x_N is a delta-pseudo-orbit (|x_{n+1} - f(x_n)| < delta for all n), then there exists a true orbit y_0, y_1, ..., y_N with |x_n - y_n| < epsilon for all n. The shadowing time N(epsilon, delta) grows at most polynomially in 1/delta for hyperbolic maps. Test: implement the logistic map f(x) = 4x(1-x) in floating-point and compute 10^6 iterations. For each floating-point orbit, use binary search to find the shadowing true orbit. Verify that the shadowing distance is at most 10^{-10} for floating-point precision 10^{-16}. Impact: numerical chaos is not error — it is a computable shadow of mathematical truth. Your computer's rounding errors are tracing out REAL orbits of the chaotic system.",
     "domain_bridges": [],
     "domains": [
@@ -55,7 +55,7 @@
     "proof_strategy": "State the Anosov shadowing lemma: for a hyperbolic map f on a compact manifold, for every epsilon > 0 there exists delta > 0 such that every delta-pseudo-orbit is epsilon-shadowed by a true orbit. Prove the conjecture: every floating-point computation of f is a delta-pseudo-orbit with delta = machine epsilon. By shadowing, there exists a true orbit within epsilon. The shadowing distance epsilon is at most C * delta^(1/s) where s is the expansion rate and C depends on the map. For the logistic map at r=4, s = 4 and epsilon = O(delta^{1/4}). Compute the shadowing orbit: given floating-point orbit x_0, ..., x_N, define y_0 = x_0 and y_{n+1} = f(y_n). Then |y_n - x_n| <= C * delta * (s^n - 1)/(s - 1). For N = 10^6 and delta = 10^{-16}, epsilon <= C * 10^{-16} * (4^{10^6} - 1)/3 which is too large. But for the shadowing lemma, we get epsilon = O(delta^{1/4}) = O(10^{-4}). Test: verify with numerical computation.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T23:49:57.915548+00:00",
     "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
   },
@@ -13766,6 +13766,35 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "analytic_number_theory",
+      "lyapunov_spectra",
+      "coprime_cotangent_sums",
+      "jordan_totients"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For the odd Euler ensemble at cutoff N, the positive spectral moments M^{odd}_{s,+}(N; n) satisfy the precise limit: lim_{N → ∞} √(2N/π) · M^{odd}_{s,+}(N; n) / |n|^s = ζ(s) for all real s > 1 and nonzero integers n. This identifies the Riemann zeta function as the spectral moment generating function emerging from the continuum limit of the marginally stable turbulent attractor, bridging the arithmetic structure of reduced rational angles p/q with the Lyapunov stability analysis of incompressible Navier–Stokes turbulence.",
+    "domain_bridges": [
+      "riemann_zeta_function ↔ lyapunov_spectral_theory",
+      "coprime_integer_statistics ↔ turbulent_attractor_stability",
+      "dirichlet_convolution_identities ↔ navier_stokes_fixed_points"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0619",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the finite-N spectral problem over reduced rationals p/q and winding sectors r, establish the parity constraint N - qr ≡ 0 (mod 2) ruling out r = 0 for odd N, then apply coprime cotangent sum asymptotics and Jordan totient identities to derive the moment limit. The key step is expressing M^{odd}_{s,+}(N; n) as a sum over coprime pairs (p, q) with q odd, weighted by |n/q|^s, and showing the normalization √(2N/π) converts the discrete sum to ζ(s) via Euler product or Dirichlet series techniques available in Mathlib's number theory layer.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05745v1",
+    "status": "available",
+    "timestamp": "2026-07-08T13:13:14.703914+00:00",
+    "title": "Odd Euler Ensemble Spectral Moment Zeta Convergence"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "magnitude_of_metric_spaces",
       "negative_type_metrics"
     ],
@@ -13779,7 +13808,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0619",
+    "id": "fd_0620",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formulate the problem as a strictly convex quadratic optimization over the affine subspace of signed measures with total mass 1; strict convexity guarantees a unique minimizer, and strict negative type ensures that the quadratic form is positive definite on the relevant subspace.",
@@ -13807,7 +13836,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0620",
+    "id": "fd_0621",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the existing formula by analyzing the μ-invariant's contribution through local-global principles and modular forms.",
@@ -13837,7 +13866,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0621",
+    "id": "fd_0622",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "We would prove the conjecture by establishing a bijection between quasinecklaces and primitive words, or by showing that the recurrence defining quasinecklaces derived in the paper matches the Möbius inversion of the total word count. A proof by induction on n using divisor decomposition and properties of the Möbius function can be formalized in Lean, leveraging existing libraries for arithmetic functions and finite sums.",
@@ -13863,7 +13892,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0622",
+    "id": "fd_0623",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the classical Hilton-Milner theorem as a lemma. Then formalize the notion of cross-intersecting families and non-triviality. The key structural insight from the paper is analyzing 2-cover graphs of cross-intersecting families and bounding the size of families with small minimal covers. The proof proceeds by case analysis on the structure of minimal covers of F and G, showing that non-HM-type configurations yield strictly smaller products when n > 100ℓk².",
@@ -13890,7 +13919,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0623",
+    "id": "fd_0624",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the S₁₀-construction from the paper, exploiting the absence of bridges to handle end-block decomposition more efficiently. Since bridgeless cubic graphs admit perfect matchings (Petersen's theorem), combine the S₁₂-technique achieving 4/5 for graphs with perfect matchings with the triangle-replacement structure of S₁₀ to gain the additional 1/42 fraction, using the fact that bridgeless graphs avoid the trivial-bridge obstructions that limit the 5/6 bound.",
@@ -13919,7 +13948,7 @@
     "domains": [
       "Cryptography"
     ],
-    "id": "fd_0624",
+    "id": "fd_0625",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Two possible routes: (1) Modular route — prove θ_L is a modular form of weight 4 for SL₂(ℤ) via Poisson summation on the lattice, establish that M₄(SL₂(ℤ)) is 1-dimensional spanned by E₄, and match constant terms; (2) Combinatorial route — use the explicit root system of E₈ to compute the theta series coefficients and verify they equal 240·σ₃(n) via the Weyl character formula or direct root system enumeration.",
@@ -13948,7 +13977,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0625",
+    "id": "fd_0626",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the paper's structure theorem for {-1,0,1}-diagonalizable graphs of prime order as a base case. For composite orders, leverage the regularity result (Theorem: bipartite implies regular) combined with the eigenvector structure constraints: the {-1,0,1} eigenvector basis forces strong conditions on the adjacency patterns of regular bipartite graphs. A possible approach shows that if G is connected, bipartite, regular, and {-1,0,1}-diagonalizable, then any two vertices in the same part have identical neighbor sets, yielding completeness. Attempt falsification by exhaustive search for small orders using the enumeration data provided.",
@@ -13977,7 +14006,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0626",
+    "id": "fd_0627",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "For the forward direction (k∣n ⟹ Schur positivity): decompose G(k,n) into creation operator images C_α when k∣n, then apply the compositional shuffle theorem framework to express Δ_{e_j} C_α as a positively weighted sum of vertical LLT polynomials, leveraging Grojnowski–Haiman Schur positivity of LLT polynomials. For the converse (k∤n ⟹ not Schur positive): extend the sign-analysis techniques from the paper's nabla case to general Δ_{e_j} by tracking the leading negative Schur coefficients in the Macdonald polynomial expansion of G(k,n) under the delta eigenvalue action, showing that the divisibility obstruction propagates through all delta operators.",
@@ -14005,7 +14034,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0627",
+    "id": "fd_0628",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish moment bounds for higher-order moments of the fluctuations to apply the method of moments, leveraging the Selberg trace formula on random surfaces and the known variance asymptotic of $X \\log X$.",
@@ -14034,7 +14063,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0628",
+    "id": "fd_0629",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Generalize the k=3 counterexample construction. The paper establishes a duality between symmetric powers and abstract rigidity. One would need to show that the rigidity-theoretic obstruction that produces the k=3 counterexample can be lifted to higher k, perhaps by taking symmetric powers of the counterexample matroid itself, or by constructing a family of matroids M_k indexed by k ≥ 3 such that the rank functions from the two Mason definitions diverge on specific independent sets in sym_k(M_k).",
@@ -14063,7 +14092,7 @@
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0629",
+    "id": "fd_0630",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the inversion graph G_π of a permutation π as the graph on [n] with edges corresponding to inversions. Define caterpillar graphs (removing all degree-1 vertices yields a path). Then establish the key mechanism: a reduced word for π orders the edges of G_π, with first-occurrence letters forming a spanning forest. For the acyclic case, show that the spanning tree has a unique central path by analyzing how the cycle structure of π constrains the possible branching patterns, leveraging the fact that each cycle of π contributes a specific subtree structure that can only attach linearly along a spine.",
@@ -14091,7 +14120,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0630",
+    "id": "fd_0631",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Proceed by induction on t, leveraging the t=1 base case proven in the paper. For the inductive step, analyze how the multiset and non-multiset intersection structures of insertion balls decompose when composing t insertions as a sequence of single insertions. The key difficulty is showing that the overlap multiplicities from repeated error patterns cannot create a distinction between the multiset and non-multiset models even when t > 1. A combinatorial double-counting argument on the equivalence classes of insertion error patterns producing identical outputs may suffice.",
@@ -14117,7 +14146,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0631",
+    "id": "fd_0632",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use probabilistic methods or explicit algebraic constructions to demonstrate a family of $r$-uniform hypergraphs with maximum degree $d$ that cannot be star-colored with fewer than $c \\cdot d^{2/(r-1)}$ colors, adapting known lower bounds for graph star coloring to the hypergraph setting.",
@@ -14146,7 +14175,7 @@
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_0632",
+    "id": "fd_0633",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the Mason-Snaith ratio conjecture framework to function fields: (1) formalize the explicit formula relating sums over zeros to sums over primes in F_q[T], (2) compute the n-level density via the ratio of L-functions averaged over the family using character sum identities over F_q[T], (3) show the resulting combinatorial expression matches the n-level correlation kernel of USp(2g) eigenvalues computed from the symplectic group's Weyl integration formula, using the restricted Fourier support to control error terms.",
@@ -14174,7 +14203,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0633",
+    "id": "fd_0634",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the change of variables y = -log(x) to convert the product-free condition on (0,1) into a sum-free condition on (0,∞) with respect to the exponential distribution. Then leverage the positive interval discrepancy d(A) = sup_I (2|A∩I| - |I|) to obtain refined lower bounds on |A±A| beyond the Kneser/Brunn-Minkowski bound |A-A| ≥ 2|A|, quantifying how far A is from an interval. These structural results on sumsets force |A| < 1/3 for any open product-free set.",
@@ -14200,7 +14229,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0634",
+    "id": "fd_0635",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Explicitly construct the simplicial Z_2-complex K for each n, prove it is a free Z_2-space, and compute its co-index and the co-index of its suspension using the Borsuk-Ulam theorem and homotopy equivalence arguments.",
@@ -14232,7 +14261,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0635",
+    "id": "fd_0636",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper's semidefinite Delsarte framework reduces the conjecture to a uniform L¹ anti-concentration statement for positive convex combinations of classical Kloosterman sums. A complete proof requires either (1) establishing the Kloosterman anti-concentration conjecture—that positive convex combinations of Kloosterman sums K_q(a·t) cannot concentrate in L¹ beyond a universal lower bound proportional to 1/√q—or (2) an entirely new method bypassing the Delsarte/LP framework. The unconditional q^{m+1/2} threshold follows from a second-moment bound on Kloosterman sums (Weil bound), but improving to q^m requires overcoming the fundamental barrier that individual Kloosterman columns can nearly cancel.",
@@ -14259,7 +14288,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0636",
+    "id": "fd_0637",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Further refine the structural analysis of graphs avoiding odd wheels as t-minors and their odd cycle intersections, potentially leveraging the integer decomposition property of the stable set polytope or developing new leveling arguments to progressively reduce the chromatic upper bound from 186 down to 4.",
@@ -14288,7 +14317,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0637",
+    "id": "fd_0638",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize loopless matroids, Feichtner-Yuzvinsky building sets, the graded integral K-ring K_Z(M,G) with its alpha-generators, and the Chow ring A*(M,G) with its Bergman fan presentation. Construct the integral tangent class via the quotient/theta-machinery of Sections 4-5. Then prove P^K=Hilb by establishing that the K-ring Chern character ch_K maps T^Z_{M,G} to the Todd class whose pushforward recovers the Hilbert series, mirroring the classical HRR argument adapted to the combinatorial setting.",
@@ -14319,7 +14348,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0638",
+    "id": "fd_0639",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt density-increment or energy-based methods (Bloom-Sisask, Kelley-Meka) to the multiplicative/reciprocal setting. Key obstacle: the map n ↦ n⁻¹ mod q is nonlinear, so arithmetic regularity lemmas don't directly apply. A promising approach: show that a positive-density set A ⊆ [N] must contain many 'approximate' harmonic triples, then use a stability argument to upgrade to exact ones. Alternatively, develop a Fourier-analytic framework for the equation 2bc = a(b+c) over the integers, treating the quadratic constraint via sieve methods.",
@@ -14345,7 +14374,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0639",
+    "id": "fd_0640",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the local-to-global frame decomposition and gluing technique from the $n \\ge 4$ case by constructing explicit local cycles on frame configurations in $\\mathbb{F}_q^3$ and finding a Hamiltonian cycle in the corresponding transition graph, overcoming the restricted dimensionality that prevents the standard layered frame decomposition from working directly.",
@@ -14354,6 +14383,34 @@
     "status": "available",
     "timestamp": "2026-07-08T12:41:03.297360+00:00",
     "title": "Universal Cycles for Affine Planes in $\\mathbb{F}_q^3$"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.AT",
+      "math.CT",
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The augmented chain complex E_• defined on polarised noncrossing partitions with {0,1}-labelled gaps, with differential given by the restricted Leibniz rule via gap-insertion, is acyclic: its reduced homology vanishes in all degrees. Concretely, for the augmented chain complex (E_•, ∂, aug) where E_0 = ℤ{s,t}, E_{n+1} = ℤ(PNCP(n)), and ∂ is defined recursively on rightmost decompositions via the gap-insertion operad structure, we have H̃_n(E_•) = 0 for all n ≥ 0.",
+    "domain_bridges": [
+      "operad_theory",
+      "combinatorial_homological_algebra",
+      "higher_category_theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0641",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First formalize PNCP(n) as polarised noncrossing partitions of degree n with {0,1}-labelled gaps, the rightmost decomposition, and the gap-insertion partial composition pcirc_i. Then define the differential ∂ recursively on rightmost decompositions, verify ∂∘∂ = 0 by induction on degree and rightmost decomposition length using the restricted Leibniz rule structure. For acyclicity, construct an explicit chain contraction or homotopy by exploiting the gap-labelling structure and the operadic decomposition, showing each cycle is a boundary.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05592v1",
+    "status": "available",
+    "timestamp": "2026-07-08T13:13:33.381841+00:00",
+    "title": "Acyclicity of the polarised noncrossing partition chain complex"
   },
   {
     "ambition_level": "extension",
@@ -14378,7 +14435,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cbe7147b",
     "description": "The Moebius band M is obtained from [0,1] x R by identifying (0, y) ~ (1, -y). Define arithmetic on M: a point (x, y) on M represents the number y * (2x - 1) where x in [0,1] gives the sign and magnitude, and y gives the scale. This creates a number system where going around the band flips the sign. Define the Moebius integers Z_M as the image of Z in M under the embedding n -> (1/2 + 1/(2n), |n|). Then 1 and -1 are identified at the twist point (1, 1) = (0, -1), making Z_M a one-point compactification of Z with a single infinity. Conjecture: Z_M is a ring under the induced operations from R x R / ~, but it is NOT an integral domain because (1, 0) * (0, 1) = (0, 0) but neither factor is zero in Z_M. The prime factorization in Z_M has a unique 'twist prime' that encodes orientation, and every non-zero Moebius integer has a factorization of the form ±p_1^{a_1} * ... * p_k^{a_k} where the overall sign is the twist. Test: factor the Moebius integers 6, -6, and 0 in Z_M. Verify that 6 = 2_+ * 3_+ and -6 = 2_- * 3_- = 2_+ * 3_+ * (-1) where -1 is the twist prime. Impact: arithmetic on a non-orientable surface creates a number system where orientation IS a prime — a number-theoretic analog of spin in physics.",
     "domain_bridges": [],
     "domains": [
@@ -14391,7 +14448,7 @@
     "proof_strategy": "Define Z_M as the image of Z in the Moebius band M = [0,1] x R / ~ where (0,y) ~ (1,-y). Embed n -> (1/(1+|n|), n) for n >= 0 and n -> (1/(1+|n|), -|n|) for n < 0. Define addition and multiplication coordinatewise on M. Prove Z_M is a ring: (a,b) + (c,d) = ((a+c mod 1), b+d with sign from twist). Prove Z_M is not an integral domain: find zero divisors. Prove the twist prime theorem: every Moebius integer n has a unique factorization n = epsilon * p_1^{a_1} * ... * p_k^{a_k} where epsilon = +1 or -1 is the twist, and p_i are ordinary primes. Test: factor 6 = +1 * 2 * 3, -6 = -1 * 2 * 3. Verify multiplication: 2_+ * 3_+ = 6_+ and 2_- * 3_- = 6_+ (two twists cancel). Verify that -1 is prime: if -1 = a*b in Z_M, then a or b must be the twist.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T20:47:00.188304+00:00",
     "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
   },

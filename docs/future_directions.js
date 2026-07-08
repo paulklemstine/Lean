@@ -33,7 +33,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
   },
   {
-    "consumed_by_exp_id": "a61ac536",
+    "consumed_by_exp_id": "",
     "description": "The shadowing lemma says that near an approximate orbit of a chaotic system, there exists a true orbit. In other words, every 'almost correct' trajectory of a chaotic map has a 'truly correct' trajectory nearby. This means that numerical errors in chaotic simulations are not bugs \u2014 they are SHADOWS of real trajectories. Conjecture: Every program that computes a chaotic map f: R^n -> R^n has the property that its floating-point output is shadowed by a true orbit of f. More precisely, for every epsilon > 0, there exists delta > 0 such that if x_0, x_1, ..., x_N is a delta-pseudo-orbit (|x_{n+1} - f(x_n)| < delta for all n), then there exists a true orbit y_0, y_1, ..., y_N with |x_n - y_n| < epsilon for all n. The shadowing time N(epsilon, delta) grows at most polynomially in 1/delta for hyperbolic maps. Test: implement the logistic map f(x) = 4x(1-x) in floating-point and compute 10^6 iterations. For each floating-point orbit, use binary search to find the shadowing true orbit. Verify that the shadowing distance is at most 10^{-10} for floating-point precision 10^{-16}. Impact: numerical chaos is not error \u2014 it is a computable shadow of mathematical truth. Your computer's rounding errors are tracing out REAL orbits of the chaotic system.",
     "domains": [
       "Novelty",
@@ -43,7 +43,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T23:49:57.915548+00:00",
     "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
   },
@@ -7384,12 +7384,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Conjecture that for any finite metric space X of strictly negative type there exists exactly one signed measure \u03bc of total mass 1 that minimizes the energy functional E(\u03bc)=\u2211_{x,y\u2208X}d(x,y)\u03bc(x)\u03bc(y); moreover \u03bc can be characterized as the unique optimizer of this strictly convex quadratic program.",
+    "description": "For the odd Euler ensemble at cutoff N, the positive spectral moments M^{odd}_{s,+}(N; n) satisfy the precise limit: lim_{N \u2192 \u221e} \u221a(2N/\u03c0) \u00b7 M^{odd}_{s,+}(N; n) / |n|^s = \u03b6(s) for all real s > 1 and nonzero integers n. This identifies the Riemann zeta function as the spectral moment generating function emerging from the continuum limit of the marginally stable turbulent attractor, bridging the arithmetic structure of reduced rational angles p/q with the Lyapunov stability analysis of incompressible Navier\u2013Stokes turbulence.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
     "id": "fd_0619",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05745v1",
+    "status": "available",
+    "timestamp": "2026-07-08T13:13:14.703914+00:00",
+    "title": "Odd Euler Ensemble Spectral Moment Zeta Convergence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any finite metric space X of strictly negative type there exists exactly one signed measure \u03bc of total mass 1 that minimizes the energy functional E(\u03bc)=\u2211_{x,y\u2208X}d(x,y)\u03bc(x)\u03bc(y); moreover \u03bc can be characterized as the unique optimizer of this strictly convex quadratic program.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0620",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05349v1",
@@ -7403,7 +7418,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0620",
+    "id": "fd_0621",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05305v1",
@@ -7417,7 +7432,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0621",
+    "id": "fd_0622",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05324v1",
@@ -7431,7 +7446,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0622",
+    "id": "fd_0623",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06443v1",
@@ -7446,7 +7461,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0623",
+    "id": "fd_0624",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06396v1",
@@ -7460,7 +7475,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Cryptography"
     ],
-    "id": "fd_0624",
+    "id": "fd_0625",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
@@ -7474,7 +7489,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0625",
+    "id": "fd_0626",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06336v1",
@@ -7488,7 +7503,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0626",
+    "id": "fd_0627",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06351v1",
@@ -7503,7 +7518,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0627",
+    "id": "fd_0628",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06263v1",
@@ -7518,7 +7533,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0628",
+    "id": "fd_0629",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06228v1",
@@ -7533,7 +7548,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0629",
+    "id": "fd_0630",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06198v1",
@@ -7547,7 +7562,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0630",
+    "id": "fd_0631",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06181v1",
@@ -7562,7 +7577,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0631",
+    "id": "fd_0632",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06082v1",
@@ -7577,7 +7592,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_0632",
+    "id": "fd_0633",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06022v1",
@@ -7591,7 +7606,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0633",
+    "id": "fd_0634",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06073v1",
@@ -7605,7 +7620,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0634",
+    "id": "fd_0635",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06061v1",
@@ -7620,7 +7635,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0635",
+    "id": "fd_0636",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05926v1",
@@ -7634,7 +7649,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0636",
+    "id": "fd_0637",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05961v1",
@@ -7649,7 +7664,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0637",
+    "id": "fd_0638",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05835v1",
@@ -7663,7 +7678,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0638",
+    "id": "fd_0639",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05823v1",
@@ -7678,13 +7693,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0639",
+    "id": "fd_0640",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05767v1",
     "status": "available",
     "timestamp": "2026-07-08T12:41:03.297360+00:00",
     "title": "Universal Cycles for Affine Planes in $\\mathbb{F}_q^3$"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The augmented chain complex E_\u2022 defined on polarised noncrossing partitions with {0,1}-labelled gaps, with differential given by the restricted Leibniz rule via gap-insertion, is acyclic: its reduced homology vanishes in all degrees. Concretely, for the augmented chain complex (E_\u2022, \u2202, aug) where E_0 = \u2124{s,t}, E_{n+1} = \u2124(PNCP(n)), and \u2202 is defined recursively on rightmost decompositions via the gap-insertion operad structure, we have H\u0303_n(E_\u2022) = 0 for all n \u2265 0.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0641",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05592v1",
+    "status": "available",
+    "timestamp": "2026-07-08T13:13:33.381841+00:00",
+    "title": "Acyclicity of the polarised noncrossing partition chain complex"
   },
   {
     "consumed_by_exp_id": "08563491",
@@ -7702,7 +7732,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cbe7147b",
     "description": "The Moebius band M is obtained from [0,1] x R by identifying (0, y) ~ (1, -y). Define arithmetic on M: a point (x, y) on M represents the number y * (2x - 1) where x in [0,1] gives the sign and magnitude, and y gives the scale. This creates a number system where going around the band flips the sign. Define the Moebius integers Z_M as the image of Z in M under the embedding n -> (1/2 + 1/(2n), |n|). Then 1 and -1 are identified at the twist point (1, 1) = (0, -1), making Z_M a one-point compactification of Z with a single infinity. Conjecture: Z_M is a ring under the induced operations from R x R / ~, but it is NOT an integral domain because (1, 0) * (0, 1) = (0, 0) but neither factor is zero in Z_M. The prime factorization in Z_M has a unique 'twist prime' that encodes orientation, and every non-zero Moebius integer has a factorization of the form \u00b1p_1^{a_1} * ... * p_k^{a_k} where the overall sign is the twist. Test: factor the Moebius integers 6, -6, and 0 in Z_M. Verify that 6 = 2_+ * 3_+ and -6 = 2_- * 3_- = 2_+ * 3_+ * (-1) where -1 is the twist prime. Impact: arithmetic on a non-orientable surface creates a number system where orientation IS a prime \u2014 a number-theoretic analog of spin in physics.",
     "domains": [
       "Novelty",
@@ -7712,7 +7742,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.76,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T20:47:00.188304+00:00",
     "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
   },
