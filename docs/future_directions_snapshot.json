@@ -2,22 +2,22 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "06c3f92b",
-    "description": "The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the j-function is just the TIP of the iceberg. Conjecture: The full moonshine correspondence associates to each conjugacy class g in M a McKay-Thompson series T_g(q) = sum a_n(g) q^n that is a modular function of a specific level, and the product over all g in M of T_g(q) equals a modular form of weight |M|/24 that encodes the complete character table of M. The secret message: the Monster group IS a modular form, and every property of M (its order, its character table, its maximal subgroups) can be read off from the q-expansion of this product. Test: compute the first 100 coefficients of T_g(q) for each conjugacy class of M and verify they match the known character values. Prove that the product of all T_g(q) converges to a modular form. Impact: the Monster is not just connected to modular forms — it IS a modular form. The 194 conjugacy classes of M correspond to 194 modular forms, and their product encodes everything.",
+    "consumed_by_exp_id": "",
+    "description": "The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do — as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: The tropical semiring (R union {infinity}, min, +) IS the field with one element, in the following precise sense: the category of tropical schemes is equivalent to the category of F_1-schemes. More concretely, a tropical variety over F_1 is a set with a min-plus structure, and its base change to Z (formally, tensor with Z) is a toric variety. The key correspondence: F_1-points of a tropical variety are the vertices of its Newton polytope, and the 'cardinality' of the tropical variety (as an F_1-object) is the number of lattice points in the polytope, which equals the degree of the toric variety after base change. Test: for each toric variety corresponding to a polytope P, compute the number of F_1-points (vertices of P) and verify that the Euler characteristic of the toric variety equals |vertices(P)| = #F_1-points. Prove the tensor product correspondence: tropical scheme X over F_1 has X tensor_Z Z = the corresponding toric variety. Impact: F_1 and tropical geometry are two faces of the same coin. The field with one element is tropical, and tropical geometry is the geometry of F_1.",
     "domain_bridges": [],
     "domains": [
       "Novelty",
-      "Algebra"
+      "Tropical"
     ],
-    "id": "fd_0594",
+    "id": "fd_0675",
     "lineage_refs": [],
-    "priority_score": 0.89,
-    "proof_strategy": "State the moonshine conjecture (proved by Borcherds): each conjugacy class g of M has a McKay-Thompson series T_g(q) that is a Hauptmodul of genus 0 for a specific modular curve. Extend: define the Monster product P(q) = prod_{g in Conj(M)} T_g(q)^{1/|C(g)|} where C(g) is the conjugacy class. Prove P(q) converges: log P(q) = sum_g (1/|C(g)|) * log T_g(q) = sum_g sum_n (1/|C(g)|) * a_n(g)/n * q^n. Each term is bounded by |a_n(g)|/n * |q|^n which is O(n^{3/2}) by Deligne's bound. Prove P(q) is a modular form of weight |M|/24 = 8 * 10^{53}/24 by checking it transforms correctly under each level. Test: compute P(q) mod q^{100} and compare with the character table of M.",
+    "priority_score": 0.87,
+    "proof_strategy": "Define the F_1-tropical correspondence: a tropical scheme over F_1 is a monoid object M in the tropical semiring (R union infty, min, +). The base change M tensor_Z Z is the monoid algebra Z[M], which is the coordinate ring of the toric variety associated to M. Prove: if M is the monoid of lattice points in a rational polytope P, then Z[M] is the homogeneous coordinate ring of the toric variety V(P). Prove the point-counting correspondence: #V(P)(F_1) = |vertices(P)| (number of F_1-points equals vertices). Prove: chi(V(P)) = |vertices(P)| (Euler characteristic equals number of F_1-points). This follows from the fact that V(P) is a cell complex with one cell per face of P, and chi = alternating sum of face counts = number of vertices. Test: verify for projective space P^n (the simplex has n+1 vertices, chi(P^n) = n+1), for the Hirzebruch surface F_a (4 vertices, chi = 4).",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T23:49:58.048338+00:00",
-    "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
+    "status": "available",
+    "timestamp": "2026-07-08T20:42:29.134114+00:00",
+    "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
   },
   {
     "ambition_level": "extension",
@@ -42,26 +42,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "0c573935",
-    "description": "Conway's surreal numbers No form the largest totally ordered field, containing all real numbers, all ordinals, and all infinitesimals. But No is a proper class, not a set. What topology does it have? Conjecture: No has a unique topology making it a connected, locally connected, locally compact, complete ordered field. This topology is NOT the order topology (which makes No totally disconnected). Instead, it is the 'interval topology' generated by open intervals (a,b) = {x in No : a < x < b} where a,b are arbitrary surreal numbers. The interval topology on No is connected because between any two surreals a < b there are infinitely many surreals, and No has no gaps (every Dedekind cut is filled). Moreover, No is contractible in this topology — every surreal number can be continuously deformed to 0 via the homotopy H(x,t) = x * {t | 0} where {t | 0} is the surreal number between t and 0. Test: prove that No with the interval topology is connected. Prove that it is locally compact (every surreal has a neighborhood basis of intervals with surreal endpoints). Prove that No is contractible. Compute the fundamental group: pi_1(No) = 0 (trivial, since No is contractible). Impact: the largest ordered field has a natural topology that makes it contractible — every surreal number is connected to every other by a continuous path.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0579",
-    "lineage_refs": [],
-    "priority_score": 0.83,
-    "proof_strategy": "Define the interval topology on No: a basis of open sets is {(a,b) : a,b in No, a < b}. Prove No is connected: if No = U union V with U,V disjoint open, take a in U, b in V, a < b. Then (a,b) intersects both U and V, contradicting disjointness. Actually, No with interval topology IS disconnected (intervals with surreal endpoints can be partitioned). The correct topology: the 'convex topology' where open sets are unions of convex subsets. Prove No is connected in the convex topology because every interval {x : a < x < b} is connected (convex). Prove local compactness: every point has a neighborhood basis of intervals with finite-length endpoints. Prove contractibility: H(x,t) = x * t for t in [0,1] (using the Conway normal form). Compute pi_1(No) = 0. Test: verify the interval topology is strictly finer than the order topology for infinitesimal neighborhoods.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T20:46:59.999874+00:00",
-    "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "d12ad473",
     "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long — the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static — they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
     "domain_bridges": [],
@@ -82,7 +62,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "492f9d48",
+    "consumed_by_exp_id": "8d243e81",
     "description": "Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: lines parallel to the x-axis diverge (hyperbolic behavior) while lines parallel to the y-axis converge (elliptic behavior). The metric is ds^2 = dx^2/cosh^2(y) + dy^2 * cosh^2(x) — expanding in x and contracting in y. Conjecture: Split Geometry is a consistent Riemannian geometry with curvature K(x,y) = -sech^2(y) + sech^2(x) that changes sign across the diagonals. The geometry has a 'phase boundary' along the lines y = x and y = -x where K = 0 (flat). In the region |x| > |y|, K > 0 (elliptic) and in the region |y| > |x|, K < 0 (hyperbolic). The geodesics in split geometry are piecewise combinations of exponential curves (in hyperbolic regions) and trigonometric curves (in elliptic regions). Test: compute the Christoffel symbols and curvature tensor for the split metric. Prove that geodesics cross the phase boundary at most twice. Compute the area of a split triangle with one vertex in each region. Impact: a geometry where the curvature of space depends on which direction you look — the mathematical realization of a universe that is simultaneously expanding and contracting.",
     "domain_bridges": [],
     "domains": [
@@ -4833,7 +4813,7 @@
       "OEIS:A000045",
       "https://arxiv.org/abs/xxxx.xx"
     ],
-    "consumed_by_exp_id": "33e08c01",
+    "consumed_by_exp_id": "",
     "description": "Establishes a precise exponential growth bound for the sequence A393920, relating it to the Fibonacci sequence and its combinatorial structure in additive subcategories.",
     "domain_bridges": [
       "combinatorial enumeration",
@@ -4849,7 +4829,7 @@
     "proof_strategy": "Construct a bijection between A393920's geometric configurations and Fibonacci-themed tiling-like structures, then prove exponential bounds via characteristic polynomial analysis.",
     "research_mode": "team",
     "source_exp_id": "2607.00651v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T11:59:43.715928+00:00",
     "title": "On the Growth Rate of Extension-Closed Additive Subcategories for Oriented A_n Quivers"
   },
@@ -5006,7 +4986,7 @@
     "catalog_references": [
       "arXiv:2405.12345"
     ],
-    "consumed_by_exp_id": "095ece7f",
+    "consumed_by_exp_id": "",
     "description": "For increasing Boolean functions f,g:{0,1}^n→{0,1}, if the covariance exceeds the right-hand side of the FKKK inequality by at most a small ε, then either f and g depend on disjoint sets of coordinates, or they are both dictatorships on the same coordinate, or after permuting coordinates and possibly swapping f,g they are L^2-close to the two-coordinate AND-OR pair (x_i x_j, x_i ∨ x_j).",
     "domain_bridges": [
       "Fourier analysis on the Boolean cube",
@@ -5022,7 +5002,7 @@
     "proof_strategy": "Use the inductive four-restriction scheme from the original proof to isolate the deficit term, apply a sharp Bonami-Beckner inequality to control higher-degree Fourier mass, and invoke an invariance principle to reduce to Gaussian space where the extremal configurations are classified via Ehrhard-type inequalities.",
     "research_mode": "team",
     "source_exp_id": "2606.32024v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T15:19:41.775801+00:00",
     "title": "Stability of the sharp diagonal spectral correlation inequality for monotone Boolean functions"
   },
@@ -6766,7 +6746,7 @@
     "catalog_references": [
       "math.CO"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bcd487b8",
     "description": "Conjecture: A Δ-matroid M on a finite ground set E is strong (i.e., satisfies the symmetric basis exchange axiom) if and only if its system of feasible sets contains no peerless antipode. A peerless antipode is defined as an element e∈E for which there exist feasible sets A,B∈F(M) such that A△B={e} and for every feasible set C∈F(M) with e∈C we have C∖{e}∉F(M). This conjecture links the combinatorial notion of strength with the novel 'peerless' antipode characterisation introduced in the paper and is expected to be formalizable in Lean 4 using the existing Δ-matroid library.",
     "domain_bridges": [
       "tropical geometry",
@@ -6782,7 +6762,7 @@
     "proof_strategy": "1. Translate the five equivalent descriptions of strong Δ-matroids from Theorem A of the paper into Lean definitions. 2. Formalise the notion of a peerless antipode directly from the text. 3. Show that the 'peerless antipode equations' (the tropical equations arising from the orthogonal Grassmannian) are equivalent to the absence of peerless antipodes by adapting the algebraic motivation given in the paper. 4. Use the already established equivalence between strong Δ-matroids and the hyperplane/Wenzel exchange properties to close the loop, yielding the desired iff statement.",
     "research_mode": "team",
     "source_exp_id": "2607.02419v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T23:02:36.840480+00:00",
     "title": "Strong Δ-matroids are exactly those without peerless antipodes"
   },
@@ -7608,7 +7588,7 @@
       "math.CO",
       "math.RA"
     ],
-    "consumed_by_exp_id": "4ea0f216",
+    "consumed_by_exp_id": "",
     "description": "The transformation matrix encoding the change of the h-vector of a simplicial complex under the r-colored barycentric subdivision is totally positive (all minors are non-negative). The paper establishes that this matrix is TP_2, and this conjecture posits that the stronger total positivity (TP) property holds, extending the confirmed TP property of the standard barycentric and interval subdivisions.",
     "domain_bridges": [
       "Combinatorics",
@@ -7625,7 +7605,7 @@
     "proof_strategy": "Extend the combinatorial network representation or the sufficient conditions for total positivity used for the barycentric and interval subdivisions to the r-colored barycentric subdivision. This may involve verifying the Whitney conditions or finding a suitable planar network whose path-generating function equals the transformation matrix entries.",
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T01:26:28.538763+00:00",
     "title": "Total positivity of the r-colored barycentric subdivision transformation matrix"
   },
@@ -12566,7 +12546,7 @@
       "rook_polynomials",
       "multinomial_coefficients"
     ],
-    "consumed_by_exp_id": "eb1bc437",
+    "consumed_by_exp_id": "",
     "description": "For all natural numbers m, a, and d, the sum over all m-tuples (i_1, ..., i_m) of non-negative integers summing to d of the product of binomial coefficients ∏_{j=1}^{m} C(a + i_j, a) equals C(ma + d + m - 1, d). This generalizes the identity stated in the paper for m=3 (used to simplify the Bogart-Longyear formula for 3-row Latin rectangles), where the paper claims it is 'easily proved with dots and dividers.' The generalization connects directly to Gessel's framework through multisymmetric function generating series.",
     "domain_bridges": [
       "generating_functions",
@@ -12583,7 +12563,7 @@
     "proof_strategy": "Use generating functions: (1) establish that the ordinary generating function for C(a+i, a) is (1-x)^{-(a+1)} via the negative binomial theorem; (2) the product of m copies gives (1-x)^{-m(a+1)}, so the LHS is the coefficient of x^d; (3) extract the coefficient as C(m(a+1)+d-1, d) = C(ma+d+m-1, d). Alternatively, prove by induction on m using Vandermonde convolution as the inductive step, with the m=1 base case being trivial.",
     "research_mode": "team",
     "source_exp_id": "2607.05214v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T16:25:25.291005+00:00",
     "title": "Generalized Multinomial Convolution Identity for Latin Rectangle Enumeration"
   },
@@ -14661,7 +14641,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d19fecf5",
     "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card — you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier — it's an opportunity. You can WIN at the game of undecidability.",
     "domain_bridges": [],
     "domains": [
@@ -14674,7 +14654,7 @@
     "proof_strategy": "Define Godel's Casino: each round, the house presents a statement phi in the language of arithmetic. The player bets TRUE or FALSE. If ZFC proves phi, TRUE wins. If ZFC proves not-phi, FALSE wins. If phi is independent of ZFC, BOTH bets win (the player gets their stake back plus a bonus). Strategy: bet TRUE on Sigma_1 statements, FALSE on negations of Con(ZFC) and similar independent Pi_1 statements. Prove expected profit > 0: by the arithmetic hierarchy, Sigma_1 statements are decidable (true iff provable). For a random statement at level n, the probability of decidability is at least 1/3 (by counting). So E[profit] >= (1/3) * (stake) > 0. The key: even though individual bets are undecidable, the AGGREGATE strategy is profitable because most arithmetic statements ARE decidable. Test: simulate with 1000 randomly generated arithmetic statements at various levels of the hierarchy.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.960880+00:00",
     "title": "Godel's Casino: Incomplete but Winnable Games"
   },
@@ -14901,6 +14881,32 @@
     "title": "Schur Positivity of ∇^r G(k,n) if and only if k divides n"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Holmsen2016",
+      "Barany1982"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any finite set V partitioned into d+1 disjoint color classes U_1,...,U_{d+1}, and any map A:V→ℝ^d such that 0 lies in the convex cone generated by each A(U_i), the simplicial complex K of colorful transversals whose cone contains 0 is (d-2)-connected, i.e., \\tilde{H}_i(K)=0 for all i≤d-2. This conjecture extends the (d-1)-Leray property from the classical colorful Carathéodory setting to cone configurations and can be falsified by exhibiting a counterexample with non‑trivial homology in degree d-1.",
+    "domain_bridges": [
+      "topological combinatorics",
+      "oriented matroids"
+    ],
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_0665",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Homology vanishing via Nerve theorem and spectral sequence analysis of the colored complex",
+    "research_mode": "team",
+    "source_exp_id": "2607.06172v1",
+    "status": "available",
+    "timestamp": "2026-07-08T20:40:40.627710+00:00",
+    "title": "Conjecture on (d-2)-Connectivity of the Cone-Colorful Carathéodory Support Complex"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "VR filtrations and metric spaces",
@@ -14918,7 +14924,7 @@
     "domains": [
       "MachineLearning"
     ],
-    "id": "fd_0665",
+    "id": "fd_0666",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Construct an explicit infinite family of finite metric spaces Xₙ (e.g., using ℓ₁-spheres or Hamming cube constructions) with controlled geometric properties. 2. Prove that these spaces have unbounded doubling dimension. 3. Use combinatorial arguments to show that any c-approximation must encode sufficient information to distinguish between exponentially many distinct metric configurations. 4. Establish the quantitative bound on γ(c) by analyzing the homomorphism density needed in the approximation maps. 5. Verify the limit behavior as c approaches √2 from below using asymptotic analysis.",
@@ -14944,7 +14950,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0666",
+    "id": "fd_0667",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Flatly spread the cycles A1-A2 and B1-B2 over the valuation ring, compute their intersection product in the Chow ring, and observe that the valuation of the cross‑ratio is the order of the determinant of the pairing of generators, which matches this intersection product; formalize the equality in Lean using the Chow ring and valuation homomorphism.",
@@ -14971,7 +14977,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0667",
+    "id": "fd_0668",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Initialize H via the threshold random subgraph model (independent uniform labels, keep edge uv if x_u+x_v ≥ 1). This yields asymptotic degree counts. Then apply a sequence of single-edge switches (swaps along anti-diagonals) to drive the twofold prefix norm of the degree-count error to zero while preserving the parity constraint. A full proof would need a uniform edge-atom probability bound valid for all d ≤ n and stronger concentration of the prefix norm, possibly via spectral graph theory or martingale methods.",
@@ -14997,7 +15003,7 @@
     "domains": [
       "Physics"
     ],
-    "id": "fd_0668",
+    "id": "fd_0669",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the paper's β-closed walk framework and linear programming approach to search for a walk-realizable {P₄}-supporter. If such a supporter exists, the LP feasibility problem will certify generalized spectral closedness. If no supporter exists, attempt to construct a counterexample by finding a cograph G and a non-cograph H with identical generalized spectra, possibly using the paper's induced-subgraph expansion formulas for β-closed walk counts.",
@@ -15023,7 +15029,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0669",
+    "id": "fd_0670",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use a strengthened sparse regularity lemma for K_{2,t}-free graphs to obtain a regular bipartite subgraph with strong expansion, then embed an induced subdivision of K_h via greedy path routing that exploits the forbidden K_{2,t} to control common neighborhoods and avoid extra edges, eliminating the logarithmic overcounting present in the original proof.",
@@ -15048,7 +15054,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0670",
+    "id": "fd_0671",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the arithmetic intersection numbers of special cycles using the theory of arithmetic Chow groups on the associated arithmetic surface, and compute the Fourier coefficients of the Eisenstein derivative via Fourier-Jacobi expansions and Kronecker limit formulas. Verify the equality for m up to a Sturm bound by explicit formulas involving class numbers of binary quadratic forms and representation numbers of ternary quadratic forms, then invoke Sturm's principle to extend to all m.",
@@ -15075,7 +15081,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0671",
+    "id": "fd_0672",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the structure theorem for prime-order {-1,0,1}-diagonalizable graphs using Lean's library of linear algebra and graph theory, then verify the theorem against the paper's computational results via proof automation and case analysis.",
@@ -15103,7 +15109,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0672",
+    "id": "fd_0673",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Start from the explicit counterexample for k=3 given in the paper (a specific non-representable matroid where the two definitions diverge). For k>3, use the matroidal multilinearity duality: take the direct sum of the 3rd-power counterexample with a uniform matroid of rank k-3 (or add loops) and exploit the concatenation product properties to show the discrepancy persists in the k-th symmetric power. Formalize the rank formulas and prove non-equality by exhibiting a circuit or rank difference.",
@@ -15112,6 +15118,74 @@
     "status": "available",
     "timestamp": "2026-07-08T20:12:47.703311+00:00",
     "title": "Mason's Conjecture Fails for All Symmetric Powers of Order at Least 3"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Edelman (forest permutations)",
+      "Tenner (reduced words)",
+      "Petersen and Tenner (inversion graph characterizations)",
+      "Gallai (comparability graphs)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any permutation π ∈ S_n, let G_π be its inversion graph and c(G_π) its cyclomatic number (|E|-|V|+components). We conjecture that the total number of occurrences of the permutation patterns 321 and 3412 in π is at most c(G_π). This extends the paper's claim that the inversion graph bounds each pattern count individually.",
+    "domain_bridges": [
+      "permutation patterns",
+      "graph theory",
+      "Coxeter groups"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0674",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Utilize the reduced-word edge ordering from the paper: first-occurrence edges form a spanning forest, repeated edges correspond to cyclomatic number. Show each 321 or 3412 pattern forces at least one independent cycle or repeated edge; induct on cyclomatic number by deleting leaf vertices of the inversion graph, using the proven forest case where both pattern counts are zero.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06198v1",
+    "status": "available",
+    "timestamp": "2026-07-08T20:42:00.574021+00:00",
+    "title": "Sum of 321 and 3412 pattern counts bounded by cyclomatic number"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The Mandelbrot set M is defined by z_{n+1} = z_n^2 + c, and the boundary of M is the locus of c values where the orbit of 0 is bounded but barely so. Each bulb of M corresponds to a rational number p/q (the period-q bulb at angle p/q). The size of the p/q bulb decreases with q, and the Fibonacci sequence governs the spiral arrangement of bulbs. Conjecture: The period of the bulb at angle p/q (in lowest terms) is exactly q. Moreover, the Lyapunov exponent lambda(c) at the center of the p/q bulb equals log(2) * cos(pi*p/q). The 'prime bulbs' — bulbs at angles 1/q where q is prime — have special symmetry: they are the only bulbs with dihedral symmetry D_q. The composite bulbs have more complex symmetry groups. The prime factorization of the period determines the bulb's topology: a bulb of period n = p1^a1 * ... * pk^ak is topologically a product of k bulbs of periods p1^a1, ..., pk^ak. Test: for each rational p/q with q <= 20, locate the corresponding bulb in M, compute its Lyapunov exponent, and verify lambda = log(2) * cos(pi*p/q). Classify bulbs by the prime factorization of their period and verify the product structure. Impact: the Mandelbrot set is a visual calculator for prime factorization — every bulb encodes number-theoretic information about its period.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0678",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "State the bulb-period correspondence: the bulb at angle p/q in the Mandelbrot set has period q. This follows from the Douady-Hubbard landing theorem. Conjecture the Lyapunov formula: lambda(center of p/q bulb) = log(2) * cos(pi*p/q). Prove for the main cardioid (period 1): lambda = log(2) * cos(0) = log(2). Prove for the period-2 bulb: lambda = log(2) * cos(pi/2) = 0 (parabolic). Prove for period-q bulbs: the critical orbit has period q, and the multiplier of the q-cycle equals e^{2*pi*i*p/q} at the center, so the Lyapunov exponent is log|multiplier| = log(2) * cos(2*pi*p/q). Wait, the multiplier at the center of the p/q bulb is e^{2*pi*i*p/q}, so |multiplier| = 1 and lambda = 0. The Lyapunov exponent is NOT log(2)*cos(pi*p/q) at the center. Correct: on the boundary of the p/q bulb, lambda = 0 (parabolic), and lambda increases as you move away. Test: compute lambda numerically along rays from bulb centers.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-08T20:42:29.498690+00:00",
+    "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Prime gaps — the spaces between consecutive primes — are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable — given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random — they are a solvable crossword puzzle with deterministic rules.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0676",
+    "lineage_refs": [],
+    "priority_score": 0.78,
+    "proof_strategy": "Define the prime gap sequence g(n) = p(n+1) - p(n) for n >= 1. State the Hardy-Littlewood gap conjecture: P(g(n) = g | g(n-1) = g_{-1}, ...) = 2*C_2/g * (1/log(p(n))) * product_{q prime, q | g} (q-1)/(q-2) where C_2 = 0.66016... is the twin prime constant. Define forcing patterns: a sequence of gaps g_{-k}, ..., g_{-1} is forcing if P(g(0) = g | g_{-k}, ..., g_{-1}) > 0.99 for exactly one value of g. Prove forcing patterns have positive density: the pattern [6, 4, 2, 6] is forcing because after primes p, p+6, p+10, p+12, p+18, the next prime must be p+22 with probability > 0.95 (since p+20 is even, p+21 is divisible by 3 if p ≡ 1 mod 3, etc.). Compute conditional probabilities numerically for N = 10^8. Test: enumerate forcing patterns and compute their density.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-08T20:42:29.276180+00:00",
+    "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
   },
   {
     "ambition_level": "extension",
@@ -15172,6 +15246,46 @@
     "status": "available",
     "timestamp": "2026-07-07T17:01:12.860686+00:00",
     "title": "Sharp dichotomy for the *total* d-Hoggatt numbers"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search fractal dimension D(T) of a theorem T as the Hausdorff dimension of the set of all successful proof paths for T. If D(T) < 1, the proof is 'easy' (few paths work, so search is focused). If D(T) > 1, the proof is 'hard' (many paths must be explored). Conjecture: For theorems in ZFC, D(T) = 1 + O(1/length(T)). In other words, most theorems have fractal dimension close to 1 — proof search is neither trivially easy nor impossibly hard, but balanced at the edge. Theorems with D(T) << 1 are 'obvious' (direct proofs), and theorems with D(T) >> 1 require exponentially long proofs. The fractal dimension correlates with proof length: if D(T) = 1 + epsilon, then the shortest proof of T has length roughly 1/epsilon. Test: for 1000 theorems in Lean 4's Mathlib, estimate D(T) by Monte Carlo sampling of proof search trees, and correlate with actual proof length. Impact: proof difficulty is a fractal — the dimension of the proof search space determines how hard the theorem is.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0679",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "Define the proof search tree for a theorem T: nodes are proof states, edges are inference rule applications, and leaves are states where T is proved or a contradiction is reached. Define the successful path set S(T) as the set of all paths from root to a successful leaf. Define D(T) = dim_H(S(T)) as the Hausdorff dimension. Compute D(T) by box-counting: cover S(T) with boxes of size epsilon and count N(epsilon) boxes. Then D(T) = lim_{epsilon -> 0} log(N(epsilon))/log(1/epsilon). For a balanced binary tree of depth d with 2^d leaves, D = log(2)/log(2) = 1. For a sparse tree with branching factor b < 2, D = log(b)/log(2) < 1. Conjecture: for typical ZFC theorems, the effective branching factor approaches 2 from below, giving D -> 1. Estimate D(T) by MCMC: start from the goal state, randomly apply inference rules, and count the fraction of paths that reach axioms within depth d. D(T) = log(fraction * branching_factor) / log(2). Test: compute for 1000 Mathlib theorems.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-08T20:42:29.633330+00:00",
+    "title": "Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearrangement of the primes q_1, q_2, ... such that the sequence of ratios q_n / p_n converges to 1. In other words, you can shuffle the primes almost arbitrarily and the room numbers barely change. More precisely, the set of permutations sigma for which p_{sigma(n)} / p_n has a limit is dense in the symmetric group (with the topology of pointwise convergence). But NOT every permutation works: the permutation that swaps all even-indexed primes with odd-indexed ones gives q_{2n}/p_{2n} = p_{2n-1}/p_{2n} which converges to 1 by the prime number theorem, but the permutation that reverses order gives q_n/p_n = p_{N-n}/p_n which diverges. Test: compute q_n/p_n for 10 random permutations of the first 10^6 primes and verify that most ratios converge to 1. Find the exact density of 'well-behaved' permutations. Impact: the primes are robust under rearrangement — their asymptotic density is a topological invariant of the permutation group.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0677",
+    "lineage_refs": [],
+    "priority_score": 0.74,
+    "proof_strategy": "Define a rearrangement of primes as a bijection sigma: N -> N, giving q_n = p_{sigma(n)}. Define a well-behaved rearrangement as one where q_n/p_n -> 1. Prove density: for any epsilon > 0 and any finite partial permutation sigma_0, there exists an extension sigma such that q_n/p_n -> 1. Use the prime number theorem: p_n ~ n*log(n), so q_n/p_n = p_{sigma(n)}/(n*log(n)) = sigma(n)*log(sigma(n))/(n*log(n)). For this to converge to 1, we need sigma(n) ~ n, i.e., sigma must be 'close to the identity' in the sense that sigma(n)/n -> 1. Prove the set of such permutations is dense in Sym(N): for any finite permutation and any neighborhood, extend to a permutation with sigma(n) = n + O(sqrt(n)*log(n)) which satisfies sigma(n)/n -> 1. Prove the reversal fails: sigma(n) = N-n gives sigma(n)/n = (N-n)/n -> infinity. Test: sample 1000 permutations from Sym(10^6) and measure the fraction that are well-behaved.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-08T20:42:29.383931+00:00",
+    "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
   },
   {
     "ambition_level": "extension",
