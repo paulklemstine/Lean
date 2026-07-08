@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-08T19:19:51.602693+00:00",
+  "last_updated": "2026-07-08T19:43:13.832762+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -2225,6 +2225,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-08T19:19:51.560455+00:00",
       "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4259,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 63,
+      "domain": "Computation",
+      "duration_seconds": 7361.421128749847,
+      "end_time": 1783539413.6884518,
+      "files_integrated": 3,
+      "job_id": "8dce6893",
+      "outcome_quality": 0.0,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v24",
+      "phase_b_skip_reason": "low_quality",
+      "phase_b_skipped": true,
+      "prompt_version": "v24",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.71,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.5,
+        "composite": 0.6609,
+        "cross_domain": 0.85,
+        "grade": "substantial",
+        "importance": 0.6518,
+        "novelty": 0.83,
+        "proof_depth": 0.5755,
+        "usefulness": 0.7127
+      },
+      "quality_score": 0.217608,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783532052.267323,
+      "strategy_count": 0,
+      "theorem_count": 16,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 13,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-08T19:43:13.796686+00:00",
+      "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
     }
   ]
 }
