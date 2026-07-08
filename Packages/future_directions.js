@@ -7199,6 +7199,34 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence and uniqueness of microscopic weightings on finite strictly negative type metric spaces"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Let \u03c1 be the unique real root of x^2 + x^3 = 1 in (0,1). Define \u03bc\u2082 as the infimum over all infinite sequences of radial cuts of a circular cake (as described in the paper) of the supremum over time of the ratio between the largest and smallest portion (adjacent pair of slices). Then \u03bc\u2082 = 1+\u03c1.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0599",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05330v1",
+    "status": "available",
+    "timestamp": "2026-07-08T01:02:01.369770+00:00",
+    "title": "Optimality of the 1+\u03c1 bound for the maximum-to-minimum portion ratio in the iterative cake-cutting process"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For an elliptic curve E over Q with good supersingular reduction at 2 and square-free D \u22611 mod 4, the difference in sharp/flat \u03bb-invariants under quadratic twist by D should include a term proportional to the \u03bc-invariant when \u03bc \u2260 0.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_0599",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05305v1",
+    "status": "available",
+    "timestamp": "2026-07-08T01:05:41.844138+00:00",
+    "title": "Extension of Matsuno's Formula for Non-Vanishing \u03bc-Invariants"
+  },
+  {
     "consumed_by_exp_id": "d9ca63e8",
     "description": "Bitcoin mining requires finding a nonce n such that SHA256(block_header || n) < target. What if we replaced SHA256 with a tropical hash? Define tropical SHA as: TSHA(m) = min over all i of (m_i + h_i) where m = (m_1,...,m_k) is the message, h = (h_1,...,h_k) is the tropical hash key, and all operations are in the min-plus semiring (a tropical plus b = min(a,b), a tropical times b = a + b). Conjecture: TSHA is a one-way function in the tropical sense: computing TSHA(m) given m and h is O(k) (trivial), but finding m given TSHA(m) and h is NP-hard (it reduces to a tropical shortest path problem). More precisely, the tropical preimage problem \u2014 given y and h, find m such that min_i(m_i + h_i) = y \u2014 requires checking O(e^{k}) tropical paths in the worst case. But there's a twist: tropical hash collisions are COMMON because min(a,b) = min(b,a). To fix this, define TSHA2(m) = (min_i(m_i + h_i), min_i(m_i + h'_i)) where h and h' are two independent tropical keys. Conjecture: TSHA2 is collision-resistant with probability 1 - O(1/k). Test: implement TSHA and TSHA2, measure collision resistance, and compare mining difficulty to SHA256 for block sizes k = 32, 64, 128. Impact: a cryptocurrency where mining is solving tropical optimization problems instead of brute-force hash searches \u2014 mining IS mathematics.",
     "domains": [

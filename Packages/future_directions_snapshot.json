@@ -13366,6 +13366,59 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Let ρ be the unique real root of x^2 + x^3 = 1 in (0,1). Define μ₂ as the infimum over all infinite sequences of radial cuts of a circular cake (as described in the paper) of the supremum over time of the ratio between the largest and smallest portion (adjacent pair of slices). Then μ₂ = 1+ρ.",
+    "domain_bridges": [
+      "combinatorics",
+      "discrete dynamical systems",
+      "word combinatorics"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0599",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "To prove the conjecture, one would first establish the known upper bound μ₂ ≤ 1+ρ by exhibiting the specific cutting process given in the paper. For the lower bound μ₂ ≥ 1+ρ, one would analyze the combinatorial constraints on slice sizes imposed by the cutting rule and show that any infinite sequence must eventually produce a portion whose size ratio is at least 1+ρ. This can be approached by modeling the slice sizes as a multiplicative walk on the set {1, ρ, ρ², ρ³} and using a potential function or invariant derived from the forbidden factors in Proposition~O\\\\ref{propNoRepeat} to bound the frequency of large slices relative to small ones, ultimately yielding the desired ratio.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05330v1",
+    "status": "available",
+    "timestamp": "2026-07-08T01:02:01.369770+00:00",
+    "title": "Optimality of the 1+ρ bound for the maximum-to-minimum portion ratio in the iterative cake-cutting process"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Spr12",
+      "Pol03",
+      "Mat08",
+      "Hatley-Ray"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For an elliptic curve E over Q with good supersingular reduction at 2 and square-free D ≡1 mod 4, the difference in sharp/flat λ-invariants under quadratic twist by D should include a term proportional to the μ-invariant when μ ≠ 0.",
+    "domain_bridges": [
+      "2-adic L-functions",
+      "Quadratic Twists",
+      "Iwasawa Invariants"
+    ],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_0599",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Extend the existing formula by analyzing the μ-invariant's contribution through local-global principles and modular forms.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05305v1",
+    "status": "available",
+    "timestamp": "2026-07-08T01:05:41.844138+00:00",
+    "title": "Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "d9ca63e8",
     "description": "Bitcoin mining requires finding a nonce n such that SHA256(block_header || n) < target. What if we replaced SHA256 with a tropical hash? Define tropical SHA as: TSHA(m) = min over all i of (m_i + h_i) where m = (m_1,...,m_k) is the message, h = (h_1,...,h_k) is the tropical hash key, and all operations are in the min-plus semiring (a tropical plus b = min(a,b), a tropical times b = a + b). Conjecture: TSHA is a one-way function in the tropical sense: computing TSHA(m) given m and h is O(k) (trivial), but finding m given TSHA(m) and h is NP-hard (it reduces to a tropical shortest path problem). More precisely, the tropical preimage problem — given y and h, find m such that min_i(m_i + h_i) = y — requires checking O(e^{k}) tropical paths in the worst case. But there's a twist: tropical hash collisions are COMMON because min(a,b) = min(b,a). To fix this, define TSHA2(m) = (min_i(m_i + h_i), min_i(m_i + h'_i)) where h and h' are two independent tropical keys. Conjecture: TSHA2 is collision-resistant with probability 1 - O(1/k). Test: implement TSHA and TSHA2, measure collision resistance, and compare mining difficulty to SHA256 for block sizes k = 32, 64, 128. Impact: a cryptocurrency where mining is solving tropical optimization problems instead of brute-force hash searches — mining IS mathematics.",
