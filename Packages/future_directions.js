@@ -33,7 +33,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3d9b126a",
     "description": "The shadowing lemma says that near an approximate orbit of a chaotic system, there exists a true orbit. In other words, every 'almost correct' trajectory of a chaotic map has a 'truly correct' trajectory nearby. This means that numerical errors in chaotic simulations are not bugs \u2014 they are SHADOWS of real trajectories. Conjecture: Every program that computes a chaotic map f: R^n -> R^n has the property that its floating-point output is shadowed by a true orbit of f. More precisely, for every epsilon > 0, there exists delta > 0 such that if x_0, x_1, ..., x_N is a delta-pseudo-orbit (|x_{n+1} - f(x_n)| < delta for all n), then there exists a true orbit y_0, y_1, ..., y_N with |x_n - y_n| < epsilon for all n. The shadowing time N(epsilon, delta) grows at most polynomially in 1/delta for hyperbolic maps. Test: implement the logistic map f(x) = 4x(1-x) in floating-point and compute 10^6 iterations. For each floating-point orbit, use binary search to find the shadowing true orbit. Verify that the shadowing distance is at most 10^{-10} for floating-point precision 10^{-16}. Impact: numerical chaos is not error \u2014 it is a computable shadow of mathematical truth. Your computer's rounding errors are tracing out REAL orbits of the chaotic system.",
     "domains": [
       "Novelty",
@@ -43,7 +43,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T23:49:57.915548+00:00",
     "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
   },
@@ -2965,7 +2965,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Characterization of Zero-Preserving Pisot Numerations via Torus Isomorphism"
   },
   {
-    "consumed_by_exp_id": "f61c481a",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: There exists an absolute constant K>0 such that for every n\u2208\u2115 and every family F\u22862^[n] that is 3\u2011sunflower\u2011free (i.e., contains no three sets with pairwise constant intersection), we have |F| \u2264 K\u00b7n^{1/6}\u00b7(3/2^{2/3})^n.",
     "domains": [
       "Pythagorean"
@@ -2974,7 +2974,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30593v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T23:33:38.013269+00:00",
     "title": "Optimality of the polynomial factor in the Naslund\u2013Sawin bound for sunflower\u2011free families"
   },
@@ -7168,12 +7168,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For P(X) = X\u00b2 + 1, the number of pairs (n, m) with 1 \u2264 n < m \u2264 N such that (n\u00b2+1)(m\u00b2+1) is a perfect square is O(log\u1d2c N) for some absolute constant A \u2265 0. This is equivalent to the variance of the extended Rademacher partial sum \u2211_{n\u2264N} f(n\u00b2+1) satisfying Var = N + O(log\u1d2c N), meaning the off-diagonal contribution is negligible. The equation (n\u00b2+1)(m\u00b2+1) = k\u00b2 reduces via Gaussian integer norms to the Pythagorean-type condition (nm\u22121)\u00b2 + (n+m)\u00b2 = k\u00b2, which for fixed n yields Pell equations whose solutions grow exponentially, giving only O(log N) solutions per n. The conjecture asserts the total across all n \u2264 N remains polylogarithmic.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0604",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06398v1",
+    "status": "available",
+    "timestamp": "2026-07-08T05:03:28.582408+00:00",
+    "title": "Polylogarithmic Paucity of Square Products of Shifted Squares"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any finite metric space X of strictly negative type there exists exactly one signed measure \u03bc of total mass 1 that minimizes the energy functional E(\u03bc)=\u2211_{x,y\u2208X}d(x,y)\u03bc(x)\u03bc(y); moreover \u03bc can be characterized as the unique optimizer of this strictly convex quadratic program.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0604",
+    "id": "fd_0605",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05349v1",
@@ -7187,7 +7201,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0605",
+    "id": "fd_0606",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05305v1",
@@ -7201,7 +7215,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0606",
+    "id": "fd_0607",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05324v1",
@@ -7215,7 +7229,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0607",
+    "id": "fd_0608",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06443v1",
@@ -7230,7 +7244,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0608",
+    "id": "fd_0609",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06396v1",
@@ -7244,13 +7258,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Cryptography"
     ],
-    "id": "fd_0609",
+    "id": "fd_0610",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
     "status": "available",
     "timestamp": "2026-07-08T04:27:04.932052+00:00",
     "title": "Siegel-Weil Identity for the E\u2088 Lattice Theta Series"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every connected bipartite {-1,0,1}-diagonalizable graph on n vertices is a complete bipartite graph K_{n/2, n/2}. This strengthens the paper's theorem that every bipartite {-1,0,1}-diagonalizable graph is regular, and if true, would provide a complete structural characterization connecting the {-1,0,1}-diagonalizability property to classical complete bipartite graph structure.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0611",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06336v1",
+    "status": "available",
+    "timestamp": "2026-07-08T05:03:44.362244+00:00",
+    "title": "Bipartite {-1,0,1}-diagonalizable graphs are complete bipartite"
   },
   {
     "consumed_by_exp_id": "d9ca63e8",
