@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-08T21:58:32.166185+00:00",
+  "last_updated": "2026-07-08T22:20:57.219824+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -2568,6 +2568,47 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-08T21:58:31.769703+00:00",
       "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6323,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "Applications",
+      "duration_seconds": -3611.3999564647675,
+      "end_time": 1783544316.5350251,
+      "files_integrated": 0,
+      "job_id": "8e9e7a75",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v27",
+      "phase_b_skipped": false,
+      "prompt_version": "v27",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.8,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.5,
+        "cross_domain": 1.0,
+        "importance": 0.8766666666666666,
+        "novelty": 0.9,
+        "pegb_compliance": 0.75,
+        "proof_depth": 0.8666666666666666,
+        "usefulness": 0.9333333333333333
+      },
+      "quality_score": 0.15538,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783547927.9349816,
+      "strategy_count": 0,
+      "theorem_count": 30,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 20,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-08T22:20:56.938577+00:00",
+      "title": "The Mathematics of Memes: Viral Information Topology"
     }
   ]
 }
