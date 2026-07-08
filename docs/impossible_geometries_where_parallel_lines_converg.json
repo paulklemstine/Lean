@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-07-08T21:35:08Z",
+  "date": "2026-07-08T21:57:42Z",
   "key_results": [
     "Consistency Theorem: the split metric ds^2 = dx^2/cosh^2(y) + cosh^2(x) dy^2 is positive-definite at every point, so Split Geometry is a genuine Riemannian geometry.",
     "Monotonicity of sech^2: sech^2(a) < sech^2(b) if and only if |b| < |a|, so sech^2 is a strictly decreasing, sign-blind readout of magnitude.",
@@ -116,6 +116,6 @@
   "source_exp_ids": [
     "seed"
   ],
-  "quality_score": 0.8151999999999999,
-  "quality_tier": "gold"
+  "quality_score": 0.160512,
+  "quality_tier": "bronze"
 }
