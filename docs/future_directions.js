@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "8636a701",
+    "consumed_by_exp_id": "",
     "description": "The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the j-function is just the TIP of the iceberg. Conjecture: The full moonshine correspondence associates to each conjugacy class g in M a McKay-Thompson series T_g(q) = sum a_n(g) q^n that is a modular function of a specific level, and the product over all g in M of T_g(q) equals a modular form of weight |M|/24 that encodes the complete character table of M. The secret message: the Monster group IS a modular form, and every property of M (its order, its character table, its maximal subgroups) can be read off from the q-expansion of this product. Test: compute the first 100 coefficients of T_g(q) for each conjugacy class of M and verify they match the known character values. Prove that the product of all T_g(q) converges to a modular form. Impact: the Monster is not just connected to modular forms \u2014 it IS a modular form. The 194 conjugacy classes of M correspond to 194 modular forms, and their product encodes everything.",
     "domains": [
       "Novelty",
@@ -13,7 +13,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T23:49:58.048338+00:00",
     "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
   },
@@ -33,7 +33,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
   },
   {
-    "consumed_by_exp_id": "3d9b126a",
+    "consumed_by_exp_id": "",
     "description": "The shadowing lemma says that near an approximate orbit of a chaotic system, there exists a true orbit. In other words, every 'almost correct' trajectory of a chaotic map has a 'truly correct' trajectory nearby. This means that numerical errors in chaotic simulations are not bugs \u2014 they are SHADOWS of real trajectories. Conjecture: Every program that computes a chaotic map f: R^n -> R^n has the property that its floating-point output is shadowed by a true orbit of f. More precisely, for every epsilon > 0, there exists delta > 0 such that if x_0, x_1, ..., x_N is a delta-pseudo-orbit (|x_{n+1} - f(x_n)| < delta for all n), then there exists a true orbit y_0, y_1, ..., y_N with |x_n - y_n| < epsilon for all n. The shadowing time N(epsilon, delta) grows at most polynomially in 1/delta for hyperbolic maps. Test: implement the logistic map f(x) = 4x(1-x) in floating-point and compute 10^6 iterations. For each floating-point orbit, use binary search to find the shadowing true orbit. Verify that the shadowing distance is at most 10^{-10} for floating-point precision 10^{-16}. Impact: numerical chaos is not error \u2014 it is a computable shadow of mathematical truth. Your computer's rounding errors are tracing out REAL orbits of the chaotic system.",
     "domains": [
       "Novelty",
@@ -43,7 +43,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T23:49:57.915548+00:00",
     "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
   },
@@ -1172,7 +1172,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing the generalized honeymoon Oberwolfach problem in Lean 4"
   },
   {
-    "consumed_by_exp_id": "64e0cde9",
+    "consumed_by_exp_id": "",
     "description": "For all m \u2265 1, the refined generating function for intervals in the greedy m-Tamari poset, tracking both the number of elements and the number of leaves (peaks in the corresponding Dyck paths), is equal to the refined generating function for planar (m+1)-constellations tracking the same statistics. This extends the combinatorial proof for m=1 to all m \u2265 1.",
     "domains": [
       "Algebra",
@@ -1182,7 +1182,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01206v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:55:26.518816+00:00",
     "title": "Refined Bijective Enumeration of Greedy Tamari Intervals and Planar (m+1)-Constellations"
   },
@@ -1971,7 +1971,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Positive Anti-Wick Obstruction Confirmation"
   },
   {
-    "consumed_by_exp_id": "eaf24e75",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that apart from integer scalar multiples of products of cyclotomic polynomials (which give rational multiples of \u03c4 for all root arguments), the only integer palindrome of degree\u202f4 whose four zeros all lie on the unit circle but are not all cyclotomic is, up to an integer factor, the polynomial 62826 = 2\u00b7\u03a6\u2083(x)\u00b7(3x\u00b2\u22122x+3). Consequently any such unit palindrome of degree\u202f4 must be associate either to a cyclotomic product or to 2\u00b7\u03a6\u2083(x)\u00b7(3x\u00b2\u22122x+3).",
     "domains": [
       "Pythagorean"
@@ -1980,7 +1980,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29669v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T06:17:55.891614+00:00",
     "title": "Unique exceptional integer palindromes of degree\u202f4 with unit roots"
   },
@@ -3037,7 +3037,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the n/2\u202f+\u202f1/3 exponent for the finite\u2011field Erd\u0151s\u2013Falconer distance problem"
   },
   {
-    "consumed_by_exp_id": "998dff91",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for every integer k \u2265 1 there exists a plane triangulation G on n = 5k + r vertices (r \u2208 {0,1,2,3,4}) such that the maximum size of a P3-packing \u03bb_{P3}(G) equals floor(n/5). This would imply the lower bound \u03bb_{P3}(G) \u2265 floor(n/5) proved in the paper is tight for arbitrarily large triangulations.",
     "domains": [
       "Pythagorean"
@@ -3046,7 +3046,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T04:14:42.891046+00:00",
     "title": "Tightness Conjecture for P3-Packings in Plane Triangulations"
   },
@@ -4218,7 +4218,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit Upper Bound on the Riemann Zeta Function on the 1-Line via Smoothing"
   },
   {
-    "consumed_by_exp_id": "59da6bf9",
+    "consumed_by_exp_id": "",
     "description": "For any prime p, the Markov chain on \u2115 defined by the Klagsbrun-Mazur-Rubin twist process for p-Selmer ranks of even-dimensional Galois modules satisfying the KMR technical conditions is irreducible, aperiodic, and positive recurrent. Its unique stationary distribution \u03c0 assigns strictly positive probability to every rank r \u2208 \u2115, and the distribution of p-Selmer ranks in the twist family ordered by the product of ramified primes converges to \u03c0.",
     "domains": [
       "Algebra",
@@ -4228,7 +4228,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T03:42:58.157244+00:00",
     "title": "KMR Markov chain convergence and positivity of p-Selmer rank stationary distribution"
   },
@@ -5120,7 +5120,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact enumeration of arithmetic Schur-type triples in the Boolean lattice"
   },
   {
-    "consumed_by_exp_id": "068b28b7",
+    "consumed_by_exp_id": "",
     "description": "For every fixed graph H that contains at least one edge, the decision problem Chromatic Sum remains NP\u2011complete when restricted to H\u2011free graphs (i.e., graphs that do not contain H as a subgraph). This conjecture is falsifiable because a single counterexample\u2014a graph class H\u2011free for which Chromatic Sum is polynomial\u2011time solvable\u2014 would refute it.",
     "domains": [
       "Pythagorean"
@@ -5129,7 +5129,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00263v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T08:29:25.578468+00:00",
     "title": "Chromatic Sum is NP-complete on H\u2011free graphs for any fixed graph H with at least one edge"
   },
@@ -7037,7 +7037,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Uniqueness of the 2-(496, 4, 1) Flag-Transitive Linear Space with Socle PSL(2, 32)"
   },
   {
-    "consumed_by_exp_id": "c3075cb5",
+    "consumed_by_exp_id": "",
     "description": "Ramanujan's constant e^{pi*sqrt(163)} is remarkably close to an integer: it equals 262537412640768743.99999999999925... \u2014 just 7.5 * 10^{-13} away from 262537412640768744. This is not a coincidence: 163 is the largest Heegner number, and the near-integer property follows from the j-function and the fact that Q(sqrt(-163)) has class number 1. But 163 appears EVERYWHERE: it is prime, it is the smallest p such that Q(sqrt(-p)) has class number 1 and p > 2, it is a Chen prime, a lucky prime, a strongly prime, and the 38th prime. Conjecture: 163 is the unique integer n such that e^{pi*sqrt(n)} is within 10^{-6} of an integer. More generally, the Heegner numbers (1, 2, 3, 7, 11, 19, 43, 67, 163) are exactly the n for which Q(sqrt(-n)) has class number 1, and e^{pi*sqrt(n)} is near-integer for each. The 'magic' of 163 is that it is the LAST Heegner number \u2014 the final class number 1 imaginary quadratic field. Test: prove that e^{pi*sqrt(n)} is within 10^{-6} of an integer only for Heegner numbers. Compute e^{pi*sqrt(67)} and e^{pi*sqrt(43)} and verify near-integer behavior. Prove that 163 is the largest Heegner number (Stark-Heegner theorem). Impact: 163 is not magic \u2014 it is the climax of a deep theorem in algebraic number theory. The near-integer property of e^{pi*sqrt(163)} is the shadow of the class number 1 condition.",
     "domains": [
       "Novelty",
@@ -7047,7 +7047,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T23:49:57.790919+00:00",
     "title": "The Unreasonable Effectiveness of the Number 163"
   },
@@ -7182,12 +7182,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any \u03b5 > 0, there exist effectively computable constants C(\u03b5) > 0 and Q\u2080(\u03b5) > 0 such that: if for every primitive quadratic Dirichlet character \u03c7 with conductor q \u2265 Q\u2080(\u03b5), all non-real zeros \u03c1 of L(s,\u03c7) satisfy Re(\u03c1) \u2264 1 - C(\u03b5)/log(q), then there is at most one such character \u03c7 whose associated L-function has a real zero \u03b2 in the interval [1 - q^(-\u03b5), 1). This formalizes the paper's main result that excluding non-real zeros from a shrinking neighborhood of s=1 allows a significant refinement of Page's theorem.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0605",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06433v1",
+    "status": "available",
+    "timestamp": "2026-07-08T05:36:19.999905+00:00",
+    "title": "Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any finite metric space X of strictly negative type there exists exactly one signed measure \u03bc of total mass 1 that minimizes the energy functional E(\u03bc)=\u2211_{x,y\u2208X}d(x,y)\u03bc(x)\u03bc(y); moreover \u03bc can be characterized as the unique optimizer of this strictly convex quadratic program.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0605",
+    "id": "fd_0606",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05349v1",
@@ -7201,7 +7215,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0606",
+    "id": "fd_0607",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05305v1",
@@ -7215,7 +7229,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0607",
+    "id": "fd_0608",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05324v1",
@@ -7229,7 +7243,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0608",
+    "id": "fd_0609",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06443v1",
@@ -7244,7 +7258,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0609",
+    "id": "fd_0610",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06396v1",
@@ -7258,7 +7272,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Cryptography"
     ],
-    "id": "fd_0610",
+    "id": "fd_0611",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
@@ -7272,7 +7286,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0611",
+    "id": "fd_0612",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06336v1",
@@ -7281,22 +7295,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bipartite {-1,0,1}-diagonalizable graphs are complete bipartite"
   },
   {
-    "consumed_by_exp_id": "d9ca63e8",
-    "description": "Bitcoin mining requires finding a nonce n such that SHA256(block_header || n) < target. What if we replaced SHA256 with a tropical hash? Define tropical SHA as: TSHA(m) = min over all i of (m_i + h_i) where m = (m_1,...,m_k) is the message, h = (h_1,...,h_k) is the tropical hash key, and all operations are in the min-plus semiring (a tropical plus b = min(a,b), a tropical times b = a + b). Conjecture: TSHA is a one-way function in the tropical sense: computing TSHA(m) given m and h is O(k) (trivial), but finding m given TSHA(m) and h is NP-hard (it reduces to a tropical shortest path problem). More precisely, the tropical preimage problem \u2014 given y and h, find m such that min_i(m_i + h_i) = y \u2014 requires checking O(e^{k}) tropical paths in the worst case. But there's a twist: tropical hash collisions are COMMON because min(a,b) = min(b,a). To fix this, define TSHA2(m) = (min_i(m_i + h_i), min_i(m_i + h'_i)) where h and h' are two independent tropical keys. Conjecture: TSHA2 is collision-resistant with probability 1 - O(1/k). Test: implement TSHA and TSHA2, measure collision resistance, and compare mining difficulty to SHA256 for block sizes k = 32, 64, 128. Impact: a cryptocurrency where mining is solving tropical optimization problems instead of brute-force hash searches \u2014 mining IS mathematics.",
+    "consumed_by_exp_id": "",
+    "description": "For all positive integers k \u2265 2, n \u2265 1, and 1 \u2264 j \u2264 n, the symmetric function \u0394_{e_j} G(k,n) is Schur positive (i.e., expands with nonnegative coefficients in \u2115[q,t] in the Schur basis) if and only if k divides n, where G(k,n) = \u03a3_{\u03bb\u22a2n, \u03bb\u2081<k} m_\u03bb is the Petrie symmetric function and \u0394_{e_j} is the Bergeron\u2013Garsia delta operator applied to e_j. This extends the paper's main result for \u2207 = \u0394_{e_n} (and its iterates \u2207^r) to all elementary symmetric function inputs of the delta operator, establishing that the divisibility criterion governs Schur positivity uniformly across the entire family of delta operators.",
     "domains": [
-      "Novelty",
-      "Tropical"
+      "Bridges"
     ],
-    "id": "fd_0580",
-    "priority_score": 0.79,
+    "id": "fd_0613",
+    "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T20:47:00.059968+00:00",
-    "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
+    "source_exp_id": "2607.06351v1",
+    "status": "available",
+    "timestamp": "2026-07-08T05:37:42.644235+00:00",
+    "title": "Delta-Petrie Schur Positivity"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "faec2dac",
     "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
     "domains": [
       "Novelty",
@@ -7306,7 +7319,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.77,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T16:56:44.628941+00:00",
     "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
   },

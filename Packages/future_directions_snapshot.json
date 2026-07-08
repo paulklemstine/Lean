@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "8636a701",
+    "consumed_by_exp_id": "",
     "description": "The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the j-function is just the TIP of the iceberg. Conjecture: The full moonshine correspondence associates to each conjugacy class g in M a McKay-Thompson series T_g(q) = sum a_n(g) q^n that is a modular function of a specific level, and the product over all g in M of T_g(q) equals a modular form of weight |M|/24 that encodes the complete character table of M. The secret message: the Monster group IS a modular form, and every property of M (its order, its character table, its maximal subgroups) can be read off from the q-expansion of this product. Test: compute the first 100 coefficients of T_g(q) for each conjugacy class of M and verify they match the known character values. Prove that the product of all T_g(q) converges to a modular form. Impact: the Monster is not just connected to modular forms — it IS a modular form. The 194 conjugacy classes of M correspond to 194 modular forms, and their product encodes everything.",
     "domain_bridges": [],
     "domains": [
@@ -15,7 +15,7 @@
     "proof_strategy": "State the moonshine conjecture (proved by Borcherds): each conjugacy class g of M has a McKay-Thompson series T_g(q) that is a Hauptmodul of genus 0 for a specific modular curve. Extend: define the Monster product P(q) = prod_{g in Conj(M)} T_g(q)^{1/|C(g)|} where C(g) is the conjugacy class. Prove P(q) converges: log P(q) = sum_g (1/|C(g)|) * log T_g(q) = sum_g sum_n (1/|C(g)|) * a_n(g)/n * q^n. Each term is bounded by |a_n(g)|/n * |q|^n which is O(n^{3/2}) by Deligne's bound. Prove P(q) is a modular form of weight |M|/24 = 8 * 10^{53}/24 by checking it transforms correctly under each level. Test: compute P(q) mod q^{100} and compare with the character table of M.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T23:49:58.048338+00:00",
     "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
   },
@@ -42,7 +42,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "3d9b126a",
+    "consumed_by_exp_id": "",
     "description": "The shadowing lemma says that near an approximate orbit of a chaotic system, there exists a true orbit. In other words, every 'almost correct' trajectory of a chaotic map has a 'truly correct' trajectory nearby. This means that numerical errors in chaotic simulations are not bugs — they are SHADOWS of real trajectories. Conjecture: Every program that computes a chaotic map f: R^n -> R^n has the property that its floating-point output is shadowed by a true orbit of f. More precisely, for every epsilon > 0, there exists delta > 0 such that if x_0, x_1, ..., x_N is a delta-pseudo-orbit (|x_{n+1} - f(x_n)| < delta for all n), then there exists a true orbit y_0, y_1, ..., y_N with |x_n - y_n| < epsilon for all n. The shadowing time N(epsilon, delta) grows at most polynomially in 1/delta for hyperbolic maps. Test: implement the logistic map f(x) = 4x(1-x) in floating-point and compute 10^6 iterations. For each floating-point orbit, use binary search to find the shadowing true orbit. Verify that the shadowing distance is at most 10^{-10} for floating-point precision 10^{-16}. Impact: numerical chaos is not error — it is a computable shadow of mathematical truth. Your computer's rounding errors are tracing out REAL orbits of the chaotic system.",
     "domain_bridges": [],
     "domains": [
@@ -55,7 +55,7 @@
     "proof_strategy": "State the Anosov shadowing lemma: for a hyperbolic map f on a compact manifold, for every epsilon > 0 there exists delta > 0 such that every delta-pseudo-orbit is epsilon-shadowed by a true orbit. Prove the conjecture: every floating-point computation of f is a delta-pseudo-orbit with delta = machine epsilon. By shadowing, there exists a true orbit within epsilon. The shadowing distance epsilon is at most C * delta^(1/s) where s is the expansion rate and C depends on the map. For the logistic map at r=4, s = 4 and epsilon = O(delta^{1/4}). Compute the shadowing orbit: given floating-point orbit x_0, ..., x_N, define y_0 = x_0 and y_{n+1} = f(y_n). Then |y_n - x_n| <= C * delta * (s^n - 1)/(s - 1). For N = 10^6 and delta = 10^{-16}, epsilon <= C * 10^{-16} * (4^{10^6} - 1)/3 which is too large. But for the shadowing lemma, we get epsilon = O(delta^{1/4}) = O(10^{-4}). Test: verify with numerical computation.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T23:49:57.915548+00:00",
     "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
   },
@@ -2099,7 +2099,7 @@
       "Bousquet-Mélou and Chapoton's functional equation for greedy Tamari intervals (2024)",
       "Dermenjian's definition of greedy ν-Tamari posets (2023)"
     ],
-    "consumed_by_exp_id": "64e0cde9",
+    "consumed_by_exp_id": "",
     "description": "For all m ≥ 1, the refined generating function for intervals in the greedy m-Tamari poset, tracking both the number of elements and the number of leaves (peaks in the corresponding Dyck paths), is equal to the refined generating function for planar (m+1)-constellations tracking the same statistics. This extends the combinatorial proof for m=1 to all m ≥ 1.",
     "domain_bridges": [
       "Bijections between Dyck paths and plane trees",
@@ -2117,7 +2117,7 @@
     "proof_strategy": "Formalize the bijection between greedy Tamari intervals and planar (m+1)-constellations as a type equivalence in Lean, then prove that the pullback of the leaf statistic on constellations equals the peak statistic on Dyck paths. Use structural induction on the recursive decomposition, leveraging the established isomorphism between the combinatorial structures.",
     "research_mode": "team",
     "source_exp_id": "2607.01206v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:55:26.518816+00:00",
     "title": "Refined Bijective Enumeration of Greedy Tamari Intervals and Planar (m+1)-Constellations"
   },
@@ -3578,7 +3578,7 @@
       "Vieira",
       "Konvalina--Matache"
     ],
-    "consumed_by_exp_id": "eaf24e75",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that apart from integer scalar multiples of products of cyclotomic polynomials (which give rational multiples of τ for all root arguments), the only integer palindrome of degree 4 whose four zeros all lie on the unit circle but are not all cyclotomic is, up to an integer factor, the polynomial 62826 = 2·Φ₃(x)·(3x²−2x+3). Consequently any such unit palindrome of degree 4 must be associate either to a cyclotomic product or to 2·Φ₃(x)·(3x²−2x+3).",
     "domain_bridges": [
       "Algebra",
@@ -3594,7 +3594,7 @@
     "proof_strategy": "For a degree‑4 palindrome P(x)=a x⁴+b x³+c x²+b x+a with integer coefficients, we replace x+1/x by u and obtain the Chebyshev transform Q(u)=a(u²−2)+b u+c. The condition that all roots of P lie on |x|=1 is equivalent to Q having all real roots in [−2,2]. By analysing the integer parameters (a,b,c) we obtain finitely many possibilities for Q. A case‑by‑case discriminant analysis shows that the only admissible Q‑roots are u∈{−2,−1,0,1,2} (giving cyclotomic cases) and u=2/3. The latter yields P associate to 2·Φ₃(x)·(3x²−2x+3). Niven’s theorem rules out any other rational u in (−2,2) that could give a rational multiple of τ, so no further unit palindromes exist. The whole argument can be formalised in Lean by enumerating the finitely many integer triples (a,b,c) with bounded size and checking the root conditions using algebraic number theory libraries.",
     "research_mode": "team",
     "source_exp_id": "2606.29669v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T06:17:55.891614+00:00",
     "title": "Unique exceptional integer palindromes of degree 4 with unit roots"
   },
@@ -5531,7 +5531,7 @@
     "catalog_references": [
       "3-packings in Triangulations: Algorithms, bounds, and Complexity"
     ],
-    "consumed_by_exp_id": "998dff91",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for every integer k ≥ 1 there exists a plane triangulation G on n = 5k + r vertices (r ∈ {0,1,2,3,4}) such that the maximum size of a P3-packing λ_{P3}(G) equals floor(n/5). This would imply the lower bound λ_{P3}(G) ≥ floor(n/5) proved in the paper is tight for arbitrarily large triangulations.",
     "domain_bridges": [
       "planar_graph_theory",
@@ -5546,7 +5546,7 @@
     "proof_strategy": "Construct infinite families of triangulations with prescribed degree sequences using vertex splitting and edge subdivision, then apply a greedy packing algorithm to obtain exactly floor(n/5) disjoint P3 subgraphs, showing the bound cannot be improved.",
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T04:14:42.891046+00:00",
     "title": "Tightness Conjecture for P3-Packings in Plane Triangulations"
   },
@@ -7729,7 +7729,7 @@
       "PR12",
       "Kane2013"
     ],
-    "consumed_by_exp_id": "59da6bf9",
+    "consumed_by_exp_id": "",
     "description": "For any prime p, the Markov chain on ℕ defined by the Klagsbrun-Mazur-Rubin twist process for p-Selmer ranks of even-dimensional Galois modules satisfying the KMR technical conditions is irreducible, aperiodic, and positive recurrent. Its unique stationary distribution π assigns strictly positive probability to every rank r ∈ ℕ, and the distribution of p-Selmer ranks in the twist family ordered by the product of ramified primes converges to π.",
     "domain_bridges": [
       "probability_theory",
@@ -7747,7 +7747,7 @@
     "proof_strategy": "1) Define the KMR Markov chain as an explicit stochastic kernel on ℕ capturing the effect of local twist conditions on p-Selmer ranks. 2) Prove irreducibility by constructing explicit paths from any state to any other via sequences of local twist operations. 3) Prove aperiodicity by exhibiting positive self-loop probability at state 0. 4) Establish positive recurrence via drift analysis or Lyapunov function arguments on the countable state space. 5) Apply the convergence theorem for irreducible aperiodic positive recurrent chains to deduce convergence to the unique stationary distribution. 6) Positivity of π follows from irreducibility.",
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T03:42:58.157244+00:00",
     "title": "KMR Markov chain convergence and positivity of p-Selmer rank stationary distribution"
   },
@@ -9412,7 +9412,7 @@
       "HalldorssonK02",
       "NicolosoSS99"
     ],
-    "consumed_by_exp_id": "068b28b7",
+    "consumed_by_exp_id": "",
     "description": "For every fixed graph H that contains at least one edge, the decision problem Chromatic Sum remains NP‑complete when restricted to H‑free graphs (i.e., graphs that do not contain H as a subgraph). This conjecture is falsifiable because a single counterexample—a graph class H‑free for which Chromatic Sum is polynomial‑time solvable— would refute it.",
     "domain_bridges": [
       "graph theory",
@@ -9427,7 +9427,7 @@
     "proof_strategy": "Establish NP‑membership in NP and prove NP‑hardness via a reduction from a known NP‑complete problem (e.g., 3‑Partition) while respecting the H‑free restriction.",
     "research_mode": "team",
     "source_exp_id": "2607.00263v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T08:29:25.578468+00:00",
     "title": "Chromatic Sum is NP-complete on H‑free graphs for any fixed graph H with at least one edge"
   },
@@ -13107,7 +13107,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c3075cb5",
+    "consumed_by_exp_id": "",
     "description": "Ramanujan's constant e^{pi*sqrt(163)} is remarkably close to an integer: it equals 262537412640768743.99999999999925... — just 7.5 * 10^{-13} away from 262537412640768744. This is not a coincidence: 163 is the largest Heegner number, and the near-integer property follows from the j-function and the fact that Q(sqrt(-163)) has class number 1. But 163 appears EVERYWHERE: it is prime, it is the smallest p such that Q(sqrt(-p)) has class number 1 and p > 2, it is a Chen prime, a lucky prime, a strongly prime, and the 38th prime. Conjecture: 163 is the unique integer n such that e^{pi*sqrt(n)} is within 10^{-6} of an integer. More generally, the Heegner numbers (1, 2, 3, 7, 11, 19, 43, 67, 163) are exactly the n for which Q(sqrt(-n)) has class number 1, and e^{pi*sqrt(n)} is near-integer for each. The 'magic' of 163 is that it is the LAST Heegner number — the final class number 1 imaginary quadratic field. Test: prove that e^{pi*sqrt(n)} is within 10^{-6} of an integer only for Heegner numbers. Compute e^{pi*sqrt(67)} and e^{pi*sqrt(43)} and verify near-integer behavior. Prove that 163 is the largest Heegner number (Stark-Heegner theorem). Impact: 163 is not magic — it is the climax of a deep theorem in algebraic number theory. The near-integer property of e^{pi*sqrt(163)} is the shadow of the class number 1 condition.",
     "domain_bridges": [],
     "domains": [
@@ -13120,7 +13120,7 @@
     "proof_strategy": "State the Stark-Heegner theorem: the imaginary quadratic fields Q(sqrt(-d)) with class number 1 are exactly d = 1, 2, 3, 7, 11, 19, 43, 67, 163. Prove e^{pi*sqrt(d)} is near-integer for each Heegner number: by the j-function expansion, j((1+sqrt(-d))/2) is an algebraic integer, and e^{pi*sqrt(d)} = (j/1728 + ... )^{1/3} * 12. For d = 163, j((1+sqrt(-163))/2) = -640320^3, so e^{pi*sqrt(163)} = 640320^3 + 744 - error. Prove uniqueness: for non-Heegner d, the class number h(-d) >= 2, so j((1+sqrt(-d))/2) has degree h(-d) >= 2 over Q, and e^{pi*sqrt(d)} is not near-integer. Test: compute e^{pi*sqrt(d)} for d = 1,2,3,7,11,19,43,67,163 and verify near-integer behavior. Compute for d = 5,6,10,14 to verify non-near-integer behavior.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T23:49:57.790919+00:00",
     "title": "The Unreasonable Effectiveness of the Number 163"
   },
@@ -13376,6 +13376,35 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "math.NT",
+      "Landau-Siegel zeros",
+      "Page's theorem",
+      "Dirichlet L-functions",
+      "zero-free regions"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any ε > 0, there exist effectively computable constants C(ε) > 0 and Q₀(ε) > 0 such that: if for every primitive quadratic Dirichlet character χ with conductor q ≥ Q₀(ε), all non-real zeros ρ of L(s,χ) satisfy Re(ρ) ≤ 1 - C(ε)/log(q), then there is at most one such character χ whose associated L-function has a real zero β in the interval [1 - q^(-ε), 1). This formalizes the paper's main result that excluding non-real zeros from a shrinking neighborhood of s=1 allows a significant refinement of Page's theorem.",
+    "domain_bridges": [
+      "complex_analysis",
+      "analytic_number_theory",
+      "computational_number_theory"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0605",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The proof requires establishing: (1) effective zero-free regions for Dirichlet L-functions excluding the Landau-Siegel possibility; (2) a translation mechanism from lower bounds on L(1,χ) to upper bounds on exceptional real zeros β; (3) a counting argument showing that the hypothesis on non-real zeros (lying outside σ ≥ 1 - C/log(q)) prevents the distortion that would allow multiple exceptional characters. Key ingredients include logarithmic derivative estimates for L-functions, the Deuring-Heilbronn phenomenon, and effective bounds from the geometry of the zeros. Formalization would proceed by first establishing the effective constants, then the conditional zero-free region, and finally the uniqueness of the exceptional zero.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06433v1",
+    "status": "available",
+    "timestamp": "2026-07-08T05:36:19.999905+00:00",
+    "title": "Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "magnitude_of_metric_spaces",
       "negative_type_metrics"
     ],
@@ -13389,7 +13418,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0605",
+    "id": "fd_0606",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formulate the problem as a strictly convex quadratic optimization over the affine subspace of signed measures with total mass 1; strict convexity guarantees a unique minimizer, and strict negative type ensures that the quadratic form is positive definite on the relevant subspace.",
@@ -13417,7 +13446,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0606",
+    "id": "fd_0607",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the existing formula by analyzing the μ-invariant's contribution through local-global principles and modular forms.",
@@ -13447,7 +13476,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0607",
+    "id": "fd_0608",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "We would prove the conjecture by establishing a bijection between quasinecklaces and primitive words, or by showing that the recurrence defining quasinecklaces derived in the paper matches the Möbius inversion of the total word count. A proof by induction on n using divisor decomposition and properties of the Möbius function can be formalized in Lean, leveraging existing libraries for arithmetic functions and finite sums.",
@@ -13473,7 +13502,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0608",
+    "id": "fd_0609",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the classical Hilton-Milner theorem as a lemma. Then formalize the notion of cross-intersecting families and non-triviality. The key structural insight from the paper is analyzing 2-cover graphs of cross-intersecting families and bounding the size of families with small minimal covers. The proof proceeds by case analysis on the structure of minimal covers of F and G, showing that non-HM-type configurations yield strictly smaller products when n > 100ℓk².",
@@ -13500,7 +13529,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0609",
+    "id": "fd_0610",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the S₁₀-construction from the paper, exploiting the absence of bridges to handle end-block decomposition more efficiently. Since bridgeless cubic graphs admit perfect matchings (Petersen's theorem), combine the S₁₂-technique achieving 4/5 for graphs with perfect matchings with the triangle-replacement structure of S₁₀ to gain the additional 1/42 fraction, using the fact that bridgeless graphs avoid the trivial-bridge obstructions that limit the 5/6 bound.",
@@ -13529,7 +13558,7 @@
     "domains": [
       "Cryptography"
     ],
-    "id": "fd_0610",
+    "id": "fd_0611",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Two possible routes: (1) Modular route — prove θ_L is a modular form of weight 4 for SL₂(ℤ) via Poisson summation on the lattice, establish that M₄(SL₂(ℤ)) is 1-dimensional spanned by E₄, and match constant terms; (2) Combinatorial route — use the explicit root system of E₈ to compute the theta series coefficients and verify they equal 240·σ₃(n) via the Weyl character formula or direct root system enumeration.",
@@ -13558,7 +13587,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0611",
+    "id": "fd_0612",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the paper's structure theorem for {-1,0,1}-diagonalizable graphs of prime order as a base case. For composite orders, leverage the regularity result (Theorem: bipartite implies regular) combined with the eigenvector structure constraints: the {-1,0,1} eigenvector basis forces strong conditions on the adjacency patterns of regular bipartite graphs. A possible approach shows that if G is connected, bipartite, regular, and {-1,0,1}-diagonalizable, then any two vertices in the same part have identical neighbor sets, yielding completeness. Attempt falsification by exhaustive search for small orders using the enumeration data provided.",
@@ -13570,28 +13599,37 @@
   },
   {
     "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "d9ca63e8",
-    "description": "Bitcoin mining requires finding a nonce n such that SHA256(block_header || n) < target. What if we replaced SHA256 with a tropical hash? Define tropical SHA as: TSHA(m) = min over all i of (m_i + h_i) where m = (m_1,...,m_k) is the message, h = (h_1,...,h_k) is the tropical hash key, and all operations are in the min-plus semiring (a tropical plus b = min(a,b), a tropical times b = a + b). Conjecture: TSHA is a one-way function in the tropical sense: computing TSHA(m) given m and h is O(k) (trivial), but finding m given TSHA(m) and h is NP-hard (it reduces to a tropical shortest path problem). More precisely, the tropical preimage problem — given y and h, find m such that min_i(m_i + h_i) = y — requires checking O(e^{k}) tropical paths in the worst case. But there's a twist: tropical hash collisions are COMMON because min(a,b) = min(b,a). To fix this, define TSHA2(m) = (min_i(m_i + h_i), min_i(m_i + h'_i)) where h and h' are two independent tropical keys. Conjecture: TSHA2 is collision-resistant with probability 1 - O(1/k). Test: implement TSHA and TSHA2, measure collision resistance, and compare mining difficulty to SHA256 for block sizes k = 32, 64, 128. Impact: a cryptocurrency where mining is solving tropical optimization problems instead of brute-force hash searches — mining IS mathematics.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Tropical"
+    "catalog_references": [
+      "Bergeron-Garsia delta operators",
+      "Macdonald polynomials",
+      "Compositional shuffle conjecture",
+      "Petrie symmetric functions (Grinberg)",
+      "LLT polynomials"
     ],
-    "id": "fd_0580",
+    "consumed_by_exp_id": "",
+    "description": "For all positive integers k ≥ 2, n ≥ 1, and 1 ≤ j ≤ n, the symmetric function Δ_{e_j} G(k,n) is Schur positive (i.e., expands with nonnegative coefficients in ℕ[q,t] in the Schur basis) if and only if k divides n, where G(k,n) = Σ_{λ⊢n, λ₁<k} m_λ is the Petrie symmetric function and Δ_{e_j} is the Bergeron–Garsia delta operator applied to e_j. This extends the paper's main result for ∇ = Δ_{e_n} (and its iterates ∇^r) to all elementary symmetric function inputs of the delta operator, establishing that the divisibility criterion governs Schur positivity uniformly across the entire family of delta operators.",
+    "domain_bridges": [
+      "Representation theory of symmetric groups (Schur positivity ↔ graded module existence)",
+      "Diagonal harmonics and nabla operator theory",
+      "Modified Hall-Littlewood polynomials"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0613",
     "lineage_refs": [],
-    "priority_score": 0.79,
-    "proof_strategy": "Define TSHA(m, h) = min_{i=1..k} (m_i + h_i) in the min-plus semiring. Prove: TSHA is O(k) to compute (single pass). Prove: finding m given TSHA(m,h) = y and h is NP-hard by reduction from the tropical shortest path problem. Reduction: given a weighted graph G, let h encode the edge weights and let m encode the path. Then TSHA(m,h) = length of shortest path. Finding m that achieves a given TSHA value equals finding the shortest path. Prove TSHA2 collision resistance: P(TSHA2(m) = TSHA2(m')) = O(1/k) for random h, h'. Test: implement TSHA, TSHA2, compare collision rates with SHA256 for k = 32, 64, 128. Measure mining time as function of difficulty.",
+    "priority_score": 0.8,
+    "proof_strategy": "For the forward direction (k∣n ⟹ Schur positivity): decompose G(k,n) into creation operator images C_α when k∣n, then apply the compositional shuffle theorem framework to express Δ_{e_j} C_α as a positively weighted sum of vertical LLT polynomials, leveraging Grojnowski–Haiman Schur positivity of LLT polynomials. For the converse (k∤n ⟹ not Schur positive): extend the sign-analysis techniques from the paper's nabla case to general Δ_{e_j} by tracking the leading negative Schur coefficients in the Macdonald polynomial expansion of G(k,n) under the delta eigenvalue action, showing that the divisibility obstruction propagates through all delta operators.",
     "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T20:47:00.059968+00:00",
-    "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
+    "source_exp_id": "2607.06351v1",
+    "status": "available",
+    "timestamp": "2026-07-08T05:37:42.644235+00:00",
+    "title": "Delta-Petrie Schur Positivity"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "faec2dac",
     "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' — they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
     "domain_bridges": [],
     "domains": [
@@ -13604,7 +13642,7 @@
     "proof_strategy": "Define the periodic table of finite groups: rows indexed by order (atomic number), columns indexed by composition factor pattern (chemical series). Group types: cyclic (noble gases), symmetric (halogens), simple non-abelian (transition metals), nilpotent (alkali metals), solvable non-nilpotent (alkaline earth). Prove: groups in the same column have isomorphic composition factors (Jordan-Holder theorem). Prove: the 'valence' (number of minimal normal subgroups) is determined by the chief factors. Construct the table for order <= 100 and verify periodicity: cyclic groups of prime order form the first column, groups with composition {2,2,3} form the second column, etc. Test: predict properties of groups of order 120 before computing them.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T16:56:44.628941+00:00",
     "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
   },

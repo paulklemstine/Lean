@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "461fdf74",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Quantum Thermodynamics / Landauer at the Nanoscale\n\nThe current cycle added `Catalog/Physics/LandauerSubadditivity.lean`: marginals and\nmutual information of a joint PMF, a stren",
-      "quality_score": 0.37835341176470594,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T16:05:36",
-      "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
-    },
-    {
       "cycle_id": "251e4381",
       "domain": "Applications",
       "key_insight": "# Future Directions — EML Interpolation Theory (Jackson Rates)\n\nThis cycle made the Stone–Weierstrass density of the EML algebra *constructive and\nrate-quantified* in one variable: the width-`n` piece",
@@ -2501,6 +2491,16 @@
       "theorem_count": 17,
       "timestamp": "2026-07-08T02:37:32",
       "title": "Girão-Kittipassorn-Narayanan Conjecture on Long Nontrivial Cycles"
+    },
+    {
+      "cycle_id": "d9ca63e8",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions: Tropical Hashing on the Min-Plus Semiring\n\nThis cycle established three facts about the tropical digest\n`TSHA(h, m) = min_i (m_i + h_i)`: it is sharply `1`-Lipschitz in the suprem",
+      "quality_score": 0.4666111,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-08T05:35:56",
+      "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.70296
     }
   ],
-  "last_updated": "2026-07-08T02:37:32",
+  "last_updated": "2026-07-08T05:35:56",
   "open_questions": [
     {
       "context": "`sorry`-free Lean proof of Sabidussi's theorem.",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "59a725d3",
-        "quality": 0.36443276190476187,
-        "theorems": 2,
-        "title": "Projective Fraïssé Metrization Conjecture for Universal Minimal Flows"
-      },
-      {
         "cycle_id": "3db2ad68",
         "quality": 0.3935206787878788,
         "theorems": 6,
@@ -3885,6 +3879,12 @@
         "quality": 0.5129090000000001,
         "theorems": 13,
         "title": "Isomorphism of generating trees for greedy m-Tamari intervals and planar (m+1)-c"
+      },
+      {
+        "cycle_id": "d9ca63e8",
+        "quality": 0.4666111,
+        "theorems": 8,
+        "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
       }
     ],
     "Shared": [

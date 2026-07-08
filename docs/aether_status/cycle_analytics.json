@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-08T05:01:40.022077+00:00",
+  "last_updated": "2026-07-08T05:35:58.305559+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -460,6 +460,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-08T05:01:40.001837+00:00",
       "title": "Optimality of the polynomial factor in the Naslund\u2013Sawin bound for sunflower\u2011free families"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.5465,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 10,
+      "domain": "Pythagorean",
+      "duration_seconds": 1970.5691492557526,
+      "end_time": 1783488869.1029358,
+      "files_integrated": 4,
+      "job_id": "d9ca63e8",
+      "outcome_quality": 0.4666111,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.86,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 1.0,
+        "composite": 0.6665,
+        "cross_domain": 0.9,
+        "grade": "substantial",
+        "importance": 0.5268,
+        "novelty": 0.56,
+        "proof_depth": 0.5125,
+        "usefulness": 0.7063
+      },
+      "quality_score": 0.4666111,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783486898.5337865,
+      "strategy_count": 0,
+      "theorem_count": 8,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 7,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-08T05:35:58.279253+00:00",
+      "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
     }
   ]
 }
