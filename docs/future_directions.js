@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e783dab6",
     "description": "The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the j-function is just the TIP of the iceberg. Conjecture: The full moonshine correspondence associates to each conjugacy class g in M a McKay-Thompson series T_g(q) = sum a_n(g) q^n that is a modular function of a specific level, and the product over all g in M of T_g(q) equals a modular form of weight |M|/24 that encodes the complete character table of M. The secret message: the Monster group IS a modular form, and every property of M (its order, its character table, its maximal subgroups) can be read off from the q-expansion of this product. Test: compute the first 100 coefficients of T_g(q) for each conjugacy class of M and verify they match the known character values. Prove that the product of all T_g(q) converges to a modular form. Impact: the Monster is not just connected to modular forms \u2014 it IS a modular form. The 194 conjugacy classes of M correspond to 194 modular forms, and their product encodes everything.",
     "domains": [
       "Novelty",
@@ -13,7 +13,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T23:49:58.048338+00:00",
     "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
   },
@@ -46,6 +46,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-07T20:46:59.999874+00:00",
     "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
+  },
+  {
+    "consumed_by_exp_id": "cecc1d95",
+    "description": "The shadowing lemma says that near an approximate orbit of a chaotic system, there exists a true orbit. In other words, every 'almost correct' trajectory of a chaotic map has a 'truly correct' trajectory nearby. This means that numerical errors in chaotic simulations are not bugs \u2014 they are SHADOWS of real trajectories. Conjecture: Every program that computes a chaotic map f: R^n -> R^n has the property that its floating-point output is shadowed by a true orbit of f. More precisely, for every epsilon > 0, there exists delta > 0 such that if x_0, x_1, ..., x_N is a delta-pseudo-orbit (|x_{n+1} - f(x_n)| < delta for all n), then there exists a true orbit y_0, y_1, ..., y_N with |x_n - y_n| < epsilon for all n. The shadowing time N(epsilon, delta) grows at most polynomially in 1/delta for hyperbolic maps. Test: implement the logistic map f(x) = 4x(1-x) in floating-point and compute 10^6 iterations. For each floating-point orbit, use binary search to find the shadowing true orbit. Verify that the shadowing distance is at most 10^{-10} for floating-point precision 10^{-16}. Impact: numerical chaos is not error \u2014 it is a computable shadow of mathematical truth. Your computer's rounding errors are tracing out REAL orbits of the chaotic system.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0593",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-07T23:49:57.915548+00:00",
+    "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
   },
   {
     "consumed_by_exp_id": "",
@@ -983,7 +998,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of a D_18 tuple with size 6 outside the exceptional case"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "172d1a6c",
     "description": "For any prime r, any real x with 1 \u2264 x \u2264 r^{0.49}, and any real q in [0,1], the average over all Dirichlet characters modulo r of the 2q\u2011th power of the absolute value of the short character sum satisfies (1/(r\u22121))\u2211_\u03c7 |\u2211_{n\u2264x} \u03c7(n)|^{2q} \u2265 (1/2) x^{q}.",
     "domains": [
       "Pythagorean"
@@ -992,7 +1007,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01184v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T21:39:43.438987+00:00",
     "title": "Conjecture on sharp lower bounds for low moments of Dirichlet character sums"
   },
@@ -2906,7 +2921,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Constant residue of labeled poset counts modulo 4"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c3f8fa30",
     "description": "If a polynomial f(X)=X^r B(X^{q-1}) over F_{q^2} with at most five terms and coefficients in {\u00b11} (except possibly one) permutes the field, then there must exist an integer m\u22653 dividing q^2-1 with m\u2208{3,4,6} and (Q,R,S)\u2261\u00b1(1,1,1) or \u00b1(1,1,-1) (mod m), and the associated gcd conditions on r and q\u00b11 must hold. Moreover, the only possible values of b are 0,\u00b11, which forces m\u2208{3,4,6}.",
     "domains": [
       "Pythagorean",
@@ -2916,7 +2931,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31262v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T19:55:25.577339+00:00",
     "title": "Conjecture on necessary congruence conditions for permutation pentanomials"
   },
@@ -7096,6 +7111,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Uniqueness of the 2-(496, 4, 1) Flag-Transitive Linear Space with Socle PSL(2, 32)"
   },
   {
+    "consumed_by_exp_id": "bb78c214",
+    "description": "Ramanujan's constant e^{pi*sqrt(163)} is remarkably close to an integer: it equals 262537412640768743.99999999999925... \u2014 just 7.5 * 10^{-13} away from 262537412640768744. This is not a coincidence: 163 is the largest Heegner number, and the near-integer property follows from the j-function and the fact that Q(sqrt(-163)) has class number 1. But 163 appears EVERYWHERE: it is prime, it is the smallest p such that Q(sqrt(-p)) has class number 1 and p > 2, it is a Chen prime, a lucky prime, a strongly prime, and the 38th prime. Conjecture: 163 is the unique integer n such that e^{pi*sqrt(n)} is within 10^{-6} of an integer. More generally, the Heegner numbers (1, 2, 3, 7, 11, 19, 43, 67, 163) are exactly the n for which Q(sqrt(-n)) has class number 1, and e^{pi*sqrt(n)} is near-integer for each. The 'magic' of 163 is that it is the LAST Heegner number \u2014 the final class number 1 imaginary quadratic field. Test: prove that e^{pi*sqrt(n)} is within 10^{-6} of an integer only for Heegner numbers. Compute e^{pi*sqrt(67)} and e^{pi*sqrt(43)} and verify near-integer behavior. Prove that 163 is the largest Heegner number (Stark-Heegner theorem). Impact: 163 is not magic \u2014 it is the climax of a deep theorem in algebraic number theory. The near-integer property of e^{pi*sqrt(163)} is the shadow of the class number 1 condition.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0592",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-07T23:49:57.790919+00:00",
+    "title": "The Unreasonable Effectiveness of the Number 163"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "The supremum of achievable vertical amplification parameters \u03b4 in the paper's main theorem equals 1/3. Precisely: for every \u03b5 > 0, there exist infinitely many n \u2208 \u2115 and finite sets P \u2282 \u211d\u00b2 with |P| = n such that for every A \u2286 P with |A| \u2265 2, the maximum distance multiplicity \u03bc(A) \u2265 |A|\u00b2 / n^(2/3 + \u03b5). This would be optimal given the O(n^{4/3}) Szemer\u00e9di\u2013Trotter upper bound on unit distances, which forces \u03b4 \u2264 1/3. The paper establishes existence of some \u03b4 > 0; this conjectures \u03b4 can approach 1/3 via increasingly high-degree number field constructions.",
     "domains": [
@@ -7256,7 +7286,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Mathematics of Memes: Viral Information Topology"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4e3da0be",
     "description": "The Moebius band M is obtained from [0,1] x R by identifying (0, y) ~ (1, -y). Define arithmetic on M: a point (x, y) on M represents the number y * (2x - 1) where x in [0,1] gives the sign and magnitude, and y gives the scale. This creates a number system where going around the band flips the sign. Define the Moebius integers Z_M as the image of Z in M under the embedding n -> (1/2 + 1/(2n), |n|). Then 1 and -1 are identified at the twist point (1, 1) = (0, -1), making Z_M a one-point compactification of Z with a single infinity. Conjecture: Z_M is a ring under the induced operations from R x R / ~, but it is NOT an integral domain because (1, 0) * (0, 1) = (0, 0) but neither factor is zero in Z_M. The prime factorization in Z_M has a unique 'twist prime' that encodes orientation, and every non-zero Moebius integer has a factorization of the form \u00b1p_1^{a_1} * ... * p_k^{a_k} where the overall sign is the twist. Test: factor the Moebius integers 6, -6, and 0 in Z_M. Verify that 6 = 2_+ * 3_+ and -6 = 2_- * 3_- = 2_+ * 3_+ * (-1) where -1 is the twist prime. Impact: arithmetic on a non-orientable surface creates a number system where orientation IS a prime \u2014 a number-theoretic analog of spin in physics.",
     "domains": [
       "Novelty",
@@ -7266,7 +7296,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.76,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T20:47:00.188304+00:00",
     "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
   },
