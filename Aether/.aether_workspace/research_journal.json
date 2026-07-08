@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "dfab202e",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Betti–Whittaker contragredient periods\n\nDerived from this cycle's findings (`BottomDegreeParity.lean`, `PeriodAlgebra.lean`): the\ncontragredient sign `(-1)^{b(F,n)}` is governed",
-      "quality_score": 0.8119999999999999,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T21:24:12",
-      "title": "Contragredient Period Sign Formula for Betti-Whittaker Periods of GL(n)"
-    },
-    {
       "cycle_id": "9ecd5b8c",
       "domain": "Applications",
       "key_insight": "# FUTURE DIRECTIONS — EML Interpolation Theory (this cycle)\n\nThis cycle extended the catalog's EML approximation programme in two directions\nthat were previously only available in dimension one or in",
@@ -499,19 +489,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-08T20:32:40",
       "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
+    },
+    {
+      "cycle_id": "492f9d48",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — Split Geometry\n\nThe file `Algebra/SplitGeometry.lean` formalizes, with complete proofs and no\n`sorry`, the algebraic/analytic skeleton of the Split Geometry:\n\n* the metric `ds² =",
+      "quality_score": 0.8151999999999999,
+      "sorry_count": 0,
+      "theorem_count": 28,
+      "timestamp": "2026-07-08T21:35:42",
+      "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ce5b4268",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE DIRECTIONS — Permutation polynomials `x^q + b x^2 + c x + d` over `F_{q^2}`\n\nDerived from this cycle's findings (see\n`Catalog/Novelty/PermutationPolynomialFq2.lean` and\n`Catalog/Novelty/Permu",
-      "quality_score": 0.71224,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-28T16:59:26",
-      "title": "Complete Characterization of Permutation Polynomials x^q + bx^2 + cx + d over F_{q^2}"
-    },
     {
       "cycle_id": "8999eb20",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-08T20:32:40",
       "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
+    },
+    {
+      "cycle_id": "492f9d48",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — Split Geometry\n\nThe file `Algebra/SplitGeometry.lean` formalizes, with complete proofs and no\n`sorry`, the algebraic/analytic skeleton of the Split Geometry:\n\n* the metric `ds² =",
+      "quality_score": 0.8151999999999999,
+      "sorry_count": 0,
+      "theorem_count": 28,
+      "timestamp": "2026-07-08T21:35:42",
+      "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f91c88c3",
-      "domain": "Bridges",
-      "name": "uses",
-      "quality": 0.78952
-    },
-    {
-      "cycle_id": "f91c88c3",
-      "domain": "Bridges",
-      "name": "isP4Free_of_embedding",
-      "quality": 0.78952
-    },
-    {
-      "cycle_id": "f91c88c3",
-      "domain": "Bridges",
-      "name": "coMatching3_isP4Free",
-      "quality": 0.78952
-    },
     {
       "cycle_id": "87ba90ae",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "finiteSurreals_isClosed",
       "quality": 0.7426819999999998
+    },
+    {
+      "cycle_id": "492f9d48",
+      "domain": "Algebra",
+      "name": "sech2_pos",
+      "quality": 0.8151999999999999
+    },
+    {
+      "cycle_id": "492f9d48",
+      "domain": "Algebra",
+      "name": "gE_pos",
+      "quality": 0.8151999999999999
+    },
+    {
+      "cycle_id": "492f9d48",
+      "domain": "Algebra",
+      "name": "gG_pos",
+      "quality": 0.8151999999999999
     }
   ],
-  "last_updated": "2026-07-08T20:32:40",
+  "last_updated": "2026-07-08T21:35:42",
   "open_questions": [
     {
       "context": "`sorry`-free Lean proof of Sabidussi's theorem.",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "a8f472f7",
-        "quality": 0.56056,
-        "theorems": 3,
-        "title": "Existence of a Satisfactory Multiplier Vector for 2D Lacunary Distance Graphs"
-      },
-      {
         "cycle_id": "d4c70419",
         "quality": 0.65696,
         "theorems": 18,
@@ -3079,6 +3073,12 @@
         "quality": 0.5326040000000001,
         "theorems": 15,
         "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
+      },
+      {
+        "cycle_id": "492f9d48",
+        "quality": 0.8151999999999999,
+        "theorems": 28,
+        "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
       }
     ],
     "Applications": [
