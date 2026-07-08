@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8636a701",
     "description": "The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the j-function is just the TIP of the iceberg. Conjecture: The full moonshine correspondence associates to each conjugacy class g in M a McKay-Thompson series T_g(q) = sum a_n(g) q^n that is a modular function of a specific level, and the product over all g in M of T_g(q) equals a modular form of weight |M|/24 that encodes the complete character table of M. The secret message: the Monster group IS a modular form, and every property of M (its order, its character table, its maximal subgroups) can be read off from the q-expansion of this product. Test: compute the first 100 coefficients of T_g(q) for each conjugacy class of M and verify they match the known character values. Prove that the product of all T_g(q) converges to a modular form. Impact: the Monster is not just connected to modular forms — it IS a modular form. The 194 conjugacy classes of M correspond to 194 modular forms, and their product encodes everything.",
     "domain_bridges": [],
     "domains": [
@@ -15,7 +15,7 @@
     "proof_strategy": "State the moonshine conjecture (proved by Borcherds): each conjugacy class g of M has a McKay-Thompson series T_g(q) that is a Hauptmodul of genus 0 for a specific modular curve. Extend: define the Monster product P(q) = prod_{g in Conj(M)} T_g(q)^{1/|C(g)|} where C(g) is the conjugacy class. Prove P(q) converges: log P(q) = sum_g (1/|C(g)|) * log T_g(q) = sum_g sum_n (1/|C(g)|) * a_n(g)/n * q^n. Each term is bounded by |a_n(g)|/n * |q|^n which is O(n^{3/2}) by Deligne's bound. Prove P(q) is a modular form of weight |M|/24 = 8 * 10^{53}/24 by checking it transforms correctly under each level. Test: compute P(q) mod q^{100} and compare with the character table of M.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T23:49:58.048338+00:00",
     "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
   },
@@ -42,7 +42,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3d9b126a",
     "description": "The shadowing lemma says that near an approximate orbit of a chaotic system, there exists a true orbit. In other words, every 'almost correct' trajectory of a chaotic map has a 'truly correct' trajectory nearby. This means that numerical errors in chaotic simulations are not bugs — they are SHADOWS of real trajectories. Conjecture: Every program that computes a chaotic map f: R^n -> R^n has the property that its floating-point output is shadowed by a true orbit of f. More precisely, for every epsilon > 0, there exists delta > 0 such that if x_0, x_1, ..., x_N is a delta-pseudo-orbit (|x_{n+1} - f(x_n)| < delta for all n), then there exists a true orbit y_0, y_1, ..., y_N with |x_n - y_n| < epsilon for all n. The shadowing time N(epsilon, delta) grows at most polynomially in 1/delta for hyperbolic maps. Test: implement the logistic map f(x) = 4x(1-x) in floating-point and compute 10^6 iterations. For each floating-point orbit, use binary search to find the shadowing true orbit. Verify that the shadowing distance is at most 10^{-10} for floating-point precision 10^{-16}. Impact: numerical chaos is not error — it is a computable shadow of mathematical truth. Your computer's rounding errors are tracing out REAL orbits of the chaotic system.",
     "domain_bridges": [],
     "domains": [
@@ -55,7 +55,7 @@
     "proof_strategy": "State the Anosov shadowing lemma: for a hyperbolic map f on a compact manifold, for every epsilon > 0 there exists delta > 0 such that every delta-pseudo-orbit is epsilon-shadowed by a true orbit. Prove the conjecture: every floating-point computation of f is a delta-pseudo-orbit with delta = machine epsilon. By shadowing, there exists a true orbit within epsilon. The shadowing distance epsilon is at most C * delta^(1/s) where s is the expansion rate and C depends on the map. For the logistic map at r=4, s = 4 and epsilon = O(delta^{1/4}). Compute the shadowing orbit: given floating-point orbit x_0, ..., x_N, define y_0 = x_0 and y_{n+1} = f(y_n). Then |y_n - x_n| <= C * delta * (s^n - 1)/(s - 1). For N = 10^6 and delta = 10^{-16}, epsilon <= C * 10^{-16} * (4^{10^6} - 1)/3 which is too large. But for the shadowing lemma, we get epsilon = O(delta^{1/4}) = O(10^{-4}). Test: verify with numerical computation.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T23:49:57.915548+00:00",
     "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
   },
@@ -2099,7 +2099,7 @@
       "Bousquet-Mélou and Chapoton's functional equation for greedy Tamari intervals (2024)",
       "Dermenjian's definition of greedy ν-Tamari posets (2023)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "64e0cde9",
     "description": "For all m ≥ 1, the refined generating function for intervals in the greedy m-Tamari poset, tracking both the number of elements and the number of leaves (peaks in the corresponding Dyck paths), is equal to the refined generating function for planar (m+1)-constellations tracking the same statistics. This extends the combinatorial proof for m=1 to all m ≥ 1.",
     "domain_bridges": [
       "Bijections between Dyck paths and plane trees",
@@ -2117,7 +2117,7 @@
     "proof_strategy": "Formalize the bijection between greedy Tamari intervals and planar (m+1)-constellations as a type equivalence in Lean, then prove that the pullback of the leaf statistic on constellations equals the peak statistic on Dyck paths. Use structural induction on the recursive decomposition, leveraging the established isomorphism between the combinatorial structures.",
     "research_mode": "team",
     "source_exp_id": "2607.01206v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:55:26.518816+00:00",
     "title": "Refined Bijective Enumeration of Greedy Tamari Intervals and Planar (m+1)-Constellations"
   },
@@ -3578,7 +3578,7 @@
       "Vieira",
       "Konvalina--Matache"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eaf24e75",
     "description": "We conjecture that apart from integer scalar multiples of products of cyclotomic polynomials (which give rational multiples of τ for all root arguments), the only integer palindrome of degree 4 whose four zeros all lie on the unit circle but are not all cyclotomic is, up to an integer factor, the polynomial 62826 = 2·Φ₃(x)·(3x²−2x+3). Consequently any such unit palindrome of degree 4 must be associate either to a cyclotomic product or to 2·Φ₃(x)·(3x²−2x+3).",
     "domain_bridges": [
       "Algebra",
@@ -3594,7 +3594,7 @@
     "proof_strategy": "For a degree‑4 palindrome P(x)=a x⁴+b x³+c x²+b x+a with integer coefficients, we replace x+1/x by u and obtain the Chebyshev transform Q(u)=a(u²−2)+b u+c. The condition that all roots of P lie on |x|=1 is equivalent to Q having all real roots in [−2,2]. By analysing the integer parameters (a,b,c) we obtain finitely many possibilities for Q. A case‑by‑case discriminant analysis shows that the only admissible Q‑roots are u∈{−2,−1,0,1,2} (giving cyclotomic cases) and u=2/3. The latter yields P associate to 2·Φ₃(x)·(3x²−2x+3). Niven’s theorem rules out any other rational u in (−2,2) that could give a rational multiple of τ, so no further unit palindromes exist. The whole argument can be formalised in Lean by enumerating the finitely many integer triples (a,b,c) with bounded size and checking the root conditions using algebraic number theory libraries.",
     "research_mode": "team",
     "source_exp_id": "2606.29669v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T06:17:55.891614+00:00",
     "title": "Unique exceptional integer palindromes of degree 4 with unit roots"
   },
@@ -5531,7 +5531,7 @@
     "catalog_references": [
       "3-packings in Triangulations: Algorithms, bounds, and Complexity"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "998dff91",
     "description": "Conjecture that for every integer k ≥ 1 there exists a plane triangulation G on n = 5k + r vertices (r ∈ {0,1,2,3,4}) such that the maximum size of a P3-packing λ_{P3}(G) equals floor(n/5). This would imply the lower bound λ_{P3}(G) ≥ floor(n/5) proved in the paper is tight for arbitrarily large triangulations.",
     "domain_bridges": [
       "planar_graph_theory",
@@ -5546,7 +5546,7 @@
     "proof_strategy": "Construct infinite families of triangulations with prescribed degree sequences using vertex splitting and edge subdivision, then apply a greedy packing algorithm to obtain exactly floor(n/5) disjoint P3 subgraphs, showing the bound cannot be improved.",
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T04:14:42.891046+00:00",
     "title": "Tightness Conjecture for P3-Packings in Plane Triangulations"
   },
@@ -7729,7 +7729,7 @@
       "PR12",
       "Kane2013"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "59da6bf9",
     "description": "For any prime p, the Markov chain on ℕ defined by the Klagsbrun-Mazur-Rubin twist process for p-Selmer ranks of even-dimensional Galois modules satisfying the KMR technical conditions is irreducible, aperiodic, and positive recurrent. Its unique stationary distribution π assigns strictly positive probability to every rank r ∈ ℕ, and the distribution of p-Selmer ranks in the twist family ordered by the product of ramified primes converges to π.",
     "domain_bridges": [
       "probability_theory",
@@ -7747,7 +7747,7 @@
     "proof_strategy": "1) Define the KMR Markov chain as an explicit stochastic kernel on ℕ capturing the effect of local twist conditions on p-Selmer ranks. 2) Prove irreducibility by constructing explicit paths from any state to any other via sequences of local twist operations. 3) Prove aperiodicity by exhibiting positive self-loop probability at state 0. 4) Establish positive recurrence via drift analysis or Lyapunov function arguments on the countable state space. 5) Apply the convergence theorem for irreducible aperiodic positive recurrent chains to deduce convergence to the unique stationary distribution. 6) Positivity of π follows from irreducibility.",
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T03:42:58.157244+00:00",
     "title": "KMR Markov chain convergence and positivity of p-Selmer rank stationary distribution"
   },
@@ -9412,7 +9412,7 @@
       "HalldorssonK02",
       "NicolosoSS99"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "068b28b7",
     "description": "For every fixed graph H that contains at least one edge, the decision problem Chromatic Sum remains NP‑complete when restricted to H‑free graphs (i.e., graphs that do not contain H as a subgraph). This conjecture is falsifiable because a single counterexample—a graph class H‑free for which Chromatic Sum is polynomial‑time solvable— would refute it.",
     "domain_bridges": [
       "graph theory",
@@ -9427,7 +9427,7 @@
     "proof_strategy": "Establish NP‑membership in NP and prove NP‑hardness via a reduction from a known NP‑complete problem (e.g., 3‑Partition) while respecting the H‑free restriction.",
     "research_mode": "team",
     "source_exp_id": "2607.00263v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T08:29:25.578468+00:00",
     "title": "Chromatic Sum is NP-complete on H‑free graphs for any fixed graph H with at least one edge"
   },
@@ -13107,7 +13107,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c3075cb5",
     "description": "Ramanujan's constant e^{pi*sqrt(163)} is remarkably close to an integer: it equals 262537412640768743.99999999999925... — just 7.5 * 10^{-13} away from 262537412640768744. This is not a coincidence: 163 is the largest Heegner number, and the near-integer property follows from the j-function and the fact that Q(sqrt(-163)) has class number 1. But 163 appears EVERYWHERE: it is prime, it is the smallest p such that Q(sqrt(-p)) has class number 1 and p > 2, it is a Chen prime, a lucky prime, a strongly prime, and the 38th prime. Conjecture: 163 is the unique integer n such that e^{pi*sqrt(n)} is within 10^{-6} of an integer. More generally, the Heegner numbers (1, 2, 3, 7, 11, 19, 43, 67, 163) are exactly the n for which Q(sqrt(-n)) has class number 1, and e^{pi*sqrt(n)} is near-integer for each. The 'magic' of 163 is that it is the LAST Heegner number — the final class number 1 imaginary quadratic field. Test: prove that e^{pi*sqrt(n)} is within 10^{-6} of an integer only for Heegner numbers. Compute e^{pi*sqrt(67)} and e^{pi*sqrt(43)} and verify near-integer behavior. Prove that 163 is the largest Heegner number (Stark-Heegner theorem). Impact: 163 is not magic — it is the climax of a deep theorem in algebraic number theory. The near-integer property of e^{pi*sqrt(163)} is the shadow of the class number 1 condition.",
     "domain_bridges": [],
     "domains": [
@@ -13120,7 +13120,7 @@
     "proof_strategy": "State the Stark-Heegner theorem: the imaginary quadratic fields Q(sqrt(-d)) with class number 1 are exactly d = 1, 2, 3, 7, 11, 19, 43, 67, 163. Prove e^{pi*sqrt(d)} is near-integer for each Heegner number: by the j-function expansion, j((1+sqrt(-d))/2) is an algebraic integer, and e^{pi*sqrt(d)} = (j/1728 + ... )^{1/3} * 12. For d = 163, j((1+sqrt(-163))/2) = -640320^3, so e^{pi*sqrt(163)} = 640320^3 + 744 - error. Prove uniqueness: for non-Heegner d, the class number h(-d) >= 2, so j((1+sqrt(-d))/2) has degree h(-d) >= 2 over Q, and e^{pi*sqrt(d)} is not near-integer. Test: compute e^{pi*sqrt(d)} for d = 1,2,3,7,11,19,43,67,163 and verify near-integer behavior. Compute for d = 5,6,10,14 to verify non-near-integer behavior.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T23:49:57.790919+00:00",
     "title": "The Unreasonable Effectiveness of the Number 163"
   },
