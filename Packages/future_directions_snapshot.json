@@ -9353,7 +9353,7 @@
       "cs.FL",
       "math.CO"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c8ed5b11",
     "description": "Any deterministic finite automaton (DFA) that correctly solves the Kochen-Specker problem (KSP) for a simple exclusivity graph G must possess at least χ(G) internal states. The KSP is defined as a language recognition task over the vertices of G, where strings of identical vertices are accepted, and strings of adjacent vertices are rejected.",
     "domain_bridges": [
       "Automata Theory",
@@ -9370,7 +9370,7 @@
     "proof_strategy": "Proceed by contradiction. Assume the DFA has fewer than χ(G) states. The initial transition function maps each vertex v to an internal state δ(s_0, v). Because the number of states is less than the chromatic number, this mapping cannot form a valid vertex coloring. By the pigeonhole principle, there must exist an edge (v_A, v_B) in G such that both vertices map to the same internal state s_col. Show that the state reached after reading v_A from s_col must be in the accept set (from the string v_A v_A) but also not in the accept set (from the string v_B v_A), yielding a contradiction.",
     "research_mode": "team",
     "source_exp_id": "2607.00507v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T07:33:08.390636+00:00",
     "title": "DFA State Complexity Lower Bound for the Kochen-Specker Problem"
   },
@@ -9382,7 +9382,7 @@
       "06A07",
       "05A16"
     ],
-    "consumed_by_exp_id": "b7da86b1",
+    "consumed_by_exp_id": "",
     "description": "For the Boolean lattice B_n, let E_n be the set of triples (S,T,U) with S ⊂ T ⊂ U in B_n such that |S| + |T| = |U|. The conjecture states that |E_n| = C(2n,n) - [x^n](1+x+x^2)^n - 2^n + 1, where [x^n] extracts the coefficient of x^n from the polynomial. This identity connects poset chain counting in Boolean lattices with trinomial coefficient extraction and binomial sums, and is the foundational combinatorial identity underlying the paper's analysis of multiplicity parameters.",
     "domain_bridges": [
       "poset_theory",
@@ -9400,7 +9400,7 @@
     "proof_strategy": "The proof proceeds by classifying triples (S,T,U) with S ⊂ T ⊂ U in B_n according to the rank levels of S, T, U (i.e., their cardinalities). The condition |S|+|T| = |U| constrains the rank levels. One sums over all valid rank triples (i,j,i+j) with i < j < i+j ≤ n, counting the number of ways to choose nested subsets at those ranks via inclusion (choosing U\\T, T\\S, and S independently from appropriate ground sets). The trinomial coefficient [x^n](1+x+x^2)^n arises as the count of triples where the chain condition S ⊂ T ⊂ U is violated (i.e., where some inclusions are not strict), and the term 2^n - 1 accounts for degenerate cases. The identity follows from inclusion-exclusion over these cases.",
     "research_mode": "team",
     "source_exp_id": "2607.00456v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T08:10:19.413018+00:00",
     "title": "Exact enumeration of arithmetic Schur-type triples in the Boolean lattice"
   },
@@ -13596,6 +13596,32 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "math.CO",
+      "math.SP"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every Turán graph T(n, r) with r ≥ 4 and n ≥ 4r, and for every edge e of T(n, r), the Seidel energy strictly increases upon deletion: E_S(T(n, r) − e) > E_S(T(n, r)). This is Theorem 1.2 of the paper, resolving a problem of Tian et al., but its formalization requires building the entire theory of Seidel matrices, Seidel energy, Turán graphs, and the reduced-order spectral machinery for blow-up graphs—a substantial formalization undertaking.",
+    "domain_bridges": [
+      "spectral_graph_theory",
+      "linear_algebra",
+      "combinatorics"
+    ],
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_0613",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First formalize Seidel matrices and Seidel energy in Lean, then define Turán graphs and independent-set blow-up graphs. Establish the reduced-order spectral criterion that reduces the Seidel energy comparison to eigenvalue analysis of a smaller matrix whose order depends only on the number of partite sets. Apply this criterion to the Turán graph case with r ≥ 4 and n ≥ 4r, verifying the inequality via explicit eigenvalue computation on the reduced matrix.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06095v1",
+    "status": "available",
+    "timestamp": "2026-07-08T09:55:51.506040+00:00",
+    "title": "Seidel energy strictly increases under edge deletion in Turán graphs"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "magnitude_of_metric_spaces",
       "negative_type_metrics"
     ],
@@ -13609,7 +13635,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0613",
+    "id": "fd_0614",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formulate the problem as a strictly convex quadratic optimization over the affine subspace of signed measures with total mass 1; strict convexity guarantees a unique minimizer, and strict negative type ensures that the quadratic form is positive definite on the relevant subspace.",
@@ -13637,7 +13663,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0614",
+    "id": "fd_0615",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the existing formula by analyzing the μ-invariant's contribution through local-global principles and modular forms.",
@@ -13667,7 +13693,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0615",
+    "id": "fd_0616",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "We would prove the conjecture by establishing a bijection between quasinecklaces and primitive words, or by showing that the recurrence defining quasinecklaces derived in the paper matches the Möbius inversion of the total word count. A proof by induction on n using divisor decomposition and properties of the Möbius function can be formalized in Lean, leveraging existing libraries for arithmetic functions and finite sums.",
@@ -13693,7 +13719,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0616",
+    "id": "fd_0617",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the classical Hilton-Milner theorem as a lemma. Then formalize the notion of cross-intersecting families and non-triviality. The key structural insight from the paper is analyzing 2-cover graphs of cross-intersecting families and bounding the size of families with small minimal covers. The proof proceeds by case analysis on the structure of minimal covers of F and G, showing that non-HM-type configurations yield strictly smaller products when n > 100ℓk².",
@@ -13720,7 +13746,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0617",
+    "id": "fd_0618",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the S₁₀-construction from the paper, exploiting the absence of bridges to handle end-block decomposition more efficiently. Since bridgeless cubic graphs admit perfect matchings (Petersen's theorem), combine the S₁₂-technique achieving 4/5 for graphs with perfect matchings with the triangle-replacement structure of S₁₀ to gain the additional 1/42 fraction, using the fact that bridgeless graphs avoid the trivial-bridge obstructions that limit the 5/6 bound.",
@@ -13749,7 +13775,7 @@
     "domains": [
       "Cryptography"
     ],
-    "id": "fd_0618",
+    "id": "fd_0619",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Two possible routes: (1) Modular route — prove θ_L is a modular form of weight 4 for SL₂(ℤ) via Poisson summation on the lattice, establish that M₄(SL₂(ℤ)) is 1-dimensional spanned by E₄, and match constant terms; (2) Combinatorial route — use the explicit root system of E₈ to compute the theta series coefficients and verify they equal 240·σ₃(n) via the Weyl character formula or direct root system enumeration.",
@@ -13778,7 +13804,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0619",
+    "id": "fd_0620",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the paper's structure theorem for {-1,0,1}-diagonalizable graphs of prime order as a base case. For composite orders, leverage the regularity result (Theorem: bipartite implies regular) combined with the eigenvector structure constraints: the {-1,0,1} eigenvector basis forces strong conditions on the adjacency patterns of regular bipartite graphs. A possible approach shows that if G is connected, bipartite, regular, and {-1,0,1}-diagonalizable, then any two vertices in the same part have identical neighbor sets, yielding completeness. Attempt falsification by exhaustive search for small orders using the enumeration data provided.",
@@ -13807,7 +13833,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0620",
+    "id": "fd_0621",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "For the forward direction (k∣n ⟹ Schur positivity): decompose G(k,n) into creation operator images C_α when k∣n, then apply the compositional shuffle theorem framework to express Δ_{e_j} C_α as a positively weighted sum of vertical LLT polynomials, leveraging Grojnowski–Haiman Schur positivity of LLT polynomials. For the converse (k∤n ⟹ not Schur positive): extend the sign-analysis techniques from the paper's nabla case to general Δ_{e_j} by tracking the leading negative Schur coefficients in the Macdonald polynomial expansion of G(k,n) under the delta eigenvalue action, showing that the divisibility obstruction propagates through all delta operators.",
@@ -13835,7 +13861,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0621",
+    "id": "fd_0622",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish moment bounds for higher-order moments of the fluctuations to apply the method of moments, leveraging the Selberg trace formula on random surfaces and the known variance asymptotic of $X \\log X$.",
@@ -13864,7 +13890,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0622",
+    "id": "fd_0623",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Generalize the k=3 counterexample construction. The paper establishes a duality between symmetric powers and abstract rigidity. One would need to show that the rigidity-theoretic obstruction that produces the k=3 counterexample can be lifted to higher k, perhaps by taking symmetric powers of the counterexample matroid itself, or by constructing a family of matroids M_k indexed by k ≥ 3 such that the rank functions from the two Mason definitions diverge on specific independent sets in sym_k(M_k).",
@@ -13893,7 +13919,7 @@
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0623",
+    "id": "fd_0624",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the inversion graph G_π of a permutation π as the graph on [n] with edges corresponding to inversions. Define caterpillar graphs (removing all degree-1 vertices yields a path). Then establish the key mechanism: a reduced word for π orders the edges of G_π, with first-occurrence letters forming a spanning forest. For the acyclic case, show that the spanning tree has a unique central path by analyzing how the cycle structure of π constrains the possible branching patterns, leveraging the fact that each cycle of π contributes a specific subtree structure that can only attach linearly along a spine.",
@@ -13921,7 +13947,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0624",
+    "id": "fd_0625",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Proceed by induction on t, leveraging the t=1 base case proven in the paper. For the inductive step, analyze how the multiset and non-multiset intersection structures of insertion balls decompose when composing t insertions as a sequence of single insertions. The key difficulty is showing that the overlap multiplicities from repeated error patterns cannot create a distinction between the multiset and non-multiset models even when t > 1. A combinatorial double-counting argument on the equivalence classes of insertion error patterns producing identical outputs may suffice.",
@@ -13947,7 +13973,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0625",
+    "id": "fd_0626",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use probabilistic methods or explicit algebraic constructions to demonstrate a family of $r$-uniform hypergraphs with maximum degree $d$ that cannot be star-colored with fewer than $c \\cdot d^{2/(r-1)}$ colors, adapting known lower bounds for graph star coloring to the hypergraph setting.",
@@ -13976,7 +14002,7 @@
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_0626",
+    "id": "fd_0627",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the Mason-Snaith ratio conjecture framework to function fields: (1) formalize the explicit formula relating sums over zeros to sums over primes in F_q[T], (2) compute the n-level density via the ratio of L-functions averaged over the family using character sum identities over F_q[T], (3) show the resulting combinatorial expression matches the n-level correlation kernel of USp(2g) eigenvalues computed from the symplectic group's Weyl integration formula, using the restricted Fourier support to control error terms.",
@@ -14004,7 +14030,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0627",
+    "id": "fd_0628",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the change of variables y = -log(x) to convert the product-free condition on (0,1) into a sum-free condition on (0,∞) with respect to the exponential distribution. Then leverage the positive interval discrepancy d(A) = sup_I (2|A∩I| - |I|) to obtain refined lower bounds on |A±A| beyond the Kneser/Brunn-Minkowski bound |A-A| ≥ 2|A|, quantifying how far A is from an interval. These structural results on sumsets force |A| < 1/3 for any open product-free set.",
@@ -14017,64 +14043,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
-      "math.CO",
-      "outerplanar_graphs",
-      "graph_coloring",
-      "Wegner_conjecture"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "Every finite simple subcubic outerplanar graph admits a crumby coloring: a red-blue vertex partition where blue vertices induce a subgraph of maximum degree at most one, and red vertices induce a subgraph with no isolated vertices and no P₄ subgraph (no simple path with three edges). This formalizes the main theorem resolving the Barát–Blázsik–Damásdi conjecture.",
-    "domain_bridges": [
-      "formal_verification",
-      "certificate_checking",
-      "grammatical_graph_decompositions"
-    ],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0624",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Formalize crumby coloring and outerplanarity in Lean. Encode the rooted grammar for subcubic outerplanar graphs and the notion of crumby-admissible colorings with temporary defects. Verify the finite family of lower certificates (boundary types and root states) for closure under decomposition steps and crumby condition satisfaction, mirroring the computer-assisted certificate verification in the original proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.06515v1",
-    "status": "available",
-    "timestamp": "2026-07-08T08:55:50.798742+00:00",
-    "title": "Crumby Coloring Existence for Subcubic Outerplanar Graphs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
       "math.AT",
-      "cs.CG",
       "math.CO"
     ],
     "consumed_by_exp_id": "",
-    "description": "The paper proves that for any fixed c ≥ 1, there exist finite metric spaces whose Vietoris-Rips filtration requires superlinear-size c-approximations. This conjecture strengthens that result: for any fixed c ≥ 1, there exists ε = ε(c) > 0 such that for sufficiently large n, there exists a finite metric space X on n points for which any finitely presented c-approximation to VR(X) requires at least n^{1+ε} simplices. This pins down the superlinear growth to a polynomial one, ruling out n·polylog(n) approximations.",
+    "description": "For every integer n ≥ 2, there exists a finite free n-dimensional simplicial Z_2-complex K such that coind(K) = 1 and coind(S(K)) = n+1, demonstrating that the excess of the co-index of a suspension over the lower bound coind(X)+1 can be arbitrarily large.",
     "domain_bridges": [
-      "topological_data_analysis",
-      "computational_complexity",
-      "metric_geometry"
+      "Equivariant Topology",
+      "Graph Theory",
+      "Combinatorial Topology"
     ],
     "domains": [
-      "Pythagorean",
-      "MachineLearning"
+      "Geometry"
     ],
-    "id": "fd_0624",
+    "id": "fd_0629",
     "lineage_refs": [],
     "priority_score": 0.8,
-    "proof_strategy": "Construct explicit families of metric spaces (likely extending the paper's path metric / cycle graph constructions) and use combinatorial arguments about the topology of high-dimensional skeleta to show that any c-approximation must contain a polynomial number of high-dimensional simplices. The key is to rule out subpolynomial factors in the superlinear bound by analyzing the Lusternik–Schnirelmann category or cup-length obstructions in the approximating filtration, forcing many critical simplices that cannot be collapsed.",
+    "proof_strategy": "Explicitly construct the simplicial Z_2-complex K for each n, prove it is a free Z_2-space, and compute its co-index and the co-index of its suspension using the Borsuk-Ulam theorem and homotopy equivalence arguments.",
     "research_mode": "team",
-    "source_exp_id": "2607.06524v1",
+    "source_exp_id": "2607.06061v1",
     "status": "available",
-    "timestamp": "2026-07-08T08:56:46.980080+00:00",
-    "title": "Polynomial Lower Bound for Vietoris-Rips Approximations at All Scales"
+    "timestamp": "2026-07-08T09:56:13.663591+00:00",
+    "title": "Unbounded Gap Between Co-Index of a Free Z_2-Space and Its Suspension"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ed6fbad7",
+    "consumed_by_exp_id": "d51a45d4",
     "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' — they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
     "domain_bridges": [],
     "domains": [

@@ -5090,7 +5090,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sub-square-root bound for smooth character sums at the critical threshold"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c8ed5b11",
     "description": "Any deterministic finite automaton (DFA) that correctly solves the Kochen-Specker problem (KSP) for a simple exclusivity graph G must possess at least \u03c7(G) internal states. The KSP is defined as a language recognition task over the vertices of G, where strings of identical vertices are accepted, and strings of adjacent vertices are rejected.",
     "domains": [
       "Computation",
@@ -5100,12 +5100,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00507v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T07:33:08.390636+00:00",
     "title": "DFA State Complexity Lower Bound for the Kochen-Specker Problem"
   },
   {
-    "consumed_by_exp_id": "b7da86b1",
+    "consumed_by_exp_id": "",
     "description": "For the Boolean lattice B_n, let E_n be the set of triples (S,T,U) with S \u2282 T \u2282 U in B_n such that |S| + |T| = |U|. The conjecture states that |E_n| = C(2n,n) - [x^n](1+x+x^2)^n - 2^n + 1, where [x^n] extracts the coefficient of x^n from the polynomial. This identity connects poset chain counting in Boolean lattices with trinomial coefficient extraction and binomial sums, and is the foundational combinatorial identity underlying the paper's analysis of multiplicity parameters.",
     "domains": [
       "Pythagorean",
@@ -5115,7 +5115,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00456v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T08:10:19.413018+00:00",
     "title": "Exact enumeration of arithmetic Schur-type triples in the Boolean lattice"
   },
@@ -7296,12 +7296,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every Tur\u00e1n graph T(n, r) with r \u2265 4 and n \u2265 4r, and for every edge e of T(n, r), the Seidel energy strictly increases upon deletion: E_S(T(n, r) \u2212 e) > E_S(T(n, r)). This is Theorem 1.2 of the paper, resolving a problem of Tian et al., but its formalization requires building the entire theory of Seidel matrices, Seidel energy, Tur\u00e1n graphs, and the reduced-order spectral machinery for blow-up graphs\u2014a substantial formalization undertaking.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_0613",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06095v1",
+    "status": "available",
+    "timestamp": "2026-07-08T09:55:51.506040+00:00",
+    "title": "Seidel energy strictly increases under edge deletion in Tur\u00e1n graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any finite metric space X of strictly negative type there exists exactly one signed measure \u03bc of total mass 1 that minimizes the energy functional E(\u03bc)=\u2211_{x,y\u2208X}d(x,y)\u03bc(x)\u03bc(y); moreover \u03bc can be characterized as the unique optimizer of this strictly convex quadratic program.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0613",
+    "id": "fd_0614",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05349v1",
@@ -7315,7 +7329,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0614",
+    "id": "fd_0615",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05305v1",
@@ -7329,7 +7343,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0615",
+    "id": "fd_0616",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05324v1",
@@ -7343,7 +7357,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0616",
+    "id": "fd_0617",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06443v1",
@@ -7358,7 +7372,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0617",
+    "id": "fd_0618",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06396v1",
@@ -7372,7 +7386,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Cryptography"
     ],
-    "id": "fd_0618",
+    "id": "fd_0619",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
@@ -7386,7 +7400,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0619",
+    "id": "fd_0620",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06336v1",
@@ -7400,7 +7414,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0620",
+    "id": "fd_0621",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06351v1",
@@ -7415,7 +7429,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0621",
+    "id": "fd_0622",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06263v1",
@@ -7430,7 +7444,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0622",
+    "id": "fd_0623",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06228v1",
@@ -7445,7 +7459,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0623",
+    "id": "fd_0624",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06198v1",
@@ -7459,7 +7473,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0624",
+    "id": "fd_0625",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06181v1",
@@ -7474,7 +7488,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0625",
+    "id": "fd_0626",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06082v1",
@@ -7489,7 +7503,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_0626",
+    "id": "fd_0627",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06022v1",
@@ -7503,7 +7517,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0627",
+    "id": "fd_0628",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06073v1",
@@ -7512,7 +7526,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Product-free open subsets of (0,1) have measure less than 1/3"
   },
   {
-    "consumed_by_exp_id": "ed6fbad7",
+    "consumed_by_exp_id": "",
+    "description": "For every integer n \u2265 2, there exists a finite free n-dimensional simplicial Z_2-complex K such that coind(K) = 1 and coind(S(K)) = n+1, demonstrating that the excess of the co-index of a suspension over the lower bound coind(X)+1 can be arbitrarily large.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_0629",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06061v1",
+    "status": "available",
+    "timestamp": "2026-07-08T09:56:13.663591+00:00",
+    "title": "Unbounded Gap Between Co-Index of a Free Z_2-Space and Its Suspension"
+  },
+  {
+    "consumed_by_exp_id": "d51a45d4",
     "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
     "domains": [
       "Novelty",
