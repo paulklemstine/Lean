@@ -324,7 +324,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sign law for the third order mock theta function phi(q)"
   },
   {
-    "consumed_by_exp_id": "2003147f",
+    "consumed_by_exp_id": "",
     "description": "We conjecture an explicit formula for the Jordan canonical form of the image of a regular unipotent element under any finite\u2011dimensional irreducible polynomial representation of GL\u2083(\u2096). Let \u03bb = (a,b,c) be a dominant weight with a > b > c. Define d\u2081 = a\u2011 b, d\u2082 = b\u2011 c, d\u2083 = a\u2011 c and the rational function\n\nM(t) = (1\u2011 t^{d\u2081+1})(1\u2011 t^{d\u2082+1})(1\u2011 t^{d\u2083+2}) /\n       ((1\u2011 t^{d\u2081})(1\u2011 t^{d\u2082})(1\u2011 t^{d\u2083})).\n\nWrite M(t) = \u03a3_{j\u22650} m_j t^j. Then the Jordan canonical form of \u03c0_\u03bb(u) (the regular unipotent u \u2208 GL\u2083(\u2096) under the representation \u03c0_\u03bb) is the partition whose parts are (j+1) repeated m_j times. In particular the multiplicities m_j satisfy a linear recurrence with characteristic polynomial (1\u2011 t^{d\u2081})(1\u2011 t^{d\u2082})(1\u2011 t^{d\u2083}).",
     "domains": [
       "Algebra",
@@ -334,7 +334,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31398v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T14:45:19.943455+00:00",
     "title": "Jordan type of regular unipotent image for GL\u2080 representations"
   },
@@ -4670,7 +4670,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The all-twos partition achieves the maximum number of parts in \u03a9\u2082(n)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e163d5c0",
     "description": "There exists a graph G without a cycle of length d such that at least cd n edge deletions are required to transform G into a graph where each connected component has a vertex cover of size at most (1+c)d.",
     "domains": [
       "Bridges"
@@ -4679,7 +4679,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T20:11:01.715515+00:00",
     "title": "Tightness of Edge Deletion Bound in Hyperstability Extension of Erd\u0151s-Gallai Theorem"
   },
@@ -6028,7 +6028,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Full part-count spectrum of the Sylow 2-permutation character of S_n"
   },
   {
-    "consumed_by_exp_id": "a5372f60",
+    "consumed_by_exp_id": "",
     "description": "The cyclotomic matrix $A_k(\\chi) = [G_N(\\chi^{ki+kj})]$ involving Gauss sums over $\\mathbb{Z}/N\\mathbb{Z}$ (where $N=p^m$ and $n=\\varphi(N)/k$) can be decomposed as the matrix product $W D W^T$, where $W$ is the $n \\times n$ discrete Fourier transform matrix with entries $W_{i,a} = \\omega^{ai}$ ($\\omega$ being a primitive $n$-th root of unity) and $D$ is the diagonal matrix of the $n$ Gauss periods $\\eta_a$ corresponding to the $k$-th power residue cyclotomic cosets.",
     "domains": [
       "Bridges"
@@ -6037,7 +6037,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02392v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T22:55:43.909167+00:00",
     "title": "Factorization of Cyclotomic Gauss Sum Matrix"
   },
@@ -6865,7 +6865,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimal leading constant for list coloring uncrowded hypergraphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d82d98aa",
     "description": "For an elliptic curve E over Q with good supersingular reduction at 2 and square-free conductor N_E, and a square-free integer D > 0 congruent to 1 mod 4, the difference between the sharp/flat 2-adic Iwasawa lambda-invariants of the quadratic twist E^D and E (assuming the mu-invariant is 0) is given by the sum over prime divisors ell of D of 2^{n_ell} (if ell divides N_E) or 2^{n_ell+1} (if ell does not divide N_E and 2 divides the order of E modulo ell), where n_ell is the 2-adic valuation of (ell^2 - 1)/8.",
     "domains": [
       "Pythagorean",
@@ -6875,7 +6875,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05305v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T18:27:12.191464+00:00",
     "title": "Matsuno-type Formula for Supersingular Iwasawa Lambda-Invariants"
   },
@@ -7413,12 +7413,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every finitely generated virtually nilpotent group has finite twin-width. This conjecture provides a positive structural guarantee for the combinatorial parameter of twin-width from the algebraic assumption of virtual nilpotence, complementing the paper's negative result that finite twin-width does not imply accessibility. Specifically, if \u0393 is a finitely generated group containing a nilpotent subgroup of finite index, then every Cayley graph of \u0393 has finite twin-width (i.e., the supremum of twin-widths of finite induced subgraphs is bounded). The proof would proceed by: (1) establishing that Z^n has finite twin-width by bounding the twin-width of subgraphs of the n-dimensional grid, (2) showing that torsion-free finitely generated nilpotent groups embed as discrete cocompact subgroups of nilpotent Lie groups, yielding quasi-isometric embeddings into R^m whose integer lattice Z^m has finite twin-width, and (3) applying the quasi-isometric invariance of twin-width for bounded-degree graphs (Twin-width VII, Bonnet et al.) together with finite-index arguments for the virtual case.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0621",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05713v1",
+    "status": "available",
+    "timestamp": "2026-07-08T14:18:57.860351+00:00",
+    "title": "Finite Twin-Width of Virtually Nilpotent Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any finite metric space X of strictly negative type there exists exactly one signed measure \u03bc of total mass 1 that minimizes the energy functional E(\u03bc)=\u2211_{x,y\u2208X}d(x,y)\u03bc(x)\u03bc(y); moreover \u03bc can be characterized as the unique optimizer of this strictly convex quadratic program.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0621",
+    "id": "fd_0622",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05349v1",
@@ -7432,7 +7447,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0622",
+    "id": "fd_0623",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05305v1",
@@ -7446,7 +7461,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0623",
+    "id": "fd_0624",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05324v1",
@@ -7460,7 +7475,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0624",
+    "id": "fd_0625",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06443v1",
@@ -7475,7 +7490,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0625",
+    "id": "fd_0626",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06396v1",
@@ -7489,7 +7504,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Cryptography"
     ],
-    "id": "fd_0626",
+    "id": "fd_0627",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
@@ -7503,7 +7518,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0627",
+    "id": "fd_0628",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06336v1",
@@ -7517,7 +7532,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0628",
+    "id": "fd_0629",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06351v1",
@@ -7532,7 +7547,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0629",
+    "id": "fd_0630",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06263v1",
@@ -7547,7 +7562,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0630",
+    "id": "fd_0631",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06228v1",
@@ -7562,7 +7577,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0631",
+    "id": "fd_0632",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06198v1",
@@ -7576,7 +7591,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0632",
+    "id": "fd_0633",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06181v1",
@@ -7591,7 +7606,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0633",
+    "id": "fd_0634",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06082v1",
@@ -7606,7 +7621,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_0634",
+    "id": "fd_0635",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06022v1",
@@ -7620,7 +7635,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0635",
+    "id": "fd_0636",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06073v1",
@@ -7634,7 +7649,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0636",
+    "id": "fd_0637",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06061v1",
@@ -7649,7 +7664,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0637",
+    "id": "fd_0638",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05926v1",
@@ -7663,7 +7678,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0638",
+    "id": "fd_0639",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05961v1",
@@ -7678,7 +7693,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0639",
+    "id": "fd_0640",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05835v1",
@@ -7692,7 +7707,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0640",
+    "id": "fd_0641",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05823v1",
@@ -7707,7 +7722,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0641",
+    "id": "fd_0642",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05767v1",
@@ -7722,7 +7737,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0642",
+    "id": "fd_0643",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05592v1",
@@ -7736,7 +7751,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0643",
+    "id": "fd_0644",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05688v1",
@@ -7745,7 +7760,22 @@ window.FUTURE_DIRECTIONS = [
     "title": "Circular Hessenberg pairs are characterized by the tridiagonal relations"
   },
   {
-    "consumed_by_exp_id": "08563491",
+    "consumed_by_exp_id": "",
+    "description": "For every integer $n \\geq 5$, the value $x_n := \\tan\\bigl(\\sum_{k=1}^{n} \\arctan k\\bigr)$ is not an integer. Equivalently, writing $Z_n = \\prod_{k=1}^n(1+ik) = A_n + iB_n$ with $A_n, B_n \\in \\mathbb{Z}$, the conjecture asserts that $A_n \\nmid B_n$ for all $n \\geq 5$. The four known integer values are $x_1=1, x_2=-3, x_3=0, x_4=4$.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0645",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05739v1",
+    "status": "available",
+    "timestamp": "2026-07-08T14:19:24.632628+00:00",
+    "title": "Amdeberhan-Medina-Moll Conjecture on Arctangent Sum Integrality"
+  },
+  {
+    "consumed_by_exp_id": "edee947a",
     "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
     "domains": [
       "Novelty",
