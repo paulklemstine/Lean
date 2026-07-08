@@ -14859,6 +14859,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — Supersingular Iwasawa λ-Invariants and Local Depths\n\nThe verified results isolate the arithmetic skeleton of the Matsuno-type formula for\nsharp/flat 2-adic λ-invariants: a completely additive, monotone invariant assembled\nfrom the local depths `n_ℓ = v₂((ℓ² − 1)/8)`. The following conjectures push this\nskeleton toward the full analytic theory.\n\n## 1. Full additive realization of the λ-difference\n\n**Conjecture.** For an elliptic curve `E/ℚ` with good supersingular reduction at 2,\nsquare-free conductor, and vanishing μ-invariant, the map sending a square-free\n`D ≡ 1 (mod 4)` to the difference `λ(E^D) − λ(E)` of sharp (or flat) λ-invariants is\n*completely additive* over coprime twisting parameters and agrees term-by-term with the\nlocal sum `∑_{ℓ ∣ D} δ(ℓ)`.\n\nThe key insight is that quadratic twisting acts multiplicatively on the twisting\nparameter while the λ-difference is a sum of purely local depths, so the global\ninvariant inherits exact additivity from the disjointness of prime supports.\n\nWhy now? The additivity and monotonicity of the local-sum model are established, so the\nonly remaining step is matching each local term to the ramification contribution of a\nsingle prime — a strictly local computation.\n\n## 2. Depth stratification by residue mod 8\n\n**Conjecture.** The distribution of the local contribution `δ(ℓ)` is governed entirely\nby `ℓ mod 8` together with divisibility of the conductor and parity of the reduction\norder; in particular `n_ℓ = 0` exactly for `ℓ ≡ 3, 5 (mod 8)`, and `n_ℓ` grows without\nbound only along `ℓ ≡ 1 (mod 8)`.\n\nThe key insight is that `n_ℓ + 3 = v₂(ℓ−1) + v₂(ℓ+1)`, so the depth is controlled by how\ndeeply `ℓ` sits in the 2-adic filtration of the units, which is a residue condition\nmodulo powers of 2.\n\nWhy now? The closed form `n_ℓ = v₂(ℓ−1) + v₂(ℓ+1) − 3` is proved, reducing the\nstratification question to a finite residue analysis.\n\n## 3. Growth rate of twisted λ-invariants\n\n**Conjecture.** Ordering square-free `D ≡ 1 (mod 4)` by size, the average of\n`λ(E^D) − λ(E)` over `D ≤ X` grows like `c · log log X` for an explicit constant `c`\ndepending only on the split behaviour of `E` at small primes.\n\nThe key insight is that each prime contributes a bounded local depth on average, so the\ntotal behaves like a sum of nearly-constant terms over the prime divisors of `D`,\nproducing Mertens-type `log log` growth.\n\nWhy now? With the invariant expressed as an additive prime sum, its average order is\ndirectly accessible to standard sieve and Mertens estimates.\n\n## 4. Monotone towers and stabilization\n\n**Conjecture.** Along any tower of square-free levels `d₁ ∣ d₂ ∣ ⋯` the λ-difference is\nnon-decreasing and stabilizes precisely when no new ramified prime with even reduction\norder is added.\n\nThe key insight is that the invariant is monotone under divisibility of the level and\neach newly introduced prime contributes a strictly positive local term exactly under an\nexplicit parity/ramification condition.\n\nWhy now? Monotonicity in the level is already verified, so the stabilization criterion is\nthe sole missing ingredient and is a local parity test.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0656",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "d82d98aa",
+    "status": "available",
+    "timestamp": "2026-07-08T16:32:02.084218+00:00",
+    "title": "The verified results isolate the arithmetic skeleton of the Matsuno-type formula"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -14873,5 +14893,24 @@
     "status": "available",
     "timestamp": "2026-07-02T04:44:52.457313+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any sufficiently complex algebraic variety defined over a quantum field, the classical solutions (roots of equations) exhibit quantum entanglement properties that can be measured through homotopy-type invariants. Test: By encoding classical algebraic varieties with quantum qubits and measuring their homotopy invariants (e.g., Betti numbers) against quantum error correction thresholds, we can verify whether entanglement persists in the classical limit. Impact: This bridges computational algebraic geometry with quantum information theory, enabling new algorithms for solving polynomial equations with quantum resilience.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_0657",
+    "lineage_refs": [],
+    "priority_score": 0.7,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-07-08T16:37:48.586658+00:00",
+    "title": "Quantum-Classical Entanglement in Numerical Algebraic Geometry"
   }
 ]

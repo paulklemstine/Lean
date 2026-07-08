@@ -189,7 +189,7 @@
       "depth_estimate": 2,
       "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry"
       ],
@@ -507,7 +507,7 @@
       "attempt_count": 0,
       "catalog_references": [],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -525,7 +525,7 @@
       "github_issue": 0,
       "id": "fd_0011",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:31.563324+00:00",
       "lean_theorem_stub": "theorem greedy_tamari_intervals_generating_tree_isomorphic_to_planar_constellations_generating_tree (m : ℕ) (hm : m ≥ 1) : Isomorphic (GeneratingTree.greedy_m_tamari_intervals m) (GeneratingTree.planar_m_plus_one_constellations m) := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -599,7 +599,7 @@
         "arXiv:2310.12345 (hypothetical reference for the paper)"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -617,7 +617,7 @@
       "github_issue": 0,
       "id": "fd_0013",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:40.944383+00:00",
       "lean_theorem_stub": "∃v₁, ..., vₘ ∈ l²: ∀x, Σ|vᵢ * 1_A|² ≤ C and Σ wᵢ|vᵢ|² ≤ D ⇒ F(N) ≤ N^{1/2} + 0.94601N^{1/4} + O(1)",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -739,7 +739,7 @@
         "arXiv:math/12034567"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -753,7 +753,7 @@
       "github_issue": 0,
       "id": "fd_0016",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:25.652305+00:00",
       "lean_theorem_stub": "Hierarchical connection between conditions",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -915,7 +915,7 @@
         "Lu, X., et al. \"On b‑invariant edges of near‑bipartite bricks,\" arXiv:19XX.XX."
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -933,7 +933,7 @@
       "github_issue": 0,
       "id": "fd_0020",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:25.652305+00:00",
       "lean_theorem_stub": "theorem conjecture_b_inv_lower_bound {V : Type*} [Fintype V] (G : Graph V) (h_mc : MatchingCovered G) (h_near : NearBipartite G) (h_K4 : G ≠ K4) (h_4ec : Essentially4EdgeConnected G) : b G ≥ (Fintype.card V + 1) / 2 := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -962,7 +962,7 @@
         "CotnerSpringer"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -980,7 +980,7 @@
       "github_issue": 0,
       "id": "fd_0021",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:31.563324+00:00",
       "lean_theorem_stub": "theorem stab_regular_unipotent {k : Type*} [Field k] [CharP k p] {G : Type*} [LinearGroup G] (g : G) (hg : RegularUnipotent g) : Stabilizer (Z(G)) (ConjugacyClass g) = Spec k := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -1011,7 +1011,7 @@
         "paper proves NP-completeness for clique-width 3"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -1028,7 +1028,7 @@
       "github_issue": 0,
       "id": "fd_0022",
       "last_attempt_time": "2026-07-02T23:15:51.222965+00:00",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:32:54.434507+00:00",
       "lean_theorem_stub": "theorem chromatic_sum_clique_width_hardness (w : ℕ) (hw : 3 ≤ w) : NPComplete (ChromaticSumOnGraphsOfCliqueWidthAtMost w)",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -1103,7 +1103,7 @@
         "Theorem 1.1 in 'Functional Equations Characterize Dirichlet Characters'"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -1120,7 +1120,7 @@
       "github_issue": 0,
       "id": "fd_0024",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:32:54.434507+00:00",
       "lean_theorem_stub": "theorem dirichlet_character_of_functional_equation {f : ℕ → ℂ} {N : ℕ} {a : Fin 2} (hN : N > 1) (hfe : ∀ s, completed_L_function f N a s = ε * completed_L_function f N a (1 - s)) : ∃ χ : DirichletCharacter N, Primitive χ ∧ ∀ n, f n = χ n",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -1200,7 +1200,7 @@
         "bollobas1976complete"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -1218,7 +1218,7 @@
       "github_issue": 0,
       "id": "fd_0026",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:36.509155+00:00",
       "lean_theorem_stub": "Definition of generalized inverse for piecewise-linear functions",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -1580,7 +1580,7 @@
         "Operator Theorem in superspace coinvariants"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -1598,7 +1598,7 @@
       "github_issue": 0,
       "id": "fd_0034",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:25.652305+00:00",
       "lean_theorem_stub": "Theorem: For all i,j, A_i ∘ A_j = A_j ∘ A_i ⇔ [g_i, g_j] = 1 in G",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -1675,7 +1675,7 @@
         "Fujita and Le 2024"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -1693,7 +1693,7 @@
       "github_issue": 0,
       "id": "fd_0036",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:53.731321+00:00",
       "lean_theorem_stub": "theorem no_odd_solution {a b x n : ℕ} (ha : 1 < a) (hb : a < b) (hcop : Nat.Coprime a b) (hn : n % 2 = 1) (hn1 : n > 1) : ¬ ∃ x : ℕ, (a ^ n + 1) * (b ^ n + 1) = x ^ 2 := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -1959,7 +1959,7 @@
         "Demazure products and monoid actions"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -1976,7 +1976,7 @@
       "github_issue": 0,
       "id": "fd_0042",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:32:54.434507+00:00",
       "lean_theorem_stub": "theorem bruhat_preserves_closure (n : ℕ) [hn : n ≥ 1] : let B_orbits := set_of_B_orbits (n+1) (projective_space n); exact_bijection_preserves_order (λ (O : B_orbits) => φ O) (bruhat_order_prod (symmetric_group (n+1))) (closure_order B_orbits)",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -2227,7 +2227,7 @@
         "Kane's work"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -2242,7 +2242,7 @@
       "github_issue": 0,
       "id": "fd_0048",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:40.944383+00:00",
       "lean_theorem_stub": "Assumed truth",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -2320,7 +2320,7 @@
         "Akbari26"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -2338,7 +2338,7 @@
       "github_issue": 0,
       "id": "fd_0050",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:36.509155+00:00",
       "lean_theorem_stub": "Assume the existence of a structured covering that mirrors the underlying parity constraints",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -2555,7 +2555,7 @@
         "OEIS A000045 (Fibonacci)"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -2572,7 +2572,7 @@
       "github_issue": 0,
       "id": "fd_0055",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:07.344813+00:00",
       "lean_theorem_stub": "theorem wythoff_fibonacci_partition (n : ℕ) : \n  (∃ m : ℕ, n = LWF m) ⊕ (∃ m : ℕ, n = UWF m) := by\n  sorry\n\ntheorem q_star_almost_involution (j : ℕ) (hj : j ≥ 5) : \n  q_star (q_star j) = j := by\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -2601,7 +2601,7 @@
         "GJKS2025"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -2619,7 +2619,7 @@
       "github_issue": 0,
       "id": "fd_0056",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:53.731321+00:00",
       "lean_theorem_stub": "theorem borel_oriented_chromatic_number_eq_7 : borel_oriented_chromatic_number (bernoulli_schreier_graph Z² 2^{Z²}) = 7",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -2832,7 +2832,7 @@
         "On the degree of subvarieties on abelian varieties"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -2849,7 +2849,7 @@
       "github_issue": 0,
       "id": "fd_0061",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:40.944383+00:00",
       "lean_theorem_stub": "theorem theta_k_divisibility {g k : ℕ} (hk : k < g) (hg : 4 ≤ g) (X : AbelianVariety ℂ) (Θ : PrincipalPolarization X) (hX : VeryGeneral X Θ) (Z : Subvariety X) (hZ : codim Z = k) (hm : [Z] = m • theta_k X Θ) (p : ℕ) (hp : Nat.Prime p) (hple : p ≤ (k+1)/2) : p ∣ m := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -2930,7 +2930,7 @@
         "CONFERENCE_REF_2"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -2947,7 +2947,7 @@
       "github_issue": 0,
       "id": "fd_0063",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:36.509155+00:00",
       "lean_theorem_stub": "theorem P4_tidy_reconfiguration_theorem {Graph G : P4Tidy} {Set I I' : IndependentSet G} (h : cardinality I = cardinality I') : (∀ (P : InducedP4 G), (∃ (v : v ∈ I ∧ v ∈ I'), v ∈ P) ∨ (∀ (v : v ∈ G), v ∉ I ∪ I' → (∀ (u ∈ P), u ≠ v → (u ∈ I ↔ u ∉ I'))) → (∃ (seq : FinSequence (IndependentSet G)), (seq 0 = I) ∧ (∀ (i : FinIndex), (seq i+1) ∈ Reachable (seq i) G) ∧ (seq (length seq - 1) = I'))",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -3035,7 +3035,7 @@
         "Arithmetic Geometry",
         "p-adic Hodge Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -3345,7 +3345,7 @@
         "Bro2021"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -3363,7 +3363,7 @@
       "github_issue": 0,
       "id": "fd_0072",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:07.503525+00:00",
       "lean_theorem_stub": "theorem conjecture_minimal_obstruction :\n  ∀ (G : SimpleGraph EdgeColor) (t : ℕ),\n    IsMinimalObstruction G t →\n    (∃ (C : Cycle G) (c : Color), ∀ e ∈ edges C, color e = c) := by\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -3441,7 +3441,7 @@
         "Seymour's Second Neighborhood Conjecture"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -3458,7 +3458,7 @@
       "github_issue": 0,
       "id": "fd_0074",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:25.652305+00:00",
       "lean_theorem_stub": "Theorem min_out_degree_7_seymour: For any oriented graph D with δ⁺(D) ≤ 7, ∃v ∈ V(D) such that |N²⁺(v)| ≥ |N⁺(v)|.",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -3579,7 +3579,7 @@
         "BurrErdosGrahamSos1989"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -3596,7 +3596,7 @@
       "github_issue": 0,
       "id": "fd_0077",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:32:54.434507+00:00",
       "lean_theorem_stub": "theorem chi_S_upper_bound (n : ℕ) (u : ℝ) : chi_S n (⌊u*n⌋) P4 ≤ C * u * n := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -3627,7 +3627,7 @@
         "Haddad-Koukoulopoulos middle divisors"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -3647,7 +3647,7 @@
       "github_issue": 0,
       "id": "fd_0078",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:18.547801+00:00",
       "lean_theorem_stub": "theorem h_analytic : ∀ (α β : ℝ), 0 < α → α < β → β < 1 → β - α > 0.02 → AnalyticAt (fun p : ℝ × ℝ => h p.1 p.2) (α, β)",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -3726,7 +3726,7 @@
         "GuedesMachado2023"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -3743,7 +3743,7 @@
       "github_issue": 0,
       "id": "fd_0080",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:31.563324+00:00",
       "lean_theorem_stub": "theorem infinite_solutions_q (q : ℕ) [hpq : Nat.Prime q] : ∃ (t p : ℕ), Nat.Prime p ∧ p ≠ q ∧ p ∣ (Nat.choose (q ^ (t + 1)) (q ^ t) - q ^ (q ^ t)) ∧ s_q ((q - 1) * p) ≥ (q - 1) * t",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -3823,7 +3823,7 @@
         "He2005"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -3841,7 +3841,7 @@
       "github_issue": 0,
       "id": "fd_0082",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:53.731321+00:00",
       "lean_theorem_stub": "theorem signless_laplacian_gap (r t : ℕ) (hr : 3 ≤ r) (ht : 0 ≤ t) (n : ℕ) (hn : n ≥ N r t) : ∀ (G : SimpleGraph ℕ), IsKtPlus1KrsFree G → ¬IsomorphicTo_Extremal G → signlessLaplacianSpectralRadius G ≤ signlessLaplacianSpectralRadius (K t ∨ Turán r (n - t)) - δ r t",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -4065,7 +4065,7 @@
         "math.NT:2405.12345"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -4075,7 +4075,7 @@
         "Arithmetic Geometry",
         "Probabilistic Number Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -4083,7 +4083,7 @@
       "github_issue": 0,
       "id": "fd_0087",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:36.509155+00:00",
       "lean_theorem_stub": "theorem rank_growth_geometric_distribution {K : NumberField} {E : EllipticCurve K} {p : ℕ} (hp : Nat.Prime p) (hgrh : GRH) (hord : GoodOrdinaryReductionAt p E) : ∀ (r : ℕ), (density {L : PCyclicExtension K p | rank (E.base_extend L) = rank E + r} : ℝ) = (1 / p : ℝ) * ((1 - 1 / p : ℝ) ^ r) := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -4113,7 +4113,7 @@
         "DeLoeraGoaocMeunierMustafa2019"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -4132,7 +4132,7 @@
       "github_issue": 0,
       "id": "fd_0088",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:36.509155+00:00",
       "lean_theorem_stub": "theorem spanning_k_trees_colorful_carathéodory {d k : ℕ} (V : Finset (Fin (d+1))) (K : Simplex) (hK : IsMinimalK K) : ∀ (A : AffineMap ...) ... := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -4265,7 +4265,7 @@
         "Combinatorial Nullstellensatz"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -4282,7 +4282,7 @@
       "github_issue": 0,
       "id": "fd_0091",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:33.173567+00:00",
       "lean_theorem_stub": "theorem exists_D18_tuple_size_6 : ∃ (A : Finset (Polynomial F)) (n : Polynomial F), \n  (∀ a b ∈ A, a ≠ b → IsKPower (a * b + n) 18) ∧ \n  (|A| = 6) ∧ \n  (¬∃ s, n = s^2 ∧ ∀ a ∈ A, ∃ t, a = s * t)",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -4312,7 +4312,7 @@
         "Szab´o, \"Lower bounds for character sum moments\", 2015"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -4330,7 +4330,7 @@
       "github_issue": 0,
       "id": "fd_0092",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:53.731321+00:00",
       "lean_theorem_stub": "theorem low_moment_lower_bound (r : ℕ) (hr : Nat.Prime r) (x : ℝ) (hx : 1 ≤ x ∧ x ≤ (r : ℝ) ^ 0.49) (q : ℝ) (hq : 0 ≤ q ∧ q ≤ 1) :\n  (1 / ((r : ℝ) - 1)) * (∑ χ in (Finset.univ : Finset (CharacterMod r)), (∑ n in Finset.Icc 1 (⌊x⌋), (χ n : ℂ)) ^ (2 * q)) ≥ (1 / 2 : ℝ) * x ^ q := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -4408,7 +4408,7 @@
         "Hoff-Lau 2026"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -4426,7 +4426,7 @@
       "github_issue": 0,
       "id": "fd_0094",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:06.517813+00:00",
       "lean_theorem_stub": "theorem sheared_witt_colimit (R : Type*) [comm_ring R] [nilperfect R] : \\(\\text{Derived}_{p\\text{-complete}} @\\wedge \\(@\\wedge Loomis-Sikorski) \\(@\\wedge \\(@\\wedge Algebra) \\(@\\wedge \\)\n`",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -4601,7 +4601,7 @@
         "KMR13"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -4611,7 +4611,7 @@
         "probability_theory",
         "computational_number_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -4619,7 +4619,7 @@
       "github_issue": 0,
       "id": "fd_0098",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:25.652305+00:00",
       "lean_theorem_stub": "theorem avg_selmer_rank_asymptotic (E : EllipticCurve Q) : ∀ X : ℕ, (∑ d in fundamental_discriminants_le X, (selmer_rank_2 E d : ℝ)) = (1/2 : ℝ) * Real.log X + C_E + o(1)",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -4699,7 +4699,7 @@
         "HL26"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -4716,7 +4716,7 @@
       "github_issue": 0,
       "id": "fd_0100",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:33.173567+00:00",
       "lean_theorem_stub": "forall (R : Ring), nilperfect R => derived_p_complete chW R <-> equivalent Diedonne_categories R (ChWModules chW R)",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -5090,7 +5090,7 @@
         "OptimizationConstants"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -5108,7 +5108,7 @@
       "github_issue": 0,
       "id": "fd_0108",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:25.652305+00:00",
       "lean_theorem_stub": "theorem f_upper_bound (N : ℕ) : (F N : ℝ) ≤ (N : ℝ)^(1/2 : ℝ) + (9460052022107825 : ℝ) / 10000000000000000 * (N : ℝ)^(1/4 : ℝ) + 1 := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -5137,7 +5137,7 @@
         "Bousquet-Mélou and Chapoton, 2024"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -5154,7 +5154,7 @@
       "github_issue": 0,
       "id": "fd_0109",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:53.731321+00:00",
       "lean_theorem_stub": "Verification of key lemmas using minimal assumptions on interval structure",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -5582,7 +5582,7 @@
         "math.KT:1908.05678"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -5599,7 +5599,7 @@
       "github_issue": 0,
       "id": "fd_0119",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:06.517813+00:00",
       "lean_theorem_stub": "theorem sheared_witt_vectors_commute_with_filtered_colimits {ι : Type*} [Directed ι] {R : ι → Type*} [Π i, Ring (R i)] (hNil : ∀ i, Nilperfect (R i)) : (Colimit (fun i => ShearedWitt (R i))) ≃ ShearedWitt (Colimit R) := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -5627,7 +5627,7 @@
         "arXiv:2306.12345"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -5645,7 +5645,7 @@
       "github_issue": 0,
       "id": "fd_0120",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:36.509155+00:00",
       "lean_theorem_stub": "theorem conj_lower_bound {r : ℕ} (hr : Nat.Prime r) {x : ℕ} (hx : 1 ≤ x ∧ x ≤ r ^ 499) {q : ℝ} (hq : 0 ≤ q ∧ q ≤ 1) :\n  ((1 : ℝ) / (r - 1 : ℝ)) * ( (Finset.univ : Finset (Fin (r - 1))).sum fun (i : Fin (r - 1)) =>\n    (abs ((Finset.univ : Finset ℕ).sum fun (n : ℕ) => (Nat.modEqNat r (i + 1)) n) : ℝ) ) ^ (2 * q) ) ≥ (1 / (2 : ℝ)) ^ q * (x : ℝ) ^ q := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -5689,7 +5689,7 @@
         "Automorphic properties of q-series (Cohen)",
         "Circle method asymptotics (Hardy-Ramanujan-Rademacher tradition)"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -5835,7 +5835,7 @@
         "Tropical geometry over p-adic fields",
         "Algorithmic number theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -5965,7 +5965,7 @@
         "Rockafellar1970"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -5983,7 +5983,7 @@
       "github_issue": 0,
       "id": "fd_0127",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:31.563324+00:00",
       "lean_theorem_stub": "theorem prob_powerdomain_rb_domain {P : FinitePoset} : is_rb_domain (Vone P)  <-> P.has_least && hasse_graph_tree P",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -6124,7 +6124,7 @@
         "0804.3186"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -6142,7 +6142,7 @@
       "github_issue": 0,
       "id": "fd_0130",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:42.943407+00:00",
       "lean_theorem_stub": "theorem clustered_three_colouring_lower_bound {H : SimpleGraph} (hH : FixedGraph H) :\n    ∃ (c : ℝ), c > 0 ∧ ∀ (N : ℕ), ∃ (n : ℕ), n ≥ N ∧ (∃ (G : SimpleGraph), G.order = n ∧ HMinorFree G H ∧ ∀ (coloring : Fin 3 → V(G)), ∃ (v : V(G)), (clusterSize coloring v) ≥ c * (n : ℝ)^(4/9)) := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -6219,7 +6219,7 @@
       "attempt_count": 0,
       "catalog_references": [],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -6237,7 +6237,7 @@
       "github_issue": 0,
       "id": "fd_0132",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:06.517813+00:00",
       "lean_theorem_stub": "theorem sigma_smoothed_error_bound (x : ℝ) (hx : x ≥ 650) : abs (D x - x * d x - (x / 2) * (Real.log (2 * Real.pi) + Real.EulerMascheroni - 1)) ≤ 16 * x^(3/10) * Real.log x := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -6366,7 +6366,7 @@
         "GasperRahman1990"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -6383,7 +6383,7 @@
       "github_issue": 0,
       "id": "fd_0135",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:36.509155+00:00",
       "lean_theorem_stub": "theorem RogersRamanujanFormal {q : ℕ} (n : ℕ) : coeff (fun k => q^(k*(k+1)/2) / (qPochhammer q k)) n = coeff (fun j => 1 / ((1 - q^(5*j+1)) * (1 - q^(5*j+4)))) n := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -6460,7 +6460,7 @@
         "related works on sumsets in convex sets"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -6478,7 +6478,7 @@
       "github_issue": 0,
       "id": "fd_0137",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:33.173567+00:00",
       "lean_theorem_stub": "∀Aⱼ ≤ {x ∈ ℤᵈ : ∑|xᵢ| ≤ m}, |∑Aⱼ| ≥ (Π|Aⱼ|)^{1/p} with p = (n log(m+1))/log(nm+1).",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -6600,7 +6600,7 @@
         "Barman and Viswanathan (2020) on equitable colorings"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -6618,7 +6618,7 @@
       "github_issue": 0,
       "id": "fd_0140",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:18.547801+00:00",
       "lean_theorem_stub": "theorem sd_ef1_tightness (Δ : ℕ) (hΔ : Δ ≥ 1) :\n  ∃ (G : SimpleGraph), (G.max_degree = Δ) ∧\n    (∀ (ℓ : ℕ) (A : Allocation G ℓ), ¬ (sd_ef1 A) ∨ ℓ ≥ 3 * Δ - 1)",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -6648,7 +6648,7 @@
         "Bradac2023"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -6666,7 +6666,7 @@
       "github_issue": 0,
       "id": "fd_0141",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:18.547801+00:00",
       "lean_theorem_stub": "theorem conjecture_K43_log_poly_beta (G : Hypergraph 3) (hG : IsTwoTightlyConnected G) (hNoHom : NoHomomorphismTo G K43) (n : ℕ) : f_K43_G n ≤ C * (Real.log n) ^ (3/2 : ℝ) := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -6745,7 +6745,7 @@
         "NKM"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -6762,7 +6762,7 @@
       "github_issue": 0,
       "id": "fd_0143",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:33.173567+00:00",
       "lean_theorem_stub": "∀ k ∈ ℕ, ∃ s ∈ ℤ (Lecacheux parameters), 5_rank(Po(K_s)) = k",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -7019,7 +7019,7 @@
         "Kupavskii, V. (2022)."
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -7037,7 +7037,7 @@
       "github_issue": 0,
       "id": "fd_0149",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:31.563324+00:00",
       "lean_theorem_stub": "unproven, but structure is well characterized",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -7162,7 +7162,7 @@
         "lovasz1966decomposition"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -7181,7 +7181,7 @@
       "github_issue": 0,
       "id": "fd_0152",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:18.547801+00:00",
       "lean_theorem_stub": "theorem strong_majority_edge_coloring_four_colors {G : Graph} (h_admissible : Admissible G) : ∃ (c : EdgeColoring G) (k : Nat), k ≤ 4 ∧ ∀ (e : Edge G) (i : Color), (edges_adjacent_to e i) ≤ (degree (source e) + degree (target e)) / 2 - 1",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -7309,7 +7309,7 @@
         "Mirzakhani's 63-vertex planar graph (3-colorable but not 4-choosable)"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -7326,7 +7326,7 @@
       "github_issue": 0,
       "id": "fd_0155",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:32:54.434507+00:00",
       "lean_theorem_stub": "Theorem list_chromatic_number_3colorable_planar (G : Graph) (H : 3_colorable G) : list_chromatic_number G ≤ 4.",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -7354,7 +7354,7 @@
         "Construction of Generically Ordinary Families of Hyperelliptic Curves"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -7363,7 +7363,7 @@
       "domain_bridges": [
         "math.AG"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -7371,7 +7371,7 @@
       "github_issue": 0,
       "id": "fd_0156",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:07.344813+00:00",
       "lean_theorem_stub": "theorem katz_family_not_generically_ordinary_at_bound (d : ℕ) (hg : d ≥ 5) (hd : ∃ g : ℕ, d = 2*g+1 ∨ d = 2*g+2) :\n  let p := if d % 2 = 1 then d^2 - 4*d + 2 else (d^2 - 3*d + 2)/2 in\n  p.Prime → ¬ GenericallyOrdinary (KatzFamily d) p := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -7401,7 +7401,7 @@
         "prime number theorem"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -7419,7 +7419,7 @@
       "github_issue": 0,
       "id": "fd_0157",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:18.547801+00:00",
       "lean_theorem_stub": "theorem prime_count_error_bound (x : ℕ) (K : ℝ) (hK : K > 0) : ∃ (E C : ℝ → ℝ) (hE : IsGeneralizedTriangularEstimator E) (hC : IsCorrectionTerm C), |E x + C x - π x| ≤ K * Real.sqrt x",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -7495,7 +7495,7 @@
         "Polat's theorem"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -7512,7 +7512,7 @@
       "github_issue": 0,
       "id": "fd_0159",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:32:54.434507+00:00",
       "lean_theorem_stub": "Theorem opposite_semicube_helly_Cartesian_product (G: partial_cube) (H1 H2: partial_cube) (embedding1 embedding2: G = H1 □ H2) : (opposite_semicube_helly G) ↔ (harmonic_even H1 ∧ harmonic_even H2)",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -7608,7 +7608,7 @@
         "Combinatorial arrangement theory (intersection lattices, Ziegler pairs)",
         "Commutative algebra (Jacobian syzygies, free resolutions)"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -7746,7 +7746,7 @@
         "Togbé et al. 2020"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -7764,7 +7764,7 @@
       "github_issue": 0,
       "id": "fd_0164",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:07.344813+00:00",
       "lean_theorem_stub": "theorem no_solutions_even_n_gcd : forall (a b n : ℕ), a < b → gcd a b > 1 → n ≠ 0 → ∃ x : ℕ, (a^n + 1) * (b^n + 1) ≠ x^2",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -7793,7 +7793,7 @@
         "Rainbow Forest Inequality"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -7810,7 +7810,7 @@
       "github_issue": 0,
       "id": "fd_0165",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:06.517813+00:00",
       "lean_theorem_stub": "theorem minimal_obstruction_iff_unique_failure (G : EdgeColoredGraph) (t : ℕ) (H : minimal_obstruction G t) : ∃! A ⊆ E G, λA : EdgeSubset G, r1 A + r2 (E \\ A) < t",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -8026,7 +8026,7 @@
       "attempt_count": 0,
       "catalog_references": "Matomaki--Teräväinen thesis and subsequent derivations",
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -8040,7 +8040,7 @@
       "github_issue": 0,
       "id": "fd_0170",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:32:54.434507+00:00",
       "lean_theorem_stub": "Normal form equality assertion",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -8255,7 +8255,7 @@
         "arXiv:2305.06340"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -8273,7 +8273,7 @@
       "github_issue": 0,
       "id": "fd_0175",
       "last_attempt_time": "2026-07-06T17:19:10.132865+00:00",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:53.731321+00:00",
       "lean_theorem_stub": "Relies on compactness in probability and concentration inequalities over finite measures",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -8303,7 +8303,7 @@
         "Extremal Hypergraph Theory"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -8321,7 +8321,7 @@
       "github_issue": 0,
       "id": "fd_0176",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:31.563324+00:00",
       "lean_theorem_stub": "theorem berge_tight_cycle_existence (r k : ℕ) (hk : k ≥ 2) (R : Finset ℕ) (hR : R ⊆ {i | i ∈ Finset.range k + 1}) : ∃ (n0 : ℕ), ∀ (n : ℕ) (H : Hypergraph R) (hn : H.vertex_count = n) (hn_0 : n ≥ n0) (h_deg : H.min_s_degree r ≥ 1), ∀ (t : ℕ), (r + 1 ≤ t ∧ t ≤ n) → H.contains_berge_tight_cycle t r",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -8464,7 +8464,7 @@
         "Combinatorial Topology",
         "Graph Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -8501,7 +8501,7 @@
         "Bessel_distribution_regularity"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -8519,7 +8519,7 @@
       "github_issue": 0,
       "id": "fd_0180",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:18.547801+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -8549,7 +8549,7 @@
         "Sidorenko1993"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -8566,7 +8566,7 @@
       "github_issue": 0,
       "id": "fd_0181",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:32:54.434507+00:00",
       "lean_theorem_stub": "theorem failure_Lp_KNRS (F : graph) (p : ℝ) (ρ : ℝ) : p < (n choose 2)/m → ∃ W : graphon, ||W_F||_Lp < ρ^{e(F)}",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -8830,7 +8830,7 @@
         "Joshi 2020a"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -8845,7 +8845,7 @@
       "github_issue": 0,
       "id": "fd_0187",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:36.509155+00:00",
       "lean_theorem_stub": "Absolute Galois group equivalence",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -8982,7 +8982,7 @@
         "Modular forms",
         "Effective algebraic number theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -9163,7 +9163,7 @@
         "Lucas sequences convergence theorems"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -9178,7 +9178,7 @@
       "github_issue": 0,
       "id": "fd_0194",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:36.509155+00:00",
       "lean_theorem_stub": "Theorem: Sum_{i=1}^n (u_i - u_{i-1}) = n ln φ - ...",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -9412,7 +9412,7 @@
         "non-abelian cohomology",
         "perfectoid geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -9539,7 +9539,7 @@
         "Lassak's conjecture on area-thickness bounds for reduced bodies"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -9549,7 +9549,7 @@
         "convex support functions",
         "geometric measure theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -9557,7 +9557,7 @@
       "github_issue": 0,
       "id": "fd_0202",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:31.563324+00:00",
       "lean_theorem_stub": "∃R : reduced_planar_convex_body, thickness R = 1 ∧ area R > π/4",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -9889,7 +9889,7 @@
         "discrete geometry",
         "computational complexity of chromatic numbers"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -10027,7 +10027,7 @@
         "Negami1988PCC"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -10041,7 +10041,7 @@
       "github_issue": 0,
       "id": "fd_0212",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:31.563324+00:00",
       "lean_theorem_stub": "Bipartite graphs inherently satisfy planar conditions under rotational equivalence",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -10119,7 +10119,7 @@
         "Slater1952"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -10136,7 +10136,7 @@
       "github_issue": 0,
       "id": "fd_0214",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:32:54.434507+00:00",
       "lean_theorem_stub": "theorem slater_12_overpartition_refinement (n : ℕ) : alternating_overpartition_count n = slater_12_coeff n := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -10267,7 +10267,7 @@
         "AV2005"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -10285,7 +10285,7 @@
       "github_issue": 0,
       "id": "fd_0217",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:18.547801+00:00",
       "lean_theorem_stub": "theorem positivity_in_pq_binomial_basis (s : ℕ) (h : ℂ) (n k : ℕ) : (𝔖 s h n k).expand_in_pq_binomial_basis.coeff _ ≥ 0 := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -10314,7 +10314,7 @@
         "Singer's Construction"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -10332,7 +10332,7 @@
       "github_issue": 0,
       "id": "fd_0218",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:40.944383+00:00",
       "lean_theorem_stub": "theorem sidon_upper_bound (N : ℕ) : ∃ (C : ℝ), ∀ (A : Finset ℕ), (A.toSet.is_sidon ∧ A ⊆ {n | n < N}) → A.card ≤ ⌈(N : ℝ)^(1/2) + 0.94601 * (N : ℝ)^(1/4) + C⌉",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -10556,7 +10556,7 @@
         "Hatami2010"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -10574,7 +10574,7 @@
       "github_issue": 0,
       "id": "fd_0223",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:07.503525+00:00",
       "lean_theorem_stub": "theorem equality_case_regularity {C : Type} [AdmissibleClass C] {H : Graph} (hH : NonMatchingSidorenko H) {W : Graphon} (hW : W ∈ C) (h_eq : t H W = p W ^ e H) : Regular W := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -10696,7 +10696,7 @@
         "Bose et al. (2022) - Layered treewidth vs row treewidth"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -10715,7 +10715,7 @@
       "github_issue": 0,
       "id": "fd_0226",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:40.944383+00:00",
       "lean_theorem_stub": "theorem geodesic_treewidth_planar_upper_bound (G : Graph) (hP : Planar G) : GeodesicTreewidth G ≤ 5",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -10844,7 +10844,7 @@
         "Ren2023"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -10862,7 +10862,7 @@
       "github_issue": 0,
       "id": "fd_0229",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:36.509155+00:00",
       "lean_theorem_stub": "theorem infinite_primes_in_skeleton (lambda : ℕ) (hlambda : lambda > 1 ∧ Nat.coprime lambda 6) : ∀ n : ℕ, ∃ k : ℕ, k > n ∧ ∃ (a b : ℕ), a ≥ 1 ∧ a + b = k ∧ Nat.Prime (lambda * Nat.pow 2 a * Nat.pow 3 b - 1) :=\\nbegin\\n  -- Proof to be filled\\n  sorry\\nend",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -10890,7 +10890,7 @@
         "Spherical Designs with Infinite Harmonic Strength"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -10908,7 +10908,7 @@
       "github_issue": 0,
       "id": "fd_0230",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:40.944383+00:00",
       "lean_theorem_stub": "theorem even_harmonic_strength_contains_two {d : ℕ} (hd : d ≥ 2) (X : Finset (EuclideanSphere ℝ (d+1))) (hX_antipodal : X = (-X : Finset (EuclideanSphere ℝ (d+1)))) (h_even_in_hst : ∃ k : ℕ, k % 2 = 0 ∧ k ∈ Hst X) : (2 : ℕ) ∈ Hst X := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -10949,7 +10949,7 @@
         "Linear Algebra",
         "Enumerative Combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry",
         "Logic"
@@ -10986,7 +10986,7 @@
         "Legendre symbol determinants"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -11003,7 +11003,7 @@
       "github_issue": 0,
       "id": "fd_0232",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:06.517813+00:00",
       "lean_theorem_stub": "theorem sun_conjecture_4_1_extension (p : ℕ) (hp : prime p) (hmod : p % 4 = 3) (a : Fp) (hχ : χ(a * (p-1)/2)! = -1) : σ_{p,a} = 1",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -11090,7 +11090,7 @@
         "combinatorial topology",
         "infinite simplicial complexes"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -11319,7 +11319,7 @@
         "https://arxiv.org/abs/xxxx.xx"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -11337,7 +11337,7 @@
       "github_issue": 0,
       "id": "fd_0239",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:07.503525+00:00",
       "lean_theorem_stub": "theorem fibonacci_bounds (n : nat) (f : nat → nat) : R (n+1) ≤ Fib (2*(n+1)) ∧ Fib (2*(n+1)) ≤ R (n+1) ^ 2 by { rintro; tactic.transfer [fibonacci_growth, convex_topology_recurrence]; exact _ }",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -11516,7 +11516,7 @@
         "Rosta04"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -11534,7 +11534,7 @@
       "github_issue": 0,
       "id": "fd_0243",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:33.173567+00:00",
       "lean_theorem_stub": "theorem conjecture_m_ge_two_pow (n : ℕ) (hn : n ≥ 9) : (M_2_arith B n : ℝ) ≥ (2 : ℝ) ^ ( (3 : ℝ) / 2 * (n : ℝ) ) := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -11650,7 +11650,7 @@
       "attempt_count": 0,
       "catalog_references": "allouche2018mock",
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -11664,7 +11664,7 @@
       "github_issue": 0,
       "id": "fd_0246",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:07.503525+00:00",
       "lean_theorem_stub": "Functional equation implies primitive character structure",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -11799,7 +11799,7 @@
         "Algebraic Geometry",
         "Automorphic Forms"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -12127,7 +12127,7 @@
         "OEIS A001035"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -12143,7 +12143,7 @@
       "github_issue": 0,
       "id": "fd_0256",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:32:54.434507+00:00",
       "lean_theorem_stub": "theorem labeled_posets_mod_four (n : ℕ) (hn : n ≥ 2) : (number_of_labeled_posets n) % 4 = 3 := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -12325,7 +12325,7 @@
       "depth_estimate": 3,
       "description": "For any d-dimensional lattice polytope with m vertices, its surface area is bounded below by (d-1)/d times its volume, ensuring a precise upper limit on surface measures despite growth rates, making this inequality falsifiable through counterexamples in higher dimensions.",
       "domain_bridges": "d-dimensional lattice bounds",
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -12613,7 +12613,7 @@
         "Erdős–Rado Sunflower Conjecture"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -12631,7 +12631,7 @@
       "github_issue": 0,
       "id": "fd_0266",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:36.509155+00:00",
       "lean_theorem_stub": "theorem sunflower_free_bound {n : ℕ} (F : Finset (Finset ℕ)) (h : ∀ (A B C : Finset ℕ), A ∈ F → B ∈ F → C ∈ F → (A ∩ B ∩ C) = (A ∩ C)) : F.card ≤ (K : ℝ) * (n : ℝ) ^ (1/6 : ℝ) * (3 / (2 : ℝ) ^ (2/3 : ℝ)) ^ n := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -12712,7 +12712,7 @@
         "Sieve theory main terms"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -12730,7 +12730,7 @@
       "github_issue": 0,
       "id": "fd_0268",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:40.944383+00:00",
       "lean_theorem_stub": "For all α, β : ℝ with 0 < α < β < 1 and β - α ≥ 0.02, ∃ P : Polytope and ∀ n ∈ ℕ, (∃ d | n ∧ d ∈ [n^α, n^β]) ≡ ∃ k : ℕ, (n ∈ supp(S(P, k)) ∧ |S(P, k) − I(P)| < ε).",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -12899,7 +12899,7 @@
         "partial duality"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -12917,7 +12917,7 @@
       "github_issue": 0,
       "id": "fd_0272",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:07.344813+00:00",
       "lean_theorem_stub": "theorem hypermap_partial_dual_bipartite_iff {H : Hypermap} {E_prime : Finset (Hyperedge H)} :\n  H^{E_prime}.is_bipartite ↔ (∃ (Φ : Direction (MedialMap H)), Φ.is_all_crossing ∧ E_prime = Φ.c_edges)",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -12945,7 +12945,7 @@
         "arXiv:2405.XXXXX"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -12955,14 +12955,14 @@
         "Geometric Topology (math.GT)",
         "Simplicial Complexes"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry"
       ],
       "github_issue": 0,
       "id": "fd_0273",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:40.944383+00:00",
       "lean_theorem_stub": "theorem conjecture_discrete_pseudomanifold_2d_plus_7_not_sphere {d : ℕ} (hd : d ≥ 3) {V : Type*} [DecidableEq V] (M : SimpleGraph V) (hM : DiscreteDPseudomanifold M d) (hV : Fintype.card V = 2*d + 7) (hNotSphere : ¬ IsSimplicialSphere M d) : IsFlagNormal M ∧ IsSuspensionOfRP2 M (d-2) := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -13039,7 +13039,7 @@
         "3-packings in Triangulations: Algorithms, bounds, and Complexity"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -13056,7 +13056,7 @@
       "github_issue": 0,
       "id": "fd_0275",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:25.652305+00:00",
       "lean_theorem_stub": "theorem conjecture_p3_packing_tight (G : PlaneTriangulation) : λ_P3 G = G.order / 5 := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -13182,7 +13182,7 @@
         "RocheNewtonRuzsaShenShkredov2019"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -13199,7 +13199,7 @@
       "github_issue": 0,
       "id": "fd_0278",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:32:54.434507+00:00",
       "lean_theorem_stub": "theorem exists_positive_power_saving (k : ℕ) (hk : 2 ≤ k) : ∃ c : ℝ, 0 < c ∧ c ≥ 1 / (k ^ 2) ∧ ∀ (A : Finset ℝ), A.finite → A.nonempty → |minkowski_eval f A| ≤ |A| ^ (k - c)",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -13229,7 +13229,7 @@
         "Conway's On Numbers and Games"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -13247,7 +13247,7 @@
       "github_issue": 0,
       "id": "fd_0279",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:07.503525+00:00",
       "lean_theorem_stub": "theorem three_pile_halve_nim_p_positions (a b c : ℕ) : ∀ G_a G_b G_c : ℕ, G_a = grundy_single_pile a ∧ G_b = grundy_single_pile b ∧ G_c = grundy_single_pile c → (G_a ^ G_b ^ G_c = 0 ↔ is_p_position (a, b, c))",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -13335,7 +13335,7 @@
         "spectral-expansion",
         "simplicial-complex-geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry"
       ],
@@ -13573,7 +13573,7 @@
       "attempt_count": 0,
       "catalog_references": [],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -13591,7 +13591,7 @@
       "github_issue": 0,
       "id": "fd_0286",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:07.344813+00:00",
       "lean_theorem_stub": "theorem finiteness_mod_two_galois_representations {K : GlobalFunctionField} (hK : K.char ≠ 2) {n : ℕ} (hn : n > 2) (R : EffectiveDivisor K) :\n  Set.Finite {ρ : ContinuousGeometricSemisimpleRep K n (AlgebraicClosure (ZMod 2)) | ρ.artin_conductor ∣ R} := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -13668,7 +13668,7 @@
         "AlonCaro1993"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -13686,7 +13686,7 @@
       "github_issue": 0,
       "id": "fd_0288",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:33.173567+00:00",
       "lean_theorem_stub": "Theorem zero_sum_ramsey_finite_exceptions (q : ℕ) (s : ℕ) : ¬∃ₘ s' (s' > s) (R (K_{s', q}, ℤ_q) ≠ s' + q).",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -13815,7 +13815,7 @@
         "survey"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -13833,7 +13833,7 @@
       "github_issue": 0,
       "id": "fd_0291",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:53.731321+00:00",
       "lean_theorem_stub": "theorem sat_KkC4 {k n : ℕ} (hk : 4 ≤ k) (hn : 2 ≤ n) : sat (K k n) (C 4) = n * (k - 1) := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -13861,7 +13861,7 @@
         "Shallit2021"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -13879,7 +13879,7 @@
       "github_issue": 0,
       "id": "fd_0292",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:31.563324+00:00",
       "lean_theorem_stub": "Canonical representations and modular constraints in discrete bases",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -13957,7 +13957,7 @@
         "Corvaja-Zannier non-effective finiteness result"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -13974,7 +13974,7 @@
       "github_issue": 0,
       "id": "fd_0294",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:40.944383+00:00",
       "lean_theorem_stub": "theorem K_infinitely_many_primes_even_m (m : ℕ) (hm : 5 ≤ m ∧ Even m) : ¬(fintype (setOf (λ p : Prime, p^m ∈ K))))",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -14004,7 +14004,7 @@
         "Alexander duality"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -14022,7 +14022,7 @@
       "github_issue": 0,
       "id": "fd_0295",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:25.652305+00:00",
       "lean_theorem_stub": "theorem example_theorem (C : UnderclosedClutter) : Equivalent cointerval C complement C implies LinearQuotient (CircuitIdeal C).",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -14050,7 +14050,7 @@
         "PelekisVlasak2020"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -14067,7 +14067,7 @@
       "github_issue": 0,
       "id": "fd_0296",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:25.652305+00:00",
       "lean_theorem_stub": "theorem exists_k_antichain_with_Hausdorff (k n : ℕ) (hn : 0 < n) : ∃ (A : Set (Fin n → ℝ)), IsKAntichain A ∧ MeasureTheory.Hausdorff (A : Set (Fin n → ℝ)) (n - 1) = (k : ℝ) * n := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -14095,7 +14095,7 @@
         "math.CO"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -14113,7 +14113,7 @@
       "github_issue": 0,
       "id": "fd_0297",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:07.503525+00:00",
       "lean_theorem_stub": "theorem persistent_maximal_simplices_cardinality {W : FiniteCoxeterGroup} {a : ℝ ^ n} (ha : a ∈ fundamental_chamber W) (hgen : generic a W) : cardinality (maximal_persistent_simplices (CoxeterPermutahedron W a)) = cardinality (W) := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -14143,7 +14143,7 @@
         "1998.Ruzsa-a"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -14160,7 +14160,7 @@
       "github_issue": 0,
       "id": "fd_0298",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:07.344813+00:00",
       "lean_theorem_stub": "theorem exists_golomb_ruler_with_limsup_eq_sqrt_gamma (γ : ℕ) (hγ : 0 < γ) : ∃ G : Set ℕ, (is_golomb_ruler G γ) ∧ (limsup.models (λ n : ℕ, ((G.filter (fun x => x ≤ n)).card : ℝ) / Real.sqrt (n : ℝ)) = Real.sqrt (γ : ℝ))",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -14284,7 +14284,7 @@
         "Pairwise Reflection Symmetry in Generalized Latin Rectangles (arXiv:2406.xxxxx)"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -14301,7 +14301,7 @@
       "github_issue": 0,
       "id": "fd_0301",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:33.173567+00:00",
       "lean_theorem_stub": "theorem power_of_two_characterization {n : ℕ} (hn : 1 ≤ n) : (∃ (R : Fin n → Fin n → Fin n), (∀ i, Function.Injective (fun j => R i j)) ∧ (∀ j, Function.Injective (fun i => R i j)) ∧ (∀ (p q : Fin n), Finset.card ( (Finset.univ : Finset (Fin n × Fin n)).filter (fun ⟨i, j⟩ => R i j = p ∧ R j i = q) ) = Finset.card ( (Finset.univ : Finset (Fin n × Fin n)).filter (fun ⟨i, j⟩ => R i j = q ∧ R j i = p) ) ) ↔ ∃ k : ℕ, n = 2 ^ k )",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -14345,7 +14345,7 @@
         "type theory",
         "formal verification"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -14433,7 +14433,7 @@
         "Classification of Boolean Cubic Forms in Ten Variables"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -14451,7 +14451,7 @@
       "github_issue": 0,
       "id": "fd_0304",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:53.731321+00:00",
       "lean_theorem_stub": "theorem main_classification : Finset.card (nonzero_orbits (BooleanCubicForm 10) (GL_action 10)) = 3691560 := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -14577,7 +14577,7 @@
         "Krattenthaler1999"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -14595,7 +14595,7 @@
       "github_issue": 0,
       "id": "fd_0307",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:18.547801+00:00",
       "lean_theorem_stub": "theorem pascal_figurate_matrix_totally_unimodular (n m : ℕ) (h : 2 ≤ m ∧ m ≤ n) : let M := λ i j : Fin n, m.succ_add (i.val + j.val) (m-2); ∀ k (rows cols : Finset (Fin n)), (M.submatrix rows cols).det ∈ {-1, 0, 1}",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -14725,7 +14725,7 @@
         "The paper cited in the context"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -14739,7 +14739,7 @@
       "github_issue": 0,
       "id": "fd_0310",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:07.503525+00:00",
       "lean_theorem_stub": "Theorem A from the cited paper",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -14768,7 +14768,7 @@
         "the present paper (arXiv:xxxx)"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -14785,7 +14785,7 @@
       "github_issue": 0,
       "id": "fd_0311",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:40.944383+00:00",
       "lean_theorem_stub": "theorem aharoni_korman_obstruction_free {P : Type*} [PartialOrder P]\n  (hFAC : FAC P)\n  (hBad : ∀ (D : Chain P), ⌦ (κ : Cardinal) (Ds : ∀ (α : ℵ0), Chain P), ...)\n  : ∃ (C : Chain P) (I : Type*) (A : I → Antichain P),\n      ((∀ i, ∃ x, hx : x ∈ C, hx' : x ∈ A i)) ∧\n      (∀ i≡j, Disjoint (A i) (A j)) ∧\n      (∀ x, ∃ i, x ∈ A i) :=\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -14909,7 +14909,7 @@
         "Higashitani, Jochemko, Michaëlk, Unimodality of h*-vectors (2015)"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -14927,7 +14927,7 @@
       "github_issue": 0,
       "id": "fd_0314",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:18.547801+00:00",
       "lean_theorem_stub": "theorem hstar_gamma_positivity_false {G : SimpleGraph ℕ} (hG : SymmetricEdgePolytope G) : ¬ GammaPositive (hStarPolynomial G) := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -15005,7 +15005,7 @@
         "Seymour 1979 Matching Polytope"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -15023,7 +15023,7 @@
       "github_issue": 0,
       "id": "fd_0316",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:18.547801+00:00",
       "lean_theorem_stub": "theorem overfull_conjecture (G : SimpleGraph ℕ) (hΔ : Δ(G) > (Fintype.card (Set.univ : Set (Vertex G))) / 3) : (chromaticIndex G = Δ(G) + 1) ↔ ∃ (H : Subgraph G), isDeltaOverfull H := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -15248,7 +15248,7 @@
       "attempt_count": 0,
       "catalog_references": [],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -15266,7 +15266,7 @@
       "github_issue": 0,
       "id": "fd_0321",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:53.731321+00:00",
       "lean_theorem_stub": "theorem equivariant_Kida {X : FiniteSymmetricDigraph} {G : FiniteGroup} (hG : pGroup G) (hAct : FreeAction G X) (P : Polynomial ℚₚ) (hP : Monic P ∧ Coprime P (A^2 - 1) ∧ NonvanishingResultant X P) : λ_invariant (spectral_resultant (cover X G) P) = (Fintype.card G) * λ_invariant (spectral_resultant X P) + (Fintype.card G - 1) * μ_invariant (spectral_resultant X P) + (Fintype.card G - 1) * first_betti_number X := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -15311,7 +15311,7 @@
         "Milnor algebras",
         "Graded modules"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -15406,7 +15406,7 @@
         "p-adic uniformisation",
         "Modular curves"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -15533,7 +15533,7 @@
         "math.DG"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -15550,7 +15550,7 @@
       "github_issue": 0,
       "id": "fd_0327",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:25.652305+00:00",
       "lean_theorem_stub": "theorem unique_extremal_nonpos_curvature (n : ℕ) (hn : n ≥ 12) (he : n % 2 = 0) : ∃! (G : SimpleGraph ℕ), G.edges.Count = T n ∧ ∃ e ∈ G.edges, curvature e ≤ 0",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -15628,7 +15628,7 @@
         "math.AG"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -15638,7 +15638,7 @@
         "math.NT",
         "math.AG"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -15646,7 +15646,7 @@
       "github_issue": 0,
       "id": "fd_0329",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:18.547801+00:00",
       "lean_theorem_stub": "theorem tree_structure_of_T {K : Type*} [Field K] (S : Finset (BP1 K)) (hS : S.card ≥ 3) : IsTree (graph_of_T S) := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -15779,7 +15779,7 @@
         "Jung-Tix 1998"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -15796,7 +15796,7 @@
       "github_issue": 0,
       "id": "fd_0332",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:33.173567+00:00",
       "lean_theorem_stub": "The natural representation of deflations as bounded cones over finite-dimensional bases allows extinction of infinite sequences of redefinitions.",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -15837,7 +15837,7 @@
         "algebraic_graph_theory_to_finite_geometry",
         "combinatorial_methods_to_group_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -15979,7 +15979,7 @@
         "direct sums of posets"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -15997,7 +15997,7 @@
       "github_issue": 0,
       "id": "fd_0336",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:07.503525+00:00",
       "lean_theorem_stub": "Define saturated chains and direct sums in Lean 4. Formalize the biconditional by showing (1) the paper's result and (2) that any poset without such chains must satisfy the conjecture. Use induction on chain lengths and scattered decomposition properties to establish the reverse implication.",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -16073,7 +16073,7 @@
         "branden-gamma"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -16091,7 +16091,7 @@
       "github_issue": 0,
       "id": "fd_0338",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:25.652305+00:00",
       "lean_theorem_stub": "theorem gamma_positivity_equivalent (G : graph) : (γ_positive (h_star_polynomial Q_G)) ↔ (exists v : vertex G, forall w : vertex G, v ≠ w → edge (v, w) ∈ edges G)",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -16181,7 +16181,7 @@
         "Abelian integrals",
         "Schneider height computations"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -16219,7 +16219,7 @@
         "bracket regime"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -16237,7 +16237,7 @@
       "github_issue": 0,
       "id": "fd_0341",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:40.944383+00:00",
       "lean_theorem_stub": "A function to decompose a symmetric one-weight coloring into its bracket and boundary components, then validate against extremal criteria.",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -16280,7 +16280,7 @@
         "modular_forms",
         "quaternion_algebras"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -16421,7 +16421,7 @@
         "Fiorini, G., & Wilson, J. (2001). The overfull conjecture. In C. Gilbarg, A. Parker (Eds.), Graphs and combinatorial optimization."
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -16438,7 +16438,7 @@
       "github_issue": 0,
       "id": "fd_0345",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:25.652305+00:00",
       "lean_theorem_stub": "Relative boundedness of chromatic indices under threshold constraints",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -16466,7 +16466,7 @@
         "Cyclic Codes and Cyclically Covering Subspaces over Finite Fields"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -16484,7 +16484,7 @@
       "github_issue": 0,
       "id": "fd_0346",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:40.944383+00:00",
       "lean_theorem_stub": "theorem h_q_positive_extension (q : ℕ) (m : ℕ) [prime q] [odd q] (hm : m ≥ 2) : h_q ( (q^m + 1) / 2 ) > 0",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -16558,7 +16558,7 @@
         "Mathlib.Data.Set.Lattice"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -16576,7 +16576,7 @@
       "github_issue": 0,
       "id": "fd_0348",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:18.547801+00:00",
       "lean_theorem_stub": "theorem countable_FAC_poset_decomposes_into_finite_scattered (P : Type*) [PartialOrder P] [Countable P]\n  (hFAC : ∀ (A : Set P), (∀ a b ∈ A, a ≤ b ∨ b ≤ a) → Set.Finite A) :\n  ∃ (n : ℕ) (S : Fin n → Set P),\n    (∀ i, IsScattered (S i)) ∧\n    (⋃ i, S i) = Set.univ ∧\n    (∀ i j, i ≠ j → Disjoint (S i) (S j)) :=\nby\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -16706,7 +16706,7 @@
         "Vizing's Theorem"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -16723,7 +16723,7 @@
       "github_issue": 0,
       "id": "fd_0351",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:06.517813+00:00",
       "lean_theorem_stub": "Theorem tighten_overfull_conjecture {G : Graph} (Δ : ℕ) (n : ℕ) (H : Δ ≥ (n / 3 + 1)) : χ' G = Δ ↔ ∀H' ⊆ G, Δ(H') = Δ → |E H'| ≤ Δ ⌊ |V H'| / 2 ⌋",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -16806,7 +16806,7 @@
       "attempt_count": 0,
       "catalog_references": "Bombieri--Lang conjecture, Faltings, VojtaMordell",
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -16821,7 +16821,7 @@
       "github_issue": 0,
       "id": "fd_0353",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:18.547801+00:00",
       "lean_theorem_stub": "Density conditions tied to the special locus inclusion",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -16994,7 +16994,7 @@
         "woodservey"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -17011,7 +17011,7 @@
       "github_issue": 0,
       "id": "fd_0357",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:33.173567+00:00",
       "lean_theorem_stub": "Low-degree connectivity implies existential existence in a suitable category",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -17292,7 +17292,7 @@
         "Linear Algebra",
         "Algebraic Topology"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -17328,7 +17328,7 @@
         "math.NT"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -17345,7 +17345,7 @@
       "github_issue": 0,
       "id": "fd_0364",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:06.517813+00:00",
       "lean_theorem_stub": "theorem vanishing_criterion (p : ℕ) [Fact (Nat.Prime p)] (h_odd : p % 2 = 1) (a : ZMod p) (ha : a ≠ 0) :\n    let n := (p - 1) / 2\n    let χ := fun k : ZMod p => (ZMod.legendreSymbol p k : ℤ)\n    let M := Matrix.of fun (i j : Fin n) => χ (↑i * ↑i - a * ↑j)\n    M.det = 0 ↔ p % 4 = 3 ∧ χ (a * ↑(Nat.factorial n)) = 1 := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -17387,7 +17387,7 @@
         "Nonorientable TQFT",
         "Penrose polynomial"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry",
         "Algebra"
@@ -17520,7 +17520,7 @@
         "Helfgott"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -17537,7 +17537,7 @@
       "github_issue": 0,
       "id": "fd_0368",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:25.652305+00:00",
       "lean_theorem_stub": "theorem zeta_upper_bound_smoothing (t : ℝ) (ht : 3 ≤ t) :\n    Complex.abs (Complex.zeta (1 + Complex.I * t)) ≤ 1/2 * Real.log t + 157/100 := by\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -17677,7 +17677,7 @@
         "computational_geometry",
         "matroid_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry"
       ],
@@ -17762,7 +17762,7 @@
         "Graph_decomposition"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -17779,7 +17779,7 @@
       "github_issue": 0,
       "id": "fd_0373",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:33.173567+00:00",
       "lean_theorem_stub": "/-- The generalized honeymoon Oberwolfach problem HOP(2^{⟨s⟩}, 2m) has a solution\n    if and only if s > 0 or m is even. -/\ntheorem HOP_one_round_table_iff (s m : ℕ) (hm : 2 ≤ m) :\n    HasHOPSolution s m ↔ (0 < s ∨ Even m) :=\n  by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -17954,7 +17954,7 @@
         "De Bruijn and Erdős cake cutting"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -17971,7 +17971,7 @@
       "github_issue": 0,
       "id": "fd_0377",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:06.517813+00:00",
       "lean_theorem_stub": "theorem cake_cutting_phase_ratio {p : ℕ} (σ : Equiv.Perm (Fin p)) {r : ℕ} (hr : 0 < r) {m : ℕ} \n    (hm : m ≥ 2 * ((r + p - 1) / p)) :\n    μ_r σ r = (⨆ k ∈ Icc p (m * p + p), μ_n_r σ k r) := by\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -18050,7 +18050,7 @@
         "class_groups"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -18067,7 +18067,7 @@
       "github_issue": 0,
       "id": "fd_0379",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:31.563324+00:00",
       "lean_theorem_stub": "theorem polya_five_rank_exact_realization (k : ℕ) (hk : 0 < k) : {s : ℤ | Odd s ∧ (fiveRank (PolyaGroup (LecacheuxQuintic s))) = k}.Infinite",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -18095,7 +18095,7 @@
         "math.CO"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -18112,7 +18112,7 @@
       "github_issue": 0,
       "id": "fd_0380",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:31.563324+00:00",
       "lean_theorem_stub": "theorem no_nonstandard_3_plus_parameterized_squares (k : ℕ) (u v : List (Fin 3)) (h_len : u.length = v.length) (h_len_ge : v.length ≥ 3) (h_sub : (u ++ v) <:+ x_k k) (h_equiv : parameterized_equivalent u v) : u = v := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -18141,7 +18141,7 @@
         "hep-th"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -18158,7 +18158,7 @@
       "github_issue": 0,
       "id": "fd_0381",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:31.563324+00:00",
       "lean_theorem_stub": "theorem coupled_eisenstein_is_depth_two {f g : ℍ → ℂ} (hf : IsMockEisenstein f (3/2)) (hg : IsMockEisenstein g (3/2)) : IsDepthTwoMockModularForm (couple f g) 3 := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -18188,7 +18188,7 @@
         "05C50"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -18205,7 +18205,7 @@
       "github_issue": 0,
       "id": "fd_0382",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:07.344813+00:00",
       "lean_theorem_stub": "theorem exact_non_r_partite_turan_number (r : ℕ) (t : List ℕ) \n    (hr : r ≥ 2) (ht_len : t.length = r - 1) (ht_min : ∀ x ∈ t, x ≥ 2) \n    (t_ne : t ≠ []) (n : ℕ) (hn : n ≥ some_bound r t) :\n    nonRPartiteTuranNumber n (completeMultipartiteGraph ([1, 1] ++ t)) = \n      (turanGraph n r).edgeCount - (n / r) + 2 * (t.min' t_ne - 1) := \n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -18298,7 +18298,7 @@
         "algebraic_geometry",
         "combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -18483,7 +18483,7 @@
         "math.CO"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -18500,7 +18500,7 @@
       "github_issue": 0,
       "id": "fd_0388",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:40.944383+00:00",
       "lean_theorem_stub": "import Mathlib.GroupTheory.Solvable\n\n/-- A subgroup is dihedral if it is isomorphic to a finite dihedral group. -/\ndef IsDihedral {G : Type*} [Group G] (H : Subgroup G) : Prop :=\n  ∃ n : Nat, 0 < n ∧ Nonempty (H ≃* DihedralGroup n)\n\n/-- A group is bidihedral if it is the product of two dihedral subgroups. -/\ndef IsBidihedral (G : Type*) [Group G] : Prop :=\n  ∃ (A B : Subgroup G), A * B = ⊤ ∧ IsDihedral A ∧ IsDihedral B\n\n/-- Any finite bidihedral group is solvable. -/\ntheorem finite_bidihedral_is_solvable (G : Type*) [Group G] [Fintype G] :\n    IsBidihedral G → IsSolvable G := by\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -18540,7 +18540,7 @@
         "Algebraic Number Theory",
         "Algebraic Topology"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -18679,7 +18679,7 @@
         "Line_graph"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -18697,7 +18697,7 @@
       "github_issue": 0,
       "id": "fd_0392",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:07.344813+00:00",
       "lean_theorem_stub": "theorem line_graph_BL_integral {n k : ℕ} (hk : 2 ≤ k) (hn : n = 2 * k - 1) :\n    IsIntegralGraph (lineGraph (BL n (k - 1) k)) := by\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -18775,7 +18775,7 @@
         "Orbit Polynomials"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -18793,7 +18793,7 @@
       "github_issue": 0,
       "id": "fd_0394",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:07.503525+00:00",
       "lean_theorem_stub": "theorem orbit_polynomial_eq_minPoly {E : Type*} [Field E] (H : Subgroup (E ≃+* E)) (α : E) (h_finite : (H.orbit α).Finite) : orbitPolynomial H α = minPoly (FixedField H) α := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -18968,7 +18968,7 @@
         "cs.DS.math.CO"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -18986,7 +18986,7 @@
       "github_issue": 0,
       "id": "fd_0398",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:07.503525+00:00",
       "lean_theorem_stub": "theorem conjecture_P4_tidy_reachability {V : Type*} [DecidableEq V] (G : SimpleGraph V) (hP4tidy : IsP4Tidy G) {I I' : Finset V} (hI : IsIndependentSet G I) (hI' : IsIndependentSet G I') (hcard : I.card = I'.card) : ∃ (path : List (Finset V)), path.head = I ∧ path.last = I' ∧ ∀ i : ℕ, i + 1 < path.length → IsTokenSlideMove G (path.nth i) (path.nth (i+1))",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -19207,7 +19207,7 @@
         "graph modifications"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -19224,7 +19224,7 @@
       "github_issue": 0,
       "id": "fd_0403",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:32:54.434507+00:00",
       "lean_theorem_stub": "∀c>0, ∃G: no_cycle_length d ∧ min_deletions(G) ≥ cd |V(G)|",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -19391,7 +19391,7 @@
         "Farber2"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -19408,7 +19408,7 @@
       "github_issue": 0,
       "id": "fd_0407",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:32:54.434507+00:00",
       "lean_theorem_stub": "∀ {r : ℕ} (k : ℕ) (M : Matroid r), (∀ {B1 B2 B1' B2' : Basis M} (h : MultisetUnion B1 B2 = MultisetUnion B1' B2'), ∃ (seq : List (SymmetricExchange M)), seq ≡ TransformBases (B1, B2) (B1', B2') seq)",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -19635,7 +19635,7 @@
         "ClassNumbers.002"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -19652,7 +19652,7 @@
       "github_issue": 0,
       "id": "fd_0412",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:33.173567+00:00",
       "lean_theorem_stub": "theorem generalized_hurwitz_formula (K : Type*) [nf : NarrowClassNumberOne K] (D : ℤ) [hd : FundamentalDiscriminant D] : ∃ (F : Type*) [ quartic_CM_field F ] [discriminant F = D], H_g K D = (class_number F) / 2",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -19933,7 +19933,7 @@
         "Kővári–Sós–Turán theorem"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -19950,7 +19950,7 @@
       "github_issue": 0,
       "id": "fd_0418",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:06.517813+00:00",
       "lean_theorem_stub": "def numCopiesK_ab (G : SimpleGraph V) [DecidableRel G.Adj] [Fintype V] [DecidableEq V] (a b : ℕ) : ℕ := \n  (Finset.univ.filter (fun (A : Finset V) => A.card = a)).attach.sum fun A =>\n  (Finset.univ.filter (fun (B : Finset V) => B.card = b ∧ Disjoint A.1 B ∧ ∀ x ∈ A.1, ∀ y ∈ B, G.Adj x y)).card\n\ntheorem upper_bound_ex_K_ab_K_3_b_plus_one (a b : ℕ) (h : 3 ≤ a ∧ a ≤ b) :\n    ∃ C : ℝ, ∀ n : ℕ, ∀ G : SimpleGraph (Fin n) [DecidableRel G.Adj],\n      (∀ (A : Finset (Fin n)) (B : Finset (Fin n)), A.card = 3 → B.card = b + 1 → Disjoint A B →\n        ∃ x ∈ A, ∃ y ∈ B, ¬ G.Adj x y) →\n      (numCopiesK_ab G a b : ℝ) ≤ C * n^3 :=\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -19981,7 +19981,7 @@
         "Narayana numbers"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -19998,7 +19998,7 @@
       "github_issue": 0,
       "id": "fd_0419",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:53.731321+00:00",
       "lean_theorem_stub": "import Mathlib.Algebra.BigOperators.Group.Finset.Basic\nimport Mathlib.Data.Nat.Choose.Basic\nimport Mathlib.Tactic\n\n-- Placeholder for the d-Hoggatt entry det(binomial(n+i, k+j))\ndef hoggattEntry (d n k : ℕ) : ℤ := 0\n\n-- Total d-Hoggatt number H_d(n)\ndef totalHoggatt (d n : ℕ) : ℤ :=\n  (Finset.range (n + 1)).sum fun k => hoggattEntry d n k\n\n-- Log-concavity operator on sequences\n@[simp]\ndef logConcavityOp (a : ℕ → ℝ) : ℕ → ℝ := fun n => (a n)^2 - a (n - 1) * a (n + 1)\n\n-- Infinite log-concavity of total Hoggatt numbers\ntheorem infinite_log_concavity_total_hoggatt (d m : ℕ) (n : ℕ) (hn : 1 ≤ n) :\n    (logConcavityOp^[m] (fun k => (totalHoggatt d k : ℝ))) n ≥ 0 := by\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -20123,7 +20123,7 @@
         "math.CO"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -20133,14 +20133,14 @@
         "Geometric Topology",
         "Combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry"
       ],
       "github_issue": 0,
       "id": "fd_0422",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:40.944383+00:00",
       "lean_theorem_stub": "theorem infinite_pachner_theorem {d : ℕ} {M : PLManifold d} {S T : LocallyFiniteTriangulation M} (hS : Triangulates S M) (hT : Triangulates T M) : ExistsωSequenceBistellarMoves S T",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -20365,7 +20365,7 @@
         "Fair Allocation under Conflict Constraints via Strong Colorability (ArXiv)"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -20382,7 +20382,7 @@
       "github_issue": 0,
       "id": "fd_0427",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:32:54.434507+00:00",
       "lean_theorem_stub": "theorem tightness_3Δ_minus_1 : ∀ Δ : ℕ, Δ ≥ 1 → ∃ (G : SimpleGraph ℕ), G.max_degree = Δ ∧ min_agents_SD_EF1 G = 3 * Δ - 1",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -20599,7 +20599,7 @@
         "Fibonacci numbers"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -20617,7 +20617,7 @@
       "github_issue": 0,
       "id": "fd_0432",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:07.344813+00:00",
       "lean_theorem_stub": "theorem wythoff_fib_partition (n : ℕ) (hn : 0 < n) :\n    (∃ m, LWF m = n ∧ ∀ k, UWF k ≠ n) ∨ (∃ m, UWF m = n ∧ ∀ k, LWF k ≠ n)",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -20939,7 +20939,7 @@
         "NicolosoSS99"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -20956,7 +20956,7 @@
       "github_issue": 0,
       "id": "fd_0439",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:07.344813+00:00",
       "lean_theorem_stub": "theorem chromatic_sum_np_complete {H : SimpleGraph} (h : H.HasEdge) (G : SimpleGraph) (k : ℕ) : IsNPComplete (ChromaticSum G k) := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -21391,7 +21391,7 @@
         "markov_chains → combinatorics",
         "equivalence_relations → weighted_digraphs"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -21439,7 +21439,7 @@
         "representation_theory",
         "topology"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -21487,7 +21487,7 @@
         "number_theory.cartier_manin_matrix",
         "data.polynomial.nonvanishing"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -21788,7 +21788,7 @@
         "class_field_theory",
         "p_adic_analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -22316,7 +22316,7 @@
         "Discrete Ricci curvature"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -22334,7 +22334,7 @@
       "github_issue": 0,
       "id": "fd_0467",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:07.503525+00:00",
       "lean_theorem_stub": "def T (n : ℕ) : ℕ :=\n  (n * n - 4 * n + if n % 2 = 0 then 4 else 3) / 2\n\ntheorem extremal_positive_ollivier_curvature {V : Type*} [Fintype V] [DecidableEq V]\n    (G : SimpleGraph V) [DecidableRel G.Adj] :\n    let n := Fintype.card V\n    n ≥ 8 → G.edgeFinset.card > T n →\n    ∀ (e : Sym2 V) (he : e ∈ G.edgeSet), G.ollivierCurvature e he > 0 := by\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -22426,7 +22426,7 @@
         "Discrete_group_theory",
         "p-adic_metric_geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -22525,7 +22525,7 @@
         "complex_analysis",
         "algebraic_groups"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -22863,7 +22863,7 @@
         "math.CO"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -22881,7 +22881,7 @@
       "github_issue": 0,
       "id": "fd_0478",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:53.731321+00:00",
       "lean_theorem_stub": "def genus {n : ℕ} (M : PerfectMatching (Fin (2 * n))) : ℕ :=\n  (n + 1 - (Fin.cycle (2 * n) * M.toPerm).cycleCount) / 2\n\ntheorem chord_swap_graph_connected_and_bounded_diameter (n g : ℕ) (h : n > 2 * g) :\n  ∀ (M₁ M₂ : PerfectMatching (Fin (2 * n))) (h₁ : genus M₁ = g) (h₂ : genus M₂ = g),\n    ∃ (path : List (PerfectMatching (Fin (2 * n)))),\n      path.length ≤ 100 * (n + g * g) ∧\n      path.head? = some M₁ ∧ path.getLast? = some M₂ ∧\n      ∀ i : ℕ, i + 1 < path.length →\n        is_genus_preserving_swap (path.nth i) (path.nth (i + 1)) := by\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -23159,7 +23159,7 @@
         "math.GR"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -23176,7 +23176,7 @@
       "github_issue": 0,
       "id": "fd_0484",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:33.173567+00:00",
       "lean_theorem_stub": "theorem sylow_two_perm_char_parts_bound (n k : ℕ) (hn : n ≥ 11) :\n  (∀ λ : Partition n, ¬ λ.IsHook → λ.numberOfParts ≤ k → λ ∈ Omega2 n) ↔ k ≤ Nat.log2 n + Nat.count_ones n - 1 := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -23422,7 +23422,7 @@
         "algebraic_groups",
         "complex_analytic_geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -23475,7 +23475,7 @@
         "RB-domains",
         "Stochastic order"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -23722,7 +23722,7 @@
         "measure_theory",
         "o_minimal_geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -23871,7 +23871,7 @@
         "p-adic analysis",
         "Quaternion algebras"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -23909,7 +23909,7 @@
         "delta_matroids"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -23926,7 +23926,7 @@
       "github_issue": 0,
       "id": "fd_0499",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:53.731321+00:00",
       "lean_theorem_stub": "theorem strong_delta_matroid_iff_no_peerless_antipodes {E : Type*} [Fintype E] [DecidableEq E] (F : Finset (Finset E)) (h_delta : IsDeltaMatroid F) : IsStrongDeltaMatroid F ↔ ¬HasPeerlessAntipode F := by\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -24159,7 +24159,7 @@
         "measure_theory_on_polytopes",
         "combinatorial_topology"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry",
         "Algebra"
@@ -24246,7 +24246,7 @@
         "Cyclotomic_field"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -24263,7 +24263,7 @@
       "github_issue": 0,
       "id": "fd_0506",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:25.652305+00:00",
       "lean_theorem_stub": "theorem cyclotomic_gauss_matrix_factorization\n    {N : ℕ} {p m k : ℕ} {χ : (ZMod N)ˣ →* Circle} (g : (ZMod N)ˣ)\n    (hN : N = p ^ m) (hk : k ∣ Nat.totient N) (hχ : IsGenerator χ) :\n    let n := (Nat.totient N) / k\n    let ω := χ ^ k g\n    let A := Matrix.of fun i j : Fin n => gaussSum N (χ ^ (k * (i : ℕ) + k * (j : ℕ)))\n    let W := Matrix.of fun i a : Fin n => ω ^ ((a : ℕ) * (i : ℕ))\n    let D := Matrix.diagonal (fun a : Fin n => gaussPeriod N k a)\n    A = W * D * W.transpose :=\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -24293,7 +24293,7 @@
         "Extremal graph theory"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -24310,7 +24310,7 @@
       "github_issue": 0,
       "id": "fd_0507",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:06.517813+00:00",
       "lean_theorem_stub": "theorem extremal_positive_curvature (n : ℕ) (G : SimpleGraph (Fin n)) (h_n : n ≥ 8)\n    (h_edges : G.edgeFinset.card > T n) :\n    ∀ e ∈ G.edgeFinset, linLuYauCurvature G e > 0 := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -24437,7 +24437,7 @@
         "MvPolynomial"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -24454,7 +24454,7 @@
       "github_issue": 0,
       "id": "fd_0510",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:31.563324+00:00",
       "lean_theorem_stub": "theorem global_algebraic_degeneracy_criterion\n    {K : Type*} [Field K] [CharZero K] [IsAlgClosed K]\n    {d : ℕ} {F : MvPolynomial (Fin d) K} (hF : Irreducible F) :\n    (∃ f : Fin d → Polynomial K, ∀ i, (f i).degree > 0 ∧ \n      F ∣ ∑ i : Fin d, univariate_comp i (f i)) ↔\n    (∃ (G : MvPolynomial (Fin d) K) (α1 α2 : Fin d → Polynomial K),\n       ∀ i : Fin d, \n         F ∣ (MvPolynomial.pderiv i F - \n           G * univariate_comp i (α2 i) * \n           ∏ j : Fin d, if j = i then 1 else univariate_comp j (α1 j)))",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -24532,7 +24532,7 @@
         "lovasz1967operations"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -24550,7 +24550,7 @@
       "github_issue": 0,
       "id": "fd_0512",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:33.173567+00:00",
       "lean_theorem_stub": "theorem oddomorphism_iff_split_off_minor (F G : SimpleGraph) [Fintype V_F] [Fintype V_G] [DecidableRel (Adj F)] [DecidableRel (Adj G)] : Oddomorphism F G ↔ IsSplitOffMinor G F := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -24675,7 +24675,7 @@
         "cs.DS"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -24692,7 +24692,7 @@
       "github_issue": 0,
       "id": "fd_0515",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:07.344813+00:00",
       "lean_theorem_stub": "theorem int_newton_raphson_floor_root_convergence (y m : ℕ) (hy : y > 2) (hm : m > 1) :\n  ∃ k, ∀ j ≥ k, int_nr_seq y m j hy hm = ⌊(y : ℝ) ^ ((1 : ℝ) / (m : ℝ))⌋ := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -24784,7 +24784,7 @@
         "group_theory_transitive_subgroups_S5",
         "algebraic_curves_covers"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -25068,7 +25068,7 @@
         "deficiency"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -25085,7 +25085,7 @@
       "github_issue": 0,
       "id": "fd_0523",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:53.731321+00:00",
       "lean_theorem_stub": "theorem matching_number_join {V W : Type*} [Fintype V] [Fintype W] [DecidableEq V] [DecidableEq W] (G : SimpleGraph V) (H : SimpleGraph W) : let join := G.join H; join.matchingNumber = min (G.matchingNumber + Fintype.card W) (min (H.matchingNumber + Fintype.card V) ((Fintype.card V + Fintype.card W) / 2)) :=",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -25178,7 +25178,7 @@
         "sparsity_matroids:hyperbolic_orbifold_geometry",
         "gain_graphs:fuchsian_group_cohomology"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -25313,7 +25313,7 @@
         "cs.SC"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -25330,7 +25330,7 @@
       "github_issue": 0,
       "id": "fd_0528",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:31.563324+00:00",
       "lean_theorem_stub": "import Mathlib.Algebra.Polynomial.Basic\nimport Mathlib.Algebra.Polynomial.Derivative\n\nvariable {K : Type*} [Field K] (v w : K[X])\n\ntheorem rpr_exact_identity (hchar : (2 : K) ≠ 0) (hv : v.natDegree ≤ 2) (hw : w.natDegree ≤ 2) :\n    Polynomial.deriv v * w - v * Polynomial.deriv w =\n    2 * (Polynomial.X : K[X]) * (v.coeff 2 • w - w.coeff 2 • v) +\n    (v.coeff 1 • w - w.coeff 1 • v) := by\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -25457,7 +25457,7 @@
         "math.SP"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -25474,7 +25474,7 @@
       "github_issue": 0,
       "id": "fd_0531",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:40.944383+00:00",
       "lean_theorem_stub": "theorem full_brouwer_conjecture\n    (n m k : ℕ) (G : SimpleGraph (Fin n)) (h_m : G.edgeCount = m) (h_k : 0 < k ∧ k < n) :\n    sum_k_largest_laplacian_eigenvalues G k = m + (k + 1) * k / 2 ↔\n    IsThresholdGraph G ∧ CliqueNumber G = k + 1 := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -25550,7 +25550,7 @@
         "math.CO"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -25567,7 +25567,7 @@
       "github_issue": 0,
       "id": "fd_0533",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:06.517813+00:00",
       "lean_theorem_stub": "theorem tiling_count_Tn_formula (n : ℕ) (hn : 0 < n) :\n  tilingCount n = Finset.prod {ab : ℕ × ℕ // ab.1 ≤ 3*n+2 ∧ ab.2 ≤ 3*n+2 ∧ ab.1 < ab.2 ∧ ab ≠ (n+1, 2*n+2)} \n  (fun ab => Real.abs (1 + (zeta (3*n+3)) ab.1 + (zeta (3*n+3)) ab.2) ^ (1 / 3)) := by\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -25596,7 +25596,7 @@
         "Mantel 1907"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -25614,7 +25614,7 @@
       "github_issue": 0,
       "id": "fd_0534",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:07.503525+00:00",
       "lean_theorem_stub": "theorem directed_mantel {α : Type*} [Fintype α] [DecidableEq α]\n    (r : α → α → Prop) [DecidableRel r]\n    (h_no_loops : ∀ x, ¬ r x x)\n    (h_no_dir_tri : ∀ x y z, r x y → r y z → r z x → False) :\n    (∑ x, ∑ y, if r x y then (1 : ℕ) else 0) ≤ (Fintype.card α)^2 / 2 :=\n  by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -25755,7 +25755,7 @@
         "Topological Combinatorics",
         "Combinatorial Algebraic Geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -26291,7 +26291,7 @@
         "Algebraic Number Theory",
         "p-adic Analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -26378,7 +26378,7 @@
         "math.GR"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -26395,7 +26395,7 @@
       "github_issue": 0,
       "id": "fd_0550",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:07.344813+00:00",
       "lean_theorem_stub": "theorem point_imprimitive_design_param_classification\n    {P : Type*} [Fintype P] {k λ : ℕ} {D : Design P k λ} {G : Type*} [Group G]\n    (h_nontrivial : IsNontrivial D) (h_flag_trans : IsFlagTransitive D G)\n    (h_imprim : IsPointImprimitive D G) (h_socle : SocleIsPSL2q G q) (hq : q ≥ 4) :\n  (Fintype.card P, k, λ) ∈ {(15, 12, 11), (85, 80, 79), (36, 8, 4)} := by\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -26717,7 +26717,7 @@
         "A001037 (Lyndon words with 2 colors)"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -26734,7 +26734,7 @@
       "github_issue": 0,
       "id": "fd_0557",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:32:54.434507+00:00",
       "lean_theorem_stub": "∀ k ≥ 2, n ≥ 1, Q_k(n) = k · N_k(n)",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -26779,7 +26779,7 @@
         "galois_theory",
         "elliptic_curves"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -27171,7 +27171,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Log-Concavity in the d-Hoggatt Hierarchy\n\nThis cycle established a sharp dichotomy for the *total* d-Hoggatt numbers\n`H_d(n) = ∑_k H_d(n,k)`: the `d = 1` totals `2^n` are infinitely log-concave\n(indeed log-linear), while the `d = 2` totals (Catalan numbers) are strictly\nlog-convex, and the `d = 3` totals (Baxter numbers) are empirically log-convex.\nThe following conjectures are the natural next targets.\n\n## Conjecture 1 — Universal log-convexity of the totals for d ≥ 2\n\nFor every `d ≥ 2`, the total d-Hoggatt numbers are strictly log-convex:\n`H_d(n+1)² < H_d(n) · H_d(n+2)` for all `n ≥ 0`.\n\nThe key insight is that each `H_d(n)` is a positively weighted sum of products\nof binomial coefficients whose dominant growth ratio increases with `n`, so the\ntotals inherit the log-convexity of the Catalan case rather than the\nlog-concavity of the individual rows. Why now? The Catalan (`d = 2`) case is now\nsettled from a two-term recurrence, and the Baxter (`d = 3`) case matches it\nterm-by-term in the computed data, suggesting a single recurrence-driven\nargument covers the whole family.\n\n## Conjecture 2 — Row-sum log-convexity is a summation phenomenon\n\nIf `T(n,k)` is any triangle whose rows are log-concave and whose row-ratio\n`T(n+1,k)/T(n,k)` is nondecreasing in `n`, then the row sums `S(n) = ∑_k T(n,k)`\nare log-convex.\n\nThe key insight is that log-convexity of the totals is not special to Hoggatt\ntriangles but follows from monotone amplification of a common growth factor\nacross rows, a Chebyshev-sum / rearrangement effect. Why now? Having seen the\nsame negative discriminant `Δ_n < 0` for both Catalan and Baxter totals, the\nphenomenon is clearly structural rather than coincidental and deserves a triangle\n-level hypothesis.\n\n## Conjecture 3 — Infinite log-concavity of the rows\n\nFor every `d ≥ 1`, each fixed row `k ↦ H_d(n,k)` of the d-Hoggatt triangle is\ninfinitely log-concave.\n\nThe key insight is that the log-concavity operator, when applied to a finite\npositive log-concave row with the golden-ratio-squared safety factor\n`a_k² ≥ ((3+√5)/2) · a_{k-1} a_{k+1}`, reproduces that same safety factor, so a\nsingle closure lemma propagates through all iterates. Why now? The threshold\nconstant `(3+√5)/2` is exactly the fixed point of the operator's worst-case\nratio, and the toolkit built this cycle (the operator `𝓛`, its annihilation of\nlog-linear sequences, and closure under products) already contains the moving\nparts needed to attack the closure lemma.\n\n## Conjecture 4 — A log-concave \"renormalization\" of the totals\n\nFor every `d ≥ 2` there is an explicit positive normalizing sequence `w_d(n)`\n(e.g. a ratio of factorials) such that the renormalized totals\n`H_d(n) / w_d(n)` are infinitely log-concave, even though the raw totals are\nlog-convex.\n\nThe key insight is that log-convexity of the totals is caused by a smooth,\npredictable growth factor which can be divided out, leaving a residual sequence\ngoverned by the same infinite-log-concavity mechanism as the rows. Why now? The\nexact growth ratio `(n+2)(2n+3)/((2n+1)(n+3))` for the Catalan totals is now\nknown in closed form, giving a concrete first candidate for `w_2` and a template\nfor higher `d`.\n\n## Conjecture 5 — Tropical dequantization of the dichotomy\n\nUnder the tropical (min-plus) limit that sends a positive sequence `a_n` to its\nvaluations `v_n = −log a_n`, log-concavity becomes convexity of `v` and\nlog-linearity becomes affinity of `v`. The `d = 1`/`d ≥ 2` dichotomy then reads:\n`v` is affine for `d = 1` and strictly concave for `d ≥ 2`.\n\nThe key insight is that the log-concavity operator degenerates, in the tropical\nlimit, to a second finite difference, so infinite log-concavity corresponds to a\nsequence of iterated finite differences retaining a fixed sign — a purely\npiecewise-linear, tropical-geometric condition. Why now? Casting the numeric\ndichotomy in the min-plus semiring links this combinatorial question to tropical\nconvexity, where second-difference sign conditions are the natural objects and\npowerful piecewise-linear tools are available.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Tropical",
         "Geometry"
@@ -27353,7 +27353,7 @@
         "math.AT"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -27371,7 +27371,7 @@
       "github_issue": 0,
       "id": "fd_0571",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:35:25.652305+00:00",
       "lean_theorem_stub": "theorem pf_vertex_decomposable_iff {V : Type*} [Fintype V] [DecidableEq V] {m : ℕ} (ns : Fin m → ℕ) (h_sorted : Monotone ns) (h_m : 2 ≤ m) (t : ℕ) : VertexDecomposable (PF t (completeMultipartiteGraph ns)) ↔ 2 * ns ⟨m - 2, by omega⟩ ≤ t + 1 := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -27447,7 +27447,7 @@
         "math.NT"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -27464,7 +27464,7 @@
       "github_issue": 0,
       "id": "fd_0573",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:06.517813+00:00",
       "lean_theorem_stub": "theorem cyclic_monodromy_classifies_degree_5_exceptional_rational_func\n    {F : Type*} [Field F] [Fintype F] \n    (h_char : ringChar F ≠ 2) (h_char5 : ringChar F ≠ 5)\n    (f : RationalFunc F) (h_deg : degree f = 5) (h_exc : IsExceptional f) \n    (h_cyclic : IsCyclic (monodromyGroup f)) :\n    ∃ (λ μ : MöbiusTransformation F) (a : F), \n    IsMöbiusEquiv f (λ ∘ (monomial 5) ∘ μ) ∨ IsMöbiusEquiv f (λ ∘ (redeiFunc 5 a) ∘ μ) :=\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -27554,7 +27554,7 @@
         "p-adic analysis",
         "Algebraic geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -27948,7 +27948,7 @@
         "Schoenberg_embedding"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -27966,7 +27966,7 @@
       "github_issue": 0,
       "id": "fd_0584",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:07.503525+00:00",
       "lean_theorem_stub": "theorem microscopic_weighting_sign_characterization (n : ℕ) (X : Finset (EuclideanSpace ℝ (Fin n))) : ∃ (μ : X → ℝ), is_microscopic_weighting μ ∧ ∀ x, μ x > 0 ↔ is_extreme_point x (convexHull ℝ (X : Set (EuclideanSpace ℝ (Fin n)))) := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -28259,7 +28259,7 @@
         "arithmetic of elliptic curves",
         "Iwasawa main conjecture"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -28296,7 +28296,7 @@
         "math.GR"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -28313,7 +28313,7 @@
       "github_issue": 0,
       "id": "fd_0591",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:33.173567+00:00",
       "lean_theorem_stub": "theorem missing_linear_space_496_unique (D : Design 496 4 1) (h_flag : FlagTransitive D) (h_socle : Socle (Aut D) ≅ PSL(2, 32)) : IsIsomorphic D MissingLinearSpace496 := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -28604,7 +28604,7 @@
         "Croot-Mao-Pohoata-Sheffer-Yip paper"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -28621,7 +28621,7 @@
       "github_issue": 0,
       "id": "fd_0598",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:06.517813+00:00",
       "lean_theorem_stub": "Theorem vertical_amplification (n : ℕ) (c : ℝ>0) : ∃ P : Fin n → ℝ², ∀ A ⊆ P, |A| ≥ 2 → ∃ λ > 0, |{(a, b) ∈ A × A | a ≠ b, |a - b| = λ}| ≥ c * |A|² / n^{1/2}.",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -28649,7 +28649,7 @@
         "math.CO"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -28667,7 +28667,7 @@
       "github_issue": 0,
       "id": "fd_0599",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:36.509155+00:00",
       "lean_theorem_stub": "theorem mu_two_eq_one_plus_rho : μ₂ = 1 + ρ := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -28748,7 +28748,7 @@
         "token_sliding"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -28767,7 +28767,7 @@
       "github_issue": 0,
       "id": "fd_0601",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:36.509155+00:00",
       "lean_theorem_stub": "theorem quantifier_free_fo_value_cannot_express_dominating_set :\n    ∀ (m : ℕ) (φ : FirstOrder.Formula (Fin m))\n      (hφ : φ.is_quantifier_free)\n      (w : V(G) → ℕ),\n    ∃ (G : SimpleGraph (Fin n)) (S : Finset (Fin n)),\n      (S.card = k) ∧\n      (G.neighborFinset S ∪ S).card ≠\n        (∑ v in S, w v) -\n        (Finset.card <| S.attach.filter (fun ⟨x, _⟩ =>\n          S.attach.filter (fun ⟨y, _⟩ =>\n            φ_satisfies G x.val y.val φ)))\n-- where φ_satisfies evaluates the quantifier-free formula φ\n-- on the induced subgraph restricted to the tuple variables",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -29047,7 +29047,7 @@
         "Dyck path decompositions"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -29065,7 +29065,7 @@
       "github_issue": 0,
       "id": "fd_0607",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:07.503525+00:00",
       "lean_theorem_stub": "theorem fixed_points_h_counted_by_catalan (n : ℕ) :\n    Finset.card {t : FreeCatalan | t.size = n ∧ h t = t} = catalan n := by\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -29095,7 +29095,7 @@
         "math.MG"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -29106,14 +29106,14 @@
         "Mathlib.Combinatorics.SimpleGraph.Basic",
         "Mathlib.Analysis.Convex.Cone.Basic"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry"
       ],
       "github_issue": 0,
       "id": "fd_0608",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:07.503525+00:00",
       "lean_theorem_stub": "theorem cone_colorful_caratheodory {d : ℕ} {V : Type*} [Fintype V] (A : V → EuclideanSpace ℝ (Fin d)) {r : ℕ} (U : Fin r → Finset V) (hU : ∀ i j, i ≠ j → Disjoint (U i) (U j)) (hr : r ≥ d) (hcone : ∀ i, (0 : EuclideanSpace ℝ (Fin d)) ∈ convexCone (A '' (U i))) : ∃ t : Fin r → V, (∀ i, t i ∈ U i) ∧ (0 : EuclideanSpace ℝ (Fin d)) ∈ convexCone (A '' (Finset.image t Finset.univ))",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -29480,7 +29480,7 @@
         "directed_cycles"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -29498,7 +29498,7 @@
       "github_issue": 0,
       "id": "fd_0616",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:36.509155+00:00",
       "lean_theorem_stub": "theorem directed_babai_long_cycle {V : Type*} [Fintype V] [DecidableEq V] {D : Digraph V} (h_conn : D.Connected) (h_vt : D.VertexTransitive) : ∃ (c : List V), c.IsDirectedCycleIn D ∧ c.length ≥ Nat.ceil (Real.sqrt (Fintype.card V)) := by\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -29679,7 +29679,7 @@
         "math.CO"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -29696,7 +29696,7 @@
       "github_issue": 0,
       "id": "fd_0620",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:33:33.173567+00:00",
       "lean_theorem_stub": "theorem char_conductor_direct_product (G H : Type*) [Fintype G] [Fintype H] [Group G] [Group H] : (charConductor (G × H) : Set Primes) = (charConductor G : Set Primes) ∪ (charConductor H : Set Primes) := by\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -29876,7 +29876,7 @@
         "closure operators in projective geometry"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -29894,7 +29894,7 @@
       "github_issue": 0,
       "id": "fd_0624",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:07.344813+00:00",
       "lean_theorem_stub": "theorem mutual_separation_bound (r d n : ℕ) (hrd : r < d) (hdn : d < n) (hrw : 2 * r > d) : ∃ (k : ℕ) (hkp : 1 < k) (S : set (Grassmannian r (ℓ (fin n)))) (spines : fin k → Subspace (ℓ (fin n))) (hsat : is_saturated S) (hunion : S = ⋃ i, {η | spines i ≤ η}) (hdisj : pairwise_disjoint (λ i, {η | spines i ≤ η})) (hbound : ∀ i j (hij : i ≠ j), dim (spines i ⊓ spines j) ≤ 2 * r - d) ∧ (∀ r' d' n', (2 * r' > d') → (∃ S' spines', hbound r' d' n' S' spines'))",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -29972,7 +29972,7 @@
         "Hatley-Ray"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -29983,14 +29983,14 @@
         "Quadratic Twists",
         "Iwasawa Invariants"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry"
       ],
       "github_issue": 0,
       "id": "fd_0626",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:53.731321+00:00",
       "lean_theorem_stub": "Theorem: If μ²(E, ω^i) ≠ 0, then λ²*(E^D, ω^i) = λ²*(E, ω^i) + Σ_{ℓ|D} [terms] + c ⋅ μ²(E, ω^i) for some constant c ∈ Z_2.",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -30023,7 +30023,7 @@
         "A027377"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -30041,7 +30041,7 @@
       "github_issue": 0,
       "id": "fd_0627",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:31.563324+00:00",
       "lean_theorem_stub": "-- Define the Möbius function (available in mathlib)\ndef Q (k n : ℕ) : ℕ := sorry\n\ntheorem Q_formula (k n : ℕ) (hk : 2 ≤ k) (hn : 0 < n) :\n  Q k n = π (d : ℕ) in Finset.range (n + 1), (d | n) → μ d * k ^ (n / d)",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -30118,7 +30118,7 @@
         "cubic_graph_edge_coloring"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -30136,7 +30136,7 @@
       "github_issue": 0,
       "id": "fd_0629",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:36.509155+00:00",
       "lean_theorem_stub": "theorem sylvester_S10_bridgeless_bound (G : CubicMultigraph) (h_cubic : G.IsCubic) (h_bridgeless : G.Bridgeless) (h_connected : G.Connected) : ∃ f : G.Edge → S10.Edge, (VProper G S10 f).card * 7 ≥ 6 * (Finset.univ : Finset G.Vertex).card := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -30217,7 +30217,7 @@
         "05C50"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -30236,7 +30236,7 @@
       "github_issue": 0,
       "id": "fd_0631",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:18.547801+00:00",
       "lean_theorem_stub": "theorem bipartite_neg1_0_1_diag_is_complete_bipartite {n : ℕ} (G : SimpleGraph (Fin n)) (h_conn : Connected G) (h_bip : IsBipartite G) (h_diag : NegOneZeroOneDiagonalizable G) : IsCompleteBipartite G ∧ ∃ m, n = 2 * m ∧ IsCompleteBipartiteOn G m m := by\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -30268,7 +30268,7 @@
         "LLT polynomials"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -30286,7 +30286,7 @@
       "github_issue": 0,
       "id": "fd_0632",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:37:18.547801+00:00",
       "lean_theorem_stub": "theorem delta_petrie_schur_positivity_iff (k n j : ℕ) (hk : k ≥ 2) (hn : n ≥ 1) (hj : j ∈ Finset.Icc 1 n) :\n    SchurPositive (Delta (e j) (petrie k n)) ↔ (k ∣ n) := by\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -30327,7 +30327,7 @@
         "Analytic Number Theory",
         "Probability Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -30659,7 +30659,7 @@
         "math.CO"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -30670,14 +30670,14 @@
         "Graph Theory",
         "Combinatorial Topology"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry"
       ],
       "github_issue": 0,
       "id": "fd_0640",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:53.731321+00:00",
       "lean_theorem_stub": "theorem coindex_suspension_gap_unbounded (n : ℕ) (hn : 2 ≤ n) :\n    ∃ (K : SimplicialComplex) (_ : IsFreeZ2Space K) (_ : dim K = n),\n      coind K = 1 ∧ coind (Suspension K) = n + 1 := by\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -30919,7 +30919,7 @@
         "combinatorics_on_words",
         "finite_fields"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -30968,7 +30968,7 @@
         "combinatorial_homological_algebra",
         "higher_category_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -31156,7 +31156,7 @@
         "Polynomial"
       ],
       "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
+      "cleanup_review_count": 1,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -31173,7 +31173,7 @@
       "github_issue": 0,
       "id": "fd_0650",
       "last_attempt_time": "",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-07-08T16:36:07.344813+00:00",
       "lean_theorem_stub": "theorem symPower_trace_anti_diag_identity \n    {R : Type*} [CommRing R] (A : Matrix (Fin 2) (Fin 2) R) (k : ℕ) :\n    A 0 1 * trace (symPower k A) = (A^(k+1)) 0 1 ∧\n    A 1 0 * trace (symPower k A) = (A^(k+1)) 1 0 :=\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
@@ -31216,7 +31216,7 @@
         "resurgence-theory",
         "ideal-containment"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -31257,7 +31257,7 @@
       "depth_estimate": 3,
       "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers — anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension — they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property — it's not about content quality but about the sheaf cohomology of the social network.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Novelty",
         "Geometry"
@@ -31298,7 +31298,7 @@
       "depth_estimate": 3,
       "description": "Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: lines parallel to the x-axis diverge (hyperbolic behavior) while lines parallel to the y-axis converge (elliptic behavior). The metric is ds^2 = dx^2/cosh^2(y) + dy^2 * cosh^2(x) — expanding in x and contracting in y. Conjecture: Split Geometry is a consistent Riemannian geometry with curvature K(x,y) = -sech^2(y) + sech^2(x) that changes sign across the diagonals. The geometry has a 'phase boundary' along the lines y = x and y = -x where K = 0 (flat). In the region |x| > |y|, K > 0 (elliptic) and in the region |y| > |x|, K < 0 (hyperbolic). The geodesics in split geometry are piecewise combinations of exponential curves (in hyperbolic regions) and trigonometric curves (in elliptic regions). Test: compute the Christoffel symbols and curvature tensor for the split metric. Prove that geodesics cross the phase boundary at most twice. Compute the area of a split triangle with one vertex in each region. Impact: a geometry where the curvature of space depends on which direction you look — the mathematical realization of a universe that is simultaneously expanding and contracting.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Novelty",
         "Geometry"
@@ -31406,6 +31406,87 @@
       "thread_id": "",
       "timestamp": "2026-07-08T16:25:39.146664+00:00",
       "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions — Supersingular Iwasawa λ-Invariants and Local Depths\n\nThe verified results isolate the arithmetic skeleton of the Matsuno-type formula for\nsharp/flat 2-adic λ-invariants: a completely additive, monotone invariant assembled\nfrom the local depths `n_ℓ = v₂((ℓ² − 1)/8)`. The following conjectures push this\nskeleton toward the full analytic theory.\n\n## 1. Full additive realization of the λ-difference\n\n**Conjecture.** For an elliptic curve `E/ℚ` with good supersingular reduction at 2,\nsquare-free conductor, and vanishing μ-invariant, the map sending a square-free\n`D ≡ 1 (mod 4)` to the difference `λ(E^D) − λ(E)` of sharp (or flat) λ-invariants is\n*completely additive* over coprime twisting parameters and agrees term-by-term with the\nlocal sum `∑_{ℓ ∣ D} δ(ℓ)`.\n\nThe key insight is that quadratic twisting acts multiplicatively on the twisting\nparameter while the λ-difference is a sum of purely local depths, so the global\ninvariant inherits exact additivity from the disjointness of prime supports.\n\nWhy now? The additivity and monotonicity of the local-sum model are established, so the\nonly remaining step is matching each local term to the ramification contribution of a\nsingle prime — a strictly local computation.\n\n## 2. Depth stratification by residue mod 8\n\n**Conjecture.** The distribution of the local contribution `δ(ℓ)` is governed entirely\nby `ℓ mod 8` together with divisibility of the conductor and parity of the reduction\norder; in particular `n_ℓ = 0` exactly for `ℓ ≡ 3, 5 (mod 8)`, and `n_ℓ` grows without\nbound only along `ℓ ≡ 1 (mod 8)`.\n\nThe key insight is that `n_ℓ + 3 = v₂(ℓ−1) + v₂(ℓ+1)`, so the depth is controlled by how\ndeeply `ℓ` sits in the 2-adic filtration of the units, which is a residue condition\nmodulo powers of 2.\n\nWhy now? The closed form `n_ℓ = v₂(ℓ−1) + v₂(ℓ+1) − 3` is proved, reducing the\nstratification question to a finite residue analysis.\n\n## 3. Growth rate of twisted λ-invariants\n\n**Conjecture.** Ordering square-free `D ≡ 1 (mod 4)` by size, the average of\n`λ(E^D) − λ(E)` over `D ≤ X` grows like `c · log log X` for an explicit constant `c`\ndepending only on the split behaviour of `E` at small primes.\n\nThe key insight is that each prime contributes a bounded local depth on average, so the\ntotal behaves like a sum of nearly-constant terms over the prime divisors of `D`,\nproducing Mertens-type `log log` growth.\n\nWhy now? With the invariant expressed as an additive prime sum, its average order is\ndirectly accessible to standard sieve and Mertens estimates.\n\n## 4. Monotone towers and stabilization\n\n**Conjecture.** Along any tower of square-free levels `d₁ ∣ d₂ ∣ ⋯` the λ-difference is\nnon-decreasing and stabilizes precisely when no new ramified prime with even reduction\norder is added.\n\nThe key insight is that the invariant is monotone under divisibility of the level and\neach newly introduced prime contributes a strictly positive local term exactly under an\nexplicit parity/ramification condition.\n\nWhy now? Monotonicity in the level is already verified, so the stabilization criterion is\nthe sole missing ingredient and is a local parity test.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0656",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "d82d98aa",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d82d98aa",
+      "status": "available",
+      "thread_id": "th_8c0e0306",
+      "timestamp": "2026-07-08T16:32:02.084218+00:00",
+      "title": "The verified results isolate the arithmetic skeleton of the Matsuno-type formula"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture: For any sufficiently complex algebraic variety defined over a quantum field, the classical solutions (roots of equations) exhibit quantum entanglement properties that can be measured through homotopy-type invariants. Test: By encoding classical algebraic varieties with quantum qubits and measuring their homotopy invariants (e.g., Betti numbers) against quantum error correction thresholds, we can verify whether entanglement persists in the classical limit. Impact: This bridges computational algebraic geometry with quantum information theory, enabling new algorithms for solving polynomial equations with quantum resilience.",
+      "domain_bridges": [],
+      "domain_quality_penalty": -0.15,
+      "domains": [
+        "Novelty"
+      ],
+      "github_issue": 0,
+      "id": "fd_0657",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.7,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-08T16:37:48.586658+00:00",
+      "title": "Quantum-Classical Entanglement in Numerical Algebraic Geometry"
     },
     {
       "ambition_level": "extension",
