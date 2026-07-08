@@ -13457,6 +13457,63 @@
     "title": "Product Hilton-Milner theorem for large n"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "outerplanar_graphs",
+      "Wegner_conjecture",
+      "graph_coloring",
+      "graph_grammars",
+      "induced_subgraph_constraints"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every finite simple subcubic outerplanar graph admits a crumby coloring, i.e., a red-blue vertex partition where the blue vertices induce a subgraph of maximum degree at most one, and the red vertices induce a subgraph with minimum degree at least one and containing no induced path on four vertices (P₄). This is the main theorem of the paper, resolving a conjecture of Barát, Blázsik, and Damásdi that removed the 2-connectivity assumption from their result.",
+    "domain_bridges": [
+      "graph_theory_to_formal_language_theory_grammar_decomposition",
+      "combinatorial_construction_to_certificate_verification"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0606",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the rooted grammar decomposition of subcubic outerplanar graphs into rooted branches and two-terminal path fragments, where cyclic blocks are handled by deleting the root. Define crumby-admissible colorings that relax the crumby condition by allowing temporary isolated red vertices at boundary positions (roots of branches, terminals of path fragments). Prove the grammar decomposition theorem characterizing subcubic outerplanar graphs. Then verify closure of an explicit finite family of certificate types (boundary types and root states) under all decomposition steps, and verify that every certified completed branch contains a final-legal root state ensuring the temporary defect disappears. The finite certificate verification can be discharged by computation or explicit case analysis.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06515v1",
+    "status": "available",
+    "timestamp": "2026-07-08T03:56:52.974841+00:00",
+    "title": "Crumby colorings exist for subcubic outerplanar graphs"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.AT",
+      "cs.CG",
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every approximation factor c > √2, there exists a constant d = d(c) such that any finite metric space (X, ∂) admits a finitely presented c-approximation (in the homotopy interleaving sense) to the Vietoris-Rips filtration VR(X) of size at most |X|^d. This would establish √2 as a sharp phase transition: below √2, exponential-size approximations are necessary (as proven in the paper), while above √2, polynomial-size approximations always suffice—even without bounded doubling dimension—though superlinear lower bounds persist for all c ≥ 1.",
+    "domain_bridges": [
+      "homotopy_interleaving_distance",
+      "simplicial_filtration_size",
+      "doubling_dimension"
+    ],
+    "domains": [
+      "Geometry",
+      "MachineLearning"
+    ],
+    "id": "fd_0606",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The positive direction (constructing polynomial-size c-approximations for c > √2) could proceed by leveraging the fact that at scale √2·r, the Rips complex VR(X)_{√2·r} captures the homotopy type that suffices for interleaving, combined with sparsification techniques that exploit the clique complex structure—potentially using selective subsampling or witness complexes that preserve homotopy type beyond the √2 threshold. The negative direction (ruling out polynomial size for c < √2) is already established by the paper's exponential lower bound. The key insight would be that the √2 threshold corresponds to the point where the Rips complex's nerve lemma arguments stabilize, enabling polynomial-size faithful approximations.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06524v1",
+    "status": "available",
+    "timestamp": "2026-07-08T03:57:15.934027+00:00",
+    "title": "Polynomial Approximability Above the √2 Threshold for Vietoris-Rips Filtrations"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "Petersen_coloring_conjecture",
