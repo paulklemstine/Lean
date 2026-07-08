@@ -14813,6 +14813,34 @@
     "title": "Symmetric Minimum Rank of Intersection Graphs over Finite Fields"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Dirac's Theorem",
+      "Hamiltonian cycles",
+      "Cyclic subset enumeration",
+      "Minimum degree thresholds"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that the optimal exponential rate at the Dirac boundary established for n/2-regular graphs extends to all graphs with minimum degree at least n/2. Specifically, every n-vertex graph G with minimum degree δ(G) ≥ n/2 satisfies Cyc(G) ≥ 2^{(1-o(1))n}, which is sharp up to a subexponential factor as witnessed by K_{n/2,n/2}.",
+    "domain_bridges": [
+      "Graph Theory",
+      "Asymptotic Enumeration",
+      "Extremal Combinatorics"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0660",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt the absorbing method and robustness of Hamiltonicity under minimum degree conditions. Show that any graph with δ(G) ≥ n/2 contains a robust spanning structure (e.g., a Hamilton-connected subgraph or a suitable power of a Hamilton cycle) that guarantees a positive fraction of vertex subsets induce Hamiltonian subgraphs. Count subsets via expansion or balanced bipartition arguments mirroring the regular case.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06551v1",
+    "status": "available",
+    "timestamp": "2026-07-08T18:40:30.271481+00:00",
+    "title": "Dirac Boundary Cyclic Subset Bound for Minimum Degree Graphs"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "VR filtrations and metric spaces",
@@ -14830,7 +14858,7 @@
     "domains": [
       "MachineLearning"
     ],
-    "id": "fd_0660",
+    "id": "fd_0661",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Construct an explicit infinite family of finite metric spaces Xₙ (e.g., using ℓ₁-spheres or Hamming cube constructions) with controlled geometric properties. 2. Prove that these spaces have unbounded doubling dimension. 3. Use combinatorial arguments to show that any c-approximation must encode sufficient information to distinguish between exponentially many distinct metric configurations. 4. Establish the quantitative bound on γ(c) by analyzing the homomorphism density needed in the approximation maps. 5. Verify the limit behavior as c approaches √2 from below using asymptotic analysis.",
@@ -14856,7 +14884,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0661",
+    "id": "fd_0662",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Flatly spread the cycles A1-A2 and B1-B2 over the valuation ring, compute their intersection product in the Chow ring, and observe that the valuation of the cross‑ratio is the order of the determinant of the pairing of generators, which matches this intersection product; formalize the equality in Lean using the Chow ring and valuation homomorphism.",
@@ -14883,7 +14911,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0662",
+    "id": "fd_0663",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Initialize H via the threshold random subgraph model (independent uniform labels, keep edge uv if x_u+x_v ≥ 1). This yields asymptotic degree counts. Then apply a sequence of single-edge switches (swaps along anti-diagonals) to drive the twofold prefix norm of the degree-count error to zero while preserving the parity constraint. A full proof would need a uniform edge-atom probability bound valid for all d ≤ n and stronger concentration of the prefix norm, possibly via spectral graph theory or martingale methods.",
@@ -14892,6 +14920,32 @@
     "status": "available",
     "timestamp": "2026-07-08T18:20:41.047271+00:00",
     "title": "Alon–Wei Conjecture for Arbitrary Regular Graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "arXiv:2407.XXXXX (this paper)",
+      "Corneil et al. 'Cographs: recognition and applications' (1981)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The class of cographs (Forb(P₄)) is generalized spectrally closed: if G is a cograph and H is generalized cospectral with G (i.e., G and H have the same adjacency spectrum and the same complement spectrum), then H must also be a cograph. This extends the paper's result for threshold graphs (Forb(2K₂, P₄, C₄)) to the larger class of cographs.",
+    "domain_bridges": [
+      "spectral graph theory",
+      "hereditary graph classes",
+      "algebraic combinatorics"
+    ],
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_0664",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Apply the paper's β-closed walk framework and linear programming approach to search for a walk-realizable {P₄}-supporter. If such a supporter exists, the LP feasibility problem will certify generalized spectral closedness. If no supporter exists, attempt to construct a counterexample by finding a cograph G and a non-cograph H with identical generalized spectra, possibly using the paper's induced-subgraph expansion formulas for β-closed walk counts.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06455v1",
+    "status": "available",
+    "timestamp": "2026-07-08T18:43:29.811729+00:00",
+    "title": "Cographs are generalized spectrally closed"
   },
   {
     "ambition_level": "extension",

@@ -31598,6 +31598,55 @@
       "title": "Symmetric Minimum Rank of Intersection Graphs over Finite Fields"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Dirac's Theorem",
+        "Hamiltonian cycles",
+        "Cyclic subset enumeration",
+        "Minimum degree thresholds"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture that the optimal exponential rate at the Dirac boundary established for n/2-regular graphs extends to all graphs with minimum degree at least n/2. Specifically, every n-vertex graph G with minimum degree δ(G) ≥ n/2 satisfies Cyc(G) ≥ 2^{(1-o(1))n}, which is sharp up to a subexponential factor as witnessed by K_{n/2,n/2}.",
+      "domain_bridges": [
+        "Graph Theory",
+        "Asymptotic Enumeration",
+        "Extremal Combinatorics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0660",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem cyc_min_degree_dirac {ε : ℝ} (hε : 0 < ε) : ∃ N : ℕ, ∀ n > N, ∀ (G : SimpleGraph (Fin n)), (∀ v, G.degree v ≥ n / 2) → (Cyc G : ℝ) ≥ 2 ^ ((1 - ε) * (n : ℝ)) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Adapt the absorbing method and robustness of Hamiltonicity under minimum degree conditions. Show that any graph with δ(G) ≥ n/2 contains a robust spanning structure (e.g., a Hamilton-connected subgraph or a suitable power of a Hamilton cycle) that guarantees a positive fraction of vertex subsets induce Hamiltonian subgraphs. Count subsets via expansion or balanced bipartition arguments mirroring the regular case.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.06551v1",
+      "source_path": "http://arxiv.org/abs/2607.06551v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-08T18:40:30.271481+00:00",
+      "title": "Dirac Boundary Cyclic Subset Bound for Minimum Degree Graphs"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -31625,7 +31674,7 @@
         "MachineLearning"
       ],
       "github_issue": 0,
-      "id": "fd_0660",
+      "id": "fd_0661",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vietoris_rips_exponential_lower_bound\n  (c : ℝ) (hc : c ∈ Set.Icc 1 (Real.sqrt 2))\n  (h : c < Real.sqrt 2) : ∃ (γ : ℝ) (hγ : γ > 0) (γ_func : ℝ → ℝ),\n  (∀ n : ℕ, ∃ (X : FinMetricSpace n) (approx : FinitelyPresentedCApproximation c X),\n    (#(simplices approx) ≥ 2^(γ_func c * n)))\n  ∧ (γ_func c = γ) ∧ (∀ c' : ℝ, c' < Real.sqrt 2 → γ_func c' > 0)\n  ∧ (Filter.tendsto γ_func (nhds (Real.sqrt 2)) (𝓝 0))",
@@ -31672,7 +31721,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0661",
+      "id": "fd_0662",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem valuation_cross_ratio_eq_intersection {K : Type} [DiscretelyValuedField K] {n k : ℕ} (A1 A2 B1 B2 : Cycles (Fin n + 1) (k : ℕ) (n - k - 1 : ℕ)) : valuation ((A1 A2 B1 B2) : K×) = intersection_number (A1 - A2) (B1 - B2) := by sorry",
@@ -31720,7 +31769,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0662",
+      "id": "fd_0663",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem alon_wei (d n : ℕ) (V : Type*) [Fintype V] (G : SimpleGraph V) (hreg : G.IsRegularOfDegree d) (hn : Fintype.card V = n) : ∃ (H : G.Subgraph) (hspan : H.IsSpanning), ∀ i ≤ d, let m := (Finset.univ.filter (fun v => H.degree v = i)).card in |(m : ℝ) - n / (d + 1)| ≤ 2 := by sorry",
@@ -31740,6 +31789,53 @@
       "thread_id": "",
       "timestamp": "2026-07-08T18:20:41.047271+00:00",
       "title": "Alon–Wei Conjecture for Arbitrary Regular Graphs"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "arXiv:2407.XXXXX (this paper)",
+        "Corneil et al. 'Cographs: recognition and applications' (1981)"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The class of cographs (Forb(P₄)) is generalized spectrally closed: if G is a cograph and H is generalized cospectral with G (i.e., G and H have the same adjacency spectrum and the same complement spectrum), then H must also be a cograph. This extends the paper's result for threshold graphs (Forb(2K₂, P₄, C₄)) to the larger class of cographs.",
+      "domain_bridges": [
+        "spectral graph theory",
+        "hereditary graph classes",
+        "algebraic combinatorics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Physics"
+      ],
+      "github_issue": 0,
+      "id": "fd_0664",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem cographs_generalized_spectrally_closed : ∀ (G H : SimpleGraph ℕ), G.IsCograph → GeneralizedCospectral G H → H.IsCograph := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Apply the paper's β-closed walk framework and linear programming approach to search for a walk-realizable {P₄}-supporter. If such a supporter exists, the LP feasibility problem will certify generalized spectral closedness. If no supporter exists, attempt to construct a counterexample by finding a cograph G and a non-cograph H with identical generalized spectra, possibly using the paper's induced-subgraph expansion formulas for β-closed walk counts.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.06455v1",
+      "source_path": "http://arxiv.org/abs/2607.06455v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-08T18:43:29.811729+00:00",
+      "title": "Cographs are generalized spectrally closed"
     },
     {
       "ambition_level": "extension",

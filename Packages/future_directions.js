@@ -7939,11 +7939,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture that the optimal exponential rate at the Dirac boundary established for n/2-regular graphs extends to all graphs with minimum degree at least n/2. Specifically, every n-vertex graph G with minimum degree \u03b4(G) \u2265 n/2 satisfies Cyc(G) \u2265 2^{(1-o(1))n}, which is sharp up to a subexponential factor as witnessed by K_{n/2,n/2}.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0660",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06551v1",
+    "status": "available",
+    "timestamp": "2026-07-08T18:40:30.271481+00:00",
+    "title": "Dirac Boundary Cyclic Subset Bound for Minimum Degree Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "There exists an effectively computable constant \u03b3 > 0 such that for every c \u2208 [1, \u221a2), there exists an infinite family of finite metric spaces {X\u2099} indexed by n \u2208 \u2115 where any finitely presented c-approximation to the Vietoris-Rips filtration VR(X\u2099) requires at least 2^(\u03b3\u00b7n) simplices, and moreover \u03b3 can be taken to satisfy \u03b3 = \u03b3(c) with lim_{c\u2192\u221a2\u207b} \u03b3(c) = 0.",
     "domains": [
       "MachineLearning"
     ],
-    "id": "fd_0660",
+    "id": "fd_0661",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06524v1",
@@ -7957,7 +7971,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0661",
+    "id": "fd_0662",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06477v1",
@@ -7971,13 +7985,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0662",
+    "id": "fd_0663",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06465v1",
     "status": "available",
     "timestamp": "2026-07-08T18:20:41.047271+00:00",
     "title": "Alon\u2013Wei Conjecture for Arbitrary Regular Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The class of cographs (Forb(P\u2084)) is generalized spectrally closed: if G is a cograph and H is generalized cospectral with G (i.e., G and H have the same adjacency spectrum and the same complement spectrum), then H must also be a cograph. This extends the paper's result for threshold graphs (Forb(2K\u2082, P\u2084, C\u2084)) to the larger class of cographs.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_0664",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06455v1",
+    "status": "available",
+    "timestamp": "2026-07-08T18:43:29.811729+00:00",
+    "title": "Cographs are generalized spectrally closed"
   },
   {
     "consumed_by_exp_id": "edee947a",
