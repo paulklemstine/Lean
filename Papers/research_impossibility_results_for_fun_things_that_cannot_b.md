@@ -1,224 +1,203 @@
-# A Unified Calculus of Impossibility: Transfer, Composition, and Spectral Analysis of Equivariant Obstructions
+# The Symmetry Principle of Impossibility: Invariant Distinguishers and Free Group Actions
+
+**Author:** Aristotle
+**Date:** 2026-07-08
 
 ## Abstract
 
-We develop a systematic theory of impossibility phenomena through the lens of equivariant tasks on group actions. Classical impossibility theorems — including the unsolvability of the quintic by radicals, the impossibility of angle trisection, Arrow's voting impossibility, and the Borsuk-Ulam theorem — are shown to arise from a common structural principle: the non-existence of equivariant maps satisfying compression constraints on free group actions.
+A striking number of the classical impossibility theorems — the unsolvability of the general quintic by radicals, the impossibility of squaring the circle or trisecting an angle by ruler and compass, the non-existence of a fair non-dictatorial social choice rule — share an informal slogan: *you cannot break a symmetry with a rule that respects it.* We isolate the algebraic kernel behind this slogan and prove it precisely. Given a group $G$ acting on a set $X$, we model a "symmetric distinguishing task" as the existence of an **invariant injective** function $f : X \to Y$ — a rule that is constant on orbits (it respects the symmetry) yet separates points (it breaks the symmetry). Our central result is an exact dichotomy: **such a function exists if and only if the action is trivial.** We further characterize free actions as exactly those whose orbit maps are injective, showing that freeness is the sharpest — but not the necessary — form of the obstruction; non-triviality is the true frontier. Applying the dichotomy to the left-regular action of a non-trivial group yields a uniform impossibility statement, which specialized to the symmetric group $S_5$ becomes the group-theoretic shadow of the unsolvability of the quintic. We discuss the conceptual bridge to the classical impossibilities, provide numerical illustrations, and outline directions toward a quantitative theory of partial distinguishability and a Galois-theoretic refinement.
 
-We establish four main results: (1) a **Transfer Principle** showing impossibility is inherited along surjective group homomorphisms; (2) a **Product Composition Theorem** demonstrating that independent impossibilities compose under direct products; (3) the introduction of the **Impossibility Spectrum**, a novel invariant measuring which subgroups witness impossibility, with proof of its upward closure in the subgroup lattice; and (4) an **Equivariant Bijectivity Theorem** showing that equivariant self-maps on free transitive actions are necessarily bijections. All results are formalized and machine-verified in Lean 4 using the Mathlib library, with zero remaining sorry-placeholders.
-
-**Keywords:** impossibility theorems, equivariant maps, group actions, free actions, symmetry breaking, social choice, Galois theory, formal verification
+**Keywords:** group action, free action, invariant function, orbit space, symmetry breaking, impossibility theorems, Abel–Ruffini, symmetric group.
 
 ---
 
 ## 1. Introduction
 
-Impossibility theorems are among the most celebrated results in mathematics. The Abel-Ruffini theorem (1824) established that the general quintic polynomial has no solution by radicals. Wantzel (1837) proved that arbitrary angles cannot be trisected and cubes cannot be doubled using compass and straightedge. Lindemann (1882) showed that π is transcendental, killing the ancient problem of squaring the circle. Arrow (1951) proved that no voting system satisfying unanimity and independence of irrelevant alternatives can be non-dictatorial. The Borsuk-Ulam theorem guarantees that every continuous map from S^n to ℝ^n identifies a pair of antipodal points.
+Impossibility theorems occupy a distinctive place in mathematics. Where most theorems assert that something *can* be constructed, impossibility results assert that something *cannot* — and, remarkably, these negative statements are often deeper and more structurally illuminating than their positive counterparts. The classical canon includes:
 
-Despite their diverse origins, these results share a common structure that has been informally recognized but rarely formalized: each involves a symmetry group acting on a mathematical structure, and the impossibility arises because the task demands a canonical choice or equivariant compression that conflicts with the freeness of the action.
+- **Squaring the circle** is impossible because $\pi$ is transcendental (Lindemann, 1882).
+- **Trisecting a general angle** and **doubling the cube** are impossible because the relevant lengths generate field extensions of degree $3$, not a power of $2$ (Wantzel, 1837).
+- **Solving the general quintic by radicals** is impossible because the alternating group $A_5$ is not solvable (Abel and Ruffini, 1824; Galois).
+- **Fair aggregate voting** is impossible in the sense of Arrow's theorem: no social welfare function is simultaneously unanimous, independent of irrelevant alternatives, and non-dictatorial.
+
+Told in the usual way, each of these is a self-contained saga with its own toolkit. The purpose of this paper is to extract a single algebraic principle that underlies a large class of such statements and to prove it cleanly. The principle can be phrased as a slogan:
+
+> *A symmetric structure cannot be pinned down by a rule that respects its symmetry.*
+
+We turn this slogan into a theorem about group actions. The reward is not a shortcut around the specialized proofs — transcendence theory and Galois theory retain their essential roles — but a common diagnostic lens: once a would-be construction is recognized as an *invariant injective selector on a genuinely symmetric structure*, its impossibility is immediate.
 
 ### 1.1 Contributions
 
-This paper makes the following contributions:
-
-1. **Transfer Principle (Theorem 4.1):** If a group G acts freely and nontrivially on X, and φ : H →* G is a surjective group homomorphism, then no map X → X can be simultaneously constant and equivariant with respect to the H-action via φ. This shows impossibility "transfers upward" through surjections.
-
-2. **Product Composition (Theorem 5.2):** If G acts freely on X and H acts freely on Y, both nontrivially, then G × H acts freely on X × Y and the product impossibility holds. Independent impossibilities compose.
-
-3. **Impossibility Spectrum (Definition 2.1, Theorems 7.1-7.2):** We introduce a novel invariant — the set of nontrivial subgroups whose action already has no fixed points. We prove this is an upper set in the subgroup lattice and contains the full group whenever the action is free and nontrivial.
-
-4. **Equivariant Bijectivity (Theorem 8.1):** On a free transitive action, every equivariant self-map is a bijection. This is the structural positive counterpart to the impossibility results.
-
-5. **No Equivariant Section (Theorem 9.1):** On a free transitive action with nontrivial group, no function can simultaneously be orbit-constant, orbit-representative-selecting, and equivariant.
-
-6. **Complete Formalization:** All results are fully proven in Lean 4 with Mathlib, verified by the Lean kernel, with standard axioms only (propext, Classical.choice, Quot.sound).
+1. A precise model of a "symmetric distinguishing task" as an invariant injective function on a set carrying a group action (Section 2).
+2. **Theorem A** (freeness = orbit-map injectivity): a structural characterization of free actions (Section 3).
+3. **Theorem B** (the dichotomy): the symmetric distinguishing task is solvable if and only if the action is trivial (Section 4).
+4. **Theorem C** (regular-action impossibility): the task is unsolvable for the left-regular action of any non-trivial group, with the symmetric group $S_5$ as the flagship instance connecting to the unsolvability of the quintic (Section 5).
+5. A careful analysis of why the naive equivalence "impossible $\iff$ free" is *false*, locating the exact frontier at non-triviality (Section 6).
 
 ---
 
 ## 2. Definitions
 
-### Definition 2.1 (Equivariant Task)
-Let G be a group acting on types X and Y. An *equivariant task* consists of an admissibility function `admissible : X → Set Y` satisfying equivariance: `y ∈ admissible(x) ↔ g • y ∈ admissible(g • x)` for all g, x, y.
+Throughout, $G$ is a group (written multiplicatively, with identity $1$) acting on a set $X$. We write the action as $g \cdot x$ for $g \in G$ and $x \in X$, satisfying $1 \cdot x = x$ and $g \cdot (h \cdot x) = (gh) \cdot x$.
 
-### Definition 2.2 (Task Solvability)
-A task is *solvable* if there exists an equivariant function f : X → Y with f(x) ∈ admissible(x) for all x.
+**Definition 2.1 (Orbit).** The *orbit* of $x \in X$ is $G \cdot x = \{\, g \cdot x : g \in G \,\}$. Orbits partition $X$; the set of orbits is the *orbit space* $X / G$.
 
-### Definition 2.3 (Impossibility Spectrum)
-The *impossibility spectrum* of a group action G ↷ X is:
-$$\text{Spec}_{\text{imp}}(G, X) = \{ H \leq G \mid H \neq 1 \text{ and } X^H = \emptyset \}$$
-where X^H denotes the fixed-point set of H.
+**Definition 2.2 (Free action).** The action of $G$ on $X$ is **free** if the only group element fixing any point is the identity:
+$$
+\forall\, x \in X,\ \forall\, g \in G,\quad g \cdot x = x \implies g = 1.
+$$
 
-### Definition 2.4 (Impossibility Degree)
-The *impossibility degree* is the minimal order of a subgroup in the spectrum, or 0 if the spectrum is empty.
+**Definition 2.3 (Trivial action).** The action is **trivial** if every element fixes every point:
+$$
+\forall\, g \in G,\ \forall\, x \in X,\quad g \cdot x = x.
+$$
+Equivalently, every orbit is a single point.
 
----
+**Definition 2.4 (Invariant function / symmetric observable).** A function $f : X \to Y$ is **invariant** (with respect to the action) if it is constant along the action:
+$$
+\forall\, g \in G,\ \forall\, x \in X,\quad f(g \cdot x) = f(x).
+$$
+Invariance is the formal expression of "the rule respects the symmetry": symmetric copies of a point receive identical values.
 
-## 3. Core Impossibility
+**Definition 2.5 (Symmetric distinguishing task).** The **symmetric distinguishing task** for the action of $G$ on $X$ is the problem of exhibiting a set $Y$ and a function $f : X \to Y$ that is simultaneously *invariant* (Definition 2.4) and *injective* (points get distinct values). We say the task is **solvable** if such an $(Y, f)$ exists, and **impossible** otherwise.
 
-**Theorem 3.1 (No Equivariant Constant Map).** *Let G act freely on X with a nontrivial element. Then there is no equivariant constant map f : X → X.*
+The two conditions on $f$ are in explicit tension: invariance demands that $f$ *ignore* the group's relabelings, while injectivity demands that $f$ *see through* them to tell every point apart. Solving the task means simultaneously respecting and breaking the symmetry.
 
-*Proof.* Suppose f is equivariant with f(x) = c for all x. Then for any g ∈ G: c = f(g • c) = g • f(c) = g • c. Taking g ≠ 1 contradicts freeness. □
-
-This is the atomic impossibility from which all others derive. Its power comes from universality — it applies to any free action.
-
----
-
-## 4. Transfer Principle
-
-**Theorem 4.1 (Impossibility Transfer).** *Let G act freely and nontrivially on X. Let φ : H →* G be a surjective group homomorphism. Then no map f : X → X can be simultaneously:*
-- *Equivariant with respect to the H-action via φ: f(φ(h) • x) = φ(h) • f(x) for all h, x.*
-- *Constant: f(x) = c for all x.*
-
-*Proof.* If f is constant and equivariant via φ, then φ(h) • c = c for all h ∈ H. By surjectivity, for any g ∈ G there exists h with φ(h) = g, giving g • c = c. This contradicts freeness for g ≠ 1 (which exists by the nontriviality hypothesis). □
-
-### Remark 4.2 (Interpretation)
-The Transfer Principle formalizes the intuition that impossibility is "robust": you cannot circumvent it by passing to a richer symmetry group. In the context of Galois theory, this says: the quintic's unsolvability (due to A₅) cannot be bypassed by extending the Galois group — any group surjecting onto a non-solvable group inherits the obstruction.
+**Remark 2.6 (Universe honesty).** In the fully formal statement, the target $Y$ ranges over all types in a fixed universe, so "impossible" means *no* target of any kind admits an invariant injection — the strongest sense of impossibility, not merely the failure of one candidate.
 
 ---
 
-## 5. Product Composition
+## 3. Theorem A: Freeness Is Injectivity of the Orbit Maps
 
-**Theorem 5.1 (Product Freeness).** *If G acts freely on X and H acts freely on Y, then G × H acts freely on X × Y under the componentwise action (g,h) • (x,y) = (g•x, h•y).*
+For each $x \in X$ define the **orbit map**
+$$
+\mathrm{orb}_x : G \to X, \qquad \mathrm{orb}_x(g) = g \cdot x.
+$$
+Its image is precisely the orbit $G \cdot x$.
 
-*Proof.* If (g,h) • (x,y) = (x,y), then g • x = x and h • y = y. If (g,h) ≠ (1,1), then g ≠ 1 or h ≠ 1, contradicting the respective freeness. □
+**Theorem A.** The action of $G$ on $X$ is free if and only if the orbit map $\mathrm{orb}_x$ is injective for every $x \in X$.
 
-**Theorem 5.2 (Product Impossibility).** *Under the hypotheses of Theorem 5.1, with both actions nontrivial, no equivariant constant map X × Y → X × Y exists.*
+*Proof.*
 
-*Proof.* Apply Theorem 3.1 to G × H acting freely on X × Y (by Theorem 5.1), with nontrivial element (g₀, 1) where g₀ ≠ 1. □
+($\Rightarrow$) Assume the action is free and fix $x$. Suppose $\mathrm{orb}_x(g) = \mathrm{orb}_x(h)$, i.e. $g \cdot x = h \cdot x$. Apply $h^{-1}$ to both sides: $(h^{-1} g) \cdot x = (h^{-1} h) \cdot x = 1 \cdot x = x$. By freeness the element $h^{-1} g$ fixing $x$ must equal $1$, hence $g = h$. Thus $\mathrm{orb}_x$ is injective.
 
-### Remark 5.3
-This result has a natural interpretation: independent impossibilities don't cancel. If choosing a canonical root for the quintic is impossible, and choosing a canonical social welfare function is impossible, then choosing both simultaneously is also impossible — the product structure inherits both obstructions.
+($\Leftarrow$) Assume every orbit map is injective and suppose $g \cdot x = x$ for some $g, x$. Then $\mathrm{orb}_x(g) = g \cdot x = x = 1 \cdot x = \mathrm{orb}_x(1)$. Injectivity of $\mathrm{orb}_x$ gives $g = 1$. Hence the action is free. $\qquad\blacksquare$
 
----
-
-## 6. Stabilizer Characterization
-
-**Theorem 6.1.** *stabilizer(G, x) = {1} if and only if g • x = x implies g = 1.*
-
-**Theorem 6.2.** *The action of G on X is free if and only if all stabilizers are trivial.*
-
-These characterizations connect the algebraic perspective (stabilizer triviality) with the geometric perspective (freeness). The impossibility spectrum can be equivalently defined as the set of subgroups H such that H contains an element not in any stabilizer, with additional constraints.
+**Interpretation.** Freeness is equivalent to the statement that the *entire group embeds into every orbit*: distinct relabelings always produce distinct points, so each orbit is a faithful, undistorted copy of $G$. This is the strongest structural form a symmetry can take. In particular there is no point at which the group's action "collapses," no partial fixed structure that a clever rule could exploit. Theorem A is what makes free actions the extreme case of the impossibility we prove next.
 
 ---
 
-## 7. Spectral Properties
+## 4. Theorem B: The Dichotomy
 
-**Theorem 7.1 (Upward Closure).** *If H ∈ Spec_imp(G, X) and H ≤ K, then K ∈ Spec_imp(G, X).*
+We now prove the central result: solvability of the symmetric distinguishing task is governed *exactly* by triviality of the action.
 
-*Proof.* Since H ≤ K and H ≠ ⊥, we have K ≠ ⊥. For the fixed-point condition: X^K ⊆ X^H (K-fixed points are a fortiori H-fixed), and X^H = ∅, so X^K = ∅. □
+**Theorem B (Symmetry Principle of Impossibility).** There exists a set $Y$ and an invariant injective function $f : X \to Y$ **if and only if** the action of $G$ on $X$ is trivial.
 
-**Theorem 7.2 (Spectrum Non-emptiness).** *If G acts freely and nontrivially on X, then ⊤ ∈ Spec_imp(G, X).*
+*Proof.*
 
-### Corollary 7.3
-The impossibility spectrum is an upper set (order filter) in the subgroup lattice. This means it is determined by its minimal elements — the smallest subgroups that already witness impossibility.
+($\Rightarrow$) Suppose $f : X \to Y$ is invariant and injective. Fix any $g \in G$ and $x \in X$. Invariance gives $f(g \cdot x) = f(x)$. Injectivity then forces the arguments to agree: $g \cdot x = x$. Since $g$ and $x$ were arbitrary, the action is trivial.
 
-### Conjecture 7.4 (Spectral Gap)
-*For the natural action of the symmetric group S_n on {1,...,n}, the impossibility spectrum equals the set of all nontrivial subgroups. For the action of a cyclic group Z_p (p prime) on itself, the spectrum is {Z_p} (singleton). There exist actions with "spectral gaps" — nontrivial subgroups that are neither in the spectrum nor trivial.*
+($\Leftarrow$) Suppose the action is trivial. Take $Y = X$ and $f = \mathrm{id}_X$. The identity is injective. It is invariant because triviality gives $g \cdot x = x$, whence $f(g \cdot x) = g \cdot x = x = f(x)$ for all $g, x$. Thus $(X, \mathrm{id}_X)$ solves the task. $\qquad\blacksquare$
 
-**Test:** Construct an explicit action of Z₆ on a set where Z₂ ≤ Z₆ is in the spectrum but Z₃ ≤ Z₆ is not.
+**Corollary 4.1 (Impossibility under any genuine symmetry).** If the action is non-trivial — that is, if some $g \in G$ moves some $x \in X$ — then the symmetric distinguishing task is impossible.
 
----
+*Proof.* Immediate contrapositive of Theorem B. $\qquad\blacksquare$
 
-## 8. Equivariant Bijectivity
-
-**Theorem 8.1 (Equivariant Bijectivity).** *Let G act freely and transitively on X. Then every equivariant self-map f : X → X is a bijection.*
-
-*Proof.* **Injectivity:** If f(x) = f(y), pick g with g • x = y. Then g • f(x) = f(g • x) = f(y) = f(x). By freeness, g = 1, so x = y.
-
-**Surjectivity:** For any z ∈ X, pick g with g • f(x₀) = z for some x₀. Then f(g • x₀) = g • f(x₀) = z. □
-
-### Remark 8.2
-This is the positive structural consequence of freeness. While freeness prevents compression (Theorem 3.1), it also forces rigidity: equivariant maps are automatically invertible. In physical terms: symmetry-respecting transformations on a torsor (a free transitive group action) are always reversible.
+The elegance of Theorem B lies in its exactness. It is not merely that free actions block the task; *any* orbit of size greater than one blocks it, because invariance collapses that orbit to a single value while injectivity demands the opposite. The dividing line is drawn with no slack.
 
 ---
 
-## 9. No Equivariant Section
+## 5. Theorem C: The Regular Action and the Quintic
 
-**Theorem 9.1 (No Equivariant Orbit Section).** *Let G act freely and transitively on X, with G nontrivial and X nonempty. Then there is no function s : X → X satisfying all of:*
-1. *s selects orbit representatives: for each x, there exists g with g • s(x) = x.*
-2. *s is orbit-constant: if x and y are in the same orbit, then s(x) = s(y).*
-3. *s is equivariant: s(g • x) = g • s(x) for all g, x.*
+Every group $G$ acts on itself by left multiplication, $g \cdot x = gx$; this is the **left-regular action**.
 
-*Proof.* Since the action is transitive, conditions (1) and (2) force s to be constant: s(x) = c for all x. But then condition (3) gives c = g • c for all g, contradicting freeness. □
+**Lemma 5.1.** The left-regular action of any group $G$ on itself is free.
 
-### Remark 9.2 (The Abstract Form of Classical Impossibilities)
-This theorem is the abstract skeleton of every classical impossibility:
-- **Quintic:** s would be "choose a root," equivariance under the Galois group would mean the choice respects relabeling, orbit-constancy means equivalent polynomials get the same root.
-- **Arrow:** s would be "choose a winner," equivariance means the choice respects candidate relabeling.
-- **Angle trisection:** s would be "choose a trisection point," equivariance means respecting the constructible field extension structure.
+*Proof.* Suppose $g \cdot x = x$, i.e. $gx = x$. Since $x = 1 \cdot x$ as well, we have $gx = 1 \cdot x = x$; right-cancellation of $x$ (valid in a group) yields $g = 1$. $\qquad\blacksquare$
 
----
+**Theorem C (Regular-action impossibility).** If $G$ is a non-trivial group (i.e. $|G| > 1$) acting on itself by left multiplication, then the symmetric distinguishing task is impossible: there is no invariant injective function $f : G \to Y$ for any $Y$.
 
-## 10. Instantiation: Cyclic Groups
+*Proof.* Suppose, for contradiction, that an invariant injective $f : G \to Y$ exists. By Theorem B the action must be trivial: $g \cdot x = x$ for all $g, x \in G$. Taking $x = 1$ gives $g \cdot 1 = g \cdot 1 = g = 1$ for every $g \in G$, so $G$ is trivial — contradicting $|G| > 1$. Hence no such $f$ exists. $\qquad\blacksquare$
 
-**Theorem 10.1.** *For n ≥ 2, the additive action of Z/nZ on itself is free: if g ≠ 0 and x ∈ Z/nZ, then g + x ≠ x.*
+By Lemma 5.1 the obstructing action here is not merely non-trivial but *free*, so Theorem C exhibits the impossibility in its sharpest form: every orbit is a faithful copy of the whole group.
 
-This is the simplest nontrivial instance, showing the impossibility phenomenon requires no exotic algebra.
+### 5.1 The bridge to the unsolvability of the quintic
 
----
+Specialize $G = S_5$, the symmetric group on five letters, with $|S_5| = 120 > 1$.
 
-## 11. Discussion
+**Corollary 5.2.** For the left-regular action of $S_5$ on itself, no invariant injective function exists: no rule that respects relabeling can pick out the elements of $S_5$.
 
-### 11.1 Connections to Classical Results
+This is the group-theoretic shadow of the Abel–Ruffini theorem. Recall the shape of that classical result: the general quintic $x^5 + a_4 x^4 + \cdots + a_0 = 0$ cannot be solved by radicals — by any formula in the coefficients using field operations and $n$th roots — because the Galois group of the generic quintic is $S_5$, whose derived series does not terminate at the identity (equivalently, its simple non-abelian composition factor $A_5$ is not solvable). A radical formula for the roots would constitute, in structural terms, an *equivariant selector* for the action of the Galois group on the roots: a way of naming roots that respects the permutation symmetry yet distinguishes them. That is precisely a symmetric rule that breaks the symmetry — the forbidden combination of Theorem B. The very freeness of the symmetric group's action, which our development makes explicit, is the same rigidity that prevents the roots from being organized by a symmetric radical formula.
 
-The framework connects to classical impossibility theorems as follows:
-
-| Classical Result | Group G | Space X | Task |
-|---|---|---|---|
-| Quintic unsolvability | A₅ (or S₅) | Roots of quintic | Choose a root by radicals |
-| Angle trisection | Z/3Z | Constructible points | Trisect via compass-straightedge |
-| Squaring the circle | Gal(Q(π)/Q) | Constructible numbers | Construct √π |
-| Arrow's theorem | S_n | Preference profiles | Choose fair aggregation |
-| Borsuk-Ulam | Z/2Z | S^n | Map to ℝ^n without antipodal agreement |
-
-### 11.2 The Impossibility Spectrum as Invariant
-
-The impossibility spectrum is, to our knowledge, a novel invariant. It captures the *depth* of an impossibility — how much symmetry is needed to create the obstruction. An action with a large spectrum (many subgroups witness impossibility) is "deeply impossible," while one with a small spectrum is "shallowly impossible." This distinction is invisible to binary possible/impossible classifications.
-
-### 11.3 Limitations
-
-Our framework captures impossibilities arising from equivariant selection on free actions. Not all impossibilities fit this pattern:
-- **Halting problem:** This is a diagonalization argument, not obviously a group-action obstruction.
-- **Gödel's incompleteness:** This involves self-reference, not symmetry.
-- **P ≠ NP (conjectured):** The symmetry structure, if any, is unclear.
-
-Understanding which impossibilities are "equivariant" and which are "diagonal" is an open question.
+We emphasize the logical status: Corollary 5.2 does not *reprove* Abel–Ruffini (which requires the solvability theory of $S_5$ and Galois correspondence). Rather, it exhibits the shared skeleton — "no symmetric rule breaks a symmetric structure" — of which unsolvability by radicals is a decorated instance.
 
 ---
 
-## 12. Algorithms
+## 6. The Frontier: Why "Impossible $\iff$ Free" Is False
 
-### Algorithm 12.1: Impossibility Detector
-Given a group G and an action on X:
-1. Check if the action is free (all stabilizers trivial).
-2. If free, check if G is nontrivial.
-3. If both, declare: "No equivariant constant map exists."
-4. Compute the impossibility spectrum by testing subgroups.
+It is tempting to promote Corollary 4.1 to a biconditional and declare the task impossible *if and only if* the action is free. This is **false**, and identifying the error is itself instructive.
 
-### Algorithm 12.2: Spectrum Computation
-For a finite group G acting on a finite set X:
-1. Enumerate all subgroups H of G.
-2. For each H, compute X^H (fixed points of H).
-3. Include H in spectrum if H ≠ {1} and X^H = ∅.
-4. Return spectrum and its minimal elements.
+Consider a rotation action of the cyclic group $C_n$ ($n \ge 2$) on the plane $\mathbb{R}^2$, rotating about the origin. This action:
 
----
+- is **non-trivial** (non-identity rotations move most points), so by Corollary 4.1 the symmetric distinguishing task is **impossible**;
+- is **not free** (the origin is fixed by every rotation, so a non-identity element fixes a point).
 
-## 13. Future Work
+Thus we have an impossible task arising from a non-free action. Freeness is therefore *sufficient but not necessary* for impossibility. The precise frontier is **non-triviality**: the task fails the instant one point is genuinely moved, whether or not other points sit still.
 
-1. **Spectral Gap Conjecture:** Do there exist actions with "gaps" in the spectrum — nontrivial subgroups with fixed points, sandwiched between subgroups without?
+What, then, does freeness contribute? By Theorem A it upgrades the obstruction from *local* to *uniform*. In a non-free but non-trivial action, some orbits may be singletons (fixed points) while others are large; the difficulty is uneven. In a free action there are no fixed points anywhere and every orbit is a full copy of $G$ — the obstruction is homogeneous across the entire space. This is why free actions, and the left-regular action in particular, furnish the cleanest and most quotable impossibilities, even though they are not the whole story.
 
-2. **Categorical Generalization:** The transfer principle suggests a functorial treatment. Define a category whose objects are "impossibility contexts" (group actions) and whose morphisms are surjective homomorphisms. Impossibility is a functor from this category to the category of propositions.
+We record the corrected hierarchy:
 
-3. **Quantitative Impossibility:** Define a measure of "how impossible" a task is, perhaps using the minimal index [G : H] for H in the spectrum.
+$$
+\underbrace{\text{trivial}}_{\text{task solvable}} \;\subsetneq\; \underbrace{\text{non-trivial}}_{\text{task impossible}} \;\supsetneq\; \underbrace{\text{free non-trivial}}_{\text{sharpest obstruction}}.
+$$
 
-4. **Connection to Computability:** Can halting-problem-style impossibilities be recast as group-action obstructions in a suitable algebraic framework?
+The middle region — non-trivial actions that are not free — is where a *quantitative* refinement lives, measuring how much distinguishability survives; this is the subject of Section 8.
 
 ---
 
-## References
+## 7. Algorithmic Perspective
 
-1. Abel, N.H. (1824). "Mémoire sur les équations algébriques."
-2. Arrow, K.J. (1951). *Social Choice and Individual Values.*
-3. Borsuk, K. (1933). "Drei Sätze über die n-dimensionale euklidische Sphäre."
-4. Lindemann, F. (1882). "Über die Zahl π."
-5. Wantzel, P. (1837). "Recherches sur les moyens de reconnaître si un problème de Géométrie peut se résoudre avec la règle et le compas."
+Although the theorems are about arbitrary (possibly infinite) sets, their content is entirely constructive for finite groups and sets, yielding decision procedures.
+
+**Deciding freeness.** By Definition 2.2, freeness is decided by checking, for every $x \in X$ and every $g \in G$ with $g \ne 1$, whether $g \cdot x = x$; the action is free iff no such fixed pair exists. This is $O(|G|\,|X|)$ group-action evaluations. By Theorem A one may equivalently verify injectivity of each orbit map $\mathrm{orb}_x$.
+
+**Deciding solvability.** By Theorem B, the symmetric distinguishing task is solvable iff the action is trivial, decided by checking $g \cdot x = x$ for all $(g, x)$ — again $O(|G|\,|X|)$.
+
+**Constructing the maximal invariant distinguisher.** When the task is unsolvable, the best one can do is separate *orbits* rather than points. The orbit projection $\pi : X \to X/G$ is the universal invariant function: every invariant $f$ factors uniquely as $f = \bar f \circ \pi$. Computing $X/G$ (e.g. by a union–find over the relation $x \sim g\cdot x$) produces the finest invariant partition and quantifies exactly how far the task falls short — the number of surviving classes is $|X/G|$, versus the $|X|$ that full distinguishing would require.
+
+---
+
+## 8. Applications and Interpretations
+
+**Canonical forms.** A "canonical form" for objects up to a symmetry is exactly an invariant injective map from objects to representatives. Theorem B explains why canonical forms that are simultaneously *symmetry-respecting* and *complete* cannot exist for genuinely symmetric families; practical canonical forms succeed only by *breaking* the symmetry with an arbitrary choice (a total order on variables, a chosen basepoint), which is precisely a non-invariant rule.
+
+**Voting and social choice.** Arrow-type impossibilities can be read through this lens: the symmetric group permuting alternatives (or, in variants, voters) acts on the space of preference profiles, and an aggregation rule that is neutral (invariant under relabeling alternatives) while also decisive in a point-separating sense confronts the same tension between respecting and breaking symmetry.
+
+**Physics and phase space.** Symmetries acting freely on a configuration space obstruct globally-defined, symmetry-respecting coordinates — a viewpoint resonant with the non-existence of certain global sections and with the necessity of gauge fixing (a deliberate symmetry break) in physical theories.
+
+In each case the diagnostic is the same: identify the symmetry group and its action, ask whether a solution would be an invariant injective selector, and invoke Theorem B.
+
+---
+
+## 9. Discussion
+
+The Symmetry Principle reframes a scattered catalogue of impossibilities as instances of one algebraic fact. Its worth is methodological: it converts "is this impossible?" into "is the symmetry genuine, and would a solution respect it?" — a question that can often be answered before any domain-specific machinery is deployed. At the same time, the principle is honest about its limits. It does not subsume the transcendence of $\pi$ or the solvability theory of $A_5$; those results supply the *reason a given action is genuine* in their respective settings. The principle organizes the conclusions, not the deep inputs.
+
+The most important conceptual correction delivered here is the precise location of the frontier. The folklore identification of impossibility with freeness overshoots; non-triviality is the true boundary, with freeness marking the extreme. Stating this exactly — and exhibiting a concrete non-free yet impossible action — is what elevates the slogan to a theorem.
+
+---
+
+## 10. Future Directions
+
+**The quotient dichotomy for partial distinguishers.** We conjecture that the maximal number of points an invariant function can separate equals the number of orbits: the poset of invariant functions on $X$ is canonically isomorphic to the poset of functions on the orbit space $X/G$, and every invariant function factors uniquely through the orbit projection. The insight is that invariance is a *change of base* — every symmetric observable is a function on the quotient — so the failure of full separation is exactly the non-injectivity of the quotient map, measured by orbit sizes. This refines the two endpoints proved here (trivial = full separation, non-trivial = no full separation) into a quantitative middle theory.
+
+**Freeness as the unique universal obstruction.** We conjecture that among non-trivial actions of a fixed group $G$, the free actions are exactly those for which every orbit map is an embedding of $G$; consequently a free action is terminal among actions admitting no invariant distinguisher, and any action with a fixed point is strictly weaker as an obstruction. This would rank actions by obstruction strength, filling in the ordering between "trivial" and "free."
+
+**A Galois bridge.** We conjecture that for a separable polynomial whose Galois group acts freely and transitively on a distinguished set of root-data, no radical tower can produce a selector equivariant for that action; hence unsolvability by radicals becomes a corollary of freeness of the Galois action on the relevant fiber. A radical formula is exactly an equivariant selector, so its non-existence is an instance of the general principle rather than a phenomenon special to degree five.
+
+---
+
+## 11. Conclusion
+
+We have proven that a symmetric distinguishing task — an invariant injective function on a group-acted set — is solvable if and only if the action is trivial, characterized free actions by injectivity of their orbit maps, and derived a uniform impossibility for the left-regular action of any non-trivial group. The symmetric group $S_5$ furnishes the flagship instance, connecting the abstract principle to the classical unsolvability of the quintic. Along the way we corrected the seductive but false slogan "impossible iff free," locating the true frontier at non-triviality with freeness as its sharpest case. In this precise sense, a broad swath of impossibility is a single impossibility: *no symmetric rule can break a symmetric structure.*
