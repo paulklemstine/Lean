@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "e783dab6",
+    "consumed_by_exp_id": "8636a701",
     "description": "The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the j-function is just the TIP of the iceberg. Conjecture: The full moonshine correspondence associates to each conjugacy class g in M a McKay-Thompson series T_g(q) = sum a_n(g) q^n that is a modular function of a specific level, and the product over all g in M of T_g(q) equals a modular form of weight |M|/24 that encodes the complete character table of M. The secret message: the Monster group IS a modular form, and every property of M (its order, its character table, its maximal subgroups) can be read off from the q-expansion of this product. Test: compute the first 100 coefficients of T_g(q) for each conjugacy class of M and verify they match the known character values. Prove that the product of all T_g(q) converges to a modular form. Impact: the Monster is not just connected to modular forms \u2014 it IS a modular form. The 194 conjugacy classes of M correspond to 194 modular forms, and their product encodes everything.",
     "domains": [
       "Novelty",
@@ -16,21 +16,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-07T23:49:58.048338+00:00",
     "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
-  },
-  {
-    "consumed_by_exp_id": "a8488433",
-    "description": "Suppose we had an oracle that computes L(s, chi) for any L-function and any complex s in O(1) time. What theorems would follow? Conjecture: The L-function oracle implies (1) The Riemann Hypothesis (compute zeros directly), (2) The BSD conjecture (compute the order of vanishing at s=1), (3) The Sato-Tate conjecture (compute the distribution of a_p), (4) Langlands functoriality (compare L-functions on both sides of the functoriality lift), and (5) A polynomial-time algorithm for factoring (the L-function of an elliptic curve E over Z/nZ detects factors of n). But the oracle also implies IMPOSSIBILITY results: (6) P != NP (because NP-complete problems would reduce to L-function computations that the oracle solves in O(1), contradicting the time hierarchy theorem if P = NP). Wait \u2014 the oracle solves L-function computations in O(1), so if P = NP, then NP problems can be encoded as L-function computations and solved instantly, but the oracle's existence is an axiom, not a theorem. The correct statement: the L-function oracle collapses the polynomial hierarchy to L-function computations. Test: prove that the Riemann Hypothesis follows from the oracle. Prove that BSD follows. Prove that factoring is in P given the oracle. Impact: understanding what an L-function oracle implies tells us exactly how powerful L-functions are \u2014 and how far we are from proving things about them.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0581",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T20:47:00.132224+00:00",
-    "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
   },
   {
     "consumed_by_exp_id": "",
@@ -48,7 +33,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
   },
   {
-    "consumed_by_exp_id": "cecc1d95",
+    "consumed_by_exp_id": "",
     "description": "The shadowing lemma says that near an approximate orbit of a chaotic system, there exists a true orbit. In other words, every 'almost correct' trajectory of a chaotic map has a 'truly correct' trajectory nearby. This means that numerical errors in chaotic simulations are not bugs \u2014 they are SHADOWS of real trajectories. Conjecture: Every program that computes a chaotic map f: R^n -> R^n has the property that its floating-point output is shadowed by a true orbit of f. More precisely, for every epsilon > 0, there exists delta > 0 such that if x_0, x_1, ..., x_N is a delta-pseudo-orbit (|x_{n+1} - f(x_n)| < delta for all n), then there exists a true orbit y_0, y_1, ..., y_N with |x_n - y_n| < epsilon for all n. The shadowing time N(epsilon, delta) grows at most polynomially in 1/delta for hyperbolic maps. Test: implement the logistic map f(x) = 4x(1-x) in floating-point and compute 10^6 iterations. For each floating-point orbit, use binary search to find the shadowing true orbit. Verify that the shadowing distance is at most 10^{-10} for floating-point precision 10^{-16}. Impact: numerical chaos is not error \u2014 it is a computable shadow of mathematical truth. Your computer's rounding errors are tracing out REAL orbits of the chaotic system.",
     "domains": [
       "Novelty",
@@ -58,7 +43,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T23:49:57.915548+00:00",
     "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
   },
@@ -983,7 +968,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of a D_18 tuple with size 6 outside the exceptional case"
   },
   {
-    "consumed_by_exp_id": "172d1a6c",
+    "consumed_by_exp_id": "",
     "description": "For any prime r, any real x with 1 \u2264 x \u2264 r^{0.49}, and any real q in [0,1], the average over all Dirichlet characters modulo r of the 2q\u2011th power of the absolute value of the short character sum satisfies (1/(r\u22121))\u2211_\u03c7 |\u2211_{n\u2264x} \u03c7(n)|^{2q} \u2265 (1/2) x^{q}.",
     "domains": [
       "Pythagorean"
@@ -992,7 +977,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01184v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T21:39:43.438987+00:00",
     "title": "Conjecture on sharp lower bounds for low moments of Dirichlet character sums"
   },
@@ -1187,7 +1172,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing the generalized honeymoon Oberwolfach problem in Lean 4"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "64e0cde9",
     "description": "For all m \u2265 1, the refined generating function for intervals in the greedy m-Tamari poset, tracking both the number of elements and the number of leaves (peaks in the corresponding Dyck paths), is equal to the refined generating function for planar (m+1)-constellations tracking the same statistics. This extends the combinatorial proof for m=1 to all m \u2265 1.",
     "domains": [
       "Algebra",
@@ -1197,7 +1182,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01206v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:55:26.518816+00:00",
     "title": "Refined Bijective Enumeration of Greedy Tamari Intervals and Planar (m+1)-Constellations"
   },
@@ -1986,7 +1971,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Positive Anti-Wick Obstruction Confirmation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eaf24e75",
     "description": "We conjecture that apart from integer scalar multiples of products of cyclotomic polynomials (which give rational multiples of \u03c4 for all root arguments), the only integer palindrome of degree\u202f4 whose four zeros all lie on the unit circle but are not all cyclotomic is, up to an integer factor, the polynomial 62826 = 2\u00b7\u03a6\u2083(x)\u00b7(3x\u00b2\u22122x+3). Consequently any such unit palindrome of degree\u202f4 must be associate either to a cyclotomic product or to 2\u00b7\u03a6\u2083(x)\u00b7(3x\u00b2\u22122x+3).",
     "domains": [
       "Pythagorean"
@@ -1995,7 +1980,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29669v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T06:17:55.891614+00:00",
     "title": "Unique exceptional integer palindromes of degree\u202f4 with unit roots"
   },
@@ -2891,7 +2876,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Constant residue of labeled poset counts modulo 4"
   },
   {
-    "consumed_by_exp_id": "c3f8fa30",
+    "consumed_by_exp_id": "",
     "description": "If a polynomial f(X)=X^r B(X^{q-1}) over F_{q^2} with at most five terms and coefficients in {\u00b11} (except possibly one) permutes the field, then there must exist an integer m\u22653 dividing q^2-1 with m\u2208{3,4,6} and (Q,R,S)\u2261\u00b1(1,1,1) or \u00b1(1,1,-1) (mod m), and the associated gcd conditions on r and q\u00b11 must hold. Moreover, the only possible values of b are 0,\u00b11, which forces m\u2208{3,4,6}.",
     "domains": [
       "Pythagorean",
@@ -2901,7 +2886,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31262v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T19:55:25.577339+00:00",
     "title": "Conjecture on necessary congruence conditions for permutation pentanomials"
   },
@@ -3052,7 +3037,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the n/2\u202f+\u202f1/3 exponent for the finite\u2011field Erd\u0151s\u2013Falconer distance problem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "998dff91",
     "description": "Conjecture that for every integer k \u2265 1 there exists a plane triangulation G on n = 5k + r vertices (r \u2208 {0,1,2,3,4}) such that the maximum size of a P3-packing \u03bb_{P3}(G) equals floor(n/5). This would imply the lower bound \u03bb_{P3}(G) \u2265 floor(n/5) proved in the paper is tight for arbitrarily large triangulations.",
     "domains": [
       "Pythagorean"
@@ -3061,7 +3046,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T04:14:42.891046+00:00",
     "title": "Tightness Conjecture for P3-Packings in Plane Triangulations"
   },
@@ -4233,7 +4218,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit Upper Bound on the Riemann Zeta Function on the 1-Line via Smoothing"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "59da6bf9",
     "description": "For any prime p, the Markov chain on \u2115 defined by the Klagsbrun-Mazur-Rubin twist process for p-Selmer ranks of even-dimensional Galois modules satisfying the KMR technical conditions is irreducible, aperiodic, and positive recurrent. Its unique stationary distribution \u03c0 assigns strictly positive probability to every rank r \u2208 \u2115, and the distribution of p-Selmer ranks in the twist family ordered by the product of ramified primes converges to \u03c0.",
     "domains": [
       "Algebra",
@@ -4243,7 +4228,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T03:42:58.157244+00:00",
     "title": "KMR Markov chain convergence and positivity of p-Selmer rank stationary distribution"
   },
@@ -5135,7 +5120,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact enumeration of arithmetic Schur-type triples in the Boolean lattice"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "068b28b7",
     "description": "For every fixed graph H that contains at least one edge, the decision problem Chromatic Sum remains NP\u2011complete when restricted to H\u2011free graphs (i.e., graphs that do not contain H as a subgraph). This conjecture is falsifiable because a single counterexample\u2014a graph class H\u2011free for which Chromatic Sum is polynomial\u2011time solvable\u2014 would refute it.",
     "domains": [
       "Pythagorean"
@@ -5144,7 +5129,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00263v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T08:29:25.578468+00:00",
     "title": "Chromatic Sum is NP-complete on H\u2011free graphs for any fixed graph H with at least one edge"
   },
@@ -7052,7 +7037,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Uniqueness of the 2-(496, 4, 1) Flag-Transitive Linear Space with Socle PSL(2, 32)"
   },
   {
-    "consumed_by_exp_id": "bb78c214",
+    "consumed_by_exp_id": "c3075cb5",
     "description": "Ramanujan's constant e^{pi*sqrt(163)} is remarkably close to an integer: it equals 262537412640768743.99999999999925... \u2014 just 7.5 * 10^{-13} away from 262537412640768744. This is not a coincidence: 163 is the largest Heegner number, and the near-integer property follows from the j-function and the fact that Q(sqrt(-163)) has class number 1. But 163 appears EVERYWHERE: it is prime, it is the smallest p such that Q(sqrt(-p)) has class number 1 and p > 2, it is a Chen prime, a lucky prime, a strongly prime, and the 38th prime. Conjecture: 163 is the unique integer n such that e^{pi*sqrt(n)} is within 10^{-6} of an integer. More generally, the Heegner numbers (1, 2, 3, 7, 11, 19, 43, 67, 163) are exactly the n for which Q(sqrt(-n)) has class number 1, and e^{pi*sqrt(n)} is near-integer for each. The 'magic' of 163 is that it is the LAST Heegner number \u2014 the final class number 1 imaginary quadratic field. Test: prove that e^{pi*sqrt(n)} is within 10^{-6} of an integer only for Heegner numbers. Compute e^{pi*sqrt(67)} and e^{pi*sqrt(43)} and verify near-integer behavior. Prove that 163 is the largest Heegner number (Stark-Heegner theorem). Impact: 163 is not magic \u2014 it is the climax of a deep theorem in algebraic number theory. The near-integer property of e^{pi*sqrt(163)} is the shadow of the class number 1 condition.",
     "domains": [
       "Novelty",
@@ -7168,12 +7153,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Characterizes when equality holds in the FKG inequality on the Boolean lattice 2^{[n]}: for a strictly positive log-supermodular measure \u03bc and increasing functions f, g, equality E_\u03bc[fg] = E_\u03bc[f]\u00b7E_\u03bc[g] holds if and only if [n] admits a nontrivial partition [n] = A \u2294 B such that \u03bc is a product measure over 2^A \u00d7 2^B, f depends only on coordinates in A, and g depends only on coordinates in B. This is a concrete instance of the paper's main Theorem 1.2 (FKG equality conditions) specialized to Boolean lattices.",
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_0603",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06275v1",
+    "status": "available",
+    "timestamp": "2026-07-08T04:26:40.602811+00:00",
+    "title": "FKG Equality Characterization on Boolean Lattices"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any finite metric space X of strictly negative type there exists exactly one signed measure \u03bc of total mass 1 that minimizes the energy functional E(\u03bc)=\u2211_{x,y\u2208X}d(x,y)\u03bc(x)\u03bc(y); moreover \u03bc can be characterized as the unique optimizer of this strictly convex quadratic program.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0603",
+    "id": "fd_0604",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05349v1",
@@ -7187,7 +7187,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0604",
+    "id": "fd_0605",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05305v1",
@@ -7201,7 +7201,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0605",
+    "id": "fd_0606",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05324v1",
@@ -7215,7 +7215,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0606",
+    "id": "fd_0607",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06443v1",
@@ -7230,13 +7230,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0607",
+    "id": "fd_0608",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06396v1",
     "status": "available",
     "timestamp": "2026-07-08T03:53:42.083077+00:00",
     "title": "Bridgeless Sylvester S\u2081\u2080-Coloring Improvement Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The theta series of any even positive definite unimodular lattice of rank 8 equals the Eisenstein series E\u2084. Concretely, for every positive integer n, the number of vectors of norm n in such a lattice equals 240\u00b7\u03c3\u2083(n), where \u03c3\u2083(n) = \u03a3_{d|n} d\u00b3. This is the foundational special case of the classical Siegel-Weil formula, connecting the theta series of a lattice to an Eisenstein series, and reduces to verifying that the Fourier coefficients of \u03b8_L coincide with those of E\u2084.",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "fd_0609",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06285v1",
+    "status": "available",
+    "timestamp": "2026-07-08T04:27:04.932052+00:00",
+    "title": "Siegel-Weil Identity for the E\u2088 Lattice Theta Series"
   },
   {
     "consumed_by_exp_id": "d9ca63e8",
@@ -7269,7 +7283,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
   },
   {
-    "consumed_by_exp_id": "4e3da0be",
+    "consumed_by_exp_id": "",
     "description": "The Moebius band M is obtained from [0,1] x R by identifying (0, y) ~ (1, -y). Define arithmetic on M: a point (x, y) on M represents the number y * (2x - 1) where x in [0,1] gives the sign and magnitude, and y gives the scale. This creates a number system where going around the band flips the sign. Define the Moebius integers Z_M as the image of Z in M under the embedding n -> (1/2 + 1/(2n), |n|). Then 1 and -1 are identified at the twist point (1, 1) = (0, -1), making Z_M a one-point compactification of Z with a single infinity. Conjecture: Z_M is a ring under the induced operations from R x R / ~, but it is NOT an integral domain because (1, 0) * (0, 1) = (0, 0) but neither factor is zero in Z_M. The prime factorization in Z_M has a unique 'twist prime' that encodes orientation, and every non-zero Moebius integer has a factorization of the form \u00b1p_1^{a_1} * ... * p_k^{a_k} where the overall sign is the twist. Test: factor the Moebius integers 6, -6, and 0 in Z_M. Verify that 6 = 2_+ * 3_+ and -6 = 2_- * 3_- = 2_+ * 3_+ * (-1) where -1 is the twist prime. Impact: arithmetic on a non-orientable surface creates a number system where orientation IS a prime \u2014 a number-theoretic analog of spin in physics.",
     "domains": [
       "Novelty",
@@ -7279,7 +7293,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.76,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T20:47:00.188304+00:00",
     "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
   },
