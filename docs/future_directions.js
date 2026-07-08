@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "e79614eb",
+    "consumed_by_exp_id": "f338d77a",
     "description": "The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the j-function is just the TIP of the iceberg. Conjecture: The full moonshine correspondence associates to each conjugacy class g in M a McKay-Thompson series T_g(q) = sum a_n(g) q^n that is a modular function of a specific level, and the product over all g in M of T_g(q) equals a modular form of weight |M|/24 that encodes the complete character table of M. The secret message: the Monster group IS a modular form, and every property of M (its order, its character table, its maximal subgroups) can be read off from the q-expansion of this product. Test: compute the first 100 coefficients of T_g(q) for each conjugacy class of M and verify they match the known character values. Prove that the product of all T_g(q) converges to a modular form. Impact: the Monster is not just connected to modular forms \u2014 it IS a modular form. The 194 conjugacy classes of M correspond to 194 modular forms, and their product encodes everything.",
     "domains": [
       "Novelty",
@@ -6028,7 +6028,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Full part-count spectrum of the Sylow 2-permutation character of S_n"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a5372f60",
     "description": "The cyclotomic matrix $A_k(\\chi) = [G_N(\\chi^{ki+kj})]$ involving Gauss sums over $\\mathbb{Z}/N\\mathbb{Z}$ (where $N=p^m$ and $n=\\varphi(N)/k$) can be decomposed as the matrix product $W D W^T$, where $W$ is the $n \\times n$ discrete Fourier transform matrix with entries $W_{i,a} = \\omega^{ai}$ ($\\omega$ being a primitive $n$-th root of unity) and $D$ is the diagonal matrix of the $n$ Gauss periods $\\eta_a$ corresponding to the $k$-th power residue cyclotomic cosets.",
     "domains": [
       "Bridges"
@@ -6037,7 +6037,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02392v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T22:55:43.909167+00:00",
     "title": "Factorization of Cyclotomic Gauss Sum Matrix"
   },
@@ -7037,7 +7037,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Uniqueness of the 2-(496, 4, 1) Flag-Transitive Linear Space with Socle PSL(2, 32)"
   },
   {
-    "consumed_by_exp_id": "4e744da1",
+    "consumed_by_exp_id": "",
     "description": "Ramanujan's constant e^{pi*sqrt(163)} is remarkably close to an integer: it equals 262537412640768743.99999999999925... \u2014 just 7.5 * 10^{-13} away from 262537412640768744. This is not a coincidence: 163 is the largest Heegner number, and the near-integer property follows from the j-function and the fact that Q(sqrt(-163)) has class number 1. But 163 appears EVERYWHERE: it is prime, it is the smallest p such that Q(sqrt(-p)) has class number 1 and p > 2, it is a Chen prime, a lucky prime, a strongly prime, and the 38th prime. Conjecture: 163 is the unique integer n such that e^{pi*sqrt(n)} is within 10^{-6} of an integer. More generally, the Heegner numbers (1, 2, 3, 7, 11, 19, 43, 67, 163) are exactly the n for which Q(sqrt(-n)) has class number 1, and e^{pi*sqrt(n)} is near-integer for each. The 'magic' of 163 is that it is the LAST Heegner number \u2014 the final class number 1 imaginary quadratic field. Test: prove that e^{pi*sqrt(n)} is within 10^{-6} of an integer only for Heegner numbers. Compute e^{pi*sqrt(67)} and e^{pi*sqrt(43)} and verify near-integer behavior. Prove that 163 is the largest Heegner number (Stark-Heegner theorem). Impact: 163 is not magic \u2014 it is the climax of a deep theorem in algebraic number theory. The near-integer property of e^{pi*sqrt(163)} is the shadow of the class number 1 condition.",
     "domains": [
       "Novelty",
@@ -7047,7 +7047,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T23:49:57.790919+00:00",
     "title": "The Unreasonable Effectiveness of the Number 163"
   },
@@ -7354,12 +7354,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Conjecture that for any finite metric space X of strictly negative type there exists exactly one signed measure \u03bc of total mass 1 that minimizes the energy functional E(\u03bc)=\u2211_{x,y\u2208X}d(x,y)\u03bc(x)\u03bc(y); moreover \u03bc can be characterized as the unique optimizer of this strictly convex quadratic program.",
+    "description": "We conjecture that for the critical case \u03b5=1/2, the maximal anti-Ramsey function for P_4 admits an exact quadratic lower bound with a computable constant. Specifically, we propose that \u03c7_S(n, (n choose 2) - \u230an^{3/2}\u230b, P_4) > (1/8 - o(1))\u00b7n\u00b2 as n \u2192 \u221e, where the constant 1/8 arises from the induced matching structure in graphs with minimum degree (1/2 + o(1))n. This conjecture addresses the sharpness of the phase transition at \u03b5=1/2 and would require establishing both the lower bound and matching upper bound to determine the exact asymptotic behavior.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
     "id": "fd_0617",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05896v1",
+    "status": "available",
+    "timestamp": "2026-07-08T12:06:46.795943+00:00",
+    "title": "Sharp Threshold and Exact Constant for P_4 Anti-Ramsey Number at \u03b5=1/2"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any finite metric space X of strictly negative type there exists exactly one signed measure \u03bc of total mass 1 that minimizes the energy functional E(\u03bc)=\u2211_{x,y\u2208X}d(x,y)\u03bc(x)\u03bc(y); moreover \u03bc can be characterized as the unique optimizer of this strictly convex quadratic program.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0618",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05349v1",
@@ -7373,7 +7388,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0618",
+    "id": "fd_0619",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05305v1",
@@ -7387,7 +7402,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0619",
+    "id": "fd_0620",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05324v1",
@@ -7401,7 +7416,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0620",
+    "id": "fd_0621",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06443v1",
@@ -7416,7 +7431,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0621",
+    "id": "fd_0622",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06396v1",
@@ -7430,7 +7445,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Cryptography"
     ],
-    "id": "fd_0622",
+    "id": "fd_0623",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
@@ -7444,7 +7459,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0623",
+    "id": "fd_0624",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06336v1",
@@ -7458,7 +7473,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0624",
+    "id": "fd_0625",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06351v1",
@@ -7473,7 +7488,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0625",
+    "id": "fd_0626",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06263v1",
@@ -7488,7 +7503,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0626",
+    "id": "fd_0627",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06228v1",
@@ -7503,7 +7518,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0627",
+    "id": "fd_0628",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06198v1",
@@ -7517,7 +7532,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0628",
+    "id": "fd_0629",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06181v1",
@@ -7532,7 +7547,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0629",
+    "id": "fd_0630",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06082v1",
@@ -7547,7 +7562,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_0630",
+    "id": "fd_0631",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06022v1",
@@ -7561,7 +7576,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0631",
+    "id": "fd_0632",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06073v1",
@@ -7575,7 +7590,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0632",
+    "id": "fd_0633",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06061v1",
@@ -7590,7 +7605,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0633",
+    "id": "fd_0634",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05926v1",
@@ -7604,7 +7619,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0634",
+    "id": "fd_0635",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05961v1",
@@ -7619,7 +7634,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0635",
+    "id": "fd_0636",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05835v1",
@@ -7628,7 +7643,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hirzebruch\u2013Riemann\u2013Roch Identity for the Integral Tangent Class of Matroids"
   },
   {
-    "consumed_by_exp_id": "d51a45d4",
+    "consumed_by_exp_id": "",
+    "description": "For any subset A \u2286 [N] containing no harmonic triple (distinct a, b, c \u2208 A with 2/a = 1/b + 1/c), the density |A|/N \u2192 0 as N \u2192 \u221e. Formally: \u2200 \u03b5 > 0, \u2203 N\u2080, \u2200 N \u2265 N\u2080, every A \u2286 {1,...,N} with no harmonic triple satisfies |A| \u2264 \u03b5\u00b7N. This is the reciprocal analogue of Roth's theorem on 3-AP-free sets, posed as Question 1 in the paper. The paper's construction yields sets of size \u226b N\u00b7exp(\u2212C\u221a(log log N)), so a positive resolution would need new upper-bound techniques beyond Roth-type methods, since the reciprocal map x \u21a6 1/x is not additive.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0637",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05823v1",
+    "status": "available",
+    "timestamp": "2026-07-08T12:07:42.791954+00:00",
+    "title": "Reciprocal Roth Conjecture: Harmonic-Triple-Free Sets Have Density Zero"
+  },
+  {
+    "consumed_by_exp_id": "08563491",
     "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
     "domains": [
       "Novelty",
