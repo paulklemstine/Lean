@@ -42,7 +42,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "4b7d8ef3",
+    "consumed_by_exp_id": "b95f7c2a",
     "description": "The shadowing lemma says that near an approximate orbit of a chaotic system, there exists a true orbit. In other words, every 'almost correct' trajectory of a chaotic map has a 'truly correct' trajectory nearby. This means that numerical errors in chaotic simulations are not bugs — they are SHADOWS of real trajectories. Conjecture: Every program that computes a chaotic map f: R^n -> R^n has the property that its floating-point output is shadowed by a true orbit of f. More precisely, for every epsilon > 0, there exists delta > 0 such that if x_0, x_1, ..., x_N is a delta-pseudo-orbit (|x_{n+1} - f(x_n)| < delta for all n), then there exists a true orbit y_0, y_1, ..., y_N with |x_n - y_n| < epsilon for all n. The shadowing time N(epsilon, delta) grows at most polynomially in 1/delta for hyperbolic maps. Test: implement the logistic map f(x) = 4x(1-x) in floating-point and compute 10^6 iterations. For each floating-point orbit, use binary search to find the shadowing true orbit. Verify that the shadowing distance is at most 10^{-10} for floating-point precision 10^{-16}. Impact: numerical chaos is not error — it is a computable shadow of mathematical truth. Your computer's rounding errors are tracing out REAL orbits of the chaotic system.",
     "domain_bridges": [],
     "domains": [
@@ -5185,7 +5185,7 @@
       "Seymour 1995",
       "Even et al. 1995"
     ],
-    "consumed_by_exp_id": "e083ac41",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that a tournament T is cycle Mengerian (CM) if and only if it is cycle ideal (CI), i.e., for every non‑negative integral weight function w on its arcs the minimum weight of a feedback arc set equals the weight of a minimum‑weight feedback arc set in its linear programming relaxation.",
     "domain_bridges": [
       "LP duality",
@@ -5203,7 +5203,7 @@
     "proof_strategy": "Prove both directions: (1) Show that any CM tournament satisfies CI by using the equality ν_w^* = ν_w and the known relation between τ_w^* and ν_w^*; (2) Show that any CI tournament satisfies CM by constructing appropriate weight functions that force ν_w^* = ν_w, leveraging the structural characterization of CM tournaments.",
     "research_mode": "team",
     "source_exp_id": "2606.31565v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T18:35:10.861567+00:00",
     "title": "CM tournaments are precisely the cycle‑ideal tournaments"
   },
@@ -13107,7 +13107,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4e744da1",
     "description": "Ramanujan's constant e^{pi*sqrt(163)} is remarkably close to an integer: it equals 262537412640768743.99999999999925... — just 7.5 * 10^{-13} away from 262537412640768744. This is not a coincidence: 163 is the largest Heegner number, and the near-integer property follows from the j-function and the fact that Q(sqrt(-163)) has class number 1. But 163 appears EVERYWHERE: it is prime, it is the smallest p such that Q(sqrt(-p)) has class number 1 and p > 2, it is a Chen prime, a lucky prime, a strongly prime, and the 38th prime. Conjecture: 163 is the unique integer n such that e^{pi*sqrt(n)} is within 10^{-6} of an integer. More generally, the Heegner numbers (1, 2, 3, 7, 11, 19, 43, 67, 163) are exactly the n for which Q(sqrt(-n)) has class number 1, and e^{pi*sqrt(n)} is near-integer for each. The 'magic' of 163 is that it is the LAST Heegner number — the final class number 1 imaginary quadratic field. Test: prove that e^{pi*sqrt(n)} is within 10^{-6} of an integer only for Heegner numbers. Compute e^{pi*sqrt(67)} and e^{pi*sqrt(43)} and verify near-integer behavior. Prove that 163 is the largest Heegner number (Stark-Heegner theorem). Impact: 163 is not magic — it is the climax of a deep theorem in algebraic number theory. The near-integer property of e^{pi*sqrt(163)} is the shadow of the class number 1 condition.",
     "domain_bridges": [],
     "domains": [
@@ -13120,7 +13120,7 @@
     "proof_strategy": "State the Stark-Heegner theorem: the imaginary quadratic fields Q(sqrt(-d)) with class number 1 are exactly d = 1, 2, 3, 7, 11, 19, 43, 67, 163. Prove e^{pi*sqrt(d)} is near-integer for each Heegner number: by the j-function expansion, j((1+sqrt(-d))/2) is an algebraic integer, and e^{pi*sqrt(d)} = (j/1728 + ... )^{1/3} * 12. For d = 163, j((1+sqrt(-163))/2) = -640320^3, so e^{pi*sqrt(163)} = 640320^3 + 744 - error. Prove uniqueness: for non-Heegner d, the class number h(-d) >= 2, so j((1+sqrt(-d))/2) has degree h(-d) >= 2 over Q, and e^{pi*sqrt(d)} is not near-integer. Test: compute e^{pi*sqrt(d)} for d = 1,2,3,7,11,19,43,67,163 and verify near-integer behavior. Compute for d = 5,6,10,14 to verify non-near-integer behavior.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T23:49:57.790919+00:00",
     "title": "The Unreasonable Effectiveness of the Number 163"
   },
@@ -13517,6 +13517,33 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "math.NT",
+      "Diophantine triples",
+      "Filipin-Jurasić regularity theorem"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every exotic Diophantine triple {a, b, c} of distinct nonzero polynomials in ℝ[X] with at least one nonconstant element must contain the element 1. That is, if a+1, b+1, c+1, ab+1, ac+1, bc+1, and abc+1 are all perfect squares in ℝ[X], and at least one of a, b, c is nonconstant, then one of a, b, c equals 1.",
+    "domain_bridges": [
+      "polynomial arithmetic over real closed fields",
+      "perfect squares in polynomial rings",
+      "regular Diophantine quadruples"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0610",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the Filipin-Jurasić regularity theorem for polynomial Diophantine quadruples over ℝ[X], which classifies the structure of such quadruples. Then show that any exotic triple {a, b, c} (equivalently, a Diophantine quadruple {1, a, b, c} with abc+1 a square) with a nonconstant element and no element equal to 1 leads to a contradiction with this regularity structure.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06227v1",
+    "status": "available",
+    "timestamp": "2026-07-08T08:18:48.750696+00:00",
+    "title": "Exotic Diophantine triples in ℝ[X] must contain 1"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "magnitude_of_metric_spaces",
       "negative_type_metrics"
     ],
@@ -13530,7 +13557,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0610",
+    "id": "fd_0611",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formulate the problem as a strictly convex quadratic optimization over the affine subspace of signed measures with total mass 1; strict convexity guarantees a unique minimizer, and strict negative type ensures that the quadratic form is positive definite on the relevant subspace.",
@@ -13558,7 +13585,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0611",
+    "id": "fd_0612",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the existing formula by analyzing the μ-invariant's contribution through local-global principles and modular forms.",
@@ -13588,7 +13615,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0612",
+    "id": "fd_0613",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "We would prove the conjecture by establishing a bijection between quasinecklaces and primitive words, or by showing that the recurrence defining quasinecklaces derived in the paper matches the Möbius inversion of the total word count. A proof by induction on n using divisor decomposition and properties of the Möbius function can be formalized in Lean, leveraging existing libraries for arithmetic functions and finite sums.",
@@ -13614,7 +13641,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0613",
+    "id": "fd_0614",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the classical Hilton-Milner theorem as a lemma. Then formalize the notion of cross-intersecting families and non-triviality. The key structural insight from the paper is analyzing 2-cover graphs of cross-intersecting families and bounding the size of families with small minimal covers. The proof proceeds by case analysis on the structure of minimal covers of F and G, showing that non-HM-type configurations yield strictly smaller products when n > 100ℓk².",
@@ -13641,7 +13668,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0614",
+    "id": "fd_0615",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the S₁₀-construction from the paper, exploiting the absence of bridges to handle end-block decomposition more efficiently. Since bridgeless cubic graphs admit perfect matchings (Petersen's theorem), combine the S₁₂-technique achieving 4/5 for graphs with perfect matchings with the triangle-replacement structure of S₁₀ to gain the additional 1/42 fraction, using the fact that bridgeless graphs avoid the trivial-bridge obstructions that limit the 5/6 bound.",
@@ -13670,7 +13697,7 @@
     "domains": [
       "Cryptography"
     ],
-    "id": "fd_0615",
+    "id": "fd_0616",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Two possible routes: (1) Modular route — prove θ_L is a modular form of weight 4 for SL₂(ℤ) via Poisson summation on the lattice, establish that M₄(SL₂(ℤ)) is 1-dimensional spanned by E₄, and match constant terms; (2) Combinatorial route — use the explicit root system of E₈ to compute the theta series coefficients and verify they equal 240·σ₃(n) via the Weyl character formula or direct root system enumeration.",
@@ -13699,7 +13726,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0616",
+    "id": "fd_0617",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the paper's structure theorem for {-1,0,1}-diagonalizable graphs of prime order as a base case. For composite orders, leverage the regularity result (Theorem: bipartite implies regular) combined with the eigenvector structure constraints: the {-1,0,1} eigenvector basis forces strong conditions on the adjacency patterns of regular bipartite graphs. A possible approach shows that if G is connected, bipartite, regular, and {-1,0,1}-diagonalizable, then any two vertices in the same part have identical neighbor sets, yielding completeness. Attempt falsification by exhaustive search for small orders using the enumeration data provided.",
@@ -13728,7 +13755,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0617",
+    "id": "fd_0618",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "For the forward direction (k∣n ⟹ Schur positivity): decompose G(k,n) into creation operator images C_α when k∣n, then apply the compositional shuffle theorem framework to express Δ_{e_j} C_α as a positively weighted sum of vertical LLT polynomials, leveraging Grojnowski–Haiman Schur positivity of LLT polynomials. For the converse (k∤n ⟹ not Schur positive): extend the sign-analysis techniques from the paper's nabla case to general Δ_{e_j} by tracking the leading negative Schur coefficients in the Macdonald polynomial expansion of G(k,n) under the delta eigenvalue action, showing that the divisibility obstruction propagates through all delta operators.",
@@ -13756,7 +13783,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0618",
+    "id": "fd_0619",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish moment bounds for higher-order moments of the fluctuations to apply the method of moments, leveraging the Selberg trace formula on random surfaces and the known variance asymptotic of $X \\log X$.",
@@ -13785,7 +13812,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0619",
+    "id": "fd_0620",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Generalize the k=3 counterexample construction. The paper establishes a duality between symmetric powers and abstract rigidity. One would need to show that the rigidity-theoretic obstruction that produces the k=3 counterexample can be lifted to higher k, perhaps by taking symmetric powers of the counterexample matroid itself, or by constructing a family of matroids M_k indexed by k ≥ 3 such that the rank functions from the two Mason definitions diverge on specific independent sets in sym_k(M_k).",
@@ -13814,7 +13841,7 @@
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0620",
+    "id": "fd_0621",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the inversion graph G_π of a permutation π as the graph on [n] with edges corresponding to inversions. Define caterpillar graphs (removing all degree-1 vertices yields a path). Then establish the key mechanism: a reduced word for π orders the edges of G_π, with first-occurrence letters forming a spanning forest. For the acyclic case, show that the spanning tree has a unique central path by analyzing how the cycle structure of π constrains the possible branching patterns, leveraging the fact that each cycle of π contributes a specific subtree structure that can only attach linearly along a spine.",
@@ -13842,7 +13869,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0621",
+    "id": "fd_0622",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Proceed by induction on t, leveraging the t=1 base case proven in the paper. For the inductive step, analyze how the multiset and non-multiset intersection structures of insertion balls decompose when composing t insertions as a sequence of single insertions. The key difficulty is showing that the overlap multiplicities from repeated error patterns cannot create a distinction between the multiset and non-multiset models even when t > 1. A combinatorial double-counting argument on the equivalence classes of insertion error patterns producing identical outputs may suffice.",
@@ -13851,6 +13878,32 @@
     "status": "available",
     "timestamp": "2026-07-08T07:47:14.792212+00:00",
     "title": "Equality of Multiset and Non-Multiset Reconstruction Numbers for All Insertion Counts"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "cs.DM"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper establishes an upper bound of $O(d^{2/(r-1)})$ for the star chromatic number $\\chi_s^r(d)$ of $r$-uniform hypergraphs with maximum degree $d$ (where a star is defined as two hyperedges intersecting in $r-1$ vertices). We conjecture that this upper bound is asymptotically tight, meaning there exists a constant $c > 0$ such that for all $r \\ge 3$ and $d \\ge 1$, $\\chi_s^r(d) \\ge c \\cdot d^{2/(r-1)}$.",
+    "domain_bridges": [
+      "Extremal Combinatorics",
+      "Probabilistic Methods"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0623",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use probabilistic methods or explicit algebraic constructions to demonstrate a family of $r$-uniform hypergraphs with maximum degree $d$ that cannot be star-colored with fewer than $c \\cdot d^{2/(r-1)}$ colors, adapting known lower bounds for graph star coloring to the hypergraph setting.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06082v1",
+    "status": "available",
+    "timestamp": "2026-07-08T08:20:02.108638+00:00",
+    "title": "Asymptotic Tightness of Star Coloring in Hypergraphs"
   },
   {
     "ambition_level": "extension",
