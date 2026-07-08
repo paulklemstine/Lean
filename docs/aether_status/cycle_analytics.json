@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-08T22:20:57.219824+00:00",
+  "last_updated": "2026-07-08T23:35:26.482342+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -2609,6 +2609,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-08T22:20:56.938577+00:00",
       "title": "The Mathematics of Memes: Viral Information Topology"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.3713,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 8,
+      "domain": "Cryptography",
+      "duration_seconds": 1224.4644520282745,
+      "end_time": 1783553404.4380348,
+      "files_integrated": 0,
+      "job_id": "7d533993",
+      "outcome_quality": 0.0,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v27",
+      "phase_b_skip_reason": "low_quality",
+      "phase_b_skipped": true,
+      "prompt_version": "v27",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.74,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.8,
+        "composite": 0.5613,
+        "cross_domain": 0.9,
+        "grade": "substantial",
+        "importance": 0.4201,
+        "novelty": 0.455,
+        "proof_depth": 0.4051,
+        "usefulness": 0.6526
+      },
+      "quality_score": 0.12735488,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783552179.9735827,
+      "strategy_count": 0,
+      "theorem_count": 10,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 8,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-08T23:35:26.435871+00:00",
+      "title": "Bukh's Exact Zero-Sum-Free Density Conjecture"
     }
   ]
 }

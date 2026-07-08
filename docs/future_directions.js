@@ -3,6 +3,21 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
+    "consumed_by_exp_id": "",
+    "description": "The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do \u2014 as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: The tropical semiring (R union {infinity}, min, +) IS the field with one element, in the following precise sense: the category of tropical schemes is equivalent to the category of F_1-schemes. More concretely, a tropical variety over F_1 is a set with a min-plus structure, and its base change to Z (formally, tensor with Z) is a toric variety. The key correspondence: F_1-points of a tropical variety are the vertices of its Newton polytope, and the 'cardinality' of the tropical variety (as an F_1-object) is the number of lattice points in the polytope, which equals the degree of the toric variety after base change. Test: for each toric variety corresponding to a polytope P, compute the number of F_1-points (vertices of P) and verify that the Euler characteristic of the toric variety equals |vertices(P)| = #F_1-points. Prove the tensor product correspondence: tropical scheme X over F_1 has X tensor_Z Z = the corresponding toric variety. Impact: F_1 and tropical geometry are two faces of the same coin. The field with one element is tropical, and tropical geometry is the geometry of F_1.",
+    "domains": [
+      "Novelty",
+      "Tropical"
+    ],
+    "id": "fd_0687",
+    "priority_score": 0.87,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-08T23:36:45.165286+00:00",
+    "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
+  },
+  {
     "consumed_by_exp_id": "1880cad2",
     "description": "L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable \u2014 there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domains": [
@@ -2626,7 +2641,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Upper bound conjecture for the cake balancing ratio sequence"
   },
   {
-    "consumed_by_exp_id": "33e08c01",
+    "consumed_by_exp_id": "",
     "description": "Establishes a precise exponential growth bound for the sequence A393920, relating it to the Fibonacci sequence and its combinatorial structure in additive subcategories.",
     "domains": [
       "Algebra"
@@ -2635,7 +2650,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00651v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T11:59:43.715928+00:00",
     "title": "On the Growth Rate of Extension-Closed Additive Subcategories for Oriented A_n Quivers"
   },
@@ -2728,7 +2743,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Functional Equations Enforce Primitivity of Coefficients"
   },
   {
-    "consumed_by_exp_id": "095ece7f",
+    "consumed_by_exp_id": "",
     "description": "For increasing Boolean functions f,g:{0,1}^n\u2192{0,1}, if the covariance exceeds the right-hand side of the FKKK inequality by at most a small \u03b5, then either f and g depend on disjoint sets of coordinates, or they are both dictatorships on the same coordinate, or after permuting coordinates and possibly swapping f,g they are L^2-close to the two-coordinate AND-OR pair (x_i x_j, x_i \u2228 x_j).",
     "domains": [
       "Physics"
@@ -2737,7 +2752,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.32024v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T15:19:41.775801+00:00",
     "title": "Stability of the sharp diagonal spectral correlation inequality for monotone Boolean functions"
   },
@@ -3677,7 +3692,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Genus-zero condition for Atkin\u2013Lehner quotients of Shimura curves"
   },
   {
-    "consumed_by_exp_id": "bcd487b8",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: A \u0394-matroid M on a finite ground set E is strong (i.e., satisfies the symmetric basis exchange axiom) if and only if its system of feasible sets contains no peerless antipode. A peerless antipode is defined as an element e\u2208E for which there exist feasible sets A,B\u2208F(M) such that A\u25b3B={e} and for every feasible set C\u2208F(M) with e\u2208C we have C\u2216{e}\u2209F(M). This conjecture links the combinatorial notion of strength with the novel 'peerless' antipode characterisation introduced in the paper and is expected to be formalizable in Lean 4 using the existing \u0394-matroid library.",
     "domains": [
       "Algebra",
@@ -3687,7 +3702,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02419v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T23:02:36.840480+00:00",
     "title": "Strong \u0394-matroids are exactly those without peerless antipodes"
   },
@@ -6185,7 +6200,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit Threshold for No-(k+1)-in-line: f_k(n) = kn for all k \u2265 3 and n \u2265 k"
   },
   {
-    "consumed_by_exp_id": "7d533993",
+    "consumed_by_exp_id": "",
     "description": "For every d \u2265 3, the supremum of normalized surface measures of zero-sum-free measurable subsets of the unit sphere S^{d-1} in \u211d^d equals exactly 1/2. Equivalently, every measurable zero-sum-free A \u2286 S^{d-1} satisfies \u03c3_{d-1}(A) \u2264 1/2, with equality achieved (only) by open hemispheres. The paper establishes the asymptotic bound m_d \u2264 1/2 + O(1/d), but the exact value m_d = 1/2 remains open.",
     "domains": [
       "Pythagorean",
@@ -6195,7 +6210,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05099v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T07:31:22.446580+00:00",
     "title": "Bukh's Exact Zero-Sum-Free Density Conjecture"
   },
@@ -8039,11 +8054,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "This conjecture focuses on the critical-element method proposed in the ArXiv paper to verify whether a subset is lexicographically minimal in its orbit under group action. Specifically, it formalizes the claim that if a subset S is lexicographically minimal, then its removal of the maximum element S^- must also be lexicographically minimal in its orbit. This recursive property enables a backtracking algorithm to enumerate minimal representatives. The formalization must handle group actions, lexicographic order, symmetric differences, and subset operations in Lean 4.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0671",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05967v1",
+    "status": "available",
+    "timestamp": "2026-07-08T23:35:41.689664+00:00",
+    "title": "A Formalization of the Critical-Element Method for Verifying Lexicographic Minimality in Subset-Orbits"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "There exists an effectively computable constant \u03b3 > 0 such that for every c \u2208 [1, \u221a2), there exists an infinite family of finite metric spaces {X\u2099} indexed by n \u2208 \u2115 where any finitely presented c-approximation to the Vietoris-Rips filtration VR(X\u2099) requires at least 2^(\u03b3\u00b7n) simplices, and moreover \u03b3 can be taken to satisfy \u03b3 = \u03b3(c) with lim_{c\u2192\u221a2\u207b} \u03b3(c) = 0.",
     "domains": [
       "MachineLearning"
     ],
-    "id": "fd_0671",
+    "id": "fd_0672",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06524v1",
@@ -8057,7 +8087,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0672",
+    "id": "fd_0673",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06477v1",
@@ -8071,7 +8101,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0673",
+    "id": "fd_0674",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06465v1",
@@ -8085,7 +8115,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0674",
+    "id": "fd_0675",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06455v1",
@@ -8099,7 +8129,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0675",
+    "id": "fd_0676",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06444v1",
@@ -8114,7 +8144,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0676",
+    "id": "fd_0677",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
@@ -8129,7 +8159,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0677",
+    "id": "fd_0678",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06336v1",
@@ -8144,7 +8174,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0678",
+    "id": "fd_0679",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06228v1",
@@ -8158,7 +8188,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0679",
+    "id": "fd_0680",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06198v1",
@@ -8173,7 +8203,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0680",
+    "id": "fd_0681",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06181v1",
@@ -8187,7 +8217,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0681",
+    "id": "fd_0682",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06227v1",
@@ -8202,7 +8232,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0682",
+    "id": "fd_0683",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06092v1",
@@ -8217,7 +8247,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0683",
+    "id": "fd_0684",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06167v1",
@@ -8231,13 +8261,58 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0684",
+    "id": "fd_0685",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06061v1",
     "status": "available",
     "timestamp": "2026-07-08T23:14:12.131922+00:00",
     "title": "Sharp maximal excess of co-index under suspension for all feasible starting co-indices"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The conjecture states that on the diamond hierarchical lattice the Ramsey community number \\( r_k(b,s;q) \\) equals the smallest integer \\( n \\) for which the degree\u2011corrected evidence density exceeds the detection threshold, i.e. \\( (b s)^n > b^n (q-1) \\), which is equivalent to \\( n \\ge \\lceil \\log (q-1) / \\log s \\rceil \\).",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0686",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05954v1",
+    "status": "available",
+    "timestamp": "2026-07-08T23:36:39.523687+00:00",
+    "title": "Ramsey community number as RG crossing conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Mandelbrot set M is defined by z_{n+1} = z_n^2 + c, and the boundary of M is the locus of c values where the orbit of 0 is bounded but barely so. Each bulb of M corresponds to a rational number p/q (the period-q bulb at angle p/q). The size of the p/q bulb decreases with q, and the Fibonacci sequence governs the spiral arrangement of bulbs. Conjecture: The period of the bulb at angle p/q (in lowest terms) is exactly q. Moreover, the Lyapunov exponent lambda(c) at the center of the p/q bulb equals log(2) * cos(pi*p/q). The 'prime bulbs' \u2014 bulbs at angles 1/q where q is prime \u2014 have special symmetry: they are the only bulbs with dihedral symmetry D_q. The composite bulbs have more complex symmetry groups. The prime factorization of the period determines the bulb's topology: a bulb of period n = p1^a1 * ... * pk^ak is topologically a product of k bulbs of periods p1^a1, ..., pk^ak. Test: for each rational p/q with q <= 20, locate the corresponding bulb in M, compute its Lyapunov exponent, and verify lambda = log(2) * cos(pi*p/q). Classify bulbs by the prime factorization of their period and verify the product structure. Impact: the Mandelbrot set is a visual calculator for prime factorization \u2014 every bulb encodes number-theoretic information about its period.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0690",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-08T23:36:45.549430+00:00",
+    "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prime gaps \u2014 the spaces between consecutive primes \u2014 are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable \u2014 given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random \u2014 they are a solvable crossword puzzle with deterministic rules.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0688",
+    "priority_score": 0.78,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-08T23:36:45.313799+00:00",
+    "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
   },
   {
     "consumed_by_exp_id": "e158da3a",
@@ -8283,6 +8358,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-07T17:01:12.860686+00:00",
     "title": "Sharp dichotomy for the *total* d-Hoggatt numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search fractal dimension D(T) of a theorem T as the Hausdorff dimension of the set of all successful proof paths for T. If D(T) < 1, the proof is 'easy' (few paths work, so search is focused). If D(T) > 1, the proof is 'hard' (many paths must be explored). Conjecture: For theorems in ZFC, D(T) = 1 + O(1/length(T)). In other words, most theorems have fractal dimension close to 1 \u2014 proof search is neither trivially easy nor impossibly hard, but balanced at the edge. Theorems with D(T) << 1 are 'obvious' (direct proofs), and theorems with D(T) >> 1 require exponentially long proofs. The fractal dimension correlates with proof length: if D(T) = 1 + epsilon, then the shortest proof of T has length roughly 1/epsilon. Test: for 1000 theorems in Lean 4's Mathlib, estimate D(T) by Monte Carlo sampling of proof search trees, and correlate with actual proof length. Impact: proof difficulty is a fractal \u2014 the dimension of the proof search space determines how hard the theorem is.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0691",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-08T23:36:45.664322+00:00",
+    "title": "Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearrangement of the primes q_1, q_2, ... such that the sequence of ratios q_n / p_n converges to 1. In other words, you can shuffle the primes almost arbitrarily and the room numbers barely change. More precisely, the set of permutations sigma for which p_{sigma(n)} / p_n has a limit is dense in the symmetric group (with the topology of pointwise convergence). But NOT every permutation works: the permutation that swaps all even-indexed primes with odd-indexed ones gives q_{2n}/p_{2n} = p_{2n-1}/p_{2n} which converges to 1 by the prime number theorem, but the permutation that reverses order gives q_n/p_n = p_{N-n}/p_n which diverges. Test: compute q_n/p_n for 10 random permutations of the first 10^6 primes and verify that most ratios converge to 1. Find the exact density of 'well-behaved' permutations. Impact: the primes are robust under rearrangement \u2014 their asymptotic density is a topological invariant of the permutation group.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0689",
+    "priority_score": 0.74,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-08T23:36:45.440829+00:00",
+    "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
   },
   {
     "consumed_by_exp_id": "",
