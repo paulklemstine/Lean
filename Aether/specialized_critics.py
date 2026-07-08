@@ -127,112 +127,77 @@ class SpecializedCritic:
         concept_description: str = "",
         existing_titles: Optional[set] = None,
     ) -> CriticScores:
-        """Run all four critics and return scores + rationale."""
-        correctness = self._correctness(lean_source)
-        novelty = self._novelty(lean_source, concept_title, existing_titles)
-        depth = self._depth(lean_source, concept_title)
-        presentation = self._presentation(lean_source, concept_title)
+        """Run a single combined critic evaluation and return scores + rationale."""
+        if self.pi_agent is None:
+            return CriticScores(0.5, 0.5, 0.5, 0.5, rationale={
+                "correctness": "No Pi-Agent", "novelty": "No Pi-Agent",
+                "depth": "No Pi-Agent", "presentation": "No Pi-Agent"
+            })
 
-        return CriticScores(
-            correctness=correctness["score"],
-            novelty=novelty["score"],
-            depth=depth["score"],
-            presentation=presentation["score"],
-            rationale={
-                "correctness": correctness.get("rationale", ""),
-                "novelty": novelty.get("rationale", ""),
-                "depth": depth.get("rationale", ""),
-                "presentation": presentation.get("rationale", ""),
-            },
-        )
-
-    # ── Individual critics ──
-
-    def _correctness(self, lean_source: str) -> Dict[str, Any]:
         system = (
-            "You are a correctness critic for Lean 4 proofs. Score the output from 0 to 1 "
-            "where 1 means the code is complete, compiles, has valid imports, and contains no "
-            "`sorry`, `admit`, or placeholder proofs. 0 means it is broken or mostly placeholders. "
-            "Respond with valid JSON only: {\"score\": float, \"rationale\": string}."
+            "You are a specialized mathematical critic. Evaluate the provided Lean 4 code across 4 dimensions, "
+            "scoring each from 0.0 to 1.0:\n"
+            "- correctness: 1.0 = complete, valid imports, no sorry/admit. 0.0 = broken or mostly placeholders.\n"
+            "- novelty: 1.0 = genuinely new theorem/connection. 0.0 = trivial restatement or wrapper.\n"
+            "- depth: 1.0 = deep proof, non-trivial tactics. 0.0 = trivial simp/rfl.\n"
+            "- presentation: 1.0 = clear docs, structure, naming. 0.0 = opaque, missing docs.\n\n"
+            "Respond ONLY with a valid JSON object in this exact format:\n"
+            "{\n"
+            '  "correctness": {"score": 0.0, "rationale": ""},\n'
+            '  "novelty": {"score": 0.0, "rationale": ""},\n'
+            '  "depth": {"score": 0.0, "rationale": ""},\n'
+            '  "presentation": {"score": 0.0, "rationale": ""}\n'
+            "}"
         )
-        user = f"Lean source to evaluate:\n```lean4\n{lean_source[:8000]}\n```"
-        return self._ask_critic(system, user)
-
-    def _novelty(
-        self, lean_source: str, concept_title: str, existing_titles: Optional[set]
-    ) -> Dict[str, Any]:
-        system = (
-            "You are a novelty critic. Score how new/non-obvious the result is from 0 to 1. "
-            "1 means a genuinely new theorem or connection; 0 means a trivial restatement, wrapper, "
-            "or known result. Respond with valid JSON only: {\"score\": float, \"rationale\": string}."
-        )
+        
         existing = ", ".join(sorted(existing_titles or set())[:20])
         user = (
             f"Concept: {concept_title}\n\n"
             f"Existing catalog theorem titles (sample): {existing}\n\n"
-            f"Lean source:\n```lean4\n{lean_source[:8000]}\n```"
+            f"Lean source to evaluate:\n```lean4\n{lean_source[:8000]}\n```"
         )
-        return self._ask_critic(system, user)
-
-    def _depth(self, lean_source: str, concept_title: str) -> Dict[str, Any]:
-        system = (
-            "You are a depth critic. Score proof/theorem depth from 0 to 1. "
-            "1 means a deep, insightful proof with non-trivial tactics, new definitions, and "
-            "cross-domain connections; 0 means trivial `simp`/`rfl` proofs or definitional equalities. "
-            "Respond with valid JSON only: {\"score\": float, \"rationale\": string}."
-        )
-        user = (
-            f"Concept: {concept_title}\n\n"
-            f"Lean source:\n```lean4\n{lean_source[:8000]}\n```"
-        )
-        return self._ask_critic(system, user)
-
-    def _presentation(self, lean_source: str, concept_title: str) -> Dict[str, Any]:
-        system = (
-            "You are a presentation critic. Score clarity from 0 to 1. "
-            "1 means clear theorem statements, helpful doc comments, good naming, and readable structure; "
-            "0 means opaque names, missing docs, or confusing organization. "
-            "Respond with valid JSON only: {\"score\": float, \"rationale\": string}."
-        )
-        user = (
-            f"Concept: {concept_title}\n\n"
-            f"Lean source:\n```lean4\n{lean_source[:8000]}\n```"
-        )
-        return self._ask_critic(system, user)
-
-    # ── Shared machinery ──
-
-    def _ask_critic(self, system: str, user: str) -> Dict[str, Any]:
-        """Call the Pi-Agent and parse a {score, rationale} JSON response."""
-        if self.pi_agent is None:
-            return {"score": 0.5, "rationale": "No Pi-Agent available"}
+        
         try:
             raw = self.pi_agent._call_ollama(system, user, timeout=self.timeout)
-            return self._parse_score(raw)
+            return self._parse_combined_scores(raw)
         except Exception as e:
-            return {"score": 0.5, "rationale": f"Critic call failed: {e}"}
+            return CriticScores(0.5, 0.5, 0.5, 0.5, rationale={
+                "correctness": f"Failed: {e}", "novelty": f"Failed: {e}",
+                "depth": f"Failed: {e}", "presentation": f"Failed: {e}"
+            })
 
     @staticmethod
-    def _parse_score(raw: str) -> Dict[str, Any]:
-        """Extract a {score, rationale} dict from raw LLM output."""
-        # Try to find a JSON object in the response
+    def _parse_combined_scores(raw: str) -> CriticScores:
+        """Extract all 4 scores and rationales from the combined LLM output."""
         try:
-            # Strip markdown fences if present
             cleaned = raw.strip()
             if cleaned.startswith("```"):
                 cleaned = re.sub(r"^```(?:json)?\s*", "", cleaned)
                 cleaned = re.sub(r"\s*```$", "", cleaned)
             data = json.loads(cleaned)
+            
             if isinstance(data, dict):
-                score = float(data.get("score", 0.5))
-                score = max(0.0, min(1.0, score))
-                rationale = str(data.get("rationale", ""))
-                return {"score": score, "rationale": rationale}
+                c_data = data.get("correctness", {})
+                n_data = data.get("novelty", {})
+                d_data = data.get("depth", {})
+                p_data = data.get("presentation", {})
+                
+                return CriticScores(
+                    correctness=max(0.0, min(1.0, float(c_data.get("score", 0.5)))),
+                    novelty=max(0.0, min(1.0, float(n_data.get("score", 0.5)))),
+                    depth=max(0.0, min(1.0, float(d_data.get("score", 0.5)))),
+                    presentation=max(0.0, min(1.0, float(p_data.get("score", 0.5)))),
+                    rationale={
+                        "correctness": str(c_data.get("rationale", "")),
+                        "novelty": str(n_data.get("rationale", "")),
+                        "depth": str(d_data.get("rationale", "")),
+                        "presentation": str(p_data.get("rationale", "")),
+                    }
+                )
         except Exception:
             pass
-
-        # Fallback: regex for a decimal between 0 and 1
-        match = re.search(r"(0\.\d+|1\.0|1)", raw)
-        if match:
-            return {"score": max(0.0, min(1.0, float(match.group(1)))), "rationale": raw[:200]}
-        return {"score": 0.5, "rationale": raw[:200]}
+            
+        return CriticScores(0.5, 0.5, 0.5, 0.5, rationale={
+            "correctness": "Parse failed", "novelty": "Parse failed",
+            "depth": "Parse failed", "presentation": "Parse failed"
+        })
