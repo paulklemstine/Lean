@@ -7568,7 +7568,7 @@
       "math.CO",
       "math.RA"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4ea0f216",
     "description": "The transformation matrix encoding the change of the h-vector of a simplicial complex under the r-colored barycentric subdivision is totally positive (all minors are non-negative). The paper establishes that this matrix is TP_2, and this conjecture posits that the stronger total positivity (TP) property holds, extending the confirmed TP property of the standard barycentric and interval subdivisions.",
     "domain_bridges": [
       "Combinatorics",
@@ -7585,7 +7585,7 @@
     "proof_strategy": "Extend the combinatorial network representation or the sufficient conditions for total positivity used for the barycentric and interval subdivisions to the r-colored barycentric subdivision. This may involve verifying the Whitney conditions or finding a suitable planar network whose path-generating function equals the transformation matrix entries.",
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T01:26:28.538763+00:00",
     "title": "Total positivity of the r-colored barycentric subdivision transformation matrix"
   },
@@ -8567,33 +8567,6 @@
     "status": "available",
     "timestamp": "2026-07-05T19:45:16.570930+00:00",
     "title": "The all-twos partition achieves the maximum number of parts in Ω₂(n)"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "Erdős-Gallai theorem",
-      "hyperstability",
-      "vertex cover",
-      "graph modifications"
-    ],
-    "consumed_by_exp_id": "e163d5c0",
-    "description": "There exists a graph G without a cycle of length d such that at least cd n edge deletions are required to transform G into a graph where each connected component has a vertex cover of size at most (1+c)d.",
-    "domain_bridges": [
-      "Stability theory in graph algorithms",
-      "extremal graph theory"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0403",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Construct a specific graph achieving the lower bound via Pokrovskiy's structure theorem",
-    "research_mode": "team",
-    "source_exp_id": "2607.02483v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-05T20:11:01.715515+00:00",
-    "title": "Tightness of Edge Deletion Bound in Hyperstability Extension of Erdős-Gallai Theorem"
   },
   {
     "ambition_level": "extension",
@@ -14636,6 +14609,63 @@
     "status": "available",
     "timestamp": "2026-07-08T15:30:29.182057+00:00",
     "title": "Anti-diagonal Trace Identity for 2x2 Matrix Symmetric Powers"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Barát–Blázsik–Damásdi (2019): Decomposition of subcubic outerplanar graphs and the crumby coloring conjecture",
+      "Thomassen conjecture on red-blue partitions of 3-connected cubic graphs",
+      "Wegner conjecture on chromatic numbers of squares of planar graphs",
+      "Bellitto et al. counterexample to Thomassen's conjecture for 3-connected cubic graphs"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Formalize that every finite simple subcubic outerplanar graph admits a crumby coloring: a red-blue vertex partition where the blue vertices induce a subgraph of maximum degree at most one, and the red vertices induce a subgraph with minimum degree at least one and no induced path on four vertices (P₄). This resolves the Barát–Blázsik–Damásdi conjecture and extends their result from 2-connected to all subcubic outerplanar graphs. The proof introduces a rooted grammatical decomposition of subcubic outerplanar graphs into rooted branches and two-terminal path fragments, extends crumby colorings to crumby-admissible colorings that permit temporary defects at boundary vertices, and reduces the inductive verification to checking an explicit finite family of certificates.",
+    "domain_bridges": [
+      "Graph minor theory ↔ constrained 2-colorability (outerplanarity as a forbidden-minor condition enabling the grammatical decomposition)",
+      "Formal grammars ↔ graph decomposition (rooted grammar producing subcubic outerplanar graphs from branches and path fragments)",
+      "Computer-verified certificate checking ↔ combinatorial existence proofs (finite certificate closure verified by a stand-alone checker)"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0650",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First formalize subcubic outerplanar graphs and the crumby coloring property. Then formalize the rooted grammatical decomposition: every finite simple subcubic outerplanar graph decomposes recursively via rooted branches and two-terminal path fragments, with cyclic blocks handled by deleting the root. Define crumby-admissible colorings that allow temporary isolated red vertices at boundary locations (the root of a rooted branch, or the two terminals of a path fragment). Prove by induction on the grammar that every decomposed graph admits a crumby-admissible coloring, reducing to verifying an explicit finite family of lower certificates (boundary types and root states). The finite verification that the certificate family is closed under all decomposition steps and that every completed branch contains a final-legal root state can be automated via decidable computation, while the structural reductions and certificate-induction principle are proved by hand.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06515v1",
+    "status": "available",
+    "timestamp": "2026-07-08T15:56:47.377407+00:00",
+    "title": "Every subcubic outerplanar graph admits a crumby coloring"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.AT",
+      "cs.CG",
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that for any fixed c ∈ [1, √2), there exist finite metric spaces requiring exponentially large finitely presented c-approximations of the Vietoris-Rips filtration, and that for any c ≥ 1, superlinear size is necessary. This conjecture posits that √2 is the sharp threshold between exponential and polynomial approximability: for every fixed c ≥ √2, there exists a polynomial p_c such that every finite metric space X admits a finitely presented c-approximation to VR(X) of size at most p_c(|X|). This would yield a complete dichotomy—exponential below √2, polynomial at or above √2—matching the natural geometric breakpoint where the Rips complex becomes the full simplex on any metric space with all distances ≤ 2r.",
+    "domain_bridges": [
+      "computational complexity theory (threshold phenomena in approximability)",
+      "metric geometry (doubling dimension and packing)",
+      "homotopy theory (interleaving distances)"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0651",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish the upper bound by constructing polynomial-size approximations for c ≥ √2. The key insight should be that at approximation factor √2, the homotopy interleaving relaxation is strong enough to allow collapse of high-dimensional simplices that are forced in the exact filtration. A potential approach: (1) Show that for c ≥ √2, any finite metric space can be embedded into a space of bounded doubling dimension with distortion at most √2, then invoke Sheehy-type sparse approximation results; (2) Alternatively, directly construct a filtration that is homotopy-interleaved with VR(X) at factor √2 using controlled local collapses whose combinatorial complexity is polynomially bounded.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06524v1",
+    "status": "available",
+    "timestamp": "2026-07-08T15:57:12.890675+00:00",
+    "title": "The √2-Threshold Conjecture for Rips Filtration Approximation"
   },
   {
     "ambition_level": "extension",

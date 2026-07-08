@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-08T15:25:09.629432+00:00",
+  "last_updated": "2026-07-08T15:55:48.032476+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -1866,6 +1866,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-08T15:25:09.596563+00:00",
       "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 58,
+      "domain": "NumberTheory",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "e163d5c0",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v19c",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783520387.6614113,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-08T15:55:48.002453+00:00",
+      "title": "Tightness of Edge Deletion Bound in Hyperstability Extension of Erd\u0151s-Gallai Theorem"
     }
   ]
 }

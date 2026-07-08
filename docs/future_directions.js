@@ -4132,7 +4132,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "GL_n-equivariant isomorphism between graded cone algebra and spherical chains"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4ea0f216",
     "description": "The transformation matrix encoding the change of the h-vector of a simplicial complex under the r-colored barycentric subdivision is totally positive (all minors are non-negative). The paper establishes that this matrix is TP_2, and this conjecture posits that the stronger total positivity (TP) property holds, extending the confirmed TP property of the standard barycentric and interval subdivisions.",
     "domains": [
       "Pythagorean",
@@ -4142,7 +4142,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T01:26:28.538763+00:00",
     "title": "Total positivity of the r-colored barycentric subdivision transformation matrix"
   },
@@ -4668,20 +4668,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-05T19:45:16.570930+00:00",
     "title": "The all-twos partition achieves the maximum number of parts in \u03a9\u2082(n)"
-  },
-  {
-    "consumed_by_exp_id": "e163d5c0",
-    "description": "There exists a graph G without a cycle of length d such that at least cd n edge deletions are required to transform G into a graph where each connected component has a vertex cover of size at most (1+c)d.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0403",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02483v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-05T20:11:01.715515+00:00",
-    "title": "Tightness of Edge Deletion Bound in Hyperstability Extension of Erd\u0151s-Gallai Theorem"
   },
   {
     "consumed_by_exp_id": "",
@@ -7831,6 +7817,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-08T15:30:29.182057+00:00",
     "title": "Anti-diagonal Trace Identity for 2x2 Matrix Symmetric Powers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize that every finite simple subcubic outerplanar graph admits a crumby coloring: a red-blue vertex partition where the blue vertices induce a subgraph of maximum degree at most one, and the red vertices induce a subgraph with minimum degree at least one and no induced path on four vertices (P\u2084). This resolves the Bar\u00e1t\u2013Bl\u00e1zsik\u2013Dam\u00e1sdi conjecture and extends their result from 2-connected to all subcubic outerplanar graphs. The proof introduces a rooted grammatical decomposition of subcubic outerplanar graphs into rooted branches and two-terminal path fragments, extends crumby colorings to crumby-admissible colorings that permit temporary defects at boundary vertices, and reduces the inductive verification to checking an explicit finite family of certificates.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0650",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06515v1",
+    "status": "available",
+    "timestamp": "2026-07-08T15:56:47.377407+00:00",
+    "title": "Every subcubic outerplanar graph admits a crumby coloring"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that for any fixed c \u2208 [1, \u221a2), there exist finite metric spaces requiring exponentially large finitely presented c-approximations of the Vietoris-Rips filtration, and that for any c \u2265 1, superlinear size is necessary. This conjecture posits that \u221a2 is the sharp threshold between exponential and polynomial approximability: for every fixed c \u2265 \u221a2, there exists a polynomial p_c such that every finite metric space X admits a finitely presented c-approximation to VR(X) of size at most p_c(|X|). This would yield a complete dichotomy\u2014exponential below \u221a2, polynomial at or above \u221a2\u2014matching the natural geometric breakpoint where the Rips complex becomes the full simplex on any metric space with all distances \u2264 2r.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0651",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06524v1",
+    "status": "available",
+    "timestamp": "2026-07-08T15:57:12.890675+00:00",
+    "title": "The \u221a2-Threshold Conjecture for Rips Filtration Approximation"
   },
   {
     "consumed_by_exp_id": "edee947a",
