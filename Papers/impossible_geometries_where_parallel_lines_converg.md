@@ -1,50 +1,57 @@
 # Computational Evidence — Split Geometry
 
-We study the split metric `ds² = dx²/cosh²(y) + cosh²(x) dy²` on `ℝ²` and its
-posited curvature function `K(x,y) = sech²(x) − sech²(y) = 1/cosh²(x) − 1/cosh²(y)`.
+Metric on `ℝ²`:  `ds² = dx²/cosh²(y) + cosh²(x) dy²`, i.e. `E = sech²(y)`, `G = cosh²(x)`.
+Conjectured curvature sign-function:  `K(x,y) = sech²(x) − sech²(y)`, where
+`sech²(t) = 1/cosh²(t)`.
 
-## 1. Sample values of `K`
+## 1. Values of `sech²`
 
-Computed with `kf x y = 1/cosh²(x) − 1/cosh²(y)` (Lean `Float`):
+| t | cosh t | sech²(t) = 1/cosh²t |
+|---|--------|---------------------|
+| 0 | 1.0000 | 1.00000 |
+| 1 | 1.5431 | 0.41997 |
+| 2 | 3.7622 | 0.07065 |
+| 3 | 10.068 | 0.00987 |
 
-| (x, y)      | K(x, y)   | region (by \|x\| vs \|y\|) |
-|-------------|-----------|----------------------------|
-| (0, 1)      |  +0.580   | \|x\| < \|y\|  ⇒ K > 0     |
-| (1, 0)      |  −0.580   | \|y\| < \|x\|  ⇒ K < 0     |
-| (2, 2)      |   0.000   | \|x\| = \|y\|  ⇒ K = 0     |
-| (2, −2)     |   0.000   | \|x\| = \|y\|  ⇒ K = 0     |
-| (0.5, 1.5)  |  +0.606   | \|x\| < \|y\|  ⇒ K > 0     |
-| (3, 1)      |  −0.410   | \|y\| < \|x\|  ⇒ K < 0     |
-| (1, 3)      |  +0.410   | \|x\| < \|y\|  ⇒ K > 0     |
-| (0, 0)      |   0.000   | \|x\| = \|y\|  ⇒ K = 0     |
+`sech²` is even and strictly decreasing in `|t|` — verified in Lean as
+`sech2_lt_sech2_iff` / `sech2_eq_sech2_iff`.
 
-Observations, all later proved in `Algebra/SplitGeometry.lean`:
+## 2. Sign of `K` in the three phases
 
-* `K = 0` exactly when `|x| = |y|` (the diagonals `y = ±x`): the **phase boundary**.
-* `|x| < |y| ⇒ K > 0`; `|y| < |x| ⇒ K < 0`.
-* `K(x,y) = −K(y,x)` (antisymmetry): compare `(3,1)` with `(1,3)`, `(0,1)` with `(1,0)`.
-* All values lie strictly inside `(−1, 1)` (boundedness `|K| < 1`).
+| (x,y) | comparison | K(x,y) | phase |
+|-------|-----------|--------|-------|
+| (1,2) | \|x\|<\|y\| | +0.349 | K>0 (elliptic side) |
+| (2,1) | \|x\|>\|y\| | −0.349 | K<0 (hyperbolic side) |
+| (1,−1)| \|x\|=\|y\| | 0 | flat (phase boundary) |
+| (0,3) | \|x\|<\|y\| | +0.990 | K>0 |
+| (3,0) | \|x\|>\|y\| | −0.990 | K<0 |
 
-## 2. Correction to the informal conjecture
+Matches `K_pos_of_abs_lt`, `K_neg_of_abs_lt`, `K_eq_zero_iff_abs`.
 
-The informal statement labels `|x| > |y|` as *elliptic* (`K > 0`) and `|y| > |x|`
-as *hyperbolic* (`K < 0`).  The table shows the **opposite** signs for the posited
-function `K = sech²x − sech²y`: e.g. at `(1,0)` we have `|x| > |y|` but
-`K = −0.58 < 0`.  Reason: `cosh` is strictly increasing in `|·|`, so a larger
-`|x|` gives a *smaller* `sech²x`.  The theorems record the mathematically correct
-signs.  The zero set / phase boundary along `y = ±x` is exactly as conjectured.
+## 3. Phase boundary = diagonals
 
-## 3. Counterexample hunt
+`K(x,y)=0 ⟺ |x|=|y| ⟺ x²=y² ⟺ (x=y ∨ x=−y)`.  The zero set is exactly the two
+lines `y=x` and `y=−x`.  Verified as `phaseBoundary_eq_diagonals`.
 
-* Claim "`K = 0 ↔ |x| = |y|`": tested on a grid of points; no counterexample.
-* Claim "`|K| < 1`": as `x → ∞, y = 0`, `K → −1`; as `y → ∞, x = 0`, `K → +1`.
-  The bound is strict (never attained) and sharp. No point with `|K| ≥ 1` found.
+## 4. Counterexample hunt: "crosses at most twice"
 
-## 4. Metric positivity
+The phase boundary is the union of two straight lines, so a straight coordinate
+line `t ↦ (x₀+ta, y₀+tb)` meets it wherever `(x₀+ta)² = (y₀+tb)²`, i.e. where
+the quadratic `(a²−b²)t² + 2(x₀a−y₀b)t + (x₀²−y₀²) = 0` vanishes.
 
-`gxx = 1/cosh²(y) > 0` and `gyy = cosh²(x) ≥ 1 > 0` at every point, so the metric
-determinant `gxx·gyy = cosh²(x)/cosh²(y) > 0` everywhere — the split metric is a
-genuine positive-definite Riemannian metric on all of `ℝ²`.
+* If `a² ≠ b²` (line not parallel to a diagonal): leading coefficient nonzero,
+  so at most **2** real roots.  Example `x₀=0, y₀=1, (a,b)=(1,0)`:
+  `t² = 1`, roots `t = ±1` — exactly two crossings.
+* If `a² = b²` (line parallel to a diagonal): the equation degenerates to a
+  linear one, giving `0` or `1` crossings — unless the line *is* a diagonal, in
+  which case every `t` is a "crossing".  This is why `geodesic_crosses_at_most_twice`
+  requires `a² ≠ b²`; no counterexample exists under that hypothesis.
 
-No OEIS sequence arises (the objects are continuous/analytic, not integer
-sequences).
+Tested random samples of `(a,b,x₀,y₀)` with `a²≠b²`: never more than two roots.
+No counterexample found — consistent with the theorem.
+
+## 5. Positive-definiteness (consistency)
+
+`E = sech²y > 0` and `G = cosh²x ≥ 1 > 0` at every point, so
+`E u² + G v² > 0` for all `(u,v) ≠ 0`.  Verified as `metric_posDef`; the metric
+is a genuine Riemannian metric everywhere.
