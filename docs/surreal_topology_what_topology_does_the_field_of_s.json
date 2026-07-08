@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-07-08T17:25:14Z",
+  "date": "2026-07-08T17:38:00Z",
   "key_results": [
     "Non-Archimedean witness: there exists a surreal number strictly greater than every natural number.",
     "The finite surreals {x : x < n for some natural number n} form a nonempty proper clopen set.",
@@ -111,6 +111,6 @@
   "source_exp_ids": [
     "seed"
   ],
-  "quality_score": 0.221124,
+  "quality_score": 0.214224,
   "quality_tier": "bronze"
 }

@@ -6795,20 +6795,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Threshold for No-$(k+1)$-in-line Problem"
   },
   {
-    "consumed_by_exp_id": "eb1bc437",
-    "description": "For all natural numbers m, a, and d, the sum over all m-tuples (i_1, ..., i_m) of non-negative integers summing to d of the product of binomial coefficients \u220f_{j=1}^{m} C(a + i_j, a) equals C(ma + d + m - 1, d). This generalizes the identity stated in the paper for m=3 (used to simplify the Bogart-Longyear formula for 3-row Latin rectangles), where the paper claims it is 'easily proved with dots and dividers.' The generalization connects directly to Gessel's framework through multisymmetric function generating series.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "fd_0561",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.05214v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T16:25:25.291005+00:00",
-    "title": "Generalized Multinomial Convolution Identity for Latin Rectangle Enumeration"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "There exists a constant \u03b4 > 0 such that for every n \u2265 2, there is a set P of n points in \u211d\u00b2 where every subset A \u2286 P of size \u2265 2 contains a distance occurring at least \u2308|A|\u00b2/n^(1\u2212\u03b4)\u2309 times as an ordered pair. This is the main theorem of the paper, establishing that Minkowski grids derived from number fields of high degree have robustly many repeated distances, vertically amplifying the Croot\u2013Mao\u2013Pohoata\u2013Sheffer\u2013Yip robust Ramanujan estimate for the ordinary square grid.",
     "domains": [
@@ -8010,6 +7996,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-07T17:01:12.860686+00:00",
     "title": "Sharp dichotomy for the *total* d-Hoggatt numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Topology of the Surreal Numbers\n\n`SurrealTopology.lean` establishes the central connector result: with the interval (order)\ntopology, the surreal field `No` is **disconnected**, refuting the conjecture that this topology is\nconnected/contractible. The bridge is game theory / order theory (non-Archimedean structure)\n\u2194 point-set topology (a nontrivial clopen set). Natural continuations:\n\n## 1. Strengthen disconnected \u2192 totally disconnected\n\nWe separated `No` at the single Archimedean gap. Conjecture: `No` is **totally disconnected** in\nthe order topology \u2014 every pair `a < b` is separated by a clopen set. This should follow from a\ngap between any two distinct surreals (e.g. `a` and the class of surreals `\u2264 a + \u03b5` for infinitesimal\n`\u03b5`). Formalizing \"gaps everywhere\" needs a convenient surreal density/infinitesimal API.\n\n## 2. Density and the perfect-space property\n\nProve `DenselyOrdered Surreal` (between any two surreals lies a third, e.g. the simplest number\n`{a | b}`), together with `NoMaxOrder`/`NoMinOrder`. With the order topology this yields that `No`\nis a **perfect space**: it has no isolated points. This is the positive topological content that\nsurvives once connectedness is abandoned.\n\n## 3. The correct topology question\n\nSince the order topology is disconnected, the mission's uniqueness conjecture (\"a unique topology\nmaking `No` a connected, locally connected, locally compact, complete ordered field\") should be\nre-examined. Likely honest outcomes to formalize:\n* `No` is **not** locally compact in the order topology (the finite/infinite split obstructs compact\n  neighborhoods of `0`, mirroring `\u211a`).\n* Any topology making `No` a *topological field* that induces the order must agree with the order\n  topology on intervals; connectedness then fails, so no such connected field topology exists.\n\n## 4. Proper-class subtleties\n\nMathlib's `Surreal.{u}` is a genuine type (a fixed universe of surreals), not the full proper class\n`No`. The results here are stated for `Surreal.{0}` and hold uniformly in `u`. A faithful\nproper-class treatment (class-topology, class-connectedness) would require a metatheory of\nclass-sized topological spaces \u2014 a separate foundational project.\n\n## 5. Analogy transfer\n\nThe disconnection argument (`{x | \u2203 n, x < n}` clopen) works verbatim for **any** non-Archimedean\nlinearly ordered additive group with the order topology (e.g. `\u211a((t))`, hyperreals, Hahn series).\nAbstracting the lemma to `[LinearOrderedAddCommGroup] + (\u00ac Archimedean)` would give a reusable\n\"non-Archimedean \u21d2 order-disconnected\" theorem, of which the surreal case is one instance.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0659",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "396b76ab",
+    "status": "available",
+    "timestamp": "2026-07-08T17:38:01.395654+00:00",
+    "title": "`SurrealTopology.lean` establishes the central connector result: with the interv"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any discrete\u2011time quantum walk on a one\u2011dimensional lattice with a fixed coin operator, the Shannon entropy H(t) of the position distribution grows linearly with t until a critical time t_c = \u2308c\u221an\u2309 (c\u22481), after which the growth rate changes to a different slope; the critical time scales as the square root of the lattice size n and is independent of the specific coin operator. Test: Simulate quantum walks on lattices of varying length n, compute H(t) for t up to several times \u221an, and look for a distinct change in slope at t\u2248c\u221an. A failure to observe such a slope change (or a contradictory scaling) would refute the conjecture. Impact: Provides a testable dynamical signature that can be used to benchmark quantum walk implementations and to design algorithms that exploit the entropy transition.",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0660",
+    "priority_score": 0.7155409836065575,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-07-08T17:43:16.896942+00:00",
+    "title": "Critical Scaling of Entropy in One\u2011Dimensional Quantum Walks"
   },
   {
     "consumed_by_exp_id": "",
