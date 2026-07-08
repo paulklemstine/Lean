@@ -14016,6 +14016,63 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "outerplanar_graphs",
+      "graph_coloring",
+      "Wegner_conjecture"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every finite simple subcubic outerplanar graph admits a crumby coloring: a red-blue vertex partition where blue vertices induce a subgraph of maximum degree at most one, and red vertices induce a subgraph with no isolated vertices and no P₄ subgraph (no simple path with three edges). This formalizes the main theorem resolving the Barát–Blázsik–Damásdi conjecture.",
+    "domain_bridges": [
+      "formal_verification",
+      "certificate_checking",
+      "grammatical_graph_decompositions"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0624",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize crumby coloring and outerplanarity in Lean. Encode the rooted grammar for subcubic outerplanar graphs and the notion of crumby-admissible colorings with temporary defects. Verify the finite family of lower certificates (boundary types and root states) for closure under decomposition steps and crumby condition satisfaction, mirroring the computer-assisted certificate verification in the original proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06515v1",
+    "status": "available",
+    "timestamp": "2026-07-08T08:55:50.798742+00:00",
+    "title": "Crumby Coloring Existence for Subcubic Outerplanar Graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.AT",
+      "cs.CG",
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that for any fixed c ≥ 1, there exist finite metric spaces whose Vietoris-Rips filtration requires superlinear-size c-approximations. This conjecture strengthens that result: for any fixed c ≥ 1, there exists ε = ε(c) > 0 such that for sufficiently large n, there exists a finite metric space X on n points for which any finitely presented c-approximation to VR(X) requires at least n^{1+ε} simplices. This pins down the superlinear growth to a polynomial one, ruling out n·polylog(n) approximations.",
+    "domain_bridges": [
+      "topological_data_analysis",
+      "computational_complexity",
+      "metric_geometry"
+    ],
+    "domains": [
+      "Pythagorean",
+      "MachineLearning"
+    ],
+    "id": "fd_0624",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct explicit families of metric spaces (likely extending the paper's path metric / cycle graph constructions) and use combinatorial arguments about the topology of high-dimensional skeleta to show that any c-approximation must contain a polynomial number of high-dimensional simplices. The key is to rule out subpolynomial factors in the superlinear bound by analyzing the Lusternik–Schnirelmann category or cup-length obstructions in the approximating filtration, forcing many critical simplices that cannot be collapsed.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06524v1",
+    "status": "available",
+    "timestamp": "2026-07-08T08:56:46.980080+00:00",
+    "title": "Polynomial Lower Bound for Vietoris-Rips Approximations at All Scales"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "ed6fbad7",
     "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' — they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
