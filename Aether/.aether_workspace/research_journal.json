@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "872fa119",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Incoherence Index of Standard Social Decision Frames\n\nDerived from this cycle's findings (`OrderSpectrum.lean`,\n`SpectrumCharacterization.lean`): the incoherence index of a singl",
-      "quality_score": 0.7050400000000001,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-28T15:37:33",
-      "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
-    },
-    {
       "cycle_id": "461fdf74",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Quantum Thermodynamics / Landauer at the Nanoscale\n\nThe current cycle added `Catalog/Physics/LandauerSubadditivity.lean`: marginals and\nmutual information of a joint PMF, a stren",
@@ -2501,6 +2491,16 @@
       "theorem_count": 20,
       "timestamp": "2026-07-08T02:35:50",
       "title": "Antipodality Characterization via Opposite-Semicube Helly Property"
+    },
+    {
+      "cycle_id": "55b8bae9",
+      "domain": "Physics",
+      "key_insight": "# Future Directions: Long Nontrivial Cycles in Hamiltonian Graphs\n\nThis cycle established that a single chord in a Hamiltonian graph of minimum\ndegree three forces a second cycle of length exactly hal",
+      "quality_score": 0.69272,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-07-08T02:37:32",
+      "title": "Girão-Kittipassorn-Narayanan Conjecture on Long Nontrivial Cycles"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.70296
     }
   ],
-  "last_updated": "2026-07-08T02:35:50",
+  "last_updated": "2026-07-08T02:37:32",
   "open_questions": [
     {
       "context": "`sorry`-free Lean proof of Sabidussi's theorem.",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "7e71ceda",
-        "quality": 0.48598591282051284,
-        "theorems": 12,
-        "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs"
-      },
-      {
         "cycle_id": "50adb4ee",
         "quality": 0.49653899999999995,
         "theorems": 8,
@@ -3761,6 +3755,12 @@
         "quality": 0.460800096969697,
         "theorems": 9,
         "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+      },
+      {
+        "cycle_id": "55b8bae9",
+        "quality": 0.69272,
+        "theorems": 17,
+        "title": "Girão-Kittipassorn-Narayanan Conjecture on Long Nontrivial Cycles"
       }
     ],
     "Probability": [

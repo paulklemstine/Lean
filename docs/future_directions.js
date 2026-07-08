@@ -48,21 +48,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
   },
   {
-    "consumed_by_exp_id": "cecc1d95",
-    "description": "The shadowing lemma says that near an approximate orbit of a chaotic system, there exists a true orbit. In other words, every 'almost correct' trajectory of a chaotic map has a 'truly correct' trajectory nearby. This means that numerical errors in chaotic simulations are not bugs \u2014 they are SHADOWS of real trajectories. Conjecture: Every program that computes a chaotic map f: R^n -> R^n has the property that its floating-point output is shadowed by a true orbit of f. More precisely, for every epsilon > 0, there exists delta > 0 such that if x_0, x_1, ..., x_N is a delta-pseudo-orbit (|x_{n+1} - f(x_n)| < delta for all n), then there exists a true orbit y_0, y_1, ..., y_N with |x_n - y_n| < epsilon for all n. The shadowing time N(epsilon, delta) grows at most polynomially in 1/delta for hyperbolic maps. Test: implement the logistic map f(x) = 4x(1-x) in floating-point and compute 10^6 iterations. For each floating-point orbit, use binary search to find the shadowing true orbit. Verify that the shadowing distance is at most 10^{-10} for floating-point precision 10^{-16}. Impact: numerical chaos is not error \u2014 it is a computable shadow of mathematical truth. Your computer's rounding errors are tracing out REAL orbits of the chaotic system.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0593",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T23:49:57.915548+00:00",
-    "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: lines parallel to the x-axis diverge (hyperbolic behavior) while lines parallel to the y-axis converge (elliptic behavior). The metric is ds^2 = dx^2/cosh^2(y) + dy^2 * cosh^2(x) \u2014 expanding in x and contracting in y. Conjecture: Split Geometry is a consistent Riemannian geometry with curvature K(x,y) = -sech^2(y) + sech^2(x) that changes sign across the diagonals. The geometry has a 'phase boundary' along the lines y = x and y = -x where K = 0 (flat). In the region |x| > |y|, K > 0 (elliptic) and in the region |y| > |x|, K < 0 (hyperbolic). The geodesics in split geometry are piecewise combinations of exponential curves (in hyperbolic regions) and trigonometric curves (in elliptic regions). Test: compute the Christoffel symbols and curvature tensor for the split metric. Prove that geodesics cross the phase boundary at most twice. Compute the area of a split triangle with one vertex in each region. Impact: a geometry where the curvature of space depends on which direction you look \u2014 the mathematical realization of a universe that is simultaneously expanding and contracting.",
     "domains": [
@@ -3010,7 +2995,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Characterization of Zero-Preserving Pisot Numerations via Torus Isomorphism"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f61c481a",
     "description": "Conjecture: There exists an absolute constant K>0 such that for every n\u2208\u2115 and every family F\u22862^[n] that is 3\u2011sunflower\u2011free (i.e., contains no three sets with pairwise constant intersection), we have |F| \u2264 K\u00b7n^{1/6}\u00b7(3/2^{2/3})^n.",
     "domains": [
       "Pythagorean"
@@ -3019,7 +3004,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30593v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T23:33:38.013269+00:00",
     "title": "Optimality of the polynomial factor in the Naslund\u2013Sawin bound for sunflower\u2011free families"
   },
@@ -7241,7 +7226,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
   },
   {
-    "consumed_by_exp_id": "b2a0714e",
+    "consumed_by_exp_id": "",
     "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
     "domains": [
       "Novelty",
@@ -7251,7 +7236,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.77,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-07T16:56:44.628941+00:00",
     "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
   },
@@ -7344,6 +7329,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-08T02:35:45.817446+00:00",
     "title": "Complete characterization of antipodality inside the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Long Nontrivial Cycles in Hamiltonian Graphs\n\nThis cycle established that a single chord in a Hamiltonian graph of minimum\ndegree three forces a second cycle of length exactly half the perimeter,\nuniformly across all vertices, and that this half-perimeter guarantee is the best\nobtainable from one chord alone. The gap to the conjectural `n - c` therefore\nlives entirely in the *interaction* between several chords. The following\nconjectures are framed to attack that gap.\n\n## Conjecture 1 (Two crossing chords already beat the half bound)\n\nIf a Hamiltonian graph of minimum degree three contains two chords that *cross*\n(their endpoints alternate around the frame), then it contains a second cycle of\nlength at least `2n/3`.\n\nThe key insight is that two crossing chords partition the frame into four arcs,\nand one can route a single cycle through three of the four arcs \u2014 discarding only\nthe shortest \u2014 instead of being confined to one arc as with a lone chord.\n\nWhy now? The single-chord analysis shows the half bound is *tight* precisely\nbecause only one arc is used; crossing is the minimal structural feature that\nlets a cycle re-use more than one arc, so it is the natural first step beyond the\nhalf bound and is entirely combinatorial.\n\n## Conjecture 2 (Chord density forces near-Hamiltonian second cycles)\n\nIf a Hamiltonian graph on `n` vertices has at least `n` chords (equivalently,\naverage degree at least four on top of the frame), then it contains a second\ncycle of length at least `n - O(log n)`.\n\nThe key insight is that with linearly many chords the \"short arcs\" they cut off\ncan be individually bypassed, and a bypassed arc removes only its own length from\nthe achievable cycle, so plentiful short chords erode the deficit logarithmically\nrather than polynomially.\n\nWhy now? Minimum degree three yields at least `n/2` chords by an elementary\ndegree count; doubling that count to `n` is a modest strengthening under which\nthe deficit's dependence on `n` should provably collapse, isolating where the\npolynomial error bounds in the general problem come from.\n\n## Conjecture 3 (Bounded chord span is the only obstruction)\n\nA Hamiltonian graph of minimum degree three fails to contain a second cycle of\nlength `n - c` (for the optimal absolute `c`) only if all but `c` of its chords\nhave span (cyclic distance) bounded by an absolute constant.\n\nThe key insight is that a long-span chord contributes a long arc directly, so the\nextremal graphs for the conjecture must hide all their length in many short-span\nchords clustered near the frame, turning the problem into one about local chord\npatterns rather than global structure.\n\nWhy now? The proved arc-length identity `L_forward + L_backward = n + 2` shows a\nsingle long-span chord already gives a long cycle, so the extremal analysis can\nbe reduced to short-span chords \u2014 a finite, checkable local configuration space.\n\n## Conjecture 4 (Vertex-uniform strengthening)\n\nIn a Hamiltonian graph of minimum degree three, *every* vertex lies on a second\ncycle of length at least `n - c` for an absolute constant `c`, not merely some\nvertex.\n\nThe key insight is that the half-perimeter guarantee is already vertex-uniform,\nso the correct strong form of the conjecture should be uniform as well: the\nextremal length bound ought not to depend on which vertex one insists the long\ncycle pass through.\n\nWhy now? The uniform half bound (every vertex sits on a nontrivial cycle) is now\nestablished, making the uniform version of the full conjecture a precise and\nnatural target rather than a vague hope, and offering a stronger induction\nhypothesis for attacking the existential version.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0608",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "55b8bae9",
+    "status": "available",
+    "timestamp": "2026-07-08T02:37:28.544727+00:00",
+    "title": "That a single chord in a Hamiltonian graph of minimum"
   },
   {
     "consumed_by_exp_id": "",
