@@ -64,21 +64,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: lines parallel to the x-axis diverge (hyperbolic behavior) while lines parallel to the y-axis converge (elliptic behavior). The metric is ds^2 = dx^2/cosh^2(y) + dy^2 * cosh^2(x) \u2014 expanding in x and contracting in y. Conjecture: Split Geometry is a consistent Riemannian geometry with curvature K(x,y) = -sech^2(y) + sech^2(x) that changes sign across the diagonals. The geometry has a 'phase boundary' along the lines y = x and y = -x where K = 0 (flat). In the region |x| > |y|, K > 0 (elliptic) and in the region |y| > |x|, K < 0 (hyperbolic). The geodesics in split geometry are piecewise combinations of exponential curves (in hyperbolic regions) and trigonometric curves (in elliptic regions). Test: compute the Christoffel symbols and curvature tensor for the split metric. Prove that geodesics cross the phase boundary at most twice. Compute the area of a split triangle with one vertex in each region. Impact: a geometry where the curvature of space depends on which direction you look \u2014 the mathematical realization of a universe that is simultaneously expanding and contracting.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0605",
-    "priority_score": 0.81,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-08T02:27:29.699955+00:00",
-    "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "For every m \u2265 1, the generating tree encoding the recursive decomposition of intervals in the greedy m-Tamari poset (on Dyck paths of size n) is isomorphic to the generating tree encoding the recursive decomposition of planar (m+1)-constellations of size n. This conjecture generalizes the m=1 case proved in the paper and would provide a combinatorial proof of the equinumerosity refined by the parameters tracked in the generating tree (e.g., number of valleys in Dyck paths and corresponding statistics in constellations).",
     "domains": [
       "Pythagorean",
@@ -1432,21 +1417,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T09:58:51.961008+00:00",
     "title": "Sharp Lower Bounds for Sumsets in L\u2081 Balls in \u2124\u1d48"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The conjecture asserts that for any partitions \u03bc, \u03bb, the coefficients in the expansion of (-1)^{|\u03bc|-\u2113(\u03bc)}\u27e8\u2207m\u03bc, s\u03bb\u27e9 are non-negative integers.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0139",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.00940v1",
-    "status": "available",
-    "timestamp": "2026-07-03T10:38:18.237447+00:00",
-    "title": "Nonnegativity of Schur Positivity"
   },
   {
     "consumed_by_exp_id": "",
@@ -4149,21 +4119,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Any simple graph on n vertices with minimum degree at least 3 that contains a Hamiltonian cycle must contain another cycle (a nontrivial cycle) of length at least n - c for some absolute constant c > 0. This formalizes the primary open conjecture addressed in the paper, which currently only has polynomial error bounds.",
-    "domains": [
-      "Pythagorean",
-      "Physics"
-    ],
-    "id": "fd_0360",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01738v1",
-    "status": "available",
-    "timestamp": "2026-07-06T00:21:09.674491+00:00",
-    "title": "Gir\u00e3o-Kittipassorn-Narayanan Conjecture on Long Nontrivial Cycles"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "For every integer k \u2265 6 with k \u2261 2 (mod 4), and for every pair of nonnegative integers (a, b) with a + b = k and a \u2265 1, the number 2^a \u00b7 3^b \u2212 1 is composite. This formalizes the paper's theorem that row k of the principal skeleton L\u2081 contains no primes when k \u2261 2 (mod 4) and k \u2265 6. The proof exploits that k even forces a and b to share parity. When both even, 2^a \u00b7 3^b \u2212 1 = (2^{a/2} \u00b7 3^{b/2} \u2212 1)(2^{a/2} \u00b7 3^{b/2} + 1) via difference of squares, with both factors > 1 for k \u2265 6. When both odd, k \u2261 2 (mod 4) forces a \u2261 b (mod 4), yielding 2^a \u00b7 3^b \u2261 1 (mod 5) so 5 | (2^a \u00b7 3^b \u2212 1), and the cofactor exceeds 1 since k \u2265 6 excludes the case a = b = 1 where the value equals 5.",
     "domains": [
       "Pythagorean",
@@ -4699,20 +4654,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-06T13:09:05.350644+00:00",
     "title": "Reachability of equal-size independent sets in P\u2084\u2011tidy graphs under token sliding"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "A finite partial cube satisfying the opposite-semicube Helly property is antipodal if and only if its opposite semicubes are pairwise isomorphic.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0400",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.31468v1",
-    "status": "available",
-    "timestamp": "2026-07-06T13:53:12.762795+00:00",
-    "title": "Antipodality Characterization via Opposite-Semicube Helly Property"
   },
   {
     "consumed_by_exp_id": "",
@@ -7199,12 +7140,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The partial dominating set value function |N[S]| (number of vertices dominated by a set S) cannot be expressed as an FO Value expression with quantifier-free correction terms over the vocabulary of graphs. Concretely: for every unary weight function w : V(G) \u2192 \u2115 and every quantifier-free formula \u03c6(x\u2081,...,x\u2098) over the vocabulary {E}, there exists a graph G and a finite set S \u2286 V(G) such that |N_G[S]| \u2260 (\u03a3_{v \u2208 S} w(v)) \u2212 |{(v\u2081,...,v\u2098) \u2208 S\u1d50 : G \u22a8 \u03c6(v\u2081,...,v\u2098)}|. This contrasts with Partial Vertex Cover, which the paper shows is a quantifier-free FO Value instance via the identity |{e : e \u2229 S \u2260 \u2205}| = \u03a3_{v \u2208 S} deg(v) \u2212 |E(G[S])|, where the correction term E(x,y) is quantifier-free. The dominating set value requires counting vertices outside S that are adjacent to multiple vertices in S, necessitating existential quantification over vertices not in the selected tuple.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0601",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06446v1",
+    "status": "available",
+    "timestamp": "2026-07-08T03:16:20.689307+00:00",
+    "title": "Inexpressibility of Partial Dominating Set as Quantifier-Free FO Value"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any finite metric space X of strictly negative type there exists exactly one signed measure \u03bc of total mass 1 that minimizes the energy functional E(\u03bc)=\u2211_{x,y\u2208X}d(x,y)\u03bc(x)\u03bc(y); moreover \u03bc can be characterized as the unique optimizer of this strictly convex quadratic program.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0601",
+    "id": "fd_0602",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05349v1",
@@ -7218,7 +7173,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0602",
+    "id": "fd_0603",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05305v1",
@@ -7232,13 +7187,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0603",
+    "id": "fd_0604",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05324v1",
     "status": "available",
     "timestamp": "2026-07-08T01:55:28.254950+00:00",
     "title": "Exact formula for the number of quasinecklaces"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For integers n, k, \u2113 with n > 100\u00b7\u2113\u00b7k\u00b2 and 3 \u2264 \u2113 < k, if F \u2286 ([n] choose k) and G \u2286 ([n] choose \u2113) are non-trivial cross-intersecting families (i.e., \u22c2_{F\u2208F} F = \u2205 and \u22c2_{G\u2208G} G = \u2205, and F \u2229 G \u2260 \u2205 for all F \u2208 F, G \u2208 G), then |F|\u00b7|G| \u2264 h(n,k)\u00b7(n-1 choose \u2113-1), where h(n,k) = (n-1 choose k-1) - (n-k-1 choose k-1) + 1 is the Hilton-Milner bound.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0605",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06443v1",
+    "status": "available",
+    "timestamp": "2026-07-08T03:16:37.289057+00:00",
+    "title": "Product Hilton-Milner theorem for large n"
   },
   {
     "consumed_by_exp_id": "d9ca63e8",
@@ -7266,24 +7235,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.77,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-07-07T16:56:44.628941+00:00",
     "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers \u2014 anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension \u2014 they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property \u2014 it's not about content quality but about the sheaf cohomology of the social network.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0604",
-    "priority_score": 0.77,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-08T02:27:29.630756+00:00",
-    "title": "The Mathematics of Memes: Viral Information Topology"
   },
   {
     "consumed_by_exp_id": "4e3da0be",
@@ -7329,51 +7283,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-07T17:01:12.860686+00:00",
     "title": "Sharp dichotomy for the *total* d-Hoggatt numbers"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: The Symmetry Frontier of Impossibility\n\nThis cycle established a precise algebraic kernel for the slogan *\"impossibility\nis symmetry\"*: a symmetric distinguishing task on a group-acted structure is\nsolvable exactly when the action is trivial, and free nontrivial actions are the\nsharpest obstruction. The following conjectures push that kernel outward.\n\n## 1. The quotient dichotomy for partial distinguishers\n\n**Conjecture.** For a group `G` acting on `X`, the maximal number of points an\ninvariant function can separate equals the number of orbits; more precisely, the\nposet of invariant functions on `X` is canonically isomorphic to the poset of\nfunctions on the orbit space `X/G`, and every invariant function factors\nuniquely through the orbit projection.\n\n*The key insight is* that invariance is not merely an obstruction but a\n*change of base*: every symmetric observable is a function on the quotient, so\nthe impossibility of full separation is exactly the failure of the quotient map\nto be injective, measured by orbit sizes.\n\n*Why now?* The present cycle proved the two endpoints (trivial action = full\nseparation, nontrivial action = no full separation). The intermediate regime \u2014\ncounting *how much* separation survives \u2014 is the natural refinement and reduces\nto a clean statement about the orbit space that is within immediate reach.\n\n## 2. Freeness as the unique universal obstruction\n\n**Conjecture.** Among all nontrivial actions of a fixed group `G`, the free\nactions are exactly those for which *every* orbit map is an embedding of `G`;\nconsequently a free action is the terminal object among actions admitting no\ninvariant distinguisher, and any action with a fixed point is strictly weaker as\nan obstruction.\n\n*The key insight is* that freeness is not just \"no fixed points\" but the\nstatement that each orbit is a faithful copy of the group, so the obstruction it\nproduces is *uniform across the whole space* rather than merely generic.\n\n*Why now?* The characterization of freeness via injective orbit maps proved this\ncycle is precisely the tool needed to rank actions by obstruction strength; the\nordering of nontrivial-but-nonfree actions between \"trivial\" and \"free\" is the\nmissing structural theorem.\n\n## 3. A Galois bridge: unsolvability from freeness of the root action\n\n**Conjecture.** For a separable polynomial whose Galois group acts freely and\ntransitively on a distinguished set of root-data, no radical tower can produce a\nselector that is equivariant for that action; hence unsolvability by radicals is\na corollary of freeness of the Galois action on the relevant fiber.\n\n*The key insight is* that a radical formula is exactly an equivariant selector\nfor the Galois action, so its nonexistence is an instance of the general\n\"no symmetric rule breaks a symmetric structure\" principle rather than a\nphenomenon special to degree five.\n\n*Why now?* The symmetric-group instance proved this cycle already exhibits the\nfree regular action of `S\u2085`; connecting it to the standard solvability criterion\nturns a suggestive analogy into a genuine reduction.\n\n## 4. Cryptographic canonicalization is symmetry-obstructed\n\n**Conjecture.** For any protocol whose message space carries a free nontrivial\nsymmetry (e.g. a cyclic re-keying or a permutation of anonymous parties), there\nis no deterministic canonicalization rule that both respects the symmetry and\ndistinguishes distinct states; every symmetric tie-breaker must therefore be\nrandomized or must break the symmetry explicitly.\n\n*The key insight is* that a deterministic symmetric canonical form is precisely\nan invariant injective task, which the impossibility theorem forbids the instant\nthe symmetry group is nontrivial.\n\n*Why now?* The regular-action impossibility proved this cycle is exactly the\nabstract form of \"no symmetric deterministic representative\"; recasting fairness\nand anonymity impossibilities in this language would unify several protocol-level\nno-go results under one algebraic statement.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0606",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "44d92b62",
-    "status": "available",
-    "timestamp": "2026-07-08T02:34:21.695399+00:00",
-    "title": "Precise algebraic kernel for the slogan *\"impossibility"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Antipodality and the Opposite-Semicube Helly Property\n\nThis cycle established a complete characterization of antipodality inside the\nhypercube: the bit-complement map is a global isometry, and a vertex set is\nantipodal **exactly when** this map swaps every pair of opposite semicubes.\nAlong the way, every vertex of an antipodal set has a unique diametral partner,\nand the semicubes of the hypercube satisfy the Helly property with Helly number\nexactly two. The following conjectures push the characterization from the\ncanonical (antipode-driven) isomorphism to the abstract one and beyond.\n\n## Conjecture 1 \u2014 The abstract-isomorphism Helly converse\n\nThe characterization proved this cycle uses the *canonical* isomorphism given by\nthe antipode map. The bolder statement drops the canonical map: a finite partial\ncube satisfying the opposite-semicube Helly property is antipodal whenever all of\nits opposite semicubes are *abstractly* isomorphic (matching cardinalities and\ninternal geometry, with no preferred matching supplied).\n\n*The key insight is* that abstract isomorphism supplies, for each direction, some\ndistance-preserving matching between the two halves, and the Helly property is\nexactly the coherence condition that lets these per-direction matchings be forced\nto coincide with the single global involution \u2014 the antipode map \u2014 already known\nto witness the canonical version. *Why now?* Both endpoints are in hand: the\ncanonical biconditional is fully established, and the gluing obstruction is\ngoverned by the constructive Helly assignment proved here, so the remaining work\nis to show that any abstract per-direction matching must agree on overlaps with\nthe antipode, collapsing the abstract hypothesis onto the canonical one.\n\n## Conjecture 2 \u2014 Helly number is a partial-cube invariant\n\nFor every finite partial cube, the Helly number of its family of semicubes is at\nmost two, with equality unless the cube is a single vertex.\n\n*The key insight is* that a semicube is a halfspace, and halfspace families in\nmedian-like geometries never require more than pairwise checking; the antipodal\ncase is merely the extremal instance where every halfspace has an exact opposite.\n*Why now?* The hypercube case is settled constructively, giving a template for\nthe induction on isometric expansions that build every partial cube.\n\n## Conjecture 3 \u2014 Diameter rigidity\n\nA finite partial cube is antipodal if and only if every vertex has a unique\nvertex at maximum distance and this correspondence is a distance-preserving\ninvolution.\n\n*The key insight is* that the uniqueness of the diametral mate already forces the\ncorrespondence to reverse every semicube, and reversing every semicube is\nantipodality; the involution hypothesis removes degenerate near-antipodal\nconfigurations. *Why now?* The hypercube version \u2014 distance `n` characterizes the\nantipode, and the mate is unique \u2014 is proved here, so the conjecture asks only\nwhether isometric embedding transports this rigidity.\n\n## Conjecture 4 \u2014 Isomorphism spectrum\n\nIn an antipodal partial cube the multiset of isomorphism types of opposite\nsemicubes is a single type; conversely, a bounded number of distinct types forces\na bounded \"defect from antipodality\" measured by the smallest set of vertices\nwhose addition restores complement-closure.\n\n*The key insight is* that antipodality is the collapse of the isomorphism\nspectrum to one point, so counting distinct semicube types quantifies exactly how\nfar a partial cube is from being antipodal. *Why now?* The forward collapse is\nestablished, so the quantitative converse becomes a well-posed extremal question.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0607",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "4aec9d8b",
-    "status": "available",
-    "timestamp": "2026-07-08T02:35:45.817446+00:00",
-    "title": "Complete characterization of antipodality inside the"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Long Nontrivial Cycles in Hamiltonian Graphs\n\nThis cycle established that a single chord in a Hamiltonian graph of minimum\ndegree three forces a second cycle of length exactly half the perimeter,\nuniformly across all vertices, and that this half-perimeter guarantee is the best\nobtainable from one chord alone. The gap to the conjectural `n - c` therefore\nlives entirely in the *interaction* between several chords. The following\nconjectures are framed to attack that gap.\n\n## Conjecture 1 (Two crossing chords already beat the half bound)\n\nIf a Hamiltonian graph of minimum degree three contains two chords that *cross*\n(their endpoints alternate around the frame), then it contains a second cycle of\nlength at least `2n/3`.\n\nThe key insight is that two crossing chords partition the frame into four arcs,\nand one can route a single cycle through three of the four arcs \u2014 discarding only\nthe shortest \u2014 instead of being confined to one arc as with a lone chord.\n\nWhy now? The single-chord analysis shows the half bound is *tight* precisely\nbecause only one arc is used; crossing is the minimal structural feature that\nlets a cycle re-use more than one arc, so it is the natural first step beyond the\nhalf bound and is entirely combinatorial.\n\n## Conjecture 2 (Chord density forces near-Hamiltonian second cycles)\n\nIf a Hamiltonian graph on `n` vertices has at least `n` chords (equivalently,\naverage degree at least four on top of the frame), then it contains a second\ncycle of length at least `n - O(log n)`.\n\nThe key insight is that with linearly many chords the \"short arcs\" they cut off\ncan be individually bypassed, and a bypassed arc removes only its own length from\nthe achievable cycle, so plentiful short chords erode the deficit logarithmically\nrather than polynomially.\n\nWhy now? Minimum degree three yields at least `n/2` chords by an elementary\ndegree count; doubling that count to `n` is a modest strengthening under which\nthe deficit's dependence on `n` should provably collapse, isolating where the\npolynomial error bounds in the general problem come from.\n\n## Conjecture 3 (Bounded chord span is the only obstruction)\n\nA Hamiltonian graph of minimum degree three fails to contain a second cycle of\nlength `n - c` (for the optimal absolute `c`) only if all but `c` of its chords\nhave span (cyclic distance) bounded by an absolute constant.\n\nThe key insight is that a long-span chord contributes a long arc directly, so the\nextremal graphs for the conjecture must hide all their length in many short-span\nchords clustered near the frame, turning the problem into one about local chord\npatterns rather than global structure.\n\nWhy now? The proved arc-length identity `L_forward + L_backward = n + 2` shows a\nsingle long-span chord already gives a long cycle, so the extremal analysis can\nbe reduced to short-span chords \u2014 a finite, checkable local configuration space.\n\n## Conjecture 4 (Vertex-uniform strengthening)\n\nIn a Hamiltonian graph of minimum degree three, *every* vertex lies on a second\ncycle of length at least `n - c` for an absolute constant `c`, not merely some\nvertex.\n\nThe key insight is that the half-perimeter guarantee is already vertex-uniform,\nso the correct strong form of the conjecture should be uniform as well: the\nextremal length bound ought not to depend on which vertex one insists the long\ncycle pass through.\n\nWhy now? The uniform half bound (every vertex sits on a nontrivial cycle) is now\nestablished, making the uniform version of the full conjecture a precise and\nnatural target rather than a vague hope, and offering a stronger induction\nhypothesis for attacking the existential version.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0608",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "55b8bae9",
-    "status": "available",
-    "timestamp": "2026-07-08T02:37:28.544727+00:00",
-    "title": "That a single chord in a Hamiltonian graph of minimum"
   },
   {
     "consumed_by_exp_id": "",
