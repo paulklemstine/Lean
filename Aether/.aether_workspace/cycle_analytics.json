@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-08T10:59:13.126411+00:00",
+  "last_updated": "2026-07-08T11:31:53.957530+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -1315,6 +1315,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-08T10:59:13.097803+00:00",
       "title": "Generalized Honeymoon Oberwolfach Problem with Multiple Round Tables"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 38,
+      "domain": "Probability",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "c8ed5b11",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v27",
+      "phase_b_skipped": false,
+      "prompt_version": "v27",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783508343.2993388,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-08T11:31:53.918917+00:00",
+      "title": "DFA State Complexity Lower Bound for the Kochen-Specker Problem"
     }
   ]
 }

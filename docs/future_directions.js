@@ -2862,7 +2862,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "CM tournaments are precisely the cycle\u2011ideal tournaments"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9b08c356",
     "description": "For all integers n \u2265 2, the number of labeled partially ordered sets on n points (OEIS A001035) satisfies P(n) \u2261 3 (mod 4). This congruence is verified for n = 2 through 19 (with P(19) = 646099441937791106493755218560442089979 \u2261 3 mod 4) and predicts the same residue for P(20) and beyond. The paper's mention of a 'modular periodicity' check for A001035 suggests such congruences are structurally inherent in the Ern\u00e9-Stege moment reduction.",
     "domains": [
       "Bridges"
@@ -2871,7 +2871,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31526v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T18:54:52.477458+00:00",
     "title": "Constant residue of labeled poset counts modulo 4"
   },
@@ -5090,7 +5090,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sub-square-root bound for smooth character sums at the critical threshold"
   },
   {
-    "consumed_by_exp_id": "c8ed5b11",
+    "consumed_by_exp_id": "",
     "description": "Any deterministic finite automaton (DFA) that correctly solves the Kochen-Specker problem (KSP) for a simple exclusivity graph G must possess at least \u03c7(G) internal states. The KSP is defined as a language recognition task over the vertices of G, where strings of identical vertices are accepted, and strings of adjacent vertices are rejected.",
     "domains": [
       "Computation",
@@ -5100,7 +5100,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00507v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T07:33:08.390636+00:00",
     "title": "DFA State Complexity Lower Bound for the Kochen-Specker Problem"
   },
@@ -7340,12 +7340,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every connected vertex-transitive digraph on n \u2265 1 vertices contains a directed cycle of length at least \u2308\u221an\u2309. This is the natural directed analogue of Babai's 1979 theorem for undirected vertex-transitive graphs, and strengthens the paper's asymptotic \u03a9(\u221an) lower bound to an explicit constant of 1.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0616",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05807v1",
+    "status": "available",
+    "timestamp": "2026-07-08T11:32:09.225914+00:00",
+    "title": "Directed Babai Theorem: Long Cycles in Vertex-Transitive Digraphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any finite metric space X of strictly negative type there exists exactly one signed measure \u03bc of total mass 1 that minimizes the energy functional E(\u03bc)=\u2211_{x,y\u2208X}d(x,y)\u03bc(x)\u03bc(y); moreover \u03bc can be characterized as the unique optimizer of this strictly convex quadratic program.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0616",
+    "id": "fd_0617",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05349v1",
@@ -7359,7 +7373,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0617",
+    "id": "fd_0618",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05305v1",
@@ -7373,7 +7387,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0618",
+    "id": "fd_0619",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05324v1",
@@ -7387,7 +7401,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0619",
+    "id": "fd_0620",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06443v1",
@@ -7402,7 +7416,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0620",
+    "id": "fd_0621",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06396v1",
@@ -7416,7 +7430,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Cryptography"
     ],
-    "id": "fd_0621",
+    "id": "fd_0622",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
@@ -7430,7 +7444,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0622",
+    "id": "fd_0623",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06336v1",
@@ -7444,7 +7458,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0623",
+    "id": "fd_0624",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06351v1",
@@ -7459,7 +7473,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0624",
+    "id": "fd_0625",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06263v1",
@@ -7474,7 +7488,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0625",
+    "id": "fd_0626",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06228v1",
@@ -7489,7 +7503,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0626",
+    "id": "fd_0627",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06198v1",
@@ -7503,7 +7517,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0627",
+    "id": "fd_0628",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06181v1",
@@ -7518,7 +7532,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0628",
+    "id": "fd_0629",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06082v1",
@@ -7533,7 +7547,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_0629",
+    "id": "fd_0630",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06022v1",
@@ -7547,7 +7561,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0630",
+    "id": "fd_0631",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06073v1",
@@ -7561,7 +7575,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0631",
+    "id": "fd_0632",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06061v1",
@@ -7576,7 +7590,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0632",
+    "id": "fd_0633",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05926v1",
@@ -7590,13 +7604,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0633",
+    "id": "fd_0634",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05961v1",
     "status": "available",
     "timestamp": "2026-07-08T11:00:38.273301+00:00",
     "title": "t-Perfect Graph 4-Colorability Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every loopless matroid M on finite ground set E and every Feichtner\u2013Yuzvinsky building set G containing the top flat E, the K-polynomial of the integral tangent class T^Z_{M,G} \u2208 K_Z(M,G) equals the Hilbert series of the Chow ring A*(M,G). Concretely, P^K(T^Z_{M,G}, t) = Hilb(A*(M,G), t) as polynomials in Z[t]. This is the central P^K=Hilb identity (Theorem A, property 2) of the paper, connecting the K-theoretic tangent class to the cohomological Hilbert series.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0635",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05835v1",
+    "status": "available",
+    "timestamp": "2026-07-08T11:32:34.706786+00:00",
+    "title": "Hirzebruch\u2013Riemann\u2013Roch Identity for the Integral Tangent Class of Matroids"
   },
   {
     "consumed_by_exp_id": "d51a45d4",
