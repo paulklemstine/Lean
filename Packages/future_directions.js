@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "46774af6",
+    "consumed_by_exp_id": "06c3f92b",
     "description": "The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the j-function is just the TIP of the iceberg. Conjecture: The full moonshine correspondence associates to each conjugacy class g in M a McKay-Thompson series T_g(q) = sum a_n(g) q^n that is a modular function of a specific level, and the product over all g in M of T_g(q) equals a modular form of weight |M|/24 that encodes the complete character table of M. The secret message: the Monster group IS a modular form, and every property of M (its order, its character table, its maximal subgroups) can be read off from the q-expansion of this product. Test: compute the first 100 coefficients of T_g(q) for each conjugacy class of M and verify they match the known character values. Prove that the product of all T_g(q) converges to a modular form. Impact: the Monster is not just connected to modular forms \u2014 it IS a modular form. The 194 conjugacy classes of M correspond to 194 modular forms, and their product encodes everything.",
     "domains": [
       "Novelty",
@@ -33,7 +33,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
   },
   {
-    "consumed_by_exp_id": "8b33e545",
+    "consumed_by_exp_id": "8dce6893",
     "description": "The shadowing lemma says that near an approximate orbit of a chaotic system, there exists a true orbit. In other words, every 'almost correct' trajectory of a chaotic map has a 'truly correct' trajectory nearby. This means that numerical errors in chaotic simulations are not bugs \u2014 they are SHADOWS of real trajectories. Conjecture: Every program that computes a chaotic map f: R^n -> R^n has the property that its floating-point output is shadowed by a true orbit of f. More precisely, for every epsilon > 0, there exists delta > 0 such that if x_0, x_1, ..., x_N is a delta-pseudo-orbit (|x_{n+1} - f(x_n)| < delta for all n), then there exists a true orbit y_0, y_1, ..., y_N with |x_n - y_n| < epsilon for all n. The shadowing time N(epsilon, delta) grows at most polynomially in 1/delta for hyperbolic maps. Test: implement the logistic map f(x) = 4x(1-x) in floating-point and compute 10^6 iterations. For each floating-point orbit, use binary search to find the shadowing true orbit. Verify that the shadowing distance is at most 10^{-10} for floating-point precision 10^{-16}. Impact: numerical chaos is not error \u2014 it is a computable shadow of mathematical truth. Your computer's rounding errors are tracing out REAL orbits of the chaotic system.",
     "domains": [
       "Novelty",
@@ -7443,12 +7443,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The non-separating degeneration of the multivariable Enriquez connection from genus h to h-1 with two punctures induces a map on the associated Lie algebras whose matrix coefficients are polynomials in Bernoulli numbers B_2, B_4, ..., B_{2h-2} with rational coefficients. These polynomials are universal in the sense that they do not depend on h, and coincide with the polynomials obtained from the genus 1 degeneration. Specifically, for each generator index, the coefficient of B_{2k} in the degeneration formula is a fixed rational number independent of h.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0623",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05656v1",
+    "status": "available",
+    "timestamp": "2026-07-08T15:29:36.098258+00:00",
+    "title": "Universality of Bernoulli generating functions in non-separating degeneration of Enriquez connections"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any finite metric space X of strictly negative type there exists exactly one signed measure \u03bc of total mass 1 that minimizes the energy functional E(\u03bc)=\u2211_{x,y\u2208X}d(x,y)\u03bc(x)\u03bc(y); moreover \u03bc can be characterized as the unique optimizer of this strictly convex quadratic program.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0623",
+    "id": "fd_0624",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05349v1",
@@ -7462,7 +7476,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0624",
+    "id": "fd_0625",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05305v1",
@@ -7476,7 +7490,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0625",
+    "id": "fd_0626",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05324v1",
@@ -7490,7 +7504,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0626",
+    "id": "fd_0627",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06443v1",
@@ -7505,7 +7519,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0627",
+    "id": "fd_0628",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06396v1",
@@ -7519,7 +7533,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Cryptography"
     ],
-    "id": "fd_0628",
+    "id": "fd_0629",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
@@ -7533,7 +7547,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0629",
+    "id": "fd_0630",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06336v1",
@@ -7547,7 +7561,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0630",
+    "id": "fd_0631",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06351v1",
@@ -7562,7 +7576,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0631",
+    "id": "fd_0632",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06263v1",
@@ -7577,7 +7591,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0632",
+    "id": "fd_0633",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06228v1",
@@ -7592,7 +7606,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0633",
+    "id": "fd_0634",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06198v1",
@@ -7606,7 +7620,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0634",
+    "id": "fd_0635",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06181v1",
@@ -7621,7 +7635,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0635",
+    "id": "fd_0636",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06082v1",
@@ -7636,7 +7650,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_0636",
+    "id": "fd_0637",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06022v1",
@@ -7650,7 +7664,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0637",
+    "id": "fd_0638",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06073v1",
@@ -7664,7 +7678,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0638",
+    "id": "fd_0639",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06061v1",
@@ -7679,7 +7693,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0639",
+    "id": "fd_0640",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05926v1",
@@ -7693,7 +7707,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0640",
+    "id": "fd_0641",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05961v1",
@@ -7708,7 +7722,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0641",
+    "id": "fd_0642",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05835v1",
@@ -7722,7 +7736,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0642",
+    "id": "fd_0643",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05823v1",
@@ -7737,7 +7751,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0643",
+    "id": "fd_0644",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05767v1",
@@ -7752,7 +7766,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0644",
+    "id": "fd_0645",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05592v1",
@@ -7766,7 +7780,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0645",
+    "id": "fd_0646",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05688v1",
@@ -7781,7 +7795,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0646",
+    "id": "fd_0647",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05739v1",
@@ -7796,13 +7810,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_0647",
+    "id": "fd_0648",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05707v1",
     "status": "available",
     "timestamp": "2026-07-08T14:53:30.067692+00:00",
     "title": "Sieve Weight Correlation Product Identity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any 2x2 matrix A over a commutative ring R, the anti-diagonal entries of A^(k+1) are equal to the product of the corresponding anti-diagonal entries of A and the trace of the k-th symmetric power of A. This algebraic identity implies the conjugation invariance of the anti-diagonal power quotients and generalizes Fibonacci/Lucas identities.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0649",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05589v1",
+    "status": "available",
+    "timestamp": "2026-07-08T15:30:29.182057+00:00",
+    "title": "Anti-diagonal Trace Identity for 2x2 Matrix Symmetric Powers"
   },
   {
     "consumed_by_exp_id": "edee947a",
