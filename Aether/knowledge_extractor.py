@@ -943,17 +943,24 @@ class KnowledgeExtractor:
         # Phase A prompt version selection. v15 is the stable baseline.
         # Weights can be overridden via config (pi_agent.phase_a_prompt_weights)
         # or environment variable AETHER_PHASE_A_PROMPT_WEIGHTS as JSON.
-        prompt_weights = DEFAULT_PHASE_A_PROMPT_WEIGHTS.copy()
-        config_weights = self.config.get("pi_agent", {}).get("phase_a_prompt_weights")
-        if config_weights and isinstance(config_weights, dict):
-            prompt_weights.update(config_weights)
-        env_weights = os.environ.get("AETHER_PHASE_A_PROMPT_WEIGHTS")
-        if env_weights:
-            try:
-                prompt_weights.update(json.loads(env_weights))
-            except Exception as e:
-                print(f"[Dispatch] Ignoring invalid AETHER_PHASE_A_PROMPT_WEIGHTS: {e}")
-        phase_a_version = select_phase_a_prompt_version(prompt_weights)
+        # A/B selection: Thompson-sampling bandit or manual config weights.
+        _bandit_mode = self.config.get("pi_agent", {}).get("phase_a_bandit", False)
+        if _bandit_mode:
+            # No weights → Thompson sampling (Beta distribution per arm, anneals
+            # from exploration to exploitation as data accumulates).
+            phase_a_version = select_phase_a_prompt_version(None, workspace_dir=self.workspace)
+        else:
+            prompt_weights = DEFAULT_PHASE_A_PROMPT_WEIGHTS.copy()
+            config_weights = self.config.get("pi_agent", {}).get("phase_a_prompt_weights")
+            if config_weights and isinstance(config_weights, dict):
+                prompt_weights.update(config_weights)
+            env_weights = os.environ.get("AETHER_PHASE_A_PROMPT_WEIGHTS")
+            if env_weights:
+                try:
+                    prompt_weights.update(json.loads(env_weights))
+                except Exception as e:
+                    print(f"[Dispatch] Ignoring invalid AETHER_PHASE_A_PROMPT_WEIGHTS: {e}")
+            phase_a_version = select_phase_a_prompt_version(prompt_weights)
         job.prompt_version = phase_a_version  # legacy field
         job.phase = "A"  # Two-phase: this is Phase A (math)
         job.phase_a_prompt_version = phase_a_version

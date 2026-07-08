@@ -31,11 +31,10 @@ from arxiv_provider import ArxivTexProvider
 # Phase A prompt version registry and default A/B weights.
 # New prompt variants are added here; the orchestrator samples from these weights.
 DEFAULT_PHASE_A_PROMPT_WEIGHTS: Dict[str, float] = {
-    "v19": 0.50,   # baseline: v12 speculative + v16 scientific-method rigor
-    "v19a": 0.15,  # baseline + 50/50 famous-subtask / cross-domain menu constraint
-    "v19b": 0.15,  # baseline + mandatory pre-proof computational stage
-    "v19c": 0.10,  # baseline + recursive abduction / thread continuation mandate
-    "v19d": 0.10,  # baseline + external signal awareness (arXiv/OEIS/LMFDB)
+    # v19 family (5 arms) — scientific-method team loop
+    "v19": 0.10, "v19a": 0.10, "v19b": 0.10, "v19c": 0.10, "v19d": 0.10,
+    # v24-v28 (5 arms) — minimalist prompts, less is more
+    "v24": 0.10, "v25": 0.10, "v26": 0.10, "v27": 0.10, "v28": 0.10,
 }
 
 DEFAULT_PHASE_B_PROMPT_WEIGHTS: Dict[str, float] = {
@@ -101,7 +100,7 @@ def select_phase_a_prompt_version(weights: Optional[Dict[str, float]] = None, wo
     except Exception:
         pass
 
-    under_explored = [arm for arm in active_arms if stats.get(arm, {}).get("n", 0) < 30]
+    under_explored = [arm for arm in active_arms if stats.get(arm, {}).get("count", 0) < 30]
     
     if under_explored:
         chosen = random.choice(under_explored)
@@ -115,11 +114,11 @@ def select_phase_a_prompt_version(weights: Optional[Dict[str, float]] = None, wo
     state = {}
     for arm in active_arms:
         arm_stats = stats.get(arm, {})
-        n = arm_stats.get("n", 0)
-        avg_q = arm_stats.get("avg_Q", 0.0)
+        n = arm_stats.get("count", 0)
+        avg_q = arm_stats.get("avg_quality", 0.0)
         sum_q = avg_q * n
-        alpha = 1 + sum_q
-        beta = 1 + (n - sum_q)
+        alpha = max(1.0, 1 + sum_q)
+        beta = max(1.0, 1 + (n - sum_q))
         
         state[arm] = {"alpha": alpha, "beta": beta, "n": n, "avg_Q": avg_q}
         
@@ -136,7 +135,7 @@ def select_phase_a_prompt_version(weights: Optional[Dict[str, float]] = None, wo
         pass
         
     c_stats = stats.get(chosen, {})
-    print(f"[Bandit] arm={chosen} n={c_stats.get('n', 0)} avg_Q={c_stats.get('avg_Q', 0.0):.3f} sampled={chosen}")
+    print(f"[Bandit] arm={chosen} n={c_stats.get('count', 0)} avg_Q={c_stats.get('avg_quality', 0.0):.3f} sampled={chosen}")
     return chosen
 
 
@@ -2493,6 +2492,92 @@ class PiAgentClient:
         """)
 
 
+    def _build_v24_directive(self):
+        return textwrap.dedent("""\
+            ## v24: Minimalist
+            Prove interesting theorems in Lean 4. Complete proofs only — 0 sorries.
+            Clear docstrings. Nothing else. No Lab Notes, no team roles, no process
+            documentation. Use your full compute on mathematics.
+        """)
+
+    def _build_v25_directive(self):
+        return textwrap.dedent("""\
+            ## v25: Builder
+            Start with the simplest non-trivial result you can prove. Prove it completely.
+            Then prove the next lemma that follows naturally from it. Each theorem should
+            use the previous one. Build a chain of results as long as you can.
+        """)
+
+    def _build_v26_directive(self):
+        return textwrap.dedent("""\
+            ## v26: Contrarian
+            Formulate bold conjectures in this domain. Try to PROVE each one. If you
+            find a counterexample, that is a valuable result too — disproofs count.
+            Report what you proved and what you disproved.
+        """)
+
+    def _build_v27_directive(self):
+        return textwrap.dedent("""\
+            ## v27: Connector
+            Find a theorem that connects two seemingly unrelated mathematical areas.
+            Prove the connection. Cross-domain bridges are the most valuable results.
+        """)
+
+    def _build_v28_directive(self):
+        return textwrap.dedent("""\
+            ## v28: Explorer
+            Pick the most interesting theorem you can prove in this domain. Prove it
+            completely. Then explore what follows from it. Keep proving theorems until
+            your compute budget is exhausted. No constraints on approach or style.
+        """)
+
+    def _build_phase_a_minimal_prompt(self, concept, prompt_version):
+        """v24-v28: Minimalist prompts. Direction + guardrails, nothing else."""
+        directive_map = {
+            "v24": self._build_v24_directive,
+            "v25": self._build_v25_directive,
+            "v26": self._build_v26_directive,
+            "v27": self._build_v27_directive,
+            "v28": self._build_v28_directive,
+        }
+        directive_fn = directive_map.get(prompt_version, self._build_v28_directive)
+        directive = directive_fn()
+
+        refs = concept.catalog_references or []
+        refs_section = ""
+        if refs:
+            refs_section = (
+                "### Attached Catalog References (read these first)\n"
+                + "\n".join(f"- `{r}`" for r in refs[:8])
+                + "\n"
+            )
+
+        return textwrap.dedent(f"""\
+            # Phase A Research Mission {prompt_version}: {concept.title}
+
+            ## Concept
+            **Domain**: {concept.domain}
+            **Research mode**: {concept.research_mode}
+            **Title**: {concept.title}
+            **Description**: {concept.concept_description}
+            **Mathematical framing**: {concept.mathematical_framing}
+
+            {refs_section}
+
+            {directive}
+
+            ### Guardrails (non-negotiable)
+            - No trivial theorems (True, Inhabited-only, native_decide-only, rfl-only).
+            - No circular proofs — a theorem must not reference itself in its own proof.
+            - No truncated/stubbed declarations — every theorem needs a complete `:= by ...` proof.
+            - No `sorry` in main theorems.
+            - Every file must be self-contained (compiles independently).
+
+            ### Output
+            Return `.lean` files and `FUTURE_DIRECTIONS.md` only. Focus all compute
+            on the mathematics.
+        """)
+
     def write_aristotle_prompt(
         self,
         concept: ResearchConcept,
@@ -2746,6 +2831,11 @@ class PiAgentClient:
                 catalog_references=catalog_references,
                 catalog_context=catalog_context,
                 theorem_context=theorem_context,
+                prompt_version=prompt_version,
+            )
+        if prompt_version in ("v24", "v25", "v26", "v27", "v28"):
+            return self._build_phase_a_minimal_prompt(
+                concept=concept,
                 prompt_version=prompt_version,
             )
         if prompt_version == "v8":

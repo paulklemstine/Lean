@@ -132,6 +132,15 @@ from pi_agent_client import ResearchConcept
 
 
 REPO_ROOT = Path(__file__).parent.parent
+
+# All known Phase A prompt versions — used for A/B stats printing.
+# Extend this when new variants are added.
+PHASE_A_VERSIONS = (
+    "v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15",
+    "v16", "v16a", "v16b", "v17", "v18",
+    "v19", "v19a", "v19b", "v19c", "v19d",
+    "v24", "v25", "v26", "v27", "v28",
+)
 PACKAGES_DIR = REPO_ROOT / "Packages"
 
 
@@ -155,7 +164,7 @@ def _print_prompt_version_stats(extractor: "KnowledgeExtractor") -> None:
             v = r.get("prompt_version", "unknown")
             by_ver.setdefault(v, []).append(r)
         lines = ["[A/B] Prompt version stats:"]
-        for v in ("v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15", "v16", "v16a", "v16b", "v17", "v18", "v19", "v19a", "v19b", "v19c", "v19d"):
+        for v in PHASE_A_VERSIONS:
             rs = by_ver.get(v, [])
             if not rs:
                 continue
@@ -166,10 +175,10 @@ def _print_prompt_version_stats(extractor: "KnowledgeExtractor") -> None:
             avg_dur = sum(durs) / len(durs) if durs else 0
             lines.append(f"  {v}: n={n:3d} avg_Q={avg_q:.3f} wc={wc}/{n} ({100*wc/n:.0f}%) avg_dur={avg_dur:.0f}min")
         # Last 20 only, to keep it fresh
-        recent = [r for r in records[-20:] if r.get("prompt_version") in ("v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15", "v16", "v16a", "v16b", "v17", "v18", "v19", "v19a", "v19b", "v19c", "v19d")]
+        recent = [r for r in records[-20:] if r.get("prompt_version") in PHASE_A_VERSIONS]
         if recent:
             scores = {}
-            for v in ("v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15", "v16", "v16a", "v16b", "v17", "v18", "v19", "v19a", "v19b", "v19c", "v19d"):
+            for v in PHASE_A_VERSIONS:
                 vrs = [r for r in recent if r.get("prompt_version") == v]
                 if vrs:
                     scores[v] = sum(r.get("quality_score", 0) for r in vrs) / len(vrs)
@@ -349,6 +358,28 @@ def _print_tick_report(extractor: "KnowledgeExtractor", completed_jobs, remainin
               f"{_lb} bridges{_mismatch}")
     except Exception as _e:
         print(f"[Packages] report failed: {_e}")
+
+    # --- Bandit state (Thompson sampling) ---
+    try:
+        _bs_path = extractor.workspace / "prompt_bandit_state.json"
+        if _bs_path.exists():
+            _bs = json.loads(_bs_path.read_text())
+            if _bs:
+                _sorted = sorted(_bs.items(), key=lambda x: x[1].get("alpha",1)/(x[1].get("alpha",1)+x[1].get("beta",1)), reverse=True)
+                print("[Bandit]   Thompson sampling posterior (sorted by mean):")
+                for _arm, _st in _sorted[:5]:
+                    _a = _st.get("alpha", 1.0)
+                    _b = _st.get("beta", 1.0)
+                    _mean = _a / (_a + _b) if (_a + _b) > 0 else 0
+                    _n = _st.get("n", 0) if isinstance(_st.get("n"), (int, float)) else _st.get("count", 0)
+                    _q = _st.get("avg_Q", _st.get("avg_quality", 0.0))
+                    print(f"[Bandit]   {_arm:6s}: \u03b1={_a:.1f} \u03b2={_b:.1f} mean={_mean:.3f} n={_n} avg_Q={_q:.3f}")
+                if _sorted:
+                    _leader = _sorted[0][0]
+                    _lm = _sorted[0][1].get("alpha",1) / (_sorted[0][1].get("alpha",1) + _sorted[0][1].get("beta",1))
+                    print(f"[Bandit]   -> leader: {_leader} (posterior mean {_lm:.3f})")
+    except Exception:
+        pass
 
     print("=" * 72)
 

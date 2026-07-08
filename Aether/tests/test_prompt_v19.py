@@ -48,7 +48,7 @@ def pi_client():
         yield client
 
 
-V19_VARIANTS = ["v19", "v19a", "v19b", "v19c", "v19d"]
+V19_VARIANTS = ["v19", "v19a", "v19b", "v19c", "v19d", "v24", "v25", "v26", "v27", "v28"]
 
 
 def test_v19_baseline_has_speculative_and_team_loop(pi_client, research_concept):
