@@ -3035,7 +3035,7 @@
         "Arithmetic Geometry",
         "p-adic Hodge Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -4075,7 +4075,7 @@
         "Arithmetic Geometry",
         "Probabilistic Number Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -4611,7 +4611,7 @@
         "probability_theory",
         "computational_number_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -5689,7 +5689,7 @@
         "Automorphic properties of q-series (Cohen)",
         "Circle method asymptotics (Hardy-Ramanujan-Rademacher tradition)"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -5835,7 +5835,7 @@
         "Tropical geometry over p-adic fields",
         "Algorithmic number theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -7363,7 +7363,7 @@
       "domain_bridges": [
         "math.AG"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -7608,7 +7608,7 @@
         "Combinatorial arrangement theory (intersection lattices, Ziegler pairs)",
         "Commutative algebra (Jacobian syzygies, free resolutions)"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -8464,7 +8464,7 @@
         "Combinatorial Topology",
         "Graph Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -8982,7 +8982,7 @@
         "Modular forms",
         "Effective algebraic number theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -9412,7 +9412,7 @@
         "non-abelian cohomology",
         "perfectoid geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -9549,7 +9549,7 @@
         "convex support functions",
         "geometric measure theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -9889,7 +9889,7 @@
         "discrete geometry",
         "computational complexity of chromatic numbers"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -10949,7 +10949,7 @@
         "Linear Algebra",
         "Enumerative Combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry",
         "Logic"
@@ -11090,7 +11090,7 @@
         "combinatorial topology",
         "infinite simplicial complexes"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -11799,7 +11799,7 @@
         "Algebraic Geometry",
         "Automorphic Forms"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -12325,7 +12325,7 @@
       "depth_estimate": 3,
       "description": "For any d-dimensional lattice polytope with m vertices, its surface area is bounded below by (d-1)/d times its volume, ensuring a precise upper limit on surface measures despite growth rates, making this inequality falsifiable through counterexamples in higher dimensions.",
       "domain_bridges": "d-dimensional lattice bounds",
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -12955,7 +12955,7 @@
         "Geometric Topology (math.GT)",
         "Simplicial Complexes"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry"
       ],
@@ -13335,7 +13335,7 @@
         "spectral-expansion",
         "simplicial-complex-geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry"
       ],
@@ -14345,7 +14345,7 @@
         "type theory",
         "formal verification"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -15311,7 +15311,7 @@
         "Milnor algebras",
         "Graded modules"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -15406,7 +15406,7 @@
         "p-adic uniformisation",
         "Modular curves"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -15638,7 +15638,7 @@
         "math.NT",
         "math.AG"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -15837,7 +15837,7 @@
         "algebraic_graph_theory_to_finite_geometry",
         "combinatorial_methods_to_group_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -16181,7 +16181,7 @@
         "Abelian integrals",
         "Schneider height computations"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -16280,7 +16280,7 @@
         "modular_forms",
         "quaternion_algebras"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -17387,7 +17387,7 @@
         "Nonorientable TQFT",
         "Penrose polynomial"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry",
         "Algebra"
@@ -17677,7 +17677,7 @@
         "computational_geometry",
         "matroid_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry"
       ],
@@ -18298,7 +18298,7 @@
         "algebraic_geometry",
         "combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -18540,7 +18540,7 @@
         "Algebraic Number Theory",
         "Algebraic Topology"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -20133,7 +20133,7 @@
         "Geometric Topology",
         "Combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry"
       ],
@@ -21391,7 +21391,7 @@
         "markov_chains → combinatorics",
         "equivalence_relations → weighted_digraphs"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -21439,7 +21439,7 @@
         "representation_theory",
         "topology"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -21487,7 +21487,7 @@
         "number_theory.cartier_manin_matrix",
         "data.polynomial.nonvanishing"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -21788,7 +21788,7 @@
         "class_field_theory",
         "p_adic_analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -22426,7 +22426,7 @@
         "Discrete_group_theory",
         "p-adic_metric_geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -22525,7 +22525,7 @@
         "complex_analysis",
         "algebraic_groups"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -23422,7 +23422,7 @@
         "algebraic_groups",
         "complex_analytic_geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -23475,7 +23475,7 @@
         "RB-domains",
         "Stochastic order"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -23722,7 +23722,7 @@
         "measure_theory",
         "o_minimal_geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -23871,7 +23871,7 @@
         "p-adic analysis",
         "Quaternion algebras"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -24159,7 +24159,7 @@
         "measure_theory_on_polytopes",
         "combinatorial_topology"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry",
         "Algebra"
@@ -24784,7 +24784,7 @@
         "group_theory_transitive_subgroups_S5",
         "algebraic_curves_covers"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -25178,7 +25178,7 @@
         "sparsity_matroids:hyperbolic_orbifold_geometry",
         "gain_graphs:fuchsian_group_cohomology"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -25755,7 +25755,7 @@
         "Topological Combinatorics",
         "Combinatorial Algebraic Geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -26291,7 +26291,7 @@
         "Algebraic Number Theory",
         "p-adic Analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -26779,7 +26779,7 @@
         "galois_theory",
         "elliptic_curves"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -27171,7 +27171,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Log-Concavity in the d-Hoggatt Hierarchy\n\nThis cycle established a sharp dichotomy for the *total* d-Hoggatt numbers\n`H_d(n) = ∑_k H_d(n,k)`: the `d = 1` totals `2^n` are infinitely log-concave\n(indeed log-linear), while the `d = 2` totals (Catalan numbers) are strictly\nlog-convex, and the `d = 3` totals (Baxter numbers) are empirically log-convex.\nThe following conjectures are the natural next targets.\n\n## Conjecture 1 — Universal log-convexity of the totals for d ≥ 2\n\nFor every `d ≥ 2`, the total d-Hoggatt numbers are strictly log-convex:\n`H_d(n+1)² < H_d(n) · H_d(n+2)` for all `n ≥ 0`.\n\nThe key insight is that each `H_d(n)` is a positively weighted sum of products\nof binomial coefficients whose dominant growth ratio increases with `n`, so the\ntotals inherit the log-convexity of the Catalan case rather than the\nlog-concavity of the individual rows. Why now? The Catalan (`d = 2`) case is now\nsettled from a two-term recurrence, and the Baxter (`d = 3`) case matches it\nterm-by-term in the computed data, suggesting a single recurrence-driven\nargument covers the whole family.\n\n## Conjecture 2 — Row-sum log-convexity is a summation phenomenon\n\nIf `T(n,k)` is any triangle whose rows are log-concave and whose row-ratio\n`T(n+1,k)/T(n,k)` is nondecreasing in `n`, then the row sums `S(n) = ∑_k T(n,k)`\nare log-convex.\n\nThe key insight is that log-convexity of the totals is not special to Hoggatt\ntriangles but follows from monotone amplification of a common growth factor\nacross rows, a Chebyshev-sum / rearrangement effect. Why now? Having seen the\nsame negative discriminant `Δ_n < 0` for both Catalan and Baxter totals, the\nphenomenon is clearly structural rather than coincidental and deserves a triangle\n-level hypothesis.\n\n## Conjecture 3 — Infinite log-concavity of the rows\n\nFor every `d ≥ 1`, each fixed row `k ↦ H_d(n,k)` of the d-Hoggatt triangle is\ninfinitely log-concave.\n\nThe key insight is that the log-concavity operator, when applied to a finite\npositive log-concave row with the golden-ratio-squared safety factor\n`a_k² ≥ ((3+√5)/2) · a_{k-1} a_{k+1}`, reproduces that same safety factor, so a\nsingle closure lemma propagates through all iterates. Why now? The threshold\nconstant `(3+√5)/2` is exactly the fixed point of the operator's worst-case\nratio, and the toolkit built this cycle (the operator `𝓛`, its annihilation of\nlog-linear sequences, and closure under products) already contains the moving\nparts needed to attack the closure lemma.\n\n## Conjecture 4 — A log-concave \"renormalization\" of the totals\n\nFor every `d ≥ 2` there is an explicit positive normalizing sequence `w_d(n)`\n(e.g. a ratio of factorials) such that the renormalized totals\n`H_d(n) / w_d(n)` are infinitely log-concave, even though the raw totals are\nlog-convex.\n\nThe key insight is that log-convexity of the totals is caused by a smooth,\npredictable growth factor which can be divided out, leaving a residual sequence\ngoverned by the same infinite-log-concavity mechanism as the rows. Why now? The\nexact growth ratio `(n+2)(2n+3)/((2n+1)(n+3))` for the Catalan totals is now\nknown in closed form, giving a concrete first candidate for `w_2` and a template\nfor higher `d`.\n\n## Conjecture 5 — Tropical dequantization of the dichotomy\n\nUnder the tropical (min-plus) limit that sends a positive sequence `a_n` to its\nvaluations `v_n = −log a_n`, log-concavity becomes convexity of `v` and\nlog-linearity becomes affinity of `v`. The `d = 1`/`d ≥ 2` dichotomy then reads:\n`v` is affine for `d = 1` and strictly concave for `d ≥ 2`.\n\nThe key insight is that the log-concavity operator degenerates, in the tropical\nlimit, to a second finite difference, so infinite log-concavity corresponds to a\nsequence of iterated finite differences retaining a fixed sign — a purely\npiecewise-linear, tropical-geometric condition. Why now? Casting the numeric\ndichotomy in the min-plus semiring links this combinatorial question to tropical\nconvexity, where second-difference sign conditions are the natural objects and\npowerful piecewise-linear tools are available.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Tropical",
         "Geometry"
@@ -28259,7 +28259,7 @@
         "arithmetic of elliptic curves",
         "Iwasawa main conjecture"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -29106,7 +29106,7 @@
         "Mathlib.Combinatorics.SimpleGraph.Basic",
         "Mathlib.Analysis.Convex.Cone.Basic"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry"
       ],
@@ -29934,7 +29934,7 @@
         "Quadratic Twists",
         "Iwasawa Invariants"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry"
       ],
@@ -30278,7 +30278,7 @@
         "Analytic Number Theory",
         "Probability Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -30621,7 +30621,7 @@
         "Graph Theory",
         "Combinatorial Topology"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry"
       ],
@@ -30870,7 +30870,7 @@
         "combinatorics_on_words",
         "finite_fields"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -30919,7 +30919,7 @@
         "combinatorial_homological_algebra",
         "higher_category_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Geometry"
@@ -31256,7 +31256,7 @@
       "depth_estimate": 3,
       "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers — anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension — they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property — it's not about content quality but about the sheaf cohomology of the social network.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Novelty",
         "Geometry"
@@ -31297,7 +31297,7 @@
       "depth_estimate": 3,
       "description": "Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: lines parallel to the x-axis diverge (hyperbolic behavior) while lines parallel to the y-axis converge (elliptic behavior). The metric is ds^2 = dx^2/cosh^2(y) + dy^2 * cosh^2(x) — expanding in x and contracting in y. Conjecture: Split Geometry is a consistent Riemannian geometry with curvature K(x,y) = -sech^2(y) + sech^2(x) that changes sign across the diagonals. The geometry has a 'phase boundary' along the lines y = x and y = -x where K = 0 (flat). In the region |x| > |y|, K > 0 (elliptic) and in the region |y| > |x|, K < 0 (hyperbolic). The geodesics in split geometry are piecewise combinations of exponential curves (in hyperbolic regions) and trigonometric curves (in elliptic regions). Test: compute the Christoffel symbols and curvature tensor for the split metric. Prove that geodesics cross the phase boundary at most twice. Compute the area of a split triangle with one vertex in each region. Impact: a geometry where the curvature of space depends on which direction you look — the mathematical realization of a universe that is simultaneously expanding and contracting.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Novelty",
         "Geometry"
@@ -31598,7 +31598,7 @@
       "depth_estimate": 3,
       "description": "Conjecture: The degree of quantum entanglement between two quantum systems is directly proportional to the curvature of the hyperbolic space they inhabit. Test: By manipulating the curvature of a hyperbolic space and measuring the resulting quantum entanglement, we can confirm or refute this hypothesis. Impact: If proven true, this correlation could lead to significant advancements in quantum computing and information theory, enabling more efficient quantum algorithms and communication protocols.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Novelty"
       ],

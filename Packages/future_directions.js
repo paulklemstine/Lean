@@ -8013,16 +8013,31 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
+    "description": "# Future Directions \u2014 Supersingular Iwasawa \u03bb-Invariants and Local Depths\n\nThe verified results isolate the arithmetic skeleton of the Matsuno-type formula for\nsharp/flat 2-adic \u03bb-invariants: a completely additive, monotone invariant assembled\nfrom the local depths `n_\u2113 = v\u2082((\u2113\u00b2 \u2212 1)/8)`. The following conjectures push this\nskeleton toward the full analytic theory.\n\n## 1. Full additive realization of the \u03bb-difference\n\n**Conjecture.** For an elliptic curve `E/\u211a` with good supersingular reduction at 2,\nsquare-free conductor, and vanishing \u03bc-invariant, the map sending a square-free\n`D \u2261 1 (mod 4)` to the difference `\u03bb(E^D) \u2212 \u03bb(E)` of sharp (or flat) \u03bb-invariants is\n*completely additive* over coprime twisting parameters and agrees term-by-term with the\nlocal sum `\u2211_{\u2113 \u2223 D} \u03b4(\u2113)`.\n\nThe key insight is that quadratic twisting acts multiplicatively on the twisting\nparameter while the \u03bb-difference is a sum of purely local depths, so the global\ninvariant inherits exact additivity from the disjointness of prime supports.\n\nWhy now? The additivity and monotonicity of the local-sum model are established, so the\nonly remaining step is matching each local term to the ramification contribution of a\nsingle prime \u2014 a strictly local computation.\n\n## 2. Depth stratification by residue mod 8\n\n**Conjecture.** The distribution of the local contribution `\u03b4(\u2113)` is governed entirely\nby `\u2113 mod 8` together with divisibility of the conductor and parity of the reduction\norder; in particular `n_\u2113 = 0` exactly for `\u2113 \u2261 3, 5 (mod 8)`, and `n_\u2113` grows without\nbound only along `\u2113 \u2261 1 (mod 8)`.\n\nThe key insight is that `n_\u2113 + 3 = v\u2082(\u2113\u22121) + v\u2082(\u2113+1)`, so the depth is controlled by how\ndeeply `\u2113` sits in the 2-adic filtration of the units, which is a residue condition\nmodulo powers of 2.\n\nWhy now? The closed form `n_\u2113 = v\u2082(\u2113\u22121) + v\u2082(\u2113+1) \u2212 3` is proved, reducing the\nstratification question to a finite residue analysis.\n\n## 3. Growth rate of twisted \u03bb-invariants\n\n**Conjecture.** Ordering square-free `D \u2261 1 (mod 4)` by size, the average of\n`\u03bb(E^D) \u2212 \u03bb(E)` over `D \u2264 X` grows like `c \u00b7 log log X` for an explicit constant `c`\ndepending only on the split behaviour of `E` at small primes.\n\nThe key insight is that each prime contributes a bounded local depth on average, so the\ntotal behaves like a sum of nearly-constant terms over the prime divisors of `D`,\nproducing Mertens-type `log log` growth.\n\nWhy now? With the invariant expressed as an additive prime sum, its average order is\ndirectly accessible to standard sieve and Mertens estimates.\n\n## 4. Monotone towers and stabilization\n\n**Conjecture.** Along any tower of square-free levels `d\u2081 \u2223 d\u2082 \u2223 \u22ef` the \u03bb-difference is\nnon-decreasing and stabilizes precisely when no new ramified prime with even reduction\norder is added.\n\nThe key insight is that the invariant is monotone under divisibility of the level and\neach newly introduced prime contributes a strictly positive local term exactly under an\nexplicit parity/ramification condition.\n\nWhy now? Monotonicity in the level is already verified, so the stabilization criterion is\nthe sole missing ingredient and is a local parity test.\n",
     "domains": [
-      "Geometry"
+      "Pythagorean",
+      "Algebra"
     ],
-    "id": "fd_0003",
+    "id": "fd_0659",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d82d98aa",
+    "status": "available",
+    "timestamp": "2026-07-08T17:07:36.191824+00:00",
+    "title": "The verified results isolate the arithmetic skeleton of the Matsuno-type formula"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: The degree of quantum entanglement between two quantum systems is directly proportional to the curvature of the hyperbolic space they inhabit. Test: By manipulating the curvature of a hyperbolic space and measuring the resulting quantum entanglement, we can confirm or refute this hypothesis. Impact: If proven true, this correlation could lead to significant advancements in quantum computing and information theory, enabling more efficient quantum algorithms and communication protocols.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_0660",
     "priority_score": 0.7,
     "research_mode": "team",
-    "source_exp_id": "oeis:212351",
+    "source_exp_id": "pi_brainstorm",
     "status": "available",
-    "timestamp": "2026-07-02T04:44:52.457313+00:00",
-    "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+    "timestamp": "2026-07-08T17:13:48.378413+00:00",
+    "title": "Quantum Entanglement and Hyperbolic Geometry: A Novel Correlation"
   }
 ];
