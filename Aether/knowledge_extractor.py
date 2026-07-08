@@ -1362,11 +1362,13 @@ Research mode: {concept.research_mode}
             # no-progress hang is presumed a server glitch, not a bad concept.
             if job.status == "dispatched" and job.dispatch_time:
                 _last_progress = None
+                _last_pct = 0
                 try:
                     _rlog = ReasoningLog(self.workspace, pid, job.job_id)
                     _cps = _rlog._data.get("checkpoints", [])
                     if _cps:
                         _ts = _cps[-1].get("timestamp")
+                        _last_pct = _cps[-1].get("percent_complete", 0)
                         if _ts:
                             _dt = datetime.fromisoformat(_ts)
                             if _dt.tzinfo is None:
@@ -1374,7 +1376,11 @@ Research mode: {concept.research_mode}
                             _last_progress = _dt.timestamp()
                 except Exception:
                     pass
-                if _last_progress is not None and (now - _last_progress) > no_progress_seconds:
+                
+                # Extended timeout if deeply in progress (Aristotle actively streaming large generation)
+                _active_timeout = 10800 if _last_pct >= 90 else no_progress_seconds
+
+                if _last_progress is not None and (now - _last_progress) > _active_timeout:
                     _idle_min = (now - _last_progress) / 60
                     print(f"[Poll] {pid[:8]} NO-PROGRESS ZOMBIE: idle {_idle_min:.0f}min, "
                           f"releasing direction to available")
@@ -2230,7 +2236,7 @@ Research mode: {concept.research_mode}
                 # Blend with existing heuristic/structural score so the pipeline
                 # still benefits from local signal, but specialized critics dominate.
                 aggregate = scores.aggregate()
-                if aggregate > 0:
+                if aggregate >= 0:
                     job.quality_score = 0.3 * job.quality_score + 0.7 * aggregate
                 print(f"[SpecializedCritics] correctness={scores.correctness:.2f} novelty={scores.novelty:.2f} "
                       f"depth={scores.depth:.2f} presentation={scores.presentation:.2f} "
