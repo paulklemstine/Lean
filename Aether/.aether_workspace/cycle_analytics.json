@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-08T19:58:41.106393+00:00",
+  "last_updated": "2026-07-08T20:08:05.432245+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -2309,6 +2309,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-08T19:58:41.067514+00:00",
       "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.2996,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "Algebra",
+      "duration_seconds": 2744.6574466228485,
+      "end_time": 1783541105.6020489,
+      "files_integrated": 2,
+      "job_id": "492f9d48",
+      "outcome_quality": 0.0,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v24",
+      "phase_b_skip_reason": "low_quality",
+      "phase_b_skipped": true,
+      "prompt_version": "v24",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.62,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7446,
+        "cross_domain": 0.7,
+        "grade": "world_class",
+        "importance": 0.9008,
+        "novelty": 0.935,
+        "proof_depth": 0.8861,
+        "usefulness": 0.7931
+      },
+      "quality_score": 0.184776,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783538360.9446023,
+      "strategy_count": 0,
+      "theorem_count": 43,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 43,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-08T20:08:05.370906+00:00",
+      "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
     }
   ]
 }
