@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-07-08T17:45:57Z",
+  "date": "2026-07-08T18:11:05Z",
   "key_results": [
     "The value map phi(x,y) = y(2x-1) descends to a well-defined, surjective function from the Möbius band onto the real line.",
     "The twist involution (x,y) -> (1-x, y) acts as exact negation on values and is an involution fixing precisely the central circle x = 1/2, exhibiting a Z/2-grading.",
@@ -117,6 +117,6 @@
   "source_exp_ids": [
     "seed"
   ],
-  "quality_score": 0.20664299999999997,
-  "quality_tier": "bronze"
+  "quality_score": 0.5326040000000001,
+  "quality_tier": "silver"
 }

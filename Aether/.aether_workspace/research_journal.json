@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "251e4381",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — EML Interpolation Theory (Jackson Rates)\n\nThis cycle made the Stone–Weierstrass density of the EML algebra *constructive and\nrate-quantified* in one variable: the width-`n` piece",
-      "quality_score": 0.68488,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T16:08:05",
-      "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
-    },
-    {
       "cycle_id": "28bd8499",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Extremal L1 mass of 1-Lipschitz grid height functions\n\nDerived from the verified results in\n`Catalog/Novelty/GridLipschitzMass.lean` (sharp bound `gridMass_le`, attainment\n`gridM",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-07-08T05:35:56",
       "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
+    },
+    {
+      "cycle_id": "cbe7147b",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions: Arithmetic on the Möbius Band\n\nThis project formalizes the honest mathematical core of the \"Möbius arithmetic\"\nproposal in `Algebra/MoebiusArithmetic.lean`, and shows precisely wh",
+      "quality_score": 0.5326040000000001,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-08T18:11:11",
+      "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.70296
     }
   ],
-  "last_updated": "2026-07-08T05:35:56",
+  "last_updated": "2026-07-08T18:11:11",
   "open_questions": [
     {
       "context": "`sorry`-free Lean proof of Sabidussi's theorem.",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "7ae59772",
-        "quality": 0.7357199999999999,
-        "theorems": 17,
-        "title": "Normality of Mathematical Constants"
-      },
-      {
         "cycle_id": "a8f472f7",
         "quality": 0.56056,
         "theorems": 3,
@@ -3079,6 +3073,12 @@
         "quality": 0.5155438642611684,
         "theorems": 8,
         "title": "Kernel‑cover characterisation of the weighted Davenport constant"
+      },
+      {
+        "cycle_id": "cbe7147b",
+        "quality": 0.5326040000000001,
+        "theorems": 15,
+        "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
       }
     ],
     "Applications": [
