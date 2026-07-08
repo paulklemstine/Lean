@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-07-08T16:32:00Z",
+  "date": "2026-07-08T17:07:35Z",
   "key_results": [
     "Closed form for the 2-adic depth: n_ell = v2(ell-1) + v2(ell+1) - 3 for every odd ell >= 3",
     "The integer ell^2 - 1 is divisible by 8 for all odd ell, so the depth is well defined",
@@ -115,6 +115,6 @@
   "source_exp_ids": [
     "2607.05305v1"
   ],
-  "quality_score": 0.22429499999999997,
+  "quality_score": 0.20087999999999998,
   "quality_tier": "bronze"
 }
