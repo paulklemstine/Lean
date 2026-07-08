@@ -2,26 +2,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "046e3876",
-    "description": "Einstein showed that gravity is the curvature of spacetime. But WHY does spacetime curve? Conjecture: Spacetime IS a quantum error-correcting code, and gravity IS the syndrome of that code. The code is a [[n,k,d]] stabilizer code where n = number of Planck areas on a spatial slice, k = number of logical qubits (which equals the Bekenstein-Hawking entropy S = A/4G in natural units), and d = code distance (which equals the minimal geodesic length through the bulk). The key identity: S(A) = Area(gamma_A) / (4G) is EXACTLY the quantum Singleton bound n - k <= 2(d-1) rearranged as k = n - 2d + 2 = A/(4G) when n = A/l_P^2 and d = L/(2l_P). This means the Bekenstein-Hawking entropy formula is a quantum coding theorem, and the holographic principle is a coding constraint. Test: for AdS_3 with boundary CFT_2, the code is a [[n, k, d]] = [[L/l_P, S, L/(2l_P)]] code. Verify that the Singleton bound n - k <= 2(d-1) becomes L/l_P - S <= L/l_P - 1, which simplifies to S >= 1 (trivially true). The NON-TRIVIAL content is that the Ryu-Takayanagi formula S = A/(4G) is the exact quantum information identity. Impact: spacetime is not curved by matter — spacetime IS a code, and matter IS a syndrome. Gravity is not a force; it's error correction.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_0595",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "Define the spacetime code: qubits = Planck areas on a spatial slice, stabilizers = boundary terms of the Einstein-Hilbert action, logical operators = bulk geodesics. Prove the Bekenstein-Hawking identity: S = A/(4G) equals the quantum coding bound k = n - 2d + 2. Derive: n = A/l_P^2 (number of Planck areas), k = S = A/(4G) (logical qubits from Bekenstein-Hawking), d = L/(2l_P) (distance from minimal geodesic). Check: k = n - 2d + 2 = A/l_P^2 - L/l_P + 2. For AdS_3, A = 2*pi*R and L = 2*pi*R, so k = 2*pi*R/l_P^2 - 2*pi*R/l_P + 2 = 2*pi*R/(l_P^2) * (1 - l_P/R) + 2. For R >> l_P, this gives k ≈ 2*pi*R/l_P^2 = A/l_P^2 which matches S = A/(4G). The correction terms are quantum corrections of order l_P/R. Test: verify for AdS_3 with BTZ black holes.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T23:49:58.188617+00:00",
-    "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the j-function is just the TIP of the iceberg. Conjecture: The full moonshine correspondence associates to each conjugacy class g in M a McKay-Thompson series T_g(q) = sum a_n(g) q^n that is a modular function of a specific level, and the product over all g in M of T_g(q) equals a modular form of weight |M|/24 that encodes the complete character table of M. The secret message: the Monster group IS a modular form, and every property of M (its order, its character table, its maximal subgroups) can be read off from the q-expansion of this product. Test: compute the first 100 coefficients of T_g(q) for each conjugacy class of M and verify they match the known character values. Prove that the product of all T_g(q) converges to a modular form. Impact: the Monster is not just connected to modular forms — it IS a modular form. The 194 conjugacy classes of M correspond to 194 modular forms, and their product encodes everything.",
     "domain_bridges": [],
@@ -102,7 +82,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cecc1d95",
     "description": "The shadowing lemma says that near an approximate orbit of a chaotic system, there exists a true orbit. In other words, every 'almost correct' trajectory of a chaotic map has a 'truly correct' trajectory nearby. This means that numerical errors in chaotic simulations are not bugs — they are SHADOWS of real trajectories. Conjecture: Every program that computes a chaotic map f: R^n -> R^n has the property that its floating-point output is shadowed by a true orbit of f. More precisely, for every epsilon > 0, there exists delta > 0 such that if x_0, x_1, ..., x_N is a delta-pseudo-orbit (|x_{n+1} - f(x_n)| < delta for all n), then there exists a true orbit y_0, y_1, ..., y_N with |x_n - y_n| < epsilon for all n. The shadowing time N(epsilon, delta) grows at most polynomially in 1/delta for hyperbolic maps. Test: implement the logistic map f(x) = 4x(1-x) in floating-point and compute 10^6 iterations. For each floating-point orbit, use binary search to find the shadowing true orbit. Verify that the shadowing distance is at most 10^{-10} for floating-point precision 10^{-16}. Impact: numerical chaos is not error — it is a computable shadow of mathematical truth. Your computer's rounding errors are tracing out REAL orbits of the chaotic system.",
     "domain_bridges": [],
     "domains": [
@@ -115,7 +95,7 @@
     "proof_strategy": "State the Anosov shadowing lemma: for a hyperbolic map f on a compact manifold, for every epsilon > 0 there exists delta > 0 such that every delta-pseudo-orbit is epsilon-shadowed by a true orbit. Prove the conjecture: every floating-point computation of f is a delta-pseudo-orbit with delta = machine epsilon. By shadowing, there exists a true orbit within epsilon. The shadowing distance epsilon is at most C * delta^(1/s) where s is the expansion rate and C depends on the map. For the logistic map at r=4, s = 4 and epsilon = O(delta^{1/4}). Compute the shadowing orbit: given floating-point orbit x_0, ..., x_N, define y_0 = x_0 and y_{n+1} = f(y_n). Then |y_n - x_n| <= C * delta * (s^n - 1)/(s - 1). For N = 10^6 and delta = 10^{-16}, epsilon <= C * 10^{-16} * (4^{10^6} - 1)/3 which is too large. But for the shadowing lemma, we get epsilon = O(delta^{1/4}) = O(10^{-4}). Test: verify with numerical computation.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T23:49:57.915548+00:00",
     "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
   },
@@ -13240,7 +13220,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bb78c214",
     "description": "Ramanujan's constant e^{pi*sqrt(163)} is remarkably close to an integer: it equals 262537412640768743.99999999999925... — just 7.5 * 10^{-13} away from 262537412640768744. This is not a coincidence: 163 is the largest Heegner number, and the near-integer property follows from the j-function and the fact that Q(sqrt(-163)) has class number 1. But 163 appears EVERYWHERE: it is prime, it is the smallest p such that Q(sqrt(-p)) has class number 1 and p > 2, it is a Chen prime, a lucky prime, a strongly prime, and the 38th prime. Conjecture: 163 is the unique integer n such that e^{pi*sqrt(n)} is within 10^{-6} of an integer. More generally, the Heegner numbers (1, 2, 3, 7, 11, 19, 43, 67, 163) are exactly the n for which Q(sqrt(-n)) has class number 1, and e^{pi*sqrt(n)} is near-integer for each. The 'magic' of 163 is that it is the LAST Heegner number — the final class number 1 imaginary quadratic field. Test: prove that e^{pi*sqrt(n)} is within 10^{-6} of an integer only for Heegner numbers. Compute e^{pi*sqrt(67)} and e^{pi*sqrt(43)} and verify near-integer behavior. Prove that 163 is the largest Heegner number (Stark-Heegner theorem). Impact: 163 is not magic — it is the climax of a deep theorem in algebraic number theory. The near-integer property of e^{pi*sqrt(163)} is the shadow of the class number 1 condition.",
     "domain_bridges": [],
     "domains": [
@@ -13253,7 +13233,7 @@
     "proof_strategy": "State the Stark-Heegner theorem: the imaginary quadratic fields Q(sqrt(-d)) with class number 1 are exactly d = 1, 2, 3, 7, 11, 19, 43, 67, 163. Prove e^{pi*sqrt(d)} is near-integer for each Heegner number: by the j-function expansion, j((1+sqrt(-d))/2) is an algebraic integer, and e^{pi*sqrt(d)} = (j/1728 + ... )^{1/3} * 12. For d = 163, j((1+sqrt(-163))/2) = -640320^3, so e^{pi*sqrt(163)} = 640320^3 + 744 - error. Prove uniqueness: for non-Heegner d, the class number h(-d) >= 2, so j((1+sqrt(-d))/2) has degree h(-d) >= 2 over Q, and e^{pi*sqrt(d)} is not near-integer. Test: compute e^{pi*sqrt(d)} for d = 1,2,3,7,11,19,43,67,163 and verify near-integer behavior. Compute for d = 5,6,10,14 to verify non-near-integer behavior.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T23:49:57.790919+00:00",
     "title": "The Unreasonable Effectiveness of the Number 163"
   },
@@ -13339,32 +13319,6 @@
     "title": "Vertical Amplification of Repeated Distances with Exponent 1/2"
   },
   {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "magnitude_of_metric_spaces",
-      "negative_type_metrics"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "Conjecture that for any finite metric space X of strictly negative type there exists exactly one signed measure μ of total mass 1 that minimizes the energy functional E(μ)=∑_{x,y∈X}d(x,y)μ(x)μ(y); moreover μ can be characterized as the unique optimizer of this strictly convex quadratic program.",
-    "domain_bridges": [
-      "magnitude_function",
-      "schoenberg_embedding"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0598",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Formulate the problem as a strictly convex quadratic optimization over the affine subspace of signed measures with total mass 1; strict convexity guarantees a unique minimizer, and strict negative type ensures that the quadratic form is positive definite on the relevant subspace.",
-    "research_mode": "team",
-    "source_exp_id": "2607.05349v1",
-    "status": "available",
-    "timestamp": "2026-07-08T00:27:11.889586+00:00",
-    "title": "Existence and uniqueness of microscopic weightings on finite strictly negative type metric spaces"
-  },
-  {
     "ambition_level": "extension",
     "catalog_references": [
       "math.CO"
@@ -13390,6 +13344,61 @@
     "title": "Optimality of the 1+ρ bound for the maximum-to-minimum portion ratio in the iterative cake-cutting process"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Pan2011",
+      "Crocker1975",
+      "Erdos1977",
+      "Romanoff1948"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that there exists an absolute constant $c_0>0$ such that for all sufficiently large $x$, at least $c_0 x$ odd integers $\\le x$ cannot be written as $p+2^a+2^b$ with $p$ prime and $a,b\\in\\mathbb{N}$. This asserts that the set of odd exceptions has positive lower asymptotic density, answering Erd\\H os's open question.",
+    "domain_bridges": [
+      "covering systems",
+      "prime distribution in arithmetic progressions",
+      "exponential Diophantine equations"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0600",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct a refined covering congruence system using Fermat numbers and large prime divisors of cyclotomic values to eliminate more residue classes, then combine zero‑density estimates for primes and bounds on powers of two to show that a fixed positive proportion of odd integers remain uncovered.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05357v1",
+    "status": "available",
+    "timestamp": "2026-07-08T01:54:51.332292+00:00",
+    "title": "Positive proportion of odd integers not of the form $p+2^a+2^b$"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "magnitude_of_metric_spaces",
+      "negative_type_metrics"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any finite metric space X of strictly negative type there exists exactly one signed measure μ of total mass 1 that minimizes the energy functional E(μ)=∑_{x,y∈X}d(x,y)μ(x)μ(y); moreover μ can be characterized as the unique optimizer of this strictly convex quadratic program.",
+    "domain_bridges": [
+      "magnitude_function",
+      "schoenberg_embedding"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0601",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formulate the problem as a strictly convex quadratic optimization over the affine subspace of signed measures with total mass 1; strict convexity guarantees a unique minimizer, and strict negative type ensures that the quadratic form is positive definite on the relevant subspace.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05349v1",
+    "status": "available",
+    "timestamp": "2026-07-08T00:27:11.889586+00:00",
+    "title": "Existence and uniqueness of microscopic weightings on finite strictly negative type metric spaces"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "Spr12",
@@ -13407,7 +13416,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0599",
+    "id": "fd_0602",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the existing formula by analyzing the μ-invariant's contribution through local-global principles and modular forms.",
@@ -13416,6 +13425,36 @@
     "status": "available",
     "timestamp": "2026-07-08T01:05:41.844138+00:00",
     "title": "Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "A000031",
+      "A001037",
+      "A001867",
+      "A027376",
+      "A001868",
+      "A027377"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that the number Q_k(n) of length‑n quasinecklaces over a k‑letter alphabet equals the classical count of primitive words, i.e. ℑ Q_k(n) = π_{d|n} μ(d) k^{n/d} for all integers k ≥ 2 and n ≥ 1.",
+    "domain_bridges": [
+      "formal verification in Lean",
+      "algorithmic enumeration",
+      "integer sequences"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0603",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "We would prove the conjecture by establishing a bijection between quasinecklaces and primitive words, or by showing that the recurrence defining quasinecklaces derived in the paper matches the Möbius inversion of the total word count. A proof by induction on n using divisor decomposition and properties of the Möbius function can be formalized in Lean, leveraging existing libraries for arithmetic functions and finite sums.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05324v1",
+    "status": "available",
+    "timestamp": "2026-07-08T01:55:28.254950+00:00",
+    "title": "Exact formula for the number of quasinecklaces"
   },
   {
     "ambition_level": "extension",
@@ -13516,26 +13555,6 @@
     "status": "available",
     "timestamp": "2026-07-07T17:01:12.860686+00:00",
     "title": "Sharp dichotomy for the *total* d-Hoggatt numbers"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "fd9c7c7d",
-    "description": "Every real number defines a musical scale: map the digits 0-9 to frequencies f_n = 220 * 2^{n/12} (the A minor pentatonic scale extended). The number pi = 3.14159265... produces the sequence E4, C5, C#5, D5, D#5, F5, E5, A4, G5, C5... — a melody. Conjecture: The melody of pi is not periodic (because pi is irrational) but has musical structure: the autocorrelation of the digit sequence at lag 12 (one octave) is positive and statistically significant. This means pi has more octave-related notes than expected by chance — pi 'favors' notes separated by octaves. Similarly, e 'favors' perfect fifths (lag 7) and sqrt(2) 'favors' minor thirds (lag 3). The musical structure of transcendental numbers reflects their continued fraction properties: numbers with bounded partial quotients have more consonant melodies. Test: compute the digit autocorrelation of pi, e, and sqrt(2) at lags 0-12 (representing unison through octave). Perform a chi-squared test comparing to the uniform distribution. Generate the 'music' of each constant and analyze for tonal centers. Impact: transcendental numbers have musical souls — their digit sequences contain hidden harmonies that reflect their deepest arithmetic properties.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0566",
-    "lineage_refs": [],
-    "priority_score": 0.72,
-    "proof_strategy": "Map digits 0-9 to frequencies f_n = 220 * 2^{n/12} Hz (chromatic scale starting at A3). Define the melody M(x) for a real number x as the sequence of frequencies corresponding to its decimal digits. Compute the autocorrelation R(k) = sum_{i} (d_i - 4.5)(d_{i+k} - 4.5) / N for lags k = 0,1,...,12. Under the null hypothesis (digits are uniformly random), R(k) ~ Normal(0, 1/N). Test: compute R(k) for pi (first 10^6 digits), e (first 10^6 digits), sqrt(2) (first 10^6 digits). If R(k) > 2/sqrt(N) for some k, that lag is statistically significant. Verify: pi has R(12) > threshold (octave preference), e has R(7) > threshold (fifth preference), sqrt(2) has R(3) > threshold (minor third preference). Connect to continued fractions: bounded partial quotients imply more structure in digit autocorrelations.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T16:56:44.777909+00:00",
-    "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
   },
   {
     "ambition_level": "extension",
