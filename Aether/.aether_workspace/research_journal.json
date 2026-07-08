@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d1a8353e",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Extended Eulerian numbers `A(n,k,s)`\n\nDerived from the cycle that produced `Catalog/Applications/ExtendedEulerian.lean`\n(recurrence, `k=0` edge, `k>n` boundary, and the `s=0` cla",
-      "quality_score": 0.56128,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T15:11:53",
-      "title": "Recurrence relation for extended Eulerian numbers"
-    },
-    {
       "cycle_id": "872fa119",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Incoherence Index of Standard Social Decision Frames\n\nDerived from this cycle's findings (`OrderSpectrum.lean`,\n`SpectrumCharacterization.lean`): the incoherence index of a singl",
@@ -2501,6 +2491,16 @@
       "theorem_count": 7,
       "timestamp": "2026-07-08T02:34:26",
       "title": "Impossibility Results for Fun: Things That Cannot Be Done (But We Try Anyway)"
+    },
+    {
+      "cycle_id": "4aec9d8b",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Antipodality and the Opposite-Semicube Helly Property\n\nThis cycle established a complete characterization of antipodality inside the\nhypercube: the bit-complement map is a global",
+      "quality_score": 0.542,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-08T02:35:50",
+      "title": "Antipodality Characterization via Opposite-Semicube Helly Property"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.70296
     }
   ],
-  "last_updated": "2026-07-08T02:34:26",
+  "last_updated": "2026-07-08T02:35:50",
   "open_questions": [
     {
       "context": "`sorry`-free Lean proof of Sabidussi's theorem.",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "0dfef380",
-        "quality": 0.7484,
-        "theorems": 14,
-        "title": "Proof Automation: Custom Lean 4 Tactics"
-      },
-      {
         "cycle_id": "cd0ef092",
         "quality": 0.7045299999999999,
         "theorems": 10,
@@ -3203,6 +3197,12 @@
         "quality": 0.40624133333333334,
         "theorems": 4,
         "title": "The opposite-semicube Helly property characterizes harmonic-evenness in Cartesia"
+      },
+      {
+        "cycle_id": "4aec9d8b",
+        "quality": 0.542,
+        "theorems": 20,
+        "title": "Antipodality Characterization via Opposite-Semicube Helly Property"
       }
     ],
     "Combinatorics": [

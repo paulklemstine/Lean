@@ -7111,21 +7111,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Uniqueness of the 2-(496, 4, 1) Flag-Transitive Linear Space with Socle PSL(2, 32)"
   },
   {
-    "consumed_by_exp_id": "bb78c214",
-    "description": "Ramanujan's constant e^{pi*sqrt(163)} is remarkably close to an integer: it equals 262537412640768743.99999999999925... \u2014 just 7.5 * 10^{-13} away from 262537412640768744. This is not a coincidence: 163 is the largest Heegner number, and the near-integer property follows from the j-function and the fact that Q(sqrt(-163)) has class number 1. But 163 appears EVERYWHERE: it is prime, it is the smallest p such that Q(sqrt(-p)) has class number 1 and p > 2, it is a Chen prime, a lucky prime, a strongly prime, and the 38th prime. Conjecture: 163 is the unique integer n such that e^{pi*sqrt(n)} is within 10^{-6} of an integer. More generally, the Heegner numbers (1, 2, 3, 7, 11, 19, 43, 67, 163) are exactly the n for which Q(sqrt(-n)) has class number 1, and e^{pi*sqrt(n)} is near-integer for each. The 'magic' of 163 is that it is the LAST Heegner number \u2014 the final class number 1 imaginary quadratic field. Test: prove that e^{pi*sqrt(n)} is within 10^{-6} of an integer only for Heegner numbers. Compute e^{pi*sqrt(67)} and e^{pi*sqrt(43)} and verify near-integer behavior. Prove that 163 is the largest Heegner number (Stark-Heegner theorem). Impact: 163 is not magic \u2014 it is the climax of a deep theorem in algebraic number theory. The near-integer property of e^{pi*sqrt(163)} is the shadow of the class number 1 condition.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0592",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T23:49:57.790919+00:00",
-    "title": "The Unreasonable Effectiveness of the Number 163"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The supremum of achievable vertical amplification parameters \u03b4 in the paper's main theorem equals 1/3. Precisely: for every \u03b5 > 0, there exist infinitely many n \u2208 \u2115 and finite sets P \u2282 \u211d\u00b2 with |P| = n such that for every A \u2286 P with |A| \u2265 2, the maximum distance multiplicity \u03bc(A) \u2265 |A|\u00b2 / n^(2/3 + \u03b5). This would be optimal given the O(n^{4/3}) Szemer\u00e9di\u2013Trotter upper bound on unit distances, which forces \u03b4 \u2264 1/3. The paper establishes existence of some \u03b4 > 0; this conjectures \u03b4 can approach 1/3 via increasingly high-degree number field constructions.",
     "domains": [
@@ -7344,6 +7329,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-08T02:34:21.695399+00:00",
     "title": "Precise algebraic kernel for the slogan *\"impossibility"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Antipodality and the Opposite-Semicube Helly Property\n\nThis cycle established a complete characterization of antipodality inside the\nhypercube: the bit-complement map is a global isometry, and a vertex set is\nantipodal **exactly when** this map swaps every pair of opposite semicubes.\nAlong the way, every vertex of an antipodal set has a unique diametral partner,\nand the semicubes of the hypercube satisfy the Helly property with Helly number\nexactly two. The following conjectures push the characterization from the\ncanonical (antipode-driven) isomorphism to the abstract one and beyond.\n\n## Conjecture 1 \u2014 The abstract-isomorphism Helly converse\n\nThe characterization proved this cycle uses the *canonical* isomorphism given by\nthe antipode map. The bolder statement drops the canonical map: a finite partial\ncube satisfying the opposite-semicube Helly property is antipodal whenever all of\nits opposite semicubes are *abstractly* isomorphic (matching cardinalities and\ninternal geometry, with no preferred matching supplied).\n\n*The key insight is* that abstract isomorphism supplies, for each direction, some\ndistance-preserving matching between the two halves, and the Helly property is\nexactly the coherence condition that lets these per-direction matchings be forced\nto coincide with the single global involution \u2014 the antipode map \u2014 already known\nto witness the canonical version. *Why now?* Both endpoints are in hand: the\ncanonical biconditional is fully established, and the gluing obstruction is\ngoverned by the constructive Helly assignment proved here, so the remaining work\nis to show that any abstract per-direction matching must agree on overlaps with\nthe antipode, collapsing the abstract hypothesis onto the canonical one.\n\n## Conjecture 2 \u2014 Helly number is a partial-cube invariant\n\nFor every finite partial cube, the Helly number of its family of semicubes is at\nmost two, with equality unless the cube is a single vertex.\n\n*The key insight is* that a semicube is a halfspace, and halfspace families in\nmedian-like geometries never require more than pairwise checking; the antipodal\ncase is merely the extremal instance where every halfspace has an exact opposite.\n*Why now?* The hypercube case is settled constructively, giving a template for\nthe induction on isometric expansions that build every partial cube.\n\n## Conjecture 3 \u2014 Diameter rigidity\n\nA finite partial cube is antipodal if and only if every vertex has a unique\nvertex at maximum distance and this correspondence is a distance-preserving\ninvolution.\n\n*The key insight is* that the uniqueness of the diametral mate already forces the\ncorrespondence to reverse every semicube, and reversing every semicube is\nantipodality; the involution hypothesis removes degenerate near-antipodal\nconfigurations. *Why now?* The hypercube version \u2014 distance `n` characterizes the\nantipode, and the mate is unique \u2014 is proved here, so the conjecture asks only\nwhether isometric embedding transports this rigidity.\n\n## Conjecture 4 \u2014 Isomorphism spectrum\n\nIn an antipodal partial cube the multiset of isomorphism types of opposite\nsemicubes is a single type; conversely, a bounded number of distinct types forces\na bounded \"defect from antipodality\" measured by the smallest set of vertices\nwhose addition restores complement-closure.\n\n*The key insight is* that antipodality is the collapse of the isomorphism\nspectrum to one point, so counting distinct semicube types quantifies exactly how\nfar a partial cube is from being antipodal. *Why now?* The forward collapse is\nestablished, so the quantitative converse becomes a well-posed extremal question.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0607",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4aec9d8b",
+    "status": "available",
+    "timestamp": "2026-07-08T02:35:45.817446+00:00",
+    "title": "Complete characterization of antipodality inside the"
   },
   {
     "consumed_by_exp_id": "",
