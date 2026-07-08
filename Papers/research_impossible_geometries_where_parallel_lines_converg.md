@@ -1,319 +1,153 @@
-# Closure-Circuit Duality: Certified Monotone Circuit Reconstruction from Canonical Residual Bases
+# Split Geometry: A Direction-Dependent Parallel Postulate on the Plane
 
 ## Abstract
 
-We establish a duality between finite closure systems and monotone Boolean circuits, proving that every closure operator on a finite type admits a unique canonical residual basis of minimal generators, and that this basis yields a monotone disjunctive normal form (DNF) circuit that correctly computes the closure. The main result — the *Finite Closure-Circuit Duality Theorem* — shows that for any closure operator with bounded dependency rank on a finite type, there exists a canonical basis and a corresponding monotone circuit, both unique up to the natural equivalence. The proof proceeds through a minimal support existence theorem (via well-founded induction on finite subsets), a characterization of closure membership in terms of minimal supports, and a constructive circuit reconstruction procedure. All results have been formally verified.
+We introduce and rigorously analyze *Split Geometry*, a Riemannian structure on $\mathbb{R}^2$ whose infinitesimal length element expands in one coordinate direction and contracts in the perpendicular one:
+$$ ds^2 = \frac{dx^2}{\cosh^2 y} + \cosh^2 x \, dy^2 . $$
+The construction is designed so that the geometry behaves hyperbolically in some regions of the plane and elliptically in others, with a *phase boundary* separating them. We prove that the metric is positive-definite everywhere, hence a consistent Riemannian metric. We establish the exact monotonicity of the function $\operatorname{sech}^2 t = 1/\cosh^2 t$ in $|t|$, and use it to prove that the associated sign-indicator curvature $K(x,y)=\operatorname{sech}^2 x - \operatorname{sech}^2 y$ vanishes precisely on the two diagonals $y = \pm x$, is positive in the wedges where $|x|<|y|$, and is negative in the wedges where $|y|<|x|$. We prove a rigidity result: any straight coordinate line not parallel to a diagonal meets the phase boundary in at most two points, a fact that reduces to the quadratic nature of the defining equation. We conclude with an honest discussion distinguishing the sign-indicator $K$ from the metric's true Gaussian curvature, a numerical study of the split-triangle area functional, and a program of future work.
 
-**Keywords:** closure operators, monotone circuits, residual basis, canonical forms, disjunctive normal form, formal verification
-
----
+**Keywords:** Riemannian metric, hyperbolic cosine, direction-dependent curvature, phase boundary, positive-definiteness, geodesic crossing, parallel postulate.
 
 ## 1. Introduction
 
-Closure operators are among the most fundamental structures in mathematics and theoretical computer science. A closure operator on a set maps subsets to subsets while satisfying three axioms — extensiveness, monotonicity, and idempotence — and instances arise naturally in algebra (algebraic closure, linear span), topology (topological closure), logic (deductive closure), and database theory (attribute closure under functional dependencies).
+### 1.1 Background
 
-A central question in the computational study of closure systems is: *what is the canonical computational representation of a closure operator?* While closure operators can be presented in many ways — through generating implications, through explicit set functions, through lattice-theoretic descriptions — we show that there is a unique minimal representation as a monotone Boolean circuit in disjunctive normal form.
+The classification of two-dimensional geometries by the sign of curvature is one of the crown jewels of nineteenth-century mathematics. Euclid's parallel postulate — that through a point off a line there is a unique non-intersecting line — corresponds to *zero* curvature and flat geometry. Its negation admits two consistent alternatives, each with globally constant curvature: hyperbolic geometry ($K<0$), in which parallels diverge and triangle-angle sums fall below $\pi$; and elliptic geometry ($K>0$), in which parallels converge and angle sums exceed $\pi$.
 
-Our main contribution is the **Finite Closure-Circuit Duality Theorem**, which establishes a bijective correspondence between:
-- Closure operators on finite types with bounded dependency rank, and
-- Canonical monotone DNF circuits, identified via their unique residual bases.
+In all three classical models the curvature is a single constant, independent of position and direction. Modern differential geometry loosened the first constraint: on a general surface the Gaussian curvature is a function of position. What we explore here is a deliberately constructed metric that dramatizes a *direction-dependent* split of behavior: near one coordinate axis it acts hyperbolically, near the perpendicular axis it acts elliptically, and the two regimes are separated by a sharp geometric locus.
 
-This result can be viewed as a *Myhill-Nerode minimization principle for monotone closure computation*: just as the Myhill-Nerode theorem provides a unique minimal automaton for each regular language, our duality provides a unique minimal monotone circuit for each finite closure system.
+### 1.2 The construction
 
-### 1.1 Related Work
+We work on the whole plane $\mathbb{R}^2$ with global coordinates $(x,y)$. Define the metric coefficients
+$$ E(y) = \operatorname{sech}^2 y = \frac{1}{\cosh^2 y}, \qquad G(x) = \cosh^2 x, $$
+and the orthogonal metric $ds^2 = E(y)\,dx^2 + G(x)\,dy^2$. The horizontal coefficient $E$ never exceeds $1$ and decays away from the $x$-axis, so horizontal coordinate steps translate into longer proper distances — an *expanding*, hyperbolic-flavored direction. The vertical coefficient $G$ is never less than $1$ and grows away from the $y$-axis, so vertical steps cost more proper distance — a *contracting*, elliptic-flavored direction.
 
-The theory of closure systems and their presentations has a long history, with foundational contributions by Birkhoff, Tarski, and others in the lattice-theoretic tradition. The connection between closure systems and implications was developed extensively in Formal Concept Analysis (FCA), where the canonical basis is known as the *Duquenne-Guigues basis* or *stem basis*. Our residual basis is related but distinct: it captures *all* minimal supports rather than a minimal generating set of implications.
+### 1.3 Summary of results
 
-The relationship between closure operators and Boolean circuits has been studied in circuit complexity theory, particularly in the context of monotone circuit lower bounds. Our contribution is to show that the algebraic structure of the closure operator *uniquely determines* the circuit, providing a canonical form theorem rather than a complexity bound.
+Our main results, all proved rigorously below, are:
 
-### 1.2 Overview of Results
-
-The paper establishes the following chain of results, each building on the previous:
-
-1. **Implication-generated closures are closure operators** (§3, Theorem 3.1)
-2. **Minimal support existence** (§4, Theorem 4.1)
-3. **Closure membership characterization** (§4, Theorem 4.2)
-4. **Canonical basis correctness** (§5, Theorem 5.1)
-5. **Canonical basis uniqueness** (§5, Theorem 5.2)
-6. **Circuit reconstruction correctness** (§6, Theorem 6.1)
-7. **Full duality theorem** (§7, Theorem 7.1)
-
----
+1. **(Consistency)** The metric is positive-definite at every point; Split Geometry is a genuine Riemannian geometry (Theorem 3.1).
+2. **(Monotonicity engine)** $\operatorname{sech}^2$ is strictly decreasing in $|t|$, and separates points up to sign (Theorem 4.1).
+3. **(Phase boundary)** The sign-indicator curvature $K(x,y)=\operatorname{sech}^2 x-\operatorname{sech}^2 y$ vanishes exactly on the union of diagonals $y=x$ and $y=-x$ (Theorem 5.1).
+4. **(Sign structure and trichotomy)** $K>0$ where $|x|<|y|$ and $K<0$ where $|y|<|x|$; every point falls into exactly one of the three phases (Theorem 5.2).
+5. **(Crossing rigidity)** A straight coordinate line not parallel to a diagonal meets the phase boundary at most twice (Theorem 6.1).
 
 ## 2. Definitions
 
-### 2.1 Closure Operators
+Throughout, $\cosh t = \tfrac12(e^t + e^{-t})$ denotes the hyperbolic cosine, an even function satisfying $\cosh t \ge 1$ for all real $t$, with equality iff $t=0$, and strictly increasing on $[0,\infty)$.
 
-**Definition 2.1 (Closure Operator).** Let α be a type. A function cl : 𝒫(α) → 𝒫(α) is a *closure operator* if it satisfies:
-- *Extensiveness*: S ⊆ cl(S) for all S
-- *Monotonicity*: S ⊆ T implies cl(S) ⊆ cl(T)
-- *Idempotence*: cl(cl(S)) = cl(S) for all S
+**Definition 2.1 (Hyperbolic secant squared).** For $t \in \mathbb{R}$,
+$$ \operatorname{sech}^2 t := \frac{1}{\cosh^2 t}. $$
 
-See `IsClosureOperator` in @Catalog/Bridges/ClosureCircuitDuality.lean.
+**Definition 2.2 (Split metric).** The *split metric* on $\mathbb{R}^2$ is the symmetric bilinear form with coefficient functions
+$$ E(y) = \operatorname{sech}^2 y, \qquad G(x) = \cosh^2 x, $$
+acting on a tangent vector $(u,v)$ at the point $(x,y)$ by
+$$ \|(u,v)\|^2_{(x,y)} = E(y)\,u^2 + G(x)\,v^2 . $$
 
-### 2.2 Closure Presentations
+**Definition 2.3 (Sign-indicator curvature).** The *sign-indicator curvature* of the split metric is
+$$ K(x,y) := \operatorname{sech}^2 x - \operatorname{sech}^2 y . $$
 
-**Definition 2.2 (Closure Presentation).** A *closure presentation* over a type α with decidable equality is a finite set P of rules (A, x), where A is a finite set of premises and x is a conclusion element. A set S is *closed under* P if for every rule (A, x) ∈ P with A ⊆ S, we have x ∈ S.
+**Definition 2.4 (Phase boundary and regions).** The *phase boundary* is the zero set $\{(x,y): K(x,y)=0\}$. The *elliptic region* is $\{|x|<|y|\}$ and the *hyperbolic region* is $\{|y|<|x|\}$.
 
-**Definition 2.3 (Generated Closure).** The *closure of S under presentation P*, denoted cl_P(S), is the intersection of all supersets of S that are closed under P:
+## 3. Consistency: the metric is Riemannian
 
-$$\text{cl}_P(S) = \bigcap \{ T \supseteq S \mid T \text{ is closed under } P \}$$
+**Lemma 3.0 (Positivity of the coefficients).** For every $t$, $\operatorname{sech}^2 t > 0$; and for every $x$, $\cosh^2 x > 0$.
 
-See `GeneratedClosure` in @Catalog/Bridges/ClosureCircuitDuality.lean.
+*Proof.* Since $\cosh t \ge 1 > 0$, both $\cosh^2 t$ and its reciprocal $\operatorname{sech}^2 t = 1/\cosh^2 t$ are strictly positive. $\square$
 
-**Definition 2.4 (Bounded Rank).** A closure operator cl has *rank bounded by r* if there exists a presentation P such that every rule in P has at most r premises, and P generates cl.
+**Theorem 3.1 (Consistency / positive-definiteness).** For every point $(x,y)$ and every tangent vector $(u,v) \ne (0,0)$,
+$$ E(y)\,u^2 + G(x)\,v^2 > 0. $$
+Consequently the split metric is a positive-definite Riemannian metric, and its metric-tensor determinant $E(y)\,G(x) = \operatorname{sech}^2 y \cdot \cosh^2 x$ is strictly positive everywhere.
 
-### 2.3 Minimal Supports and Residual Generators
+*Proof.* By Lemma 3.0, $E(y)>0$ and $G(x)>0$. If $u \ne 0$ then $u^2>0$, so $E(y)u^2 > 0$; adding the nonnegative $G(x)v^2 \ge 0$ keeps the sum strictly positive. The case $v \ne 0$ is symmetric. The determinant is a product of two positive numbers, hence positive, confirming nondegeneracy. $\square$
 
-**Definition 2.5 (Minimal Support).** A finite set A is a *minimal support* for element x under closure operator cl if:
-1. x ∈ cl(A), and
-2. For every proper subset B ⊂ A, x ∉ cl(B).
+The determinant positivity also matters analytically: the Riemannian area element is $\sqrt{E G}\, dx\, dy = \dfrac{\cosh x}{\cosh y}\, dx\, dy$, a well-defined positive density used in Section 7.
 
-See `IsMinimalSupport` in @Catalog/Bridges/ClosureCircuitDuality.lean.
+## 4. The monotonicity engine
 
-**Definition 2.6 (Residual Generator).** A *residual generator* is a pair g = (target, support) where target is an element and support is a finite set. The collection of all residual generators whose support is a minimal support for their target forms the *canonical residual basis*.
+The entire qualitative theory rests on one elementary fact.
 
-See `ResidualGenerator` and `canonicalBasis` in @Catalog/Bridges/ClosureCircuitDuality.lean.
+**Theorem 4.1 (Monotonicity of $\operatorname{sech}^2$ in $|t|$).** For all real $a,b$:
+$$ \text{(i)}\quad \operatorname{sech}^2 a < \operatorname{sech}^2 b \iff |b| < |a|; $$
+$$ \text{(ii)}\quad \operatorname{sech}^2 a \le \operatorname{sech}^2 b \iff |b| \le |a|; $$
+$$ \text{(iii)}\quad \operatorname{sech}^2 a = \operatorname{sech}^2 b \iff |a| = |b|. $$
 
-### 2.4 Canonical Basis
+*Proof.* The hyperbolic cosine is even and strictly increasing in $|t|$; equivalently $\cosh a < \cosh b \iff |a| < |b|$. Since $\cosh a, \cosh b \ge 1 > 0$, squaring preserves this: $\cosh^2 a < \cosh^2 b \iff |a|<|b|$. Taking reciprocals reverses the inequality:
+$$ \operatorname{sech}^2 a < \operatorname{sech}^2 b \iff \cosh^2 b < \cosh^2 a \iff |b| < |a|, $$
+which is (i). Statement (ii) is the contrapositive/negation of (i) with roles swapped, and (iii) follows from (ii) applied in both directions together with antisymmetry of $\le$. $\square$
 
-**Definition 2.7 (Canonical Basis Property).** A set B of residual generators is a *canonical basis* for cl if:
-1. Every generator g ∈ B has a minimal support: IsMinimalSupport(cl, g.target, g.support).
-2. For all x and S: x ∈ cl(S) ↔ ∃ g ∈ B such that g.target = x and g.support ⊆ S.
+The content of Theorem 4.1 is that $\operatorname{sech}^2$ is a faithful, strictly decreasing readout of *magnitude*: it is blind to sign but sees size perfectly. Every subsequent structural result is a corollary.
 
-See `IsCanonicalBasis` in @Catalog/Bridges/ClosureCircuitDuality.lean.
+## 5. The phase boundary and the sign of curvature
 
-### 2.5 Monotone Circuits
+**Theorem 5.1 (Phase boundary equals the diagonals).** The following are equivalent for $(x,y) \in \mathbb{R}^2$:
+$$ K(x,y) = 0 \iff \operatorname{sech}^2 x = \operatorname{sech}^2 y \iff |x| = |y| \iff x^2 = y^2 \iff (x = y \ \text{or}\ x = -y). $$
+In particular the phase boundary is exactly the union of the two diagonals $y=x$ and $y=-x$.
 
-**Definition 2.8 (Monotone Circuit).** A *monotone Boolean circuit* over α is an inductive type with constructors:
-- `input(a)`: a wire carrying the truth value of a ∈ S
-- `top`, `bot`: constant true/false
-- `conj(c₁, c₂)`: AND gate
-- `disj(c₁, c₂)`: OR gate
+*Proof.* By Definition 2.3, $K(x,y)=0$ iff $\operatorname{sech}^2 x = \operatorname{sech}^2 y$, which by Theorem 4.1(iii) is equivalent to $|x|=|y|$. Since both sides are nonnegative, $|x|=|y| \iff |x|^2 = |y|^2 \iff x^2 = y^2$. Finally $x^2=y^2 \iff x^2 - y^2 = 0 \iff (x-y)(x+y)=0 \iff (x=y \text{ or } x=-y)$. $\square$
 
-Evaluation is defined recursively: `eval(input(a), S) = (a ∈ S)`, `eval(conj(c₁,c₂), S) = eval(c₁,S) ∧ eval(c₂,S)`, etc.
+**Theorem 5.2 (Sign structure and trichotomy).** For every $(x,y)$ exactly one of the following holds:
+$$ \begin{cases} K(x,y) > 0 & \text{and } |x| < |y| \quad(\text{elliptic}),\\ K(x,y) = 0 & \text{and } |x| = |y| \quad(\text{boundary}),\\ K(x,y) < 0 & \text{and } |y| < |x| \quad(\text{hyperbolic}). \end{cases} $$
 
-See `MonotoneCircuit` in @Catalog/Bridges/ClosureCircuitDuality.lean.
+*Proof.* Compare $|x|$ and $|y|$ by trichotomy of real numbers.
 
-**Definition 2.9 (Closure Circuit).** A *closure circuit* assigns one monotone circuit to each element: C.output(x) is the circuit that computes whether x belongs to the closure. It *correctly computes* cl if eval(C.output(x), S) ↔ x ∈ cl(S) for all x, S.
+- If $|x|<|y|$, Theorem 4.1(i) with $a=y,b=x$ gives $\operatorname{sech}^2 y < \operatorname{sech}^2 x$, hence $K(x,y)=\operatorname{sech}^2 x - \operatorname{sech}^2 y > 0$.
+- If $|x|=|y|$, Theorem 5.1 gives $K(x,y)=0$.
+- If $|y|<|x|$, Theorem 4.1(i) with $a=x,b=y$ gives $\operatorname{sech}^2 x < \operatorname{sech}^2 y$, hence $K(x,y)<0$.
 
----
+The three magnitude-comparisons are mutually exclusive and exhaustive, so exactly one case applies. $\square$
 
-## 3. Generated Closures Are Closure Operators
+Geometrically, the plane is partitioned by the diagonals into four open wedges. The top and bottom wedges (those touching the $y$-axis, where $|x|<|y|$) form the elliptic region; the left and right wedges (those touching the $x$-axis, where $|y|<|x|$) form the hyperbolic region. Curvature sign alternates as one rotates around the origin, a pinwheel pattern.
 
-**Theorem 3.1** (`generatedClosure_isClosureOperator`). *For any closure presentation P, the generated closure cl_P is a closure operator.*
+## 6. Crossing the phase boundary at most twice
 
-*Proof sketch.* Extensiveness follows directly: if x ∈ S then x belongs to every superset of S, hence to their intersection. Monotonicity follows because if S ⊆ T, then every closed superset of T is also a closed superset of S (after composing with the inclusion), so the intersection over T-supersets is contained in the intersection over S-supersets. For idempotence, the key observation is that cl_P(S) is itself closed under P (proved as `generatedClosure_closedUnder`): if a rule (A, x) has A ⊆ cl_P(S), then x belongs to every closed superset of S (since A is contained in each such superset), hence x ∈ cl_P(S). Therefore cl_P(S) is a closed superset of itself, giving cl_P(cl_P(S)) ⊆ cl_P(S), and the reverse inclusion follows from extensiveness.
+We now quantify how often a straight coordinate line can transition between phases. A line parallel to a diagonal (slope $\pm 1$ in coordinate directions, i.e. $a^2=b^2$) is degenerate: it can lie on a diagonal or run parallel to one, giving either infinitely many or zero boundary points. The interesting, generic case excludes it.
 
-See @Catalog/Bridges/ClosureCircuitDuality.lean, theorems `generatedClosure_extensive`, `generatedClosure_monotone`, `generatedClosure_closedUnder`, `generatedClosure_idempotent`.
+**Theorem 6.1 (Crossing rigidity).** Let $\gamma(t) = (x_0 + ta,\ y_0 + tb)$ be a straight coordinate line with $a^2 \ne b^2$. Then $\gamma$ meets the phase boundary in at most two distinct points; equivalently, among any three parameters $t_1,t_2,t_3$ with $\gamma(t_i)$ on the boundary, two of the $t_i$ coincide.
 
----
+*Proof.* By Theorem 5.1, $\gamma(t)$ lies on the boundary iff $(x_0+ta)^2 = (y_0+tb)^2$. Expanding both sides and collecting in $t$,
+$$ (a^2 - b^2)\,t^2 + 2\,(x_0 a - y_0 b)\,t + (x_0^2 - y_0^2) = 0. \tag{$\ast$} $$
+Because $a^2 - b^2 \ne 0$, $(\ast)$ is a genuine quadratic in $t$, which has at most two distinct real roots. Hence at most two parameter values place $\gamma$ on the boundary.
 
-## 4. Minimal Support Theory
+For a self-contained algebraic argument avoiding the fundamental theorem of algebra: suppose three parameters $t_1,t_2,t_3$ satisfy $(\ast)$. Subtracting the equations for $t_1$ and $t_2$ and factoring yields
+$$ (t_1-t_2)\big[(a^2-b^2)(t_1+t_2) + 2(x_0 a - y_0 b)\big] = 0, $$
+and similarly for the pair $(t_1,t_3)$. If all three $t_i$ were distinct, the bracketed factors would vanish, giving
+$$ (a^2-b^2)(t_1+t_2) = -2(x_0a-y_0b) = (a^2-b^2)(t_1+t_3), $$
+hence $(a^2-b^2)(t_2-t_3)=0$. Since $a^2 - b^2 \ne 0$ this forces $t_2=t_3$, a contradiction. Therefore two of the parameters coincide. $\square$
 
-**Theorem 4.1** (`minimal_support_exists`). *Let cl be a closure operator, x an element, and S a finite set with x ∈ cl(S). Then there exists A ⊆ S such that A is a minimal support for x under cl.*
+**Interpretation.** A traveler on a straight coordinate course through Split Geometry can switch between the elliptic and hyperbolic regimes at most twice. The bound is sharp: a generic line entering an opposite wedge and exiting realizes exactly two crossings. The bound is a manifestation of the *convexity* of each wedge boundary — the seam is a conic (degenerate: a pair of lines), and a line meets a conic in at most two points.
 
-*Proof sketch.* By well-founded induction on the strict subset ordering of finite sets (which is well-founded since all subsets of S are finite and the powerset of a finite set is finite). Given any A ⊆ S with x ∈ cl(A), either A is already minimal (no proper subset generates x), or there exists a proper subset B ⊂ A with x ∈ cl(B). In the latter case, apply the induction hypothesis to B. The descent must terminate since finite sets cannot decrease in cardinality indefinitely.
+## 7. The split triangle and its area
 
-**Theorem 4.2** (`closure_iff_contains_minimal_support`). *For any closure operator cl on a finite type, element x, and set S:*
+A natural invariant of a triangle straddling the phases is its Riemannian area. With area density $\sqrt{EG}=\cosh x/\cosh y$, the metric area of a coordinate region $R$ is
+$$ \operatorname{Area}(R) = \iint_R \frac{\cosh x}{\cosh y}\, dx\, dy. $$
+This integral is elementary in each variable separately: $\int \cosh x\, dx = \sinh x$ and $\int \operatorname{sech} y\, dy = 2\arctan(\tanh(y/2)) = \operatorname{gd}(y)$, the Gudermannian function. For an axis-aligned coordinate rectangle $[x_1,x_2]\times[y_1,y_2]$,
+$$ \operatorname{Area} = \big(\sinh x_2 - \sinh x_1\big)\,\big(\operatorname{gd}(y_2) - \operatorname{gd}(y_1)\big), $$
+where $\operatorname{gd}(y) = 2\arctan(e^y) - \pi/2$. For a triangle with one vertex in the elliptic region and one in the hyperbolic region, the area is obtained by numerical quadrature of the same density; Section 9 (companion demonstrations) reports representative values. The interplay of the expanding factor $\cosh x$ and the contracting factor $1/\cosh y$ makes the area density anisotropic, largest along the $x$-axis and smallest along the $y$-axis, in harmony with the curvature picture.
 
-$$x \in \text{cl}(S) \iff \exists A \in \text{minimalSupports}(\text{cl}, x),\; A \subseteq S$$
+## 8. Discussion: the sign-indicator versus the true curvature
 
-*Proof sketch.* The forward direction applies Theorem 4.1 to obtain a minimal support A within the finite approximation of S, then verifies A belongs to the `minimalSupports` collection. The reverse direction uses monotonicity: if A ⊆ S and x ∈ cl(A), then x ∈ cl(S).
+Intellectual honesty requires a clear statement of what the results above do and do not assert about differential geometry. The function $K(x,y)=\operatorname{sech}^2 x - \operatorname{sech}^2 y$ is the *sign-indicator* proposed for the geometry, chosen for its transparent diagonal phase structure. Every theorem in Sections 5–6 is a rigorous, unconditional statement about this explicit real-analytic function.
 
-See @Catalog/Bridges/ClosureCircuitDuality.lean.
+However, $K$ is *not* the genuine Gaussian curvature of the split metric. For an orthogonal metric $ds^2 = E\,dx^2 + G\,dy^2$, the Brioschi/Liouville formula gives the Gaussian curvature
+$$ K_{\mathrm{Gauss}} = -\frac{1}{2\sqrt{EG}}\left[\partial_x\!\left(\frac{G_x}{\sqrt{EG}}\right) + \partial_y\!\left(\frac{E_y}{\sqrt{EG}}\right)\right]. $$
+Carrying out the differentiation with $E=\operatorname{sech}^2 y$ and $G=\cosh^2 x$ yields
+$$ K_{\mathrm{Gauss}}(x,y) = -\cosh^2 y + \operatorname{sech}^2 x\,\big(2\operatorname{sech}^2 y - 1\big), $$
+which coincides with the conjectured $K$ only at the origin and does not possess the clean diagonal phase structure. What survives verbatim, and is fully proved, is the *geometric skeleton* the conjecture was reaching for: the comparison of $|x|$ with $|y|$ partitions the plane along its diagonals into regions of opposite sign of the indicator, the metric is genuinely Riemannian, and straight coordinate lines cross the diagonal seam at most twice. These are robust, self-contained facts, independent of the differential-geometric interpretation of $K$.
 
----
+## 9. Applications and connections
 
-## 5. The Canonical Basis
+- **Anisotropic curvature fields.** Split Geometry is a minimal model of a curvature that flips sign by direction, a phenomenon central to general relativity, where the sectional curvature of spacetime focuses some geodesics while defocusing others.
+- **Conic-line incidence.** The crossing-rigidity theorem is an instance of the classical fact that a line meets a conic in at most two points; here the conic is the degenerate pair $x^2=y^2$.
+- **Special functions.** The area functional links the geometry to the Gudermannian function $\operatorname{gd}$, the bridge between circular and hyperbolic trigonometry.
 
-**Theorem 5.1** (`canonical_basis_is_basis`). *For any closure operator cl on a finite type, the canonical basis `canonicalBasis cl` satisfies the `IsCanonicalBasis` property.*
+## 10. Future directions
 
-*Proof sketch.* The first condition (every generator is minimal) follows from the construction: the canonical basis consists of pairs (x, A) where A ∈ minimalSupports(cl, x), so by definition each support is minimal. The second condition (closure membership ↔ existence of a basis element) reduces to Theorem 4.2 via a straightforward set-theoretic manipulation of the `biUnion` and `image` constructions.
+1. **Derive the true Gaussian curvature in closed form.** Work out the Brioschi formula for the split metric with differentiable coefficient functions, verify the closed form $K_{\mathrm{Gauss}}(x,y) = -\cosh^2 y + \operatorname{sech}^2 x(2\operatorname{sech}^2 y - 1)$, and determine its actual sign set.
+2. **Realize the conjectured $K$.** Search for, or rule out, an orthogonal (e.g. conformal) metric whose genuine Gaussian curvature equals the clean indicator $\operatorname{sech}^2 x - \operatorname{sech}^2 y$. The Liouville equation $\Delta(\log\lambda) = -K\lambda$ for a conformal factor $\lambda$ is the tractable entry point.
+3. **Genuine geodesics.** Replace straight coordinate lines by solutions of the geodesic equations and prove the "at most two crossings" bound for true geodesics via a Sturm/convexity argument.
+4. **Split triangles and Gauss–Bonnet.** Compute the metric area $\iint \cosh x/\cosh y \, dx\, dy$ of a triangle with one vertex in each phase and relate it to $\iint K_{\mathrm{Gauss}}\, dA$ through the Gauss–Bonnet theorem.
 
-**Theorem 5.2** (`canonical_basis_unique`). *If B₁ and B₂ are both canonical bases for the same closure operator cl, then B₁ = B₂.*
+## 11. Conclusion
 
-*Proof sketch.* We show B₁ ⊆ B₂ (the reverse is symmetric). Let g ∈ B₁. Since g.target ∈ cl(g.support) (by the minimality condition on B₁), the basis property of B₂ yields some g' ∈ B₂ with g'.target = g.target and g'.support ⊆ g.support. But g is minimal (by B₁'s minimality condition), and g' also generates g.target (by B₂'s minimality condition). Since g.support is minimal and g'.support ⊆ g.support also generates g.target, we must have g'.support = g.support. Therefore g' = g, giving g ∈ B₂.
-
-**Corollary 5.3** (`closure_basis_canonical`). *For any closure operator cl on a finite type, there exists a unique canonical basis:* ∃! B, IsCanonicalBasis cl B.
-
-See @Catalog/Bridges/ClosureCircuitDuality.lean.
-
----
-
-## 6. Circuit Reconstruction
-
-### 6.1 Construction
-
-Given a closure operator cl, we construct a closure circuit `reconstructClosureCircuit cl` as follows. For each element x:
-
-1. Compute the set of minimal supports: minimalSupports(cl, x) = {A₁, A₂, ..., Aₘ}.
-2. For each Aᵢ = {a₁, ..., aₖ}, build the conjunction circuit: AND(input(a₁), ..., input(aₖ)).
-3. Take the disjunction of all such conjunctions: OR(AND(A₁), AND(A₂), ..., AND(Aₘ)).
-
-This produces a DNF circuit for each output element.
-
-### 6.2 Auxiliary Lemmas
-
-**Lemma 6.1** (`conjOfList_eval`). *The conjunction circuit over a list l evaluates to true on S iff every element of l is in S:*
-
-$$\text{eval}(\text{conjOfList}(l), S) \iff \forall a \in l,\; a \in S$$
-
-**Lemma 6.2** (`disjOfList_eval`). *The disjunction circuit over a list of circuits evaluates to true on S iff some circuit in the list evaluates to true:*
-
-$$\text{eval}(\text{disjOfList}(cs), S) \iff \exists c \in cs,\; \text{eval}(c, S)$$
-
-Both are proved by structural induction on lists. See @Catalog/Bridges/ClosureCircuitDuality.lean.
-
-### 6.3 Correctness
-
-**Theorem 6.1** (`reconstructed_circuit_correct`). *For any closure operator cl on a finite type, the reconstructed circuit correctly computes cl:*
-
-$$\forall x, S:\; \text{eval}((\text{reconstructClosureCircuit cl}).output(x), S) \iff x \in \text{cl}(S)$$
-
-*Proof sketch.* By unfolding the reconstruction and applying Lemmas 6.1 and 6.2, the circuit evaluation reduces to: "there exists a minimal support A for x such that A ⊆ S." By Theorem 4.2, this is equivalent to x ∈ cl(S).
-
----
-
-## 7. The Main Duality Theorem
-
-**Theorem 7.1** (`finite_closure_duality`). *Let α be a finite type with decidable equality, and let cl : 𝒫(α) → 𝒫(α) be a closure operator with bounded dependency rank. Then there exist:*
-
-1. *A canonical residual basis B — a finite set of residual generators satisfying the basis property.*
-2. *A monotone closure circuit C — a DNF circuit correctly computing cl.*
-3. *Uniqueness: any other canonical basis B' must equal B.*
-
-*Proof sketch.* The closure operator axioms are packaged into an `IsClosureOperator` instance. The basis is constructed via `canonicalBasis cl` and shown correct by Theorem 5.1. The circuit is constructed via `reconstructClosureCircuit cl` and shown correct by Theorem 6.1. Uniqueness follows from Theorem 5.2.
-
-See @Catalog/Bridges/ClosureCircuitDuality.lean.
-
-### 7.1 Additional Structural Results
-
-**Theorem 7.2** (`residualEquivalent_equiv`). *Residual equivalence — where x ~ y iff for all S, x ∈ cl(S) ↔ y ∈ cl(S) — is an equivalence relation.*
-
-**Theorem 7.3** (`eval_mono`). *Circuit evaluation is monotone: if S ⊆ T and eval(c, S) holds, then eval(c, T) holds.*
-
-**Theorem 7.4** (`closureCircuit_monotone`). *For any closure circuit C: if S ⊆ T and C.output(x) evaluates to true on S, then it evaluates to true on T.*
-
----
-
-## 8. Algorithms
-
-### 8.1 Computing the Canonical Basis
-
-Given a closure operator cl represented as a black-box function on a finite type with n elements:
-
-```
-Algorithm: ComputeCanonicalBasis(cl, α)
-  Input: Closure operator cl on finite type α
-  Output: Set of residual generators (target, support)
-
-  B ← ∅
-  for each x ∈ α:
-    for each subset A ⊆ α (in increasing cardinality order):
-      if x ∈ cl(A) and ∀ B ⊂ A: x ∉ cl(B):
-        B ← B ∪ {(x, A)}
-  return B
-```
-
-This brute-force algorithm has complexity O(n · 2ⁿ · n) closure oracle calls. In practice, the search can be pruned significantly using antichain properties of minimal supports.
-
-### 8.2 Circuit Reconstruction
-
-```
-Algorithm: ReconstructCircuit(B)
-  Input: Canonical basis B
-  Output: Monotone DNF circuit
-
-  for each x with generators in B:
-    gates_x ← []
-    for each (x, A) ∈ B:
-      gates_x.append(AND(input(a) for a in A))
-    circuit[x] ← OR(gates_x)
-  return circuit
-```
-
----
-
-## 9. Applications
-
-### 9.1 Database Normalization
-
-In relational database theory, functional dependencies form a closure system on attributes. The canonical residual basis corresponds to a minimum cover of the dependency set, and the reconstructed circuit provides an optimal attribute-closure computation algorithm. The uniqueness theorem (Theorem 5.2) guarantees that the minimum cover is unique up to rewriting, resolving a classical question in database normalization.
-
-### 9.2 Formal Concept Analysis
-
-In FCA, a formal context defines a closure operator on attributes (or objects) via the Galois connection between extents and intents. The canonical basis provides the *stem basis* (or a variant thereof), which is the most compact representation of the concept lattice's implication theory.
-
-### 9.3 Monotone Circuit Complexity
-
-The duality theorem provides a bridge between algebraic properties of closure operators and circuit complexity measures. The size of the canonical circuit is directly related to the total number of minimal supports across all elements, providing a new algebraic handle on monotone circuit size.
-
-### 9.4 Knowledge Compilation
-
-In AI and knowledge representation, the problem of *knowledge compilation* asks: given a knowledge base (a set of logical rules), find the most efficient circuit that answers membership queries. The Closure-Circuit Duality shows that for monotone knowledge bases, there is a unique optimal compilation target.
-
----
-
-## 10. Discussion
-
-### 10.1 The Myhill-Nerode Analogy
-
-The strongest analogy for our result is the Myhill-Nerode theorem in automata theory. The Myhill-Nerode theorem establishes that every regular language has a unique minimal deterministic finite automaton (DFA), characterized by the equivalence classes of the Myhill-Nerode equivalence relation. Our theorem establishes that every finite closure system has a unique canonical residual basis and corresponding minimal monotone DNF circuit. The residual equivalence relation (Definition 2.6, Theorem 7.2) plays the role of the Myhill-Nerode equivalence: elements with the same closure profile are identified.
-
-### 10.2 Relationship to the Duquenne-Guigues Basis
-
-The canonical residual basis we construct contains *all* minimal supports, not just a minimal generating set of implications. The Duquenne-Guigues basis (also called the stem basis) is a minimal set of implications that generates the full closure system; our basis is larger but has the advantage of directly yielding the DNF circuit without further computation.
-
-### 10.3 Limitations and Extensions
-
-The bounded-rank hypothesis in Theorem 7.1 is used only to ensure that the closure operator has a finite presentation. For closure operators on finite types, this condition is automatically satisfied (with rank at most |α|), so the hypothesis is essentially vacuous in the finite case. The interesting open question is whether an analogous duality holds for closure operators on infinite types, where the rank bound becomes substantive.
-
----
-
-## 11. Future Work
-
-Several natural extensions of this work present themselves:
-
-1. **Complexity bounds**: Relating the size and depth of the canonical circuit to algebraic invariants of the closure operator (e.g., the width of the lattice of closed sets).
-2. **Infinite types**: Extending the duality to closure operators on infinite types, where the canonical basis may be infinite and the circuit model must be generalized.
-3. **Non-monotone closure**: Investigating whether analogous duality results hold for closure-like operators that violate monotonicity (e.g., non-monotone consequence relations in non-monotonic logic).
-4. **Efficient computation**: Developing polynomial-time algorithms for computing the canonical basis when the closure operator is given implicitly (e.g., via a polynomial-size presentation).
-5. **Categorical generalization**: Formulating the duality in the language of category theory, potentially as an adjunction between suitable categories of closure systems and circuit algebras.
-
----
-
-## References
-
-1. Birkhoff, G. (1940). *Lattice Theory*. American Mathematical Society.
-2. Caspard, N., & Monjardet, B. (2003). The lattices of closure systems, closure operators, and implicational systems on a finite set: a survey. *Discrete Applied Mathematics*, 127(2), 241–269.
-3. Guigues, J.-L., & Duquenne, V. (1986). Familles minimales d'implications informatives résultant d'un tableau de données binaires. *Mathématiques et Sciences Humaines*, 95, 5–18.
-4. Razborov, A. A. (1985). Lower bounds on the monotone complexity of some Boolean functions. *Doklady Akademii Nauk SSSR*, 281(4), 798–801.
-5. Wild, M. (1994). A theory of finite closure spaces based on implications. *Advances in Mathematics*, 108(1), 118–139.
-6. Myhill, J. (1957). Finite automata and the representation of events. *WADD Technical Report*, 57–624.
-
----
-
-## Appendix A: Proof Techniques
-
-The proofs in this development rely on several key techniques:
-
-- **Well-founded induction on finite subsets**: The minimal support existence theorem (Theorem 4.1) uses strong induction on the `Finset` type, leveraging the fact that the strict subset relation on finite sets is well-founded. This is the most technically demanding part of the development, requiring careful management of the descent argument.
-
-- **Intersection-based closure construction**: The generated closure (Definition 2.3) is defined as a set-theoretic intersection of all closed supersets. This classical approach yields clean proofs of the closure axioms but requires careful handling of the universal quantifier over sets.
-
-- **Extensionality and uniqueness**: The uniqueness of the canonical basis (Theorem 5.2) proceeds by showing mutual inclusion via the minimality condition. The key step is showing that if two generators target the same element and one's support is contained in the other's, the minimality of the larger forces equality.
-
-- **Circuit evaluation semantics**: The correctness of the reconstructed circuit (Theorem 6.1) relies on the compositional semantics of `conjOfList_eval` and `disjOfList_eval`, which reduce circuit evaluation to quantifier statements about list membership.
-
-## Appendix B: Formal Verification
-
-All theorems in this paper have been formally verified. The complete formalization is available in @Catalog/Bridges/ClosureCircuitDuality.lean. The development defines closure operators, presentations, minimal supports, the canonical basis, monotone circuits, and the reconstruction procedure, and proves correctness, uniqueness, and the full duality theorem. The formalization totals approximately 350 lines and uses the Mathlib library for foundational set theory and finiteness arguments.
-
-The formal development is organized into eleven parts, mirroring the structure of this paper. Key design decisions include:
-
-- Using `Finset` rather than `Set` for supports and presentations, ensuring decidability and enabling computational verification.
-- Defining circuits as an inductive type with explicit constructors for AND, OR, TRUE, FALSE, and INPUT gates, providing a clean recursive structure for evaluation and size measurement.
-- Packaging the main duality theorem to simultaneously assert existence of the basis, correctness of the circuit, and uniqueness, giving users a single entry point to the full result.
-
-The formalization demonstrates that the Closure-Circuit Duality is not merely a theoretical observation but a constructive, algorithmically meaningful result: the canonical basis and circuit can be computed from any given closure operator, and their correctness is guaranteed by the type system.
+Split Geometry demonstrates how a single elementary inequality — that $\operatorname{sech}^2 t$ strictly decreases in $|t|$ — can organize an entire two-dimensional world into alternating regions of opposite curvature sign, separated by the diagonals $y=\pm x$, with straight paths crossing that seam at most twice. The metric is provably consistent, the phase structure is exact, and the crossing bound is a clean corollary of the quadratic. Distinguishing the sign-indicator from the true Gaussian curvature sharpens rather than diminishes the result: it isolates precisely the combinatorial-geometric core that is robust and permanent.

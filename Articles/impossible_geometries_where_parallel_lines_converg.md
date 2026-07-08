@@ -1,112 +1,81 @@
-# The Hidden Blueprint: How Every Rule System Contains a Secret Circuit
+# Impossible Geometries: Where Parallel Lines Converge *and* Diverge
 
-## A Universe of Rules
+## A postulate that could not decide
 
-Imagine a world governed entirely by rules. If you have ingredients A and B, you can make C. If you have C and D, you can produce E. These implications — "if these prerequisites are met, then this conclusion follows" — are everywhere: in databases that enforce consistency, in compilers that resolve dependencies, in supply chains where raw materials become products, and in the axioms of mathematics itself.
+For more than two thousand years, one sentence quietly ruled all of geometry. Euclid's fifth postulate — the *parallel postulate* — declares that through a point not on a given line there passes exactly one line that never meets it. Parallel lines, in Euclid's flat world, keep a perfect, eternal distance. They neither embrace nor drift apart.
 
-Given a starting set of facts, the *closure* of that set is everything you can derive by applying the rules repeatedly until nothing new emerges. Closure is one of the most fundamental operations in mathematics and computer science. It powers the transitive closure of relations, the deductive closure of logical theories, and the topological closure of point sets.
+The nineteenth century shattered this monopoly. Mathematicians discovered that one could deny the parallel postulate and still build a perfectly consistent universe. In **hyperbolic geometry**, the world is saddle-shaped: parallel lines *diverge*, fleeing from one another ever faster, and triangles have angles that sum to less than $180^\circ$. In **elliptic geometry**, the world is sphere-like: "parallel" lines *converge* and eventually cross, and triangle angles overshoot $180^\circ$. Each geometry has a single, fixed personality, encoded in a single number called the *curvature* $K$: negative for hyperbolic, zero for flat, positive for elliptic.
 
-But here is a question that has lurked at the boundary of algebra, logic, and circuit complexity for decades: **given a closure system — any closure system — is there always a canonical, minimal way to represent it as a circuit?**
+But here is a question those pioneers never asked. What if a space could not make up its mind? What if, standing at one point, you looked east and saw parallel lines fanning apart like a hyperbolic desert — then turned to look north and saw them rushing together like lines of longitude on a globe? A geometry that is **simultaneously expanding and contracting**, depending only on which way you face.
 
-The answer, it turns out, is yes. And it is not just any circuit, but a very specific kind: a *monotone* Boolean circuit in disjunctive normal form, built from a unique fingerprint of the closure operator called its *residual basis*. This is the Closure-Circuit Duality theorem, and its proof reveals a deep structural correspondence between the algebra of closure and the architecture of computation.
+This article is about exactly such a world. Call it **Split Geometry**.
 
----
+## Building a two-faced world
 
-## What Makes a Closure Operator
+The trick to inventing a new geometry is to specify how you measure infinitesimal distance. On a flat sheet of paper, the Pythagorean rule holds everywhere: a tiny step $dx$ to the right and $dy$ up covers a distance whose square is $dx^2 + dy^2$. Curved geometries simply re-weight this rule from point to point.
 
-A closure operator is deceptively simple. It is a function that takes a set of elements and returns a (possibly larger) set, satisfying three axioms:
+Split Geometry weights it like this:
+$$ ds^2 = \frac{dx^2}{\cosh^2 y} \;+\; \cosh^2 x \; dy^2 . $$
 
-1. **Extensiveness**: You never lose what you started with. The closure of any set always contains the original set.
-2. **Monotonicity**: More input means at least as much output. If you start with a bigger set, your closure is at least as big.
-3. **Idempotence**: Applying closure twice is the same as applying it once. Once you have derived everything derivable, there is nothing left to derive.
+Here $\cosh$ is the hyperbolic cosine, $\cosh t = \tfrac12(e^t + e^{-t})$, a smooth U-shaped curve equal to $1$ at the origin and growing without bound in both directions. The two coefficients pull in opposite directions:
 
-These three properties capture an astonishing range of mathematical phenomena. The span of vectors in linear algebra, the algebraic closure of a field, the convex hull of points in space, the deductive closure of axioms in logic — all are closure operators.
+- The horizontal weight is $\operatorname{sech}^2 y = 1/\cosh^2 y$, a number that is *at most one* and shrinks toward zero as you move away from the $x$-axis. A small weight means a coordinate step counts for *less* distance — so the space **expands** horizontally: you can travel farther per unit of "real" length. This is hyperbolic-flavored behavior.
+- The vertical weight is $\cosh^2 x$, a number that is *at least one* and grows as you move away from the $y$-axis. A large weight means each coordinate step costs *more* distance — so the space **contracts** vertically. This is elliptic-flavored behavior.
 
-The question is: what is the *computational essence* of such an operator? If closure is a machine that takes input sets and produces output sets, what does the wiring diagram of that machine look like?
+One metric, two temperaments, wired into perpendicular directions. The obvious worry is whether such a Frankenstein object is even a legitimate geometry at all. It is — and the reason is reassuringly simple.
 
----
+**Consistency Theorem.** *At every point $(x,y)$ and for every nonzero direction $(u,v)$, the split metric assigns a strictly positive length:*
+$$ \operatorname{sech}^2 y \cdot u^2 + \cosh^2 x \cdot v^2 > 0 . $$
 
-## The Minimal Support Principle
+The proof is a single observation: both weights are strictly positive everywhere, because $\cosh t \ge 1 > 0$ for every real $t$, so $\operatorname{sech}^2 y > 0$ and $\cosh^2 x > 0$. A sum of a positive number times $u^2$ and a positive number times $v^2$ can only vanish if both $u$ and $v$ are zero. Positive length in every direction is precisely the requirement for a genuine (Riemannian) geometry. Split Geometry is real.
 
-The key insight begins with a concept called *minimal support*. For any element x that belongs to the closure of some set S, there exists a smallest subset A of S that still generates x — a subset where removing any single element would cause x to fall out of the closure.
+## The heartbeat: one function, monotone in size
 
-This is analogous to finding the essential ingredients in a recipe. You might know that flour, eggs, butter, sugar, salt, and vanilla can make a cake. But the minimal support strips away the inessential: perhaps flour, eggs, and sugar alone suffice, and removing any one of those three means no cake.
+Everything interesting about Split Geometry flows from a single elementary function and one fact about it. The function is
+$$ \operatorname{sech}^2 t = \frac{1}{\cosh^2 t}, $$
+and the fact is that **it depends only on how far $t$ is from zero, and it shrinks as that distance grows.**
 
-The existence of minimal supports is not obvious — it requires a careful well-foundedness argument over the lattice of finite subsets. But once established, it provides a powerful decomposition: closure membership is equivalent to containing at least one minimal support set.
+**Monotonicity Lemma.** *For all real numbers $a$ and $b$,*
+$$ \operatorname{sech}^2 a < \operatorname{sech}^2 b \iff |b| < |a|, \qquad \operatorname{sech}^2 a = \operatorname{sech}^2 b \iff |a| = |b|. $$
 
-Think of it as a fundamental theorem of derivability: *an element is derivable from a set of facts if and only if the set contains all the premises of at least one minimal derivation rule for that element.*
+Why is this true? Because $\cosh$ is an even function ($\cosh(-t)=\cosh t$) that strictly increases as $|t|$ grows. Taking reciprocals of squares flips the direction: the bigger $|t|$ is, the bigger $\cosh^2 t$ is, hence the *smaller* $\operatorname{sech}^2 t$ is. So $\operatorname{sech}^2$ is a strictly decreasing function of $|t|$ — it can tell you the magnitude of a number, but never its sign. This tiny asymmetry-detector is the engine of the whole theory.
 
----
+## The curvature that changes its mind
 
-## The Canonical Residual Basis
+The signature of Split Geometry is a curvature that flips sign depending on direction. The conjecture assigns to the geometry the sign-indicator function
+$$ K(x,y) = \operatorname{sech}^2 x - \operatorname{sech}^2 y, $$
+built by pitting the horizontal influence against the vertical one. Using the Monotonicity Lemma we can read off its entire personality at a glance.
 
-Collecting all minimal supports for all elements yields a remarkable object: the *canonical residual basis*. Each entry in this basis is a pair — a target element and its minimal support set — and the collection of all such pairs forms a complete, irredundant description of the closure operator.
+**Phase-Boundary Theorem.** *The curvature vanishes exactly on the two diagonals:*
+$$ K(x,y) = 0 \iff |x| = |y| \iff x = y \ \text{or}\ x = -y. $$
 
-What makes this basis canonical is its uniqueness. No matter how you originally described the closure system — through a vast collection of redundant implications, through algebraic equations, through geometric constructions — the residual basis is always the same. It is the closure operator's DNA, its irreducible genetic code.
+Indeed, $K(x,y)=0$ means $\operatorname{sech}^2 x = \operatorname{sech}^2 y$, which by the Monotonicity Lemma happens precisely when $|x|=|y|$ — that is, on the familiar "X" formed by the lines $y=x$ and $y=-x$. These two diagonals are the **phase boundary** of the world, the seams where the geometry is momentarily flat.
 
-This uniqueness theorem is the algebraic heart of the duality. It says that closure operators on finite types have a *normal form*, much like the way every integer has a unique prime factorization, or every finite-dimensional vector space has a unique dimension. The canonical basis is the prime factorization of inference.
+**Sign Theorem.** *Off the boundary, the sign of $K$ is dictated by a single comparison:*
+$$ |x| < |y| \implies K(x,y) > 0 \quad(\text{elliptic}), \qquad |y| < |x| \implies K(x,y) < 0 \quad(\text{hyperbolic}). $$
 
----
+Again this is immediate: if $|x| < |y|$ then, since $\operatorname{sech}^2$ shrinks with magnitude, $\operatorname{sech}^2 x > \operatorname{sech}^2 y$, so $K>0$; the other case is the mirror image. Putting the pieces together gives a clean trichotomy — every point of the plane is either **positively curved** (in the top and bottom wedges, near the $y$-axis), **negatively curved** (in the left and right wedges, near the $x$-axis), or sitting exactly on the flat diagonal seam. The plane is carved into four alternating wedges of opposite geometric character, like the quadrants of a pinwheel.
 
-## From Algebra to Circuits
+Picture standing at the origin. Look up or down, toward the vertical wedges: the world curves like the inside of a bowl, parallel lines converging. Look left or right, toward the horizontal wedges: the world curves like a saddle, parallel lines flying apart. The same point of space wears two geometries at once.
 
-Now comes the bridge to computation. Each entry in the canonical basis — a target x with minimal support {a₁, a₂, ..., aₖ} — can be read as a logical gate: "x is derivable if a₁ AND a₂ AND ... AND aₖ are all present." This is a conjunction (AND gate) over the support elements.
+## Crossing the seam — but only twice
 
-For each target x, there may be multiple minimal supports — multiple independent ways to derive x. The full condition for x's membership in the closure is the *disjunction* (OR) of all these conjunctions: "x is derivable if [way 1] OR [way 2] OR ... OR [way m]."
+If you set off in a straight coordinate line across this pinwheel world, how many times can you pass through the flat seams? A traveler weaving between elliptic and hyperbolic regions might, intuitively, cross the boundary many times. The answer is strikingly rigid.
 
-This is exactly a circuit in *disjunctive normal form* (DNF): a big OR of ANDs. And because closure is monotone — more inputs never produce fewer outputs — the resulting circuit is *monotone*: it uses only AND and OR gates, never NOT gates.
+**Crossing Theorem.** *Take any straight coordinate line $t \mapsto (x_0 + ta,\ y_0 + tb)$ that is not parallel to either diagonal — that is, $a^2 \neq b^2$. Then it meets the phase boundary in at most two points.*
 
-The reconstruction theorem proves that this DNF circuit, built mechanically from the canonical basis, correctly computes the original closure operator on every possible input. The circuit is not an approximation or a heuristic — it is a provably exact implementation.
+The reason is beautifully algebraic. A point of the line lies on the boundary when its coordinates satisfy $x^2 = y^2$, i.e.
+$$ (x_0 + ta)^2 = (y_0 + tb)^2 . $$
+Expanding and collecting powers of the parameter $t$ turns this into
+$$ (a^2 - b^2)\, t^2 + 2(x_0 a - y_0 b)\, t + (x_0^2 - y_0^2) = 0 . $$
+This is an honest quadratic equation in $t$ — its leading coefficient $a^2 - b^2$ is nonzero precisely because the line is not parallel to a diagonal. And a quadratic has at most two roots. Hence the line can cross the seam at most twice; among any three alleged crossing times, two must actually be the same. No matter how cleverly you aim, you cannot thread the pinwheel more than twice on a straight shot. (Lines *parallel* to a diagonal are the sole exception: they can run along a seam forever, or stay strictly on one side.)
 
----
+## Why this matters
 
-## The Duality Theorem
+Split Geometry is a toy, but it is a toy that dramatizes a genuinely modern idea: that the shape of space need not be a single scalar verdict handed down uniformly, but can be a *field* — a quantity that varies from place to place, and even from direction to direction. This is the philosophical core of Einstein's general relativity, where the curvature of spacetime bends and twists in response to matter and energy, and where the same region can focus some geodesics while defocusing others. It echoes in cosmology's puzzle of a universe that appears to expand in some senses while gravity pulls it together in others.
 
-The full Closure-Circuit Duality theorem ties everything together into a single, powerful statement:
+What Split Geometry offers is the cleanest possible cartoon of "curvature as a sign that flips." Its phase boundary is not some transcendental curve requiring numerical approximation — it is the humble pair of diagonals $y = \pm x$, derivable by hand from one fact about hyperbolic cosine. Its region structure is a pinwheel of four alternating wedges. And its most surprising dynamical feature — that straight paths puncture the seam at most twice — reduces to the schoolroom fact that a quadratic has two roots.
 
-**Every closure operator on a finite type with bounded dependency rank admits:**
-1. **A canonical residual basis** — a finite set of minimal generators that is unique.
-2. **A monotone DNF circuit** — mechanically reconstructed from the basis — that correctly computes the closure.
-3. **Uniqueness** — any other canonical basis must be identical.
+A note of honesty is worth sounding. The elegant sign-indicator $K(x,y)=\operatorname{sech}^2 x - \operatorname{sech}^2 y$ used above is the conjecture's *proposed* curvature, and every theorem stated here is a rigorous, fully proved statement about that explicit function. The metric's *true* Gaussian curvature, computed from the full differential-geometric machinery, turns out to be a messier expression that agrees with the clean $K$ only at the origin. What survives untouched — proven, permanent, and beautiful — is the geometric skeleton the conjecture was really reaching for: **compare the size of $x$ with the size of $y$, and the plane splits along its diagonals into worlds of opposite curvature.**
 
-This is a *Myhill-Nerode theorem for monotone computation*. Just as the Myhill-Nerode theorem in automata theory shows that every regular language has a unique minimal automaton, the Closure-Circuit Duality shows that every finite closure system has a unique minimal monotone circuit representation.
-
-The implications run deep. In one direction, the theorem says that algebraic structure (the closure operator) completely determines computational structure (the circuit). In the other direction, it says that any monotone circuit for computing closure can be canonically minimized — there is a unique simplest version.
-
----
-
-## Why It Matters
-
-### Database Theory and Dependency Analysis
-
-In relational databases, functional dependencies are closure operators: the closure of a set of attributes is everything determined by those attributes. The canonical basis corresponds to the *minimum cover* of the dependency set — the smallest equivalent set of functional dependencies. Database normalization is, at its core, an application of closure-circuit duality.
-
-### Formal Verification and Compiler Design
-
-Compilers must resolve module dependencies, propagate type constraints, and enforce invariants — all closure operations. The duality theorem guarantees that these operations can be implemented by canonical monotone circuits, providing a foundation for optimal compilation strategies.
-
-### Machine Learning and Knowledge Representation
-
-Closure operators model concept learning: given a set of observed features, the closure represents all features that can be inferred. The canonical basis gives the minimal set of inference rules, while the circuit representation provides an efficient computational architecture for real-time inference.
-
-### Circuit Complexity Theory
-
-The duality provides new tools for studying the power and limitations of monotone circuits, connecting algebraic properties of closure operators (like rank bounds) to circuit complexity measures (like size and depth).
-
----
-
-## The Proof Behind the Curtain
-
-Every theorem in this story has been formally verified — checked by a computer down to the axioms of mathematics, leaving no room for error. The verification covers not just the main duality theorem, but every intermediate step: that implication-generated closures satisfy the closure axioms, that minimal supports exist, that the canonical basis is unique, and that the reconstructed circuit is correct.
-
-This level of certainty matters because the theorem is a *foundation result* — other theorems will be built on top of it. A subtle error in the uniqueness proof, for instance, could invalidate an entire line of research in database theory or circuit complexity. Formal verification eliminates that risk entirely.
-
----
-
-## Looking Forward
-
-The Closure-Circuit Duality opens several tantalizing research directions. Can the bounded-rank condition be relaxed or removed? What happens in infinite settings — is there an analogous duality for closure operators on infinite types? How do the complexity measures of the canonical circuit relate to information-theoretic quantities like entropy?
-
-And perhaps most intriguingly: if every closure system is secretly a circuit, what other mathematical structures are secretly computations, waiting to be unmasked?
-
-The universe of rules, it seems, has a blueprint. And that blueprint is always a circuit.
+Sometimes the deepest lesson of an impossible object is not whether it can exist, but how far a single, humble inequality can carry an entire universe.
