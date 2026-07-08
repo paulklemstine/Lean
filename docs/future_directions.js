@@ -881,7 +881,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on explicit closed form for (p,q)-deformed s-rook numbers on staircase boards"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a361ae44",
     "description": "The generalized honeymoon Oberwolfach problem asks whether n couples can be seated over several nights at s tables of size 2 and t round tables of sizes 2m_1,...,2m_t (with n = s + \u2211 m_i) such that each person sits next to their spouse every night and next to every other person exactly once. The paper solves the case t=1, proving that the obvious necessary condition (\u2211 m_i divides 2n(n-1)) is sufficient. This conjecture extends the result to t \u2265 2, claiming that the same divisibility condition is also sufficient for any number of round tables.",
     "domains": [
       "Pythagorean"
@@ -890,7 +890,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01130v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T21:24:44.021492+00:00",
     "title": "Generalized Honeymoon Oberwolfach Problem with Multiple Round Tables"
   },
@@ -3618,7 +3618,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Counterexample to Mason's log-concavity conjecture for matroid flat counts"
   },
   {
-    "consumed_by_exp_id": "6fccaec2",
+    "consumed_by_exp_id": "",
     "description": "The paper introduces a tensor-amplification framework for proving Sidorenko-type inequalities in graphon classes, providing two transfer principles and formalizing structural closure properties.",
     "domains": [
       "Physics"
@@ -3627,7 +3627,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T03:34:51.895674+00:00",
     "title": "Tensor Amplification and Spectral Transfer for Sidorenko-Type Inequalities"
   },
@@ -5076,7 +5076,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fibonacci Lower Bound for Extension-Closed Subcategories of Type A_n"
   },
   {
-    "consumed_by_exp_id": "784a0620",
+    "consumed_by_exp_id": "",
     "description": "The paper proves that the average absolute character sum over y-smooth numbers is o(\u221a\u03a8(x,y)) when q \u2265 x^{1+\u03b5}. This conjecture asserts that the same sub-square-root bound holds at the critical threshold q \u2265 x (i.e., \u03b5 = 0), with a concrete saving factor. Specifically: for every \u03b5 > 0, there exists x\u2080(\u03b5) such that for all x \u2265 x\u2080, all primes q \u2265 x, and all y with (log x)\u2076 \u2264 y \u2264 x^{1/(32 log log x)}, the average absolute smooth character sum satisfies (1/(q-1)) \u03a3_{\u03c7 mod q, \u03c7\u2260\u03c7\u2080} |\u03a3_{n\u2264x, P(n)\u2264y} \u03c7(n)| \u2264 (1\u2212\u03b5)\u221a\u03a8(x,y). This extends the paper's main theorem from q \u2265 x^{1+\u03b5} to the boundary case q \u2265 x, which is the natural threshold where the problem transitions from trivial to nontrivial.",
     "domains": [
       "Pythagorean"
@@ -5085,7 +5085,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00592v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T07:12:40.061772+00:00",
     "title": "Sub-square-root bound for smooth character sums at the critical threshold"
   },
@@ -6431,7 +6431,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dihedral-Coinvariant Isomorphism for Cluster Parking Function Homology"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c5d4423d",
     "description": "In the extended quasi-shuffle algebra E on (Z, +), the p-th quasi-shuffle power of the generator z_0 satisfies z_0^{*p} = \u03a3_{k=0}^{p} S(p,k) \u00b7 k! \u00b7 z_0^k, where S(p,k) is the Stirling number of the second kind. The idempotent merge property z_0 \u2295 z_0 = z_0 (since 0+0=0) makes this the natural quasi-shuffle analogue of the classical identity x^p = \u03a3_k S(p,k) \u00b7 k! \u00b7 (x choose k), and it underpins the systematic summation of harmonic number powers via evaluation at truncated MZV maps \u03b6_n(z_0^j) = C(n,j).",
     "domains": [
       "Algebra",
@@ -6441,7 +6441,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.04960v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T08:06:41.902134+00:00",
     "title": "Stirling Number Formula for Quasi-Shuffle Powers of Zero in the Extended Quasi-Symmetric Algebra"
   },
@@ -7282,12 +7282,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any integer $k \\ge 4$, there exists a constant $C_k > 0$ such that for all positive integers $N$, the minimum modulus of a non-vanishing sum of $k$ $N$-th roots of unity satisfies $f(k, N) \\le C_k \\cdot N^{-k/4}$. This would generalize Myerson's asymptotic bound $f(k,N) \\le N^{-k/4+o_N(1)}$ for even $k$ and even $N$ to all $k \\ge 4$ and all $N$, vastly improving upon the logarithmic growth of the exponent $\\alpha_k$ established in the paper.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0612",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06098v1",
+    "status": "available",
+    "timestamp": "2026-07-08T09:24:10.679147+00:00",
+    "title": "Linear Exponent Conjecture for Small Sums of Roots of Unity"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any finite metric space X of strictly negative type there exists exactly one signed measure \u03bc of total mass 1 that minimizes the energy functional E(\u03bc)=\u2211_{x,y\u2208X}d(x,y)\u03bc(x)\u03bc(y); moreover \u03bc can be characterized as the unique optimizer of this strictly convex quadratic program.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0612",
+    "id": "fd_0613",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05349v1",
@@ -7301,7 +7315,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0613",
+    "id": "fd_0614",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05305v1",
@@ -7315,7 +7329,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0614",
+    "id": "fd_0615",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05324v1",
@@ -7329,7 +7343,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0615",
+    "id": "fd_0616",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06443v1",
@@ -7344,7 +7358,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0616",
+    "id": "fd_0617",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06396v1",
@@ -7358,7 +7372,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Cryptography"
     ],
-    "id": "fd_0617",
+    "id": "fd_0618",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
@@ -7372,7 +7386,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0618",
+    "id": "fd_0619",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06336v1",
@@ -7386,7 +7400,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0619",
+    "id": "fd_0620",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06351v1",
@@ -7401,7 +7415,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0620",
+    "id": "fd_0621",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06263v1",
@@ -7416,7 +7430,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0621",
+    "id": "fd_0622",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06228v1",
@@ -7431,7 +7445,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0622",
+    "id": "fd_0623",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06198v1",
@@ -7445,7 +7459,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0623",
+    "id": "fd_0624",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06181v1",
@@ -7460,7 +7474,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0624",
+    "id": "fd_0625",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06082v1",
@@ -7475,13 +7489,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_0625",
+    "id": "fd_0626",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06022v1",
     "status": "available",
     "timestamp": "2026-07-08T08:52:19.109825+00:00",
     "title": "Symplectic n-level density correspondence for quadratic Dirichlet L-functions over function fields"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every open product-free subset of (0,1) \u2014 meaning no x, y, z \u2208 A satisfy xy = z \u2014 has Lebesgue measure strictly less than 1/3. This resolves the third problem in Green's collection of 100 open problems and constitutes a continuous analogue of Erd\u0151s's classical question on maximal sum-free subsets.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0627",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06073v1",
+    "status": "available",
+    "timestamp": "2026-07-08T09:24:30.481983+00:00",
+    "title": "Product-free open subsets of (0,1) have measure less than 1/3"
   },
   {
     "consumed_by_exp_id": "ed6fbad7",
@@ -7499,7 +7527,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
   },
   {
-    "consumed_by_exp_id": "77415b4d",
+    "consumed_by_exp_id": "a978fa77",
     "description": "The Moebius band M is obtained from [0,1] x R by identifying (0, y) ~ (1, -y). Define arithmetic on M: a point (x, y) on M represents the number y * (2x - 1) where x in [0,1] gives the sign and magnitude, and y gives the scale. This creates a number system where going around the band flips the sign. Define the Moebius integers Z_M as the image of Z in M under the embedding n -> (1/2 + 1/(2n), |n|). Then 1 and -1 are identified at the twist point (1, 1) = (0, -1), making Z_M a one-point compactification of Z with a single infinity. Conjecture: Z_M is a ring under the induced operations from R x R / ~, but it is NOT an integral domain because (1, 0) * (0, 1) = (0, 0) but neither factor is zero in Z_M. The prime factorization in Z_M has a unique 'twist prime' that encodes orientation, and every non-zero Moebius integer has a factorization of the form \u00b1p_1^{a_1} * ... * p_k^{a_k} where the overall sign is the twist. Test: factor the Moebius integers 6, -6, and 0 in Z_M. Verify that 6 = 2_+ * 3_+ and -6 = 2_- * 3_- = 2_+ * 3_+ * (-1) where -1 is the twist prime. Impact: arithmetic on a non-orientable surface creates a number system where orientation IS a prime \u2014 a number-theoretic analog of spin in physics.",
     "domains": [
       "Novelty",

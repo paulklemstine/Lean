@@ -1545,7 +1545,7 @@
       "Akbari26",
       "LDMSaj"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a361ae44",
     "description": "The generalized honeymoon Oberwolfach problem asks whether n couples can be seated over several nights at s tables of size 2 and t round tables of sizes 2m_1,...,2m_t (with n = s + ∑ m_i) such that each person sits next to their spouse every night and next to every other person exactly once. The paper solves the case t=1, proving that the obvious necessary condition (∑ m_i divides 2n(n-1)) is sufficient. This conjecture extends the result to t ≥ 2, claiming that the same divisibility condition is also sufficient for any number of round tables.",
     "domain_bridges": [
       "graph theory",
@@ -1561,7 +1561,7 @@
     "proof_strategy": "Use the equivalence between HOP solutions and HOP decompositions of 4K_n^•. Develop a general construction method for HOP (C_{m_1},...,C_{m_t})-decompositions of 4K_n^• using starter cycles, factorizations, and amalgamation techniques, extending the methods used for t=1. Leverage the existence of HOP C_m-factorizations for 4K_m^• (m even) and 4K_{2m}^• (m odd) as building blocks. Handle small exceptional cases by computer search.",
     "research_mode": "team",
     "source_exp_id": "2607.01130v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T21:24:44.021492+00:00",
     "title": "Generalized Honeymoon Oberwolfach Problem with Multiple Round Tables"
   },
@@ -6618,7 +6618,7 @@
       "ConlonFoxSudakov2010",
       "LiSzegedy2026"
     ],
-    "consumed_by_exp_id": "6fccaec2",
+    "consumed_by_exp_id": "",
     "description": "The paper introduces a tensor-amplification framework for proving Sidorenko-type inequalities in graphon classes, providing two transfer principles and formalizing structural closure properties.",
     "domain_bridges": [
       "Graph Theory",
@@ -6634,7 +6634,7 @@
     "proof_strategy": "Conversion of geometric concentration estimates into tensor-exponential forms using Perron regularity",
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T03:34:51.895674+00:00",
     "title": "Tensor Amplification and Spectral Transfer for Sidorenko-Type Inequalities"
   },
@@ -9327,7 +9327,7 @@
       "math.NT",
       "math.PR"
     ],
-    "consumed_by_exp_id": "784a0620",
+    "consumed_by_exp_id": "",
     "description": "The paper proves that the average absolute character sum over y-smooth numbers is o(√Ψ(x,y)) when q ≥ x^{1+ε}. This conjecture asserts that the same sub-square-root bound holds at the critical threshold q ≥ x (i.e., ε = 0), with a concrete saving factor. Specifically: for every ε > 0, there exists x₀(ε) such that for all x ≥ x₀, all primes q ≥ x, and all y with (log x)⁶ ≤ y ≤ x^{1/(32 log log x)}, the average absolute smooth character sum satisfies (1/(q-1)) Σ_{χ mod q, χ≠χ₀} |Σ_{n≤x, P(n)≤y} χ(n)| ≤ (1−ε)√Ψ(x,y). This extends the paper's main theorem from q ≥ x^{1+ε} to the boundary case q ≥ x, which is the natural threshold where the problem transitions from trivial to nontrivial.",
     "domain_bridges": [
       "probability_theory",
@@ -9342,7 +9342,7 @@
     "proof_strategy": "Adapt the paper's connection between character sums and Steinhaus random multiplicative functions. The key step is establishing the moment identity (1/φ(q))Σ_χ|Σ_{n≤x,P(n)≤y}χ(n)|^{2k} = E|Σ_{n≤x,P(n)≤y,(n,q)=1}f(n)|^{2k} for q ≥ x, which requires careful treatment of the coprimality condition at the boundary. Then leverage the authors' prior result on random multiplicative functions over smooths to extract the sub-square-root saving, combined with Harper's hypercontractivity machinery to control higher moments at the critical regime.",
     "research_mode": "team",
     "source_exp_id": "2607.00592v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T07:12:40.061772+00:00",
     "title": "Sub-square-root bound for smooth character sums at the critical threshold"
   },
@@ -11941,7 +11941,7 @@
       "math.CO",
       "math.RA"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c5d4423d",
     "description": "In the extended quasi-shuffle algebra E on (Z, +), the p-th quasi-shuffle power of the generator z_0 satisfies z_0^{*p} = Σ_{k=0}^{p} S(p,k) · k! · z_0^k, where S(p,k) is the Stirling number of the second kind. The idempotent merge property z_0 ⊕ z_0 = z_0 (since 0+0=0) makes this the natural quasi-shuffle analogue of the classical identity x^p = Σ_k S(p,k) · k! · (x choose k), and it underpins the systematic summation of harmonic number powers via evaluation at truncated MZV maps ζ_n(z_0^j) = C(n,j).",
     "domain_bridges": [
       "Quasi-symmetric functions",
@@ -11959,7 +11959,7 @@
     "proof_strategy": "Define the quasi-shuffle product recursively on words via aw * bv = a(w * bv) + b(aw * v) + (a ⊕ b)(w * v) with a ⊕ b = z_{i+j} for letters z_i, z_j. Establish that z_0 is merge-idempotent (z_0 ⊕ z_0 = z_0). Prove by induction on p: base case p=0 is trivial (1 = 1); inductive step multiplies both sides by z_0, applies the quasi-shuffle recursion to get z_0^{*(p+1)} = Σ_k S(p,k)·k!·((k+1)z_0^{k+1} + k·z_0^k), then reindexes and applies the Stirling recurrence S(p+1,k) = S(p,k-1) + k·S(p,k) to close the induction.",
     "research_mode": "team",
     "source_exp_id": "2607.04960v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T08:06:41.902134+00:00",
     "title": "Stirling Number Formula for Quasi-Shuffle Powers of Zero in the Extended Quasi-Symmetric Algebra"
   },
@@ -13571,6 +13571,31 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "math.NT",
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any integer $k \\ge 4$, there exists a constant $C_k > 0$ such that for all positive integers $N$, the minimum modulus of a non-vanishing sum of $k$ $N$-th roots of unity satisfies $f(k, N) \\le C_k \\cdot N^{-k/4}$. This would generalize Myerson's asymptotic bound $f(k,N) \\le N^{-k/4+o_N(1)}$ for even $k$ and even $N$ to all $k \\ge 4$ and all $N$, vastly improving upon the logarithmic growth of the exponent $\\alpha_k$ established in the paper.",
+    "domain_bridges": [
+      "math.NT",
+      "math.DS"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0612",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Extend the perturbation method of Barber and the author using inhomogeneous Diophantine approximation to systematically construct cancellations achieving order $N^{-k/4}$ for arbitrary $k$ and $N$, bypassing the parity constraints of Myerson's original construction.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06098v1",
+    "status": "available",
+    "timestamp": "2026-07-08T09:24:10.679147+00:00",
+    "title": "Linear Exponent Conjecture for Small Sums of Roots of Unity"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "magnitude_of_metric_spaces",
       "negative_type_metrics"
     ],
@@ -13584,7 +13609,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0612",
+    "id": "fd_0613",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formulate the problem as a strictly convex quadratic optimization over the affine subspace of signed measures with total mass 1; strict convexity guarantees a unique minimizer, and strict negative type ensures that the quadratic form is positive definite on the relevant subspace.",
@@ -13612,7 +13637,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0613",
+    "id": "fd_0614",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the existing formula by analyzing the μ-invariant's contribution through local-global principles and modular forms.",
@@ -13642,7 +13667,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0614",
+    "id": "fd_0615",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "We would prove the conjecture by establishing a bijection between quasinecklaces and primitive words, or by showing that the recurrence defining quasinecklaces derived in the paper matches the Möbius inversion of the total word count. A proof by induction on n using divisor decomposition and properties of the Möbius function can be formalized in Lean, leveraging existing libraries for arithmetic functions and finite sums.",
@@ -13668,7 +13693,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0615",
+    "id": "fd_0616",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the classical Hilton-Milner theorem as a lemma. Then formalize the notion of cross-intersecting families and non-triviality. The key structural insight from the paper is analyzing 2-cover graphs of cross-intersecting families and bounding the size of families with small minimal covers. The proof proceeds by case analysis on the structure of minimal covers of F and G, showing that non-HM-type configurations yield strictly smaller products when n > 100ℓk².",
@@ -13695,7 +13720,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0616",
+    "id": "fd_0617",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the S₁₀-construction from the paper, exploiting the absence of bridges to handle end-block decomposition more efficiently. Since bridgeless cubic graphs admit perfect matchings (Petersen's theorem), combine the S₁₂-technique achieving 4/5 for graphs with perfect matchings with the triangle-replacement structure of S₁₀ to gain the additional 1/42 fraction, using the fact that bridgeless graphs avoid the trivial-bridge obstructions that limit the 5/6 bound.",
@@ -13724,7 +13749,7 @@
     "domains": [
       "Cryptography"
     ],
-    "id": "fd_0617",
+    "id": "fd_0618",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Two possible routes: (1) Modular route — prove θ_L is a modular form of weight 4 for SL₂(ℤ) via Poisson summation on the lattice, establish that M₄(SL₂(ℤ)) is 1-dimensional spanned by E₄, and match constant terms; (2) Combinatorial route — use the explicit root system of E₈ to compute the theta series coefficients and verify they equal 240·σ₃(n) via the Weyl character formula or direct root system enumeration.",
@@ -13753,7 +13778,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0618",
+    "id": "fd_0619",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the paper's structure theorem for {-1,0,1}-diagonalizable graphs of prime order as a base case. For composite orders, leverage the regularity result (Theorem: bipartite implies regular) combined with the eigenvector structure constraints: the {-1,0,1} eigenvector basis forces strong conditions on the adjacency patterns of regular bipartite graphs. A possible approach shows that if G is connected, bipartite, regular, and {-1,0,1}-diagonalizable, then any two vertices in the same part have identical neighbor sets, yielding completeness. Attempt falsification by exhaustive search for small orders using the enumeration data provided.",
@@ -13782,7 +13807,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0619",
+    "id": "fd_0620",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "For the forward direction (k∣n ⟹ Schur positivity): decompose G(k,n) into creation operator images C_α when k∣n, then apply the compositional shuffle theorem framework to express Δ_{e_j} C_α as a positively weighted sum of vertical LLT polynomials, leveraging Grojnowski–Haiman Schur positivity of LLT polynomials. For the converse (k∤n ⟹ not Schur positive): extend the sign-analysis techniques from the paper's nabla case to general Δ_{e_j} by tracking the leading negative Schur coefficients in the Macdonald polynomial expansion of G(k,n) under the delta eigenvalue action, showing that the divisibility obstruction propagates through all delta operators.",
@@ -13810,7 +13835,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0620",
+    "id": "fd_0621",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish moment bounds for higher-order moments of the fluctuations to apply the method of moments, leveraging the Selberg trace formula on random surfaces and the known variance asymptotic of $X \\log X$.",
@@ -13839,7 +13864,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0621",
+    "id": "fd_0622",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Generalize the k=3 counterexample construction. The paper establishes a duality between symmetric powers and abstract rigidity. One would need to show that the rigidity-theoretic obstruction that produces the k=3 counterexample can be lifted to higher k, perhaps by taking symmetric powers of the counterexample matroid itself, or by constructing a family of matroids M_k indexed by k ≥ 3 such that the rank functions from the two Mason definitions diverge on specific independent sets in sym_k(M_k).",
@@ -13868,7 +13893,7 @@
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0622",
+    "id": "fd_0623",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the inversion graph G_π of a permutation π as the graph on [n] with edges corresponding to inversions. Define caterpillar graphs (removing all degree-1 vertices yields a path). Then establish the key mechanism: a reduced word for π orders the edges of G_π, with first-occurrence letters forming a spanning forest. For the acyclic case, show that the spanning tree has a unique central path by analyzing how the cycle structure of π constrains the possible branching patterns, leveraging the fact that each cycle of π contributes a specific subtree structure that can only attach linearly along a spine.",
@@ -13896,7 +13921,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0623",
+    "id": "fd_0624",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Proceed by induction on t, leveraging the t=1 base case proven in the paper. For the inductive step, analyze how the multiset and non-multiset intersection structures of insertion balls decompose when composing t insertions as a sequence of single insertions. The key difficulty is showing that the overlap multiplicities from repeated error patterns cannot create a distinction between the multiset and non-multiset models even when t > 1. A combinatorial double-counting argument on the equivalence classes of insertion error patterns producing identical outputs may suffice.",
@@ -13922,7 +13947,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0624",
+    "id": "fd_0625",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use probabilistic methods or explicit algebraic constructions to demonstrate a family of $r$-uniform hypergraphs with maximum degree $d$ that cannot be star-colored with fewer than $c \\cdot d^{2/(r-1)}$ colors, adapting known lower bounds for graph star coloring to the hypergraph setting.",
@@ -13951,7 +13976,7 @@
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_0625",
+    "id": "fd_0626",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the Mason-Snaith ratio conjecture framework to function fields: (1) formalize the explicit formula relating sums over zeros to sums over primes in F_q[T], (2) compute the n-level density via the ratio of L-functions averaged over the family using character sum identities over F_q[T], (3) show the resulting combinatorial expression matches the n-level correlation kernel of USp(2g) eigenvalues computed from the symplectic group's Weyl integration formula, using the restricted Fourier support to control error terms.",
@@ -13960,6 +13985,34 @@
     "status": "available",
     "timestamp": "2026-07-08T08:52:19.109825+00:00",
     "title": "Symplectic n-level density correspondence for quadratic Dirichlet L-functions over function fields"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Green's 100 open problems",
+      "Erdős sum-free subset problem",
+      "Kneser's theorem",
+      "Brunn-Minkowski inequality"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every open product-free subset of (0,1) — meaning no x, y, z ∈ A satisfy xy = z — has Lebesgue measure strictly less than 1/3. This resolves the third problem in Green's collection of 100 open problems and constitutes a continuous analogue of Erdős's classical question on maximal sum-free subsets.",
+    "domain_bridges": [
+      "measure_theory",
+      "real_analysis",
+      "multiplicative_structure_on_reals"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0627",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Apply the change of variables y = -log(x) to convert the product-free condition on (0,1) into a sum-free condition on (0,∞) with respect to the exponential distribution. Then leverage the positive interval discrepancy d(A) = sup_I (2|A∩I| - |I|) to obtain refined lower bounds on |A±A| beyond the Kneser/Brunn-Minkowski bound |A-A| ≥ 2|A|, quantifying how far A is from an interval. These structural results on sumsets force |A| < 1/3 for any open product-free set.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06073v1",
+    "status": "available",
+    "timestamp": "2026-07-08T09:24:30.481983+00:00",
+    "title": "Product-free open subsets of (0,1) have measure less than 1/3"
   },
   {
     "ambition_level": "extension",
@@ -13984,7 +14037,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "77415b4d",
+    "consumed_by_exp_id": "a978fa77",
     "description": "The Moebius band M is obtained from [0,1] x R by identifying (0, y) ~ (1, -y). Define arithmetic on M: a point (x, y) on M represents the number y * (2x - 1) where x in [0,1] gives the sign and magnitude, and y gives the scale. This creates a number system where going around the band flips the sign. Define the Moebius integers Z_M as the image of Z in M under the embedding n -> (1/2 + 1/(2n), |n|). Then 1 and -1 are identified at the twist point (1, 1) = (0, -1), making Z_M a one-point compactification of Z with a single infinity. Conjecture: Z_M is a ring under the induced operations from R x R / ~, but it is NOT an integral domain because (1, 0) * (0, 1) = (0, 0) but neither factor is zero in Z_M. The prime factorization in Z_M has a unique 'twist prime' that encodes orientation, and every non-zero Moebius integer has a factorization of the form ±p_1^{a_1} * ... * p_k^{a_k} where the overall sign is the twist. Test: factor the Moebius integers 6, -6, and 0 in Z_M. Verify that 6 = 2_+ * 3_+ and -6 = 2_- * 3_- = 2_+ * 3_+ * (-1) where -1 is the twist prime. Impact: arithmetic on a non-orientable surface creates a number system where orientation IS a prime — a number-theoretic analog of spin in physics.",
     "domain_bridges": [],
     "domains": [
