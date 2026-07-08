@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "8636a701",
+    "consumed_by_exp_id": "94357f15",
     "description": "The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the j-function is just the TIP of the iceberg. Conjecture: The full moonshine correspondence associates to each conjugacy class g in M a McKay-Thompson series T_g(q) = sum a_n(g) q^n that is a modular function of a specific level, and the product over all g in M of T_g(q) equals a modular form of weight |M|/24 that encodes the complete character table of M. The secret message: the Monster group IS a modular form, and every property of M (its order, its character table, its maximal subgroups) can be read off from the q-expansion of this product. Test: compute the first 100 coefficients of T_g(q) for each conjugacy class of M and verify they match the known character values. Prove that the product of all T_g(q) converges to a modular form. Impact: the Monster is not just connected to modular forms — it IS a modular form. The 194 conjugacy classes of M correspond to 194 modular forms, and their product encodes everything.",
     "domain_bridges": [],
     "domains": [
@@ -42,7 +42,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "3d9b126a",
+    "consumed_by_exp_id": "4b7d8ef3",
     "description": "The shadowing lemma says that near an approximate orbit of a chaotic system, there exists a true orbit. In other words, every 'almost correct' trajectory of a chaotic map has a 'truly correct' trajectory nearby. This means that numerical errors in chaotic simulations are not bugs — they are SHADOWS of real trajectories. Conjecture: Every program that computes a chaotic map f: R^n -> R^n has the property that its floating-point output is shadowed by a true orbit of f. More precisely, for every epsilon > 0, there exists delta > 0 such that if x_0, x_1, ..., x_N is a delta-pseudo-orbit (|x_{n+1} - f(x_n)| < delta for all n), then there exists a true orbit y_0, y_1, ..., y_N with |x_n - y_n| < epsilon for all n. The shadowing time N(epsilon, delta) grows at most polynomially in 1/delta for hyperbolic maps. Test: implement the logistic map f(x) = 4x(1-x) in floating-point and compute 10^6 iterations. For each floating-point orbit, use binary search to find the shadowing true orbit. Verify that the shadowing distance is at most 10^{-10} for floating-point precision 10^{-16}. Impact: numerical chaos is not error — it is a computable shadow of mathematical truth. Your computer's rounding errors are tracing out REAL orbits of the chaotic system.",
     "domain_bridges": [],
     "domains": [
@@ -3711,7 +3711,7 @@
       "Gruber (DMTCS 2012)",
       "Giannopoulou, Hunter, and Thilikos (DAM 2012)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "676713e4",
     "description": "For every semi-complete digraph G, the directed clique-width of G is at most the cycle rank of G plus 2.",
     "domain_bridges": [
       "Parameterized Complexity",
@@ -3726,7 +3726,7 @@
     "proof_strategy": "Prove by induction on the cycle rank. Base cases: acyclic graphs (cr=0) have directed clique-width ≤ 2. For inductive step, use the cycle rank decomposition: when G is strongly connected, remove a vertex v to get G-v with cr(G-v) ≤ cr(G)-1. By inductive hypothesis, cw(G-v) ≤ cr(G-v)+2 ≤ cr(G)+1. Then show that adding v back and reconnecting edges in the semi-complete manner increases the directed clique-width by at most 1.",
     "research_mode": "team",
     "source_exp_id": "2606.29336v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T09:21:10.954489+00:00",
     "title": "Directed Clique-Width Bound for Semi-Complete Digraphs via Cycle Rank"
   },
@@ -7729,7 +7729,7 @@
       "PR12",
       "Kane2013"
     ],
-    "consumed_by_exp_id": "59da6bf9",
+    "consumed_by_exp_id": "",
     "description": "For any prime p, the Markov chain on ℕ defined by the Klagsbrun-Mazur-Rubin twist process for p-Selmer ranks of even-dimensional Galois modules satisfying the KMR technical conditions is irreducible, aperiodic, and positive recurrent. Its unique stationary distribution π assigns strictly positive probability to every rank r ∈ ℕ, and the distribution of p-Selmer ranks in the twist family ordered by the product of ramified primes converges to π.",
     "domain_bridges": [
       "probability_theory",
@@ -7747,7 +7747,7 @@
     "proof_strategy": "1) Define the KMR Markov chain as an explicit stochastic kernel on ℕ capturing the effect of local twist conditions on p-Selmer ranks. 2) Prove irreducibility by constructing explicit paths from any state to any other via sequences of local twist operations. 3) Prove aperiodicity by exhibiting positive self-loop probability at state 0. 4) Establish positive recurrence via drift analysis or Lyapunov function arguments on the countable state space. 5) Apply the convergence theorem for irreducible aperiodic positive recurrent chains to deduce convergence to the unique stationary distribution. 6) Positivity of π follows from irreducibility.",
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T03:42:58.157244+00:00",
     "title": "KMR Markov chain convergence and positivity of p-Selmer rank stationary distribution"
   },
@@ -13434,6 +13434,33 @@
     "title": "Chamber-wise constancy and explicit wall-crossing for q-deformed symmetric function automorphisms"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalan numbers",
+      "involutions on combinatorial structures",
+      "Dyck path decompositions"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For the free Catalan structure (C, e, λ, ⊕) satisfying the unique decomposition property from Definition 1, the involution h = rev ∘ corev ∘ rev restricted to level C_n has exactly C_n fixed points, where C_n = (2n choose n)/(n+1) is the n-th Catalan number. This asserts that the fixed-point enumerator of h matches the Catalan generating function.",
+    "domain_bridges": [
+      "Algebraic structures with unique decomposition",
+      "Formal languages and inductive types",
+      "Enumerative combinatorics ↔ algebraic involution theory"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0607",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First inductively define the free Catalan structure as an inductive type mirroring the three-form decomposition (empty | λ(s) | λ(u) ⊕ v with v ≠ e). Define rev and corev by structural recursion on the first-return and last-return decompositions respectively. Prove h = rev ∘ corev ∘ rev is involutive. Then establish the fixed-point count by constructing an explicit bijection between Fix(h|_{C_n}) and binary trees on n internal nodes, using the characterization that t is a fixed point iff rev(t) = corev(t).",
+    "research_mode": "team",
+    "source_exp_id": "2607.06247v1",
+    "status": "available",
+    "timestamp": "2026-07-08T06:43:49.712638+00:00",
+    "title": "Fixed points of involution h on the free Catalan structure are counted by Catalan numbers"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "magnitude_of_metric_spaces",
@@ -13449,7 +13476,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0607",
+    "id": "fd_0608",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formulate the problem as a strictly convex quadratic optimization over the affine subspace of signed measures with total mass 1; strict convexity guarantees a unique minimizer, and strict negative type ensures that the quadratic form is positive definite on the relevant subspace.",
@@ -13477,7 +13504,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0608",
+    "id": "fd_0609",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the existing formula by analyzing the μ-invariant's contribution through local-global principles and modular forms.",
@@ -13507,7 +13534,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0609",
+    "id": "fd_0610",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "We would prove the conjecture by establishing a bijection between quasinecklaces and primitive words, or by showing that the recurrence defining quasinecklaces derived in the paper matches the Möbius inversion of the total word count. A proof by induction on n using divisor decomposition and properties of the Möbius function can be formalized in Lean, leveraging existing libraries for arithmetic functions and finite sums.",
@@ -13533,7 +13560,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0610",
+    "id": "fd_0611",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the classical Hilton-Milner theorem as a lemma. Then formalize the notion of cross-intersecting families and non-triviality. The key structural insight from the paper is analyzing 2-cover graphs of cross-intersecting families and bounding the size of families with small minimal covers. The proof proceeds by case analysis on the structure of minimal covers of F and G, showing that non-HM-type configurations yield strictly smaller products when n > 100ℓk².",
@@ -13560,7 +13587,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0611",
+    "id": "fd_0612",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the S₁₀-construction from the paper, exploiting the absence of bridges to handle end-block decomposition more efficiently. Since bridgeless cubic graphs admit perfect matchings (Petersen's theorem), combine the S₁₂-technique achieving 4/5 for graphs with perfect matchings with the triangle-replacement structure of S₁₀ to gain the additional 1/42 fraction, using the fact that bridgeless graphs avoid the trivial-bridge obstructions that limit the 5/6 bound.",
@@ -13589,7 +13616,7 @@
     "domains": [
       "Cryptography"
     ],
-    "id": "fd_0612",
+    "id": "fd_0613",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Two possible routes: (1) Modular route — prove θ_L is a modular form of weight 4 for SL₂(ℤ) via Poisson summation on the lattice, establish that M₄(SL₂(ℤ)) is 1-dimensional spanned by E₄, and match constant terms; (2) Combinatorial route — use the explicit root system of E₈ to compute the theta series coefficients and verify they equal 240·σ₃(n) via the Weyl character formula or direct root system enumeration.",
@@ -13618,7 +13645,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0613",
+    "id": "fd_0614",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the paper's structure theorem for {-1,0,1}-diagonalizable graphs of prime order as a base case. For composite orders, leverage the regularity result (Theorem: bipartite implies regular) combined with the eigenvector structure constraints: the {-1,0,1} eigenvector basis forces strong conditions on the adjacency patterns of regular bipartite graphs. A possible approach shows that if G is connected, bipartite, regular, and {-1,0,1}-diagonalizable, then any two vertices in the same part have identical neighbor sets, yielding completeness. Attempt falsification by exhaustive search for small orders using the enumeration data provided.",
@@ -13647,7 +13674,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0614",
+    "id": "fd_0615",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "For the forward direction (k∣n ⟹ Schur positivity): decompose G(k,n) into creation operator images C_α when k∣n, then apply the compositional shuffle theorem framework to express Δ_{e_j} C_α as a positively weighted sum of vertical LLT polynomials, leveraging Grojnowski–Haiman Schur positivity of LLT polynomials. For the converse (k∤n ⟹ not Schur positive): extend the sign-analysis techniques from the paper's nabla case to general Δ_{e_j} by tracking the leading negative Schur coefficients in the Macdonald polynomial expansion of G(k,n) under the delta eigenvalue action, showing that the divisibility obstruction propagates through all delta operators.",
@@ -13675,7 +13702,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0615",
+    "id": "fd_0616",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish moment bounds for higher-order moments of the fluctuations to apply the method of moments, leveraging the Selberg trace formula on random surfaces and the known variance asymptotic of $X \\log X$.",
@@ -13684,6 +13711,35 @@
     "status": "available",
     "timestamp": "2026-07-08T06:12:19.981475+00:00",
     "title": "Asymptotic Normality of Prime Geodesic Fluctuations on Random Hyperbolic Surfaces"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "symmetric_powers",
+      "matroid_products",
+      "Mason_conjecture"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that Mason's conjecture on the equivalence of two definitions of symmetric powers of matroids holds for k=2 but fails for k=3. The natural conjecture is that it fails for all k ≥ 3: for every integer k ≥ 3, there exists a matroid M such that the two definitions of the k-th symmetric power of M yield different matroids. This would completely characterize the boundary between the two definitions coinciding and diverging.",
+    "domain_bridges": [
+      "tropical_geometry",
+      "representability_theory",
+      "abstract_rigidity"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0617",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Generalize the k=3 counterexample construction. The paper establishes a duality between symmetric powers and abstract rigidity. One would need to show that the rigidity-theoretic obstruction that produces the k=3 counterexample can be lifted to higher k, perhaps by taking symmetric powers of the counterexample matroid itself, or by constructing a family of matroids M_k indexed by k ≥ 3 such that the rank functions from the two Mason definitions diverge on specific independent sets in sym_k(M_k).",
+    "research_mode": "team",
+    "source_exp_id": "2607.06228v1",
+    "status": "available",
+    "timestamp": "2026-07-08T06:44:01.764440+00:00",
+    "title": "Mason's Conjecture Fails for All Higher Symmetric Powers"
   },
   {
     "ambition_level": "extension",

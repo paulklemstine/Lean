@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "8636a701",
+    "consumed_by_exp_id": "94357f15",
     "description": "The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the j-function is just the TIP of the iceberg. Conjecture: The full moonshine correspondence associates to each conjugacy class g in M a McKay-Thompson series T_g(q) = sum a_n(g) q^n that is a modular function of a specific level, and the product over all g in M of T_g(q) equals a modular form of weight |M|/24 that encodes the complete character table of M. The secret message: the Monster group IS a modular form, and every property of M (its order, its character table, its maximal subgroups) can be read off from the q-expansion of this product. Test: compute the first 100 coefficients of T_g(q) for each conjugacy class of M and verify they match the known character values. Prove that the product of all T_g(q) converges to a modular form. Impact: the Monster is not just connected to modular forms \u2014 it IS a modular form. The 194 conjugacy classes of M correspond to 194 modular forms, and their product encodes everything.",
     "domains": [
       "Novelty",
@@ -33,7 +33,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
   },
   {
-    "consumed_by_exp_id": "3d9b126a",
+    "consumed_by_exp_id": "4b7d8ef3",
     "description": "The shadowing lemma says that near an approximate orbit of a chaotic system, there exists a true orbit. In other words, every 'almost correct' trajectory of a chaotic map has a 'truly correct' trajectory nearby. This means that numerical errors in chaotic simulations are not bugs \u2014 they are SHADOWS of real trajectories. Conjecture: Every program that computes a chaotic map f: R^n -> R^n has the property that its floating-point output is shadowed by a true orbit of f. More precisely, for every epsilon > 0, there exists delta > 0 such that if x_0, x_1, ..., x_N is a delta-pseudo-orbit (|x_{n+1} - f(x_n)| < delta for all n), then there exists a true orbit y_0, y_1, ..., y_N with |x_n - y_n| < epsilon for all n. The shadowing time N(epsilon, delta) grows at most polynomially in 1/delta for hyperbolic maps. Test: implement the logistic map f(x) = 4x(1-x) in floating-point and compute 10^6 iterations. For each floating-point orbit, use binary search to find the shadowing true orbit. Verify that the shadowing distance is at most 10^{-10} for floating-point precision 10^{-16}. Impact: numerical chaos is not error \u2014 it is a computable shadow of mathematical truth. Your computer's rounding errors are tracing out REAL orbits of the chaotic system.",
     "domains": [
       "Novelty",
@@ -2045,7 +2045,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "If-and-only-if classification of real quadratic fields where Kim's octonary diagonal form is universal"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "676713e4",
     "description": "For every semi-complete digraph G, the directed clique-width of G is at most the cycle rank of G plus 2.",
     "domains": [
       "Bridges"
@@ -2054,7 +2054,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29336v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T09:21:10.954489+00:00",
     "title": "Directed Clique-Width Bound for Semi-Complete Digraphs via Cycle Rank"
   },
@@ -4218,7 +4218,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit Upper Bound on the Riemann Zeta Function on the 1-Line via Smoothing"
   },
   {
-    "consumed_by_exp_id": "59da6bf9",
+    "consumed_by_exp_id": "",
     "description": "For any prime p, the Markov chain on \u2115 defined by the Klagsbrun-Mazur-Rubin twist process for p-Selmer ranks of even-dimensional Galois modules satisfying the KMR technical conditions is irreducible, aperiodic, and positive recurrent. Its unique stationary distribution \u03c0 assigns strictly positive probability to every rank r \u2208 \u2115, and the distribution of p-Selmer ranks in the twist family ordered by the product of ramified primes converges to \u03c0.",
     "domains": [
       "Algebra",
@@ -4228,7 +4228,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T03:42:58.157244+00:00",
     "title": "KMR Markov chain convergence and positivity of p-Selmer rank stationary distribution"
   },
@@ -7211,12 +7211,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For the free Catalan structure (C, e, \u03bb, \u2295) satisfying the unique decomposition property from Definition 1, the involution h = rev \u2218 corev \u2218 rev restricted to level C_n has exactly C_n fixed points, where C_n = (2n choose n)/(n+1) is the n-th Catalan number. This asserts that the fixed-point enumerator of h matches the Catalan generating function.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0607",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06247v1",
+    "status": "available",
+    "timestamp": "2026-07-08T06:43:49.712638+00:00",
+    "title": "Fixed points of involution h on the free Catalan structure are counted by Catalan numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any finite metric space X of strictly negative type there exists exactly one signed measure \u03bc of total mass 1 that minimizes the energy functional E(\u03bc)=\u2211_{x,y\u2208X}d(x,y)\u03bc(x)\u03bc(y); moreover \u03bc can be characterized as the unique optimizer of this strictly convex quadratic program.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0607",
+    "id": "fd_0608",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05349v1",
@@ -7230,7 +7244,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0608",
+    "id": "fd_0609",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05305v1",
@@ -7244,7 +7258,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0609",
+    "id": "fd_0610",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05324v1",
@@ -7258,7 +7272,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0610",
+    "id": "fd_0611",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06443v1",
@@ -7273,7 +7287,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0611",
+    "id": "fd_0612",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06396v1",
@@ -7287,7 +7301,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Cryptography"
     ],
-    "id": "fd_0612",
+    "id": "fd_0613",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
@@ -7301,7 +7315,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0613",
+    "id": "fd_0614",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06336v1",
@@ -7315,7 +7329,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0614",
+    "id": "fd_0615",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06351v1",
@@ -7330,13 +7344,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0615",
+    "id": "fd_0616",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06263v1",
     "status": "available",
     "timestamp": "2026-07-08T06:12:19.981475+00:00",
     "title": "Asymptotic Normality of Prime Geodesic Fluctuations on Random Hyperbolic Surfaces"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that Mason's conjecture on the equivalence of two definitions of symmetric powers of matroids holds for k=2 but fails for k=3. The natural conjecture is that it fails for all k \u2265 3: for every integer k \u2265 3, there exists a matroid M such that the two definitions of the k-th symmetric power of M yield different matroids. This would completely characterize the boundary between the two definitions coinciding and diverging.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0617",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06228v1",
+    "status": "available",
+    "timestamp": "2026-07-08T06:44:01.764440+00:00",
+    "title": "Mason's Conjecture Fails for All Higher Symmetric Powers"
   },
   {
     "consumed_by_exp_id": "faec2dac",
