@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "72418ed5",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE DIRECTIONS — Spectral radius bounds for signed graphs\n\nBuilding on `Catalog/Novelty/SignedGraphSpectralEquality.lean`, which establishes\nthe Δ-bound `|μ| ≤ Δ` for signed adjacency matrices to",
-      "quality_score": 0.43096,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T15:03:40",
-      "title": "Equality Cases for Spectral Radius Bound in Signed Graphs"
-    },
-    {
       "cycle_id": "d1a8353e",
       "domain": "Applications",
       "key_insight": "# Future Directions — Extended Eulerian numbers `A(n,k,s)`\n\nDerived from the cycle that produced `Catalog/Applications/ExtendedEulerian.lean`\n(recurrence, `k=0` edge, `k>n` boundary, and the `s=0` cla",
@@ -2501,6 +2491,16 @@
       "theorem_count": 4,
       "timestamp": "2026-07-07T22:10:09",
       "title": "The opposite-semicube Helly property characterizes harmonic-evenness in Cartesian products of partia"
+    },
+    {
+      "cycle_id": "44d92b62",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions: The Symmetry Frontier of Impossibility\n\nThis cycle established a precise algebraic kernel for the slogan *\"impossibility\nis symmetry\"*: a symmetric distinguishing task on a group-",
+      "quality_score": 0.43460760000000004,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-07-08T02:34:26",
+      "title": "Impossibility Results for Fun: Things That Cannot Be Done (But We Try Anyway)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.70296
     }
   ],
-  "last_updated": "2026-07-07T22:10:09",
+  "last_updated": "2026-07-08T02:34:26",
   "open_questions": [
     {
       "context": "`sorry`-free Lean proof of Sabidussi's theorem.",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "0cb84107",
-        "quality": 0.506378,
-        "theorems": 10,
-        "title": "Primes of the Form n²+1"
-      },
-      {
         "cycle_id": "18edb6fb",
         "quality": 0.6521899999999999,
         "theorems": 12,
@@ -3389,6 +3383,12 @@
         "quality": 0.5242404210526316,
         "theorems": 4,
         "title": "Chain Covers in the Boolean Lattice"
+      },
+      {
+        "cycle_id": "44d92b62",
+        "quality": 0.43460760000000004,
+        "theorems": 7,
+        "title": "Impossibility Results for Fun: Things That Cannot Be Done (But We Try Anyway)"
       }
     ],
     "Geometry": [
