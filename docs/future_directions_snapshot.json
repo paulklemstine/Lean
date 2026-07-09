@@ -42,7 +42,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ac85eee2",
     "description": "Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: lines parallel to the x-axis diverge (hyperbolic behavior) while lines parallel to the y-axis converge (elliptic behavior). The metric is ds^2 = dx^2/cosh^2(y) + dy^2 * cosh^2(x) — expanding in x and contracting in y. Conjecture: Split Geometry is a consistent Riemannian geometry with curvature K(x,y) = -sech^2(y) + sech^2(x) that changes sign across the diagonals. The geometry has a 'phase boundary' along the lines y = x and y = -x where K = 0 (flat). In the region |x| > |y|, K > 0 (elliptic) and in the region |y| > |x|, K < 0 (hyperbolic). The geodesics in split geometry are piecewise combinations of exponential curves (in hyperbolic regions) and trigonometric curves (in elliptic regions). Test: compute the Christoffel symbols and curvature tensor for the split metric. Prove that geodesics cross the phase boundary at most twice. Compute the area of a split triangle with one vertex in each region. Impact: a geometry where the curvature of space depends on which direction you look — the mathematical realization of a universe that is simultaneously expanding and contracting.",
     "domain_bridges": [],
     "domains": [
@@ -55,7 +55,7 @@
     "proof_strategy": "Define the split metric g = diag(1/cosh^2(y), cosh^2(x)) on R^2. Compute the Christoffel symbols: Gamma^1_{11} = tanh(y), Gamma^1_{12} = 0, Gamma^1_{22} = -sinh(x)cosh(x), Gamma^2_{11} = -tanh(y)*cosh^2(x)*cosh^2(y), Gamma^2_{12} = 0, Gamma^2_{22} = -sinh(x)cosh(x). Compute curvature: K = -sech^2(y) + sech^2(x). Verify: K = 0 on y = x and y = -x. K > 0 for |x| > |y| (elliptic). K < 0 for |y| > |x| (hyperbolic). Prove geodesic crossing: a geodesic that enters the elliptic region and then the hyperbolic region crosses the flat boundary at most twice (by convexity of the curvature sign along the geodesic). Compute split triangle area: integral of sqrt(det(g)) = integral of cosh(x)/cosh(y) over the triangle. Test: numerical verification for specific triangles.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.730052+00:00",
     "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
   },
@@ -4544,34 +4544,6 @@
     "status": "available",
     "timestamp": "2026-07-03T07:08:28.593276+00:00",
     "title": "Equality case of the weighted dual Fisher inequality for taiko product structures"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "GKN2019",
-      "GKNT2023",
-      "HSV2006",
-      "TC2013"
-    ],
-    "consumed_by_exp_id": "620b641b",
-    "description": "For a Hamiltonian graph G with minimum degree at least 3, there exists a constant c > 0 such that G contains a nontrivial cycle of length at least n - c n^{2/3}. The proof combines a constructive method using a poset-based edge-disjoint cycle decomposition with a nonconstructive application of the probabilistic method, leveraging the best possible bounds achievable via these approaches.",
-    "domain_bridges": [
-      "Poset Theory",
-      "Probabilistic Method"
-    ],
-    "domains": [
-      "Logic",
-      "Physics"
-    ],
-    "id": "fd_0228",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Establish that all long cycles are blocked by a specific edge, then use a cycle-pairing strategy from poset theory to construct a nontrivial cycle, augmented by a probabilistic counting argument to ensure the existence of a sufficiently long alternative cycle.",
-    "research_mode": "team",
-    "source_exp_id": "2607.01738v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T07:37:36.028717+00:00",
-    "title": "Existence of a nontrivial cycle of length n-O(n^{2/3}) in Hamiltonian graphs with δ(G) ≥ 3"
   },
   {
     "ambition_level": "extension",
@@ -10987,7 +10959,7 @@
       "symmetric edge polytopes",
       "gamma-positivity"
     ],
-    "consumed_by_exp_id": "c3f7a0cc",
+    "consumed_by_exp_id": "",
     "description": "Every symmetric edge polytope of dimension at most 35 has a γ-positive Ehrhart h*-polynomial. Equivalently, 36 is the minimum dimension of a symmetric edge polytope whose Ehrhart h*-polynomial fails to be γ-positive. This would sharpen the paper's existence result by establishing the exact threshold, confirming that no smaller counterexamples to the Ohsugi–Tsuchiya conjecture exist.",
     "domain_bridges": [
       "Algebraic Combinatorics",
@@ -11003,7 +10975,7 @@
     "proof_strategy": "Combine exhaustive computational verification of γ-positivity for all connected graphs on at most 9 vertices (covering dimensions ≤ 8) with structural arguments that γ-positivity is preserved under cone, join, and subdivision operations, thereby inductively covering all dimensions up to 35 while using the paper's explicit 36-dimensional counterexample as the lower bound.",
     "research_mode": "team",
     "source_exp_id": "2607.02424v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T23:28:54.298787+00:00",
     "title": "Dimension Threshold for Gamma-Positivity of Symmetric Edge Polytopes"
   },
@@ -14621,7 +14593,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "62dc7dd2",
     "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card — you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier — it's an opportunity. You can WIN at the game of undecidability.",
     "domain_bridges": [],
     "domains": [
@@ -14634,7 +14606,7 @@
     "proof_strategy": "Define Godel's Casino: each round, the house presents a statement phi in the language of arithmetic. The player bets TRUE or FALSE. If ZFC proves phi, TRUE wins. If ZFC proves not-phi, FALSE wins. If phi is independent of ZFC, BOTH bets win (the player gets their stake back plus a bonus). Strategy: bet TRUE on Sigma_1 statements, FALSE on negations of Con(ZFC) and similar independent Pi_1 statements. Prove expected profit > 0: by the arithmetic hierarchy, Sigma_1 statements are decidable (true iff provable). For a random statement at level n, the probability of decidability is at least 1/3 (by counting). So E[profit] >= (1/3) * (stake) > 0. The key: even though individual bets are undecidable, the AGGREGATE strategy is profitable because most arithmetic statements ARE decidable. Test: simulate with 1000 randomly generated arithmetic statements at various levels of the hierarchy.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.960880+00:00",
     "title": "Godel's Casino: Incomplete but Winnable Games"
   },
@@ -16183,6 +16155,32 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "arXiv:2305.XXXXX (placeholder for 'On possible values of the group complexity function of infinite words')"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Every aperiodic infinite word over a finite alphabet with minimal factor complexity (i.e., p(n) = (|A|-1)n + 1) has universal group complexity. This generalizes the paper's result for Sturmian words (binary alphabet, p(n)=n+1) and its study of ternary minimal words (p(n)=2n+1) to arbitrary alphabet sizes.",
+    "domain_bridges": [
+      "combinatorics on words",
+      "group theory",
+      "symbolic dynamics"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0713",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the known structure of episturmian words (which are the aperiodic words with minimal complexity p(n) = (|A|-1)n + 1). Exploit their rich symmetry and balance properties to explicitly construct, for each n and each k between abelian and factor complexity, a subgroup G_n ≤ S_n that realizes the desired group complexity value. The construction would likely involve permutations preserving certain letter frequencies or order patterns.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07620v1",
+    "status": "available",
+    "timestamp": "2026-07-09T05:17:43.303899+00:00",
+    "title": "Universal Group Complexity for Minimal Complexity Words"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Schubert calculus",
       "boson-fermion correspondence",
       "exterior algebra",
@@ -16199,7 +16197,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0712",
+    "id": "fd_0714",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove by induction on r using generating function identities for exterior powers and sign-reversing arguments; verify base case r=1 and use the relation ∂_i X_j = δ_{ij} to deduce the action on higher wedges, then extend to arbitrary compositions.",
@@ -16208,6 +16206,27 @@
     "status": "available",
     "timestamp": "2026-07-09T04:50:32.617687+00:00",
     "title": "Finite-type boson-fermion correspondence for Schubert differential operators"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "A precise statement that for each fixed y, the limsup of (∑_{j=1}^y ω(x+j))·log log x / log x equals 1, generalizing the abc conjecture and amenable to formalization in Lean.",
+    "domain_bridges": [
+      "math.NT"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0715",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Combine probabilistic models of prime factor distributions with known upper and lower bounds for ω(n) and constructions of integers with many small prime factors; likely requires sieve methods and deep results on smooth numbers.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07641v1",
+    "status": "available",
+    "timestamp": "2026-07-09T05:17:59.335513+00:00",
+    "title": "New abc-type conjecture on weighted sum of ω(n)"
   },
   {
     "ambition_level": "extension",

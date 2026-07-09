@@ -1,4 +1,48 @@
 {
-  "last_updated": "",
-  "records": []
+  "last_updated": "2026-07-09T05:16:58.948465+00:00",
+  "records": [
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.0906,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 9,
+      "domain": "Logic",
+      "duration_seconds": 2009.1645271778107,
+      "end_time": 1783573641.9831035,
+      "files_integrated": 2,
+      "job_id": "620b641b",
+      "outcome_quality": 0.0,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v28",
+      "phase_b_skip_reason": "low_quality",
+      "phase_b_skipped": true,
+      "prompt_version": "v28",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.74,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.8,
+        "composite": 0.5906,
+        "cross_domain": 0.9,
+        "grade": "substantial",
+        "importance": 0.4591,
+        "novelty": 0.6467,
+        "proof_depth": 0.3787,
+        "usefulness": 0.6394
+      },
+      "quality_score": 0.204513,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783571632.8185763,
+      "strategy_count": 0,
+      "theorem_count": 11,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 10,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-09T05:16:58.903065+00:00",
+      "title": "Existence of a nontrivial cycle of length n-O(n^{2/3}) in Hamiltonian graphs with \u03b4(G) \u2265 3"
+    }
+  ]
 }
