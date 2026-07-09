@@ -60,19 +60,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
   },
   {
-    "consumed_by_exp_id": "3716954d",
-    "description": "L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable \u2014 there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 3716954d (Q=0.780), which proved 29 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, ",
     "domains": [
-      "Novelty",
-      "NumberTheory"
+      "Applications"
     ],
-    "id": "fd_0655",
-    "priority_score": 0.86,
+    "id": "push_3716954d_b8e54a15",
+    "priority_score": 0.88,
     "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T16:01:43.876173+00:00",
-    "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
+    "source_exp_id": "3716954d",
+    "status": "available",
+    "timestamp": "2026-07-09T23:44:06.034172+00:00",
+    "title": "Deepening: The L-Function Universe: A Cosmic Census of All L-Functions"
   },
   {
     "consumed_by_exp_id": "",
@@ -104,7 +103,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Tropical Dreams: The Field with One Element Meets Tropical Geometry"
   },
   {
-    "consumed_by_exp_id": "116104eb",
+    "consumed_by_exp_id": "",
     "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long \u2014 the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static \u2014 they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
     "domains": [
       "Novelty",
@@ -114,7 +113,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-08T16:01:43.810023+00:00",
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
   },
@@ -10027,6 +10026,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "That every elementary cellular automaton (ECA) is a"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes, in Lean 4, the cardinality dichotomy behind the \"cosmic\ncensus of L-functions\": the naive space of Dirichlet series is uncountable, but\nevery arithmetically constrained family of L-functions is countable.\n\n## What is proved\n\n- **`NaiveUniverse.lean`** \u2014 the unconstrained universe is a continuum:\n  `allDirichletSeries_uncountable : \u00ac Countable (\u2115 \u2192 \u2102)`, and already the\n  `{0,1}`-valued sequences are uncountable.\n- **`PeriodicUniverse.lean`** \u2014 periodic sequences over any countable alphabet form\n  a countable set (`periodicSeq_countable`); the family of all Dirichlet characters\n  over all moduli is countable (`dirichletCharFamily_countable`); hence there are\n  only countably many Dirichlet L-functions (`dirichletLCoeff_countable`), with the\n  bridge lemma that character coefficients are periodic (`charCoeff_periodic`).\n- **`SelbergCensus.lean`** \u2014 a finite-data model `SelbergDatum` (degree, conductor,\n  root number, finitely many Euler-factor coefficients) is countably infinite\n  (`instCountableSelbergDatum`, `selbergDatum_countably_infinite`); ordered by a\n  complexity bound, each census slice is finite (`census_finite`) and the slices\n  exhaust the whole universe (`census_iUnion`, `census_mono`).  An explicit,\n  computable enumeration ordered by conductor is provided\n  (`censusByConductor`), together with proofs that it has the right length\n  (`censusByConductor_length`), no repetitions (`censusByConductor_nodup`), reads off\n  the conductors `0, 1, \u2026, n-1` in order (`censusByConductor_conductors`), and lands\n  inside the corresponding finite census slice (`censusByConductor_mem_census`); in\n  particular the \"first `100`\" case is recorded in `first_hundred_length` and\n  `first_hundred_nodup`.\n\n## Natural next steps\n\n1. **Analytic Selberg class.** Replace the finite-data caricature with the genuine\n   analytic definition (Dirichlet series with analytic continuation, functional\n   equation, Euler product, Ramanujan bound) once Mathlib's L-function library is\n   rich enough, and prove countability via the strong multiplicity-one theorem\n   (an element is determined by its coefficients, which are algebraic).\n\n2. **Root numbers on the unit circle.** Model the root number as an actual element\n   of the unit circle whose argument is a rational multiple of `\u03c0`, and relate the\n   rational numerator/denominator packet used here to genuine roots of unity.\n\n3. **Degree and conductor constraints.** Formalize the theorem that, for fixed\n   degree `d` and conductor `q`, the Selberg class contains only finitely many\n   primitive elements, sharpening `census_finite`.\n\n4. **Bridge to Mathlib's `DirichletCharacter` L-series.** Connect `charCoeff` to the\n   analytically defined `LSeries` of a Dirichlet character, turning the coefficient\n   count into a count of the analytic objects.\n\n5. **Richer explicit enumeration.** The current enumeration `censusByConductor`\n   records one canonical datum per conductor; a natural refinement is to enumerate\n   *all* data packets below each conductor bound (not just one per conductor) in a\n   canonical order, giving a literal exhaustive \"first 100 elements\" list of the full\n   finite slice.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0816",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3716954d",
+    "status": "available",
+    "timestamp": "2026-07-09T23:44:00.622037+00:00",
+    "title": "This project formalizes, in Lean 4, the cardinality dichotomy behind the \"cosmic"
+  },
+  {
     "consumed_by_exp_id": "c05d7abb",
     "description": "Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearrangement of the primes q_1, q_2, ... such that the sequence of ratios q_n / p_n converges to 1. In other words, you can shuffle the primes almost arbitrarily and the room numbers barely change. More precisely, the set of permutations sigma for which p_{sigma(n)} / p_n has a limit is dense in the symmetric group (with the topology of pointwise convergence). But NOT every permutation works: the permutation that swaps all even-indexed primes with odd-indexed ones gives q_{2n}/p_{2n} = p_{2n-1}/p_{2n} which converges to 1 by the prime number theorem, but the permutation that reverses order gives q_n/p_n = p_{N-n}/p_n which diverges. Test: compute q_n/p_n for 10 random permutations of the first 10^6 primes and verify that most ratios converge to 1. Find the exact density of 'well-behaved' permutations. Impact: the primes are robust under rearrangement \u2014 their asymptotic density is a topological invariant of the permutation group.",
     "domains": [
@@ -10056,7 +10070,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "acc2ac17",
     "description": "Every recipe is an algorithm: it takes ingredients (inputs) and produces a dish (output). The question is: can you verify a good dish faster than you can cook it? This is exactly P vs NP, but in the kitchen. Define the verification time V(R) of a recipe R as the time it takes to taste the dish and determine if it's good. Define the cooking time C(R) as the time it takes to prepare the dish. Conjecture: For most traditional recipes, C(R) > V(R) \u2014 cooking takes longer than tasting (P != NP in the kitchen). But there exist 'quick recipes' where C(R) = V(R) \u2014 assemble-and-serve dishes like salads (P = NP in the kitchen). The interesting class is 'NP-hard recipes' \u2014 dishes where even VERifying the result is hard. Example: is the souffle risen? You can only verify by cutting it open, which destroys it. Theorem: souffle verification is co-NP-hard because determining if a souffle will rise requires simulating the thermodynamic process, which is PSPACE-hard. More formally: the souffle function S(ingredients, temperature, time) -> {risen, collapsed} requires computing the Navier-Stokes equations for the batter, which is PSPACE-hard. Test: classify 100 recipes by their C(R)/V(R) ratio. Verify that P = NP recipes have C = V, while P != NP recipes have C >> V. Impact: computational complexity is not abstract \u2014 it shows up in your kitchen. Some dishes are inherently harder to make than to verify.",
     "domains": [
       "Novelty",
@@ -10066,7 +10080,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.71,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T21:23:09.226908+00:00",
     "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
   },

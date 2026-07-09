@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "562c0234",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — Simulation-Based Privacy for Colouring Proofs\n\nThe results of this cycle establish, for the three-colouring proof of a graph,\nthat a single challenged edge reveals a transcript w",
-      "quality_score": 0.74152,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-01T04:21:22",
-      "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
-    },
-    {
       "cycle_id": "fb9fd2df",
       "domain": "Geometry",
       "key_insight": "# Future Directions — Fractional colouring of the plane via independence ratios\n\nThis cycle isolated a single, domain-free inequality — the fractional chromatic number\nof a finite graph is at least it",
@@ -499,19 +489,19 @@
       "theorem_count": 55,
       "timestamp": "2026-07-09T22:51:37",
       "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
+    },
+    {
+      "cycle_id": "3716954d",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThis project formalizes, in Lean 4, the cardinality dichotomy behind the \"cosmic\ncensus of L-functions\": the naive space of Dirichlet series is uncountable, but\nevery arithmetical",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 29,
+      "timestamp": "2026-07-09T23:44:05",
+      "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2b7b775f",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Diophantine sufficient conditions for Wang-stripe aperiodicity\n\nDerived from the cycle that produced `WangStripeAperiodicity.lean` and\n`WangQuadraticDiophantine.lean` (chain prov",
-      "quality_score": 0.69949,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T21:48:47",
-      "title": "Sufficient condition for non-periodicity of awaited set of Wang tiles"
-    },
     {
       "cycle_id": "9ecd5b8c",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 55,
       "timestamp": "2026-07-09T22:51:37",
       "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
+    },
+    {
+      "cycle_id": "3716954d",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThis project formalizes, in Lean 4, the cardinality dichotomy behind the \"cosmic\ncensus of L-functions\": the naive space of Dirichlet series is uncountable, but\nevery arithmetical",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 29,
+      "timestamp": "2026-07-09T23:44:05",
+      "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "95c356ab",
-      "domain": "Applications",
-      "name": "G025_three_ge_77",
-      "quality": 0.8257369999999999
-    },
-    {
-      "cycle_id": "2f34538d",
-      "domain": "Novelty",
-      "name": "central_choose_factorization",
-      "quality": 0.7903600000000002
-    },
-    {
-      "cycle_id": "2f34538d",
-      "domain": "Novelty",
-      "name": "A_qadic_valuation",
-      "quality": 0.7903600000000002
-    },
     {
       "cycle_id": "3a1da3d1",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "fib_carmichael_composite",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "3716954d",
+      "domain": "Applications",
+      "name": "boolSequences_uncountable",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "3716954d",
+      "domain": "Applications",
+      "name": "allDirichletSeries_uncountable",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "3716954d",
+      "domain": "Applications",
+      "name": "zeroOneSequences_uncountable",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-09T22:51:37",
+  "last_updated": "2026-07-09T23:44:05",
   "open_questions": [
     {
       "context": "for the star half; the conjunction is `sorry`-free and uses both results literally.; `omega`.  Both `sorry`-free.; `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "c2b51bcc",
-        "quality": 0.4724886610169492,
-        "theorems": 7,
-        "title": "Close Proofs: Phantom Topologies: Spaces That Change When You Look at Them"
-      },
-      {
         "cycle_id": "ee6f49cd",
         "quality": 0.7998400000000001,
         "theorems": 29,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 55,
         "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
+      },
+      {
+        "cycle_id": "3716954d",
+        "quality": 0.78,
+        "theorems": 29,
+        "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
       }
     ],
     "Bridges": [
