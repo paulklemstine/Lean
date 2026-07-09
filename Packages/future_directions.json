@@ -29924,7 +29924,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "a6d77751",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -29955,7 +29955,7 @@
       "source": "",
       "source_exp_id": "2607.05305v1",
       "source_path": "http://arxiv.org/abs/2607.05305v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-08T01:05:41.844138+00:00",
       "title": "Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
@@ -30062,7 +30062,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Petersen_coloring_conjecture",
         "Sylvester_coloring",
@@ -30070,7 +30070,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "db9ced03",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -30086,7 +30086,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0628",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-09T12:26:15.326929+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sylvester_S10_bridgeless_bound (G : CubicMultigraph) (h_cubic : G.IsCubic) (h_bridgeless : G.Bridgeless) (h_connected : G.Connected) : ∃ f : G.Edge → S10.Edge, (VProper G S10 f).card * 7 ≥ 6 * (Finset.univ : Finset G.Vertex).card := by sorry",
       "lineage_refs": [],
@@ -30101,7 +30101,7 @@
       "source": "",
       "source_exp_id": "2607.06396v1",
       "source_path": "http://arxiv.org/abs/2607.06396v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-08T03:53:42.083077+00:00",
       "title": "Bridgeless Sylvester S₁₀-Coloring Improvement Conjecture"
@@ -35042,6 +35042,55 @@
       "title": "Higher-order clique density stability conjecture"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Draganić, Keevash, Müyesser 2025, \"Tight Staircase Bounds for Cyclic Subsets below Dirac's Threshold\" (ArXiv)",
+        "Erdős, Faudree 1997, \"Regular graph Hamiltonicity\"",
+        "Kim, Liu, Sharifzadeh, Staden 2017, \"Minimum degree and cyclic subsets\""
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture that any n‑vertex graph whose minimum degree is at least n/2 contains at least (1−o(1))·2^n cyclic subsets, i.e. the number of vertex subsets that induce a Hamiltonian cycle is exponential with base 2 and only a subexponential loss.",
+      "domain_bridges": [
+        "extremal graph theory",
+        "enumerative combinatorics",
+        "probabilistic methods"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Physics"
+      ],
+      "github_issue": 0,
+      "id": "fd_0731",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem cyclist_lower_bound {n : ℕ} (G : Graph n) (hδ : ∀ v : n, Graph.degree G v ≥ n / 2) : CyclicSubsetCount G ≥ (1 - o(1 : ℝ)) * (2 : ℝ) ^ n := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Leverage Dirac's theorem to obtain expansion properties, then use an inductive or double‑counting argument to show that the proportion of non‑cyclic subsets tends to zero, yielding the (1−o(1))·2^n lower bound.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.06551v1",
+      "source_path": "http://arxiv.org/abs/2607.06551v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T12:25:50.131006+00:00",
+      "title": "Almost all subsets are cyclic in Dirac graphs"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -35070,7 +35119,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0731",
+      "id": "fd_0732",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem schubert_exterior_relation (r : ℕ) (indices : Fin r → ℕ) : (∂_indices.productDiff) = (signPermutation indices) • (exteriorMonomial indices) := by sorry",
@@ -35112,7 +35161,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0732",
+      "id": "fd_0733",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem new_abc_conjecture (y : ℕ) : Filter.limsup (fun n : ℕ => ((∑ j in Finset.Icc 1 y, ω (n + j)) * Real.log (Real.log n)) / Real.log n) = (1 : ℝ) := by sorry",
@@ -35161,7 +35210,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0733",
+      "id": "fd_0734",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem generalized_supercongruence (l m : ℕ) (p : ℕ) (hp : prime p) (h1 : ¬(p ∣ (l + 1))) (h2 : ¬(p ∣ binomial (l + 1) 2)) : (∑ n in finset.range (p - 1), ((-1) ^ (m * n) / (n ^ (m - 1))) * S l m n) % p ^ 2 = 0",
@@ -35212,7 +35261,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0734",
+      "id": "fd_0735",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mertens_combinatorial_identity (x : ℕ) (u : ℕ) (hx : x ≥ 1) (hu : ⌊Real.sqrt x⌋ < u ∧ u < x) : Mertens.mertens x = ∑ k in Finset.range (x / u + 1), μ k * S (x / k) u",
@@ -35261,7 +35310,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0735",
+      "id": "fd_0736",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem iu_p_biased_lubell_maximum (n : ℕ) (𝓕 : set (finset (fin n))) (h𝓕 : is_iu_family 𝓕) : ∃ p_opt : ℝ, p_opt ∈ [0,1] ∧ Λ_p 𝓕 ≤ Λ_p 𝓕_extremal p_opt ∧ (∀ q, Λ_q 𝓕 ≤ Λ_q 𝓕_extremal q)",
@@ -35307,7 +35356,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0736",
+      "id": "fd_0737",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem analytic_spread_eq_matroid_rank {G H : SimpleGraph ℕ} (J : Ideal (PolynomialRing ℚ (fin (V G) × fin (V H)))) (hJ : J = determinantalIdeal G H) (M : Matroid ℚ (fin (V G) × fin (V H))) (hM : M = linearMatroidOfPair G H) : analyticSpread J = matroidRank M := by sorry",
@@ -35354,7 +35403,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0737",
+      "id": "fd_0738",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem b2_values (n : ℕ) (h : n ≥ 2) : b₂(n) = if n % 8 = 0 ∨ n % 8 = 1 ∨ n % 8 = 7 then Nat.ceil (n / 2) else Nat.ceil (n / 2) + 1",
@@ -35404,7 +35453,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0738",
+      "id": "fd_0739",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mpd_tree_iff_lower_bound (T : SimpleGraph) [connected] [is_tree] [nonempty (V T)] [fintype (V T)] [decidable_linear_order (V T)] : multiset_partition_dimension T = 4 ↔ ∃ u v : V T, is_leaf u ∧ is_leaf v ∧ dist u v ≥ 3",
@@ -35453,7 +35502,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0739",
+      "id": "fd_0740",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem spec (r s : ℕ) (H : Hypergraph r) (n : ℕ) (hν : matching_number H < s) (hn : n ≥ N r s) : spectral_radius H ≤ spectral_radius (F (s-1) n) ∧ (spectral_radius H = spectral_radius (F (s-1) n) → isomorphic H (F (s-1) n))",
@@ -35498,7 +35547,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0740",
+      "id": "fd_0741",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem diameter_network_realignment_graph_complete_graph (n : ℕ) (hn : n ≥ 5) : diameter (network_realignment_graph (complete_graph n)) = n - 2 := by sorry",
@@ -35546,7 +35595,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0741",
+      "id": "fd_0742",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "-- Lean 4 stub for the conjecture\n\ndef DirectedSRG (n : Nat) : Type u where\n  params : SRGParams\n  adjacency : Fin n → Fin n → Bool\n  ...\n\ndef HasTransitiveAutGroup (g : DirectedSRG 108) : Prop := •••\n\ndef ConstructedParams : List (SRGParams) :=\n  [(108,11,3,2,1), (108,14,10,0,2), (108,22,12,6,4), (108,23,9,8,4),\n   (108,25,15,8,5), (108,34,18,12,10), (108,38,22,12,14), (108,39,23,14,14),\n   (108,41,35,16,15), (108,42,33,18,15), (108,46,22,19,20)]\n\ndef directed_srg_108_exhaustive : Prop :=\n  ∀ (g : DirectedSRG 108) (h : HasTransitiveAutGroup g),\n    g.params ∈ ConstructedParams → ∀ (c : ConstructionType), g ≃ c.from_group (aut_group_of g)",
@@ -35594,7 +35643,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0742",
+      "id": "fd_0743",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem minimally_one_tough_K1P4_hamiltonian {G : Graph ℕ} (h : MinimallyOneTough (K1 ∪ P4) G) (hsize : G.order ≥ 3) : IsHamiltonian G := by sorry",
@@ -35642,7 +35691,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0743",
+      "id": "fd_0744",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem overline_R_mod4_char (ℓ μ n : ℕ) (hcop : Nat.Coprime ℓ μ) (hℓ : 2 ≤ ℓ) (hμ : 2 ≤ μ) : (overline_R ℓ n) % 4 = if ∃ m : ℕ, m * m = n then 1 else 0 := by sorry",
@@ -35689,7 +35738,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0744",
+      "id": "fd_0745",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem genus_cardinality_eq_product (R : GorensteinCubicOrder) : # (Cl R \\ Cl R) = ∏ (v : FinitePrime), # (GorensteinOverorders (localization R v))",
@@ -35743,7 +35792,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0745",
+      "id": "fd_0746",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem coarse_block_cut_tree_improved_adhesion {d : ℕ} (G : SimpleGraph ℕ) :\\n  ∃ (T : Tree ℕ) (B : Π (t : T.V), Finset (G.V)),\\n    IsTreeDecomposition G T B ∧\\n    (∀ (e : T.E), diameter_G (B e.1 ∩ B e.2) ≤ 4 * d + 2) ∧\\n    (∀ (t : T.V), IsInseparable d (2 * d + 1) (B t) G)\\n  := by sorry",
@@ -35795,7 +35844,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0746",
+      "id": "fd_0747",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem (m_fold_cover_structure) (F : NonArchimedeanLocalField) (m : ℕ) [Hm : HMul (m)] :\n  let T := BruhatTitsTree (GL (F := F) 2)\n  let G_tilde := MetaplecticCover (GL (F := F) 2) m\n  let T_tilde := CoverTree T G_tilde m\n  have : ∀ v : Vertex T_tilde, Valency v = m * (Card (ResidueField F) + 1) :=\n  have : Index (Aut T_tilde) G_tilde = m :=\n  have : ConnectedComponents (T_tilde / G_tilde.k) = m :=\n  sorry",
@@ -35842,7 +35891,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0747",
+      "id": "fd_0748",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀ (H₁ : MonotonePath), (H₂ : MonotonePath), (Γ₁ : ReflectionGroup (VertexSet H₁)), (Γ₂ : ReflectionGroup (VertexSet H₂)), (D₁ : DihedralGroup (VertexSet H₁)), (D₂ : DihedralGroup (VertexSet H₂)) → R (H₁ ^ Γ₁) (H₂ ^ Γ₂) > R (H₁ ^ D₁) (H₂ ^ D₂)",
@@ -35891,7 +35940,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0748",
+      "id": "fd_0749",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sparse_set_iff_gap_growth {S : Set ℕ} (hS : S.Countable) : Sparse S ↔ ∀ ε > 0, ∃ C : ℝ, ∀ k : ℕ, k ≥ threshold, ∃ i, gap_ratio_bound S k C ε i",
@@ -35939,7 +35988,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0749",
+      "id": "fd_0750",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem exists_SL2_of_Y (n : ℕ) (B : YFriez n) : ∃ A : SL2Friez n, ∀ i j, B i j = A (i, j+1) * A (i+1, j)",
@@ -35959,6 +36008,54 @@
       "thread_id": "",
       "timestamp": "2026-07-09T12:06:07.343888+00:00",
       "title": "Every Y-frieze is induced by an SL₂-frieze via the product map"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Grünbaum, B. 'Tilings and Patterns'",
+        "Zalgaller, V. 'Convex Polytopes'",
+        "Cromwell, P. 'Polyhedra'"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any spherical tiling by kites and regular m-gons (m≥4) with vertex degree sequence satisfying the combinatorial constraints from the classification, there exists a corresponding Euclidean planar tiling with the same face and vertex degree counts where each kite is subdivided from a regular polygon according to the dihedral spherical classification.",
+      "domain_bridges": [
+        "Combinatorial rigidity theory",
+        "Polyhedral graph theory",
+        "Discrete differential geometry"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0751",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem eberhard_kite_subdivision {η : Type} [encodable η] (T : spherical_tiling_by_kites_and_mgons) (h : vertex_degree_sequence_admits_realization T.vertex_degrees) : θ (T' : euclidean_planar_tiling) , bijective_on_faces T T' · bijective_on_vertices T T'",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Establish bijection between dihedral spherical tilings classified in the paper and combinatorial types realizable in Euclidean plane; use Cauchy's rigidity theorem and Steinitz' theorem to transfer realizability conditions; apply Eberhard's theorem on realizing prescribed vertex degree sequences in convex polytopes",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.06798v1",
+      "source_path": "http://arxiv.org/abs/2607.06798v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T12:26:09.962991+00:00",
+      "title": "Eberhard's Theorem for Kite Subdivisions in Spherical Tilings"
     },
     {
       "ambition_level": "extension",
@@ -36047,8 +36144,8 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "cross_domain_bridge",
     "famous_subtask",
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge"
   ]

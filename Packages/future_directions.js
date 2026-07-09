@@ -7368,7 +7368,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence and uniqueness of microscopic weightings on finite strictly negative type metric spaces"
   },
   {
-    "consumed_by_exp_id": "a6d77751",
+    "consumed_by_exp_id": "",
     "description": "For an elliptic curve E over Q with good supersingular reduction at 2 and square-free D \u22611 mod 4, the difference in sharp/flat \u03bb-invariants under quadratic twist by D should include a term proportional to the \u03bc-invariant when \u03bc \u2260 0.",
     "domains": [
       "Geometry"
@@ -7377,7 +7377,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05305v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T01:05:41.844138+00:00",
     "title": "Extension of Matsuno's Formula for Non-Vanishing \u03bc-Invariants"
   },
@@ -7410,7 +7410,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Product Hilton-Milner theorem for large n"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "db9ced03",
     "description": "For every bridgeless cubic multigraph G, there exists a mapping f: E(G) \u2192 E(S\u2081\u2080) such that |V(f)| \u2265 (6/7)\u00b7|V(G)|, where V(f) is the set of vertices v \u2208 V(G) for which f(\u2202_G(v)) = \u2202_{S\u2081\u2080}(x) for some x \u2208 V(S\u2081\u2080). This would improve the 5/6-bound established in the paper for all cubic multigraphs, leveraging the additional structure of bridgeless graphs.",
     "domains": [
       "Pythagorean",
@@ -7420,7 +7420,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06396v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T03:53:42.083077+00:00",
     "title": "Bridgeless Sylvester S\u2081\u2080-Coloring Improvement Conjecture"
   },
@@ -8855,12 +8855,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture that any n\u2011vertex graph whose minimum degree is at least n/2 contains at least (1\u2212o(1))\u00b72^n cyclic subsets, i.e. the number of vertex subsets that induce a Hamiltonian cycle is exponential with base 2 and only a subexponential loss.",
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_0731",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06551v1",
+    "status": "available",
+    "timestamp": "2026-07-09T12:25:50.131006+00:00",
+    "title": "Almost all subsets are cyclic in Dirac graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For every composition \u03b1 of length r \u2264 R, the differential operator \u2202_\u03b1 = \u2202_{i1}\u22ef\u2202_{ir} acting on the polynomial ring \u211a[X_1,\u2026,X_R] yields a non-zero scalar multiple of the basis element X_{i1}\u2227\u22ef\u2227X_{ir} in \u2227^r V, where \u2202_i = (1/i!)\u00b7(d/dX_i)|_{X=0}. Moreover, the scalar equals the sign of the permutation that sorts (i1,\u2026,ir). This equality holds for all r and can be tested computationally for small values.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0731",
+    "id": "fd_0732",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07667v1",
@@ -8874,7 +8889,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0732",
+    "id": "fd_0733",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07641v1",
@@ -8888,7 +8903,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0733",
+    "id": "fd_0734",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07638v1",
@@ -8903,7 +8918,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0734",
+    "id": "fd_0735",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07566v1",
@@ -8918,7 +8933,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0735",
+    "id": "fd_0736",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07564v1",
@@ -8933,7 +8948,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0736",
+    "id": "fd_0737",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07458v1",
@@ -8947,7 +8962,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0737",
+    "id": "fd_0738",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07448v1",
@@ -8962,7 +8977,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0738",
+    "id": "fd_0739",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07407v1",
@@ -8977,7 +8992,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0739",
+    "id": "fd_0740",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07392v1",
@@ -8991,7 +9006,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0740",
+    "id": "fd_0741",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07404v1",
@@ -9006,7 +9021,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0741",
+    "id": "fd_0742",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07381v1",
@@ -9020,7 +9035,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0742",
+    "id": "fd_0743",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07239v1",
@@ -9035,7 +9050,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0743",
+    "id": "fd_0744",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07259v1",
@@ -9050,7 +9065,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0744",
+    "id": "fd_0745",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07063v1",
@@ -9064,7 +9079,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0745",
+    "id": "fd_0746",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07030v1",
@@ -9078,7 +9093,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0746",
+    "id": "fd_0747",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06899v1",
@@ -9092,7 +9107,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0747",
+    "id": "fd_0748",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06817v1",
@@ -9107,7 +9122,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_0748",
+    "id": "fd_0749",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06773v1",
@@ -9121,13 +9136,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0749",
+    "id": "fd_0750",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06767v1",
     "status": "available",
     "timestamp": "2026-07-09T12:06:07.343888+00:00",
     "title": "Every Y-frieze is induced by an SL\u2082-frieze via the product map"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any spherical tiling by kites and regular m-gons (m\u22654) with vertex degree sequence satisfying the combinatorial constraints from the classification, there exists a corresponding Euclidean planar tiling with the same face and vertex degree counts where each kite is subdivided from a regular polygon according to the dihedral spherical classification.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0751",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06798v1",
+    "status": "available",
+    "timestamp": "2026-07-09T12:26:09.962991+00:00",
+    "title": "Eberhard's Theorem for Kite Subdivisions in Spherical Tilings"
   },
   {
     "consumed_by_exp_id": "77c07bb4",
