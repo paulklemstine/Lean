@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9ecd5b8c",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS — EML Interpolation Theory (this cycle)\n\nThis cycle extended the catalog's EML approximation programme in two directions\nthat were previously only available in dimension one or in",
-      "quality_score": 0.7327899999999999,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-06-28T22:46:15",
-      "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
-    },
-    {
       "cycle_id": "3c64518a",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Forbidden pc-minors for Daisy Cubes\n\nDerived from this cycle's formalized findings:\n- `daisy_isometric` — daisy cubes are partial cubes (isometric subgraphs of `Q_n`);\n- `meet_on",
@@ -499,19 +489,19 @@
       "theorem_count": 28,
       "timestamp": "2026-07-08T21:35:42",
       "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
+    },
+    {
+      "cycle_id": "8d243e81",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nResearch directions arising from the Lean formalization of the split geometry\n`g = sech²(y) dx² + cosh²(x) dy²` on `ℝ²` (see `research_paper.md` and the Lean files in\nthis directo",
+      "quality_score": 0.7115,
+      "sorry_count": 0,
+      "theorem_count": 26,
+      "timestamp": "2026-07-09T03:18:19",
+      "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8999eb20",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Girth and the codes of bipartite graphs\n\nDerived from the cycle of work formalized in\n`Catalog/Novelty/BipartiteGraphCodeGirth.lean` and\n`Catalog/Novelty/BipartiteGraphCodeGirthA",
-      "quality_score": 0.7782,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T17:21:24",
-      "title": "Girth bounds minimum distance of bipartite graph codes"
-    },
     {
       "cycle_id": "07ec4039",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 28,
       "timestamp": "2026-07-08T21:35:42",
       "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
+    },
+    {
+      "cycle_id": "8d243e81",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nResearch directions arising from the Lean formalization of the split geometry\n`g = sech²(y) dx² + cosh²(x) dy²` on `ℝ²` (see `research_paper.md` and the Lean files in\nthis directo",
+      "quality_score": 0.7115,
+      "sorry_count": 0,
+      "theorem_count": 26,
+      "timestamp": "2026-07-09T03:18:19",
+      "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "87ba90ae",
-      "domain": "Algebra",
-      "name": "states",
-      "quality": 0.73448
-    },
-    {
-      "cycle_id": "87ba90ae",
-      "domain": "Algebra",
-      "name": "selmerWalk_parity",
-      "quality": 0.73448
-    },
-    {
-      "cycle_id": "87ba90ae",
-      "domain": "Algebra",
-      "name": "selmerWalk_closed_even",
-      "quality": 0.73448
-    },
     {
       "cycle_id": "3fe1db8c",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "gG_pos",
       "quality": 0.8151999999999999
+    },
+    {
+      "cycle_id": "8d243e81",
+      "domain": "Novelty",
+      "name": "K_origin",
+      "quality": 0.7115
+    },
+    {
+      "cycle_id": "8d243e81",
+      "domain": "Novelty",
+      "name": "K_xaxis",
+      "quality": 0.7115
+    },
+    {
+      "cycle_id": "8d243e81",
+      "domain": "Novelty",
+      "name": "K_xaxis_nonpos",
+      "quality": 0.7115
     }
   ],
-  "last_updated": "2026-07-08T21:35:42",
+  "last_updated": "2026-07-09T03:18:19",
   "open_questions": [
     {
       "context": "`sorry`-free Lean proof of Sabidussi's theorem.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "0a41cc78",
-        "quality": 0.7258007692307691,
-        "theorems": 13,
-        "title": "Explicit Formula for 2-adic Valuation of Shifted Perrin Numbers"
-      },
-      {
         "cycle_id": "054477b4",
         "quality": 0.4514887166666668,
         "theorems": 10,
@@ -3637,6 +3631,12 @@
         "quality": 0.49735784528301885,
         "theorems": 14,
         "title": "Existence of Optimal Equidistant Codes for n ≡ 2 mod 4 with Unidentified Subcase"
+      },
+      {
+        "cycle_id": "8d243e81",
+        "quality": 0.7115,
+        "theorems": 26,
+        "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
       }
     ],
     "NumberTheory": [

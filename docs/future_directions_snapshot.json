@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "31a0a054",
+    "consumed_by_exp_id": "",
     "description": "L-functions are the DNA of mathematics — each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable — there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domain_bridges": [],
     "domains": [
@@ -15,49 +15,9 @@
     "proof_strategy": "Define the Selberg class S as the set of Dirichlet series L(s) = sum a_n/n^s satisfying: (1) Ramanujan bound |a_n| <= n^epsilon for epsilon > 0, (2) Analytic continuation to C except for a possible pole at s=1, (3) Functional equation relating L(s) to L(1-s), (4) Euler product L(s) = prod_p L_p(s). Prove S is countable: each L in S is determined by finitely many data because (a) the degree d_L is a positive integer, (b) the conductor q_L is a positive integer, (c) the Euler factors L_p(s) for p not dividing q_L are determined by the Ramanujan bound and the functional equation, and (d) there are finitely many primes dividing q_L. So L is determined by (d_L, q_L, epsilon_L, {L_p(s) : p | q_L}), a finite set of data. Since each piece of data is countable, S is countable. Test: enumerate elements of S by increasing conductor.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T16:01:43.876173+00:00",
     "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "d12ad473",
-    "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long — the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static — they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0654",
-    "lineage_refs": [],
-    "priority_score": 0.82,
-    "proof_strategy": "Define proof complexity C(P) = length(P) + depth(P) + number_of_lemmas(P) for a proof P in a formal system. Define refinement: P' refines P if P' proves the same theorem as P and C(P') < C(P). Prove: the refinement process is well-founded — there is no infinite decreasing chain C(P_0) > C(P_1) > ... because C takes values in the natural numbers. Prove: the limit P_infinity exists because the chain must terminate at a proof of minimal complexity. Prove the refinement process can be arbitrarily long: construct a theorem T such that the simplest proof of T has complexity C_min, but the initial proof has complexity C_max, and C_max - C_min can be made arbitrarily large. Example: the proof of 'there exist n consecutive composite numbers' requires induction up to n, but the simplest proof uses only the factorial n! + 2, n! + 3, ..., n! + n. Test: implement refinement for sqrt(2) irrationality in Lean 4.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T16:01:43.810023+00:00",
-    "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "8d243e81",
-    "description": "Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: lines parallel to the x-axis diverge (hyperbolic behavior) while lines parallel to the y-axis converge (elliptic behavior). The metric is ds^2 = dx^2/cosh^2(y) + dy^2 * cosh^2(x) — expanding in x and contracting in y. Conjecture: Split Geometry is a consistent Riemannian geometry with curvature K(x,y) = -sech^2(y) + sech^2(x) that changes sign across the diagonals. The geometry has a 'phase boundary' along the lines y = x and y = -x where K = 0 (flat). In the region |x| > |y|, K > 0 (elliptic) and in the region |y| > |x|, K < 0 (hyperbolic). The geodesics in split geometry are piecewise combinations of exponential curves (in hyperbolic regions) and trigonometric curves (in elliptic regions). Test: compute the Christoffel symbols and curvature tensor for the split metric. Prove that geodesics cross the phase boundary at most twice. Compute the area of a split triangle with one vertex in each region. Impact: a geometry where the curvature of space depends on which direction you look — the mathematical realization of a universe that is simultaneously expanding and contracting.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0653",
-    "lineage_refs": [],
-    "priority_score": 0.81,
-    "proof_strategy": "Define the split metric g = diag(1/cosh^2(y), cosh^2(x)) on R^2. Compute the Christoffel symbols: Gamma^1_{11} = tanh(y), Gamma^1_{12} = 0, Gamma^1_{22} = -sinh(x)cosh(x), Gamma^2_{11} = -tanh(y)*cosh^2(x)*cosh^2(y), Gamma^2_{12} = 0, Gamma^2_{22} = -sinh(x)cosh(x). Compute curvature: K = -sech^2(y) + sech^2(x). Verify: K = 0 on y = x and y = -x. K > 0 for |x| > |y| (elliptic). K < 0 for |y| > |x| (hyperbolic). Prove geodesic crossing: a geodesic that enters the elliptic region and then the hyperbolic region crosses the flat boundary at most twice (by convexity of the curvature sign along the geodesic). Compute split triangle area: integral of sqrt(det(g)) = integral of cosh(x)/cosh(y) over the triangle. Test: numerical verification for specific triangles.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T16:01:43.730052+00:00",
-    "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
   },
   {
     "ambition_level": "extension",
@@ -8107,7 +8067,7 @@
       "math.CO",
       "math.AG"
     ],
-    "consumed_by_exp_id": "3d8596f0",
+    "consumed_by_exp_id": "",
     "description": "In type A_n, the subalgebra B_aff of the affine Hecke algebra admits a canonical basis {b_{W_fin w}} indexed by cosets W_fin \\ W_aff. The conjecture states that the structure constants of B_aff with respect to this canonical basis are polynomials in v with non-negative integer coefficients: for any two cosets W_fin w and W_fin w' in W_fin \\ W_aff, the product b_{W_fin w} · b_{W_fin w'} = Σ c_{w,w'}^z · b_{W_fin z} where each c_{w,w'}^z ∈ Z_{≥0}[v]. This is the v-deformed analogue of the positivity of structure constants in the affine Fomin-Stanley subalgebra (equivalently, homology of the affine Grassmannian).",
     "domain_bridges": [
       "representation_theory",
@@ -8124,7 +8084,7 @@
     "proof_strategy": "First formalize the affine Weyl group W_aff = W_fin ⋉ Q∨ in type A_n as a Coxeter group with generators S_aff = S_fin ∪ {s_0}. Define the affine Hecke algebra H_aff over Z[v,v^{-1}] with Bernstein presentation and quadratic relations. Construct the pseudo-centralizer subalgebra B_aff as the subalgebra generated by appropriate elements arising from the DAHA centralizer construction. Prove the canonical basis exists (indexed by W_fin \\ W_aff) by establishing a graded module structure and applying the bar-involution argument. Finally, establish positivity of structure constants using geometric arguments via the affine Grassmannian or combinatorial arguments via the v-deformed Pieri rule.",
     "research_mode": "team",
     "source_exp_id": "2607.00426v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T08:09:58.266321+00:00",
     "title": "Positivity of structure constants for the canonical basis of the pseudo-centralizer subalgebra in type A"
   },
@@ -10987,7 +10947,7 @@
       "symmetric edge polytopes",
       "gamma-positivity"
     ],
-    "consumed_by_exp_id": "c3f7a0cc",
+    "consumed_by_exp_id": "",
     "description": "Every symmetric edge polytope of dimension at most 35 has a γ-positive Ehrhart h*-polynomial. Equivalently, 36 is the minimum dimension of a symmetric edge polytope whose Ehrhart h*-polynomial fails to be γ-positive. This would sharpen the paper's existence result by establishing the exact threshold, confirming that no smaller counterexamples to the Ohsugi–Tsuchiya conjecture exist.",
     "domain_bridges": [
       "Algebraic Combinatorics",
@@ -11003,7 +10963,7 @@
     "proof_strategy": "Combine exhaustive computational verification of γ-positivity for all connected graphs on at most 9 vertices (covering dimensions ≤ 8) with structural arguments that γ-positivity is preserved under cone, join, and subdivision operations, thereby inductively covering all dimensions up to 35 while using the paper's explicit 36-dimensional counterexample as the lower bound.",
     "research_mode": "team",
     "source_exp_id": "2607.02424v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T23:28:54.298787+00:00",
     "title": "Dimension Threshold for Gamma-Positivity of Symmetric Edge Polytopes"
   },
@@ -11176,7 +11136,7 @@
       "Ollivier curvature",
       "Extremal graph theory"
     ],
-    "consumed_by_exp_id": "6d195403",
+    "consumed_by_exp_id": "",
     "description": "For any graph of order n ≥ 8, if it contains strictly more than T(n) = (n^2 - 3n)/2 - ⌈n/2⌉ + 2 edges, then every edge in the graph has strictly positive Ollivier/Lin-Lu-Yau curvature.",
     "domain_bridges": [
       "Discrete differential geometry",
@@ -11191,7 +11151,7 @@
     "proof_strategy": "Formalize the Lin-Lu-Yau curvature using the 1-Wasserstein distance between probability measures on vertices. Establish structural properties of graphs with non-positive curvature edges, and demonstrate that exceeding the edge threshold T(n) precludes the existence of such subgraphs, thereby forcing all edge curvatures to be strictly positive.",
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T23:29:27.413260+00:00",
     "title": "Positive Curvature Threshold for Lin-Lu-Yau Curvature"
   },
@@ -11421,7 +11381,7 @@
       "05C20",
       "05C85"
     ],
-    "consumed_by_exp_id": "c5715a86",
+    "consumed_by_exp_id": "",
     "description": "For every doubly regular tournament on n vertices (where n ≡ 3 mod 4 and n ≥ 3), the metric dimension β(G) is at most ⌈3·log₂(n)⌉. This provides an explicit constant in the O(log n) bound established for related families in the paper, extending the probabilistic method of Babai to the directed tournament setting with a constructive resolvability guarantee.",
     "domain_bridges": [
       "graph_theory",
@@ -11437,7 +11397,7 @@
     "proof_strategy": "Adapt Babai's probabilistic method: for a doubly regular tournament on n=4k+3 vertices, every vertex has out-degree 2k+1 and every pair of distinct vertices shares exactly k common out-neighbours. Sample a random set S of size ⌈3·log₂(n)⌉ vertices. For any pair (u,v) of distinct vertices, compute the probability over the random choice of S that all s ∈ S give d(s,u)=d(s,v). Use the strong regularity properties to bound this probability below 1/n², then take a union bound over all pairs. The key structural lemma is that in a doubly regular tournament, for any distinct u,v, the set {s : d(s,u) ≠ d(s,v)} has size at least n/3, giving each sample at least a 1/3 chance of distinguishing u from v.",
     "research_mode": "team",
     "source_exp_id": "2607.05152v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T05:40:17.241598+00:00",
     "title": "Explicit logarithmic bound on metric dimension of doubly regular tournaments"
   },
@@ -12911,7 +12871,7 @@
       "list_coloring",
       "nibble_method"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3877d438",
     "description": "For every integer r ≥ 2 and real ε > 0, there exists Δ₀ such that for every (r+1)-uniform hypergraph H with girth at least 5 and maximum degree Δ ≥ Δ₀, the list chromatic number χ_ℓ(H) satisfies χ_ℓ(H) ≤ ⌈(1+ε)(rΔ / ln Δ)^(1/r)⌉. This conjecture formalizes the main theorem of the paper, improving Iliopoulos's bound of (1+o(1))r(Δ/ln Δ)^(1/r) by reducing the leading constant from r to r^(1/r) via a semi-random nibble argument combined with a Rosenfeld-style counting completion.",
     "domain_bridges": [
       "probability_theory",
@@ -12928,7 +12888,7 @@
     "proof_strategy": "Formalize the semi-random nibble in two phases: (1) define the nibble process on the hypergraph with active edge-color constraints, proving concentration of residual degrees via Chernoff-type binomial bounds (requiring Measure Theory / Probability bridges), (2) establish a sparse terminal state condition, (3) complete the coloring via a Rosenfeld-style counting argument (injection from list assignments to proper colorings). The girth ≥ 5 (uncrowded) hypothesis controls dependency structures and should be encoded as a locality condition on the hypergraph's Berge-cycle structure. Start with r = 2 (3-uniform case) to simplify the exponent.",
     "research_mode": "team",
     "source_exp_id": "2607.05256v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T20:55:28.462579+00:00",
     "title": "List Chromatic Number Bound for Uncrowded Uniform Hypergraphs"
   },
@@ -15074,7 +15034,7 @@
       "Vakil2003",
       "Faltings2002"
     ],
-    "consumed_by_exp_id": "fa0de409",
+    "consumed_by_exp_id": "",
     "description": "For any complementary configuration of type (k,n) over a discretely valued field K with valuation ring O, the valuation of the cross‑ratio (A1,A2;B1,B2) equals the intersection product (A1−A2)·(B1−B2) in the Chow group of codimension k+1 cycles on ℙⁿ.",
     "domain_bridges": [
       "Intersection theory",
@@ -15090,7 +15050,7 @@
     "proof_strategy": "Flatly spread the cycles A1-A2 and B1-B2 over the valuation ring, compute their intersection product in the Chow ring, and observe that the valuation of the cross‑ratio is the order of the determinant of the pairing of generators, which matches this intersection product; formalize the equality in Lean using the Chow ring and valuation homomorphism.",
     "research_mode": "team",
     "source_exp_id": "2607.06477v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T17:50:38.342442+00:00",
     "title": "Valuation of the Generalised Cross‑Ratio Equals the Intersection Number of the Associated Cycles"
   },
@@ -15661,6 +15621,35 @@
     "title": "Non-vanishing of Heegner-Drinfeld self-intersection at deeper level"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Partition dimension (classical)",
+      "Metric dimension",
+      "Resolving partitions",
+      "Complete graphs"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For the complete graph K_n with n ≥ 4 vertices, the multiset partition dimension equals n-1. This conjecture asserts that the newly introduced multiset partition dimension parameter for complete graphs follows the exact formula mpd(K_n) = n-1, which would characterize these fundamental graphs within the lower bound framework established in the paper (mpd(G) ≥ 4 for connected graphs with at least 2 vertices).",
+    "domain_bridges": [
+      "Combinatorial optimization",
+      "Metric geometry in graphs",
+      "distance-based graph parameters"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0696",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish tightness of the lower bound mpd(G) ≥ 4 by constructing an optimal resolving multiset partition with exactly n-1 parts for K_n when n ≥ 4. Show that any partition with fewer than n-1 parts fails to distinguish some pair of vertices due to their symmetric distance properties in the complete graph structure, leveraging the proof technique from the paper's main theorem to demonstrate that the constructed partition is indeed resolving.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07407v1",
+    "status": "available",
+    "timestamp": "2026-07-09T03:19:16.580565+00:00",
+    "title": "Exact Multiset Partition Dimension of Complete Graphs"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "[B] $10.48550/ARXIV.2201.03794$"
@@ -15673,7 +15662,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0696",
+    "id": "fd_0697",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a family of configurations dispersing the cycles over the valuation ring, show that the cross-ratio valuation is preserved under deformation, and compute the limit using intersection-theoretic methods.",
@@ -15701,7 +15690,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0697",
+    "id": "fd_0698",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Utilize the paper's β-closed walk expansion and the sufficient condition via a walk-realizable {P4}-supporter. Reduce the search to a linear programming feasibility problem for coefficients of β-closed walk counts. Compute a concrete finite witness (e.g., with bounded walk length) satisfying the LP, then formalize the induced-subgraph expansion and supporter criterion in Lean 4 to verify the implication.",
@@ -15729,7 +15718,7 @@
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0698",
+    "id": "fd_0699",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Verify the conjecture for classes of biserial algebras where both magnitude and Grothendieck rank are computable: (1) Hereditary biserial algebras (where magnitude relates to Dynkin type), (2) Self-injective biserial algebras (where Coxeter duality provides constraints), (3) Use induction on the complexity of the Auslander-Reiten quiver structure. The key is establishing that representation-finiteness creates a perfect matching between indecomposable modules and Grothendieck group generators, reflected in the magnitude calculation.",
@@ -15759,7 +15748,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0699",
+    "id": "fd_0700",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct the formal group via the universal property of the tangent space of Ig_μ, use the Hodge type embedding to identify the differential operators with components of the logarithm map, then prove the coproduct compatibility by analyzing the group structure on Ig_μ via p-adic Fourier theory and the Mantovan correspondence.",
@@ -15789,7 +15778,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0700",
+    "id": "fd_0701",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Formalize determinantal ideal J_{G,H} in Lean using mathlib's commutative algebra and graph theory. 2. Define analytic spread as dimension of special fiber ring. 3. Define linear matroid M_{G,H} from incidence matrix of G over a perfect field. 4. Prove by induction on number of edges of H: base case |E(H)|=1 known from paper. For forest H, decompose into single edges; use exact sequences or properties of reductions of determinantal ideals to show that adding an edge increases both analytic spread and matroid rank by 1, preserving equality. 5. Bridge to existing matroid theory API in mathlib (or develop minimal matroid library).",
@@ -15816,7 +15805,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0701",
+    "id": "fd_0702",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the proof of $b_3(n+1)=b_2(n)$ to arbitrary uniformity.  Develop a systematic 'shifting' construction that lifts an optimal odd cover of $K_n^{(r)}$ to an odd cover of $K_{n+1}^{(r+1)}$ of the same size, showing $b_{r+1}(n+1)\\le b_r(n)$.  Simultaneously, apply the $\\mathbb{F}_2$ rank bound $b_r(G)\\ge r_2(A_G)/2$ to complete $(r+1)\\!$-uniform hypergraphs to obtain $b_{r+1}(n+1)\\ge b_r(n)$.  Together these give equality.  The combinatorial details involve analysing the adjacency tensors of complete hypergraphs over $\\mathbb{F}_2$ and using induction on $r$.",
@@ -15828,23 +15817,32 @@
   },
   {
     "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "e158da3a",
-    "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers — anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension — they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property — it's not about content quality but about the sheaf cohomology of the social network.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Geometry"
+    "catalog_references": [
+      "Ozaki's theorem on capitulation and finite submodules",
+      "Fujii's generalizations to Z_p^d-extensions",
+      "Greenberg's conjecture on triviality of X_K",
+      "Iwasawa modules and their pseudo-null submodules"
     ],
-    "id": "fd_0652",
+    "consumed_by_exp_id": "",
+    "description": "For a totally real number field F and its cyclotomic Z_p^d-extension F_∞ (d ≥ 2, p odd), if there exists a finite subextension F_n such that the natural map on even K-groups K_{2n}(F_n) → K_{2n}(F_∞) has non-trivial kernel, then the maximal pseudo-null submodule X_{F_∞}^0 of the inverse limit module must be non-zero.",
+    "domain_bridges": [
+      "Class field theory",
+      "Algebraic K-theory",
+      "Galois cohomology",
+      "p-adic analysis"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0703",
     "lineage_refs": [],
-    "priority_score": 0.77,
-    "proof_strategy": "Define the meme sheaf M on social network G: for each community C_i (cluster in G), M(C_i) is the set of interpretations of the meme in community i. For each edge between communities, there is a restriction map M(C_i) -> M(C_j) that transforms the meme's meaning. Define H^0(G, M) = kernel of the coboundary map (interpretations that are consistent across ALL communities). Define H^1(G, M) = cokernel (obstructions to consistent interpretation). Prove: dim(H^0) = number of universal interpretations. Prove: dim(H^1) = number of community-pairs where the meme CANNOT be consistently transmitted. Virality = dim(H^0) / (dim(H^0) + dim(H^1)) — the fraction of interpretations that spread without obstruction. Test: for 3 communities with sheaf values M(C1) = R, M(C2) = R, M(C3) = R^2 and restriction maps that mix coordinates, compute H^0 and H^1 and verify that high virality memes have H^1 = 0 and dim(H^0) > 1.",
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt Fujii's arguments for class groups to the even K-group setting, using the relationship between K_{2n} and ordinary class groups via cyclotomic trace maps and regulator computations, combined with control theorem techniques for the inverse system.",
     "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T16:01:43.584485+00:00",
-    "title": "The Mathematics of Memes: Viral Information Topology"
+    "source_exp_id": "2607.07328v1",
+    "status": "available",
+    "timestamp": "2026-07-09T03:20:01.367192+00:00",
+    "title": "Capitulation of Even K-Groups Implies Non-Trivial Pseudo-Null Submodules"
   },
   {
     "ambition_level": "extension",
