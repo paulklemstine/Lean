@@ -170,7 +170,7 @@ def _print_prompt_version_stats(extractor: "KnowledgeExtractor") -> None:
                 continue
             n = len(rs)
             avg_q = sum(r.get("quality_score", 0) for r in rs) / n
-            avg_qa = sum(r.get("phase_a_quality_score", r.get("quality_score", 0)) for r in rs) / n
+            avg_qa = sum(r.get("phase_a_quality_score") or r.get("quality_score", 0) for r in rs) / n
             wc = sum(1 for r in rs if r.get("quality_breakdown", {}).get("grade") == "world_class")
             durs = [r.get("duration_seconds", 0) / 60 for r in rs if r.get("duration_seconds")]
             avg_dur = sum(durs) / len(durs) if durs else 0
@@ -266,7 +266,7 @@ def _print_quality_metrics(extractor: "KnowledgeExtractor") -> None:
             avg_theorems = sum(r.get("theorem_count", 0) for r in rs) / n
             # Avg quality score
             avg_q = sum(r.get("quality_score", 0) for r in rs) / n
-            avg_qa = sum(r.get("phase_a_quality_score", r.get("quality_score", 0)) for r in rs) / n
+            avg_qa = sum(r.get("phase_a_quality_score") or r.get("quality_score", 0) for r in rs) / n
             # Theorem novelty: new vs strengthening vs duplicate vs disproof
             total_new = sum(r.get("theorem_novelty_new", 0) for r in rs)
             total_strength = sum(r.get("theorem_novelty_strengthening", 0) for r in rs)
@@ -282,8 +282,8 @@ def _print_quality_metrics(extractor: "KnowledgeExtractor") -> None:
             second_half = recent[len(recent)//2:]
             q1 = sum(r.get("quality_score", 0) for r in first_half) / len(first_half)
             q2 = sum(r.get("quality_score", 0) for r in second_half) / len(second_half)
-            qa1 = sum(r.get("phase_a_quality_score", r.get("quality_score", 0)) for r in first_half) / len(first_half)
-            qa2 = sum(r.get("phase_a_quality_score", r.get("quality_score", 0)) for r in second_half) / len(second_half)
+            qa1 = sum(r.get("phase_a_quality_score") or r.get("quality_score", 0) for r in first_half) / len(first_half)
+            qa2 = sum(r.get("phase_a_quality_score") or r.get("quality_score", 0) for r in second_half) / len(second_half)
             trend = "improving" if q2 > q1 + 0.01 else "declining" if q2 < q1 - 0.01 else "flat"
             lines.append(f"  Trend: {trend} (Q_A: {qa1:.3f} → {qa2:.3f}, Q: {q1:.3f} → {q2:.3f})")
 
