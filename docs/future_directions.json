@@ -31250,7 +31250,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "ad8ddf45",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -31278,7 +31278,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-08T16:01:43.584485+00:00",
       "title": "The Mathematics of Memes: Viral Information Topology"
@@ -31369,11 +31369,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "57910dd4",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -31386,7 +31386,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0655",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-09T08:14:33.229576+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -31401,7 +31401,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-08T16:01:43.876173+00:00",
       "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
@@ -34026,7 +34026,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.CO",
         "Hamiltonian cycles",
@@ -34050,7 +34050,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0710",
-      "last_attempt_time": "2026-07-09T07:55:03.737846+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hamiltonian_of_K1_union_P4_free_one_tough (G : SimpleGraph V) [Fintype V] (h_free : ∀ (S : G.Subgraph), ¬ S.IsInducedCopyOf (K1 ∪ P4)) (h_tough : toughness G ≥ 1) (h_card : Fintype.card V ≥ 3) : G.Hamiltonian := by sorry",
       "lineage_refs": [],
@@ -34511,6 +34511,55 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "msci:11R23",
+        "msci:11R70",
+        "msci:11S25"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Let F be a totally real number field and F_∞ its cyclotomic Z_p-extension. For the even K-groups K_{2n}(O_{F_m})(p) at each layer F_m of the extension, if the capitulation kernel ker(K_{2n}(O_{F_m})(p) → lim← K_{2n}(O_{F_m})(p)) has order at least p^{2μ(X_{F_∞})+λ(X_{F_∞})+1} where μ and λ are the classical Iwasawa invariants of the class group module, then X_{F_∞}^0 ≠ 0. This provides an effective bound relating higher K-theory capitulation to the existence of non-trivial pseudo-null submodules in classical Iwasawa modules.",
+      "domain_bridges": [
+        "Iwasawa modules",
+        "Galois cohomology",
+        "Algebraic K-theory",
+        "Class field theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0720",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem even_K_capitulation_pseudo_null (F : NumberField) (p : OddPrime) (n : ℕ) [TotallyReal F] : let F_inf := Cyclotomic_Zp_extension F p let X := Iwasawa_module F_inf p let ker_m := capitulation_kernel (even_K_group (F.mth_layer p) (2 * n) p) in (∃ m ≤ 2 * Iwasawa_invariant.mu X + Iwasawa_invariant.lambda X + 1, (order_of_group ker_m) ≥ p^(2 * Iwasawa_invariant.mu X + Iwasawa_invariant.lambda X + 1)) → X.maximal_finite_submodule ≠ 0",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use the connection between higher K-groups and Iwasawa modules via the localization sequence in K-theory, combined with explicit bounds on capitulation indices derived from the control theorem and the structure of Z_p[[Γ]]-modules where Γ = Gal(F_∞/F) ≅ Z_p.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.07328v1",
+      "source_path": "http://arxiv.org/abs/2607.07328v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T08:13:50.739502+00:00",
+      "title": "Capitulation bound for even K-groups implies pseudo-null submodules"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "Schubert calculus",
         "boson-fermion correspondence",
         "exterior algebra",
@@ -34534,7 +34583,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0720",
+      "id": "fd_0721",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem schubert_exterior_relation (r : ℕ) (indices : Fin r → ℕ) : (∂_indices.productDiff) = (signPermutation indices) • (exteriorMonomial indices) := by sorry",
@@ -34576,7 +34625,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0721",
+      "id": "fd_0722",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem new_abc_conjecture (y : ℕ) : Filter.limsup (fun n : ℕ => ((∑ j in Finset.Icc 1 y, ω (n + j)) * Real.log (Real.log n)) / Real.log n) = (1 : ℝ) := by sorry",
@@ -34625,7 +34674,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0722",
+      "id": "fd_0723",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem generalized_supercongruence (l m : ℕ) (p : ℕ) (hp : prime p) (h1 : ¬(p ∣ (l + 1))) (h2 : ¬(p ∣ binomial (l + 1) 2)) : (∑ n in finset.range (p - 1), ((-1) ^ (m * n) / (n ^ (m - 1))) * S l m n) % p ^ 2 = 0",
@@ -34676,7 +34725,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0723",
+      "id": "fd_0724",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mertens_combinatorial_identity (x : ℕ) (u : ℕ) (hx : x ≥ 1) (hu : ⌊Real.sqrt x⌋ < u ∧ u < x) : Mertens.mertens x = ∑ k in Finset.range (x / u + 1), μ k * S (x / k) u",
@@ -34725,7 +34774,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0724",
+      "id": "fd_0725",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem iu_p_biased_lubell_maximum (n : ℕ) (𝓕 : set (finset (fin n))) (h𝓕 : is_iu_family 𝓕) : ∃ p_opt : ℝ, p_opt ∈ [0,1] ∧ Λ_p 𝓕 ≤ Λ_p 𝓕_extremal p_opt ∧ (∀ q, Λ_q 𝓕 ≤ Λ_q 𝓕_extremal q)",
@@ -34771,7 +34820,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0725",
+      "id": "fd_0726",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem analytic_spread_eq_matroid_rank {G H : SimpleGraph ℕ} (J : Ideal (PolynomialRing ℚ (fin (V G) × fin (V H)))) (hJ : J = determinantalIdeal G H) (M : Matroid ℚ (fin (V G) × fin (V H))) (hM : M = linearMatroidOfPair G H) : analyticSpread J = matroidRank M := by sorry",
@@ -34818,7 +34867,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0726",
+      "id": "fd_0727",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem b2_values (n : ℕ) (h : n ≥ 2) : b₂(n) = if n % 8 = 0 ∨ n % 8 = 1 ∨ n % 8 = 7 then Nat.ceil (n / 2) else Nat.ceil (n / 2) + 1",
@@ -34868,7 +34917,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0727",
+      "id": "fd_0728",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mpd_tree_iff_lower_bound (T : SimpleGraph) [connected] [is_tree] [nonempty (V T)] [fintype (V T)] [decidable_linear_order (V T)] : multiset_partition_dimension T = 4 ↔ ∃ u v : V T, is_leaf u ∧ is_leaf v ∧ dist u v ≥ 3",
@@ -34888,6 +34937,55 @@
       "thread_id": "",
       "timestamp": "2026-07-09T07:55:01.469177+00:00",
       "title": "Lower Bound Characterization for Multiset Partition Dimension of Trees"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "ErdosMatchingConjecture",
+        "SpectralTuránTheorem",
+        "HypergraphEigenvalues"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture that for any fixed integers r≥2 and s≥2, there exists a threshold N(r,s) such that for all n≥N(r,s), every n-vertex r-uniform hypergraph H with matching number ν(H)<s satisfies ρ(H) ≤ ρ(F_{s-1}(n)), with equality only when H is isomorphic to the complete (s-1)-star family F_{s-1}(n). This refines the spectral analogue of the Erdős Matching Conjecture and is falsifiable by providing a counterexample for some n below the threshold or by showing non-uniqueness of the extremal structure.",
+      "domain_bridges": [
+        "ExtremalGraphTheory",
+        "TensorSpectralMethods",
+        "CombinatorialOptimization"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0729",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem spec (r s : ℕ) (H : Hypergraph r) (n : ℕ) (hν : matching_number H < s) (hn : n ≥ N r s) : spectral_radius H ≤ spectral_radius (F (s-1) n) ∧ (spectral_radius H = spectral_radius (F (s-1) n) → isomorphic H (F (s-1) n))",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "The conjecture can be approached by first establishing a shifting invariance, then applying variational estimates for the tensor spectral radius, and finally performing a saturation analysis to identify the extremal configuration; this mirrors the strategy outlined in the paper but isolates the key inequality for independent verification.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.07392v1",
+      "source_path": "http://arxiv.org/abs/2607.07392v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T08:14:30.490481+00:00",
+      "title": "Spectral Extremal Conjecture for r-Uniform Hypergraphs with Bounded Matching Number"
     },
     {
       "ambition_level": "extension",
@@ -34979,6 +35077,6 @@
     "famous_subtask",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "cross_domain_bridge"
+    "famous_subtask"
   ]
 }

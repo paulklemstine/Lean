@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "57910dd4",
     "description": "L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable \u2014 there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domains": [
       "Novelty",
@@ -13,7 +13,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.876173+00:00",
     "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
   },
@@ -8722,12 +8722,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let F be a totally real number field and F_\u221e its cyclotomic Z_p-extension. For the even K-groups K_{2n}(O_{F_m})(p) at each layer F_m of the extension, if the capitulation kernel ker(K_{2n}(O_{F_m})(p) \u2192 lim\u2190 K_{2n}(O_{F_m})(p)) has order at least p^{2\u03bc(X_{F_\u221e})+\u03bb(X_{F_\u221e})+1} where \u03bc and \u03bb are the classical Iwasawa invariants of the class group module, then X_{F_\u221e}^0 \u2260 0. This provides an effective bound relating higher K-theory capitulation to the existence of non-trivial pseudo-null submodules in classical Iwasawa modules.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0720",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07328v1",
+    "status": "available",
+    "timestamp": "2026-07-09T08:13:50.739502+00:00",
+    "title": "Capitulation bound for even K-groups implies pseudo-null submodules"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For every composition \u03b1 of length r \u2264 R, the differential operator \u2202_\u03b1 = \u2202_{i1}\u22ef\u2202_{ir} acting on the polynomial ring \u211a[X_1,\u2026,X_R] yields a non-zero scalar multiple of the basis element X_{i1}\u2227\u22ef\u2227X_{ir} in \u2227^r V, where \u2202_i = (1/i!)\u00b7(d/dX_i)|_{X=0}. Moreover, the scalar equals the sign of the permutation that sorts (i1,\u2026,ir). This equality holds for all r and can be tested computationally for small values.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0720",
+    "id": "fd_0721",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07667v1",
@@ -8741,7 +8755,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0721",
+    "id": "fd_0722",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07641v1",
@@ -8755,7 +8769,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0722",
+    "id": "fd_0723",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07638v1",
@@ -8770,7 +8784,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0723",
+    "id": "fd_0724",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07566v1",
@@ -8785,7 +8799,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0724",
+    "id": "fd_0725",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07564v1",
@@ -8800,7 +8814,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0725",
+    "id": "fd_0726",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07458v1",
@@ -8814,7 +8828,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0726",
+    "id": "fd_0727",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07448v1",
@@ -8829,7 +8843,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0727",
+    "id": "fd_0728",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07407v1",
@@ -8838,7 +8852,22 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lower Bound Characterization for Multiset Partition Dimension of Trees"
   },
   {
-    "consumed_by_exp_id": "ad8ddf45",
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any fixed integers r\u22652 and s\u22652, there exists a threshold N(r,s) such that for all n\u2265N(r,s), every n-vertex r-uniform hypergraph H with matching number \u03bd(H)<s satisfies \u03c1(H) \u2264 \u03c1(F_{s-1}(n)), with equality only when H is isomorphic to the complete (s-1)-star family F_{s-1}(n). This refines the spectral analogue of the Erd\u0151s Matching Conjecture and is falsifiable by providing a counterexample for some n below the threshold or by showing non-uniqueness of the extremal structure.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0729",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07392v1",
+    "status": "available",
+    "timestamp": "2026-07-09T08:14:30.490481+00:00",
+    "title": "Spectral Extremal Conjecture for r-Uniform Hypergraphs with Bounded Matching Number"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers \u2014 anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension \u2014 they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property \u2014 it's not about content quality but about the sheaf cohomology of the social network.",
     "domains": [
       "Novelty",
@@ -8848,7 +8877,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.77,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T16:01:43.584485+00:00",
     "title": "The Mathematics of Memes: Viral Information Topology"
   },

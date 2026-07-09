@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "57910dd4",
     "description": "L-functions are the DNA of mathematics — each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable — there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domain_bridges": [],
     "domains": [
@@ -15,7 +15,7 @@
     "proof_strategy": "Define the Selberg class S as the set of Dirichlet series L(s) = sum a_n/n^s satisfying: (1) Ramanujan bound |a_n| <= n^epsilon for epsilon > 0, (2) Analytic continuation to C except for a possible pole at s=1, (3) Functional equation relating L(s) to L(1-s), (4) Euler product L(s) = prod_p L_p(s). Prove S is countable: each L in S is determined by finitely many data because (a) the degree d_L is a positive integer, (b) the conductor q_L is a positive integer, (c) the Euler factors L_p(s) for p not dividing q_L are determined by the Ramanujan bound and the functional equation, and (d) there are finitely many primes dividing q_L. So L is determined by (d_L, q_L, epsilon_L, {L_p(s) : p | q_L}), a finite set of data. Since each piece of data is countable, S is countable. Test: enumerate elements of S by increasing conductor.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.876173+00:00",
     "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
   },
@@ -16319,6 +16319,34 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "msci:11R23",
+      "msci:11R70",
+      "msci:11S25"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let F be a totally real number field and F_∞ its cyclotomic Z_p-extension. For the even K-groups K_{2n}(O_{F_m})(p) at each layer F_m of the extension, if the capitulation kernel ker(K_{2n}(O_{F_m})(p) → lim← K_{2n}(O_{F_m})(p)) has order at least p^{2μ(X_{F_∞})+λ(X_{F_∞})+1} where μ and λ are the classical Iwasawa invariants of the class group module, then X_{F_∞}^0 ≠ 0. This provides an effective bound relating higher K-theory capitulation to the existence of non-trivial pseudo-null submodules in classical Iwasawa modules.",
+    "domain_bridges": [
+      "Iwasawa modules",
+      "Galois cohomology",
+      "Algebraic K-theory",
+      "Class field theory"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0720",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the connection between higher K-groups and Iwasawa modules via the localization sequence in K-theory, combined with explicit bounds on capitulation indices derived from the control theorem and the structure of Z_p[[Γ]]-modules where Γ = Gal(F_∞/F) ≅ Z_p.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07328v1",
+    "status": "available",
+    "timestamp": "2026-07-09T08:13:50.739502+00:00",
+    "title": "Capitulation bound for even K-groups implies pseudo-null submodules"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Schubert calculus",
       "boson-fermion correspondence",
       "exterior algebra",
@@ -16335,7 +16363,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0720",
+    "id": "fd_0721",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove by induction on r using generating function identities for exterior powers and sign-reversing arguments; verify base case r=1 and use the relation ∂_i X_j = δ_{ij} to deduce the action on higher wedges, then extend to arbitrary compositions.",
@@ -16356,7 +16384,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0721",
+    "id": "fd_0722",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine probabilistic models of prime factor distributions with known upper and lower bounds for ω(n) and constructions of integers with many small prime factors; likely requires sieve methods and deep results on smooth numbers.",
@@ -16384,7 +16412,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0722",
+    "id": "fd_0723",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use p-adic analysis and properties of multinomial coefficients modulo prime powers, potentially relating to generalized hypergeometric functions and their p-integrality properties. The approach would involve analyzing the generating function of S_l^{(m)}(n) and applying p-adic differential equations.",
@@ -16414,7 +16442,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0723",
+    "id": "fd_0724",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the identity Σ_{n≤x} M(x/n) = 1, prove the grouping into S_1 and S_2 components, apply Möbius inversion to derive the main formula, and verify correctness through induction on bounded intervals. The proof requires careful handling of floor function identities and the constraint ν_x < u < x to ensure all terms are well-defined.",
@@ -16442,7 +16470,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0724",
+    "id": "fd_0725",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Characterize the optimizer of the variational problem via Lagrange multipliers on the Boolean lattice, establish convexity properties of the p-biased measure under IU constraints, and prove uniqueness of extremal families through exchange arguments and majorization theory.",
@@ -16467,7 +16495,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0725",
+    "id": "fd_0726",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Choose a monomial order that yields a squarefree initial ideal in(J_{G,H}) whose Stanley–Reisner complex is precisely the independence complex of the linear matroid M_{G,H}. 2. Show that the special fiber ring S/J_{G,H} ⊗_k k[m] has the same Hilbert function as the face ring of that complex, hence its Krull dimension (the analytic spread) equals dim(Δ)+1. 3. For a squarefree simplicial complex, dim(Δ)+1 equals the size of the largest face, which is the rank of the represented matroid. 4. Conclude ℓ(J_{G,H}) = rank(M_{G,H}).",
@@ -16493,7 +16521,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0726",
+    "id": "fd_0727",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof would involve verifying the modular conditions and leveraging the lower bound from Buchanan et al. combined with constructive upper bounds. By analyzing the structure of bicliques and their symmetric differences, one can show that the conjectured values are achievable and minimal.",
@@ -16522,7 +16550,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0727",
+    "id": "fd_0728",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The forward direction can be established by contradiction: if a tree has mpd(T) = 4 but all pairs of leaves have distance at most 2, then the distance constraints would force at least two vertices to have identical multiset representations, violating the resolving property. The reverse direction follows from constructing an explicit resolving multiset partition with exactly 4 parts when the leaf distance condition is satisfied. This construction generalizes the proof techniques used for the general lower bound while exploiting the tree structure to ensure the partition is valid. The characterization should be formalized by first defining the multiset representation function, then proving the equivalence via structural analysis of tree topology.",
@@ -16533,9 +16561,37 @@
     "title": "Lower Bound Characterization for Multiset Partition Dimension of Trees"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "ErdosMatchingConjecture",
+      "SpectralTuránTheorem",
+      "HypergraphEigenvalues"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any fixed integers r≥2 and s≥2, there exists a threshold N(r,s) such that for all n≥N(r,s), every n-vertex r-uniform hypergraph H with matching number ν(H)<s satisfies ρ(H) ≤ ρ(F_{s-1}(n)), with equality only when H is isomorphic to the complete (s-1)-star family F_{s-1}(n). This refines the spectral analogue of the Erdős Matching Conjecture and is falsifiable by providing a counterexample for some n below the threshold or by showing non-uniqueness of the extremal structure.",
+    "domain_bridges": [
+      "ExtremalGraphTheory",
+      "TensorSpectralMethods",
+      "CombinatorialOptimization"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0729",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The conjecture can be approached by first establishing a shifting invariance, then applying variational estimates for the tensor spectral radius, and finally performing a saturation analysis to identify the extremal configuration; this mirrors the strategy outlined in the paper but isolates the key inequality for independent verification.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07392v1",
+    "status": "available",
+    "timestamp": "2026-07-09T08:14:30.490481+00:00",
+    "title": "Spectral Extremal Conjecture for r-Uniform Hypergraphs with Bounded Matching Number"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ad8ddf45",
+    "consumed_by_exp_id": "",
     "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers — anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension — they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property — it's not about content quality but about the sheaf cohomology of the social network.",
     "domain_bridges": [],
     "domains": [
@@ -16548,7 +16604,7 @@
     "proof_strategy": "Define the meme sheaf M on social network G: for each community C_i (cluster in G), M(C_i) is the set of interpretations of the meme in community i. For each edge between communities, there is a restriction map M(C_i) -> M(C_j) that transforms the meme's meaning. Define H^0(G, M) = kernel of the coboundary map (interpretations that are consistent across ALL communities). Define H^1(G, M) = cokernel (obstructions to consistent interpretation). Prove: dim(H^0) = number of universal interpretations. Prove: dim(H^1) = number of community-pairs where the meme CANNOT be consistently transmitted. Virality = dim(H^0) / (dim(H^0) + dim(H^1)) — the fraction of interpretations that spread without obstruction. Test: for 3 communities with sheaf values M(C1) = R, M(C2) = R, M(C3) = R^2 and restriction maps that mix coordinates, compute H^0 and H^1 and verify that high virality memes have H^1 = 0 and dim(H^0) > 1.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T16:01:43.584485+00:00",
     "title": "The Mathematics of Memes: Viral Information Topology"
   },
