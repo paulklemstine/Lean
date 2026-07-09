@@ -18,7 +18,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
   },
   {
-    "consumed_by_exp_id": "55f141e7",
+    "consumed_by_exp_id": "",
     "description": "L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable \u2014 there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domains": [
       "Novelty",
@@ -28,24 +28,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T16:01:43.876173+00:00",
     "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
-  },
-  {
-    "consumed_by_exp_id": "116104eb",
-    "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long \u2014 the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static \u2014 they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0654",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T16:01:43.810023+00:00",
-    "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
   },
   {
     "consumed_by_exp_id": "",
@@ -9881,6 +9866,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 G\u00f6del's Casino\n\nThe file `Casino.lean` formalises *G\u00f6del's Casino* as a betting game over the sentences\nof an abstract formal theory `T` and proves a guaranteed-win strategy for the\nundecidable (independent) cards. The theory is modelled by exactly the data the game\nneeds \u2014 a sentence type, negation, provability `Provable`, standard-model truth `True_`,\nand a `\u03a3\u2081`-classification `IsSigma1` \u2014 subject to three standard facts taken as\nhypotheses: soundness, `True_ (\u00acs) \u2194 \u00ac True_ s`, and `\u03a3\u2081`-completeness.\n\n## What is proved\n\n* `Theory.pi1_indep_true` / `Theory.sigma1_indep_false` \u2014 the mathematical core:\n  every `\u03a0\u2081` sentence independent of `T` is TRUE, every `\u03a3\u2081` sentence independent of `T`\n  is FALSE. This *corrects* the mission's proposal (\"bet FALSE on `\u03a0\u2081` such as\n  `Con(ZFC)`\"): one must bet TRUE on independent `\u03a0\u2081` sentences.\n* `cardProfit_pi1`, `cardProfit_sigma1`, `cardProfit_other`, `cardProfit_nonneg` \u2014 the\n  strategy wins `+1` on each decidable-shape card and never loses.\n* `deckProfit_eq_count` \u2014 total profit equals the number of `\u03a3\u2081`/`\u03a0\u2081` cards dealt.\n* `deckProfit_nonneg`, `deckProfit_pos` \u2014 the strategy never loses, and strictly wins as\n  soon as one decidable-shape card appears. This is a *guaranteed* win, stronger than the\n  conjectured \"positive expected value\".\n* `deckProfit_avg_third` \u2014 if `\u2265 1/3` of the deck has decidable shape (the mission's\n  arithmetic-hierarchy heuristic), the average profit per round is `\u2265 1/3`.\n* `naiveCardProfit_eq_neg`, `naiveDeckProfit_eq_neg`, `naiveDeckProfit_neg` \u2014 the\n  mission's originally-proposed strategy is the pointwise opposite of the correct one and\n  loses exactly what the correct strategy wins.\n* A concrete toy theory (`toyTheory`, `toyDeck`) witnessing non-vacuity, with profit `1`.\n\n## Natural extensions\n\n1. **Ground the abstract `Theory` in real arithmetic.** Instantiate the `Theory`\n   structure with Mathlib's `FirstOrder.Language.Arith`/`Peano` development: define\n   `Sentence`, `neg`, and `Provable` from the actual derivability relation, `True_` from\n   satisfaction in `\u2115`, and prove `sound`, `true_neg`, and `sigma1_complete` as genuine\n   theorems (`\u03a3\u2081`-completeness of `Q`/`PA`). The casino theorems would then transfer to\n   ZFC-independent arithmetic sentences unconditionally.\n\n2. **A concrete deck of famous cards.** Build cards for `Con(ZFC)` (independent `\u03a0\u2081`,\n   TRUE), a Rosser-style independent `\u03a3\u2081` sentence (FALSE), and the Continuum Hypothesis\n   (an `other` card that must be hedged because it is not arithmetic). Compute the deck\n   profit explicitly.\n\n3. **Optimality / minimax of the hedge.** For `other` cards, prove that no non-hedge bet\n   dominates: there exist truth assignments making `betTrue` lose and making `betFalse`\n   lose, so `hedge` maximises the guaranteed payoff. This justifies the third arm of the\n   strategy as minimax-optimal.\n\n4. **Probabilistic layer.** Replace the guaranteed-count statement with a genuine\n   expectation over a `PMF`/measure on decks, recovering \"expected profit `> 0`\" as a\n   corollary of the stronger pointwise `deckProfit_nonneg`.\n\n5. **Higher levels of the hierarchy.** Extend `Kind` to `\u03a3\u2099`/`\u03a0\u2099` and study which levels\n   admit a forced correct bet under `\u03a3\u2099`-completeness/soundness assumptions, quantifying\n   the \"fraction decidable at level `n`\" heuristic.\n\n6. **House vs. player as a formal game.** Model the dealer choosing the deck adversarially\n   and prove a value/strategy-stealing result: the player's guaranteed value is exactly\n   the number of decidable-shape cards the dealer is forced to include.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0805",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "00f256fb",
+    "status": "available",
+    "timestamp": "2026-07-09T21:23:32.128595+00:00",
+    "title": "The file `Casino.lean` formalises *G\u00f6del's Casino* as a betting game over the se"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearrangement of the primes q_1, q_2, ... such that the sequence of ratios q_n / p_n converges to 1. In other words, you can shuffle the primes almost arbitrarily and the room numbers barely change. More precisely, the set of permutations sigma for which p_{sigma(n)} / p_n has a limit is dense in the symmetric group (with the topology of pointwise convergence). But NOT every permutation works: the permutation that swaps all even-indexed primes with odd-indexed ones gives q_{2n}/p_{2n} = p_{2n-1}/p_{2n} which converges to 1 by the prime number theorem, but the permutation that reverses order gives q_n/p_n = p_{N-n}/p_n which diverges. Test: compute q_n/p_n for 10 random permutations of the first 10^6 primes and verify that most ratios converge to 1. Find the exact density of 'well-behaved' permutations. Impact: the primes are robust under rearrangement \u2014 their asymptotic density is a topological invariant of the permutation group.",
     "domains": [
       "Novelty",
@@ -9907,6 +9907,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-09T19:55:16.452095+00:00",
     "title": "Close Proofs: Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every recipe is an algorithm: it takes ingredients (inputs) and produces a dish (output). The question is: can you verify a good dish faster than you can cook it? This is exactly P vs NP, but in the kitchen. Define the verification time V(R) of a recipe R as the time it takes to taste the dish and determine if it's good. Define the cooking time C(R) as the time it takes to prepare the dish. Conjecture: For most traditional recipes, C(R) > V(R) \u2014 cooking takes longer than tasting (P != NP in the kitchen). But there exist 'quick recipes' where C(R) = V(R) \u2014 assemble-and-serve dishes like salads (P = NP in the kitchen). The interesting class is 'NP-hard recipes' \u2014 dishes where even VERifying the result is hard. Example: is the souffle risen? You can only verify by cutting it open, which destroys it. Theorem: souffle verification is co-NP-hard because determining if a souffle will rise requires simulating the thermodynamic process, which is PSPACE-hard. More formally: the souffle function S(ingredients, temperature, time) -> {risen, collapsed} requires computing the Navier-Stokes equations for the batter, which is PSPACE-hard. Test: classify 100 recipes by their C(R)/V(R) ratio. Verify that P = NP recipes have C = V, while P != NP recipes have C >> V. Impact: computational complexity is not abstract \u2014 it shows up in your kitchen. Some dishes are inherently harder to make than to verify.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0804",
+    "priority_score": 0.71,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-09T21:23:09.226908+00:00",
+    "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
   },
   {
     "consumed_by_exp_id": "",
