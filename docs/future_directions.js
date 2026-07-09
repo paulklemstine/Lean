@@ -3,21 +3,6 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "643186e8",
-    "description": "The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do \u2014 as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: The tropical semiring (R union {infinity}, min, +) IS the field with one element, in the following precise sense: the category of tropical schemes is equivalent to the category of F_1-schemes. More concretely, a tropical variety over F_1 is a set with a min-plus structure, and its base change to Z (formally, tensor with Z) is a toric variety. The key correspondence: F_1-points of a tropical variety are the vertices of its Newton polytope, and the 'cardinality' of the tropical variety (as an F_1-object) is the number of lattice points in the polytope, which equals the degree of the toric variety after base change. Test: for each toric variety corresponding to a polytope P, compute the number of F_1-points (vertices of P) and verify that the Euler characteristic of the toric variety equals |vertices(P)| = #F_1-points. Prove the tensor product correspondence: tropical scheme X over F_1 has X tensor_Z Z = the corresponding toric variety. Impact: F_1 and tropical geometry are two faces of the same coin. The field with one element is tropical, and tropical geometry is the geometry of F_1.",
-    "domains": [
-      "Novelty",
-      "Tropical"
-    ],
-    "id": "fd_0791",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-09T19:37:23.824326+00:00",
-    "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable \u2014 there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domains": [
@@ -33,7 +18,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "116104eb",
     "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long \u2014 the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static \u2014 they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
     "domains": [
       "Novelty",
@@ -43,7 +28,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.810023+00:00",
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
   },
@@ -9818,6 +9803,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-09T20:47:51.482127+00:00",
     "title": "This project formalizes a self-contained theory of **total nonnegativity** (all "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Self-Improving Proofs\n\nThe file `SelfImprovingProofs.lean` formalises a proof-refinement system for a\nfixed target proposition `T`: an abstract type of candidate proofs, a\n`\u2115`-valued complexity `C`, a validity predicate, and a soundness guarantee.\nRefinement is `C(P') < C(P)` between valid candidates. We proved:\n\n* refinement is **well-founded** (`System.refines_wellFounded`) \u2014 no infinite\n  strict simplification;\n* finite chains are **length-bounded** by the initial complexity\n  (`nat_finite_strict_chain_bounded`), and this bound is **tight**\n  (`nat_strict_chain_achievable`, `chainSystem_arbitrarily_long`): for every `m`\n  there is a genuine refinement chain of exactly `m` steps \u2014 finite, but with no\n  uniform length bound;\n* every non-increasing refinement process **halts**\n  (`System.process_halts`, `nat_noninc_eventually_constant`);\n* a **simplest proof exists** (`System.exists_simplest`);\n* but the halting limit need **not** be simplest\n  (`refinement_limit_not_optimal`), with a concrete `\u221a2` counterexample whose\n  soundness is Mathlib's `irrational_sqrt_two`.\n\n## Directions\n\n1. **Syntactic complexity.** Replace the abstract `complexity : Proof \u2192 \u2115` with\n   a genuine measure on Lean `Expr`/tactic scripts (`length + depth + #lemmas`)\n   and re-derive the theorems for that concrete `C`.\n\n2. **Steepest-descent refinement.** Model a refinement *strategy* as a function\n   choosing the next candidate, and characterise which strategies do reach the\n   global minimum (e.g. always pick a strict refinement when one exists). The\n   current counterexample shows arbitrary non-increasing strategies fail.\n\n3. **Multi-objective complexity.** Take `C` valued in a well-order other than\n   `\u2115` (lexicographic `length \u00d7\u2097 depth \u00d7\u2097 #lemmas`, or ordinals) and check which\n   results survive; well-foundedness generalises to any `WellFoundedLT`.\n\n4. **Uncomputability of the optimum.** Formalise that \"the Kolmogorov-minimal\n   proof\" is not computable, sharpening why local refinement cannot in general\n   attain it.\n\n5. **Quantitative arbitrariness (done, extendable).** The tightness of the\n   length bound is now formalised: `chainSystem_arbitrarily_long` builds, for\n   every `m`, a system with a strict refinement chain of exactly `m` steps,\n   matching the `10^100` remark. A natural extension is to exhibit chains whose\n   *length as a function of the theorem's statement size* grows faster than any\n   computable function, sharpening the \"arbitrarily long\" slogan quantitatively.\n",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_0800",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6b9c675a",
+    "status": "available",
+    "timestamp": "2026-07-09T20:47:58.711884+00:00",
+    "title": "The file `SelfImprovingProofs.lean` formalises a proof-refinement system for a"
   },
   {
     "consumed_by_exp_id": "",

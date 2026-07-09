@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "8f5c44bc",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Width vs Depth Trade-offs for ReLU Networks\n\nThis cycle closed the **deep upper-bound** side of the depth–width tradeoff,\ncomplementing the catalog's shallow lower bound\n(`TentDe",
-      "quality_score": 0.65133,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-06-28T19:46:59",
-      "title": "ML Universal Approximation: Width vs Depth Trade-offs"
-    },
-    {
       "cycle_id": "23de9107",
       "domain": "Applications",
       "key_insight": "# Future Directions — Continued Fractions and Diophantine Approximation\n\nDerived from this cycle's findings (Dirichlet bound `Lc ≤ 1`, denominator\nunboundedness, and `Lc = 0` for Liouville numbers).",
@@ -2501,6 +2491,16 @@
       "theorem_count": 20,
       "timestamp": "2026-07-09T20:47:56",
       "title": "Total Positivity of the Interval Subdivision Transformation Matrix"
+    },
+    {
+      "cycle_id": "6b9c675a",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Self-Improving Proofs\n\nThe file `SelfImprovingProofs.lean` formalises a proof-refinement system for a\nfixed target proposition `T`: an abstract type of candidate proofs, a\n`ℕ`-va",
+      "quality_score": 0.63,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-07-09T20:48:01",
+      "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7115
     }
   ],
-  "last_updated": "2026-07-09T20:47:56",
+  "last_updated": "2026-07-09T20:48:01",
   "open_questions": [
     {
       "context": "continued to `s = -1` at all.  This file proves the rigorous, sorry-free facts on",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "2e937390",
-        "quality": 0.5295662942477877,
-        "theorems": 39,
-        "title": "Young Conjugation Induces a Measure-Preserving Involution on the Natural Extensi"
-      },
-      {
         "cycle_id": "d01d52df",
         "quality": 0.642,
         "theorems": 6,
@@ -3637,6 +3631,12 @@
         "quality": 0.618,
         "theorems": 20,
         "title": "Total Positivity of the Interval Subdivision Transformation Matrix"
+      },
+      {
+        "cycle_id": "6b9c675a",
+        "quality": 0.63,
+        "theorems": 18,
+        "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
       }
     ],
     "NumberTheory": [
