@@ -8738,7 +8738,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Order-type characterization of algebraic $p$-adic Hahn series with finitely many accumulation points"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c38e66e4",
     "description": "In every connected graph whose edges are either 1\u2011matching or 2\u2011matching edges and in which no perfect matching contains edges of both types, the number of perfect matchings is always a power of two.",
     "domains": [
       "Bridges"
@@ -8747,7 +8747,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06921v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T10:39:28.931121+00:00",
     "title": "Power\u2011of\u2011Two Perfect Matching Count in Class\u202fB Graphs"
   },
@@ -9758,6 +9758,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-09T19:54:56.644469+00:00",
     "title": "This project formalises a **local-to-global principle for coordinate influences*"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nFile: `Bridges/PageSiegelRefinement.lean`\n\n## What is proved\n\nThe file formalizes, and proves in full (no `sorry`, only the standard axioms\n`propext`, `Classical.choice`, `Quot.sound`), a **conditional refinement of\nPage's theorem** on Landau\u2013Siegel zeros, framed as a *connector* between two\nareas:\n\n* **Zero location / complex analysis** \u2014 the repulsion of real zeros of Dirichlet\n  `L`-functions (`DirichletCharacter.LFunction`), packaged as `Repulsion`, and the\n  mission's premise `NonRealExclusion` (no non-real zeros near `s = 1`).\n* **Asymptotics + finiteness** \u2014 the pivot `exists_threshold`\n  (`m^{-\u03b5} log m \u2192 0`, from `isLittleO_log_rpow_atTop`) and the abstract\n  `repulsion_subsingleton`, which turns a repulsion inequality into a\n  `Subsingleton` (\"at most one\").\n\nThe main theorem `page_siegel_refinement` wires these together: for every `\u03b5 > 0`\nthere are effective `C > 0`, `Q\u2080 > 1` such that the Deuring\u2013Heilbronn bridge\n`NonRealExclusion \u2192 Repulsion` together with `NonRealExclusion` forces the set of\nexceptional primitive quadratic characters (real zero in `[1 - q^{-\u03b5}, 1)`) to be\na `Set.Subsingleton`.\n\n## Honest scope / what is assumed\n\nTwo genuinely deep analytic facts are isolated as **explicit hypotheses** rather\nthan proved from scratch (this is what makes the result *conditional*, matching\nthe paper's own framing):\n\n1. `NonRealExclusion` \u2014 the hypothesis of the statement itself.\n2. The bridge `NonRealExclusion \u2192 Repulsion` \u2014 the Deuring\u2013Heilbronn / Landau\n   zero-repulsion mechanism, whose usual proof rests on the non-negativity of the\n   Dirichlet coefficients of `\u03b6(s) L(s,\u03c7\u2081) L(s,\u03c7\u2082) L(s,\u03c7\u2081\u03c7\u2082)`.\n\nEverything *downstream* of these inputs \u2014 the effective constant, the monotonicity\nargument, and the passage to \"at most one\" \u2014 is a Lean theorem.\n\n## Concrete next steps\n\n1. **Discharge the bridge.** Prove `NonRealExclusion \u2192 Repulsion` inside Lean.\n   Mathlib already provides the key positivity input\n   `DirichletCharacter.norm_LFunction_product_ge_one` (the `3\u20134\u20131` trick); the\n   remaining work is the explicit log-derivative estimates and the choice of the\n   auxiliary point `s = 1 + \u03b4`.\n\n2. **Replace the `min`-conductor repulsion by the classical `log(q\u2081q\u2082)` form.**\n   The abstract lemma is stated with `log (min conductor)`; deriving the sharper\n   `log(q\u2081q\u2082)` version and re-deriving `repulsion_subsingleton` from it would make\n   the constant match Landau's exactly.\n\n3. **Non-vacuity via character theory.** Connect `ExcSet` to the Kronecker-symbol\n   description of primitive real characters, so that \"at most one character\" is\n   phrased at the level of fundamental discriminants.\n\n4. **Effective `C(\u03b5)`.** The proof currently fixes `C = 1`; tracking the optimal\n   `C(\u03b5)` through the bridge would yield the fully effective statement.\n\n5. **Remove `Classical.choice`.** The zero witness is extracted with\n   `Classical.choose`; a constructive selection (or `Set.Subsingleton` proved\n   directly) would trim the axiom footprint.\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_0795",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8202f9a7",
+    "status": "available",
+    "timestamp": "2026-07-09T19:55:02.128218+00:00",
+    "title": "File: `Bridges/PageSiegelRefinement.lean`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 8202f9a7 (Q=0.675) proved 19 theorems in Novelty but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Develop a verified computational pipeline in Lean 4 that makes the conditional refinement of Page's theorem effective and algorithmic: for a given \u03b5>0, compute explicit C(\u03b5), Q\u2080(\u03b5) and enumerate primi",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_8202f9a7_0e1258b9",
+    "priority_score": 0.7249863157894737,
+    "research_mode": "team",
+    "source_exp_id": "8202f9a7",
+    "status": "available",
+    "timestamp": "2026-07-09T19:55:16.452095+00:00",
+    "title": "Close Proofs: Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
   },
   {
     "consumed_by_exp_id": "",

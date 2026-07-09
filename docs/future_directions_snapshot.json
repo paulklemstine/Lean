@@ -16348,7 +16348,7 @@
       "Diestel, R. \"Graph Theory\"",
       "Lovász, L., Plummer, M. \"Matching Theory\""
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c38e66e4",
     "description": "In every connected graph whose edges are either 1‑matching or 2‑matching edges and in which no perfect matching contains edges of both types, the number of perfect matchings is always a power of two.",
     "domain_bridges": [
       "combinatorics",
@@ -16363,7 +16363,7 @@
     "proof_strategy": "Use the structural characterization of class B FIFA: induction on the ear decomposition supplied in the paper.  The base case (a single edge) clearly has 1 = 2^0 perfect matchings.  Adding an ear introduces exactly one new pair of perfect matchings, so the total number of perfect matchings doubles.  Tight‑cut decompositions can be employed to handle the case where the graph splits into smaller class B components, each inheriting the power‑of‑two property, and the total number of perfect matchings is the product of the component counts, preserving the power‑of‑two nature.",
     "research_mode": "team",
     "source_exp_id": "2607.06921v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T10:39:28.931121+00:00",
     "title": "Power‑of‑Two Perfect Matching Count in Class B Graphs"
   },
@@ -18228,6 +18228,45 @@
     "status": "available",
     "timestamp": "2026-07-09T19:54:56.644469+00:00",
     "title": "This project formalises a **local-to-global principle for coordinate influences*"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nFile: `Bridges/PageSiegelRefinement.lean`\n\n## What is proved\n\nThe file formalizes, and proves in full (no `sorry`, only the standard axioms\n`propext`, `Classical.choice`, `Quot.sound`), a **conditional refinement of\nPage's theorem** on Landau–Siegel zeros, framed as a *connector* between two\nareas:\n\n* **Zero location / complex analysis** — the repulsion of real zeros of Dirichlet\n  `L`-functions (`DirichletCharacter.LFunction`), packaged as `Repulsion`, and the\n  mission's premise `NonRealExclusion` (no non-real zeros near `s = 1`).\n* **Asymptotics + finiteness** — the pivot `exists_threshold`\n  (`m^{-ε} log m → 0`, from `isLittleO_log_rpow_atTop`) and the abstract\n  `repulsion_subsingleton`, which turns a repulsion inequality into a\n  `Subsingleton` (\"at most one\").\n\nThe main theorem `page_siegel_refinement` wires these together: for every `ε > 0`\nthere are effective `C > 0`, `Q₀ > 1` such that the Deuring–Heilbronn bridge\n`NonRealExclusion → Repulsion` together with `NonRealExclusion` forces the set of\nexceptional primitive quadratic characters (real zero in `[1 - q^{-ε}, 1)`) to be\na `Set.Subsingleton`.\n\n## Honest scope / what is assumed\n\nTwo genuinely deep analytic facts are isolated as **explicit hypotheses** rather\nthan proved from scratch (this is what makes the result *conditional*, matching\nthe paper's own framing):\n\n1. `NonRealExclusion` — the hypothesis of the statement itself.\n2. The bridge `NonRealExclusion → Repulsion` — the Deuring–Heilbronn / Landau\n   zero-repulsion mechanism, whose usual proof rests on the non-negativity of the\n   Dirichlet coefficients of `ζ(s) L(s,χ₁) L(s,χ₂) L(s,χ₁χ₂)`.\n\nEverything *downstream* of these inputs — the effective constant, the monotonicity\nargument, and the passage to \"at most one\" — is a Lean theorem.\n\n## Concrete next steps\n\n1. **Discharge the bridge.** Prove `NonRealExclusion → Repulsion` inside Lean.\n   Mathlib already provides the key positivity input\n   `DirichletCharacter.norm_LFunction_product_ge_one` (the `3–4–1` trick); the\n   remaining work is the explicit log-derivative estimates and the choice of the\n   auxiliary point `s = 1 + δ`.\n\n2. **Replace the `min`-conductor repulsion by the classical `log(q₁q₂)` form.**\n   The abstract lemma is stated with `log (min conductor)`; deriving the sharper\n   `log(q₁q₂)` version and re-deriving `repulsion_subsingleton` from it would make\n   the constant match Landau's exactly.\n\n3. **Non-vacuity via character theory.** Connect `ExcSet` to the Kronecker-symbol\n   description of primitive real characters, so that \"at most one character\" is\n   phrased at the level of fundamental discriminants.\n\n4. **Effective `C(ε)`.** The proof currently fixes `C = 1`; tracking the optimal\n   `C(ε)` through the bridge would yield the fully effective statement.\n\n5. **Remove `Classical.choice`.** The zero witness is extracted with\n   `Classical.choose`; a constructive selection (or `Set.Subsingleton` proved\n   directly) would trim the axiom footprint.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_0795",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "8202f9a7",
+    "status": "available",
+    "timestamp": "2026-07-09T19:55:02.128218+00:00",
+    "title": "File: `Bridges/PageSiegelRefinement.lean`"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 8202f9a7 (Q=0.675) proved 19 theorems in Novelty but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Develop a verified computational pipeline in Lean 4 that makes the conditional refinement of Page's theorem effective and algorithmic: for a given ε>0, compute explicit C(ε), Q₀(ε) and enumerate primi",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_8202f9a7_0e1258b9",
+    "lineage_refs": [],
+    "priority_score": 0.7249863157894737,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "8202f9a7",
+    "status": "available",
+    "timestamp": "2026-07-09T19:55:16.452095+00:00",
+    "title": "Close Proofs: Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
   },
   {
     "ambition_level": "extension",
