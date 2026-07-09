@@ -3,6 +3,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do — as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: The tropical semiring (R union {infinity}, min, +) IS the field with one element, in the following precise sense: the category of tropical schemes is equivalent to the category of F_1-schemes. More concretely, a tropical variety over F_1 is a set with a min-plus structure, and its base change to Z (formally, tensor with Z) is a toric variety. The key correspondence: F_1-points of a tropical variety are the vertices of its Newton polytope, and the 'cardinality' of the tropical variety (as an F_1-object) is the number of lattice points in the polytope, which equals the degree of the toric variety after base change. Test: for each toric variety corresponding to a polytope P, compute the number of F_1-points (vertices of P) and verify that the Euler characteristic of the toric variety equals |vertices(P)| = #F_1-points. Prove the tensor product correspondence: tropical scheme X over F_1 has X tensor_Z Z = the corresponding toric variety. Impact: F_1 and tropical geometry are two faces of the same coin. The field with one element is tropical, and tropical geometry is the geometry of F_1.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Tropical"
+    ],
+    "id": "fd_0791",
+    "lineage_refs": [],
+    "priority_score": 0.87,
+    "proof_strategy": "Define the F_1-tropical correspondence: a tropical scheme over F_1 is a monoid object M in the tropical semiring (R union infty, min, +). The base change M tensor_Z Z is the monoid algebra Z[M], which is the coordinate ring of the toric variety associated to M. Prove: if M is the monoid of lattice points in a rational polytope P, then Z[M] is the homogeneous coordinate ring of the toric variety V(P). Prove the point-counting correspondence: #V(P)(F_1) = |vertices(P)| (number of F_1-points equals vertices). Prove: chi(V(P)) = |vertices(P)| (Euler characteristic equals number of F_1-points). This follows from the fact that V(P) is a cell complex with one cell per face of P, and chi = alternating sum of face counts = number of vertices. Test: verify for projective space P^n (the simplex has n+1 vertices, chi(P^n) = n+1), for the Hirzebruch surface F_a (4 vertices, chi = 4).",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-09T19:37:23.824326+00:00",
+    "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "L-functions are the DNA of mathematics — each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable — there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domain_bridges": [],
     "domains": [
@@ -5591,7 +5611,7 @@
       "Gur22",
       "Gotlib23"
     ],
-    "consumed_by_exp_id": "52557551",
+    "consumed_by_exp_id": "",
     "description": "Any simplicial complex whose links satisfy the KKL theorem also satisfies a global KKL-type theorem for influence functions. Formally, if every (d-1)-dimensional link in a simplicial complex K satisfies the KKL condition that low-influence functions on the link must have a coordinate with large influence, then the entire complex K satisfies a global KKL condition for functions on its simplices.",
     "domain_bridges": [
       "boolean-function-analysis",
@@ -5607,7 +5627,7 @@
     "proof_strategy": "Inductive argument over simplex dimensions, leveraging the local KKL hypothesis on links to establish global influence bounds via Fourier-analytic techniques on simplicial complexes. Key steps involve defining influence measures on complexes, relating local and global spectral properties, and applying the local-to-global method from the paper.",
     "research_mode": "team",
     "source_exp_id": "2606.29449v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T06:47:54.813371+00:00",
     "title": "Local-to-Global KKL Theorem for Simplicial Complexes with Local KKL Links"
   },
@@ -8773,7 +8793,7 @@
       "Complete bipartite graphs",
       "Kővári–Sós–Turán theorem"
     ],
-    "consumed_by_exp_id": "6b4ee47d",
+    "consumed_by_exp_id": "",
     "description": "For all integers a, b with 3 ≤ a ≤ b, there exists a constant C > 0 such that for any n-vertex graph G that is K_{3,b+1}-free, the number of labeled copies of K_{a,b} in G is at most C * n^3. This captures the main asymptotic upper bound result of the paper, resolving the generalized Turán problem for these parameters.",
     "domain_bridges": [
       "Combinatorics",
@@ -8788,7 +8808,7 @@
     "proof_strategy": "Formalize the definitions of K_{s,t}-free graphs and the counting of labeled subgraphs isomorphic to K_{a,b}. Apply the Kővári–Sós–Turán theorem and double counting arguments, bounding the number of K_{a,b} copies by considering the number of common neighbors of a-sets of vertices.",
     "research_mode": "team",
     "source_exp_id": "2607.01680v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T01:46:23.166235+00:00",
     "title": "Upper Bound on Generalized Turán Number ex(n, K_{a,b}, K_{3,b+1})"
   },
@@ -13147,7 +13167,7 @@
       "Dirichlet L-functions",
       "zero-free regions"
     ],
-    "consumed_by_exp_id": "8202f9a7",
+    "consumed_by_exp_id": "",
     "description": "For any ε > 0, there exist effectively computable constants C(ε) > 0 and Q₀(ε) > 0 such that: if for every primitive quadratic Dirichlet character χ with conductor q ≥ Q₀(ε), all non-real zeros ρ of L(s,χ) satisfy Re(ρ) ≤ 1 - C(ε)/log(q), then there is at most one such character χ whose associated L-function has a real zero β in the interval [1 - q^(-ε), 1). This formalizes the paper's main result that excluding non-real zeros from a shrinking neighborhood of s=1 allows a significant refinement of Page's theorem.",
     "domain_bridges": [
       "complex_analysis",
@@ -13163,7 +13183,7 @@
     "proof_strategy": "The proof requires establishing: (1) effective zero-free regions for Dirichlet L-functions excluding the Landau-Siegel possibility; (2) a translation mechanism from lower bounds on L(1,χ) to upper bounds on exceptional real zeros β; (3) a counting argument showing that the hypothesis on non-real zeros (lying outside σ ≥ 1 - C/log(q)) prevents the distortion that would allow multiple exceptional characters. Key ingredients include logarithmic derivative estimates for L-functions, the Deuring-Heilbronn phenomenon, and effective bounds from the geometry of the zeros. Formalization would proceed by first establishing the effective constants, then the conditional zero-free region, and finally the uniqueness of the exceptional zero.",
     "research_mode": "team",
     "source_exp_id": "2607.06433v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T05:36:19.999905+00:00",
     "title": "Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
   },
@@ -18136,6 +18156,26 @@
     "status": "available",
     "timestamp": "2026-07-09T19:32:54.891692+00:00",
     "title": "Bypassed"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Prime gaps — the spaces between consecutive primes — are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable — given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random — they are a solvable crossword puzzle with deterministic rules.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0792",
+    "lineage_refs": [],
+    "priority_score": 0.78,
+    "proof_strategy": "Define the prime gap sequence g(n) = p(n+1) - p(n) for n >= 1. State the Hardy-Littlewood gap conjecture: P(g(n) = g | g(n-1) = g_{-1}, ...) = 2*C_2/g * (1/log(p(n))) * product_{q prime, q | g} (q-1)/(q-2) where C_2 = 0.66016... is the twin prime constant. Define forcing patterns: a sequence of gaps g_{-k}, ..., g_{-1} is forcing if P(g(0) = g | g_{-k}, ..., g_{-1}) > 0.99 for exactly one value of g. Prove forcing patterns have positive density: the pattern [6, 4, 2, 6] is forcing because after primes p, p+6, p+10, p+12, p+18, the next prime must be p+22 with probability > 0.95 (since p+20 is even, p+21 is divisible by 3 if p ≡ 1 mod 3, etc.). Compute conditional probabilities numerically for N = 10^8. Test: enumerate forcing patterns and compute their density.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-09T19:37:23.883933+00:00",
+    "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
   },
   {
     "ambition_level": "extension",

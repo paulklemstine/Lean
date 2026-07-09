@@ -4,6 +4,21 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
+    "description": "The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do \u2014 as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: The tropical semiring (R union {infinity}, min, +) IS the field with one element, in the following precise sense: the category of tropical schemes is equivalent to the category of F_1-schemes. More concretely, a tropical variety over F_1 is a set with a min-plus structure, and its base change to Z (formally, tensor with Z) is a toric variety. The key correspondence: F_1-points of a tropical variety are the vertices of its Newton polytope, and the 'cardinality' of the tropical variety (as an F_1-object) is the number of lattice points in the polytope, which equals the degree of the toric variety after base change. Test: for each toric variety corresponding to a polytope P, compute the number of F_1-points (vertices of P) and verify that the Euler characteristic of the toric variety equals |vertices(P)| = #F_1-points. Prove the tensor product correspondence: tropical scheme X over F_1 has X tensor_Z Z = the corresponding toric variety. Impact: F_1 and tropical geometry are two faces of the same coin. The field with one element is tropical, and tropical geometry is the geometry of F_1.",
+    "domains": [
+      "Novelty",
+      "Tropical"
+    ],
+    "id": "fd_0791",
+    "priority_score": 0.87,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-09T19:37:23.824326+00:00",
+    "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable \u2014 there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domains": [
       "Novelty",
@@ -3064,7 +3079,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Grundy Number XOR Conjecture for Three-Pile Halve Nim"
   },
   {
-    "consumed_by_exp_id": "52557551",
+    "consumed_by_exp_id": "",
     "description": "Any simplicial complex whose links satisfy the KKL theorem also satisfies a global KKL-type theorem for influence functions. Formally, if every (d-1)-dimensional link in a simplicial complex K satisfies the KKL condition that low-influence functions on the link must have a coordinate with large influence, then the entire complex K satisfies a global KKL condition for functions on its simplices.",
     "domains": [
       "Geometry"
@@ -3073,7 +3088,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29449v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T06:47:54.813371+00:00",
     "title": "Local-to-Global KKL Theorem for Simplicial Complexes with Local KKL Links"
   },
@@ -4771,7 +4786,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Real-rootedness of the square of the Eulerian triangle"
   },
   {
-    "consumed_by_exp_id": "6b4ee47d",
+    "consumed_by_exp_id": "",
     "description": "For all integers a, b with 3 \u2264 a \u2264 b, there exists a constant C > 0 such that for any n-vertex graph G that is K_{3,b+1}-free, the number of labeled copies of K_{a,b} in G is at most C * n^3. This captures the main asymptotic upper bound result of the paper, resolving the generalized Tur\u00e1n problem for these parameters.",
     "domains": [
       "Bridges"
@@ -4780,7 +4795,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01680v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T01:46:23.166235+00:00",
     "title": "Upper Bound on Generalized Tur\u00e1n Number ex(n, K_{a,b}, K_{3,b+1})"
   },
@@ -7049,7 +7064,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Polylogarithmic Paucity of Square Products of Shifted Squares"
   },
   {
-    "consumed_by_exp_id": "8202f9a7",
+    "consumed_by_exp_id": "",
     "description": "For any \u03b5 > 0, there exist effectively computable constants C(\u03b5) > 0 and Q\u2080(\u03b5) > 0 such that: if for every primitive quadratic Dirichlet character \u03c7 with conductor q \u2265 Q\u2080(\u03b5), all non-real zeros \u03c1 of L(s,\u03c7) satisfy Re(\u03c1) \u2264 1 - C(\u03b5)/log(q), then there is at most one such character \u03c7 whose associated L-function has a real zero \u03b2 in the interval [1 - q^(-\u03b5), 1). This formalizes the paper's main result that excluding non-real zeros from a shrinking neighborhood of s=1 allows a significant refinement of Page's theorem.",
     "domains": [
       "Bridges"
@@ -7058,7 +7073,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06433v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T05:36:19.999905+00:00",
     "title": "Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
   },
@@ -9682,6 +9697,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-09T19:32:54.891692+00:00",
     "title": "Bypassed"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prime gaps \u2014 the spaces between consecutive primes \u2014 are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable \u2014 given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random \u2014 they are a solvable crossword puzzle with deterministic rules.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0792",
+    "priority_score": 0.78,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-09T19:37:23.883933+00:00",
+    "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
   },
   {
     "consumed_by_exp_id": "",
