@@ -8930,12 +8930,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every integer k\u22653 and every \u2113\u2208{1,\u2308k/2\u2309,\u2026,k\u22122} and for every positive integer d there exists a single k-uniform hypergraph F such that the Tur\u00e1n density \u03c0_\u2113(F) is an algebraic number whose minimal polynomial over \u211a has exact degree d. Consequently the set \u03a0^k_\u2113 contains algebraic numbers of arbitrarily large degree.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0736",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06518v1",
+    "status": "available",
+    "timestamp": "2026-07-09T14:07:44.290268+00:00",
+    "title": "Algebraic degree realization conjecture for single-forbidden Tur\u00e1n spectra"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For every composition \u03b1 of length r \u2264 R, the differential operator \u2202_\u03b1 = \u2202_{i1}\u22ef\u2202_{ir} acting on the polynomial ring \u211a[X_1,\u2026,X_R] yields a non-zero scalar multiple of the basis element X_{i1}\u2227\u22ef\u2227X_{ir} in \u2227^r V, where \u2202_i = (1/i!)\u00b7(d/dX_i)|_{X=0}. Moreover, the scalar equals the sign of the permutation that sorts (i1,\u2026,ir). This equality holds for all r and can be tested computationally for small values.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0736",
+    "id": "fd_0737",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07667v1",
@@ -8949,7 +8964,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0737",
+    "id": "fd_0738",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07641v1",
@@ -8963,7 +8978,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0738",
+    "id": "fd_0739",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07638v1",
@@ -8978,7 +8993,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0739",
+    "id": "fd_0740",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07566v1",
@@ -8993,7 +9008,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0740",
+    "id": "fd_0741",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07564v1",
@@ -9008,7 +9023,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0741",
+    "id": "fd_0742",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07458v1",
@@ -9022,7 +9037,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0742",
+    "id": "fd_0743",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07448v1",
@@ -9037,7 +9052,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0743",
+    "id": "fd_0744",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07407v1",
@@ -9052,7 +9067,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0744",
+    "id": "fd_0745",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07392v1",
@@ -9066,7 +9081,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0745",
+    "id": "fd_0746",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07404v1",
@@ -9081,7 +9096,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0746",
+    "id": "fd_0747",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07381v1",
@@ -9095,7 +9110,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0747",
+    "id": "fd_0748",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07239v1",
@@ -9110,7 +9125,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0748",
+    "id": "fd_0749",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07259v1",
@@ -9125,7 +9140,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0749",
+    "id": "fd_0750",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07063v1",
@@ -9139,7 +9154,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0750",
+    "id": "fd_0751",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07030v1",
@@ -9153,7 +9168,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0751",
+    "id": "fd_0752",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06899v1",
@@ -9167,7 +9182,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0752",
+    "id": "fd_0753",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06817v1",
@@ -9182,7 +9197,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_0753",
+    "id": "fd_0754",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06773v1",
@@ -9196,7 +9211,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0754",
+    "id": "fd_0755",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06767v1",
@@ -9210,7 +9225,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0755",
+    "id": "fd_0756",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06798v1",
@@ -9225,7 +9240,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0756",
+    "id": "fd_0757",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06515v1",
@@ -9239,7 +9254,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0757",
+    "id": "fd_0758",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06444v1",
@@ -9254,7 +9269,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0758",
+    "id": "fd_0759",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06477v1",
@@ -9268,13 +9283,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0759",
+    "id": "fd_0760",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06455v1",
     "status": "available",
     "timestamp": "2026-07-09T13:45:06.223990+00:00",
     "title": "Generalized spectral closedness of cographs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that equality in the Fishburn inequality holds if and only if the poset is a disjoint union of chains or a graded poset with a specific decomposition into antichains and chains, formalizable via distributive lattice factorizations in Lean 4.",
+    "domains": [
+      "Pythagorean",
+      "Cryptography"
+    ],
+    "id": "fd_0761",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06275v1",
+    "status": "available",
+    "timestamp": "2026-07-09T14:12:35.891128+00:00",
+    "title": "Equality Conditions for the Fishburn Inequality for Linear Extensions of Posets"
   },
   {
     "consumed_by_exp_id": "ad941b96",

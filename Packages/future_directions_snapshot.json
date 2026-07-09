@@ -16706,6 +16706,33 @@
     "title": "Exact Degree Distribution in Subgraphs of Regular Graphs via Prefix-Norm-Tuned Edge Adjustments"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "05C65",
+      "11B83"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer k≥3 and every ℓ∈{1,⌈k/2⌉,…,k−2} and for every positive integer d there exists a single k-uniform hypergraph F such that the Turán density π_ℓ(F) is an algebraic number whose minimal polynomial over ℚ has exact degree d. Consequently the set Π^k_ℓ contains algebraic numbers of arbitrarily large degree.",
+    "domain_bridges": [
+      "graph_theory",
+      "algebraic_number_theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0736",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct hypergraphs via tree suspensions that encode a prescribed algebraic extension; use the universal transfer function to realize any algebraic number of the given degree as π_ℓ(F) for some F.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06518v1",
+    "status": "available",
+    "timestamp": "2026-07-09T14:07:44.290268+00:00",
+    "title": "Algebraic degree realization conjecture for single-forbidden Turán spectra"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "Schubert calculus",
@@ -16724,7 +16751,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0736",
+    "id": "fd_0737",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove by induction on r using generating function identities for exterior powers and sign-reversing arguments; verify base case r=1 and use the relation ∂_i X_j = δ_{ij} to deduce the action on higher wedges, then extend to arbitrary compositions.",
@@ -16745,7 +16772,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0737",
+    "id": "fd_0738",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine probabilistic models of prime factor distributions with known upper and lower bounds for ω(n) and constructions of integers with many small prime factors; likely requires sieve methods and deep results on smooth numbers.",
@@ -16773,7 +16800,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0738",
+    "id": "fd_0739",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use p-adic analysis and properties of multinomial coefficients modulo prime powers, potentially relating to generalized hypergeometric functions and their p-integrality properties. The approach would involve analyzing the generating function of S_l^{(m)}(n) and applying p-adic differential equations.",
@@ -16803,7 +16830,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0739",
+    "id": "fd_0740",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the identity Σ_{n≤x} M(x/n) = 1, prove the grouping into S_1 and S_2 components, apply Möbius inversion to derive the main formula, and verify correctness through induction on bounded intervals. The proof requires careful handling of floor function identities and the constraint ν_x < u < x to ensure all terms are well-defined.",
@@ -16831,7 +16858,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0740",
+    "id": "fd_0741",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Characterize the optimizer of the variational problem via Lagrange multipliers on the Boolean lattice, establish convexity properties of the p-biased measure under IU constraints, and prove uniqueness of extremal families through exchange arguments and majorization theory.",
@@ -16856,7 +16883,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0741",
+    "id": "fd_0742",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Choose a monomial order that yields a squarefree initial ideal in(J_{G,H}) whose Stanley–Reisner complex is precisely the independence complex of the linear matroid M_{G,H}. 2. Show that the special fiber ring S/J_{G,H} ⊗_k k[m] has the same Hilbert function as the face ring of that complex, hence its Krull dimension (the analytic spread) equals dim(Δ)+1. 3. For a squarefree simplicial complex, dim(Δ)+1 equals the size of the largest face, which is the rank of the represented matroid. 4. Conclude ℓ(J_{G,H}) = rank(M_{G,H}).",
@@ -16882,7 +16909,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0742",
+    "id": "fd_0743",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof would involve verifying the modular conditions and leveraging the lower bound from Buchanan et al. combined with constructive upper bounds. By analyzing the structure of bicliques and their symmetric differences, one can show that the conjectured values are achievable and minimal.",
@@ -16911,7 +16938,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0743",
+    "id": "fd_0744",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The forward direction can be established by contradiction: if a tree has mpd(T) = 4 but all pairs of leaves have distance at most 2, then the distance constraints would force at least two vertices to have identical multiset representations, violating the resolving property. The reverse direction follows from constructing an explicit resolving multiset partition with exactly 4 parts when the leaf distance condition is satisfied. This construction generalizes the proof techniques used for the general lower bound while exploiting the tree structure to ensure the partition is valid. The characterization should be formalized by first defining the multiset representation function, then proving the equivalence via structural analysis of tree topology.",
@@ -16939,7 +16966,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0744",
+    "id": "fd_0745",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The conjecture can be approached by first establishing a shifting invariance, then applying variational estimates for the tensor spectral radius, and finally performing a saturation analysis to identify the extremal configuration; this mirrors the strategy outlined in the paper but isolates the key inequality for independent verification.",
@@ -16963,7 +16990,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0745",
+    "id": "fd_0746",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the lower bound by exhibiting a pair of vertices whose distance is at least n−2, using an invariant that counts the number of labels out of place under any admissible move. Establish the upper bound by describing an explicit algorithm that transforms any vertex to any other in at most n−2 steps, via a greedy reduction of mismatched labels, and prove its correctness by induction on n.",
@@ -16990,7 +17017,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0746",
+    "id": "fd_0747",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the O\\u2019Nan–Scott theorem to enumerate all primitive permutation groups of degree 108, apply integrality and eigenvalue constraints for directed SRGs, and computationally verify that the only feasible parameter sets coincide with those constructed. A GAP/Sage pipeline can generate candidate adjacency matrices under transitive actions and compare them to the known constructions.",
@@ -17017,7 +17044,7 @@
     "domains": [
       "Physics"
     ],
-    "id": "fd_0747",
+    "id": "fd_0748",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the structural characterization of minimally 1‑tough (K₁ ∪ P₄)-free graphs, combine with known sufficient conditions for Hamiltonicity (e.g., Dirac’s theorem) and verify the degree‑2 condition implied by Kriesell's conjecture.",
@@ -17044,7 +17071,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0748",
+    "id": "fd_0749",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive combinatorial argument using Lemma lem:lift and parity analysis of distinct part sizes.",
@@ -17070,7 +17097,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0749",
+    "id": "fd_0750",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Verify the equality by explicit enumeration for concrete cubic orders and attempt a general proof by constructing a bijection between global genus classes and tuples of local Gorenstein overorders.",
@@ -17103,7 +17130,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0750",
+    "id": "fd_0751",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Refine the original construction by applying the coarse Menger theorem to find separators of smaller diameter that still separate large‑diameter parts, then use an iterative compression argument to reduce adhesion size while preserving the (d,2d+1)-inseparability of bags.",
@@ -17134,7 +17161,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0751",
+    "id": "fd_0752",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the explicit cocycle formula σ^(α) from Theorem 1 to compute the fundamental group of the cover, apply covering space theory for graphs to determine the index of the metaplectic group in the full automorphism group, and use the transitivity properties established in the paper to analyze the component structure of the quotient.",
@@ -17160,7 +17187,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0752",
+    "id": "fd_0753",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive analysis of path structures under group actions, leveraging SAT-based embedding bounds to establish lower bounds for reflective cases.",
@@ -17188,7 +17215,7 @@
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_0753",
+    "id": "fd_0754",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove both directions: (1) If S is sparse, use the sparsity condition to bound gap ratios by exploiting the uniform lower bound on local counts; (2) If gap ratios are bounded as conjectured, show this implies the sparse set condition by constructing intervals where the local count is sufficiently large relative to log k. The proof would require delicate counting arguments and optimization over the parameter ρ.",
@@ -17215,7 +17242,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0754",
+    "id": "fd_0755",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an SL₂-frieze A from a given Y-frieze B by solving the SL₂-diamond equations backwards from B's Y-diamond constraints, leveraging the periodicity and glide symmetry to propagate entries across the array.",
@@ -17242,7 +17269,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0755",
+    "id": "fd_0756",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish bijection between dihedral spherical tilings classified in the paper and combinatorial types realizable in Euclidean plane; use Cauchy's rigidity theorem and Steinitz' theorem to transfer realizability conditions; apply Eberhard's theorem on realizing prescribed vertex degree sequences in convex polytopes",
@@ -17270,7 +17297,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0756",
+    "id": "fd_0757",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the rooted grammar for subcubic outerplanar graphs to a decomposition grammar for subcubic series-parallel graphs using series and parallel compositions of two-terminal fragments. Define crumby-admissible colorings on fragments with finite boundary states (terminal colors and local red/blue degree constraints). Perform induction on the decomposition tree; prove by hand that a finite family of boundary certificates is closed under composition steps, and use a formalized finite automated verification in Lean to check that all base cases and completed branches yield a genuine crumby coloring. The boundary information stays finite because max degree is 3.",
@@ -17297,7 +17324,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0757",
+    "id": "fd_0758",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use a density increment argument combined with an absorbing path system to construct the required subdivision, leveraging the K_{s,t}-free condition to control vertex degrees.",
@@ -17323,7 +17350,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0758",
+    "id": "fd_0759",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Express each generalized cross-ratio as a ratio of determinants of (k+1)×(k+1) matrices whose entries are evaluations of linear forms defining the Bj on basis vectors of the Ai. Use multilinearity of the determinant and the Plücker relations to show that the product telescopes to 1. The proof reduces to a linear algebra identity involving alternating multilinear forms, which can be verified by expanding the determinants and cancelling common factors.",
@@ -17348,7 +17375,7 @@
     "domains": [
       "Physics"
     ],
-    "id": "fd_0759",
+    "id": "fd_0760",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the β-closed walk framework and LP-based sufficient condition from the paper to the forbidden family F = {P₄}. Construct a walk-realizable {P₄}-supporter by solving the associated linear program, or develop a combinatorial argument leveraging the recursive structure of cographs (disjoint union and complement operations) to show that generalized cospectrality preserves P₄-freeness.",
@@ -17357,6 +17384,36 @@
     "status": "available",
     "timestamp": "2026-07-09T13:45:06.223990+00:00",
     "title": "Generalized spectral closedness of cographs"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "arXiv:2303.01234",
+      "Börner's inequality",
+      "Fishburn's inequality",
+      "HK inequality",
+      "AD inequality"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that equality in the Fishburn inequality holds if and only if the poset is a disjoint union of chains or a graded poset with a specific decomposition into antichains and chains, formalizable via distributive lattice factorizations in Lean 4.",
+    "domain_bridges": [
+      "Poset linear extensions",
+      "Distributive lattices",
+      "Schur positivity"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Cryptography"
+    ],
+    "id": "fd_0761",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Prove equivalence between equality conditions in Fishburn and AD inequalities using lattice pointwise order preservation and factorization decomposition in Lean 4.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06275v1",
+    "status": "available",
+    "timestamp": "2026-07-09T14:12:35.891128+00:00",
+    "title": "Equality Conditions for the Fishburn Inequality for Linear Extensions of Posets"
   },
   {
     "ambition_level": "extension",

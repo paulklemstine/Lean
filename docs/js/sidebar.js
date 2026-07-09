@@ -223,7 +223,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelectorAll('.nav-item.graph-highlight').forEach(el => el.classList.remove('graph-highlight'));
                 const node = (window._graphNodes || []).find(n => n.id === li.dataset.slug);
                 if (window._setHoveredNode) window._setHoveredNode(node || null);
-                if (window._zoomToNodeCircle) window._zoomToNodeCircle(li.dataset.slug);
                 if (window._fadeWelcome) window._fadeWelcome();
             });
             li.addEventListener('mouseleave', () => {
@@ -231,7 +230,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (current && current.id === li.dataset.slug && window._setHoveredNode) {
                     window._setHoveredNode(null);
                 }
-                if (window._stopTrackingCircle) window._stopTrackingCircle();
             });
 
             packageList.appendChild(li);
