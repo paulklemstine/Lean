@@ -1646,7 +1646,7 @@
                 const sp = worldToScreen(node.x, node.y);
                 const col = nodeColor(node);
                 const isHovered = node === hoveredNode;
-                const hoverPulse = isHovered ? 1.8 + 0.4 * Math.sin(time * 6) : 1;
+                const hoverPulse = isHovered ? 2.5 + 0.5 * Math.sin(time * 10) : 1;
                 const pulse = (1 + 0.04 * Math.sin(time * 1.5 + node.phase)) * hoverPulse;
                 const massScale = 0.7 + (node.mass || 1) * 0.3;  // bigger mass = bigger visual
                 const r = Math.max(8, Math.min(16, (node.radius || 22) * pulse * massScale * camera.zoom));
@@ -1654,16 +1654,25 @@
                 // Pulsing brightness — brighter for higher mass (suns vs planets)
                 const brightPulse = 0.8 + 0.2 * Math.sin(time * 2 + node.phase);
                 const massBright = Math.min(1, (node.mass || 1) * 0.4);
-                const adjustedL = Math.min(col.l * brightPulse + 15 + massBright * 10, 95);
-                const adjColor = { h: col.h, s: col.s, l: adjustedL };
+                let adjustedL = Math.min(col.l * brightPulse + 15 + massBright * 10, 95);
+                if (isHovered) adjustedL = 100; // Burning sun core
+                const adjColor = { h: col.h, s: isHovered ? 100 : col.s, l: adjustedL };
 
                 // Outer glow halo — brighter for massive nodes
-                const glowSize = r * (1.8 + massBright * 1.2);
+                const glowScale = isHovered ? (5.0 + 1.0 * Math.sin(time * 15)) : (1.8 + massBright * 1.2);
+                const glowSize = r * glowScale;
                 if (isFinite(sp.x) && isFinite(sp.y) && isFinite(r) && isFinite(glowSize) && r > 0 && glowSize > 0) {
                     const outerGlow = ctx.createRadialGradient(sp.x, sp.y, r * 0.5, sp.x, sp.y, glowSize);
-                    outerGlow.addColorStop(0, `hsla(${col.h}, ${col.s}%, ${Math.min(col.l + 20, 90)}%, ${0.15 + massBright * 0.15})`);
-                    outerGlow.addColorStop(0.5, `hsla(${col.h}, ${col.s}%, ${col.l}%, ${0.05 + massBright * 0.05})`);
-                    outerGlow.addColorStop(1, `hsla(${col.h}, ${col.s}%, ${col.l}%, 0)`);
+                    if (isHovered) {
+                        outerGlow.addColorStop(0, `hsla(${col.h}, 100%, 90%, 0.9)`);
+                        outerGlow.addColorStop(0.3, `hsla(${col.h}, 100%, 70%, 0.6)`);
+                        outerGlow.addColorStop(0.7, `hsla(${col.h}, 100%, 50%, 0.2)`);
+                        outerGlow.addColorStop(1, `hsla(${col.h}, 100%, 20%, 0)`);
+                    } else {
+                        outerGlow.addColorStop(0, `hsla(${col.h}, ${col.s}%, ${Math.min(col.l + 20, 90)}%, ${0.15 + massBright * 0.15})`);
+                        outerGlow.addColorStop(0.5, `hsla(${col.h}, ${col.s}%, ${col.l}%, ${0.05 + massBright * 0.05})`);
+                        outerGlow.addColorStop(1, `hsla(${col.h}, ${col.s}%, ${col.l}%, 0)`);
+                    }
                     ctx.beginPath();
                     ctx.arc(sp.x, sp.y, glowSize, 0, Math.PI * 2);
                     ctx.fillStyle = outerGlow;
