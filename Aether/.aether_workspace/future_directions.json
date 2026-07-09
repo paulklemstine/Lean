@@ -610,7 +610,7 @@
         "Sidon sets",
         "convolution inequalities"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -656,7 +656,7 @@
         "Graph Product Theory",
         "Domination in Hypergraphs"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -1021,7 +1021,7 @@
         "graph theory (clique-width)",
         "computational complexity"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -1969,7 +1969,7 @@
         "Algebraic geometry to combinatorics via geometric invariant theory",
         "Representation theory to geometric combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -4419,7 +4419,7 @@
         "nilperfect ring theory",
         "Dieudonné modules"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -4563,7 +4563,7 @@
         "the theory of matroids",
         "computational complexity"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Bridges"
@@ -4998,7 +4998,7 @@
         "Dieudonné theory",
         "p-adic Hodge theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Bridges"
@@ -5976,7 +5976,7 @@
         "probabilistic powerdomains",
         "Euclidean convex analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -6471,7 +6471,7 @@
         "L₁ Space Analysis",
         "Functional Inequalities"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -7505,7 +7505,7 @@
         "Cartesian product of partial cubes",
         "harmonic-even partial cubes"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -7803,7 +7803,7 @@
         "Cycle matroid rank function",
         "Uniform matroid rank function"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -8033,7 +8033,7 @@
       "depth_estimate": 3,
       "description": "The exponent α must equal 103/64 for the derived bound to hold universally regardless of κ.",
       "domain_bridges": "Interconnected with Dirichlet class formulations",
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -8314,7 +8314,7 @@
         "Set Theory",
         "Finite Combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -9078,7 +9078,7 @@
         "Parameterized Complexity",
         "Digraph Decomposition"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -10325,7 +10325,7 @@
         "Computational Number Theory (Rational Certificates)",
         "Hilbert Space Theory (Weighted Direct Sums)"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -10901,7 +10901,7 @@
         "harmonic_analysis",
         "algebraic_combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -12136,7 +12136,7 @@
       "domain_bridges": [
         "math.NT"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -12910,7 +12910,7 @@
         "topological graph theory",
         "graph coloring"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -13192,7 +13192,7 @@
         "analytic number theory",
         "real algebraic geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -14153,7 +14153,7 @@
         "Combinatorics",
         "FiniteFieldTheory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -14444,7 +14444,7 @@
         "finite geometry",
         "coding theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -15789,7 +15789,7 @@
         "finite-binary-channel coding",
         "probabilistic chains"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -16084,7 +16084,7 @@
         "graph theory",
         "γ-positivity in polynomials"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -17434,7 +17434,7 @@
         "Graph Theory",
         "Discrete Mathematics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -17483,7 +17483,7 @@
         "graph_theory",
         "generating_functions"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -17772,7 +17772,7 @@
         "Graph_Theory",
         "Design_Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -17819,7 +17819,7 @@
         "Polyhedral Geometry",
         "Polynomial Root Analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -18012,7 +18012,7 @@
         "roots of unity",
         "Fibonacci and Lucas numbers"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -18198,7 +18198,7 @@
         "LinearAlgebra",
         "Combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -19217,7 +19217,7 @@
         "Stability theory in graph algorithms",
         "extremal graph theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -19895,7 +19895,7 @@
         "Eulerian numbers",
         "Matrix products of combinatorial triangles"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -19943,7 +19943,7 @@
         "Combinatorics",
         "Graph Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -19991,7 +19991,7 @@
         "Linear Algebra",
         "Real Analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -20375,7 +20375,7 @@
         "cs.GT",
         "cs.DS"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -21247,7 +21247,7 @@
         "real analysis",
         "convex optimization"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -22375,7 +22375,7 @@
         "p_adic_galois_representations",
         "local_Langlands_correspondence"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Bridges"
@@ -22776,7 +22776,7 @@
         "tropical_geometry",
         "algebraic_combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Bridges"
@@ -23269,7 +23269,7 @@
         "deformation_theory--representation_theory",
         "tannakian_categories--algebraic_groups"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Bridges"
@@ -24062,7 +24062,7 @@
         "Mathlib.CategoryTheory.Monoidal.Rigid",
         "Mathlib.CategoryTheory.Monoidal.NaturalTransformation"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Bridges"
@@ -24256,7 +24256,7 @@
         "Linear_algebra",
         "Abstract_algebra"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -24303,7 +24303,7 @@
         "Discrete differential geometry",
         "Optimal transport"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -24543,7 +24543,7 @@
         "finite_model_theory",
         "minor_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -25129,7 +25129,7 @@
         "harmonic_analysis_padic",
         "local_class_field_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Bridges"
@@ -25227,7 +25227,7 @@
         "Harmonic analysis on reductive groups",
         "Symplectic representations and dual pairs"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Bridges"
@@ -25560,7 +25560,7 @@
         "Linear Algebra",
         "Complex Analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -25954,7 +25954,7 @@
         "hypergeometric_functions",
         "CM_elliptic_curves"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Bridges"
@@ -26244,7 +26244,7 @@
         "Sampling theory → Zero distribution of L-functions",
         "Functional equations → Reflected zero pairs"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -26341,7 +26341,7 @@
         "analytic_number_theory",
         "diophantine_approximation"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Bridges"
@@ -26633,7 +26633,7 @@
         "infinite_words_substitutions",
         "cyclic_avoidability"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -26681,7 +26681,7 @@
         "combinatorial_topology",
         "commutative_algebra"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -26727,7 +26727,7 @@
         "Constant-amortized-time algorithms",
         "Combinatorial superset properties"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -27364,7 +27364,7 @@
         "Simplicial Complexes",
         "Combinatorial Algebra"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -27959,7 +27959,7 @@
         "potential_theory_energy_minimization",
         "combinatorics_of_finite_metric_spaces"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -28568,7 +28568,7 @@
         "Probability Theory",
         "Asymptotic Analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -28760,7 +28760,7 @@
         "graph_theory",
         "logic_and_combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -28958,7 +28958,7 @@
         "analytic_number_theory",
         "computational_number_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -29058,7 +29058,7 @@
         "Formal languages and inductive types",
         "Enumerative combinatorics ↔ algebraic involution theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -29491,7 +29491,7 @@
         "extremal_combinatorics",
         "computational_complexity"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -29887,7 +29887,7 @@
         "incidence geometry",
         "algebraic/combinatorial extremal problems"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -30081,7 +30081,7 @@
         "combinatorics",
         "binomial_coefficients"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -30229,7 +30229,7 @@
         "hadamard_matrices",
         "finite_group_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -30279,7 +30279,7 @@
         "Diagonal harmonics and nabla operator theory",
         "Modified Hall-Littlewood polynomials"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -30573,7 +30573,7 @@
         "arithmetic_geometry_over_finite_fields",
         "symplectic_group_representations"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Bridges"
@@ -31902,7 +31902,7 @@
         "math.AT",
         "math.MG"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -32000,7 +32000,7 @@
         "Optimization on Graphons",
         "Stability Results in Extremal Combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],
@@ -32243,7 +32243,7 @@
         "random_multiplicative_functions",
         "pell_fermat_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Bridges"
       ],

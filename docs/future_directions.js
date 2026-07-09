@@ -3,6 +3,21 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
+    "consumed_by_exp_id": "",
+    "description": "The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do \u2014 as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: The tropical semiring (R union {infinity}, min, +) IS the field with one element, in the following precise sense: the category of tropical schemes is equivalent to the category of F_1-schemes. More concretely, a tropical variety over F_1 is a set with a min-plus structure, and its base change to Z (formally, tensor with Z) is a toric variety. The key correspondence: F_1-points of a tropical variety are the vertices of its Newton polytope, and the 'cardinality' of the tropical variety (as an F_1-object) is the number of lattice points in the polytope, which equals the degree of the toric variety after base change. Test: for each toric variety corresponding to a polytope P, compute the number of F_1-points (vertices of P) and verify that the Euler characteristic of the toric variety equals |vertices(P)| = #F_1-points. Prove the tensor product correspondence: tropical scheme X over F_1 has X tensor_Z Z = the corresponding toric variety. Impact: F_1 and tropical geometry are two faces of the same coin. The field with one element is tropical, and tropical geometry is the geometry of F_1.",
+    "domains": [
+      "Novelty",
+      "Tropical"
+    ],
+    "id": "fd_0679",
+    "priority_score": 0.87,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-09T00:28:36.810473+00:00",
+    "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
+  },
+  {
     "consumed_by_exp_id": "1880cad2",
     "description": "L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable \u2014 there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domains": [
@@ -2743,7 +2758,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Functional Equations Enforce Primitivity of Coefficients"
   },
   {
-    "consumed_by_exp_id": "095ece7f",
+    "consumed_by_exp_id": "",
     "description": "For increasing Boolean functions f,g:{0,1}^n\u2192{0,1}, if the covariance exceeds the right-hand side of the FKKK inequality by at most a small \u03b5, then either f and g depend on disjoint sets of coordinates, or they are both dictatorships on the same coordinate, or after permuting coordinates and possibly swapping f,g they are L^2-close to the two-coordinate AND-OR pair (x_i x_j, x_i \u2228 x_j).",
     "domains": [
       "Physics"
@@ -2752,7 +2767,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.32024v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T15:19:41.775801+00:00",
     "title": "Stability of the sharp diagonal spectral correlation inequality for monotone Boolean functions"
   },
@@ -3692,7 +3707,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Genus-zero condition for Atkin\u2013Lehner quotients of Shimura curves"
   },
   {
-    "consumed_by_exp_id": "bcd487b8",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: A \u0394-matroid M on a finite ground set E is strong (i.e., satisfies the symmetric basis exchange axiom) if and only if its system of feasible sets contains no peerless antipode. A peerless antipode is defined as an element e\u2208E for which there exist feasible sets A,B\u2208F(M) such that A\u25b3B={e} and for every feasible set C\u2208F(M) with e\u2208C we have C\u2216{e}\u2209F(M). This conjecture links the combinatorial notion of strength with the novel 'peerless' antipode characterisation introduced in the paper and is expected to be formalizable in Lean 4 using the existing \u0394-matroid library.",
     "domains": [
       "Algebra",
@@ -3702,7 +3717,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02419v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T23:02:36.840480+00:00",
     "title": "Strong \u0394-matroids are exactly those without peerless antipodes"
   },
@@ -6214,7 +6229,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit Threshold for No-(k+1)-in-line: f_k(n) = kn for all k \u2265 3 and n \u2265 k"
   },
   {
-    "consumed_by_exp_id": "7d533993",
+    "consumed_by_exp_id": "",
     "description": "For every d \u2265 3, the supremum of normalized surface measures of zero-sum-free measurable subsets of the unit sphere S^{d-1} in \u211d^d equals exactly 1/2. Equivalently, every measurable zero-sum-free A \u2286 S^{d-1} satisfies \u03c3_{d-1}(A) \u2264 1/2, with equality achieved (only) by open hemispheres. The paper establishes the asymptotic bound m_d \u2264 1/2 + O(1/d), but the exact value m_d = 1/2 remains open.",
     "domains": [
       "Pythagorean",
@@ -6224,7 +6239,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05099v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T07:31:22.446580+00:00",
     "title": "Bukh's Exact Zero-Sum-Free Density Conjecture"
   },
@@ -8180,7 +8195,37 @@ window.FUTURE_DIRECTIONS = [
     "title": "Unicyclic inversion graphs are cycle-caterpillars"
   },
   {
-    "consumed_by_exp_id": "e158da3a",
+    "consumed_by_exp_id": "",
+    "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card \u2014 you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier \u2014 it's an opportunity. You can WIN at the game of undecidability.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0678",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-09T00:28:36.645926+00:00",
+    "title": "Godel's Casino: Incomplete but Winnable Games"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prime gaps \u2014 the spaces between consecutive primes \u2014 are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable \u2014 given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random \u2014 they are a solvable crossword puzzle with deterministic rules.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0680",
+    "priority_score": 0.78,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-09T00:28:37.151420+00:00",
+    "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers \u2014 anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension \u2014 they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property \u2014 it's not about content quality but about the sheaf cohomology of the social network.",
     "domains": [
       "Novelty",
@@ -8190,7 +8235,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.77,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T16:25:38.891319+00:00",
     "title": "The Mathematics of Memes: Viral Information Topology"
   },
@@ -8226,6 +8271,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearrangement of the primes q_1, q_2, ... such that the sequence of ratios q_n / p_n converges to 1. In other words, you can shuffle the primes almost arbitrarily and the room numbers barely change. More precisely, the set of permutations sigma for which p_{sigma(n)} / p_n has a limit is dense in the symmetric group (with the topology of pointwise convergence). But NOT every permutation works: the permutation that swaps all even-indexed primes with odd-indexed ones gives q_{2n}/p_{2n} = p_{2n-1}/p_{2n} which converges to 1 by the prime number theorem, but the permutation that reverses order gives q_n/p_n = p_{N-n}/p_n which diverges. Test: compute q_n/p_n for 10 random permutations of the first 10^6 primes and verify that most ratios converge to 1. Find the exact density of 'well-behaved' permutations. Impact: the primes are robust under rearrangement \u2014 their asymptotic density is a topological invariant of the permutation group.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0681",
+    "priority_score": 0.74,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-09T00:28:37.373268+00:00",
+    "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Geometry"
@@ -8237,5 +8297,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T04:44:52.457313+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: The unfolded nearest-neighbor spacing distribution of the Floquet operator of the quantum kicked top with angular momentum J=10000 and kick parameter k=3.0 deviates from the GUE spacing distribution of Riemann zeta zeros (up to height 10^6) by Kolmogorov-Smirnov distance D < 0.005. Test: Diagonalize the 20001-dimensional unitary matrix numerically, unfold the spectrum, and compare with Odlyzko's zero data; if D >= 0.005 the conjecture is refuted. Impact: Provides an experimental quantum analog of the Riemann Hypothesis spectral correspondence, allowing laboratory study of prime-related statistics.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0683",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-07-09T00:53:34.954193+00:00",
+    "title": "Spectral Emulation of Riemann Zeros by Quantum Kicked Top"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: The minimal Kolmogorov complexity of any string produced by a halting Turing machine that runs for exactly n steps is \u0398(n log n). Test: Enumerate all Turing machines that halt in exactly n steps, compute the length of the shortest program that outputs their halting string, and verify that the growth rate asymptotically matches n log n; a counterexample showing sub\u2011linear growth would falsify the conjecture. Impact: Provides a precise quantitative bridge between computational runtime and information content, advancing algorithmic information theory and informing bounds on algorithmic randomness and complexity\u2011information trade\u2011offs.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_0685",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-07-09T01:05:55.622295+00:00",
+    "title": "Kolmogorov Complexity of Finite-Time Turing Machine Outputs"
   }
 ];
