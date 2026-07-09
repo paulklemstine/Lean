@@ -1,26 +1,24 @@
-"""
-Split Geometry: numerical demonstrations.
+"""Numerical demonstrations for the Split Geometry.
 
-Split Geometry is the Riemannian metric on R^2 given by
+The split geometry is the plane R^2 with the anisotropic warped metric
 
-    ds^2 = dx^2 / cosh^2(y) + cosh^2(x) dy^2,
+    ds^2 = dx^2 / cosh^2(y) + cosh^2(x) dy^2,     i.e.  E = sech^2(y), G = cosh^2(x).
 
-with coefficient functions E(y) = sech^2(y) (horizontal, expanding) and
-G(x) = cosh^2(x) (vertical, contracting). Its sign-indicator curvature is
+This self-contained script (standard library only) demonstrates the paper's
+results:
 
-    K(x, y) = sech^2(x) - sech^2(y).
+  1. The closed-form Gaussian curvature
+         K(x, y) = -cosh^2(y) + (2 - cosh^2(y)) / (cosh^2(x) cosh^2(y))
+     agrees with a finite-difference evaluation of the Brioschi formula.
+  2. Along the x-axis, K(x, 0) = -tanh^2(x) <= 0 (hyperbolic).
+  3. Along the y-axis, K(0, y) = -cosh^2(y) + 2 sech^2(y) - 1 <= 0, so the
+     conjectured elliptic (K > 0) behavior does NOT occur.
+  4. The Jacobi equation J'' + K J = 0 gives divergence (sinh) for K < 0 and
+     bounded refocusing (sin) for K > 0.
+  5. The coordinate-axis lines are geodesics; the proposed exponential curve is
+     not.
 
-This script demonstrates, with concrete numbers, the main results:
-  1. The metric is positive-definite everywhere (consistency).
-  2. sech^2 is strictly decreasing in |t| (the monotonicity engine).
-  3. K = 0 exactly on the diagonals y = +/- x (the phase boundary).
-  4. K > 0 where |x| < |y| (elliptic), K < 0 where |y| < |x| (hyperbolic).
-  5. A straight coordinate line not parallel to a diagonal crosses the
-     phase boundary at most twice (roots of a quadratic in the parameter).
-  6. The metric area density is cosh(x) / cosh(y); area of a rectangle in
-     closed form and of a split triangle by quadrature.
-
-Only the Python standard library is used.
+Run:  python demo.py
 """
 
 from __future__ import annotations
@@ -29,234 +27,218 @@ import math
 from typing import Callable, List, Tuple
 
 
-# --------------------------------------------------------------------------
-# Core functions
-# --------------------------------------------------------------------------
+# --------------------------------------------------------------------------- #
+# Metric coefficients and curvature
+# --------------------------------------------------------------------------- #
 
-def sech2(t: float) -> float:
-    """sech^2(t) = 1 / cosh^2(t), always in (0, 1]."""
-    return 1.0 / math.cosh(t) ** 2
-
-
-def metric_coeff_E(y: float) -> float:
-    """Horizontal (x-x) coefficient E(y) = sech^2(y)."""
-    return sech2(y)
+def sech(t: float) -> float:
+    """Hyperbolic secant, sech(t) = 1 / cosh(t)."""
+    return 1.0 / math.cosh(t)
 
 
-def metric_coeff_G(x: float) -> float:
-    """Vertical (y-y) coefficient G(x) = cosh^2(x)."""
+def E(x: float, y: float) -> float:
+    """First metric coefficient E = sech^2(y)."""
+    return sech(y) ** 2
+
+
+def G(x: float, y: float) -> float:
+    """Second metric coefficient G = cosh^2(x)."""
     return math.cosh(x) ** 2
 
 
-def metric_norm_sq(x: float, y: float, u: float, v: float) -> float:
-    """Squared length of tangent vector (u, v) at the point (x, y)."""
-    return metric_coeff_E(y) * u ** 2 + metric_coeff_G(x) * v ** 2
+def K_closed(x: float, y: float) -> float:
+    """Closed-form Gaussian curvature of the split metric."""
+    cy2 = math.cosh(y) ** 2
+    cx2 = math.cosh(x) ** 2
+    return -cy2 + (2.0 - cy2) / (cx2 * cy2)
 
 
-def K(x: float, y: float) -> float:
-    """Sign-indicator curvature K(x, y) = sech^2(x) - sech^2(y)."""
-    return sech2(x) - sech2(y)
+def K_brioschi(x: float, y: float, h: float = 1e-4) -> float:
+    """Gaussian curvature via a finite-difference Brioschi formula.
+
+    For an orthogonal metric g = E dx^2 + G dy^2,
+
+        K = -1 / (2 sqrt(EG)) [ d/dx (G_x / sqrt(EG)) + d/dy (E_y / sqrt(EG)) ].
+    """
+    def root(a: float, b: float) -> float:
+        return math.sqrt(E(a, b) * G(a, b))
+
+    def dG_dx(a: float, b: float) -> float:
+        return (G(a + h, b) - G(a - h, b)) / (2 * h)
+
+    def dE_dy(a: float, b: float) -> float:
+        return (E(a, b + h) - E(a, b - h)) / (2 * h)
+
+    def term_x(a: float, b: float) -> float:
+        return dG_dx(a, b) / root(a, b)
+
+    def term_y(a: float, b: float) -> float:
+        return dE_dy(a, b) / root(a, b)
+
+    d_term_x = (term_x(x + h, y) - term_x(x - h, y)) / (2 * h)
+    d_term_y = (term_y(x, y + h) - term_y(x, y - h)) / (2 * h)
+    return -(d_term_x + d_term_y) / (2 * root(x, y))
 
 
-def area_density(x: float, y: float) -> float:
-    """Riemannian area density sqrt(E G) = cosh(x) / cosh(y)."""
-    return math.cosh(x) / math.cosh(y)
+def K_xaxis(x: float) -> float:
+    """K(x, 0) = -tanh^2(x)."""
+    return -math.tanh(x) ** 2
 
 
-def gudermannian(y: float) -> float:
-    """Gudermannian gd(y) = 2*arctan(e^y) - pi/2, an antiderivative of sech."""
-    return 2.0 * math.atan(math.exp(y)) - math.pi / 2.0
+def K_yaxis(y: float) -> float:
+    """K(0, y) = -cosh^2(y) + 2 sech^2(y) - 1."""
+    return -math.cosh(y) ** 2 + 2.0 * sech(y) ** 2 - 1.0
 
 
-# --------------------------------------------------------------------------
-# 1. Consistency: positive-definiteness
-# --------------------------------------------------------------------------
+# --------------------------------------------------------------------------- #
+# Jacobi equation (geodesic deviation)
+# --------------------------------------------------------------------------- #
 
-def demo_positive_definite() -> None:
+def integrate_jacobi(
+    curvature: float, j0: float, jp0: float, t_max: float, n: int
+) -> List[Tuple[float, float]]:
+    """Integrate J'' + K J = 0 with constant K via classical RK4.
+
+    Returns a list of (t, J(t)) samples.
+    """
+    dt = t_max / n
+
+    def deriv(state: Tuple[float, float]) -> Tuple[float, float]:
+        j, jp = state
+        return (jp, -curvature * j)
+
+    def add(s: Tuple[float, float], d: Tuple[float, float], f: float) -> Tuple[float, float]:
+        return (s[0] + f * d[0], s[1] + f * d[1])
+
+    state = (j0, jp0)
+    out: List[Tuple[float, float]] = [(0.0, j0)]
+    t = 0.0
+    for _ in range(n):
+        k1 = deriv(state)
+        k2 = deriv(add(state, k1, dt / 2))
+        k3 = deriv(add(state, k2, dt / 2))
+        k4 = deriv(add(state, k3, dt))
+        state = (
+            state[0] + dt / 6 * (k1[0] + 2 * k2[0] + 2 * k3[0] + k4[0]),
+            state[1] + dt / 6 * (k1[1] + 2 * k2[1] + 2 * k3[1] + k4[1]),
+        )
+        t += dt
+        out.append((t, state[0]))
+    return out
+
+
+# --------------------------------------------------------------------------- #
+# Geodesic equation residuals
+# --------------------------------------------------------------------------- #
+
+def geodesic_residual(
+    x: Callable[[float], float],
+    y: Callable[[float], float],
+    t: float,
+    h: float = 1e-4,
+) -> Tuple[float, float]:
+    """Residuals of the two geodesic equations at parameter t.
+
+    A curve is a geodesic iff both residuals vanish for all t. Uses centered
+    finite differences for derivatives and the split-metric Christoffel symbols.
+    """
+    def d1(f: Callable[[float], float], s: float) -> float:
+        return (f(s + h) - f(s - h)) / (2 * h)
+
+    def d2(f: Callable[[float], float], s: float) -> float:
+        return (f(s + h) - 2 * f(s) + f(s - h)) / (h * h)
+
+    xt, yt = x(t), y(t)
+    xd, yd = d1(x, t), d1(y, t)
+    xdd, ydd = d2(x, t), d2(y, t)
+
+    chr1_12 = -math.tanh(yt)
+    chr1_22 = -math.cosh(xt) * math.sinh(xt) * math.cosh(yt) ** 2
+    chr2_11 = sech(yt) ** 2 * math.tanh(yt) / math.cosh(xt) ** 2
+    chr2_12 = math.tanh(xt)
+
+    res1 = xdd + 2 * chr1_12 * xd * yd + chr1_22 * yd ** 2
+    res2 = ydd + chr2_11 * xd ** 2 + 2 * chr2_12 * xd * yd
+    return res1, res2
+
+
+# --------------------------------------------------------------------------- #
+# Demonstrations
+# --------------------------------------------------------------------------- #
+
+def demo_curvature_agreement() -> None:
     print("=" * 68)
-    print("1. Consistency: metric is positive-definite (norm^2 > 0)")
+    print("1. Closed-form curvature vs. finite-difference Brioschi formula")
     print("=" * 68)
-    samples: List[Tuple[float, float, float, float]] = [
-        (0.0, 0.0, 1.0, 0.0),
-        (2.0, -1.5, 0.0, 1.0),
-        (-3.0, 2.0, 1.0, -1.0),
-        (5.0, 5.0, 0.3, -0.7),
-    ]
-    for x, y, u, v in samples:
-        val = metric_norm_sq(x, y, u, v)
-        flag = "OK" if val > 0 else "FAIL"
-        print(f"  (x,y)=({x:+.1f},{y:+.1f}) v=({u:+.1f},{v:+.1f}) "
-              f"|v|^2 = {val:.6f}  [{flag}]")
+    pts = [(0.0, 0.0), (1.0, 0.0), (0.0, 1.0), (0.7, -0.4), (-1.2, 0.9)]
+    print(f"{'(x, y)':>14} | {'K_closed':>14} | {'K_brioschi':>14} | {'|diff|':>10}")
+    for (x, y) in pts:
+        a, b = K_closed(x, y), K_brioschi(x, y)
+        print(f"{f'({x:+.2f},{y:+.2f})':>14} | {a:>14.8f} | {b:>14.8f} | {abs(a-b):>10.2e}")
     print()
 
 
-# --------------------------------------------------------------------------
-# 2. Monotonicity of sech^2 in |t|
-# --------------------------------------------------------------------------
-
-def demo_monotonicity() -> None:
+def demo_axes() -> None:
     print("=" * 68)
-    print("2. Monotonicity: sech^2(a) < sech^2(b)  <=>  |b| < |a|")
+    print("2 & 3. Curvature along the axes (both nonpositive => no split)")
     print("=" * 68)
-    pairs: List[Tuple[float, float]] = [(1.0, 2.0), (-3.0, 0.5), (2.0, -2.0)]
-    for a, b in pairs:
-        lhs = sech2(a) < sech2(b)
-        rhs = abs(b) < abs(a)
-        print(f"  a={a:+.1f}, b={b:+.1f}: sech2(a)={sech2(a):.5f}, "
-              f"sech2(b)={sech2(b):.5f}  |  "
-              f"[sech2(a)<sech2(b)]={lhs}  [|b|<|a|]={rhs}  "
-              f"agree={lhs == rhs}")
+    print("x-axis: K(x,0) = -tanh^2(x)      |  y-axis: K(0,y) = -cosh^2+2sech^2-1")
+    print(f"{'t':>7} | {'K(t,0)':>16} | {'K(0,t)':>16}")
+    for t in [-2.0, -1.0, 0.0, 1.0, 2.0]:
+        kx, ky = K_xaxis(t), K_yaxis(t)
+        # cross-check against the general closed form on the axes
+        assert abs(kx - K_closed(t, 0.0)) < 1e-9
+        assert abs(ky - K_closed(0.0, t)) < 1e-9
+        print(f"{t:>7.2f} | {kx:>16.8f} | {ky:>16.8f}")
+    print("Both columns <= 0; strictly < 0 off the origin. Elliptic K>0 never occurs.")
     print()
 
 
-# --------------------------------------------------------------------------
-# 3 & 4. Phase boundary and sign of K
-# --------------------------------------------------------------------------
-
-def classify(x: float, y: float, tol: float = 1e-12) -> str:
-    k = K(x, y)
-    if abs(k) <= tol:
-        return "boundary (flat)"
-    return "elliptic (K>0)" if k > 0 else "hyperbolic (K<0)"
-
-
-def demo_phase_structure() -> None:
+def demo_jacobi() -> None:
     print("=" * 68)
-    print("3-4. Phase boundary y = +/- x and the sign of K")
+    print("4. Geodesic deviation via the Jacobi equation J'' + K J = 0")
     print("=" * 68)
-    points: List[Tuple[float, float]] = [
-        (0.0, 2.0),   # |x|<|y| -> elliptic
-        (2.0, 0.0),   # |y|<|x| -> hyperbolic
-        (3.0, 3.0),   # on diagonal y = x
-        (2.0, -2.0),  # on diagonal y = -x
-        (1.0, 4.0),   # elliptic
-        (4.0, -1.0),  # hyperbolic
-    ]
-    for x, y in points:
-        print(f"  (x,y)=({x:+.1f},{y:+.1f}): K={K(x, y):+.6f}  "
-              f"-> {classify(x, y)}")
+    k = 1.0
+    # Hyperbolic: K = -k, exact solution sinh(sqrt(k) t) -> diverges.
+    hyp = integrate_jacobi(-k, j0=0.0, jp0=1.0, t_max=3.0, n=3000)
+    t_end, j_end = hyp[-1]
+    exact_hyp = math.sinh(math.sqrt(k) * t_end)
+    print(f"Hyperbolic (K=-1): J({t_end:.1f}) = {j_end:.6f}  vs  sinh = {exact_hyp:.6f}"
+          f"   (diverges)")
+    # Elliptic: K = +k, exact solution sin(sqrt(k) t), refocuses at pi/sqrt(k).
+    ell = integrate_jacobi(k, j0=0.0, jp0=1.0, t_max=math.pi, n=3000)
+    t_ref, j_ref = ell[-1]
+    print(f"Elliptic  (K=+1): J(pi) = {j_ref:.6f}  vs  sin(pi) = {math.sin(math.pi):.6f}"
+          f"   (refocuses to 0)")
+    max_ell = max(abs(j) for _, j in ell)
+    print(f"Elliptic amplitude bound: max|J| = {max_ell:.6f} (<= 1, bounded)")
     print()
 
 
-# --------------------------------------------------------------------------
-# 5. Crossing the phase boundary at most twice
-# --------------------------------------------------------------------------
-
-def boundary_crossings(a: float, b: float, x0: float, y0: float
-                       ) -> List[float]:
-    """Return the parameters t at which the line (x0+ta, y0+tb) satisfies
-    x^2 = y^2, i.e. the roots of (a^2-b^2)t^2 + 2(x0 a - y0 b)t + (x0^2-y0^2).
-    Returns at most two values when a^2 != b^2."""
-    A = a ** 2 - b ** 2
-    B = 2.0 * (x0 * a - y0 * b)
-    C = x0 ** 2 - y0 ** 2
-    if abs(A) < 1e-15:  # line parallel to a diagonal: degenerate
-        if abs(B) < 1e-15:
-            return []  # no finite crossings (or the whole line)
-        return [-C / B]
-    disc = B * B - 4.0 * A * C
-    if disc < 0:
-        return []
-    sqrt_d = math.sqrt(disc)
-    return sorted({(-B + sqrt_d) / (2 * A), (-B - sqrt_d) / (2 * A)})
-
-
-def demo_crossings() -> None:
+def demo_geodesics() -> None:
     print("=" * 68)
-    print("5. A generic line (a^2 != b^2) crosses the boundary at most twice")
+    print("5. Geodesic check: axis lines vs. the proposed exponential curve")
     print("=" * 68)
-    lines: List[Tuple[float, float, float, float]] = [
-        (1.0, 0.3, -2.0, 0.5),
-        (0.5, 2.0, 1.0, -3.0),
-        (2.0, 0.0, 0.0, 1.0),
-    ]
-    for a, b, x0, y0 in lines:
-        ts = boundary_crossings(a, b, x0, y0)
-        print(f"  line (x0,y0)=({x0:+.1f},{y0:+.1f}) dir=({a:+.1f},{b:+.1f}): "
-              f"{len(ts)} crossing(s) at t={[round(t, 4) for t in ts]}")
-        for t in ts:
-            x, y = x0 + t * a, y0 + t * b
-            print(f"      t={t:+.4f} -> (x,y)=({x:+.4f},{y:+.4f}), "
-                  f"x^2-y^2={x*x - y*y:+.2e}")
-    print()
-
-
-# --------------------------------------------------------------------------
-# 6. Metric area
-# --------------------------------------------------------------------------
-
-def rectangle_area_closed_form(x1: float, x2: float,
-                               y1: float, y2: float) -> float:
-    """Exact metric area of [x1,x2] x [y1,y2] using
-    (sinh x2 - sinh x1)(gd y2 - gd y1)."""
-    return ((math.sinh(x2) - math.sinh(x1))
-            * (gudermannian(y2) - gudermannian(y1)))
-
-
-def rectangle_area_quadrature(x1: float, x2: float, y1: float, y2: float,
-                              n: int = 400) -> float:
-    """Midpoint-rule metric area of the rectangle for cross-checking."""
-    dx = (x2 - x1) / n
-    dy = (y2 - y1) / n
-    total = 0.0
-    for i in range(n):
-        xc = x1 + (i + 0.5) * dx
-        for j in range(n):
-            yc = y1 + (j + 0.5) * dy
-            total += area_density(xc, yc)
-    return total * dx * dy
-
-
-def triangle_area_quadrature(p1: Tuple[float, float],
-                             p2: Tuple[float, float],
-                             p3: Tuple[float, float],
-                             n: int = 400) -> float:
-    """Metric area of the triangle p1 p2 p3 by barycentric quadrature."""
-    (x1, y1), (x2, y2), (x3, y3) = p1, p2, p3
-    # Euclidean triangle area for the Jacobian of the barycentric map.
-    euclid = 0.5 * abs((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1))
-    total = 0.0
-    count = 0
-    for i in range(n):
-        for j in range(n - i):
-            s = (i + 1.0 / 3.0) / n
-            t = (j + 1.0 / 3.0) / n
-            u = 1.0 - s - t
-            if u < 0:
-                continue
-            x = s * x1 + t * x2 + u * x3
-            y = s * y1 + t * y2 + u * y3
-            total += area_density(x, y)
-            count += 1
-    return total / count * euclid if count else 0.0
-
-
-def demo_area() -> None:
-    print("=" * 68)
-    print("6. Metric area: density cosh(x)/cosh(y)")
-    print("=" * 68)
-    x1, x2, y1, y2 = 0.0, 1.0, 0.0, 1.0
-    exact = rectangle_area_closed_form(x1, x2, y1, y2)
-    approx = rectangle_area_quadrature(x1, x2, y1, y2, n=300)
-    print(f"  Rectangle [0,1]x[0,1]: closed form = {exact:.6f}, "
-          f"quadrature = {approx:.6f}")
-    # Split triangle: one vertex per phase and one on the boundary.
-    p_ell = (0.0, 2.0)   # elliptic (|x|<|y|)
-    p_hyp = (2.0, 0.0)   # hyperbolic (|y|<|x|)
-    p_bnd = (-1.5, 1.5)  # on the diagonal y = -x
-    area_tri = triangle_area_quadrature(p_ell, p_hyp, p_bnd, n=300)
-    print(f"  Split triangle {p_ell},{p_hyp},{p_bnd}:")
-    print(f"      one vertex elliptic, one hyperbolic, one on the boundary")
-    print(f"      metric area = {area_tri:.6f}")
+    # x-axis line
+    r1 = geodesic_residual(lambda t: 1.0 + 2.0 * t, lambda t: 0.0, t=0.3)
+    print(f"x-axis line (x=1+2t, y=0):   residuals = ({r1[0]:.2e}, {r1[1]:.2e})  -> geodesic")
+    # y-axis line
+    r2 = geodesic_residual(lambda t: 0.0, lambda t: -1.0 + 0.5 * t, t=0.3)
+    print(f"y-axis line (x=0, y=-1+t/2): residuals = ({r2[0]:.2e}, {r2[1]:.2e})  -> geodesic")
+    # proposed exponential curve x=t, y=exp(t)
+    r3 = geodesic_residual(lambda t: t, lambda t: math.exp(t), t=0.0)
+    print(f"exp curve (x=t, y=e^t) at 0: residuals = ({r3[0]:.2e}, {r3[1]:.2e})  -> NOT geodesic")
+    predicted = 1.0 + sech(1.0) ** 2 * math.tanh(1.0)
+    print(f"   predicted 2nd residual at t=0: 1 + sech^2(1)tanh(1) = {predicted:.6f}")
     print()
 
 
 def main() -> None:
-    demo_positive_definite()
-    demo_monotonicity()
-    demo_phase_structure()
-    demo_crossings()
-    demo_area()
+    demo_curvature_agreement()
+    demo_axes()
+    demo_jacobi()
+    demo_geodesics()
+    print("All demonstrations completed.")
 
 
 if __name__ == "__main__":
