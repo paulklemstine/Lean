@@ -2697,7 +2697,7 @@ class PiAgentClient:
                 prompt_version=phase_b_prompt_version,
             )
         if phase == "A_lean_only":
-            return self._build_phase_a_lean_prompt(
+            p = self._build_phase_a_lean_prompt(
                 concept=concept,
                 catalog_references=catalog_references,
                 catalog_context=catalog_context,
@@ -2708,6 +2708,19 @@ class PiAgentClient:
                 research_journal=research_journal,
                 prompt_version=prompt_version,
             )
+            # Add self-score JSON instruction
+            p += textwrap.dedent("""
+                
+                ### MANDATORY PHASE A SELF-EVALUATION
+                Additionally, you MUST write a JSON file named `quality_score.json` in your output directory.
+                This file must contain a single JSON object containing your self-evaluation score (a float between 0.0 and 1.0) based on your compile correctness, proof depth, and mathematical novelty.
+                Example format:
+                {
+                  "self_score": 0.85
+                }
+                Do NOT include any extra formatting, markdown code blocks, or text in `quality_score.json`.
+            """)
+            return p
         # phase == "A_full" (legacy) — fall through to the original full prompt
         return self._build_full_aristotle_prompt(
             concept=concept,

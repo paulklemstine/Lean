@@ -523,3 +523,36 @@ def test_phase_b_pruned_workspace(temp_workspace, research_job):
         assert dir_c is not None
         assert (dir_c / "Catalog" / "Algebra" / "Matrix.lean").exists()
         assert not (dir_c / "Catalog" / "Geometry" / "Stereo.lean").exists()
+
+
+def test_aristotle_self_score_evaluation(temp_workspace, research_job):
+    """If job has an aristotle_self_score, extractor.evaluate should use it and return early."""
+    from knowledge_extractor import KnowledgeExtractor
+    
+    config = {
+        "workspace_dir": str(temp_workspace),
+        "catalog_root": str(temp_workspace),
+    }
+    
+    with patch.object(KnowledgeExtractor, "_load_config", return_value=config):
+        extractor = KnowledgeExtractor()
+        
+        # Test case 1: no sorry
+        research_job.result_lean = "theorem foo : True := trivial"
+        research_job.aristotle_self_score = 0.88
+        
+        evaluated_job = extractor.evaluate(research_job)
+        assert evaluated_job.quality_score == 0.88
+        assert evaluated_job.quality_assessment["quality"] == "substantial"
+        assert evaluated_job.quality_assessment["should_retry"] is False
+        assert evaluated_job.quality_detail.proof_depth == 0.88
+
+        # Test case 2: has sorry
+        research_job.result_lean = "theorem foo : True := sorry"
+        research_job.aristotle_self_score = 0.45
+        
+        evaluated_job2 = extractor.evaluate(research_job)
+        assert evaluated_job2.quality_score == 0.45
+        assert evaluated_job2.quality_assessment["quality"] == "partial"
+        assert evaluated_job2.quality_assessment["should_retry"] is True
+        assert evaluated_job2.quality_detail.proof_depth == 0.45

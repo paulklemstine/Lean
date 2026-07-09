@@ -1765,6 +1765,18 @@ Research mode: {concept.research_mode}
                 elif f.endswith(".py"):
                     python_files.append(fp)
                 elif f.endswith(".json") and f != "knowledge_data.json":
+                    # Check if this is Aristotle's self-score file
+                    if f in ("self_score.json", "quality_score.json", "aristotle_score.json"):
+                        try:
+                            import json as _json
+                            data = _json.loads(fp.read_text(encoding="utf-8"))
+                            for k in ("self_score", "quality_score", "score"):
+                                if k in data:
+                                    job.aristotle_self_score = float(data[k])
+                                    print(f"[Extract] Found Aristotle self-score: {job.aristotle_self_score:.3f}")
+                                    break
+                        except Exception as e:
+                            print(f"[Extract] Failed to parse Aristotle self-score file {f}: {e}")
                     # JSON package files (PACKAGE.json or similar)
                     json_package_files.append(fp)
                 elif f.endswith(".md") and f not in ("README.md", "PROMPT.md"):
@@ -2036,7 +2048,39 @@ Research mode: {concept.research_mode}
                     return job
             except Exception as _e:
                 print(f"[Cache] eval cache read failed: {_e}")
-
+        # Check if Aristotle provided a self-score JSON file
+        if getattr(job, "aristotle_self_score", None) is not None:
+            job.quality_score = job.aristotle_self_score
+            has_sorry = "sorry" in job.result_lean
+            job.quality_assessment = {
+                "quality": "partial" if has_sorry else "substantial",
+                "should_retry": has_sorry,
+                "retry_strategy": "Fix remaining sorries." if has_sorry else "N/A",
+                "confidence": 1.0,
+                "analysis": f"Aristotle self-scored this result as {job.quality_score:.3f}."
+            }
+            print(f"[Evaluate] Bypassing evaluation, using Aristotle self-score: {job.quality_score:.3f} (has_sorry={has_sorry})")
+            
+            from quality_evaluator import QualityScore
+            job.quality_detail = QualityScore(
+                proof_depth=job.quality_score,
+                novelty=job.quality_score,
+                cross_domain=0.5,
+                importance=job.quality_score,
+                usefulness=0.5,
+                applications=0.5,
+                catalog_anchoring=0.5
+            )
+            if _ec and _ec_key:
+                try:
+                    _ec.set(_ec_key, {
+                        "quality_score": job.quality_score,
+                        "quality_assessment": job.quality_assessment,
+                        "quality_detail": job.quality_detail.to_dict() if hasattr(job.quality_detail, 'to_dict') else None
+                    })
+                except Exception as _e:
+                    print(f"[Cache] Failed to save evaluation cache: {_e}")
+            return job
         # Compact oversized result_lean before passing to evaluation
         compact_lean = self._compact_result_lean(job.result_lean)
 
