@@ -8300,6 +8300,34 @@ window.FUTURE_DIRECTIONS = [
     "title": "Integral Tangent Class Characterizes the Hilbert Series of Matroid Chow Rings via Hirzebruch\u2013Riemann\u2013Roch"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Every finite simple subcubic series\u2011parallel graph (equivalently, every finite simple subcubic graph of treewidth at most\u202f2, or every finite simple subcubic K4\u2011minor\u2011free graph) admits a crumby coloring.  This generalizes the main theorem of the paper, which proves the statement only for outerplanar graphs.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0689",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06515v1",
+    "status": "available",
+    "timestamp": "2026-07-09T00:13:17.479487+00:00",
+    "title": "Crumby colorings for subcubic series\u2011parallel graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "If a family of complementary configurations degenerates to a configuration where some planes intersect, then the limit of the cross-ratio valuations (as the parameters approach the degenerate case) equals the intersection degree of the cycles obtained by spreading the original cycles to the valuation ring.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0689",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06477v1",
+    "status": "available",
+    "timestamp": "2026-07-09T00:14:17.753606+00:00",
+    "title": "The Valuation of the Degenerate Cross-Ratio Equals the Intersection Degree of Spread Cycles"
+  },
+  {
     "consumed_by_exp_id": "e158da3a",
     "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers \u2014 anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension \u2014 they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property \u2014 it's not about content quality but about the sheaf cohomology of the social network.",
     "domains": [
