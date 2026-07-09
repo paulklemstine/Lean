@@ -15798,6 +15798,31 @@
     "title": "Automorphism group of network realignment complex equals base graph automorphism group"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "cms"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that any directed strongly regular graph on 108 vertices must have degree k belonging to the set {11,14,22,23,25,34,38,39,41,42,46}. Equivalently, no such graph exists with a degree outside this set.",
+    "domain_bridges": [
+      "finite_group_theory",
+      "design_theory",
+      "algebraic_graph_theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0699",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Search computationally over all parameter tuples (k,λ,μ,ν) that satisfy the feasibility conditions for a directed strongly regular graph on 108 vertices, and verify that none are viable unless k is in the listed set; then provide a theoretical argument using the parameter equations and transitivity constraints to show that k must belong to that set.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07381v1",
+    "status": "available",
+    "timestamp": "2026-07-09T04:16:34.308096+00:00",
+    "title": "Conjecture on the possible degrees of directed strongly regular graphs on 108 vertices"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "[B] $10.48550/ARXIV.2201.03794$"
@@ -15810,7 +15835,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0699",
+    "id": "fd_0700",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a family of configurations dispersing the cycles over the valuation ring, show that the cross-ratio valuation is preserved under deformation, and compute the limit using intersection-theoretic methods.",
@@ -15838,7 +15863,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0700",
+    "id": "fd_0701",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Utilize the paper's β-closed walk expansion and the sufficient condition via a walk-realizable {P4}-supporter. Reduce the search to a linear programming feasibility problem for coefficients of β-closed walk counts. Compute a concrete finite witness (e.g., with bounded walk length) satisfying the LP, then formalize the induced-subgraph expansion and supporter criterion in Lean 4 to verify the implication.",
@@ -15866,7 +15891,7 @@
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0701",
+    "id": "fd_0702",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Verify the conjecture for classes of biserial algebras where both magnitude and Grothendieck rank are computable: (1) Hereditary biserial algebras (where magnitude relates to Dynkin type), (2) Self-injective biserial algebras (where Coxeter duality provides constraints), (3) Use induction on the complexity of the Auslander-Reiten quiver structure. The key is establishing that representation-finiteness creates a perfect matching between indecomposable modules and Grothendieck group generators, reflected in the magnitude calculation.",
@@ -15896,7 +15921,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0702",
+    "id": "fd_0703",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct the formal group via the universal property of the tangent space of Ig_μ, use the Hodge type embedding to identify the differential operators with components of the logarithm map, then prove the coproduct compatibility by analyzing the group structure on Ig_μ via p-adic Fourier theory and the Mantovan correspondence.",
@@ -15926,7 +15951,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0703",
+    "id": "fd_0704",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Formalize determinantal ideal J_{G,H} in Lean using mathlib's commutative algebra and graph theory. 2. Define analytic spread as dimension of special fiber ring. 3. Define linear matroid M_{G,H} from incidence matrix of G over a perfect field. 4. Prove by induction on number of edges of H: base case |E(H)|=1 known from paper. For forest H, decompose into single edges; use exact sequences or properties of reductions of determinantal ideals to show that adding an edge increases both analytic spread and matroid rank by 1, preserving equality. 5. Bridge to existing matroid theory API in mathlib (or develop minimal matroid library).",
@@ -15953,7 +15978,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0704",
+    "id": "fd_0705",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the proof of $b_3(n+1)=b_2(n)$ to arbitrary uniformity.  Develop a systematic 'shifting' construction that lifts an optimal odd cover of $K_n^{(r)}$ to an odd cover of $K_{n+1}^{(r+1)}$ of the same size, showing $b_{r+1}(n+1)\\le b_r(n)$.  Simultaneously, apply the $\\mathbb{F}_2$ rank bound $b_r(G)\\ge r_2(A_G)/2$ to complete $(r+1)\\!$-uniform hypergraphs to obtain $b_{r+1}(n+1)\\ge b_r(n)$.  Together these give equality.  The combinatorial details involve analysing the adjacency tensors of complete hypergraphs over $\\mathbb{F}_2$ and using induction on $r$.",
@@ -15982,7 +16007,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0705",
+    "id": "fd_0706",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt Fujii's arguments for class groups to the even K-group setting, using the relationship between K_{2n} and ordinary class groups via cyclotomic trace maps and regulator computations, combined with control theorem techniques for the inverse system.",
@@ -16008,7 +16033,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0706",
+    "id": "fd_0707",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof strategy involves using the explicit decomposition of an associated selector process, inspired by Talagrand's generic decomposition theorem, to obtain improved norm bounds for sparse random tensors. This approach requires a careful analysis of the variance of the tensor norm and the use of truncation inequalities to control the contribution of large entries.",
@@ -16037,7 +16062,7 @@
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0707",
+    "id": "fd_0708",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Derive the bivariate generating function for c-balanced Dyck paths weighted by peak count using the kernel method extended from the paper, and show it coincides with the known rational Narayana generating function. Alternatively, construct an explicit bijection to marked (c+1)-ary trees that preserves peaks, potentially via the cycle lemma on Raney sequences.",
@@ -16046,6 +16071,33 @@
     "status": "available",
     "timestamp": "2026-07-09T03:59:50.858865+00:00",
     "title": "Peak refinement of c-balanced Dyck path enumeration"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "Hamiltonian cycles",
+      "Graph toughness",
+      "Forbidden induced subgraphs"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every simple finite graph that is (K₁∪P₄)-free, has toughness at least 1, and has at least 3 vertices is Hamiltonian.",
+    "domain_bridges": [
+      "Formalization of graph toughness in Lean 4",
+      "Mathlib simple graph theory"
+    ],
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_0709",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Assume a minimal counterexample by number of vertices. Show that any non-minimally 1-tough graph can be reduced by edge deletion while preserving (K₁∪P₄)-freeness and 1-toughness until a minimally 1-tough graph is obtained. Then apply the structural characterization from the paper (already proven for minimally 1-tough case) to conclude the minimized graph is Hamiltonian, and lift the cycle back to the original, yielding contradiction.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07239v1",
+    "status": "available",
+    "timestamp": "2026-07-09T04:17:26.671029+00:00",
+    "title": "Hamiltonicity of (K₁∪P₄)-free 1-tough graphs"
   },
   {
     "ambition_level": "extension",

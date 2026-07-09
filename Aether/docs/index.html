@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alethean Research Packages</title>
+
+    <!-- Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- KaTeX for Math Rendering -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+    <!-- Pyodide for WASM Python Execution -->
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+
+    <link rel="stylesheet" href="style.css?v=0.1.1256">
+</head>
+
+<body class="dark-theme">
+    <!-- Mobile floating menu button (always visible on small screens) -->
+    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open menu">
+        <span></span><span></span><span></span>
+    </button>
+    <!-- Mobile overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header" style="flex-direction: column; align-items: stretch; gap: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2><a href="#" id="home-link">Alethean Research</a> <span class="version-badge"
+                            id="version-badge">v0.1.1256</span></h2>
+                    <div class="header-controls">
+                        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme">
+                            <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="5"></circle>
+                                <line x1="12" y1="1" x2="12" y2="3"></line>
+                                <line x1="12" y1="21" x2="12" y2="23"></line>
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                <line x1="1" y1="12" x2="3" y2="12"></line>
+                                <line x1="21" y1="12" x2="23" y2="12"></line>
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                            </svg>
+                            <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                            </svg>
+                        </button>
+                        <button class="mobile-toggle" id="mobile-toggle">
+                            <span></span><span></span><span></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="nav-links-row" style="display: flex; gap: 8px;">
+                    <a href="#" class="nav-directions-link" id="nav-directions-link"
+                        style="flex: 1; text-align: center; justify-content: center;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="12 6 12 12 16 14" />
+                        </svg>
+                        Future Directions
+                    </a>
+                    <a href="#" class="nav-directions-link" id="nav-lean-catalog-link"
+                        style="flex: 1; text-align: center; justify-content: center;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                            <polyline points="14 2 14 8 20 8" />
+                        </svg>
+                        Lean 4 Catalog
+                    </a>
+                </div>
+            </div>
+
+            <div class="package-list-container">
+                <h3 class="nav-section-title">Research Packages</h3>
+                <div class="sidebar-controls">
+                    <select id="sort-mode">
+                        <option value="date-desc">Date (newest)</option>
+                        <option value="date-asc">Date (oldest)</option>
+                        <option value="alpha">A-Z</option>
+                        <option value="score-desc">Quality (best)</option>
+                        <option value="score-asc">Quality (lowest)</option>
+                    </select>
+                </div>
+                <div class="search-container" style="margin-top: 12px;">
+                    <input type="text" id="search-input" placeholder="Search packages...">
+                </div>
+                <div class="sidebar-pagination" id="sidebar-pagination" style="margin-top: 12px; margin-bottom: 12px;">
+                    <button id="page-home" class="page-btn" title="First page">&#8962;</button>
+                    <button id="page-prev" class="page-btn" disabled>&larr; Prev</button>
+                    <span id="page-indicator">1 / 1</span>
+                    <button id="page-next" class="page-btn" disabled>Next &rarr;</button>
+                </div>
+                <ul id="package-list" class="nav-list">
+                    <!-- Package links populated by JS -->
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content" id="main-content">
+            <div class="welcome-screen" id="welcome-screen">
+                <canvas id="knowledge-graph-canvas"></canvas>
+                <div class="welcome-overlay"></div>
+                <div class="graph-tooltip tooltip-hidden" id="graph-tooltip">
+                    <div class="tooltip-title"></div>
+                    <div class="tooltip-domain"></div>
+                    <div class="tooltip-score"></div>
+                    <div class="tooltip-date"></div>
+                </div>
+                <div class="welcome-content">
+                    <h1 class="welcome-title">A.L.E.T.H.E.A.N.</h1>
+                    <p class="welcome-subtitle">Autonomous Logic Engine for Theorem Hunting, Exploration, And Navigation</p>
+                    <p class="welcome-tagline">The luminous medium between conjecture and proof.</p>
+                    <p class="welcome-desc">Just as "aletheia" represents the unconcealed truth,
+                        this engine pulls mathematical certainty from the void of wild human intuition. 
+                        A.L.E.T.H.E.A.N. autonomously navigates the vast landscape of logic, formalizing and proving theorems in Lean 4 to build an ever-expanding registry of absolute mathematical truths.<br><br>
+                        Select a package from the sidebar to explore generated papers, code, and demos, or browse
+                        <a href="javascript:void(0)" id="welcome-directions-link" class="welcome-link">future
+                            directions</a>
+                        to see what we're hunting next.
+                        <br><br>
+                        Have a great idea? 
+                        <a href="https://github.com/paulklemstine/Lean/issues/new?title=Injected%20Direction:%20[Your%20Title]&body=%23%23%20Conjecture%0A%0A%23%23%20Test%0A%0A%23%23%20Impact%0A&labels=proposed-direction" target="_blank" rel="noopener" class="welcome-link">Propose a Future Direction</a>
+                        and Alethean will research it next!
+                    </p>
+                </div>
+                <footer class="welcome-footer">
+                    <span>&copy; 2026 <a href="#" id="author-link">Paul Klemstine</a></span>
+                    <span class="footer-separator">&middot;</span>
+                    <span>Powered by <a href="https://openrouter.ai/" target="_blank" rel="noopener">OpenRouter</a> & <a
+                            href="https://ollama.com/" target="_blank" rel="noopener">Ollama</a></span>
+                    <span class="footer-separator">&middot;</span>
+                    <span>Reasoning via <a href="https://aristotle.harmonic.fun" target="_blank"
+                            rel="noopener">Aristotle</a></span>
+                    <span class="footer-separator">&middot;</span>
+
+                </footer>
+            </div>
+
+            <div class="package-view hidden" id="package-view">
+                <header class="package-header">
+                    <div class="meta-tags">
+                        <span class="tag domain-tag" id="pkg-domain">Domain</span>
+                        <span class="tag date-tag" id="pkg-date">Date</span>
+                        <span class="tag time-tag" id="pkg-time" style="display:none">Time</span>
+                        <span class="tag quality-tier" id="pkg-quality-tier" style="display:none"></span>
+                        <button id="copy-link-btn" class="lean-download-btn"
+                            style="font-size: 0.85em; padding: 6px 14px; margin-left: 12px; background: linear-gradient(135deg, #3b82f6, #1d4ed8);"
+                            title="Copy shareable link to this package">🔗 Copy Link</button>
+                        <button id="lean-download-zip" class="lean-download-btn"
+                            style="font-size: 0.85em; padding: 6px 14px; margin-left: 12px;">Download Research Package
+                            .zip</button>
+                    </div>
+                    <h1 id="pkg-title">Package Title</h1>
+
+                    <!-- Internal Tabs for the Package -->
+                    <div class="tabs-container">
+                        <button class="tab-btn active" data-tab="article">Article</button>
+                        <button class="tab-btn" data-tab="paper">Research Paper</button>
+
+                        <button class="tab-btn" data-tab="directions">Future Directions</button>
+                        <button class="tab-btn" data-tab="demos">Interactive</button>
+                        <button class="tab-btn" data-tab="lean">Lean 4 Proofs</button>
+                    </div>
+                </header>
+
+                <div class="tab-content-container">
+                    <!-- Article Tab -->
+                    <div class="tab-pane active" id="tab-article">
+                        <div class="markdown-body" id="content-article"></div>
+                    </div>
+
+                    <!-- Paper Tab -->
+                    <div class="tab-pane" id="tab-paper">
+                        <div class="markdown-body" id="content-paper"></div>
+                    </div>
+
+
+
+                    <!-- Future Directions Tab -->
+                    <div class="tab-pane" id="tab-directions">
+                        <div class="directions-lineage" id="content-lineage"></div>
+                        <div class="directions-narrative markdown-body" id="content-directions-narrative"></div>
+                        <h3 class="directions-section-title" id="directions-section-title" style="display:none">Related
+                            Research Directions</h3>
+                        <div class="directions-package-cards" id="content-directions-cards"></div>
+                        <a href="#" class="view-all-directions-link" id="view-all-directions-link"
+                            style="display:none">View all research directions &rarr;</a>
+                    </div>
+
+                    <!-- Demos Tab (algorithms pseudocode + interactive demos) -->
+                    <div class="tab-pane" id="tab-demos">
+                        <div id="content-interactive-demos"></div>
+                        <div id="content-visualizations"></div>
+                        <div class="algorithms-list" id="content-algorithms"></div>
+                        <div class="demos-list" id="content-demos"></div>
+                    </div>
+
+                    <!-- Lean Proofs Tab -->
+                    <div class="tab-pane" id="tab-lean">
+                        <div id="lean-header" style="display: none; margin-bottom: 16px;">
+                            <span class="section-title" style="color: var(--accent-color, #7c3aed);">Lean 4 Proof
+                                Files</span>
+                        </div>
+                        <div id="lean-files-container"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Future Directions View -->
+            <div class="directions-view hidden" id="directions-view">
+                <header class="directions-header">
+                    <h1>Future Research Directions</h1>
+                    <p class="directions-subtitle">Research frontiers queued for exploration</p>
+                    <div class="directions-filters">
+                        <select id="directions-status-filter">
+                            <option value="">All</option>
+                            <option value="available">Available</option>
+                            <option value="in_progress">In Progress</option>
+                        </select>
+                        <select id="directions-domain-filter">
+                            <option value="">All Domains</option>
+                        </select>
+                        <input type="text" id="directions-search" placeholder="Search directions...">
+                    </div>
+                </header>
+                <div class="directions-grid" id="directions-grid">
+                    <!-- Direction cards rendered by JS -->
+                </div>
+            </div>
+
+            <!-- Lean 4 Catalog View -->
+            <div class="directions-view hidden" id="lean-catalog-view">
+                <header class="directions-header">
+                    <h1>Lean 4 Proof Catalog</h1>
+                    <p class="directions-subtitle">Central registry of all formalized theorems across the Alethean
+                        ecosystem</p>
+                    <div class="directions-filters">
+                        <select id="lean-domain-filter">
+                            <option value="">All Domains</option>
+                        </select>
+                        <input type="text" id="lean-search" placeholder="Search theorems or files...">
+                    </div>
+                </header>
+                <div class="lean-catalog-content" id="lean-catalog-content" style="padding: 24px;">
+                    <!-- Rendered by JS -->
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox-overlay hidden" id="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+            <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous">&lsaquo;</button>
+            <div class="lightbox-img-container" id="lightbox-img"></div>
+            <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next">&rsaquo;</button>
+            <div class="lightbox-caption" id="lightbox-caption"></div>
+        </div>
+    </div>
+
+    <!-- Author Profile Popover -->
+    <div class="author-popover hidden" id="author-popover">
+        <button class="author-popover-close" id="author-popover-close" aria-label="Close">&times;</button>
+        <a href="https://x.com/paulklemstine" target="_blank" rel="noopener" class="author-popover-header">
+            <img class="author-popover-avatar"
+                src="https://pbs.twimg.com/profile_images/2025403585542881280/PPk1p3-5_400x400.jpg" alt="Paul Klemstine"
+                width="48" height="48">
+            <div class="author-popover-info">
+                <h3>Paul Klemstine</h3>
+                <p class="author-popover-handle">@paulklemstine</p>
+            </div>
+            <svg class="author-popover-extlink" xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" y1="14" x2="21" y2="3" />
+            </svg>
+        </a>
+        <div class="author-popover-links">
+            <a href="mailto:paulklemstine@gmail.com" class="author-popover-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="4" width="20" height="16" rx="2" />
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                </svg>
+                paulklemstine@gmail.com
+            </a>
+        </div>
+    </div>
+
+    <script src="js/state.js"></script>
+    <script src="package_index.js?v=327.1783569595"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/sidebar.js"></script>
+    <script src="js/lightbox.js"></script>
+    <script src="js/packages.js?v=0.1.1256"></script>
+    <script src="js/pyodide-runner.js"></script>
+    <script src="js/knowledge-graph.js"></script>
+    <script src="js/directions.js"></script>
+    <script src="js/lean_catalog.js"></script>
+    <script src="js/notifications.js"></script>
+    <script>
+        // Cross-module coordination and initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initial data load
+            if (window.PACKAGE_INDEX) {
+                window.Aether.packages = window.PACKAGE_INDEX;
+                if (window.renderSidebar) window.renderSidebar(window.PACKAGE_INDEX);
+            } else {
+                const pl = document.getElementById('package-list');
+                if (pl) pl.innerHTML = '<li class="nav-item"><div class="nav-item-title text-red">Please run update_index.py to bundle packages</div></li>';
+            }
+
+            // Lazy-load future directions on first access
+            window.loadFutureDirections = function (callback) {
+                if (window.FUTURE_DIRECTIONS) {
+                    if (callback) callback();
+                    return;
+                }
+                const script = document.createElement('script');
+                script.src = 'future_directions.js';
+                script.onload = () => {
+                    if (window.populateDomainFilter) window.populateDomainFilter();
+                    if (callback) callback();
+                };
+                document.head.appendChild(script);
+            };
+
+            // Auto-load if already present (e.g. from cached script tag)
+            if (window.FUTURE_DIRECTIONS && window.populateDomainFilter) {
+                window.populateDomainFilter();
+            }
+
+            // Initialize notifications: mark current packages as seen
+            if (window.AetherNotifications) {
+                window.AetherNotifications.init(window.PACKAGE_INDEX);
+            }
+
+            // Periodic refresh: check for new packages every 60 seconds
+            // Works on both file:// (script-tag injection) and http:// (fetch)
+            console.log('[Aether] Starting package polling (every 60s)');
+            setInterval(() => {
+                try {
+                    // Snapshot current state before reload
+                    const prevIndex = window.PACKAGE_INDEX ? [...window.PACKAGE_INDEX] : [];
+                    const prevCount = prevIndex.length;
+                    const prevEdges = (window.PACKAGE_GRAPH && window.PACKAGE_GRAPH.edges) ? [...window.PACKAGE_GRAPH.edges] : [];
+                    const prevDirCount = (window.FUTURE_DIRECTIONS || []).length;
+
+                    const script = document.createElement('script');
+                    script.src = 'package_index.js?v=' + Date.now();
+                    script.onload = () => {
+                        try {
+                            const newIndex = window.PACKAGE_INDEX || [];
+                            if (newIndex.length > prevCount) {
+                                const prevFilenames = new Set(prevIndex.map(p => p.filename));
+                                const newFilenames = newIndex.filter(p => !prevFilenames.has(p.filename)).map(p => p.filename);
+                                console.log('[Aether] New packages detected! Previous:', prevCount, 'Now:', newIndex.length, 'New:', newFilenames);
+
+                                window.Aether.packages = newIndex;
+                                if (window.renderSidebar) window.renderSidebar(newIndex);
+
+                                // Browser + in-app notification for new packages
+                                if (window.AetherNotifications && newFilenames.length > 0) {
+                                    window.AetherNotifications.onNewPackages(newIndex, newFilenames);
+                                }
+
+                                if (window.PACKAGE_GRAPH && window.PACKAGE_GRAPH.nodes) {
+                                    window.PACKAGE_GRAPH.nodes.forEach(n => {
+                                        if (window.addGraphNode) window.addGraphNode(n);
+                                    });
+                                }
+                            }
+                            if (window.PACKAGE_GRAPH && window.PACKAGE_GRAPH.edges && window.PACKAGE_GRAPH.edges.length > 0) {
+                                const newEdges = window.PACKAGE_GRAPH.edges.filter(e =>
+                                    !prevEdges.some(oe => oe.source === e.source && oe.target === e.target)
+                                );
+                                if (newEdges.length > 0 && window.addGraphEdges) {
+                                    window.addGraphEdges(newEdges);
+                                }
+                            }
+                            if (window.FUTURE_DIRECTIONS && window.FUTURE_DIRECTIONS.length >= prevDirCount) {
+                                if (window.populateDomainFilter) window.populateDomainFilter();
+                                if (window.Aether.directionsVisible && window.renderDirectionsView) window.renderDirectionsView();
+                            }
+                        } catch (err) {
+                            console.warn('[Aether] Poll refresh error:', err);
+                        }
+                        script.remove();
+                    };
+                    script.onerror = () => { console.warn('[Aether] Failed to load package_index.js'); script.remove(); };
+                    document.head.appendChild(script);
+                } catch (err) {
+                    console.warn('[Aether] Poll error:', err);
+                }
+            }, 60000);
+
+            // Check for Updates button
+            const checkUpdatesBtn = document.getElementById('check-updates-btn');
+            if (checkUpdatesBtn) {
+                checkUpdatesBtn.addEventListener('click', () => {
+                    if (window.AetherNotifications) {
+                        window.AetherNotifications.checkNow();
+                    }
+                });
+            }
+
+            // Author popover
+            const authorLink = document.getElementById('author-link');
+            const authorPopover = document.getElementById('author-popover');
+            const authorPopoverClose = document.getElementById('author-popover-close');
+            if (authorLink && authorPopover) {
+                authorLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    authorPopover.classList.toggle('hidden');
+                });
+                authorPopoverClose.addEventListener('click', () => {
+                    authorPopover.classList.add('hidden');
+                });
+                document.addEventListener('click', (e) => {
+                    if (!authorPopover.contains(e.target) && e.target !== authorLink) {
+                        authorPopover.classList.add('hidden');
+                    }
+                });
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') authorPopover.classList.add('hidden');
+                });
+            }
+
+            // Home button: reset graph view and show welcome screen
+            const homeLink = document.getElementById('home-link');
+            if (homeLink) {
+                homeLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const welcomeScreen = document.getElementById('welcome-screen');
+                    const packageView = document.getElementById('package-view');
+                    const directionsView = document.getElementById('directions-view');
+                    const leanCatalogView = document.getElementById('lean-catalog-view');
+                    if (welcomeScreen) welcomeScreen.classList.remove('hidden');
+                    if (packageView) packageView.classList.add('hidden');
+                    if (directionsView) directionsView.classList.add('hidden');
+                    if (leanCatalogView) leanCatalogView.classList.add('hidden');
+                    if (window.unfadeWelcome) window.unfadeWelcome();
+                    if (window.Aether) window.Aether.currentPackage = null;
+                    if (window._resetCamera) window._resetCamera();
+                });
+            }
+
+            // Override loadPackage to also hide directions and lean catalog views
+            // Wait until packages.js has defined window.loadPackage
+            function wrapLoadPackage() {
+                if (typeof window.loadPackage !== 'function') {
+                    setTimeout(wrapLoadPackage, 50);
+                    return;
+                }
+                const orig = window.loadPackage;
+                window.loadPackage = function (filename) {
+                    if (window.hideDirectionsView) window.hideDirectionsView();
+                    if (window.hideLeanCatalogView) window.hideLeanCatalogView();
+                    orig(filename);
+                };
+            }
+            wrapLoadPackage();
+
+            // Override renderSidebar to also populate domain filter
+            const origRenderSidebar = window.renderSidebar;
+            window.renderSidebar = function (pkgArray) {
+                origRenderSidebar(pkgArray);
+                if (window.populateDomainFilter) window.populateDomainFilter();
+            };
+        });
+    </script>
+</body>
+
+</html>

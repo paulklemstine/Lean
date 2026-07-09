@@ -8446,11 +8446,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture that any directed strongly regular graph on 108 vertices must have degree k belonging to the set {11,14,22,23,25,34,38,39,41,42,46}. Equivalently, no such graph exists with a degree outside this set.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0699",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07381v1",
+    "status": "available",
+    "timestamp": "2026-07-09T04:16:34.308096+00:00",
+    "title": "Conjecture on the possible degrees of directed strongly regular graphs on 108 vertices"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "If a family of complementary configurations degenerates to a configuration where some planes intersect, then the limit of the cross-ratio valuations (as the parameters approach the degenerate case) equals the intersection degree of the cycles obtained by spreading the original cycles to the valuation ring.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0699",
+    "id": "fd_0700",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06477v1",
@@ -8465,7 +8479,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0700",
+    "id": "fd_0701",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06455v1",
@@ -8480,7 +8494,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0701",
+    "id": "fd_0702",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07555v1",
@@ -8495,7 +8509,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0702",
+    "id": "fd_0703",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07427v1",
@@ -8510,7 +8524,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0703",
+    "id": "fd_0704",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07458v1",
@@ -8524,7 +8538,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0704",
+    "id": "fd_0705",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07448v1",
@@ -8538,7 +8552,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0705",
+    "id": "fd_0706",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07328v1",
@@ -8553,7 +8567,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0706",
+    "id": "fd_0707",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07308v1",
@@ -8568,13 +8582,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0707",
+    "id": "fd_0708",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07256v1",
     "status": "available",
     "timestamp": "2026-07-09T03:59:50.858865+00:00",
     "title": "Peak refinement of c-balanced Dyck path enumeration"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every simple finite graph that is (K\u2081\u222aP\u2084)-free, has toughness at least 1, and has at least 3 vertices is Hamiltonian.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_0709",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07239v1",
+    "status": "available",
+    "timestamp": "2026-07-09T04:17:26.671029+00:00",
+    "title": "Hamiltonicity of (K\u2081\u222aP\u2084)-free 1-tough graphs"
   },
   {
     "consumed_by_exp_id": "",
