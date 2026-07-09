@@ -6607,7 +6607,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimality of the cake-cutting constant \u03bc\u2082"
   },
   {
-    "consumed_by_exp_id": "901a2c39",
+    "consumed_by_exp_id": "",
     "description": "For a complete multipartite graph G = K_{n_1,...,n_m} with n_1 \u2264 ... \u2264 n_m, the path-free complex PF_t(G) is vertex decomposable if and only if t \u2265 2n_{m-1} - 1. Equivalently, this is exactly the range where PF_t(G) is shellable and sequentially Cohen-Macaulay. For t \u2264 2n_{m-1} - 2, the complex fails to be sequentially Cohen-Macaulay.",
     "domains": [
       "Bridges"
@@ -6616,7 +6616,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05358v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T13:11:19.325737+00:00",
     "title": "Vertex decomposability threshold for path-free complexes of complete multipartite graphs"
   },
@@ -7732,7 +7732,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The \u221a2-Threshold Conjecture for Rips Filtration Approximation"
   },
   {
-    "consumed_by_exp_id": "00f256fb",
+    "consumed_by_exp_id": "",
     "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card \u2014 you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier \u2014 it's an opportunity. You can WIN at the game of undecidability.",
     "domains": [
       "Novelty",
@@ -7742,7 +7742,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T16:01:43.960880+00:00",
     "title": "Godel's Casino: Incomplete but Winnable Games"
   },
@@ -8752,20 +8752,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Order-type characterization of algebraic $p$-adic Hahn series with finitely many accumulation points"
   },
   {
-    "consumed_by_exp_id": "c38e66e4",
-    "description": "In every connected graph whose edges are either 1\u2011matching or 2\u2011matching edges and in which no perfect matching contains edges of both types, the number of perfect matchings is always a power of two.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0726",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.06921v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-09T10:39:28.931121+00:00",
-    "title": "Power\u2011of\u2011Two Perfect Matching Count in Class\u202fB Graphs"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "We conjecture that for any field F and integers n \u2265 m \u2265 0, d \u2265 0, the field\u2011independent filtration of \u0394^(n,m)Sym^dE described in the paper yields graded pieces whose characters are exactly the quantum binomial coefficients appearing in the product rule (Rel2) for Lusztig\u2019s quantum Cartan elements. In particular, the i\u2011th quotient is isomorphic to \u0394^(n\u2011i,m\u2011i)Sym^(d\u2011i)E and its formal character equals s_(n\u2011i,m\u2011i) \u2218 s_(d\u2011i).",
     "domains": [
@@ -9699,6 +9685,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bypassed"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "The Mandelbrot set M is defined by z_{n+1} = z_n^2 + c, and the boundary of M is the locus of c values where the orbit of 0 is bounded but barely so. Each bulb of M corresponds to a rational number p/q (the period-q bulb at angle p/q). The size of the p/q bulb decreases with q, and the Fibonacci sequence governs the spiral arrangement of bulbs. Conjecture: The period of the bulb at angle p/q (in lowest terms) is exactly q. Moreover, the Lyapunov exponent lambda(c) at the center of the p/q bulb equals log(2) * cos(pi*p/q). The 'prime bulbs' \u2014 bulbs at angles 1/q where q is prime \u2014 have special symmetry: they are the only bulbs with dihedral symmetry D_q. The composite bulbs have more complex symmetry groups. The prime factorization of the period determines the bulb's topology: a bulb of period n = p1^a1 * ... * pk^ak is topologically a product of k bulbs of periods p1^a1, ..., pk^ak. Test: for each rational p/q with q <= 20, locate the corresponding bulb in M, compute its Lyapunov exponent, and verify lambda = log(2) * cos(pi*p/q). Classify bulbs by the prime factorization of their period and verify the product structure. Impact: the Mandelbrot set is a visual calculator for prime factorization \u2014 every bulb encodes number-theoretic information about its period.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0798",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-09T20:47:34.624685+00:00",
+    "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
+  },
+  {
     "consumed_by_exp_id": "601f17f4",
     "description": "Prime gaps \u2014 the spaces between consecutive primes \u2014 are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable \u2014 given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random \u2014 they are a solvable crossword puzzle with deterministic rules.",
     "domains": [
@@ -9802,6 +9803,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-09T20:30:12.097598+00:00",
     "title": "Derived from the cycle studying monochromatic Pythagorean triples in the level s"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes a self-contained theory of **total nonnegativity** (all minors\n`\u2265 0`) and applies it to the **interval-subdivision transformation matrices** of finite\nsimplicial complexes.\n\n## What is proved (Lean, 0 `sorry`)\n\n* `IntervalTP/Basic.lean` \u2014 the core theory over any linearly ordered commutative ring:\n  * `IsTN` : total nonnegativity via strictly-monotone minors;\n  * `IsTN.entry_nonneg`, `IsTN.transpose`, `isTN_diagonal`, `isTN_one`;\n  * **`IsTN.colOp` / `IsTN.rowOp`** : the central result that a *single adjacent\n    nonnegative column/row operation preserves total nonnegativity*, proved using only\n    multilinearity of the determinant in one column (no Cauchy\u2013Binet formula).\n* `IntervalTP/Construction.lean` \u2014 `IsTN.applyOps` / `isTN_applyOps_diagonal`: any matrix\n  built from a nonnegative diagonal by a list of valid adjacent operations is totally\n  nonnegative.\n* `IntervalTP/Matrices.lean` \u2014 the interval-subdivision transformation matrices\n  `H\u2081, H\u2082, H\u2083, H\u2084` are totally nonnegative, each certified by an explicit bidiagonal\n  construction.\n* `IntervalTP/SimplexIntervals.lean` \u2014 `card_intervals_simplex`: the interval subdivision\n  of the `(d-1)`-simplex has `3^d - 2^d` vertices.\n\n## Natural next steps\n\n1. **General dimension `d`.**  Find a closed form for the entries `H_{i,j}(d)` (equivalently\n   the local `h`-vector of the interval subdivision of a simplex) and a uniform bidiagonal\n   factorization, then prove `IsTN (H_d)` for all `d`.  The symmetry `H_{i,j} = H_{d-i,d-j}`\n   and the boundary rows `e_0, e_d` observed computationally should guide this.\n\n2. **The `h`-vector / interval subdivision in Lean.**  Formalize the face poset, the\n   interval poset, and the order-complex `f`- and `h`-vectors, and prove the transformation\n   law `h(Int \u0394) = H_d \u00b7 h(\u0394)` (a Brenti\u2013Welker\u2013style statement), of which the matrices\n   here are the numerical content.\n\n3. **Cauchy\u2013Binet and closure under products.**  Add the Cauchy\u2013Binet formula to obtain\n   that products of totally nonnegative matrices are totally nonnegative, and the\n   Loewner\u2013Whitney theorem that every totally nonnegative matrix factors into nonnegative\n   bidiagonals \u2014 giving a converse to the construction used here.\n\n4. **Pascal and other subdivision operators.**  The same machinery certifies the\n   (lower-triangular) Pascal matrix and the barycentric / edgewise subdivision\n   transformation matrices as totally nonnegative via their adjacent-operation\n   constructions.\n\n5. **Strict total positivity.**  Strengthen `IsTN` (minors `\u2265 0`) to strict total\n   positivity (minors `> 0`) where it holds, and relate it to real-rootedness of the\n   associated `h`-polynomials.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0799",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6c21e233",
+    "status": "available",
+    "timestamp": "2026-07-09T20:47:51.482127+00:00",
+    "title": "This project formalizes a self-contained theory of **total nonnegativity** (all "
   },
   {
     "consumed_by_exp_id": "",

@@ -1,222 +1,224 @@
 """
-Self-Improving Proofs: A Refinement Calculus on Proof Complexity
-================================================================
+Numerical demonstrations for the Proof-Refinement Framework.
 
-Numerical demonstrations of the refinement theory.
+A *refinement system* for a fixed target proposition consists of:
+  - a collection of proof candidates,
+  - a validity (soundness) predicate on candidates, and
+  - a natural-number complexity measure C.
 
-We model a *proof* of a theorem as a bundle of a complexity value
-    C(P) = length(P) + depth(P) + #lemmas(P)  in the natural numbers,
-together with a marker that the underlying theorem is true.  A proof P'
-*refines* P when it proves the same theorem strictly more simply:
-    P' refines P   <=>   C(P') < C(P).
+A candidate P' *refines* P when both are valid and C(P') < C(P).
 
-Because C(P) is a natural number and the natural numbers are well-ordered,
-the following all hold (and are demonstrated below):
+This script demonstrates, with concrete finite systems, the framework's results:
 
-  * every nonempty family of proofs has a complexity-minimal member;
-  * the limit P_infinity (a globally simplest proof) always exists;
-  * the minimal complexity is a well-defined invariant of the theorem;
-  * no infinite strictly-descending refinement chain exists;
-  * every non-increasing refinement sequence is eventually constant;
-  * yet refinement chains can be arbitrarily long.
+  1. Well-foundedness  -> no infinite refinement chain (chain length <= C(start)).
+  2. Halting           -> a deterministic non-increasing process stabilizes.
+  3. Existence         -> a globally complexity-minimal valid proof always exists.
+  4. Non-uniqueness    -> the simplest proof need not be unique (2 + 2 = 4).
+  5. Local minima      -> a greedy process can get stuck above the global optimum.
+  6. Tightness         -> chains can be arbitrarily long, but always finite.
 
-The script is self-contained: run `python demo.py`.
+All functions are self-contained and type-hinted; no external dependencies.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Callable, List, Optional, Sequence
+from typing import Callable, Dict, Hashable, List, Optional, Sequence
 
-
-# ---------------------------------------------------------------------------
-# The model
-# ---------------------------------------------------------------------------
 
 @dataclass(frozen=True)
-class Proof:
-    """A proof of a (true) theorem, abstracted by its complexity.
+class RefinementSystem:
+    """A refinement system over a finite candidate set.
 
-    Attributes
-    ----------
-    name:
-        A human label for the proof strategy.
-    length:
-        Number of proof steps.
-    depth:
-        Nesting depth of sub-derivations.
-    lemmas:
-        Number of auxiliary lemmas invoked.
-    theorem_holds:
-        Certificate marker that the underlying theorem is true.  A Proof is
-        only meaningful when this is True (existence <=> theorem is true).
+    Attributes:
+        candidates: the finite list of proof candidates (any hashable labels).
+        valid: soundness predicate; valid(c) is True iff c certifies the target.
+        complexity: natural-number complexity measure C on candidates.
     """
 
-    name: str
-    length: int
-    depth: int
-    lemmas: int
-    theorem_holds: bool = True
+    candidates: Sequence[Hashable]
+    valid: Callable[[Hashable], bool]
+    complexity: Callable[[Hashable], int]
 
-    @property
-    def complexity(self) -> int:
-        """C(P) = length(P) + depth(P) + #lemmas(P)."""
-        return self.length + self.depth + self.lemmas
+    def refines(self, p_new: Hashable, p_old: Hashable) -> bool:
+        """Return True iff p_new refines p_old: both valid and strictly simpler."""
+        return (
+            self.valid(p_new)
+            and self.valid(p_old)
+            and self.complexity(p_new) < self.complexity(p_old)
+        )
+
+    def valid_candidates(self) -> List[Hashable]:
+        """Return all valid candidates."""
+        return [c for c in self.candidates if self.valid(c)]
+
+    def global_minimum(self) -> Optional[Hashable]:
+        """Return a globally complexity-minimal valid candidate, or None.
+
+        Existence theorem: whenever a valid candidate exists, so does a minimizer.
+        """
+        valids = self.valid_candidates()
+        if not valids:
+            return None
+        return min(valids, key=self.complexity)
+
+    def all_global_minima(self) -> List[Hashable]:
+        """Return every valid candidate attaining the minimum complexity."""
+        valids = self.valid_candidates()
+        if not valids:
+            return []
+        best = min(self.complexity(c) for c in valids)
+        return [c for c in valids if self.complexity(c) == best]
 
 
-def refines(p: Proof, q: Proof) -> bool:
-    """True iff `p` refines `q`, i.e. C(p) < C(q)."""
-    return p.complexity < q.complexity
+def run_deterministic_process(
+    system: RefinementSystem,
+    step: Callable[[Hashable], Hashable],
+    start: Hashable,
+    max_iters: int = 1000,
+) -> List[Hashable]:
+    """Iterate a deterministic non-increasing step rule until complexity stabilizes.
 
+    Halting theorem: if C(step(c)) <= C(c) for all c, the complexity sequence
+    becomes eventually constant. We stop once the complexity stops changing.
 
-# ---------------------------------------------------------------------------
-# Core algorithms from the theory
-# ---------------------------------------------------------------------------
-
-def minimal_proof(family: Sequence[Proof]) -> Proof:
-    """Return a complexity-minimal member of a nonempty family (Theorem 4.1).
-
-    No member of the family refines the returned proof.
+    Returns the trajectory of visited candidates up to (and including) the point
+    where complexity first stabilizes.
     """
-    if not family:
-        raise ValueError("family must be nonempty")
-    return min(family, key=lambda p: p.complexity)
+    trajectory: List[Hashable] = [start]
+    current = start
+    for _ in range(max_iters):
+        nxt = step(current)
+        if system.complexity(nxt) >= system.complexity(current):
+            # No strict decrease: the deterministic process has stabilized.
+            break
+        trajectory.append(nxt)
+        current = nxt
+    return trajectory
 
 
-def minimal_complexity(family: Sequence[Proof]) -> int:
-    """The well-defined minimal complexity of a nonempty family (Def. 5.2)."""
-    return minimal_proof(family).complexity
+def longest_refinement_chain(system: RefinementSystem, start: Hashable) -> List[Hashable]:
+    """Greedily build a strict refinement chain from `start`.
 
-
-def is_globally_simplest(p: Proof, universe: Sequence[Proof]) -> bool:
-    """True iff no proof in `universe` refines `p` (the P_infinity property)."""
-    return not any(refines(q, p) for q in universe)
-
-
-def refinement_terminates(sequence: Sequence[Proof]) -> Optional[int]:
-    """For a non-increasing sequence, return the first index N after which the
-    complexity is constant (Theorem 6.2); return None if the sequence is not
-    non-increasing.
+    Length bound: the number of steps is at most C(start), since each step
+    decreases a natural-number complexity by at least one.
     """
-    comps = [p.complexity for p in sequence]
-    if any(comps[i + 1] > comps[i] for i in range(len(comps) - 1)):
-        return None  # not non-increasing
-    final = comps[-1]
-    for n, c in enumerate(comps):
-        if c == final:
-            return n
-    return len(comps) - 1
+    chain: List[Hashable] = [start]
+    current = start
+    while True:
+        # pick any strictly simpler valid candidate; here, the simplest available
+        candidates = [
+            c for c in system.candidates if system.refines(c, current)
+        ]
+        if not candidates:
+            break
+        # pick the *closest* simpler candidate to build the longest chain
+        nxt = max(candidates, key=system.complexity)
+        chain.append(nxt)
+        current = nxt
+    return chain
 
 
-def long_refinement_chain(theorem_holds: bool, N: int) -> List[Proof]:
-    """A strictly descending refinement chain of length N+1 (Theorem 7.1).
-
-    The proofs have complexities N, N-1, ..., 0.
-    """
-    if not theorem_holds:
-        raise ValueError("theorem must hold to build proofs of it")
-    return [Proof(name=f"P_{i}", length=N - i, depth=0, lemmas=0) for i in range(N + 1)]
-
-
-def is_strictly_descending(chain: Sequence[Proof]) -> bool:
-    """True iff each proof strictly refines the previous one."""
-    return all(refines(chain[i + 1], chain[i]) for i in range(len(chain) - 1))
-
-
-# ---------------------------------------------------------------------------
-# Demonstration 1: the sqrt(2) worked example (chain 7 -> 4 -> 2)
-# ---------------------------------------------------------------------------
-
-def demo_sqrt2() -> None:
+# --------------------------------------------------------------------------- #
+# Demo 1: Existence + well-foundedness on a generic finite system.
+# --------------------------------------------------------------------------- #
+def demo_existence_and_wellfounded() -> None:
     print("=" * 70)
-    print("DEMO 1  Irrationality of sqrt(2):  the chain  7  ->  4  ->  2")
+    print("DEMO 1: Existence of a simplest proof; well-founded chains")
     print("=" * 70)
-
-    # Complexities engineered to total 7, 4, 2 respectively.
-    strategy_A = Proof("A: classical contradiction", length=4, depth=2, lemmas=1)  # 7
-    strategy_B = Proof("B: via prime divisibility", length=2, depth=1, lemmas=1)   # 4
-    strategy_C = Proof("C: packaged theorem", length=1, depth=1, lemmas=0)         # 2
-
-    family = [strategy_A, strategy_B, strategy_C]
-    for p in family:
-        print(f"  {p.name:32s}  C = {p.complexity}")
-
-    print(f"\n  B refines A? {refines(strategy_B, strategy_A)}  (4 < 7)")
-    print(f"  C refines B? {refines(strategy_C, strategy_B)}  (2 < 4)")
-    print(f"  C refines A (by transitivity)? {refines(strategy_C, strategy_A)}")
-
-    simplest = minimal_proof(family)
-    print(f"\n  Simplest of the three: {simplest.name}  (C = {simplest.complexity})")
-    print(f"  Globally simplest within the family? "
-          f"{is_globally_simplest(simplest, family)}")
-    print(f"  Minimal complexity C_min over the family: {minimal_complexity(family)}")
+    # Candidates labeled by name, all valid (true target); complexities vary.
+    weights: Dict[str, int] = {"draft": 9, "revised": 6, "tight": 4, "book": 2}
+    system = RefinementSystem(
+        candidates=list(weights),
+        valid=lambda c: True,
+        complexity=lambda c: weights[c],
+    )
+    gmin = system.global_minimum()
+    print(f"Complexities: {weights}")
+    print(f"Global minimum (simplest proof): {gmin!r} with C = {weights[gmin]}")
+    chain = longest_refinement_chain(system, "draft")
+    print(f"Greedy refinement chain from 'draft': {chain}")
+    print(f"Chain steps = {len(chain) - 1}, bound C(start) = {weights['draft']} "
+          f"(steps <= bound: {len(chain) - 1 <= weights['draft']})")
+    print()
 
 
-# ---------------------------------------------------------------------------
-# Demonstration 2: uniqueness of the minimal complexity
-# ---------------------------------------------------------------------------
-
-def demo_invariant() -> None:
-    print("\n" + "=" * 70)
-    print("DEMO 2  Two different simplest proofs share the same complexity")
+# --------------------------------------------------------------------------- #
+# Demo 2: Non-uniqueness of the simplest proof (target 2 + 2 = 4).
+# --------------------------------------------------------------------------- #
+def demo_non_unique_minimum() -> None:
     print("=" * 70)
-
-    # Two genuinely different proofs, both of complexity 3.
-    p = Proof("proof P", length=2, depth=1, lemmas=0)  # 3
-    q = Proof("proof Q", length=1, depth=1, lemmas=1)  # 3
-    universe = [p, q, Proof("bulky", length=5, depth=3, lemmas=2)]
-
-    print(f"  C(P) = {p.complexity}, C(Q) = {q.complexity}")
-    print(f"  P globally simplest? {is_globally_simplest(p, universe)}")
-    print(f"  Q globally simplest? {is_globally_simplest(q, universe)}")
-    print(f"  Equal complexity (Theorem 5.1)? {p.complexity == q.complexity}")
-    print("  => The minimal complexity is an invariant of the theorem,")
-    print("     even though the simplest proof object is NOT unique.")
-
-
-# ---------------------------------------------------------------------------
-# Demonstration 3: termination of a non-increasing sequence
-# ---------------------------------------------------------------------------
-
-def demo_termination() -> None:
-    print("\n" + "=" * 70)
-    print("DEMO 3  A non-increasing refinement sequence halts")
+    print("DEMO 2: The simplest proof need not be unique (target: 2 + 2 = 4)")
     print("=" * 70)
+    target_true = (2 + 2 == 4)
+    weights = {"computation": 1, "normalization": 1, "verbose": 3}
+    system = RefinementSystem(
+        candidates=list(weights),
+        valid=lambda c: target_true,     # every candidate valid since target holds
+        complexity=lambda c: weights[c],
+    )
+    minima = system.all_global_minima()
+    print(f"Complexities: {weights}")
+    print(f"All global minima: {minima}")
+    print(f"Number of distinct simplest proofs: {len(minima)}")
+    print()
 
-    # Complexities 9,7,5,5,5,5,...  -- decreasing then frozen.
-    comps = [9, 7, 5, 5, 5, 5]
-    seq = [Proof(f"step {i}", length=c, depth=0, lemmas=0) for i, c in enumerate(comps)]
-    print("  complexities:", [p.complexity for p in seq])
-    N = refinement_terminates(seq)
-    print(f"  Sequence becomes constant from index N = {N} "
-          f"(C = {seq[N].complexity}) onward.")
 
-
-# ---------------------------------------------------------------------------
-# Demonstration 4: arbitrarily long chains that still terminate
-# ---------------------------------------------------------------------------
-
-def demo_long_chains() -> None:
-    print("\n" + "=" * 70)
-    print("DEMO 4  Chains can be arbitrarily long (yet always terminate)")
+# --------------------------------------------------------------------------- #
+# Demo 3: Halting at a LOCAL minimum that is not global.
+# --------------------------------------------------------------------------- #
+def demo_local_minimum_trap() -> None:
     print("=" * 70)
+    print("DEMO 3: A deterministic process trapped at a local minimum")
+    print("=" * 70)
+    weights = {"start": 5, "mid": 4, "local": 3, "global": 2}
+    system = RefinementSystem(
+        candidates=list(weights),
+        valid=lambda c: True,
+        complexity=lambda c: weights[c],
+    )
 
-    for N in (3, 10, 100):
-        chain = long_refinement_chain(theorem_holds=True, N=N)
-        print(f"  N = {N:3d}:  chain length {len(chain):3d}, "
-              f"strictly descending? {is_strictly_descending(chain)}, "
-              f"complexities {chain[0].complexity} -> ... -> {chain[-1].complexity}")
+    def step(c: str) -> str:
+        return {"start": "mid", "mid": "local", "local": "local", "global": "global"}[c]
 
-    print("\n  No bound on chain length exists, but every chain still bottoms")
-    print("  out at complexity 0 -- termination is guaranteed, speed is not.")
+    trajectory = run_deterministic_process(system, step, "start")
+    end = trajectory[-1]
+    gmin = system.global_minimum()
+    print(f"Complexities: {weights}")
+    print(f"Process trajectory: {trajectory}")
+    print(f"Process halts at {end!r} with C = {weights[end]} (a LOCAL minimum)")
+    print(f"True global minimum: {gmin!r} with C = {weights[gmin]}")
+    print(f"'global' refines 'local'? {system.refines('global', 'local')} "
+          f"-- yet the process never reaches it.")
+    print()
+
+
+# --------------------------------------------------------------------------- #
+# Demo 4: Tightness -- arbitrarily long (but finite) refinement chains.
+# --------------------------------------------------------------------------- #
+def demo_arbitrarily_long_chains() -> None:
+    print("=" * 70)
+    print("DEMO 4: Chains can be arbitrarily long, but always finite")
+    print("=" * 70)
+    for m in (3, 7, 20, 100):
+        system = RefinementSystem(
+            candidates=list(range(m + 1)),
+            valid=lambda c: True,
+            complexity=lambda c: int(c),
+        )
+        chain = longest_refinement_chain(system, m)
+        steps = len(chain) - 1
+        print(f"m = {m:>3}: chain of exactly {steps} refinement steps "
+              f"(bound C(start) = {m}, tight: {steps == m})")
+    print()
 
 
 def main() -> None:
-    demo_sqrt2()
-    demo_invariant()
-    demo_termination()
-    demo_long_chains()
-    print("\nAll demonstrations completed.")
+    demo_existence_and_wellfounded()
+    demo_non_unique_minimum()
+    demo_local_minimum_trap()
+    demo_arbitrarily_long_chains()
+    print("All demonstrations complete.")
 
 
 if __name__ == "__main__":

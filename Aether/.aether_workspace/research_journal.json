@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "203b440f",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Frankl's Union-Closed Conjecture\n\nDerived from this cycle's findings (the singleton injection `frankl_singleton`,\nthe top-element lemma `sup_mem`, the 3-universe theorem `frankl_",
-      "quality_score": 0.68208,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T19:21:09",
-      "title": "Frankl's Union-Closed Conjecture: Partial Results"
-    },
-    {
       "cycle_id": "8f5c44bc",
       "domain": "Applications",
       "key_insight": "# Future Directions — Width vs Depth Trade-offs for ReLU Networks\n\nThis cycle closed the **deep upper-bound** side of the depth–width tradeoff,\ncomplementing the catalog's shallow lower bound\n(`TentDe",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-07-09T20:30:17",
       "title": "Monochromatic Pythagorean Triples in Every Level Set of Completely Multiplicative Functions"
+    },
+    {
+      "cycle_id": "6c21e233",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis project formalizes a self-contained theory of **total nonnegativity** (all minors\n`≥ 0`) and applies it to the **interval-subdivision transformation matrices** of finite\nsimp",
+      "quality_score": 0.618,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-09T20:47:56",
+      "title": "Total Positivity of the Interval Subdivision Transformation Matrix"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7115
     }
   ],
-  "last_updated": "2026-07-09T20:30:17",
+  "last_updated": "2026-07-09T20:47:56",
   "open_questions": [
     {
       "context": "continued to `s = -1` at all.  This file proves the rigorous, sorry-free facts on",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "bdd384c4",
-        "quality": 0.83176,
-        "theorems": 14,
-        "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-      },
-      {
         "cycle_id": "2e937390",
         "quality": 0.5295662942477877,
         "theorems": 39,
@@ -3637,6 +3631,12 @@
         "quality": 0.6749863157894737,
         "theorems": 19,
         "title": "Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
+      },
+      {
+        "cycle_id": "6c21e233",
+        "quality": 0.618,
+        "theorems": 20,
+        "title": "Total Positivity of the Interval Subdivision Transformation Matrix"
       }
     ],
     "NumberTheory": [

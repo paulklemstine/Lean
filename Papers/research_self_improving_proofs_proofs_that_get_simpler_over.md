@@ -1,189 +1,391 @@
-# Self-Improving Proofs: A Refinement Calculus on Proof Complexity
+# A Framework for Proof Refinement: Well-Foundedness, Halting, and the Limits of Local Simplification
 
 ## Abstract
 
-We develop a rigorous calculus of *proof refinement*, making precise the idea that a proof of a theorem can be progressively simplified and that this simplification is a well-behaved dynamical process. Each proof $P$ of a proposition $T$ is assigned a **complexity** $C(P) = \mathrm{length}(P) + \mathrm{depth}(P) + \#\mathrm{lemmas}(P) \in \mathbb{N}$, and a proof $P'$ *refines* $P$ when it proves the same theorem strictly more simply, $C(P') < C(P)$. We prove that refinement is a well-founded strict order, that every nonempty family of proofs of $T$ contains a complexity-minimal member, and consequently that as soon as $T$ is provable it possesses a globally simplest proof $P_\infty$ — the limit of the refinement process, which always exists. We show the minimal complexity $C(P_\infty)$ is a well-defined invariant of $T$; that no infinite strictly-descending refinement chain exists; that every non-increasing refinement sequence is eventually constant (termination); and yet that refinement chains can be arbitrarily long. The theory is instantiated on the irrationality of $\sqrt{2}$, exhibiting an explicit chain $C = 7 \rightsquigarrow 4 \rightsquigarrow 2$ whose minimal member is identified. We close by isolating exactly which parts of the informal "self-improving proofs" program are established and which remain open, and lay out a route toward a syntactic complexity measure and a rewrite-based refinement engine.
+Proofs are usually regarded as static objects: a fixed argument establishing a
+fixed statement. In practice, however, proofs are routinely *simplified* —
+lemmas are eliminated, case splits shortened, quantifiers removed — producing new
+proofs of the same theorem with smaller complexity. We formalize this
+observation as a general **refinement system**: a type of proof candidates for a
+fixed target, a validity (soundness) predicate, and a natural-number complexity
+measure. A candidate $P'$ *refines* $P$ when both are valid and $C(P') < C(P)$.
 
-**Keywords.** proof complexity, refinement, well-foundedness, well-ordering, minimal proof, Kolmogorov complexity, termination, irrationality of $\sqrt{2}$.
+We establish three positive structural results. First, refinement is
+**well-founded**: no infinite chain of strict simplifications exists. Second,
+any deterministic, complexity-non-increasing simplification process **halts** in
+the sense that its complexity eventually becomes constant. Third, whenever the
+target is provable at all, a **complexity-minimal** valid proof exists — a
+"simplest proof." We then delimit these results with two counterexamples: the
+simplest proof need **not be unique** (two distinct global minima for the target
+$2+2=4$), and a deterministic process can become trapped at a **local minimum**
+strictly above the global one. Finally, we show that every refinement chain has
+length bounded by its initial complexity, and that this bound is **tight**:
+chains can be made arbitrarily long, giving rigorous content to the intuition
+that the simplest proof may lie an astronomically long — but always finite —
+sequence of refinements away.
+
+**Keywords:** proof complexity, refinement, well-founded relations, local
+minima, well-order, simplification, halting.
+
+---
 
 ## 1. Introduction
 
-A proof is customarily regarded as a static artifact: once verified, it is complete and immutable. Yet mathematical practice tells a different story. The same theorem is reproved again and again, each generation trimming hypotheses, merging cases, replacing bespoke arguments by reusable lemmas, until a folklore "book proof" emerges. This suggests treating a proof not as a fixed object but as a *state* in a dynamical system, with a transition rule — *simplification* — driving it toward an optimum.
+A working mathematician improves proofs constantly. The second draft is cleaner
+than the first; a published proof is often superseded by a slicker one; folklore
+"book proofs" represent decades of collective polishing. Each such act replaces
+one argument with another that proves the same statement more economically. This
+paper takes that informal activity seriously and asks what can be said, in full
+generality, about the *dynamics of proof simplification*.
 
-This paper makes that picture precise and proves its structural backbone. We introduce a minimal but faithful model in which the only feature of a proof we track is a scalar complexity, and we show that the entire qualitative behavior of proof simplification is governed by a single classical fact: the **well-ordering of the natural numbers**. From it we extract, in a tight dependency chain, the existence of simplest proofs, the well-definedness of a theorem's minimal complexity, the impossibility of infinite refinement, the termination of every improving sequence, and — as a counterweight — the unboundedness of chain length.
+We introduce a minimal abstract model — a **refinement system** — in which the
+only structure assumed is:
 
-The central conceptual payoff is a clean separation of two notions that intuition tends to conflate: *how simple can a proof of $T$ get* (a well-defined number, the minimal complexity) versus *how long simplification might take to get there* (unbounded). Both are theorems below.
+1. a set of proof candidates for a fixed target proposition;
+2. a way to tell which candidates are genuine (valid) proofs; and
+3. a natural-number *complexity* assigned to each candidate.
 
-This separation deserves emphasis because informal discussions of "difficulty" routinely blur it. When one says a theorem is *hard*, one might mean that its simplest known argument is intrinsically long — that its minimal complexity is large — or one might mean that, although a short argument exists, finding it (walking the refinement path down to the valley floor) is laborious. The theory below shows these are genuinely orthogonal: a theorem can have minimal complexity as small as one likes while sitting at the far end of a refinement chain of any prescribed length. Any honest account of proof simplification must keep the two apart, and our formalism does so by construction.
+Refinement is then the relation "valid, simpler, and proving the same thing." The
+model is deliberately spare, so that its theorems apply regardless of what one
+means by "proof" (a formal term, a tactic script, an informal write-up) or by
+"complexity" (term size, line count, lemma count, or a weighted mixture such as
+$C(P) = \text{length}(P) + \text{depth}(P) + \#\{\text{lemmas}\}$).
 
-A second theme is *unconditionality*. The existence of the simplest proof requires no search procedure, no bound on the family, and no finiteness. It is a pure consequence of order structure, and it holds the instant the theorem is provable at all. Where much of the folklore around "the book proof" is aspirational — we hope a beautiful proof exists — here it is a theorem that one does.
+### Contributions
 
-### 1.1 Contributions
+- **Well-foundedness** of the refinement relation (§3.1): no infinite descent.
+- **Halting** of deterministic non-increasing processes (§3.2): complexity
+  stabilizes.
+- **Existence of a simplest proof** (§3.3): a global complexity minimum whenever
+  the target is provable.
+- **Non-uniqueness** of the simplest proof (§4.1): distinct global minima.
+- **Local minima that are not global** (§4.2): greedy processes can get stuck.
+- **Length bound and its tightness** (§5): every chain is finite with length
+  $\le$ initial complexity, but chains can be arbitrarily long.
 
-1. A precise model of proofs-as-complexity-bundles and of the refinement relation (§2).
-2. Well-foundedness of refinement and the strict-order laws (§3).
-3. Existence of complexity-minimal proofs in arbitrary nonempty families, and hence a globally simplest proof $P_\infty$ whenever $T$ is provable (§4).
-4. Well-definedness of the minimal complexity $C(P_\infty)$ as an invariant of $T$ (§5).
-5. Non-existence of infinite refinement chains and termination of every non-increasing refinement sequence (§6).
-6. Unboundedness of refinement chain length (§7).
-7. A worked instantiation on $\mathrm{Irrational}(\sqrt 2)$ with the explicit chain $7 \rightsquigarrow 4 \rightsquigarrow 2$ (§8).
-8. A careful account of the theory's scope and its relation to Kolmogorov complexity (§9), and a research program toward a syntactic measure (§10).
+The unifying technical engine is the well-foundedness of the strict order $<$ on
+the natural numbers $\mathbb{N}$, pulled back along the complexity measure.
+
+---
 
 ## 2. The model
 
-### 2.1 Proofs as complexity bundles
+### 2.1 Refinement systems
+
+**Definition 2.1 (Refinement system).** A *refinement system* for a fixed target
+proposition consists of:
+
+- a type $\mathcal{C}$ of **candidates** (concrete proof attempts for the
+  target);
+- a **validity predicate** $\mathrm{valid} : \mathcal{C} \to \mathrm{Prop}$,
+  where $\mathrm{valid}(c)$ asserts that $c$ genuinely certifies the target
+  (soundness); and
+- a **complexity measure** $C : \mathcal{C} \to \mathbb{N}$.
+
+The choice of $\mathbb{N}$ as the codomain of $C$ is not incidental: it is
+precisely the well-ordering of $\mathbb{N}$ that yields every result below.
+
+**Definition 2.2 (Refinement).** For candidates $P', P \in \mathcal{C}$, we say
+$P'$ **refines** $P$, written $P' \succ P$, when
+$$
+\mathrm{valid}(P') \;\wedge\; \mathrm{valid}(P) \;\wedge\; C(P') < C(P).
+$$
+That is, $P'$ and $P$ are both valid proofs of the target and $P'$ is strictly
+simpler.
+
+**Definition 2.3 (Global minimum / simplest proof).** A candidate $c_{\min}$ is a
+*globally minimal* (simplest) proof if $\mathrm{valid}(c_{\min})$ and, for every
+valid candidate $c'$, $C(c_{\min}) \le C(c')$.
+
+**Definition 2.4 (Local minimum of a process).** Given a step relation
+$\rightsquigarrow$ describing the moves a simplification process may make, a
+candidate $p$ is a *local minimum* if there is no $p'$ with $p \rightsquigarrow
+p'$.
+
+---
+
+## 3. Positive results
+
+### 3.1 Refinement is well-founded
+
+**Theorem 3.1 (Well-foundedness).** In any refinement system, the relation
+$\succ$ is well-founded. Equivalently, there is no infinite sequence
+$P_0 \succ P_1 \succ P_2 \succ \cdots$.
+
+*Proof sketch.* Refinement is a sub-relation of the relation "$C(P') < C(P)$,"
+i.e. the pullback (inverse image) of the strict order $<$ on $\mathbb{N}$ along
+the map $C$. The order $<$ on $\mathbb{N}$ is well-founded, and the inverse image
+of a well-founded relation under any map is well-founded. Any sub-relation of a
+well-founded relation is well-founded. Hence $\succ$ is well-founded. Concretely,
+an infinite descending chain of refinements would induce an infinite strictly
+decreasing sequence of natural numbers $C(P_0) > C(P_1) > \cdots$, which is
+impossible. $\qquad\blacksquare$
+
+### 3.2 Deterministic non-increasing processes halt
+
+**Theorem 3.2 (Halting).** Let $\text{step} : \mathcal{C} \to \mathcal{C}$ be a
+deterministic rule with $C(\text{step}(c)) \le C(c)$ for all $c$ (it never
+increases complexity). Then for every starting candidate $c_0$ there exists an
+index $N$ such that for all $n \ge N$,
+$$
+C\big(\text{step}^{[n]}(c_0)\big) = C\big(\text{step}^{[N]}(c_0)\big),
+$$
+where $\text{step}^{[n]}$ denotes $n$-fold iteration. That is, the complexity is
+eventually constant.
+
+*Proof sketch.* Define $a_n = C(\text{step}^{[n]}(c_0))$. Because $\text{step}$
+never increases complexity, $a_{n+1} \le a_n$, so $(a_n)$ is antitone (a
+non-increasing sequence of natural numbers). Its range is a non-empty subset of
+$\mathbb{N}$ bounded above by $a_0$, hence finite and possessing a least element
+$a_N$ attained at some index $N$. For $n \ge N$ monotonicity gives $a_n \le a_N$,
+while minimality gives $a_N \le a_n$; therefore $a_n = a_N$. $\qquad\blacksquare$
+
+Note the hypothesis is only that complexity does not *increase*; the process need
+not strictly decrease it at every step, and indeed a process that has reached a
+fixed point simply repeats it.
+
+### 3.3 A simplest proof always exists
+
+**Theorem 3.3 (Existence of a simplest proof).** If the target has at least one
+valid candidate, then it has a globally minimal valid candidate: a $c_{\min}$
+with $\mathrm{valid}(c_{\min})$ and $C(c_{\min}) \le C(c')$ for every valid $c'$.
+
+*Proof sketch.* Consider the set $V = \{ c : \mathrm{valid}(c) \}$, which is
+non-empty by hypothesis. Since $\succ$ is well-founded (Theorem 3.1), $V$ has a
+$\succ$-minimal element $c_{\min}$: a valid candidate admitting no valid
+refinement. Suppose, for contradiction, $c_{\min}$ were not a global minimum.
+Then some valid $c'$ has $C(c') < C(c_{\min})$, whence $c' \succ c_{\min}$,
+contradicting minimality of $c_{\min}$ in $V$. Therefore $C(c_{\min}) \le C(c')$
+for all valid $c'$. $\qquad\blacksquare$
+
+Theorem 3.3 makes precise the idea of a "limit" of the refinement process: the
+simplest proof exists as an actual object, and the complexity landscape has a
+genuine floor.
+
+---
+
+## 4. The limits of simplification
+
+The results of §3 are entirely positive. It is tempting to infer that diligent,
+step-by-step simplification will deliver the simplest proof, and that this proof
+is canonical. Both inferences are false. This section supplies explicit
+counterexamples.
+
+### 4.1 The simplest proof need not be unique
 
-Fix a proposition $T$.
+Take the (true) target $2 + 2 = 4$. Because the target holds, every candidate is
+valid, so validity imposes no constraint and the entire content is in the
+complexity assignment.
 
-**Definition 2.1 (Proof).** A *proof* of $T$ is a pair
-$$P = (\,C(P),\ \mathrm{cert}(P)\,),$$
-where $C(P) \in \mathbb{N}$ is its **complexity** and $\mathrm{cert}(P)$ is a certificate that $T$ holds. We write $\mathrm{Proof}(T)$ for the type of all proofs of $T$.
+Consider three candidates:
 
-Two remarks fix the intended reading.
+- $r$ ("reflexivity/computation"), with $C(r) = 1$;
+- $n$ ("normalization"), with $C(n) = 1$;
+- $v$ ("verbose"), with $C(v) = 3$.
 
-*The complexity as a composite.* The mission measure is $C(P) = \mathrm{length}(P) + \mathrm{depth}(P) + \#\mathrm{lemmas}(P)$, where $\mathrm{length}$ counts proof steps, $\mathrm{depth}$ the nesting of sub-derivations, and $\#\mathrm{lemmas}$ the number of auxiliary results invoked. Each summand is a nonnegative integer, so their sum is a natural number. Modelling $C(P)$ as an abstract element of $\mathbb{N}$ therefore loses no structure: every claim about the *dynamics* of refinement is a claim about the order structure of $\mathbb{N}$, and it is exactly that structure we analyze. §10 discusses replacing this scalar by a measure derived from a genuine proof-term datatype.
+**Theorem 4.1 (Two distinct global minima).** The candidates $r$ and $n$ are
+distinct, both valid, of equal complexity, and both globally minimal.
 
-*The certificate.* Requiring $\mathrm{cert}(P) : T$ makes $\mathrm{Proof}(T)$ inhabited **iff** $T$ is true. This guarantees refinement is a relation *between genuine proofs of the same theorem* — we never compare or manufacture proofs of falsehoods.
+*Proof sketch.* Distinctness is by construction. Both are valid because the
+target $2+2=4$ is true. Both have complexity $1$. For global minimality, a finite
+case check over the three candidates shows $1 \le C(c')$ for every candidate
+$c'$ (the complexities are $1, 1, 3$), so no candidate is simpler than complexity
+$1$. Hence $r$ and $n$ are two distinct simplest proofs. $\qquad\blacksquare$
 
-### 2.2 Refinement
+Thus "the simplest proof" is properly "*a* simplest proof": minimality is a
+property that may be shared. Any hope of a unique canonical proof, selected by
+complexity alone, is unfounded.
 
-**Definition 2.2 (Refinement).** For $P, Q \in \mathrm{Proof}(T)$, say $P$ **refines** $Q$, written $P \prec Q$, iff
-$$C(P) < C(Q).$$
+### 4.2 A local minimum that is not global
 
-Thus $P \prec Q$ means "$P$ proves the same theorem, strictly more simply." Refinement is literally the pullback of the strict order $<$ on $\mathbb{N}$ along the complexity map $C : \mathrm{Proof}(T) \to \mathbb{N}$.
+We now exhibit a deterministic simplification process that halts (as Theorem 3.2
+guarantees) but at a suboptimal point.
 
-## 3. Refinement is a well-founded strict order
+Let the candidates be $s, m, \ell, g$ ("start, mid, local, global") with
+complexities
+$$
+C(s) = 5,\quad C(m) = 4,\quad C(\ell) = 3,\quad C(g) = 2,
+$$
+and let every candidate be valid. Define the deterministic successor rule
+$$
+\text{next}(s) = m,\quad \text{next}(m) = \ell,\quad \text{next}(\ell) = \ell,\quad \text{next}(g) = g,
+$$
+and let the process's *allowed steps* be $p \rightsquigarrow p'$ iff
+$p' = \text{next}(p)$ **and** $C(p') < C(p)$ (a move is taken only when it
+strictly simplifies).
 
-**Theorem 3.1 (Well-foundedness — the engine).** The relation $\prec$ on $\mathrm{Proof}(T)$ is well-founded: there is no infinite sequence $P_0, P_1, P_2, \dots$ with $P_{n+1} \prec P_n$ for all $n$.
+**Proposition 4.2 (The process descends).** $s \rightsquigarrow m$ and
+$m \rightsquigarrow \ell$.
 
-*Proof.* $\prec$ is the pullback of $<$ on $\mathbb{N}$ along $C$. The pullback (inverse image) of a well-founded relation along any function is well-founded, and $<$ on $\mathbb{N}$ is well-founded (equivalently, $\mathbb{N}$ is well-ordered). Hence $\prec$ is well-founded. $\qquad\blacksquare$
+*Proof sketch.* $\text{next}(s) = m$ with $4 < 5$, and $\text{next}(m) = \ell$
+with $3 < 4$; both are decidable numeric checks. $\qquad\blacksquare$
 
-This single fact drives everything below.
+**Proposition 4.3 ($\ell$ is a local minimum).** There is no $p'$ with
+$\ell \rightsquigarrow p'$.
 
-**Theorem 3.2 (Transitivity).** If $P \prec Q$ and $Q \prec R$ then $P \prec R$.
+*Proof sketch.* The only candidate the rule can produce from $\ell$ is
+$\text{next}(\ell) = \ell$, and the step requires $C(\ell) < C(\ell)$, i.e.
+$3 < 3$, which is false. Hence no allowed step exists. $\qquad\blacksquare$
 
-*Proof.* $C(P) < C(Q) < C(R)$, and $<$ on $\mathbb{N}$ is transitive. $\qquad\blacksquare$
+**Proposition 4.4 ($\ell$ is not a global minimum).** The candidate $g$ is valid
+and refines $\ell$ in the sense of Definition 2.2, since $g$ and $\ell$ are valid
+and $C(g) = 2 < 3 = C(\ell)$.
 
-**Theorem 3.3 (Irreflexivity).** For every $P$, $\lnot (P \prec P)$.
+*Proof sketch.* Validity is immediate (all candidates are valid), and $2 < 3$ is
+a numeric check. $\qquad\blacksquare$
 
-*Proof.* $C(P) < C(P)$ is false. $\qquad\blacksquare$
+**Theorem 4.5 (Trapped process).** Starting from $s$, the process descends
+$s \rightsquigarrow m \rightsquigarrow \ell$ and then halts at $\ell$
+(complexity $3$), even though a strictly simpler valid candidate $g$ (complexity
+$2$) exists. Consequently, well-foundedness, halting, and existence of a global
+minimum do **not** imply that a deterministic process reaches the global optimum.
 
-Together, Theorems 3.2–3.3 make $\prec$ a strict order, and Theorem 3.1 makes it well-founded.
+*Proof sketch.* Combine Propositions 4.2–4.4. The process reaches $\ell$ and can
+take no further step (4.3), yet $g$ is a strictly simpler valid proof (4.4). The
+optimum $g$ is unreachable because it is not in the image of the process's step
+rule from $\ell$. $\qquad\blacksquare$
 
-## 4. Existence of the simplest proof and the limit $P_\infty$
+This is the central cautionary result. The abstract refinement relation
+$\succ$ still connects $\ell$ to $g$; what fails is that a *particular
+deterministic strategy* need not follow that connection. Greedy local
+simplification and global optimality are genuinely different.
 
-**Theorem 4.1 (Minimal member of a family).** Let $S \subseteq \mathrm{Proof}(T)$ be nonempty. Then there exists $P \in S$ such that no $Q \in S$ refines $P$:
-$$\exists\, P \in S,\ \forall\, Q \in S,\ \lnot(Q \prec P).$$
+---
+
+## 5. How long can simplification take?
 
-*Proof.* Direct from well-foundedness (Theorem 3.1): a well-founded relation has a minimal element on every nonempty subset. Concretely, $\{\,C(Q) : Q \in S\,\}$ is a nonempty set of naturals, so it has a least element $m$; any $P \in S$ with $C(P) = m$ is minimal, since $Q \prec P$ would give $C(Q) < m$, contradicting minimality of $m$. $\qquad\blacksquare$
-
-No finiteness of $S$ is required, and $P$ need not be unique.
-
-**Theorem 4.2 (The limit always exists).** If $T$ has at least one proof $P_0$, then it has a *globally simplest* proof $P$: one that no proof of $T$ can refine,
-$$\exists\, P \in \mathrm{Proof}(T),\ \forall\, Q \in \mathrm{Proof}(T),\ \lnot(Q \prec P).$$
-
-*Proof.* Apply Theorem 4.1 to the total family $S = \mathrm{Proof}(T)$, which is nonempty since $P_0 \in S$. The resulting minimal member is minimal against *all* proofs of $T$. $\qquad\blacksquare$
-
-We call such a $P$ the **limit** $P_\infty$ of the refinement process. Theorem 4.2 says $P_\infty$ exists the moment $T$ is provable — no construction, continuity, or search is needed for the guarantee.
-
-## 5. The minimal complexity is an invariant of the theorem
-
-Distinct globally simplest proofs may exist, but they cannot disagree on complexity.
-
-**Theorem 5.1 (Uniqueness of the minimal complexity).** If $P$ and $Q$ are both globally simplest proofs of $T$ (each refined by no proof of $T$), then $C(P) = C(Q)$.
-
-*Proof.* Since $Q$ does not refine $P$, $\lnot(C(Q) < C(P))$, i.e. $C(P) \le C(Q)$. Since $P$ does not refine $Q$, $C(Q) \le C(P)$. By antisymmetry of $\le$ on $\mathbb{N}$, $C(P) = C(Q)$. $\qquad\blacksquare$
-
-**Definition 5.2 (Minimal complexity).** For a provable $T$, define $C_{\min}(T) := C(P_\infty)$, the common complexity of all globally simplest proofs. By Theorem 5.1 this is well-defined and independent of the chosen simplest proof.
-
-$C_{\min}(T)$ is the intrinsic, irreducible cost of proving $T$ *within this measure* — a concrete analogue of a Kolmogorov-minimal description (see §9 for the precise scope of this analogy).
-
-## 6. No infinite refinement, and termination
-
-**Theorem 6.1 (No infinite refinement).** There is no sequence $f : \mathbb{N} \to \mathrm{Proof}(T)$ with $f(n+1) \prec f(n)$ for all $n$.
-
-*Proof.* Suppose such $f$ exists. The range $\{f(n) : n \in \mathbb{N}\}$ is nonempty, so by Theorem 4.1 it has a minimal member $f(k)$. But $f(k+1) \prec f(k)$ with $f(k+1)$ in the range contradicts minimality. $\qquad\blacksquare$
-
-(This is Theorem 3.1 re-derived through the minimal-member lemma, emphasizing the chain of dependence.)
-
-**Theorem 6.2 (Termination).** Let $f : \mathbb{N} \to \mathrm{Proof}(T)$ have non-increasing complexity, i.e. $n \le m \Rightarrow C(f(m)) \le C(f(n))$ (the sequence "never gets more complex"). Then $f$ is eventually constant in complexity: there is $N$ with
-$$\forall\, n \ge N,\ C(f(n)) = C(f(N)).$$
-
-*Proof.* By Theorem 4.1 the range of $f$ has a complexity-minimal member $f(N)$. For $n \ge N$, monotonicity gives $C(f(n)) \le C(f(N))$, while minimality of $f(N)$ gives $\lnot(C(f(n)) < C(f(N)))$, i.e. $C(f(N)) \le C(f(n))$. Hence $C(f(n)) = C(f(N))$. $\qquad\blacksquare$
-
-Theorem 6.2 is the precise form of the slogan $C(P_N) = C(P_{N+1}) = \cdots = C(P_\infty)$. Note it locks the *complexity*, not the proof object: after stage $N$ the proofs may still vary, but only among proofs of the same minimal complexity reached along the sequence.
-
-## 7. Chains can be arbitrarily long
-
-Termination does not bound the *time to terminate*.
-
-**Theorem 7.1 (Unbounded chain length).** If $T$ holds, then for every $N \in \mathbb{N}$ there is a strictly descending refinement chain of length $N+1$: a family $f : \{0, 1, \dots, N\} \to \mathrm{Proof}(T)$ with $C(f(i))$ strictly decreasing in $i$.
-
-*Proof.* Because $T$ holds, we may form, for each $i \in \{0,\dots,N\}$, a proof $f(i)$ with certificate the given proof of $T$ and complexity $C(f(i)) = N - i$ (padding the complexity by irrelevant steps). Then $i < j \le N$ implies $N - i > N - j \ge 0$, so $C(f(j)) < C(f(i))$; the chain $f(0), \dots, f(N)$ has strictly decreasing complexities $N, N-1, \dots, 0$. $\qquad\blacksquare$
-
-Corollary: although every refinement process terminates (Theorem 6.2), there is no uniform bound on how many strict steps it may take. This captures the intuition that a theorem may possess a very simple $P_\infty$ that is nonetheless reachable only through an astronomically long simplification.
-
-## 8. Worked example: the irrationality of $\sqrt{2}$
-
-We instantiate the theory at $T = \mathrm{Irrational}(\sqrt{2})$, a true proposition, and compare three proof strategies by their complexities.
-
-**Strategy A — classical proof by contradiction ($C = 7$).** Assume $\sqrt 2 = a/b$ in lowest terms; then $a^2 = 2 b^2$, so $2 \mid a^2$, so $2 \mid a$; write $a = 2c$, obtain $b^2 = 2 c^2$, so $2 \mid b$; this contradicts $\gcd(a,b)=1$. The step count, the nested even/odd case reasoning, and the several arithmetic lemmas invoked accumulate to complexity $7$.
-
-**Strategy B — via prime divisibility ($C = 4$).** Use the lemma "if a prime $p$ divides $n^2$ then $p \mid n$." For $p = 2$ this absorbs the two separate "$a$ even" and "$b$ even" deductions into one reusable principle, cutting length, depth, and lemma-count to total complexity $4$.
-
-**Strategy C — the packaged theorem ($C = 2$).** Invoke the finished result that $\sqrt 2$ is irrational as a single named fact. Complexity $2$ (state and apply).
-
-These three proofs form a nonempty family $S = \{A, B, C\} \subseteq \mathrm{Proof}(\mathrm{Irrational}(\sqrt2))$ with complexities $7, 4, 2$. We record:
-
-**Proposition 8.1 (The chain $7 \rightsquigarrow 4 \rightsquigarrow 2$).** $B \prec A$ and $C \prec B$ (since $4 < 7$ and $2 < 4$), and by transitivity $C \prec A$. Thus $A \rightsquigarrow B \rightsquigarrow C$ is a genuine refinement chain.
-
-**Proposition 8.2 (Simplest of the three).** $C$ is the minimal member of $S$: no member of $S$ refines $C$, because none has complexity $< 2$. By Theorem 4.1 this is exactly the guaranteed minimal member for the family $S$, and $C_{\min}$ restricted to $S$ equals $2$.
-
-This concrete episode is the abstract theory in miniature: a nonempty family of proofs, a guaranteed minimal member, a strictly descending chain realizing successive refinements, and a well-defined minimal complexity.
-
-The example also illustrates the two axes of §1 in one picture. All three strategies prove the very same theorem, and the packaged proof — complexity $2$ — is genuinely simple. Yet historically the community reached it only after generations of reorganization: first the classical contradiction, then its distillation through the prime-divisibility lemma, then the packaging of the whole argument as a single citable fact. The minimal complexity ($2$, over this family) is small; the refinement path that led there was long. The abstract theorems say this pattern is not an accident of $\sqrt2$ but the generic shape of proof simplification.
-
-One can tabulate the family compactly. Writing each proof as $(\mathrm{length}, \mathrm{depth}, \#\mathrm{lemmas})$:
-
-| Strategy | length | depth | #lemmas | $C$ |
-|---|---|---|---|---|
-| A: classical contradiction | 4 | 2 | 1 | 7 |
-| B: via prime divisibility | 2 | 1 | 1 | 4 |
-| C: packaged theorem | 1 | 1 | 0 | 2 |
-
-Each row certifies a true proof of the same theorem; the strictly decreasing final column is the chain $7 \rightsquigarrow 4 \rightsquigarrow 2$, and the bottom row is the minimal member guaranteed by Theorem 4.1.
-
-## 9. Scope: what is and is not claimed
-
-The informal program speaks of "the simplest proof in the sense of Kolmogorov complexity." We are deliberately precise about the correspondence.
-
-- **What holds.** Bundling $\mathrm{length} + \mathrm{depth} + \#\mathrm{lemmas}$ into a single $C \in \mathbb{N}$ yields, via Theorem 5.1, a well-defined *minimal complexity value* $C_{\min}(T)$. This is the honest formal counterpart of a minimal-description length *within this measure*.
-- **What does not.** We do **not** claim uniqueness of the simplest *proof object*: there may be many proofs achieving complexity $C_{\min}(T)$. Theorem 5.1 asserts uniqueness of the *value*, not of the witness. Nor do we claim any connection to the uncomputable Kolmogorov complexity $K$; $C_{\min}$ here is defined relative to the chosen additive measure and is not asserted to be uncomputable or to coincide with $K$.
-
-This scoping is what makes the theory clean: every theorem is a statement about the order structure of $\mathbb{N}$ pulled back along $C$, and each is proved without appeal to any informal intuition.
-
-### 9.1 Design rationale: why a scalar complexity suffices
-
-A reader might object that collapsing a rich, structured proof into a single number throws away everything interesting. Two responses justify the choice. First, the *dynamics* of refinement — the questions of existence, uniqueness of value, termination, and chain length — depend only on how complexities compare, i.e. on the total preorder that $C$ induces on proofs. Any faithful model of "strictly simpler" must at minimum give such a comparison; our scalar model gives exactly it and nothing extraneous, so the theorems isolate precisely the order-theoretic content of the informal program. Second, the scalar is not a straitjacket: §10 explains how to *derive* it from a genuine proof-term datatype so that $\mathrm{length}$, $\mathrm{depth}$, and $\#\mathrm{lemmas}$ become computed statistics rather than posited ones. The theorems proved here transfer verbatim to any such derived $C$, because their proofs use only that $C$ lands in a well-ordered set. In this sense the abstract development is a reusable core: instantiate $C$ however one likes, and the entire chain of consequences follows for free.
-
-### 9.2 Relation to descending-chain conditions
-
-The backbone of the theory is the *descending chain condition* (DCC) on $\mathbb{N}$: there is no infinite strictly decreasing sequence. Structures satisfying a DCC pervade mathematics — Noetherian rings and modules, well-founded recursions, ordinal-indexed constructions, and termination arguments in rewriting theory all rest on it. Our contribution is to observe that proof simplification, once complexity is measured in a well-ordered set, is *another* instance of this pattern, and to draw out its specific consequences (existence of simplest proofs, invariance of minimal complexity, termination of improving sequences). The unboundedness result (Theorem 7.1) is the familiar companion to every DCC argument: well-foundedness controls *whether* descent stops, never *when*. Recognizing proof refinement as a DCC phenomenon both explains why the results are robust and points to the natural strengthenings — confluence and quantitative bounds — pursued in §10.
-
-## 10. Discussion and future directions
-
-The results isolate the mathematical core of "self-improving proofs" — the well-ordering of complexity — and derive from it a complete qualitative picture: refinement is a well-founded strict order (Thms 3.1–3.3); every nonempty family has a simplest member (Thm 4.1); the limit $P_\infty$ exists whenever $T$ is provable (Thm 4.2); its complexity is an invariant (Thm 5.1); infinite refinement is impossible (Thm 6.1) and every improving sequence halts (Thm 6.2); yet chains are unbounded in length (Thm 7.1). The $\sqrt2$ instance (§8) shows the apparatus in action.
-
-**Future directions.**
-
-1. **A syntactic complexity measure.** Replace the abstract $C : \mathbb{N}$ by a function computed from a genuine inductive proof-term datatype (constructors for introduction, application, case analysis, lemma references, …), so that $\mathrm{length}$, $\mathrm{depth}$, and $\#\mathrm{lemmas}$ are *derived* rather than posited; then re-establish the entire chain for this concrete $C$.
-
-2. **Refinement rules as rewrites.** Model the specific moves — "eliminate an unnecessary lemma," "shorten a case split," "remove a redundant quantifier" — as operations on proof terms, and prove each is complexity-non-increasing. The abstract results then certify termination of any pipeline built from such rules.
-
-3. **Confluence and canonical forms.** Determine whether a fixed set of refinement rewrites is confluent, yielding a *unique normal-form proof* rather than merely a unique minimal complexity — the natural strengthening of Theorem 5.1.
-
-4. **Quantitative bounds.** Theorem 7.1 shows chains are unbounded; a refinement would relate maximal chain length to starting complexity for a *specific* rewrite system, capturing the "$10^{100}$ refinements" intuition as an explicit (e.g. exponential) bound.
-
-## 11. Conclusion
-
-Treating proofs as living objects and refinement as a downhill flow, we have shown the flow is globally well-behaved: it cannot cycle, cannot run forever, and always reaches a valley floor whose height is an invariant of the theorem — while being free to take arbitrarily long to get there. Elegance, on this account, is not merely aesthetic: the simplest proof exists, and its cost is a number attached to the theorem for all time.
+Well-foundedness (Theorem 3.1) tells us every refinement chain is finite, but
+says nothing about *how* finite. We now quantify.
+
+**Theorem 5.1 (Length bound).** Any strict refinement chain
+$P_0 \succ P_1 \succ \cdots \succ P_k$ satisfies $k \le C(P_0)$.
+
+*Proof sketch.* Each step strictly decreases a natural-number complexity, so
+$C(P_0) > C(P_1) > \cdots > C(P_k) \ge 0$. A strictly decreasing chain of
+natural numbers starting at $C(P_0)$ has at most $C(P_0)$ steps. $\qquad
+\blacksquare$
+
+**Theorem 5.2 (Tightness / arbitrarily long chains).** For every $m \in
+\mathbb{N}$ there is a refinement system and a genuine refinement chain of
+exactly $m$ steps. Hence there is no uniform bound on chain length valid across
+all targets.
+
+*Proof sketch.* Fix $m$. Take candidates $0, 1, \dots, m$ (all valid, e.g. for a
+true target), and set $C(i) = i$. Then $m \succ m-1 \succ \cdots \succ 1 \succ 0$
+is a strict refinement chain of length exactly $m$, since each step decreases
+complexity by one and all candidates are valid. As $m$ ranges over $\mathbb{N}$,
+chain lengths are unbounded. $\qquad\blacksquare$
+
+Together, Theorems 5.1 and 5.2 give a precise sense to the folklore claim that
+the simplest proof of a theorem might be reached only after an astronomically
+long sequence of refinements (say $10^{100}$): the number of refinement steps is
+always **finite** but subject to **no universal bound**. The road down to the
+simplest proof is guaranteed to end, yet may be arbitrarily long.
+
+---
+
+## 6. Algorithms
+
+The theory suggests two natural algorithms, both grounded in the results above.
+
+**Algorithm A (Iterative simplification to a local minimum).** Given a
+non-increasing deterministic step rule and a start candidate, iterate until the
+complexity stops changing. Theorem 3.2 guarantees termination; the result is a
+local minimum of the process, which by §4.2 need not be global.
+
+**Algorithm B (Exhaustive search for the global minimum).** Over a finite (or
+finitely enumerable) candidate space, filter to valid candidates and select one
+of minimum complexity. Theorem 3.3 guarantees such a candidate exists; Theorem
+4.1 warns that the minimizer may not be unique, so any tie-break is a convention.
+
+The contrast between A and B is exactly the contrast between local and global
+optimization. A is cheap and always halts but can be trapped; B is correct but
+requires surveying the whole candidate space.
+
+---
+
+## 7. Applications and connections
+
+- **Automated proof simplification.** Tactic-level or term-level simplifiers are
+  instances of Algorithm A. The theory explains both why they always terminate
+  (Theorem 3.2) and why they may leave a strictly simpler proof on the table
+  (Theorem 4.5). To recover global optimality one must either enlarge the step
+  relation or switch to a search strategy (Algorithm B).
+
+- **Optimization in general.** The local-versus-global gap here is the same
+  phenomenon that appears in gradient descent on non-convex landscapes, energy
+  minimization in physics, and lossless compression. "Downhill is easy;
+  the bottom is hard" is a structural fact, not an artifact of any particular
+  domain.
+
+- **The book-proof heuristic.** The existence of a simplest proof (Theorem 3.3)
+  formalizes the aspiration behind "proofs from the book," while non-uniqueness
+  (Theorem 4.1) tempers it: there may be several equally minimal book proofs.
+
+---
+
+## 8. Discussion
+
+The framework isolates exactly which optimistic intuitions about proof
+simplification are correct and which are not. Correct: simplification terminates,
+a simplest proof exists, automated polishing stabilizes. Incorrect: that greedy
+polishing reaches the simplest proof, and that the simplest proof is unique.
+
+The single mathematical fact responsible for the positive results is the
+well-ordering of $\mathbb{N}$ under $<$. This suggests the theory is robust to
+generalization: replacing $\mathbb{N}$ by any well-founded order (e.g. a
+lexicographic product $\text{length} \times \text{depth} \times \#\text{lemmas}$,
+or the ordinals) preserves well-foundedness and hence the existence and
+termination results, while the counterexamples of §4 are already about the gap
+between a relation and a chosen sub-process, independent of the codomain of $C$.
+
+---
+
+## 9. Future directions
+
+We formalized a proof-refinement system for a fixed target proposition $T$: an
+abstract type of candidate proofs, a natural-valued complexity $C$, a validity
+predicate, and a soundness guarantee. Refinement is $C(P') < C(P)$ between valid
+candidates. We proved: refinement is well-founded (no infinite strict
+simplification); finite chains are length-bounded by the initial complexity, and
+this bound is tight (for every $m$ there is a genuine refinement chain of exactly
+$m$ steps — finite, but with no uniform length bound); every non-increasing
+refinement process halts; a simplest proof exists; but the halting limit need not
+be simplest, with a concrete $\sqrt 2$-flavored counterexample. Building on this:
+
+1. **Syntactic complexity.** Replace the abstract $C$ with a genuine measure on
+   proof terms/tactic scripts ($\text{length} + \text{depth} + \#\text{lemmas}$)
+   and re-derive the theorems for that concrete $C$.
+
+2. **Steepest-descent refinement.** Model a refinement *strategy* as a function
+   choosing the next candidate, and characterize which strategies do reach the
+   global minimum (e.g. always pick a strict refinement when one exists). The
+   present counterexample shows arbitrary non-increasing strategies fail.
+
+3. **Multi-objective complexity.** Take $C$ valued in a well-order other than
+   $\mathbb{N}$ (lexicographic $\text{length} \times \text{depth} \times
+   \#\text{lemmas}$, or ordinals) and check which results survive;
+   well-foundedness generalizes to any well-founded order.
+
+4. **Uncomputability of the optimum.** Formalize that "the Kolmogorov-minimal
+   proof" is not computable, sharpening why local refinement cannot in general
+   attain it.
+
+5. **Quantitative arbitrariness.** The tightness of the length bound is
+   established: for every $m$ there is a system with a strict refinement chain of
+   exactly $m$ steps, matching the $10^{100}$ remark. A natural extension is to
+   exhibit chains whose length as a function of the theorem's statement size
+   grows faster than any computable function, sharpening the "arbitrarily long"
+   slogan quantitatively.
+
+---
+
+## 10. Conclusion
+
+A proof, viewed through the lens of complexity, is not a static artifact but a
+point in a landscape connected by refinement. That landscape is well-founded, so
+descent always terminates; it has a floor, so a simplest proof always exists; and
+non-increasing processes always come to rest. But its minima can be plural, and
+local descent can halt above the true bottom. The simplest proof of a theorem is
+guaranteed to exist and to be finitely far away — yet finding it, in general,
+demands more than diligent step-by-step improvement.
