@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "0518b354",
+    "consumed_by_exp_id": "",
     "description": "L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable \u2014 there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domains": [
       "Novelty",
@@ -13,7 +13,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T16:01:43.876173+00:00",
     "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
   },
@@ -6127,7 +6127,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit logarithmic bound on metric dimension of doubly regular tournaments"
   },
   {
-    "consumed_by_exp_id": "874776c2",
+    "consumed_by_exp_id": "",
     "description": "The paper proves that for k \u2265 3 and sufficiently large n, the maximum number of points in an n \u00d7 n grid with no k+1 collinear points equals kn. This conjecture asserts that 'sufficiently large' can be replaced by the explicit threshold n \u2265 k. Note that for n \u2264 k the whole grid has no k+1 collinear points so f_k(n) = n\u00b2, and for n = k we get f_k(k) = k\u00b2 = k\u00b7k, making n \u2265 k the natural boundary. The conjecture predicts that for all k \u2265 3 and n \u2265 k, the trivial upper bound kn is always achievable.",
     "domains": [
       "Pythagorean"
@@ -6136,7 +6136,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05255v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T06:16:15.118766+00:00",
     "title": "Explicit Threshold for No-(k+1)-in-line: f_k(n) = kn for all k \u2265 3 and n \u2265 k"
   },
@@ -7368,7 +7368,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence and uniqueness of microscopic weightings on finite strictly negative type metric spaces"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a6d77751",
     "description": "For an elliptic curve E over Q with good supersingular reduction at 2 and square-free D \u22611 mod 4, the difference in sharp/flat \u03bb-invariants under quadratic twist by D should include a term proportional to the \u03bc-invariant when \u03bc \u2260 0.",
     "domains": [
       "Geometry"
@@ -7377,7 +7377,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05305v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T01:05:41.844138+00:00",
     "title": "Extension of Matsuno's Formula for Non-Vanishing \u03bc-Invariants"
   },
@@ -8810,12 +8810,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize that any two objects satisfying the four essential properties (axioms) shared by honeycombs and spectra of Hermitian triples are provably equivalent in the context of the Knutson-Tao correspondence.",
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "id": "fd_0728",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06710v1",
+    "status": "available",
+    "timestamp": "2026-07-09T11:24:55.775621+00:00",
+    "title": "Four Axioms Characterize the Equivalence of Honeycombs and Horn Triples"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For every composition \u03b1 of length r \u2264 R, the differential operator \u2202_\u03b1 = \u2202_{i1}\u22ef\u2202_{ir} acting on the polynomial ring \u211a[X_1,\u2026,X_R] yields a non-zero scalar multiple of the basis element X_{i1}\u2227\u22ef\u2227X_{ir} in \u2227^r V, where \u2202_i = (1/i!)\u00b7(d/dX_i)|_{X=0}. Moreover, the scalar equals the sign of the permutation that sorts (i1,\u2026,ir). This equality holds for all r and can be tested computationally for small values.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0728",
+    "id": "fd_0729",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07667v1",
@@ -8829,7 +8844,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0729",
+    "id": "fd_0730",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07641v1",
@@ -8843,7 +8858,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0730",
+    "id": "fd_0731",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07638v1",
@@ -8858,7 +8873,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0731",
+    "id": "fd_0732",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07566v1",
@@ -8873,7 +8888,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0732",
+    "id": "fd_0733",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07564v1",
@@ -8888,7 +8903,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0733",
+    "id": "fd_0734",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07458v1",
@@ -8902,7 +8917,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0734",
+    "id": "fd_0735",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07448v1",
@@ -8917,7 +8932,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0735",
+    "id": "fd_0736",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07407v1",
@@ -8932,7 +8947,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0736",
+    "id": "fd_0737",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07392v1",
@@ -8946,7 +8961,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0737",
+    "id": "fd_0738",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07404v1",
@@ -8961,7 +8976,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0738",
+    "id": "fd_0739",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07381v1",
@@ -8975,7 +8990,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0739",
+    "id": "fd_0740",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07239v1",
@@ -8990,7 +9005,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0740",
+    "id": "fd_0741",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07259v1",
@@ -9005,7 +9020,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0741",
+    "id": "fd_0742",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07063v1",
@@ -9019,7 +9034,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0742",
+    "id": "fd_0743",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07030v1",
@@ -9033,7 +9048,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0743",
+    "id": "fd_0744",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06899v1",
@@ -9042,7 +9057,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Structure of m-fold covers of Bruhat-Tits trees for GL\u2082 over local fields"
   },
   {
-    "consumed_by_exp_id": "a88deb31",
+    "consumed_by_exp_id": "",
+    "description": "For any two monotone paths H\u2081 and H\u2082 with reflection groups \u0393\u2081 and \u0393\u2082, the reflective Ramsey number R(H\u2081^\u0393\u2081, H\u2082^\u0393\u2082) is strictly greater than the dihedral Ramsey number R(H\u2081^D\u2081, H\u2082^D\u2082), where D\u2081 and D\u2082 are dihedral groups on their vertex sets.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0745",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06817v1",
+    "status": "available",
+    "timestamp": "2026-07-09T11:26:21.174361+00:00",
+    "title": "Reflective Ramsey Numbers Exceed Dihedral Ramsey Numbers for Monotone Paths"
+  },
+  {
+    "consumed_by_exp_id": "77c07bb4",
     "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers \u2014 anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension \u2014 they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property \u2014 it's not about content quality but about the sheaf cohomology of the social network.",
     "domains": [
       "Novelty",

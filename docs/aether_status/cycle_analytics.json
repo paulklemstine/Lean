@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-09T10:37:39.614499+00:00",
+  "last_updated": "2026-07-09T11:24:21.809871+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -301,6 +301,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-09T10:37:39.586092+00:00",
       "title": "Extension of Gaussian CLT to Rademacher random multiplicative functions in all short intervals"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4676,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 9,
+      "domain": "Shared",
+      "duration_seconds": 2903.0092775821686,
+      "end_time": 1783596105.6855512,
+      "files_integrated": 0,
+      "job_id": "a88deb31",
+      "outcome_quality": 0.0,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v27",
+      "phase_b_skip_reason": "low_quality",
+      "phase_b_skipped": true,
+      "prompt_version": "v27",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.8,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7426,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.7697,
+        "novelty": 0.8118,
+        "proof_depth": 0.7517,
+        "usefulness": 0.8759
+      },
+      "quality_score": 0.1491092883116883,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783593202.6762736,
+      "strategy_count": 0,
+      "theorem_count": 13,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 8,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-09T11:24:21.785136+00:00",
+      "title": "The Mathematics of Memes: Viral Information Topology"
     }
   ]
 }

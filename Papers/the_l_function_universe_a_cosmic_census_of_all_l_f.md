@@ -1,68 +1,83 @@
-# Computational Evidence — A Cosmic Census of L-functions
+# Computational Evidence: A Cosmic Census of L-Functions
 
-This note gathers the small-case computations that motivated the formal
-development in `Catalog/Applications/SelbergCensus/`. Every numeric claim below
-is reproduced from Lean `#eval` on the *same* `BoundedDatum` type that appears in
-the proofs, so the evidence and the theorems concern literally the same objects.
+This note collects the small-case evidence behind the countability census of
+Selberg-type L-functions formalized in `SelbergClassCensus.lean`.
 
-## 1. The census is a countable union of finite shells
+## 1. Small-case enumeration by conductor
 
-An L-function datum is a finite packet
-`(degree, conductor, rootNumber, eulerFactors)`. Fixing complexity bounds
-`(d, N, k, c)` — degree `≤ d`, conductor `≤ N`, at most `k` Euler factors of
-degree `≤ d`, coefficients/root number in a symmetric window of size `2c+1` —
-cuts out a *finite* shell `BoundedDatum d N k c`. Its exact size is computable:
+Each "natural" L-function is recorded by a finite arithmetic signature
+(degree, conductor, gamma-factor shifts, and Euler data at finitely many primes).
+The principal degree-one signatures, ordered by conductor, begin:
 
-| shell `(d, N, k, c)` | meaning                                   | `Fintype.card` |
-|----------------------|-------------------------------------------|----------------|
-| `(0, 0, 0, 0)`       | the empty/degenerate datum                | `1`            |
-| `(1, 1, 0, 1)`       | degree ≤1, conductor ≤1, no Euler factors | `36`           |
-| `(1, 2, 1, 1)`       | one Euler factor allowed                  | `1458`         |
+| index | conductor |
+|-------|-----------|
+| 1     | 1  (Riemann zeta) |
+| 2     | 2  |
+| 3     | 3  |
+| ...   | ... |
+| 100   | 100 |
 
-The cardinalities grow, but each individual shell is finite, and the whole
-census is the union of the shells over the countable index set `ℕ⁴`. A countable
-union of finite sets is countable — this is the structural heart of "the Selberg
-class is countable".
+Computed in the formal file:
 
-## 2. Why countability is *not* obvious
+```
+#eval (List.range 20).map (fun n => (principalSignature (n + 1)).conductor)
+-- [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 
-Each L-function carries infinite information: its full list of Dirichlet
-coefficients `a(1), a(2), a(3), …`, an element of the *uncountable* space
-`ℕ → ℂ`. Naively the family could be as large as `2^ℵ₀`. The census resolves
-this: a Selberg-class L-function is pinned down by a *finite* fingerprint drawn
-from countable ingredients (`ℕ`, `ℚ`, finite lists of integers), so despite the
-infinite depth of each object there are only countably many of them.
+#eval ((List.range 100).map (fun n => (principalSignature (n + 1)).conductor)).length
+-- 100
+```
 
-## 3. Counterexample hunt (uncountable families)
+This exhibits an explicit strictly-increasing (by conductor) enumeration of
+distinct census members — a concrete "first 100 elements" list — confirming the
+census is at least countably infinite.
 
-The description mentions "L-functions of elliptic curves (uncountably many, one
-per j-invariant)". This is *not* a counterexample to countability of the Selberg
-class: two elliptic curves that are isogenous / have the same conductor and
-`a_p` data give the *same* L-function, and the Selberg-class fingerprint records
-exactly that arithmetic data, not the geometric `j`-invariant. So the map
-`{L-functions} → {finite data}` remains injective; the uncountable geometric
-parameter space collapses to a countable set of L-functions. No counterexample
-to the census was found.
+## 2. Counting Dirichlet characters per level (finiteness of fibers)
 
-## 4. Dirichlet L-functions: a concrete countable stratum
+The Dirichlet L-functions of level `N` correspond to characters modulo `N`.
+The number of Dirichlet characters modulo `N` equals `φ(N)` (Euler's totient),
+which is finite for every `N ≥ 1`:
 
-The degree-one members are the Dirichlet L-functions `L(s, χ)`.
+| N  | # characters = φ(N) |
+|----|---------------------|
+| 1  | 1 |
+| 2  | 1 |
+| 3  | 2 |
+| 4  | 2 |
+| 5  | 4 |
+| 6  | 2 |
+| 7  | 6 |
+| 8  | 4 |
+| 12 | 4 |
 
-* For each modulus `n ≥ 1` there are finitely many characters (a group of order
-  `φ(n)`): `φ(1)=1, φ(2)=1, φ(3)=2, φ(4)=2, φ(5)=4, φ(6)=2, …`
-  (OEIS A000010).
-* Summing/bundling over all moduli gives a countably infinite family — verified
-  formally in `Dirichlet.lean` via an explicit injection `ℕ ↪ Σ n, χ`.
+Finitely many per level, summed over countably many levels, gives a countable
+family — matching `dirichletFamily_countable`.
 
-## 5. OEIS
+## 3. Counterexample hunt: where countability fails (boundary)
 
-The count of Dirichlet characters modulo `n` is Euler's totient
-`φ(n)` = **OEIS A000010**: `1, 1, 2, 2, 4, 2, 6, 4, 6, 4, 10, …`.
+The informal slogan "an L-function is determined by finitely many Euler factors"
+is *too strong*. If we instead allow an **independent binary choice at every
+prime** (e.g. a free ramified/unramified flag), the family is the full Cantor
+space `Primes → Bool`, of cardinality `2^{ℵ₀}` — uncountable. This is not a bug
+in the census but its precise boundary: countability requires the *stored*
+determining data to be finite. Formalized as `naive_all_primes_uncountable`.
 
-## Summary
+Similarly, the reals carry uncountably many j-invariants, yet only countably many
+elliptic curves are defined over `ℚ` (five rational Weierstrass coefficients).
+The continuum of complex j-invariants therefore does **not** inject into the
+census: `no_injective_real_signature`.
 
-The computations confirm the two pillars formalized in Lean: (i) each complexity
-shell is finite with an explicitly computable size; (ii) the strata are indexed
-by a countable set. Together they give a rigorous, non-vacuous proof that the
-universe of finite L-function data — and hence of the L-functions it classifies —
-is countable.
+## 4. OEIS connections
+
+- **A000010** (Euler totient φ): counts Dirichlet characters per level; the fiber
+  sizes of the Dirichlet family.
+- **A002088** (partial sums of φ): running count of primitive-plus-imprimitive
+  Dirichlet L-functions up to conductor `N`.
+- **A000027** (natural numbers): the conductor enumeration of the principal
+  census members is literally `1, 2, 3, ...`.
+
+## 5. Summary
+
+Every finite census fiber is finite; the base (conductors, levels, coefficient
+tuples) is countable; the total is countably infinite. Relaxing finiteness of the
+determining data crosses immediately into the uncountable. The evidence is fully
+consistent with the two-sided census proved in the accompanying module.

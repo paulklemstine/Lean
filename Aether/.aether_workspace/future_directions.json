@@ -24871,7 +24871,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "874776c2",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -24902,7 +24902,7 @@
       "source": "",
       "source_exp_id": "2607.05255v1",
       "source_path": "http://arxiv.org/abs/2607.05255v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-07T06:16:15.118766+00:00",
       "title": "Explicit Threshold for No-(k+1)-in-line: f_k(n) = kn for all k ≥ 3 and n ≥ k"
@@ -29915,7 +29915,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Spr12",
         "Pol03",
@@ -29924,7 +29924,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "a6d77751",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -29940,7 +29940,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0625",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-09T11:26:35.005726+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem: If μ²(E, ω^i) ≠ 0, then λ²*(E^D, ω^i) = λ²*(E, ω^i) + Σ_{ℓ|D} [terms] + c ⋅ μ²(E, ω^i) for some constant c ∈ Z_2.",
       "lineage_refs": [],
@@ -29955,7 +29955,7 @@
       "source": "",
       "source_exp_id": "2607.05305v1",
       "source_path": "http://arxiv.org/abs/2607.05305v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-08T01:05:41.844138+00:00",
       "title": "Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
@@ -31246,11 +31246,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "a88deb31",
+      "consumed_by_exp_id": "77c07bb4",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -31263,7 +31263,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0652",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-09T11:26:26.154926+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -31373,7 +31373,7 @@
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "0518b354",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -31401,7 +31401,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-08T16:01:43.876173+00:00",
       "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
@@ -34891,6 +34891,55 @@
       "title": "Categorifying the quantum binomial product rule via filtrations of plethystic modules"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "honeycombs1",
+        "BZ",
+        "klyachko",
+        "horn"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Formalize that any two objects satisfying the four essential properties (axioms) shared by honeycombs and spectra of Hermitian triples are provably equivalent in the context of the Knutson-Tao correspondence.",
+      "domain_bridges": [
+        "combinatorial_geometry",
+        "linear_algebra"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges",
+        "Logic"
+      ],
+      "github_issue": 0,
+      "id": "fd_0728",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem four_axioms_equiv {honeycomb : Type*} {horn_triple : Type*} (P1 : Prop) (P2 : Prop) (P3 : Prop) (P4 : Prop) (Hhon : P1 P2 => honeycomb) (Hhorn : P1 P2 => horn_triple) (Hequiv : ∀ {a b}, (P1 a b ∧ P2 a b ∧ P3 a b ∧ P4 a b) => a ≃ b) : ∀ {a b}, (P1 a b ∧ P2 a b ∧ P3 a b ∧ P4 a b) => a ≃ b",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Axiomatic reduction: Define four properties axiomatizing honeycombs and Horn triples, then prove equivalence via constructive instantiation of these axioms.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.06710v1",
+      "source_path": "http://arxiv.org/abs/2607.06710v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T11:24:55.775621+00:00",
+      "title": "Four Axioms Characterize the Equivalence of Honeycombs and Horn Triples"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -34919,7 +34968,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0728",
+      "id": "fd_0729",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem schubert_exterior_relation (r : ℕ) (indices : Fin r → ℕ) : (∂_indices.productDiff) = (signPermutation indices) • (exteriorMonomial indices) := by sorry",
@@ -34961,7 +35010,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0729",
+      "id": "fd_0730",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem new_abc_conjecture (y : ℕ) : Filter.limsup (fun n : ℕ => ((∑ j in Finset.Icc 1 y, ω (n + j)) * Real.log (Real.log n)) / Real.log n) = (1 : ℝ) := by sorry",
@@ -35010,7 +35059,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0730",
+      "id": "fd_0731",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem generalized_supercongruence (l m : ℕ) (p : ℕ) (hp : prime p) (h1 : ¬(p ∣ (l + 1))) (h2 : ¬(p ∣ binomial (l + 1) 2)) : (∑ n in finset.range (p - 1), ((-1) ^ (m * n) / (n ^ (m - 1))) * S l m n) % p ^ 2 = 0",
@@ -35061,7 +35110,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0731",
+      "id": "fd_0732",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mertens_combinatorial_identity (x : ℕ) (u : ℕ) (hx : x ≥ 1) (hu : ⌊Real.sqrt x⌋ < u ∧ u < x) : Mertens.mertens x = ∑ k in Finset.range (x / u + 1), μ k * S (x / k) u",
@@ -35110,7 +35159,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0732",
+      "id": "fd_0733",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem iu_p_biased_lubell_maximum (n : ℕ) (𝓕 : set (finset (fin n))) (h𝓕 : is_iu_family 𝓕) : ∃ p_opt : ℝ, p_opt ∈ [0,1] ∧ Λ_p 𝓕 ≤ Λ_p 𝓕_extremal p_opt ∧ (∀ q, Λ_q 𝓕 ≤ Λ_q 𝓕_extremal q)",
@@ -35156,7 +35205,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0733",
+      "id": "fd_0734",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem analytic_spread_eq_matroid_rank {G H : SimpleGraph ℕ} (J : Ideal (PolynomialRing ℚ (fin (V G) × fin (V H)))) (hJ : J = determinantalIdeal G H) (M : Matroid ℚ (fin (V G) × fin (V H))) (hM : M = linearMatroidOfPair G H) : analyticSpread J = matroidRank M := by sorry",
@@ -35203,7 +35252,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0734",
+      "id": "fd_0735",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem b2_values (n : ℕ) (h : n ≥ 2) : b₂(n) = if n % 8 = 0 ∨ n % 8 = 1 ∨ n % 8 = 7 then Nat.ceil (n / 2) else Nat.ceil (n / 2) + 1",
@@ -35253,7 +35302,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0735",
+      "id": "fd_0736",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mpd_tree_iff_lower_bound (T : SimpleGraph) [connected] [is_tree] [nonempty (V T)] [fintype (V T)] [decidable_linear_order (V T)] : multiset_partition_dimension T = 4 ↔ ∃ u v : V T, is_leaf u ∧ is_leaf v ∧ dist u v ≥ 3",
@@ -35302,7 +35351,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0736",
+      "id": "fd_0737",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem spec (r s : ℕ) (H : Hypergraph r) (n : ℕ) (hν : matching_number H < s) (hn : n ≥ N r s) : spectral_radius H ≤ spectral_radius (F (s-1) n) ∧ (spectral_radius H = spectral_radius (F (s-1) n) → isomorphic H (F (s-1) n))",
@@ -35347,7 +35396,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0737",
+      "id": "fd_0738",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem diameter_network_realignment_graph_complete_graph (n : ℕ) (hn : n ≥ 5) : diameter (network_realignment_graph (complete_graph n)) = n - 2 := by sorry",
@@ -35395,7 +35444,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0738",
+      "id": "fd_0739",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "-- Lean 4 stub for the conjecture\n\ndef DirectedSRG (n : Nat) : Type u where\n  params : SRGParams\n  adjacency : Fin n → Fin n → Bool\n  ...\n\ndef HasTransitiveAutGroup (g : DirectedSRG 108) : Prop := •••\n\ndef ConstructedParams : List (SRGParams) :=\n  [(108,11,3,2,1), (108,14,10,0,2), (108,22,12,6,4), (108,23,9,8,4),\n   (108,25,15,8,5), (108,34,18,12,10), (108,38,22,12,14), (108,39,23,14,14),\n   (108,41,35,16,15), (108,42,33,18,15), (108,46,22,19,20)]\n\ndef directed_srg_108_exhaustive : Prop :=\n  ∀ (g : DirectedSRG 108) (h : HasTransitiveAutGroup g),\n    g.params ∈ ConstructedParams → ∀ (c : ConstructionType), g ≃ c.from_group (aut_group_of g)",
@@ -35443,7 +35492,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0739",
+      "id": "fd_0740",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem minimally_one_tough_K1P4_hamiltonian {G : Graph ℕ} (h : MinimallyOneTough (K1 ∪ P4) G) (hsize : G.order ≥ 3) : IsHamiltonian G := by sorry",
@@ -35491,7 +35540,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0740",
+      "id": "fd_0741",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem overline_R_mod4_char (ℓ μ n : ℕ) (hcop : Nat.Coprime ℓ μ) (hℓ : 2 ≤ ℓ) (hμ : 2 ≤ μ) : (overline_R ℓ n) % 4 = if ∃ m : ℕ, m * m = n then 1 else 0 := by sorry",
@@ -35538,7 +35587,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0741",
+      "id": "fd_0742",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem genus_cardinality_eq_product (R : GorensteinCubicOrder) : # (Cl R \\ Cl R) = ∏ (v : FinitePrime), # (GorensteinOverorders (localization R v))",
@@ -35592,7 +35641,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0742",
+      "id": "fd_0743",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem coarse_block_cut_tree_improved_adhesion {d : ℕ} (G : SimpleGraph ℕ) :\\n  ∃ (T : Tree ℕ) (B : Π (t : T.V), Finset (G.V)),\\n    IsTreeDecomposition G T B ∧\\n    (∀ (e : T.E), diameter_G (B e.1 ∩ B e.2) ≤ 4 * d + 2) ∧\\n    (∀ (t : T.V), IsInseparable d (2 * d + 1) (B t) G)\\n  := by sorry",
@@ -35644,7 +35693,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0743",
+      "id": "fd_0744",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem (m_fold_cover_structure) (F : NonArchimedeanLocalField) (m : ℕ) [Hm : HMul (m)] :\n  let T := BruhatTitsTree (GL (F := F) 2)\n  let G_tilde := MetaplecticCover (GL (F := F) 2) m\n  let T_tilde := CoverTree T G_tilde m\n  have : ∀ v : Vertex T_tilde, Valency v = m * (Card (ResidueField F) + 1) :=\n  have : Index (Aut T_tilde) G_tilde = m :=\n  have : ConnectedComponents (T_tilde / G_tilde.k) = m :=\n  sorry",
@@ -35664,6 +35713,53 @@
       "thread_id": "",
       "timestamp": "2026-07-09T11:05:13.009170+00:00",
       "title": "Structure of m-fold covers of Bruhat-Tits trees for GL₂ over local fields"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Ramsey theory fundamentals",
+        "Permutation group actions in combinatorics",
+        "Reflection and dihedral group properties"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any two monotone paths H₁ and H₂ with reflection groups Γ₁ and Γ₂, the reflective Ramsey number R(H₁^Γ₁, H₂^Γ₂) is strictly greater than the dihedral Ramsey number R(H₁^D₁, H₂^D₂), where D₁ and D₂ are dihedral groups on their vertex sets.",
+      "domain_bridges": [
+        "Graph isomorphism under group actions",
+        "Computational Ramsey number determination via SAT"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0745",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "∀ (H₁ : MonotonePath), (H₂ : MonotonePath), (Γ₁ : ReflectionGroup (VertexSet H₁)), (Γ₂ : ReflectionGroup (VertexSet H₂)), (D₁ : DihedralGroup (VertexSet H₁)), (D₂ : DihedralGroup (VertexSet H₂)) → R (H₁ ^ Γ₁) (H₂ ^ Γ₂) > R (H₁ ^ D₁) (H₂ ^ D₂)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Inductive analysis of path structures under group actions, leveraging SAT-based embedding bounds to establish lower bounds for reflective cases.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.06817v1",
+      "source_path": "http://arxiv.org/abs/2607.06817v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T11:26:21.174361+00:00",
+      "title": "Reflective Ramsey Numbers Exceed Dihedral Ramsey Numbers for Monotone Paths"
     },
     {
       "ambition_level": "extension",
@@ -35752,8 +35848,8 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "cross_domain_bridge",
     "famous_subtask",
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge"
   ]

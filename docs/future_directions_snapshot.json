@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "0518b354",
+    "consumed_by_exp_id": "",
     "description": "L-functions are the DNA of mathematics — each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable — there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domain_bridges": [],
     "domains": [
@@ -15,7 +15,7 @@
     "proof_strategy": "Define the Selberg class S as the set of Dirichlet series L(s) = sum a_n/n^s satisfying: (1) Ramanujan bound |a_n| <= n^epsilon for epsilon > 0, (2) Analytic continuation to C except for a possible pole at s=1, (3) Functional equation relating L(s) to L(1-s), (4) Euler product L(s) = prod_p L_p(s). Prove S is countable: each L in S is determined by finitely many data because (a) the degree d_L is a positive integer, (b) the conductor q_L is a positive integer, (c) the Euler factors L_p(s) for p not dividing q_L are determined by the Ramanujan bound and the functional equation, and (d) there are finitely many primes dividing q_L. So L is determined by (d_L, q_L, epsilon_L, {L_p(s) : p | q_L}), a finite set of data. Since each piece of data is countable, S is countable. Test: enumerate elements of S by increasing conductor.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T16:01:43.876173+00:00",
     "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
   },
@@ -11365,7 +11365,7 @@
       "math.CO",
       "math.MG"
     ],
-    "consumed_by_exp_id": "874776c2",
+    "consumed_by_exp_id": "",
     "description": "The paper proves that for k ≥ 3 and sufficiently large n, the maximum number of points in an n × n grid with no k+1 collinear points equals kn. This conjecture asserts that 'sufficiently large' can be replaced by the explicit threshold n ≥ k. Note that for n ≤ k the whole grid has no k+1 collinear points so f_k(n) = n², and for n = k we get f_k(k) = k² = k·k, making n ≥ k the natural boundary. The conjecture predicts that for all k ≥ 3 and n ≥ k, the trivial upper bound kn is always achievable.",
     "domain_bridges": [
       "discrete_geometry",
@@ -11381,7 +11381,7 @@
     "proof_strategy": "The paper's approach splits into: (1) handling 'heavy' lines via pseudorandom hypergraph matchings (Ehard-Glock-Joos), (2) crude deletion for remaining violations, (3) randomized switching to recover near-optimal size. To push 'sufficiently large n' down to n ≥ k, one would need to make each step effective with explicit bounds. The hypergraph matching step likely requires the most careful analysis for small n. A computer-verified case analysis for small n (up to some explicit bound) combined with the asymptotic argument for larger n could work. The key is determining whether the o(n) deletion/swinging losses can be controlled when n is close to k.",
     "research_mode": "team",
     "source_exp_id": "2607.05255v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T06:16:15.118766+00:00",
     "title": "Explicit Threshold for No-(k+1)-in-line: f_k(n) = kn for all k ≥ 3 and n ≥ k"
   },
@@ -13751,7 +13751,7 @@
       "Mat08",
       "Hatley-Ray"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a6d77751",
     "description": "For an elliptic curve E over Q with good supersingular reduction at 2 and square-free D ≡1 mod 4, the difference in sharp/flat λ-invariants under quadratic twist by D should include a term proportional to the μ-invariant when μ ≠ 0.",
     "domain_bridges": [
       "2-adic L-functions",
@@ -13767,7 +13767,7 @@
     "proof_strategy": "Extend the existing formula by analyzing the μ-invariant's contribution through local-global principles and modular forms.",
     "research_mode": "team",
     "source_exp_id": "2607.05305v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T01:05:41.844138+00:00",
     "title": "Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
   },
@@ -16480,6 +16480,34 @@
     "title": "Categorifying the quantum binomial product rule via filtrations of plethystic modules"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "honeycombs1",
+      "BZ",
+      "klyachko",
+      "horn"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Formalize that any two objects satisfying the four essential properties (axioms) shared by honeycombs and spectra of Hermitian triples are provably equivalent in the context of the Knutson-Tao correspondence.",
+    "domain_bridges": [
+      "combinatorial_geometry",
+      "linear_algebra"
+    ],
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "id": "fd_0728",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Axiomatic reduction: Define four properties axiomatizing honeycombs and Horn triples, then prove equivalence via constructive instantiation of these axioms.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06710v1",
+    "status": "available",
+    "timestamp": "2026-07-09T11:24:55.775621+00:00",
+    "title": "Four Axioms Characterize the Equivalence of Honeycombs and Horn Triples"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "Schubert calculus",
@@ -16498,7 +16526,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0728",
+    "id": "fd_0729",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove by induction on r using generating function identities for exterior powers and sign-reversing arguments; verify base case r=1 and use the relation ∂_i X_j = δ_{ij} to deduce the action on higher wedges, then extend to arbitrary compositions.",
@@ -16519,7 +16547,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0729",
+    "id": "fd_0730",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine probabilistic models of prime factor distributions with known upper and lower bounds for ω(n) and constructions of integers with many small prime factors; likely requires sieve methods and deep results on smooth numbers.",
@@ -16547,7 +16575,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0730",
+    "id": "fd_0731",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use p-adic analysis and properties of multinomial coefficients modulo prime powers, potentially relating to generalized hypergeometric functions and their p-integrality properties. The approach would involve analyzing the generating function of S_l^{(m)}(n) and applying p-adic differential equations.",
@@ -16577,7 +16605,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0731",
+    "id": "fd_0732",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the identity Σ_{n≤x} M(x/n) = 1, prove the grouping into S_1 and S_2 components, apply Möbius inversion to derive the main formula, and verify correctness through induction on bounded intervals. The proof requires careful handling of floor function identities and the constraint ν_x < u < x to ensure all terms are well-defined.",
@@ -16605,7 +16633,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0732",
+    "id": "fd_0733",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Characterize the optimizer of the variational problem via Lagrange multipliers on the Boolean lattice, establish convexity properties of the p-biased measure under IU constraints, and prove uniqueness of extremal families through exchange arguments and majorization theory.",
@@ -16630,7 +16658,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0733",
+    "id": "fd_0734",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Choose a monomial order that yields a squarefree initial ideal in(J_{G,H}) whose Stanley–Reisner complex is precisely the independence complex of the linear matroid M_{G,H}. 2. Show that the special fiber ring S/J_{G,H} ⊗_k k[m] has the same Hilbert function as the face ring of that complex, hence its Krull dimension (the analytic spread) equals dim(Δ)+1. 3. For a squarefree simplicial complex, dim(Δ)+1 equals the size of the largest face, which is the rank of the represented matroid. 4. Conclude ℓ(J_{G,H}) = rank(M_{G,H}).",
@@ -16656,7 +16684,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0734",
+    "id": "fd_0735",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof would involve verifying the modular conditions and leveraging the lower bound from Buchanan et al. combined with constructive upper bounds. By analyzing the structure of bicliques and their symmetric differences, one can show that the conjectured values are achievable and minimal.",
@@ -16685,7 +16713,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0735",
+    "id": "fd_0736",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The forward direction can be established by contradiction: if a tree has mpd(T) = 4 but all pairs of leaves have distance at most 2, then the distance constraints would force at least two vertices to have identical multiset representations, violating the resolving property. The reverse direction follows from constructing an explicit resolving multiset partition with exactly 4 parts when the leaf distance condition is satisfied. This construction generalizes the proof techniques used for the general lower bound while exploiting the tree structure to ensure the partition is valid. The characterization should be formalized by first defining the multiset representation function, then proving the equivalence via structural analysis of tree topology.",
@@ -16713,7 +16741,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0736",
+    "id": "fd_0737",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The conjecture can be approached by first establishing a shifting invariance, then applying variational estimates for the tensor spectral radius, and finally performing a saturation analysis to identify the extremal configuration; this mirrors the strategy outlined in the paper but isolates the key inequality for independent verification.",
@@ -16737,7 +16765,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0737",
+    "id": "fd_0738",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the lower bound by exhibiting a pair of vertices whose distance is at least n−2, using an invariant that counts the number of labels out of place under any admissible move. Establish the upper bound by describing an explicit algorithm that transforms any vertex to any other in at most n−2 steps, via a greedy reduction of mismatched labels, and prove its correctness by induction on n.",
@@ -16764,7 +16792,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0738",
+    "id": "fd_0739",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the O\\u2019Nan–Scott theorem to enumerate all primitive permutation groups of degree 108, apply integrality and eigenvalue constraints for directed SRGs, and computationally verify that the only feasible parameter sets coincide with those constructed. A GAP/Sage pipeline can generate candidate adjacency matrices under transitive actions and compare them to the known constructions.",
@@ -16791,7 +16819,7 @@
     "domains": [
       "Physics"
     ],
-    "id": "fd_0739",
+    "id": "fd_0740",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the structural characterization of minimally 1‑tough (K₁ ∪ P₄)-free graphs, combine with known sufficient conditions for Hamiltonicity (e.g., Dirac’s theorem) and verify the degree‑2 condition implied by Kriesell's conjecture.",
@@ -16818,7 +16846,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0740",
+    "id": "fd_0741",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive combinatorial argument using Lemma lem:lift and parity analysis of distinct part sizes.",
@@ -16844,7 +16872,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0741",
+    "id": "fd_0742",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Verify the equality by explicit enumeration for concrete cubic orders and attempt a general proof by constructing a bijection between global genus classes and tuples of local Gorenstein overorders.",
@@ -16877,7 +16905,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0742",
+    "id": "fd_0743",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Refine the original construction by applying the coarse Menger theorem to find separators of smaller diameter that still separate large‑diameter parts, then use an iterative compression argument to reduce adhesion size while preserving the (d,2d+1)-inseparability of bags.",
@@ -16908,7 +16936,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0743",
+    "id": "fd_0744",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the explicit cocycle formula σ^(α) from Theorem 1 to compute the fundamental group of the cover, apply covering space theory for graphs to determine the index of the metaplectic group in the full automorphism group, and use the transitivity properties established in the paper to analyze the component structure of the quotient.",
@@ -16919,9 +16947,35 @@
     "title": "Structure of m-fold covers of Bruhat-Tits trees for GL₂ over local fields"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Ramsey theory fundamentals",
+      "Permutation group actions in combinatorics",
+      "Reflection and dihedral group properties"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any two monotone paths H₁ and H₂ with reflection groups Γ₁ and Γ₂, the reflective Ramsey number R(H₁^Γ₁, H₂^Γ₂) is strictly greater than the dihedral Ramsey number R(H₁^D₁, H₂^D₂), where D₁ and D₂ are dihedral groups on their vertex sets.",
+    "domain_bridges": [
+      "Graph isomorphism under group actions",
+      "Computational Ramsey number determination via SAT"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0745",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Inductive analysis of path structures under group actions, leveraging SAT-based embedding bounds to establish lower bounds for reflective cases.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06817v1",
+    "status": "available",
+    "timestamp": "2026-07-09T11:26:21.174361+00:00",
+    "title": "Reflective Ramsey Numbers Exceed Dihedral Ramsey Numbers for Monotone Paths"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "a88deb31",
+    "consumed_by_exp_id": "77c07bb4",
     "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers — anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension — they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property — it's not about content quality but about the sheaf cohomology of the social network.",
     "domain_bridges": [],
     "domains": [
