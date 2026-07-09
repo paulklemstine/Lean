@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "99e4c1c9",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Structured Coupon Collection on Finite Geometries\n\nThese conjectures grow out of a single discovery: when coupon batches are drawn\nas the lines of a projective plane rather than",
-      "quality_score": 0.77624,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-06-30T00:32:14",
-      "title": "Projective Plane Coupon Collection Slowness"
-    },
-    {
       "cycle_id": "230b77ce",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Certified Robustness via Cover Cohomology\n\nThese conjectures are derived from the present cycle, in which we proved that on a\ntree-shaped cover of a classifier's input space the",
@@ -499,19 +489,19 @@
       "theorem_count": 26,
       "timestamp": "2026-07-09T22:16:17",
       "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
+    },
+    {
+      "cycle_id": "643186e8",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions: The Field with One Element Meets Tropical Geometry\n\nThis cycle established a precise, quantitative bridge between the min-plus\n(tropical / F₁) world and the topology of toric vari",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 18,
+      "timestamp": "2026-07-09T22:51:25",
+      "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "52a20f8b",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — EML Kolmogorov–Arnold separable rank\n\nDerived from this cycle's findings in `KolmogorovArnoldEMLSeparableRank.lean` and\n`KolmogorovArnoldEMLSeparableRankExact.lean`, where we int",
-      "quality_score": 0.59432,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T21:22:54",
-      "title": "EML Kolmogorov-Arnold Representation"
-    },
     {
       "cycle_id": "dfab202e",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 26,
       "timestamp": "2026-07-09T22:16:17",
       "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
+    },
+    {
+      "cycle_id": "643186e8",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions: The Field with One Element Meets Tropical Geometry\n\nThis cycle established a precise, quantitative bridge between the min-plus\n(tropical / F₁) world and the topology of toric vari",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 18,
+      "timestamp": "2026-07-09T22:51:25",
+      "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5961bdfa",
-      "domain": "Applications",
-      "name": "trivB_card",
-      "quality": 0.7401600000000002
-    },
-    {
-      "cycle_id": "95c356ab",
-      "domain": "Applications",
-      "name": "colVec_avoids",
-      "quality": 0.8257369999999999
-    },
-    {
-      "cycle_id": "95c356ab",
-      "domain": "Applications",
-      "name": "not_forces025_three_76",
-      "quality": 0.8257369999999999
-    },
     {
       "cycle_id": "95c356ab",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Applications",
       "name": "levels_injective",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "643186e8",
+      "domain": "Algebra",
+      "name": "itself",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "643186e8",
+      "domain": "Algebra",
+      "name": "of",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "643186e8",
+      "domain": "Algebra",
+      "name": "fib_carmichael_composite",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-09T22:16:17",
+  "last_updated": "2026-07-09T22:51:25",
   "open_questions": [
-    {
-      "context": "We prove, with no `sorry`, the abstract principle:; formal, zero-`sorry` proofs**, on the smallest non-trivial values",
-      "cycle_id": "8ffddeae",
-      "domain": "Applications",
-      "sorry_count": 2,
-      "timestamp": "2026-06-28T05:31:58"
-    },
     {
       "context": "for the star half; the conjunction is `sorry`-free and uses both results literally.; `omega`.  Both `sorry`-free.; `sorry`-free.",
       "cycle_id": "db606ba2",
@@ -3016,16 +3009,17 @@
       "domain": "Computation",
       "sorry_count": 3,
       "timestamp": "2026-07-09T21:05:47"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "643186e8",
+      "domain": "Algebra",
+      "sorry_count": 4,
+      "timestamp": "2026-07-09T22:51:25"
     }
   ],
   "research_threads": {
     "Algebra": [
-      {
-        "cycle_id": "d4c70419",
-        "quality": 0.65696,
-        "theorems": 18,
-        "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
-      },
       {
         "cycle_id": "e0366114",
         "quality": 0.4133402545454546,
@@ -3079,6 +3073,12 @@
         "quality": 0.8151999999999999,
         "theorems": 28,
         "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
+      },
+      {
+        "cycle_id": "643186e8",
+        "quality": 0.82,
+        "theorems": 18,
+        "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
       }
     ],
     "Applications": [

@@ -433,7 +433,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Congruence Rigidity of Sums of Squares\n\nThis cycle established that the entries of an integer right triangle are forced into\nstrong divisibility patterns — one leg is a multiple of three, the legs jointly carry a\nfactor of four, one entry is a multiple of five — and that a four-dimensional right\n\"box\" (a solution of `a² + b² + c² = d²`) is even more rigid: at most one of its three\nspatial edges can be odd. We also pinned down exactly which whole numbers can serve as a\nleg. These findings point to several bold, testable conjectures.\n\n## 1. The correct modulus for a power of two grows with the power\n**Conjecture.** In any solution of `a² + b² = c²`, the two-adic valuation of the leg\nproduct `a·b` is governed one level deeper than naive reduction suggests: deciding\nwhether `2^k` divides `a·b` is a question about residues modulo `2^{k+1}`, never modulo\n`2^k`.\n*The key insight is* that a difference of two odd squares is always divisible by eight,\nso each additional factor of two in the product must be certified one binary place\nfurther out than one would guess. *Why now?* Having isolated the exact `mod 8`\nobstruction behind the factor of four, we can test the pattern mechanically for `k = 3,\n4, 5` and either confirm a clean \"shift-by-one\" law or expose its first exception.\n\n## 2. A universal super-divisor for higher-dimensional right figures\n**Conjecture.** For every dimension `r`, solutions of `x₁² + ⋯ + x_r² = y²` obey a single\nuniversal divisibility law: there is a constant `D(r)`, depending only on `r`, such that\n`D(r)` divides the product `x₁·x₂·⋯·x_r` for *every* solution, and `D(r)` is the largest\nsuch constant.\n*The key insight is* that reduction to a finite residue ring turns \"for all solutions\"\ninto a finite, decidable statement, so the optimal constant `D(r)` is computable and\nshould grow in a structured (conjecturally multiplicative-over-primes) way. *Why now?*\nThe three-dimensional case already yields `4 ∣ x₁x₂x₃`; comparing it against the planar\nconstant `12` suggests a dimension-indexed sequence worth charting and predicting.\n\n## 3. Parity collapse in higher dimensions\n**Conjecture.** As the number of squared terms increases, the number of edges permitted to\nbe odd stays uniformly bounded: in `x₁² + ⋯ + x_r² = y²` at most three of the `x_i` can be\nodd, regardless of `r`.\n*The key insight is* that the sum of squares equals the count of odd terms modulo four,\nwhile a perfect square is `0` or `1` modulo four, capping the admissible odd-count no\nmatter how many terms are added. *Why now?* We proved the cap is \"at most one\" in three\ndimensions; extending the modular bookkeeping to arbitrary `r` is a self-contained next\nstep that would reveal whether the cap is truly dimension-independent.\n\n## 4. A sharp threshold characterization of legs in every dimension\n**Conjecture.** Just as the whole numbers that are a leg of a right triangle are exactly\nthose `≥ 3`, in each higher dimension there is a sharp finite threshold above which every\ninteger appears as an edge of some right figure, and the finitely many exceptions can be\nlisted explicitly.\n*The key insight is* that a single explicit construction, split according to the parity of\nthe target edge, realizes all sufficiently large values, while the small exceptions are\nforced by a factorization that would otherwise require a vanishing edge. *Why now?* The\nplanar threshold `3` and its sharpness (the failures at `1` and `2`) give a template that\nshould transfer verbatim to the box equation and beyond.\n\n## 5. Divisibility as a sieve against near-solutions\n**Conjecture.** The combined congruence obstructions (`12 ∣ a·b`, `60 ∣ a·b·c`, and their\nhigher-dimensional analogues) are strong enough that a random integer triple satisfying\nthem has a positive, computable probability of being genuinely Pythagorean — i.e. the\ncongruence conditions capture a constant fraction of the \"arithmetic mass\" of true\nsolutions.\n*The key insight is* that each universal divisor removes a fixed proportion of impostors,\nso stacking independent prime-power obstructions multiplies into a sieve of predictable\ndensity. *Why now?* With the exact obstructions in hand for the primes `2, 3, 5`, one can\nimmediately measure how much of the solution set they explain and calibrate whether a few\nmore primes suffice to pin down solutions almost completely.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -517,7 +517,7 @@
         "Algebraic Combinatorics",
         "Enumerative Combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -789,7 +789,7 @@
       "depth_estimate": 3,
       "description": "The conjecture posits that the maximum number of disjoint t-star subgraphs in a graph with n vertices is bounded by n^{t-1}. This aligns with the extremal nature of such configurations, though testing its falsifiability requires verifying the bound against extremal examples.",
       "domain_bridges": "none",
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -832,7 +832,7 @@
       "depth_estimate": 3,
       "description": "This conjecture states that reduced words in type B_n have Coxeter lengths exactly double those of type A_n, ensuring non-equivalence in structural complexity.",
       "domain_bridges": "mathematics/algebra",
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -972,7 +972,7 @@
         "Algebraic geometry",
         "Group cohomology"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -1067,7 +1067,7 @@
         "Automorphic forms",
         "Analytic number theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -1160,7 +1160,7 @@
         "convex combination",
         "formal verification in Lean 4"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -1258,7 +1258,7 @@
         "Bruhat–Tits stratification",
         "Kottwitz–Rapoport stratification"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -1305,7 +1305,7 @@
         "Cohomology of profinite groups",
         "Pro-p group theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -1446,7 +1446,7 @@
         "special_functions_trigonometric",
         "asymptotic_analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -1543,7 +1543,7 @@
         "mathlib/representation_theory",
         "mathlib/character_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -1590,7 +1590,7 @@
         "Reflection groups",
         "Wreath products"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -1921,7 +1921,7 @@
         "Permutation Groups",
         "Finite p-groups"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -2234,7 +2234,7 @@
       "depth_estimate": 3,
       "description": "The product of primes in the extension field equals its order.",
       "domain_bridges": "extension",
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -2330,7 +2330,7 @@
         "combinatorial optimization",
         "extremal graph theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -2424,7 +2424,7 @@
         "mod p local Langlands correspondence",
         "Galois representations"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -2470,7 +2470,7 @@
         "Ramsey theory",
         "Extremal hypergraph theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -2565,7 +2565,7 @@
         "number_theory",
         "discrete_mathematics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -2611,7 +2611,7 @@
         "Descriptive combinatorics",
         "Topological dynamics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -2660,7 +2660,7 @@
         "combinatorics",
         "homological_algebra"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -2748,7 +2748,7 @@
       "depth_estimate": 3,
       "description": "A complete classification exists for all bidihedral groups up to isomorphism.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -2796,7 +2796,7 @@
         "field_theory",
         "algebraic_geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -2841,7 +2841,7 @@
       "domain_bridges": [
         "math.CO"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -2893,7 +2893,7 @@
         "discriminant $D_\\alpha(t)$ and its reduction modulo $p$",
         "Newton polygon of the Jacobian"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -2987,7 +2987,7 @@
         "Lean4/Mathlib: Selmer groups",
         "Lean4/Mathlib: Local Galois representations"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -3035,7 +3035,7 @@
         "Arithmetic Geometry",
         "p-adic Hodge Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -3122,7 +3122,7 @@
         "arithmetic fundamental groups",
         "ramified covers"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -3209,7 +3209,7 @@
         "q-series",
         "Divisor sums"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -3263,7 +3263,7 @@
         "Product measure concentration",
         "High‑dimensional geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -3404,7 +3404,7 @@
         "algebraic number theory (ray class groups, prime ideals)",
         "additive combinatorics (dense model theorem, transference principle)"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -3639,7 +3639,7 @@
         "sieve theory",
         "computational number theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -3784,7 +3784,7 @@
         "Combinatorial number theory",
         "Commutative algebra"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -3833,7 +3833,7 @@
         "spectral_graph_theory",
         "extremal_combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -3882,7 +3882,7 @@
         "Combinatorial Nullstellensatz",
         "Mason–Stothers theorem"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -3934,7 +3934,7 @@
         "Nilpotent elements in rings",
         "Derived $p$-completeness"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -3982,7 +3982,7 @@
         "Algebra",
         "Number Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -4124,7 +4124,7 @@
         "algorithmic geometry",
         "combinatorial optimization"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -4227,7 +4227,7 @@
         "higher algebra formalizations in Lean",
         "pro‑p groups"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -4369,7 +4369,7 @@
         "mathematical logic",
         "algorithmic complexity"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -4467,7 +4467,7 @@
         "Algebraic Number Theory",
         "Probabilistic Combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -4611,7 +4611,7 @@
         "probability_theory",
         "computational_number_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -4660,7 +4660,7 @@
         "Recursive decomposition schemes in planar maps",
         "Functional equations in Tamari-type posets"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -4709,7 +4709,7 @@
         "Dieudonné theory",
         "p-adic Hodge theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -4946,7 +4946,7 @@
         "math.NT",
         "cs.PL"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -4998,7 +4998,7 @@
         "Dieudonné theory",
         "p-adic Hodge theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Bridges"
@@ -5289,7 +5289,7 @@
         "quantitative graph theory",
         "combinatorial optimization"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -5545,7 +5545,7 @@
         "Recursive decompositions in combinatorial structures",
         "Statistical refinement in enumeration"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Logic"
@@ -5592,7 +5592,7 @@
         "math.NT",
         "math.KT"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -5835,7 +5835,7 @@
         "Tropical geometry over p-adic fields",
         "Algorithmic number theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -5924,7 +5924,7 @@
       "depth_estimate": 3,
       "description": "The conjecture asserts that rational points on a general type variety over a number field form a finite set confined to the special locus.",
       "domain_bridges": "Algebraic Geometry",
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -6025,7 +6025,7 @@
         "Iwasawa Theory ↔ Quantum Walk Dynamics",
         "Galois Representations ↔ Graph Cohomology"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -6134,7 +6134,7 @@
         "Extremal graph theory",
         "Parameterized complexity"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -6185,7 +6185,7 @@
         "modular forms",
         "mathematical physics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -6279,7 +6279,7 @@
         "superalgebra",
         "symmetric_functions"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -6328,7 +6328,7 @@
         "combinatorial representation theory",
         "integrable probability"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -6658,7 +6658,7 @@
         "Ramsey Theory",
         "Extremal Hypergraph Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -6755,7 +6755,7 @@
         "Golod-Shafarevich density theorems",
         "Pólya field characterizations"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -6795,7 +6795,7 @@
       "depth_estimate": 3,
       "description": "This conjecture formalizes the existence of long square-free sequences under generalized equivalence relations, linking combinatorial growth to algebraic constraints. It targets the parameterization of morphic structures in Lean 4's framework.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -6933,7 +6933,7 @@
         "algebraic combinatorics",
         "quantum groups"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -7029,7 +7029,7 @@
         "extremal combinatorics",
         "permutation groups"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -7077,7 +7077,7 @@
         "Analytic Number Theory",
         "Complex Analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -7125,7 +7125,7 @@
         "Scheme-theoretic stabilizer vs. group-theoretic stabilizer",
         "Regular unipotent orbits and their properties"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -7173,7 +7173,7 @@
         "majority colorings",
         "edge colorings"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -7222,7 +7222,7 @@
         "line graph eigenvalue formulas via $B^TB = A(L)+2I$",
         "eigenvalue expressions for Johnson graphs"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -7458,7 +7458,7 @@
         "Algebraic Number Theory",
         "Analytic Number Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -7558,7 +7558,7 @@
         "arithmetic statistics",
         "Galois representations"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -7708,7 +7708,7 @@
         "lie-algebras",
         "quantum-groups"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -7939,7 +7939,7 @@
       "depth_estimate": 3,
       "description": "The conjecture asserts that sum throttling for any graph G is at most twice the product throttling value of its complement, ensuring mathematical consistency.",
       "domain_bridges": "none",
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -7992,7 +7992,7 @@
         "arithmetic progressions",
         "asymptotic analysis of exponential sums"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -8080,7 +8080,7 @@
         "strong chromatic index",
         "probabilistic constructions"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -8217,7 +8217,7 @@
         "Lie Groups",
         "Automorphic Forms"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -8367,7 +8367,7 @@
         "Siegel modular forms",
         "Hermitian modular forms"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -8415,7 +8415,7 @@
         "Optimization",
         "Strategic Decision Making"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -8464,7 +8464,7 @@
         "Combinatorial Topology",
         "Graph Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -8511,7 +8511,7 @@
         "Langlands_program",
         "harmonic_analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Computation"
@@ -8837,7 +8837,7 @@
       "depth_estimate": 3,
       "description": "A conjecture linking Langlands stacks and anabelomorphic properties under group isomorphism conditions.",
       "domain_bridges": "Langlands Correspondence",
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -8885,7 +8885,7 @@
         "graph Laplacians",
         "variance bounds"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -8982,7 +8982,7 @@
         "Modular forms",
         "Effective algebraic number theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -9031,7 +9031,7 @@
         "Continued Fractions",
         "Universal Quadratic Forms"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -9126,7 +9126,7 @@
         "Combinatorial Designs",
         "Probabilistic Method"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -9170,7 +9170,7 @@
       "depth_estimate": 3,
       "description": "The conjecture states that the sum of gaps in Fibonacci and Lucas sequences converges logarithmically to n times the natural logarithm of the golden ratio, validated through asymptotic analysis.",
       "domain_bridges": "math.NT",
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -9412,7 +9412,7 @@
         "non-abelian cohomology",
         "perfectoid geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -9792,7 +9792,7 @@
         "ranking function",
         "balanced tree structures"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -9842,7 +9842,7 @@
         "spectral_theory",
         "combinatorial_matrix_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -9939,7 +9939,7 @@
         "Computational databases (House of Graphs, Potočnik census)",
         "Mathematical knowledge management"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -10034,7 +10034,7 @@
       "depth_estimate": 3,
       "description": "A connected bipartite graph admits a planar rotation-compatible covering, ensuring all rotational constraints are satisfied.",
       "domain_bridges": "true",
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -10082,7 +10082,7 @@
         "representation theory",
         "differential geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -10129,7 +10129,7 @@
         "SIP classes",
         "basic hypergeometric series"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -10179,7 +10179,7 @@
         "analytic number theory",
         "probabilistic methods"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -10278,7 +10278,7 @@
         "noncommutative algebra",
         "rook theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -10422,7 +10422,7 @@
         "finite geometry (covering radius of dual codes)",
         "graph theory (de Bruijn–type covering properties)"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -10471,7 +10471,7 @@
         "Random matrix theory ↔ CFT",
         "Statistical mechanics ↔ quantum gravity"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -10518,7 +10518,7 @@
         "combinatorics",
         "operations research"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -10613,7 +10613,7 @@
         "category theory",
         "group theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -10659,7 +10659,7 @@
         "math.CO",
         "math.AC"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -10758,7 +10758,7 @@
         "combinatorial designs",
         "Lean formalization of combinatorial objects"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -11187,7 +11187,7 @@
         "flag simplicial complexes",
         "squarefree Veronese ideals"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -11330,7 +11330,7 @@
         "additive subcategory lattices",
         "convex topologies"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -11426,7 +11426,7 @@
         "Turán-type extremal problems",
         "Spectral radius of graphs"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -11526,7 +11526,7 @@
         "Ramsey theory",
         "Poset theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -11567,7 +11567,7 @@
       "depth_estimate": 3,
       "description": "The conjecture posits that finite fields require a threshold of $l+1$ for nonempty interior projections, diverging from Euclidean settings where thresholds align differently, leading to verifiable contrasts.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -11616,7 +11616,7 @@
         "Incidence Geometry",
         "Fourier Analysis on Finite Fields"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -11751,7 +11751,7 @@
         "Lovász–Simonovits stability",
         "Zykov symmetrization"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -11799,7 +11799,7 @@
         "Algebraic Geometry",
         "Automorphic Forms"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -11846,7 +11846,7 @@
         "Probability theory (Markov chains)",
         "Convex geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -11895,7 +11895,7 @@
         "Class field theory",
         "Quaternion orders"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -11944,7 +11944,7 @@
         "ADE classification",
         "generalized partition theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -11992,7 +11992,7 @@
         "Galois Theory",
         "Cohomology of Groups"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -12041,7 +12041,7 @@
         "Selmer groups",
         "Arithmetic of abelian varieties"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -12091,7 +12091,7 @@
         "feedback arc set",
         "tournament ranking"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -12233,7 +12233,7 @@
         "NumberTheory",
         "Algebra"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -12282,7 +12282,7 @@
         "Congruences and modular arithmetic in combinatorics",
         "Generating functions and their coefficient extraction"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -12325,7 +12325,7 @@
       "depth_estimate": 3,
       "description": "For any d-dimensional lattice polytope with m vertices, its surface area is bounded below by (d-1)/d times its volume, ensuring a precise upper limit on surface measures despite growth rates, making this inequality falsifiable through counterexamples in higher dimensions.",
       "domain_bridges": "d-dimensional lattice bounds",
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -12424,7 +12424,7 @@
         "math.CO",
         "math.CT"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -12475,7 +12475,7 @@
         "discrete Fourier analysis",
         "algebraic combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -12524,7 +12524,7 @@
         "Topological Groups",
         "Diophantine Approximation"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -12722,7 +12722,7 @@
         "Analytic number theory",
         "Computational algebraic geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -13003,7 +13003,7 @@
         "Quadratic forms ↔ Graph eigenvalue bounds",
         "Additive combinatorics ↔ Linear programming bounds"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -13145,7 +13145,7 @@
         "Lie Algebras",
         "Symmetric Functions"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -13390,7 +13390,7 @@
         "Formal verification in Lean",
         "Category theory (for algebraic structures)"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -13539,7 +13539,7 @@
         "sum‑free sets",
         "van der Waerden numbers"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -13583,7 +13583,7 @@
         "Galois representations",
         "de Jong's conjecture"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -13630,7 +13630,7 @@
         "dyadic regularity",
         "central binomial coefficients"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -13679,7 +13679,7 @@
         "Extremal Graph Theory",
         "Number Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -13727,7 +13727,7 @@
         "normal domains",
         "quotients"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -13871,7 +13871,7 @@
         "analytic number theory",
         "computational mathematics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -14014,7 +14014,7 @@
         "Hypergraph theory",
         "Commutative algebra via syzygies"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -14060,7 +14060,7 @@
         "math.CA",
         "math.CO"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -14105,7 +14105,7 @@
         "math.MG",
         "math.RT"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -14201,7 +14201,7 @@
         "James-Kamnitzer decomposition matrices",
         "Rook partitions and RoCK blocks"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -14345,7 +14345,7 @@
         "type theory",
         "formal verification"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -14397,7 +14397,7 @@
         "automorphic forms",
         "special functions"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -14588,7 +14588,7 @@
         "polyhedral_combinatorics",
         "lattice_path_enumeration"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -14732,7 +14732,7 @@
       "depth_estimate": 3,
       "description": "The subset Ω₂(n) restricts partitions to have at most a₁ + t -1 parts, where a₁ is the highest power of 2 in n's binary expansion, t the number of non-zero terms.",
       "domain_bridges": "Theoretical Combinatorics",
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -14777,7 +14777,7 @@
       "domain_bridges": [
         "Lean 4's order theory library (mathlib), definitions of FAC, saturated chains, direct sums, equivalence relations, transfinite recursion"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -14826,7 +14826,7 @@
         "Representation Theory of Finite Groups",
         "Combinatorics of Set Partitions"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -14967,7 +14967,7 @@
         "Algebraic invariants of diagrams",
         "Cheeger-type inequalities for combinatorial chains"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -15066,7 +15066,7 @@
         "linear codes",
         "cyclic codes"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -15115,7 +15115,7 @@
         "Conformal Field Theory",
         "AdS/CFT correspondence"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Computation"
@@ -15165,7 +15165,7 @@
         "Polytope theory (face lattice log-concavity)",
         "Algebraic combinatorics (Stanley-Reisner rings)"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -15258,7 +15258,7 @@
         "math.CO",
         "math.RT"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -15311,7 +15311,7 @@
         "Milnor algebras",
         "Graded modules"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -15452,7 +15452,7 @@
         "tropical geometry",
         "Coxeter matroids"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -15496,7 +15496,7 @@
       "depth_estimate": 3,
       "description": "This paper investigates the behavior of cyclotomic matrices arising from Gauss sums over cyclic group characters, aiming to establish connections between algebraic number theory and matrix representation theory.",
       "domain_bridges": "The interplay between arithmetic functions, character theory, and linear algebra over finite fields.",
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -15543,7 +15543,7 @@
         "discrete curvature",
         "extremal graph theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -15590,7 +15590,7 @@
         "representation theory of algebraic groups",
         "formalization of algebraic geometry in Lean"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -15688,7 +15688,7 @@
         "Finite automata",
         "SAT modulo theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -15837,7 +15837,7 @@
         "algebraic_graph_theory_to_finite_geometry",
         "combinatorial_methods_to_group_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -15891,7 +15891,7 @@
         "subdivision theory",
         "Average Degree Constraints"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -16132,7 +16132,7 @@
         "p-adic Hodge theory",
         "Algebraic geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -16181,7 +16181,7 @@
         "Abelian integrals",
         "Schneider height computations"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -16230,7 +16230,7 @@
         "homothetic sets",
         "symmetric colorings"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -16329,7 +16329,7 @@
         "linear_algebra",
         "algebraic_number_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -16476,7 +16476,7 @@
         "Number Theory",
         "Coding Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -16520,7 +16520,7 @@
       "depth_estimate": 3,
       "description": "The author proposes that the fluctuation distribution of high-dimension primary operators in AdS/CFT correspondence should conform to Gaussian log-correlated field models, with a sharp universal limit imposed at large N.",
       "domain_bridges": "Quantum Gravity ↔ Conformal Field Theory",
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Computation"
@@ -16568,7 +16568,7 @@
         "combinatorics",
         "set_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -16618,7 +16618,7 @@
         "Matroid Theory",
         "Tropical Geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Logic"
@@ -16772,7 +16772,7 @@
         "Lean formalization of Gallai‑Witt theorem (by Johan Commelin)",
         "Lean 4's support for dependent types and theorem proving suitable for encoding combinatorial structures"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -16813,7 +16813,7 @@
       "depth_estimate": 3,
       "description": "The conjecture posits that algebraic varieties of general type over finite fields have finitely many rational points unless constrained by the special locus, where density is non-zero.",
       "domain_bridges": "general_type",
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -16911,7 +16911,7 @@
         "finite geometry",
         "permutation groups"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -16958,7 +16958,7 @@
         "additive combinatorics",
         "category theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -17004,7 +17004,7 @@
         "logarithmicRamsey",
         "extremalgraph theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -17099,7 +17099,7 @@
         "Combinatorics – finite product structures and girth",
         "Ring theory – units of group rings"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -17245,7 +17245,7 @@
         "polyhedral cones",
         "Gersten complex"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -17387,7 +17387,7 @@
         "Nonorientable TQFT",
         "Penrose polynomial"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Algebra"
@@ -17627,7 +17627,7 @@
         "galois_cohomology",
         "class_field_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Computation"
@@ -17867,7 +17867,7 @@
         "Graph theory",
         "Asymptotic analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -17917,7 +17917,7 @@
         "hamiltonian cycles",
         "extremal graph theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -17964,7 +17964,7 @@
         "Combinatorics",
         "Real Analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -18060,7 +18060,7 @@
         "class_field_theory",
         "analytic_number_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -18249,7 +18249,7 @@
         "combinatorial_optimization",
         "graph_perfection"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -18298,7 +18298,7 @@
         "algebraic_geometry",
         "combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -18349,7 +18349,7 @@
         "topological_dynamics",
         "finite_graph_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Logic"
@@ -18399,7 +18399,7 @@
         "polynomial_method",
         "maximal_k_plane_transforms"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -18446,7 +18446,7 @@
         "Geometric measure theory",
         "Additive combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -18493,7 +18493,7 @@
         "Finite Group Theory",
         "Permutation Groups"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -18540,7 +18540,7 @@
         "Algebraic Number Theory",
         "Algebraic Topology"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -18591,7 +18591,7 @@
         "Serre_duality",
         "perfect_matchings"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -18640,7 +18640,7 @@
         "majority_coloring",
         "local_graph_decomposition"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -18690,7 +18690,7 @@
         "Linear Algebra",
         "Combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -18737,7 +18737,7 @@
         "bruhat_tits_theory",
         "deligne_lusztig_varieties"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -18786,7 +18786,7 @@
         "Polynomial Roots",
         "Fixed Fields"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -18835,7 +18835,7 @@
         "order_theory",
         "algebra"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -18883,7 +18883,7 @@
         "Number Theory",
         "Combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -18932,7 +18932,7 @@
         "q-series and Partition Identities",
         "Bailey Lattice"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -19121,7 +19121,7 @@
         "Birch-Swinnerton-Dyer conjecture and Mordell-Weil groups",
         "Galois cohomology and Selmer groups"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -19169,7 +19169,7 @@
         "combinatorics of partitions",
         "Sylow permutation characters"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -19304,7 +19304,7 @@
       "depth_estimate": 3,
       "description": "The conjecture posits that the Schottky group W_p for X over ℚ(p) is finitely generated.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -19401,7 +19401,7 @@
         "matroid theory",
         "combinatorial optimization"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -19499,7 +19499,7 @@
         "p‑adic L‑functions ↔ Grover matrices",
         "equivariant factorization ↔ voltage graphs"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -19549,7 +19549,7 @@
         "Homological type classification of arrangements",
         "Generalized Terao Conjecture and combinatorial invariants"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -19598,7 +19598,7 @@
         "Stirling numbers of the second kind",
         "partial Bell polynomials"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -19645,7 +19645,7 @@
         "AlgebraicNumberTheory.003",
         "AutomorphicForms.004"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -19697,7 +19697,7 @@
         "ExponentialSums",
         "EulerMaclaurinFormula"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -19845,7 +19845,7 @@
         "Algebraic Number Theory",
         "Order Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -20039,7 +20039,7 @@
         "Finite set cardinality",
         "Combinatorial Nullstellensatz"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -20230,7 +20230,7 @@
         "Pro-p group classification (Demushkin–Serre–Labute)",
         "Massey products in Galois cohomology"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -20281,7 +20281,7 @@
         "Combinatorics",
         "Representation Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -20330,7 +20330,7 @@
         "matroid_theory",
         "hyperplane_arrangements"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -20415,7 +20415,7 @@
       "depth_estimate": 3,
       "description": "The conjecture that the dimension of the space generated by squarefree ideals of dimension $p$ vanishes linearly when $2p$ aligns with combinatorial characterizations of linear resolutions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -20512,7 +20512,7 @@
         "algebraic_number_theory",
         "category_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -20610,7 +20610,7 @@
         "Golden ratio",
         "Partition of natural numbers"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -20657,7 +20657,7 @@
         "math.CO:Fibonacci_sequences_and_lattice_paths",
         "math.CO:convex_topologies_on_finite_chains"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -20799,7 +20799,7 @@
         "Graph Theory",
         "Quantum Contextuality"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Algebra"
@@ -20900,7 +20900,7 @@
         "polynomial_algebra",
         "number_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -20996,7 +20996,7 @@
         "Representation Theory (character bounds for S_n)",
         "Algebraic Combinatorics (Erdős-Ko-Rado type theorems)"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -21147,7 +21147,7 @@
         "centralizer_smoothness",
         "etale_covers"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -21198,7 +21198,7 @@
         "Monotone_Boolean_functions",
         "Extremal_set_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Physics"
@@ -21342,7 +21342,7 @@
         "Enumerative combinatorics",
         "Algorithmic game theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -21391,7 +21391,7 @@
         "markov_chains → combinatorics",
         "equivalence_relations → weighted_digraphs"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -21439,7 +21439,7 @@
         "representation_theory",
         "topology"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -21537,7 +21537,7 @@
         "non_uniform_partition_asymptotics",
         "incremental_computation_and_error_accumulation"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -21587,7 +21587,7 @@
         "quadratic_forms",
         "galois_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Logic"
@@ -21638,7 +21638,7 @@
         "analytic_number_theory",
         "Galois_cohomology"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -21688,7 +21688,7 @@
         "tournament_graphs",
         "total_dual_integrality"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -21838,7 +21838,7 @@
         "Algebraic combinatorics (orthogonal Grassmannian)",
         "Valued matroid theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Logic"
@@ -22033,7 +22033,7 @@
         "Cyclic Codes",
         "Combinatorics of Vector Spaces"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -22133,7 +22133,7 @@
         "toric algebra",
         "discrete optimization"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -22229,7 +22229,7 @@
         "combinatorial enumeration",
         "representation theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -22327,7 +22327,7 @@
         "Graph topology to discrete curvature",
         "Combinatorial optimization"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -22375,7 +22375,7 @@
         "p_adic_galois_representations",
         "local_Langlands_correspondence"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Bridges"
@@ -22426,7 +22426,7 @@
         "Discrete_group_theory",
         "p-adic_metric_geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -22476,7 +22476,7 @@
         "permutation-invariant functions factor through weight sums",
         "integer-valued weight realizations of orbit partitions"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -22525,7 +22525,7 @@
         "complex_analysis",
         "algebraic_groups"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -22577,7 +22577,7 @@
         "convex_geometry ↔ domain_theory: simplicial structure of local stochastic cones enables/disables deflation constructions",
         "graph_theory ↔ order_theory: tree property of undirected Hasse graph characterizes deflation-existence"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Algebra"
@@ -22677,7 +22677,7 @@
         "combinatorics/chain_antichain_duality",
         "order_theory/scattered_posets"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -22727,7 +22727,7 @@
         "p-adic uniformisation → norm formulas",
         "CM points → algebraic numbers"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -22776,7 +22776,7 @@
         "tropical_geometry",
         "algebraic_combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Bridges"
@@ -22874,7 +22874,7 @@
         "algebraic_topology",
         "probability_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -22972,7 +22972,7 @@
         "cyclic_codes",
         "hamming_weight"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -23072,7 +23072,7 @@
         "Commutative algebra (toric ideals)",
         "Algebraic geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -23122,7 +23122,7 @@
         "convex_geometry",
         "measure_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -23169,7 +23169,7 @@
         "Number Theory",
         "Combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -23269,7 +23269,7 @@
         "deformation_theory--representation_theory",
         "tannakian_categories--algebraic_groups"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Bridges"
@@ -23321,7 +23321,7 @@
         "group_theory:free_product_characterization",
         "algebraic_geometry:reduction_maps"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -23370,7 +23370,7 @@
         "Ramsey theory ↔ one-dimensional arithmetic combinatorics (via the coincidence of symmetric and one-weight colorings)",
         "higher-dimensional combinatorial geometry ↔ integer-weighted counting (via radix weight representation)"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -23422,7 +23422,7 @@
         "algebraic_groups",
         "complex_analytic_geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -23527,7 +23527,7 @@
         "set_theory",
         "order_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -23625,7 +23625,7 @@
         "order_topology",
         "descriptive_set_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -23673,7 +23673,7 @@
         "algebraic geometry",
         "number theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -23722,7 +23722,7 @@
         "measure_theory",
         "o_minimal_geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -23771,7 +23771,7 @@
         "Representation Theory of Symmetric Groups",
         "Finite Group Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -23820,7 +23820,7 @@
         "antichain_partitions",
         "transversal_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -23919,7 +23919,7 @@
         "tropical_geometry",
         "algebraic_geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -24062,7 +24062,7 @@
         "Mathlib.CategoryTheory.Monoidal.Rigid",
         "Mathlib.CategoryTheory.Monoidal.NaturalTransformation"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Bridges"
@@ -24110,7 +24110,7 @@
         "Cyclic Codes",
         "Linear Algebra"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -24159,7 +24159,7 @@
         "measure_theory_on_polytopes",
         "combinatorial_topology"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Algebra"
@@ -24208,7 +24208,7 @@
         "Sylow theory of symmetric groups",
         "Character theory of symmetric groups"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -24398,7 +24398,7 @@
         "graph_minors",
         "finite_model_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -24447,7 +24447,7 @@
         "combinatorial geometry",
         "commutative algebra"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -24494,7 +24494,7 @@
         "commutative_algebra",
         "differential_algebra"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -24685,7 +24685,7 @@
         "Numerical Analysis",
         "Algorithm Verification"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -24784,7 +24784,7 @@
         "group_theory_transitive_subgroups_S5",
         "algebraic_curves_covers"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -24978,7 +24978,7 @@
         "Spherical harmonics and spectral analysis on S^{d-1}",
         "Sum-free sets in continuous settings"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -25030,7 +25030,7 @@
         "algebraic_dynamics_and_combinatorics",
         "pretentious_number_theory_and_density"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -25078,7 +25078,7 @@
         "extremal graph theory → commutative algebra of monomial ideals",
         "matching theory → Stanley-Reisner complexes"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -25129,7 +25129,7 @@
         "harmonic_analysis_padic",
         "local_class_field_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Bridges"
@@ -25178,7 +25178,7 @@
         "sparsity_matroids:hyperbolic_orbifold_geometry",
         "gain_graphs:fuchsian_group_cohomology"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -25227,7 +25227,7 @@
         "Harmonic analysis on reductive groups",
         "Symplectic representations and dual pairs"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Bridges"
@@ -25323,7 +25323,7 @@
         "Differential Algebra",
         "Polynomial Algebra"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -25373,7 +25373,7 @@
         "lattice_theory",
         "number_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -25420,7 +25420,7 @@
         "Arithmetic geometry",
         "Metric number theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Computation"
@@ -25515,7 +25515,7 @@
         "Projective Geometry",
         "Finite Simple Groups"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -25606,7 +25606,7 @@
         "Extremal graph theory",
         "Additive combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -25707,7 +25707,7 @@
         "Commutative algebra ↔ Complex analysis (divisor theory in restricted coefficient rings)",
         "Diophantine approximation ↔ Complex analysis (lattice rounding in jet-correction schemes)"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -25755,7 +25755,7 @@
         "Topological Combinatorics",
         "Combinatorial Algebraic Geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -25805,7 +25805,7 @@
         "Multiple zeta values",
         "Combinatorial Hopf algebras"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Tropical"
@@ -25904,7 +25904,7 @@
         "Cayley graphs of elementary abelian groups",
         "Antipodal distance-regular graphs"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -25954,7 +25954,7 @@
         "hypergeometric_functions",
         "CM_elliptic_curves"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Bridges"
@@ -26000,7 +26000,7 @@
         "Group Theory",
         "Graph Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Physics"
@@ -26097,7 +26097,7 @@
         "algebraic_number_theory",
         "incidence_geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -26147,7 +26147,7 @@
         "local_lemma",
         "random_graphs"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -26194,7 +26194,7 @@
         "Hypergraph Coloring",
         "Random Structures"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -26388,7 +26388,7 @@
         "group_theory",
         "finite_geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -26533,7 +26533,7 @@
         "local-global principles",
         "analytic number theory densities"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -26584,7 +26584,7 @@
         "linear_algebra",
         "convex_optimization"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Computation"
@@ -26779,7 +26779,7 @@
         "galois_theory",
         "elliptic_curves"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -27221,7 +27221,7 @@
         "metric_geometry",
         "extremal_combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -27269,7 +27269,7 @@
         "metric_geometry",
         "combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Computation"
@@ -27411,7 +27411,7 @@
         "permutation_group_actions",
         "projective_geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -27457,7 +27457,7 @@
         "algebraic_geometry",
         "group_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -27504,7 +27504,7 @@
         "Probabilistic method",
         "Hypergraph independence"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -27605,7 +27605,7 @@
         "cyclotomic_polynomials:additive_number_theory",
         "covering_systems:density_arguments"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -28105,7 +28105,7 @@
         "computational_combinatorics",
         "asymptotic_analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -28306,7 +28306,7 @@
         "Finite Geometries",
         "Permutation Groups"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -28518,7 +28518,7 @@
         "Algebraic Number Theory",
         "Metric Geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -28614,7 +28614,7 @@
         "number theory",
         "combinatorial discrepancy"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -28709,7 +28709,7 @@
         "prime distribution in arithmetic progressions",
         "exponential Diophantine equations"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -28859,7 +28859,7 @@
         "combinatorics-measure_theory",
         "lattice_theory-algebraic_combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Cryptography"
@@ -29009,7 +29009,7 @@
         "enumerative geometry",
         "representation theory of symmetric groups"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -29153,7 +29153,7 @@
         "Computational Complexity (Isolation Lemma)",
         "Probabilistic Methods in Combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -29390,7 +29390,7 @@
         "lexicographic_orders",
         "finite_set_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Logic"
@@ -29441,7 +29441,7 @@
         "bayesian_inference-network_science",
         "RG_flow-combinatorial_detectability"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Cryptography"
@@ -29541,7 +29541,7 @@
         "Bridge between extremal graph theory and Ramsey-type colorings",
         "Threshold phenomena in sparse-dense graph transitions"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -29591,7 +29591,7 @@
         "ring_theory",
         "real_numbers"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -29641,7 +29641,7 @@
         "coprime_integer_statistics ↔ turbulent_attractor_stability",
         "dirichlet_convolution_identities ↔ navier_stokes_fixed_points"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -29689,7 +29689,7 @@
         "representation_theory",
         "algebraic_number_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -29740,7 +29740,7 @@
         "Cayley graph combinatorics ↔ Lie group embedding theorems (Mal'cev)",
         "Polynomial growth ↔ bounded twin-width classes"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -29789,7 +29789,7 @@
         "Combinatorics of partitions and symmetric functions",
         "Commutative algebra of multigraded rings"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -29838,7 +29838,7 @@
         "number_theory",
         "mathematical_physics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -29884,7 +29884,7 @@
         "magnitude_function",
         "schoenberg_embedding"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -30079,7 +30079,7 @@
         "graph_theory_to_combinatorial_optimization",
         "matching_theory_to_structural_graph_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -30328,7 +30328,7 @@
         "representability_theory",
         "abstract_rigidity"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -30378,7 +30378,7 @@
         "Coxeter_length_gap_to_forest_structure",
         "pattern_avoidance_to_graph_acyclicity"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Logic"
@@ -30474,7 +30474,7 @@
         "Extremal Combinatorics",
         "Probabilistic Methods"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -30524,7 +30524,7 @@
         "arithmetic_geometry_over_finite_fields",
         "symplectic_group_representations"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Bridges"
@@ -30574,7 +30574,7 @@
         "real_analysis",
         "multiplicative_structure_on_reals"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -30673,7 +30673,7 @@
         "fourier_analysis_over_finite_fields",
         "restriction_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -30771,7 +30771,7 @@
         "Hirzebruch-Riemann-Roch for combinatorial geometries",
         "graded ring homomorphisms between K-ring and Chow ring"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -30919,7 +30919,7 @@
         "combinatorial_homological_algebra",
         "higher_category_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -31017,7 +31017,7 @@
         "p_adic_valuations",
         "transcendence_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -31117,7 +31117,7 @@
         "Representation Theory",
         "Combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -31166,7 +31166,7 @@
         "Formal grammars ↔ graph decomposition (rooted grammar producing subcubic outerplanar graphs from branches and path fragments)",
         "Computer-verified certificate checking ↔ combinatorial existence proofs (finite certificate closure verified by a stand-alone checker)"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -31215,7 +31215,7 @@
         "metric geometry (doubling dimension and packing)",
         "homotopy theory (interleaving distances)"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -31467,7 +31467,7 @@
         "outerplanar_graphs",
         "planar_graph_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -31520,7 +31520,7 @@
         "Heisenberg groups and nilmanifolds",
         "Automorphic forms and Langlands program"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -31570,7 +31570,7 @@
         "linear_algebra_over_finite_fields",
         "zero_forcing"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -31715,7 +31715,7 @@
         "Combinatorics to Probability Theory",
         "Lattice Theory to Functional Analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -32011,7 +32011,7 @@
         "graph theory",
         "formal verification"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -32062,7 +32062,7 @@
         "random matrix theory universality",
         "hyperelliptic curve families over finite fields"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -32160,7 +32160,7 @@
         "math.CO: Enumerative Combinatorics",
         "cs.DM: Discrete Mathematics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -32206,7 +32206,7 @@
         "group_theory",
         "extremal_graph_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -32303,7 +32303,7 @@
         "Arakelov theory",
         "Arithmetic geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -32490,7 +32490,7 @@
         "math.AG",
         "math.RT"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -32538,7 +32538,7 @@
         "Eigenspace decomposition",
         "Graph isomorphism algorithms"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -32587,7 +32587,7 @@
         "Abstract rigidity theory",
         "Multilinear algebra of vector spaces"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -32685,7 +32685,7 @@
         "information_theory",
         "formal_languages"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -32782,7 +32782,7 @@
         "computational complexity (NP-hardness)",
         "algebraic characterizations of optimality"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -32832,7 +32832,7 @@
         "additive basis theory",
         "combinatorial optimization"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -32925,7 +32925,7 @@
         "math.CO",
         "physics.soc-ph"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -32973,7 +32973,7 @@
         "Matroid theory",
         "Hirzebruch–Riemann–Roch theorem"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -33019,7 +33019,7 @@
         "math.graph_theory",
         "formal_methods.lean"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -33070,7 +33070,7 @@
         "extremal_graph_theory",
         "flag_algebra"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -33165,7 +33165,7 @@
         "extremal combinatorics",
         "algebraic number theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -33212,7 +33212,7 @@
         "p-biased measure",
         "Boolean lattice"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -33259,7 +33259,7 @@
         "graph theory (q‑Johnson graphs)",
         "coding theory (constant‑dimension codes)"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -33309,7 +33309,7 @@
         "intersection theory",
         "moduli spaces of shtukas"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -33359,7 +33359,7 @@
         "Metric geometry in graphs",
         "distance-based graph parameters"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -33413,7 +33413,7 @@
         "unique extremal structure",
         "Lean formalization of hypergraphs and spectral radius"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -33462,7 +33462,7 @@
         "connects graph symmetries to topological automorphism groups",
         "links equivariant homotopy theory with combinatorial enumeration"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -33557,7 +33557,7 @@
         "q-series identities",
         "Elementary partition theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -33601,7 +33601,7 @@
       "domain_bridges": [
         "math.AG"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -33698,7 +33698,7 @@
         "Homological Algebra",
         "Combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Logic"
@@ -33749,7 +33749,7 @@
         "p-adic Hodge theory",
         "Derived Hecke algebras"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -33800,7 +33800,7 @@
         "commutative algebra <-> matroid theory",
         "graph theory <-> determinantal ideals"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -33899,7 +33899,7 @@
         "Galois cohomology",
         "p-adic analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -33945,7 +33945,7 @@
         "spectral_gap_random_hypergraphs",
         "norm_bounds_random_matrices"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -34089,7 +34089,7 @@
         "divisor functions",
         "partition enumeration"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -34185,7 +34185,7 @@
         "group theory",
         "symbolic dynamics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -34235,7 +34235,7 @@
         "Algebraic combinatorics",
         "Formal verification in Lean"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -34329,7 +34329,7 @@
         "category_theory",
         "algebraic_topology"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -34378,7 +34378,7 @@
         "Shimura varieties",
         "automorphic forms"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -34528,7 +34528,7 @@
         "Algebraic K-theory",
         "Class field theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -34672,7 +34672,7 @@
         "Polynomial Dynamics",
         "Galois Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -34721,7 +34721,7 @@
         "q-series",
         "Eta Quotients"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -34767,7 +34767,7 @@
         "automata theory",
         "model theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -34863,7 +34863,7 @@
         "Symmetric Functions",
         "Quantum Algebra"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -34962,7 +34962,7 @@
         "Extremal combinatorics",
         "Additive combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -35014,7 +35014,7 @@
         "Quantitative regularity lemmas",
         "Nonstandard analysis for graph limits"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -35210,7 +35210,7 @@
         "Permutation Group Theory",
         "Local-Global Principles in Number Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -35305,7 +35305,7 @@
         "graph_theory",
         "algebraic_number_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -35355,7 +35355,7 @@
         "exterior algebra",
         "Weyl algebra"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -35497,7 +35497,7 @@
         "Riemann hypothesis equivalent formulations",
         "computational complexity of arithmetic functions"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -35546,7 +35546,7 @@
         "convex optimization",
         "measure theory on finite spaces"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -35592,7 +35592,7 @@
       "domain_bridges": [
         "math.CO:05B35 (matroid theory)"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -35689,7 +35689,7 @@
         "vertex resolving partitions",
         "tree characterization"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -35738,7 +35738,7 @@
         "TensorSpectralMethods",
         "CombinatorialOptimization"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -35831,7 +35831,7 @@
         "design theory",
         "spectral graph theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -35927,7 +35927,7 @@
         "partition theory",
         "modular arithmetic"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -35974,7 +35974,7 @@
         "Ideal class groups",
         "Bhargava parametrization"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -36081,7 +36081,7 @@
         "NumberTheory",
         "GeometricRepresentationTheory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -36128,7 +36128,7 @@
         "Graph isomorphism under group actions",
         "Computational Ramsey number determination via SAT"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -36273,7 +36273,7 @@
         "Polyhedral graph theory",
         "Discrete differential geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -36321,7 +36321,7 @@
         "Computer-assisted finite certificate checking",
         "Inductive graph grammars for subgraphs of partial 2-trees"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -36416,7 +36416,7 @@
         "Projective Geometry",
         "Intersection Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -36563,7 +36563,7 @@
         "combinatorial algebra",
         "algebraic geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -36654,7 +36654,7 @@
         "group theory",
         "combinatorial enumeration"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -36803,7 +36803,7 @@
         "group-theory",
         "combinatorics-on-words"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -36952,7 +36952,7 @@
         "Representation theory of symmetric groups",
         "Grassmannian cohomology"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -37054,7 +37054,7 @@
         "analytic number theory",
         "discrete geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -37339,7 +37339,7 @@
         "Combinatorics",
         "Homological Algebra"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -37386,7 +37386,7 @@
         "subspace codes",
         "graph coloring"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -37437,7 +37437,7 @@
         "Automorphic Forms",
         "Intersection Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -37538,7 +37538,7 @@
         "formal language theory",
         "discrete mathematics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -37640,7 +37640,7 @@
         "Generating functions",
         "Type theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -37738,7 +37738,7 @@
         "Probabilistic Methods",
         "Measure Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -37786,7 +37786,7 @@
         "Combinatorial cluster pictures for genus 2",
         "Mathlib algebraic geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -37880,7 +37880,7 @@
         "classical partition dimension",
         "multiset distance"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -38043,7 +38043,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThis project proves the upper half of the generalized Turán result\n`ex(n, K_{a,b}, K_{3,b+1}) = Θ(n^3)` and, as a **connector**, re-expresses the combinatorial\ncardinality bound in the language of asymptotic analysis.\n\n## What is proved\n\nFile `Catalog/Bridges/GenTuranAsymptoticBridge.lean` (self-contained, imports only `Mathlib`):\n\n* `KabCopies_cubic_of_K3tFree` — the combinatorial core: every `K_{3,b+1}`-free graph on a\n  finite vertex set has at most `C(b, b) · C(b, a-3) · n^3 = C(b, a-3) · n^3` copies of\n  `K_{a,b}` when `3 ≤ a` and `3 ≤ b` (KST-style double count on a 3-element core).\n* `genTuran_KabCopies_isBigO` — **the bridge**: for any sequence of `K_{3,b+1}`-free graphs,\n  `n ↦ #{copies of K_{a,b}}` is `O(n^3)` in the Landau sense (`Asymptotics.IsBigO`), with the\n  Landau constant equal to the combinatorial constant `C(b, a-3)`.\n* `genTuran_density_tendsto_zero` — the probabilistic/analytic reading: the copy density\n  `#copies / n^{a+b}` tends to `0`.\n\n## Natural next steps\n\n1. **Matching lower bound (the `Θ` half).** Construct, for infinitely many `n`, `K_{3,b+1}`-free\n   graphs with `Ω(n^3)` copies of `K_{a,b}`. The parity subtlety in the literature lives in this\n   construction; formalizing it would upgrade the `O(n^3)` bridge to a two-sided `Θ(n^3)`\n   asymptotic equivalence (`Asymptotics.IsTheta`).\n\n2. **Extremal function as an object.** Define `ex(n, K_{a,b}, K_{3,t})` as the supremum of\n   `KabCopies` over all `K_{3,t}`-free graphs on `Fin n`, and state the bridge directly for this\n   parameter (`IsBigO`/`IsTheta`), rather than for arbitrary sequences. This requires a\n   `Fintype (SimpleGraph (Fin n))` sup with classical decidability.\n\n3. **General `K_{s,t}` forbidden graphs.** Replace the forbidden `K_{3,b+1}` (and the anchoring\n   triple) by `K_{s, ·}`, giving `ex(n, K_{a,b}, K_{s,t}) = O(n^s)` under the analogous\n   common-neighborhood cap on `s`-sets. The double count generalizes verbatim with `s` in place\n   of `3`.\n\n4. **Sharper constants.** The current constant `C(b, a-3)` is not optimized. Investigate the\n   exact extremal constant and whether the KST cap can be tightened for specific `(a,b)`.\n\n5. **Further cross-domain bridges.** The `IsBigO` framing invites connections to (a) incidence\n   geometry / the Zarankiewicz problem (0-1 matrices with no `s×t` all-ones submatrix), and\n   (b) random-graph thresholds, where the vanishing density\n   `genTuran_density_tendsto_zero` becomes a first-moment statement.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Bridges"
@@ -38084,7 +38084,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThis project formalises a **local-to-global principle for coordinate influences**\n— the engine behind local-to-global KKL theorems for simplicial complexes and\nhigh-dimensional expanders (Kahn–Kalai–Linial 1988; Bafna–Hoory–Kaufman 2022;\nGur–Lifshitz–Liu 2022; Gotlib–Kaufman 2023).\n\n## What is proved\n\n`Cryptography/LocalToGlobalKKL/Basic.lean`\n\n* `inf_decomp` — influences self-average: `Inf f i = InfSub f j false i + InfSub f j true i`.\n* `linktot_decomp` — the total-influence version summed over coordinates.\n* `localToGlobal_KKL_cube` — flagship concrete theorem: local total-influence\n  lower bounds on both links of a coordinate give a globally influential\n  coordinate (`(n-1)·Inf f i ≥ 2T`).\n* `abstract_localToGlobal_KKL` — the abstract averaging engine: bridge + local\n  KKL hypothesis ⟹ global total influence `≥ τ·(∑ w)`.\n* `abstract_global_influential_coord` — abstract global influential coordinate.\n* `cube_total_via_abstract` — the cube is literally an instance of the abstract\n  engine.\n\n`Cryptography/LocalToGlobalKKL/Explorations.lean`\n\n* `abstract_localToGlobal_KKL_variance` — the faithful KKL conditional form\n  (non-degenerate link ⟹ influential coordinate).\n* `regular_complex_exact` — exact total influence in regular systems.\n* `cube_localKKL_influential_coord_real` — real-valued global influential\n  coordinate `2T ≤ n·Inf f i`.\n\n## Natural next steps\n\n1. **The genuine KKL logarithmic bound.** The current global conclusion is an\n   averaging (max ≥ average) bound. The full KKL theorem gives an influential\n   coordinate of influence `Ω(Var(f)·log n / n)` even when the total influence is\n   small. Formalising this requires Fourier analysis on the cube and\n   hypercontractivity / the Bonami–Beckner inequality, which are not yet in\n   Mathlib and would be the main investment.\n\n2. **True simplicial complexes.** Replace the Boolean-cube model by an abstract\n   pure `d`-dimensional simplicial complex with a measure on top faces, define\n   links and the induced local functions, and *prove* the self-averaging bridge\n   `I i = ∑ links w·Iℓ` from the complex structure (rather than instantiating\n   with the cube's codimension-one subcubes). The abstract engine here already\n   consumes exactly that bridge.\n\n3. **Weighted / spectral links.** Incorporate the spectral gap of the links\n   (high-dimensional expansion) to convert the local KKL bound into a stronger\n   global bound with an expansion-dependent constant, following the\n   local-to-global spectral machinery.\n\n4. **Variance transfer.** Prove a local-to-global statement for the variance\n   proxy `V` itself, so that global non-degeneracy follows from local\n   non-degeneracy, closing the loop with `abstract_localToGlobal_KKL_variance`.\n\n5. **Hypercontractivity on HDX.** Formalise the Gur–Lifshitz–Liu\n   hypercontractive inequality on high-dimensional expanders, from which\n   KKL-type theorems follow directly, giving an alternative route to item 1.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -38125,7 +38125,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nFile: `Bridges/PageSiegelRefinement.lean`\n\n## What is proved\n\nThe file formalizes, and proves in full (no `sorry`, only the standard axioms\n`propext`, `Classical.choice`, `Quot.sound`), a **conditional refinement of\nPage's theorem** on Landau–Siegel zeros, framed as a *connector* between two\nareas:\n\n* **Zero location / complex analysis** — the repulsion of real zeros of Dirichlet\n  `L`-functions (`DirichletCharacter.LFunction`), packaged as `Repulsion`, and the\n  mission's premise `NonRealExclusion` (no non-real zeros near `s = 1`).\n* **Asymptotics + finiteness** — the pivot `exists_threshold`\n  (`m^{-ε} log m → 0`, from `isLittleO_log_rpow_atTop`) and the abstract\n  `repulsion_subsingleton`, which turns a repulsion inequality into a\n  `Subsingleton` (\"at most one\").\n\nThe main theorem `page_siegel_refinement` wires these together: for every `ε > 0`\nthere are effective `C > 0`, `Q₀ > 1` such that the Deuring–Heilbronn bridge\n`NonRealExclusion → Repulsion` together with `NonRealExclusion` forces the set of\nexceptional primitive quadratic characters (real zero in `[1 - q^{-ε}, 1)`) to be\na `Set.Subsingleton`.\n\n## Honest scope / what is assumed\n\nTwo genuinely deep analytic facts are isolated as **explicit hypotheses** rather\nthan proved from scratch (this is what makes the result *conditional*, matching\nthe paper's own framing):\n\n1. `NonRealExclusion` — the hypothesis of the statement itself.\n2. The bridge `NonRealExclusion → Repulsion` — the Deuring–Heilbronn / Landau\n   zero-repulsion mechanism, whose usual proof rests on the non-negativity of the\n   Dirichlet coefficients of `ζ(s) L(s,χ₁) L(s,χ₂) L(s,χ₁χ₂)`.\n\nEverything *downstream* of these inputs — the effective constant, the monotonicity\nargument, and the passage to \"at most one\" — is a Lean theorem.\n\n## Concrete next steps\n\n1. **Discharge the bridge.** Prove `NonRealExclusion → Repulsion` inside Lean.\n   Mathlib already provides the key positivity input\n   `DirichletCharacter.norm_LFunction_product_ge_one` (the `3–4–1` trick); the\n   remaining work is the explicit log-derivative estimates and the choice of the\n   auxiliary point `s = 1 + δ`.\n\n2. **Replace the `min`-conductor repulsion by the classical `log(q₁q₂)` form.**\n   The abstract lemma is stated with `log (min conductor)`; deriving the sharper\n   `log(q₁q₂)` version and re-deriving `repulsion_subsingleton` from it would make\n   the constant match Landau's exactly.\n\n3. **Non-vacuity via character theory.** Connect `ExcSet` to the Kronecker-symbol\n   description of primitive real characters, so that \"at most one character\" is\n   phrased at the level of fundamental discriminants.\n\n4. **Effective `C(ε)`.** The proof currently fixes `C = 1`; tracking the optimal\n   `C(ε)` through the bridge would yield the fully effective statement.\n\n5. **Remove `Classical.choice`.** The zero witness is extracted with\n   `Classical.choose`; a constructive selection (or `Set.Subsingleton` proved\n   directly) would trim the axiom footprint.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Logic",
         "Algebra"
@@ -38207,7 +38207,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nDerived from the cycle studying monochromatic Pythagorean triples in the level sets\nof completely multiplicative colourings of the positive integers.\n\n## 1. Existence of a single monochromatic triple for every completely multiplicative colouring\n\n**Conjecture.** For every finite abelian group `G` and every completely multiplicative\ncolouring `f : ℕ⁺ → G`, at least one Pythagorean triple `(x, y, z)` satisfies\n`f(x) = f(y) = f(z)`.\n\n**The key insight is** that once *one* monochromatic triple exists, scaling forces a\nmonochromatic triple of *every* colour in the image — so the entire general-colour\nproblem collapses to this single existence statement. The remaining difficulty is\npurely analytic: forcing the first coincidence of three multiplicative values on a\nPythagorean configuration.\n\n**Why now?** The reduction proved this cycle cleanly separates the algebraic layer\n(fully settled) from the analytic layer, so effort can be concentrated on the one\nstatement that actually carries the weight, rather than re-deriving the group-theoretic\nscaffolding for each colour.\n\n## 2. Density of realising scales\n\n**Conjecture.** If a completely multiplicative colouring admits a monochromatic\nPythagorean triple of colour `ω`, then the set of scaling factors `t` producing a\nmonochromatic triple of a *prescribed* colour has positive natural density, with density\ndetermined by the index of the kernel of `f` restricted to the multiplicative monoid.\n\n**The key insight is** that the scaling factor must land in a fixed coset of the level\nset of `f`, and the frequency of such integers is a multiplicative-function counting\nproblem governed by the colour subgroup's index.\n\n**Why now?** The coset description of \"which scales work\" emerged directly from this\ncycle's reduction; quantifying its density is the natural refinement from a qualitative\nexistence result to a quantitative one.\n\n## 3. Simultaneous monochromatic triples across several colours\n\n**Conjecture.** For every completely multiplicative colouring into a finite abelian\ngroup of order `m`, one can find `m` pairwise-disjoint Pythagorean triples, each\nmonochromatic, realising `m` distinct colours simultaneously.\n\n**The key insight is** that scaling a single monochromatic seed triple by\nindependently chosen factors from distinct cosets yields triples of distinct colours,\nand disjointness can be arranged by spacing the scales along a fast-growing sequence.\n\n**Why now?** The all-or-nothing dichotomy guarantees each colour is individually\nrealisable; the open step is upgrading individual realisability to a simultaneous,\ndisjoint family, which packages the reduction into a Ramsey-type partition statement.\n\n## 4. Beyond Pythagorean: scale-invariant Diophantine configurations\n\n**Conjecture.** The reduction is not special to `x² + y² = z²`. For any homogeneous\nDiophantine relation `P(x₁, …, x_r) = 0` invariant under simultaneous scaling, the\ncolour spectrum of monochromatic solutions under a completely multiplicative colouring\nis all-or-nothing.\n\n**The key insight is** that only two ingredients were used — scale invariance of the\nconfiguration and the subgroup structure of the image — neither of which mentions the\nPythagorean equation specifically.\n\n**Why now?** Having isolated the exact hypotheses driving the dichotomy, the abstract\nversion costs almost nothing and immediately covers sums of two squares, Markov-type\nequations, and higher-power analogues.\n\n## 5. Non-abelian and infinite colour groups\n\n**Conjecture.** For colourings into a finite (possibly non-abelian) group, the\nachievable colours of monochromatic Pythagorean triples form a union of conjugacy-class\ntranslates of the image subgroup; for suitable infinite torsion groups the subgroup\nclosure argument survives verbatim.\n\n**The key insight is** that the inverse-closure step used finiteness only to express an\ninverse as a positive power; any group in which every element has finite order supports\nthe same argument, while non-commutativity replaces cosets by two-sided translates.\n\n**Why now?** The single place commutativity and finiteness entered the proof is now\nexplicit, making it a well-posed question exactly which of the two can be relaxed and at\nwhat cost.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -38289,7 +38289,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThis project formalizes a self-contained theory of **total nonnegativity** (all minors\n`≥ 0`) and applies it to the **interval-subdivision transformation matrices** of finite\nsimplicial complexes.\n\n## What is proved (Lean, 0 `sorry`)\n\n* `IntervalTP/Basic.lean` — the core theory over any linearly ordered commutative ring:\n  * `IsTN` : total nonnegativity via strictly-monotone minors;\n  * `IsTN.entry_nonneg`, `IsTN.transpose`, `isTN_diagonal`, `isTN_one`;\n  * **`IsTN.colOp` / `IsTN.rowOp`** : the central result that a *single adjacent\n    nonnegative column/row operation preserves total nonnegativity*, proved using only\n    multilinearity of the determinant in one column (no Cauchy–Binet formula).\n* `IntervalTP/Construction.lean` — `IsTN.applyOps` / `isTN_applyOps_diagonal`: any matrix\n  built from a nonnegative diagonal by a list of valid adjacent operations is totally\n  nonnegative.\n* `IntervalTP/Matrices.lean` — the interval-subdivision transformation matrices\n  `H₁, H₂, H₃, H₄` are totally nonnegative, each certified by an explicit bidiagonal\n  construction.\n* `IntervalTP/SimplexIntervals.lean` — `card_intervals_simplex`: the interval subdivision\n  of the `(d-1)`-simplex has `3^d - 2^d` vertices.\n\n## Natural next steps\n\n1. **General dimension `d`.**  Find a closed form for the entries `H_{i,j}(d)` (equivalently\n   the local `h`-vector of the interval subdivision of a simplex) and a uniform bidiagonal\n   factorization, then prove `IsTN (H_d)` for all `d`.  The symmetry `H_{i,j} = H_{d-i,d-j}`\n   and the boundary rows `e_0, e_d` observed computationally should guide this.\n\n2. **The `h`-vector / interval subdivision in Lean.**  Formalize the face poset, the\n   interval poset, and the order-complex `f`- and `h`-vectors, and prove the transformation\n   law `h(Int Δ) = H_d · h(Δ)` (a Brenti–Welker–style statement), of which the matrices\n   here are the numerical content.\n\n3. **Cauchy–Binet and closure under products.**  Add the Cauchy–Binet formula to obtain\n   that products of totally nonnegative matrices are totally nonnegative, and the\n   Loewner–Whitney theorem that every totally nonnegative matrix factors into nonnegative\n   bidiagonals — giving a converse to the construction used here.\n\n4. **Pascal and other subdivision operators.**  The same machinery certifies the\n   (lower-triangular) Pascal matrix and the barycentric / edgewise subdivision\n   transformation matrices as totally nonnegative via their adjacent-operation\n   constructions.\n\n5. **Strict total positivity.**  Strengthen `IsTN` (minors `≥ 0`) to strict total\n   positivity (minors `> 0`) where it holds, and relate it to real-rootedness of the\n   associated `h`-polynomials.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -38423,7 +38423,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.82,
       "parent_direction": "",
       "priority_score": 0.78,
       "proof_strategy": "Encode ECA state as vector s in GF(2)^n. Rule r defines update f_r(s)_i = g(s_{i-1}, s_i, s_{i+1}) where g is the truth table of rule r, viewed as a polynomial over GF(2). For example, Rule 110: g(a,b,c) = a + b + ac + bc (mod 2). Fixed points satisfy f_r(s) = s, a system of n polynomial equations over GF(2). Compute dim(V(f_r)) using Groebner basis methods. For Rule 0: f_0(s) = 0, so V = {0}, dim = 0. For Rule 255: f_255(s) = 1+s, V = {1+s = s} = {1=0} = empty, dim = -1 (no fixed points). For Rule 110: f_110(s) = s + s_{i-1} + s_i + s_{i-1}*s_{i+1} + s_i*s_{i+1}, dim(V) = n - rank(Jacobian of f-s). Conjecture: dim(V(f_r)) correlates with Wolfram class. Test: compute dim(V(f_r)) for all 256 rules with n=20 and compare to Wolfram classification.",
@@ -38434,7 +38434,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-07-09T21:05:18.693080+00:00",
       "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
@@ -38453,7 +38453,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Tensor Amplification and Spectral Transfer for Sidorenko-Type Inequalities\n\nThis cycle established a tensor-amplification engine for Sidorenko-type inequalities on weighted\ngraphs: closed-walk counts are multiplicative under the tensor product (spectral transfer), the\nSidorenko ratio is therefore multiplicative, the Sidorenko property is closed under tensor products\n(Transfer Principle I), and surpluses/deficits are strictly amplified by self-tensoring (Transfer\nPrinciple II). The even cycles `C₂` and `C₄` were shown to satisfy Sidorenko for *all* symmetric\nweightings — with no positivity hypothesis — seeding an entire tensor-closed class. The following\nconjectures grow directly out of these findings.\n\n## Conjecture 1 (Sign-free even-cycle Sidorenko for all lengths)\n\nEvery even cycle `C₂ₘ` satisfies `t(C₂ₘ, A) ≥ t(K₂, A)^{2m}` for every symmetric weighted graph\n`A`, with no assumption on the signs of the entries.\n\n*The key insight is* that the closed-walk count `tr(A^{2m})` is intrinsically a sum of squares of\nthe entries of `Aᵐ`, so a chain of `m` Cauchy–Schwarz steps — each passing from `Aʳ` to `A^{2r}`\nthrough the squared row sums — never inspects a sign; the nonnegativity usually imposed on graphons\nis a red herring for even cycles.\n\n*Why now?* The `C₄` case was just proved in exactly this sign-free, doubling form, exposing the\nrecursive `Aʳ ↦ A^{2r}` structure. Turning that one step into an induction on `m` is the natural\nand immediate next target, and it would settle the even-cycle case of Sidorenko in the discrete\nmodel in one stroke.\n\n## Conjecture 2 (Amplification dichotomy and the ratio spectrum)\n\nUnder the tensor product the Sidorenko ratio behaves as a discrete dynamical system with exactly\ntwo fixed points, `0` and `1`: for a fixed cycle `Cₖ`, the closure of the set of achievable ratios\n`{R(A)}` under multiplication is the whole interval `[0, ∞)`, and iterated self-tensoring sends\nevery `R ≠ 1` monotonically to a fixed point (`R > 1 → ∞`, `0 < R < 1 → 0`).\n\n*The key insight is* that multiplicativity of the ratio converts a single graph with `R ≠ 1` into a\ngeometric orbit `R, R², R⁴, …`, so the *existence* of any surplus or deficit, however tiny, already\nwitnesses arbitrarily extreme behaviour — the inequality has no \"almost-tight\" regime that is\nstable under tensoring.\n\n*Why now?* The multiplicativity identity and both strict amplification laws are now in hand; what\nremains is to characterise which ratios are realizable and to prove the orbit-closure statement,\nmaking the qualitative \"amplification\" picture into a precise structural theorem.\n\n## Conjecture 3 (Spectral transfer beyond cycles)\n\nThe multiplicativity `t(H, A ⊗ B) = t(H, A)·t(H, B)` holds for *every* pattern graph `H`, not only\ncycles, and consequently the Sidorenko property for any bipartite `H` is closed under tensor\nproducts and its ratio is amplified by self-tensoring.\n\n*The key insight is* that homomorphism counts are contractions of tensor powers of the adjacency\noperator, and the Kronecker product acts diagonally on every such contraction, so multiplicativity\nis a property of the pattern-independent tensor structure rather than of the special trace formula\nfor cycles.\n\n*Why now?* The cycle case reduced entirely to `(A ⊗ B)ᵏ = Aᵏ ⊗ Bᵏ` together with multiplicativity\nof the trace; the same two ingredients, applied to the general homomorphism-count functional,\nshould yield the pattern-independent statement and thereby a uniform tensor-closure principle for\nall of Sidorenko's conjecture.\n\n## Conjecture 4 (Extremal rigidity of the tight case)\n\nFor an even cycle `Cₖ`, equality `t(Cₖ, A) = t(K₂, A)ᵏ` forces `A` to be a constant weighting (a\nrescaled complete looped graph), and this rigidity is preserved and detected by the tensor product:\n`R(A) = 1` if and only if `A` is constant.\n\n*The key insight is* that each Cauchy–Schwarz step in the even-cycle proof is tight exactly when\nthe relevant vectors are proportional to the all-ones vector, so equality throughout propagates\nback to constancy of the original weighting, and the fixed point `R = 1` of the amplification map\ncorresponds precisely to the extremal graphons.\n\n*Why now?* The proof of `C₄` already isolates the exact Cauchy–Schwarz steps whose equality cases\nmust be analysed, and the amplification map's fixed point at `1` gives an independent, dynamical\nhandle on the extremal set; combining the two should convert the inequalities into rigidity\ntheorems.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -38535,7 +38535,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Gödel's Casino\n\nThe file `Casino.lean` formalises *Gödel's Casino* as a betting game over the sentences\nof an abstract formal theory `T` and proves a guaranteed-win strategy for the\nundecidable (independent) cards. The theory is modelled by exactly the data the game\nneeds — a sentence type, negation, provability `Provable`, standard-model truth `True_`,\nand a `Σ₁`-classification `IsSigma1` — subject to three standard facts taken as\nhypotheses: soundness, `True_ (¬s) ↔ ¬ True_ s`, and `Σ₁`-completeness.\n\n## What is proved\n\n* `Theory.pi1_indep_true` / `Theory.sigma1_indep_false` — the mathematical core:\n  every `Π₁` sentence independent of `T` is TRUE, every `Σ₁` sentence independent of `T`\n  is FALSE. This *corrects* the mission's proposal (\"bet FALSE on `Π₁` such as\n  `Con(ZFC)`\"): one must bet TRUE on independent `Π₁` sentences.\n* `cardProfit_pi1`, `cardProfit_sigma1`, `cardProfit_other`, `cardProfit_nonneg` — the\n  strategy wins `+1` on each decidable-shape card and never loses.\n* `deckProfit_eq_count` — total profit equals the number of `Σ₁`/`Π₁` cards dealt.\n* `deckProfit_nonneg`, `deckProfit_pos` — the strategy never loses, and strictly wins as\n  soon as one decidable-shape card appears. This is a *guaranteed* win, stronger than the\n  conjectured \"positive expected value\".\n* `deckProfit_avg_third` — if `≥ 1/3` of the deck has decidable shape (the mission's\n  arithmetic-hierarchy heuristic), the average profit per round is `≥ 1/3`.\n* `naiveCardProfit_eq_neg`, `naiveDeckProfit_eq_neg`, `naiveDeckProfit_neg` — the\n  mission's originally-proposed strategy is the pointwise opposite of the correct one and\n  loses exactly what the correct strategy wins.\n* A concrete toy theory (`toyTheory`, `toyDeck`) witnessing non-vacuity, with profit `1`.\n\n## Natural extensions\n\n1. **Ground the abstract `Theory` in real arithmetic.** Instantiate the `Theory`\n   structure with Mathlib's `FirstOrder.Language.Arith`/`Peano` development: define\n   `Sentence`, `neg`, and `Provable` from the actual derivability relation, `True_` from\n   satisfaction in `ℕ`, and prove `sound`, `true_neg`, and `sigma1_complete` as genuine\n   theorems (`Σ₁`-completeness of `Q`/`PA`). The casino theorems would then transfer to\n   ZFC-independent arithmetic sentences unconditionally.\n\n2. **A concrete deck of famous cards.** Build cards for `Con(ZFC)` (independent `Π₁`,\n   TRUE), a Rosser-style independent `Σ₁` sentence (FALSE), and the Continuum Hypothesis\n   (an `other` card that must be hedged because it is not arithmetic). Compute the deck\n   profit explicitly.\n\n3. **Optimality / minimax of the hedge.** For `other` cards, prove that no non-hedge bet\n   dominates: there exist truth assignments making `betTrue` lose and making `betFalse`\n   lose, so `hedge` maximises the guaranteed payoff. This justifies the third arm of the\n   strategy as minimax-optimal.\n\n4. **Probabilistic layer.** Replace the guaranteed-count statement with a genuine\n   expectation over a `PMF`/measure on decks, recovering \"expected profit `> 0`\" as a\n   corollary of the stronger pointwise `deckProfit_nonneg`.\n\n5. **Higher levels of the hierarchy.** Extend `Kind` to `Σₙ`/`Πₙ` and study which levels\n   admit a forced correct bet under `Σₙ`-completeness/soundness assumptions, quantifying\n   the \"fraction decidable at level `n`\" heuristic.\n\n6. **House vs. player as a formal game.** Model the dealer choosing the deck adversarially\n   and prove a value/strategy-stealing result: the player's guaranteed value is exactly\n   the number of decidable-shape cards the dealer is forced to include.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -38576,7 +38576,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Power-of-Two Matching Counts\n\nThis cycle established a clean multiplicative law for perfect matchings of *block\ngraphs* — superpositions of identical gadgets with no edges between blocks — and\nspecialized it to obtain an exact power-of-two count when every block is a\nquadrilateral. The following conjectures push the phenomenon toward richer,\nconnected, and cross-domain settings.\n\n## Conjecture 1 — Forced-tree gluing preserves the power-of-two law\nIf a connected graph is assembled from two-matching gadgets glued along *forcing\nedges* (edges lying in every perfect matching), then its number of perfect\nmatchings remains an exact power of two.\n\nThe key insight is that a forcing edge behaves like a rigid identification that\nneither creates nor destroys matching choices, so gluing along it multiplies\ncounts by one and leaves the two-choice structure of each gadget intact.\n\nWhy now? The multiplicative law already isolates the mechanism (independent binary\nchoices); forcing edges are precisely the tool needed to keep that independence\nwhile making the graph connected, closing the gap between the disconnected model\nand the informal \"connected\" hypothesis.\n\n## Conjecture 2 — Spectral signature of two-matching gadgets\nA connected graph has a perfect-matching count that is a power of two if and only\nif its adjacency structure decomposes into blocks each of which contributes a\nsingle eigenvalue pair of a fixed shape to the matching (permanent) generating\nfunction.\n\nThe key insight is that the logarithm of a power-of-two count is an integer, and\nintegrality of a spectral invariant is exactly the kind of rigidity that forces a\nbinary block decomposition.\n\nWhy now? The block equivalence proved this cycle gives an explicit factorization\nof the matching polynomial over blocks, providing the algebraic handle needed to\ntranslate the counting statement into a spectral one.\n\n## Conjecture 3 — Two-matching gadgets are exactly the even cycles and their trees\nUp to the gluing operations of Conjecture 1, every connected building block whose\nmatching count is exactly two is an even cycle.\n\nThe key insight is that exactly two perfect matchings means the symmetric\ndifference of any two matchings is a single alternating cycle, and the only\nconnected graphs supporting a unique such cycle are the even cycles themselves.\n\nWhy now? We verified directly that both the quadrilateral and the hexagon have\nexactly two matchings; recognizing this as the defining feature of even cycles\nturns a pair of computations into a structural classification.\n\n## Conjecture 4 — Density threshold for power-of-two counts\nAmong all connected graphs on `2n` vertices with a perfect matching, the fraction\nwhose matching count is a power of two tends to zero as `n` grows, yet the maximum\nnumber of edges compatible with a power-of-two count grows linearly in `n`.\n\nThe key insight is that power-of-two counts demand a sparse, block-like backbone,\nso adding edges beyond a linear budget necessarily introduces mixed matchings that\nbreak the binary factorization.\n\nWhy now? The block model pinpoints the exact structural cost of each extra matching\nchoice, making the edge budget a concrete, testable quantity rather than a vague\nheuristic.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -38617,7 +38617,7 @@
       "depth_estimate": 3,
       "description": "Two quantum particles are entangled if measuring one instantly affects the other. But entanglement is also a topological property: if you represent the state of two qubits as a curve in R^3, entanglement IS the linking number. Conjecture: For any pure state of two qubits |psi> in C^2 tensor C^2, the concurrence C(psi) = 2|alpha*delta - beta*gamma| (where psi = alpha|00> + beta|01> + gamma|10> + delta|11>) equals the absolute value of the linking number of two curves derived from the Hopf fibration applied to psi. Specifically, map psi to S^7 via normalization, then project to S^4 via the Hopf map, and the preimages of two points in S^4 are linked circles in S^7 whose linking number equals the concurrence. This means: entanglement is MEASURED by topology, and maximally entangled states correspond to the Hopf link (linking number 1). Test: for 1000 random two-qubit states, compute the concurrence and the linking number of the Hopf preimages, and verify they are equal. Prove the equality for the Bell states. Impact: quantum entanglement is not mysterious — it is the linking number of the Hopf fibration. Two particles are entangled if and only if their Hopf preimages are linked.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Physics"
@@ -38740,7 +38740,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — The L-Function Universe\n\n## What is proved\n\n`Census.lean` builds a self-contained chain culminating in:\n\n* **Countability.** `instCountableSelbergDatum` : the universe of L-functions,\n  modelled by finite invariant packages, is countable.\n* **Countable infinitude.** `instInfiniteSelbergDatum` + `exists_equiv_nat` :\n  the universe is in bijection with `ℕ` — no bigger than the integers.\n* **Valid sub-universe.** `Valid.exists_equiv_nat` : imposing positive degree and\n  conductor `≥ 1` still leaves a countably infinite universe.\n* **Explicit census.** `census` and its verified length / conductor list /\n  distinctness / validity.\n\n## Honest scope and the deep open problem\n\nThe theorem proved is: *any family of L-functions faithfully captured by a finite\npackage of invariants over countable rings is countable.* The mathematically deep,\nunproven step is the converse modelling assumption — that the analytic Selberg\nclass really is captured by such finite data. Naively the Euler product involves a\nlocal factor at **each** of infinitely many primes, and free choices there would\ngive a continuum (`≈ 2^ℕ`). Countability of the Selberg class therefore hinges on\nrigidity phenomena that force the local data to be globally determined:\n\n1. **Strong multiplicity one.** Two Selberg-class functions sharing all but finitely\n   many Euler factors coincide. Formalising this would let a genuine Selberg-class\n   element be recovered from finite data + its degree/conductor, justifying the\n   model.\n2. **Degree conjecture / conductor discreteness.** Degrees are conjecturally in\n   `{0} ∪ [1,∞)` with gaps, and for each `(degree, conductor)` only finitely many\n   primitive functions occur — this is what would make \"order by conductor\" a\n   genuine well-ordering with finite levels.\n3. **Bounded local families.** With the Ramanujan bound and integrality, the local\n   factor at each prime lies in a *finite* set; combined with (1) this bounds the\n   whole object by finite data.\n\n## Concrete next Lean steps\n\n* Add an analytic layer: Dirichlet series `ℕ → ℂ` with a `SelbergAxioms` structure\n  (Euler product, functional equation data, Ramanujan bound), and a map\n  `axioms → SelbergDatum`. State strong multiplicity one as the injectivity of a\n  refinement of that map.\n* Refine `IsValid` toward the real axioms (multiplicative coefficients, `a₁ = 1`).\n* Replace the `ℚ²` root-number/shift model by algebraic numbers (`ℚ̄`, still\n  countable) to track the functional equation exactly.\n* Prove finiteness of `{d | d.conductor = q ∧ d.degree ≤ D ∧ d.eulerData = []}`\n  and assemble the census as a genuine ordered enumeration of finite levels.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -38781,7 +38781,7 @@
       "depth_estimate": 3,
       "description": "A cake is a smooth projective variety over R: it has a base (a smooth manifold with boundary), frosting (a sheaf of sections supported on the boundary), and layers (a stratification by codimension). The Fundamental Theorem of Cakes states: every cake C is uniquely determined (up to isomorphism of flavor) by its base B, its frosting sheaf F, and its layer stratification L. The frosting sheaf is a locally free sheaf of rank 1 (the cake has uniform frosting thickness) supported on the boundary of the base. The stratification is a flag of subvarieties C = L_0 > L_1 > ... > L_k = {point} where L_i has codimension i and represents the i-th layer. Conjecture: the moduli space of cakes of genus g (g = number of cherries on top) has dimension 3g-3 for g >= 2, mirroring the moduli space of Riemann surfaces. The cherry number g corresponds to the first Betti number of the cake surface, and the moduli are the positions of the g cherries on the surface. Test: enumerate all topologically distinct cakes with g <= 5 cherries and verify that the moduli space has dimension 3g-3. Compute the Teichmuller space of cakes by varying the cherry positions. Impact: cakes are algebraic varieties, and the mathematics of cake decoration IS the mathematics of moduli spaces.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Algebra"
@@ -38822,7 +38822,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: The Field with One Element Meets Tropical Geometry\n\nThis cycle established a precise, quantitative bridge between the min-plus\n(tropical / F₁) world and the topology of toric varieties: for every toric\nvariety generated by projective spaces under products, the Euler characteristic\nof the base change to `ℤ` equals the number of F₁-points, i.e. the vertices of\nthe associated polytope. Two structural facts drove the result — the vanishing of\nodd cohomology and the multiplicativity of total Betti numbers under products.\nThe conjectures below extend that finding.\n\n## 1. Euler characteristic equals vertex count for *all* smooth projective toric varieties\n\n**Conjecture.** For every smooth projective toric variety, the Euler\ncharacteristic equals the number of vertices of its moment polytope, equivalently\nthe number of maximal cones of its normal fan, equivalently the number of\ntorus-fixed points.\n\nThe key insight is that the Białynicki-Birula decomposition attaches one even-\ndimensional cell to each torus-fixed point, so odd cohomology vanishes and the\nEuler characteristic degenerates to a fixed-point count — a phenomenon we verified\nhere for the product-of-projective-spaces subclass, where it reduces to a Cauchy\nproduct of vertex counts.\n\nWhy now? The product case is fully settled, isolating the two load-bearing\nmechanisms (no odd cohomology, multiplicativity); the natural next step is to\nreplace \"product of simplices\" by an arbitrary simplicial fan and let the\nh-vector carry the Betti numbers.\n\n## 2. The h-vector refines the correspondence into a Poincaré polynomial identity\n\n**Conjecture.** For a simplicial polytope `P` with normal fan defining a toric\nvariety `X`, the Poincaré polynomial of `X` equals the generating function of the\nh-vector of `P`, so that evaluating at `1` recovers the vertex count and the\nDehn–Sommerville relations become Poincaré duality.\n\nThe key insight is that the alternating vertex/edge/face counts of `P`\n(its f-vector), once transformed into the h-vector, are exactly the even Betti\nnumbers of `X`; the topological symmetry of duality is the combinatorial symmetry\nof the h-vector.\n\nWhy now? Our proof already computes the total Betti number as a supported Cauchy\nproduct; upgrading the scalar count to a graded (polynomial) count is the minimal\nextra bookkeeping needed to see the whole Poincaré polynomial rather than only its\nvalue at `1`.\n\n## 3. Tropical cardinality is multiplicative and additive along tropical operations\n\n**Conjecture.** The F₁-cardinality (vertex count) is a semiring homomorphism from\nthe min-plus world to the counting semiring: it is multiplicative under products\nof tropical varieties and behaves predictably under tropical (min) unions of\npolytopes, mirroring inclusion–exclusion for Euler characteristics.\n\nThe key insight is that idempotency of tropical addition — the very fingerprint of\nF₁ we isolated (`min a a = a`, no additive inverses) — is the algebraic reason\nEuler characteristic is additive on unions and multiplicative on products, i.e.\nthat it is a *motivic measure* over the field with one element.\n\nWhy now? We have already proved multiplicativity for products and characterised\nthe no-cancellation law of min-plus; the union/inclusion–exclusion side is the\ncomplementary half needed to promote the correspondence to a full homomorphism.\n\n## 4. Lattice-point counts as F₁-cardinalities of dilations\n\n**Conjecture.** The number of lattice points of the `n`-th dilation of a lattice\npolytope equals the F₁-cardinality of the corresponding thickened tropical\nvariety, and its leading term recovers the degree of the toric variety after base\nchange.\n\nThe key insight is that Ehrhart's quasi-polynomial is the tropical analogue of\ncounting points over a finite field: replacing `q` by `1` turns the point-count\nzeta function into a lattice-point enumerator, so the volume-degree of the toric\nvariety is the top Ehrhart coefficient.\n\nWhy now? The vertex-count correspondence pins down the constant (dimension-zero)\ndata; dilations are the obvious one-parameter deformation that exposes the full\nEhrhart polynomial and, with it, the degree.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -38848,6 +38848,87 @@
       "thread_id": "th_c6cc97df",
       "timestamp": "2026-07-09T22:51:15.446637+00:00",
       "title": "Precise, quantitative bridge between the min-plus"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions — Cellular automata as varieties over the binary field\n\nThis cycle established that every elementary cellular automaton (ECA) is a\ndegree-≤3 polynomial map over the binary field, that its fixed configurations form\nan affine variety, and — contrary to the initial conjecture — that the *dimension*\nof this variety does **not** track dynamical complexity: the Turing-complete\nRule 110 has a zero-dimensional fixed-point variety (a single point), while the\ntrivial identity rule fills the whole space. The additive rules were pinned down\nexactly: their varieties are linear subspaces whose dimensions are governed by\nelementary arithmetic (the Pisano period `3` for Rule 90, parity for Rule 150).\nThe following conjectures extend these findings.\n\n## 1. Linearity, not dimension, is the true complexity separator\n\n**Conjecture.** Among the 256 ECA rules, exactly the sixteen affine rules have a\nfixed-point set that is an affine subspace for every cycle length; every rule\nwhose local polynomial has genuine degree ≥ 2 admits a cycle length on which its\nfixed-point set is not closed under addition of solutions.\n\n*The key insight is* that \"algebraic complexity\" of an automaton should be read\noff the **degree of its defining polynomial**, and equivalently from whether its\nfixed-point scheme is linear, rather than from the dimension of that scheme.\n\n*Why now?* We have exact linear descriptions of all additive rules and an\nexplicit nonlinear collapse for Rule 110; the degree/linearity dichotomy is the\ncommon thread, and it is directly checkable rule-by-rule.\n\n## 2. Fixed-point dimension is a Pisano-type arithmetic function\n\n**Conjecture.** For every additive rule the sequence `n ↦ dim V_n` is eventually\nperiodic in `n`, with period equal to the multiplicative order over `GF(2)` of the\ncompanion matrix of the rule's recurrence; for Rule 90 this order is the Pisano\nperiod `π(2)=3`, and for the general additive rule with characteristic polynomial\n`p(x)` over `GF(2)` the period is the order of `x` in `GF(2)[x]/(p)`.\n\n*The key insight is* that the jump in fixed-point dimension at `n` is a\nclosure-of-orbit condition `T^n = I` for a small matrix over `GF(2)`, so the\ndimension function is dictated by the order of a finite matrix — a purely\nnumber-theoretic quantity.\n\n*Why now?* The companion-matrix bridge for Rule 90 (order `3`, matching the\nFibonacci period modulo `2`) is already proved; the same transfer-matrix\nmechanism applies verbatim to every additive rule.\n\n## 3. The period spectrum classifies the additive rules\n\n**Conjecture.** The sixteen affine ECA rules split into finitely many families\nindexed by the factorisation type over `GF(2)` of their recurrence polynomial,\nand two additive rules are conjugate under lattice symmetries (reflection,\ncomplementation) iff their recurrence polynomials have the same order and\ndegree pattern.\n\n*The key insight is* that the reflection/complement symmetries of the rule table\nact as `GF(2)`-linear changes of coordinate on configuration space, hence preserve\nthe recurrence polynomial's order — turning a combinatorial symmetry group into an\ninvariant of a finite-field polynomial.\n\n*Why now?* With each additive variety identified as the kernel of an explicit\nlinear operator, the symmetry action becomes a concrete change of basis whose\norbits can be enumerated.\n\n## 4. Higher fixed points: period-`k` orbits are also varieties\n\n**Conjecture.** For each `k`, the set of period-`k` configurations of an ECA\n(solutions of `F^k(s) = s`, where `F` is the global update) is the `GF(2)`-points\nof an affine variety of degree at most `3^k`, and for Rule 110 the number of\nperiod-`k` points grows strictly slower than `2^n` in `n`, quantifying its\n\"algebraic thinness\" despite computational universality.\n\n*The key insight is* that iterating a degree-3 polynomial map keeps the fixed\nlocus algebraic, so the entire periodic structure of an ECA — not just its fixed\npoints — lives inside a tower of varieties whose degrees are controlled.\n\n*Why now?* The single-step framework already realises `V(g)` as the vanishing\nlocus of explicit cubics; iterating the map is a mechanical composition that keeps\neverything polynomial.\n\n## 5. A cohomological reading of stable backgrounds\n\n**Conjecture.** The \"background\" fixed configurations that support Rule 110's\nlocalized structures (gliders) are precisely the global sections of the constant\nsheaf on the quotient of the lattice by the automaton's spatial period, and the\nobstruction to gluing two compatible local fixed patches into a global one is a\nfirst-cohomology class that is nonzero exactly on the cycle lengths where the\nfixed-point count drops.\n\n*The key insight is* that the failure of local fixed patterns to close up\ncyclically is a genuine gluing obstruction, so the drop in fixed-point dimension\nat certain lengths is measured by a first cohomology group of a sheaf on the\ncyclic lattice.\n\n*Why now?* We have already isolated the closure condition (`T^n = I`) that decides\nwhether a local fixed pattern extends globally; recasting that condition as a\ncohomological vanishing is the natural next abstraction and connects the concrete\ncounts to the sheaf-theoretic language that motivated the original programme.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "github_issue": 0,
+      "id": "fd_0813",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "84ab5171",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/84ab5171",
+      "status": "available",
+      "thread_id": "th_cf5b862e",
+      "timestamp": "2026-07-09T22:51:27.927522+00:00",
+      "title": "That every elementary cellular automaton (ECA) is a"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 643186e8 (Q=0.820), which proved 18 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do — as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: ",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "push_643186e8_75258500",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9199999999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "643186e8",
+      "source_path": "Tropical Dreams: The Field with One Element Meets Tropical Geometry",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T22:51:25.551096+00:00",
+      "title": "Deepening: Tropical Dreams: The Field with One Element Meets Tropical Geometry"
     },
     {
       "ambition_level": "extension",
@@ -38933,6 +39014,46 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Cycle 643186e8 (Q=0.820) proved 18 theorems in Algebra but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do — as if there were a field with q^0 = 1 element. Tropical geometry replaces ad",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "sorry_fill_643186e8_4a7acee6",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.85,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "643186e8",
+      "source_path": "Tropical Dreams: The Field with One Element Meets Tropical Geometry",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T22:51:25.650060+00:00",
+      "title": "Close Proofs: Tropical Dreams: The Field with One Element Meets Tropical Geometry"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
       "attempt_count": 1,
       "catalog_references": [],
       "category": "",
@@ -39012,114 +39133,114 @@
   ],
   "pruned": [],
   "recent_domain_counts": {
-    "Algebra": 1,
+    "Algebra": 2,
     "Bridges": 2,
     "Cryptography": 1,
     "Logic": 1,
-    "Novelty": 4,
+    "Novelty": 5,
     "NumberTheory": 1,
     "Physics": 3,
     "Tropical": 2
   },
   "recent_theme_keywords": {
-    "#f_1-points": 1,
-    "'cardinality'": 1,
-    "addition": 1,
+    "'complexity": 1,
+    "3-cell": 1,
+    "algebraic": 1,
     "always": 4,
     "amplification": 3,
-    "category": 1,
+    "approach": 1,
+    "automata": 1,
+    "binary": 1,
+    "cells": 1,
+    "cellular": 1,
     "change": 2,
-    "characteristic": 1,
+    "class": 1,
+    "class'": 1,
     "classes": 3,
+    "classification": 1,
+    "classify": 1,
     "closure": 3,
-    "compute": 2,
-    "concretely": 1,
-    "conjecture": 4,
-    "conjectures": 1,
+    "complex": 1,
+    "complexity": 1,
+    "compute": 3,
+    "configurations": 1,
+    "conjecture": 5,
     "contains": 4,
-    "correspondence": 1,
-    "corresponding": 3,
-    "degree": 1,
-    "dreams": 1,
-    "element": 1,
-    "equals": 1,
-    "equivalent": 1,
+    "correlates": 1,
+    "corresponding": 4,
+    "defines": 1,
+    "degree-3": 1,
+    "depends": 1,
+    "dim(v(f": 1,
+    "dim<=n/2": 1,
+    "dim=0": 1,
+    "dim=n": 1,
+    "dim>=n/2": 1,
+    "dimension": 1,
+    "e.g": 1,
+    "ecas": 1,
+    "elementary": 1,
     "exists": 2,
-    "explain": 1,
-    "f_1-object": 1,
-    "f_1-points": 1,
-    "f_1-schemes": 1,
-    "field": 1,
-    "following": 1,
+    "fixed": 1,
+    "fixed-point": 1,
     "formalizing": 3,
-    "formally": 1,
     "framework": 3,
-    "geometry": 1,
+    "geometry": 2,
+    "gf(2": 1,
+    "global": 1,
     "graphon": 3,
-    "hypothetical": 1,
-    "impact": 4,
+    "grothendieck": 1,
+    "grothendieck-style": 1,
+    "impact": 5,
     "inequalities": 3,
     "introduces": 3,
     "lattice": 3,
-    "meets": 1,
-    "min-plus": 1,
-    "multiplication": 1,
-    "newton": 1,
+    "maximal": 1,
+    "neighborhood": 1,
     "number": 6,
-    "object": 1,
-    "points": 1,
-    "polytope": 1,
-    "precise": 1,
+    "point": 1,
+    "points": 2,
+    "polynomial": 1,
+    "possible": 1,
     "principles": 3,
-    "product": 1,
     "properties": 3,
     "providing": 3,
     "proving": 3,
-    "ratios": 1,
-    "rearrange": 1,
-    "rearrangement": 1,
-    "replaces": 1,
-    "reverses": 1,
-    "robust": 1,
-    "rooms": 1,
-    "scheme": 1,
-    "schemes": 1,
-    "semiring": 1,
-    "sense": 1,
+    "richest": 1,
+    "rules": 1,
+    "s_{n-1}": 1,
+    "section": 1,
+    "sections": 1,
     "sequence": 2,
-    "shuffle": 1,
     "sidorenko-type": 3,
-    "simplification": 1,
+    "simple": 1,
+    "since": 1,
+    "single": 1,
+    "space": 1,
     "spectral": 3,
-    "splits": 1,
-    "sqrt(2": 1,
-    "squarefree": 1,
-    "starting": 1,
-    "statement": 1,
-    "states": 1,
-    "static": 1,
+    "stable": 1,
     "structural": 3,
-    "structure": 2,
-    "symmetric": 1,
-    "system": 1,
+    "structure": 3,
     "tensor": 5,
     "tensor-amplification": 3,
     "tensor_z": 2,
     "theorem": 3,
-    "there": 1,
-    "topological": 1,
-    "topology": 1,
     "transfer": 3,
     "tropical": 2,
+    "turing-complete": 1,
+    "turing-completeness": 1,
     "types": 2,
-    "unique": 1,
-    "unnecessary": 1,
-    "variety": 2,
-    "verify": 4,
+    "update": 1,
+    "varieties": 1,
+    "variety": 3,
+    "vector": 1,
+    "verify": 5,
     "vertices": 2,
-    "well-founded": 1,
+    "viewed": 1,
+    "wolfram's": 1,
     "words": 1,
     "works": 1,
+    "zeros": 1,
     "{infinity}": 2,
     "|vertices(p)|": 2
   },

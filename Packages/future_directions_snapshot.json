@@ -3,6 +3,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 643186e8 (Q=0.820), which proved 18 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do — as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: ",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "push_643186e8_75258500",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "643186e8",
+    "status": "available",
+    "timestamp": "2026-07-09T22:51:25.551096+00:00",
+    "title": "Deepening: Tropical Dreams: The Field with One Element Meets Tropical Geometry"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle c38e66e4 (Q=0.820), which proved 14 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In every connected graph whose edges are either 1‑matching or 2‑matching edges and in which no perfect matching contains edges of both types, the number of perfect matchings is always a power of two.",
     "domain_bridges": [],
     "domains": [
@@ -41,26 +60,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "643186e8",
-    "description": "The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do — as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: The tropical semiring (R union {infinity}, min, +) IS the field with one element, in the following precise sense: the category of tropical schemes is equivalent to the category of F_1-schemes. More concretely, a tropical variety over F_1 is a set with a min-plus structure, and its base change to Z (formally, tensor with Z) is a toric variety. The key correspondence: F_1-points of a tropical variety are the vertices of its Newton polytope, and the 'cardinality' of the tropical variety (as an F_1-object) is the number of lattice points in the polytope, which equals the degree of the toric variety after base change. Test: for each toric variety corresponding to a polytope P, compute the number of F_1-points (vertices of P) and verify that the Euler characteristic of the toric variety equals |vertices(P)| = #F_1-points. Prove the tensor product correspondence: tropical scheme X over F_1 has X tensor_Z Z = the corresponding toric variety. Impact: F_1 and tropical geometry are two faces of the same coin. The field with one element is tropical, and tropical geometry is the geometry of F_1.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Tropical"
-    ],
-    "id": "fd_0791",
-    "lineage_refs": [],
-    "priority_score": 0.87,
-    "proof_strategy": "Define the F_1-tropical correspondence: a tropical scheme over F_1 is a monoid object M in the tropical semiring (R union infty, min, +). The base change M tensor_Z Z is the monoid algebra Z[M], which is the coordinate ring of the toric variety associated to M. Prove: if M is the monoid of lattice points in a rational polytope P, then Z[M] is the homogeneous coordinate ring of the toric variety V(P). Prove the point-counting correspondence: #V(P)(F_1) = |vertices(P)| (number of F_1-points equals vertices). Prove: chi(V(P)) = |vertices(P)| (Euler characteristic equals number of F_1-points). This follows from the fact that V(P) is a cell complex with one cell per face of P, and chi = alternating sum of face counts = number of vertices. Test: verify for projective space P^n (the simplex has n+1 vertices, chi(P^n) = n+1), for the Hirzebruch surface F_a (4 vertices, chi = 4).",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-09T19:37:23.824326+00:00",
-    "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "3716954d",
     "description": "L-functions are the DNA of mathematics — each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable — there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domain_bridges": [],
@@ -77,6 +76,25 @@
     "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.876173+00:00",
     "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 643186e8 (Q=0.820) proved 18 theorems in Algebra but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do — as if there were a field with q^0 = 1 element. Tropical geometry replaces ad",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "sorry_fill_643186e8_4a7acee6",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "643186e8",
+    "status": "available",
+    "timestamp": "2026-07-09T22:51:25.650060+00:00",
+    "title": "Close Proofs: Tropical Dreams: The Field with One Element Meets Tropical Geometry"
   },
   {
     "ambition_level": "extension",
@@ -18205,26 +18223,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "84ab5171",
-    "description": "Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s) where f is a degree-3 polynomial (since the rule depends on 3 cells). Conjecture: The algebraic variety V(f) = {s : f(s) = s} (fixed points of the ECA) has dimension equal to the 'complexity class' of the rule. For simple rules (e.g., Rule 0, which is all zeros), V(f) has dimension 0 (a single point). For complex rules (e.g., Rule 110), V(f) has maximal dimension. The Grothendieck-style approach: each ECA defines a sheaf on the state space, and the global sections of this sheaf classify the possible stable configurations. Rule 110's sheaf has the richest section structure, corresponding to its Turing-completeness. Test: compute dim(V(f)) for all 256 ECAs and verify that the dimension correlates with Wolfram's complexity classification (Class 1: dim=0, Class 2: dim<=n/2, Class 3: dim>=n/2, Class 4: dim=n). Impact: cellular automata are algebraic varieties, and their complexity is the dimension of their fixed-point variety.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0802",
-    "lineage_refs": [],
-    "priority_score": 0.78,
-    "proof_strategy": "Encode ECA state as vector s in GF(2)^n. Rule r defines update f_r(s)_i = g(s_{i-1}, s_i, s_{i+1}) where g is the truth table of rule r, viewed as a polynomial over GF(2). For example, Rule 110: g(a,b,c) = a + b + ac + bc (mod 2). Fixed points satisfy f_r(s) = s, a system of n polynomial equations over GF(2). Compute dim(V(f_r)) using Groebner basis methods. For Rule 0: f_0(s) = 0, so V = {0}, dim = 0. For Rule 255: f_255(s) = 1+s, V = {1+s = s} = {1=0} = empty, dim = -1 (no fixed points). For Rule 110: f_110(s) = s + s_{i-1} + s_i + s_{i-1}*s_{i+1} + s_i*s_{i+1}, dim(V) = n - rank(Jacobian of f-s). Conjecture: dim(V(f_r)) correlates with Wolfram class. Test: compute dim(V(f_r)) for all 256 rules with n=20 and compare to Wolfram classification.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-09T21:05:18.693080+00:00",
-    "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Infinite chess is chess on an infinite board. It is known that there are positions where White can force checkmate but only in omega (the first infinite ordinal) moves. Conjecture: There exists a position on the infinite chess board where White can force checkmate in exactly omega^omega moves, but not in fewer. More precisely, define the game value v(P) of a position P as the smallest ordinal alpha such that White can force checkmate in at most alpha moves. The known results give positions with v(P) = omega. The conjecture is that v(P) can be arbitrarily large below omega^omega. The key construction: create a position where White must first solve a 'puzzle' that takes omega moves, and then another puzzle that takes omega moves for each of omega starting positions, giving omega^2 total moves. Iterating, one can reach omega^n for any n, and omega^omega by a diagonal argument. Test: construct explicit positions with game values omega, omega^2, omega^3, and omega^omega on the infinite board. Verify by computation that no strategy achieves checkmate in fewer moves. Impact: chess on an infinite board has transfinite game values — the complexity of checkmate goes beyond the finite ordinals into the transfinite.",
     "domain_bridges": [],
@@ -18501,6 +18499,46 @@
     "status": "available",
     "timestamp": "2026-07-09T22:16:11.662205+00:00",
     "title": "`Census.lean` builds a self-contained chain culminating in:"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: The Field with One Element Meets Tropical Geometry\n\nThis cycle established a precise, quantitative bridge between the min-plus\n(tropical / F₁) world and the topology of toric varieties: for every toric\nvariety generated by projective spaces under products, the Euler characteristic\nof the base change to `ℤ` equals the number of F₁-points, i.e. the vertices of\nthe associated polytope. Two structural facts drove the result — the vanishing of\nodd cohomology and the multiplicativity of total Betti numbers under products.\nThe conjectures below extend that finding.\n\n## 1. Euler characteristic equals vertex count for *all* smooth projective toric varieties\n\n**Conjecture.** For every smooth projective toric variety, the Euler\ncharacteristic equals the number of vertices of its moment polytope, equivalently\nthe number of maximal cones of its normal fan, equivalently the number of\ntorus-fixed points.\n\nThe key insight is that the Białynicki-Birula decomposition attaches one even-\ndimensional cell to each torus-fixed point, so odd cohomology vanishes and the\nEuler characteristic degenerates to a fixed-point count — a phenomenon we verified\nhere for the product-of-projective-spaces subclass, where it reduces to a Cauchy\nproduct of vertex counts.\n\nWhy now? The product case is fully settled, isolating the two load-bearing\nmechanisms (no odd cohomology, multiplicativity); the natural next step is to\nreplace \"product of simplices\" by an arbitrary simplicial fan and let the\nh-vector carry the Betti numbers.\n\n## 2. The h-vector refines the correspondence into a Poincaré polynomial identity\n\n**Conjecture.** For a simplicial polytope `P` with normal fan defining a toric\nvariety `X`, the Poincaré polynomial of `X` equals the generating function of the\nh-vector of `P`, so that evaluating at `1` recovers the vertex count and the\nDehn–Sommerville relations become Poincaré duality.\n\nThe key insight is that the alternating vertex/edge/face counts of `P`\n(its f-vector), once transformed into the h-vector, are exactly the even Betti\nnumbers of `X`; the topological symmetry of duality is the combinatorial symmetry\nof the h-vector.\n\nWhy now? Our proof already computes the total Betti number as a supported Cauchy\nproduct; upgrading the scalar count to a graded (polynomial) count is the minimal\nextra bookkeeping needed to see the whole Poincaré polynomial rather than only its\nvalue at `1`.\n\n## 3. Tropical cardinality is multiplicative and additive along tropical operations\n\n**Conjecture.** The F₁-cardinality (vertex count) is a semiring homomorphism from\nthe min-plus world to the counting semiring: it is multiplicative under products\nof tropical varieties and behaves predictably under tropical (min) unions of\npolytopes, mirroring inclusion–exclusion for Euler characteristics.\n\nThe key insight is that idempotency of tropical addition — the very fingerprint of\nF₁ we isolated (`min a a = a`, no additive inverses) — is the algebraic reason\nEuler characteristic is additive on unions and multiplicative on products, i.e.\nthat it is a *motivic measure* over the field with one element.\n\nWhy now? We have already proved multiplicativity for products and characterised\nthe no-cancellation law of min-plus; the union/inclusion–exclusion side is the\ncomplementary half needed to promote the correspondence to a full homomorphism.\n\n## 4. Lattice-point counts as F₁-cardinalities of dilations\n\n**Conjecture.** The number of lattice points of the `n`-th dilation of a lattice\npolytope equals the F₁-cardinality of the corresponding thickened tropical\nvariety, and its leading term recovers the degree of the toric variety after base\nchange.\n\nThe key insight is that Ehrhart's quasi-polynomial is the tropical analogue of\ncounting points over a finite field: replacing `q` by `1` turns the point-count\nzeta function into a lattice-point enumerator, so the volume-degree of the toric\nvariety is the top Ehrhart coefficient.\n\nWhy now? The vertex-count correspondence pins down the constant (dimension-zero)\ndata; dilations are the obvious one-parameter deformation that exposes the full\nEhrhart polynomial and, with it, the degree.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0812",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "643186e8",
+    "status": "available",
+    "timestamp": "2026-07-09T22:51:15.446637+00:00",
+    "title": "Precise, quantitative bridge between the min-plus"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Cellular automata as varieties over the binary field\n\nThis cycle established that every elementary cellular automaton (ECA) is a\ndegree-≤3 polynomial map over the binary field, that its fixed configurations form\nan affine variety, and — contrary to the initial conjecture — that the *dimension*\nof this variety does **not** track dynamical complexity: the Turing-complete\nRule 110 has a zero-dimensional fixed-point variety (a single point), while the\ntrivial identity rule fills the whole space. The additive rules were pinned down\nexactly: their varieties are linear subspaces whose dimensions are governed by\nelementary arithmetic (the Pisano period `3` for Rule 90, parity for Rule 150).\nThe following conjectures extend these findings.\n\n## 1. Linearity, not dimension, is the true complexity separator\n\n**Conjecture.** Among the 256 ECA rules, exactly the sixteen affine rules have a\nfixed-point set that is an affine subspace for every cycle length; every rule\nwhose local polynomial has genuine degree ≥ 2 admits a cycle length on which its\nfixed-point set is not closed under addition of solutions.\n\n*The key insight is* that \"algebraic complexity\" of an automaton should be read\noff the **degree of its defining polynomial**, and equivalently from whether its\nfixed-point scheme is linear, rather than from the dimension of that scheme.\n\n*Why now?* We have exact linear descriptions of all additive rules and an\nexplicit nonlinear collapse for Rule 110; the degree/linearity dichotomy is the\ncommon thread, and it is directly checkable rule-by-rule.\n\n## 2. Fixed-point dimension is a Pisano-type arithmetic function\n\n**Conjecture.** For every additive rule the sequence `n ↦ dim V_n` is eventually\nperiodic in `n`, with period equal to the multiplicative order over `GF(2)` of the\ncompanion matrix of the rule's recurrence; for Rule 90 this order is the Pisano\nperiod `π(2)=3`, and for the general additive rule with characteristic polynomial\n`p(x)` over `GF(2)` the period is the order of `x` in `GF(2)[x]/(p)`.\n\n*The key insight is* that the jump in fixed-point dimension at `n` is a\nclosure-of-orbit condition `T^n = I` for a small matrix over `GF(2)`, so the\ndimension function is dictated by the order of a finite matrix — a purely\nnumber-theoretic quantity.\n\n*Why now?* The companion-matrix bridge for Rule 90 (order `3`, matching the\nFibonacci period modulo `2`) is already proved; the same transfer-matrix\nmechanism applies verbatim to every additive rule.\n\n## 3. The period spectrum classifies the additive rules\n\n**Conjecture.** The sixteen affine ECA rules split into finitely many families\nindexed by the factorisation type over `GF(2)` of their recurrence polynomial,\nand two additive rules are conjugate under lattice symmetries (reflection,\ncomplementation) iff their recurrence polynomials have the same order and\ndegree pattern.\n\n*The key insight is* that the reflection/complement symmetries of the rule table\nact as `GF(2)`-linear changes of coordinate on configuration space, hence preserve\nthe recurrence polynomial's order — turning a combinatorial symmetry group into an\ninvariant of a finite-field polynomial.\n\n*Why now?* With each additive variety identified as the kernel of an explicit\nlinear operator, the symmetry action becomes a concrete change of basis whose\norbits can be enumerated.\n\n## 4. Higher fixed points: period-`k` orbits are also varieties\n\n**Conjecture.** For each `k`, the set of period-`k` configurations of an ECA\n(solutions of `F^k(s) = s`, where `F` is the global update) is the `GF(2)`-points\nof an affine variety of degree at most `3^k`, and for Rule 110 the number of\nperiod-`k` points grows strictly slower than `2^n` in `n`, quantifying its\n\"algebraic thinness\" despite computational universality.\n\n*The key insight is* that iterating a degree-3 polynomial map keeps the fixed\nlocus algebraic, so the entire periodic structure of an ECA — not just its fixed\npoints — lives inside a tower of varieties whose degrees are controlled.\n\n*Why now?* The single-step framework already realises `V(g)` as the vanishing\nlocus of explicit cubics; iterating the map is a mechanical composition that keeps\neverything polynomial.\n\n## 5. A cohomological reading of stable backgrounds\n\n**Conjecture.** The \"background\" fixed configurations that support Rule 110's\nlocalized structures (gliders) are precisely the global sections of the constant\nsheaf on the quotient of the lattice by the automaton's spatial period, and the\nobstruction to gluing two compatible local fixed patches into a global one is a\nfirst-cohomology class that is nonzero exactly on the cycle lengths where the\nfixed-point count drops.\n\n*The key insight is* that the failure of local fixed patterns to close up\ncyclically is a genuine gluing obstruction, so the drop in fixed-point dimension\nat certain lengths is measured by a first cohomology group of a sheaf on the\ncyclic lattice.\n\n*Why now?* We have already isolated the closure condition (`T^n = I`) that decides\nwhether a local fixed pattern extends globally; recasting that condition as a\ncohomological vanishing is the natural next abstraction and connects the concrete\ncounts to the sheaf-theoretic language that motivated the original programme.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0813",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "84ab5171",
+    "status": "available",
+    "timestamp": "2026-07-09T22:51:27.927522+00:00",
+    "title": "That every elementary cellular automaton (ECA) is a"
   },
   {
     "ambition_level": "extension",

@@ -4,6 +4,20 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 643186e8 (Q=0.820), which proved 18 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do \u2014 as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: ",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "push_643186e8_75258500",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "643186e8",
+    "status": "available",
+    "timestamp": "2026-07-09T22:51:25.551096+00:00",
+    "title": "Deepening: Tropical Dreams: The Field with One Element Meets Tropical Geometry"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle c38e66e4 (Q=0.820), which proved 14 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In every connected graph whose edges are either 1\u2011matching or 2\u2011matching edges and in which no perfect matching contains edges of both types, the number of perfect matchings is always a power of two.",
     "domains": [
       "NumberTheory"
@@ -32,21 +46,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
   },
   {
-    "consumed_by_exp_id": "643186e8",
-    "description": "The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do \u2014 as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: The tropical semiring (R union {infinity}, min, +) IS the field with one element, in the following precise sense: the category of tropical schemes is equivalent to the category of F_1-schemes. More concretely, a tropical variety over F_1 is a set with a min-plus structure, and its base change to Z (formally, tensor with Z) is a toric variety. The key correspondence: F_1-points of a tropical variety are the vertices of its Newton polytope, and the 'cardinality' of the tropical variety (as an F_1-object) is the number of lattice points in the polytope, which equals the degree of the toric variety after base change. Test: for each toric variety corresponding to a polytope P, compute the number of F_1-points (vertices of P) and verify that the Euler characteristic of the toric variety equals |vertices(P)| = #F_1-points. Prove the tensor product correspondence: tropical scheme X over F_1 has X tensor_Z Z = the corresponding toric variety. Impact: F_1 and tropical geometry are two faces of the same coin. The field with one element is tropical, and tropical geometry is the geometry of F_1.",
-    "domains": [
-      "Novelty",
-      "Tropical"
-    ],
-    "id": "fd_0791",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-09T19:37:23.824326+00:00",
-    "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
-  },
-  {
     "consumed_by_exp_id": "3716954d",
     "description": "L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable \u2014 there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domains": [
@@ -60,6 +59,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.876173+00:00",
     "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 643186e8 (Q=0.820) proved 18 theorems in Algebra but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do \u2014 as if there were a field with q^0 = 1 element. Tropical geometry replaces ad",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "sorry_fill_643186e8_4a7acee6",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "643186e8",
+    "status": "available",
+    "timestamp": "2026-07-09T22:51:25.650060+00:00",
+    "title": "Close Proofs: Tropical Dreams: The Field with One Element Meets Tropical Geometry"
   },
   {
     "consumed_by_exp_id": "116104eb",
@@ -9968,6 +9981,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-09T22:16:11.662205+00:00",
     "title": "`Census.lean` builds a self-contained chain culminating in:"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: The Field with One Element Meets Tropical Geometry\n\nThis cycle established a precise, quantitative bridge between the min-plus\n(tropical / F\u2081) world and the topology of toric varieties: for every toric\nvariety generated by projective spaces under products, the Euler characteristic\nof the base change to `\u2124` equals the number of F\u2081-points, i.e. the vertices of\nthe associated polytope. Two structural facts drove the result \u2014 the vanishing of\nodd cohomology and the multiplicativity of total Betti numbers under products.\nThe conjectures below extend that finding.\n\n## 1. Euler characteristic equals vertex count for *all* smooth projective toric varieties\n\n**Conjecture.** For every smooth projective toric variety, the Euler\ncharacteristic equals the number of vertices of its moment polytope, equivalently\nthe number of maximal cones of its normal fan, equivalently the number of\ntorus-fixed points.\n\nThe key insight is that the Bia\u0142ynicki-Birula decomposition attaches one even-\ndimensional cell to each torus-fixed point, so odd cohomology vanishes and the\nEuler characteristic degenerates to a fixed-point count \u2014 a phenomenon we verified\nhere for the product-of-projective-spaces subclass, where it reduces to a Cauchy\nproduct of vertex counts.\n\nWhy now? The product case is fully settled, isolating the two load-bearing\nmechanisms (no odd cohomology, multiplicativity); the natural next step is to\nreplace \"product of simplices\" by an arbitrary simplicial fan and let the\nh-vector carry the Betti numbers.\n\n## 2. The h-vector refines the correspondence into a Poincar\u00e9 polynomial identity\n\n**Conjecture.** For a simplicial polytope `P` with normal fan defining a toric\nvariety `X`, the Poincar\u00e9 polynomial of `X` equals the generating function of the\nh-vector of `P`, so that evaluating at `1` recovers the vertex count and the\nDehn\u2013Sommerville relations become Poincar\u00e9 duality.\n\nThe key insight is that the alternating vertex/edge/face counts of `P`\n(its f-vector), once transformed into the h-vector, are exactly the even Betti\nnumbers of `X`; the topological symmetry of duality is the combinatorial symmetry\nof the h-vector.\n\nWhy now? Our proof already computes the total Betti number as a supported Cauchy\nproduct; upgrading the scalar count to a graded (polynomial) count is the minimal\nextra bookkeeping needed to see the whole Poincar\u00e9 polynomial rather than only its\nvalue at `1`.\n\n## 3. Tropical cardinality is multiplicative and additive along tropical operations\n\n**Conjecture.** The F\u2081-cardinality (vertex count) is a semiring homomorphism from\nthe min-plus world to the counting semiring: it is multiplicative under products\nof tropical varieties and behaves predictably under tropical (min) unions of\npolytopes, mirroring inclusion\u2013exclusion for Euler characteristics.\n\nThe key insight is that idempotency of tropical addition \u2014 the very fingerprint of\nF\u2081 we isolated (`min a a = a`, no additive inverses) \u2014 is the algebraic reason\nEuler characteristic is additive on unions and multiplicative on products, i.e.\nthat it is a *motivic measure* over the field with one element.\n\nWhy now? We have already proved multiplicativity for products and characterised\nthe no-cancellation law of min-plus; the union/inclusion\u2013exclusion side is the\ncomplementary half needed to promote the correspondence to a full homomorphism.\n\n## 4. Lattice-point counts as F\u2081-cardinalities of dilations\n\n**Conjecture.** The number of lattice points of the `n`-th dilation of a lattice\npolytope equals the F\u2081-cardinality of the corresponding thickened tropical\nvariety, and its leading term recovers the degree of the toric variety after base\nchange.\n\nThe key insight is that Ehrhart's quasi-polynomial is the tropical analogue of\ncounting points over a finite field: replacing `q` by `1` turns the point-count\nzeta function into a lattice-point enumerator, so the volume-degree of the toric\nvariety is the top Ehrhart coefficient.\n\nWhy now? The vertex-count correspondence pins down the constant (dimension-zero)\ndata; dilations are the obvious one-parameter deformation that exposes the full\nEhrhart polynomial and, with it, the degree.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0812",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "643186e8",
+    "status": "available",
+    "timestamp": "2026-07-09T22:51:15.446637+00:00",
+    "title": "Precise, quantitative bridge between the min-plus"
   },
   {
     "consumed_by_exp_id": "c05d7abb",
