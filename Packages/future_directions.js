@@ -8342,11 +8342,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every prime power q and every pair of integers n, k with 2\u00b7k \u2264 n, any constant\u2011dimension Schubert subspace code of minimum subspace distance 2\u00b7k satisfies |C| \u2264 S(q, n, k), where S(q, n, k) denotes the maximum size of a partial k\u2011spread in PG(n\u20111, q). Moreover, equality holds if and only if the code is a spread code (i.e., the codewords form a partition of the ambient vector space). This conjecture is falsifiable: a single counterexample\u2014 a Schubert code of distance 2\u00b7k whose cardinality strictly exceeds S(q, n, k)\u2014 would refute it.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0694",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07479v1",
+    "status": "available",
+    "timestamp": "2026-07-09T02:32:11.356923+00:00",
+    "title": "No Schubert code can exceed the size of a maximal partial spread in the extremal distance case"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "If a family of complementary configurations degenerates to a configuration where some planes intersect, then the limit of the cross-ratio valuations (as the parameters approach the degenerate case) equals the intersection degree of the cycles obtained by spreading the original cycles to the valuation ring.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0694",
+    "id": "fd_0695",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06477v1",
@@ -8361,7 +8376,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0695",
+    "id": "fd_0696",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06455v1",
@@ -8376,7 +8391,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0696",
+    "id": "fd_0697",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07555v1",
@@ -8391,13 +8406,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0697",
+    "id": "fd_0698",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07427v1",
     "status": "available",
     "timestamp": "2026-07-09T02:13:23.534305+00:00",
     "title": "Explicit Formal Group Integrating p-adic Maass--Shimura Operators for Hodge Type Shimura Varieties"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any finite simple graphs G and H on a common vertex set V, if H is a forest, then the analytic spread of the determinantal ideal J_{G,H} equals the rank of the linear matroid M_{G,H} constructed from the incidence matrix of G restricted to edges of H. This extends the proven single-edge case (where analytic spread equals rank of G in Kalai's 2-hyperconnectivity matroid) and predicts equality in the forest case.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0699",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07458v1",
+    "status": "available",
+    "timestamp": "2026-07-09T02:33:36.890665+00:00",
+    "title": "Analytic spread equals linear matroid rank for forest H"
   },
   {
     "consumed_by_exp_id": "e158da3a",

@@ -33244,6 +33244,54 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "arXiv:2405.01873 [math.CO]",
+        "arXiv:2405.01873 [cs.IT]"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every prime power q and every pair of integers n, k with 2·k ≤ n, any constant‑dimension Schubert subspace code of minimum subspace distance 2·k satisfies |C| ≤ S(q, n, k), where S(q, n, k) denotes the maximum size of a partial k‑spread in PG(n‑1, q). Moreover, equality holds if and only if the code is a spread code (i.e., the codewords form a partition of the ambient vector space). This conjecture is falsifiable: a single counterexample— a Schubert code of distance 2·k whose cardinality strictly exceeds S(q, n, k)— would refute it.",
+      "domain_bridges": [
+        "finite geometry",
+        "graph theory (q‑Johnson graphs)",
+        "coding theory (constant‑dimension codes)"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0694",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem no_larger_than_spread {q n k : ℕ} (hq : 0 < q) (hk : k ∣ n) (h2k : 2*k ≤ n) : ¬ ∃ (C : Set (Subspace (Fin n → ℕ))), size C > maximal_partial_spread_size q n k",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "combinatorial counting via chromatic and clique obstructions in powers of q‑Johnson graphs, combined with a double‑counting argument relating code size to partial spreads",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.07479v1",
+      "source_path": "http://arxiv.org/abs/2607.07479v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T02:32:11.356923+00:00",
+      "title": "No Schubert code can exceed the size of a maximal partial spread in the extremal distance case"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "[B] $10.48550/ARXIV.2201.03794$"
       ],
       "category": "cross_domain_bridge",
@@ -33261,7 +33309,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0694",
+      "id": "fd_0695",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem degenerate_cross_ratio_valuation_theorem {K : Type} [field K] {n : ℕ} {k : ℕ} (C : ComplementaryConfiguration K n k) (f : LiftWithParameter C) (t : t → 0) :\n    lim (t → 0) (cross_ratio (f C) t) = intersection_degree (spread f C t)\n    [arithmetic, proof_with_full_details]",
@@ -33310,7 +33358,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0695",
+      "id": "fd_0696",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem cographs_genspec_closed (V : Type*) [Fintype V] (G H : SimpleGraph V) (hG : IsCograph G) (h_eq : generalizedSpectrum G = generalizedSpectrum H) : IsCograph H := by sorry",
@@ -33359,7 +33407,7 @@
         "Logic"
       ],
       "github_issue": 0,
-      "id": "fd_0696",
+      "id": "fd_0697",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem biserial_representation_finite_characterization (Λ : Type*) [algebra k Λ] [representation_finite Λ] [biserial Λ] : magnitude_of_module_category Λ = rank (grothendieck_group (module_category Λ))",
@@ -33410,7 +33458,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0697",
+      "id": "fd_0698",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem formal_group_integration {G : Type} [h : shimura_variety_of_hodge_type G] (Ig : igusa_variety μ_ordinary G) : ∃ (F : formal_group h.dimension), integrable_action F Ig ∧ Sym (differential_operators Ig) ≃ₐ[log] coordinate_ring F",
@@ -33430,6 +33478,57 @@
       "thread_id": "",
       "timestamp": "2026-07-09T02:13:23.534305+00:00",
       "title": "Explicit Formal Group Integrating p-adic Maass--Shimura Operators for Hodge Type Shimura Varieties"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.AC",
+        "math.CO",
+        "binomial edge ideal",
+        "Kalai's 2-hyperconnectivity matroid",
+        "analytic spread",
+        "linear matroid"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture: For any finite simple graphs G and H on a common vertex set V, if H is a forest, then the analytic spread of the determinantal ideal J_{G,H} equals the rank of the linear matroid M_{G,H} constructed from the incidence matrix of G restricted to edges of H. This extends the proven single-edge case (where analytic spread equals rank of G in Kalai's 2-hyperconnectivity matroid) and predicts equality in the forest case.",
+      "domain_bridges": [
+        "commutative algebra <-> matroid theory",
+        "graph theory <-> determinantal ideals"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0699",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem analytic_spread_forest_H {V : Type*} [Fintype V] (G H : SimpleGraph V) (hH : IsForest H) (k : ℕ) (F : Field k) : analyticSpread (determinantalIdeal G H) = matroidRank (linearMatroidOfPair G H) H.edgeSet := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "1. Formalize determinantal ideal J_{G,H} in Lean using mathlib's commutative algebra and graph theory. 2. Define analytic spread as dimension of special fiber ring. 3. Define linear matroid M_{G,H} from incidence matrix of G over a perfect field. 4. Prove by induction on number of edges of H: base case |E(H)|=1 known from paper. For forest H, decompose into single edges; use exact sequences or properties of reductions of determinantal ideals to show that adding an edge increases both analytic spread and matroid rank by 1, preserving equality. 5. Bridge to existing matroid theory API in mathlib (or develop minimal matroid library).",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.07458v1",
+      "source_path": "http://arxiv.org/abs/2607.07458v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T02:33:36.890665+00:00",
+      "title": "Analytic spread equals linear matroid rank for forest H"
     },
     {
       "ambition_level": "extension",

@@ -15607,6 +15607,33 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "arXiv:2405.01873 [math.CO]",
+      "arXiv:2405.01873 [cs.IT]"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every prime power q and every pair of integers n, k with 2·k ≤ n, any constant‑dimension Schubert subspace code of minimum subspace distance 2·k satisfies |C| ≤ S(q, n, k), where S(q, n, k) denotes the maximum size of a partial k‑spread in PG(n‑1, q). Moreover, equality holds if and only if the code is a spread code (i.e., the codewords form a partition of the ambient vector space). This conjecture is falsifiable: a single counterexample— a Schubert code of distance 2·k whose cardinality strictly exceeds S(q, n, k)— would refute it.",
+    "domain_bridges": [
+      "finite geometry",
+      "graph theory (q‑Johnson graphs)",
+      "coding theory (constant‑dimension codes)"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0694",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "combinatorial counting via chromatic and clique obstructions in powers of q‑Johnson graphs, combined with a double‑counting argument relating code size to partial spreads",
+    "research_mode": "team",
+    "source_exp_id": "2607.07479v1",
+    "status": "available",
+    "timestamp": "2026-07-09T02:32:11.356923+00:00",
+    "title": "No Schubert code can exceed the size of a maximal partial spread in the extremal distance case"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "[B] $10.48550/ARXIV.2201.03794$"
     ],
     "consumed_by_exp_id": "",
@@ -15617,7 +15644,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0694",
+    "id": "fd_0695",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a family of configurations dispersing the cycles over the valuation ring, show that the cross-ratio valuation is preserved under deformation, and compute the limit using intersection-theoretic methods.",
@@ -15645,7 +15672,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0695",
+    "id": "fd_0696",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Utilize the paper's β-closed walk expansion and the sufficient condition via a walk-realizable {P4}-supporter. Reduce the search to a linear programming feasibility problem for coefficients of β-closed walk counts. Compute a concrete finite witness (e.g., with bounded walk length) satisfying the LP, then formalize the induced-subgraph expansion and supporter criterion in Lean 4 to verify the implication.",
@@ -15673,7 +15700,7 @@
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0696",
+    "id": "fd_0697",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Verify the conjecture for classes of biserial algebras where both magnitude and Grothendieck rank are computable: (1) Hereditary biserial algebras (where magnitude relates to Dynkin type), (2) Self-injective biserial algebras (where Coxeter duality provides constraints), (3) Use induction on the complexity of the Auslander-Reiten quiver structure. The key is establishing that representation-finiteness creates a perfect matching between indecomposable modules and Grothendieck group generators, reflected in the magnitude calculation.",
@@ -15703,7 +15730,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0697",
+    "id": "fd_0698",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct the formal group via the universal property of the tangent space of Ig_μ, use the Hodge type embedding to identify the differential operators with components of the logarithm map, then prove the coproduct compatibility by analyzing the group structure on Ig_μ via p-adic Fourier theory and the Mantovan correspondence.",
@@ -15712,6 +15739,36 @@
     "status": "available",
     "timestamp": "2026-07-09T02:13:23.534305+00:00",
     "title": "Explicit Formal Group Integrating p-adic Maass--Shimura Operators for Hodge Type Shimura Varieties"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.AC",
+      "math.CO",
+      "binomial edge ideal",
+      "Kalai's 2-hyperconnectivity matroid",
+      "analytic spread",
+      "linear matroid"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any finite simple graphs G and H on a common vertex set V, if H is a forest, then the analytic spread of the determinantal ideal J_{G,H} equals the rank of the linear matroid M_{G,H} constructed from the incidence matrix of G restricted to edges of H. This extends the proven single-edge case (where analytic spread equals rank of G in Kalai's 2-hyperconnectivity matroid) and predicts equality in the forest case.",
+    "domain_bridges": [
+      "commutative algebra <-> matroid theory",
+      "graph theory <-> determinantal ideals"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0699",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "1. Formalize determinantal ideal J_{G,H} in Lean using mathlib's commutative algebra and graph theory. 2. Define analytic spread as dimension of special fiber ring. 3. Define linear matroid M_{G,H} from incidence matrix of G over a perfect field. 4. Prove by induction on number of edges of H: base case |E(H)|=1 known from paper. For forest H, decompose into single edges; use exact sequences or properties of reductions of determinantal ideals to show that adding an edge increases both analytic spread and matroid rank by 1, preserving equality. 5. Bridge to existing matroid theory API in mathlib (or develop minimal matroid library).",
+    "research_mode": "team",
+    "source_exp_id": "2607.07458v1",
+    "status": "available",
+    "timestamp": "2026-07-09T02:33:36.890665+00:00",
+    "title": "Analytic spread equals linear matroid rank for forest H"
   },
   {
     "ambition_level": "extension",
