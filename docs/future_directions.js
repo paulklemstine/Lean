@@ -8649,12 +8649,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Conjecture: For every composition \u03b1 of length r \u2264 R, the differential operator \u2202_\u03b1 = \u2202_{i1}\u22ef\u2202_{ir} acting on the polynomial ring \u211a[X_1,\u2026,X_R] yields a non-zero scalar multiple of the basis element X_{i1}\u2227\u22ef\u2227X_{ir} in \u2227^r V, where \u2202_i = (1/i!)\u00b7(d/dX_i)|_{X=0}. Moreover, the scalar equals the sign of the permutation that sorts (i1,\u2026,ir). This equality holds for all r and can be tested computationally for small values.",
+    "description": "We conjecture that, just as in type B, the set of palindromic Poincar\u00e9 polynomials in the Coxeter group of type D_n is the union of two families: (i) the image under Stembridge's top map \\top : A_{n-1} \\to D_n of all palindromic polynomials from type A, and (ii) a genuinely D\u2011type family given by \\emph{reflected bounded\u2011growth tuples} equipped with an even\u2011parity condition on the last coordinate. Moreover, the two families intersect precisely in those polynomials whose underlying Lehmer code is symmetric under the transposition of the last two coordinates.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
     "id": "fd_0714",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07659v1",
+    "status": "available",
+    "timestamp": "2026-07-09T05:44:46.033286+00:00",
+    "title": "A D\u2011type analogue of the classification of palindromic Poincar\u00e9 polynomials in type B"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For every composition \u03b1 of length r \u2264 R, the differential operator \u2202_\u03b1 = \u2202_{i1}\u22ef\u2202_{ir} acting on the polynomial ring \u211a[X_1,\u2026,X_R] yields a non-zero scalar multiple of the basis element X_{i1}\u2227\u22ef\u2227X_{ir} in \u2227^r V, where \u2202_i = (1/i!)\u00b7(d/dX_i)|_{X=0}. Moreover, the scalar equals the sign of the permutation that sorts (i1,\u2026,ir). This equality holds for all r and can be tested computationally for small values.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0715",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07667v1",
@@ -8668,13 +8683,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0715",
+    "id": "fd_0716",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07641v1",
     "status": "available",
     "timestamp": "2026-07-09T05:17:59.335513+00:00",
     "title": "New abc-type conjecture on weighted sum of \u03c9(n)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for integers l>0 and m\u22651, and any prime p not dividing l+1 or (l+1 choose 2), the congruence \u2211_{n=1}^{p-1}((-1)^{mn}/n^{m-1})S_l^{(m)}(n) \u2261 0 (mod p\u00b2) holds, strengthening the main theorem which only guarantees congruence modulo p. This generalizes the known m=2, l=4 case to arbitrary l and m.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0717",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07638v1",
+    "status": "available",
+    "timestamp": "2026-07-09T05:45:12.158155+00:00",
+    "title": "Strengthened Congruence for Generalized Multinomial Sums Modulo p\u00b2"
   },
   {
     "consumed_by_exp_id": "",
