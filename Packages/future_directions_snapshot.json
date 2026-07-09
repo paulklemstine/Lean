@@ -18213,6 +18213,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalises a **local-to-global principle for coordinate influences**\n— the engine behind local-to-global KKL theorems for simplicial complexes and\nhigh-dimensional expanders (Kahn–Kalai–Linial 1988; Bafna–Hoory–Kaufman 2022;\nGur–Lifshitz–Liu 2022; Gotlib–Kaufman 2023).\n\n## What is proved\n\n`Cryptography/LocalToGlobalKKL/Basic.lean`\n\n* `inf_decomp` — influences self-average: `Inf f i = InfSub f j false i + InfSub f j true i`.\n* `linktot_decomp` — the total-influence version summed over coordinates.\n* `localToGlobal_KKL_cube` — flagship concrete theorem: local total-influence\n  lower bounds on both links of a coordinate give a globally influential\n  coordinate (`(n-1)·Inf f i ≥ 2T`).\n* `abstract_localToGlobal_KKL` — the abstract averaging engine: bridge + local\n  KKL hypothesis ⟹ global total influence `≥ τ·(∑ w)`.\n* `abstract_global_influential_coord` — abstract global influential coordinate.\n* `cube_total_via_abstract` — the cube is literally an instance of the abstract\n  engine.\n\n`Cryptography/LocalToGlobalKKL/Explorations.lean`\n\n* `abstract_localToGlobal_KKL_variance` — the faithful KKL conditional form\n  (non-degenerate link ⟹ influential coordinate).\n* `regular_complex_exact` — exact total influence in regular systems.\n* `cube_localKKL_influential_coord_real` — real-valued global influential\n  coordinate `2T ≤ n·Inf f i`.\n\n## Natural next steps\n\n1. **The genuine KKL logarithmic bound.** The current global conclusion is an\n   averaging (max ≥ average) bound. The full KKL theorem gives an influential\n   coordinate of influence `Ω(Var(f)·log n / n)` even when the total influence is\n   small. Formalising this requires Fourier analysis on the cube and\n   hypercontractivity / the Bonami–Beckner inequality, which are not yet in\n   Mathlib and would be the main investment.\n\n2. **True simplicial complexes.** Replace the Boolean-cube model by an abstract\n   pure `d`-dimensional simplicial complex with a measure on top faces, define\n   links and the induced local functions, and *prove* the self-averaging bridge\n   `I i = ∑ links w·Iℓ` from the complex structure (rather than instantiating\n   with the cube's codimension-one subcubes). The abstract engine here already\n   consumes exactly that bridge.\n\n3. **Weighted / spectral links.** Incorporate the spectral gap of the links\n   (high-dimensional expansion) to convert the local KKL bound into a stronger\n   global bound with an expansion-dependent constant, following the\n   local-to-global spectral machinery.\n\n4. **Variance transfer.** Prove a local-to-global statement for the variance\n   proxy `V` itself, so that global non-degeneracy follows from local\n   non-degeneracy, closing the loop with `abstract_localToGlobal_KKL_variance`.\n\n5. **Hypercontractivity on HDX.** Formalise the Gur–Lifshitz–Liu\n   hypercontractive inequality on high-dimensional expanders, from which\n   KKL-type theorems follow directly, giving an alternative route to item 1.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0794",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "52557551",
+    "status": "available",
+    "timestamp": "2026-07-09T19:54:56.644469+00:00",
+    "title": "This project formalises a **local-to-global principle for coordinate influences*"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domain_bridges": [],
     "domains": [

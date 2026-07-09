@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e44edf9a",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Non-Trivial Boolean Degree-One Functions on `J_q(n,2)`\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle.  This cycle proved\nthe *parametric fingerprint* of t",
-      "quality_score": 0.39200000000000007,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T17:30:42",
-      "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(n,2) for q ≥ 3 and n ≥ 4"
-    },
-    {
       "cycle_id": "37c46c25",
       "domain": "Applications",
       "key_insight": "# FUTURE DIRECTIONS — EML Fixed-Point Dynamics (cycle v16b)\n\nDerived from this cycle's results:\n\n* `EML/FixedPointSensitivity.lean` — exact first-order sensitivity\n  `dx*/da = x*·(x*+c)/(x*+c − exp a)",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-07-09T19:54:51",
       "title": "Upper Bound on Generalized Turán Number ex(n, K_{a,b}, K_{3,b+1})"
+    },
+    {
+      "cycle_id": "52557551",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions\n\nThis project formalises a **local-to-global principle for coordinate influences**\n— the engine behind local-to-global KKL theorems for simplicial complexes and\nhigh-dimensional ex",
+      "quality_score": 0.63,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-09T19:54:59",
+      "title": "Local-to-Global KKL Theorem for Simplicial Complexes with Local KKL Links"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7115
     }
   ],
-  "last_updated": "2026-07-09T19:54:51",
+  "last_updated": "2026-07-09T19:54:59",
   "open_questions": [
     {
       "context": "`sorry`-free Lean proof of Sabidussi's theorem.",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "18edb6fb",
-        "quality": 0.6521899999999999,
-        "theorems": 12,
-        "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
-      },
-      {
         "cycle_id": "d4e980c4",
         "quality": 0.713,
         "theorems": 13,
@@ -3389,6 +3383,12 @@
         "quality": 0.43460760000000004,
         "theorems": 7,
         "title": "Impossibility Results for Fun: Things That Cannot Be Done (But We Try Anyway)"
+      },
+      {
+        "cycle_id": "52557551",
+        "quality": 0.63,
+        "theorems": 20,
+        "title": "Local-to-Global KKL Theorem for Simplicial Complexes with Local KKL Links"
       }
     ],
     "Geometry": [
