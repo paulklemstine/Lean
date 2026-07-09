@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "57910dd4",
+    "consumed_by_exp_id": "0518b354",
     "description": "L-functions are the DNA of mathematics — each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable — there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domain_bridges": [],
     "domains": [
@@ -6829,7 +6829,7 @@
       "Jung 1989",
       "Jung-Tix 1998"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c7d57e93",
     "description": "This paper investigates the structural constraints under which a finite poset admits a probabilistic powerdomain isomorphic to an RB-domain. The key claim is that such a domain must inherit a least element and possess a tree-like Hasse graph structure.",
     "domain_bridges": [
       "finite-binary-channel coding",
@@ -6844,7 +6844,7 @@
     "proof_strategy": "Constructive separation with two clear obstruction layers",
     "research_mode": "team",
     "source_exp_id": "2607.02231v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T03:01:13.702884+00:00",
     "title": "Characterizing finite posets whose probabilistic powerdomain is an RB-domain"
   },
@@ -11122,7 +11122,7 @@
       "Ollivier curvature",
       "Extremal graph theory"
     ],
-    "consumed_by_exp_id": "6d195403",
+    "consumed_by_exp_id": "",
     "description": "For any graph of order n ≥ 8, if it contains strictly more than T(n) = (n^2 - 3n)/2 - ⌈n/2⌉ + 2 edges, then every edge in the graph has strictly positive Ollivier/Lin-Lu-Yau curvature.",
     "domain_bridges": [
       "Discrete differential geometry",
@@ -11137,7 +11137,7 @@
     "proof_strategy": "Formalize the Lin-Lu-Yau curvature using the 1-Wasserstein distance between probability measures on vertices. Establish structural properties of graphs with non-positive curvature edges, and demonstrate that exceeding the edge threshold T(n) precludes the existence of such subgraphs, thereby forcing all edge curvatures to be strictly positive.",
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T23:29:27.413260+00:00",
     "title": "Positive Curvature Threshold for Lin-Lu-Yau Curvature"
   },
@@ -16401,6 +16401,34 @@
     "title": "Upper bound on dynamically irreducible sets equals p-squared for finite fields"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Ramanujan1919",
+      "Andrews1998",
+      "Kim2009"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that the coefficients of the generating function for overcubic partition pairs satisfy a divisibility pattern analogous to Ramanujan's congruences: for every non‑negative integer n, the value \\overline{b}(5n+4) is divisible by 5.",
+    "domain_bridges": [
+      "Modular Forms",
+      "q-series",
+      "Eta Quotients"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0724",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the modular transformation properties of the eta-quotient generating function using the Dedekind eta function and the theory of modular forms to derive congruences.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07270v1",
+    "status": "available",
+    "timestamp": "2026-07-09T09:36:28.083318+00:00",
+    "title": "Ramanujan-type congruence for overcubic partition pairs"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "Schubert calculus",
@@ -16419,7 +16447,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0724",
+    "id": "fd_0725",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove by induction on r using generating function identities for exterior powers and sign-reversing arguments; verify base case r=1 and use the relation ∂_i X_j = δ_{ij} to deduce the action on higher wedges, then extend to arbitrary compositions.",
@@ -16440,7 +16468,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0725",
+    "id": "fd_0726",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine probabilistic models of prime factor distributions with known upper and lower bounds for ω(n) and constructions of integers with many small prime factors; likely requires sieve methods and deep results on smooth numbers.",
@@ -16468,7 +16496,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0726",
+    "id": "fd_0727",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use p-adic analysis and properties of multinomial coefficients modulo prime powers, potentially relating to generalized hypergeometric functions and their p-integrality properties. The approach would involve analyzing the generating function of S_l^{(m)}(n) and applying p-adic differential equations.",
@@ -16498,7 +16526,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0727",
+    "id": "fd_0728",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the identity Σ_{n≤x} M(x/n) = 1, prove the grouping into S_1 and S_2 components, apply Möbius inversion to derive the main formula, and verify correctness through induction on bounded intervals. The proof requires careful handling of floor function identities and the constraint ν_x < u < x to ensure all terms are well-defined.",
@@ -16526,7 +16554,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0728",
+    "id": "fd_0729",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Characterize the optimizer of the variational problem via Lagrange multipliers on the Boolean lattice, establish convexity properties of the p-biased measure under IU constraints, and prove uniqueness of extremal families through exchange arguments and majorization theory.",
@@ -16551,7 +16579,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0729",
+    "id": "fd_0730",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Choose a monomial order that yields a squarefree initial ideal in(J_{G,H}) whose Stanley–Reisner complex is precisely the independence complex of the linear matroid M_{G,H}. 2. Show that the special fiber ring S/J_{G,H} ⊗_k k[m] has the same Hilbert function as the face ring of that complex, hence its Krull dimension (the analytic spread) equals dim(Δ)+1. 3. For a squarefree simplicial complex, dim(Δ)+1 equals the size of the largest face, which is the rank of the represented matroid. 4. Conclude ℓ(J_{G,H}) = rank(M_{G,H}).",
@@ -16577,7 +16605,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0730",
+    "id": "fd_0731",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof would involve verifying the modular conditions and leveraging the lower bound from Buchanan et al. combined with constructive upper bounds. By analyzing the structure of bicliques and their symmetric differences, one can show that the conjectured values are achievable and minimal.",
@@ -16606,7 +16634,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0731",
+    "id": "fd_0732",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The forward direction can be established by contradiction: if a tree has mpd(T) = 4 but all pairs of leaves have distance at most 2, then the distance constraints would force at least two vertices to have identical multiset representations, violating the resolving property. The reverse direction follows from constructing an explicit resolving multiset partition with exactly 4 parts when the leaf distance condition is satisfied. This construction generalizes the proof techniques used for the general lower bound while exploiting the tree structure to ensure the partition is valid. The characterization should be formalized by first defining the multiset representation function, then proving the equivalence via structural analysis of tree topology.",
@@ -16634,7 +16662,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0732",
+    "id": "fd_0733",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The conjecture can be approached by first establishing a shifting invariance, then applying variational estimates for the tensor spectral radius, and finally performing a saturation analysis to identify the extremal configuration; this mirrors the strategy outlined in the paper but isolates the key inequality for independent verification.",
@@ -16658,7 +16686,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0733",
+    "id": "fd_0734",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the lower bound by exhibiting a pair of vertices whose distance is at least n−2, using an invariant that counts the number of labels out of place under any admissible move. Establish the upper bound by describing an explicit algorithm that transforms any vertex to any other in at most n−2 steps, via a greedy reduction of mismatched labels, and prove its correctness by induction on n.",
@@ -16685,7 +16713,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0734",
+    "id": "fd_0735",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the O\\u2019Nan–Scott theorem to enumerate all primitive permutation groups of degree 108, apply integrality and eigenvalue constraints for directed SRGs, and computationally verify that the only feasible parameter sets coincide with those constructed. A GAP/Sage pipeline can generate candidate adjacency matrices under transitive actions and compare them to the known constructions.",
@@ -16712,7 +16740,7 @@
     "domains": [
       "Physics"
     ],
-    "id": "fd_0735",
+    "id": "fd_0736",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the structural characterization of minimally 1‑tough (K₁ ∪ P₄)-free graphs, combine with known sufficient conditions for Hamiltonicity (e.g., Dirac’s theorem) and verify the degree‑2 condition implied by Kriesell's conjecture.",
@@ -16721,6 +16749,33 @@
     "status": "available",
     "timestamp": "2026-07-09T09:17:10.297215+00:00",
     "title": "Minimally 1‑tough (K₁ ∪ P₄)-free graphs are Hamiltonian"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Alanazi2026",
+      "Kim2009",
+      "Andrews1999"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any coprime ℓ, μ ≥ 2 and any positive integer n, the overpartition count \\overline{R}_ℓ(n) is congruent to 1 modulo 4 exactly when n is a perfect square, and congruent to 0 modulo 4 otherwise.",
+    "domain_bridges": [
+      "partition theory",
+      "modular arithmetic"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0737",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Inductive combinatorial argument using Lemma lem:lift and parity analysis of distinct part sizes.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07259v1",
+    "status": "available",
+    "timestamp": "2026-07-09T09:37:01.683657+00:00",
+    "title": "Some Comments on Regular Overpartitions modulo $2^k$"
   },
   {
     "ambition_level": "extension",

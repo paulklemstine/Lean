@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "57910dd4",
+    "consumed_by_exp_id": "0518b354",
     "description": "L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable \u2014 there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domains": [
       "Novelty",
@@ -3737,7 +3737,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture: Gallai homothety numbers characterize symmetric one-weight HJ thresholds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c7d57e93",
     "description": "This paper investigates the structural constraints under which a finite poset admits a probabilistic powerdomain isomorphic to an RB-domain. The key claim is that such a domain must inherit a least element and possess a tree-like Hasse graph structure.",
     "domains": [
       "Bridges"
@@ -3746,7 +3746,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02231v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T03:01:13.702884+00:00",
     "title": "Characterizing finite posets whose probabilistic powerdomain is an RB-domain"
   },
@@ -5999,7 +5999,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Factorization of Cyclotomic Gauss Sum Matrix"
   },
   {
-    "consumed_by_exp_id": "6d195403",
+    "consumed_by_exp_id": "",
     "description": "For any graph of order n \u2265 8, if it contains strictly more than T(n) = (n^2 - 3n)/2 - \u2308n/2\u2309 + 2 edges, then every edge in the graph has strictly positive Ollivier/Lin-Lu-Yau curvature.",
     "domains": [
       "Bridges"
@@ -6008,7 +6008,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T23:29:27.413260+00:00",
     "title": "Positive Curvature Threshold for Lin-Lu-Yau Curvature"
   },
@@ -8766,12 +8766,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Conjecture: For every composition \u03b1 of length r \u2264 R, the differential operator \u2202_\u03b1 = \u2202_{i1}\u22ef\u2202_{ir} acting on the polynomial ring \u211a[X_1,\u2026,X_R] yields a non-zero scalar multiple of the basis element X_{i1}\u2227\u22ef\u2227X_{ir} in \u2227^r V, where \u2202_i = (1/i!)\u00b7(d/dX_i)|_{X=0}. Moreover, the scalar equals the sign of the permutation that sorts (i1,\u2026,ir). This equality holds for all r and can be tested computationally for small values.",
+    "description": "Conjecture that the coefficients of the generating function for overcubic partition pairs satisfy a divisibility pattern analogous to Ramanujan's congruences: for every non\u2011negative integer n, the value \\overline{b}(5n+4) is divisible by 5.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
     "id": "fd_0724",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07270v1",
+    "status": "available",
+    "timestamp": "2026-07-09T09:36:28.083318+00:00",
+    "title": "Ramanujan-type congruence for overcubic partition pairs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For every composition \u03b1 of length r \u2264 R, the differential operator \u2202_\u03b1 = \u2202_{i1}\u22ef\u2202_{ir} acting on the polynomial ring \u211a[X_1,\u2026,X_R] yields a non-zero scalar multiple of the basis element X_{i1}\u2227\u22ef\u2227X_{ir} in \u2227^r V, where \u2202_i = (1/i!)\u00b7(d/dX_i)|_{X=0}. Moreover, the scalar equals the sign of the permutation that sorts (i1,\u2026,ir). This equality holds for all r and can be tested computationally for small values.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0725",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07667v1",
@@ -8785,7 +8800,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0725",
+    "id": "fd_0726",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07641v1",
@@ -8799,7 +8814,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0726",
+    "id": "fd_0727",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07638v1",
@@ -8814,7 +8829,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0727",
+    "id": "fd_0728",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07566v1",
@@ -8829,7 +8844,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0728",
+    "id": "fd_0729",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07564v1",
@@ -8844,7 +8859,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0729",
+    "id": "fd_0730",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07458v1",
@@ -8858,7 +8873,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0730",
+    "id": "fd_0731",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07448v1",
@@ -8873,7 +8888,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0731",
+    "id": "fd_0732",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07407v1",
@@ -8888,7 +8903,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0732",
+    "id": "fd_0733",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07392v1",
@@ -8902,7 +8917,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0733",
+    "id": "fd_0734",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07404v1",
@@ -8917,7 +8932,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0734",
+    "id": "fd_0735",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07381v1",
@@ -8931,13 +8946,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0735",
+    "id": "fd_0736",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07239v1",
     "status": "available",
     "timestamp": "2026-07-09T09:17:10.297215+00:00",
     "title": "Minimally 1\u2011tough (K\u2081 \u222a P\u2084)-free graphs are Hamiltonian"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any coprime \u2113, \u03bc \u2265 2 and any positive integer n, the overpartition count \\overline{R}_\u2113(n) is congruent to 1 modulo 4 exactly when n is a perfect square, and congruent to 0 modulo 4 otherwise.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0737",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07259v1",
+    "status": "available",
+    "timestamp": "2026-07-09T09:37:01.683657+00:00",
+    "title": "Some Comments on Regular Overpartitions modulo $2^k$"
   },
   {
     "consumed_by_exp_id": "a88deb31",

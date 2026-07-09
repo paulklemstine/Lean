@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-09T08:55:51.435830+00:00",
+  "last_updated": "2026-07-09T09:36:11.885564+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -215,6 +215,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-09T08:55:51.411082+00:00",
       "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6104,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 8,
+      "domain": "Applications",
+      "duration_seconds": 1185.3488535881042,
+      "end_time": 1783589629.482772,
+      "files_integrated": 3,
+      "job_id": "57910dd4",
+      "outcome_quality": 0.0,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v24",
+      "phase_b_skip_reason": "low_quality",
+      "phase_b_skipped": true,
+      "prompt_version": "v24",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.8,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7829,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.8418,
+        "novelty": 0.95,
+        "proof_depth": 0.7955,
+        "usefulness": 0.8977
+      },
+      "quality_score": 0.237336,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783588444.1339185,
+      "strategy_count": 0,
+      "theorem_count": 18,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 11,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-09T09:36:11.859300+00:00",
+      "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
     }
   ]
 }
