@@ -18,6 +18,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 84ab5171 (Q=0.820), which proved 55 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_84ab5171_270da8dd",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "84ab5171",
+    "status": "available",
+    "timestamp": "2026-07-09T22:51:37.493006+00:00",
+    "title": "Deepening: Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle c38e66e4 (Q=0.820), which proved 14 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In every connected graph whose edges are either 1\u2011matching or 2\u2011matching edges and in which no perfect matching contains edges of both types, the number of perfect matchings is always a power of two.",
     "domains": [
       "NumberTheory"
@@ -31,7 +45,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Power\u2011of\u2011Two Perfect Matching Count in Class\u202fB Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a5663e2a",
     "description": "Two quantum particles are entangled if measuring one instantly affects the other. But entanglement is also a topological property: if you represent the state of two qubits as a curve in R^3, entanglement IS the linking number. Conjecture: For any pure state of two qubits |psi> in C^2 tensor C^2, the concurrence C(psi) = 2|alpha*delta - beta*gamma| (where psi = alpha|00> + beta|01> + gamma|10> + delta|11>) equals the absolute value of the linking number of two curves derived from the Hopf fibration applied to psi. Specifically, map psi to S^7 via normalization, then project to S^4 via the Hopf map, and the preimages of two points in S^4 are linked circles in S^7 whose linking number equals the concurrence. This means: entanglement is MEASURED by topology, and maximally entangled states correspond to the Hopf link (linking number 1). Test: for 1000 random two-qubit states, compute the concurrence and the linking number of the Hopf preimages, and verify they are equal. Prove the equality for the Bell states. Impact: quantum entanglement is not mysterious \u2014 it is the linking number of the Hopf fibration. Two particles are entangled if and only if their Hopf preimages are linked.",
     "domains": [
       "Novelty",
@@ -41,7 +55,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T21:40:59.530765+00:00",
     "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
   },
@@ -9758,21 +9772,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
   },
   {
-    "consumed_by_exp_id": "84ab5171",
-    "description": "Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s) where f is a degree-3 polynomial (since the rule depends on 3 cells). Conjecture: The algebraic variety V(f) = {s : f(s) = s} (fixed points of the ECA) has dimension equal to the 'complexity class' of the rule. For simple rules (e.g., Rule 0, which is all zeros), V(f) has dimension 0 (a single point). For complex rules (e.g., Rule 110), V(f) has maximal dimension. The Grothendieck-style approach: each ECA defines a sheaf on the state space, and the global sections of this sheaf classify the possible stable configurations. Rule 110's sheaf has the richest section structure, corresponding to its Turing-completeness. Test: compute dim(V(f)) for all 256 ECAs and verify that the dimension correlates with Wolfram's complexity classification (Class 1: dim=0, Class 2: dim<=n/2, Class 3: dim>=n/2, Class 4: dim=n). Impact: cellular automata are algebraic varieties, and their complexity is the dimension of their fixed-point variety.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0802",
-    "priority_score": 0.78,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-09T21:05:18.693080+00:00",
-    "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Infinite chess is chess on an infinite board. It is known that there are positions where White can force checkmate but only in omega (the first infinite ordinal) moves. Conjecture: There exists a position on the infinite chess board where White can force checkmate in exactly omega^omega moves, but not in fewer. More precisely, define the game value v(P) of a position P as the smallest ordinal alpha such that White can force checkmate in at most alpha moves. The known results give positions with v(P) = omega. The conjecture is that v(P) can be arbitrarily large below omega^omega. The key construction: create a position where White must first solve a 'puzzle' that takes omega moves, and then another puzzle that takes omega moves for each of omega starting positions, giving omega^2 total moves. Iterating, one can reach omega^n for any n, and omega^omega by a diagonal argument. Test: construct explicit positions with game values omega, omega^2, omega^3, and omega^omega on the infinite board. Verify by computation that no strategy achieves checkmate in fewer moves. Impact: chess on an infinite board has transfinite game values \u2014 the complexity of checkmate goes beyond the finite ordinals into the transfinite.",
     "domains": [
@@ -9996,6 +9995,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-09T22:51:15.446637+00:00",
     "title": "Precise, quantitative bridge between the min-plus"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Cellular automata as varieties over the binary field\n\nThis cycle established that every elementary cellular automaton (ECA) is a\ndegree-\u22643 polynomial map over the binary field, that its fixed configurations form\nan affine variety, and \u2014 contrary to the initial conjecture \u2014 that the *dimension*\nof this variety does **not** track dynamical complexity: the Turing-complete\nRule 110 has a zero-dimensional fixed-point variety (a single point), while the\ntrivial identity rule fills the whole space. The additive rules were pinned down\nexactly: their varieties are linear subspaces whose dimensions are governed by\nelementary arithmetic (the Pisano period `3` for Rule 90, parity for Rule 150).\nThe following conjectures extend these findings.\n\n## 1. Linearity, not dimension, is the true complexity separator\n\n**Conjecture.** Among the 256 ECA rules, exactly the sixteen affine rules have a\nfixed-point set that is an affine subspace for every cycle length; every rule\nwhose local polynomial has genuine degree \u2265 2 admits a cycle length on which its\nfixed-point set is not closed under addition of solutions.\n\n*The key insight is* that \"algebraic complexity\" of an automaton should be read\noff the **degree of its defining polynomial**, and equivalently from whether its\nfixed-point scheme is linear, rather than from the dimension of that scheme.\n\n*Why now?* We have exact linear descriptions of all additive rules and an\nexplicit nonlinear collapse for Rule 110; the degree/linearity dichotomy is the\ncommon thread, and it is directly checkable rule-by-rule.\n\n## 2. Fixed-point dimension is a Pisano-type arithmetic function\n\n**Conjecture.** For every additive rule the sequence `n \u21a6 dim V_n` is eventually\nperiodic in `n`, with period equal to the multiplicative order over `GF(2)` of the\ncompanion matrix of the rule's recurrence; for Rule 90 this order is the Pisano\nperiod `\u03c0(2)=3`, and for the general additive rule with characteristic polynomial\n`p(x)` over `GF(2)` the period is the order of `x` in `GF(2)[x]/(p)`.\n\n*The key insight is* that the jump in fixed-point dimension at `n` is a\nclosure-of-orbit condition `T^n = I` for a small matrix over `GF(2)`, so the\ndimension function is dictated by the order of a finite matrix \u2014 a purely\nnumber-theoretic quantity.\n\n*Why now?* The companion-matrix bridge for Rule 90 (order `3`, matching the\nFibonacci period modulo `2`) is already proved; the same transfer-matrix\nmechanism applies verbatim to every additive rule.\n\n## 3. The period spectrum classifies the additive rules\n\n**Conjecture.** The sixteen affine ECA rules split into finitely many families\nindexed by the factorisation type over `GF(2)` of their recurrence polynomial,\nand two additive rules are conjugate under lattice symmetries (reflection,\ncomplementation) iff their recurrence polynomials have the same order and\ndegree pattern.\n\n*The key insight is* that the reflection/complement symmetries of the rule table\nact as `GF(2)`-linear changes of coordinate on configuration space, hence preserve\nthe recurrence polynomial's order \u2014 turning a combinatorial symmetry group into an\ninvariant of a finite-field polynomial.\n\n*Why now?* With each additive variety identified as the kernel of an explicit\nlinear operator, the symmetry action becomes a concrete change of basis whose\norbits can be enumerated.\n\n## 4. Higher fixed points: period-`k` orbits are also varieties\n\n**Conjecture.** For each `k`, the set of period-`k` configurations of an ECA\n(solutions of `F^k(s) = s`, where `F` is the global update) is the `GF(2)`-points\nof an affine variety of degree at most `3^k`, and for Rule 110 the number of\nperiod-`k` points grows strictly slower than `2^n` in `n`, quantifying its\n\"algebraic thinness\" despite computational universality.\n\n*The key insight is* that iterating a degree-3 polynomial map keeps the fixed\nlocus algebraic, so the entire periodic structure of an ECA \u2014 not just its fixed\npoints \u2014 lives inside a tower of varieties whose degrees are controlled.\n\n*Why now?* The single-step framework already realises `V(g)` as the vanishing\nlocus of explicit cubics; iterating the map is a mechanical composition that keeps\neverything polynomial.\n\n## 5. A cohomological reading of stable backgrounds\n\n**Conjecture.** The \"background\" fixed configurations that support Rule 110's\nlocalized structures (gliders) are precisely the global sections of the constant\nsheaf on the quotient of the lattice by the automaton's spatial period, and the\nobstruction to gluing two compatible local fixed patches into a global one is a\nfirst-cohomology class that is nonzero exactly on the cycle lengths where the\nfixed-point count drops.\n\n*The key insight is* that the failure of local fixed patterns to close up\ncyclically is a genuine gluing obstruction, so the drop in fixed-point dimension\nat certain lengths is measured by a first cohomology group of a sheaf on the\ncyclic lattice.\n\n*Why now?* We have already isolated the closure condition (`T^n = I`) that decides\nwhether a local fixed pattern extends globally; recasting that condition as a\ncohomological vanishing is the natural next abstraction and connects the concrete\ncounts to the sheaf-theoretic language that motivated the original programme.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0813",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "84ab5171",
+    "status": "available",
+    "timestamp": "2026-07-09T22:51:27.927522+00:00",
+    "title": "That every elementary cellular automaton (ECA) is a"
   },
   {
     "consumed_by_exp_id": "c05d7abb",

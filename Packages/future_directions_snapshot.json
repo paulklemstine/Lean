@@ -22,6 +22,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 84ab5171 (Q=0.820), which proved 55 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_84ab5171_270da8dd",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "84ab5171",
+    "status": "available",
+    "timestamp": "2026-07-09T22:51:37.493006+00:00",
+    "title": "Deepening: Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle c38e66e4 (Q=0.820), which proved 14 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In every connected graph whose edges are either 1‑matching or 2‑matching edges and in which no perfect matching contains edges of both types, the number of perfect matchings is always a power of two.",
     "domain_bridges": [],
     "domains": [
@@ -40,7 +59,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a5663e2a",
     "description": "Two quantum particles are entangled if measuring one instantly affects the other. But entanglement is also a topological property: if you represent the state of two qubits as a curve in R^3, entanglement IS the linking number. Conjecture: For any pure state of two qubits |psi> in C^2 tensor C^2, the concurrence C(psi) = 2|alpha*delta - beta*gamma| (where psi = alpha|00> + beta|01> + gamma|10> + delta|11>) equals the absolute value of the linking number of two curves derived from the Hopf fibration applied to psi. Specifically, map psi to S^7 via normalization, then project to S^4 via the Hopf map, and the preimages of two points in S^4 are linked circles in S^7 whose linking number equals the concurrence. This means: entanglement is MEASURED by topology, and maximally entangled states correspond to the Hopf link (linking number 1). Test: for 1000 random two-qubit states, compute the concurrence and the linking number of the Hopf preimages, and verify they are equal. Prove the equality for the Bell states. Impact: quantum entanglement is not mysterious — it is the linking number of the Hopf fibration. Two particles are entangled if and only if their Hopf preimages are linked.",
     "domain_bridges": [],
     "domains": [
@@ -53,7 +72,7 @@
     "proof_strategy": "Define the Hopf fibration: S^3 -> S^2 by (z1, z2) -> (2*z1*z2_bar, |z1|^2 - |z2|^2). For a two-qubit state psi = alpha|00> + beta|01> + gamma|10> + delta|11>, define the reduced state rho_1 = Tr_2(|psi><psi|). The concurrence is C = 2|alpha*delta - beta*gamma|. Map: given psi, form the complex matrix M = [[alpha, beta], [gamma, delta]]. The concurrence equals 2|det(M)| = 2|alpha*delta - beta*gamma|. Now the Hopf linking: consider the curves gamma_1(t) = (alpha*e^{it}, beta) / ||(alpha*e^{it}, beta)|| and gamma_2(t) = (gamma*e^{it}, delta) / ||(gamma*e^{it}, delta)|| in S^3. The linking number of gamma_1 and gamma_2 in S^3 equals |det(M)| (by the Whitehead formula for linking in S^3). Therefore C = 2 * |linking number|. Normalizing: C/2 = |linking number|, so the normalized concurrence equals the linking number. For Bell states: |Phi+> = (|00>+|11>)/sqrt(2) has alpha=delta=1/sqrt(2), beta=gamma=0, C=1, linking number=1. For product states: |00> has C=0, linking number=0. Test: verify for 1000 random states.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T21:40:59.530765+00:00",
     "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
   },

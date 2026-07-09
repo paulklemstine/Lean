@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "230b77ce",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Certified Robustness via Cover Cohomology\n\nThese conjectures are derived from the present cycle, in which we proved that on a\ntree-shaped cover of a classifier's input space the",
-      "quality_score": 0.76576,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-06-30T02:56:43",
-      "title": "Certified Adversarial Robustness via Sheaf Cohomology"
-    },
-    {
       "cycle_id": "562c0234",
       "domain": "Physics",
       "key_insight": "# Future Directions — Simulation-Based Privacy for Colouring Proofs\n\nThe results of this cycle establish, for the three-colouring proof of a graph,\nthat a single challenged edge reveals a transcript w",
@@ -499,19 +489,19 @@
       "theorem_count": 18,
       "timestamp": "2026-07-09T22:51:25",
       "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
+    },
+    {
+      "cycle_id": "84ab5171",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Cellular automata as varieties over the binary field\n\nThis cycle established that every elementary cellular automaton (ECA) is a\ndegree-≤3 polynomial map over the binary field, t",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 55,
+      "timestamp": "2026-07-09T22:51:37",
+      "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "dfab202e",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Betti–Whittaker contragredient periods\n\nDerived from this cycle's findings (`BottomDegreeParity.lean`, `PeriodAlgebra.lean`): the\ncontragredient sign `(-1)^{b(F,n)}` is governed",
-      "quality_score": 0.8119999999999999,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T21:24:12",
-      "title": "Contragredient Period Sign Formula for Betti-Whittaker Periods of GL(n)"
-    },
     {
       "cycle_id": "2b7b775f",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 18,
       "timestamp": "2026-07-09T22:51:25",
       "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
+    },
+    {
+      "cycle_id": "84ab5171",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Cellular automata as varieties over the binary field\n\nThis cycle established that every elementary cellular automaton (ECA) is a\ndegree-≤3 polynomial map over the binary field, t",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 55,
+      "timestamp": "2026-07-09T22:51:37",
+      "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-09T22:51:25",
+  "last_updated": "2026-07-09T22:51:37",
   "open_questions": [
     {
       "context": "for the star half; the conjunction is `sorry`-free and uses both results literally.; `omega`.  Both `sorry`-free.; `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "a45ab2ca",
-        "quality": 0.50004,
-        "theorems": 0,
-        "title": "Recursive Decomposition Isomorphism for General m-Tamari Intervals and Planar Co"
-      },
-      {
         "cycle_id": "c2b51bcc",
         "quality": 0.4724886610169492,
         "theorems": 7,
@@ -3141,6 +3135,12 @@
         "quality": 0.7,
         "theorems": 26,
         "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
+      },
+      {
+        "cycle_id": "84ab5171",
+        "quality": 0.82,
+        "theorems": 55,
+        "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
       }
     ],
     "Bridges": [
