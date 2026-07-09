@@ -42,7 +42,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "df755cd3",
+    "consumed_by_exp_id": "f459aaa0",
     "description": "Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: lines parallel to the x-axis diverge (hyperbolic behavior) while lines parallel to the y-axis converge (elliptic behavior). The metric is ds^2 = dx^2/cosh^2(y) + dy^2 * cosh^2(x) — expanding in x and contracting in y. Conjecture: Split Geometry is a consistent Riemannian geometry with curvature K(x,y) = -sech^2(y) + sech^2(x) that changes sign across the diagonals. The geometry has a 'phase boundary' along the lines y = x and y = -x where K = 0 (flat). In the region |x| > |y|, K > 0 (elliptic) and in the region |y| > |x|, K < 0 (hyperbolic). The geodesics in split geometry are piecewise combinations of exponential curves (in hyperbolic regions) and trigonometric curves (in elliptic regions). Test: compute the Christoffel symbols and curvature tensor for the split metric. Prove that geodesics cross the phase boundary at most twice. Compute the area of a split triangle with one vertex in each region. Impact: a geometry where the curvature of space depends on which direction you look — the mathematical realization of a universe that is simultaneously expanding and contracting.",
     "domain_bridges": [],
     "domains": [
@@ -16375,6 +16375,34 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Jones2013",
+      "Fernandes2025",
+      "Mullen1993"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any finite field F_q where q = p^r (p prime), every dynamically irreducible set of polynomials of the form f_i(x) = (x - a_i)^t + b_i (with t fixed and each f_i irreducible over F_q) has cardinality at most p^2. This conjecture asserts that the lower bound construction of size p^2 given in the paper is optimal for this class of polynomials.",
+    "domain_bridges": [
+      "Finite Fields",
+      "Polynomial Dynamics",
+      "Galois Theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0723",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the necessary and sufficient condition from Theorem 1 involving rad(t)-free elements. Apply pigeonhole principle arguments on the orbit structure of compositions, combined with bounds from the multiplicative group F_q^* and its subgroup structure. Leverage the fact that rad(t)-free elements in F_q^* are constrained by the arithmetic of q-1 = p^r - 1, and show that when the set has more than p^2 elements, some composition must fail the rad(t)-free condition.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07369v1",
+    "status": "available",
+    "timestamp": "2026-07-09T09:17:02.311029+00:00",
+    "title": "Upper bound on dynamically irreducible sets equals p-squared for finite fields"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Schubert calculus",
       "boson-fermion correspondence",
       "exterior algebra",
@@ -16391,7 +16419,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0723",
+    "id": "fd_0724",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove by induction on r using generating function identities for exterior powers and sign-reversing arguments; verify base case r=1 and use the relation ∂_i X_j = δ_{ij} to deduce the action on higher wedges, then extend to arbitrary compositions.",
@@ -16412,7 +16440,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0724",
+    "id": "fd_0725",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine probabilistic models of prime factor distributions with known upper and lower bounds for ω(n) and constructions of integers with many small prime factors; likely requires sieve methods and deep results on smooth numbers.",
@@ -16440,7 +16468,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0725",
+    "id": "fd_0726",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use p-adic analysis and properties of multinomial coefficients modulo prime powers, potentially relating to generalized hypergeometric functions and their p-integrality properties. The approach would involve analyzing the generating function of S_l^{(m)}(n) and applying p-adic differential equations.",
@@ -16470,7 +16498,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0726",
+    "id": "fd_0727",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the identity Σ_{n≤x} M(x/n) = 1, prove the grouping into S_1 and S_2 components, apply Möbius inversion to derive the main formula, and verify correctness through induction on bounded intervals. The proof requires careful handling of floor function identities and the constraint ν_x < u < x to ensure all terms are well-defined.",
@@ -16498,7 +16526,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0727",
+    "id": "fd_0728",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Characterize the optimizer of the variational problem via Lagrange multipliers on the Boolean lattice, establish convexity properties of the p-biased measure under IU constraints, and prove uniqueness of extremal families through exchange arguments and majorization theory.",
@@ -16523,7 +16551,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0728",
+    "id": "fd_0729",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Choose a monomial order that yields a squarefree initial ideal in(J_{G,H}) whose Stanley–Reisner complex is precisely the independence complex of the linear matroid M_{G,H}. 2. Show that the special fiber ring S/J_{G,H} ⊗_k k[m] has the same Hilbert function as the face ring of that complex, hence its Krull dimension (the analytic spread) equals dim(Δ)+1. 3. For a squarefree simplicial complex, dim(Δ)+1 equals the size of the largest face, which is the rank of the represented matroid. 4. Conclude ℓ(J_{G,H}) = rank(M_{G,H}).",
@@ -16549,7 +16577,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0729",
+    "id": "fd_0730",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof would involve verifying the modular conditions and leveraging the lower bound from Buchanan et al. combined with constructive upper bounds. By analyzing the structure of bicliques and their symmetric differences, one can show that the conjectured values are achievable and minimal.",
@@ -16578,7 +16606,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0730",
+    "id": "fd_0731",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The forward direction can be established by contradiction: if a tree has mpd(T) = 4 but all pairs of leaves have distance at most 2, then the distance constraints would force at least two vertices to have identical multiset representations, violating the resolving property. The reverse direction follows from constructing an explicit resolving multiset partition with exactly 4 parts when the leaf distance condition is satisfied. This construction generalizes the proof techniques used for the general lower bound while exploiting the tree structure to ensure the partition is valid. The characterization should be formalized by first defining the multiset representation function, then proving the equivalence via structural analysis of tree topology.",
@@ -16606,7 +16634,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0731",
+    "id": "fd_0732",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The conjecture can be approached by first establishing a shifting invariance, then applying variational estimates for the tensor spectral radius, and finally performing a saturation analysis to identify the extremal configuration; this mirrors the strategy outlined in the paper but isolates the key inequality for independent verification.",
@@ -16630,7 +16658,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0732",
+    "id": "fd_0733",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the lower bound by exhibiting a pair of vertices whose distance is at least n−2, using an invariant that counts the number of labels out of place under any admissible move. Establish the upper bound by describing an explicit algorithm that transforms any vertex to any other in at most n−2 steps, via a greedy reduction of mismatched labels, and prove its correctness by induction on n.",
@@ -16657,7 +16685,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0733",
+    "id": "fd_0734",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the O\\u2019Nan–Scott theorem to enumerate all primitive permutation groups of degree 108, apply integrality and eigenvalue constraints for directed SRGs, and computationally verify that the only feasible parameter sets coincide with those constructed. A GAP/Sage pipeline can generate candidate adjacency matrices under transitive actions and compare them to the known constructions.",
@@ -16666,6 +16694,33 @@
     "status": "available",
     "timestamp": "2026-07-09T08:57:05.979673+00:00",
     "title": "Exhaustivity of directed strongly regular graphs on 108 vertices"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "LibinlP4K1",
+      "Nikoghosyan",
+      "BauerNot every 2-tough"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every minimally 1‑tough graph that contains no induced subgraph isomorphic to K₁ ∪ P₄ and has at least three vertices admits a Hamiltonian cycle.",
+    "domain_bridges": [
+      "Graph Theory",
+      "Hamiltonicity",
+      "Toughness"
+    ],
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_0735",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the structural characterization of minimally 1‑tough (K₁ ∪ P₄)-free graphs, combine with known sufficient conditions for Hamiltonicity (e.g., Dirac’s theorem) and verify the degree‑2 condition implied by Kriesell's conjecture.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07239v1",
+    "status": "available",
+    "timestamp": "2026-07-09T09:17:10.297215+00:00",
+    "title": "Minimally 1‑tough (K₁ ∪ P₄)-free graphs are Hamiltonian"
   },
   {
     "ambition_level": "extension",

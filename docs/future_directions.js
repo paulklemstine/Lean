@@ -33,7 +33,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
   },
   {
-    "consumed_by_exp_id": "df755cd3",
+    "consumed_by_exp_id": "f459aaa0",
     "description": "Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: lines parallel to the x-axis diverge (hyperbolic behavior) while lines parallel to the y-axis converge (elliptic behavior). The metric is ds^2 = dx^2/cosh^2(y) + dy^2 * cosh^2(x) \u2014 expanding in x and contracting in y. Conjecture: Split Geometry is a consistent Riemannian geometry with curvature K(x,y) = -sech^2(y) + sech^2(x) that changes sign across the diagonals. The geometry has a 'phase boundary' along the lines y = x and y = -x where K = 0 (flat). In the region |x| > |y|, K > 0 (elliptic) and in the region |y| > |x|, K < 0 (hyperbolic). The geodesics in split geometry are piecewise combinations of exponential curves (in hyperbolic regions) and trigonometric curves (in elliptic regions). Test: compute the Christoffel symbols and curvature tensor for the split metric. Prove that geodesics cross the phase boundary at most twice. Compute the area of a split triangle with one vertex in each region. Impact: a geometry where the curvature of space depends on which direction you look \u2014 the mathematical realization of a universe that is simultaneously expanding and contracting.",
     "domains": [
       "Novelty",
@@ -8751,12 +8751,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Conjecture: For every composition \u03b1 of length r \u2264 R, the differential operator \u2202_\u03b1 = \u2202_{i1}\u22ef\u2202_{ir} acting on the polynomial ring \u211a[X_1,\u2026,X_R] yields a non-zero scalar multiple of the basis element X_{i1}\u2227\u22ef\u2227X_{ir} in \u2227^r V, where \u2202_i = (1/i!)\u00b7(d/dX_i)|_{X=0}. Moreover, the scalar equals the sign of the permutation that sorts (i1,\u2026,ir). This equality holds for all r and can be tested computationally for small values.",
+    "description": "For any finite field F_q where q = p^r (p prime), every dynamically irreducible set of polynomials of the form f_i(x) = (x - a_i)^t + b_i (with t fixed and each f_i irreducible over F_q) has cardinality at most p^2. This conjecture asserts that the lower bound construction of size p^2 given in the paper is optimal for this class of polynomials.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
     "id": "fd_0723",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07369v1",
+    "status": "available",
+    "timestamp": "2026-07-09T09:17:02.311029+00:00",
+    "title": "Upper bound on dynamically irreducible sets equals p-squared for finite fields"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For every composition \u03b1 of length r \u2264 R, the differential operator \u2202_\u03b1 = \u2202_{i1}\u22ef\u2202_{ir} acting on the polynomial ring \u211a[X_1,\u2026,X_R] yields a non-zero scalar multiple of the basis element X_{i1}\u2227\u22ef\u2227X_{ir} in \u2227^r V, where \u2202_i = (1/i!)\u00b7(d/dX_i)|_{X=0}. Moreover, the scalar equals the sign of the permutation that sorts (i1,\u2026,ir). This equality holds for all r and can be tested computationally for small values.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0724",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07667v1",
@@ -8770,7 +8785,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0724",
+    "id": "fd_0725",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07641v1",
@@ -8784,7 +8799,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0725",
+    "id": "fd_0726",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07638v1",
@@ -8799,7 +8814,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0726",
+    "id": "fd_0727",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07566v1",
@@ -8814,7 +8829,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0727",
+    "id": "fd_0728",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07564v1",
@@ -8829,7 +8844,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0728",
+    "id": "fd_0729",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07458v1",
@@ -8843,7 +8858,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0729",
+    "id": "fd_0730",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07448v1",
@@ -8858,7 +8873,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0730",
+    "id": "fd_0731",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07407v1",
@@ -8873,7 +8888,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0731",
+    "id": "fd_0732",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07392v1",
@@ -8887,7 +8902,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0732",
+    "id": "fd_0733",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07404v1",
@@ -8902,13 +8917,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0733",
+    "id": "fd_0734",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07381v1",
     "status": "available",
     "timestamp": "2026-07-09T08:57:05.979673+00:00",
     "title": "Exhaustivity of directed strongly regular graphs on 108 vertices"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every minimally 1\u2011tough graph that contains no induced subgraph isomorphic to K\u2081 \u222a P\u2084 and has at least three vertices admits a Hamiltonian cycle.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_0735",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07239v1",
+    "status": "available",
+    "timestamp": "2026-07-09T09:17:10.297215+00:00",
+    "title": "Minimally 1\u2011tough (K\u2081 \u222a P\u2084)-free graphs are Hamiltonian"
   },
   {
     "consumed_by_exp_id": "a88deb31",

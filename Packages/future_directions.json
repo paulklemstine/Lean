@@ -31246,7 +31246,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -31263,7 +31263,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0652",
-      "last_attempt_time": "2026-07-09T08:57:10.888400+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -31287,11 +31287,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "df755cd3",
+      "consumed_by_exp_id": "f459aaa0",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -31304,7 +31304,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0653",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-09T09:17:14.956885+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -34656,6 +34656,55 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "Jones2013",
+        "Fernandes2025",
+        "Mullen1993"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any finite field F_q where q = p^r (p prime), every dynamically irreducible set of polynomials of the form f_i(x) = (x - a_i)^t + b_i (with t fixed and each f_i irreducible over F_q) has cardinality at most p^2. This conjecture asserts that the lower bound construction of size p^2 given in the paper is optimal for this class of polynomials.",
+      "domain_bridges": [
+        "Finite Fields",
+        "Polynomial Dynamics",
+        "Galois Theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0723",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem dynamically_irreducible_upper_bound (p : ℕ) [hp : Fact (Nat.Prime p)] (r : ℕ) (t : ℕ) (f_set : Finset (Polynomial (F_p_p r))) : (h : ∀ f ∈ f_set, Irreducible f) → (h_dyn : DynamicallyIrreducible f_set) → f_set.card ≤ p ^ 2",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use the necessary and sufficient condition from Theorem 1 involving rad(t)-free elements. Apply pigeonhole principle arguments on the orbit structure of compositions, combined with bounds from the multiplicative group F_q^* and its subgroup structure. Leverage the fact that rad(t)-free elements in F_q^* are constrained by the arithmetic of q-1 = p^r - 1, and show that when the set has more than p^2 elements, some composition must fail the rad(t)-free condition.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.07369v1",
+      "source_path": "http://arxiv.org/abs/2607.07369v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T09:17:02.311029+00:00",
+      "title": "Upper bound on dynamically irreducible sets equals p-squared for finite fields"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "Schubert calculus",
         "boson-fermion correspondence",
         "exterior algebra",
@@ -34679,7 +34728,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0723",
+      "id": "fd_0724",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem schubert_exterior_relation (r : ℕ) (indices : Fin r → ℕ) : (∂_indices.productDiff) = (signPermutation indices) • (exteriorMonomial indices) := by sorry",
@@ -34721,7 +34770,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0724",
+      "id": "fd_0725",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem new_abc_conjecture (y : ℕ) : Filter.limsup (fun n : ℕ => ((∑ j in Finset.Icc 1 y, ω (n + j)) * Real.log (Real.log n)) / Real.log n) = (1 : ℝ) := by sorry",
@@ -34770,7 +34819,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0725",
+      "id": "fd_0726",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem generalized_supercongruence (l m : ℕ) (p : ℕ) (hp : prime p) (h1 : ¬(p ∣ (l + 1))) (h2 : ¬(p ∣ binomial (l + 1) 2)) : (∑ n in finset.range (p - 1), ((-1) ^ (m * n) / (n ^ (m - 1))) * S l m n) % p ^ 2 = 0",
@@ -34821,7 +34870,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0726",
+      "id": "fd_0727",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mertens_combinatorial_identity (x : ℕ) (u : ℕ) (hx : x ≥ 1) (hu : ⌊Real.sqrt x⌋ < u ∧ u < x) : Mertens.mertens x = ∑ k in Finset.range (x / u + 1), μ k * S (x / k) u",
@@ -34870,7 +34919,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0727",
+      "id": "fd_0728",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem iu_p_biased_lubell_maximum (n : ℕ) (𝓕 : set (finset (fin n))) (h𝓕 : is_iu_family 𝓕) : ∃ p_opt : ℝ, p_opt ∈ [0,1] ∧ Λ_p 𝓕 ≤ Λ_p 𝓕_extremal p_opt ∧ (∀ q, Λ_q 𝓕 ≤ Λ_q 𝓕_extremal q)",
@@ -34916,7 +34965,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0728",
+      "id": "fd_0729",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem analytic_spread_eq_matroid_rank {G H : SimpleGraph ℕ} (J : Ideal (PolynomialRing ℚ (fin (V G) × fin (V H)))) (hJ : J = determinantalIdeal G H) (M : Matroid ℚ (fin (V G) × fin (V H))) (hM : M = linearMatroidOfPair G H) : analyticSpread J = matroidRank M := by sorry",
@@ -34963,7 +35012,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0729",
+      "id": "fd_0730",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem b2_values (n : ℕ) (h : n ≥ 2) : b₂(n) = if n % 8 = 0 ∨ n % 8 = 1 ∨ n % 8 = 7 then Nat.ceil (n / 2) else Nat.ceil (n / 2) + 1",
@@ -35013,7 +35062,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0730",
+      "id": "fd_0731",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mpd_tree_iff_lower_bound (T : SimpleGraph) [connected] [is_tree] [nonempty (V T)] [fintype (V T)] [decidable_linear_order (V T)] : multiset_partition_dimension T = 4 ↔ ∃ u v : V T, is_leaf u ∧ is_leaf v ∧ dist u v ≥ 3",
@@ -35062,7 +35111,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0731",
+      "id": "fd_0732",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem spec (r s : ℕ) (H : Hypergraph r) (n : ℕ) (hν : matching_number H < s) (hn : n ≥ N r s) : spectral_radius H ≤ spectral_radius (F (s-1) n) ∧ (spectral_radius H = spectral_radius (F (s-1) n) → isomorphic H (F (s-1) n))",
@@ -35107,7 +35156,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0732",
+      "id": "fd_0733",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem diameter_network_realignment_graph_complete_graph (n : ℕ) (hn : n ≥ 5) : diameter (network_realignment_graph (complete_graph n)) = n - 2 := by sorry",
@@ -35155,7 +35204,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0733",
+      "id": "fd_0734",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "-- Lean 4 stub for the conjecture\n\ndef DirectedSRG (n : Nat) : Type u where\n  params : SRGParams\n  adjacency : Fin n → Fin n → Bool\n  ...\n\ndef HasTransitiveAutGroup (g : DirectedSRG 108) : Prop := •••\n\ndef ConstructedParams : List (SRGParams) :=\n  [(108,11,3,2,1), (108,14,10,0,2), (108,22,12,6,4), (108,23,9,8,4),\n   (108,25,15,8,5), (108,34,18,12,10), (108,38,22,12,14), (108,39,23,14,14),\n   (108,41,35,16,15), (108,42,33,18,15), (108,46,22,19,20)]\n\ndef directed_srg_108_exhaustive : Prop :=\n  ∀ (g : DirectedSRG 108) (h : HasTransitiveAutGroup g),\n    g.params ∈ ConstructedParams → ∀ (c : ConstructionType), g ≃ c.from_group (aut_group_of g)",
@@ -35175,6 +35224,54 @@
       "thread_id": "",
       "timestamp": "2026-07-09T08:57:05.979673+00:00",
       "title": "Exhaustivity of directed strongly regular graphs on 108 vertices"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "LibinlP4K1",
+        "Nikoghosyan",
+        "BauerNot every 2-tough"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Every minimally 1‑tough graph that contains no induced subgraph isomorphic to K₁ ∪ P₄ and has at least three vertices admits a Hamiltonian cycle.",
+      "domain_bridges": [
+        "Graph Theory",
+        "Hamiltonicity",
+        "Toughness"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Physics"
+      ],
+      "github_issue": 0,
+      "id": "fd_0735",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem minimally_one_tough_K1P4_hamiltonian {G : Graph ℕ} (h : MinimallyOneTough (K1 ∪ P4) G) (hsize : G.order ≥ 3) : IsHamiltonian G := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use the structural characterization of minimally 1‑tough (K₁ ∪ P₄)-free graphs, combine with known sufficient conditions for Hamiltonicity (e.g., Dirac’s theorem) and verify the degree‑2 condition implied by Kriesell's conjecture.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.07239v1",
+      "source_path": "http://arxiv.org/abs/2607.07239v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T09:17:10.297215+00:00",
+      "title": "Minimally 1‑tough (K₁ ∪ P₄)-free graphs are Hamiltonian"
     },
     {
       "ambition_level": "extension",
@@ -35263,9 +35360,9 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "cross_domain_bridge",
     "famous_subtask",
     "cross_domain_bridge",
-    "cross_domain_bridge"
+    "cross_domain_bridge",
+    "famous_subtask"
   ]
 }
