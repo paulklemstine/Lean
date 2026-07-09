@@ -11375,7 +11375,7 @@
       "Ramsey_theory",
       "partition_regularity"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "26e5c4d5",
     "description": "For any positive integer k and any completely multiplicative function f : ℕ → μ_k (the k-th roots of unity), and any ω in the image of f, there exists a Pythagorean triple (x, y, z) with f(x) = f(y) = f(z) = ω. This extends the paper's main result, which establishes the case ω = 1 via approximate concentration (for ε small enough, the values are forced to equal 1 since μ_k is discrete). The case of general ω does not reduce to ω = 1 by a simple substitution, as f(n)/ω is not completely multiplicative, making this a genuinely stronger statement that implies every color class of a completely multiplicative k-coloring of ℕ contains a Pythagorean triple.",
     "domain_bridges": [
       "ramsey_theory_and_multiplicative_number_theory",
@@ -11391,7 +11391,7 @@
     "proof_strategy": "The ω = 1 case follows from the paper's vanishing-averages/pretentious-function decomposition. For general ω, one might try: (1) construct a modified multiplicative function g related to f and ω whose level set at 1 corresponds to f's level set at ω, then apply the paper's machinery to g — but g(n) = f(n)·ω^{-v(n)} for suitable v is not completely multiplicative; (2) use the dilation structure: if (a,b,c) is a Pythagorean triple with f(a)=f(b)=f(c)=1, then for any prime p with f(p)=ω, the dilated triple (pa,pb,pc) gives f(pa)=ω·f(a)=ω, etc., but this requires f(a)=1 which is circular; (3) develop a new transference principle that works for arbitrary level sets, not just neighborhoods of 1.",
     "research_mode": "team",
     "source_exp_id": "2607.04903v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T08:05:16.465632+00:00",
     "title": "Monochromatic Pythagorean Triples in Every Level Set of Completely Multiplicative Functions"
   },
@@ -13444,34 +13444,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
-      "math.CO",
-      "graph_theory",
-      "vertex_transitive",
-      "directed_cycles"
-    ],
-    "consumed_by_exp_id": "ef8ef45e",
-    "description": "Every connected vertex-transitive digraph on n ≥ 1 vertices contains a directed cycle of length at least ⌈√n⌉. This is the natural directed analogue of Babai's 1979 theorem for undirected vertex-transitive graphs, and strengthens the paper's asymptotic Ω(√n) lower bound to an explicit constant of 1.",
-    "domain_bridges": [
-      "group_theory",
-      "extremal_combinatorics",
-      "computational_complexity"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0616",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Formalize the core structural argument from the paper's Ω(√n) bound with explicit constants. The proof likely uses the orbit-stabilizer theorem and group-theoretic analysis of the automorphism group acting on the digraph to find a long directed cycle. Key steps: (1) formalize vertex-transitive digraphs and their automorphism groups, (2) establish that connected vertex-transitive digraphs on n vertices have minimum out-degree ≥ 1 and use orbit structure to find cycles, (3) combine the orbit counting with cycle-finding arguments to extract a directed cycle of length ≥ ⌈√n⌉. The existence result (digraphs missing n/12 vertices) provides the complementary upper bound context.",
-    "research_mode": "team",
-    "source_exp_id": "2607.05807v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T11:32:09.225914+00:00",
-    "title": "Directed Babai Theorem: Long Cycles in Vertex-Transitive Digraphs"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
       "Anti-Ramsey numbers for paths",
       "Induced matching numbers in dense graphs",
       "Turán-type problems with color restrictions",
@@ -14462,7 +14434,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "00f256fb",
     "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card — you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier — it's an opportunity. You can WIN at the game of undecidability.",
     "domain_bridges": [],
     "domains": [
@@ -14475,7 +14447,7 @@
     "proof_strategy": "Define Godel's Casino: each round, the house presents a statement phi in the language of arithmetic. The player bets TRUE or FALSE. If ZFC proves phi, TRUE wins. If ZFC proves not-phi, FALSE wins. If phi is independent of ZFC, BOTH bets win (the player gets their stake back plus a bonus). Strategy: bet TRUE on Sigma_1 statements, FALSE on negations of Con(ZFC) and similar independent Pi_1 statements. Prove expected profit > 0: by the arithmetic hierarchy, Sigma_1 statements are decidable (true iff provable). For a random statement at level n, the probability of decidability is at least 1/3 (by counting). So E[profit] >= (1/3) * (stake) > 0. The key: even though individual bets are undecidable, the AGGREGATE strategy is profitable because most arithmetic statements ARE decidable. Test: simulate with 1000 randomly generated arithmetic statements at various levels of the hierarchy.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.960880+00:00",
     "title": "Godel's Casino: Incomplete but Winnable Games"
   },
@@ -17838,6 +17810,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.CO",
+      "cs.IT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that the largest constant-dimension subspace code contained in the Schubert variety Ω_{(4,5,6)} of Gr_2(3,6) with minimum subspace distance 4 (i.e., pairwise intersections of dimension at most 1) has size exactly 9. This is the extremal distance case forced by ℓ=1, and 9 matches the natural counting upper bound from the paper's direct-sum construction. The conjecture is falsifiable by exhibiting a code of size 10 or proving an upper bound <9.",
+    "domain_bridges": [
+      "finite geometry",
+      "subspace codes",
+      "graph coloring"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0779",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize finite fields, Grassmannians, and Schubert varieties in Lean 4 (using mathlib or custom defs). Enumerate all 3-dimensional subspaces of F_2^6 (1395 total) and filter those satisfying the Schubert condition. Build the graph where edges connect subspaces at distance <4. Then use a verified exhaustive search or ILP to compute the maximum independent set size. Alternatively, prove the upper bound via packing arguments and construct a code of size 9 using a known partial spread meeting the condition.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07479v1",
+    "status": "available",
+    "timestamp": "2026-07-09T18:18:12.174650+00:00",
+    "title": "Exact maximum size of a Schubert subspace code for q=2, n=6, k=3, d=(4,5,6) at minimum distance 4"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "factor complexity",
       "abelian complexity",
       "group complexity",
@@ -17856,7 +17855,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0779",
+    "id": "fd_0780",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Utilize the structural description of ternary minimal complexity words (e.g., Arnoux-Rauzy/episturmian). Analyze bispecial factors and their left/right extensions to show that for any target k one can choose G_n as a stabilizer of a suitable partition of positions, interpolating between abelian equivalence (G_n=S_n) and identity (G_n=Id). Proceed by induction on n, with base cases verified by finite enumeration.",
@@ -17881,7 +17880,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0780",
+    "id": "fd_0781",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use a short t‑model of the ΘZero graph together with a monotone guidance that always selects a big component of weight >½; apply the Dominated Guided Separator lemma to obtain a separator of size O(tk log k) and argue that its closed neighbourhood hits all Θ_t‑induced minors.",
@@ -17916,7 +17915,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0781",
+    "id": "fd_0782",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "We will formalise the conjecture in Lean 4 by defining the predicate \\`is_reflected_bounded_growth\\` on vectors of natural numbers, the monotonicity and inequality/parity conditions, and the associated product of \\(q\\)-integers.  The plan is:\n\n1. Implement the definitions in Lean.\n2. Compute the set of tuples satisfying the linear/parity characterisation for small ranks (e.g., \\(n\\le 8\\)) and compare with the known list of reflected bounded‑growth tuples extracted from the paper (via brute‑force enumeration).\n3. Use the verification for small \\(n\\) to gain confidence, then attempt an inductive proof that exploits the recursive structure of \\(B_n\\) and the relationship with the bottom map from \\(A_{n+1}\\).\n\nThe final theorem will assert the equivalence described above.",
@@ -17945,7 +17944,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0782",
+    "id": "fd_0783",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Start from the identity ∑_{n≤y} M(⌊y/n⌋) = 1. Split the sum at n = ⌊√y⌋ using summation by parts to express ∑_{n≤κ_y} M(⌊y/n⌋) in terms of M(⌊√y⌋) and a sum involving μ(n). Define S(y,u) by isolating the terms with n ≤ ⌊y/u⌋. Verify that ∑_{k≤y/u} M(⌊y/k⌋) = S(y,u) when ⌊√y⌋ < u. Apply the generalized Möbius inversion formula ∑_{k≤x} μ(k) G(⌊x/k⌋) = F(x) where G(y) = ∑_{k≤y/u} F(⌊y/k⌋) to obtain the result.",
@@ -17972,7 +17971,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0783",
+    "id": "fd_0784",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "p-biased measure integration over the Boolean lattice followed by continuous integration across the bias parameter p ∈ [0,1] to recover the optimal coefficient 1/6",
@@ -17984,23 +17983,30 @@
   },
   {
     "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "ad941b96",
-    "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers — anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension — they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property — it's not about content quality but about the sheaf cohomology of the social network.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Geometry"
+    "catalog_references": [
+      "math.NT",
+      "math.AG"
     ],
-    "id": "fd_0652",
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that the classification of reduction types of genus 2 curves over local fields given in the paper for residue characteristic p≠2 extends verbatim to the case p=2 provided the curve has tame reduction (i.e., the Néron component group of its Jacobian has odd order). Specifically, for a complete DVR R with algebraically closed residue field of characteristic 2 and fraction field K, any smooth genus 2 curve C/K with tame Jacobian has a reduction type among the 106 Namikawa-Ueno families, and the associated invariants (minimal regular normal crossings model, Néron component group, tame conductor exponent, discriminant valuation, cluster pictures) coincide with those listed in the paper's tables for p≠2, with potential stable type equal to the actual stable type.",
+    "domain_bridges": [
+      "Lean 4 formalization of DVRs and schemes",
+      "Combinatorial cluster pictures for genus 2",
+      "Mathlib algebraic geometry"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0785",
     "lineage_refs": [],
-    "priority_score": 0.77,
-    "proof_strategy": "Define the meme sheaf M on social network G: for each community C_i (cluster in G), M(C_i) is the set of interpretations of the meme in community i. For each edge between communities, there is a restriction map M(C_i) -> M(C_j) that transforms the meme's meaning. Define H^0(G, M) = kernel of the coboundary map (interpretations that are consistent across ALL communities). Define H^1(G, M) = cokernel (obstructions to consistent interpretation). Prove: dim(H^0) = number of universal interpretations. Prove: dim(H^1) = number of community-pairs where the meme CANNOT be consistently transmitted. Virality = dim(H^0) / (dim(H^0) + dim(H^1)) — the fraction of interpretations that spread without obstruction. Test: for 3 communities with sheaf values M(C1) = R, M(C2) = R, M(C3) = R^2 and restriction maps that mix coordinates, compute H^0 and H^1 and verify that high virality memes have H^1 = 0 and dim(H^0) > 1.",
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the notion of cluster picture and minimal regular model for genus 2 curves in Lean 4 using mathlib's discrete valuation ring and algebraic curve libraries. For a family of explicit curves in characteristic 2 with tame reduction (e.g., given by y^2 = f(x) with f separable and odd degree extension for semistability), computationally derive the cluster picture and verify it maps to the expected Namikawa-Ueno label and invariants. Then adapt the authors' p≠2 proof: because tame reduction implies the relevant inertia group has odd order, the wild ramification obstacles in characteristic 2 are absent, allowing the same resolution and component group calculations.",
     "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T16:01:43.584485+00:00",
-    "title": "The Mathematics of Memes: Viral Information Topology"
+    "source_exp_id": "2607.07558v1",
+    "status": "available",
+    "timestamp": "2026-07-09T18:21:59.032628+00:00",
+    "title": "Tame reduction classification for genus 2 curves in characteristic 2"
   },
   {
     "ambition_level": "extension",

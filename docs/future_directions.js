@@ -6127,7 +6127,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bukh's Exact Zero-Sum-Free Density Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "26e5c4d5",
     "description": "For any positive integer k and any completely multiplicative function f : \u2115 \u2192 \u03bc_k (the k-th roots of unity), and any \u03c9 in the image of f, there exists a Pythagorean triple (x, y, z) with f(x) = f(y) = f(z) = \u03c9. This extends the paper's main result, which establishes the case \u03c9 = 1 via approximate concentration (for \u03b5 small enough, the values are forced to equal 1 since \u03bc_k is discrete). The case of general \u03c9 does not reduce to \u03c9 = 1 by a simple substitution, as f(n)/\u03c9 is not completely multiplicative, making this a genuinely stronger statement that implies every color class of a completely multiplicative k-coloring of \u2115 contains a Pythagorean triple.",
     "domains": [
       "Algebra"
@@ -6136,7 +6136,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.04903v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T08:05:16.465632+00:00",
     "title": "Monochromatic Pythagorean Triples in Every Level Set of Completely Multiplicative Functions"
   },
@@ -7207,20 +7207,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Degree correction advances Ramsey community detection by exactly two generations on diamond hierarchical lattices"
   },
   {
-    "consumed_by_exp_id": "ef8ef45e",
-    "description": "Every connected vertex-transitive digraph on n \u2265 1 vertices contains a directed cycle of length at least \u2308\u221an\u2309. This is the natural directed analogue of Babai's 1979 theorem for undirected vertex-transitive graphs, and strengthens the paper's asymptotic \u03a9(\u221an) lower bound to an explicit constant of 1.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0616",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.05807v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T11:32:09.225914+00:00",
-    "title": "Directed Babai Theorem: Long Cycles in Vertex-Transitive Digraphs"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "We conjecture that for the critical case \u03b5=1/2, the maximal anti-Ramsey function for P_4 admits an exact quadratic lower bound with a computable constant. Specifically, we propose that \u03c7_S(n, (n choose 2) - \u230an^{3/2}\u230b, P_4) > (1/8 - o(1))\u00b7n\u00b2 as n \u2192 \u221e, where the constant 1/8 arises from the induced matching structure in graphs with minimum degree (1/2 + o(1))n. This conjecture addresses the sharpness of the phase transition at \u03b5=1/2 and would require establishing both the lower bound and matching upper bound to determine the exact asymptotic behavior.",
     "domains": [
@@ -7731,7 +7717,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The \u221a2-Threshold Conjecture for Rips Filtration Approximation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "00f256fb",
     "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card \u2014 you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier \u2014 it's an opportunity. You can WIN at the game of undecidability.",
     "domains": [
       "Novelty",
@@ -7741,7 +7727,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.960880+00:00",
     "title": "Godel's Casino: Incomplete but Winnable Games"
   },
@@ -9523,12 +9509,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "We conjecture that every aperiodic infinite word over a ternary alphabet whose factor complexity satisfies p(n)=2n+1 for all n\u22651 possesses the universal group complexity property: for each length n and each integer k with p_ab(n) \u2264 k \u2264 p(n) there exists a subgroup G \u2264 S_n such that the group complexity p^G(n)=k.",
+    "description": "We conjecture that the largest constant-dimension subspace code contained in the Schubert variety \u03a9_{(4,5,6)} of Gr_2(3,6) with minimum subspace distance 4 (i.e., pairwise intersections of dimension at most 1) has size exactly 9. This is the extremal distance case forced by \u2113=1, and 9 matches the natural counting upper bound from the paper's direct-sum construction. The conjecture is falsifiable by exhibiting a code of size 10 or proving an upper bound <9.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
     "id": "fd_0779",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07479v1",
+    "status": "available",
+    "timestamp": "2026-07-09T18:18:12.174650+00:00",
+    "title": "Exact maximum size of a Schubert subspace code for q=2, n=6, k=3, d=(4,5,6) at minimum distance 4"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that every aperiodic infinite word over a ternary alphabet whose factor complexity satisfies p(n)=2n+1 for all n\u22651 possesses the universal group complexity property: for each length n and each integer k with p_ab(n) \u2264 k \u2264 p(n) there exists a subgroup G \u2264 S_n such that the group complexity p^G(n)=k.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0780",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07620v1",
@@ -9542,7 +9543,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0780",
+    "id": "fd_0781",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07697v1",
@@ -9557,7 +9558,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0781",
+    "id": "fd_0782",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07659v1",
@@ -9571,7 +9572,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0782",
+    "id": "fd_0783",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07566v1",
@@ -9586,7 +9587,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0783",
+    "id": "fd_0784",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07564v1",
@@ -9595,19 +9596,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "Frankl's conjecture on intersecting-union families and the Lubell bound"
   },
   {
-    "consumed_by_exp_id": "ad941b96",
-    "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers \u2014 anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension \u2014 they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property \u2014 it's not about content quality but about the sheaf cohomology of the social network.",
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that the classification of reduction types of genus 2 curves over local fields given in the paper for residue characteristic p\u22602 extends verbatim to the case p=2 provided the curve has tame reduction (i.e., the N\u00e9ron component group of its Jacobian has odd order). Specifically, for a complete DVR R with algebraically closed residue field of characteristic 2 and fraction field K, any smooth genus 2 curve C/K with tame Jacobian has a reduction type among the 106 Namikawa-Ueno families, and the associated invariants (minimal regular normal crossings model, N\u00e9ron component group, tame conductor exponent, discriminant valuation, cluster pictures) coincide with those listed in the paper's tables for p\u22602, with potential stable type equal to the actual stable type.",
     "domains": [
-      "Novelty",
-      "Geometry"
+      "Algebra",
+      "Pythagorean"
     ],
-    "id": "fd_0652",
-    "priority_score": 0.77,
+    "id": "fd_0785",
+    "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T16:01:43.584485+00:00",
-    "title": "The Mathematics of Memes: Viral Information Topology"
+    "source_exp_id": "2607.07558v1",
+    "status": "available",
+    "timestamp": "2026-07-09T18:21:59.032628+00:00",
+    "title": "Tame reduction classification for genus 2 curves in characteristic 2"
   },
   {
     "consumed_by_exp_id": "",
