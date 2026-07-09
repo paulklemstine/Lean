@@ -1,202 +1,219 @@
-"""
-Gödel's Casino — Numerical demonstrations of the expected-profit theory.
+"""Gödel's Casino: numerical demonstrations of a guaranteed-win strategy.
 
-This self-contained script demonstrates the core results of the theory of
-betting on undecidable statements:
+This self-contained script models a formal theory abstractly and simulates the
+betting game described in the accompanying paper.  It demonstrates:
 
-  * expected_payoff(p) = 2p - 1           (a single card)
-  * total_expected_payoff(ps)             (a finite deck)
-  * hedge_break_even                       (p = 1/2  ->  payoff 0)
-  * payoff_pos_iff                         (payoff > 0  <->  p > 1/2)
-  * casino_positive_profit                 (one strict winner suffices)
-  * fraction_bound                         (payoff >= alpha * n * 2*eps)
-  * one_third_theorem                      (>= 1/3 strict winners  ->  profit)
-
-Each card is a statement; its "win-probability" p in [0, 1] is the measure of
-the set of models in which the player's bet matches the statement's truth value.
-A correct bet pays +1, an incorrect bet pays -1.
+  * shape determines truth: independent Pi_1 sentences are TRUE, independent
+    Sigma_1 sentences are FALSE (Theorems 3.1 and 3.2);
+  * the winning strategy (bet TRUE on Pi_1, FALSE on Sigma_1, hedge otherwise)
+    never loses a single round and profits +1 on each decidable-shape card;
+  * total deck profit equals the number of decidable-shape cards;
+  * a >= 1/3 decidable-shape density guarantees average profit >= 1/3;
+  * the naive strategy is the pointwise inverse and loses exactly what the
+    winning strategy wins.
 
 Run:  python demo.py
 """
 
 from __future__ import annotations
 
+from dataclasses import dataclass
+from enum import Enum
+from typing import Callable, List
 import random
-from typing import Sequence
 
 
-# --------------------------------------------------------------------------
-# Core payoff functionals
-# --------------------------------------------------------------------------
+# --------------------------------------------------------------------------- #
+# Model of a theory
+# --------------------------------------------------------------------------- #
 
-def expected_payoff(p: float) -> float:
-    """Expected payoff of a single card with win-probability ``p``: 2p - 1."""
-    return 2.0 * p - 1.0
-
-
-def total_expected_payoff(ps: Sequence[float]) -> float:
-    """Total expected payoff of a finite deck of win-probabilities."""
-    return sum(expected_payoff(p) for p in ps)
+class Kind(Enum):
+    """Syntactic shape of a sentence card."""
+    SIGMA1 = "Sigma_1"
+    PI1 = "Pi_1"
+    OTHER = "other"
 
 
-# --------------------------------------------------------------------------
-# Certificates mirroring the theorems
-# --------------------------------------------------------------------------
-
-def all_break_even_or_better(ps: Sequence[float], tol: float = 1e-12) -> bool:
-    """Check every card is at least break-even: p_i >= 1/2."""
-    return all(p >= 0.5 - tol for p in ps)
+class Bet(Enum):
+    BET_TRUE = "betTrue"
+    BET_FALSE = "betFalse"
+    HEDGE = "hedge"
 
 
-def count_strict_winners(ps: Sequence[float], tol: float = 1e-12) -> int:
-    """Number of strictly profitable cards: p_i > 1/2."""
-    return sum(1 for p in ps if p > 0.5 + tol)
+@dataclass(frozen=True)
+class Card:
+    """A card dealt by the house.
 
-
-def one_third_certificate(ps: Sequence[float]) -> bool:
-    """One-Third Theorem hypotheses: all >= 1/2 and at least n/3 strict winners.
-
-    When satisfied on a nonempty deck, total_expected_payoff(ps) > 0 is
-    guaranteed.
+    `truth` is the sentence's truth value in the standard model N.  Crucially,
+    the *player never inspects `truth`*: the strategy depends only on `kind`.
+    `truth` is used solely to score the resulting bet, mirroring how an external
+    observer settles the wager.  For an independent card the paper *proves*
+    truth is forced by kind, so we enforce that invariant on construction.
     """
-    n = len(ps)
-    if n == 0:
-        return False
-    return all_break_even_or_better(ps) and count_strict_winners(ps) >= n / 3.0
+    name: str
+    kind: Kind
+    truth: bool
+    independent: bool = True
+
+    def __post_init__(self) -> None:
+        # Enforce the shape-determines-truth theorems for independent cards.
+        if self.independent and self.kind is Kind.PI1 and not self.truth:
+            raise ValueError(f"independent Pi_1 card {self.name!r} must be TRUE")
+        if self.independent and self.kind is Kind.SIGMA1 and self.truth:
+            raise ValueError(f"independent Sigma_1 card {self.name!r} must be FALSE")
 
 
-def fraction_bound_floor(ps: Sequence[float], eps: float) -> float:
-    """Certified lower bound alpha * n * (2 eps) from the fraction bound.
-
-    Here alpha = |G| / n where G = {i : p_i >= 1/2 + eps}. The returned floor
-    equals 2 * |G| * eps and is a proven lower bound on total_expected_payoff.
-    """
-    n = len(ps)
-    if n == 0:
-        return 0.0
-    good = sum(1 for p in ps if p >= 0.5 + eps)
-    alpha = good / n
-    return alpha * n * (2.0 * eps)
+def strat(kind: Kind) -> Bet:
+    """The winning strategy: TRUE on Pi_1, FALSE on Sigma_1, hedge otherwise."""
+    return {
+        Kind.PI1: Bet.BET_TRUE,
+        Kind.SIGMA1: Bet.BET_FALSE,
+        Kind.OTHER: Bet.HEDGE,
+    }[kind]
 
 
-# --------------------------------------------------------------------------
+def naive_strat(kind: Kind) -> Bet:
+    """The tempting-but-wrong strategy: the pointwise inverse of `strat`."""
+    return {
+        Kind.PI1: Bet.BET_FALSE,   # bets FALSE on Con(T) -- loses
+        Kind.SIGMA1: Bet.BET_TRUE,
+        Kind.OTHER: Bet.HEDGE,
+    }[kind]
+
+
+def payoff(bet: Bet, truth: bool) -> int:
+    """+1 for a correct bet, -1 for a wrong bet, 0 for a hedge."""
+    if bet is Bet.HEDGE:
+        return 0
+    if bet is Bet.BET_TRUE:
+        return 1 if truth else -1
+    return -1 if truth else 1  # BET_FALSE
+
+
+def card_profit(card: Card, strategy: Callable[[Kind], Bet]) -> int:
+    return payoff(strategy(card.kind), card.truth)
+
+
+def deck_profit(deck: List[Card], strategy: Callable[[Kind], Bet]) -> int:
+    return sum(card_profit(c, strategy) for c in deck)
+
+
+def is_decidable_shape(card: Card) -> bool:
+    return card.kind in (Kind.SIGMA1, Kind.PI1)
+
+
+# --------------------------------------------------------------------------- #
 # Demonstrations
-# --------------------------------------------------------------------------
+# --------------------------------------------------------------------------- #
 
-def demo_endpoints() -> None:
-    print("=" * 70)
-    print("1. Endpoints: hedge (p=1/2) and winnable (p=1)")
-    print("=" * 70)
-    print(f"  hedged  card p=1/2 -> payoff {expected_payoff(0.5):+.4f}  (breaks even)")
-    print(f"  winnable card p=1   -> payoff {expected_payoff(1.0):+.4f}  (maximal)")
-    print(f"  losing  card p=0   -> payoff {expected_payoff(0.0):+.4f}  (never chosen)")
-    print()
-
-
-def demo_positivity_criterion() -> None:
-    print("=" * 70)
-    print("2. Positivity criterion: payoff > 0  <->  p > 1/2")
-    print("=" * 70)
-    for p in [0.40, 0.50, 0.5001, 0.60, 0.90]:
-        payoff = expected_payoff(p)
-        flag = "PROFIT" if payoff > 0 else ("even  " if payoff == 0 else "loss  ")
-        print(f"  p={p:.4f}  payoff={payoff:+.4f}  [{flag}]  (p>1/2 is {p > 0.5})")
-    print()
-
-
-def demo_one_strict_winner() -> None:
-    print("=" * 70)
-    print("3. One strict winner lifts a deck of hedges into profit")
-    print("=" * 70)
-    deck = [0.5] * 999 + [0.6]  # 999 undecidable hedges, 1 genuine edge
-    print(f"  deck: 999 cards at p=1/2, 1 card at p=0.6")
-    print(f"  all break-even or better : {all_break_even_or_better(deck)}")
-    print(f"  strict winners           : {count_strict_winners(deck)}")
-    print(f"  total expected payoff    : {total_expected_payoff(deck):+.4f}  (> 0)")
-    print()
+def demo_famous_cards() -> None:
+    """A small deck of famous independent sentences."""
+    print("=" * 68)
+    print("Demo 1: A deck of famous independent cards")
+    print("=" * 68)
+    deck = [
+        Card("Con(ZFC)                ", Kind.PI1, truth=True),
+        Card("Con(PA)                 ", Kind.PI1, truth=True),
+        Card("Goodstein-style Pi_1    ", Kind.PI1, truth=True),
+        Card("Rosser-style Sigma_1    ", Kind.SIGMA1, truth=False),
+        Card("false halting witness   ", Kind.SIGMA1, truth=False),
+        Card("Continuum Hypothesis    ", Kind.OTHER, truth=False, independent=False),
+    ]
+    print(f"{'card':26} {'kind':9} {'bet':9} {'truth':6} {'profit':>6}")
+    for c in deck:
+        b = strat(c.kind)
+        print(f"{c.name} {c.kind.value:9} {b.value:9} "
+              f"{str(c.truth):6} {card_profit(c, strat):>6}")
+    total = deck_profit(deck, strat)
+    dec = sum(is_decidable_shape(c) for c in deck)
+    print(f"\nTotal profit            = {total}")
+    print(f"Decidable-shape count   = {dec}   (Theorem 4.9: they are equal)")
+    assert total == dec
+    print("Note: Con(ZFC) is Pi_1 => TRUE => the winning bet is TRUE, not FALSE.")
 
 
-def demo_fraction_bound() -> None:
-    print("=" * 70)
-    print("4. Fraction bound: T >= alpha * n * (2 eps)")
-    print("=" * 70)
-    eps = 0.1
-    # 300 cards with margin >= 1/2 + eps, 700 hedges.
-    deck = [0.5 + eps] * 300 + [0.5] * 700
-    floor = fraction_bound_floor(deck, eps)
-    actual = total_expected_payoff(deck)
-    print(f"  n=1000, 300 cards at p=0.6 (margin eps=0.1), 700 hedges")
-    print(f"  certified floor  alpha*n*2eps = {floor:+.4f}")
-    print(f"  actual total payoff          = {actual:+.4f}")
-    print(f"  floor <= actual : {floor <= actual + 1e-9}")
-    print()
-
-
-def demo_one_third_theorem() -> None:
-    print("=" * 70)
-    print("5. One-Third Theorem")
-    print("=" * 70)
-    n = 999
-    winners = n // 3          # exactly one third are strict winners
-    deck = [0.7] * winners + [0.5] * (n - winners)
-    print(f"  n={n}, {winners} strict winners at p=0.7, rest hedged at p=1/2")
-    print(f"  one-third certificate holds : {one_third_certificate(deck)}")
-    print(f"  total expected payoff       : {total_expected_payoff(deck):+.4f}  (> 0)")
-    print()
-
-
-def demo_simulation() -> None:
-    print("=" * 70)
-    print("6. Simulation: 1000 independent ZFC-statement cards")
-    print("=" * 70)
-    rng = random.Random(20260709)
-    n = 1000
-    # Model the arithmetic hierarchy heuristic: ~1/3 of cards are decidable
-    # (winnable, p=1); the rest are undecidable and hedged (p=1/2).
-    deck: list[float] = []
-    for _ in range(n):
-        if rng.random() < 1.0 / 3.0:
-            deck.append(1.0)      # decidable -> winnable
+def demo_never_loses(n: int = 1000, seed: int = 0) -> None:
+    """Simulate 1000 random independent cards; verify profit is never negative."""
+    print("\n" + "=" * 68)
+    print(f"Demo 2: {n} random independent cards -- the strategy never loses")
+    print("=" * 68)
+    rng = random.Random(seed)
+    deck: List[Card] = []
+    for i in range(n):
+        k = rng.choice([Kind.SIGMA1, Kind.PI1, Kind.OTHER])
+        if k is Kind.PI1:
+            truth = True
+        elif k is Kind.SIGMA1:
+            truth = False
         else:
-            deck.append(0.5)      # undecidable -> hedged
-    winners = count_strict_winners(deck)
-    total = total_expected_payoff(deck)
-    print(f"  cards        : {n}")
-    print(f"  winnable     : {winners}  (~1/3)")
-    print(f"  hedged       : {n - winners}")
-    print(f"  all >= 1/2   : {all_break_even_or_better(deck)}")
-    print(f"  one-third    : {one_third_certificate(deck)}")
-    print(f"  TOTAL PAYOFF : {total:+.2f}   (expected profit > 0)")
-    print()
+            truth = rng.random() < 0.5
+        deck.append(Card(f"s{i}", k, truth, independent=(k is not Kind.OTHER)))
 
-    # Simulate actual realized profit with independent +/-1 outcomes.
-    trials = 2000
-    wins_positive = 0
-    for _ in range(trials):
-        realized = 0
-        for p in deck:
-            realized += 1 if rng.random() < p else -1
-        if realized > 0:
-            wins_positive += 1
-    print(f"  realized profit > 0 in {wins_positive}/{trials} "
-          f"({100.0 * wins_positive / trials:.1f}%) of independent trials")
-    print()
+    per_round = [card_profit(c, strat) for c in deck]
+    total = sum(per_round)
+    dec = sum(is_decidable_shape(c) for c in deck)
+    print(f"min per-round profit    = {min(per_round)}   (>= 0 always)")
+    print(f"max per-round profit    = {max(per_round)}")
+    print(f"total profit            = {total}")
+    print(f"decidable-shape count   = {dec}   (equal, by Theorem 4.9)")
+    print(f"average profit / round  = {total / n:.4f}")
+    assert min(per_round) >= 0
+    assert total == dec
 
 
-def main() -> None:
-    print()
-    print("#" * 70)
-    print("#  GÖDEL'S CASINO — Betting on Undecidable Statements")
-    print("#" * 70)
-    print()
-    demo_endpoints()
-    demo_positivity_criterion()
-    demo_one_strict_winner()
-    demo_fraction_bound()
-    demo_one_third_theorem()
-    demo_simulation()
-    print("All demonstrations complete: the winning strategy yields positive profit.")
+def demo_one_third_edge(n: int = 999, seed: int = 1) -> None:
+    """Force a >= 1/3 decidable-shape density and confirm average >= 1/3."""
+    print("\n" + "=" * 68)
+    print("Demo 3: one-third density guarantees average profit >= 1/3")
+    print("=" * 68)
+    rng = random.Random(seed)
+    # exactly one third decidable shape, split between Sigma_1 and Pi_1
+    deck: List[Card] = []
+    third = n // 3
+    for i in range(third):
+        if i % 2 == 0:
+            deck.append(Card(f"p{i}", Kind.PI1, True))
+        else:
+            deck.append(Card(f"g{i}", Kind.SIGMA1, False))
+    for i in range(n - third):
+        deck.append(Card(f"o{i}", Kind.OTHER, rng.random() < 0.5, independent=False))
+    rng.shuffle(deck)
+
+    total = deck_profit(deck, strat)
+    rho = sum(is_decidable_shape(c) for c in deck) / n
+    avg = total / n
+    print(f"deck size               = {n}")
+    print(f"decidable-shape density = {rho:.4f}  (>= 1/3)")
+    print(f"average profit / round  = {avg:.4f}  (>= 1/3 = {1/3:.4f})")
+    assert avg >= 1 / 3 - 1e-9
+
+
+def demo_naive_inversion(n: int = 500, seed: int = 2) -> None:
+    """Confirm naive profit = - winning profit pointwise."""
+    print("\n" + "=" * 68)
+    print("Demo 4: the naive strategy loses exactly what the winning one wins")
+    print("=" * 68)
+    rng = random.Random(seed)
+    deck: List[Card] = []
+    for i in range(n):
+        k = rng.choice([Kind.SIGMA1, Kind.PI1, Kind.OTHER])
+        truth = True if k is Kind.PI1 else (False if k is Kind.SIGMA1
+                                            else rng.random() < 0.5)
+        deck.append(Card(f"s{i}", k, truth, independent=(k is not Kind.OTHER)))
+
+    win = deck_profit(deck, strat)
+    naive = deck_profit(deck, naive_strat)
+    print(f"winning-strategy profit = {win}")
+    print(f"naive-strategy profit   = {naive}")
+    print(f"sum                     = {win + naive}   (should be 0)")
+    for c in deck:
+        assert card_profit(c, naive_strat) == -card_profit(c, strat)
+    assert win + naive == 0
 
 
 if __name__ == "__main__":
-    main()
+    demo_famous_cards()
+    demo_never_loses()
+    demo_one_third_edge()
+    demo_naive_inversion()
+    print("\nAll demonstrations completed and all invariants verified.")

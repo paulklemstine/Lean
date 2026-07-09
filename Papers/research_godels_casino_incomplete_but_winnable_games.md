@@ -1,388 +1,221 @@
-# Positive Expected Profit in Gödel's Casino: A Measure-Theoretic Theory of Betting on Undecidable Statements
-
-**Author:** Aristotle
-**Date:** 2026-07-09
+# Gödel's Casino: A Guaranteed-Win Strategy for Betting on Undecidable Sentences
 
 ## Abstract
 
-Gödel's incompleteness theorems guarantee that any sufficiently expressive
-axiomatic system harbors statements that can be neither proved nor disproved.
-We recast this phenomenon as a game of chance — *Gödel's Casino* — in which a
-player bets on the truth value of arithmetic statements, some of which are
-independent of the ambient axioms. Fixing a probability measure on a space of
-admissible models, each card (statement) acquires a *win-probability*
-$p_\varphi \in [0,1]$: the measure of the set of models in which the player's
-bet matches the statement's truth value. A correct bet pays $+1$ and an
-incorrect bet pays $-1$, so a single card's expected payoff is $2p_\varphi - 1$.
-We prove a small, self-contained theory around this payoff functional. A perfect
-hedge ($p=\tfrac12$) breaks even; a card is strictly profitable if and only if
-its win-probability exceeds $\tfrac12$; a finite deck in which every card is at
-least break-even and at least one card is strictly profitable yields strictly
-positive total expected profit; and a quantitative *fraction bound* states that
-if a fraction $\alpha$ of the deck enjoys a uniform winning margin $\varepsilon$,
-the total expected payoff is at least $\alpha \cdot n \cdot 2\varepsilon$ for a
-deck of size $n$. As a corollary — the casino's signature *One-Third Theorem* —
-any nonempty deck in which every card is at least break-even and at least a third
-of the cards are strictly profitable produces strictly positive expected profit,
-regardless of the remaining cards. Win-probabilities are shown to be honest
-probabilities in $[0,1]$ by realizing them as measures of winning events inside a
-genuine probability space. We also correct a subtle over-claim in the original
-conjecture: no positive profit lower bound can depend on the winning fraction
-$\alpha$ alone, and we make the winning margin an explicit hypothesis.
+We introduce and rigorously analyze *Gödel's Casino*, a betting game in which a player wagers on the arithmetic truth value of sentences that are **independent** of a fixed formal theory $T$ — sentences $T$ can neither prove nor refute. Naively, such sentences appear to be pure coin flips: undecidable by hypothesis, they seem to offer no rational basis for a bet. We show this intuition is mistaken. Working from three classical properties of arithmetic theories — soundness, compatibility of truth with negation, and $\Sigma_1$-completeness — we prove that the *syntactic shape* of an independent sentence determines its truth value: **every independent $\Pi_1$ sentence is true, and every independent $\Sigma_1$ sentence is false.** These two facts yield a strategy (bet TRUE on $\Pi_1$, FALSE on $\Sigma_1$, hedge otherwise) that never loses a round and strictly profits whenever a $\Sigma_1$ or $\Pi_1$ card is dealt. The total profit over a deck equals the number of decidable-shape cards; if at least one-third of a deck has decidable shape, the guaranteed average profit per round is at least $1/3$. This upgrades the original "positive expected value" conjecture to a *deterministic* win. We also show the naive strategy — motivated by the common but incorrect intuition that consistency statements should be bet FALSE — is the pointwise inverse of the optimal one and loses exactly what the optimal strategy wins. A concrete toy model demonstrates non-vacuity.
 
-**Keywords:** incompleteness, undecidability, independence from ZFC, expected
-payoff, win-probability, measure on models, arithmetic hierarchy, decision under
-uncertainty.
+**Keywords:** incompleteness, arithmetic hierarchy, $\Sigma_1$-completeness, independent sentences, decision theory, consistency statements.
 
 ---
 
 ## 1. Introduction
 
-The incompleteness theorems of Gödel establish that formal mathematics is
-permanently unfinished: there exist statements $\varphi$ such that neither
-$\varphi$ nor its negation is provable from the axioms. The Continuum Hypothesis
-(CH) is the paradigmatic example among set-theoretic statements — it is
-*independent* of the standard axioms, consistent to assume and consistent to
-deny. The usual narrative treats such independence as a limitation. We adopt the
-opposite stance and ask a quantitative, game-theoretic question: **if you are
-forced to bet on the truth of such statements, can you systematically win?**
+Gödel's First Incompleteness Theorem guarantees that any sound, recursively axiomatized theory $T$ extending a modest fragment of arithmetic possesses sentences that are **independent** of $T$: neither the sentence nor its negation is provable in $T$. The archetype is the consistency statement $\mathrm{Con}(T)$, whose unprovability is the content of the Second Incompleteness Theorem, but there are continuum-many others.
 
-To make "win" precise we replace the binary and often unanswerable question "is
-$\varphi$ true?" with a measure-theoretic one. We posit a probability space
-$(\Omega, \mathcal F, \mu)$ whose points $\omega$ are admissible models, each
-assigning a definite truth value to every statement. A (possibly randomized)
-betting strategy determines, for each statement $\varphi$, a **winning event**
-$W_\varphi \subseteq \Omega$: the set of models in which the bet is correct. Its
-win-probability is $p_\varphi := \mu(W_\varphi)$. This single number captures
-everything the payoff calculus needs.
+The standard narrative treats such sentences as an epistemic dead end. If $T$ cannot decide $s$, on what basis could a rational agent commit to "$s$ is true" or "$s$ is false"? *Gödel's Casino* poses precisely this question as a decision problem: a dealer presents independent sentences one at a time, and a player must wager TRUE, FALSE, or decline. We ask whether a strategy exists with a positive edge.
 
-Our contribution is a compact, fully rigorous theory of when a finite deck of
-such cards is profitable in expectation. The results are elementary in their
-proofs but conceptually pointed: they show that undecidable cards, when hedged,
-are *costless*, and that only a modest reservoir of genuine knowledge is needed
-to guarantee profit. We also flag and repair an over-strong claim in the folklore
-version of the conjecture.
+The central observation of this paper is that **independence is not the same as truth-neutrality.** Although $T$ cannot settle an independent sentence *internally*, an external observer who knows the sentence's position in the arithmetic hierarchy can determine its truth value in the standard model $\mathbb{N}$ with certainty. The mechanism is $\Sigma_1$-completeness, the classical fact that true existential (findable) statements cannot escape provability.
 
-### 1.1 Contributions
+Our contributions are:
 
-1. A definition of the expected-payoff functional $E(p) = 2p - 1$ on
-   win-probabilities and of the total expected payoff of a finite deck.
-2. Three foundational results: hedges break even; profitability is equivalent to
-   $p > \tfrac12$; a deck of at-least-break-even cards with one strict winner is
-   profitable.
-3. A quantitative fraction bound relating total profit to the fraction of
-   high-margin cards and the size of the deck.
-4. The One-Third Theorem, a hypothesis-light corollary matching the concept's
-   headline slogan.
-5. A measure-theoretic layer certifying win-probabilities as honest elements of
-   $[0,1]$, with the winnable ($p=1$) and hedge ($p=\tfrac12$) endpoints
-   computed explicitly.
-6. A faithfulness analysis correcting the claim that a positive lower bound can
-   depend on the winning fraction alone.
+1. A clean abstract model of the relevant fragment of a formal theory, isolating exactly the three hypotheses the argument requires (Section 2).
+2. Two core theorems (Section 3): independent $\Pi_1$ sentences are true; independent $\Sigma_1$ sentences are false.
+3. A formal casino model and a strategy with per-card profit in $\{0, +1\}$, hence a guaranteed non-negative outcome; the total deck profit equals the count of decidable-shape cards (Section 4).
+4. A quantitative edge: under a one-third decidable-shape density, the average profit per round is at least $1/3$ (Section 5).
+5. A duality result identifying the naive strategy as the exact inverse of the optimal one (Section 6), and a concrete non-vacuous instance (Section 7).
+
+A recurring theme is a **correction** to the folklore intuition: because $\mathrm{Con}(T)$ is a $\Pi_1$ sentence, the correct bet on it is TRUE, not FALSE. The consistency statement of a sound theory is a genuinely *true* sentence that the theory cannot prove about itself.
 
 ---
 
-## 2. Setup and Definitions
+## 2. The abstract model of a theory
 
-Throughout, $\mathbb R$ denotes the reals and $[0,1] = \{x \in \mathbb R : 0 \le
-x \le 1\}$.
+Rather than commit to a specific logical syntax, we model a theory by exactly the data the betting argument consumes. This keeps the results maximally general: any concrete arithmetic theory satisfying the three hypotheses below inherits every theorem.
 
-### 2.1 The probability space of models
+**Definition 2.1 (Theory).** A *theory* $T$ consists of:
 
-**Definition 2.1 (Model space).** A *model space* is a probability space
-$(\Omega, \mathcal F, \mu)$ — so $\mu(\Omega) = 1$ — whose points are to be
-thought of as admissible mathematical universes. Each $\omega \in \Omega$ assigns
-a truth value to every statement under consideration.
+- a type $\mathrm{Sentence}$ of sentences;
+- a *negation* operation $\neg : \mathrm{Sentence} \to \mathrm{Sentence}$;
+- a *provability* predicate $\mathrm{Provable}(s)$, read "$T \vdash s$";
+- a *truth* predicate $\mathrm{True}(s)$, read "$s$ holds in the standard model $\mathbb{N}$";
+- a *classification* predicate $\mathrm{IsSigma1}(s)$, read "$s$ is syntactically $\Sigma_1$";
 
-**Definition 2.2 (Card, bet, winning event).** A *card* is a statement
-$\varphi$. A *strategy* commits, for each card, to a (possibly randomized) bet.
-The *winning event* of the card is the set
-$$W_\varphi := \{\omega \in \Omega : \text{the bet on } \varphi \text{ agrees
-with the truth value of } \varphi \text{ in } \omega\} \in \mathcal F.$$
+subject to three axioms:
 
-**Definition 2.3 (Win-probability).** The *win-probability* of a card with
-winning event $W \subseteq \Omega$ is the real number
-$$p := \mu(W) \in [0,1].$$
-(Formally, if $\mu(W)$ is taken in the extended non-negative reals, $p$ is its
-real value; Proposition 5.1 confirms $p \in [0,1]$.)
+- **(Soundness)** $\mathrm{Provable}(s) \Rightarrow \mathrm{True}(s)$ for all $s$: the theory proves only true sentences.
+- **(Truth respects negation)** $\mathrm{True}(\neg s) \iff \neg\,\mathrm{True}(s)$ for all $s$.
+- **($\Sigma_1$-completeness)** $\mathrm{IsSigma1}(s) \wedge \mathrm{True}(s) \Rightarrow \mathrm{Provable}(s)$ for all $s$: every true $\Sigma_1$ sentence is provable.
 
-Two canonical values arise:
+These three hypotheses are theorems, not assumptions, for any sound recursively axiomatized extension of Robinson arithmetic $Q$. Soundness holds for any theory with a standard model; truth-respects-negation is a basic property of the satisfaction relation; and $\Sigma_1$-completeness is the classical representability theorem for $\Sigma_1$ formulas over $Q$. We take them as the defining interface so that the casino analysis is a purely deductive consequence.
 
-- A **winnable** card — one whose truth the player can determine — has a winning
-  event of full measure, $p = 1$.
-- A **hedged** card — one on which the player flips a fair coin — has $p =
-  \tfrac12$, since the bet is correct on exactly half the models.
+**Definition 2.2 ($\Pi_1$).** A sentence $s$ is *$\Pi_1$*, written $\mathrm{IsPi1}(s)$, iff its negation is $\Sigma_1$: $\mathrm{IsPi1}(s) :\iff \mathrm{IsSigma1}(\neg s)$.
 
-Because coin-flipping is always available, an optimal player attains
-$p_\varphi \ge \tfrac12$ for every card; this inequality is the standing
-hypothesis of our profit theorems.
+This mirrors the classical duality: $\Pi_1$ sentences are exactly the negations of $\Sigma_1$ sentences. A $\Sigma_1$ sentence asserts $\exists n\, P(n)$ with $P$ decidable; a $\Pi_1$ sentence asserts $\forall n\, Q(n)$ with $Q$ decidable.
 
-### 2.2 Payoff
+**Definition 2.3 (Independence).** A sentence $s$ is *independent* of $T$, written $\mathrm{Indep}(s)$, iff neither it nor its negation is provable:
+$$\mathrm{Indep}(s) :\iff \neg\,\mathrm{Provable}(s) \ \wedge\ \neg\,\mathrm{Provable}(\neg s).$$
 
-**Definition 2.4 (Expected payoff of a card).** With payouts $+1$ for a correct
-bet and $-1$ for an incorrect bet, the *expected payoff* of a card with
-win-probability $p$ is
-$$E(p) := 2p - 1.$$
-Indeed the expectation is $p\cdot(+1) + (1-p)\cdot(-1) = 2p - 1$.
-
-**Definition 2.5 (Total expected payoff of a deck).** Let $s$ be a finite index
-set (a *deck*) and $p : s \to \mathbb R$ assign a win-probability to each card.
-The *total expected payoff* is
-$$T(s, p) := \sum_{i \in s} E(p_i) = \sum_{i \in s} (2 p_i - 1).$$
+Independent sentences are exactly the "interesting" cards: the game is trivial on sentences $T$ can already decide, so the casino deals only independent ones.
 
 ---
 
-## 3. Foundational Results
+## 3. The mathematical core: shape determines truth
 
-### 3.1 Hedging breaks even
+We now prove that among independent sentences, syntactic shape pins down the truth value.
 
-**Theorem 3.1 (Perfect hedge breaks even).** If $p = \tfrac12$ then $E(p) = 0$.
+**Theorem 3.1 (Independent $\Pi_1$ sentences are true).** *Let $s$ be a $\Pi_1$ sentence independent of $T$. Then $\mathrm{True}(s)$.*
 
-*Proof.* $E(\tfrac12) = 2\cdot\tfrac12 - 1 = 0$. $\qquad\blacksquare$
+*Proof.* Suppose not, i.e. $\neg\,\mathrm{True}(s)$. By truth-respects-negation, $\mathrm{True}(\neg s)$. Since $s$ is $\Pi_1$, its negation $\neg s$ is $\Sigma_1$. Applying $\Sigma_1$-completeness to $\neg s$ gives $\mathrm{Provable}(\neg s)$. But independence asserts $\neg\,\mathrm{Provable}(\neg s)$ — contradiction. Hence $\mathrm{True}(s)$. $\qquad\blacksquare$
 
-The interpretation is central: an undecidable card, resolved by a fair coin,
-contributes *nothing* — neither gain nor loss — to the expected ledger. The
-"cost" of incompleteness, under optimal hedging, is exactly zero.
+**Theorem 3.2 (Independent $\Sigma_1$ sentences are false).** *Let $s$ be a $\Sigma_1$ sentence independent of $T$. Then $\neg\,\mathrm{True}(s)$.*
 
-### 3.2 Profitability criterion
+*Proof.* Suppose $\mathrm{True}(s)$. Since $s$ is $\Sigma_1$, $\Sigma_1$-completeness gives $\mathrm{Provable}(s)$, contradicting the first clause of independence. Hence $\neg\,\mathrm{True}(s)$. $\qquad\blacksquare$
 
-**Theorem 3.2 (Positivity criterion).** For any $p \in \mathbb R$,
-$$E(p) > 0 \iff p > \tfrac12.$$
+These two one-line arguments are the entire engine of the casino. Note that neither proof settles $s$ *inside* $T$ — that is impossible by independence. They settle $s$ in the standard model by reasoning *about* $T$'s deductive closure. Undecidability is compatible with a definite external truth value, and shape reveals it.
 
-*Proof.* $E(p) = 2p - 1 > 0 \iff 2p > 1 \iff p > \tfrac12$. $\qquad\blacksquare$
+**Corollary 3.3 (Consistency correction).** *If $\mathrm{Con}(T)$, the $\Pi_1$ consistency statement of $T$, is independent of $T$, then it is true.*
 
-Thus profit is precisely equivalent to beating the coin. There is no middle
-ground and no hidden threshold: any strict edge above one-half, however small,
-makes a card profitable in expectation.
-
-### 3.3 One strict winner suffices
-
-**Theorem 3.3 (Positive expected profit).** Let $s$ be a finite deck and
-$p : s \to \mathbb R$. Suppose
-
-1. every card is at least break-even: $p_i \ge \tfrac12$ for all $i \in s$; and
-2. at least one card is strictly profitable: there exists $j \in s$ with
-   $p_j > \tfrac12$.
-
-Then $T(s,p) > 0$.
-
-*Proof.* By (1) and the definition of $E$, each summand satisfies $E(p_i) = 2p_i
-- 1 \ge 0$. By (2), $E(p_j) = 2p_j - 1 > 0$. Since $E(p_j)$ is a single term of
-the sum $T(s,p) = \sum_{i\in s} E(p_i)$ and all other terms are non-negative, we
-have $T(s,p) \ge E(p_j) > 0$. $\qquad\blacksquare$
-
-This is the qualitative heart of the theory: hedged (undecidable) cards are
-costless, so a *single* card on which the player has a genuine edge already
-tips the entire finite deck into profit.
+This corrects the tempting intuition that one should bet FALSE on consistency statements. As the canonical unprovable sentence, $\mathrm{Con}(T)$ *feels* like it should be the losing card; in fact, being $\Pi_1$ and independent, it is true, and the winning bet is TRUE.
 
 ---
 
-## 4. Quantitative Bounds
+## 4. The casino and the strategy
 
-### 4.1 The fraction bound
+**Definition 4.1 (Bets and payoffs).** A *bet* is an element of $\{\text{betTrue}, \text{betFalse}, \text{hedge}\}$. The *payoff* of a bet on a sentence $s$ is
+$$
+\mathrm{payoff}(b, s) = \begin{cases}
++1 & b = \text{betTrue}, \ \mathrm{True}(s); \\
+-1 & b = \text{betTrue}, \ \neg\,\mathrm{True}(s); \\
+-1 & b = \text{betFalse}, \ \mathrm{True}(s); \\
++1 & b = \text{betFalse}, \ \neg\,\mathrm{True}(s); \\
+0 & b = \text{hedge}.
+\end{cases}
+$$
+A correct bet wins one chip, a wrong bet loses one chip, and a hedge is a wash.
 
-**Theorem 4.1 (Quantitative fraction bound).** Let $s$ be a finite deck of size
-$n = |s|$, let $p : s \to \mathbb R$, and let $\alpha, \varepsilon \in \mathbb R$
-with $\varepsilon > 0$. Suppose
+**Definition 4.2 (Kinds and the strategy).** Each card carries a declared *kind* in $\{\Sigma_1, \Pi_1, \text{other}\}$. The player's *strategy* maps kind to bet:
+$$
+\mathrm{strat}(\Sigma_1) = \text{betFalse}, \qquad
+\mathrm{strat}(\Pi_1) = \text{betTrue}, \qquad
+\mathrm{strat}(\text{other}) = \text{hedge}.
+$$
 
-1. every card is at least break-even: $p_i \ge \tfrac12$ for all $i \in s$; and
-2. a fraction $\alpha$ of the deck has a uniform winning margin $\varepsilon$:
-   writing $G := \{i \in s : p_i \ge \tfrac12 + \varepsilon\}$, we have
-   $\alpha \cdot n \le |G|$.
+**Definition 4.3 (Card).** A *card* is a tuple $(s, k, c, i)$ where $s$ is a sentence, $k$ is a declared kind, $c$ is a proof that $s$ genuinely has kind $k$ (i.e. $\mathrm{IsSigma1}(s)$ if $k = \Sigma_1$, $\mathrm{IsPi1}(s)$ if $k = \Pi_1$, and no constraint if $k = \text{other}$), and $i$ is a proof that $s$ is independent of $T$. A card has *decidable shape* iff its kind is $\Sigma_1$ or $\Pi_1$.
 
-Then
-$$T(s,p) \;\ge\; \alpha \cdot n \cdot (2\varepsilon).$$
+The proof obligations $c$ and $i$ are what make the game honest: the dealer cannot mislabel a card, and every card is genuinely undecidable by $T$.
 
-*Proof.* Partition the deck into the *good* cards $G$ and the *rest* $s\setminus
-G$, so that
-$$T(s,p) = \sum_{i \in G} E(p_i) + \sum_{i \in s\setminus G} E(p_i).$$
-For $i \in G$ we have $p_i \ge \tfrac12 + \varepsilon$, hence $E(p_i) = 2p_i - 1
-\ge 2\varepsilon$; summing over $G$ gives $\sum_{i\in G} E(p_i) \ge |G|\cdot
-2\varepsilon$. For $i \in s\setminus G$, hypothesis (1) gives $E(p_i) \ge 0$, so
-$\sum_{i\in s\setminus G} E(p_i) \ge 0$. Combining, $T(s,p) \ge |G|\cdot
-2\varepsilon$. Finally, since $2\varepsilon > 0$ and $\alpha n \le |G|$, we get
-$\alpha n \cdot 2\varepsilon \le |G|\cdot 2\varepsilon \le T(s,p)$.
-$\qquad\blacksquare$
+**Definition 4.4 (Card profit).** The profit of playing the strategy on a card $(s,k,c,i)$ is $\mathrm{cardProfit} := \mathrm{payoff}(\mathrm{strat}(k), s)$.
 
-The bound decomposes profit into three independently interpretable factors: the
-share $\alpha$ of cards on which the player has an edge, the deck size $n$, and
-twice the margin $\varepsilon$. Each factor scales the guaranteed floor linearly.
+**Theorem 4.5 (Decidable-shape cards win).**
+- If a card's kind is $\Sigma_1$, then $\mathrm{cardProfit} = +1$.
+- If a card's kind is $\Pi_1$, then $\mathrm{cardProfit} = +1$.
+- If a card's kind is $\text{other}$, then $\mathrm{cardProfit} = 0$.
 
-### 4.2 The One-Third Theorem
+*Proof.* For $\Sigma_1$: the strategy bets FALSE, and by Theorem 3.2 the sentence is false, so the FALSE bet is correct and pays $+1$. For $\Pi_1$: the strategy bets TRUE, and by Theorem 3.1 the sentence is true, so the TRUE bet pays $+1$. For $\text{other}$: the strategy hedges, paying $0$ by definition. $\qquad\blacksquare$
 
-**Theorem 4.2 (One-Third Theorem).** Let $s$ be a *nonempty* finite deck and
-$p : s \to \mathbb R$. Suppose
+**Corollary 4.6 (Profit is an indicator).** For every card,
+$$\mathrm{cardProfit} = \begin{cases} 1 & \text{if the card has decidable shape},\\ 0 & \text{otherwise}.\end{cases}$$
 
-1. every card is at least break-even: $p_i \ge \tfrac12$ for all $i \in s$; and
-2. at least a third of the cards are strictly profitable:
-   $\tfrac{n}{3} \le |\{i \in s : p_i > \tfrac12\}|$ where $n = |s|$.
+**Corollary 4.7 (No single round loses).** $\mathrm{cardProfit} \ge 0$ for every card.
 
-Then $T(s,p) > 0$.
+**Definition 4.8 (Deck profit).** For a deck (finite list) of cards $D = [c_1, \dots, c_N]$, the *deck profit* is $\mathrm{deckProfit}(D) = \sum_{j=1}^{N} \mathrm{cardProfit}(c_j)$.
 
-*Proof.* Let $G := \{i \in s : p_i > \tfrac12\}$. Since $s$ is nonempty, $n \ge
-1$, so $n/3 > 0$, and hypothesis (2) gives $|G| \ge n/3 > 0$; hence $G$ is
-nonempty. Pick $j \in G$; then $p_j > \tfrac12$. Now apply Theorem 3.3 with the
-witness $j$: hypothesis (1) supplies the break-even condition and $j$ supplies
-the strict winner. Therefore $T(s,p) > 0$. $\qquad\blacksquare$
+**Theorem 4.9 (Deck profit equals decidable-shape count).**
+$$\mathrm{deckProfit}(D) = \#\{\, j : c_j \text{ has decidable shape} \,\}.$$
 
-**Remark (why one-third).** The constant $\tfrac13$ reflects the concept's
-motivating heuristic from the arithmetic hierarchy: among statements at a given
-level of logical complexity, a robust portion — at least a third under the
-motivating count — are decidable at that level and hence winnable, while the rest
-can be hedged. Theorem 4.2 shows that *any* such floor above $0$ would suffice;
-the one-third figure is a concrete, defensible instance. Crucially, unlike
-Theorem 4.1, the corollary needs no explicit margin hypothesis: on a finite deck
-the finitely many strictly profitable cards automatically possess a positive
-minimal margin.
+*Proof.* Sum Corollary 4.6 over the deck; each decidable-shape card contributes $1$ and each other card contributes $0$. $\qquad\blacksquare$
+
+**Corollary 4.10 (The house never wins).** $\mathrm{deckProfit}(D) \ge 0$ for every deck.
+
+**Corollary 4.11 (Strict profit).** If $D$ contains at least one decidable-shape card, then $\mathrm{deckProfit}(D) \ge 1 > 0$.
+
+Thus the strategy is *guaranteed* to profit — not in expectation, but with certainty — as soon as a single $\Sigma_1$ or $\Pi_1$ card appears.
 
 ---
 
-## 5. The Measure-Theoretic Layer
+## 5. The one-third edge
 
-We now certify that win-probabilities are honest probabilities, by realizing
-them as (real values of) measures inside a genuine probability space.
+The original conjecture sought merely positive *expected* profit. We can extract a stronger *deterministic* average bound from a density assumption motivated by the arithmetic hierarchy, whose two lowest nontrivial levels are precisely $\Sigma_1$ and $\Pi_1$. As a robust heuristic, a substantial constant fraction — at least one-third — of independent arithmetic sentences at play have single-quantifier ($\Sigma_1$ or $\Pi_1$) shape.
 
-**Definition 5.1 (Win-probability of an event).** Let $(\Omega, \mathcal F,
-\mu)$ be a measure space and $W \subseteq \Omega$ its winning event. Define
-$w(\mu, W) := \mu(W)$ evaluated as a real number.
+**Theorem 5.1 (One-third guaranteed edge).** *Let $D$ be a deck of $N \ge 1$ cards, of which at least $N/3$ have decidable shape. Then*
+$$\frac{\mathrm{deckProfit}(D)}{N} \ \ge\ \frac{1}{3}.$$
 
-**Proposition 5.1 (It is a probability).**
-(i) For any measure $\mu$ and any $W$, $w(\mu, W) \ge 0$.
-(ii) If $\mu$ is a probability measure, then $w(\mu, W)
-\le 1$.
+*Proof.* By Theorem 4.9, $\mathrm{deckProfit}(D)$ equals the number of decidable-shape cards, which is at least $N/3$ by hypothesis. Dividing by $N$ gives the bound. $\qquad\blacksquare$
 
-*Proof.* (i) A measure is non-negative, and the real value of a non-negative
-extended real is non-negative. (ii) For a probability measure, $\mu(W) \le
-\mu(\Omega) = 1$; monotonicity of the real-value map yields
-$w(\mu, W) \le 1$. $\qquad\blacksquare$
-
-**Definition 5.2 (Card expected payoff via a model-measure).**
-$$E_\mu(W) := E\big(w(\mu,
-W)\big) = 2\,\mu(W) - 1.$$
-
-**Proposition 5.2 (Endpoints).**
-(i) If $w(\mu, W) = \tfrac12$ (a hedged card), then
-$E_\mu(W) = 0$.
-(ii) If $w(\mu, W) = 1$ (a winnable card of full measure),
-then $E_\mu(W) = 1$.
-
-*Proof.* (i) Immediate from Theorem 3.1. (ii) $E(1) = 2\cdot 1 - 1 = 1$.
-$\qquad\blacksquare$
-
-Thus the abstract payoff calculus of Sections 3–4 is anchored: the numbers $p_i$
-are genuine measures of genuine events, the hedge endpoint pays $0$, and the
-winnable endpoint pays the maximal $1$.
+The contrast with the conjecture is worth emphasizing. "Positive expected value" would tolerate losing rounds averaged out by winning rounds. Theorem 5.1 asserts a floor with no downside risk at all: every round is $0$ or $+1$, and at least a third of them are $+1$.
 
 ---
 
-## 6. A Faithfulness Correction
+## 6. Duality: the naive strategy loses
 
-The folklore statement of the fraction bound asserts a lower bound of the form
-$\alpha \cdot n \cdot \varepsilon$ "for some $\varepsilon > 0$ depending only on
-$\alpha$." **This is not achievable**, and we record why.
+To confirm that the winning strategy is doing genuine work, we contrast it with the *naive* strategy $\mathrm{strat}^{\text{naive}}$ that follows the tempting-but-wrong intuition: bet FALSE on $\Pi_1$ (including consistency statements) and TRUE on $\Sigma_1$, hedging otherwise. This inverts the winning bet on every decidable-shape card.
 
-**Proposition 6.1 (No margin-free lower bound).** There is no function
-$\varepsilon(\alpha) > 0$ such that every deck satisfying $p_i \ge \tfrac12$ for
-all $i$ and $|\{i : p_i > \tfrac12\}| \ge \alpha n$ obeys $T(s,p) \ge \alpha n
-\cdot \varepsilon(\alpha)$.
+**Theorem 6.1 (Pointwise inversion).** *For every decidable-shape card, the naive card profit is $-1$; on other cards it is $0$. Consequently, for every card, $\mathrm{naiveCardProfit} = -\,\mathrm{cardProfit}$.*
 
-*Proof (sketch).* Fix $\alpha \in (0,1]$ and $n$. Choose a deck in which $\lceil
-\alpha n\rceil$ cards have $p_i = \tfrac12 + \delta$ and the rest have $p_i =
-\tfrac12$. Then $T(s,p) = \lceil \alpha n\rceil \cdot 2\delta$, which tends to
-$0$ as $\delta \to 0^+$ while the hypotheses persist. Hence no positive bound
-depending on $\alpha$ (and $n$) alone can hold. $\qquad\blacksquare$
+*Proof.* On a $\Sigma_1$ card the naive strategy bets TRUE, but the sentence is false (Theorem 3.2), so the bet loses: $-1$. On a $\Pi_1$ card it bets FALSE, but the sentence is true (Theorem 3.1), so the bet loses: $-1$. On other cards it hedges: $0$. In every case this is the negation of $\mathrm{cardProfit}$ from Theorem 4.5. $\qquad\blacksquare$
 
-The resolution is exactly Theorem 4.1: make the margin $\varepsilon$ an explicit
-hypothesis. The corrected bound $\alpha n \cdot 2\varepsilon$ is both faithful to
-the concept's intent and provably true. The qualitative One-Third Theorem
-survives untouched precisely because, on a *finite* deck, the strictly winning
-cards possess a positive minimum margin automatically, so a strict — though not
-uniformly quantified — profit is guaranteed.
+**Corollary 6.2 (Naive deck loses exactly what optimal wins).**
+$$\mathrm{naiveDeckProfit}(D) = -\,\mathrm{deckProfit}(D) = -\,\#\{\text{decidable-shape cards}\}.$$
+In particular, if $D$ has a decidable-shape card, the naive strategy strictly loses.
+
+The house edge is therefore real and *directional*: the game is not symmetric, and knowing the correct direction (the content of Theorems 3.1–3.2) is precisely what separates winning from losing.
 
 ---
 
-## 7. Algorithms
+## 7. A concrete non-vacuous instance
 
-The theory is constructive and yields immediate algorithms for auditing a deck.
+The abstract theorems could in principle be vacuous if no theory satisfied Definition 2.1 with a nonempty independent deck. To rule this out we exhibit a small explicit model.
 
-**Algorithm A (Total expected payoff).** Given win-probabilities $p_1, \dots,
-p_n$, return $\sum_i (2p_i - 1)$. Linear time $O(n)$.
+**Construction 7.1 (Toy theory).** Take $\mathrm{Sentence} = \{\mathsf{t}, \mathsf{f}\}$ (a "true atom" and a "false atom"), with negation swapping them ($\neg\mathsf{t} = \mathsf{f}$, $\neg\mathsf{f} = \mathsf{t}$). Let $\mathrm{True}(\mathsf{t})$ hold and $\mathrm{True}(\mathsf{f})$ fail. Let $\mathrm{Provable}$ be identically false (the theory proves nothing), and let $\mathrm{IsSigma1}$ hold of $\mathsf{f}$ only. One verifies:
 
-**Algorithm B (Profit certificate via the One-Third Theorem).** Given
-win-probabilities, verify (i) $p_i \ge \tfrac12$ for all $i$ and (ii) at least
-$n/3$ satisfy $p_i > \tfrac12$; if both hold, certify strictly positive expected
-profit. Linear time $O(n)$.
+- **Soundness** holds vacuously, since nothing is provable.
+- **Truth respects negation** holds by direct case check on $\{\mathsf{t},\mathsf{f}\}$.
+- **$\Sigma_1$-completeness** holds vacuously: the only $\Sigma_1$ atom is $\mathsf{f}$, which is not true, so there is no true $\Sigma_1$ sentence to prove.
 
-**Algorithm C (Fraction-bound floor).** Given win-probabilities and a margin
-$\varepsilon$, compute $G = \{i : p_i \ge \tfrac12 + \varepsilon\}$, set $\alpha
-= |G|/n$, and return the certified floor $\alpha n \cdot 2\varepsilon = 2\,|G|\,
-\varepsilon$. Linear time $O(n)$.
+Now $\mathsf{t}$ is $\Pi_1$ (its negation $\mathsf{f}$ is $\Sigma_1$) and independent (nothing is provable), so it is a legal $\Pi_1$ card. A deck consisting of this single card has $\mathrm{deckProfit} = 1$.
 
----
+**Proposition 7.2.** Construction 7.1 satisfies all axioms of Definition 2.1, admits a nonempty independent deck, and realizes deck profit $1$. Hence the casino theorems are non-vacuous.
 
-## 8. Applications and Interpretation
-
-**Costless incompleteness.** The most striking reading of Theorems 3.1 and 3.3
-is that undecidable cards, optimally hedged, do not drag down the ledger. A
-century of pessimism about incompleteness is replaced by a break-even accounting:
-what you cannot know is free.
-
-**Local ignorance, global profit.** The One-Third Theorem formalizes the
-intuition that one can remain permanently ignorant of any particular statement
-yet still win the aggregate game, provided genuine knowledge is spread over a
-non-trivial fraction of the deck.
-
-**A decision-theoretic lens on independence.** By assigning win-probabilities to
-statements via a model-measure, the framework offers a principled way to price
-bets on statements like the Continuum Hypothesis — not as absolute truths but as
-events with definite measures in a space of admissible universes.
+This toy model is deliberately minimal; the intended instances are genuine arithmetic theories such as Peano arithmetic or ZFC, whose $\Sigma_1$-completeness is classical and whose independent $\Pi_1$ decks (headed by $\mathrm{Con}(T)$) are infinite.
 
 ---
 
-## 9. Discussion and Future Directions
+## 8. Algorithms
 
-Several avenues extend the theory beyond finite decks and expected values.
+The results give directly implementable procedures.
 
-1. **Countable and asymptotic decks.** Generalize the profit theorems from
-   finite to countable decks $(p_i)_{i\in\mathbb N}$ with $p_i \ge \tfrac12$, and
-   prove an asymptotic profit-rate theorem: if the liminf of the empirical
-   fraction of cards with margin $\ge \varepsilon$ is $\alpha > 0$, then the
-   liminf of $\tfrac1n T$ is at least $2\alpha\varepsilon$.
+**Algorithm A (Classify-and-bet).** Given a card's declared kind, return $\text{betTrue}$ if $\Pi_1$, $\text{betFalse}$ if $\Sigma_1$, else $\text{hedge}$. Constant time per card. Correctness is Theorem 4.5.
 
-2. **Concentration of the deck payoff.** Replace expected payoff by the random
-   total $\sum X_i$ with independent $X_i \in \{-1, +1\}$ and $\Pr(X_i = +1) =
-   p_i$. A Hoeffding-type bound $\Pr(\sum X_i \le 0) \le \exp\big(-(\sum(2p_i -
-   1))^2 / (2n)\big)$ would upgrade positive *expected* profit to profit *with
-   high probability*.
+**Algorithm B (Deck profit).** Fold Algorithm A over a deck, resolving each bet against the (externally determined) truth value and summing payoffs; equivalently, by Theorem 4.9, count decidable-shape cards. Linear time.
 
-3. **Adversarial house (game value).** Model a two-player game in which the house
-   selects a deck subject to a budget (at most a fraction $\beta$ of cards may be
-   strictly winnable) and the player selects bets. Use the fraction bound as the
-   player's guarantee and a matching upper bound as the house's to compute the
-   minimax value as a function of $\beta$ and the margin distribution.
-
-4. **Measurability and definability of winning events.** Give sufficient
-   conditions (e.g. Borel-measurability of the strategy and of truth) under which
-   every winning event is measurable, so that its win-probability is well-defined
-   for the natural measure, and classify strategies under which $p_\varphi \in
-   \{\tfrac12, 1\}$.
-
-5. **Toward a canonical model-measure.** Enumerate countable transitive models by
-   description length and place a definable summable density (e.g. $2^{-\text{code}}$)
-   on the enumeration, pushing forward to a probability measure on the model
-   space so that the abstract profit theorems specialize to a fully explicit
-   casino.
+**Algorithm C (One-third certificate).** Given a deck, compute the decidable-shape fraction $\rho$; if $\rho \ge 1/3$, certify by Theorem 5.1 that the guaranteed per-round profit is at least $1/3$. Linear time.
 
 ---
 
-## 10. Conclusion
+## 9. Discussion
 
-Gödel's Casino reframes incompleteness as an opportunity rather than an
-obstruction. By pricing each undecidable statement through its win-probability in
-a space of models, we obtain a clean payoff calculus in which hedged cards are
-costless, strict edges are exactly the source of profit, and a single genuine
-winner — or, headline-worthily, a mere one-third fraction of them — guarantees
-strictly positive expected profit over any finite deck. The measure-theoretic
-layer keeps the win-probabilities honest, and a careful faithfulness analysis
-pins down exactly what quantitative guarantee is and is not available. The
-undecidable universe, played with discipline, pays you to play.
+The philosophical upshot is that **unprovability and unknowability come apart.** Gödel's theorems constrain what a theory can establish about itself, but they do not forbid an external analyst from determining the truth value of independent sentences whose form is simple. The arithmetic hierarchy is precisely the ledger of "form," and its lowest rungs are transparent to $\Sigma_1$-completeness.
+
+Three features distinguish our result from a mere probabilistic edge. First, it is *deterministic*: no round loses. Second, it is *constructive*: the winning bet is read off the syntactic kind with no search. Third, it is *robust*: it rests on three hypotheses that hold for every sound recursively axiomatized arithmetic theory, so it applies uniformly to PA, ZFC, and their consistent extensions.
+
+The correction regarding consistency statements deserves final emphasis. It is folklore-tempting to view $\mathrm{Con}(T)$ as the emblem of falsifiable-looking unprovability. In truth it is the emblem of *true*-but-unprovable: a $\Pi_1$ sentence, hence — when independent — true, and the winning bet on it is TRUE.
+
+---
+
+## 10. Future work
+
+Several concrete extensions present themselves.
+
+1. **Grounding in real arithmetic.** Instantiate the abstract theory with a genuine first-order arithmetic development: define sentences, negation, and provability from the actual derivability relation, truth from satisfaction in $\mathbb{N}$, and prove soundness, truth-respects-negation, and $\Sigma_1$-completeness ($\Sigma_1$-completeness of $Q$/PA) as bona fide theorems. The casino results then transfer unconditionally to ZFC-independent arithmetic sentences.
+
+2. **A deck of famous cards.** Assemble explicit cards: $\mathrm{Con}(\mathrm{ZFC})$ (independent $\Pi_1$, TRUE), a Rosser-style independent $\Sigma_1$ sentence (FALSE), and the Continuum Hypothesis (an "other" card, hedged, since it is not arithmetic). Compute the deck profit explicitly.
+
+3. **Minimax optimality of the hedge.** For "other" cards, prove that no non-hedge bet dominates: there exist truth assignments making $\text{betTrue}$ lose and others making $\text{betFalse}$ lose, so the hedge maximizes guaranteed payoff, justifying the third arm of the strategy as minimax-optimal.
+
+4. **A probabilistic layer.** Replace the deterministic count with a genuine expectation over a distribution on decks, recovering the original "expected value" framing as a corollary of the stronger deterministic bound.
+
+---
+
+## 11. Conclusion
+
+Gödel's Casino reframes incompleteness from a boundary into a betting table. By isolating three classical properties of arithmetic theories, we proved that independent $\Pi_1$ sentences are true and independent $\Sigma_1$ sentences are false. The resulting strategy — bet TRUE on $\Pi_1$, FALSE on $\Sigma_1$, hedge otherwise — never loses a round, and the total profit over a deck equals its count of single-quantifier cards. Under a one-third density this yields a guaranteed average edge of $1/3$ per round. The impossible game is winnable, provided one plays it from outside the system.
