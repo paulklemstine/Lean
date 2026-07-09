@@ -6935,21 +6935,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quasinecklace-Necklace Proportionality Bound"
   },
   {
-    "consumed_by_exp_id": "3877d438",
-    "description": "For every integer r \u2265 2 and real \u03b5 > 0, there exists \u0394\u2080 such that for every (r+1)-uniform hypergraph H with girth at least 5 and maximum degree \u0394 \u2265 \u0394\u2080, the list chromatic number \u03c7_\u2113(H) satisfies \u03c7_\u2113(H) \u2264 \u2308(1+\u03b5)(r\u0394 / ln \u0394)^(1/r)\u2309. This conjecture formalizes the main theorem of the paper, improving Iliopoulos's bound of (1+o(1))r(\u0394/ln \u0394)^(1/r) by reducing the leading constant from r to r^(1/r) via a semi-random nibble argument combined with a Rosenfeld-style counting completion.",
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "fd_0588",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.05256v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T20:55:28.462579+00:00",
-    "title": "List Chromatic Number Bound for Uncrowded Uniform Hypergraphs"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For every primitive holomorphic newform f of weight k \u2265 4, level N, and nebentypus \u03c7, and for every non-negative integer m, all zeros of the derivative period polynomial P\u207d\u1d50\u207e_f(z) = \u03a3_{j=0}^{k-2} C(k-2,j) \u00b7 \u039b\u207d\u1d50\u207e(f, j+1) \u00b7 z^j lie on the unit circle, where \u039b(f,s) denotes the completed L-function. This confirms and extends the Diamantis\u2013Rolen conjecture to arbitrary level, nebentypus, and derivative order. The core mechanism is a sharp circular sampling theorem: for balanced polynomials p with zeros in \u03a9_d = {a+ib : a\u00b2 \u2212 b\u00b2/(d\u22121) \u2264 d/4}, the centered binomial sample B_d[p] has all zeros on the unit circle.",
     "domains": [
@@ -8664,12 +8649,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "This conjecture posits that the Odd Cycle Transversal problem is solvable in polynomial time for graphs with bounded induced-$\\mathcal{H}$-packing treewidth when $\\mathcal{H} = \\{P_3\\}$, providing a parameterized framework for algorithmic meta-theorems in graph classes defined by forbidden induced $P_3$ subgraphs.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_0715",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07595v1",
+    "status": "available",
+    "timestamp": "2026-07-09T06:03:45.652070+00:00",
+    "title": "Fixed-Parameter Algorithmic Consequences of Bounded Induced-$\\mathcal{H}$-Packing Treewidth for $P_3$-Free Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For every composition \u03b1 of length r \u2264 R, the differential operator \u2202_\u03b1 = \u2202_{i1}\u22ef\u2202_{ir} acting on the polynomial ring \u211a[X_1,\u2026,X_R] yields a non-zero scalar multiple of the basis element X_{i1}\u2227\u22ef\u2227X_{ir} in \u2227^r V, where \u2202_i = (1/i!)\u00b7(d/dX_i)|_{X=0}. Moreover, the scalar equals the sign of the permutation that sorts (i1,\u2026,ir). This equality holds for all r and can be tested computationally for small values.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0715",
+    "id": "fd_0716",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07667v1",
@@ -8683,7 +8683,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0716",
+    "id": "fd_0717",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07641v1",
@@ -8697,7 +8697,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0717",
+    "id": "fd_0718",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07638v1",
@@ -8707,6 +8707,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For all positive integers x \u2265 1 and integers u satisfying \u230a\u221ax\u230b < u < x, the Mertens function M(x) = \u03a3_{n\u2264x} \u03bc(n) satisfies the identity M(x) = \u03a3_{k\u2264x/u} \u03bc(k)S(x/k,u), where S(y,u) = 1 - \u03a3_{y/u < n \u2264 \u230a\u221ay\u230b} M(y/n) + \u230ay/(\u230a\u221ay\u230b+1)\u230b M(\u230a\u221ay\u230b) - \u03a3_{n\u2264\u230a\u221ay\u230b} \u230ay/n\u230b \u03bc(n). This conjecture asserts that the main combinatorial formula derived in the paper correctly expresses M(x) in terms of smaller Mertens values and M\u00f6bius function values, which forms the theoretical foundation of the O(x^{2/3+\u03b5}) algorithm.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0719",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07566v1",
+    "status": "available",
+    "timestamp": "2026-07-09T06:04:45.935344+00:00",
+    "title": "Correctness of the Combinatorial Mertens Function Identity"
+  },
+  {
+    "consumed_by_exp_id": "ad8ddf45",
     "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers \u2014 anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension \u2014 they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property \u2014 it's not about content quality but about the sheaf cohomology of the social network.",
     "domains": [
       "Novelty",
@@ -8716,7 +8731,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.77,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.584485+00:00",
     "title": "The Mathematics of Memes: Viral Information Topology"
   },

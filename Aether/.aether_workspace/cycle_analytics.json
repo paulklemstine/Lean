@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-09T05:16:58.948465+00:00",
+  "last_updated": "2026-07-09T06:03:33.407574+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -43,6 +43,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-09T05:16:58.903065+00:00",
       "title": "Existence of a nontrivial cycle of length n-O(n^{2/3}) in Hamiltonian graphs with \u03b4(G) \u2265 3"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.1938,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 8,
+      "domain": "Computation",
+      "duration_seconds": 4372.100880622864,
+      "end_time": 1783576907.9029012,
+      "files_integrated": 2,
+      "job_id": "3877d438",
+      "outcome_quality": 0.0,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v26",
+      "phase_b_skip_reason": "low_quality",
+      "phase_b_skipped": true,
+      "prompt_version": "v26",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.74,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.5,
+        "composite": 0.6938,
+        "cross_domain": 0.9,
+        "grade": "substantial",
+        "importance": 0.6944,
+        "novelty": 0.89,
+        "proof_depth": 0.6105,
+        "usefulness": 0.7553
+      },
+      "quality_score": 0.21534899999999998,
+      "sorry_count": 3,
+      "sorry_density": 0.23076923076923078,
+      "start_time": 1783572535.8020205,
+      "strategy_count": 0,
+      "theorem_count": 13,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 8,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-09T06:03:33.379439+00:00",
+      "title": "List Chromatic Number Bound for Uncrowded Uniform Hypergraphs"
     }
   ]
 }
