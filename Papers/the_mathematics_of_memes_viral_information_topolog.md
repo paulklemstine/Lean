@@ -1,69 +1,75 @@
-# Computational Evidence — Meme Sheaf Cohomology
+# Computational Evidence — Viral Information Topology
 
-We model a social network as a finite directed graph `(V, E, src, tgt)` and a meme as the
-**constant sheaf** valued in a field `K`. The coboundary is `(δ f) e = f(tgt e) − f(src e)`.
-
-* `H⁰ = ker δ` — globally consistent interpretations (its dimension = number of distinct
-  interpretations).
-* `H¹ = coker δ` — consistency obstructions (its dimension = first Betti number).
-
-All formulas below are the specializations of the machine-checked theorems in
-`MemeSheafCohomology.lean`. For any finite graph:
+We model a meme as a section of the **constant sheaf** `K` over a social network,
+represented as a directed multigraph with vertex set `V` (people), edge set `E`
+(channels), and endpoint maps `src, tgt : E → V`. The coboundary is
 
 ```
-dim H⁰ = number of connected components          (= distinct interpretations)
-dim H¹ = |E| − |V| + (number of components)      (= first Betti number, "independent cycles")
-dim H⁰ − dim H¹ = |V| − |E|                       (Euler characteristic; euler_characteristic)
+(δ f) e = f (tgt e) − f (src e),      δ : (V → K) → (E → K),
 ```
 
-## 1. Small-case table
+with cohomology `H⁰(δ) = ker δ` (global interpretations) and
+`H¹(δ) = coker δ = (E → K) / range δ` (transmission barriers).
 
-| Graph                         | \|V\| | \|E\| | components | dim H⁰ | dim H¹ | H⁰−H¹ = V−E |
-|-------------------------------|------:|------:|-----------:|-------:|-------:|:-----------:|
-| single vertex                 |   1   |   0   |     1      |   1    |   0    |   1 = 1     |
-| edgeless (n vertices)         |   n   |   0   |     n      |   n    |   0    |   n = n     |
-| path P₂ (2 nodes, 1 edge)     |   2   |   1   |     1      |   1    |   0    |   1 = 1     |
-| tree on n nodes (n−1 edges)   |   n   |  n−1  |     1      |   1    |   0    |   1 = 1     |
-| triangle C₃                   |   3   |   3   |     1      |   1    |   1    |   0 = 0     |
-| cycle Cₙ                      |   n   |   n   |     1      |   1    |   1    |   0 = 0     |
-| two disjoint edges            |   4   |   2   |     2      |   2    |   0    |   2 = 2     |
-| triangle ⊔ isolated vertex    |   4   |   3   |     2      |   2    |   1    |   1 = 1     |
+## 1. Small-case calculations (constant sheaf, connected graphs)
 
-Every row satisfies the Euler identity `dim H⁰ − dim H¹ = |V| − |E|`, which is the
-capstone theorem `euler_characteristic`. The connected rows (components = 1) satisfy
-`dim H⁰ = 1` (`finrank_H0_of_connected`) and `dim H¹ = |E| − |V| + 1`
-(`betti_one_of_connected`). The edgeless row realises the maximal `dim H⁰ = |V|`
-(`finrank_H0_of_edgeless`).
+For a **connected** graph the theory predicts `dim H⁰ = 1` (one global
+interpretation) and, by the Euler characteristic `dim H⁰ − dim H¹ = |V| − |E|`,
 
-## 2. Where the sequence lives
+```
+dim H¹ = |E| − |V| + 1   =   first Betti number   =   number of independent cycles.
+```
 
-`dim H¹ = |E| − |V| + c` is the **circuit rank / cyclomatic number** of a graph. For the
-cycle graphs `Cₙ` it is constantly `1`; for the complete graphs `Kₙ` it is
-`n(n−1)/2 − n + 1 = (n−1)(n−2)/2` (OEIS A000217 shifted: 0, 0, 1, 3, 6, 10, … for
-n = 1,2,3,4,5,6). These match direct hand computation.
+| Graph                | \|V\| | \|E\| | dim H⁰ | dim H¹ = \|E\|−\|V\|+1 | interpretation                 |
+|----------------------|:---:|:---:|:-----:|:---------------------:|--------------------------------|
+| single edge `0–1`    |  2  |  1  |   1   |          0            | tree — universally transmissible |
+| path `0–1–2`         |  3  |  2  |   1   |          0            | tree — universally transmissible |
+| triangle `C₃`        |  3  |  3  |   1   |          1            | one cycle → one barrier        |
+| square `C₄`          |  4  |  4  |   1   |          1            | one cycle → one barrier        |
+| complete graph `K₄`  |  4  |  6  |   1   |          3            | three independent cycles       |
+| `Kₙ`                 |  n  | n(n−1)/2 | 1 | (n−1)(n−2)/2         | cycle rank of `Kₙ`             |
 
-## 3. Counterexample hunt on the informal conjecture
+The rows **path** (`dim H¹ = 0`) and **triangle** (`dim H¹ = 1`) are proved as
+machine-checked theorems `MemeGraph.path_dimH1` and `MemeGraph.triangle_dimH1`
+in `Catalog/MachineLearning/MemeGraphCohomology.lean`.
 
-The mission's informal conjecture states the "most viral" meme has **`H¹ = 0` and `H⁰`
-of maximal dimension**. Testing this against the formulas exposes a genuine tension, which
-our theorems make precise:
+## 2. Sequence check (OEIS)
 
-* `dim H⁰` is *maximal* (`= |V|`) **iff the graph is edgeless** (`finrank_H0_of_edgeless`).
-  But an edgeless network has no channels, so a meme cannot spread at all. Thus
-  "maximal `H⁰`" is incompatible with "spreads everywhere".
-* `dim H¹ = 0` holds **iff `|E| = |V| − c`, i.e. the graph is a forest** (every connected
-  component is a tree — no redundant channels).
+The cycle rank of the complete graph `Kₙ`, `1 + n(n−3)/2` for `n ≥ 1`
+(`= (n−1)(n−2)/2`), gives `0, 0, 0, 1, 3, 6, 10, 15, …` — the triangular numbers
+shifted, **OEIS A000217** (offset). Betti numbers of graphs are not a single
+canonical OEIS entry because they depend on `|E|`; the point of the formula
+`|E| − |V| + c` (with `c` = number of components) is that it is a purely
+topological invariant, matching classical algebraic-graph-theory tables.
 
-So the honest refinement supported by the proofs is: a meme with `H¹ = 0` and *large*
-`dim H⁰` corresponds to a **fragmented forest** — it spreads freely and unambiguously
-*within* each tree-shaped community but carries a *different* interpretation in each of the
-many components, and cannot cross between them. No counterexample to the *theorems* was
-found (they are proved); rather, the computation clarifies that the literal "maximal `H⁰`"
-phrasing of the conjecture describes total fragmentation, not universal virality.
+## 3. Counterexample hunt on the guiding conjecture
 
-## 4. Method
+The brief conjectures "most viral ⟺ `H¹ = 0` and `dim H⁰` maximal". For the
+**constant sheaf** the abstract identity forces, whenever `H¹ = 0` (δ surjective):
 
-These are closed-form evaluations of the proved theorems, so the evidence is exact rather
-than sampled. The theorems themselves (not just the table) are machine-checked in
-`MemeSheafCohomology.lean` with only the standard axioms
-(`propext`, `Classical.choice`, `Quot.sound`).
+```
+dim H⁰ = dim C⁰ − dim C¹   (theorem MemeSheaf.viral_interpretations)
+```
+
+so once transmissibility (`H¹ = 0`) holds, the number of interpretations is
+*determined*, not free — and on a connected graph it collapses to `dim H⁰ = 1`.
+Thus the naive reading "spread everywhere **and** many distinct meanings" is
+**false for the constant sheaf**: connected transmissibility forces a *single*
+global meaning. Distinct community meanings (`dim H⁰ > 1`) require either a
+disconnected network or a genuinely non-constant sheaf (varying stalks /
+restriction maps). This is recorded honestly:
+
+* `MemeSheaf.dimH0_ge` — `dim H⁰ ≥ dim C⁰ − dim C¹` always.
+* `MemeSheaf.dimH0_eq_floor_iff_surjective` — equality (minimum interpretations)
+  is *equivalent* to transmissibility `H¹ = 0`.
+
+No counterexample to the proved theorems was found; the exploration instead
+sharpened the conjecture (see `FUTURE_DIRECTIONS.md`).
+
+## 4. What is formally verified
+
+Every entry above that is stated as a theorem builds with `#print axioms`
+returning only `propext`, `Classical.choice`, `Quot.sound`. See
+`Catalog/MachineLearning/MemeSheafCohomology.lean` (abstract core) and
+`Catalog/MachineLearning/MemeGraphCohomology.lean` (graph instantiation +
+concrete triangle/path computations).
