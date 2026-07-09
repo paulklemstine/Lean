@@ -46,6 +46,7 @@ class CycleRecord:
     # Two-phase fields
     phase: str = "A"  # "A" | "B" | "complete" | "A_only"
     phase_a_prompt_version: Optional[str] = None  # v3 or v4 used for the math prompt
+    phase_a_quality_score: float = 0.0
     phase_b_prompt_version: Optional[str] = None  # v1 packaging prompt (only one for now)
     phase_b_skipped: bool = False  # True if Phase B was skipped (low quality or failure)
     phase_b_skip_reason: Optional[str] = None  # "low_quality" | "threshold_not_met" | "phase_a_failed"
@@ -134,6 +135,7 @@ class CycleAnalytics:
             theorem_novelty_duplicate=getattr(job, "theorem_novelty", {}).get("duplicate", 0) if getattr(job, "theorem_novelty", None) else 0,
             theorem_novelty_disproof=getattr(job, "theorem_novelty", {}).get("disproof", 0) if getattr(job, "theorem_novelty", None) else 0,
             quality_score=getattr(job, "quality_score", 0.0),
+            phase_a_quality_score=getattr(job, "phase_a_quality_score", 0.0),
             outcome_quality=0.0,
             files_integrated=getattr(job, "files_integrated", 0),
             timestamp=datetime.now(timezone.utc).isoformat(),

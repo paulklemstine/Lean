@@ -1780,6 +1780,10 @@ class PiAgentClient:
             This engine is configured for **Conceptual Unification (Grothendieck style)**. Search for deep, hidden structures, universal patterns, and bridges across domains.
 
             ### RESEARCH CORE METHODOLOGY:
+            **CRITICAL SCORING REQUIREMENT**: To maximize your Phase A quality score, your
+            outputs MUST aim for extreme `proof_depth` (deep structural hierarchies rather
+            than shallow one-liners) and `cross_domain` bridging (combining distinct areas of
+            math).
             1. **Abstract Structural Patterns**: Frame your objects and mappings in terms of universal structures, symmetries, and invariant properties. Look for the underlying categorical, topological, or algebraic foundations that make the specific problem a special case of a deeper truth.
             2. **Cross-Domain Bridges**: Connect apparently distinct mathematical worlds (e.g. applying algebraic structures to computational complexity, or geometry to logic).
             3. **Generalization Over Specialization**: Prefer elegant, universal formulations that unify multiple separate facts into single, coherent conceptual frameworks.
@@ -2077,6 +2081,10 @@ class PiAgentClient:
             Brainstorm 5–7 falsifiable conjectures about the topic. At least three must be
             bold, surprising, or grand-challenge level. Rank them by expected scientific
             impact, not by ease of proof.
+            **CRITICAL SCORING REQUIREMENT**: To maximize your Phase A quality score, your
+            conjectures MUST aim for extreme `proof_depth` (deep structural hierarchies rather
+            than shallow one-liners) and `cross_domain` bridging (combining distinct areas of
+            math, e.g., algebra with topology, or geometry with combinatorics).
 
             ### Stage 2 — Experiment (team: Experimenter)
             For each conjecture, attempt to prove it in Lean 4 or disprove it with a concrete

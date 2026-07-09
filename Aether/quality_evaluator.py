@@ -63,6 +63,7 @@ class QualityScore:
     applications: float = 0.0
     catalog_anchoring: float = 0.0
     pegb_compliance: float = 0.0  # 0-1 score for PEGB structural requirement
+    phase: str = "B"  # Default to Phase B (full artifact evaluation)
 
     # Default weights (direction-driven weights override these)
     _BASE_WEIGHTS = {
@@ -104,6 +105,12 @@ class QualityScore:
             # Boost novelty for speculative/novelty domains
             if domain_set & {"novelty", "speculative"}:
                 w["novelty"] = w.get("novelty", 0.15) + 0.08
+
+        if self.phase == "A":
+            # Phase A does not produce artifacts; zero out their weights
+            w["artifact_richness"] = 0.0
+            w["actionability"] = 0.0
+            w["applications"] = 0.0
 
         # Normalize weights to sum to 1.0
         total = sum(w.values())
@@ -248,32 +255,26 @@ class QualityEvaluator:
         score.artifact_richness = self._eval_artifacts(result_dir, result_fields)
         score.actionability = self._eval_actionability(result_dir, result_fields)
 
-        # Phase A (Lean-only) intentionally produces no articles, papers, or demos.
-        # Penalizing artifact_richness and actionability for missing Phase B deliverables
-        # creates a catch-22: Phase A can't score high enough to trigger Phase B.
-        # Set both to neutral (0.5) so they don't drag the composite down.
+        score.phase = phase
+
+        # Artifacts and Actionability are inherently 0 for Phase A, but we leave them at 0
+        # because the composite_with_domains will zero out their weights anyway.
         if phase == "A":
-            score.artifact_richness = 0.5
-            score.actionability = 0.5
+            score.artifact_richness = 0.0
+            score.actionability = 0.0
+
         score.catalog_anchoring = self._eval_catalog_anchoring(
             concept_title, catalog_references or [], existing_titles
         )
 
         # Heuristic evaluation for importance, usefulness, applications
-        # (LLM grading disabled — it gave avg importance=0.17, max=0.36,
-        # systematically suppressing composites for every package)
         score.importance = min(1.0, score.proof_depth * 0.7 + score.novelty * 0.3)
         score.usefulness = min(1.0, score.cross_domain * 0.5 + score.proof_depth * 0.5)
         score.applications = min(1.0, score.cross_domain * 0.6 + score.artifact_richness * 0.4)
 
-        # Domain overlap penalty has been removed to avoid suppressing genuine progress.
-
         # Jargon penalty: penalize excessive use of narrow jargon without substance
-        # (many domain-specific terms but few definitions/theorems to back them up)
         if lean_source:
-            # Count unique multi-character words in the Lean source
             all_words = set(re.findall(r'[a-zA-Z_]\w{4,}', lean_source.lower()))
-            # Jargon-heavy domains have specific keyword clusters
             jargon_clusters = {
                 'tropical_lorentzian': {'tropical', 'lorentzian', 'hessian', 'certificate', 'shadow'},
                 'matroid_dpp': {'matroid', 'exchange', 'dpp', 'determinantal', 'partition'},
@@ -284,10 +285,11 @@ class QualityEvaluator:
                 overlap = len(all_words & cluster_words)
                 if overlap >= 3:
                     jargon_overlap += 1
-            # If the source hits 2+ jargon clusters but has low proof depth, penalize
             if jargon_overlap >= 2 and score.proof_depth < 0.4:
-                score.novelty *= 0.80
-                score.importance *= 0.85
+                # Soften jargon penalty for Phase A exploration
+                penalty = 0.90 if phase == "A" else 0.80
+                score.novelty *= penalty
+                score.importance *= penalty
 
         return score
 

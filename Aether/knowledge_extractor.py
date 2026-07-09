@@ -2238,6 +2238,15 @@ Research mode: {concept.research_mode}
                 aggregate = scores.aggregate()
                 if aggregate >= 0:
                     job.quality_score = 0.3 * job.quality_score + 0.7 * aggregate
+
+                # Phase A Inner Self-Reflection Loop: if depth or novelty is low, force a repair loop
+                if job.phase == "A" and (scores.depth < 0.5 or scores.novelty < 0.5) and getattr(job, "retry_count", 0) < getattr(self, "max_retries", 3):
+                    if job.quality_assessment is None:
+                        job.quality_assessment = {}
+                    job.quality_assessment["should_retry"] = True
+                    reason = f"SpecializedCritic rejected Phase A result: depth={scores.depth:.2f}, novelty={scores.novelty:.2f}. "
+                    reason += scores.rationale.get("depth", "") + " " + scores.rationale.get("novelty", "")
+                    job.quality_assessment["analysis"] = reason + "\n" + job.quality_assessment.get("analysis", "")
                 print(f"[SpecializedCritics] correctness={scores.correctness:.2f} novelty={scores.novelty:.2f} "
                       f"depth={scores.depth:.2f} presentation={scores.presentation:.2f} "
                       f"aggregate={aggregate:.2f} final_q={job.quality_score:.3f}")
