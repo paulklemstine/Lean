@@ -11395,7 +11395,7 @@
       "Ramsey_theory",
       "partition_regularity"
     ],
-    "consumed_by_exp_id": "26e5c4d5",
+    "consumed_by_exp_id": "",
     "description": "For any positive integer k and any completely multiplicative function f : ℕ → μ_k (the k-th roots of unity), and any ω in the image of f, there exists a Pythagorean triple (x, y, z) with f(x) = f(y) = f(z) = ω. This extends the paper's main result, which establishes the case ω = 1 via approximate concentration (for ε small enough, the values are forced to equal 1 since μ_k is discrete). The case of general ω does not reduce to ω = 1 by a simple substitution, as f(n)/ω is not completely multiplicative, making this a genuinely stronger statement that implies every color class of a completely multiplicative k-coloring of ℕ contains a Pythagorean triple.",
     "domain_bridges": [
       "ramsey_theory_and_multiplicative_number_theory",
@@ -11411,7 +11411,7 @@
     "proof_strategy": "The ω = 1 case follows from the paper's vanishing-averages/pretentious-function decomposition. For general ω, one might try: (1) construct a modified multiplicative function g related to f and ω whose level set at 1 corresponds to f's level set at ω, then apply the paper's machinery to g — but g(n) = f(n)·ω^{-v(n)} for suitable v is not completely multiplicative; (2) use the dilation structure: if (a,b,c) is a Pythagorean triple with f(a)=f(b)=f(c)=1, then for any prime p with f(p)=ω, the dilated triple (pa,pb,pc) gives f(pa)=ω·f(a)=ω, etc., but this requires f(a)=1 which is circular; (3) develop a new transference principle that works for arbitrary level sets, not just neighborhoods of 1.",
     "research_mode": "team",
     "source_exp_id": "2607.04903v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T08:05:16.465632+00:00",
     "title": "Monochromatic Pythagorean Triples in Every Level Set of Completely Multiplicative Functions"
   },
@@ -18276,6 +18276,26 @@
     "status": "available",
     "timestamp": "2026-07-09T19:55:02.128218+00:00",
     "title": "File: `Bridges/PageSiegelRefinement.lean`"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearrangement of the primes q_1, q_2, ... such that the sequence of ratios q_n / p_n converges to 1. In other words, you can shuffle the primes almost arbitrarily and the room numbers barely change. More precisely, the set of permutations sigma for which p_{sigma(n)} / p_n has a limit is dense in the symmetric group (with the topology of pointwise convergence). But NOT every permutation works: the permutation that swaps all even-indexed primes with odd-indexed ones gives q_{2n}/p_{2n} = p_{2n-1}/p_{2n} which converges to 1 by the prime number theorem, but the permutation that reverses order gives q_n/p_n = p_{N-n}/p_n which diverges. Test: compute q_n/p_n for 10 random permutations of the first 10^6 primes and verify that most ratios converge to 1. Find the exact density of 'well-behaved' permutations. Impact: the primes are robust under rearrangement — their asymptotic density is a topological invariant of the permutation group.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0796",
+    "lineage_refs": [],
+    "priority_score": 0.74,
+    "proof_strategy": "Define a rearrangement of primes as a bijection sigma: N -> N, giving q_n = p_{sigma(n)}. Define a well-behaved rearrangement as one where q_n/p_n -> 1. Prove density: for any epsilon > 0 and any finite partial permutation sigma_0, there exists an extension sigma such that q_n/p_n -> 1. Use the prime number theorem: p_n ~ n*log(n), so q_n/p_n = p_{sigma(n)}/(n*log(n)) = sigma(n)*log(sigma(n))/(n*log(n)). For this to converge to 1, we need sigma(n) ~ n, i.e., sigma must be 'close to the identity' in the sense that sigma(n)/n -> 1. Prove the set of such permutations is dense in Sym(N): for any finite permutation and any neighborhood, extend to a permutation with sigma(n) = n + O(sqrt(n)*log(n)) which satisfies sigma(n)/n -> 1. Prove the reversal fails: sigma(n) = N-n gives sigma(n)/n = (N-n)/n -> infinity. Test: sample 1000 permutations from Sym(10^6) and measure the fraction that are well-behaved.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-09T20:12:33.003700+00:00",
+    "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
   },
   {
     "ambition_level": "extension",
