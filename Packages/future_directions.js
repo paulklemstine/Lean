@@ -7760,7 +7760,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The \u221a2-Threshold Conjecture for Rips Filtration Approximation"
   },
   {
-    "consumed_by_exp_id": "86f6e146",
+    "consumed_by_exp_id": "586144ff",
     "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card \u2014 you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier \u2014 it's an opportunity. You can WIN at the game of undecidability.",
     "domains": [
       "Novelty",
@@ -8900,12 +8900,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For the 3\u00d73 Heisenberg group over \ud835\udd3d\u2084, the leading constant in Malle's conjecture for Galois \ud835\udcd7-extensions of \u211a ordered by discriminant is exactly the sum of two distinct Euler products, each corresponding to distinct local factors or representations of the group.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0734",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06476v1",
+    "status": "available",
+    "timestamp": "2026-07-09T13:25:53.597345+00:00",
+    "title": "Sum of Two Distinct Euler Products for Heisenberg Group Leading Constant"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For every composition \u03b1 of length r \u2264 R, the differential operator \u2202_\u03b1 = \u2202_{i1}\u22ef\u2202_{ir} acting on the polynomial ring \u211a[X_1,\u2026,X_R] yields a non-zero scalar multiple of the basis element X_{i1}\u2227\u22ef\u2227X_{ir} in \u2227^r V, where \u2202_i = (1/i!)\u00b7(d/dX_i)|_{X=0}. Moreover, the scalar equals the sign of the permutation that sorts (i1,\u2026,ir). This equality holds for all r and can be tested computationally for small values.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0734",
+    "id": "fd_0735",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07667v1",
@@ -8919,7 +8934,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0735",
+    "id": "fd_0736",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07641v1",
@@ -8933,7 +8948,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0736",
+    "id": "fd_0737",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07638v1",
@@ -8948,7 +8963,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0737",
+    "id": "fd_0738",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07566v1",
@@ -8963,7 +8978,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0738",
+    "id": "fd_0739",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07564v1",
@@ -8978,7 +8993,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0739",
+    "id": "fd_0740",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07458v1",
@@ -8992,7 +9007,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0740",
+    "id": "fd_0741",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07448v1",
@@ -9007,7 +9022,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0741",
+    "id": "fd_0742",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07407v1",
@@ -9022,7 +9037,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0742",
+    "id": "fd_0743",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07392v1",
@@ -9036,7 +9051,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0743",
+    "id": "fd_0744",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07404v1",
@@ -9051,7 +9066,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0744",
+    "id": "fd_0745",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07381v1",
@@ -9065,7 +9080,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0745",
+    "id": "fd_0746",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07239v1",
@@ -9080,7 +9095,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0746",
+    "id": "fd_0747",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07259v1",
@@ -9095,7 +9110,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0747",
+    "id": "fd_0748",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07063v1",
@@ -9109,7 +9124,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0748",
+    "id": "fd_0749",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07030v1",
@@ -9123,7 +9138,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0749",
+    "id": "fd_0750",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06899v1",
@@ -9137,7 +9152,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0750",
+    "id": "fd_0751",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06817v1",
@@ -9152,7 +9167,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_0751",
+    "id": "fd_0752",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06773v1",
@@ -9166,7 +9181,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0752",
+    "id": "fd_0753",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06767v1",
@@ -9180,7 +9195,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0753",
+    "id": "fd_0754",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06798v1",
@@ -9195,7 +9210,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0754",
+    "id": "fd_0755",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06515v1",
@@ -9209,13 +9224,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0755",
+    "id": "fd_0756",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06444v1",
     "status": "available",
     "timestamp": "2026-07-09T13:08:15.700280+00:00",
     "title": "Nearly tight bound for induced K_h subdivisions in K_{s,t}-free graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any three k-dimensional planes A1, A2, A3 and two (n-k-1)-dimensional planes B1, B2 in projective n-space over a field, assuming each Ai is disjoint from each Bj, the product of the three generalized cross-ratios (A1,A2;B1,B2), (A2,A3;B1,B2), (A3,A1;B1,B2) equals 1. This extends the classical cyclic identity for the ordinary cross-ratio of four points on a line.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0757",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06477v1",
+    "status": "available",
+    "timestamp": "2026-07-09T13:26:58.075263+00:00",
+    "title": "Cyclic identity for the generalized cross-ratio of planes"
   },
   {
     "consumed_by_exp_id": "77c07bb4",
