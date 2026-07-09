@@ -8328,11 +8328,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "If a family of complementary configurations degenerates to a configuration where some planes intersect, then the limit of the cross-ratio valuations (as the parameters approach the degenerate case) equals the intersection degree of the cycles obtained by spreading the original cycles to the valuation ring.",
+    "description": "For every intersecting-union family F \u2286 2^{[n]}, the Lubell sum L(F) = \u03a3_{A\u2208F} (n choose |A|)^{-1} satisfies L(F) \u2264 (n+1)/6. Moreover, equality holds iff n is divisible by 3 and F is isomorphic to the family of all n/3-subsets containing a fixed element, or n \u2261 1,2 (mod 3) and F consists of all subsets of size \u230an/3\u230b or \u2308n/3\u2309 containing a fixed element (with appropriate multiplicities).",
     "domains": [
       "Algebra"
     ],
     "id": "fd_0693",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07564v1",
+    "status": "available",
+    "timestamp": "2026-07-09T02:12:48.267380+00:00",
+    "title": "Sharp Lubell bound for intersecting-union families with extremal characterization"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "If a family of complementary configurations degenerates to a configuration where some planes intersect, then the limit of the cross-ratio valuations (as the parameters approach the degenerate case) equals the intersection degree of the cycles obtained by spreading the original cycles to the valuation ring.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0694",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06477v1",
@@ -8347,7 +8361,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0694",
+    "id": "fd_0695",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06455v1",
@@ -8362,13 +8376,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0695",
+    "id": "fd_0696",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07555v1",
     "status": "available",
     "timestamp": "2026-07-09T01:55:03.631882+00:00",
     "title": "Characterization of representation-finite biserial algebras via magnitude and Grothendieck rank"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let Sh_G be a Shimura variety of Hodge type with \u03bc-ordinary Mantovan Igusa variety Ig_\u03bc. Let D = \u2295_{i=1}^n D_i be the graded algebra of rank one Maass--Shimura differential operators on Ig_\u03bc. Conjecture: There exists an explicit n-dimensional commutative formal group F_D such that the action of D integrates to an action of F_D on Ig_\u03bc, and the coordinate ring of F_D is canonically isomorphic to the symmetric algebra Sym(D) equipped with a specific coproduct structure determined by the Hodge embedding data. Moreover, this isomorphism is equivariant for the natural action of the derived Hecke algebra H^*(K_p, G) where K_p is a hyperspecial maximal subgroup.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0697",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07427v1",
+    "status": "available",
+    "timestamp": "2026-07-09T02:13:23.534305+00:00",
+    "title": "Explicit Formal Group Integrating p-adic Maass--Shimura Operators for Hodge Type Shimura Varieties"
   },
   {
     "consumed_by_exp_id": "e158da3a",

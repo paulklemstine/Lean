@@ -15579,6 +15579,32 @@
     "title": "Arbitrarily high-degree algebraic numbers in single-degree Turán spectra"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "arXiv:2405.XXXXX",
+      "Frankl2021"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every intersecting-union family F ⊆ 2^{[n]}, the Lubell sum L(F) = Σ_{A∈F} (n choose |A|)^{-1} satisfies L(F) ≤ (n+1)/6. Moreover, equality holds iff n is divisible by 3 and F is isomorphic to the family of all n/3-subsets containing a fixed element, or n ≡ 1,2 (mod 3) and F consists of all subsets of size ⌊n/3⌋ or ⌈n/3⌉ containing a fixed element (with appropriate multiplicities).",
+    "domain_bridges": [
+      "Probabilistic methods",
+      "p-biased measure",
+      "Boolean lattice"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0693",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the p-biased μ_p measure on the Boolean lattice to bound the weighted sum Σ_{A∈F} p^{|A|}(1-p)^{n-|A|} for each p∈[0,1], integrate over p to recover the Lubell sum, and optimize the resulting integral to obtain the constant 1/6; extremal families are identified by analyzing equality conditions in the integral estimates.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07564v1",
+    "status": "available",
+    "timestamp": "2026-07-09T02:12:48.267380+00:00",
+    "title": "Sharp Lubell bound for intersecting-union families with extremal characterization"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "[B] $10.48550/ARXIV.2201.03794$"
@@ -15591,7 +15617,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0693",
+    "id": "fd_0694",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a family of configurations dispersing the cycles over the valuation ring, show that the cross-ratio valuation is preserved under deformation, and compute the limit using intersection-theoretic methods.",
@@ -15619,7 +15645,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0694",
+    "id": "fd_0695",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Utilize the paper's β-closed walk expansion and the sufficient condition via a walk-realizable {P4}-supporter. Reduce the search to a linear programming feasibility problem for coefficients of β-closed walk counts. Compute a concrete finite witness (e.g., with bounded walk length) satisfying the LP, then formalize the induced-subgraph expansion and supporter criterion in Lean 4 to verify the implication.",
@@ -15647,7 +15673,7 @@
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0695",
+    "id": "fd_0696",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Verify the conjecture for classes of biserial algebras where both magnitude and Grothendieck rank are computable: (1) Hereditary biserial algebras (where magnitude relates to Dynkin type), (2) Self-injective biserial algebras (where Coxeter duality provides constraints), (3) Use induction on the complexity of the Auslander-Reiten quiver structure. The key is establishing that representation-finiteness creates a perfect matching between indecomposable modules and Grothendieck group generators, reflected in the magnitude calculation.",
@@ -15656,6 +15682,36 @@
     "status": "available",
     "timestamp": "2026-07-09T01:55:03.631882+00:00",
     "title": "Characterization of representation-finite biserial algebras via magnitude and Grothendieck rank"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.NT",
+      "math.AG",
+      "Shimura varieties",
+      "p-adic analysis",
+      "formal groups"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let Sh_G be a Shimura variety of Hodge type with μ-ordinary Mantovan Igusa variety Ig_μ. Let D = ⊕_{i=1}^n D_i be the graded algebra of rank one Maass--Shimura differential operators on Ig_μ. Conjecture: There exists an explicit n-dimensional commutative formal group F_D such that the action of D integrates to an action of F_D on Ig_μ, and the coordinate ring of F_D is canonically isomorphic to the symmetric algebra Sym(D) equipped with a specific coproduct structure determined by the Hodge embedding data. Moreover, this isomorphism is equivariant for the natural action of the derived Hecke algebra H^*(K_p, G) where K_p is a hyperspecial maximal subgroup.",
+    "domain_bridges": [
+      "Automorphic forms",
+      "p-adic Hodge theory",
+      "Derived Hecke algebras"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0697",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct the formal group via the universal property of the tangent space of Ig_μ, use the Hodge type embedding to identify the differential operators with components of the logarithm map, then prove the coproduct compatibility by analyzing the group structure on Ig_μ via p-adic Fourier theory and the Mantovan correspondence.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07427v1",
+    "status": "available",
+    "timestamp": "2026-07-09T02:13:23.534305+00:00",
+    "title": "Explicit Formal Group Integrating p-adic Maass--Shimura Operators for Hodge Type Shimura Varieties"
   },
   {
     "ambition_level": "extension",
