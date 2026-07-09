@@ -22,7 +22,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "6be296cb",
+    "consumed_by_exp_id": "6b9c675a",
     "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long — the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static — they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
     "domain_bridges": [],
     "domains": [
@@ -17732,6 +17732,31 @@
     "title": "Optimal Size Bound for Degree Fault-Tolerant Multiplicative Spanners"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "The abc Conjecture Revisited"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For each fixed positive integer y, the limit superior as x tends to infinity of (W(x,y) * log log x) / log x equals 1, where W(x,y) = ∑_{j=1}^y ω(x+j) and ω(n) is the number of distinct prime divisors of n. This conjecture is implied by the new abc-type conjecture proposed in the paper.",
+    "domain_bridges": [
+      "Analytic Number Theory",
+      "Prime Number Theory",
+      "Additive Combinatorics"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0775",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The paper derives this as a consequence of their new Conjecture 1 (a strengthening of the abc conjecture using the function H(n) = γ(n)/(log γ(n))^ω(n)). A formalization would first require stating Conjecture 1 precisely, then replicating the paper's deduction. Alternatively, one might attempt a direct analytic approach using sieve methods or probabilistic models of prime factor distributions, but the problem is likely extremely difficult and connected to deep conjectures in additive number theory.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07641v1",
+    "status": "available",
+    "timestamp": "2026-07-09T16:41:39.234159+00:00",
+    "title": "Limsup Asymptotic for Sum of Distinct Prime Divisors in Intervals"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "factor complexity",
@@ -17752,7 +17777,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0774",
+    "id": "fd_0776",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Utilize the structural description of ternary minimal complexity words (e.g., Arnoux-Rauzy/episturmian). Analyze bispecial factors and their left/right extensions to show that for any target k one can choose G_n as a stabilizer of a suitable partition of positions, interpolating between abelian equivalence (G_n=S_n) and identity (G_n=Id). Proceed by induction on n, with base cases verified by finite enumeration.",
@@ -17761,6 +17786,31 @@
     "status": "available",
     "timestamp": "2026-07-09T16:21:56.969294+00:00",
     "title": "Universal group complexity for aperiodic ternary words of minimal factor complexity"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Induced Erdős--Pósa property for long holes, long thetas, and beyond"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every fixed integer t ≥ 2 there exists a constant C(t)=4·t such that any graph G either contains k vertex‑disjoint, pairwise anti‑adjacent copies of the long theta Θ_t as induced minors, or there exists a set X⊆V(G) with |X|≤C(t)·k·log k whose closed neighbourhood meets every Θ_t‑induced minor of G.",
+    "domain_bridges": [
+      "graph minors",
+      "parameterized algorithms",
+      "separator theorems"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0777",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use a short t‑model of the ΘZero graph together with a monotone guidance that always selects a big component of weight >½; apply the Dominated Guided Separator lemma to obtain a separator of size O(tk log k) and argue that its closed neighbourhood hits all Θ_t‑induced minors.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07697v1",
+    "status": "available",
+    "timestamp": "2026-07-09T16:42:11.956682+00:00",
+    "title": "Conjecture on the size of hitting sets for Θ_t-induced minors"
   },
   {
     "ambition_level": "extension",

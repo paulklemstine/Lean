@@ -31328,11 +31328,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "6be296cb",
+      "consumed_by_exp_id": "6b9c675a",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -31345,7 +31345,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0654",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-09T16:42:16.233259+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -37178,6 +37178,52 @@
       "title": "Optimal Size Bound for Degree Fault-Tolerant Multiplicative Spanners"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "The abc Conjecture Revisited"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For each fixed positive integer y, the limit superior as x tends to infinity of (W(x,y) * log log x) / log x equals 1, where W(x,y) = ∑_{j=1}^y ω(x+j) and ω(n) is the number of distinct prime divisors of n. This conjecture is implied by the new abc-type conjecture proposed in the paper.",
+      "domain_bridges": [
+        "Analytic Number Theory",
+        "Prime Number Theory",
+        "Additive Combinatorics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0775",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem W_limsup_conjecture (y : ℕ) (hy : 0 < y) :\n    Filter.limsup (fun (x : ℕ) =>\n      (∑ j in Finset.Icc 1 y, (ArithmeticFunction.ω (x + j) : ℝ)) * Real.log (Real.log (x : ℝ)) / Real.log (x : ℝ)\n    ) Filter.atTop = 1 := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "The paper derives this as a consequence of their new Conjecture 1 (a strengthening of the abc conjecture using the function H(n) = γ(n)/(log γ(n))^ω(n)). A formalization would first require stating Conjecture 1 precisely, then replicating the paper's deduction. Alternatively, one might attempt a direct analytic approach using sieve methods or probabilistic models of prime factor distributions, but the problem is likely extremely difficult and connected to deep conjectures in additive number theory.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.07641v1",
+      "source_path": "http://arxiv.org/abs/2607.07641v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T16:41:39.234159+00:00",
+      "title": "Limsup Asymptotic for Sum of Distinct Prime Divisors in Intervals"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -37208,7 +37254,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0774",
+      "id": "fd_0776",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ternary_minimal_universal_group_complexity (w : InfiniteWord (Fin 3)) (h_aper : Aperiodic w) (h_min : ∀ n, factorComplexity w n = 2 * n + 1) : UniversalGroupComplexity w := by sorry",
@@ -37228,6 +37274,52 @@
       "thread_id": "",
       "timestamp": "2026-07-09T16:21:56.969294+00:00",
       "title": "Universal group complexity for aperiodic ternary words of minimal factor complexity"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Induced Erdős--Pósa property for long holes, long thetas, and beyond"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every fixed integer t ≥ 2 there exists a constant C(t)=4·t such that any graph G either contains k vertex‑disjoint, pairwise anti‑adjacent copies of the long theta Θ_t as induced minors, or there exists a set X⊆V(G) with |X|≤C(t)·k·log k whose closed neighbourhood meets every Θ_t‑induced minor of G.",
+      "domain_bridges": [
+        "graph minors",
+        "parameterized algorithms",
+        "separator theorems"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0777",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem induced_ep_theta {t k : ℕ} (G : Graph ℕ) : (¬ (∃ (C : List (InducedMinorCopy Θ_t G)), ...)) → ∃ (X : Finset ℕ), X.card ≤ 4 * t * k * Nat.log k ∧ ∀ (H : InducedMinorCopy Θ_t G), (closure X).contains (H.representative)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use a short t‑model of the ΘZero graph together with a monotone guidance that always selects a big component of weight >½; apply the Dominated Guided Separator lemma to obtain a separator of size O(tk log k) and argue that its closed neighbourhood hits all Θ_t‑induced minors.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.07697v1",
+      "source_path": "http://arxiv.org/abs/2607.07697v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T16:42:11.956682+00:00",
+      "title": "Conjecture on the size of hitting sets for Θ_t-induced minors"
     },
     {
       "ambition_level": "extension",
@@ -37315,10 +37407,10 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "cross_domain_bridge",
     "famous_subtask",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "cross_domain_bridge"
+    "cross_domain_bridge",
+    "famous_subtask"
   ]
 }

@@ -18,7 +18,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
   },
   {
-    "consumed_by_exp_id": "6be296cb",
+    "consumed_by_exp_id": "6b9c675a",
     "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long \u2014 the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static \u2014 they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
     "domains": [
       "Novelty",
@@ -9467,18 +9467,46 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For each fixed positive integer y, the limit superior as x tends to infinity of (W(x,y) * log log x) / log x equals 1, where W(x,y) = \u2211_{j=1}^y \u03c9(x+j) and \u03c9(n) is the number of distinct prime divisors of n. This conjecture is implied by the new abc-type conjecture proposed in the paper.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0775",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07641v1",
+    "status": "available",
+    "timestamp": "2026-07-09T16:41:39.234159+00:00",
+    "title": "Limsup Asymptotic for Sum of Distinct Prime Divisors in Intervals"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "We conjecture that every aperiodic infinite word over a ternary alphabet whose factor complexity satisfies p(n)=2n+1 for all n\u22651 possesses the universal group complexity property: for each length n and each integer k with p_ab(n) \u2264 k \u2264 p(n) there exists a subgroup G \u2264 S_n such that the group complexity p^G(n)=k.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0774",
+    "id": "fd_0776",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07620v1",
     "status": "available",
     "timestamp": "2026-07-09T16:21:56.969294+00:00",
     "title": "Universal group complexity for aperiodic ternary words of minimal factor complexity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every fixed integer t \u2265 2 there exists a constant C(t)=4\u00b7t such that any graph G either contains k vertex\u2011disjoint, pairwise anti\u2011adjacent copies of the long theta \u0398_t as induced minors, or there exists a set X\u2286V(G) with |X|\u2264C(t)\u00b7k\u00b7log k whose closed neighbourhood meets every \u0398_t\u2011induced minor of G.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0777",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07697v1",
+    "status": "available",
+    "timestamp": "2026-07-09T16:42:11.956682+00:00",
+    "title": "Conjecture on the size of hitting sets for \u0398_t-induced minors"
   },
   {
     "consumed_by_exp_id": "ad941b96",
