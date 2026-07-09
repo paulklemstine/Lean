@@ -5877,7 +5877,7 @@
       "Chatterjee & Soundararajan (2012) - CLT for Rademacher in short intervals",
       "Soundararajan & Xu (2018) - Extension to Steinhaus and wider range"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "685d9909",
     "description": "The paper establishes a central limit theorem for Steinhaus random multiplicative functions in short intervals [x, x+y] for all y → ∞ with y = o(x), with a precise normalization that differs from √y when y is close to x. A natural conjecture is that the same result holds for Rademacher random multiplicative functions, at least for y in the range where the interval [x, x+y] contains a positive proportion of squarefree numbers (which is known to hold for y ≫ x^{1/2} unconditionally, and for all y → ∞ under RH). Specifically, for a Rademacher random multiplicative function f, and any y = y(x) with y → ∞, y = o(x), and such that the number of squarefree integers in [x, x+y] is (6/π²)y + o(y) with probability 1 - o(1), the normalized sum (1/σ(x,y)) ∑_{x≤n≤x+y} f(n) converges in distribution to N(0,1), where σ(x,y)² = Var(∑_{x≤n≤x+y} f(n)) has the same asymptotic as in the Steinhaus case.",
     "domain_bridges": [
       "Probabilistic number theory",
@@ -5894,7 +5894,7 @@
     "proof_strategy": "Follow the characteristic function approach of the Steinhaus case. The main additional difficulty is handling the support on squarefree numbers. Show that the covariance structure of the Rademacher function restricted to squarefree integers matches that of the Steinhaus function, and that the contribution from intervals with few squarefree numbers is negligible in the limit. Use the fact that the characteristic function of the Rademacher sum can be approximated by that of the Steinhaus sum conditioned on squarefree support.",
     "research_mode": "team",
     "source_exp_id": "2606.29040v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T11:02:04.722996+00:00",
     "title": "Extension of Gaussian CLT to Rademacher random multiplicative functions in all short intervals"
   },
