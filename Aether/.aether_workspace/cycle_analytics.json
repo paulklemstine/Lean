@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-09T09:36:11.885564+00:00",
+  "last_updated": "2026-07-09T10:37:39.614499+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -258,6 +258,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-09T09:36:11.859300+00:00",
       "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.5788,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 10,
+      "domain": "Pythagorean",
+      "duration_seconds": 1227.3842334747314,
+      "end_time": 1783593214.3243942,
+      "files_integrated": 4,
+      "job_id": "685d9909",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v27",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v27",
+      "quality_breakdown": {
+        "actionability": 0.68,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.6838,
+        "cross_domain": 0.95,
+        "grade": "substantial",
+        "importance": 0.4752,
+        "novelty": 0.89,
+        "proof_depth": 0.2974,
+        "usefulness": 0.6237
+      },
+      "quality_score": 0.21205153714285713,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783591986.9401608,
+      "strategy_count": 0,
+      "theorem_count": 10,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 10,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-09T10:37:39.586092+00:00",
+      "title": "Extension of Gaussian CLT to Rademacher random multiplicative functions in all short intervals"
     }
   ]
 }
