@@ -47,7 +47,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3716954d",
     "description": "L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable \u2014 there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domains": [
       "Novelty",
@@ -57,7 +57,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.876173+00:00",
     "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
   },
@@ -9761,6 +9761,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Infinite chess is chess on an infinite board. It is known that there are positions where White can force checkmate but only in omega (the first infinite ordinal) moves. Conjecture: There exists a position on the infinite chess board where White can force checkmate in exactly omega^omega moves, but not in fewer. More precisely, define the game value v(P) of a position P as the smallest ordinal alpha such that White can force checkmate in at most alpha moves. The known results give positions with v(P) = omega. The conjecture is that v(P) can be arbitrarily large below omega^omega. The key construction: create a position where White must first solve a 'puzzle' that takes omega moves, and then another puzzle that takes omega moves for each of omega starting positions, giving omega^2 total moves. Iterating, one can reach omega^n for any n, and omega^omega by a diagonal argument. Test: construct explicit positions with game values omega, omega^2, omega^3, and omega^omega on the infinite board. Verify by computation that no strategy achieves checkmate in fewer moves. Impact: chess on an infinite board has transfinite game values \u2014 the complexity of checkmate goes beyond the finite ordinals into the transfinite.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0809",
+    "priority_score": 0.76,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-09T22:15:49.669051+00:00",
+    "title": "Infinite Chess: Checkmate in Omega Moves"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Congruence Rigidity of Sums of Squares\n\nThis cycle established that the entries of an integer right triangle are forced into\nstrong divisibility patterns \u2014 one leg is a multiple of three, the legs jointly carry a\nfactor of four, one entry is a multiple of five \u2014 and that a four-dimensional right\n\"box\" (a solution of `a\u00b2 + b\u00b2 + c\u00b2 = d\u00b2`) is even more rigid: at most one of its three\nspatial edges can be odd. We also pinned down exactly which whole numbers can serve as a\nleg. These findings point to several bold, testable conjectures.\n\n## 1. The correct modulus for a power of two grows with the power\n**Conjecture.** In any solution of `a\u00b2 + b\u00b2 = c\u00b2`, the two-adic valuation of the leg\nproduct `a\u00b7b` is governed one level deeper than naive reduction suggests: deciding\nwhether `2^k` divides `a\u00b7b` is a question about residues modulo `2^{k+1}`, never modulo\n`2^k`.\n*The key insight is* that a difference of two odd squares is always divisible by eight,\nso each additional factor of two in the product must be certified one binary place\nfurther out than one would guess. *Why now?* Having isolated the exact `mod 8`\nobstruction behind the factor of four, we can test the pattern mechanically for `k = 3,\n4, 5` and either confirm a clean \"shift-by-one\" law or expose its first exception.\n\n## 2. A universal super-divisor for higher-dimensional right figures\n**Conjecture.** For every dimension `r`, solutions of `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` obey a single\nuniversal divisibility law: there is a constant `D(r)`, depending only on `r`, such that\n`D(r)` divides the product `x\u2081\u00b7x\u2082\u00b7\u22ef\u00b7x_r` for *every* solution, and `D(r)` is the largest\nsuch constant.\n*The key insight is* that reduction to a finite residue ring turns \"for all solutions\"\ninto a finite, decidable statement, so the optimal constant `D(r)` is computable and\nshould grow in a structured (conjecturally multiplicative-over-primes) way. *Why now?*\nThe three-dimensional case already yields `4 \u2223 x\u2081x\u2082x\u2083`; comparing it against the planar\nconstant `12` suggests a dimension-indexed sequence worth charting and predicting.\n\n## 3. Parity collapse in higher dimensions\n**Conjecture.** As the number of squared terms increases, the number of edges permitted to\nbe odd stays uniformly bounded: in `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` at most three of the `x_i` can be\nodd, regardless of `r`.\n*The key insight is* that the sum of squares equals the count of odd terms modulo four,\nwhile a perfect square is `0` or `1` modulo four, capping the admissible odd-count no\nmatter how many terms are added. *Why now?* We proved the cap is \"at most one\" in three\ndimensions; extending the modular bookkeeping to arbitrary `r` is a self-contained next\nstep that would reveal whether the cap is truly dimension-independent.\n\n## 4. A sharp threshold characterization of legs in every dimension\n**Conjecture.** Just as the whole numbers that are a leg of a right triangle are exactly\nthose `\u2265 3`, in each higher dimension there is a sharp finite threshold above which every\ninteger appears as an edge of some right figure, and the finitely many exceptions can be\nlisted explicitly.\n*The key insight is* that a single explicit construction, split according to the parity of\nthe target edge, realizes all sufficiently large values, while the small exceptions are\nforced by a factorization that would otherwise require a vanishing edge. *Why now?* The\nplanar threshold `3` and its sharpness (the failures at `1` and `2`) give a template that\nshould transfer verbatim to the box equation and beyond.\n\n## 5. Divisibility as a sieve against near-solutions\n**Conjecture.** The combined congruence obstructions (`12 \u2223 a\u00b7b`, `60 \u2223 a\u00b7b\u00b7c`, and their\nhigher-dimensional analogues) are strong enough that a random integer triple satisfying\nthem has a positive, computable probability of being genuinely Pythagorean \u2014 i.e. the\ncongruence conditions capture a constant fraction of the \"arithmetic mass\" of true\nsolutions.\n*The key insight is* that each universal divisor removes a fixed proportion of impostors,\nso stacking independent prime-power obstructions multiplies into a sieve of predictable\ndensity. *Why now?* With the exact obstructions in hand for the primes `2, 3, 5`, one can\nimmediately measure how much of the solution set they explain and calibrate whether a few\nmore primes suffice to pin down solutions almost completely.\n",
     "domains": [
       "Pythagorean",
@@ -9940,19 +9955,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "Clean multiplicative law for perfect matchings of *bloc"
   },
   {
-    "consumed_by_exp_id": "c05d7abb",
-    "description": "Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearrangement of the primes q_1, q_2, ... such that the sequence of ratios q_n / p_n converges to 1. In other words, you can shuffle the primes almost arbitrarily and the room numbers barely change. More precisely, the set of permutations sigma for which p_{sigma(n)} / p_n has a limit is dense in the symmetric group (with the topology of pointwise convergence). But NOT every permutation works: the permutation that swaps all even-indexed primes with odd-indexed ones gives q_{2n}/p_{2n} = p_{2n-1}/p_{2n} which converges to 1 by the prime number theorem, but the permutation that reverses order gives q_n/p_n = p_{N-n}/p_n which diverges. Test: compute q_n/p_n for 10 random permutations of the first 10^6 primes and verify that most ratios converge to 1. Find the exact density of 'well-behaved' permutations. Impact: the primes are robust under rearrangement \u2014 their asymptotic density is a topological invariant of the permutation group.",
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The L-Function Universe\n\n## What is proved\n\n`Census.lean` builds a self-contained chain culminating in:\n\n* **Countability.** `instCountableSelbergDatum` : the universe of L-functions,\n  modelled by finite invariant packages, is countable.\n* **Countable infinitude.** `instInfiniteSelbergDatum` + `exists_equiv_nat` :\n  the universe is in bijection with `\u2115` \u2014 no bigger than the integers.\n* **Valid sub-universe.** `Valid.exists_equiv_nat` : imposing positive degree and\n  conductor `\u2265 1` still leaves a countably infinite universe.\n* **Explicit census.** `census` and its verified length / conductor list /\n  distinctness / validity.\n\n## Honest scope and the deep open problem\n\nThe theorem proved is: *any family of L-functions faithfully captured by a finite\npackage of invariants over countable rings is countable.* The mathematically deep,\nunproven step is the converse modelling assumption \u2014 that the analytic Selberg\nclass really is captured by such finite data. Naively the Euler product involves a\nlocal factor at **each** of infinitely many primes, and free choices there would\ngive a continuum (`\u2248 2^\u2115`). Countability of the Selberg class therefore hinges on\nrigidity phenomena that force the local data to be globally determined:\n\n1. **Strong multiplicity one.** Two Selberg-class functions sharing all but finitely\n   many Euler factors coincide. Formalising this would let a genuine Selberg-class\n   element be recovered from finite data + its degree/conductor, justifying the\n   model.\n2. **Degree conjecture / conductor discreteness.** Degrees are conjecturally in\n   `{0} \u222a [1,\u221e)` with gaps, and for each `(degree, conductor)` only finitely many\n   primitive functions occur \u2014 this is what would make \"order by conductor\" a\n   genuine well-ordering with finite levels.\n3. **Bounded local families.** With the Ramanujan bound and integrality, the local\n   factor at each prime lies in a *finite* set; combined with (1) this bounds the\n   whole object by finite data.\n\n## Concrete next Lean steps\n\n* Add an analytic layer: Dirichlet series `\u2115 \u2192 \u2102` with a `SelbergAxioms` structure\n  (Euler product, functional equation data, Ramanujan bound), and a map\n  `axioms \u2192 SelbergDatum`. State strong multiplicity one as the injectivity of a\n  refinement of that map.\n* Refine `IsValid` toward the real axioms (multiplicative coefficients, `a\u2081 = 1`).\n* Replace the `\u211a\u00b2` root-number/shift model by algebraic numbers (`\u211a\u0304`, still\n  countable) to track the functional equation exactly.\n* Prove finiteness of `{d | d.conductor = q \u2227 d.degree \u2264 D \u2227 d.eulerData = []}`\n  and assemble the census as a genuine ordered enumeration of finite levels.\n",
     "domains": [
-      "Novelty",
-      "NumberTheory"
+      "Algebra",
+      "Pythagorean"
     ],
-    "id": "fd_0796",
-    "priority_score": 0.74,
+    "id": "fd_0810",
+    "priority_score": 0.75,
     "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-09T20:12:33.003700+00:00",
-    "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
+    "source_exp_id": "55f141e7",
+    "status": "available",
+    "timestamp": "2026-07-09T22:16:11.662205+00:00",
+    "title": "`Census.lean` builds a self-contained chain culminating in:"
   },
   {
     "consumed_by_exp_id": "352dbc27",
