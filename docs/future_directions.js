@@ -19,6 +19,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long \u2014 the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static \u2014 they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0654",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-08T16:01:43.810023+00:00",
+    "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: lines parallel to the x-axis diverge (hyperbolic behavior) while lines parallel to the y-axis converge (elliptic behavior). The metric is ds^2 = dx^2/cosh^2(y) + dy^2 * cosh^2(x) \u2014 expanding in x and contracting in y. Conjecture: Split Geometry is a consistent Riemannian geometry with curvature K(x,y) = -sech^2(y) + sech^2(x) that changes sign across the diagonals. The geometry has a 'phase boundary' along the lines y = x and y = -x where K = 0 (flat). In the region |x| > |y|, K > 0 (elliptic) and in the region |y| > |x|, K < 0 (hyperbolic). The geodesics in split geometry are piecewise combinations of exponential curves (in hyperbolic regions) and trigonometric curves (in elliptic regions). Test: compute the Christoffel symbols and curvature tensor for the split metric. Prove that geodesics cross the phase boundary at most twice. Compute the area of a split triangle with one vertex in each region. Impact: a geometry where the curvature of space depends on which direction you look \u2014 the mathematical realization of a universe that is simultaneously expanding and contracting.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0653",
+    "priority_score": 0.81,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-08T16:01:43.730052+00:00",
+    "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every m \u2265 1, the generating tree encoding the recursive decomposition of intervals in the greedy m-Tamari poset (on Dyck paths of size n) is isomorphic to the generating tree encoding the recursive decomposition of planar (m+1)-constellations of size n. This conjecture generalizes the m=1 case proved in the paper and would provide a combinatorial proof of the equinumerosity refined by the parameters tracked in the generating tree (e.g., number of valleys in Dyck paths and corresponding statistics in constellations).",
     "domains": [
       "Pythagorean",
@@ -6156,6 +6186,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every d \u2265 3, the supremum of normalized surface measures of zero-sum-free measurable subsets of the unit sphere S^{d-1} in \u211d^d equals exactly 1/2. Equivalently, every measurable zero-sum-free A \u2286 S^{d-1} satisfies \u03c3_{d-1}(A) \u2264 1/2, with equality achieved (only) by open hemispheres. The paper establishes the asymptotic bound m_d \u2264 1/2 + O(1/d), but the exact value m_d = 1/2 remains open.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0521",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.05099v1",
+    "status": "available",
+    "timestamp": "2026-07-07T07:31:22.446580+00:00",
+    "title": "Bukh's Exact Zero-Sum-Free Density Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any positive integer k and any completely multiplicative function f : \u2115 \u2192 \u03bc_k (the k-th roots of unity), and any \u03c9 in the image of f, there exists a Pythagorean triple (x, y, z) with f(x) = f(y) = f(z) = \u03c9. This extends the paper's main result, which establishes the case \u03c9 = 1 via approximate concentration (for \u03b5 small enough, the values are forced to equal 1 since \u03bc_k is discrete). The case of general \u03c9 does not reduce to \u03c9 = 1 by a simple substitution, as f(n)/\u03c9 is not completely multiplicative, making this a genuinely stronger statement that implies every color class of a completely multiplicative k-coloring of \u2115 contains a Pythagorean triple.",
     "domains": [
       "Algebra"
@@ -7775,6 +7820,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card \u2014 you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier \u2014 it's an opportunity. You can WIN at the game of undecidability.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0656",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-08T16:01:43.960880+00:00",
+    "title": "Godel's Casino: Incomplete but Winnable Games"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Every finite simple subcubic outerplanar graph admits a vertex partition (R,B) such that the blue vertices induce a graph of maximum degree at most one, the red vertices induce a graph with no isolated vertices and containing no simple path of three edges, and the red subgraph has minimum degree at least one.",
     "domains": [
       "Algebra",
@@ -8357,11 +8417,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "We conjecture that for any integers r\u22652, s\u22652 and any n\u2011 vertex r\u2011uniform hypergraph H with matching number \u03bd(H)< s, the spectral radius \u03c1(H) (defined as the Perron\u2011Frobenius eigenvalue of its adjacency tensor) satisfies \u03c1(H)\u2264\u03c1(\u5341\u2081(s\u20111)(n)), where \u5341\u2081(a)(n) denotes the family of all r\u2011subsets of [n] intersecting a fixed set of size a (the \u201cstar\u201d hypergraph). Moreover, equality holds if and only if H is isomorphic to \u5341\u2081(s\u20111)(n). This is a spectral analogue of the Erd\u0151s\u2011Matching Conjecture, extending the result of the paper to all n (not just \u201csufficiently large\u201d) and providing a precise, formalizable statement suitable for verification in Lean 4.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0697",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07392v1",
+    "status": "available",
+    "timestamp": "2026-07-09T03:39:52.985172+00:00",
+    "title": "Spectral Extremal Conjecture for Hypergraphs with Bounded Matching Number"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "If a family of complementary configurations degenerates to a configuration where some planes intersect, then the limit of the cross-ratio valuations (as the parameters approach the degenerate case) equals the intersection degree of the cycles obtained by spreading the original cycles to the valuation ring.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0697",
+    "id": "fd_0698",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06477v1",
@@ -8376,7 +8451,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0698",
+    "id": "fd_0699",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06455v1",
@@ -8391,7 +8466,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0699",
+    "id": "fd_0700",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07555v1",
@@ -8406,7 +8481,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0700",
+    "id": "fd_0701",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07427v1",
@@ -8421,7 +8496,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0701",
+    "id": "fd_0702",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07458v1",
@@ -8435,7 +8510,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0702",
+    "id": "fd_0703",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07448v1",
@@ -8449,13 +8524,43 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0703",
+    "id": "fd_0704",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07328v1",
     "status": "available",
     "timestamp": "2026-07-09T03:20:01.367192+00:00",
     "title": "Capitulation of Even K-Groups Implies Non-Trivial Pseudo-Null Submodules"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This conjecture addresses the challenge of obtaining improved norm bounds for sparse random tensors with independent entries, building on the techniques used in the proof of the spectral gap for random hypergraphs. Specifically, it aims to remove logarithmic factors in the norm bounds, which is a significant open problem in the field. The conjecture is formalized in Lean 4 using the `NormBoundTensor` theorem, which states that for a random tensor with independent entries and a given bound on the maximum entry size, the expected 2-norm can be bounded without logarithmic factors.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0705",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07308v1",
+    "status": "available",
+    "timestamp": "2026-07-09T03:40:07.466750+00:00",
+    "title": "Improved Norm Bounds for Sparse Random Tensors with Independent Entries"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers \u2014 anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension \u2014 they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property \u2014 it's not about content quality but about the sheaf cohomology of the social network.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0652",
+    "priority_score": 0.77,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-08T16:01:43.584485+00:00",
+    "title": "The Mathematics of Memes: Viral Information Topology"
   },
   {
     "consumed_by_exp_id": "",

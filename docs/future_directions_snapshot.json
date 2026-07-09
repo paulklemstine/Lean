@@ -23,6 +23,46 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long — the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static — they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0654",
+    "lineage_refs": [],
+    "priority_score": 0.82,
+    "proof_strategy": "Define proof complexity C(P) = length(P) + depth(P) + number_of_lemmas(P) for a proof P in a formal system. Define refinement: P' refines P if P' proves the same theorem as P and C(P') < C(P). Prove: the refinement process is well-founded — there is no infinite decreasing chain C(P_0) > C(P_1) > ... because C takes values in the natural numbers. Prove: the limit P_infinity exists because the chain must terminate at a proof of minimal complexity. Prove the refinement process can be arbitrarily long: construct a theorem T such that the simplest proof of T has complexity C_min, but the initial proof has complexity C_max, and C_max - C_min can be made arbitrarily large. Example: the proof of 'there exist n consecutive composite numbers' requires induction up to n, but the simplest proof uses only the factorial n! + 2, n! + 3, ..., n! + n. Test: implement refinement for sqrt(2) irrationality in Lean 4.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-08T16:01:43.810023+00:00",
+    "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: lines parallel to the x-axis diverge (hyperbolic behavior) while lines parallel to the y-axis converge (elliptic behavior). The metric is ds^2 = dx^2/cosh^2(y) + dy^2 * cosh^2(x) — expanding in x and contracting in y. Conjecture: Split Geometry is a consistent Riemannian geometry with curvature K(x,y) = -sech^2(y) + sech^2(x) that changes sign across the diagonals. The geometry has a 'phase boundary' along the lines y = x and y = -x where K = 0 (flat). In the region |x| > |y|, K > 0 (elliptic) and in the region |y| > |x|, K < 0 (hyperbolic). The geodesics in split geometry are piecewise combinations of exponential curves (in hyperbolic regions) and trigonometric curves (in elliptic regions). Test: compute the Christoffel symbols and curvature tensor for the split metric. Prove that geodesics cross the phase boundary at most twice. Compute the area of a split triangle with one vertex in each region. Impact: a geometry where the curvature of space depends on which direction you look — the mathematical realization of a universe that is simultaneously expanding and contracting.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0653",
+    "lineage_refs": [],
+    "priority_score": 0.81,
+    "proof_strategy": "Define the split metric g = diag(1/cosh^2(y), cosh^2(x)) on R^2. Compute the Christoffel symbols: Gamma^1_{11} = tanh(y), Gamma^1_{12} = 0, Gamma^1_{22} = -sinh(x)cosh(x), Gamma^2_{11} = -tanh(y)*cosh^2(x)*cosh^2(y), Gamma^2_{12} = 0, Gamma^2_{22} = -sinh(x)cosh(x). Compute curvature: K = -sech^2(y) + sech^2(x). Verify: K = 0 on y = x and y = -x. K > 0 for |x| > |y| (elliptic). K < 0 for |y| > |x| (hyperbolic). Prove geodesic crossing: a geodesic that enters the elliptic region and then the hyperbolic region crosses the flat boundary at most twice (by convexity of the curvature sign along the geodesic). Compute split triangle area: integral of sqrt(det(g)) = integral of cosh(x)/cosh(y) over the triangle. Test: numerical verification for specific triangles.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-08T16:01:43.730052+00:00",
+    "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "For every m ≥ 1, the generating tree encoding the recursive decomposition of intervals in the greedy m-Tamari poset (on Dyck paths of size n) is isomorphic to the generating tree encoding the recursive decomposition of planar (m+1)-constellations of size n. This conjecture generalizes the m=1 case proved in the paper and would provide a combinatorial proof of the equinumerosity refined by the parameters tracked in the generating tree (e.g., number of valleys in Dyck paths and corresponding statistics in constellations).",
     "domain_bridges": [
       "Algebraic Combinatorics",
@@ -11430,6 +11470,34 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "Mathlib.Analysis.InnerProductSpace.Sphere",
+      "Mathlib.MeasureTheory.Measure.Haar",
+      "Mathlib.Combinatorics.Additive"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every d ≥ 3, the supremum of normalized surface measures of zero-sum-free measurable subsets of the unit sphere S^{d-1} in ℝ^d equals exactly 1/2. Equivalently, every measurable zero-sum-free A ⊆ S^{d-1} satisfies σ_{d-1}(A) ≤ 1/2, with equality achieved (only) by open hemispheres. The paper establishes the asymptotic bound m_d ≤ 1/2 + O(1/d), but the exact value m_d = 1/2 remains open.",
+    "domain_bridges": [
+      "Cap set problem and polynomial method (Croot-Lev-Pach / Ellenberg-Gijswijt)",
+      "Spherical harmonics and spectral analysis on S^{d-1}",
+      "Sum-free sets in continuous settings"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0521",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The paper establishes m_d ≤ ⌊(d+1)²/2⌋/(d(d+1)) = 1/2 + O(1/d) using spherical harmonics and a polynomial method argument. To prove the exact bound m_d = 1/2, one must close the O(1/d) gap. A potential strategy: (1) characterize the near-extremal sets more precisely using the spherical harmonic analysis already developed, (2) show that any set exceeding measure 1/2 + ε must have structural properties forcing it to contain a zero-sum triple, possibly by developing a spherical analogue of the slice-rank/polynomial method that yields exact rather than asymptotic bounds, or (3) establish a stability result showing near-hemisphere sets must be close to hemispheres, then use this rigidity to exclude the O(1/d) excess.",
+    "research_mode": "team",
+    "source_exp_id": "2607.05099v1",
+    "status": "available",
+    "timestamp": "2026-07-07T07:31:22.446580+00:00",
+    "title": "Bukh's Exact Zero-Sum-Free Density Conjecture"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "math.NT",
       "math.CO",
       "Pythagorean_triples",
@@ -14552,6 +14620,26 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card — you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier — it's an opportunity. You can WIN at the game of undecidability.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0656",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define Godel's Casino: each round, the house presents a statement phi in the language of arithmetic. The player bets TRUE or FALSE. If ZFC proves phi, TRUE wins. If ZFC proves not-phi, FALSE wins. If phi is independent of ZFC, BOTH bets win (the player gets their stake back plus a bonus). Strategy: bet TRUE on Sigma_1 statements, FALSE on negations of Con(ZFC) and similar independent Pi_1 statements. Prove expected profit > 0: by the arithmetic hierarchy, Sigma_1 statements are decidable (true iff provable). For a random statement at level n, the probability of decidability is at least 1/3 (by counting). So E[profit] >= (1/3) * (stake) > 0. The key: even though individual bets are undecidable, the AGGREGATE strategy is profitable because most arithmetic statements ARE decidable. Test: simulate with 1000 randomly generated arithmetic statements at various levels of the hierarchy.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-08T16:01:43.960880+00:00",
+    "title": "Godel's Casino: Incomplete but Winnable Games"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [
       "Barát, Blázsik, Damádi, 2019 - Crumby colorings of outerplanar graphs"
     ],
@@ -15652,6 +15740,39 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "Erdős1965",
+      "BollobásDaykinErdős1968",
+      "HuangLohSudakov2007",
+      "FranklŚLuczakMieczkowska2009",
+      "arXiv:2305.12345"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for any integers r≥2, s≥2 and any n‑ vertex r‑uniform hypergraph H with matching number ν(H)< s, the spectral radius ρ(H) (defined as the Perron‑Frobenius eigenvalue of its adjacency tensor) satisfies ρ(H)≤ρ(十₁(s‑1)(n)), where 十₁(a)(n) denotes the family of all r‑subsets of [n] intersecting a fixed set of size a (the “star” hypergraph). Moreover, equality holds if and only if H is isomorphic to 十₁(s‑1)(n). This is a spectral analogue of the Erdős‑Matching Conjecture, extending the result of the paper to all n (not just “sufficiently large”) and providing a precise, formalizable statement suitable for verification in Lean 4.",
+    "domain_bridges": [
+      "shifting method",
+      "tensor spectral radius",
+      "variational estimates for adjacency tensors",
+      "hypergraph decomposition",
+      "unique extremal structure",
+      "Lean formalization of hypergraphs and spectral radius"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0697",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "1. Formalize r‑uniform hypergraphs as subsets of ℓ[n] {r} in Lean.\n2. Define the adjacency tensor and the spectral radius via the Perron‑Frobenius eigenvalue (using existing Lean spectral theory libraries).\n3. Implement the shifting operation and prove its monotonicity for the spectral radius.\n4. Derive spectral upper bounds via hypergraph decomposition and tensor variational formulas.\n5. Analyse the structure of shifted‑saturated hypergraphs with ν(H)< s, showing they must be exactly 十₁(s‑1)(n).\n6. Extend the bound to arbitrary hypergraphs using stability arguments.\n7. Formalise the conjecture as a theorem in Lean, with auxiliary lemmas for matching number, star hypergraph construction, and isomorphism testing.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07392v1",
+    "status": "available",
+    "timestamp": "2026-07-09T03:39:52.985172+00:00",
+    "title": "Spectral Extremal Conjecture for Hypergraphs with Bounded Matching Number"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "[B] $10.48550/ARXIV.2201.03794$"
     ],
     "consumed_by_exp_id": "",
@@ -15662,7 +15783,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0697",
+    "id": "fd_0698",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a family of configurations dispersing the cycles over the valuation ring, show that the cross-ratio valuation is preserved under deformation, and compute the limit using intersection-theoretic methods.",
@@ -15690,7 +15811,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0698",
+    "id": "fd_0699",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Utilize the paper's β-closed walk expansion and the sufficient condition via a walk-realizable {P4}-supporter. Reduce the search to a linear programming feasibility problem for coefficients of β-closed walk counts. Compute a concrete finite witness (e.g., with bounded walk length) satisfying the LP, then formalize the induced-subgraph expansion and supporter criterion in Lean 4 to verify the implication.",
@@ -15718,7 +15839,7 @@
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0699",
+    "id": "fd_0700",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Verify the conjecture for classes of biserial algebras where both magnitude and Grothendieck rank are computable: (1) Hereditary biserial algebras (where magnitude relates to Dynkin type), (2) Self-injective biserial algebras (where Coxeter duality provides constraints), (3) Use induction on the complexity of the Auslander-Reiten quiver structure. The key is establishing that representation-finiteness creates a perfect matching between indecomposable modules and Grothendieck group generators, reflected in the magnitude calculation.",
@@ -15748,7 +15869,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0700",
+    "id": "fd_0701",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct the formal group via the universal property of the tangent space of Ig_μ, use the Hodge type embedding to identify the differential operators with components of the logarithm map, then prove the coproduct compatibility by analyzing the group structure on Ig_μ via p-adic Fourier theory and the Mantovan correspondence.",
@@ -15778,7 +15899,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0701",
+    "id": "fd_0702",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Formalize determinantal ideal J_{G,H} in Lean using mathlib's commutative algebra and graph theory. 2. Define analytic spread as dimension of special fiber ring. 3. Define linear matroid M_{G,H} from incidence matrix of G over a perfect field. 4. Prove by induction on number of edges of H: base case |E(H)|=1 known from paper. For forest H, decompose into single edges; use exact sequences or properties of reductions of determinantal ideals to show that adding an edge increases both analytic spread and matroid rank by 1, preserving equality. 5. Bridge to existing matroid theory API in mathlib (or develop minimal matroid library).",
@@ -15805,7 +15926,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0702",
+    "id": "fd_0703",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the proof of $b_3(n+1)=b_2(n)$ to arbitrary uniformity.  Develop a systematic 'shifting' construction that lifts an optimal odd cover of $K_n^{(r)}$ to an odd cover of $K_{n+1}^{(r+1)}$ of the same size, showing $b_{r+1}(n+1)\\le b_r(n)$.  Simultaneously, apply the $\\mathbb{F}_2$ rank bound $b_r(G)\\ge r_2(A_G)/2$ to complete $(r+1)\\!$-uniform hypergraphs to obtain $b_{r+1}(n+1)\\ge b_r(n)$.  Together these give equality.  The combinatorial details involve analysing the adjacency tensors of complete hypergraphs over $\\mathbb{F}_2$ and using induction on $r$.",
@@ -15834,7 +15955,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0703",
+    "id": "fd_0704",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt Fujii's arguments for class groups to the even K-group setting, using the relationship between K_{2n} and ordinary class groups via cyclotomic trace maps and regulator computations, combined with control theorem techniques for the inverse system.",
@@ -15843,6 +15964,52 @@
     "status": "available",
     "timestamp": "2026-07-09T03:20:01.367192+00:00",
     "title": "Capitulation of Even K-Groups Implies Non-Trivial Pseudo-Null Submodules"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "arXiv:1906.01311",
+      "arXiv:2101.01555"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "This conjecture addresses the challenge of obtaining improved norm bounds for sparse random tensors with independent entries, building on the techniques used in the proof of the spectral gap for random hypergraphs. Specifically, it aims to remove logarithmic factors in the norm bounds, which is a significant open problem in the field. The conjecture is formalized in Lean 4 using the `NormBoundTensor` theorem, which states that for a random tensor with independent entries and a given bound on the maximum entry size, the expected 2-norm can be bounded without logarithmic factors.",
+    "domain_bridges": [
+      "spectral_gap_random_hypergraphs",
+      "norm_bounds_random_matrices"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0705",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The proof strategy involves using the explicit decomposition of an associated selector process, inspired by Talagrand's generic decomposition theorem, to obtain improved norm bounds for sparse random tensors. This approach requires a careful analysis of the variance of the tensor norm and the use of truncation inequalities to control the contribution of large entries.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07308v1",
+    "status": "available",
+    "timestamp": "2026-07-09T03:40:07.466750+00:00",
+    "title": "Improved Norm Bounds for Sparse Random Tensors with Independent Entries"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers — anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension — they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property — it's not about content quality but about the sheaf cohomology of the social network.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0652",
+    "lineage_refs": [],
+    "priority_score": 0.77,
+    "proof_strategy": "Define the meme sheaf M on social network G: for each community C_i (cluster in G), M(C_i) is the set of interpretations of the meme in community i. For each edge between communities, there is a restriction map M(C_i) -> M(C_j) that transforms the meme's meaning. Define H^0(G, M) = kernel of the coboundary map (interpretations that are consistent across ALL communities). Define H^1(G, M) = cokernel (obstructions to consistent interpretation). Prove: dim(H^0) = number of universal interpretations. Prove: dim(H^1) = number of community-pairs where the meme CANNOT be consistently transmitted. Virality = dim(H^0) / (dim(H^0) + dim(H^1)) — the fraction of interpretations that spread without obstruction. Test: for 3 communities with sheaf values M(C1) = R, M(C2) = R, M(C3) = R^2 and restriction maps that mix coordinates, compute H^0 and H^1 and verify that high virality memes have H^1 = 0 and dim(H^0) > 1.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-08T16:01:43.584485+00:00",
+    "title": "The Mathematics of Memes: Viral Information Topology"
   },
   {
     "ambition_level": "extension",
