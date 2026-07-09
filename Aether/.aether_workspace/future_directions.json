@@ -37470,6 +37470,55 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.CO/2301.01234",
+        "math.AG/0601041",
+        "math.CO/2105.04567"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture: Let G be a finite toroidal bipartite graph and G' the non‑bipartite graph obtained from G by replacing every degree‑3 vertex by a triangular gadget as defined in the paper. Then the Newton polygon of the characteristic polynomial of G' coincides exactly with the Newton polygon of the characteristic polynomial of G. Moreover, the primitive edge vectors of this common polygon correspond to the homology classes of the zig‑zag cycles of G (and hence of G').",
+      "domain_bridges": [
+        "Algebraic Geometry (Newton polygons, Harnack curves)",
+        "Topological Graph Theory (homology of cycles on the torus)",
+        "Statistical Mechanics (dimer partition functions)"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Geometry"
+      ],
+      "github_issue": 0,
+      "id": "fd_0781",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem triangle_replacement_preserves_newton_polygon {G : TorusGraph} (h_bip : G.is_bipartite) (G' : TorusGraph) (h_tri : G'.is_triangle_replacement_of G) : newton_polygon (characteristic_polynomial G') = newton_polygon (characteristic_polynomial G)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Develop a combinatorial description of the characteristic polynomial via Kasteleyn matrices for G and G'. Show that the triangle replacement amounts to multiplying the Kasteleyn matrix by a block‑diagonal matrix whose determinant contributes only a monomial factor, leaving the support of the polynomial unchanged. Use homological analysis of zig‑zag paths to identify edge normals, then invoke the known correspondence for bipartite graphs to conclude equality of Newton polygons. Formalisation can proceed by defining torus graphs, Kasteleyn orientations, and the map from perfect matchings to homology classes in Lean, then proving the determinant factorisation and support invariance.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.07503v1",
+      "source_path": "http://arxiv.org/abs/2607.07503v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T19:23:07.816671+00:00",
+      "title": "Newton polygon invariance under triangle replacement in torus dimer graphs"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "factor complexity",
         "abelian complexity",
         "group complexity",
@@ -37495,7 +37544,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0781",
+      "id": "fd_0782",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ternary_minimal_universal_group_complexity (w : InfiniteWord (Fin 3)) (h_aper : Aperiodic w) (h_min : ∀ n, factorComplexity w n = 2 * n + 1) : UniversalGroupComplexity w := by sorry",
@@ -37541,7 +37590,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0782",
+      "id": "fd_0783",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem induced_ep_theta {t k : ℕ} (G : Graph ℕ) : (¬ (∃ (C : List (InducedMinorCopy Θ_t G)), ...)) → ∃ (X : Finset ℕ), X.card ≤ 4 * t * k * Nat.log k ∧ ∀ (H : InducedMinorCopy Θ_t G), (closure X).contains (H.representative)",
@@ -37597,7 +37646,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0783",
+      "id": "fd_0784",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "-- Characterisation of reflected bounded‑growth tuples\n\ntheorem reflected_bounded_growth_iff :\n  ∀ {n : ℕ} (a : Vector ℕ n),\n    is_reflected_bounded_growth a ↔\n      (monotone a ∧\n       ∀ i : Fin n, a i ≤ 2 * (i + 1) - 1 ∧\n         ((i + 1) % 2 = 1 → a i % 2 = i % 2)) := by\n  -- The proof is split into two directions:\n  -- • (→) Assume \\`a\\` is a reflected bounded‑growth tuple.\n  --   By definition there is a weakly increasing sequence \\`b\\` with \\`b_i ≤ 2i-1\\` and parity property;\n  --   the reflection argument yields the stated inequalities for \\`a\\`.\n  -- • (←) Assume the linear/parity conditions.\n  --   Construct a weakly increasing sequence \\`b\\` by setting \\`b_i = a_{n-i+1}\\` and verify that \\`b\\`\n  --   satisfies the required bounds, thereby producing a reflected bounded‑growth tuple whose image is \\`a\\`.\n  -- The details are handled by elementary arithmetic lemmas in Lean.",
@@ -37647,7 +37696,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0784",
+      "id": "fd_0785",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mertens_recursion_identity (x u : ℕ) (hx : x ≥ 2) (hu₁ : ⌊Real.sqrt x⌋ < u) (hu₂ : u < x) : M x = ∑ k in Finset.Icc 1 (x / u), moebius k * S (x / k) u := by sorry",
@@ -37695,7 +37744,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0785",
+      "id": "fd_0786",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem frankl_conjecture {n : ℕ} (hn : 1 ≤ n) {F : Finset (Finset (Fin n))} (hint : ∀ (s t : Finset (Fin n)), s ∈ F → t ∈ F → s.Nonempty ∧ t.Nonempty → (s ∩ t).Nonempty ∧ (s ∪ t) ≠ Finset.univ) : (F.sum (fun s => (Nat.choose n s.card)⁻¹ : ℕ → ℝ)) ≤ ((n : ℝ) + 1) / 6 := by sorry",
@@ -37743,7 +37792,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0786",
+      "id": "fd_0787",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem genus2_tame_char2_classification (R : Type*) [CompleteDiscreteValuationRing R] (k : Type*) [Field k] [Algebra R k] [IsAlgebraicallyClosed k] [CharP k 2] (K : FractionMap R) (C : Genus2Curve K) (h_tame : TameReduction (Jacobian C)) : ∃ (nu : NamikawaUenoLabel) (h : nu ∈ paper_tables_106), ReductionType (minimalRegularModel C) = nu ∧ InvariantsMatchTable nu C",
@@ -37791,7 +37840,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0787",
+      "id": "fd_0788",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "def b₂ (n : ℕ) : ℕ := sorry\n\ntheorem b₂_odd (k : ℕ) (hk : k ≥ 2) : b₂ (2 * k + 1) = k + 1 := by sorry",
@@ -37811,6 +37860,52 @@
       "thread_id": "",
       "timestamp": "2026-07-09T18:44:00.462337+00:00",
       "title": "Odd cover number for complete graphs of odd order"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "chartrand2000"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture that the multiset partition dimension of any connected graph is even.",
+      "domain_bridges": [
+        "classical partition dimension",
+        "multiset distance"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0789",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem conjecture_mpd_even (G : SimpleGraph ℕ) (hconn : Connected G) : Even (mpd G) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Proof by induction on the number of vertices, leveraging properties of resolving partitions and distance constraints.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.07407v1",
+      "source_path": "http://arxiv.org/abs/2607.07407v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T19:23:31.248434+00:00",
+      "title": "Multiset Partition Dimension of Graphs"
     },
     {
       "ambition_level": "extension",

@@ -9539,12 +9539,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture: Let G be a finite toroidal bipartite graph and G' the non\u2011bipartite graph obtained from G by replacing every degree\u20113 vertex by a triangular gadget as defined in the paper. Then the Newton polygon of the characteristic polynomial of G' coincides exactly with the Newton polygon of the characteristic polynomial of G. Moreover, the primitive edge vectors of this common polygon correspond to the homology classes of the zig\u2011zag cycles of G (and hence of G').",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0781",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07503v1",
+    "status": "available",
+    "timestamp": "2026-07-09T19:23:07.816671+00:00",
+    "title": "Newton polygon invariance under triangle replacement in torus dimer graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "We conjecture that every aperiodic infinite word over a ternary alphabet whose factor complexity satisfies p(n)=2n+1 for all n\u22651 possesses the universal group complexity property: for each length n and each integer k with p_ab(n) \u2264 k \u2264 p(n) there exists a subgroup G \u2264 S_n such that the group complexity p^G(n)=k.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0781",
+    "id": "fd_0782",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07620v1",
@@ -9558,7 +9573,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0782",
+    "id": "fd_0783",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07697v1",
@@ -9573,7 +9588,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0783",
+    "id": "fd_0784",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07659v1",
@@ -9587,7 +9602,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0784",
+    "id": "fd_0785",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07566v1",
@@ -9602,7 +9617,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0785",
+    "id": "fd_0786",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07564v1",
@@ -9617,7 +9632,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0786",
+    "id": "fd_0787",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07558v1",
@@ -9631,13 +9646,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0787",
+    "id": "fd_0788",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07448v1",
     "status": "available",
     "timestamp": "2026-07-09T18:44:00.462337+00:00",
     "title": "Odd cover number for complete graphs of odd order"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that the multiset partition dimension of any connected graph is even.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0789",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07407v1",
+    "status": "available",
+    "timestamp": "2026-07-09T19:23:31.248434+00:00",
+    "title": "Multiset Partition Dimension of Graphs"
   },
   {
     "consumed_by_exp_id": "",

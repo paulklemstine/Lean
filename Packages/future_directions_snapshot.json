@@ -17867,6 +17867,34 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.CO/2301.01234",
+      "math.AG/0601041",
+      "math.CO/2105.04567"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Let G be a finite toroidal bipartite graph and G' the non‑bipartite graph obtained from G by replacing every degree‑3 vertex by a triangular gadget as defined in the paper. Then the Newton polygon of the characteristic polynomial of G' coincides exactly with the Newton polygon of the characteristic polynomial of G. Moreover, the primitive edge vectors of this common polygon correspond to the homology classes of the zig‑zag cycles of G (and hence of G').",
+    "domain_bridges": [
+      "Algebraic Geometry (Newton polygons, Harnack curves)",
+      "Topological Graph Theory (homology of cycles on the torus)",
+      "Statistical Mechanics (dimer partition functions)"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0781",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Develop a combinatorial description of the characteristic polynomial via Kasteleyn matrices for G and G'. Show that the triangle replacement amounts to multiplying the Kasteleyn matrix by a block‑diagonal matrix whose determinant contributes only a monomial factor, leaving the support of the polynomial unchanged. Use homological analysis of zig‑zag paths to identify edge normals, then invoke the known correspondence for bipartite graphs to conclude equality of Newton polygons. Formalisation can proceed by defining torus graphs, Kasteleyn orientations, and the map from perfect matchings to homology classes in Lean, then proving the determinant factorisation and support invariance.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07503v1",
+    "status": "available",
+    "timestamp": "2026-07-09T19:23:07.816671+00:00",
+    "title": "Newton polygon invariance under triangle replacement in torus dimer graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "factor complexity",
       "abelian complexity",
       "group complexity",
@@ -17885,7 +17913,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0781",
+    "id": "fd_0782",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Utilize the structural description of ternary minimal complexity words (e.g., Arnoux-Rauzy/episturmian). Analyze bispecial factors and their left/right extensions to show that for any target k one can choose G_n as a stabilizer of a suitable partition of positions, interpolating between abelian equivalence (G_n=S_n) and identity (G_n=Id). Proceed by induction on n, with base cases verified by finite enumeration.",
@@ -17910,7 +17938,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0782",
+    "id": "fd_0783",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use a short t‑model of the ΘZero graph together with a monotone guidance that always selects a big component of weight >½; apply the Dominated Guided Separator lemma to obtain a separator of size O(tk log k) and argue that its closed neighbourhood hits all Θ_t‑induced minors.",
@@ -17945,7 +17973,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0783",
+    "id": "fd_0784",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "We will formalise the conjecture in Lean 4 by defining the predicate \\`is_reflected_bounded_growth\\` on vectors of natural numbers, the monotonicity and inequality/parity conditions, and the associated product of \\(q\\)-integers.  The plan is:\n\n1. Implement the definitions in Lean.\n2. Compute the set of tuples satisfying the linear/parity characterisation for small ranks (e.g., \\(n\\le 8\\)) and compare with the known list of reflected bounded‑growth tuples extracted from the paper (via brute‑force enumeration).\n3. Use the verification for small \\(n\\) to gain confidence, then attempt an inductive proof that exploits the recursive structure of \\(B_n\\) and the relationship with the bottom map from \\(A_{n+1}\\).\n\nThe final theorem will assert the equivalence described above.",
@@ -17974,7 +18002,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0784",
+    "id": "fd_0785",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Start from the identity ∑_{n≤y} M(⌊y/n⌋) = 1. Split the sum at n = ⌊√y⌋ using summation by parts to express ∑_{n≤κ_y} M(⌊y/n⌋) in terms of M(⌊√y⌋) and a sum involving μ(n). Define S(y,u) by isolating the terms with n ≤ ⌊y/u⌋. Verify that ∑_{k≤y/u} M(⌊y/k⌋) = S(y,u) when ⌊√y⌋ < u. Apply the generalized Möbius inversion formula ∑_{k≤x} μ(k) G(⌊x/k⌋) = F(x) where G(y) = ∑_{k≤y/u} F(⌊y/k⌋) to obtain the result.",
@@ -18001,7 +18029,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0785",
+    "id": "fd_0786",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "p-biased measure integration over the Boolean lattice followed by continuous integration across the bias parameter p ∈ [0,1] to recover the optimal coefficient 1/6",
@@ -18028,7 +18056,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0786",
+    "id": "fd_0787",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the notion of cluster picture and minimal regular model for genus 2 curves in Lean 4 using mathlib's discrete valuation ring and algebraic curve libraries. For a family of explicit curves in characteristic 2 with tame reduction (e.g., given by y^2 = f(x) with f separable and odd degree extension for semistability), computationally derive the cluster picture and verify it maps to the expected Namikawa-Ueno label and invariants. Then adapt the authors' p≠2 proof: because tame reduction implies the relevant inertia group has odd order, the wild ramification obstacles in characteristic 2 are absent, allowing the same resolution and component group calculations.",
@@ -18055,7 +18083,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0787",
+    "id": "fd_0788",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the lower bound b₂(K_{2k+1}) ≥ k+1 using the F₂-rank bound b₂(G) ≥ r₂(A_G)/2, where the adjacency matrix of K_{2k+1} over F₂ has rank 2k. For the upper bound, construct an explicit odd cover of size k+1 using finite field constructions, such as symmetric conference matrices or Paley-type graphs, leveraging the fact that 2k+1 is odd.",
@@ -18064,6 +18092,31 @@
     "status": "available",
     "timestamp": "2026-07-09T18:44:00.462337+00:00",
     "title": "Odd cover number for complete graphs of odd order"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "chartrand2000"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that the multiset partition dimension of any connected graph is even.",
+    "domain_bridges": [
+      "classical partition dimension",
+      "multiset distance"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0789",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Proof by induction on the number of vertices, leveraging properties of resolving partitions and distance constraints.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07407v1",
+    "status": "available",
+    "timestamp": "2026-07-09T19:23:31.248434+00:00",
+    "title": "Multiset Partition Dimension of Graphs"
   },
   {
     "ambition_level": "extension",
