@@ -17704,6 +17704,65 @@
     "title": "A curious congruence modulo primes"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Wenger1991",
+      "Conlon2021",
+      "ADDJS93",
+      "Erdos1963"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For every undirected graph G on n vertices and integers f,k ≥ 1, there exists an f-degree fault-tolerant (2k-1)-spanner H ⊆ G with at most C · f^{1-1/k} n^{1+1/k} edges, where C is an absolute constant independent of k, n, f. This would remove the exp(k) factor slack in known upper bounds and match the unconditional lower bound Ω(f^{1-1/k} n^{1+1/k}) proven via Wenger graphs.",
+    "domain_bridges": [
+      "graph theory",
+      "combinatorial optimization",
+      "formal verification"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0774",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define simple graphs, subgraphs, distance, and f-degree fault-tolerant spanner predicates in Lean 4 mathlib. Use a combinatorial greedy construction or known clustering-based algorithms to build H, then bound its edges by analyzing the number of fault edges incident to any vertex and the packing of shortest-path witnesses. To falsify, construct a family of graphs (e.g., modified Wenger graphs) and prove any valid spanner must exceed the bound via distance preservation under adversarial f-degree edge deletions.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07576v1",
+    "status": "available",
+    "timestamp": "2026-07-09T16:19:59.894249+00:00",
+    "title": "Optimal Size Bound for Degree Fault-Tolerant Multiplicative Spanners"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "factor complexity",
+      "abelian complexity",
+      "group complexity",
+      "universal group complexity",
+      "Sturmian words",
+      "Arnoux-Rauzy words"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that every aperiodic infinite word over a ternary alphabet whose factor complexity satisfies p(n)=2n+1 for all n≥1 possesses the universal group complexity property: for each length n and each integer k with p_ab(n) ≤ k ≤ p(n) there exists a subgroup G ≤ S_n such that the group complexity p^G(n)=k.",
+    "domain_bridges": [
+      "group theory (symmetric groups)",
+      "formal language theory",
+      "discrete mathematics"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0774",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Utilize the structural description of ternary minimal complexity words (e.g., Arnoux-Rauzy/episturmian). Analyze bispecial factors and their left/right extensions to show that for any target k one can choose G_n as a stabilizer of a suitable partition of positions, interpolating between abelian equivalence (G_n=S_n) and identity (G_n=Id). Proceed by induction on n, with base cases verified by finite enumeration.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07620v1",
+    "status": "available",
+    "timestamp": "2026-07-09T16:21:56.969294+00:00",
+    "title": "Universal group complexity for aperiodic ternary words of minimal factor complexity"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "ad941b96",

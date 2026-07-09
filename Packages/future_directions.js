@@ -9452,6 +9452,35 @@ window.FUTURE_DIRECTIONS = [
     "title": "A curious congruence modulo primes"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For every undirected graph G on n vertices and integers f,k \u2265 1, there exists an f-degree fault-tolerant (2k-1)-spanner H \u2286 G with at most C \u00b7 f^{1-1/k} n^{1+1/k} edges, where C is an absolute constant independent of k, n, f. This would remove the exp(k) factor slack in known upper bounds and match the unconditional lower bound \u03a9(f^{1-1/k} n^{1+1/k}) proven via Wenger graphs.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0774",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07576v1",
+    "status": "available",
+    "timestamp": "2026-07-09T16:19:59.894249+00:00",
+    "title": "Optimal Size Bound for Degree Fault-Tolerant Multiplicative Spanners"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that every aperiodic infinite word over a ternary alphabet whose factor complexity satisfies p(n)=2n+1 for all n\u22651 possesses the universal group complexity property: for each length n and each integer k with p_ab(n) \u2264 k \u2264 p(n) there exists a subgroup G \u2264 S_n such that the group complexity p^G(n)=k.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0774",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07620v1",
+    "status": "available",
+    "timestamp": "2026-07-09T16:21:56.969294+00:00",
+    "title": "Universal group complexity for aperiodic ternary words of minimal factor complexity"
+  },
+  {
     "consumed_by_exp_id": "ad941b96",
     "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers \u2014 anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension \u2014 they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property \u2014 it's not about content quality but about the sheaf cohomology of the social network.",
     "domains": [
