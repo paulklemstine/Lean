@@ -31256,7 +31256,7 @@
       "depth_estimate": 3,
       "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers — anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension — they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property — it's not about content quality but about the sheaf cohomology of the social network.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Novelty",
         "Geometry"
@@ -31338,7 +31338,7 @@
       "depth_estimate": 3,
       "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long — the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static — they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Novelty",
         "Logic"
@@ -35094,7 +35094,7 @@
       "depth_estimate": 3,
       "description": "The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do — as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: The tropical semiring (R union {infinity}, min, +) IS the field with one element, in the following precise sense: the category of tropical schemes is equivalent to the category of F_1-schemes. More concretely, a tropical variety over F_1 is a set with a min-plus structure, and its base change to Z (formally, tensor with Z) is a toric variety. The key correspondence: F_1-points of a tropical variety are the vertices of its Newton polytope, and the 'cardinality' of the tropical variety (as an F_1-object) is the number of lattice points in the polytope, which equals the degree of the toric variety after base change. Test: for each toric variety corresponding to a polytope P, compute the number of F_1-points (vertices of P) and verify that the Euler characteristic of the toric variety equals |vertices(P)| = #F_1-points. Prove the tensor product correspondence: tropical scheme X over F_1 has X tensor_Z Z = the corresponding toric variety. Impact: F_1 and tropical geometry are two faces of the same coin. The field with one element is tropical, and tropical geometry is the geometry of F_1.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Novelty",
         "Tropical"
@@ -35135,7 +35135,7 @@
       "depth_estimate": 3,
       "description": "Prime gaps — the spaces between consecutive primes — are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable — given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random — they are a solvable crossword puzzle with deterministic rules.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Novelty",
         "NumberTheory"
@@ -35176,7 +35176,7 @@
       "depth_estimate": 3,
       "description": "Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearrangement of the primes q_1, q_2, ... such that the sequence of ratios q_n / p_n converges to 1. In other words, you can shuffle the primes almost arbitrarily and the room numbers barely change. More precisely, the set of permutations sigma for which p_{sigma(n)} / p_n has a limit is dense in the symmetric group (with the topology of pointwise convergence). But NOT every permutation works: the permutation that swaps all even-indexed primes with odd-indexed ones gives q_{2n}/p_{2n} = p_{2n-1}/p_{2n} which converges to 1 by the prime number theorem, but the permutation that reverses order gives q_n/p_n = p_{N-n}/p_n which diverges. Test: compute q_n/p_n for 10 random permutations of the first 10^6 primes and verify that most ratios converge to 1. Find the exact density of 'well-behaved' permutations. Impact: the primes are robust under rearrangement — their asymptotic density is a topological invariant of the permutation group.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Novelty",
         "NumberTheory"
@@ -35243,6 +35243,47 @@
       "thread_id": "th_77dbd46a",
       "timestamp": "2026-07-09T08:54:26.849031+00:00",
       "title": "This cycle studied how many agents are needed to share the vertices of a graph w"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions — Self-Improving Proofs\n\nThe file `Catalog/NumberTheory/SelfImprovingProofs.lean` formalizes a proof\nrefinement calculus and proves the mission's core claims by isolating their\nmathematical content: the well-ordering of complexity in `ℕ`. It establishes a\nsingle dependency chain of results (each used by the next):\n\n1. `refines_wellFounded` — refinement is well-founded.\n2. `refines_transitive`, `refines_irreflexive` — it is a strict order.\n3. `exists_minimal_proof` — every nonempty family of proofs has a simplest member.\n4. `exists_simplest_proof` — the limit `P_∞` of the refinement process always\n   exists once `T` is provable at all.\n5. `simplest_complexity_unique` — the limiting complexity `C(P_∞)` is a\n   well-defined invariant of `T`.\n6. `no_infinite_refinement` — no infinite strictly-descending refinement chain.\n7. `refinement_terminates` — every non-increasing refinement sequence halts\n   (is eventually constant).\n8. `exists_long_refinement_chain` — yet refinement chains can be arbitrarily long.\n\nA worked instance at `T = Irrational (√2)` exhibits the concrete chain\n`C = 7 ⇝ 4 ⇝ 2` and proves the library proof is its simplest member.\n\n## What is deliberately *not* claimed\n\nThe mission's slogan mentions \"the simplest proof in the sense of Kolmogorov\ncomplexity.\" Our `complexity` field abstracts `length + depth + #lemmas` as a\nsingle `ℕ`, so `simplest_complexity_unique` gives a well-defined *minimal\ncomplexity value*, the honest formal counterpart of a Kolmogorov-minimal\ndescription within this measure. We do **not** claim uniqueness of the simplest\n*proof object* (there can be many proofs of the minimal complexity), nor any\nconnection to uncomputable Kolmogorov complexity `K`.\n\n## Concrete next steps\n\n1. **A syntactic complexity measure.** Replace the abstract `complexity : ℕ`\n   with a function computed from a real inductive proof-term datatype\n   (constructors for `intro`, `apply`, `cases`, lemma references, …), so that\n   `length`, `depth`, and `#lemmas` are *derived* rather than posited. Then\n   re-prove the chain with this concrete `C`.\n\n2. **Refinement rules as rewrites.** Model the mission's specific moves —\n   \"eliminate an unnecessary lemma\", \"shorten a case split\", \"remove a redundant\n   quantifier\" — as operations on the proof-term datatype, and prove each is\n   complexity-non-increasing. The abstract results here then certify termination\n   of any pipeline built from such rules.\n\n3. **Confluence / canonical forms.** Investigate whether a fixed set of\n   refinement rewrites is confluent, giving a *unique* normal-form proof (not\n   merely a unique minimal complexity). This is the natural strengthening of\n   `simplest_complexity_unique`.\n\n4. **Quantitative bounds.** `exists_long_refinement_chain` shows chains are\n   unbounded in length. A refinement of it would relate the maximal chain length\n   to the starting complexity for a *specific* rewrite system, formalizing the\n   \"10^100 refinements\" intuition as an explicit (large but finite) bound.\n\n5. **Beyond `ℕ`.** Generalize `complexity` to any well-founded order (e.g.\n   ordinal-valued complexity for proofs with transfinite structure). Every result\n   here goes through verbatim once `Nat.lt_wfRel` is replaced by a general\n   `WellFoundedLT` instance; only the `omega` steps in\n   `refinement_terminates`/`exists_long_refinement_chain` need reworking.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Logic"
+      ],
+      "github_issue": 0,
+      "id": "fd_0736",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "c4017799",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/c4017799_retry1",
+      "status": "available",
+      "thread_id": "th_f1080ce0",
+      "timestamp": "2026-07-09T08:55:45.378397+00:00",
+      "title": "The file `Catalog/NumberTheory/SelfImprovingProofs.lean` formalizes a proof"
     },
     {
       "ambition_level": "extension",
