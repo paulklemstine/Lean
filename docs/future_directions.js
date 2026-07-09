@@ -9394,6 +9394,35 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finite Type Boson-Fermion Correspondence as an Algebra Isomorphism between Bosonic and Fermionic Schubert Calculus Operators"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "For any pair of positive integers (n,k) where the abelian complexity p_ab(n) \u2264 k \u2264 factor complexity p(n), there exists a subgroup G of the symmetric group S_n containing the abelian group A_n such that the group complexity p_G(n) = k. Sturmian words exhibit this property, and we conjecture this holds for all infinite words with bounded group complexity functions.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0767",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07620v1",
+    "status": "available",
+    "timestamp": "2026-07-09T15:11:11.616797+00:00",
+    "title": "Universal Group Complexity of Sturmian Words and Beyond in the Context of Abelian Group Extensions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For each fixed interval length \\(y\\in\\mathbb{N}\\), define \\(W(x,y)=\\sum_{j=1}^{y}\\omega(x+j)\\) where \\(\\omega(n)\\) counts distinct prime factors of \\(n\\). The conjecture states that the growth of \\(W\\) is sharply bounded: \n\\[ \\limsup_{x\\to\\infty}\\frac{W(x,y)\\log\\log x}{\\log x}=1.\\]\nThis captures the maximal possible order of the sum of distinct prime factors in a block of \\(y\\) consecutive integers.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0767",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07641v1",
+    "status": "available",
+    "timestamp": "2026-07-09T15:12:10.552210+00:00",
+    "title": "Precise asymptotic for the sum of distinct prime divisors over intervals"
+  },
+  {
     "consumed_by_exp_id": "ad941b96",
     "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers \u2014 anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension \u2014 they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property \u2014 it's not about content quality but about the sheaf cohomology of the social network.",
     "domains": [

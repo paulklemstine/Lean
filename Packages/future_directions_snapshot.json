@@ -17581,6 +17581,66 @@
     "title": "Finite Type Boson-Fermion Correspondence as an Algebra Isomorphism between Bosonic and Fermionic Schubert Calculus Operators"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "cs.DM/2305.04481",
+      "cs.DM/2308.01234"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any pair of positive integers (n,k) where the abelian complexity p_ab(n) ≤ k ≤ factor complexity p(n), there exists a subgroup G of the symmetric group S_n containing the abelian group A_n such that the group complexity p_G(n) = k. Sturmian words exhibit this property, and we conjecture this holds for all infinite words with bounded group complexity functions.",
+    "domain_bridges": [
+      "complexity-theory",
+      "group-theory",
+      "combinatorics-on-words"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0767",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct a family of Abelian group extensions G_n containing A_n and indexed by the intermediate values between p_ab(n) and p(n). For Sturmian words, use the Lucas sequence representation to index these extensions. For general words, develop a combinatorial algorithm to realize intermediate values through local factor transformations preserving the infinite word's structure.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07620v1",
+    "status": "available",
+    "timestamp": "2026-07-09T15:11:11.616797+00:00",
+    "title": "Universal Group Complexity of Sturmian Words and Beyond in the Context of Abelian Group Extensions"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "jo",
+      "rcm",
+      "wws",
+      "ab",
+      "ag:tjt",
+      "gm:wm",
+      "mw",
+      "tb:jdl:jt",
+      "or:cls:gt"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For each fixed interval length \\(y\\in\\mathbb{N}\\), define \\(W(x,y)=\\sum_{j=1}^{y}\\omega(x+j)\\) where \\(\\omega(n)\\) counts distinct prime factors of \\(n\\). The conjecture states that the growth of \\(W\\) is sharply bounded: \n\\[ \\limsup_{x\\to\\infty}\\frac{W(x,y)\\log\\log x}{\\log x}=1.\\]\nThis captures the maximal possible order of the sum of distinct prime factors in a block of \\(y\\) consecutive integers.",
+    "domain_bridges": [
+      "formal verification (Lean 4)",
+      "probabilistic number theory",
+      "model theory of arithmetic functions"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0767",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The conjecture is motivated by a refined abc‑type conjecture involving the kernel function \\(H(n)=\\gamma(n)/(\\log\\gamma(n))^{\\omega(n)}\\). Using heuristic arguments from the abc conjecture, sieve methods, and extreme‑value theory for additive functions, one can show that the upper bound \\((\\log x)/\\log\\log x\\) is best possible and that the limsup equals 1. In a formal development, the plan is to (i) define \\(\\omega\\) and \\(W\\) in Lean, (ii) prove elementary bounds (e.g., \\(\\omega(n)\\le \\log n/\\log\\log n\\)), (iii) encode the limsup condition via a universal quantifier over \\(\\varepsilon>0\\) and an existence statement for infinitely many \\(x\\), and (iv) attempt a contradiction proof assuming a larger limsup.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07641v1",
+    "status": "available",
+    "timestamp": "2026-07-09T15:12:10.552210+00:00",
+    "title": "Precise asymptotic for the sum of distinct prime divisors over intervals"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "ad941b96",
