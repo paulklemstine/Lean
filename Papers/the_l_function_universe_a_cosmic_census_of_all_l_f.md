@@ -1,59 +1,57 @@
-# Computational Evidence — Cosmic Census of L-Functions
+# Computational Evidence: the L-function universe is countable
 
-## 1. The claim being tested
+The project formalizes a cardinality dichotomy for spaces of Dirichlet series
+`L(s) = Σ a(k) k^{-s}`, identified with their coefficient sequences `a : ℕ → ℂ`.
 
-The census philosophy asserts that a Selberg-class L-function is determined by a
-finite package of arithmetic invariants over countable rings:
+## 1. Small-case calculations
 
-    (degree ∈ ℕ, conductor ∈ ℕ, root number ∈ ℚ², gamma shifts ∈ List ℚ²,
-     finite local Euler data ∈ List (ℕ × List ℤ)).
+**Dirichlet characters (the concrete countable family).** For each modulus `n` the
+number of Dirichlet characters mod `n` is `φ(n)` (for `n ≥ 1`):
 
-If that is so, the universe of L-functions injects into a **countable** type, so it
-is at most countable. Adding one infinite family (Dirichlet L-functions, one per
-conductor) makes it exactly **countably infinite**, hence in bijection with `ℕ`.
+| n | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |
+|---|---|---|---|---|---|---|---|---|---|----|----|----|
+| # characters mod n (= φ(n)) | 1 | 1 | 2 | 2 | 4 | 2 | 6 | 4 | 6 | 4 | 10 | 4 |
 
-## 2. Small-case calculation — the census by conductor
+Each is finite, and the moduli are indexed by `ℕ`, so the total family
+`Σ n, DirichletCharacter ℂ n` is a countable union of finite sets — countable.
+The running total (number of characters of modulus `≤ N`) is finite for every `N`,
+which is precisely the "enumerate the first 100" phenomenon:
 
-Ordering the degree-1 representatives by conductor `q = 1, 2, 3, …` gives the start
-of the census:
+    Σ_{n≤N} φ(n) :  1, 2, 4, 6, 10, 12, 18, 22, 28, 32, ...
 
-| # | conductor | degree | family              |
-|---|-----------|--------|---------------------|
-| 1 | 1         | 1      | ζ (trivial char)    |
-| 2 | 2         | 1      | Dirichlet mod 2     |
-| 3 | 3         | 1      | Dirichlet mod 3     |
-| … | …         | 1      | …                   |
-|100| 100       | 1      | Dirichlet mod 100   |
+This is the *totient summatory function* (OEIS **A002088**), confirming each finite
+prefix of the enumeration is a genuine finite set.
 
-This is exactly `SelbergDatum.census` in `Census.lean`; the Lean file proves:
+## 2. The naive universe, by contrast, is a continuum
 
-* `census_length : census.length = 100`
-* `census_conductors : census.map conductor = [1, 2, …, 100]` (`List.range' 1 100`)
-* `census_nodup : census.Nodup`
-* `census_valid : ∀ d ∈ census, IsValid d`
+Without arithmetic constraints the coefficient sequences range over all of
+`ℕ → ℂ`. Already the `{0,1}`-valued sequences biject with subsets of `ℕ`, of which
+there are `2^{ℵ₀} > ℵ₀`. So the *unconstrained* universe is uncountable; the
+countability is entirely due to the arithmetic axioms (periodicity/algebraicity of
+coefficients, finite determining data).
 
-## 3. Cardinality bookkeeping (why "countable")
+## 3. The census slices are finite
 
-* `ℕ`, `ℤ`, `ℚ` are countable; finite products and `List` of countable types are
-  countable. Hence the invariant-tuple type is countable.
-* `toTuple` is injective (proved in Lean), so `SelbergDatum` is countable.
-* `levels : ℕ → SelbergDatum` and `dirichletLike : ℕ → SelbergDatum` are injective,
-  so `SelbergDatum` is infinite.
-* Countable + Infinite ⇒ `SelbergDatum ≃ ℕ` (`exists_equiv_nat`).
+Modelling an L-function by its finite determining packet
+`(degree, conductor, root number, finitely many Euler-factor coefficients)`, the set
+of packets whose invariants are all bounded by `N` is finite for every `N`, and
+these finite slices exhaust the whole (countably infinite) universe. Concretely, for
+each complexity bound the census is a finite subset of a finite product
+`Iic N × Iic N × Icc(-N,N) × Iic N × {lists over [-N,N] of length ≤ N}`.
 
 ## 4. Counterexample hunt
 
-Could the universe be *uncountable*? Only if some invariant ranged over an
-uncountable set (e.g. root numbers as arbitrary reals, or Euler data at *all*
-infinitely many primes chosen freely). The finite-invariant model deliberately
-excludes that: root numbers/shifts live in `ℚ` and only *finitely many* local
-factors are recorded. Within the model no uncountable family exists — consistent
-with the conjecture. The genuinely hard content (that the analytic Selberg class
-actually embeds into such finite data) is a rigidity statement discussed in
-`FUTURE_DIRECTIONS.md` and is *not* asserted here.
+The claim "the constrained universe is countable" is verified rather than refuted:
+- periodic sequences over a countable alphabet: countable (proved, `periodicSeq_countable`);
+- Dirichlet characters over all moduli: countable (proved, `dirichletCharFamily_countable`);
+- finite-data Selberg packets: countably infinite (proved, `selbergDatum_countably_infinite`).
+No counterexample is possible: countability of each family is a theorem, not a
+conjecture, in the models used here.
 
-## 5. OEIS
+## Summary
 
-The census ordered by conductor with a single degree-1 representative per level is
-just `a(n) = n` (conductor tower), OEIS A000027 (the natural numbers) — the very
-sequence witnessing the bijection with `ℕ`.
+The formal artifacts (`NaiveUniverse.lean`, `PeriodicUniverse.lean`,
+`SelbergCensus.lean`) turn these observations into fully checked Lean 4 proofs:
+the naive universe is uncountable, but every arithmetically constrained model —
+periodic-coefficient L-functions, Dirichlet L-functions, and finite-data Selberg
+packets — is countable.
