@@ -17416,6 +17416,59 @@
     "title": "Equality Conditions for the Fishburn Inequality for Linear Extensions of Posets"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Hecke algebra",
+      "Schubert calculus",
+      "exterior algebra",
+      "bosonic Schubert calculus"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any positive integer r, the representation of the finite Hecke algebra H_r on the r-th exterior power ∧^r V (where V = ℚ[X] truncated appropriately) obtained from the bosonic Schubert calculus is faithful; distinct elements of H_r act as distinct linear maps on ∧^r V.",
+    "domain_bridges": [
+      "representation theory",
+      "combinatorial algebra",
+      "algebraic geometry"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0762",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Show that the kernel of the representation is trivial by computing the character on a generating set of H_r and verifying it is non‑zero, or by exhibiting a separating vector on which distinct group elements act differently.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07667v1",
+    "status": "available",
+    "timestamp": "2026-07-09T14:17:39.222700+00:00",
+    "title": "Faithfulness of the Hecke Algebra Representation via Bosonic Schubert Operators on Exterior Powers"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The conjecture asserts that every infinite word over a finite alphabet has universal group complexity, i.e., for each length n and each integer k between its abelian and factor complexities there exists a subgroup G_n ≤ S_n realizing p_ω(n)=k.",
+    "domain_bridges": [
+      "formal languages",
+      "group theory",
+      "combinatorial enumeration"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0762",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "search for counterexample by exhaustive enumeration of small alphabets and lengths",
+    "research_mode": "team",
+    "source_exp_id": "2607.07620v1",
+    "status": "available",
+    "timestamp": "2026-07-09T14:18:06.425289+00:00",
+    "title": "Universal Group Complexity Conjecture for All Infinite Words"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "ad941b96",

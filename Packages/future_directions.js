@@ -9307,6 +9307,36 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equality Conditions for the Fishburn Inequality for Linear Extensions of Posets"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "For any positive integer r, the representation of the finite Hecke algebra H_r on the r-th exterior power \u2227^r V (where V = \u211a[X] truncated appropriately) obtained from the bosonic Schubert calculus is faithful; distinct elements of H_r act as distinct linear maps on \u2227^r V.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0762",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07667v1",
+    "status": "available",
+    "timestamp": "2026-07-09T14:17:39.222700+00:00",
+    "title": "Faithfulness of the Hecke Algebra Representation via Bosonic Schubert Operators on Exterior Powers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The conjecture asserts that every infinite word over a finite alphabet has universal group complexity, i.e., for each length n and each integer k between its abelian and factor complexities there exists a subgroup G_n \u2264 S_n realizing p_\u03c9(n)=k.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0762",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07620v1",
+    "status": "available",
+    "timestamp": "2026-07-09T14:18:06.425289+00:00",
+    "title": "Universal Group Complexity Conjecture for All Infinite Words"
+  },
+  {
     "consumed_by_exp_id": "ad941b96",
     "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers \u2014 anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension \u2014 they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property \u2014 it's not about content quality but about the sheaf cohomology of the social network.",
     "domains": [
