@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "57910dd4",
+    "consumed_by_exp_id": "",
     "description": "L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable \u2014 there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domains": [
       "Novelty",
@@ -13,7 +13,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T16:01:43.876173+00:00",
     "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
   },
@@ -33,7 +33,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
   },
   {
-    "consumed_by_exp_id": "df755cd3",
+    "consumed_by_exp_id": "",
     "description": "Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: lines parallel to the x-axis diverge (hyperbolic behavior) while lines parallel to the y-axis converge (elliptic behavior). The metric is ds^2 = dx^2/cosh^2(y) + dy^2 * cosh^2(x) \u2014 expanding in x and contracting in y. Conjecture: Split Geometry is a consistent Riemannian geometry with curvature K(x,y) = -sech^2(y) + sech^2(x) that changes sign across the diagonals. The geometry has a 'phase boundary' along the lines y = x and y = -x where K = 0 (flat). In the region |x| > |y|, K > 0 (elliptic) and in the region |y| > |x|, K < 0 (hyperbolic). The geodesics in split geometry are piecewise combinations of exponential curves (in hyperbolic regions) and trigonometric curves (in elliptic regions). Test: compute the Christoffel symbols and curvature tensor for the split metric. Prove that geodesics cross the phase boundary at most twice. Compute the area of a split triangle with one vertex in each region. Impact: a geometry where the curvature of space depends on which direction you look \u2014 the mathematical realization of a universe that is simultaneously expanding and contracting.",
     "domains": [
       "Novelty",
@@ -43,7 +43,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T16:01:43.730052+00:00",
     "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
   },
@@ -1402,20 +1402,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T09:58:51.961008+00:00",
     "title": "Sharp Lower Bounds for Sumsets in L\u2081 Balls in \u2124\u1d48"
-  },
-  {
-    "consumed_by_exp_id": "b99a839a",
-    "description": "For any integer \u0394 \u2265 1, there exists a graph G with maximum degree \u0394 such that any SD-EF1 allocation of G to common preferences requires at least 3\u0394\u22121 agents. This conjecture asserts that the upper bound of 3\u0394\u22121 agents proved in the paper is asymptotically tight for SD-EF1 fairness under common preferences.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0140",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01059v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T10:56:54.072591+00:00",
-    "title": "Tightness of the 3\u0394-1 Bound for SD-EF1 Allocations"
   },
   {
     "consumed_by_exp_id": "",
@@ -6156,7 +6142,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit logarithmic bound on metric dimension of doubly regular tournaments"
   },
   {
-    "consumed_by_exp_id": "874776c2",
+    "consumed_by_exp_id": "",
     "description": "The paper proves that for k \u2265 3 and sufficiently large n, the maximum number of points in an n \u00d7 n grid with no k+1 collinear points equals kn. This conjecture asserts that 'sufficiently large' can be replaced by the explicit threshold n \u2265 k. Note that for n \u2264 k the whole grid has no k+1 collinear points so f_k(n) = n\u00b2, and for n = k we get f_k(k) = k\u00b2 = k\u00b7k, making n \u2265 k the natural boundary. The conjecture predicts that for all k \u2265 3 and n \u2265 k, the trivial upper bound kn is always achievable.",
     "domains": [
       "Pythagorean"
@@ -6165,7 +6151,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05255v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T06:16:15.118766+00:00",
     "title": "Explicit Threshold for No-(k+1)-in-line: f_k(n) = kn for all k \u2265 3 and n \u2265 k"
   },
@@ -7789,7 +7775,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The \u221a2-Threshold Conjecture for Rips Filtration Approximation"
   },
   {
-    "consumed_by_exp_id": "62dc7dd2",
+    "consumed_by_exp_id": "",
     "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card \u2014 you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier \u2014 it's an opportunity. You can WIN at the game of undecidability.",
     "domains": [
       "Novelty",
@@ -7799,7 +7785,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T16:01:43.960880+00:00",
     "title": "Godel's Casino: Incomplete but Winnable Games"
   },
@@ -8575,7 +8561,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Peak refinement of c-balanced Dyck path enumeration"
   },
   {
-    "consumed_by_exp_id": "96910b34",
+    "consumed_by_exp_id": "",
     "description": "Every simple finite graph that is (K\u2081\u222aP\u2084)-free, has toughness at least 1, and has at least 3 vertices is Hamiltonian.",
     "domains": [
       "Physics"
@@ -8584,7 +8570,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07239v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-09T04:17:26.671029+00:00",
     "title": "Hamiltonicity of (K\u2081\u222aP\u2084)-free 1-tough graphs"
   },
@@ -8751,12 +8737,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any integers c \u2265 2 and 1 \u2264 r \u2264 c, there exists a bijection between the set of c\u2011balanced Dyck paths of semilength n = c\u00b7m + r \u2013 1 and the set of (c+1)-ary rooted trees with m internal nodes and exactly r leaves. Consequently, the number of such Dyck paths equals the Raney number Raney_{c+1,r}(m).",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0722",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07256v1",
+    "status": "available",
+    "timestamp": "2026-07-09T08:56:45.426505+00:00",
+    "title": "Existence of a bijection between c\u2011balanced Dyck paths and (c+1)-ary trees with prescribed leaf count"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For every composition \u03b1 of length r \u2264 R, the differential operator \u2202_\u03b1 = \u2202_{i1}\u22ef\u2202_{ir} acting on the polynomial ring \u211a[X_1,\u2026,X_R] yields a non-zero scalar multiple of the basis element X_{i1}\u2227\u22ef\u2227X_{ir} in \u2227^r V, where \u2202_i = (1/i!)\u00b7(d/dX_i)|_{X=0}. Moreover, the scalar equals the sign of the permutation that sorts (i1,\u2026,ir). This equality holds for all r and can be tested computationally for small values.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0722",
+    "id": "fd_0723",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07667v1",
@@ -8770,7 +8770,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0723",
+    "id": "fd_0724",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07641v1",
@@ -8784,7 +8784,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0724",
+    "id": "fd_0725",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07638v1",
@@ -8799,7 +8799,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0725",
+    "id": "fd_0726",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07566v1",
@@ -8814,7 +8814,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0726",
+    "id": "fd_0727",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07564v1",
@@ -8829,7 +8829,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0727",
+    "id": "fd_0728",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07458v1",
@@ -8843,7 +8843,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0728",
+    "id": "fd_0729",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07448v1",
@@ -8858,7 +8858,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0729",
+    "id": "fd_0730",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07407v1",
@@ -8873,7 +8873,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0730",
+    "id": "fd_0731",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07392v1",
@@ -8887,7 +8887,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0731",
+    "id": "fd_0732",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07404v1",
@@ -8897,6 +8897,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture that any directed strongly regular graph on 108 vertices admitting a transitive automorphism group must be isomorphic to one of the graphs constructed in the paper, i.e., the parameters listed are exactly those possible under a transitive group action.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0733",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07381v1",
+    "status": "available",
+    "timestamp": "2026-07-09T08:57:05.979673+00:00",
+    "title": "Exhaustivity of directed strongly regular graphs on 108 vertices"
+  },
+  {
+    "consumed_by_exp_id": "a88deb31",
     "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers \u2014 anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension \u2014 they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property \u2014 it's not about content quality but about the sheaf cohomology of the social network.",
     "domains": [
       "Novelty",
@@ -8906,7 +8921,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.77,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.584485+00:00",
     "title": "The Mathematics of Memes: Viral Information Topology"
   },

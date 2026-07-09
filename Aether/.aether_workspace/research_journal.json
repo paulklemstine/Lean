@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "07ec4039",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — EML Universal Approximation: Density & Depth\n\nDerived from the cycle that produced `Catalog/EML/CubeDensity.lean` (density of the\ncoordinate-exponential EML algebra on `[0,1]ⁿ`,",
-      "quality_score": 0.77992,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-06-28T17:25:51",
-      "title": "EML Universal Approximation: Density of EML Functions"
-    },
-    {
       "cycle_id": "35f6557d",
       "domain": "Applications",
       "key_insight": "# FUTURE DIRECTIONS — Euler–Mascheroni Constant: Irrationality Approaches\n\nTarget category (Menu Balance, v19a): **subtask of a famous open problem** —\nthe irrationality of the Euler–Mascheroni consta",
@@ -2501,6 +2491,16 @@
       "theorem_count": 26,
       "timestamp": "2026-07-09T03:18:19",
       "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
+    },
+    {
+      "cycle_id": "c4017799",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — Self-Improving Proofs\n\nThe file `Catalog/NumberTheory/SelfImprovingProofs.lean` formalizes a proof\nrefinement calculus and proves the mission's core claims by isolating their\nmat",
+      "quality_score": 0.5808559999999999,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-07-09T08:55:50",
+      "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7115
     }
   ],
-  "last_updated": "2026-07-09T03:18:19",
+  "last_updated": "2026-07-09T08:55:50",
   "open_questions": [
     {
       "context": "`sorry`-free Lean proof of Sabidussi's theorem.",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "0e9a5064",
-        "quality": 0.7836800000000002,
-        "theorems": 13,
-        "title": "Lean-formalizable Sun truncated Legendre-symbol determinant"
-      },
-      {
         "cycle_id": "ab42f98e",
         "quality": 0.70551,
         "theorems": 3,
@@ -3699,6 +3693,12 @@
         "quality": 0.43457572380952386,
         "theorems": 4,
         "title": "Real-rootedness of the square of the Eulerian triangle"
+      },
+      {
+        "cycle_id": "c4017799",
+        "quality": 0.5808559999999999,
+        "theorems": 21,
+        "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
       }
     ],
     "Physics": [
