@@ -1,55 +1,83 @@
-# Computational Evidence: Self-Improving Proofs
+# Computational Evidence — Self-Improving Proofs
 
-The refinement theory is discrete and finite, so the relevant evidence is a
-direct calculation of complexities along a refinement chain and a check of the
-structural claims on small cases. All numbers below are reproduced by the
-formal development (`SelfImprovingProofs.lean`).
+The mission's conjecture reduces, once made precise, to a statement about the
+order structure of `ℕ`: a proof `P` carries a complexity
+`C(P) = length(P) + depth(P) + #lemmas(P) ∈ ℕ`, and refinement means strict
+decrease of `C`. All the dynamical claims (a simplest proof exists, the process
+halts, chains can be arbitrarily long) are therefore claims about descending
+sequences in `ℕ`. Below is the concrete evidence gathered before formalizing.
 
-## 1. The √2 refinement chain
+## 1. Small-case calculations
 
-Complexity `C(P) = length + depth + numLemmas`:
+### The `√2` refinement chain
 
-| Proof             | length | depth | numLemmas | C(P) |
-|-------------------|--------|-------|-----------|------|
-| `sqrt2_verbose`      | 40 | 12 | 8 | **60** |
-| `sqrt2_intermediate` | 20 |  6 | 3 | **29** |
-| `sqrt2_streamlined`  |  1 |  1 | 0 | **2**  |
+Three genuine proof strategies for `Irrational (√2)`, with a coarse complexity
+count `C = length + depth + #lemmas` (lines of essential tactic script + nesting
+depth of case splits + number of auxiliary lemmas invoked):
 
-The chain `60 → 29 → 2` is strictly decreasing, so each step is a genuine
-refinement, and `2` is the minimum — the terminal / simplest proof of the three.
+| Strategy | length | depth | #lemmas | `C(P)` |
+|---|---|---|---|---|
+| A. classical proof by contradiction (`a/b` in lowest terms, both even) | 4 | 2 | 1 | **7** |
+| B. via `2 ∣ n² → 2 ∣ n` (`Nat.Prime.dvd_of_dvd_pow`) | 2 | 1 | 1 | **4** |
+| C. packaged `irrational_sqrt_two` | 1 | 0 | 1 | **2** |
 
-## 2. Step-bound spot check
+Refinement chain: `C = 7 ⇝ 4 ⇝ 2`, strictly decreasing, halting at `C = 2`.
+The values themselves are only illustrative; what is verified formally is that
+they form a strictly descending, terminating chain with a unique minimum.
 
-For a strictly decreasing chain the bound `C(P_n) + n ≤ C(P_0)` holds:
+### Descending sequences in `ℕ` (the abstract content)
 
-- `n = 1`: `29 + 1 = 30 ≤ 60` ✓
-- `n = 2`: `2  + 2 = 4  ≤ 60` ✓
+Simulating "measure `C` at each refinement step" for a few monotone-improving
+sequences:
 
-More generally a strictly decreasing `ℕ`-chain from `c` has at most `c` steps;
-sampling `c = 0,1,2,3` confirms maximum chain lengths `0,1,2,3` respectively.
+| start `C₀` | sample non-increasing walk | halts at step | limit `C∞` |
+|---|---|---|---|
+| 5 | 5,4,4,2,2,2,… | 3 | 2 |
+| 9 | 9,7,7,7,3,3,… | 4 | 3 |
+| N | N, N−1, …, 1, 0, 0, … | N | 0 |
 
-## 3. Eventual-constancy sampling
+Every walk stabilizes; the stabilization index is unbounded across the family
+(row 3 needs `N` steps), matching "the process can be arbitrarily long yet always
+halts."
 
-Non-increasing sequences tested for the "eventually constant" claim
-`∃ N, ∀ n ≥ N, f n = f N`:
+## 2. OEIS search
 
-- `f = 5,3,3,1,1,1,1,…` stabilizes at `N = 3`, value `1`.
-- `f = 7,7,7,…` stabilizes at `N = 0`, value `7`.
-- `f n = max(4 - n, 0)` i.e. `4,3,2,1,0,0,…` stabilizes at `N = 4`, value `0`.
+The only sequence that appears is the maximal chain length as a function of the
+starting complexity `N`, namely `N ↦ N` (the padded chain `N, N−1, …, 0`). This
+is the identity sequence A001477 (0,1,2,3,…) and carries no further structure —
+consistent with the fact that the phenomenon is purely the well-ordering of `ℕ`.
 
-Every sampled non-increasing `ℕ`-sequence reaches a final constant value, as the
-general theorem predicts.
+## 3. Counterexample hunt
 
-## 4. Counterexample hunt (uniqueness of the simplest proof)
+The universal claims were stress-tested against attempts to build a
+counterexample:
 
-Testing whether "minimal complexity ⇒ unique proof": the two artifacts
-`⟨0,0,0,trivial⟩` and `⟨0,0,0,True.intro⟩` both certify `True` at complexity `0`
-yet are distinct records. This is a genuine counterexample to uniqueness, so the
-theory only claims uniqueness of the *value* `Cmin`, not of the proof object.
+- **"Infinite strictly-descending refinement chain."** Any candidate `f : ℕ →
+  Proof T` with `C(f(n+1)) < C(f(n))` yields a strictly decreasing sequence of
+  naturals, which cannot exist. No counterexample — formalized as
+  `no_infinite_refinement`.
+- **"A non-increasing sequence that never stabilizes."** Impossible for the same
+  reason (a never-stabilizing antitone `ℕ`-sequence would be strictly decreasing
+  infinitely often). No counterexample — formalized as `refinement_terminates`.
+- **"A family of proofs with no simplest element."** Would require a nonempty
+  subset of `ℕ` with no least element. No counterexample — formalized as
+  `exists_minimal_proof`.
+- **"Two simplest proofs of different complexity."** Would violate antisymmetry
+  of `≤` on `ℕ`. No counterexample — formalized as `simplest_complexity_unique`.
 
-## 5. OEIS note
+No counterexamples were found to any universal claim, as expected.
 
-The maximal-chain-length sequence for a strictly decreasing `ℕ`-process started
-at `c` is simply `0,1,2,3,4,…` (the identity, A001477); no deeper sequence
-arises, which is itself evidence that the finite step bound is exactly `c` and
-cannot be improved.
+## 4. Tables / plots
+
+The single relevant plot is the complexity-vs-step trace of a refinement run,
+e.g. for row 2 above: `9 → 7 → 7 → 7 → 3 → 3 → …`, a staircase that is
+non-increasing and eventually flat. Every such trace is a non-increasing `ℕ`
+sequence, hence eventually constant — the visual content of
+`refinement_terminates`.
+
+## Conclusion
+
+The evidence is unanimous: modelled honestly, the refinement dynamics are exactly
+the descending-chain behaviour of `ℕ`. This is what is proved, without any
+axioms beyond `propext`, `Classical.choice`, `Quot.sound`, in
+`Catalog/NumberTheory/SelfImprovingProofs.lean`.
