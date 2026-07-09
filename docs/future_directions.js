@@ -3,6 +3,21 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
+    "consumed_by_exp_id": "643186e8",
+    "description": "The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do \u2014 as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: The tropical semiring (R union {infinity}, min, +) IS the field with one element, in the following precise sense: the category of tropical schemes is equivalent to the category of F_1-schemes. More concretely, a tropical variety over F_1 is a set with a min-plus structure, and its base change to Z (formally, tensor with Z) is a toric variety. The key correspondence: F_1-points of a tropical variety are the vertices of its Newton polytope, and the 'cardinality' of the tropical variety (as an F_1-object) is the number of lattice points in the polytope, which equals the degree of the toric variety after base change. Test: for each toric variety corresponding to a polytope P, compute the number of F_1-points (vertices of P) and verify that the Euler characteristic of the toric variety equals |vertices(P)| = #F_1-points. Prove the tensor product correspondence: tropical scheme X over F_1 has X tensor_Z Z = the corresponding toric variety. Impact: F_1 and tropical geometry are two faces of the same coin. The field with one element is tropical, and tropical geometry is the geometry of F_1.",
+    "domains": [
+      "Novelty",
+      "Tropical"
+    ],
+    "id": "fd_0791",
+    "priority_score": 0.87,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-09T19:37:23.824326+00:00",
+    "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable \u2014 there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domains": [
@@ -6592,7 +6607,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimality of the cake-cutting constant \u03bc\u2082"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "901a2c39",
     "description": "For a complete multipartite graph G = K_{n_1,...,n_m} with n_1 \u2264 ... \u2264 n_m, the path-free complex PF_t(G) is vertex decomposable if and only if t \u2265 2n_{m-1} - 1. Equivalently, this is exactly the range where PF_t(G) is shellable and sequentially Cohen-Macaulay. For t \u2264 2n_{m-1} - 2, the complex fails to be sequentially Cohen-Macaulay.",
     "domains": [
       "Bridges"
@@ -6601,7 +6616,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05358v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T13:11:19.325737+00:00",
     "title": "Vertex decomposability threshold for path-free complexes of complete multipartite graphs"
   },
@@ -7717,7 +7732,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The \u221a2-Threshold Conjecture for Rips Filtration Approximation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "00f256fb",
     "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card \u2014 you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier \u2014 it's an opportunity. You can WIN at the game of undecidability.",
     "domains": [
       "Novelty",
@@ -7727,7 +7742,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.960880+00:00",
     "title": "Godel's Casino: Incomplete but Winnable Games"
   },
@@ -8737,6 +8752,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Order-type characterization of algebraic $p$-adic Hahn series with finitely many accumulation points"
   },
   {
+    "consumed_by_exp_id": "c38e66e4",
+    "description": "In every connected graph whose edges are either 1\u2011matching or 2\u2011matching edges and in which no perfect matching contains edges of both types, the number of perfect matchings is always a power of two.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0726",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06921v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-09T10:39:28.931121+00:00",
+    "title": "Power\u2011of\u2011Two Perfect Matching Count in Class\u202fB Graphs"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "We conjecture that for any field F and integers n \u2265 m \u2265 0, d \u2265 0, the field\u2011independent filtration of \u0394^(n,m)Sym^dE described in the paper yields graded pieces whose characters are exactly the quantum binomial coefficients appearing in the product rule (Rel2) for Lusztig\u2019s quantum Cartan elements. In particular, the i\u2011th quotient is isomorphic to \u0394^(n\u2011i,m\u2011i)Sym^(d\u2011i)E and its formal character equals s_(n\u2011i,m\u2011i) \u2218 s_(d\u2011i).",
     "domains": [
@@ -9670,7 +9699,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bypassed"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "90ef345f",
     "description": "The Mandelbrot set M is defined by z_{n+1} = z_n^2 + c, and the boundary of M is the locus of c values where the orbit of 0 is bounded but barely so. Each bulb of M corresponds to a rational number p/q (the period-q bulb at angle p/q). The size of the p/q bulb decreases with q, and the Fibonacci sequence governs the spiral arrangement of bulbs. Conjecture: The period of the bulb at angle p/q (in lowest terms) is exactly q. Moreover, the Lyapunov exponent lambda(c) at the center of the p/q bulb equals log(2) * cos(pi*p/q). The 'prime bulbs' \u2014 bulbs at angles 1/q where q is prime \u2014 have special symmetry: they are the only bulbs with dihedral symmetry D_q. The composite bulbs have more complex symmetry groups. The prime factorization of the period determines the bulb's topology: a bulb of period n = p1^a1 * ... * pk^ak is topologically a product of k bulbs of periods p1^a1, ..., pk^ak. Test: for each rational p/q with q <= 20, locate the corresponding bulb in M, compute its Lyapunov exponent, and verify lambda = log(2) * cos(pi*p/q). Classify bulbs by the prime factorization of their period and verify the product structure. Impact: the Mandelbrot set is a visual calculator for prime factorization \u2014 every bulb encodes number-theoretic information about its period.",
     "domains": [
       "Novelty",
@@ -9680,7 +9709,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T20:47:34.624685+00:00",
     "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
   },

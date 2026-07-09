@@ -2,6 +2,26 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "643186e8",
+    "description": "The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do — as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: The tropical semiring (R union {infinity}, min, +) IS the field with one element, in the following precise sense: the category of tropical schemes is equivalent to the category of F_1-schemes. More concretely, a tropical variety over F_1 is a set with a min-plus structure, and its base change to Z (formally, tensor with Z) is a toric variety. The key correspondence: F_1-points of a tropical variety are the vertices of its Newton polytope, and the 'cardinality' of the tropical variety (as an F_1-object) is the number of lattice points in the polytope, which equals the degree of the toric variety after base change. Test: for each toric variety corresponding to a polytope P, compute the number of F_1-points (vertices of P) and verify that the Euler characteristic of the toric variety equals |vertices(P)| = #F_1-points. Prove the tensor product correspondence: tropical scheme X over F_1 has X tensor_Z Z = the corresponding toric variety. Impact: F_1 and tropical geometry are two faces of the same coin. The field with one element is tropical, and tropical geometry is the geometry of F_1.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Tropical"
+    ],
+    "id": "fd_0791",
+    "lineage_refs": [],
+    "priority_score": 0.87,
+    "proof_strategy": "Define the F_1-tropical correspondence: a tropical scheme over F_1 is a monoid object M in the tropical semiring (R union infty, min, +). The base change M tensor_Z Z is the monoid algebra Z[M], which is the coordinate ring of the toric variety associated to M. Prove: if M is the monoid of lattice points in a rational polytope P, then Z[M] is the homogeneous coordinate ring of the toric variety V(P). Prove the point-counting correspondence: #V(P)(F_1) = |vertices(P)| (number of F_1-points equals vertices). Prove: chi(V(P)) = |vertices(P)| (Euler characteristic equals number of F_1-points). This follows from the fact that V(P) is a cell complex with one cell per face of P, and chi = alternating sum of face counts = number of vertices. Test: verify for projective space P^n (the simplex has n+1 vertices, chi(P^n) = n+1), for the Hirzebruch surface F_a (4 vertices, chi = 4).",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-09T19:37:23.824326+00:00",
+    "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "L-functions are the DNA of mathematics — each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable — there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domain_bridges": [],
@@ -12256,7 +12276,7 @@
       "math.CO",
       "math.AT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "901a2c39",
     "description": "For a complete multipartite graph G = K_{n_1,...,n_m} with n_1 ≤ ... ≤ n_m, the path-free complex PF_t(G) is vertex decomposable if and only if t ≥ 2n_{m-1} - 1. Equivalently, this is exactly the range where PF_t(G) is shellable and sequentially Cohen-Macaulay. For t ≤ 2n_{m-1} - 2, the complex fails to be sequentially Cohen-Macaulay.",
     "domain_bridges": [
       "simplicial_complexes",
@@ -12273,7 +12293,7 @@
     "proof_strategy": "Formalize simplicial complexes and vertex decomposability in Lean, then define PF_t(G) as the simplicial complex of vertex subsets with no induced P_t. Define complete multipartite graphs and their part-size ordering. The forward direction (t ≥ 2n_{m-1}-1 ⟹ vertex decomposable) requires formalizing the explicit structural decomposition of PF_t(G) as a union of join complexes with a size-truncation term, then proving each join component is vertex decomposable and that the union preserves this property. The reverse direction (t ≤ 2n_{m-1}-2 ⟹ not sequentially Cohen-Macaulay) requires constructing a specific non-Cohen-Macaulay witness face or showing the homology fails the sequential Cohen-Macaulay condition, potentially via a Mayer-Vietoris spectral sequence argument.",
     "research_mode": "team",
     "source_exp_id": "2607.05358v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T13:11:19.325737+00:00",
     "title": "Vertex decomposability threshold for path-free complexes of complete multipartite graphs"
   },
@@ -14434,7 +14454,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "00f256fb",
     "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card — you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier — it's an opportunity. You can WIN at the game of undecidability.",
     "domain_bridges": [],
     "domains": [
@@ -14447,7 +14467,7 @@
     "proof_strategy": "Define Godel's Casino: each round, the house presents a statement phi in the language of arithmetic. The player bets TRUE or FALSE. If ZFC proves phi, TRUE wins. If ZFC proves not-phi, FALSE wins. If phi is independent of ZFC, BOTH bets win (the player gets their stake back plus a bonus). Strategy: bet TRUE on Sigma_1 statements, FALSE on negations of Con(ZFC) and similar independent Pi_1 statements. Prove expected profit > 0: by the arithmetic hierarchy, Sigma_1 statements are decidable (true iff provable). For a random statement at level n, the probability of decidability is at least 1/3 (by counting). So E[profit] >= (1/3) * (stake) > 0. The key: even though individual bets are undecidable, the AGGREGATE strategy is profitable because most arithmetic statements ARE decidable. Test: simulate with 1000 randomly generated arithmetic statements at various levels of the hierarchy.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.960880+00:00",
     "title": "Godel's Casino: Incomplete but Winnable Games"
   },
@@ -16350,6 +16370,32 @@
     "title": "Order-type characterization of algebraic $p$-adic Hahn series with finitely many accumulation points"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "arXiv:2305.12345",
+      "Diestel, R. \"Graph Theory\"",
+      "Lovász, L., Plummer, M. \"Matching Theory\""
+    ],
+    "consumed_by_exp_id": "c38e66e4",
+    "description": "In every connected graph whose edges are either 1‑matching or 2‑matching edges and in which no perfect matching contains edges of both types, the number of perfect matchings is always a power of two.",
+    "domain_bridges": [
+      "combinatorics",
+      "algebraic graph theory"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0726",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the structural characterization of class B FIFA: induction on the ear decomposition supplied in the paper.  The base case (a single edge) clearly has 1 = 2^0 perfect matchings.  Adding an ear introduces exactly one new pair of perfect matchings, so the total number of perfect matchings doubles.  Tight‑cut decompositions can be employed to handle the case where the graph splits into smaller class B components, each inheriting the power‑of‑two property, and the total number of perfect matchings is the product of the component counts, preserving the power‑of‑two nature.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06921v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-09T10:39:28.931121+00:00",
+    "title": "Power‑of‑Two Perfect Matching Count in Class B Graphs"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "GSMW-Pfaff",
@@ -18114,7 +18160,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "90ef345f",
     "description": "The Mandelbrot set M is defined by z_{n+1} = z_n^2 + c, and the boundary of M is the locus of c values where the orbit of 0 is bounded but barely so. Each bulb of M corresponds to a rational number p/q (the period-q bulb at angle p/q). The size of the p/q bulb decreases with q, and the Fibonacci sequence governs the spiral arrangement of bulbs. Conjecture: The period of the bulb at angle p/q (in lowest terms) is exactly q. Moreover, the Lyapunov exponent lambda(c) at the center of the p/q bulb equals log(2) * cos(pi*p/q). The 'prime bulbs' — bulbs at angles 1/q where q is prime — have special symmetry: they are the only bulbs with dihedral symmetry D_q. The composite bulbs have more complex symmetry groups. The prime factorization of the period determines the bulb's topology: a bulb of period n = p1^a1 * ... * pk^ak is topologically a product of k bulbs of periods p1^a1, ..., pk^ak. Test: for each rational p/q with q <= 20, locate the corresponding bulb in M, compute its Lyapunov exponent, and verify lambda = log(2) * cos(pi*p/q). Classify bulbs by the prime factorization of their period and verify the product structure. Impact: the Mandelbrot set is a visual calculator for prime factorization — every bulb encodes number-theoretic information about its period.",
     "domain_bridges": [],
     "domains": [
@@ -18127,7 +18173,7 @@
     "proof_strategy": "State the bulb-period correspondence: the bulb at angle p/q in the Mandelbrot set has period q. This follows from the Douady-Hubbard landing theorem. Conjecture the Lyapunov formula: lambda(center of p/q bulb) = log(2) * cos(pi*p/q). Prove for the main cardioid (period 1): lambda = log(2) * cos(0) = log(2). Prove for the period-2 bulb: lambda = log(2) * cos(pi/2) = 0 (parabolic). Prove for period-q bulbs: the critical orbit has period q, and the multiplier of the q-cycle equals e^{2*pi*i*p/q} at the center, so the Lyapunov exponent is log|multiplier| = log(2) * cos(2*pi*p/q). Wait, the multiplier at the center of the p/q bulb is e^{2*pi*i*p/q}, so |multiplier| = 1 and lambda = 0. The Lyapunov exponent is NOT log(2)*cos(pi*p/q) at the center. Correct: on the boundary of the p/q bulb, lambda = 0 (parabolic), and lambda increases as you move away. Test: compute lambda numerically along rays from bulb centers.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T20:47:34.624685+00:00",
     "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
   },
