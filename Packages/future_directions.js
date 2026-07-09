@@ -9481,12 +9481,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every integer k \u2265 1, there exists a 4\u00d74 nonnegative unimodular matrix with entries in {0, 1, ..., 2k} such that its minimal singular value is at most 1/k.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0776",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07688v1",
+    "status": "available",
+    "timestamp": "2026-07-09T17:01:15.012969+00:00",
+    "title": "Minimal Singular Value Bound for 4\u00d74 Nonnegative Unimodular Matrices"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "We conjecture that every aperiodic infinite word over a ternary alphabet whose factor complexity satisfies p(n)=2n+1 for all n\u22651 possesses the universal group complexity property: for each length n and each integer k with p_ab(n) \u2264 k \u2264 p(n) there exists a subgroup G \u2264 S_n such that the group complexity p^G(n)=k.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0776",
+    "id": "fd_0777",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07620v1",
@@ -9500,13 +9514,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0777",
+    "id": "fd_0778",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07697v1",
     "status": "available",
     "timestamp": "2026-07-09T16:42:11.956682+00:00",
     "title": "Conjecture on the size of hitting sets for \u0398_t-induced minors"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that the combinatorial condition defining reflected bounded\u2011growth tuples can be expressed solely by simple linear inequalities and parity constraints on a weakly increasing integer sequence.  In other words, for a tuple \\(a=(a_1,\\dots,a_n)\\in\\mathbb{N}^n\\) the following are equivalent:\n\n1. \\(a\\) is a reflected bounded\u2011growth tuple (as defined in the paper).\n2. \\(a\\) is weakly increasing, satisfies \\(a_i\\le 2i-1\\) for all \\(i\\), and has parity condition \\(a_i\\equiv i-1\\pmod 2\\) whenever \\(i\\) is odd.\n\nConsequently the map \\(a\\mapsto\\prod_{i=1}^n[ a_i+1 ]_q\\) gives a bijection between such tuples and the palindromic Poincar\u00e9 polynomials of type \\(B_n\\) which do not lie in the image of Stembridge's bottom map from type \\(A_{n+1}\\).  This yields a purely elementary description of the complete list of palindromic Poincar\u00e9 polynomials in type \\(B\\).",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0779",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07659v1",
+    "status": "available",
+    "timestamp": "2026-07-09T17:02:33.023554+00:00",
+    "title": "Characterizing reflected bounded\u2011growth tuples in type\u202fB"
   },
   {
     "consumed_by_exp_id": "ad941b96",

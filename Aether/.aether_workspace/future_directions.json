@@ -31328,7 +31328,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
@@ -31345,7 +31345,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0654",
-      "last_attempt_time": "2026-07-09T16:42:16.233259+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -37224,6 +37224,53 @@
       "title": "Limsup Asymptotic for Sum of Distinct Prime Divisors in Intervals"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "unimodular matrices",
+        "singular values",
+        "nonnegative matrix theory"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every integer k ≥ 1, there exists a 4×4 nonnegative unimodular matrix with entries in {0, 1, ..., 2k} such that its minimal singular value is at most 1/k.",
+      "domain_bridges": [
+        "combinatorial matrix theory",
+        "algebraic geometry"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "github_issue": 0,
+      "id": "fd_0776",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "∀ (k : ℕ), ∃ (M : Matrix ℝ 4 4), (M.is_nonnegative ∧ M.det = 1 ∧ M.entries ≤ 2k) ∧ (min_singular_value M ≤ 1/k)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Constructive combinatorial analysis or probabilistic method to exhibit matrices with controlled singular values",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.07688v1",
+      "source_path": "http://arxiv.org/abs/2607.07688v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T17:01:15.012969+00:00",
+      "title": "Minimal Singular Value Bound for 4×4 Nonnegative Unimodular Matrices"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -37254,7 +37301,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0776",
+      "id": "fd_0777",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ternary_minimal_universal_group_complexity (w : InfiniteWord (Fin 3)) (h_aper : Aperiodic w) (h_min : ∀ n, factorComplexity w n = 2 * n + 1) : UniversalGroupComplexity w := by sorry",
@@ -37300,7 +37347,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0777",
+      "id": "fd_0778",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem induced_ep_theta {t k : ℕ} (G : Graph ℕ) : (¬ (∃ (C : List (InducedMinorCopy Θ_t G)), ...)) → ∃ (X : Finset ℕ), X.card ≤ 4 * t * k * Nat.log k ∧ ∀ (H : InducedMinorCopy Θ_t G), (closure X).contains (H.representative)",
@@ -37320,6 +37367,62 @@
       "thread_id": "",
       "timestamp": "2026-07-09T16:42:11.956682+00:00",
       "title": "Conjecture on the size of hitting sets for Θ_t-induced minors"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "BP05",
+        "RS16",
+        "GG25",
+        "Gas98",
+        "Bil98",
+        "BS25",
+        "Ste97",
+        "LS90"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "We conjecture that the combinatorial condition defining reflected bounded‑growth tuples can be expressed solely by simple linear inequalities and parity constraints on a weakly increasing integer sequence.  In other words, for a tuple \\(a=(a_1,\\dots,a_n)\\in\\mathbb{N}^n\\) the following are equivalent:\n\n1. \\(a\\) is a reflected bounded‑growth tuple (as defined in the paper).\n2. \\(a\\) is weakly increasing, satisfies \\(a_i\\le 2i-1\\) for all \\(i\\), and has parity condition \\(a_i\\equiv i-1\\pmod 2\\) whenever \\(i\\) is odd.\n\nConsequently the map \\(a\\mapsto\\prod_{i=1}^n[ a_i+1 ]_q\\) gives a bijection between such tuples and the palindromic Poincaré polynomials of type \\(B_n\\) which do not lie in the image of Stembridge's bottom map from type \\(A_{n+1}\\).  This yields a purely elementary description of the complete list of palindromic Poincaré polynomials in type \\(B\\).",
+      "domain_bridges": [
+        "Algebraic combinatorics",
+        "Order theory",
+        "Coxeter groups",
+        "Generating functions",
+        "Type theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0779",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "-- Characterisation of reflected bounded‑growth tuples\n\ntheorem reflected_bounded_growth_iff :\n  ∀ {n : ℕ} (a : Vector ℕ n),\n    is_reflected_bounded_growth a ↔\n      (monotone a ∧\n       ∀ i : Fin n, a i ≤ 2 * (i + 1) - 1 ∧\n         ((i + 1) % 2 = 1 → a i % 2 = i % 2)) := by\n  -- The proof is split into two directions:\n  -- • (→) Assume \\`a\\` is a reflected bounded‑growth tuple.\n  --   By definition there is a weakly increasing sequence \\`b\\` with \\`b_i ≤ 2i-1\\` and parity property;\n  --   the reflection argument yields the stated inequalities for \\`a\\`.\n  -- • (←) Assume the linear/parity conditions.\n  --   Construct a weakly increasing sequence \\`b\\` by setting \\`b_i = a_{n-i+1}\\` and verify that \\`b\\`\n  --   satisfies the required bounds, thereby producing a reflected bounded‑growth tuple whose image is \\`a\\`.\n  -- The details are handled by elementary arithmetic lemmas in Lean.",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "We will formalise the conjecture in Lean 4 by defining the predicate \\`is_reflected_bounded_growth\\` on vectors of natural numbers, the monotonicity and inequality/parity conditions, and the associated product of \\(q\\)-integers.  The plan is:\n\n1. Implement the definitions in Lean.\n2. Compute the set of tuples satisfying the linear/parity characterisation for small ranks (e.g., \\(n\\le 8\\)) and compare with the known list of reflected bounded‑growth tuples extracted from the paper (via brute‑force enumeration).\n3. Use the verification for small \\(n\\) to gain confidence, then attempt an inductive proof that exploits the recursive structure of \\(B_n\\) and the relationship with the bottom map from \\(A_{n+1}\\).\n\nThe final theorem will assert the equivalence described above.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.07659v1",
+      "source_path": "http://arxiv.org/abs/2607.07659v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T17:02:33.023554+00:00",
+      "title": "Characterizing reflected bounded‑growth tuples in type B"
     },
     {
       "ambition_level": "extension",
@@ -37407,10 +37510,10 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
+    "cross_domain_bridge",
     "famous_subtask",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "cross_domain_bridge",
-    "famous_subtask"
+    "cross_domain_bridge"
   ]
 }

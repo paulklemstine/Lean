@@ -17757,6 +17757,32 @@
     "title": "Limsup Asymptotic for Sum of Distinct Prime Divisors in Intervals"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "unimodular matrices",
+      "singular values",
+      "nonnegative matrix theory"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer k ≥ 1, there exists a 4×4 nonnegative unimodular matrix with entries in {0, 1, ..., 2k} such that its minimal singular value is at most 1/k.",
+    "domain_bridges": [
+      "combinatorial matrix theory",
+      "algebraic geometry"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0776",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Constructive combinatorial analysis or probabilistic method to exhibit matrices with controlled singular values",
+    "research_mode": "team",
+    "source_exp_id": "2607.07688v1",
+    "status": "available",
+    "timestamp": "2026-07-09T17:01:15.012969+00:00",
+    "title": "Minimal Singular Value Bound for 4×4 Nonnegative Unimodular Matrices"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "factor complexity",
@@ -17777,7 +17803,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0776",
+    "id": "fd_0777",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Utilize the structural description of ternary minimal complexity words (e.g., Arnoux-Rauzy/episturmian). Analyze bispecial factors and their left/right extensions to show that for any target k one can choose G_n as a stabilizer of a suitable partition of positions, interpolating between abelian equivalence (G_n=S_n) and identity (G_n=Id). Proceed by induction on n, with base cases verified by finite enumeration.",
@@ -17802,7 +17828,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0777",
+    "id": "fd_0778",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use a short t‑model of the ΘZero graph together with a monotone guidance that always selects a big component of weight >½; apply the Dominated Guided Separator lemma to obtain a separator of size O(tk log k) and argue that its closed neighbourhood hits all Θ_t‑induced minors.",
@@ -17811,6 +17837,41 @@
     "status": "available",
     "timestamp": "2026-07-09T16:42:11.956682+00:00",
     "title": "Conjecture on the size of hitting sets for Θ_t-induced minors"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "BP05",
+      "RS16",
+      "GG25",
+      "Gas98",
+      "Bil98",
+      "BS25",
+      "Ste97",
+      "LS90"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that the combinatorial condition defining reflected bounded‑growth tuples can be expressed solely by simple linear inequalities and parity constraints on a weakly increasing integer sequence.  In other words, for a tuple \\(a=(a_1,\\dots,a_n)\\in\\mathbb{N}^n\\) the following are equivalent:\n\n1. \\(a\\) is a reflected bounded‑growth tuple (as defined in the paper).\n2. \\(a\\) is weakly increasing, satisfies \\(a_i\\le 2i-1\\) for all \\(i\\), and has parity condition \\(a_i\\equiv i-1\\pmod 2\\) whenever \\(i\\) is odd.\n\nConsequently the map \\(a\\mapsto\\prod_{i=1}^n[ a_i+1 ]_q\\) gives a bijection between such tuples and the palindromic Poincaré polynomials of type \\(B_n\\) which do not lie in the image of Stembridge's bottom map from type \\(A_{n+1}\\).  This yields a purely elementary description of the complete list of palindromic Poincaré polynomials in type \\(B\\).",
+    "domain_bridges": [
+      "Algebraic combinatorics",
+      "Order theory",
+      "Coxeter groups",
+      "Generating functions",
+      "Type theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0779",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "We will formalise the conjecture in Lean 4 by defining the predicate \\`is_reflected_bounded_growth\\` on vectors of natural numbers, the monotonicity and inequality/parity conditions, and the associated product of \\(q\\)-integers.  The plan is:\n\n1. Implement the definitions in Lean.\n2. Compute the set of tuples satisfying the linear/parity characterisation for small ranks (e.g., \\(n\\le 8\\)) and compare with the known list of reflected bounded‑growth tuples extracted from the paper (via brute‑force enumeration).\n3. Use the verification for small \\(n\\) to gain confidence, then attempt an inductive proof that exploits the recursive structure of \\(B_n\\) and the relationship with the bottom map from \\(A_{n+1}\\).\n\nThe final theorem will assert the equivalence described above.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07659v1",
+    "status": "available",
+    "timestamp": "2026-07-09T17:02:33.023554+00:00",
+    "title": "Characterizing reflected bounded‑growth tuples in type B"
   },
   {
     "ambition_level": "extension",
