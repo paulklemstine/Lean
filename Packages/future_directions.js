@@ -8795,12 +8795,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "We conjecture that for any field F and integers n \u2265 m \u2265 0, d \u2265 0, the field\u2011independent filtration of \u0394^(n,m)Sym^dE described in the paper yields graded pieces whose characters are exactly the quantum binomial coefficients appearing in the product rule (Rel2) for Lusztig\u2019s quantum Cartan elements. In particular, the i\u2011th quotient is isomorphic to \u0394^(n\u2011i,m\u2011i)Sym^(d\u2011i)E and its formal character equals s_(n\u2011i,m\u2011i) \u2218 s_(d\u2011i).",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0727",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06749v1",
+    "status": "available",
+    "timestamp": "2026-07-09T11:04:03.670117+00:00",
+    "title": "Categorifying the quantum binomial product rule via filtrations of plethystic modules"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For every composition \u03b1 of length r \u2264 R, the differential operator \u2202_\u03b1 = \u2202_{i1}\u22ef\u2202_{ir} acting on the polynomial ring \u211a[X_1,\u2026,X_R] yields a non-zero scalar multiple of the basis element X_{i1}\u2227\u22ef\u2227X_{ir} in \u2227^r V, where \u2202_i = (1/i!)\u00b7(d/dX_i)|_{X=0}. Moreover, the scalar equals the sign of the permutation that sorts (i1,\u2026,ir). This equality holds for all r and can be tested computationally for small values.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0727",
+    "id": "fd_0728",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07667v1",
@@ -8814,7 +8829,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0728",
+    "id": "fd_0729",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07641v1",
@@ -8828,7 +8843,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0729",
+    "id": "fd_0730",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07638v1",
@@ -8843,7 +8858,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0730",
+    "id": "fd_0731",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07566v1",
@@ -8858,7 +8873,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0731",
+    "id": "fd_0732",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07564v1",
@@ -8873,7 +8888,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0732",
+    "id": "fd_0733",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07458v1",
@@ -8887,7 +8902,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0733",
+    "id": "fd_0734",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07448v1",
@@ -8902,7 +8917,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0734",
+    "id": "fd_0735",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07407v1",
@@ -8917,7 +8932,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0735",
+    "id": "fd_0736",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07392v1",
@@ -8931,7 +8946,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0736",
+    "id": "fd_0737",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07404v1",
@@ -8946,7 +8961,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0737",
+    "id": "fd_0738",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07381v1",
@@ -8960,7 +8975,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0738",
+    "id": "fd_0739",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07239v1",
@@ -8975,7 +8990,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0739",
+    "id": "fd_0740",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07259v1",
@@ -8990,7 +9005,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0740",
+    "id": "fd_0741",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07063v1",
@@ -9004,13 +9019,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0741",
+    "id": "fd_0742",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07030v1",
     "status": "available",
     "timestamp": "2026-07-09T10:41:07.742340+00:00",
     "title": "Improved adhesion bound in coarse block-cutvertex tree-decomposition"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The m-fold cover T^(m) of the Bruhat-Tits tree T for GL\u2082(F) over a non-Archimedean local field F admits a canonical ~GL\u2082(F)-invariant graph structure where the automorphism group Aut(T^(m)) contains the metaplectic cover ~GL\u2082(F) as a subgroup of index m, and the quotient graph T^(m)/~K has exactly m connected components, each isomorphic to T/K, where ~K is the preimage of a maximal compact subgroup K.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0743",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06899v1",
+    "status": "available",
+    "timestamp": "2026-07-09T11:05:13.009170+00:00",
+    "title": "Structure of m-fold covers of Bruhat-Tits trees for GL\u2082 over local fields"
   },
   {
     "consumed_by_exp_id": "a88deb31",
