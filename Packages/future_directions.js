@@ -3574,6 +3574,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Counterexample to Mason's log-concavity conjecture for matroid flat counts"
   },
   {
+    "consumed_by_exp_id": "c2c03fe8",
+    "description": "The paper introduces a tensor-amplification framework for proving Sidorenko-type inequalities in graphon classes, providing two transfer principles and formalizing structural closure properties.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_0320",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02260v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-05T03:34:51.895674+00:00",
+    "title": "Tensor Amplification and Spectral Transfer for Sidorenko-Type Inequalities"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Let X be a finite connected symmetric digraph, G a finite p-group acting freely on X, and Y = X(G, \u03b1) the associated voltage graph cover. For a monic polynomial P \u2208 \u211a\u209a[A] coprime to A\u00b2\u22121 such that the spectral resultant R_{X,P}(T) does not vanish at any torsion character, let \u03bb_X, \u03bc_X be the Iwasawa \u03bb- and \u03bc-invariants of R_{X,P}. Then the \u03bb-invariant \u03bb_Y of the resultant R_{Y,P} satisfies \u03bb_Y = |G|\u00b7\u03bb_X + (|G|\u22121)\u00b7\u03bc_X + (|G|\u22121)\u00b7b\u2081(X), where b\u2081(X) = #E(X) \u2212 #V(X) + 1 is the first Betti number of X.",
     "domains": [
@@ -6593,7 +6607,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimality of the cake-cutting constant \u03bc\u2082"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "901a2c39",
     "description": "For a complete multipartite graph G = K_{n_1,...,n_m} with n_1 \u2264 ... \u2264 n_m, the path-free complex PF_t(G) is vertex decomposable if and only if t \u2265 2n_{m-1} - 1. Equivalently, this is exactly the range where PF_t(G) is shellable and sequentially Cohen-Macaulay. For t \u2264 2n_{m-1} - 2, the complex fails to be sequentially Cohen-Macaulay.",
     "domains": [
       "Bridges"
@@ -6602,7 +6616,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05358v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T13:11:19.325737+00:00",
     "title": "Vertex decomposability threshold for path-free complexes of complete multipartite graphs"
   },
@@ -7718,7 +7732,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The \u221a2-Threshold Conjecture for Rips Filtration Approximation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "00f256fb",
     "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card \u2014 you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier \u2014 it's an opportunity. You can WIN at the game of undecidability.",
     "domains": [
       "Novelty",
@@ -7728,7 +7742,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.960880+00:00",
     "title": "Godel's Casino: Incomplete but Winnable Games"
   },
