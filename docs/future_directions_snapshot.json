@@ -18584,6 +18584,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "A cake is a smooth projective variety over R: it has a base (a smooth manifold with boundary), frosting (a sheaf of sections supported on the boundary), and layers (a stratification by codimension). The Fundamental Theorem of Cakes states: every cake C is uniquely determined (up to isomorphism of flavor) by its base B, its frosting sheaf F, and its layer stratification L. The frosting sheaf is a locally free sheaf of rank 1 (the cake has uniform frosting thickness) supported on the boundary of the base. The stratification is a flag of subvarieties C = L_0 > L_1 > ... > L_k = {point} where L_i has codimension i and represents the i-th layer. Conjecture: the moduli space of cakes of genus g (g = number of cherries on top) has dimension 3g-3 for g >= 2, mirroring the moduli space of Riemann surfaces. The cherry number g corresponds to the first Betti number of the cake surface, and the moduli are the positions of the g cherries on the surface. Test: enumerate all topologically distinct cakes with g <= 5 cherries and verify that the moduli space has dimension 3g-3. Compute the Teichmuller space of cakes by varying the cherry positions. Impact: cakes are algebraic varieties, and the mathematics of cake decoration IS the mathematics of moduli spaces.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0811",
+    "lineage_refs": [],
+    "priority_score": 0.68,
+    "proof_strategy": "Define a cake as a triple (B, F, L) where B is a compact 2-manifold with boundary (the base), F is a line bundle on the boundary (the frosting), and L is a stratification C = L_0 > L_1 > ... > L_k (the layers). The genus g is the number of connected components of the boundary (cherries sit on boundary components). The moduli space M_g of cakes of genus g is the space of conformal structures on B with g boundary components, which has dimension 6g-6 + 2g = 8g-6 for the full Teichmuller space and 3g-3 after quotienting by the mapping class group (for g >= 2). The frosting sheaf F is determined by its degree, which is the total frosting 'amount' — a positive integer. The stratification L is determined by the number of layers k and the types of each layer (chocolate, vanilla, etc.). Test: enumerate cakes for g = 0 (sphere with no cherries — a round cake), g = 1 (torus with one cherry — a donut), g = 2 (double torus with two cherries). Verify dim(M_g) = 3g-3 for g >= 2.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-09T22:33:32.914564+00:00",
+    "title": "The Fundamental Theorem of Cakes: Algebraic Geometry of Baking"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle c2c03fe8 (Q=0.630) proved 25 theorems in Computation but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The paper introduces a tensor-amplification framework for proving Sidorenko-type inequalities in graphon classes, providing two transfer principles and formalizing structural closure properties.",
     "domain_bridges": [],
     "domains": [
