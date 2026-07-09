@@ -17469,6 +17469,62 @@
     "title": "Universal Group Complexity Conjecture for All Infinite Words"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "arXiv:2310.12345"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For each fixed y ∈ ℕ, the lim sup of (W(x,y) log log x)/log x as x→∞ equals 1, where W(x,y) = ∑_{j=1}^y ω(x+j) and ω(n) counts distinct prime divisors of n.",
+    "domain_bridges": [
+      "abc conjecture",
+      "distribution of prime factors",
+      "analytic number theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0763",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Probabilistic analysis of prime factor distribution in intervals of length y, coupled with extremal prime spacing heuristics.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07641v1",
+    "status": "available",
+    "timestamp": "2026-07-09T14:37:11.657340+00:00",
+    "title": "Growth Bound for the Sum of Distinct Prime Divisors in Arithmetic Progressions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Hadamard's maximal determinant problem",
+      "Ehlich-Wojtas bounds for ternary matrices",
+      "Cohn's work on unimodular lattices",
+      "Pellegrino's characterization of unimodular surfaces",
+      "Computer algebra results on small unimodular matrices"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer k ≥ 1, the maximum determinant of any 4×4 unimodular matrix with entries in {-(2k-1), -(2k-2), ..., 0, ..., 2k-2, 2k-1} equals (2k-1)^4 - 2(2k-1)^2 + 1. This bound is achieved by a specific construction involving circulant-like matrices with entries from {-1, 0, 1} scaled and shifted appropriately.",
+    "domain_bridges": [
+      "Integer programming and branch-and-bound algorithms",
+      "Compact lattice bases and KZ reduction",
+      "Coding theory via generator matrices",
+      "Combinatorial designs over finite rings",
+      "Algebraic number theory via embedding determinants"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0763",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish the conjecture by (1) proving the upper bound using elementary divisor bounds and Hadamard's inequality; (2) constructing explicit extremal matrices via a parametric family; (3) verifying via symbolic computation that these matrices achieve the claimed determinant and are unimodular; (4) ruling out larger determinants through case analysis of possible Smith normal forms. The key insight is that near-singular behavior occurs when the matrix approaches a rank-deficient configuration over ℤ, forcing severe constraints on the possible Smith normal forms.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07688v1",
+    "status": "available",
+    "timestamp": "2026-07-09T14:37:40.968742+00:00",
+    "title": "Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded Entries"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "ad941b96",
