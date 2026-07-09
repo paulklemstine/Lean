@@ -1,317 +1,244 @@
-#!/usr/bin/env python3
 """
-The L-Function Universe: Numerical Demonstrations
+A Census of the Selberg Class: The L-Function Universe is Countable
+===================================================================
 
-Demonstrates key properties of the Selberg class: countability via
-enumeration, spectral complexity ordering, conductor counting functions,
-and density estimates for Dirichlet L-functions.
+This self-contained script demonstrates, numerically and constructively, the
+central results of the census of "natural" L-functions:
+
+  1. Each L-function is pinned down by a FINITE arithmetic signature
+     (degree, conductor, gamma-factor shifts, and local Euler data at finitely
+     many primes).
+  2. The space of signatures is COUNTABLE -- indeed countably infinite -- so it
+     is in bijection with the natural numbers. We realize this bijection with an
+     explicit Goedel-style encoding.
+  3. Concrete families embed into the census: the Riemann zeta function, the
+     Dirichlet L-functions (finitely many characters per modulus), and the
+     elliptic curves over the rationals (five rational Weierstrass coefficients).
+  4. Boundaries: relaxing finiteness (a free binary choice at every prime, or a
+     continuum of real j-invariants) escapes countability. We illustrate the
+     Cantor obstruction numerically.
+
+Everything runs with the Python standard library only.
 """
 
-import math
-from collections import defaultdict
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from fractions import Fraction
+from itertools import count, islice
+from math import gcd
+from typing import Iterable, Iterator
+
+
+# ---------------------------------------------------------------------------
+# 1. The arithmetic signature
+# ---------------------------------------------------------------------------
+
+@dataclass(frozen=True)
+class SelbergSignature:
+    """The finite data determining a Selberg-class L-function.
+
+    Attributes:
+        degree:        dimension of the associated representation.
+        conductor:     arithmetic modulus of the functional equation.
+        gamma_shifts:  rational model of the gamma-factor shifts (finite tuple).
+        euler_factors: local Euler data as a finite tuple of
+                       (prime, coefficient-tuple) pairs.
+    """
+    degree: int
+    conductor: int
+    gamma_shifts: tuple[Fraction, ...] = ()
+    euler_factors: tuple[tuple[int, tuple[Fraction, ...]], ...] = ()
+
+
+def zeta_signature() -> SelbergSignature:
+    """Signature of the Riemann zeta function: degree 1, conductor 1."""
+    return SelbergSignature(degree=1, conductor=1, gamma_shifts=(Fraction(0),))
+
+
+def principal_signature(conductor: int) -> SelbergSignature:
+    """The principal L-function of a given conductor (the census enumeration)."""
+    return SelbergSignature(degree=1, conductor=conductor,
+                            gamma_shifts=(Fraction(0),))
+
+
+# ---------------------------------------------------------------------------
+# 2. Countability: an explicit bijection signatures <-> natural numbers
+# ---------------------------------------------------------------------------
+
+def cantor_pair(a: int, b: int) -> int:
+    """Bijection N x N -> N (Cantor pairing)."""
+    s = a + b
+    return s * (s + 1) // 2 + b
+
+
+def encode_nat(n: int) -> int:
+    """Identity encoding of a natural number (kept for symmetry)."""
+    return n
+
+
+def encode_int(z: int) -> int:
+    """Bijection Z -> N: 0,-1,1,-2,2,... <-> 0,1,2,3,4,..."""
+    return 2 * z if z >= 0 else -2 * z - 1
+
+
+def encode_fraction(q: Fraction) -> int:
+    """Bijection Q -> N via (sign-encoded numerator, denominator)."""
+    return cantor_pair(encode_int(q.numerator), q.denominator)
+
+
+def encode_list(items: Iterable[int]) -> int:
+    """Bijection (finite lists over N) -> N via iterated pairing.
+
+    An empty list maps to 0; a nonempty list [x, *rest] maps to
+    1 + pair(x, encode_list(rest)), guaranteeing injectivity.
+    """
+    acc = 0
+    for x in reversed(list(items)):
+        acc = 1 + cantor_pair(x, acc)
+    return acc
+
+
+def encode_signature(sig: SelbergSignature) -> int:
+    """A concrete injection SelbergSignature -> N.
+
+    This *witnesses* the countability theorem: distinct signatures receive
+    distinct natural numbers, so the whole space injects into N.
+    """
+    g = encode_list(encode_fraction(x) for x in sig.gamma_shifts)
+    e = encode_list(
+        cantor_pair(p, encode_list(encode_fraction(c) for c in coeffs))
+        for (p, coeffs) in sig.euler_factors
+    )
+    return cantor_pair(
+        cantor_pair(encode_nat(sig.degree), encode_nat(sig.conductor)),
+        cantor_pair(g, e),
+    )
+
+
+# ---------------------------------------------------------------------------
+# 3. Populating the census
+# ---------------------------------------------------------------------------
+
+def census_by_conductor(limit: int) -> list[SelbergSignature]:
+    """The first `limit` principal L-functions ordered by conductor 1..limit."""
+    return [principal_signature(n) for n in range(1, limit + 1)]
 
 
 def euler_totient(n: int) -> int:
-    """Compute Euler's totient function φ(n)."""
-    if n <= 0:
-        return 0
-    result = n
-    p = 2
-    temp = n
-    while p * p <= temp:
-        if temp % p == 0:
-            while temp % p == 0:
-                temp //= p
+    """Euler's totient phi(n): counts the Dirichlet characters modulo n."""
+    result, m, p = n, n, 2
+    while p * p <= m:
+        if m % p == 0:
+            while m % p == 0:
+                m //= p
             result -= result // p
         p += 1
-    if temp > 1:
-        result -= result // temp
+    if m > 1:
+        result -= result // m
     return result
 
 
-def count_dirichlet_characters(Q: int) -> int:
-    """Count total Dirichlet characters with modulus ≤ Q.
-    
-    For each modulus n, there are φ(n) Dirichlet characters mod n.
-    The total count is ∑_{n=1}^{Q} φ(n).
+def dirichlet_character_count(max_modulus: int) -> int:
+    """Total number of Dirichlet characters over all moduli 1..max_modulus.
+
+    Each count phi(N) is finite, so the sum -- a partial census of the Dirichlet
+    family -- is finite for every bound, confirming countability of the union.
     """
-    return sum(euler_totient(n) for n in range(1, Q + 1))
+    return sum(euler_totient(n) for n in range(1, max_modulus + 1))
 
 
-def totient_sum_asymptotic(Q: int) -> float:
-    """Asymptotic estimate: ∑_{n≤Q} φ(n) ~ 3Q²/π²."""
-    return 3 * Q**2 / (math.pi**2)
+@dataclass(frozen=True)
+class WeierstrassCurve:
+    """An elliptic curve over Q given by five rational coefficients."""
+    a1: Fraction
+    a2: Fraction
+    a3: Fraction
+    a4: Fraction
+    a6: Fraction
 
 
-def spectral_complexity(degree: int, conductor: int,
-                         spectral_params: list[tuple[float, float]]) -> float:
-    """Compute the spectral complexity of a Selberg datum."""
-    param_sum = sum(abs(r) + abs(s) for r, s in spectral_params)
-    return degree + conductor + param_sum
+def enumerate_rational_curves(bound: int) -> Iterator[WeierstrassCurve]:
+    """Enumerate rational Weierstrass curves with small integer coefficients.
 
-
-def enumerate_selberg_data(max_complexity: float) -> list[dict]:
-    """Enumerate Selberg data with spectral complexity ≤ max_complexity.
-    
-    For simplicity, restrict to integer spectral parameters.
-    This demonstrates the finiteness of the set below any bound.
+    Demonstrates the injection into Q^5: the family is a subset of a countable
+    set, hence countable. (We use integer coefficients for a finite illustration.)
     """
-    results = []
-    max_degree = int(max_complexity)
-    
-    for d in range(max_degree + 1):
-        max_cond = int(max_complexity - d)
-        if max_cond < 1:
-            continue
-        for q in range(1, max_cond + 1):
-            remaining = max_complexity - d - q
-            if remaining < 0:
-                continue
-            if d == 0:
-                # No spectral parameters
-                results.append({
-                    'degree': d, 'conductor': q,
-                    'spectral_params': [], 
-                    'complexity': d + q
-                })
-            elif d == 1:
-                # One spectral parameter (r, s) with |r| + |s| ≤ remaining
-                bound = int(remaining)
-                for r in range(-bound, bound + 1):
-                    s_bound = bound - abs(r)
-                    for s in range(-s_bound, s_bound + 1):
-                        c = spectral_complexity(d, q, [(r, s)])
-                        if c <= max_complexity:
-                            results.append({
-                                'degree': d, 'conductor': q,
-                                'spectral_params': [(r, s)],
-                                'complexity': c
-                            })
-    return sorted(results, key=lambda x: x['complexity'])
+    rng = range(-bound, bound + 1)
+    for a1 in rng:
+        for a2 in rng:
+            for a3 in rng:
+                for a4 in rng:
+                    for a6 in rng:
+                        yield WeierstrassCurve(
+                            Fraction(a1), Fraction(a2), Fraction(a3),
+                            Fraction(a4), Fraction(a6))
 
 
-def conductor_counting_function(data: list[dict], Q: int) -> int:
-    """Count data with conductor ≤ Q."""
-    return sum(1 for d in data if d['conductor'] <= Q)
+# ---------------------------------------------------------------------------
+# 4. The boundary: Cantor's diagonal (uncountability obstruction)
+# ---------------------------------------------------------------------------
+
+def cantor_diagonal(sequences: list[list[int]]) -> list[int]:
+    """Given a finite list of binary sequences, produce one not in the list.
+
+    A miniature of the argument that {primes} -> {0,1} (or N -> {0,1}) is
+    uncountable: no enumeration can capture every binary sequence.
+    """
+    n = len(sequences)
+    return [1 - sequences[i][i] for i in range(n)]
 
 
-def main():
-    print("=" * 70)
-    print("THE L-FUNCTION UNIVERSE: NUMERICAL DEMONSTRATIONS")
-    print("=" * 70)
-    
-    # Demo 1: Dirichlet character counts
-    print("\n--- Demo 1: Dirichlet Character Counts ---")
-    print(f"{'Q':>6} {'Σφ(n)':>10} {'3Q²/π²':>12} {'Ratio':>8}")
-    print("-" * 40)
-    for Q in [10, 50, 100, 500, 1000, 5000, 10000]:
-        actual = count_dirichlet_characters(Q)
-        asymp = totient_sum_asymptotic(Q)
-        ratio = actual / asymp if asymp > 0 else 0
-        print(f"{Q:>6} {actual:>10} {asymp:>12.1f} {ratio:>8.4f}")
-    
-    # Demo 2: Enumerate low-complexity Selberg data
-    print("\n--- Demo 2: Selberg Data Enumeration (complexity ≤ 8) ---")
-    data = enumerate_selberg_data(8)
-    print(f"Total Selberg data with integer params and complexity ≤ 8: {len(data)}")
-    print("\nFirst 20 by complexity:")
-    print(f"{'#':>3} {'d':>3} {'q':>4} {'params':>20} {'complexity':>12}")
-    print("-" * 50)
-    for i, datum in enumerate(data[:20]):
-        params_str = str(datum['spectral_params']) if datum['spectral_params'] else '[]'
-        print(f"{i+1:>3} {datum['degree']:>3} {datum['conductor']:>4} "
-              f"{params_str:>20} {datum['complexity']:>12.1f}")
-    
-    # Demo 3: Growth by complexity level
-    print("\n--- Demo 3: Growth of N(C) = #{data with complexity ≤ C} ---")
-    print(f"{'C':>6} {'N(C)':>8} {'ΔN':>6}")
-    prev = 0
-    for C in range(1, 16):
-        count = len([d for d in enumerate_selberg_data(C)])
-        print(f"{C:>6} {count:>8} {count - prev:>6}")
-        prev = count
-    
-    # Demo 4: Conductor counting monotonicity
-    print("\n--- Demo 4: Conductor Counting Function (monotonicity) ---")
-    all_data = enumerate_selberg_data(10)
-    print(f"{'Q':>4} {'N(Q)':>6}")
-    for Q in range(1, 12):
-        n_q = conductor_counting_function(all_data, Q)
-        print(f"{Q:>4} {n_q:>6}")
-    
-    # Demo 5: Degree distribution
-    print("\n--- Demo 5: Degree Distribution (complexity ≤ 10) ---")
-    data10 = enumerate_selberg_data(10)
-    degree_counts = defaultdict(int)
-    for d in data10:
-        degree_counts[d['degree']] += 1
-    for deg in sorted(degree_counts.keys()):
-        print(f"  Degree {deg}: {degree_counts[deg]} data")
-    
-    print("\n" + "=" * 70)
-    print("KEY INSIGHT: The Selberg class is countable — there are only")
-    print("as many well-behaved L-functions as there are natural numbers.")
-    print("Each one contains infinite depth, but there are countably many.")
-    print("=" * 70)
+# ---------------------------------------------------------------------------
+# 5. Driver
+# ---------------------------------------------------------------------------
 
+def main() -> None:
+    print("=" * 68)
+    print("  A CENSUS OF THE SELBERG CLASS -- NUMERICAL DEMONSTRATION")
+    print("=" * 68)
 
-if __name__ == "__main__":
-    main()
+    print("\n[1] The Riemann zeta function's signature")
+    z = zeta_signature()
+    print(f"    degree={z.degree}, conductor={z.conductor}, "
+          f"gamma_shifts={tuple(str(x) for x in z.gamma_shifts)}")
+    print(f"    Goedel code in N: {encode_signature(z)}")
 
+    print("\n[2] The census ordered by conductor (first 20 addresses)")
+    first20 = census_by_conductor(20)
+    print("    conductors:", [s.conductor for s in first20])
+    print("    length of first-100 census:", len(census_by_conductor(100)))
 
-#!/usr/bin/env python3
-"""
-Visualization: Spectral complexity distribution of L-functions.
+    print("\n[3] Countability witness: distinct signatures -> distinct codes")
+    sample = census_by_conductor(10)
+    codes = [encode_signature(s) for s in sample]
+    print("    codes:", codes)
+    print("    all distinct:", len(set(codes)) == len(codes))
 
-Shows how the number of Selberg data grows with the complexity bound,
-demonstrating the "cosmic census" structure.
-"""
-import math
+    print("\n[4] Dirichlet family: finitely many characters per modulus")
+    for N in (1, 2, 3, 5, 12, 100):
+        print(f"    #characters mod {N:>3} = phi({N}) = {euler_totient(N)}")
+    print(f"    total #characters for moduli 1..100 = "
+          f"{dirichlet_character_count(100)}  (finite => countable union)")
 
+    print("\n[5] Rational elliptic curves inject into Q^5 (countable)")
+    curves = list(islice(enumerate_rational_curves(1), 5))
+    for c in curves:
+        print(f"    E: (a1,a2,a3,a4,a6) = "
+              f"({c.a1},{c.a2},{c.a3},{c.a4},{c.a6})")
+    total = sum(1 for _ in enumerate_rational_curves(1))
+    print(f"    #curves with coeffs in [-1,1] = {total} = 3^5 (finite slice)")
 
-def enumerate_count_by_complexity(max_c: int) -> dict[int, int]:
-    """Count integer-parameter Selberg data at each complexity level."""
-    counts: dict[int, int] = {}
-    for c in range(1, max_c + 1):
-        count = 0
-        for d in range(c + 1):
-            for q in range(1, c - d + 1):
-                remaining = c - d - q
-                if remaining < 0:
-                    continue
-                if d == 0:
-                    count += 1
-                elif d == 1:
-                    bound = int(remaining)
-                    for r in range(-bound, bound + 1):
-                        s_bound = bound - abs(r)
-                        for s in range(-s_bound, s_bound + 1):
-                            if abs(r) + abs(s) + d + q <= c:
-                                count += 1
-        counts[c] = count
-    return counts
+    print("\n[6] Boundary (Cantor): no finite list captures all binary seqs")
+    listing = [[(i >> k) & 1 for k in range(4)] for i in range(4)]
+    missing = cantor_diagonal(listing)
+    print("    enumerated:", listing)
+    print("    diagonal (not in list):", missing)
+    print("    => {primes} -> {0,1} is uncountable: finiteness is essential")
 
-
-def main():
-    try:
-        import matplotlib.pyplot as plt
-        import matplotlib
-    except ImportError:
-        print("matplotlib not available; printing data instead")
-        counts = enumerate_count_by_complexity(15)
-        for c, n in sorted(counts.items()):
-            print(f"C={c}: {n} Selberg data")
-        return
-
-    counts = enumerate_count_by_complexity(20)
-    cumulative = {}
-    running = 0
-    for c in sorted(counts.keys()):
-        running += counts[c]
-        cumulative[c] = running
-
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-
-    cs = sorted(counts.keys())
-    ns = [counts[c] for c in cs]
-    ax1.bar(cs, ns, color='steelblue', alpha=0.8, edgecolor='navy')
-    ax1.set_xlabel('Spectral Complexity C', fontsize=12)
-    ax1.set_ylabel('Number of Selberg Data', fontsize=12)
-    ax1.set_title('L-Functions at Each Complexity Level', fontsize=14)
-    ax1.grid(True, alpha=0.3, axis='y')
-
-    cums = [cumulative[c] for c in cs]
-    ax2.plot(cs, cums, 'o-', color='darkred', markersize=5, linewidth=2)
-    ax2.set_xlabel('Spectral Complexity Bound C', fontsize=12)
-    ax2.set_ylabel('Cumulative Count N(≤C)', fontsize=12)
-    ax2.set_title('Cumulative Census of the L-Function Universe', fontsize=14)
-    ax2.set_yscale('log')
-    ax2.grid(True, alpha=0.3)
-
-    plt.suptitle('The Cosmic Census of L-Functions', fontsize=16, y=1.02)
-    plt.tight_layout()
-    plt.savefig('complexity_spectrum.png', dpi=150, bbox_inches='tight')
-    print("Saved complexity_spectrum.png")
-    plt.close()
-
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Density of L-functions ordered by conductor.
-
-Plots the conductor counting function N(Q) = ∑_{n≤Q} φ(n) against
-the asymptotic prediction 3Q²/π², showing convergence.
-"""
-import math
-
-
-def euler_totient(n: int) -> int:
-    if n <= 0:
-        return 0
-    result = n
-    p = 2
-    temp = n
-    while p * p <= temp:
-        if temp % p == 0:
-            while temp % p == 0:
-                temp //= p
-            result -= result // p
-        p += 1
-    if temp > 1:
-        result -= result // temp
-    return result
-
-
-def main():
-    try:
-        import matplotlib.pyplot as plt
-    except ImportError:
-        print("matplotlib not available; printing data instead")
-        for Q in range(1, 201):
-            actual = sum(euler_totient(n) for n in range(1, Q + 1))
-            asymp = 3 * Q**2 / math.pi**2
-            print(f"Q={Q}, N(Q)={actual}, 3Q²/π²={asymp:.1f}")
-        return
-
-    Q_values = list(range(1, 501))
-    actual_values = []
-    asymptotic_values = []
-    ratios = []
-
-    running = 0
-    for Q in Q_values:
-        running += euler_totient(Q)
-        actual_values.append(running)
-        asymp = 3 * Q**2 / math.pi**2
-        asymptotic_values.append(asymp)
-        ratios.append(running / asymp if asymp > 0 else 1)
-
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
-
-    ax1.plot(Q_values, actual_values, 'b-', linewidth=1.5, label=r'$N(Q) = \sum_{n \leq Q} \varphi(n)$')
-    ax1.plot(Q_values, asymptotic_values, 'r--', linewidth=1.5, label=r'$3Q^2/\pi^2$')
-    ax1.set_xlabel('Conductor bound Q')
-    ax1.set_ylabel('Count of degree-1 L-functions')
-    ax1.set_title('Density of Dirichlet L-functions by Conductor')
-    ax1.legend(fontsize=12)
-    ax1.grid(True, alpha=0.3)
-
-    ax2.plot(Q_values, ratios, 'g-', linewidth=1.5)
-    ax2.axhline(y=1.0, color='k', linestyle='--', alpha=0.5)
-    ax2.set_xlabel('Conductor bound Q')
-    ax2.set_ylabel(r'$N(Q) / (3Q^2/\pi^2)$')
-    ax2.set_title('Convergence to Asymptotic Density')
-    ax2.set_ylim(0.9, 1.1)
-    ax2.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('selberg_density.png', dpi=150, bbox_inches='tight')
-    print("Saved selberg_density.png")
-    plt.close()
+    print("\n" + "=" * 68)
+    print("  CONCLUSION: the census has size aleph_0 -- countably infinite.")
+    print("=" * 68)
 
 
 if __name__ == "__main__":
