@@ -15527,6 +15527,34 @@
     "title": "Uniqueness of Extremal Graphons in the Higher‑Order Clique Density Theorem"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "Alon-Wei conjecture",
+      "spanning subgraph",
+      "degree sequence prescription"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that for any d-regular graph G on n vertices with d ≤ n^{1/12-ε} and any integer vector q=(q_0,…,q_d) satisfying ∑ q_i = n, ∑ i q_i ≡ 0 (mod 2), and |q_i - n/(d+1)| ≤ 1 for all i, there exists a spanning subgraph H ⊆ G with m(H,i)=q_i exactly. We conjecture that this exact prescription holds for every d-regular graph on n vertices and every such admissible q, i.e., without the restriction d ≤ n^{1/12-ε}.",
+    "domain_bridges": [
+      "graph theory",
+      "probabilistic methods",
+      "interactive theorem proving"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0691",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Refine the anti-diagonal edge-move correction step by replacing the twofold prefix norm bound with a potential that remains O(d^2√n) or smaller for d up to n^{1/2} or beyond, possibly using iterative absorption, balanced random adjustments, or hypergraph container methods to control the lattice cost uniformly for all d.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06465v1",
+    "status": "available",
+    "timestamp": "2026-07-09T01:35:50.044056+00:00",
+    "title": "Exact degree-count prescription without polynomial-range restriction"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "[B] $10.48550/ARXIV.2201.03794$"
@@ -15539,7 +15567,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0691",
+    "id": "fd_0692",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a family of configurations dispersing the cycles over the valuation ring, show that the cross-ratio valuation is preserved under deformation, and compute the limit using intersection-theoretic methods.",
@@ -15548,6 +15576,34 @@
     "status": "available",
     "timestamp": "2026-07-09T00:14:17.753606+00:00",
     "title": "The Valuation of the Degenerate Cross-Ratio Equals the Intersection Degree of Spread Cycles"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "hereditary graph classes",
+      "generalized cospectrality"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that the hereditary class of cographs, i.e., graphs with no induced path on four vertices (P4), is generalized spectrally closed: any graph generalized cospectral with a cograph must itself be a cograph. This extends the paper's proven results for threshold graphs (Forb(2K2,P4,C4)) and chain graphs.",
+    "domain_bridges": [
+      "combinatorics",
+      "linear algebra",
+      "linear programming"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_0693",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Utilize the paper's β-closed walk expansion and the sufficient condition via a walk-realizable {P4}-supporter. Reduce the search to a linear programming feasibility problem for coefficients of β-closed walk counts. Compute a concrete finite witness (e.g., with bounded walk length) satisfying the LP, then formalize the induced-subgraph expansion and supporter criterion in Lean 4 to verify the implication.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06455v1",
+    "status": "available",
+    "timestamp": "2026-07-09T01:37:55.627711+00:00",
+    "title": "Generalized spectral closedness of cographs (Forb(P4))"
   },
   {
     "ambition_level": "extension",

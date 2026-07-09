@@ -8300,17 +8300,46 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The paper proves that for any d-regular graph G on n vertices with d \u2264 n^{1/12-\u03b5} and any integer vector q=(q_0,\u2026,q_d) satisfying \u2211 q_i = n, \u2211 i q_i \u2261 0 (mod 2), and |q_i - n/(d+1)| \u2264 1 for all i, there exists a spanning subgraph H \u2286 G with m(H,i)=q_i exactly. We conjecture that this exact prescription holds for every d-regular graph on n vertices and every such admissible q, i.e., without the restriction d \u2264 n^{1/12-\u03b5}.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0691",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06465v1",
+    "status": "available",
+    "timestamp": "2026-07-09T01:35:50.044056+00:00",
+    "title": "Exact degree-count prescription without polynomial-range restriction"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "If a family of complementary configurations degenerates to a configuration where some planes intersect, then the limit of the cross-ratio valuations (as the parameters approach the degenerate case) equals the intersection degree of the cycles obtained by spreading the original cycles to the valuation ring.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0691",
+    "id": "fd_0692",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06477v1",
     "status": "available",
     "timestamp": "2026-07-09T00:14:17.753606+00:00",
     "title": "The Valuation of the Degenerate Cross-Ratio Equals the Intersection Degree of Spread Cycles"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that the hereditary class of cographs, i.e., graphs with no induced path on four vertices (P4), is generalized spectrally closed: any graph generalized cospectral with a cograph must itself be a cograph. This extends the paper's proven results for threshold graphs (Forb(2K2,P4,C4)) and chain graphs.",
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_0693",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06455v1",
+    "status": "available",
+    "timestamp": "2026-07-09T01:37:55.627711+00:00",
+    "title": "Generalized spectral closedness of cographs (Forb(P4))"
   },
   {
     "consumed_by_exp_id": "e158da3a",
