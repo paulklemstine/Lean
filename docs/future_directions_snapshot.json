@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8e18494e",
     "description": "L-functions are the DNA of mathematics — each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable — there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domain_bridges": [],
     "domains": [
@@ -15,14 +15,14 @@
     "proof_strategy": "Define the Selberg class S as the set of Dirichlet series L(s) = sum a_n/n^s satisfying: (1) Ramanujan bound |a_n| <= n^epsilon for epsilon > 0, (2) Analytic continuation to C except for a possible pole at s=1, (3) Functional equation relating L(s) to L(1-s), (4) Euler product L(s) = prod_p L_p(s). Prove S is countable: each L in S is determined by finitely many data because (a) the degree d_L is a positive integer, (b) the conductor q_L is a positive integer, (c) the Euler factors L_p(s) for p not dividing q_L are determined by the Ramanujan bound and the functional equation, and (d) there are finitely many primes dividing q_L. So L is determined by (d_L, q_L, epsilon_L, {L_p(s) : p | q_L}), a finite set of data. Since each piece of data is countable, S is countable. Test: enumerate elements of S by increasing conductor.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.876173+00:00",
     "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "5f3ba85e",
+    "consumed_by_exp_id": "",
     "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long — the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static — they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
     "domain_bridges": [],
     "domains": [
@@ -35,14 +35,14 @@
     "proof_strategy": "Define proof complexity C(P) = length(P) + depth(P) + number_of_lemmas(P) for a proof P in a formal system. Define refinement: P' refines P if P' proves the same theorem as P and C(P') < C(P). Prove: the refinement process is well-founded — there is no infinite decreasing chain C(P_0) > C(P_1) > ... because C takes values in the natural numbers. Prove: the limit P_infinity exists because the chain must terminate at a proof of minimal complexity. Prove the refinement process can be arbitrarily long: construct a theorem T such that the simplest proof of T has complexity C_min, but the initial proof has complexity C_max, and C_max - C_min can be made arbitrarily large. Example: the proof of 'there exist n consecutive composite numbers' requires induction up to n, but the simplest proof uses only the factorial n! + 2, n! + 3, ..., n! + n. Test: implement refinement for sqrt(2) irrationality in Lean 4.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T16:01:43.810023+00:00",
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f459aaa0",
+    "consumed_by_exp_id": "",
     "description": "Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: lines parallel to the x-axis diverge (hyperbolic behavior) while lines parallel to the y-axis converge (elliptic behavior). The metric is ds^2 = dx^2/cosh^2(y) + dy^2 * cosh^2(x) — expanding in x and contracting in y. Conjecture: Split Geometry is a consistent Riemannian geometry with curvature K(x,y) = -sech^2(y) + sech^2(x) that changes sign across the diagonals. The geometry has a 'phase boundary' along the lines y = x and y = -x where K = 0 (flat). In the region |x| > |y|, K > 0 (elliptic) and in the region |y| > |x|, K < 0 (hyperbolic). The geodesics in split geometry are piecewise combinations of exponential curves (in hyperbolic regions) and trigonometric curves (in elliptic regions). Test: compute the Christoffel symbols and curvature tensor for the split metric. Prove that geodesics cross the phase boundary at most twice. Compute the area of a split triangle with one vertex in each region. Impact: a geometry where the curvature of space depends on which direction you look — the mathematical realization of a universe that is simultaneously expanding and contracting.",
     "domain_bridges": [],
     "domains": [
@@ -55,7 +55,7 @@
     "proof_strategy": "Define the split metric g = diag(1/cosh^2(y), cosh^2(x)) on R^2. Compute the Christoffel symbols: Gamma^1_{11} = tanh(y), Gamma^1_{12} = 0, Gamma^1_{22} = -sinh(x)cosh(x), Gamma^2_{11} = -tanh(y)*cosh^2(x)*cosh^2(y), Gamma^2_{12} = 0, Gamma^2_{22} = -sinh(x)cosh(x). Compute curvature: K = -sech^2(y) + sech^2(x). Verify: K = 0 on y = x and y = -x. K > 0 for |x| > |y| (elliptic). K < 0 for |y| > |x| (hyperbolic). Prove geodesic crossing: a geodesic that enters the elliptic region and then the hyperbolic region crosses the flat boundary at most twice (by convexity of the curvature sign along the geodesic). Compute split triangle area: integral of sqrt(det(g)) = integral of cosh(x)/cosh(y) over the triangle. Test: numerical verification for specific triangles.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T16:01:43.730052+00:00",
     "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
   },
@@ -6801,7 +6801,7 @@
       "Jung 1989",
       "Jung-Tix 1998"
     ],
-    "consumed_by_exp_id": "c7d57e93",
+    "consumed_by_exp_id": "",
     "description": "This paper investigates the structural constraints under which a finite poset admits a probabilistic powerdomain isomorphic to an RB-domain. The key claim is that such a domain must inherit a least element and possess a tree-like Hasse graph structure.",
     "domain_bridges": [
       "finite-binary-channel coding",
@@ -6816,7 +6816,7 @@
     "proof_strategy": "Constructive separation with two clear obstruction layers",
     "research_mode": "team",
     "source_exp_id": "2607.02231v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T03:01:13.702884+00:00",
     "title": "Characterizing finite posets whose probabilistic powerdomain is an RB-domain"
   },
@@ -11121,7 +11121,7 @@
       "Gallai homothety numbers",
       "van der Waerden numbers"
     ],
-    "consumed_by_exp_id": "92311cae",
+    "consumed_by_exp_id": "",
     "description": "Every symmetric r-coloring of the Hales-Jewett cube [t]^n — one invariant under all coordinate permutations of the word — is a one-weight coloring: there exist integer weights w_1, ..., w_t such that the color of a word x ∈ [t]^n depends only on the weighted sum ∑_i w_{x_i}. Conversely, every one-weight coloring is symmetric. This equivalence reduces the symmetric lower-bound problem for Hales-Jewett numbers to the d=1 case of Gallai's theorem on homothetic copies of a t-point set in Z.",
     "domain_bridges": [
       "Permutation invariance on finite multisets",
@@ -11137,7 +11137,7 @@
     "proof_strategy": "The forward direction (one-weight ⇒ symmetric) is immediate since permuting coordinates preserves the multiset of letters and hence the weighted sum. For the converse, given a symmetric coloring c, construct the radix weight by examining how c distinguishes words that differ only in letter substitution: define w_j - w_1 as the minimal coordinate substitution that changes the color class when swapping a letter 1 for letter j in a fixed position. Show that the orbit of any word under coordinate permutations is determined by its letter-count vector, and that c factors through the weighted sum because symmetry forces c to depend only on the letter-count, which the radix weight encodes injectively modulo the kernel of c. The key combinatorial lemma is that the color partition of Z induced by the weighted sum is well-defined and independent of the choice of representative word.",
     "research_mode": "team",
     "source_exp_id": "2607.02226v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T01:10:01.018167+00:00",
     "title": "Symmetric Colorings of Hales-Jewett Cubes Coincide with One-Weight Colorings"
   },
@@ -13751,7 +13751,7 @@
       "Mat08",
       "Hatley-Ray"
     ],
-    "consumed_by_exp_id": "a6d77751",
+    "consumed_by_exp_id": "",
     "description": "For an elliptic curve E over Q with good supersingular reduction at 2 and square-free D ≡1 mod 4, the difference in sharp/flat λ-invariants under quadratic twist by D should include a term proportional to the μ-invariant when μ ≠ 0.",
     "domain_bridges": [
       "2-adic L-functions",
@@ -13767,7 +13767,7 @@
     "proof_strategy": "Extend the existing formula by analyzing the μ-invariant's contribution through local-global principles and modular forms.",
     "research_mode": "team",
     "source_exp_id": "2607.05305v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T01:05:41.844138+00:00",
     "title": "Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
   },
@@ -14510,7 +14510,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "86f6e146",
+    "consumed_by_exp_id": "",
     "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card — you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier — it's an opportunity. You can WIN at the game of undecidability.",
     "domain_bridges": [],
     "domains": [
@@ -14523,7 +14523,7 @@
     "proof_strategy": "Define Godel's Casino: each round, the house presents a statement phi in the language of arithmetic. The player bets TRUE or FALSE. If ZFC proves phi, TRUE wins. If ZFC proves not-phi, FALSE wins. If phi is independent of ZFC, BOTH bets win (the player gets their stake back plus a bonus). Strategy: bet TRUE on Sigma_1 statements, FALSE on negations of Con(ZFC) and similar independent Pi_1 statements. Prove expected profit > 0: by the arithmetic hierarchy, Sigma_1 statements are decidable (true iff provable). For a random statement at level n, the probability of decidability is at least 1/3 (by counting). So E[profit] >= (1/3) * (stake) > 0. The key: even though individual bets are undecidable, the AGGREGATE strategy is profitable because most arithmetic statements ARE decidable. Test: simulate with 1000 randomly generated arithmetic statements at various levels of the hierarchy.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T16:01:43.960880+00:00",
     "title": "Godel's Casino: Incomplete but Winnable Games"
   },
@@ -15997,7 +15997,7 @@
       "Graph toughness",
       "Forbidden induced subgraphs"
     ],
-    "consumed_by_exp_id": "96910b34",
+    "consumed_by_exp_id": "",
     "description": "Every simple finite graph that is (K₁∪P₄)-free, has toughness at least 1, and has at least 3 vertices is Hamiltonian.",
     "domain_bridges": [
       "Formalization of graph toughness in Lean 4",
@@ -16012,7 +16012,7 @@
     "proof_strategy": "Assume a minimal counterexample by number of vertices. Show that any non-minimally 1-tough graph can be reduced by edge deletion while preserving (K₁∪P₄)-freeness and 1-toughness until a minimally 1-tough graph is obtained. Then apply the structural characterization from the paper (already proven for minimally 1-tough case) to conclude the minimized graph is Hamiltonian, and lift the cycle back to the original, yielding contradiction.",
     "research_mode": "team",
     "source_exp_id": "2607.07239v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-09T04:17:26.671029+00:00",
     "title": "Hamiltonicity of (K₁∪P₄)-free 1-tough graphs"
   },
@@ -16508,6 +16508,35 @@
     "title": "Four Axioms Characterize the Equivalence of Honeycombs and Horn Triples"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Erdős-Pósa property for cycles",
+      "Graph embeddings on surfaces",
+      "Radial graphs and face distances",
+      "Tight bounds in extremal graph theory"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every fixed Euler genus g ≥ 0 and fixed distance d ≥ 1, there exists a constant c_{g,d} > 0 such that for infinitely many values of k, there exists a graph G_k with a closed 2-cell embedding ψ_k on a surface of Euler genus g, and a face coloring c_k, such that G_k contains no k faces of pairwise distinct colors at pairwise distance at least d in R(G_k, ψ_k), and every set X ⊆ V(G_k) satisfying |{c_k(F) : F ∈ F(ψ_k) and V(F) ∩ ⋃_{x∈X} N^d_{R(G_k,ψ_k)}(x) = ∅}| ≤ k(k+2) has size at least c_{g,d} · k².",
+    "domain_bridges": [
+      "Topological graph theory",
+      "Extremal combinatorics",
+      "Additive combinatorics"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0729",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct an infinite family of graphs {G_k} with closed 2-cell embeddings on surfaces of Euler genus g such that the radial graph structure forces any valid hitting set X to intersect almost all faces within distance d. Use the connection to additive combinatorics via sum-free sets or Sidon sets to establish the lower bound, leveraging the fact that subdivisions of ladders can be embedded in fixed genus surfaces while maintaining the constraint on cycle lengths. The key insight is that the distance constraint in the radial graph creates a packing problem equivalent to finding sets with restricted sumsets, allowing application of polynomial growth bounds from additive combinatorics to show the c_{g,d} · k² lower bound.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06869v1",
+    "status": "available",
+    "timestamp": "2026-07-09T11:46:45.249309+00:00",
+    "title": "Tightness of Erdős-Pósa Bound for Facial Cycles in Fixed Genus Surfaces"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "Schubert calculus",
@@ -16526,7 +16555,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0729",
+    "id": "fd_0730",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove by induction on r using generating function identities for exterior powers and sign-reversing arguments; verify base case r=1 and use the relation ∂_i X_j = δ_{ij} to deduce the action on higher wedges, then extend to arbitrary compositions.",
@@ -16547,7 +16576,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0730",
+    "id": "fd_0731",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine probabilistic models of prime factor distributions with known upper and lower bounds for ω(n) and constructions of integers with many small prime factors; likely requires sieve methods and deep results on smooth numbers.",
@@ -16575,7 +16604,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0731",
+    "id": "fd_0732",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use p-adic analysis and properties of multinomial coefficients modulo prime powers, potentially relating to generalized hypergeometric functions and their p-integrality properties. The approach would involve analyzing the generating function of S_l^{(m)}(n) and applying p-adic differential equations.",
@@ -16605,7 +16634,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0732",
+    "id": "fd_0733",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the identity Σ_{n≤x} M(x/n) = 1, prove the grouping into S_1 and S_2 components, apply Möbius inversion to derive the main formula, and verify correctness through induction on bounded intervals. The proof requires careful handling of floor function identities and the constraint ν_x < u < x to ensure all terms are well-defined.",
@@ -16633,7 +16662,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0733",
+    "id": "fd_0734",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Characterize the optimizer of the variational problem via Lagrange multipliers on the Boolean lattice, establish convexity properties of the p-biased measure under IU constraints, and prove uniqueness of extremal families through exchange arguments and majorization theory.",
@@ -16658,7 +16687,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0734",
+    "id": "fd_0735",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Choose a monomial order that yields a squarefree initial ideal in(J_{G,H}) whose Stanley–Reisner complex is precisely the independence complex of the linear matroid M_{G,H}. 2. Show that the special fiber ring S/J_{G,H} ⊗_k k[m] has the same Hilbert function as the face ring of that complex, hence its Krull dimension (the analytic spread) equals dim(Δ)+1. 3. For a squarefree simplicial complex, dim(Δ)+1 equals the size of the largest face, which is the rank of the represented matroid. 4. Conclude ℓ(J_{G,H}) = rank(M_{G,H}).",
@@ -16684,7 +16713,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0735",
+    "id": "fd_0736",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof would involve verifying the modular conditions and leveraging the lower bound from Buchanan et al. combined with constructive upper bounds. By analyzing the structure of bicliques and their symmetric differences, one can show that the conjectured values are achievable and minimal.",
@@ -16713,7 +16742,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0736",
+    "id": "fd_0737",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The forward direction can be established by contradiction: if a tree has mpd(T) = 4 but all pairs of leaves have distance at most 2, then the distance constraints would force at least two vertices to have identical multiset representations, violating the resolving property. The reverse direction follows from constructing an explicit resolving multiset partition with exactly 4 parts when the leaf distance condition is satisfied. This construction generalizes the proof techniques used for the general lower bound while exploiting the tree structure to ensure the partition is valid. The characterization should be formalized by first defining the multiset representation function, then proving the equivalence via structural analysis of tree topology.",
@@ -16741,7 +16770,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0737",
+    "id": "fd_0738",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The conjecture can be approached by first establishing a shifting invariance, then applying variational estimates for the tensor spectral radius, and finally performing a saturation analysis to identify the extremal configuration; this mirrors the strategy outlined in the paper but isolates the key inequality for independent verification.",
@@ -16765,7 +16794,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0738",
+    "id": "fd_0739",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the lower bound by exhibiting a pair of vertices whose distance is at least n−2, using an invariant that counts the number of labels out of place under any admissible move. Establish the upper bound by describing an explicit algorithm that transforms any vertex to any other in at most n−2 steps, via a greedy reduction of mismatched labels, and prove its correctness by induction on n.",
@@ -16792,7 +16821,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0739",
+    "id": "fd_0740",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the O\\u2019Nan–Scott theorem to enumerate all primitive permutation groups of degree 108, apply integrality and eigenvalue constraints for directed SRGs, and computationally verify that the only feasible parameter sets coincide with those constructed. A GAP/Sage pipeline can generate candidate adjacency matrices under transitive actions and compare them to the known constructions.",
@@ -16819,7 +16848,7 @@
     "domains": [
       "Physics"
     ],
-    "id": "fd_0740",
+    "id": "fd_0741",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the structural characterization of minimally 1‑tough (K₁ ∪ P₄)-free graphs, combine with known sufficient conditions for Hamiltonicity (e.g., Dirac’s theorem) and verify the degree‑2 condition implied by Kriesell's conjecture.",
@@ -16846,7 +16875,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0741",
+    "id": "fd_0742",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive combinatorial argument using Lemma lem:lift and parity analysis of distinct part sizes.",
@@ -16872,7 +16901,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0742",
+    "id": "fd_0743",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Verify the equality by explicit enumeration for concrete cubic orders and attempt a general proof by constructing a bijection between global genus classes and tuples of local Gorenstein overorders.",
@@ -16905,7 +16934,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0743",
+    "id": "fd_0744",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Refine the original construction by applying the coarse Menger theorem to find separators of smaller diameter that still separate large‑diameter parts, then use an iterative compression argument to reduce adhesion size while preserving the (d,2d+1)-inseparability of bags.",
@@ -16936,7 +16965,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0744",
+    "id": "fd_0745",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the explicit cocycle formula σ^(α) from Theorem 1 to compute the fundamental group of the cover, apply covering space theory for graphs to determine the index of the metaplectic group in the full automorphism group, and use the transitivity properties established in the paper to analyze the component structure of the quotient.",
@@ -16962,7 +16991,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0745",
+    "id": "fd_0746",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive analysis of path structures under group actions, leveraging SAT-based embedding bounds to establish lower bounds for reflective cases.",
@@ -16973,9 +17002,37 @@
     "title": "Reflective Ramsey Numbers Exceed Dihedral Ramsey Numbers for Monotone Paths"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "normal_numbers",
+      "Cantor_sets",
+      "computable_analysis"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that a set of positive integers S is sparse if and only if for every ε > 0, there exists a constant C_ε such that for all sufficiently large k, the ratio of consecutive elements in the increasing sequence s_1 < s_2 < ... satisfies s_{i+1}/s_i < C_ε(1 + ε)^i for some computable function relating to the sparsity exponent ρ. This would provide a computable characterization of sparseness that bridges the analytic definition with algorithmic computability properties used in the construction of normal numbers.",
+    "domain_bridges": [
+      "analytic_number_theory",
+      "computability_theory",
+      "geometric_measure_theory"
+    ],
+    "domains": [
+      "Computation",
+      "Pythagorean"
+    ],
+    "id": "fd_0747",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Prove both directions: (1) If S is sparse, use the sparsity condition to bound gap ratios by exploiting the uniform lower bound on local counts; (2) If gap ratios are bounded as conjectured, show this implies the sparse set condition by constructing intervals where the local count is sufficiently large relative to log k. The proof would require delicate counting arguments and optimization over the parameter ρ.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06773v1",
+    "status": "available",
+    "timestamp": "2026-07-09T11:47:11.937303+00:00",
+    "title": "Characterization of sparse sets via consecutive gap growth rates"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "77c07bb4",
+    "consumed_by_exp_id": "",
     "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers — anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension — they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property — it's not about content quality but about the sheaf cohomology of the social network.",
     "domain_bridges": [],
     "domains": [
@@ -16988,7 +17045,7 @@
     "proof_strategy": "Define the meme sheaf M on social network G: for each community C_i (cluster in G), M(C_i) is the set of interpretations of the meme in community i. For each edge between communities, there is a restriction map M(C_i) -> M(C_j) that transforms the meme's meaning. Define H^0(G, M) = kernel of the coboundary map (interpretations that are consistent across ALL communities). Define H^1(G, M) = cokernel (obstructions to consistent interpretation). Prove: dim(H^0) = number of universal interpretations. Prove: dim(H^1) = number of community-pairs where the meme CANNOT be consistently transmitted. Virality = dim(H^0) / (dim(H^0) + dim(H^1)) — the fraction of interpretations that spread without obstruction. Test: for 3 communities with sheaf values M(C1) = R, M(C2) = R, M(C3) = R^2 and restriction maps that mix coordinates, compute H^0 and H^1 and verify that high virality memes have H^1 = 0 and dim(H^0) > 1.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T16:01:43.584485+00:00",
     "title": "The Mathematics of Memes: Viral Information Topology"
   },
