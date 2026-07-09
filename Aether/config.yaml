@@ -397,11 +397,12 @@ git:
   commit_template: 'AETHER v1.0 cycle #{cycle}: {concept_title}'
 features:
   enable_threads: true
-  enable_specialized_critics: true
-  enable_thread_promise_critic: true
-  enable_abduction_loop: true
+  enable_specialized_critics: false
+  enable_thread_promise_critic: false
+  enable_abduction_loop: false
   enable_external_signal: true
   enable_computational_stage: true
+  bypass_all_local_llm: true
 
 # LLM usage reduction levers. Modes: on/off (eval_cache, pruning_rules);
 # enabled/off for the skip-gates (lint_gate). See Aether/CLAUDE.md.

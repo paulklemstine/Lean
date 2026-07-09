@@ -11,24 +11,21 @@ from specialized_critics import SpecializedCritic, CriticScores
 
 class FakePiAgent:
     """Mock PiAgent that returns predetermined JSON responses."""
-    def __init__(self, responses):
-        self.responses = responses
-        self._idx = 0
+    def __init__(self, response):
+        self.response = response
 
     def _call_ollama(self, system: str, user: str, timeout=None) -> str:
-        response = self.responses[self._idx % len(self.responses)]
-        self._idx += 1
-        return response
+        return self.response
 
 
 @pytest.fixture
 def fake_pi_agent():
-    return FakePiAgent([
-        json.dumps({"score": 0.9, "rationale": "Compiles, no sorry."}),
-        json.dumps({"score": 0.7, "rationale": "Likely new."}),
-        json.dumps({"score": 0.8, "rationale": "Deep proof."}),
-        json.dumps({"score": 0.6, "rationale": "Okay prose."}),
-    ])
+    return FakePiAgent(json.dumps({
+        "correctness": {"score": 0.9, "rationale": "Compiles, no sorry."},
+        "novelty": {"score": 0.7, "rationale": "Likely new."},
+        "depth": {"score": 0.8, "rationale": "Deep proof."},
+        "presentation": {"score": 0.6, "rationale": "Okay prose."}
+    }))
 
 
 class TestCriticParsing:
@@ -36,18 +33,18 @@ class TestCriticParsing:
         critic = SpecializedCritic(fake_pi_agent)
         scores = critic.evaluate(lean_source="theorem a : True := trivial", concept_title="Test")
         assert isinstance(scores, CriticScores)
-        assert 0.0 <= scores.correctness <= 1.0
-        assert 0.0 <= scores.novelty <= 1.0
-        assert 0.0 <= scores.depth <= 1.0
-        assert 0.0 <= scores.presentation <= 1.0
+        assert scores.correctness == 0.9
+        assert scores.novelty == 0.7
+        assert scores.depth == 0.8
+        assert scores.presentation == 0.6
 
     def test_clamp_out_of_range_scores(self):
-        agent = FakePiAgent([
-            json.dumps({"score": 1.5}),
-            json.dumps({"score": -0.2}),
-            json.dumps({"score": 0.5}),
-            json.dumps({"score": 0.5}),
-        ])
+        agent = FakePiAgent(json.dumps({
+            "correctness": {"score": 1.5, "rationale": ""},
+            "novelty": {"score": -0.2, "rationale": ""},
+            "depth": {"score": 0.5, "rationale": ""},
+            "presentation": {"score": 0.5, "rationale": ""}
+        }))
         critic = SpecializedCritic(agent)
         scores = critic.evaluate(lean_source="", concept_title="Test")
         assert scores.correctness == 1.0
@@ -55,7 +52,7 @@ class TestCriticParsing:
         assert scores.depth == 0.5
 
     def test_fallback_when_no_json(self):
-        agent = FakePiAgent(["not json"] * 4)
+        agent = FakePiAgent("not json")
         critic = SpecializedCritic(agent)
         scores = critic.evaluate(lean_source="", concept_title="Test")
         assert scores.correctness == 0.5

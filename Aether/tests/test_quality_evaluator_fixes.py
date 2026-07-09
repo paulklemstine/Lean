@@ -128,6 +128,7 @@ class TestFullEvaluateWithResultFields:
             lean_source="theorem foo : 1 + 1 = 2 := by omega\nlemma bar : 2 + 2 = 4 := by omega",
             concept_title="Test Theorem",
             result_fields=result_fields,
+            phase="B",
         )
         # artifact_richness should be > 0.1 (the old default)
         assert score.artifact_richness > 0.1
