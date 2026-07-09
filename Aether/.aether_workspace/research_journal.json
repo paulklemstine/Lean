@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3c64518a",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Forbidden pc-minors for Daisy Cubes\n\nDerived from this cycle's formalized findings:\n- `daisy_isometric` — daisy cubes are partial cubes (isometric subgraphs of `Q_n`);\n- `meet_on",
-      "quality_score": 0.79664,
-      "sorry_count": 0,
-      "theorem_count": 24,
-      "timestamp": "2026-06-29T00:21:28",
-      "title": "Complete Characterization of Minimal Forbidden Partial‑Cube Minors for Daisy Cubes"
-    },
-    {
       "cycle_id": "0a73d6d7",
       "domain": "Probability",
       "key_insight": "# Future Directions: Restrictions, Counting, and the Resolution / Cutting-Planes Frontier\n\nThis cycle established three robustness facts about the pigeonhole principle and\nits proof systems: a refutat",
@@ -499,19 +489,19 @@
       "theorem_count": 26,
       "timestamp": "2026-07-09T03:18:19",
       "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
+    },
+    {
+      "cycle_id": "c38e66e4",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions: Power-of-Two Matching Counts\n\nThis cycle established a clean multiplicative law for perfect matchings of *block\ngraphs* — superpositions of identical gadgets with no edges between",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-09T21:23:45",
+      "title": "Power‑of‑Two Perfect Matching Count in Class B Graphs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3f78044a",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Formal Verification of Algorithms\n\nDerived from this cycle's findings (verified files: `BinarySearchVerified.lean`,\n`FourierTransformInversion.lean`, `BinarySearchFactoradicBridg",
-      "quality_score": 0.5920639999999999,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T21:18:51",
-      "title": "Formal Verification of Algorithms"
-    },
     {
       "cycle_id": "333b621d",
       "domain": "Novelty",
@@ -2501,21 +2491,19 @@
       "theorem_count": 31,
       "timestamp": "2026-07-09T21:23:40",
       "title": "Godel's Casino: Incomplete but Winnable Games"
+    },
+    {
+      "cycle_id": "c38e66e4",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions: Power-of-Two Matching Counts\n\nThis cycle established a clean multiplicative law for perfect matchings of *block\ngraphs* — superpositions of identical gadgets with no edges between",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-09T21:23:45",
+      "title": "Power‑of‑Two Perfect Matching Count in Class B Graphs"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3fe1db8c",
-      "domain": "Novelty",
-      "name": "mem_agreements",
-      "quality": 0.8246161538461538
-    },
-    {
-      "cycle_id": "3fe1db8c",
-      "domain": "Novelty",
-      "name": "agree_iff_fixed",
-      "quality": 0.8246161538461538
-    },
     {
       "cycle_id": "3fe1db8c",
       "domain": "Novelty",
@@ -2803,9 +2791,21 @@
       "domain": "Novelty",
       "name": "K_xaxis_nonpos",
       "quality": 0.7115
+    },
+    {
+      "cycle_id": "c38e66e4",
+      "domain": "NumberTheory",
+      "name": "is",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "c38e66e4",
+      "domain": "NumberTheory",
+      "name": "matchCount_blockGraph",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-09T21:23:40",
+  "last_updated": "2026-07-09T21:23:45",
   "open_questions": [
     {
       "context": "We prove, with no `sorry`, the abstract principle:; formal, zero-`sorry` proofs**, on the smallest non-trivial values",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "ab42f98e",
-        "quality": 0.70551,
-        "theorems": 3,
-        "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
-      },
-      {
         "cycle_id": "fdb1bb82",
         "quality": 0.452,
         "theorems": 19,
@@ -3699,6 +3693,12 @@
         "quality": 0.5808559999999999,
         "theorems": 21,
         "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
+      },
+      {
+        "cycle_id": "c38e66e4",
+        "quality": 0.82,
+        "theorems": 14,
+        "title": "Power‑of‑Two Perfect Matching Count in Class B Graphs"
       }
     ],
     "Physics": [

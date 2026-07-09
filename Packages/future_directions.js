@@ -3,6 +3,20 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle c38e66e4 (Q=0.820), which proved 14 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In every connected graph whose edges are either 1\u2011matching or 2\u2011matching edges and in which no perfect matching contains edges of both types, the number of perfect matchings is always a power of two.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "push_c38e66e4_fc342391",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "c38e66e4",
+    "status": "available",
+    "timestamp": "2026-07-09T21:23:45.652130+00:00",
+    "title": "Deepening: Power\u2011of\u2011Two Perfect Matching Count in Class\u202fB Graphs"
+  },
+  {
     "consumed_by_exp_id": "643186e8",
     "description": "The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do \u2014 as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: The tropical semiring (R union {infinity}, min, +) IS the field with one element, in the following precise sense: the category of tropical schemes is equivalent to the category of F_1-schemes. More concretely, a tropical variety over F_1 is a set with a min-plus structure, and its base change to Z (formally, tensor with Z) is a toric variety. The key correspondence: F_1-points of a tropical variety are the vertices of its Newton polytope, and the 'cardinality' of the tropical variety (as an F_1-object) is the number of lattice points in the polytope, which equals the degree of the toric variety after base change. Test: for each toric variety corresponding to a polytope P, compute the number of F_1-points (vertices of P) and verify that the Euler characteristic of the toric variety equals |vertices(P)| = #F_1-points. Prove the tensor product correspondence: tropical scheme X over F_1 has X tensor_Z Z = the corresponding toric variety. Impact: F_1 and tropical geometry are two faces of the same coin. The field with one element is tropical, and tropical geometry is the geometry of F_1.",
     "domains": [
@@ -8723,20 +8737,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Order-type characterization of algebraic $p$-adic Hahn series with finitely many accumulation points"
   },
   {
-    "consumed_by_exp_id": "c38e66e4",
-    "description": "In every connected graph whose edges are either 1\u2011matching or 2\u2011matching edges and in which no perfect matching contains edges of both types, the number of perfect matchings is always a power of two.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0726",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.06921v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-09T10:39:28.931121+00:00",
-    "title": "Power\u2011of\u2011Two Perfect Matching Count in Class\u202fB Graphs"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "We conjecture that for any field F and integers n \u2265 m \u2265 0, d \u2265 0, the field\u2011independent filtration of \u0394^(n,m)Sym^dE described in the paper yields graded pieces whose characters are exactly the quantum binomial coefficients appearing in the product rule (Rel2) for Lusztig\u2019s quantum Cartan elements. In particular, the i\u2011th quotient is isomorphic to \u0394^(n\u2011i,m\u2011i)Sym^(d\u2011i)E and its formal character equals s_(n\u2011i,m\u2011i) \u2218 s_(d\u2011i).",
     "domains": [
@@ -9881,6 +9881,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Power-of-Two Matching Counts\n\nThis cycle established a clean multiplicative law for perfect matchings of *block\ngraphs* \u2014 superpositions of identical gadgets with no edges between blocks \u2014 and\nspecialized it to obtain an exact power-of-two count when every block is a\nquadrilateral. The following conjectures push the phenomenon toward richer,\nconnected, and cross-domain settings.\n\n## Conjecture 1 \u2014 Forced-tree gluing preserves the power-of-two law\nIf a connected graph is assembled from two-matching gadgets glued along *forcing\nedges* (edges lying in every perfect matching), then its number of perfect\nmatchings remains an exact power of two.\n\nThe key insight is that a forcing edge behaves like a rigid identification that\nneither creates nor destroys matching choices, so gluing along it multiplies\ncounts by one and leaves the two-choice structure of each gadget intact.\n\nWhy now? The multiplicative law already isolates the mechanism (independent binary\nchoices); forcing edges are precisely the tool needed to keep that independence\nwhile making the graph connected, closing the gap between the disconnected model\nand the informal \"connected\" hypothesis.\n\n## Conjecture 2 \u2014 Spectral signature of two-matching gadgets\nA connected graph has a perfect-matching count that is a power of two if and only\nif its adjacency structure decomposes into blocks each of which contributes a\nsingle eigenvalue pair of a fixed shape to the matching (permanent) generating\nfunction.\n\nThe key insight is that the logarithm of a power-of-two count is an integer, and\nintegrality of a spectral invariant is exactly the kind of rigidity that forces a\nbinary block decomposition.\n\nWhy now? The block equivalence proved this cycle gives an explicit factorization\nof the matching polynomial over blocks, providing the algebraic handle needed to\ntranslate the counting statement into a spectral one.\n\n## Conjecture 3 \u2014 Two-matching gadgets are exactly the even cycles and their trees\nUp to the gluing operations of Conjecture 1, every connected building block whose\nmatching count is exactly two is an even cycle.\n\nThe key insight is that exactly two perfect matchings means the symmetric\ndifference of any two matchings is a single alternating cycle, and the only\nconnected graphs supporting a unique such cycle are the even cycles themselves.\n\nWhy now? We verified directly that both the quadrilateral and the hexagon have\nexactly two matchings; recognizing this as the defining feature of even cycles\nturns a pair of computations into a structural classification.\n\n## Conjecture 4 \u2014 Density threshold for power-of-two counts\nAmong all connected graphs on `2n` vertices with a perfect matching, the fraction\nwhose matching count is a power of two tends to zero as `n` grows, yet the maximum\nnumber of edges compatible with a power-of-two count grows linearly in `n`.\n\nThe key insight is that power-of-two counts demand a sparse, block-like backbone,\nso adding edges beyond a linear budget necessarily introduces mixed matchings that\nbreak the binary factorization.\n\nWhy now? The block model pinpoints the exact structural cost of each extra matching\nchoice, making the edge budget a concrete, testable quantity rather than a vague\nheuristic.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0806",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c38e66e4",
+    "status": "available",
+    "timestamp": "2026-07-09T21:23:42.789433+00:00",
+    "title": "Clean multiplicative law for perfect matchings of *bloc"
+  },
+  {
+    "consumed_by_exp_id": "c05d7abb",
     "description": "Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearrangement of the primes q_1, q_2, ... such that the sequence of ratios q_n / p_n converges to 1. In other words, you can shuffle the primes almost arbitrarily and the room numbers barely change. More precisely, the set of permutations sigma for which p_{sigma(n)} / p_n has a limit is dense in the symmetric group (with the topology of pointwise convergence). But NOT every permutation works: the permutation that swaps all even-indexed primes with odd-indexed ones gives q_{2n}/p_{2n} = p_{2n-1}/p_{2n} which converges to 1 by the prime number theorem, but the permutation that reverses order gives q_n/p_n = p_{N-n}/p_n which diverges. Test: compute q_n/p_n for 10 random permutations of the first 10^6 primes and verify that most ratios converge to 1. Find the exact density of 'well-behaved' permutations. Impact: the primes are robust under rearrangement \u2014 their asymptotic density is a topological invariant of the permutation group.",
     "domains": [
       "Novelty",
@@ -9890,7 +9905,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.74,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T20:12:33.003700+00:00",
     "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
   },
