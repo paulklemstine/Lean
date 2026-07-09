@@ -33,21 +33,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
   },
   {
-    "consumed_by_exp_id": "f459aaa0",
-    "description": "Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: lines parallel to the x-axis diverge (hyperbolic behavior) while lines parallel to the y-axis converge (elliptic behavior). The metric is ds^2 = dx^2/cosh^2(y) + dy^2 * cosh^2(x) \u2014 expanding in x and contracting in y. Conjecture: Split Geometry is a consistent Riemannian geometry with curvature K(x,y) = -sech^2(y) + sech^2(x) that changes sign across the diagonals. The geometry has a 'phase boundary' along the lines y = x and y = -x where K = 0 (flat). In the region |x| > |y|, K > 0 (elliptic) and in the region |y| > |x|, K < 0 (hyperbolic). The geodesics in split geometry are piecewise combinations of exponential curves (in hyperbolic regions) and trigonometric curves (in elliptic regions). Test: compute the Christoffel symbols and curvature tensor for the split metric. Prove that geodesics cross the phase boundary at most twice. Compute the area of a split triangle with one vertex in each region. Impact: a geometry where the curvature of space depends on which direction you look \u2014 the mathematical realization of a universe that is simultaneously expanding and contracting.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0653",
-    "priority_score": 0.81,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T16:01:43.730052+00:00",
-    "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For every m \u2265 1, the generating tree encoding the recursive decomposition of intervals in the greedy m-Tamari poset (on Dyck paths of size n) is isomorphic to the generating tree encoding the recursive decomposition of planar (m+1)-constellations of size n. This conjecture generalizes the m=1 case proved in the paper and would provide a combinatorial proof of the equinumerosity refined by the parameters tracked in the generating tree (e.g., number of valleys in Dyck paths and corresponding statistics in constellations).",
     "domains": [
@@ -6621,7 +6606,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimality of the cake-cutting constant \u03bc\u2082"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "901a2c39",
     "description": "For a complete multipartite graph G = K_{n_1,...,n_m} with n_1 \u2264 ... \u2264 n_m, the path-free complex PF_t(G) is vertex decomposable if and only if t \u2265 2n_{m-1} - 1. Equivalently, this is exactly the range where PF_t(G) is shellable and sequentially Cohen-Macaulay. For t \u2264 2n_{m-1} - 2, the complex fails to be sequentially Cohen-Macaulay.",
     "domains": [
       "Bridges"
@@ -6630,7 +6615,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05358v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T13:11:19.325737+00:00",
     "title": "Vertex decomposability threshold for path-free complexes of complete multipartite graphs"
   },
@@ -7760,7 +7745,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The \u221a2-Threshold Conjecture for Rips Filtration Approximation"
   },
   {
-    "consumed_by_exp_id": "586144ff",
+    "consumed_by_exp_id": "f2f1d7cc",
     "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card \u2014 you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier \u2014 it's an opportunity. You can WIN at the game of undecidability.",
     "domains": [
       "Novelty",
@@ -9380,21 +9365,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For any fixed integer $r\\ge 1$, the algebra generated by the bosonic Schubert differential operators acting on Schur polynomials is isomorphic to the exterior algebra $\\bigwedge^{\\bullet}(\\mathbb{Q}^r)$; under this isomorphism each Schubert class $\\sigma_\\lambda$ corresponds to a unique exterior basis element, and the fermionic vertex operator actions on $\\bigwedge^{\\bullet}(\\mathbb{Q}^n)$ satisfy the same relations, providing a finite type version of the boson\u2013fermion correspondence.",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0766",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.07667v1",
-    "status": "available",
-    "timestamp": "2026-07-09T14:46:57.084734+00:00",
-    "title": "Finite Type Boson-Fermion Correspondence as an Algebra Isomorphism between Bosonic and Fermionic Schubert Calculus Operators"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "For any pair of positive integers (n,k) where the abelian complexity p_ab(n) \u2264 k \u2264 factor complexity p(n), there exists a subgroup G of the symmetric group S_n containing the abelian group A_n such that the group complexity p_G(n) = k. Sturmian words exhibit this property, and we conjecture this holds for all infinite words with bounded group complexity functions.",
     "domains": [
       "Pythagorean",
@@ -9410,17 +9380,61 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The paper proves the induced Erd\u0151s\u2013P\u00f3sa property for \u0398_t (long thetas) existentially, but the proof for cycles is algorithmic. It is conjectured that there exists a polynomial-time algorithm to either find k pairwise vertex-disjoint and anti-adjacent copies of \u0398_t as induced minors or a hitting set X of size O(t k log k) such that N[X] hits all \u0398_t induced minors.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_0768",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07697v1",
+    "status": "available",
+    "timestamp": "2026-07-09T15:38:54.527543+00:00",
+    "title": "Algorithmic Induced Erd\u0151s\u2013P\u00f3sa Property for Long Thetas"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any fixed integer $r\\ge 1$, the algebra generated by the bosonic Schubert differential operators acting on Schur polynomials is isomorphic to the exterior algebra $\\bigwedge^{\\bullet}(\\mathbb{Q}^r)$; under this isomorphism each Schubert class $\\sigma_\\lambda$ corresponds to a unique exterior basis element, and the fermionic vertex operator actions on $\\bigwedge^{\\bullet}(\\mathbb{Q}^n)$ satisfy the same relations, providing a finite type version of the boson\u2013fermion correspondence.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0769",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07667v1",
+    "status": "available",
+    "timestamp": "2026-07-09T14:46:57.084734+00:00",
+    "title": "Finite Type Boson-Fermion Correspondence as an Algebra Isomorphism between Bosonic and Fermionic Schubert Calculus Operators"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For each fixed interval length \\(y\\in\\mathbb{N}\\), define \\(W(x,y)=\\sum_{j=1}^{y}\\omega(x+j)\\) where \\(\\omega(n)\\) counts distinct prime factors of \\(n\\). The conjecture states that the growth of \\(W\\) is sharply bounded: \n\\[ \\limsup_{x\\to\\infty}\\frac{W(x,y)\\log\\log x}{\\log x}=1.\\]\nThis captures the maximal possible order of the sum of distinct prime factors in a block of \\(y\\) consecutive integers.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0767",
+    "id": "fd_0770",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07641v1",
     "status": "available",
     "timestamp": "2026-07-09T15:12:10.552210+00:00",
     "title": "Precise asymptotic for the sum of distinct prime divisors over intervals"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigates the infimum of |det(A)| for non-singular 4\u00d74 unimodular matrices over finite rings \u2124/(2k+1)\u2124, where unimodularity implies det(A) \u2261 1 mod (2k+1). Establishes a lower bound on |det(A)| in terms of k, quantifying how close such matrices can approach singularity.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0771",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07688v1",
+    "status": "available",
+    "timestamp": "2026-07-09T15:39:04.484817+00:00",
+    "title": "Bounding the Determinant of Unimodular 4\u00d74 Matrices Over (2k+1)-ary Fields"
   },
   {
     "consumed_by_exp_id": "ad941b96",

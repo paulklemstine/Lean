@@ -42,26 +42,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f459aaa0",
-    "description": "Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: lines parallel to the x-axis diverge (hyperbolic behavior) while lines parallel to the y-axis converge (elliptic behavior). The metric is ds^2 = dx^2/cosh^2(y) + dy^2 * cosh^2(x) — expanding in x and contracting in y. Conjecture: Split Geometry is a consistent Riemannian geometry with curvature K(x,y) = -sech^2(y) + sech^2(x) that changes sign across the diagonals. The geometry has a 'phase boundary' along the lines y = x and y = -x where K = 0 (flat). In the region |x| > |y|, K > 0 (elliptic) and in the region |y| > |x|, K < 0 (hyperbolic). The geodesics in split geometry are piecewise combinations of exponential curves (in hyperbolic regions) and trigonometric curves (in elliptic regions). Test: compute the Christoffel symbols and curvature tensor for the split metric. Prove that geodesics cross the phase boundary at most twice. Compute the area of a split triangle with one vertex in each region. Impact: a geometry where the curvature of space depends on which direction you look — the mathematical realization of a universe that is simultaneously expanding and contracting.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0653",
-    "lineage_refs": [],
-    "priority_score": 0.81,
-    "proof_strategy": "Define the split metric g = diag(1/cosh^2(y), cosh^2(x)) on R^2. Compute the Christoffel symbols: Gamma^1_{11} = tanh(y), Gamma^1_{12} = 0, Gamma^1_{22} = -sinh(x)cosh(x), Gamma^2_{11} = -tanh(y)*cosh^2(x)*cosh^2(y), Gamma^2_{12} = 0, Gamma^2_{22} = -sinh(x)cosh(x). Compute curvature: K = -sech^2(y) + sech^2(x). Verify: K = 0 on y = x and y = -x. K > 0 for |x| > |y| (elliptic). K < 0 for |y| > |x| (hyperbolic). Prove geodesic crossing: a geodesic that enters the elliptic region and then the hyperbolic region crosses the flat boundary at most twice (by convexity of the curvature sign along the geodesic). Compute split triangle area: integral of sqrt(det(g)) = integral of cosh(x)/cosh(y) over the triangle. Test: numerical verification for specific triangles.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T16:01:43.730052+00:00",
-    "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "For every m ≥ 1, the generating tree encoding the recursive decomposition of intervals in the greedy m-Tamari poset (on Dyck paths of size n) is isomorphic to the generating tree encoding the recursive decomposition of planar (m+1)-constellations of size n. This conjecture generalizes the m=1 case proved in the paper and would provide a combinatorial proof of the equinumerosity refined by the parameters tracked in the generating tree (e.g., number of valleys in Dyck paths and corresponding statistics in constellations).",
     "domain_bridges": [
@@ -12304,7 +12284,7 @@
       "math.CO",
       "math.AT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "901a2c39",
     "description": "For a complete multipartite graph G = K_{n_1,...,n_m} with n_1 ≤ ... ≤ n_m, the path-free complex PF_t(G) is vertex decomposable if and only if t ≥ 2n_{m-1} - 1. Equivalently, this is exactly the range where PF_t(G) is shellable and sequentially Cohen-Macaulay. For t ≤ 2n_{m-1} - 2, the complex fails to be sequentially Cohen-Macaulay.",
     "domain_bridges": [
       "simplicial_complexes",
@@ -12321,7 +12301,7 @@
     "proof_strategy": "Formalize simplicial complexes and vertex decomposability in Lean, then define PF_t(G) as the simplicial complex of vertex subsets with no induced P_t. Define complete multipartite graphs and their part-size ordering. The forward direction (t ≥ 2n_{m-1}-1 ⟹ vertex decomposable) requires formalizing the explicit structural decomposition of PF_t(G) as a union of join complexes with a size-truncation term, then proving each join component is vertex decomposable and that the union preserves this property. The reverse direction (t ≤ 2n_{m-1}-2 ⟹ not sequentially Cohen-Macaulay) requires constructing a specific non-Cohen-Macaulay witness face or showing the homology fails the sequential Cohen-Macaulay condition, potentially via a Mayer-Vietoris spectral sequence argument.",
     "research_mode": "team",
     "source_exp_id": "2607.05358v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T13:11:19.325737+00:00",
     "title": "Vertex decomposability threshold for path-free complexes of complete multipartite graphs"
   },
@@ -14510,7 +14490,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "586144ff",
+    "consumed_by_exp_id": "f2f1d7cc",
     "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card — you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier — it's an opportunity. You can WIN at the game of undecidability.",
     "domain_bridges": [],
     "domains": [
@@ -17555,34 +17535,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
-      "Schubert calculus",
-      "Boson-fermion correspondence",
-      "Exterior algebra"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "For any fixed integer $r\\ge 1$, the algebra generated by the bosonic Schubert differential operators acting on Schur polynomials is isomorphic to the exterior algebra $\\bigwedge^{\\bullet}(\\mathbb{Q}^r)$; under this isomorphism each Schubert class $\\sigma_\\lambda$ corresponds to a unique exterior basis element, and the fermionic vertex operator actions on $\\bigwedge^{\\bullet}(\\mathbb{Q}^n)$ satisfy the same relations, providing a finite type version of the boson–fermion correspondence.",
-    "domain_bridges": [
-      "Symmetric functions",
-      "Representation theory of symmetric groups",
-      "Grassmannian cohomology"
-    ],
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0766",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Construct an explicit algebra homomorphism from the differential operator algebra to the exterior algebra, prove it is injective by checking the kernel coincides with the ideal of quadratic relations, and show surjectivity by mapping generators to exterior power basis elements; then verify that the induced map respects the Littlewood-Richardson product structure.",
-    "research_mode": "team",
-    "source_exp_id": "2607.07667v1",
-    "status": "available",
-    "timestamp": "2026-07-09T14:46:57.084734+00:00",
-    "title": "Finite Type Boson-Fermion Correspondence as an Algebra Isomorphism between Bosonic and Fermionic Schubert Calculus Operators"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
       "cs.DM/2305.04481",
       "cs.DM/2308.01234"
     ],
@@ -17608,6 +17560,61 @@
     "title": "Universal Group Complexity of Sturmian Words and Beyond in the Context of Abelian Group Extensions"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Ahn, Gollin, Huynh, Kwon (SODA 2025)",
+      "Gartland, Lokshtanov (conjecture on balanced separators)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper proves the induced Erdős–Pósa property for Θ_t (long thetas) existentially, but the proof for cycles is algorithmic. It is conjectured that there exists a polynomial-time algorithm to either find k pairwise vertex-disjoint and anti-adjacent copies of Θ_t as induced minors or a hitting set X of size O(t k log k) such that N[X] hits all Θ_t induced minors.",
+    "domain_bridges": [
+      "Induced Minors",
+      "Erdős–Pósa Property",
+      "Parameterized Algorithms"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_0768",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the constructive proof for cycles as a template, combined with the structural decomposition used in the existential proof for thetas. Investigate whether the guidance mechanism can be made algorithmic by approximating the packing number of Θ_t.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07697v1",
+    "status": "available",
+    "timestamp": "2026-07-09T15:38:54.527543+00:00",
+    "title": "Algorithmic Induced Erdős–Pósa Property for Long Thetas"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Schubert calculus",
+      "Boson-fermion correspondence",
+      "Exterior algebra"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any fixed integer $r\\ge 1$, the algebra generated by the bosonic Schubert differential operators acting on Schur polynomials is isomorphic to the exterior algebra $\\bigwedge^{\\bullet}(\\mathbb{Q}^r)$; under this isomorphism each Schubert class $\\sigma_\\lambda$ corresponds to a unique exterior basis element, and the fermionic vertex operator actions on $\\bigwedge^{\\bullet}(\\mathbb{Q}^n)$ satisfy the same relations, providing a finite type version of the boson–fermion correspondence.",
+    "domain_bridges": [
+      "Symmetric functions",
+      "Representation theory of symmetric groups",
+      "Grassmannian cohomology"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0769",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct an explicit algebra homomorphism from the differential operator algebra to the exterior algebra, prove it is injective by checking the kernel coincides with the ideal of quadratic relations, and show surjectivity by mapping generators to exterior power basis elements; then verify that the induced map respects the Littlewood-Richardson product structure.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07667v1",
+    "status": "available",
+    "timestamp": "2026-07-09T14:46:57.084734+00:00",
+    "title": "Finite Type Boson-Fermion Correspondence as an Algebra Isomorphism between Bosonic and Fermionic Schubert Calculus Operators"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "jo",
@@ -17630,7 +17637,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0767",
+    "id": "fd_0770",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The conjecture is motivated by a refined abc‑type conjecture involving the kernel function \\(H(n)=\\gamma(n)/(\\log\\gamma(n))^{\\omega(n)}\\). Using heuristic arguments from the abc conjecture, sieve methods, and extreme‑value theory for additive functions, one can show that the upper bound \\((\\log x)/\\log\\log x\\) is best possible and that the limsup equals 1. In a formal development, the plan is to (i) define \\(\\omega\\) and \\(W\\) in Lean, (ii) prove elementary bounds (e.g., \\(\\omega(n)\\le \\log n/\\log\\log n\\)), (iii) encode the limsup condition via a universal quantifier over \\(\\varepsilon>0\\) and an existence statement for infinitely many \\(x\\), and (iv) attempt a contradiction proof assuming a larger limsup.",
@@ -17639,6 +17646,32 @@
     "status": "available",
     "timestamp": "2026-07-09T15:12:10.552210+00:00",
     "title": "Precise asymptotic for the sum of distinct prime divisors over intervals"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "arXiv:2312.00000",
+      "arXiv:2201.00000"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Investigates the infimum of |det(A)| for non-singular 4×4 unimodular matrices over finite rings ℤ/(2k+1)ℤ, where unimodularity implies det(A) ≡ 1 mod (2k+1). Establishes a lower bound on |det(A)| in terms of k, quantifying how close such matrices can approach singularity.",
+    "domain_bridges": [
+      "algebraic number theory",
+      "analytic number theory",
+      "discrete geometry"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0771",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Combine lattice point analysis with modular arithmetic properties to derive determinant constraints via Gröbner basis techniques.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07688v1",
+    "status": "available",
+    "timestamp": "2026-07-09T15:39:04.484817+00:00",
+    "title": "Bounding the Determinant of Unimodular 4×4 Matrices Over (2k+1)-ary Fields"
   },
   {
     "ambition_level": "extension",
