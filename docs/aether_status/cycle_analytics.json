@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-09T06:03:33.407574+00:00",
+  "last_updated": "2026-07-09T07:12:54.628588+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -86,6 +86,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-09T06:03:33.379439+00:00",
       "title": "List Chromatic Number Bound for Uncrowded Uniform Hypergraphs"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6743,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Computation",
+      "duration_seconds": 1118.848956823349,
+      "end_time": 1783580366.1539562,
+      "files_integrated": 2,
+      "job_id": "ac85eee2",
+      "outcome_quality": 0.0,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v27",
+      "phase_b_skip_reason": "low_quality",
+      "phase_b_skipped": true,
+      "prompt_version": "v27",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.71,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7843,
+        "cross_domain": 0.85,
+        "grade": "world_class",
+        "importance": 0.9174,
+        "novelty": 0.95,
+        "proof_depth": 0.9035,
+        "usefulness": 0.8767
+      },
+      "quality_score": 0.207768,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783579247.3049994,
+      "strategy_count": 0,
+      "theorem_count": 23,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 23,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-09T07:12:54.599185+00:00",
+      "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
     }
   ]
 }

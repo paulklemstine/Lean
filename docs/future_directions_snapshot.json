@@ -22,7 +22,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c4017799",
     "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long — the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static — they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
     "domain_bridges": [],
     "domains": [
@@ -35,14 +35,14 @@
     "proof_strategy": "Define proof complexity C(P) = length(P) + depth(P) + number_of_lemmas(P) for a proof P in a formal system. Define refinement: P' refines P if P' proves the same theorem as P and C(P') < C(P). Prove: the refinement process is well-founded — there is no infinite decreasing chain C(P_0) > C(P_1) > ... because C takes values in the natural numbers. Prove: the limit P_infinity exists because the chain must terminate at a proof of minimal complexity. Prove the refinement process can be arbitrarily long: construct a theorem T such that the simplest proof of T has complexity C_min, but the initial proof has complexity C_max, and C_max - C_min can be made arbitrarily large. Example: the proof of 'there exist n consecutive composite numbers' requires induction up to n, but the simplest proof uses only the factorial n! + 2, n! + 3, ..., n! + n. Test: implement refinement for sqrt(2) irrationality in Lean 4.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.810023+00:00",
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ac85eee2",
+    "consumed_by_exp_id": "df755cd3",
     "description": "Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: lines parallel to the x-axis diverge (hyperbolic behavior) while lines parallel to the y-axis converge (elliptic behavior). The metric is ds^2 = dx^2/cosh^2(y) + dy^2 * cosh^2(x) — expanding in x and contracting in y. Conjecture: Split Geometry is a consistent Riemannian geometry with curvature K(x,y) = -sech^2(y) + sech^2(x) that changes sign across the diagonals. The geometry has a 'phase boundary' along the lines y = x and y = -x where K = 0 (flat). In the region |x| > |y|, K > 0 (elliptic) and in the region |y| > |x|, K < 0 (hyperbolic). The geodesics in split geometry are piecewise combinations of exponential curves (in hyperbolic regions) and trigonometric curves (in elliptic regions). Test: compute the Christoffel symbols and curvature tensor for the split metric. Prove that geodesics cross the phase boundary at most twice. Compute the area of a split triangle with one vertex in each region. Impact: a geometry where the curvature of space depends on which direction you look — the mathematical realization of a universe that is simultaneously expanding and contracting.",
     "domain_bridges": [],
     "domains": [
@@ -8079,7 +8079,7 @@
       "math.CO",
       "math.AG"
     ],
-    "consumed_by_exp_id": "3d8596f0",
+    "consumed_by_exp_id": "",
     "description": "In type A_n, the subalgebra B_aff of the affine Hecke algebra admits a canonical basis {b_{W_fin w}} indexed by cosets W_fin \\ W_aff. The conjecture states that the structure constants of B_aff with respect to this canonical basis are polynomials in v with non-negative integer coefficients: for any two cosets W_fin w and W_fin w' in W_fin \\ W_aff, the product b_{W_fin w} · b_{W_fin w'} = Σ c_{w,w'}^z · b_{W_fin z} where each c_{w,w'}^z ∈ Z_{≥0}[v]. This is the v-deformed analogue of the positivity of structure constants in the affine Fomin-Stanley subalgebra (equivalently, homology of the affine Grassmannian).",
     "domain_bridges": [
       "representation_theory",
@@ -8096,7 +8096,7 @@
     "proof_strategy": "First formalize the affine Weyl group W_aff = W_fin ⋉ Q∨ in type A_n as a Coxeter group with generators S_aff = S_fin ∪ {s_0}. Define the affine Hecke algebra H_aff over Z[v,v^{-1}] with Bernstein presentation and quadratic relations. Construct the pseudo-centralizer subalgebra B_aff as the subalgebra generated by appropriate elements arising from the DAHA centralizer construction. Prove the canonical basis exists (indexed by W_fin \\ W_aff) by establishing a graded module structure and applying the bar-involution argument. Finally, establish positivity of structure constants using geometric arguments via the affine Grassmannian or combinatorial arguments via the v-deformed Pieri rule.",
     "research_mode": "team",
     "source_exp_id": "2607.00426v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T08:09:58.266321+00:00",
     "title": "Positivity of structure constants for the canonical basis of the pseudo-centralizer subalgebra in type A"
   },
@@ -11393,7 +11393,7 @@
       "05C20",
       "05C85"
     ],
-    "consumed_by_exp_id": "c5715a86",
+    "consumed_by_exp_id": "",
     "description": "For every doubly regular tournament on n vertices (where n ≡ 3 mod 4 and n ≥ 3), the metric dimension β(G) is at most ⌈3·log₂(n)⌉. This provides an explicit constant in the O(log n) bound established for related families in the paper, extending the probabilistic method of Babai to the directed tournament setting with a constructive resolvability guarantee.",
     "domain_bridges": [
       "graph_theory",
@@ -11409,7 +11409,7 @@
     "proof_strategy": "Adapt Babai's probabilistic method: for a doubly regular tournament on n=4k+3 vertices, every vertex has out-degree 2k+1 and every pair of distinct vertices shares exactly k common out-neighbours. Sample a random set S of size ⌈3·log₂(n)⌉ vertices. For any pair (u,v) of distinct vertices, compute the probability over the random choice of S that all s ∈ S give d(s,u)=d(s,v). Use the strong regularity properties to bound this probability below 1/n², then take a union bound over all pairs. The key structural lemma is that in a doubly regular tournament, for any distinct u,v, the set {s : d(s,u) ≠ d(s,v)} has size at least n/3, giving each sample at least a 1/3 chance of distinguishing u from v.",
     "research_mode": "team",
     "source_exp_id": "2607.05152v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T05:40:17.241598+00:00",
     "title": "Explicit logarithmic bound on metric dimension of doubly regular tournaments"
   },
@@ -11419,7 +11419,7 @@
       "math.CO",
       "math.MG"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "874776c2",
     "description": "The paper proves that for k ≥ 3 and sufficiently large n, the maximum number of points in an n × n grid with no k+1 collinear points equals kn. This conjecture asserts that 'sufficiently large' can be replaced by the explicit threshold n ≥ k. Note that for n ≤ k the whole grid has no k+1 collinear points so f_k(n) = n², and for n = k we get f_k(k) = k² = k·k, making n ≥ k the natural boundary. The conjecture predicts that for all k ≥ 3 and n ≥ k, the trivial upper bound kn is always achievable.",
     "domain_bridges": [
       "discrete_geometry",
@@ -11435,7 +11435,7 @@
     "proof_strategy": "The paper's approach splits into: (1) handling 'heavy' lines via pseudorandom hypergraph matchings (Ehard-Glock-Joos), (2) crude deletion for remaining violations, (3) randomized switching to recover near-optimal size. To push 'sufficiently large n' down to n ≥ k, one would need to make each step effective with explicit bounds. The hypergraph matching step likely requires the most careful analysis for small n. A computer-verified case analysis for small n (up to some explicit bound) combined with the asymptotic argument for larger n could work. The key is determining whether the o(n) deletion/swinging losses can be controlled when n is close to k.",
     "research_mode": "team",
     "source_exp_id": "2607.05255v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T06:16:15.118766+00:00",
     "title": "Explicit Threshold for No-(k+1)-in-line: f_k(n) = kn for all k ≥ 3 and n ≥ k"
   },
@@ -16232,6 +16232,34 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.NT",
+      "math.AG",
+      "math.RT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a Hodge type Shimura variety with μ-ordinary locus, the action of the algebra of p-adic locally analytic functions on the μ-ordinary Mantovan Igusa variety—obtained by integrating rank-one Maass-Shimura differential operators and applying p-adic Fourier theory—extends to the space of nearly overconvergent automorphic forms, mirroring the ordinary case established in the paper.",
+    "domain_bridges": [
+      "p-adic analysis",
+      "formal groups",
+      "Shimura varieties",
+      "automorphic forms"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0717",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Follow the ordinary-case proof structure: construct the locally analytic action on the μ-ordinary Igusa variety via the explicit formal group and Tate module duality; then verify that the action preserves the overconvergent condition by checking annihilation of locally constant subalgebra (Hecke) and using the differential operator extensions on the sheaf of nearly holomorphic forms. Reduce to local charts where the μ-ordinary locus is a product of formal tori and use known estimates for overconvergent functions.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07427v1",
+    "status": "available",
+    "timestamp": "2026-07-09T07:13:42.726191+00:00",
+    "title": "Extension of locally analytic Maass-Shimura action to nearly overconvergent forms in the μ-ordinary case"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Schubert calculus",
       "boson-fermion correspondence",
       "exterior algebra",
@@ -16248,7 +16276,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0717",
+    "id": "fd_0718",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove by induction on r using generating function identities for exterior powers and sign-reversing arguments; verify base case r=1 and use the relation ∂_i X_j = δ_{ij} to deduce the action on higher wedges, then extend to arbitrary compositions.",
@@ -16269,7 +16297,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0718",
+    "id": "fd_0719",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine probabilistic models of prime factor distributions with known upper and lower bounds for ω(n) and constructions of integers with many small prime factors; likely requires sieve methods and deep results on smooth numbers.",
@@ -16297,7 +16325,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0719",
+    "id": "fd_0720",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use p-adic analysis and properties of multinomial coefficients modulo prime powers, potentially relating to generalized hypergeometric functions and their p-integrality properties. The approach would involve analyzing the generating function of S_l^{(m)}(n) and applying p-adic differential equations.",
@@ -16327,7 +16355,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0720",
+    "id": "fd_0721",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the identity Σ_{n≤x} M(x/n) = 1, prove the grouping into S_1 and S_2 components, apply Möbius inversion to derive the main formula, and verify correctness through induction on bounded intervals. The proof requires careful handling of floor function identities and the constraint ν_x < u < x to ensure all terms are well-defined.",
@@ -16355,7 +16383,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0721",
+    "id": "fd_0722",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Characterize the optimizer of the variational problem via Lagrange multipliers on the Boolean lattice, establish convexity properties of the p-biased measure under IU constraints, and prove uniqueness of extremal families through exchange arguments and majorization theory.",
@@ -16364,6 +16392,31 @@
     "status": "available",
     "timestamp": "2026-07-09T06:42:47.856865+00:00",
     "title": "Exact characterization of p-biased Lubell maxima for IU-families"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.AC:13A30",
+      "math.CO:05B35"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any finite simple graphs G and H, let J_{G,H} be the determinantal ideal generated by the 2‑minors of the generic matrix whose rows are indexed by V(G) and columns by V(H) (as in the paper). Let M_{G,H} be the linear matroid over a field k whose representation matrix is the bipartite incidence matrix of (G,H) (rows correspond to edges of G, columns to vertices of H, with entry 1 if the vertex is incident to the edge, 0 otherwise). Then the analytic spread ℓ(J_{G,H}) equals the rank of M_{G,H}. This extends the known result for H = K₂, where the analytic spread of the binomial edge ideal J_G equals the rank of G in Kalai's 2‑hyperconnectivity matroid.",
+    "domain_bridges": [
+      "math.CO:05B35 (matroid theory)"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0723",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "1. Choose a monomial order that yields a squarefree initial ideal in(J_{G,H}) whose Stanley–Reisner complex is precisely the independence complex of the linear matroid M_{G,H}. 2. Show that the special fiber ring S/J_{G,H} ⊗_k k[m] has the same Hilbert function as the face ring of that complex, hence its Krull dimension (the analytic spread) equals dim(Δ)+1. 3. For a squarefree simplicial complex, dim(Δ)+1 equals the size of the largest face, which is the rank of the represented matroid. 4. Conclude ℓ(J_{G,H}) = rank(M_{G,H}).",
+    "research_mode": "team",
+    "source_exp_id": "2607.07458v1",
+    "status": "available",
+    "timestamp": "2026-07-09T07:15:45.131819+00:00",
+    "title": "Analytic Spread of Determinantal Ideals Equals Rank of Associated Linear Matroid"
   },
   {
     "ambition_level": "extension",

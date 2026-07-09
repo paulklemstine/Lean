@@ -18,7 +18,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c4017799",
     "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long \u2014 the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static \u2014 they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
     "domains": [
       "Novelty",
@@ -28,12 +28,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.810023+00:00",
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
   },
   {
-    "consumed_by_exp_id": "ac85eee2",
+    "consumed_by_exp_id": "df755cd3",
     "description": "Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: lines parallel to the x-axis diverge (hyperbolic behavior) while lines parallel to the y-axis converge (elliptic behavior). The metric is ds^2 = dx^2/cosh^2(y) + dy^2 * cosh^2(x) \u2014 expanding in x and contracting in y. Conjecture: Split Geometry is a consistent Riemannian geometry with curvature K(x,y) = -sech^2(y) + sech^2(x) that changes sign across the diagonals. The geometry has a 'phase boundary' along the lines y = x and y = -x where K = 0 (flat). In the region |x| > |y|, K > 0 (elliptic) and in the region |y| > |x|, K < 0 (hyperbolic). The geodesics in split geometry are piecewise combinations of exponential curves (in hyperbolic regions) and trigonometric curves (in elliptic regions). Test: compute the Christoffel symbols and curvature tensor for the split metric. Prove that geodesics cross the phase boundary at most twice. Compute the area of a split triangle with one vertex in each region. Impact: a geometry where the curvature of space depends on which direction you look \u2014 the mathematical realization of a universe that is simultaneously expanding and contracting.",
     "domains": [
       "Novelty",
@@ -4404,7 +4404,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Balanced equals hereditary clique-Helly within distance-hereditary graphs"
   },
   {
-    "consumed_by_exp_id": "3d8596f0",
+    "consumed_by_exp_id": "",
     "description": "In type A_n, the subalgebra B_aff of the affine Hecke algebra admits a canonical basis {b_{W_fin w}} indexed by cosets W_fin \\ W_aff. The conjecture states that the structure constants of B_aff with respect to this canonical basis are polynomials in v with non-negative integer coefficients: for any two cosets W_fin w and W_fin w' in W_fin \\ W_aff, the product b_{W_fin w} \u00b7 b_{W_fin w'} = \u03a3 c_{w,w'}^z \u00b7 b_{W_fin z} where each c_{w,w'}^z \u2208 Z_{\u22650}[v]. This is the v-deformed analogue of the positivity of structure constants in the affine Fomin-Stanley subalgebra (equivalently, homology of the affine Grassmannian).",
     "domains": [
       "Geometry",
@@ -4414,7 +4414,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00426v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T08:09:58.266321+00:00",
     "title": "Positivity of structure constants for the canonical basis of the pseudo-centralizer subalgebra in type A"
   },
@@ -6142,7 +6142,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Geometric monodromy groups of exceptional degree-5 rational functions are cyclic or dihedral"
   },
   {
-    "consumed_by_exp_id": "c5715a86",
+    "consumed_by_exp_id": "",
     "description": "For every doubly regular tournament on n vertices (where n \u2261 3 mod 4 and n \u2265 3), the metric dimension \u03b2(G) is at most \u23083\u00b7log\u2082(n)\u2309. This provides an explicit constant in the O(log n) bound established for related families in the paper, extending the probabilistic method of Babai to the directed tournament setting with a constructive resolvability guarantee.",
     "domains": [
       "Logic"
@@ -6151,12 +6151,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05152v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T05:40:17.241598+00:00",
     "title": "Explicit logarithmic bound on metric dimension of doubly regular tournaments"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "874776c2",
     "description": "The paper proves that for k \u2265 3 and sufficiently large n, the maximum number of points in an n \u00d7 n grid with no k+1 collinear points equals kn. This conjecture asserts that 'sufficiently large' can be replaced by the explicit threshold n \u2265 k. Note that for n \u2264 k the whole grid has no k+1 collinear points so f_k(n) = n\u00b2, and for n = k we get f_k(k) = k\u00b2 = k\u00b7k, making n \u2265 k the natural boundary. The conjecture predicts that for all k \u2265 3 and n \u2265 k, the trivial upper bound kn is always achievable.",
     "domains": [
       "Pythagorean"
@@ -6165,7 +6165,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05255v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T06:16:15.118766+00:00",
     "title": "Explicit Threshold for No-(k+1)-in-line: f_k(n) = kn for all k \u2265 3 and n \u2265 k"
   },
@@ -8678,12 +8678,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a Hodge type Shimura variety with \u03bc-ordinary locus, the action of the algebra of p-adic locally analytic functions on the \u03bc-ordinary Mantovan Igusa variety\u2014obtained by integrating rank-one Maass-Shimura differential operators and applying p-adic Fourier theory\u2014extends to the space of nearly overconvergent automorphic forms, mirroring the ordinary case established in the paper.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0717",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07427v1",
+    "status": "available",
+    "timestamp": "2026-07-09T07:13:42.726191+00:00",
+    "title": "Extension of locally analytic Maass-Shimura action to nearly overconvergent forms in the \u03bc-ordinary case"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For every composition \u03b1 of length r \u2264 R, the differential operator \u2202_\u03b1 = \u2202_{i1}\u22ef\u2202_{ir} acting on the polynomial ring \u211a[X_1,\u2026,X_R] yields a non-zero scalar multiple of the basis element X_{i1}\u2227\u22ef\u2227X_{ir} in \u2227^r V, where \u2202_i = (1/i!)\u00b7(d/dX_i)|_{X=0}. Moreover, the scalar equals the sign of the permutation that sorts (i1,\u2026,ir). This equality holds for all r and can be tested computationally for small values.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0717",
+    "id": "fd_0718",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07667v1",
@@ -8697,7 +8711,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0718",
+    "id": "fd_0719",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07641v1",
@@ -8711,7 +8725,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0719",
+    "id": "fd_0720",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07638v1",
@@ -8726,7 +8740,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0720",
+    "id": "fd_0721",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07566v1",
@@ -8741,13 +8755,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0721",
+    "id": "fd_0722",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07564v1",
     "status": "available",
     "timestamp": "2026-07-09T06:42:47.856865+00:00",
     "title": "Exact characterization of p-biased Lubell maxima for IU-families"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any finite simple graphs G and H, let J_{G,H} be the determinantal ideal generated by the 2\u2011minors of the generic matrix whose rows are indexed by V(G) and columns by V(H) (as in the paper). Let M_{G,H} be the linear matroid over a field k whose representation matrix is the bipartite incidence matrix of (G,H) (rows correspond to edges of G, columns to vertices of H, with entry 1 if the vertex is incident to the edge, 0 otherwise). Then the analytic spread \u2113(J_{G,H}) equals the rank of M_{G,H}. This extends the known result for H = K\u2082, where the analytic spread of the binomial edge ideal J_G equals the rank of G in Kalai's 2\u2011hyperconnectivity matroid.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0723",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07458v1",
+    "status": "available",
+    "timestamp": "2026-07-09T07:15:45.131819+00:00",
+    "title": "Analytic Spread of Determinantal Ideals Equals Rank of Associated Linear Matroid"
   },
   {
     "consumed_by_exp_id": "ad8ddf45",
