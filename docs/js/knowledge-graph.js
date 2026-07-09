@@ -1942,19 +1942,6 @@
                 hoveredCluster = !node ? findClusterAt(e.offsetX, e.offsetY) : null;
                 canvas.style.cursor = node ? 'pointer' : (hoveredCluster ? 'grab' : 'grab');
 
-                // Graph node hover → highlight sidebar item
-                document.querySelectorAll('.nav-item.graph-highlight').forEach(el => el.classList.remove('graph-highlight'));
-                if (node) {
-                    // Use sidebar's highlightSidebarItem which handles pagination
-                    if (window.highlightSidebarItem) {
-                        window.highlightSidebarItem(node.id);
-                    } else {
-                        // Fallback: try direct DOM lookup (same page only)
-                        const sidebarItem = document.querySelector(`.nav-item[data-slug="${node.id}"]`);
-                        if (sidebarItem) sidebarItem.classList.add('graph-highlight');
-                    }
-                }
-
                 if (tooltip) {
                     if (node) {
                         tooltip.classList.remove('tooltip-hidden');
