@@ -7236,7 +7236,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Degree correction advances Ramsey community detection by exactly two generations on diamond hierarchical lattices"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ef8ef45e",
     "description": "Every connected vertex-transitive digraph on n \u2265 1 vertices contains a directed cycle of length at least \u2308\u221an\u2309. This is the natural directed analogue of Babai's 1979 theorem for undirected vertex-transitive graphs, and strengthens the paper's asymptotic \u03a9(\u221an) lower bound to an explicit constant of 1.",
     "domains": [
       "Bridges"
@@ -7245,7 +7245,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05807v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T11:32:09.225914+00:00",
     "title": "Directed Babai Theorem: Long Cycles in Vertex-Transitive Digraphs"
   },
@@ -8546,7 +8546,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Peak refinement of c-balanced Dyck path enumeration"
   },
   {
-    "consumed_by_exp_id": "96910b34",
+    "consumed_by_exp_id": "",
     "description": "Every simple finite graph that is (K\u2081\u222aP\u2084)-free, has toughness at least 1, and has at least 3 vertices is Hamiltonian.",
     "domains": [
       "Physics"
@@ -8555,7 +8555,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07239v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-09T04:17:26.671029+00:00",
     "title": "Hamiltonicity of (K\u2081\u222aP\u2084)-free 1-tough graphs"
   },
@@ -8870,12 +8870,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every first-order formula \u03c6 with k alternating quantifiers over vertex tuples and unary vertex weights w: V \u2192 \u2115, there exists a finite graph G with initial token placement and movement budget b such that the optimal achievable value exceeds any prescribed threshold t if and only if \u03c6 is satisfiable in the standard model of arithmetic. This establishes a tight correspondence between FO definability of value functions and computational threshold behavior in solution discovery.",
+    "domains": [
+      "Pythagorean",
+      "Bridges"
+    ],
+    "id": "fd_0732",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06446v1",
+    "status": "available",
+    "timestamp": "2026-07-09T12:43:10.045795+00:00",
+    "title": "FO Value Discovery Threshold Realizability"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For every composition \u03b1 of length r \u2264 R, the differential operator \u2202_\u03b1 = \u2202_{i1}\u22ef\u2202_{ir} acting on the polynomial ring \u211a[X_1,\u2026,X_R] yields a non-zero scalar multiple of the basis element X_{i1}\u2227\u22ef\u2227X_{ir} in \u2227^r V, where \u2202_i = (1/i!)\u00b7(d/dX_i)|_{X=0}. Moreover, the scalar equals the sign of the permutation that sorts (i1,\u2026,ir). This equality holds for all r and can be tested computationally for small values.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0732",
+    "id": "fd_0733",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07667v1",
@@ -8889,7 +8904,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0733",
+    "id": "fd_0734",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07641v1",
@@ -8903,7 +8918,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0734",
+    "id": "fd_0735",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07638v1",
@@ -8918,7 +8933,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0735",
+    "id": "fd_0736",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07566v1",
@@ -8933,7 +8948,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0736",
+    "id": "fd_0737",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07564v1",
@@ -8948,7 +8963,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0737",
+    "id": "fd_0738",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07458v1",
@@ -8962,7 +8977,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0738",
+    "id": "fd_0739",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07448v1",
@@ -8977,7 +8992,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0739",
+    "id": "fd_0740",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07407v1",
@@ -8992,7 +9007,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0740",
+    "id": "fd_0741",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07392v1",
@@ -9006,7 +9021,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0741",
+    "id": "fd_0742",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07404v1",
@@ -9021,7 +9036,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0742",
+    "id": "fd_0743",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07381v1",
@@ -9035,7 +9050,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0743",
+    "id": "fd_0744",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07239v1",
@@ -9050,7 +9065,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0744",
+    "id": "fd_0745",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07259v1",
@@ -9065,7 +9080,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0745",
+    "id": "fd_0746",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07063v1",
@@ -9079,7 +9094,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0746",
+    "id": "fd_0747",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07030v1",
@@ -9093,7 +9108,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0747",
+    "id": "fd_0748",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06899v1",
@@ -9107,7 +9122,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0748",
+    "id": "fd_0749",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06817v1",
@@ -9122,7 +9137,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_0749",
+    "id": "fd_0750",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06773v1",
@@ -9136,7 +9151,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0750",
+    "id": "fd_0751",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06767v1",
@@ -9150,13 +9165,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0751",
+    "id": "fd_0752",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06798v1",
     "status": "available",
     "timestamp": "2026-07-09T12:26:09.962991+00:00",
     "title": "Eberhard's Theorem for Kite Subdivisions in Spherical Tilings"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that every finite simple subcubic outerplanar graph admits a crumby coloring (a red/blue vertex partition where blue vertices induce max degree \u22641 and red vertices induce a graph with no isolated vertices and no simple path of length 3). Outerplanar graphs are a subclass of series-parallel graphs (both are K4-minor-free and have treewidth \u22642). We conjecture that the result extends to the broader class: every finite simple subcubic series-parallel graph admits a crumby coloring. This is precise and falsifiable: a single counterexample series-parallel graph of maximum degree 3 lacking such a partition would refute it.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0753",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06515v1",
+    "status": "available",
+    "timestamp": "2026-07-09T12:44:42.013695+00:00",
+    "title": "Crumby colorings exist for all subcubic series-parallel graphs"
   },
   {
     "consumed_by_exp_id": "77c07bb4",

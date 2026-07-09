@@ -29472,7 +29472,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO",
         "graph_theory",
@@ -29481,7 +29481,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "ef8ef45e",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -29497,7 +29497,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0616",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-09T12:44:45.074885+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem directed_babai_long_cycle {V : Type*} [Fintype V] [DecidableEq V] {D : Digraph V} (h_conn : D.Connected) (h_vt : D.VertexTransitive) : ∃ (c : List V), c.IsDirectedCycleIn D ∧ c.length ≥ Nat.ceil (Real.sqrt (Fintype.card V)) := by\n  sorry",
       "lineage_refs": [],
@@ -29512,7 +29512,7 @@
       "source": "",
       "source_exp_id": "2607.05807v1",
       "source_path": "http://arxiv.org/abs/2607.05807v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-08T11:32:09.225914+00:00",
       "title": "Directed Babai Theorem: Long Cycles in Vertex-Transitive Digraphs"
@@ -30062,7 +30062,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Petersen_coloring_conjecture",
         "Sylvester_coloring",
@@ -30086,7 +30086,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0628",
-      "last_attempt_time": "2026-07-09T12:26:15.326929+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sylvester_S10_bridgeless_bound (G : CubicMultigraph) (h_cubic : G.IsCubic) (h_bridgeless : G.Bridgeless) (h_connected : G.Connected) : ∃ f : G.Edge → S10.Edge, (VProper G S10 f).card * 7 ≥ 6 * (Finset.univ : Finset G.Vertex).card := by sorry",
       "lineage_refs": [],
@@ -34035,7 +34035,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "96910b34",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -34065,7 +34065,7 @@
       "source": "",
       "source_exp_id": "2607.07239v1",
       "source_path": "http://arxiv.org/abs/2607.07239v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-09T04:17:26.671029+00:00",
       "title": "Hamiltonicity of (K₁∪P₄)-free 1-tough graphs"
@@ -35091,6 +35091,55 @@
       "title": "Almost all subsets are cyclic in Dirac graphs"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "cs.DM token-sliding model solution discovery",
+        "cs.LO first-order definable value functions",
+        "math.CO parameterized complexity FO discovery"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every first-order formula φ with k alternating quantifiers over vertex tuples and unary vertex weights w: V → ℕ, there exists a finite graph G with initial token placement and movement budget b such that the optimal achievable value exceeds any prescribed threshold t if and only if φ is satisfiable in the standard model of arithmetic. This establishes a tight correspondence between FO definability of value functions and computational threshold behavior in solution discovery.",
+      "domain_bridges": [
+        "First-order logic definability ↔ computational threshold behavior",
+        "Token sliding reconfiguration ↔ optimization value realization",
+        "Logical meta-theorems ↔ parameterized complexity classification"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Bridges"
+      ],
+      "github_issue": 0,
+      "id": "fd_0732",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem fo_value_discovery_threshold_realizability (φ : fo_formula) (k : ℕ) :\n  (∃ (G : graph) (init : token_configuration G) (b : ℕ) (t : ℕ),\n   optimal_value G init b φ > t)\n  ↔\n  satisfiable_in_arithmetic φ := sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Construct a reduction from FO satisfiability to the threshold decision problem by encoding quantifier alternation as iterative value maximization steps. Show that each existential quantifier corresponds to adding vertices that can achieve values above t, while universal quantifiers correspond to adversarial weight assignments. Use Ehrenfeucht-Fraïssé games to establish that non-equivalence of FO formulas manifests as distinct threshold behaviors.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.06446v1",
+      "source_path": "http://arxiv.org/abs/2607.06446v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T12:43:10.045795+00:00",
+      "title": "FO Value Discovery Threshold Realizability"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -35119,7 +35168,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0732",
+      "id": "fd_0733",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem schubert_exterior_relation (r : ℕ) (indices : Fin r → ℕ) : (∂_indices.productDiff) = (signPermutation indices) • (exteriorMonomial indices) := by sorry",
@@ -35161,7 +35210,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0733",
+      "id": "fd_0734",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem new_abc_conjecture (y : ℕ) : Filter.limsup (fun n : ℕ => ((∑ j in Finset.Icc 1 y, ω (n + j)) * Real.log (Real.log n)) / Real.log n) = (1 : ℝ) := by sorry",
@@ -35210,7 +35259,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0734",
+      "id": "fd_0735",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem generalized_supercongruence (l m : ℕ) (p : ℕ) (hp : prime p) (h1 : ¬(p ∣ (l + 1))) (h2 : ¬(p ∣ binomial (l + 1) 2)) : (∑ n in finset.range (p - 1), ((-1) ^ (m * n) / (n ^ (m - 1))) * S l m n) % p ^ 2 = 0",
@@ -35261,7 +35310,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0735",
+      "id": "fd_0736",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mertens_combinatorial_identity (x : ℕ) (u : ℕ) (hx : x ≥ 1) (hu : ⌊Real.sqrt x⌋ < u ∧ u < x) : Mertens.mertens x = ∑ k in Finset.range (x / u + 1), μ k * S (x / k) u",
@@ -35310,7 +35359,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0736",
+      "id": "fd_0737",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem iu_p_biased_lubell_maximum (n : ℕ) (𝓕 : set (finset (fin n))) (h𝓕 : is_iu_family 𝓕) : ∃ p_opt : ℝ, p_opt ∈ [0,1] ∧ Λ_p 𝓕 ≤ Λ_p 𝓕_extremal p_opt ∧ (∀ q, Λ_q 𝓕 ≤ Λ_q 𝓕_extremal q)",
@@ -35356,7 +35405,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0737",
+      "id": "fd_0738",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem analytic_spread_eq_matroid_rank {G H : SimpleGraph ℕ} (J : Ideal (PolynomialRing ℚ (fin (V G) × fin (V H)))) (hJ : J = determinantalIdeal G H) (M : Matroid ℚ (fin (V G) × fin (V H))) (hM : M = linearMatroidOfPair G H) : analyticSpread J = matroidRank M := by sorry",
@@ -35403,7 +35452,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0738",
+      "id": "fd_0739",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem b2_values (n : ℕ) (h : n ≥ 2) : b₂(n) = if n % 8 = 0 ∨ n % 8 = 1 ∨ n % 8 = 7 then Nat.ceil (n / 2) else Nat.ceil (n / 2) + 1",
@@ -35453,7 +35502,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0739",
+      "id": "fd_0740",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mpd_tree_iff_lower_bound (T : SimpleGraph) [connected] [is_tree] [nonempty (V T)] [fintype (V T)] [decidable_linear_order (V T)] : multiset_partition_dimension T = 4 ↔ ∃ u v : V T, is_leaf u ∧ is_leaf v ∧ dist u v ≥ 3",
@@ -35502,7 +35551,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0740",
+      "id": "fd_0741",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem spec (r s : ℕ) (H : Hypergraph r) (n : ℕ) (hν : matching_number H < s) (hn : n ≥ N r s) : spectral_radius H ≤ spectral_radius (F (s-1) n) ∧ (spectral_radius H = spectral_radius (F (s-1) n) → isomorphic H (F (s-1) n))",
@@ -35547,7 +35596,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0741",
+      "id": "fd_0742",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem diameter_network_realignment_graph_complete_graph (n : ℕ) (hn : n ≥ 5) : diameter (network_realignment_graph (complete_graph n)) = n - 2 := by sorry",
@@ -35595,7 +35644,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0742",
+      "id": "fd_0743",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "-- Lean 4 stub for the conjecture\n\ndef DirectedSRG (n : Nat) : Type u where\n  params : SRGParams\n  adjacency : Fin n → Fin n → Bool\n  ...\n\ndef HasTransitiveAutGroup (g : DirectedSRG 108) : Prop := •••\n\ndef ConstructedParams : List (SRGParams) :=\n  [(108,11,3,2,1), (108,14,10,0,2), (108,22,12,6,4), (108,23,9,8,4),\n   (108,25,15,8,5), (108,34,18,12,10), (108,38,22,12,14), (108,39,23,14,14),\n   (108,41,35,16,15), (108,42,33,18,15), (108,46,22,19,20)]\n\ndef directed_srg_108_exhaustive : Prop :=\n  ∀ (g : DirectedSRG 108) (h : HasTransitiveAutGroup g),\n    g.params ∈ ConstructedParams → ∀ (c : ConstructionType), g ≃ c.from_group (aut_group_of g)",
@@ -35643,7 +35692,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0743",
+      "id": "fd_0744",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem minimally_one_tough_K1P4_hamiltonian {G : Graph ℕ} (h : MinimallyOneTough (K1 ∪ P4) G) (hsize : G.order ≥ 3) : IsHamiltonian G := by sorry",
@@ -35691,7 +35740,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0744",
+      "id": "fd_0745",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem overline_R_mod4_char (ℓ μ n : ℕ) (hcop : Nat.Coprime ℓ μ) (hℓ : 2 ≤ ℓ) (hμ : 2 ≤ μ) : (overline_R ℓ n) % 4 = if ∃ m : ℕ, m * m = n then 1 else 0 := by sorry",
@@ -35738,7 +35787,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0745",
+      "id": "fd_0746",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem genus_cardinality_eq_product (R : GorensteinCubicOrder) : # (Cl R \\ Cl R) = ∏ (v : FinitePrime), # (GorensteinOverorders (localization R v))",
@@ -35792,7 +35841,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0746",
+      "id": "fd_0747",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem coarse_block_cut_tree_improved_adhesion {d : ℕ} (G : SimpleGraph ℕ) :\\n  ∃ (T : Tree ℕ) (B : Π (t : T.V), Finset (G.V)),\\n    IsTreeDecomposition G T B ∧\\n    (∀ (e : T.E), diameter_G (B e.1 ∩ B e.2) ≤ 4 * d + 2) ∧\\n    (∀ (t : T.V), IsInseparable d (2 * d + 1) (B t) G)\\n  := by sorry",
@@ -35844,7 +35893,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0747",
+      "id": "fd_0748",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem (m_fold_cover_structure) (F : NonArchimedeanLocalField) (m : ℕ) [Hm : HMul (m)] :\n  let T := BruhatTitsTree (GL (F := F) 2)\n  let G_tilde := MetaplecticCover (GL (F := F) 2) m\n  let T_tilde := CoverTree T G_tilde m\n  have : ∀ v : Vertex T_tilde, Valency v = m * (Card (ResidueField F) + 1) :=\n  have : Index (Aut T_tilde) G_tilde = m :=\n  have : ConnectedComponents (T_tilde / G_tilde.k) = m :=\n  sorry",
@@ -35891,7 +35940,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0748",
+      "id": "fd_0749",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀ (H₁ : MonotonePath), (H₂ : MonotonePath), (Γ₁ : ReflectionGroup (VertexSet H₁)), (Γ₂ : ReflectionGroup (VertexSet H₂)), (D₁ : DihedralGroup (VertexSet H₁)), (D₂ : DihedralGroup (VertexSet H₂)) → R (H₁ ^ Γ₁) (H₂ ^ Γ₂) > R (H₁ ^ D₁) (H₂ ^ D₂)",
@@ -35940,7 +35989,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0749",
+      "id": "fd_0750",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sparse_set_iff_gap_growth {S : Set ℕ} (hS : S.Countable) : Sparse S ↔ ∀ ε > 0, ∃ C : ℝ, ∀ k : ℕ, k ≥ threshold, ∃ i, gap_ratio_bound S k C ε i",
@@ -35988,7 +36037,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0750",
+      "id": "fd_0751",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem exists_SL2_of_Y (n : ℕ) (B : YFriez n) : ∃ A : SL2Friez n, ∀ i j, B i j = A (i, j+1) * A (i+1, j)",
@@ -36036,7 +36085,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0751",
+      "id": "fd_0752",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem eberhard_kite_subdivision {η : Type} [encodable η] (T : spherical_tiling_by_kites_and_mgons) (h : vertex_degree_sequence_admits_realization T.vertex_degrees) : θ (T' : euclidean_planar_tiling) , bijective_on_faces T T' · bijective_on_vertices T T'",
@@ -36056,6 +36105,55 @@
       "thread_id": "",
       "timestamp": "2026-07-09T12:26:09.962991+00:00",
       "title": "Eberhard's Theorem for Kite Subdivisions in Spherical Tilings"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Barát, Blázsik, Damásdi, Conjecture 9 (arXiv:2003.???)",
+        "Bellitto et al. on failure of Thomassen's conjecture",
+        "This work: The crumby coloring conjecture for subcubic outerplanar graphs (arXiv preprint)"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The paper proves that every finite simple subcubic outerplanar graph admits a crumby coloring (a red/blue vertex partition where blue vertices induce max degree ≤1 and red vertices induce a graph with no isolated vertices and no simple path of length 3). Outerplanar graphs are a subclass of series-parallel graphs (both are K4-minor-free and have treewidth ≤2). We conjecture that the result extends to the broader class: every finite simple subcubic series-parallel graph admits a crumby coloring. This is precise and falsifiable: a single counterexample series-parallel graph of maximum degree 3 lacking such a partition would refute it.",
+      "domain_bridges": [
+        "Series-parallel decomposition (SPQR trees)",
+        "Computer-assisted finite certificate checking",
+        "Inductive graph grammars for subgraphs of partial 2-trees"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0753",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem subcubic_series_parallel_crumby (V : Type*) [Fintype V] (G : SimpleGraph V) (h_simple : G.IsSimple) (h_sub : ∀ v, G.degree v ≤ 3) (h_sp : G.IsSeriesParallel) : ∃ (col : V → Bool), is_crumby_coloring G col := sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Extend the rooted grammar for subcubic outerplanar graphs to a decomposition grammar for subcubic series-parallel graphs using series and parallel compositions of two-terminal fragments. Define crumby-admissible colorings on fragments with finite boundary states (terminal colors and local red/blue degree constraints). Perform induction on the decomposition tree; prove by hand that a finite family of boundary certificates is closed under composition steps, and use a formalized finite automated verification in Lean to check that all base cases and completed branches yield a genuine crumby coloring. The boundary information stays finite because max degree is 3.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.06515v1",
+      "source_path": "http://arxiv.org/abs/2607.06515v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T12:44:42.013695+00:00",
+      "title": "Crumby colorings exist for all subcubic series-parallel graphs"
     },
     {
       "ambition_level": "extension",
