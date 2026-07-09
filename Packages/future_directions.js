@@ -3064,7 +3064,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Grundy Number XOR Conjecture for Three-Pile Halve Nim"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "52557551",
     "description": "Any simplicial complex whose links satisfy the KKL theorem also satisfies a global KKL-type theorem for influence functions. Formally, if every (d-1)-dimensional link in a simplicial complex K satisfies the KKL condition that low-influence functions on the link must have a coordinate with large influence, then the entire complex K satisfies a global KKL condition for functions on its simplices.",
     "domains": [
       "Geometry"
@@ -3073,7 +3073,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29449v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T06:47:54.813371+00:00",
     "title": "Local-to-Global KKL Theorem for Simplicial Complexes with Local KKL Links"
   },
@@ -7731,7 +7731,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The \u221a2-Threshold Conjecture for Rips Filtration Approximation"
   },
   {
-    "consumed_by_exp_id": "f2f1d7cc",
+    "consumed_by_exp_id": "",
     "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card \u2014 you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier \u2014 it's an opportunity. You can WIN at the game of undecidability.",
     "domains": [
       "Novelty",
@@ -7741,7 +7741,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T16:01:43.960880+00:00",
     "title": "Godel's Casino: Incomplete but Winnable Games"
   },
@@ -9509,12 +9509,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "A biserial algebra \u039b over a field k is representation-finite if and only if the magnitude of its module category equals the rank of its Grothendieck group plus one, i.e., Magnitude(\u039b) = rank(\u039b) + 1. Here, the magnitude of the module category is defined as the magnitude of the Auslander algebra of \u039b, which for bound path algebras coincides with the Auslander\u2013Reiten\u2013Euler characteristic N \u2212 A + E of the Auslander\u2013Reiten quiver (N vertices, A arrows, E meshes). The rank of \u039b is the rank of the Grothendieck group K\u2080(mod \u039b), equal to the number of isomorphism classes of simple \u039b-modules.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0778",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07555v1",
+    "status": "available",
+    "timestamp": "2026-07-09T17:56:11.733444+00:00",
+    "title": "Characterization of representation-finite biserial algebras via magnitude"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "We conjecture that every aperiodic infinite word over a ternary alphabet whose factor complexity satisfies p(n)=2n+1 for all n\u22651 possesses the universal group complexity property: for each length n and each integer k with p_ab(n) \u2264 k \u2264 p(n) there exists a subgroup G \u2264 S_n such that the group complexity p^G(n)=k.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0778",
+    "id": "fd_0779",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07620v1",
@@ -9528,7 +9542,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0779",
+    "id": "fd_0780",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07697v1",
@@ -9543,7 +9557,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0780",
+    "id": "fd_0781",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07659v1",
@@ -9557,13 +9571,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0781",
+    "id": "fd_0782",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07566v1",
     "status": "available",
     "timestamp": "2026-07-09T17:29:41.664378+00:00",
     "title": "Generalized Mertens Function Recursion Identity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Propose the precise conjecture that for every integer n \u2265 1, any family F of subsets of [n] (represented as Fin n) that is both intersecting (every two members have non\u2011empty intersection) and union\u2011avoiding (the union of any two members is not the whole set [n]) satisfies the Lubell-type inequality \u2211_{A\u2208F} binom(n,|A|)^{-1} \u2264 (n+1)/6. This statement is falsifiable: a single counterexample for some n would disprove it.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0783",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07564v1",
+    "status": "available",
+    "timestamp": "2026-07-09T17:56:24.629949+00:00",
+    "title": "Frankl's conjecture on intersecting-union families and the Lubell bound"
   },
   {
     "consumed_by_exp_id": "ad941b96",

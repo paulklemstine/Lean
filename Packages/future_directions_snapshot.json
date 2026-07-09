@@ -5591,7 +5591,7 @@
       "Gur22",
       "Gotlib23"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "52557551",
     "description": "Any simplicial complex whose links satisfy the KKL theorem also satisfies a global KKL-type theorem for influence functions. Formally, if every (d-1)-dimensional link in a simplicial complex K satisfies the KKL condition that low-influence functions on the link must have a coordinate with large influence, then the entire complex K satisfies a global KKL condition for functions on its simplices.",
     "domain_bridges": [
       "boolean-function-analysis",
@@ -5607,7 +5607,7 @@
     "proof_strategy": "Inductive argument over simplex dimensions, leveraging the local KKL hypothesis on links to establish global influence bounds via Fourier-analytic techniques on simplicial complexes. Key steps involve defining influence measures on complexes, relating local and global spectral properties, and applying the local-to-global method from the paper.",
     "research_mode": "team",
     "source_exp_id": "2606.29449v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T06:47:54.813371+00:00",
     "title": "Local-to-Global KKL Theorem for Simplicial Complexes with Local KKL Links"
   },
@@ -14462,7 +14462,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f2f1d7cc",
+    "consumed_by_exp_id": "",
     "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card — you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier — it's an opportunity. You can WIN at the game of undecidability.",
     "domain_bridges": [],
     "domains": [
@@ -14475,7 +14475,7 @@
     "proof_strategy": "Define Godel's Casino: each round, the house presents a statement phi in the language of arithmetic. The player bets TRUE or FALSE. If ZFC proves phi, TRUE wins. If ZFC proves not-phi, FALSE wins. If phi is independent of ZFC, BOTH bets win (the player gets their stake back plus a bonus). Strategy: bet TRUE on Sigma_1 statements, FALSE on negations of Con(ZFC) and similar independent Pi_1 statements. Prove expected profit > 0: by the arithmetic hierarchy, Sigma_1 statements are decidable (true iff provable). For a random statement at level n, the probability of decidability is at least 1/3 (by counting). So E[profit] >= (1/3) * (stake) > 0. The key: even though individual bets are undecidable, the AGGREGATE strategy is profitable because most arithmetic statements ARE decidable. Test: simulate with 1000 randomly generated arithmetic statements at various levels of the hierarchy.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T16:01:43.960880+00:00",
     "title": "Godel's Casino: Incomplete but Winnable Games"
   },
@@ -17811,6 +17811,31 @@
     "title": "Prime graphs with induced-P4-packing treewidth at most 1 are split"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "arXiv:XXXX.XXXXX"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "A biserial algebra Λ over a field k is representation-finite if and only if the magnitude of its module category equals the rank of its Grothendieck group plus one, i.e., Magnitude(Λ) = rank(Λ) + 1. Here, the magnitude of the module category is defined as the magnitude of the Auslander algebra of Λ, which for bound path algebras coincides with the Auslander–Reiten–Euler characteristic N − A + E of the Auslander–Reiten quiver (N vertices, A arrows, E meshes). The rank of Λ is the rank of the Grothendieck group K₀(mod Λ), equal to the number of isomorphism classes of simple Λ-modules.",
+    "domain_bridges": [
+      "Category Theory",
+      "Combinatorics",
+      "Homological Algebra"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0778",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the combinatorial description of the Auslander–Reiten quiver for representation-finite biserial algebras (which are known to be iterated trivial extensions of hereditary algebras of type A) to compute the magnitude N − A + E explicitly. Relate this to the rank by analyzing the structure of the AR quiver components (tubes and Dynkin components of type A) and their mesh categories. Leverage the fact that for hereditary algebras of type A_n the magnitude equals n, while for self-injective Nakayama algebras it equals the Loewy length, and unify these via the biserial structure.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07555v1",
+    "status": "available",
+    "timestamp": "2026-07-09T17:56:11.733444+00:00",
+    "title": "Characterization of representation-finite biserial algebras via magnitude"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "factor complexity",
@@ -17831,7 +17856,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0778",
+    "id": "fd_0779",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Utilize the structural description of ternary minimal complexity words (e.g., Arnoux-Rauzy/episturmian). Analyze bispecial factors and their left/right extensions to show that for any target k one can choose G_n as a stabilizer of a suitable partition of positions, interpolating between abelian equivalence (G_n=S_n) and identity (G_n=Id). Proceed by induction on n, with base cases verified by finite enumeration.",
@@ -17856,7 +17881,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0779",
+    "id": "fd_0780",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use a short t‑model of the ΘZero graph together with a monotone guidance that always selects a big component of weight >½; apply the Dominated Guided Separator lemma to obtain a separator of size O(tk log k) and argue that its closed neighbourhood hits all Θ_t‑induced minors.",
@@ -17891,7 +17916,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0780",
+    "id": "fd_0781",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "We will formalise the conjecture in Lean 4 by defining the predicate \\`is_reflected_bounded_growth\\` on vectors of natural numbers, the monotonicity and inequality/parity conditions, and the associated product of \\(q\\)-integers.  The plan is:\n\n1. Implement the definitions in Lean.\n2. Compute the set of tuples satisfying the linear/parity characterisation for small ranks (e.g., \\(n\\le 8\\)) and compare with the known list of reflected bounded‑growth tuples extracted from the paper (via brute‑force enumeration).\n3. Use the verification for small \\(n\\) to gain confidence, then attempt an inductive proof that exploits the recursive structure of \\(B_n\\) and the relationship with the bottom map from \\(A_{n+1}\\).\n\nThe final theorem will assert the equivalence described above.",
@@ -17920,7 +17945,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0781",
+    "id": "fd_0782",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Start from the identity ∑_{n≤y} M(⌊y/n⌋) = 1. Split the sum at n = ⌊√y⌋ using summation by parts to express ∑_{n≤κ_y} M(⌊y/n⌋) in terms of M(⌊√y⌋) and a sum involving μ(n). Define S(y,u) by isolating the terms with n ≤ ⌊y/u⌋. Verify that ∑_{k≤y/u} M(⌊y/k⌋) = S(y,u) when ⌊√y⌋ < u. Apply the generalized Möbius inversion formula ∑_{k≤x} μ(k) G(⌊x/k⌋) = F(x) where G(y) = ∑_{k≤y/u} F(⌊y/k⌋) to obtain the result.",
@@ -17929,6 +17954,33 @@
     "status": "available",
     "timestamp": "2026-07-09T17:29:41.664378+00:00",
     "title": "Generalized Mertens Function Recursion Identity"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Frankl2021",
+      "Katona1974"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Propose the precise conjecture that for every integer n ≥ 1, any family F of subsets of [n] (represented as Fin n) that is both intersecting (every two members have non‑empty intersection) and union‑avoiding (the union of any two members is not the whole set [n]) satisfies the Lubell-type inequality ∑_{A∈F} binom(n,|A|)^{-1} ≤ (n+1)/6. This statement is falsifiable: a single counterexample for some n would disprove it.",
+    "domain_bridges": [
+      "Extremal Set Theory",
+      "Probabilistic Methods",
+      "Measure Theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0783",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "p-biased measure integration over the Boolean lattice followed by continuous integration across the bias parameter p ∈ [0,1] to recover the optimal coefficient 1/6",
+    "research_mode": "team",
+    "source_exp_id": "2607.07564v1",
+    "status": "available",
+    "timestamp": "2026-07-09T17:56:24.629949+00:00",
+    "title": "Frankl's conjecture on intersecting-union families and the Lubell bound"
   },
   {
     "ambition_level": "extension",
