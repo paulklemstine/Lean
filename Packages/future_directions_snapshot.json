@@ -15771,6 +15771,33 @@
     "title": "Spectral Extremal Conjecture for Hypergraphs with Bounded Matching Number"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "network realignment complex",
+      "simple graph automorphism group",
+      "equivariant deformation retraction",
+      "cubical flag complex"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every connected simple graph G, the natural homomorphism Aut(G) → Aut(X_G) induced by the action on the network realignment complex X_G is an isomorphism. In particular, every automorphism of the cubical complex X_G is induced by a relabelling of the vertices of G.",
+    "domain_bridges": [
+      "connects graph symmetries to topological automorphism groups",
+      "links equivariant homotopy theory with combinatorial enumeration"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0698",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the paper's equivariant generalised Morse theory and the Aut(G)-equivariant strong deformation retraction of X_G onto a disjoint union of a complete graph and a discrete Aut(G)-space. Show that any automorphism of X_G must map critical cells to critical cells, preserving the retraction. Then classify the resulting permutations of components and prove they arise uniquely from Aut(G), generalising the n≥5 case for K_n.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07404v1",
+    "status": "available",
+    "timestamp": "2026-07-09T03:57:15.654780+00:00",
+    "title": "Automorphism group of network realignment complex equals base graph automorphism group"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "[B] $10.48550/ARXIV.2201.03794$"
@@ -15783,7 +15810,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0698",
+    "id": "fd_0699",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a family of configurations dispersing the cycles over the valuation ring, show that the cross-ratio valuation is preserved under deformation, and compute the limit using intersection-theoretic methods.",
@@ -15811,7 +15838,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0699",
+    "id": "fd_0700",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Utilize the paper's β-closed walk expansion and the sufficient condition via a walk-realizable {P4}-supporter. Reduce the search to a linear programming feasibility problem for coefficients of β-closed walk counts. Compute a concrete finite witness (e.g., with bounded walk length) satisfying the LP, then formalize the induced-subgraph expansion and supporter criterion in Lean 4 to verify the implication.",
@@ -15839,7 +15866,7 @@
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0700",
+    "id": "fd_0701",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Verify the conjecture for classes of biserial algebras where both magnitude and Grothendieck rank are computable: (1) Hereditary biserial algebras (where magnitude relates to Dynkin type), (2) Self-injective biserial algebras (where Coxeter duality provides constraints), (3) Use induction on the complexity of the Auslander-Reiten quiver structure. The key is establishing that representation-finiteness creates a perfect matching between indecomposable modules and Grothendieck group generators, reflected in the magnitude calculation.",
@@ -15869,7 +15896,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0701",
+    "id": "fd_0702",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct the formal group via the universal property of the tangent space of Ig_μ, use the Hodge type embedding to identify the differential operators with components of the logarithm map, then prove the coproduct compatibility by analyzing the group structure on Ig_μ via p-adic Fourier theory and the Mantovan correspondence.",
@@ -15899,7 +15926,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0702",
+    "id": "fd_0703",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Formalize determinantal ideal J_{G,H} in Lean using mathlib's commutative algebra and graph theory. 2. Define analytic spread as dimension of special fiber ring. 3. Define linear matroid M_{G,H} from incidence matrix of G over a perfect field. 4. Prove by induction on number of edges of H: base case |E(H)|=1 known from paper. For forest H, decompose into single edges; use exact sequences or properties of reductions of determinantal ideals to show that adding an edge increases both analytic spread and matroid rank by 1, preserving equality. 5. Bridge to existing matroid theory API in mathlib (or develop minimal matroid library).",
@@ -15926,7 +15953,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0703",
+    "id": "fd_0704",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the proof of $b_3(n+1)=b_2(n)$ to arbitrary uniformity.  Develop a systematic 'shifting' construction that lifts an optimal odd cover of $K_n^{(r)}$ to an odd cover of $K_{n+1}^{(r+1)}$ of the same size, showing $b_{r+1}(n+1)\\le b_r(n)$.  Simultaneously, apply the $\\mathbb{F}_2$ rank bound $b_r(G)\\ge r_2(A_G)/2$ to complete $(r+1)\\!$-uniform hypergraphs to obtain $b_{r+1}(n+1)\\ge b_r(n)$.  Together these give equality.  The combinatorial details involve analysing the adjacency tensors of complete hypergraphs over $\\mathbb{F}_2$ and using induction on $r$.",
@@ -15955,7 +15982,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0704",
+    "id": "fd_0705",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt Fujii's arguments for class groups to the even K-group setting, using the relationship between K_{2n} and ordinary class groups via cyclotomic trace maps and regulator computations, combined with control theorem techniques for the inverse system.",
@@ -15981,7 +16008,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0705",
+    "id": "fd_0706",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof strategy involves using the explicit decomposition of an associated selector process, inspired by Talagrand's generic decomposition theorem, to obtain improved norm bounds for sparse random tensors. This approach requires a careful analysis of the variance of the tensor norm and the use of truncation inequalities to control the contribution of large entries.",
@@ -15990,6 +16017,35 @@
     "status": "available",
     "timestamp": "2026-07-09T03:40:07.466750+00:00",
     "title": "Improved Norm Bounds for Sparse Random Tensors with Independent Entries"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Raney numbers (two-parameter Fuss-Catalan)",
+      "Narayana numbers (OEIS A001263)",
+      "Fuss-Catalan numbers (OEIS A001764)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that for c≥2, the number of Dyck paths of semilength n=cm+r-1 whose column-residue class sums are equal (c-balanced) is the Raney number Raney_{c+1,r}(m). We conjecture a refinement: the number of such c-balanced paths with exactly k peaks equals the rational Narayana number N_{(c+1,m,r)}(k) (equivalently, the peak distribution matches that of (c+1)-ary trees with r marked nodes). This is falsifiable by explicit enumeration for small parameters.",
+    "domain_bridges": [
+      "Dyck paths",
+      "Rational Catalan numbers",
+      "Lean 4 formalization",
+      "Plane trees"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_0707",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Derive the bivariate generating function for c-balanced Dyck paths weighted by peak count using the kernel method extended from the paper, and show it coincides with the known rational Narayana generating function. Alternatively, construct an explicit bijection to marked (c+1)-ary trees that preserves peaks, potentially via the cycle lemma on Raney sequences.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07256v1",
+    "status": "available",
+    "timestamp": "2026-07-09T03:59:50.858865+00:00",
+    "title": "Peak refinement of c-balanced Dyck path enumeration"
   },
   {
     "ambition_level": "extension",

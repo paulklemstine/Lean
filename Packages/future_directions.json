@@ -33441,6 +33441,54 @@
       "title": "Spectral Extremal Conjecture for Hypergraphs with Bounded Matching Number"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "network realignment complex",
+        "simple graph automorphism group",
+        "equivariant deformation retraction",
+        "cubical flag complex"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every connected simple graph G, the natural homomorphism Aut(G) → Aut(X_G) induced by the action on the network realignment complex X_G is an isomorphism. In particular, every automorphism of the cubical complex X_G is induced by a relabelling of the vertices of G.",
+      "domain_bridges": [
+        "connects graph symmetries to topological automorphism groups",
+        "links equivariant homotopy theory with combinatorial enumeration"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0698",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem aut_X_G_eq_aut_G (G : SimpleGraph V) (h : Connected G) : Aut (NetworkRealignmentComplex G) ≅ Aut G := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use the paper's equivariant generalised Morse theory and the Aut(G)-equivariant strong deformation retraction of X_G onto a disjoint union of a complete graph and a discrete Aut(G)-space. Show that any automorphism of X_G must map critical cells to critical cells, preserving the retraction. Then classify the resulting permutations of components and prove they arise uniquely from Aut(G), generalising the n≥5 case for K_n.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.07404v1",
+      "source_path": "http://arxiv.org/abs/2607.07404v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T03:57:15.654780+00:00",
+      "title": "Automorphism group of network realignment complex equals base graph automorphism group"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -33463,7 +33511,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0698",
+      "id": "fd_0699",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem degenerate_cross_ratio_valuation_theorem {K : Type} [field K] {n : ℕ} {k : ℕ} (C : ComplementaryConfiguration K n k) (f : LiftWithParameter C) (t : t → 0) :\n    lim (t → 0) (cross_ratio (f C) t) = intersection_degree (spread f C t)\n    [arithmetic, proof_with_full_details]",
@@ -33512,7 +33560,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0699",
+      "id": "fd_0700",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem cographs_genspec_closed (V : Type*) [Fintype V] (G H : SimpleGraph V) (hG : IsCograph G) (h_eq : generalizedSpectrum G = generalizedSpectrum H) : IsCograph H := by sorry",
@@ -33561,7 +33609,7 @@
         "Logic"
       ],
       "github_issue": 0,
-      "id": "fd_0700",
+      "id": "fd_0701",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem biserial_representation_finite_characterization (Λ : Type*) [algebra k Λ] [representation_finite Λ] [biserial Λ] : magnitude_of_module_category Λ = rank (grothendieck_group (module_category Λ))",
@@ -33612,7 +33660,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0701",
+      "id": "fd_0702",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem formal_group_integration {G : Type} [h : shimura_variety_of_hodge_type G] (Ig : igusa_variety μ_ordinary G) : ∃ (F : formal_group h.dimension), integrable_action F Ig ∧ Sym (differential_operators Ig) ≃ₐ[log] coordinate_ring F",
@@ -33663,7 +33711,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0702",
+      "id": "fd_0703",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem analytic_spread_forest_H {V : Type*} [Fintype V] (G H : SimpleGraph V) (hH : IsForest H) (k : ℕ) (F : Field k) : analyticSpread (determinantalIdeal G H) = matroidRank (linearMatroidOfPair G H) H.edgeSet := by sorry",
@@ -33711,7 +33759,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0703",
+      "id": "fd_0704",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem odd_cover_recurrence (r n : ℕ) (hr : 2 ≤ r) (hn : r + 1 ≤ n + 1) : b (r + 1) (n + 1) = b r n := by\n  -- Formalisation of the conjectured recurrence.\n  -- Define b_m(n) as the minimum size of an odd cover of K_n^{(m)}.\n  -- Show both directions using the shifting construction and the $\\mathbb{F}_2$ rank bound.\n  admit",
@@ -33761,7 +33809,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0704",
+      "id": "fd_0705",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem even_k_group_capitulation_implies_pseudo_null (F : NumberField) (p : Nat) (d : Nat) (hF : IsTotallyReal F) (h_odd : Odd p) (h_geq : d ≥ 2) : let F_inf := CyclotomicZ_p_extension F p d in (∃ (n : ℕ) (F_n : NumberField), Subfield F_n F ∧ F_n ⊂ F_inf ∧ ∃ (ker : Subgroup (KGroup (2 * n) F_n)), ker ≠ ⊥ ∧ ker ≤ (KGroup (2 * n) F_n → KGroup (2 * n) F_inf) ) → X_module F_inf ^0 ≠ 0",
@@ -33808,7 +33856,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0705",
+      "id": "fd_0706",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem NormBoundTensor {n : ℕ} {r : ℕ} {M : ℝ} (ht : M > 0) (hts : ∀ X : Tensor n r, X.ℓ2 ≤ M) : (∑ X : Tensor n r, X.ℓ2 ^ 2 * X.prob) ^ 0.5 ≤ √2 * ∑ X : Tensor n r, X.ℓ2 * X.prob + M",
@@ -33828,6 +33876,56 @@
       "thread_id": "",
       "timestamp": "2026-07-09T03:40:07.466750+00:00",
       "title": "Improved Norm Bounds for Sparse Random Tensors with Independent Entries"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Raney numbers (two-parameter Fuss-Catalan)",
+        "Narayana numbers (OEIS A001263)",
+        "Fuss-Catalan numbers (OEIS A001764)"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The paper proves that for c≥2, the number of Dyck paths of semilength n=cm+r-1 whose column-residue class sums are equal (c-balanced) is the Raney number Raney_{c+1,r}(m). We conjecture a refinement: the number of such c-balanced paths with exactly k peaks equals the rational Narayana number N_{(c+1,m,r)}(k) (equivalently, the peak distribution matches that of (c+1)-ary trees with r marked nodes). This is falsifiable by explicit enumeration for small parameters.",
+      "domain_bridges": [
+        "Dyck paths",
+        "Rational Catalan numbers",
+        "Lean 4 formalization",
+        "Plane trees"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Computation"
+      ],
+      "github_issue": 0,
+      "id": "fd_0707",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem peak_refined_c_balanced (c : ℕ) (hc : c ≥ 2) (m r : ℕ) (hr : 1 ≤ r ∧ r ≤ c) :\n  let n := c * m + r - 1\n  ∀ k, Nat.card {p : DyckPath n // cBalanced c p ∧ peaks p = k} =\n    rationalNarayana (c+1) r m k := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Derive the bivariate generating function for c-balanced Dyck paths weighted by peak count using the kernel method extended from the paper, and show it coincides with the known rational Narayana generating function. Alternatively, construct an explicit bijection to marked (c+1)-ary trees that preserves peaks, potentially via the cycle lemma on Raney sequences.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.07256v1",
+      "source_path": "http://arxiv.org/abs/2607.07256v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T03:59:50.858865+00:00",
+      "title": "Peak refinement of c-balanced Dyck path enumeration"
     },
     {
       "ambition_level": "extension",

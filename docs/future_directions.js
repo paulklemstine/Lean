@@ -8432,11 +8432,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "If a family of complementary configurations degenerates to a configuration where some planes intersect, then the limit of the cross-ratio valuations (as the parameters approach the degenerate case) equals the intersection degree of the cycles obtained by spreading the original cycles to the valuation ring.",
+    "description": "For every connected simple graph G, the natural homomorphism Aut(G) \u2192 Aut(X_G) induced by the action on the network realignment complex X_G is an isomorphism. In particular, every automorphism of the cubical complex X_G is induced by a relabelling of the vertices of G.",
     "domains": [
       "Algebra"
     ],
     "id": "fd_0698",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07404v1",
+    "status": "available",
+    "timestamp": "2026-07-09T03:57:15.654780+00:00",
+    "title": "Automorphism group of network realignment complex equals base graph automorphism group"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "If a family of complementary configurations degenerates to a configuration where some planes intersect, then the limit of the cross-ratio valuations (as the parameters approach the degenerate case) equals the intersection degree of the cycles obtained by spreading the original cycles to the valuation ring.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0699",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06477v1",
@@ -8451,7 +8465,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0699",
+    "id": "fd_0700",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06455v1",
@@ -8466,7 +8480,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0700",
+    "id": "fd_0701",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07555v1",
@@ -8481,7 +8495,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0701",
+    "id": "fd_0702",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07427v1",
@@ -8496,7 +8510,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0702",
+    "id": "fd_0703",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07458v1",
@@ -8510,7 +8524,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0703",
+    "id": "fd_0704",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07448v1",
@@ -8524,7 +8538,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0704",
+    "id": "fd_0705",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07328v1",
@@ -8539,13 +8553,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0705",
+    "id": "fd_0706",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07308v1",
     "status": "available",
     "timestamp": "2026-07-09T03:40:07.466750+00:00",
     "title": "Improved Norm Bounds for Sparse Random Tensors with Independent Entries"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that for c\u22652, the number of Dyck paths of semilength n=cm+r-1 whose column-residue class sums are equal (c-balanced) is the Raney number Raney_{c+1,r}(m). We conjecture a refinement: the number of such c-balanced paths with exactly k peaks equals the rational Narayana number N_{(c+1,m,r)}(k) (equivalently, the peak distribution matches that of (c+1)-ary trees with r marked nodes). This is falsifiable by explicit enumeration for small parameters.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_0707",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07256v1",
+    "status": "available",
+    "timestamp": "2026-07-09T03:59:50.858865+00:00",
+    "title": "Peak refinement of c-balanced Dyck path enumeration"
   },
   {
     "consumed_by_exp_id": "",
