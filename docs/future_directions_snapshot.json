@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "31a0a054",
+    "consumed_by_exp_id": "",
     "description": "L-functions are the DNA of mathematics — each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable — there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domain_bridges": [],
     "domains": [
@@ -15,7 +15,7 @@
     "proof_strategy": "Define the Selberg class S as the set of Dirichlet series L(s) = sum a_n/n^s satisfying: (1) Ramanujan bound |a_n| <= n^epsilon for epsilon > 0, (2) Analytic continuation to C except for a possible pole at s=1, (3) Functional equation relating L(s) to L(1-s), (4) Euler product L(s) = prod_p L_p(s). Prove S is countable: each L in S is determined by finitely many data because (a) the degree d_L is a positive integer, (b) the conductor q_L is a positive integer, (c) the Euler factors L_p(s) for p not dividing q_L are determined by the Ramanujan bound and the functional equation, and (d) there are finitely many primes dividing q_L. So L is determined by (d_L, q_L, epsilon_L, {L_p(s) : p | q_L}), a finite set of data. Since each piece of data is countable, S is countable. Test: enumerate elements of S by increasing conductor.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T16:01:43.876173+00:00",
     "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
   },
@@ -16051,7 +16051,7 @@
       "Graph toughness",
       "Forbidden induced subgraphs"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "96910b34",
     "description": "Every simple finite graph that is (K₁∪P₄)-free, has toughness at least 1, and has at least 3 vertices is Hamiltonian.",
     "domain_bridges": [
       "Formalization of graph toughness in Lean 4",
@@ -16066,7 +16066,7 @@
     "proof_strategy": "Assume a minimal counterexample by number of vertices. Show that any non-minimally 1-tough graph can be reduced by edge deletion while preserving (K₁∪P₄)-freeness and 1-toughness until a minimally 1-tough graph is obtained. Then apply the structural characterization from the paper (already proven for minimally 1-tough case) to conclude the minimized graph is Hamiltonian, and lift the cycle back to the original, yielding contradiction.",
     "research_mode": "team",
     "source_exp_id": "2607.07239v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T04:17:26.671029+00:00",
     "title": "Hamiltonicity of (K₁∪P₄)-free 1-tough graphs"
   },
@@ -16290,6 +16290,35 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Kenyon, Okounkov, Sheffield (2006) - 'Dimers and amoebas'",
+      "Kasteleyn (1963) - 'The statistics of dimers on a lattice'",
+      "Mikhalkin (2000) - 'Enumerative tropical algebraic geometry in R^2'",
+      "Goncharov, Kenyon (2012) - 'Two-dimensional dimers and elliptic curves'"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For the triangular lattice dimer model, the marginal polynomial obtained by restricting the characteristic polynomial to any boundary side of the Newton polygon has only real roots. This generalizes the proven result for the bipartite case and provides a concrete conjecture that can be tested computationally for small tori and formally verified in Lean.",
+    "domain_bridges": [
+      "Newton polygons and tropical geometry",
+      "Dimer models and Harnack curves",
+      "Real-rooted polynomials and statistical mechanics"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Cryptography"
+    ],
+    "id": "fd_0719",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish a correspondence between the roots of marginal polynomials and equilibrium measures on the amoeba boundary. Use the explicit factorization results from the paper as base cases, then apply perturbation arguments and the preservation of real-rootedness under the local moves. Leverage the relationship between primitive edge vectors and zig-zag path homology classes to control root locations. Connect to Mikhalkin's correspondence theorem for tropical curves.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07503v1",
+    "status": "available",
+    "timestamp": "2026-07-09T07:54:47.931738+00:00",
+    "title": "Real-rootedness of marginal polynomials for non-bipartite dimer models"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Schubert calculus",
       "boson-fermion correspondence",
       "exterior algebra",
@@ -16306,7 +16335,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0719",
+    "id": "fd_0720",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove by induction on r using generating function identities for exterior powers and sign-reversing arguments; verify base case r=1 and use the relation ∂_i X_j = δ_{ij} to deduce the action on higher wedges, then extend to arbitrary compositions.",
@@ -16327,7 +16356,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0720",
+    "id": "fd_0721",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine probabilistic models of prime factor distributions with known upper and lower bounds for ω(n) and constructions of integers with many small prime factors; likely requires sieve methods and deep results on smooth numbers.",
@@ -16355,7 +16384,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0721",
+    "id": "fd_0722",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use p-adic analysis and properties of multinomial coefficients modulo prime powers, potentially relating to generalized hypergeometric functions and their p-integrality properties. The approach would involve analyzing the generating function of S_l^{(m)}(n) and applying p-adic differential equations.",
@@ -16385,7 +16414,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0722",
+    "id": "fd_0723",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the identity Σ_{n≤x} M(x/n) = 1, prove the grouping into S_1 and S_2 components, apply Möbius inversion to derive the main formula, and verify correctness through induction on bounded intervals. The proof requires careful handling of floor function identities and the constraint ν_x < u < x to ensure all terms are well-defined.",
@@ -16413,7 +16442,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0723",
+    "id": "fd_0724",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Characterize the optimizer of the variational problem via Lagrange multipliers on the Boolean lattice, establish convexity properties of the p-biased measure under IU constraints, and prove uniqueness of extremal families through exchange arguments and majorization theory.",
@@ -16438,7 +16467,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0724",
+    "id": "fd_0725",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Choose a monomial order that yields a squarefree initial ideal in(J_{G,H}) whose Stanley–Reisner complex is precisely the independence complex of the linear matroid M_{G,H}. 2. Show that the special fiber ring S/J_{G,H} ⊗_k k[m] has the same Hilbert function as the face ring of that complex, hence its Krull dimension (the analytic spread) equals dim(Δ)+1. 3. For a squarefree simplicial complex, dim(Δ)+1 equals the size of the largest face, which is the rank of the represented matroid. 4. Conclude ℓ(J_{G,H}) = rank(M_{G,H}).",
@@ -16464,7 +16493,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0725",
+    "id": "fd_0726",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof would involve verifying the modular conditions and leveraging the lower bound from Buchanan et al. combined with constructive upper bounds. By analyzing the structure of bicliques and their symmetric differences, one can show that the conjectured values are achievable and minimal.",
@@ -16473,6 +16502,35 @@
     "status": "available",
     "timestamp": "2026-07-09T07:37:31.681056+00:00",
     "title": "Conjecture on the exact values of b₂(n) for all n"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Chartrand, G., & Harary, F. (2000). Partition dimension. Les Journales de l'IRMA, 33(1), 87-92.",
+      "Erfanian, N., & Alilaro, M. J. (2014). Partition dimension of graphs: A survey. arXiv preprint arXiv:1410.5126.",
+      "Zude, T. S., & Patil, V. S. (2018). On multiset partition dimension of graphs. JP Journal of Graph Theory and Applications, 5(1), 15-26."
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any tree T with n ≥ 2 vertices, the multiset partition dimension mpd(T) equals 4 if and only if T contains at least two leaves whose distance from each other is at least 3. This conjecture refines the general lower bound of 4 by providing a complete characterization for the extremal case in trees, extending the result that mpd(G) ≥ 4 for all connected graphs with at least two vertices.",
+    "domain_bridges": [
+      "partition dimension",
+      "multiset distances",
+      "vertex resolving partitions",
+      "tree characterization"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0727",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The forward direction can be established by contradiction: if a tree has mpd(T) = 4 but all pairs of leaves have distance at most 2, then the distance constraints would force at least two vertices to have identical multiset representations, violating the resolving property. The reverse direction follows from constructing an explicit resolving multiset partition with exactly 4 parts when the leaf distance condition is satisfied. This construction generalizes the proof techniques used for the general lower bound while exploiting the tree structure to ensure the partition is valid. The characterization should be formalized by first defining the multiset representation function, then proving the equivalence via structural analysis of tree topology.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07407v1",
+    "status": "available",
+    "timestamp": "2026-07-09T07:55:01.469177+00:00",
+    "title": "Lower Bound Characterization for Multiset Partition Dimension of Trees"
   },
   {
     "ambition_level": "extension",

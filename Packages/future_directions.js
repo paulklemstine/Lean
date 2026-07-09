@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "31a0a054",
+    "consumed_by_exp_id": "",
     "description": "L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable \u2014 there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domains": [
       "Novelty",
@@ -13,7 +13,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T16:01:43.876173+00:00",
     "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
   },
@@ -8575,7 +8575,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Peak refinement of c-balanced Dyck path enumeration"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "96910b34",
     "description": "Every simple finite graph that is (K\u2081\u222aP\u2084)-free, has toughness at least 1, and has at least 3 vertices is Hamiltonian.",
     "domains": [
       "Physics"
@@ -8584,7 +8584,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07239v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T04:17:26.671029+00:00",
     "title": "Hamiltonicity of (K\u2081\u222aP\u2084)-free 1-tough graphs"
   },
@@ -8707,12 +8707,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For the triangular lattice dimer model, the marginal polynomial obtained by restricting the characteristic polynomial to any boundary side of the Newton polygon has only real roots. This generalizes the proven result for the bipartite case and provides a concrete conjecture that can be tested computationally for small tori and formally verified in Lean.",
+    "domains": [
+      "Pythagorean",
+      "Cryptography"
+    ],
+    "id": "fd_0719",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07503v1",
+    "status": "available",
+    "timestamp": "2026-07-09T07:54:47.931738+00:00",
+    "title": "Real-rootedness of marginal polynomials for non-bipartite dimer models"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For every composition \u03b1 of length r \u2264 R, the differential operator \u2202_\u03b1 = \u2202_{i1}\u22ef\u2202_{ir} acting on the polynomial ring \u211a[X_1,\u2026,X_R] yields a non-zero scalar multiple of the basis element X_{i1}\u2227\u22ef\u2227X_{ir} in \u2227^r V, where \u2202_i = (1/i!)\u00b7(d/dX_i)|_{X=0}. Moreover, the scalar equals the sign of the permutation that sorts (i1,\u2026,ir). This equality holds for all r and can be tested computationally for small values.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0719",
+    "id": "fd_0720",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07667v1",
@@ -8726,7 +8741,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0720",
+    "id": "fd_0721",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07641v1",
@@ -8740,7 +8755,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0721",
+    "id": "fd_0722",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07638v1",
@@ -8755,7 +8770,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0722",
+    "id": "fd_0723",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07566v1",
@@ -8770,7 +8785,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0723",
+    "id": "fd_0724",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07564v1",
@@ -8785,7 +8800,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0724",
+    "id": "fd_0725",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07458v1",
@@ -8799,13 +8814,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0725",
+    "id": "fd_0726",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07448v1",
     "status": "available",
     "timestamp": "2026-07-09T07:37:31.681056+00:00",
     "title": "Conjecture on the exact values of b\u2082(n) for all n"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any tree T with n \u2265 2 vertices, the multiset partition dimension mpd(T) equals 4 if and only if T contains at least two leaves whose distance from each other is at least 3. This conjecture refines the general lower bound of 4 by providing a complete characterization for the extremal case in trees, extending the result that mpd(G) \u2265 4 for all connected graphs with at least two vertices.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0727",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07407v1",
+    "status": "available",
+    "timestamp": "2026-07-09T07:55:01.469177+00:00",
+    "title": "Lower Bound Characterization for Multiset Partition Dimension of Trees"
   },
   {
     "consumed_by_exp_id": "ad8ddf45",
