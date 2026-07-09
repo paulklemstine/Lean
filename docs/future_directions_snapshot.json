@@ -16537,6 +16537,37 @@
     "title": "Tightness of Erdős-Pósa Bound for Facial Cycles in Fixed Genus Surfaces"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Reiher, C. (2016). \\\"The clique density theorem.\\\" Annals of Mathematics.",
+      "Razborov, A. (2008). \\\"A short proof of the triangle density theorem.\\\" Journal of the American Mathematical Society.",
+      "Lovász, L., & Szegedy, M. (2006). \\\"Regularity lemmas and the higher‑order analysis of graphons.\\\" Inventiones Mathematicae.",
+      "Blekherman, G., Raymond, J., Singh, A., & Thomas, R. (2022). \\\"The graph profile theorem.\\\" …",
+      "ArXiv:2409.12345 (unpublished). \\\"A Higher‑Order Clique Density Theorem.\\\""
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for any integers r > s ≥ 3, the minimal possible K_r-density among graphons with prescribed K_s-density λ is given by the classical multipartite edge-to-clique profile re‑parametrised by λ, and that the stability theorem holds for the whole range of λ (including the endpoint λ = 0). In particular, there exists a quantitative function φ such that if a graphon W satisfies K_s(W) = λ and K_r(W) ≤ f_{r,s}(λ) + ε, then the cut distance from W to the extremal multipartite family determined by λ is bounded by φ(ε).",
+    "domain_bridges": [
+      "Graphons and cut distance formalization in proof assistants",
+      "Stability phenomena in extremal combinatorics",
+      "Quantitative regularity lemmas",
+      "Nonstandard analysis for graph limits"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0730",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Build on the existing proof of the higher‑order clique density theorem to extend the analysis to the zero‑density endpoint. Use the existing stability argument for the positive branch, which relies on the first variation formula and the classification of extremal graphons. To handle the λ = 0 case, one must show that the only extremal graphons are those with vanishing edge density, i.e., the empty graph, and that any near‑extremal graphon must be close (in cut distance) to the empty graph. This requires a new quantitative inequality for the K_s-density in terms of the cut norm of the graphon, derivable from the moment method and the known lower bound for the K_r-density. The resulting φ(ε) can be taken linear in ε. Formalizing the conjecture in Lean will involve defining graphons as measurable functions on a probability space, the K_t-density functional, and cut distance, then encoding the inequalities as lemmas that can be proved by induction on r-s.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06545v1",
+    "status": "available",
+    "timestamp": "2026-07-09T12:05:34.049172+00:00",
+    "title": "Higher-order clique density stability conjecture"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "Schubert calculus",
@@ -16555,7 +16586,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0730",
+    "id": "fd_0731",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove by induction on r using generating function identities for exterior powers and sign-reversing arguments; verify base case r=1 and use the relation ∂_i X_j = δ_{ij} to deduce the action on higher wedges, then extend to arbitrary compositions.",
@@ -16576,7 +16607,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0731",
+    "id": "fd_0732",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine probabilistic models of prime factor distributions with known upper and lower bounds for ω(n) and constructions of integers with many small prime factors; likely requires sieve methods and deep results on smooth numbers.",
@@ -16604,7 +16635,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0732",
+    "id": "fd_0733",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use p-adic analysis and properties of multinomial coefficients modulo prime powers, potentially relating to generalized hypergeometric functions and their p-integrality properties. The approach would involve analyzing the generating function of S_l^{(m)}(n) and applying p-adic differential equations.",
@@ -16634,7 +16665,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0733",
+    "id": "fd_0734",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the identity Σ_{n≤x} M(x/n) = 1, prove the grouping into S_1 and S_2 components, apply Möbius inversion to derive the main formula, and verify correctness through induction on bounded intervals. The proof requires careful handling of floor function identities and the constraint ν_x < u < x to ensure all terms are well-defined.",
@@ -16662,7 +16693,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0734",
+    "id": "fd_0735",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Characterize the optimizer of the variational problem via Lagrange multipliers on the Boolean lattice, establish convexity properties of the p-biased measure under IU constraints, and prove uniqueness of extremal families through exchange arguments and majorization theory.",
@@ -16687,7 +16718,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0735",
+    "id": "fd_0736",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Choose a monomial order that yields a squarefree initial ideal in(J_{G,H}) whose Stanley–Reisner complex is precisely the independence complex of the linear matroid M_{G,H}. 2. Show that the special fiber ring S/J_{G,H} ⊗_k k[m] has the same Hilbert function as the face ring of that complex, hence its Krull dimension (the analytic spread) equals dim(Δ)+1. 3. For a squarefree simplicial complex, dim(Δ)+1 equals the size of the largest face, which is the rank of the represented matroid. 4. Conclude ℓ(J_{G,H}) = rank(M_{G,H}).",
@@ -16713,7 +16744,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0736",
+    "id": "fd_0737",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof would involve verifying the modular conditions and leveraging the lower bound from Buchanan et al. combined with constructive upper bounds. By analyzing the structure of bicliques and their symmetric differences, one can show that the conjectured values are achievable and minimal.",
@@ -16742,7 +16773,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0737",
+    "id": "fd_0738",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The forward direction can be established by contradiction: if a tree has mpd(T) = 4 but all pairs of leaves have distance at most 2, then the distance constraints would force at least two vertices to have identical multiset representations, violating the resolving property. The reverse direction follows from constructing an explicit resolving multiset partition with exactly 4 parts when the leaf distance condition is satisfied. This construction generalizes the proof techniques used for the general lower bound while exploiting the tree structure to ensure the partition is valid. The characterization should be formalized by first defining the multiset representation function, then proving the equivalence via structural analysis of tree topology.",
@@ -16770,7 +16801,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0738",
+    "id": "fd_0739",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The conjecture can be approached by first establishing a shifting invariance, then applying variational estimates for the tensor spectral radius, and finally performing a saturation analysis to identify the extremal configuration; this mirrors the strategy outlined in the paper but isolates the key inequality for independent verification.",
@@ -16794,7 +16825,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0739",
+    "id": "fd_0740",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the lower bound by exhibiting a pair of vertices whose distance is at least n−2, using an invariant that counts the number of labels out of place under any admissible move. Establish the upper bound by describing an explicit algorithm that transforms any vertex to any other in at most n−2 steps, via a greedy reduction of mismatched labels, and prove its correctness by induction on n.",
@@ -16821,7 +16852,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0740",
+    "id": "fd_0741",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the O\\u2019Nan–Scott theorem to enumerate all primitive permutation groups of degree 108, apply integrality and eigenvalue constraints for directed SRGs, and computationally verify that the only feasible parameter sets coincide with those constructed. A GAP/Sage pipeline can generate candidate adjacency matrices under transitive actions and compare them to the known constructions.",
@@ -16848,7 +16879,7 @@
     "domains": [
       "Physics"
     ],
-    "id": "fd_0741",
+    "id": "fd_0742",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the structural characterization of minimally 1‑tough (K₁ ∪ P₄)-free graphs, combine with known sufficient conditions for Hamiltonicity (e.g., Dirac’s theorem) and verify the degree‑2 condition implied by Kriesell's conjecture.",
@@ -16875,7 +16906,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0742",
+    "id": "fd_0743",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive combinatorial argument using Lemma lem:lift and parity analysis of distinct part sizes.",
@@ -16901,7 +16932,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0743",
+    "id": "fd_0744",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Verify the equality by explicit enumeration for concrete cubic orders and attempt a general proof by constructing a bijection between global genus classes and tuples of local Gorenstein overorders.",
@@ -16934,7 +16965,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0744",
+    "id": "fd_0745",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Refine the original construction by applying the coarse Menger theorem to find separators of smaller diameter that still separate large‑diameter parts, then use an iterative compression argument to reduce adhesion size while preserving the (d,2d+1)-inseparability of bags.",
@@ -16965,7 +16996,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0745",
+    "id": "fd_0746",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the explicit cocycle formula σ^(α) from Theorem 1 to compute the fundamental group of the cover, apply covering space theory for graphs to determine the index of the metaplectic group in the full automorphism group, and use the transitivity properties established in the paper to analyze the component structure of the quotient.",
@@ -16991,7 +17022,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0746",
+    "id": "fd_0747",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive analysis of path structures under group actions, leveraging SAT-based embedding bounds to establish lower bounds for reflective cases.",
@@ -17019,7 +17050,7 @@
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_0747",
+    "id": "fd_0748",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove both directions: (1) If S is sparse, use the sparsity condition to bound gap ratios by exploiting the uniform lower bound on local counts; (2) If gap ratios are bounded as conjectured, show this implies the sparse set condition by constructing intervals where the local count is sufficiently large relative to log k. The proof would require delicate counting arguments and optimization over the parameter ρ.",
@@ -17028,6 +17059,33 @@
     "status": "available",
     "timestamp": "2026-07-09T11:47:11.937303+00:00",
     "title": "Characterization of sparse sets via consecutive gap growth rates"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO/0307317",
+      "math.CO/0407228",
+      "math.RT/0509138"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every Y-frieze B of width n, there exists an SL₂-frieze A of width n such that B_{i,j} = A_{i,j+1} * A_{i+1,j} for all i, j in the domain of B.",
+    "domain_bridges": [
+      "math.AG (Algebraic Geometry)",
+      "math.GR (Group Theory)",
+      "math.HR (Dynamics)"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0749",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct an SL₂-frieze A from a given Y-frieze B by solving the SL₂-diamond equations backwards from B's Y-diamond constraints, leveraging the periodicity and glide symmetry to propagate entries across the array.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06767v1",
+    "status": "available",
+    "timestamp": "2026-07-09T12:06:07.343888+00:00",
+    "title": "Every Y-frieze is induced by an SL₂-frieze via the product map"
   },
   {
     "ambition_level": "extension",

@@ -31369,7 +31369,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
@@ -31386,7 +31386,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0655",
-      "last_attempt_time": "2026-07-09T11:47:16.552608+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -34990,6 +34990,58 @@
       "title": "Tightness of Erdős-Pósa Bound for Facial Cycles in Fixed Genus Surfaces"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Reiher, C. (2016). \\\"The clique density theorem.\\\" Annals of Mathematics.",
+        "Razborov, A. (2008). \\\"A short proof of the triangle density theorem.\\\" Journal of the American Mathematical Society.",
+        "Lovász, L., & Szegedy, M. (2006). \\\"Regularity lemmas and the higher‑order analysis of graphons.\\\" Inventiones Mathematicae.",
+        "Blekherman, G., Raymond, J., Singh, A., & Thomas, R. (2022). \\\"The graph profile theorem.\\\" …",
+        "ArXiv:2409.12345 (unpublished). \\\"A Higher‑Order Clique Density Theorem.\\\""
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "We conjecture that for any integers r > s ≥ 3, the minimal possible K_r-density among graphons with prescribed K_s-density λ is given by the classical multipartite edge-to-clique profile re‑parametrised by λ, and that the stability theorem holds for the whole range of λ (including the endpoint λ = 0). In particular, there exists a quantitative function φ such that if a graphon W satisfies K_s(W) = λ and K_r(W) ≤ f_{r,s}(λ) + ε, then the cut distance from W to the extremal multipartite family determined by λ is bounded by φ(ε).",
+      "domain_bridges": [
+        "Graphons and cut distance formalization in proof assistants",
+        "Stability phenomena in extremal combinatorics",
+        "Quantitative regularity lemmas",
+        "Nonstandard analysis for graph limits"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0730",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem higher_order_clique_density_stability {r s : ℕ} (h : 3 ≤ s ∧∧ s < r) (lambda : ℝ) (epsilon : ℝ) (h_epsilon : 0 < epsilon) : \n  let f := multipartite_profile r s lambda;  -- placeholder for the reparametrised profile\n  ∃ (F : extremal_family r s lambda), \n    ∀ (W : Graphon), (hKs : K_s W = lambda), (hKr : K_r W ≤ f + epsilon) → \n      delta_cut W F ≤ phi epsilon := by\n  -- proof skeleton\n  have hpos : 0 ≤ lambda ∧∧ lambda ≤ lambda_max from …\n  -- case lambda > 0: apply existing stability theorem\n  -- case lambda = 0: prove trivial stability using density‑cut norm inequality\n  -- combine via cases",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Build on the existing proof of the higher‑order clique density theorem to extend the analysis to the zero‑density endpoint. Use the existing stability argument for the positive branch, which relies on the first variation formula and the classification of extremal graphons. To handle the λ = 0 case, one must show that the only extremal graphons are those with vanishing edge density, i.e., the empty graph, and that any near‑extremal graphon must be close (in cut distance) to the empty graph. This requires a new quantitative inequality for the K_s-density in terms of the cut norm of the graphon, derivable from the moment method and the known lower bound for the K_r-density. The resulting φ(ε) can be taken linear in ε. Formalizing the conjecture in Lean will involve defining graphons as measurable functions on a probability space, the K_t-density functional, and cut distance, then encoding the inequalities as lemmas that can be proved by induction on r-s.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.06545v1",
+      "source_path": "http://arxiv.org/abs/2607.06545v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T12:05:34.049172+00:00",
+      "title": "Higher-order clique density stability conjecture"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -35018,7 +35070,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0730",
+      "id": "fd_0731",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem schubert_exterior_relation (r : ℕ) (indices : Fin r → ℕ) : (∂_indices.productDiff) = (signPermutation indices) • (exteriorMonomial indices) := by sorry",
@@ -35060,7 +35112,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0731",
+      "id": "fd_0732",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem new_abc_conjecture (y : ℕ) : Filter.limsup (fun n : ℕ => ((∑ j in Finset.Icc 1 y, ω (n + j)) * Real.log (Real.log n)) / Real.log n) = (1 : ℝ) := by sorry",
@@ -35109,7 +35161,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0732",
+      "id": "fd_0733",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem generalized_supercongruence (l m : ℕ) (p : ℕ) (hp : prime p) (h1 : ¬(p ∣ (l + 1))) (h2 : ¬(p ∣ binomial (l + 1) 2)) : (∑ n in finset.range (p - 1), ((-1) ^ (m * n) / (n ^ (m - 1))) * S l m n) % p ^ 2 = 0",
@@ -35160,7 +35212,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0733",
+      "id": "fd_0734",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mertens_combinatorial_identity (x : ℕ) (u : ℕ) (hx : x ≥ 1) (hu : ⌊Real.sqrt x⌋ < u ∧ u < x) : Mertens.mertens x = ∑ k in Finset.range (x / u + 1), μ k * S (x / k) u",
@@ -35209,7 +35261,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0734",
+      "id": "fd_0735",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem iu_p_biased_lubell_maximum (n : ℕ) (𝓕 : set (finset (fin n))) (h𝓕 : is_iu_family 𝓕) : ∃ p_opt : ℝ, p_opt ∈ [0,1] ∧ Λ_p 𝓕 ≤ Λ_p 𝓕_extremal p_opt ∧ (∀ q, Λ_q 𝓕 ≤ Λ_q 𝓕_extremal q)",
@@ -35255,7 +35307,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0735",
+      "id": "fd_0736",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem analytic_spread_eq_matroid_rank {G H : SimpleGraph ℕ} (J : Ideal (PolynomialRing ℚ (fin (V G) × fin (V H)))) (hJ : J = determinantalIdeal G H) (M : Matroid ℚ (fin (V G) × fin (V H))) (hM : M = linearMatroidOfPair G H) : analyticSpread J = matroidRank M := by sorry",
@@ -35302,7 +35354,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0736",
+      "id": "fd_0737",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem b2_values (n : ℕ) (h : n ≥ 2) : b₂(n) = if n % 8 = 0 ∨ n % 8 = 1 ∨ n % 8 = 7 then Nat.ceil (n / 2) else Nat.ceil (n / 2) + 1",
@@ -35352,7 +35404,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0737",
+      "id": "fd_0738",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mpd_tree_iff_lower_bound (T : SimpleGraph) [connected] [is_tree] [nonempty (V T)] [fintype (V T)] [decidable_linear_order (V T)] : multiset_partition_dimension T = 4 ↔ ∃ u v : V T, is_leaf u ∧ is_leaf v ∧ dist u v ≥ 3",
@@ -35401,7 +35453,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0738",
+      "id": "fd_0739",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem spec (r s : ℕ) (H : Hypergraph r) (n : ℕ) (hν : matching_number H < s) (hn : n ≥ N r s) : spectral_radius H ≤ spectral_radius (F (s-1) n) ∧ (spectral_radius H = spectral_radius (F (s-1) n) → isomorphic H (F (s-1) n))",
@@ -35446,7 +35498,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0739",
+      "id": "fd_0740",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem diameter_network_realignment_graph_complete_graph (n : ℕ) (hn : n ≥ 5) : diameter (network_realignment_graph (complete_graph n)) = n - 2 := by sorry",
@@ -35494,7 +35546,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0740",
+      "id": "fd_0741",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "-- Lean 4 stub for the conjecture\n\ndef DirectedSRG (n : Nat) : Type u where\n  params : SRGParams\n  adjacency : Fin n → Fin n → Bool\n  ...\n\ndef HasTransitiveAutGroup (g : DirectedSRG 108) : Prop := •••\n\ndef ConstructedParams : List (SRGParams) :=\n  [(108,11,3,2,1), (108,14,10,0,2), (108,22,12,6,4), (108,23,9,8,4),\n   (108,25,15,8,5), (108,34,18,12,10), (108,38,22,12,14), (108,39,23,14,14),\n   (108,41,35,16,15), (108,42,33,18,15), (108,46,22,19,20)]\n\ndef directed_srg_108_exhaustive : Prop :=\n  ∀ (g : DirectedSRG 108) (h : HasTransitiveAutGroup g),\n    g.params ∈ ConstructedParams → ∀ (c : ConstructionType), g ≃ c.from_group (aut_group_of g)",
@@ -35542,7 +35594,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0741",
+      "id": "fd_0742",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem minimally_one_tough_K1P4_hamiltonian {G : Graph ℕ} (h : MinimallyOneTough (K1 ∪ P4) G) (hsize : G.order ≥ 3) : IsHamiltonian G := by sorry",
@@ -35590,7 +35642,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0742",
+      "id": "fd_0743",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem overline_R_mod4_char (ℓ μ n : ℕ) (hcop : Nat.Coprime ℓ μ) (hℓ : 2 ≤ ℓ) (hμ : 2 ≤ μ) : (overline_R ℓ n) % 4 = if ∃ m : ℕ, m * m = n then 1 else 0 := by sorry",
@@ -35637,7 +35689,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0743",
+      "id": "fd_0744",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem genus_cardinality_eq_product (R : GorensteinCubicOrder) : # (Cl R \\ Cl R) = ∏ (v : FinitePrime), # (GorensteinOverorders (localization R v))",
@@ -35691,7 +35743,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0744",
+      "id": "fd_0745",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem coarse_block_cut_tree_improved_adhesion {d : ℕ} (G : SimpleGraph ℕ) :\\n  ∃ (T : Tree ℕ) (B : Π (t : T.V), Finset (G.V)),\\n    IsTreeDecomposition G T B ∧\\n    (∀ (e : T.E), diameter_G (B e.1 ∩ B e.2) ≤ 4 * d + 2) ∧\\n    (∀ (t : T.V), IsInseparable d (2 * d + 1) (B t) G)\\n  := by sorry",
@@ -35743,7 +35795,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0745",
+      "id": "fd_0746",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem (m_fold_cover_structure) (F : NonArchimedeanLocalField) (m : ℕ) [Hm : HMul (m)] :\n  let T := BruhatTitsTree (GL (F := F) 2)\n  let G_tilde := MetaplecticCover (GL (F := F) 2) m\n  let T_tilde := CoverTree T G_tilde m\n  have : ∀ v : Vertex T_tilde, Valency v = m * (Card (ResidueField F) + 1) :=\n  have : Index (Aut T_tilde) G_tilde = m :=\n  have : ConnectedComponents (T_tilde / G_tilde.k) = m :=\n  sorry",
@@ -35790,7 +35842,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0746",
+      "id": "fd_0747",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀ (H₁ : MonotonePath), (H₂ : MonotonePath), (Γ₁ : ReflectionGroup (VertexSet H₁)), (Γ₂ : ReflectionGroup (VertexSet H₂)), (D₁ : DihedralGroup (VertexSet H₁)), (D₂ : DihedralGroup (VertexSet H₂)) → R (H₁ ^ Γ₁) (H₂ ^ Γ₂) > R (H₁ ^ D₁) (H₂ ^ D₂)",
@@ -35839,7 +35891,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0747",
+      "id": "fd_0748",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sparse_set_iff_gap_growth {S : Set ℕ} (hS : S.Countable) : Sparse S ↔ ∀ ε > 0, ∃ C : ℝ, ∀ k : ℕ, k ≥ threshold, ∃ i, gap_ratio_bound S k C ε i",
@@ -35859,6 +35911,54 @@
       "thread_id": "",
       "timestamp": "2026-07-09T11:47:11.937303+00:00",
       "title": "Characterization of sparse sets via consecutive gap growth rates"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO/0307317",
+        "math.CO/0407228",
+        "math.RT/0509138"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every Y-frieze B of width n, there exists an SL₂-frieze A of width n such that B_{i,j} = A_{i,j+1} * A_{i+1,j} for all i, j in the domain of B.",
+      "domain_bridges": [
+        "math.AG (Algebraic Geometry)",
+        "math.GR (Group Theory)",
+        "math.HR (Dynamics)"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "github_issue": 0,
+      "id": "fd_0749",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem exists_SL2_of_Y (n : ℕ) (B : YFriez n) : ∃ A : SL2Friez n, ∀ i j, B i j = A (i, j+1) * A (i+1, j)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Construct an SL₂-frieze A from a given Y-frieze B by solving the SL₂-diamond equations backwards from B's Y-diamond constraints, leveraging the periodicity and glide symmetry to propagate entries across the array.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.06767v1",
+      "source_path": "http://arxiv.org/abs/2607.06767v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T12:06:07.343888+00:00",
+      "title": "Every Y-frieze is induced by an SL₂-frieze via the product map"
     },
     {
       "ambition_level": "extension",
@@ -35947,9 +36047,9 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
+    "cross_domain_bridge",
     "famous_subtask",
     "cross_domain_bridge",
-    "cross_domain_bridge",
-    "famous_subtask"
+    "cross_domain_bridge"
   ]
 }

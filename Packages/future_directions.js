@@ -8840,12 +8840,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Conjecture: For every composition \u03b1 of length r \u2264 R, the differential operator \u2202_\u03b1 = \u2202_{i1}\u22ef\u2202_{ir} acting on the polynomial ring \u211a[X_1,\u2026,X_R] yields a non-zero scalar multiple of the basis element X_{i1}\u2227\u22ef\u2227X_{ir} in \u2227^r V, where \u2202_i = (1/i!)\u00b7(d/dX_i)|_{X=0}. Moreover, the scalar equals the sign of the permutation that sorts (i1,\u2026,ir). This equality holds for all r and can be tested computationally for small values.",
+    "description": "We conjecture that for any integers r > s \u2265 3, the minimal possible K_r-density among graphons with prescribed K_s-density \u03bb is given by the classical multipartite edge-to-clique profile re\u2011parametrised by \u03bb, and that the stability theorem holds for the whole range of \u03bb (including the endpoint \u03bb = 0). In particular, there exists a quantitative function \u03c6 such that if a graphon W satisfies K_s(W) = \u03bb and K_r(W) \u2264 f_{r,s}(\u03bb) + \u03b5, then the cut distance from W to the extremal multipartite family determined by \u03bb is bounded by \u03c6(\u03b5).",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
     "id": "fd_0730",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06545v1",
+    "status": "available",
+    "timestamp": "2026-07-09T12:05:34.049172+00:00",
+    "title": "Higher-order clique density stability conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For every composition \u03b1 of length r \u2264 R, the differential operator \u2202_\u03b1 = \u2202_{i1}\u22ef\u2202_{ir} acting on the polynomial ring \u211a[X_1,\u2026,X_R] yields a non-zero scalar multiple of the basis element X_{i1}\u2227\u22ef\u2227X_{ir} in \u2227^r V, where \u2202_i = (1/i!)\u00b7(d/dX_i)|_{X=0}. Moreover, the scalar equals the sign of the permutation that sorts (i1,\u2026,ir). This equality holds for all r and can be tested computationally for small values.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0731",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07667v1",
@@ -8859,7 +8874,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0731",
+    "id": "fd_0732",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07641v1",
@@ -8873,7 +8888,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0732",
+    "id": "fd_0733",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07638v1",
@@ -8888,7 +8903,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0733",
+    "id": "fd_0734",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07566v1",
@@ -8903,7 +8918,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0734",
+    "id": "fd_0735",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07564v1",
@@ -8918,7 +8933,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0735",
+    "id": "fd_0736",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07458v1",
@@ -8932,7 +8947,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0736",
+    "id": "fd_0737",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07448v1",
@@ -8947,7 +8962,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0737",
+    "id": "fd_0738",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07407v1",
@@ -8962,7 +8977,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0738",
+    "id": "fd_0739",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07392v1",
@@ -8976,7 +8991,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0739",
+    "id": "fd_0740",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07404v1",
@@ -8991,7 +9006,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0740",
+    "id": "fd_0741",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07381v1",
@@ -9005,7 +9020,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0741",
+    "id": "fd_0742",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07239v1",
@@ -9020,7 +9035,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0742",
+    "id": "fd_0743",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07259v1",
@@ -9035,7 +9050,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0743",
+    "id": "fd_0744",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07063v1",
@@ -9049,7 +9064,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0744",
+    "id": "fd_0745",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07030v1",
@@ -9063,7 +9078,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0745",
+    "id": "fd_0746",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06899v1",
@@ -9077,7 +9092,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0746",
+    "id": "fd_0747",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06817v1",
@@ -9092,13 +9107,27 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_0747",
+    "id": "fd_0748",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06773v1",
     "status": "available",
     "timestamp": "2026-07-09T11:47:11.937303+00:00",
     "title": "Characterization of sparse sets via consecutive gap growth rates"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every Y-frieze B of width n, there exists an SL\u2082-frieze A of width n such that B_{i,j} = A_{i,j+1} * A_{i+1,j} for all i, j in the domain of B.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0749",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06767v1",
+    "status": "available",
+    "timestamp": "2026-07-09T12:06:07.343888+00:00",
+    "title": "Every Y-frieze is induced by an SL\u2082-frieze via the product map"
   },
   {
     "consumed_by_exp_id": "77c07bb4",
