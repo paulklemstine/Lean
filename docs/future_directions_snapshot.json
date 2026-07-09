@@ -22,7 +22,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "5f3ba85e",
+    "consumed_by_exp_id": "6be296cb",
     "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long — the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static — they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
     "domain_bridges": [],
     "domains": [
@@ -4578,7 +4578,7 @@
       "Simplicial Complexes",
       "h-vectors"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6c21e233",
     "description": "Formalize the proof that the transformation matrix $H_{\\mathcal{F}}$ associated with the interval subdivision of a finite simplicial complex is totally positive (TP). This requires defining the $h$-vector of a simplicial complex, the interval subdivision operation, the resulting transformation matrix $H_{\\mathcal{F}}$, and proving that all its minors are non-negative.",
     "domain_bridges": [
       "Linear Algebra",
@@ -4594,7 +4594,7 @@
     "proof_strategy": "1. Define the structure of a finite simplicial complex and the $h$-vector as a function of the $f$-vector. 2. Implement the $\\mathcal{F}$-uniform subdivision framework specifically for the interval subdivision to derive the explicit entries of the transformation matrix $H_{\\mathcal{F}}$. 3. Use the Lindström-Gessel-Viennot (LGV) lemma or a similar combinatorial path-counting method to show that the determinants of all minors are non-negative, leveraging the combinatorial proof provided in the paper.",
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T09:05:38.885794+00:00",
     "title": "Total Positivity of the Interval Subdivision Transformation Matrix"
   },
@@ -6801,7 +6801,7 @@
       "Jung 1989",
       "Jung-Tix 1998"
     ],
-    "consumed_by_exp_id": "c7d57e93",
+    "consumed_by_exp_id": "",
     "description": "This paper investigates the structural constraints under which a finite poset admits a probabilistic powerdomain isomorphic to an RB-domain. The key claim is that such a domain must inherit a least element and possess a tree-like Hasse graph structure.",
     "domain_bridges": [
       "finite-binary-channel coding",
@@ -6816,7 +6816,7 @@
     "proof_strategy": "Constructive separation with two clear obstruction layers",
     "research_mode": "team",
     "source_exp_id": "2607.02231v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-05T03:01:13.702884+00:00",
     "title": "Characterizing finite posets whose probabilistic powerdomain is an RB-domain"
   },
@@ -16626,6 +16626,35 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Sheehy 2013 - Linear-size approximations in bounded doubling dimension",
+      "Rabadán and Dey 2016 - Sparse approximations for topological inference",
+      "Chazal et al. 2014 - Persistence stability and interleaving distances",
+      "Wagner 2016 - Correctly approximating the Rips and Čech complexes"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any fixed c in [1, sqrt(2)), there exists a family of finite metric spaces {X_n} with polynomially bounded doubling dimension such that any finitely presented c-approximation to the Vietoris-Rips filtrationrips(X_n) has size at least 2^{Omega(n)}. This establishes that bounded doubling dimension is a necessary geometric assumption for linear-size sparse approximations.",
+    "domain_bridges": [
+      "Topological data analysis bridges algebraic topology and computational geometry",
+      "Doubling dimension connects metric geometry with finite dimension theory",
+      "Homotopy interleavings provide categorical framework for approximation correctness"
+    ],
+    "domains": [
+      "Geometry",
+      "MachineLearning"
+    ],
+    "id": "fd_0733",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct explicit families of metric spaces using hypergraph-based constructions that encode set systems with large chromatic number. Show that any c-approximation must preserve distinguishing topological features that require exponentially many simplices. Apply category-theoretic interleaving arguments combined with geometric constructions to establish size lower bounds.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06524v1",
+    "status": "available",
+    "timestamp": "2026-07-09T13:08:02.178509+00:00",
+    "title": "Exponential Lower Bound for Rips c-Approximation in Bounded Doubling Dimension"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Schubert calculus",
       "boson-fermion correspondence",
       "exterior algebra",
@@ -16642,7 +16671,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0733",
+    "id": "fd_0734",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove by induction on r using generating function identities for exterior powers and sign-reversing arguments; verify base case r=1 and use the relation ∂_i X_j = δ_{ij} to deduce the action on higher wedges, then extend to arbitrary compositions.",
@@ -16663,7 +16692,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0734",
+    "id": "fd_0735",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine probabilistic models of prime factor distributions with known upper and lower bounds for ω(n) and constructions of integers with many small prime factors; likely requires sieve methods and deep results on smooth numbers.",
@@ -16691,7 +16720,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0735",
+    "id": "fd_0736",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use p-adic analysis and properties of multinomial coefficients modulo prime powers, potentially relating to generalized hypergeometric functions and their p-integrality properties. The approach would involve analyzing the generating function of S_l^{(m)}(n) and applying p-adic differential equations.",
@@ -16721,7 +16750,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0736",
+    "id": "fd_0737",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the identity Σ_{n≤x} M(x/n) = 1, prove the grouping into S_1 and S_2 components, apply Möbius inversion to derive the main formula, and verify correctness through induction on bounded intervals. The proof requires careful handling of floor function identities and the constraint ν_x < u < x to ensure all terms are well-defined.",
@@ -16749,7 +16778,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0737",
+    "id": "fd_0738",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Characterize the optimizer of the variational problem via Lagrange multipliers on the Boolean lattice, establish convexity properties of the p-biased measure under IU constraints, and prove uniqueness of extremal families through exchange arguments and majorization theory.",
@@ -16774,7 +16803,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0738",
+    "id": "fd_0739",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Choose a monomial order that yields a squarefree initial ideal in(J_{G,H}) whose Stanley–Reisner complex is precisely the independence complex of the linear matroid M_{G,H}. 2. Show that the special fiber ring S/J_{G,H} ⊗_k k[m] has the same Hilbert function as the face ring of that complex, hence its Krull dimension (the analytic spread) equals dim(Δ)+1. 3. For a squarefree simplicial complex, dim(Δ)+1 equals the size of the largest face, which is the rank of the represented matroid. 4. Conclude ℓ(J_{G,H}) = rank(M_{G,H}).",
@@ -16800,7 +16829,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0739",
+    "id": "fd_0740",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof would involve verifying the modular conditions and leveraging the lower bound from Buchanan et al. combined with constructive upper bounds. By analyzing the structure of bicliques and their symmetric differences, one can show that the conjectured values are achievable and minimal.",
@@ -16829,7 +16858,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0740",
+    "id": "fd_0741",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The forward direction can be established by contradiction: if a tree has mpd(T) = 4 but all pairs of leaves have distance at most 2, then the distance constraints would force at least two vertices to have identical multiset representations, violating the resolving property. The reverse direction follows from constructing an explicit resolving multiset partition with exactly 4 parts when the leaf distance condition is satisfied. This construction generalizes the proof techniques used for the general lower bound while exploiting the tree structure to ensure the partition is valid. The characterization should be formalized by first defining the multiset representation function, then proving the equivalence via structural analysis of tree topology.",
@@ -16857,7 +16886,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0741",
+    "id": "fd_0742",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The conjecture can be approached by first establishing a shifting invariance, then applying variational estimates for the tensor spectral radius, and finally performing a saturation analysis to identify the extremal configuration; this mirrors the strategy outlined in the paper but isolates the key inequality for independent verification.",
@@ -16881,7 +16910,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0742",
+    "id": "fd_0743",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the lower bound by exhibiting a pair of vertices whose distance is at least n−2, using an invariant that counts the number of labels out of place under any admissible move. Establish the upper bound by describing an explicit algorithm that transforms any vertex to any other in at most n−2 steps, via a greedy reduction of mismatched labels, and prove its correctness by induction on n.",
@@ -16908,7 +16937,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0743",
+    "id": "fd_0744",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the O\\u2019Nan–Scott theorem to enumerate all primitive permutation groups of degree 108, apply integrality and eigenvalue constraints for directed SRGs, and computationally verify that the only feasible parameter sets coincide with those constructed. A GAP/Sage pipeline can generate candidate adjacency matrices under transitive actions and compare them to the known constructions.",
@@ -16935,7 +16964,7 @@
     "domains": [
       "Physics"
     ],
-    "id": "fd_0744",
+    "id": "fd_0745",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the structural characterization of minimally 1‑tough (K₁ ∪ P₄)-free graphs, combine with known sufficient conditions for Hamiltonicity (e.g., Dirac’s theorem) and verify the degree‑2 condition implied by Kriesell's conjecture.",
@@ -16962,7 +16991,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0745",
+    "id": "fd_0746",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive combinatorial argument using Lemma lem:lift and parity analysis of distinct part sizes.",
@@ -16988,7 +17017,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0746",
+    "id": "fd_0747",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Verify the equality by explicit enumeration for concrete cubic orders and attempt a general proof by constructing a bijection between global genus classes and tuples of local Gorenstein overorders.",
@@ -17021,7 +17050,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0747",
+    "id": "fd_0748",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Refine the original construction by applying the coarse Menger theorem to find separators of smaller diameter that still separate large‑diameter parts, then use an iterative compression argument to reduce adhesion size while preserving the (d,2d+1)-inseparability of bags.",
@@ -17052,7 +17081,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0748",
+    "id": "fd_0749",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the explicit cocycle formula σ^(α) from Theorem 1 to compute the fundamental group of the cover, apply covering space theory for graphs to determine the index of the metaplectic group in the full automorphism group, and use the transitivity properties established in the paper to analyze the component structure of the quotient.",
@@ -17078,7 +17107,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0749",
+    "id": "fd_0750",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive analysis of path structures under group actions, leveraging SAT-based embedding bounds to establish lower bounds for reflective cases.",
@@ -17106,7 +17135,7 @@
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_0750",
+    "id": "fd_0751",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove both directions: (1) If S is sparse, use the sparsity condition to bound gap ratios by exploiting the uniform lower bound on local counts; (2) If gap ratios are bounded as conjectured, show this implies the sparse set condition by constructing intervals where the local count is sufficiently large relative to log k. The proof would require delicate counting arguments and optimization over the parameter ρ.",
@@ -17133,7 +17162,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0751",
+    "id": "fd_0752",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an SL₂-frieze A from a given Y-frieze B by solving the SL₂-diamond equations backwards from B's Y-diamond constraints, leveraging the periodicity and glide symmetry to propagate entries across the array.",
@@ -17160,7 +17189,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0752",
+    "id": "fd_0753",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish bijection between dihedral spherical tilings classified in the paper and combinatorial types realizable in Euclidean plane; use Cauchy's rigidity theorem and Steinitz' theorem to transfer realizability conditions; apply Eberhard's theorem on realizing prescribed vertex degree sequences in convex polytopes",
@@ -17188,7 +17217,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0753",
+    "id": "fd_0754",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the rooted grammar for subcubic outerplanar graphs to a decomposition grammar for subcubic series-parallel graphs using series and parallel compositions of two-terminal fragments. Define crumby-admissible colorings on fragments with finite boundary states (terminal colors and local red/blue degree constraints). Perform induction on the decomposition tree; prove by hand that a finite family of boundary certificates is closed under composition steps, and use a formalized finite automated verification in Lean to check that all base cases and completed branches yield a genuine crumby coloring. The boundary information stays finite because max degree is 3.",
@@ -17197,6 +17226,33 @@
     "status": "available",
     "timestamp": "2026-07-09T12:44:42.013695+00:00",
     "title": "Crumby colorings exist for all subcubic series-parallel graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Mader67",
+      "BollobasThomason98",
+      "KomlosSzemeredi96",
+      "KuhnOsthus02"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every K_{s,t}-free graph whose average degree is at least C_{s,t}·h^{2(s-1)}·log^{7(s-1)} h contains an induced subdivision of K_h, where C_{s,t}>0 depends only on s and t.",
+    "domain_bridges": [
+      "extremal graph theory",
+      "topological graph theory"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0755",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use a density increment argument combined with an absorbing path system to construct the required subdivision, leveraging the K_{s,t}-free condition to control vertex degrees.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06444v1",
+    "status": "available",
+    "timestamp": "2026-07-09T13:08:15.700280+00:00",
+    "title": "Nearly tight bound for induced K_h subdivisions in K_{s,t}-free graphs"
   },
   {
     "ambition_level": "extension",
