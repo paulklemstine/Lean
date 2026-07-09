@@ -3574,20 +3574,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Counterexample to Mason's log-concavity conjecture for matroid flat counts"
   },
   {
-    "consumed_by_exp_id": "c2c03fe8",
-    "description": "The paper introduces a tensor-amplification framework for proving Sidorenko-type inequalities in graphon classes, providing two transfer principles and formalizing structural closure properties.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "fd_0320",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02260v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-05T03:34:51.895674+00:00",
-    "title": "Tensor Amplification and Spectral Transfer for Sidorenko-Type Inequalities"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Let X be a finite connected symmetric digraph, G a finite p-group acting freely on X, and Y = X(G, \u03b1) the associated voltage graph cover. For a monic polynomial P \u2208 \u211a\u209a[A] coprime to A\u00b2\u22121 such that the spectral resultant R_{X,P}(T) does not vanish at any torsion character, let \u03bb_X, \u03bc_X be the Iwasawa \u03bb- and \u03bc-invariants of R_{X,P}. Then the \u03bb-invariant \u03bb_Y of the resultant R_{Y,P} satisfies \u03bb_Y = |G|\u00b7\u03bb_X + (|G|\u22121)\u00b7\u03bc_X + (|G|\u22121)\u00b7b\u2081(X), where b\u2081(X) = #E(X) \u2212 #V(X) + 1 is the first Betti number of X.",
     "domains": [
@@ -6607,7 +6593,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimality of the cake-cutting constant \u03bc\u2082"
   },
   {
-    "consumed_by_exp_id": "901a2c39",
+    "consumed_by_exp_id": "",
     "description": "For a complete multipartite graph G = K_{n_1,...,n_m} with n_1 \u2264 ... \u2264 n_m, the path-free complex PF_t(G) is vertex decomposable if and only if t \u2265 2n_{m-1} - 1. Equivalently, this is exactly the range where PF_t(G) is shellable and sequentially Cohen-Macaulay. For t \u2264 2n_{m-1} - 2, the complex fails to be sequentially Cohen-Macaulay.",
     "domains": [
       "Bridges"
@@ -6616,7 +6602,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05358v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T13:11:19.325737+00:00",
     "title": "Vertex decomposability threshold for path-free complexes of complete multipartite graphs"
   },
@@ -7732,7 +7718,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The \u221a2-Threshold Conjecture for Rips Filtration Approximation"
   },
   {
-    "consumed_by_exp_id": "00f256fb",
+    "consumed_by_exp_id": "",
     "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card \u2014 you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier \u2014 it's an opportunity. You can WIN at the game of undecidability.",
     "domains": [
       "Novelty",
@@ -7742,7 +7728,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T16:01:43.960880+00:00",
     "title": "Godel's Casino: Incomplete but Winnable Games"
   },
@@ -9730,6 +9716,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s) where f is a degree-3 polynomial (since the rule depends on 3 cells). Conjecture: The algebraic variety V(f) = {s : f(s) = s} (fixed points of the ECA) has dimension equal to the 'complexity class' of the rule. For simple rules (e.g., Rule 0, which is all zeros), V(f) has dimension 0 (a single point). For complex rules (e.g., Rule 110), V(f) has maximal dimension. The Grothendieck-style approach: each ECA defines a sheaf on the state space, and the global sections of this sheaf classify the possible stable configurations. Rule 110's sheaf has the richest section structure, corresponding to its Turing-completeness. Test: compute dim(V(f)) for all 256 ECAs and verify that the dimension correlates with Wolfram's complexity classification (Class 1: dim=0, Class 2: dim<=n/2, Class 3: dim>=n/2, Class 4: dim=n). Impact: cellular automata are algebraic varieties, and their complexity is the dimension of their fixed-point variety.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0802",
+    "priority_score": 0.78,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-09T21:05:18.693080+00:00",
+    "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Congruence Rigidity of Sums of Squares\n\nThis cycle established that the entries of an integer right triangle are forced into\nstrong divisibility patterns \u2014 one leg is a multiple of three, the legs jointly carry a\nfactor of four, one entry is a multiple of five \u2014 and that a four-dimensional right\n\"box\" (a solution of `a\u00b2 + b\u00b2 + c\u00b2 = d\u00b2`) is even more rigid: at most one of its three\nspatial edges can be odd. We also pinned down exactly which whole numbers can serve as a\nleg. These findings point to several bold, testable conjectures.\n\n## 1. The correct modulus for a power of two grows with the power\n**Conjecture.** In any solution of `a\u00b2 + b\u00b2 = c\u00b2`, the two-adic valuation of the leg\nproduct `a\u00b7b` is governed one level deeper than naive reduction suggests: deciding\nwhether `2^k` divides `a\u00b7b` is a question about residues modulo `2^{k+1}`, never modulo\n`2^k`.\n*The key insight is* that a difference of two odd squares is always divisible by eight,\nso each additional factor of two in the product must be certified one binary place\nfurther out than one would guess. *Why now?* Having isolated the exact `mod 8`\nobstruction behind the factor of four, we can test the pattern mechanically for `k = 3,\n4, 5` and either confirm a clean \"shift-by-one\" law or expose its first exception.\n\n## 2. A universal super-divisor for higher-dimensional right figures\n**Conjecture.** For every dimension `r`, solutions of `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` obey a single\nuniversal divisibility law: there is a constant `D(r)`, depending only on `r`, such that\n`D(r)` divides the product `x\u2081\u00b7x\u2082\u00b7\u22ef\u00b7x_r` for *every* solution, and `D(r)` is the largest\nsuch constant.\n*The key insight is* that reduction to a finite residue ring turns \"for all solutions\"\ninto a finite, decidable statement, so the optimal constant `D(r)` is computable and\nshould grow in a structured (conjecturally multiplicative-over-primes) way. *Why now?*\nThe three-dimensional case already yields `4 \u2223 x\u2081x\u2082x\u2083`; comparing it against the planar\nconstant `12` suggests a dimension-indexed sequence worth charting and predicting.\n\n## 3. Parity collapse in higher dimensions\n**Conjecture.** As the number of squared terms increases, the number of edges permitted to\nbe odd stays uniformly bounded: in `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` at most three of the `x_i` can be\nodd, regardless of `r`.\n*The key insight is* that the sum of squares equals the count of odd terms modulo four,\nwhile a perfect square is `0` or `1` modulo four, capping the admissible odd-count no\nmatter how many terms are added. *Why now?* We proved the cap is \"at most one\" in three\ndimensions; extending the modular bookkeeping to arbitrary `r` is a self-contained next\nstep that would reveal whether the cap is truly dimension-independent.\n\n## 4. A sharp threshold characterization of legs in every dimension\n**Conjecture.** Just as the whole numbers that are a leg of a right triangle are exactly\nthose `\u2265 3`, in each higher dimension there is a sharp finite threshold above which every\ninteger appears as an edge of some right figure, and the finitely many exceptions can be\nlisted explicitly.\n*The key insight is* that a single explicit construction, split according to the parity of\nthe target edge, realizes all sufficiently large values, while the small exceptions are\nforced by a factorization that would otherwise require a vanishing edge. *Why now?* The\nplanar threshold `3` and its sharpness (the failures at `1` and `2`) give a template that\nshould transfer verbatim to the box equation and beyond.\n\n## 5. Divisibility as a sieve against near-solutions\n**Conjecture.** The combined congruence obstructions (`12 \u2223 a\u00b7b`, `60 \u2223 a\u00b7b\u00b7c`, and their\nhigher-dimensional analogues) are strong enough that a random integer triple satisfying\nthem has a positive, computable probability of being genuinely Pythagorean \u2014 i.e. the\ncongruence conditions capture a constant fraction of the \"arithmetic mass\" of true\nsolutions.\n*The key insight is* that each universal divisor removes a fixed proportion of impostors,\nso stacking independent prime-power obstructions multiplies into a sieve of predictable\ndensity. *Why now?* With the exact obstructions in hand for the primes `2, 3, 5`, one can\nimmediately measure how much of the solution set they explain and calibrate whether a few\nmore primes suffice to pin down solutions almost completely.\n",
     "domains": [
       "Pythagorean",
@@ -9849,6 +9850,36 @@ window.FUTURE_DIRECTIONS = [
     "title": "The file `SelfImprovingProofs.lean` formalises a proof-refinement system for a"
   },
   {
+    "consumed_by_exp_id": "7e60f6c2",
+    "description": "When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search fractal dimension D(T) of a theorem T as the Hausdorff dimension of the set of all successful proof paths for T. If D(T) < 1, the proof is 'easy' (few paths work, so search is focused). If D(T) > 1, the proof is 'hard' (many paths must be explored). Conjecture: For theorems in ZFC, D(T) = 1 + O(1/length(T)). In other words, most theorems have fractal dimension close to 1 \u2014 proof search is neither trivially easy nor impossibly hard, but balanced at the edge. Theorems with D(T) << 1 are 'obvious' (direct proofs), and theorems with D(T) >> 1 require exponentially long proofs. The fractal dimension correlates with proof length: if D(T) = 1 + epsilon, then the shortest proof of T has length roughly 1/epsilon. Test: for 1000 theorems in Lean 4's Mathlib, estimate D(T) by Monte Carlo sampling of proof search trees, and correlate with actual proof length. Impact: proof difficulty is a fractal \u2014 the dimension of the proof search space determines how hard the theorem is.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0801",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-09T21:05:18.624938+00:00",
+    "title": "Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Tensor Amplification and Spectral Transfer for Sidorenko-Type Inequalities\n\nThis cycle established a tensor-amplification engine for Sidorenko-type inequalities on weighted\ngraphs: closed-walk counts are multiplicative under the tensor product (spectral transfer), the\nSidorenko ratio is therefore multiplicative, the Sidorenko property is closed under tensor products\n(Transfer Principle I), and surpluses/deficits are strictly amplified by self-tensoring (Transfer\nPrinciple II). The even cycles `C\u2082` and `C\u2084` were shown to satisfy Sidorenko for *all* symmetric\nweightings \u2014 with no positivity hypothesis \u2014 seeding an entire tensor-closed class. The following\nconjectures grow directly out of these findings.\n\n## Conjecture 1 (Sign-free even-cycle Sidorenko for all lengths)\n\nEvery even cycle `C\u2082\u2098` satisfies `t(C\u2082\u2098, A) \u2265 t(K\u2082, A)^{2m}` for every symmetric weighted graph\n`A`, with no assumption on the signs of the entries.\n\n*The key insight is* that the closed-walk count `tr(A^{2m})` is intrinsically a sum of squares of\nthe entries of `A\u1d50`, so a chain of `m` Cauchy\u2013Schwarz steps \u2014 each passing from `A\u02b3` to `A^{2r}`\nthrough the squared row sums \u2014 never inspects a sign; the nonnegativity usually imposed on graphons\nis a red herring for even cycles.\n\n*Why now?* The `C\u2084` case was just proved in exactly this sign-free, doubling form, exposing the\nrecursive `A\u02b3 \u21a6 A^{2r}` structure. Turning that one step into an induction on `m` is the natural\nand immediate next target, and it would settle the even-cycle case of Sidorenko in the discrete\nmodel in one stroke.\n\n## Conjecture 2 (Amplification dichotomy and the ratio spectrum)\n\nUnder the tensor product the Sidorenko ratio behaves as a discrete dynamical system with exactly\ntwo fixed points, `0` and `1`: for a fixed cycle `C\u2096`, the closure of the set of achievable ratios\n`{R(A)}` under multiplication is the whole interval `[0, \u221e)`, and iterated self-tensoring sends\nevery `R \u2260 1` monotonically to a fixed point (`R > 1 \u2192 \u221e`, `0 < R < 1 \u2192 0`).\n\n*The key insight is* that multiplicativity of the ratio converts a single graph with `R \u2260 1` into a\ngeometric orbit `R, R\u00b2, R\u2074, \u2026`, so the *existence* of any surplus or deficit, however tiny, already\nwitnesses arbitrarily extreme behaviour \u2014 the inequality has no \"almost-tight\" regime that is\nstable under tensoring.\n\n*Why now?* The multiplicativity identity and both strict amplification laws are now in hand; what\nremains is to characterise which ratios are realizable and to prove the orbit-closure statement,\nmaking the qualitative \"amplification\" picture into a precise structural theorem.\n\n## Conjecture 3 (Spectral transfer beyond cycles)\n\nThe multiplicativity `t(H, A \u2297 B) = t(H, A)\u00b7t(H, B)` holds for *every* pattern graph `H`, not only\ncycles, and consequently the Sidorenko property for any bipartite `H` is closed under tensor\nproducts and its ratio is amplified by self-tensoring.\n\n*The key insight is* that homomorphism counts are contractions of tensor powers of the adjacency\noperator, and the Kronecker product acts diagonally on every such contraction, so multiplicativity\nis a property of the pattern-independent tensor structure rather than of the special trace formula\nfor cycles.\n\n*Why now?* The cycle case reduced entirely to `(A \u2297 B)\u1d4f = A\u1d4f \u2297 B\u1d4f` together with multiplicativity\nof the trace; the same two ingredients, applied to the general homomorphism-count functional,\nshould yield the pattern-independent statement and thereby a uniform tensor-closure principle for\nall of Sidorenko's conjecture.\n\n## Conjecture 4 (Extremal rigidity of the tight case)\n\nFor an even cycle `C\u2096`, equality `t(C\u2096, A) = t(K\u2082, A)\u1d4f` forces `A` to be a constant weighting (a\nrescaled complete looped graph), and this rigidity is preserved and detected by the tensor product:\n`R(A) = 1` if and only if `A` is constant.\n\n*The key insight is* that each Cauchy\u2013Schwarz step in the even-cycle proof is tight exactly when\nthe relevant vectors are proportional to the all-ones vector, so equality throughout propagates\nback to constancy of the original weighting, and the fixed point `R = 1` of the amplification map\ncorresponds precisely to the extremal graphons.\n\n*Why now?* The proof of `C\u2084` already isolates the exact Cauchy\u2013Schwarz steps whose equality cases\nmust be analysed, and the amplification map's fixed point at `1` gives an independent, dynamical\nhandle on the extremal set; combining the two should convert the inequalities into rigidity\ntheorems.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0803",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c2c03fe8",
+    "status": "available",
+    "timestamp": "2026-07-09T21:05:42.158271+00:00",
+    "title": "Tensor-amplification engine for Sidorenko-type inequali"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearrangement of the primes q_1, q_2, ... such that the sequence of ratios q_n / p_n converges to 1. In other words, you can shuffle the primes almost arbitrarily and the room numbers barely change. More precisely, the set of permutations sigma for which p_{sigma(n)} / p_n has a limit is dense in the symmetric group (with the topology of pointwise convergence). But NOT every permutation works: the permutation that swaps all even-indexed primes with odd-indexed ones gives q_{2n}/p_{2n} = p_{2n-1}/p_{2n} which converges to 1 by the prime number theorem, but the permutation that reverses order gives q_n/p_n = p_{N-n}/p_n which diverges. Test: compute q_n/p_n for 10 random permutations of the first 10^6 primes and verify that most ratios converge to 1. Find the exact density of 'well-behaved' permutations. Impact: the primes are robust under rearrangement \u2014 their asymptotic density is a topological invariant of the permutation group.",
     "domains": [
@@ -9890,5 +9921,19 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T04:44:52.457313+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle c2c03fe8 (Q=0.630) proved 25 theorems in Computation but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The paper introduces a tensor-amplification framework for proving Sidorenko-type inequalities in graphon classes, providing two transfer principles and formalizing structural closure properties.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "sorry_fill_c2c03fe8_95222df4",
+    "priority_score": 0.68,
+    "research_mode": "team",
+    "source_exp_id": "c2c03fe8",
+    "status": "available",
+    "timestamp": "2026-07-09T21:05:48.019889+00:00",
+    "title": "Close Proofs: Tensor Amplification and Spectral Transfer for Sidorenko-Type Inequali"
   }
 ];

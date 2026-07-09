@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "23de9107",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Continued Fractions and Diophantine Approximation\n\nDerived from this cycle's findings (Dirichlet bound `Lc ≤ 1`, denominator\nunboundedness, and `Lc = 0` for Liouville numbers).",
-      "quality_score": 0.68045,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-28T19:48:53",
-      "title": "Continued Fractions and Diophantine Approximation"
-    },
-    {
       "cycle_id": "5773b0b9",
       "domain": "Applications",
       "key_insight": "# Future Directions — Logic–Physics Bridge: Consistency of Physical Theories\n\nDerived from this cycle's findings (`Provability.lean`, `Incompleteness.lean`,\n`Bridge.lean`). This cycle proved, for any",
@@ -2501,6 +2491,16 @@
       "theorem_count": 18,
       "timestamp": "2026-07-09T20:48:01",
       "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
+    },
+    {
+      "cycle_id": "c2c03fe8",
+      "domain": "Computation",
+      "key_insight": "# Future Directions: Tensor Amplification and Spectral Transfer for Sidorenko-Type Inequalities\n\nThis cycle established a tensor-amplification engine for Sidorenko-type inequalities on weighted\ngraphs",
+      "quality_score": 0.63,
+      "sorry_count": 3,
+      "theorem_count": 25,
+      "timestamp": "2026-07-09T21:05:47",
+      "title": "Tensor Amplification and Spectral Transfer for Sidorenko-Type Inequalities"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.7115
     }
   ],
-  "last_updated": "2026-07-09T20:48:01",
+  "last_updated": "2026-07-09T21:05:47",
   "open_questions": [
-    {
-      "context": "continued to `s = -1` at all.  This file proves the rigorous, sorry-free facts on",
-      "cycle_id": "2d24ca82",
-      "domain": "Novelty",
-      "sorry_count": 1,
-      "timestamp": "2026-06-28T01:55:20"
-    },
     {
       "context": "We prove, with no `sorry`, the abstract principle:; formal, zero-`sorry` proofs**, on the smallest non-trivial values",
       "cycle_id": "8ffddeae",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 2,
       "timestamp": "2026-07-09T19:55:16"
+    },
+    {
+      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
+      "cycle_id": "c2c03fe8",
+      "domain": "Computation",
+      "sorry_count": 3,
+      "timestamp": "2026-07-09T21:05:47"
     }
   ],
   "research_threads": {
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "854c699d",
-        "quality": 0.64162,
-        "theorems": 10,
-        "title": "Spectral Modular Signatures of Formal Proof Difficulty"
-      },
-      {
         "cycle_id": "54abcfb1",
         "quality": 0.45116,
         "theorems": 17,
@@ -3327,6 +3321,12 @@
         "quality": 0.7059866666666667,
         "theorems": 18,
         "title": "Vanishing of the Benson--Krause--Schwede canonical class for pro-2 Demushkin gro"
+      },
+      {
+        "cycle_id": "c2c03fe8",
+        "quality": 0.63,
+        "theorems": 25,
+        "title": "Tensor Amplification and Spectral Transfer for Sidorenko-Type Inequalities"
       }
     ],
     "Cryptography": [

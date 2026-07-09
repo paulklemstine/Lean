@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-09T20:48:07.082228+00:00",
+  "last_updated": "2026-07-09T21:05:50.093420+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -880,6 +880,50 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-09T20:48:07.049529+00:00",
       "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.3286,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Computation",
+      "duration_seconds": 1058.560039281845,
+      "end_time": 1783631127.555256,
+      "files_integrated": 4,
+      "job_id": "c2c03fe8",
+      "outcome_quality": 0.63,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.63,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.86,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.8286,
+        "cross_domain": 0.9,
+        "grade": "world_class",
+        "importance": 0.8643,
+        "novelty": 0.95,
+        "proof_depth": 0.8275,
+        "usefulness": 0.8638
+      },
+      "quality_score": 0.63,
+      "sorry_count": 3,
+      "sorry_density": 0.12,
+      "start_time": 1783630068.9952166,
+      "strategy_count": 0,
+      "theorem_count": 25,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 22,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-09T21:05:50.060316+00:00",
+      "title": "Tensor Amplification and Spectral Transfer for Sidorenko-Type Inequalities"
     }
   ]
 }
