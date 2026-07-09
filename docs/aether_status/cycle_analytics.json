@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-09T15:37:38.523195+00:00",
+  "last_updated": "2026-07-09T16:07:34.319112+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -455,6 +455,7 @@
       "outcome_quality": 0.0,
       "phase": "A_only",
       "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality",
       "phase_b_skipped": true,
       "prompt_version": "v19c",
@@ -483,6 +484,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-09T15:37:38.489776+00:00",
       "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.2901,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 15,
+      "domain": "Physics",
+      "duration_seconds": 4217.681620597839,
+      "end_time": 1783612580.6458309,
+      "files_integrated": 2,
+      "job_id": "92311cae",
+      "outcome_quality": 0.0,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v19",
+      "phase_b_skip_reason": "low_quality",
+      "phase_b_skipped": true,
+      "prompt_version": "v19",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.57,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.8,
+        "composite": 0.7901,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.728,
+        "novelty": 0.83,
+        "proof_depth": 0.6842,
+        "usefulness": 0.8171
+      },
+      "quality_score": 0.19679999999999997,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783608362.9642103,
+      "strategy_count": 0,
+      "theorem_count": 14,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 11,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-09T16:07:34.290782+00:00",
+      "title": "Symmetric Colorings of Hales-Jewett Cubes Coincide with One-Weight Colorings"
     }
   ]
 }
