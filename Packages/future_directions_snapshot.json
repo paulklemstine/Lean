@@ -18242,7 +18242,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7ca0f553",
     "description": "Infinite chess is chess on an infinite board. It is known that there are positions where White can force checkmate but only in omega (the first infinite ordinal) moves. Conjecture: There exists a position on the infinite chess board where White can force checkmate in exactly omega^omega moves, but not in fewer. More precisely, define the game value v(P) of a position P as the smallest ordinal alpha such that White can force checkmate in at most alpha moves. The known results give positions with v(P) = omega. The conjecture is that v(P) can be arbitrarily large below omega^omega. The key construction: create a position where White must first solve a 'puzzle' that takes omega moves, and then another puzzle that takes omega moves for each of omega starting positions, giving omega^2 total moves. Iterating, one can reach omega^n for any n, and omega^omega by a diagonal argument. Test: construct explicit positions with game values omega, omega^2, omega^3, and omega^omega on the infinite board. Verify by computation that no strategy achieves checkmate in fewer moves. Impact: chess on an infinite board has transfinite game values — the complexity of checkmate goes beyond the finite ordinals into the transfinite.",
     "domain_bridges": [],
     "domains": [
@@ -18255,7 +18255,7 @@
     "proof_strategy": "Define the game value v(P) for a position P on the infinite chess board: v(P) = 0 if White is in checkmate. v(P) = min{v(Q)+1 : Q is a position reachable from P by White's move} if it's White's turn and this min is defined. v(P) = sup{v(Q) : Q reachable by Black's move} if it's Black's turn. Known result (Evans, Hamkins): there exist positions with v(P) = omega. Construction for v(P) = omega: White has a rook that must travel omega squares to reach the enemy king. For each finite n, White can reach checkmate in n moves, but no finite n works for all positions, so v(P) = omega. Construction for v(P) = omega^2: nest omega-many omega-value positions so that White must solve each one sequentially. Construction for v(P) = omega^n: iterate the nesting n times. Construction for v(P) = omega^omega: use a diagonal over all omega^n. The key lemma: for each alpha < omega^omega, there exists a position with v(P) = alpha. Test: verify constructions by exhaustive search for small positions, then generalize.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T22:15:49.669051+00:00",
     "title": "Infinite Chess: Checkmate in Omega Moves"
   },
