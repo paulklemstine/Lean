@@ -22,7 +22,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5f3ba85e",
     "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long — the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static — they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
     "domain_bridges": [],
     "domains": [
@@ -35,14 +35,14 @@
     "proof_strategy": "Define proof complexity C(P) = length(P) + depth(P) + number_of_lemmas(P) for a proof P in a formal system. Define refinement: P' refines P if P' proves the same theorem as P and C(P') < C(P). Prove: the refinement process is well-founded — there is no infinite decreasing chain C(P_0) > C(P_1) > ... because C takes values in the natural numbers. Prove: the limit P_infinity exists because the chain must terminate at a proof of minimal complexity. Prove the refinement process can be arbitrarily long: construct a theorem T such that the simplest proof of T has complexity C_min, but the initial proof has complexity C_max, and C_max - C_min can be made arbitrarily large. Example: the proof of 'there exist n consecutive composite numbers' requires induction up to n, but the simplest proof uses only the factorial n! + 2, n! + 3, ..., n! + n. Test: implement refinement for sqrt(2) irrationality in Lean 4.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.810023+00:00",
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f459aaa0",
     "description": "Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: lines parallel to the x-axis diverge (hyperbolic behavior) while lines parallel to the y-axis converge (elliptic behavior). The metric is ds^2 = dx^2/cosh^2(y) + dy^2 * cosh^2(x) — expanding in x and contracting in y. Conjecture: Split Geometry is a consistent Riemannian geometry with curvature K(x,y) = -sech^2(y) + sech^2(x) that changes sign across the diagonals. The geometry has a 'phase boundary' along the lines y = x and y = -x where K = 0 (flat). In the region |x| > |y|, K > 0 (elliptic) and in the region |y| > |x|, K < 0 (hyperbolic). The geodesics in split geometry are piecewise combinations of exponential curves (in hyperbolic regions) and trigonometric curves (in elliptic regions). Test: compute the Christoffel symbols and curvature tensor for the split metric. Prove that geodesics cross the phase boundary at most twice. Compute the area of a split triangle with one vertex in each region. Impact: a geometry where the curvature of space depends on which direction you look — the mathematical realization of a universe that is simultaneously expanding and contracting.",
     "domain_bridges": [],
     "domains": [
@@ -55,7 +55,7 @@
     "proof_strategy": "Define the split metric g = diag(1/cosh^2(y), cosh^2(x)) on R^2. Compute the Christoffel symbols: Gamma^1_{11} = tanh(y), Gamma^1_{12} = 0, Gamma^1_{22} = -sinh(x)cosh(x), Gamma^2_{11} = -tanh(y)*cosh^2(x)*cosh^2(y), Gamma^2_{12} = 0, Gamma^2_{22} = -sinh(x)cosh(x). Compute curvature: K = -sech^2(y) + sech^2(x). Verify: K = 0 on y = x and y = -x. K > 0 for |x| > |y| (elliptic). K < 0 for |y| > |x| (hyperbolic). Prove geodesic crossing: a geodesic that enters the elliptic region and then the hyperbolic region crosses the flat boundary at most twice (by convexity of the curvature sign along the geodesic). Compute split triangle area: integral of sqrt(det(g)) = integral of cosh(x)/cosh(y) over the triangle. Test: numerical verification for specific triangles.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.730052+00:00",
     "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
   },
@@ -6801,7 +6801,7 @@
       "Jung 1989",
       "Jung-Tix 1998"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c7d57e93",
     "description": "This paper investigates the structural constraints under which a finite poset admits a probabilistic powerdomain isomorphic to an RB-domain. The key claim is that such a domain must inherit a least element and possess a tree-like Hasse graph structure.",
     "domain_bridges": [
       "finite-binary-channel coding",
@@ -6816,7 +6816,7 @@
     "proof_strategy": "Constructive separation with two clear obstruction layers",
     "research_mode": "team",
     "source_exp_id": "2607.02231v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T03:01:13.702884+00:00",
     "title": "Characterizing finite posets whose probabilistic powerdomain is an RB-domain"
   },
@@ -11121,7 +11121,7 @@
       "Gallai homothety numbers",
       "van der Waerden numbers"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "92311cae",
     "description": "Every symmetric r-coloring of the Hales-Jewett cube [t]^n — one invariant under all coordinate permutations of the word — is a one-weight coloring: there exist integer weights w_1, ..., w_t such that the color of a word x ∈ [t]^n depends only on the weighted sum ∑_i w_{x_i}. Conversely, every one-weight coloring is symmetric. This equivalence reduces the symmetric lower-bound problem for Hales-Jewett numbers to the d=1 case of Gallai's theorem on homothetic copies of a t-point set in Z.",
     "domain_bridges": [
       "Permutation invariance on finite multisets",
@@ -11137,7 +11137,7 @@
     "proof_strategy": "The forward direction (one-weight ⇒ symmetric) is immediate since permuting coordinates preserves the multiset of letters and hence the weighted sum. For the converse, given a symmetric coloring c, construct the radix weight by examining how c distinguishes words that differ only in letter substitution: define w_j - w_1 as the minimal coordinate substitution that changes the color class when swapping a letter 1 for letter j in a fixed position. Show that the orbit of any word under coordinate permutations is determined by its letter-count vector, and that c factors through the weighted sum because symmetry forces c to depend only on the letter-count, which the radix weight encodes injectively modulo the kernel of c. The key combinatorial lemma is that the color partition of Z induced by the weighted sum is well-defined and independent of the choice of representative word.",
     "research_mode": "team",
     "source_exp_id": "2607.02226v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T01:10:01.018167+00:00",
     "title": "Symmetric Colorings of Hales-Jewett Cubes Coincide with One-Weight Colorings"
   },
@@ -13751,7 +13751,7 @@
       "Mat08",
       "Hatley-Ray"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a6d77751",
     "description": "For an elliptic curve E over Q with good supersingular reduction at 2 and square-free D ≡1 mod 4, the difference in sharp/flat λ-invariants under quadratic twist by D should include a term proportional to the μ-invariant when μ ≠ 0.",
     "domain_bridges": [
       "2-adic L-functions",
@@ -13767,7 +13767,7 @@
     "proof_strategy": "Extend the existing formula by analyzing the μ-invariant's contribution through local-global principles and modular forms.",
     "research_mode": "team",
     "source_exp_id": "2607.05305v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T01:05:41.844138+00:00",
     "title": "Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
   },
@@ -14510,7 +14510,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "86f6e146",
     "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card — you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier — it's an opportunity. You can WIN at the game of undecidability.",
     "domain_bridges": [],
     "domains": [
@@ -14523,7 +14523,7 @@
     "proof_strategy": "Define Godel's Casino: each round, the house presents a statement phi in the language of arithmetic. The player bets TRUE or FALSE. If ZFC proves phi, TRUE wins. If ZFC proves not-phi, FALSE wins. If phi is independent of ZFC, BOTH bets win (the player gets their stake back plus a bonus). Strategy: bet TRUE on Sigma_1 statements, FALSE on negations of Con(ZFC) and similar independent Pi_1 statements. Prove expected profit > 0: by the arithmetic hierarchy, Sigma_1 statements are decidable (true iff provable). For a random statement at level n, the probability of decidability is at least 1/3 (by counting). So E[profit] >= (1/3) * (stake) > 0. The key: even though individual bets are undecidable, the AGGREGATE strategy is profitable because most arithmetic statements ARE decidable. Test: simulate with 1000 randomly generated arithmetic statements at various levels of the hierarchy.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.960880+00:00",
     "title": "Godel's Casino: Incomplete but Winnable Games"
   },
@@ -15997,7 +15997,7 @@
       "Graph toughness",
       "Forbidden induced subgraphs"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "96910b34",
     "description": "Every simple finite graph that is (K₁∪P₄)-free, has toughness at least 1, and has at least 3 vertices is Hamiltonian.",
     "domain_bridges": [
       "Formalization of graph toughness in Lean 4",
@@ -16012,7 +16012,7 @@
     "proof_strategy": "Assume a minimal counterexample by number of vertices. Show that any non-minimally 1-tough graph can be reduced by edge deletion while preserving (K₁∪P₄)-freeness and 1-toughness until a minimally 1-tough graph is obtained. Then apply the structural characterization from the paper (already proven for minimally 1-tough case) to conclude the minimized graph is Hamiltonian, and lift the cycle back to the original, yielding contradiction.",
     "research_mode": "team",
     "source_exp_id": "2607.07239v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T04:17:26.671029+00:00",
     "title": "Hamiltonicity of (K₁∪P₄)-free 1-tough graphs"
   },
@@ -17032,7 +17032,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "77c07bb4",
     "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers — anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension — they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property — it's not about content quality but about the sheaf cohomology of the social network.",
     "domain_bridges": [],
     "domains": [
@@ -17045,7 +17045,7 @@
     "proof_strategy": "Define the meme sheaf M on social network G: for each community C_i (cluster in G), M(C_i) is the set of interpretations of the meme in community i. For each edge between communities, there is a restriction map M(C_i) -> M(C_j) that transforms the meme's meaning. Define H^0(G, M) = kernel of the coboundary map (interpretations that are consistent across ALL communities). Define H^1(G, M) = cokernel (obstructions to consistent interpretation). Prove: dim(H^0) = number of universal interpretations. Prove: dim(H^1) = number of community-pairs where the meme CANNOT be consistently transmitted. Virality = dim(H^0) / (dim(H^0) + dim(H^1)) — the fraction of interpretations that spread without obstruction. Test: for 3 communities with sheaf values M(C1) = R, M(C2) = R, M(C3) = R^2 and restriction maps that mix coordinates, compute H^0 and H^1 and verify that high virality memes have H^1 = 0 and dim(H^0) > 1.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.584485+00:00",
     "title": "The Mathematics of Memes: Viral Information Topology"
   },
