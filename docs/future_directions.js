@@ -8314,11 +8314,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "If a family of complementary configurations degenerates to a configuration where some planes intersect, then the limit of the cross-ratio valuations (as the parameters approach the degenerate case) equals the intersection degree of the cycles obtained by spreading the original cycles to the valuation ring.",
+    "description": "For every positive integer d there exists integers k \u2265 3 and \u2113 with \u2113 \u2265 \u2308k/2\u2309 and \u2113 \u2264 k-2 such that the single-degree Tur\u00e1n spectrum \u03a0^k_\u2113 contains an algebraic number whose minimal polynomial over \u211a has degree at least d.",
     "domains": [
       "Algebra"
     ],
     "id": "fd_0692",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06518v1",
+    "status": "available",
+    "timestamp": "2026-07-09T01:54:29.203970+00:00",
+    "title": "Arbitrarily high-degree algebraic numbers in single-degree Tur\u00e1n spectra"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "If a family of complementary configurations degenerates to a configuration where some planes intersect, then the limit of the cross-ratio valuations (as the parameters approach the degenerate case) equals the intersection degree of the cycles obtained by spreading the original cycles to the valuation ring.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0693",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06477v1",
@@ -8333,13 +8347,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0693",
+    "id": "fd_0694",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06455v1",
     "status": "available",
     "timestamp": "2026-07-09T01:37:55.627711+00:00",
     "title": "Generalized spectral closedness of cographs (Forb(P4))"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A biserial algebra \u039b is representation-finite if and only if the magnitude of its module category equals the rank of its Grothendieck group, i.e., MagnitudeOfModuleCat(\u039b) = rank(K\u2080(mod-\u039b)). This provides a purely homological characterization of representation-finiteness in terms of the interplay between the Auslander-Reiten quiver's Euler characteristic and the Grothendieck group structure.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0695",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07555v1",
+    "status": "available",
+    "timestamp": "2026-07-09T01:55:03.631882+00:00",
+    "title": "Characterization of representation-finite biserial algebras via magnitude and Grothendieck rank"
   },
   {
     "consumed_by_exp_id": "e158da3a",

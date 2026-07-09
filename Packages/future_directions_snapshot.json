@@ -15557,6 +15557,30 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "math.CO/2305.00123"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every positive integer d there exists integers k ≥ 3 and ℓ with ℓ ≥ ⌈k/2⌉ and ℓ ≤ k-2 such that the single-degree Turán spectrum Π^k_ℓ contains an algebraic number whose minimal polynomial over ℚ has degree at least d.",
+    "domain_bridges": [
+      "extremal combinatorics",
+      "algebraic number theory"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0692",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct an infinite sequence of tree suspensions whose associated transfer functions generate algebraic numbers with increasingly large minimal polynomial degree.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06518v1",
+    "status": "available",
+    "timestamp": "2026-07-09T01:54:29.203970+00:00",
+    "title": "Arbitrarily high-degree algebraic numbers in single-degree Turán spectra"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "[B] $10.48550/ARXIV.2201.03794$"
     ],
     "consumed_by_exp_id": "",
@@ -15567,7 +15591,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0692",
+    "id": "fd_0693",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a family of configurations dispersing the cycles over the valuation ring, show that the cross-ratio valuation is preserved under deformation, and compute the limit using intersection-theoretic methods.",
@@ -15595,7 +15619,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0693",
+    "id": "fd_0694",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Utilize the paper's β-closed walk expansion and the sufficient condition via a walk-realizable {P4}-supporter. Reduce the search to a linear programming feasibility problem for coefficients of β-closed walk counts. Compute a concrete finite witness (e.g., with bounded walk length) satisfying the LP, then formalize the induced-subgraph expansion and supporter criterion in Lean 4 to verify the implication.",
@@ -15604,6 +15628,34 @@
     "status": "available",
     "timestamp": "2026-07-09T01:37:55.627711+00:00",
     "title": "Generalized spectral closedness of cographs (Forb(P4))"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "CKL16",
+      "Bongartz87",
+      "Auslander87"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "A biserial algebra Λ is representation-finite if and only if the magnitude of its module category equals the rank of its Grothendieck group, i.e., MagnitudeOfModuleCat(Λ) = rank(K₀(mod-Λ)). This provides a purely homological characterization of representation-finiteness in terms of the interplay between the Auslander-Reiten quiver's Euler characteristic and the Grothendieck group structure.",
+    "domain_bridges": [
+      "Category Theory",
+      "Homological Algebra",
+      "Combinatorics"
+    ],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0695",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Verify the conjecture for classes of biserial algebras where both magnitude and Grothendieck rank are computable: (1) Hereditary biserial algebras (where magnitude relates to Dynkin type), (2) Self-injective biserial algebras (where Coxeter duality provides constraints), (3) Use induction on the complexity of the Auslander-Reiten quiver structure. The key is establishing that representation-finiteness creates a perfect matching between indecomposable modules and Grothendieck group generators, reflected in the magnitude calculation.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07555v1",
+    "status": "available",
+    "timestamp": "2026-07-09T01:55:03.631882+00:00",
+    "title": "Characterization of representation-finite biserial algebras via magnitude and Grothendieck rank"
   },
   {
     "ambition_level": "extension",

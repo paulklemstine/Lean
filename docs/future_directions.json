@@ -33152,6 +33152,51 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.CO/2305.00123"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every positive integer d there exists integers k ≥ 3 and ℓ with ℓ ≥ ⌈k/2⌉ and ℓ ≤ k-2 such that the single-degree Turán spectrum Π^k_ℓ contains an algebraic number whose minimal polynomial over ℚ has degree at least d.",
+      "domain_bridges": [
+        "extremal combinatorics",
+        "algebraic number theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0692",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem arbitrarily_high_degree {d : ℕ} : ∃ (k ℓ : ℕ), 3 ≤ k ∧ ℓ ≥ (k+1)/2 ∧ ℓ ≤ k-2 ∧ ∃ (α : ℝ), MinimalPolynomialDegree α ≥ d ∧ α ∈ Π^k_ℓ",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Construct an infinite sequence of tree suspensions whose associated transfer functions generate algebraic numbers with increasingly large minimal polynomial degree.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.06518v1",
+      "source_path": "http://arxiv.org/abs/2607.06518v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T01:54:29.203970+00:00",
+      "title": "Arbitrarily high-degree algebraic numbers in single-degree Turán spectra"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "[B] $10.48550/ARXIV.2201.03794$"
       ],
       "category": "cross_domain_bridge",
@@ -33169,7 +33214,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0692",
+      "id": "fd_0693",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem degenerate_cross_ratio_valuation_theorem {K : Type} [field K] {n : ℕ} {k : ℕ} (C : ComplementaryConfiguration K n k) (f : LiftWithParameter C) (t : t → 0) :\n    lim (t → 0) (cross_ratio (f C) t) = intersection_degree (spread f C t)\n    [arithmetic, proof_with_full_details]",
@@ -33218,7 +33263,7 @@
         "Physics"
       ],
       "github_issue": 0,
-      "id": "fd_0693",
+      "id": "fd_0694",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem cographs_genspec_closed (V : Type*) [Fintype V] (G H : SimpleGraph V) (hG : IsCograph G) (h_eq : generalizedSpectrum G = generalizedSpectrum H) : IsCograph H := by sorry",
@@ -33238,6 +33283,55 @@
       "thread_id": "",
       "timestamp": "2026-07-09T01:37:55.627711+00:00",
       "title": "Generalized spectral closedness of cographs (Forb(P4))"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "CKL16",
+        "Bongartz87",
+        "Auslander87"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "A biserial algebra Λ is representation-finite if and only if the magnitude of its module category equals the rank of its Grothendieck group, i.e., MagnitudeOfModuleCat(Λ) = rank(K₀(mod-Λ)). This provides a purely homological characterization of representation-finiteness in terms of the interplay between the Auslander-Reiten quiver's Euler characteristic and the Grothendieck group structure.",
+      "domain_bridges": [
+        "Category Theory",
+        "Homological Algebra",
+        "Combinatorics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Logic"
+      ],
+      "github_issue": 0,
+      "id": "fd_0695",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem biserial_representation_finite_characterization (Λ : Type*) [algebra k Λ] [representation_finite Λ] [biserial Λ] : magnitude_of_module_category Λ = rank (grothendieck_group (module_category Λ))",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Verify the conjecture for classes of biserial algebras where both magnitude and Grothendieck rank are computable: (1) Hereditary biserial algebras (where magnitude relates to Dynkin type), (2) Self-injective biserial algebras (where Coxeter duality provides constraints), (3) Use induction on the complexity of the Auslander-Reiten quiver structure. The key is establishing that representation-finiteness creates a perfect matching between indecomposable modules and Grothendieck group generators, reflected in the magnitude calculation.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.07555v1",
+      "source_path": "http://arxiv.org/abs/2607.07555v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T01:55:03.631882+00:00",
+      "title": "Characterization of representation-finite biserial algebras via magnitude and Grothendieck rank"
     },
     {
       "ambition_level": "extension",
