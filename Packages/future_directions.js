@@ -33,7 +33,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
   },
   {
-    "consumed_by_exp_id": "6b9c675a",
+    "consumed_by_exp_id": "",
     "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long \u2014 the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static \u2014 they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
     "domains": [
       "Novelty",
@@ -43,7 +43,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T16:01:43.810023+00:00",
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
   },
@@ -2510,7 +2510,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Even Harmonic Strength of Antipodal Spherical Designs Contains 2"
   },
   {
-    "consumed_by_exp_id": "6c21e233",
+    "consumed_by_exp_id": "",
     "description": "Formalize the proof that the transformation matrix $H_{\\mathcal{F}}$ associated with the interval subdivision of a finite simplicial complex is totally positive (TP). This requires defining the $h$-vector of a simplicial complex, the interval subdivision operation, the resulting transformation matrix $H_{\\mathcal{F}}$, and proving that all its minors are non-negative.",
     "domains": [
       "Geometry",
@@ -2520,7 +2520,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T09:05:38.885794+00:00",
     "title": "Total Positivity of the Interval Subdivision Transformation Matrix"
   },
@@ -3572,20 +3572,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-05T03:01:06.348760+00:00",
     "title": "Counterexample to Mason's log-concavity conjecture for matroid flat counts"
-  },
-  {
-    "consumed_by_exp_id": "c2c03fe8",
-    "description": "The paper introduces a tensor-amplification framework for proving Sidorenko-type inequalities in graphon classes, providing two transfer principles and formalizing structural closure properties.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "fd_0320",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02260v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-05T03:34:51.895674+00:00",
-    "title": "Tensor Amplification and Spectral Transfer for Sidorenko-Type Inequalities"
   },
   {
     "consumed_by_exp_id": "",
@@ -6142,7 +6128,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bukh's Exact Zero-Sum-Free Density Conjecture"
   },
   {
-    "consumed_by_exp_id": "26e5c4d5",
+    "consumed_by_exp_id": "",
     "description": "For any positive integer k and any completely multiplicative function f : \u2115 \u2192 \u03bc_k (the k-th roots of unity), and any \u03c9 in the image of f, there exists a Pythagorean triple (x, y, z) with f(x) = f(y) = f(z) = \u03c9. This extends the paper's main result, which establishes the case \u03c9 = 1 via approximate concentration (for \u03b5 small enough, the values are forced to equal 1 since \u03bc_k is discrete). The case of general \u03c9 does not reduce to \u03c9 = 1 by a simple substitution, as f(n)/\u03c9 is not completely multiplicative, making this a genuinely stronger statement that implies every color class of a completely multiplicative k-coloring of \u2115 contains a Pythagorean triple.",
     "domains": [
       "Algebra"
@@ -6151,7 +6137,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.04903v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T08:05:16.465632+00:00",
     "title": "Monochromatic Pythagorean Triples in Every Level Set of Completely Multiplicative Functions"
   },
@@ -6607,7 +6593,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimality of the cake-cutting constant \u03bc\u2082"
   },
   {
-    "consumed_by_exp_id": "901a2c39",
+    "consumed_by_exp_id": "",
     "description": "For a complete multipartite graph G = K_{n_1,...,n_m} with n_1 \u2264 ... \u2264 n_m, the path-free complex PF_t(G) is vertex decomposable if and only if t \u2265 2n_{m-1} - 1. Equivalently, this is exactly the range where PF_t(G) is shellable and sequentially Cohen-Macaulay. For t \u2264 2n_{m-1} - 2, the complex fails to be sequentially Cohen-Macaulay.",
     "domains": [
       "Bridges"
@@ -6616,7 +6602,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05358v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T13:11:19.325737+00:00",
     "title": "Vertex decomposability threshold for path-free complexes of complete multipartite graphs"
   },
@@ -7732,7 +7718,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The \u221a2-Threshold Conjecture for Rips Filtration Approximation"
   },
   {
-    "consumed_by_exp_id": "00f256fb",
+    "consumed_by_exp_id": "",
     "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card \u2014 you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier \u2014 it's an opportunity. You can WIN at the game of undecidability.",
     "domains": [
       "Novelty",
@@ -7742,7 +7728,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T16:01:43.960880+00:00",
     "title": "Godel's Casino: Incomplete but Winnable Games"
   },
@@ -9742,6 +9728,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-07T17:01:12.860686+00:00",
     "title": "Sharp dichotomy for the *total* d-Hoggatt numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project proves the upper half of the generalized Tur\u00e1n result\n`ex(n, K_{a,b}, K_{3,b+1}) = \u0398(n^3)` and, as a **connector**, re-expresses the combinatorial\ncardinality bound in the language of asymptotic analysis.\n\n## What is proved\n\nFile `Catalog/Bridges/GenTuranAsymptoticBridge.lean` (self-contained, imports only `Mathlib`):\n\n* `KabCopies_cubic_of_K3tFree` \u2014 the combinatorial core: every `K_{3,b+1}`-free graph on a\n  finite vertex set has at most `C(b, b) \u00b7 C(b, a-3) \u00b7 n^3 = C(b, a-3) \u00b7 n^3` copies of\n  `K_{a,b}` when `3 \u2264 a` and `3 \u2264 b` (KST-style double count on a 3-element core).\n* `genTuran_KabCopies_isBigO` \u2014 **the bridge**: for any sequence of `K_{3,b+1}`-free graphs,\n  `n \u21a6 #{copies of K_{a,b}}` is `O(n^3)` in the Landau sense (`Asymptotics.IsBigO`), with the\n  Landau constant equal to the combinatorial constant `C(b, a-3)`.\n* `genTuran_density_tendsto_zero` \u2014 the probabilistic/analytic reading: the copy density\n  `#copies / n^{a+b}` tends to `0`.\n\n## Natural next steps\n\n1. **Matching lower bound (the `\u0398` half).** Construct, for infinitely many `n`, `K_{3,b+1}`-free\n   graphs with `\u03a9(n^3)` copies of `K_{a,b}`. The parity subtlety in the literature lives in this\n   construction; formalizing it would upgrade the `O(n^3)` bridge to a two-sided `\u0398(n^3)`\n   asymptotic equivalence (`Asymptotics.IsTheta`).\n\n2. **Extremal function as an object.** Define `ex(n, K_{a,b}, K_{3,t})` as the supremum of\n   `KabCopies` over all `K_{3,t}`-free graphs on `Fin n`, and state the bridge directly for this\n   parameter (`IsBigO`/`IsTheta`), rather than for arbitrary sequences. This requires a\n   `Fintype (SimpleGraph (Fin n))` sup with classical decidability.\n\n3. **General `K_{s,t}` forbidden graphs.** Replace the forbidden `K_{3,b+1}` (and the anchoring\n   triple) by `K_{s, \u00b7}`, giving `ex(n, K_{a,b}, K_{s,t}) = O(n^s)` under the analogous\n   common-neighborhood cap on `s`-sets. The double count generalizes verbatim with `s` in place\n   of `3`.\n\n4. **Sharper constants.** The current constant `C(b, a-3)` is not optimized. Investigate the\n   exact extremal constant and whether the KST cap can be tightened for specific `(a,b)`.\n\n5. **Further cross-domain bridges.** The `IsBigO` framing invites connections to (a) incidence\n   geometry / the Zarankiewicz problem (0-1 matrices with no `s\u00d7t` all-ones submatrix), and\n   (b) random-graph thresholds, where the vanishing density\n   `genTuran_density_tendsto_zero` becomes a first-moment statement.\n",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_0793",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6b4ee47d",
+    "status": "available",
+    "timestamp": "2026-07-09T19:54:46.980373+00:00",
+    "title": "This project proves the upper half of the generalized Tur\u00e1n result"
   },
   {
     "consumed_by_exp_id": "",

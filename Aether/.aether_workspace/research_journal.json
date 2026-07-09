@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "35f6557d",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS — Euler–Mascheroni Constant: Irrationality Approaches\n\nTarget category (Menu Balance, v19a): **subtask of a famous open problem** —\nthe irrationality of the Euler–Mascheroni consta",
-      "quality_score": 0.61504,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-28T17:27:15",
-      "title": "Euler-Mascheroni Constant: Irrationality Approaches"
-    },
-    {
       "cycle_id": "e44edf9a",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Non-Trivial Boolean Degree-One Functions on `J_q(n,2)`\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle.  This cycle proved\nthe *parametric fingerprint* of t",
@@ -2501,6 +2491,16 @@
       "theorem_count": 21,
       "timestamp": "2026-07-09T08:55:50",
       "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
+    },
+    {
+      "cycle_id": "6b4ee47d",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\nThis project proves the upper half of the generalized Turán result\n`ex(n, K_{a,b}, K_{3,b+1}) = Θ(n^3)` and, as a **connector**, re-expresses the combinatorial\ncardinality bound i",
+      "quality_score": 0.63,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-09T19:54:51",
+      "title": "Upper Bound on Generalized Turán Number ex(n, K_{a,b}, K_{3,b+1})"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7115
     }
   ],
-  "last_updated": "2026-07-09T08:55:50",
+  "last_updated": "2026-07-09T19:54:51",
   "open_questions": [
     {
       "context": "`sorry`-free Lean proof of Sabidussi's theorem.",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "f9dc8407",
-        "quality": 0.6342000000000001,
-        "theorems": 3,
-        "title": "Tropical Curves and Chip-Firing Games"
-      },
-      {
         "cycle_id": "0dc2bca1",
         "quality": 0.7367999999999999,
         "theorems": 10,
@@ -3265,6 +3259,12 @@
         "quality": 0.57296,
         "theorems": 15,
         "title": "Sharp Threshold Constant for Cycle Games"
+      },
+      {
+        "cycle_id": "6b4ee47d",
+        "quality": 0.63,
+        "theorems": 15,
+        "title": "Upper Bound on Generalized Turán Number ex(n, K_{a,b}, K_{3,b+1})"
       }
     ],
     "Computation": [

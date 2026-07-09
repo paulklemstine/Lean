@@ -42,7 +42,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "6b9c675a",
+    "consumed_by_exp_id": "",
     "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long — the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static — they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
     "domain_bridges": [],
     "domains": [
@@ -55,7 +55,7 @@
     "proof_strategy": "Define proof complexity C(P) = length(P) + depth(P) + number_of_lemmas(P) for a proof P in a formal system. Define refinement: P' refines P if P' proves the same theorem as P and C(P') < C(P). Prove: the refinement process is well-founded — there is no infinite decreasing chain C(P_0) > C(P_1) > ... because C takes values in the natural numbers. Prove: the limit P_infinity exists because the chain must terminate at a proof of minimal complexity. Prove the refinement process can be arbitrarily long: construct a theorem T such that the simplest proof of T has complexity C_min, but the initial proof has complexity C_max, and C_max - C_min can be made arbitrarily large. Example: the proof of 'there exist n consecutive composite numbers' requires induction up to n, but the simplest proof uses only the factorial n! + 2, n! + 3, ..., n! + n. Test: implement refinement for sqrt(2) irrationality in Lean 4.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T16:01:43.810023+00:00",
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
   },
@@ -4578,7 +4578,7 @@
       "Simplicial Complexes",
       "h-vectors"
     ],
-    "consumed_by_exp_id": "6c21e233",
+    "consumed_by_exp_id": "",
     "description": "Formalize the proof that the transformation matrix $H_{\\mathcal{F}}$ associated with the interval subdivision of a finite simplicial complex is totally positive (TP). This requires defining the $h$-vector of a simplicial complex, the interval subdivision operation, the resulting transformation matrix $H_{\\mathcal{F}}$, and proving that all its minors are non-negative.",
     "domain_bridges": [
       "Linear Algebra",
@@ -4594,7 +4594,7 @@
     "proof_strategy": "1. Define the structure of a finite simplicial complex and the $h$-vector as a function of the $f$-vector. 2. Implement the $\\mathcal{F}$-uniform subdivision framework specifically for the interval subdivision to derive the explicit entries of the transformation matrix $H_{\\mathcal{F}}$. 3. Use the Lindström-Gessel-Viennot (LGV) lemma or a similar combinatorial path-counting method to show that the determinants of all minors are non-negative, leveraging the combinatorial proof provided in the paper.",
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T09:05:38.885794+00:00",
     "title": "Total Positivity of the Interval Subdivision Transformation Matrix"
   },
@@ -6527,34 +6527,6 @@
     "status": "available",
     "timestamp": "2026-07-05T03:01:06.348760+00:00",
     "title": "Counterexample to Mason's log-concavity conjecture for matroid flat counts"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "ErdosSimonovits1984",
-      "LovaszSzegedy2006",
-      "ConlonFoxSudakov2010",
-      "LiSzegedy2026"
-    ],
-    "consumed_by_exp_id": "c2c03fe8",
-    "description": "The paper introduces a tensor-amplification framework for proving Sidorenko-type inequalities in graphon classes, providing two transfer principles and formalizing structural closure properties.",
-    "domain_bridges": [
-      "Graph Theory",
-      "Probability Theory",
-      "Stochastic Processes"
-    ],
-    "domains": [
-      "Physics"
-    ],
-    "id": "fd_0320",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Conversion of geometric concentration estimates into tensor-exponential forms using Perron regularity",
-    "research_mode": "team",
-    "source_exp_id": "2607.02260v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-05T03:34:51.895674+00:00",
-    "title": "Tensor Amplification and Spectral Transfer for Sidorenko-Type Inequalities"
   },
   {
     "ambition_level": "extension",
@@ -11395,7 +11367,7 @@
       "Ramsey_theory",
       "partition_regularity"
     ],
-    "consumed_by_exp_id": "26e5c4d5",
+    "consumed_by_exp_id": "",
     "description": "For any positive integer k and any completely multiplicative function f : ℕ → μ_k (the k-th roots of unity), and any ω in the image of f, there exists a Pythagorean triple (x, y, z) with f(x) = f(y) = f(z) = ω. This extends the paper's main result, which establishes the case ω = 1 via approximate concentration (for ε small enough, the values are forced to equal 1 since μ_k is discrete). The case of general ω does not reduce to ω = 1 by a simple substitution, as f(n)/ω is not completely multiplicative, making this a genuinely stronger statement that implies every color class of a completely multiplicative k-coloring of ℕ contains a Pythagorean triple.",
     "domain_bridges": [
       "ramsey_theory_and_multiplicative_number_theory",
@@ -11411,7 +11383,7 @@
     "proof_strategy": "The ω = 1 case follows from the paper's vanishing-averages/pretentious-function decomposition. For general ω, one might try: (1) construct a modified multiplicative function g related to f and ω whose level set at 1 corresponds to f's level set at ω, then apply the paper's machinery to g — but g(n) = f(n)·ω^{-v(n)} for suitable v is not completely multiplicative; (2) use the dilation structure: if (a,b,c) is a Pythagorean triple with f(a)=f(b)=f(c)=1, then for any prime p with f(p)=ω, the dilated triple (pa,pb,pc) gives f(pa)=ω·f(a)=ω, etc., but this requires f(a)=1 which is circular; (3) develop a new transference principle that works for arbitrary level sets, not just neighborhoods of 1.",
     "research_mode": "team",
     "source_exp_id": "2607.04903v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T08:05:16.465632+00:00",
     "title": "Monochromatic Pythagorean Triples in Every Level Set of Completely Multiplicative Functions"
   },
@@ -12276,7 +12248,7 @@
       "math.CO",
       "math.AT"
     ],
-    "consumed_by_exp_id": "901a2c39",
+    "consumed_by_exp_id": "",
     "description": "For a complete multipartite graph G = K_{n_1,...,n_m} with n_1 ≤ ... ≤ n_m, the path-free complex PF_t(G) is vertex decomposable if and only if t ≥ 2n_{m-1} - 1. Equivalently, this is exactly the range where PF_t(G) is shellable and sequentially Cohen-Macaulay. For t ≤ 2n_{m-1} - 2, the complex fails to be sequentially Cohen-Macaulay.",
     "domain_bridges": [
       "simplicial_complexes",
@@ -12293,7 +12265,7 @@
     "proof_strategy": "Formalize simplicial complexes and vertex decomposability in Lean, then define PF_t(G) as the simplicial complex of vertex subsets with no induced P_t. Define complete multipartite graphs and their part-size ordering. The forward direction (t ≥ 2n_{m-1}-1 ⟹ vertex decomposable) requires formalizing the explicit structural decomposition of PF_t(G) as a union of join complexes with a size-truncation term, then proving each join component is vertex decomposable and that the union preserves this property. The reverse direction (t ≤ 2n_{m-1}-2 ⟹ not sequentially Cohen-Macaulay) requires constructing a specific non-Cohen-Macaulay witness face or showing the homology fails the sequential Cohen-Macaulay condition, potentially via a Mayer-Vietoris spectral sequence argument.",
     "research_mode": "team",
     "source_exp_id": "2607.05358v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T13:11:19.325737+00:00",
     "title": "Vertex decomposability threshold for path-free complexes of complete multipartite graphs"
   },
@@ -14454,7 +14426,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "00f256fb",
+    "consumed_by_exp_id": "",
     "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card — you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier — it's an opportunity. You can WIN at the game of undecidability.",
     "domain_bridges": [],
     "domains": [
@@ -14467,7 +14439,7 @@
     "proof_strategy": "Define Godel's Casino: each round, the house presents a statement phi in the language of arithmetic. The player bets TRUE or FALSE. If ZFC proves phi, TRUE wins. If ZFC proves not-phi, FALSE wins. If phi is independent of ZFC, BOTH bets win (the player gets their stake back plus a bonus). Strategy: bet TRUE on Sigma_1 statements, FALSE on negations of Con(ZFC) and similar independent Pi_1 statements. Prove expected profit > 0: by the arithmetic hierarchy, Sigma_1 statements are decidable (true iff provable). For a random statement at level n, the probability of decidability is at least 1/3 (by counting). So E[profit] >= (1/3) * (stake) > 0. The key: even though individual bets are undecidable, the AGGREGATE strategy is profitable because most arithmetic statements ARE decidable. Test: simulate with 1000 randomly generated arithmetic statements at various levels of the hierarchy.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T16:01:43.960880+00:00",
     "title": "Godel's Casino: Incomplete but Winnable Games"
   },
@@ -18216,6 +18188,26 @@
     "status": "available",
     "timestamp": "2026-07-07T17:01:12.860686+00:00",
     "title": "Sharp dichotomy for the *total* d-Hoggatt numbers"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project proves the upper half of the generalized Turán result\n`ex(n, K_{a,b}, K_{3,b+1}) = Θ(n^3)` and, as a **connector**, re-expresses the combinatorial\ncardinality bound in the language of asymptotic analysis.\n\n## What is proved\n\nFile `Catalog/Bridges/GenTuranAsymptoticBridge.lean` (self-contained, imports only `Mathlib`):\n\n* `KabCopies_cubic_of_K3tFree` — the combinatorial core: every `K_{3,b+1}`-free graph on a\n  finite vertex set has at most `C(b, b) · C(b, a-3) · n^3 = C(b, a-3) · n^3` copies of\n  `K_{a,b}` when `3 ≤ a` and `3 ≤ b` (KST-style double count on a 3-element core).\n* `genTuran_KabCopies_isBigO` — **the bridge**: for any sequence of `K_{3,b+1}`-free graphs,\n  `n ↦ #{copies of K_{a,b}}` is `O(n^3)` in the Landau sense (`Asymptotics.IsBigO`), with the\n  Landau constant equal to the combinatorial constant `C(b, a-3)`.\n* `genTuran_density_tendsto_zero` — the probabilistic/analytic reading: the copy density\n  `#copies / n^{a+b}` tends to `0`.\n\n## Natural next steps\n\n1. **Matching lower bound (the `Θ` half).** Construct, for infinitely many `n`, `K_{3,b+1}`-free\n   graphs with `Ω(n^3)` copies of `K_{a,b}`. The parity subtlety in the literature lives in this\n   construction; formalizing it would upgrade the `O(n^3)` bridge to a two-sided `Θ(n^3)`\n   asymptotic equivalence (`Asymptotics.IsTheta`).\n\n2. **Extremal function as an object.** Define `ex(n, K_{a,b}, K_{3,t})` as the supremum of\n   `KabCopies` over all `K_{3,t}`-free graphs on `Fin n`, and state the bridge directly for this\n   parameter (`IsBigO`/`IsTheta`), rather than for arbitrary sequences. This requires a\n   `Fintype (SimpleGraph (Fin n))` sup with classical decidability.\n\n3. **General `K_{s,t}` forbidden graphs.** Replace the forbidden `K_{3,b+1}` (and the anchoring\n   triple) by `K_{s, ·}`, giving `ex(n, K_{a,b}, K_{s,t}) = O(n^s)` under the analogous\n   common-neighborhood cap on `s`-sets. The double count generalizes verbatim with `s` in place\n   of `3`.\n\n4. **Sharper constants.** The current constant `C(b, a-3)` is not optimized. Investigate the\n   exact extremal constant and whether the KST cap can be tightened for specific `(a,b)`.\n\n5. **Further cross-domain bridges.** The `IsBigO` framing invites connections to (a) incidence\n   geometry / the Zarankiewicz problem (0-1 matrices with no `s×t` all-ones submatrix), and\n   (b) random-graph thresholds, where the vanishing density\n   `genTuran_density_tendsto_zero` becomes a first-moment statement.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_0793",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "6b4ee47d",
+    "status": "available",
+    "timestamp": "2026-07-09T19:54:46.980373+00:00",
+    "title": "This project proves the upper half of the generalized Turán result"
   },
   {
     "ambition_level": "extension",
