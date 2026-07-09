@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "8e18494e",
+    "consumed_by_exp_id": "0a75b71e",
     "description": "L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable \u2014 there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domains": [
       "Novelty",
@@ -4771,7 +4771,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Real-rootedness of the square of the Eulerian triangle"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6b4ee47d",
     "description": "For all integers a, b with 3 \u2264 a \u2264 b, there exists a constant C > 0 such that for any n-vertex graph G that is K_{3,b+1}-free, the number of labeled copies of K_{a,b} in G is at most C * n^3. This captures the main asymptotic upper bound result of the paper, resolving the generalized Tur\u00e1n problem for these parameters.",
     "domains": [
       "Bridges"
@@ -4780,7 +4780,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01680v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T01:46:23.166235+00:00",
     "title": "Upper Bound on Generalized Tur\u00e1n Number ex(n, K_{a,b}, K_{3,b+1})"
   },
@@ -6578,7 +6578,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Positivity of Microscopic Weighting on Finite Trees"
   },
   {
-    "consumed_by_exp_id": "d2b75e11",
+    "consumed_by_exp_id": "",
     "description": "The infimum \u03bc\u2082 over all infinite sequences of radial cuts of the ratio between the maximum and minimum portion (adjacent pair of slices) sizes equals 1+\u03c1, where \u03c1 is the unique real root of \u03c1\u00b2+\u03c1\u00b3=1 in (0,1). The paper proves \u03bc\u2082 \u2264 1+\u03c1 \u2248 1.75488 and Korsky proved \u03bc\u2082 \u2265 5/3 \u2248 1.66667, but the exact value remains open.",
     "domains": [
       "Bridges"
@@ -6587,7 +6587,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05330v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T12:37:59.021602+00:00",
     "title": "Optimality of the cake-cutting constant \u03bc\u2082"
   },
@@ -7049,7 +7049,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Polylogarithmic Paucity of Square Products of Shifted Squares"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8202f9a7",
     "description": "For any \u03b5 > 0, there exist effectively computable constants C(\u03b5) > 0 and Q\u2080(\u03b5) > 0 such that: if for every primitive quadratic Dirichlet character \u03c7 with conductor q \u2265 Q\u2080(\u03b5), all non-real zeros \u03c1 of L(s,\u03c7) satisfy Re(\u03c1) \u2264 1 - C(\u03b5)/log(q), then there is at most one such character \u03c7 whose associated L-function has a real zero \u03b2 in the interval [1 - q^(-\u03b5), 1). This formalizes the paper's main result that excluding non-real zeros from a shrinking neighborhood of s=1 allows a significant refinement of Page's theorem.",
     "domains": [
       "Bridges"
@@ -7058,7 +7058,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06433v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T05:36:19.999905+00:00",
     "title": "Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
   },
@@ -7381,7 +7381,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Product Hilton-Milner theorem for large n"
   },
   {
-    "consumed_by_exp_id": "db9ced03",
+    "consumed_by_exp_id": "",
     "description": "For every bridgeless cubic multigraph G, there exists a mapping f: E(G) \u2192 E(S\u2081\u2080) such that |V(f)| \u2265 (6/7)\u00b7|V(G)|, where V(f) is the set of vertices v \u2208 V(G) for which f(\u2202_G(v)) = \u2202_{S\u2081\u2080}(x) for some x \u2208 V(S\u2081\u2080). This would improve the 5/6-bound established in the paper for all cubic multigraphs, leveraging the additional structure of bridgeless graphs.",
     "domains": [
       "Pythagorean",
@@ -7391,7 +7391,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06396v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T03:53:42.083077+00:00",
     "title": "Bridgeless Sylvester S\u2081\u2080-Coloring Improvement Conjecture"
   },
@@ -9495,12 +9495,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The paper proves that a prime graph with a vertex not contained in any induced P4 is split. We conjecture the stronger statement that any prime graph whose induced-{P4}-packing treewidth is at most 1 must be split. This connects the new tree-decomposition parameter to classical split graph characterization and can be formalized in Lean 4 with standard graph definitions.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0777",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07595v1",
+    "status": "available",
+    "timestamp": "2026-07-09T17:28:13.465076+00:00",
+    "title": "Prime graphs with induced-P4-packing treewidth at most 1 are split"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "We conjecture that every aperiodic infinite word over a ternary alphabet whose factor complexity satisfies p(n)=2n+1 for all n\u22651 possesses the universal group complexity property: for each length n and each integer k with p_ab(n) \u2264 k \u2264 p(n) there exists a subgroup G \u2264 S_n such that the group complexity p^G(n)=k.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0777",
+    "id": "fd_0778",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07620v1",
@@ -9514,7 +9528,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0778",
+    "id": "fd_0779",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07697v1",
@@ -9529,13 +9543,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0779",
+    "id": "fd_0780",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07659v1",
     "status": "available",
     "timestamp": "2026-07-09T17:02:33.023554+00:00",
     "title": "Characterizing reflected bounded\u2011growth tuples in type\u202fB"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For all integers x \u2265 2 and integers u satisfying \u230a\u221ax\u230b < u < x, the Mertens function M(x) = \u2211_{n\u2264x} \u03bc(n) satisfies the recursive identity M(x) = \u2211_{k=1}^{\u230ax/u\u230b} \u03bc(k) S(\u230ax/k\u230b, u), where S(y, u) = 1 - \u2211_{n=\u230ay/u\u230b+1}^{\u03ba_y} M(\u230ay/n\u230b) + \u03ba_y M(\u230a\u221ay\u230b) - \u2211_{n=1}^{\u230a\u221ay\u230b} \u230ay/n\u230b \u03bc(n) and \u03ba_y = \u230ay/(\u230a\u221ay\u230b+1)\u230b. This formalizes Theorem 1 of the paper with the standard split point \u03bd_y = \u230a\u221ay\u230b and explicit floor operations.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0781",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07566v1",
+    "status": "available",
+    "timestamp": "2026-07-09T17:29:41.664378+00:00",
+    "title": "Generalized Mertens Function Recursion Identity"
   },
   {
     "consumed_by_exp_id": "ad941b96",
