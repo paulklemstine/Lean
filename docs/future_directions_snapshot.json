@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "31a0a054",
     "description": "L-functions are the DNA of mathematics — each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable — there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domain_bridges": [],
     "domains": [
@@ -15,7 +15,7 @@
     "proof_strategy": "Define the Selberg class S as the set of Dirichlet series L(s) = sum a_n/n^s satisfying: (1) Ramanujan bound |a_n| <= n^epsilon for epsilon > 0, (2) Analytic continuation to C except for a possible pole at s=1, (3) Functional equation relating L(s) to L(1-s), (4) Euler product L(s) = prod_p L_p(s). Prove S is countable: each L in S is determined by finitely many data because (a) the degree d_L is a positive integer, (b) the conductor q_L is a positive integer, (c) the Euler factors L_p(s) for p not dividing q_L are determined by the Ramanujan bound and the functional equation, and (d) there are finitely many primes dividing q_L. So L is determined by (d_L, q_L, epsilon_L, {L_p(s) : p | q_L}), a finite set of data. Since each piece of data is countable, S is countable. Test: enumerate elements of S by increasing conductor.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.876173+00:00",
     "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
   },
@@ -2510,7 +2510,7 @@
       "Alon and Fellows (1990s) on strong chromatic number",
       "Barman and Viswanathan (2020) on equitable colorings"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b99a839a",
     "description": "For any integer Δ ≥ 1, there exists a graph G with maximum degree Δ such that any SD-EF1 allocation of G to common preferences requires at least 3Δ−1 agents. This conjecture asserts that the upper bound of 3Δ−1 agents proved in the paper is asymptotically tight for SD-EF1 fairness under common preferences.",
     "domain_bridges": [
       "Graph theory (strong chromatic number)",
@@ -2526,7 +2526,7 @@
     "proof_strategy": "Construct a family of graphs (e.g., specific regular graphs or graphs built via gadget constructions) with max degree Δ that force any SD-EF1 allocation to require ≥ 3Δ−1 agents. Use combinatorial arguments to show no allocation with fewer agents can satisfy SD-EF1 for all common preference orders.",
     "research_mode": "team",
     "source_exp_id": "2607.01059v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T10:56:54.072591+00:00",
     "title": "Tightness of the 3Δ-1 Bound for SD-EF1 Allocations"
   },
@@ -4513,7 +4513,7 @@
       "HSV2006",
       "TC2013"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "620b641b",
     "description": "For a Hamiltonian graph G with minimum degree at least 3, there exists a constant c > 0 such that G contains a nontrivial cycle of length at least n - c n^{2/3}. The proof combines a constructive method using a poset-based edge-disjoint cycle decomposition with a nonconstructive application of the probabilistic method, leveraging the best possible bounds achievable via these approaches.",
     "domain_bridges": [
       "Poset Theory",
@@ -4529,7 +4529,7 @@
     "proof_strategy": "Establish that all long cycles are blocked by a specific edge, then use a cycle-pairing strategy from poset theory to construct a nontrivial cycle, augmented by a probabilistic counting argument to ensure the existence of a sufficiently long alternative cycle.",
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T07:37:36.028717+00:00",
     "title": "Existence of a nontrivial cycle of length n-O(n^{2/3}) in Hamiltonian graphs with δ(G) ≥ 3"
   },
@@ -5877,7 +5877,7 @@
       "Chatterjee & Soundararajan (2012) - CLT for Rademacher in short intervals",
       "Soundararajan & Xu (2018) - Extension to Steinhaus and wider range"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "685d9909",
     "description": "The paper establishes a central limit theorem for Steinhaus random multiplicative functions in short intervals [x, x+y] for all y → ∞ with y = o(x), with a precise normalization that differs from √y when y is close to x. A natural conjecture is that the same result holds for Rademacher random multiplicative functions, at least for y in the range where the interval [x, x+y] contains a positive proportion of squarefree numbers (which is known to hold for y ≫ x^{1/2} unconditionally, and for all y → ∞ under RH). Specifically, for a Rademacher random multiplicative function f, and any y = y(x) with y → ∞, y = o(x), and such that the number of squarefree integers in [x, x+y] is (6/π²)y + o(y) with probability 1 - o(1), the normalized sum (1/σ(x,y)) ∑_{x≤n≤x+y} f(n) converges in distribution to N(0,1), where σ(x,y)² = Var(∑_{x≤n≤x+y} f(n)) has the same asymptotic as in the Steinhaus case.",
     "domain_bridges": [
       "Probabilistic number theory",
@@ -5894,7 +5894,7 @@
     "proof_strategy": "Follow the characteristic function approach of the Steinhaus case. The main additional difficulty is handling the support on squarefree numbers. Show that the covariance structure of the Rademacher function restricted to squarefree integers matches that of the Steinhaus function, and that the contribution from intervals with few squarefree numbers is negligible in the limit. Use the fact that the characteristic function of the Rademacher sum can be approximated by that of the Steinhaus sum conditioned on squarefree support.",
     "research_mode": "team",
     "source_exp_id": "2606.29040v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T11:02:04.722996+00:00",
     "title": "Extension of Gaussian CLT to Rademacher random multiplicative functions in all short intervals"
   },
@@ -8067,7 +8067,7 @@
       "math.CO",
       "math.AG"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3d8596f0",
     "description": "In type A_n, the subalgebra B_aff of the affine Hecke algebra admits a canonical basis {b_{W_fin w}} indexed by cosets W_fin \\ W_aff. The conjecture states that the structure constants of B_aff with respect to this canonical basis are polynomials in v with non-negative integer coefficients: for any two cosets W_fin w and W_fin w' in W_fin \\ W_aff, the product b_{W_fin w} · b_{W_fin w'} = Σ c_{w,w'}^z · b_{W_fin z} where each c_{w,w'}^z ∈ Z_{≥0}[v]. This is the v-deformed analogue of the positivity of structure constants in the affine Fomin-Stanley subalgebra (equivalently, homology of the affine Grassmannian).",
     "domain_bridges": [
       "representation_theory",
@@ -8084,7 +8084,7 @@
     "proof_strategy": "First formalize the affine Weyl group W_aff = W_fin ⋉ Q∨ in type A_n as a Coxeter group with generators S_aff = S_fin ∪ {s_0}. Define the affine Hecke algebra H_aff over Z[v,v^{-1}] with Bernstein presentation and quadratic relations. Construct the pseudo-centralizer subalgebra B_aff as the subalgebra generated by appropriate elements arising from the DAHA centralizer construction. Prove the canonical basis exists (indexed by W_fin \\ W_aff) by establishing a graded module structure and applying the bar-involution argument. Finally, establish positivity of structure constants using geometric arguments via the affine Grassmannian or combinatorial arguments via the v-deformed Pieri rule.",
     "research_mode": "team",
     "source_exp_id": "2607.00426v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T08:09:58.266321+00:00",
     "title": "Positivity of structure constants for the canonical basis of the pseudo-centralizer subalgebra in type A"
   },
@@ -10947,7 +10947,7 @@
       "symmetric edge polytopes",
       "gamma-positivity"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c3f7a0cc",
     "description": "Every symmetric edge polytope of dimension at most 35 has a γ-positive Ehrhart h*-polynomial. Equivalently, 36 is the minimum dimension of a symmetric edge polytope whose Ehrhart h*-polynomial fails to be γ-positive. This would sharpen the paper's existence result by establishing the exact threshold, confirming that no smaller counterexamples to the Ohsugi–Tsuchiya conjecture exist.",
     "domain_bridges": [
       "Algebraic Combinatorics",
@@ -10963,7 +10963,7 @@
     "proof_strategy": "Combine exhaustive computational verification of γ-positivity for all connected graphs on at most 9 vertices (covering dimensions ≤ 8) with structural arguments that γ-positivity is preserved under cone, join, and subdivision operations, thereby inductively covering all dimensions up to 35 while using the paper's explicit 36-dimensional counterexample as the lower bound.",
     "research_mode": "team",
     "source_exp_id": "2607.02424v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T23:28:54.298787+00:00",
     "title": "Dimension Threshold for Gamma-Positivity of Symmetric Edge Polytopes"
   },
@@ -11136,7 +11136,7 @@
       "Ollivier curvature",
       "Extremal graph theory"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6d195403",
     "description": "For any graph of order n ≥ 8, if it contains strictly more than T(n) = (n^2 - 3n)/2 - ⌈n/2⌉ + 2 edges, then every edge in the graph has strictly positive Ollivier/Lin-Lu-Yau curvature.",
     "domain_bridges": [
       "Discrete differential geometry",
@@ -11151,7 +11151,7 @@
     "proof_strategy": "Formalize the Lin-Lu-Yau curvature using the 1-Wasserstein distance between probability measures on vertices. Establish structural properties of graphs with non-positive curvature edges, and demonstrate that exceeding the edge threshold T(n) precludes the existence of such subgraphs, thereby forcing all edge curvatures to be strictly positive.",
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T23:29:27.413260+00:00",
     "title": "Positive Curvature Threshold for Lin-Lu-Yau Curvature"
   },
@@ -11381,7 +11381,7 @@
       "05C20",
       "05C85"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c5715a86",
     "description": "For every doubly regular tournament on n vertices (where n ≡ 3 mod 4 and n ≥ 3), the metric dimension β(G) is at most ⌈3·log₂(n)⌉. This provides an explicit constant in the O(log n) bound established for related families in the paper, extending the probabilistic method of Babai to the directed tournament setting with a constructive resolvability guarantee.",
     "domain_bridges": [
       "graph_theory",
@@ -11397,7 +11397,7 @@
     "proof_strategy": "Adapt Babai's probabilistic method: for a doubly regular tournament on n=4k+3 vertices, every vertex has out-degree 2k+1 and every pair of distinct vertices shares exactly k common out-neighbours. Sample a random set S of size ⌈3·log₂(n)⌉ vertices. For any pair (u,v) of distinct vertices, compute the probability over the random choice of S that all s ∈ S give d(s,u)=d(s,v). Use the strong regularity properties to bound this probability below 1/n², then take a union bound over all pairs. The key structural lemma is that in a doubly regular tournament, for any distinct u,v, the set {s : d(s,u) ≠ d(s,v)} has size at least n/3, giving each sample at least a 1/3 chance of distinguishing u from v.",
     "research_mode": "team",
     "source_exp_id": "2607.05152v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T05:40:17.241598+00:00",
     "title": "Explicit logarithmic bound on metric dimension of doubly regular tournaments"
   },

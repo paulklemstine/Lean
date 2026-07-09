@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "31a0a054",
     "description": "L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable \u2014 there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domains": [
       "Novelty",
@@ -13,7 +13,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.876173+00:00",
     "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
   },
@@ -1374,7 +1374,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharp Lower Bounds for Sumsets in L\u2081 Balls in \u2124\u1d48"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b99a839a",
     "description": "For any integer \u0394 \u2265 1, there exists a graph G with maximum degree \u0394 such that any SD-EF1 allocation of G to common preferences requires at least 3\u0394\u22121 agents. This conjecture asserts that the upper bound of 3\u0394\u22121 agents proved in the paper is asymptotically tight for SD-EF1 fairness under common preferences.",
     "domains": [
       "Pythagorean"
@@ -1383,7 +1383,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01059v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T10:56:54.072591+00:00",
     "title": "Tightness of the 3\u0394-1 Bound for SD-EF1 Allocations"
   },
@@ -2466,7 +2466,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equality case of the weighted dual Fisher inequality for taiko product structures"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "620b641b",
     "description": "For a Hamiltonian graph G with minimum degree at least 3, there exists a constant c > 0 such that G contains a nontrivial cycle of length at least n - c n^{2/3}. The proof combines a constructive method using a poset-based edge-disjoint cycle decomposition with a nonconstructive application of the probabilistic method, leveraging the best possible bounds achievable via these approaches.",
     "domains": [
       "Logic",
@@ -2476,7 +2476,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T07:37:36.028717+00:00",
     "title": "Existence of a nontrivial cycle of length n-O(n^{2/3}) in Hamiltonian graphs with \u03b4(G) \u2265 3"
   },
@@ -3210,7 +3210,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strongly 1-principled matrices via vanishing cyclic products"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "685d9909",
     "description": "The paper establishes a central limit theorem for Steinhaus random multiplicative functions in short intervals [x, x+y] for all y \u2192 \u221e with y = o(x), with a precise normalization that differs from \u221ay when y is close to x. A natural conjecture is that the same result holds for Rademacher random multiplicative functions, at least for y in the range where the interval [x, x+y] contains a positive proportion of squarefree numbers (which is known to hold for y \u226b x^{1/2} unconditionally, and for all y \u2192 \u221e under RH). Specifically, for a Rademacher random multiplicative function f, and any y = y(x) with y \u2192 \u221e, y = o(x), and such that the number of squarefree integers in [x, x+y] is (6/\u03c0\u00b2)y + o(y) with probability 1 - o(1), the normalized sum (1/\u03c3(x,y)) \u2211_{x\u2264n\u2264x+y} f(n) converges in distribution to N(0,1), where \u03c3(x,y)\u00b2 = Var(\u2211_{x\u2264n\u2264x+y} f(n)) has the same asymptotic as in the Steinhaus case.",
     "domains": [
       "Computation",
@@ -3220,7 +3220,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29040v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T11:02:04.722996+00:00",
     "title": "Extension of Gaussian CLT to Rademacher random multiplicative functions in all short intervals"
   },
@@ -4389,7 +4389,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Balanced equals hereditary clique-Helly within distance-hereditary graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3d8596f0",
     "description": "In type A_n, the subalgebra B_aff of the affine Hecke algebra admits a canonical basis {b_{W_fin w}} indexed by cosets W_fin \\ W_aff. The conjecture states that the structure constants of B_aff with respect to this canonical basis are polynomials in v with non-negative integer coefficients: for any two cosets W_fin w and W_fin w' in W_fin \\ W_aff, the product b_{W_fin w} \u00b7 b_{W_fin w'} = \u03a3 c_{w,w'}^z \u00b7 b_{W_fin z} where each c_{w,w'}^z \u2208 Z_{\u22650}[v]. This is the v-deformed analogue of the positivity of structure constants in the affine Fomin-Stanley subalgebra (equivalently, homology of the affine Grassmannian).",
     "domains": [
       "Geometry",
@@ -4399,7 +4399,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00426v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T08:09:58.266321+00:00",
     "title": "Positivity of structure constants for the canonical basis of the pseudo-centralizer subalgebra in type A"
   },
@@ -5896,7 +5896,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equivalence of strong \u0394-matroid and peerless antipode characterizations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c3f7a0cc",
     "description": "Every symmetric edge polytope of dimension at most 35 has a \u03b3-positive Ehrhart h*-polynomial. Equivalently, 36 is the minimum dimension of a symmetric edge polytope whose Ehrhart h*-polynomial fails to be \u03b3-positive. This would sharpen the paper's existence result by establishing the exact threshold, confirming that no smaller counterexamples to the Ohsugi\u2013Tsuchiya conjecture exist.",
     "domains": [
       "Pythagorean"
@@ -5905,7 +5905,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02424v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T23:28:54.298787+00:00",
     "title": "Dimension Threshold for Gamma-Positivity of Symmetric Edge Polytopes"
   },
@@ -5998,7 +5998,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Factorization of Cyclotomic Gauss Sum Matrix"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6d195403",
     "description": "For any graph of order n \u2265 8, if it contains strictly more than T(n) = (n^2 - 3n)/2 - \u2308n/2\u2309 + 2 edges, then every edge in the graph has strictly positive Ollivier/Lin-Lu-Yau curvature.",
     "domains": [
       "Bridges"
@@ -6007,7 +6007,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T23:29:27.413260+00:00",
     "title": "Positive Curvature Threshold for Lin-Lu-Yau Curvature"
   },
@@ -6127,7 +6127,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Geometric monodromy groups of exceptional degree-5 rational functions are cyclic or dihedral"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c5715a86",
     "description": "For every doubly regular tournament on n vertices (where n \u2261 3 mod 4 and n \u2265 3), the metric dimension \u03b2(G) is at most \u23083\u00b7log\u2082(n)\u2309. This provides an explicit constant in the O(log n) bound established for related families in the paper, extending the probabilistic method of Babai to the directed tournament setting with a constructive resolvability guarantee.",
     "domains": [
       "Logic"
@@ -6136,7 +6136,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05152v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T05:40:17.241598+00:00",
     "title": "Explicit logarithmic bound on metric dimension of doubly regular tournaments"
   },
