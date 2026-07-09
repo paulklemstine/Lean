@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "643186e8",
     "description": "The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do — as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: The tropical semiring (R union {infinity}, min, +) IS the field with one element, in the following precise sense: the category of tropical schemes is equivalent to the category of F_1-schemes. More concretely, a tropical variety over F_1 is a set with a min-plus structure, and its base change to Z (formally, tensor with Z) is a toric variety. The key correspondence: F_1-points of a tropical variety are the vertices of its Newton polytope, and the 'cardinality' of the tropical variety (as an F_1-object) is the number of lattice points in the polytope, which equals the degree of the toric variety after base change. Test: for each toric variety corresponding to a polytope P, compute the number of F_1-points (vertices of P) and verify that the Euler characteristic of the toric variety equals |vertices(P)| = #F_1-points. Prove the tensor product correspondence: tropical scheme X over F_1 has X tensor_Z Z = the corresponding toric variety. Impact: F_1 and tropical geometry are two faces of the same coin. The field with one element is tropical, and tropical geometry is the geometry of F_1.",
     "domain_bridges": [],
     "domains": [
@@ -15,7 +15,7 @@
     "proof_strategy": "Define the F_1-tropical correspondence: a tropical scheme over F_1 is a monoid object M in the tropical semiring (R union infty, min, +). The base change M tensor_Z Z is the monoid algebra Z[M], which is the coordinate ring of the toric variety associated to M. Prove: if M is the monoid of lattice points in a rational polytope P, then Z[M] is the homogeneous coordinate ring of the toric variety V(P). Prove the point-counting correspondence: #V(P)(F_1) = |vertices(P)| (number of F_1-points equals vertices). Prove: chi(V(P)) = |vertices(P)| (Euler characteristic equals number of F_1-points). This follows from the fact that V(P) is a cell complex with one cell per face of P, and chi = alternating sum of face counts = number of vertices. Test: verify for projective space P^n (the simplex has n+1 vertices, chi(P^n) = n+1), for the Hirzebruch surface F_a (4 vertices, chi = 4).",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T19:37:23.824326+00:00",
     "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
   },
@@ -18132,7 +18132,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "601f17f4",
     "description": "Prime gaps — the spaces between consecutive primes — are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable — given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random — they are a solvable crossword puzzle with deterministic rules.",
     "domain_bridges": [],
     "domains": [
@@ -18145,7 +18145,7 @@
     "proof_strategy": "Define the prime gap sequence g(n) = p(n+1) - p(n) for n >= 1. State the Hardy-Littlewood gap conjecture: P(g(n) = g | g(n-1) = g_{-1}, ...) = 2*C_2/g * (1/log(p(n))) * product_{q prime, q | g} (q-1)/(q-2) where C_2 = 0.66016... is the twin prime constant. Define forcing patterns: a sequence of gaps g_{-k}, ..., g_{-1} is forcing if P(g(0) = g | g_{-k}, ..., g_{-1}) > 0.99 for exactly one value of g. Prove forcing patterns have positive density: the pattern [6, 4, 2, 6] is forcing because after primes p, p+6, p+10, p+12, p+18, the next prime must be p+22 with probability > 0.95 (since p+20 is even, p+21 is divisible by 3 if p ≡ 1 mod 3, etc.). Compute conditional probabilities numerically for N = 10^8. Test: enumerate forcing patterns and compute their density.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T19:37:23.883933+00:00",
     "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
   },
