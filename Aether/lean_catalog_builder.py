@@ -6,6 +6,7 @@ Aristotle only needs .lean files + lake config. This reduces upload size
 to ~12MB and focuses Aristotle on the math.
 """
 
+import re
 import shutil
 from pathlib import Path
 from typing import Set
@@ -44,9 +45,12 @@ class LeanCatalogBuilder:
             else:
                 item.unlink()
 
-        # Copy ALL .lean files (full catalog context for Aristotle v2)
+        # Copy ONLY necessary .lean files based on transitive imports from lean_source
         lean_files_copied = 0
-        for src in self.catalog_root.rglob("*.lean"):
+        
+        needed_files = self._get_transitive_imports(lean_source)
+        
+        for src in needed_files:
             rel = src.relative_to(self.catalog_root)
 
             # Skip if in ignored paths
@@ -58,7 +62,7 @@ class LeanCatalogBuilder:
             shutil.copy2(src, dest)
             lean_files_copied += 1
 
-        print(f"[LeanCatalog] Copied {lean_files_copied} .lean files (full catalog)")
+        print(f"[LeanCatalog] Copied {lean_files_copied} .lean files (import subset)")
 
         # Copy lake config
         for fname in ["lakefile.toml", "lean-toolchain", "lake-manifest.json"]:
@@ -72,6 +76,33 @@ class LeanCatalogBuilder:
             main_file.write_text(lean_source, encoding="utf-8")
 
         return project_dir
+
+    def _get_transitive_imports(self, lean_source: str) -> Set[Path]:
+        """Recursively find all catalog files imported by lean_source."""
+        if not lean_source:
+            return set()
+            
+        visited_files = set()
+        queue = [lean_source]
+        import_regex = re.compile(r'^import\s+([A-Za-z0-9_.]+)', re.MULTILINE)
+        
+        while queue:
+            content = queue.pop(0)
+            imports = import_regex.findall(content)
+            for imp in imports:
+                # Skip standard dependencies
+                if imp.startswith('Mathlib') or imp.startswith('Init') or imp.startswith('Lean'):
+                    continue
+                    
+                # Convert Module.Path to Module/Path.lean
+                rel_path = imp.replace('.', '/') + '.lean'
+                file_path = self.catalog_root / rel_path
+                
+                if file_path.exists() and file_path not in visited_files:
+                    visited_files.add(file_path)
+                    queue.append(file_path.read_text(encoding='utf-8', errors='ignore'))
+                    
+        return visited_files
 
     def _should_ignore(self, rel_path: Path) -> bool:
         """Check if a relative path should be ignored."""
