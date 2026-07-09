@@ -31332,7 +31332,7 @@
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "d12ad473",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -31355,12 +31355,12 @@
       "proof_strategy": "Define proof complexity C(P) = length(P) + depth(P) + number_of_lemmas(P) for a proof P in a formal system. Define refinement: P' refines P if P' proves the same theorem as P and C(P') < C(P). Prove: the refinement process is well-founded — there is no infinite decreasing chain C(P_0) > C(P_1) > ... because C takes values in the natural numbers. Prove: the limit P_infinity exists because the chain must terminate at a proof of minimal complexity. Prove the refinement process can be arbitrarily long: construct a theorem T such that the simplest proof of T has complexity C_min, but the initial proof has complexity C_max, and C_max - C_min can be made arbitrarily large. Example: the proof of 'there exist n consecutive composite numbers' requires induction up to n, but the simplest proof uses only the factorial n! + 2, n! + 3, ..., n! + n. Test: implement refinement for sqrt(2) irrationality in Lean 4.",
       "prune_reason": "",
       "pruned_at": "",
-      "quarantined_until": "",
+      "quarantined_until": "2026-08-08T02:55:41",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-08T16:01:43.810023+00:00",
       "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
@@ -33544,7 +33544,7 @@
       "depth_estimate": 3,
       "description": "The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do — as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: The tropical semiring (R union {infinity}, min, +) IS the field with one element, in the following precise sense: the category of tropical schemes is equivalent to the category of F_1-schemes. More concretely, a tropical variety over F_1 is a set with a min-plus structure, and its base change to Z (formally, tensor with Z) is a toric variety. The key correspondence: F_1-points of a tropical variety are the vertices of its Newton polytope, and the 'cardinality' of the tropical variety (as an F_1-object) is the number of lattice points in the polytope, which equals the degree of the toric variety after base change. Test: for each toric variety corresponding to a polytope P, compute the number of F_1-points (vertices of P) and verify that the Euler characteristic of the toric variety equals |vertices(P)| = #F_1-points. Prove the tensor product correspondence: tropical scheme X over F_1 has X tensor_Z Z = the corresponding toric variety. Impact: F_1 and tropical geometry are two faces of the same coin. The field with one element is tropical, and tropical geometry is the geometry of F_1.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Novelty",
         "Tropical"
@@ -33585,7 +33585,7 @@
       "depth_estimate": 3,
       "description": "Prime gaps — the spaces between consecutive primes — are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable — given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random — they are a solvable crossword puzzle with deterministic rules.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Novelty",
         "NumberTheory"
@@ -33626,7 +33626,7 @@
       "depth_estimate": 3,
       "description": "Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearrangement of the primes q_1, q_2, ... such that the sequence of ratios q_n / p_n converges to 1. In other words, you can shuffle the primes almost arbitrarily and the room numbers barely change. More precisely, the set of permutations sigma for which p_{sigma(n)} / p_n has a limit is dense in the symmetric group (with the topology of pointwise convergence). But NOT every permutation works: the permutation that swaps all even-indexed primes with odd-indexed ones gives q_{2n}/p_{2n} = p_{2n-1}/p_{2n} which converges to 1 by the prime number theorem, but the permutation that reverses order gives q_n/p_n = p_{N-n}/p_n which diverges. Test: compute q_n/p_n for 10 random permutations of the first 10^6 primes and verify that most ratios converge to 1. Find the exact density of 'well-behaved' permutations. Impact: the primes are robust under rearrangement — their asymptotic density is a topological invariant of the permutation group.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Novelty",
         "NumberTheory"
@@ -33667,7 +33667,7 @@
       "depth_estimate": 3,
       "description": "The Mandelbrot set M is defined by z_{n+1} = z_n^2 + c, and the boundary of M is the locus of c values where the orbit of 0 is bounded but barely so. Each bulb of M corresponds to a rational number p/q (the period-q bulb at angle p/q). The size of the p/q bulb decreases with q, and the Fibonacci sequence governs the spiral arrangement of bulbs. Conjecture: The period of the bulb at angle p/q (in lowest terms) is exactly q. Moreover, the Lyapunov exponent lambda(c) at the center of the p/q bulb equals log(2) * cos(pi*p/q). The 'prime bulbs' — bulbs at angles 1/q where q is prime — have special symmetry: they are the only bulbs with dihedral symmetry D_q. The composite bulbs have more complex symmetry groups. The prime factorization of the period determines the bulb's topology: a bulb of period n = p1^a1 * ... * pk^ak is topologically a product of k bulbs of periods p1^a1, ..., pk^ak. Test: for each rational p/q with q <= 20, locate the corresponding bulb in M, compute its Lyapunov exponent, and verify lambda = log(2) * cos(pi*p/q). Classify bulbs by the prime factorization of their period and verify the product structure. Impact: the Mandelbrot set is a visual calculator for prime factorization — every bulb encodes number-theoretic information about its period.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Novelty",
         "NumberTheory"
@@ -33708,7 +33708,7 @@
       "depth_estimate": 3,
       "description": "When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search fractal dimension D(T) of a theorem T as the Hausdorff dimension of the set of all successful proof paths for T. If D(T) < 1, the proof is 'easy' (few paths work, so search is focused). If D(T) > 1, the proof is 'hard' (many paths must be explored). Conjecture: For theorems in ZFC, D(T) = 1 + O(1/length(T)). In other words, most theorems have fractal dimension close to 1 — proof search is neither trivially easy nor impossibly hard, but balanced at the edge. Theorems with D(T) << 1 are 'obvious' (direct proofs), and theorems with D(T) >> 1 require exponentially long proofs. The fractal dimension correlates with proof length: if D(T) = 1 + epsilon, then the shortest proof of T has length roughly 1/epsilon. Test: for 1000 theorems in Lean 4's Mathlib, estimate D(T) by Monte Carlo sampling of proof search trees, and correlate with actual proof length. Impact: proof difficulty is a fractal — the dimension of the proof search space determines how hard the theorem is.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Novelty",
         "Logic"
@@ -33749,7 +33749,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n## Summary of results (this project)\n\nFile: `Catalog/Novelty/CoxeterPermutahedronPersistentSimplices.lean` (self-contained, no\n`sorry`, standard axioms only).\n\nThe conjecture \"number of maximal persistent simplices in the canonical subdivision of the\nCoxeter permutahedron `Pᵂ(a)` equals `|W|`\" rests on a group-theoretic core, which we isolate\nand prove for an arbitrary finite group `W` (finite Coxeter groups being the motivating\ninstance) acting on a set:\n\n**Proved.**\n* `card_orbit_of_generic` — for a generic (regular) point, the vertex set `W · a` of the\n  permutahedron has exactly `|W|` elements.\n* `orbitEquivGroup` — the explicit bijection vertices ↔ group elements.\n* `card_orbit_independent_of_point` — the count is independent of the chosen generic point.\n* `card_orbit_mul_card_stabilizer` — the exact orbit–stabilizer identity at every point.\n* `persistent_simplices_count` — the conjecture's logical skeleton: given the paper's\n  structural bijection \"maximal persistent simplices ↔ vertices\", the count is `|W|`.\n* Type `A`: `symmetricGroup_order` (`|Sₙ| = n!`), `perm_fixes_iff_eq_one` (a distinct-entry\n  vector is regular), and `card_permutahedron_vertices` (its permutahedron has `n!` vertices).\n\n**Disproved (contrarian).**\n* `card_orbit_lt_of_not_generic` — at a non-generic (non-regular) point the count is *strictly\n  less* than `|W|`.  Hence the statement without the genericity hypothesis is **false**;\n  genericity is necessary, not decorative.\n\n## What remains (not formalizable in current Mathlib)\n\nThe gap between what is proved and the full conjecture is the geometry/topology that Mathlib\ndoes not yet support:\n\n1. **The reflection representation and fundamental chamber.** Formalize that a point in the\n   open fundamental chamber of a finite Coxeter group has trivial stabilizer (regularity),\n   turning `IsGeneric` from a hypothesis into a theorem about chamber interiors.\n2. **The permutahedron as a polytope.** Prove that for a regular `a` the extreme points of\n   `conv(W · a)` are exactly `W · a` (all orbit points are vertices), connecting\n   `card_orbit_of_generic` to an honest vertex-count of a `convexHull`.\n3. **The canonical subdivision and persistence filtration.** Define the canonical subdivision\n   and the persistence filtration, and *prove* the structural bijection \"maximal persistent\n   simplices ↔ vertices\" that `persistent_simplices_count` currently takes as input. This is\n   the deep, paper-specific content and the main target for future work.\n\n## Bold follow-up conjectures\n\n* **Refined count by descent statistics.** Conjecture a refinement of the `|W|` count by the\n  Coxeter length / descent statistic, giving a `q`-analogue (Poincaré polynomial of `W`) as\n  the persistence-graded count.\n* **`f`-vector rigidity.** Conjecture that the full `f`-vector of the canonical subdivision\n  depends only on `W`, not on the generic `a` — a strengthening of the observed independence\n  in `card_orbit_independent_of_point`.\n* **Non-crystallographic types.** Extend the concrete type `A` instance to `I₂(m)`, `H₃`,\n  `H₄` where dihedral/icosahedral symmetry makes explicit vertex enumeration feasible.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Geometry",
         "Algebra"
@@ -33775,6 +33775,47 @@
       "thread_id": "th_26113620",
       "timestamp": "2026-07-09T02:54:32.245332+00:00",
       "title": "File: `Catalog/Novelty/CoxeterPermutahedronPersistentSimplices.lean` (self-conta"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions: Self-Improving Proofs\n\nThis cycle established a well-founded theory of proof refinement: every proof\ncarries a natural-number complexity `C(P) = length + depth + numLemmas`, a\nrefinement strictly decreases complexity, and from this alone we obtained\ntermination, an explicit `C(P_0)` step bound, eventual stabilization of any\nnon-increasing complexity stream, and existence of a simplest (terminal) proof.\nThe following conjectures push the theory beyond the natural-number setting.\n\n## 1. Ordinal complexity still terminates, but the step bound is lost\n\n**Conjecture.** If proof complexity is valued in the ordinals rather than the\nnaturals, refinement still terminates (no infinite descending chain), and a\nminimal proof still exists in every nonempty family; but the \"at most `C(P_0)`\nsteps\" bound fails — refinement can take any ordinal number of steps below\n`C(P_0)`.\n\nThe key insight is that termination depends only on well-foundedness of the\ncodomain, whereas the *finite* step count is a special feature of `ℕ`: the\ngap between \"converges\" and \"converges in boundedly many steps\" is exactly the\ngap between well-foundedness and the descending-chain-length being finite.\n\nWhy now? Modern proof developments routinely recurse on ordinal-valued measures\n(termination orders, lexicographic products), so a complexity theory that only\nworks for `ℕ` is too narrow; separating the two guarantees clarifies which\nsimplification guarantees survive the generalization.\n\n## 2. Minimal complexity is not a unique proof, but is unique up to a bounded orbit\n\n**Conjecture.** Among all proofs of a fixed theorem with the minimal achievable\ncomplexity `c`, the set of such proofs is nonempty and, under a natural notion of\n\"local edit\" (swapping equal-cost lemmas, reordering independent steps), forms a\nsingle connected component whose diameter is bounded by a function of `c` alone.\n\nThe key insight is that non-uniqueness of the simplest proof — already exhibited\nhere by two distinct complexity-`0` certificates of a trivial theorem — is not\nchaos: the minimizers should be interchangeable by cost-preserving local moves,\nso \"the simplest proof\" is well-defined as an equivalence class.\n\nWhy now? Automated simplifiers produce many superficially different \"shortest\"\nproofs; understanding whether they are all local rearrangements of one another\ndetermines whether canonicalization of simplest proofs is feasible.\n\n## 3. Complexity is subadditive across theorem composition\n\n**Conjecture.** For theorems `A` and `A → B`, the minimal complexity of a proof\nof `B` obtained by composition satisfies `Cmin(B) ≤ Cmin(A) + Cmin(A→B) + k` for\nan absolute constant `k` independent of the theorems, and this bound is tight\ninfinitely often.\n\nThe key insight is that composition of proofs adds their budgets plus a fixed\ngluing overhead, so minimal complexity behaves like a subadditive cost on the\ncategory of theorems and implications — a structure that would let one bound the\nsimplest proof of a target purely from the simplest proofs of its ingredients.\n\nWhy now? Large formal libraries are assembled by composing lemmas; a provable\nsubadditivity law would give the first predictive, compositional estimate of how\nsimple an assembled result can ultimately become.\n\n## 4. The refinement process length is unbounded across theorems\n\n**Conjecture.** For every natural number `n` there is a theorem together with a\nstarting proof whose every complexity-decreasing refinement sequence to the\nsimplest form has length at least `n`; moreover no computable function of the\ntheorem's statement bounds this length uniformly.\n\nThe key insight is that although each individual refinement halts in at most\n`C(P_0)` steps, the starting complexity itself is unbounded across theorems, so\nthe *global* simplification effort has no computable ceiling — matching the\ninformal intuition that some proofs require astronomically many improvements.\n\nWhy now? As proof-simplification pipelines become standard tooling, knowing that\ntheir worst-case running time cannot be predicted from the statement alone sets a\nprincipled expectation against over-optimistic complexity claims.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Logic"
+      ],
+      "github_issue": 0,
+      "id": "fd_0706",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "d12ad473",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d12ad473_retry3",
+      "status": "available",
+      "thread_id": "th_c2261dc5",
+      "timestamp": "2026-07-09T02:55:41.343667+00:00",
+      "title": "Well-founded theory of proof refinement: every proof"
     },
     {
       "ambition_level": "extension",
