@@ -47,7 +47,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
   },
   {
-    "consumed_by_exp_id": "55f141e7",
+    "consumed_by_exp_id": "",
     "description": "L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable \u2014 there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domains": [
       "Novelty",
@@ -57,7 +57,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T16:01:43.876173+00:00",
     "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
   },
@@ -77,7 +77,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e7035fce",
     "description": "Mendeleev's periodic table arranges elements by atomic number Z, but Z is just the charge of the nucleus. Conjecture: the periodic table is the spectrum of an operator on a Hilbert space of dimension equal to the number of stable isotopes. Define the 'nuclear Hamiltonian' H on L^2(R^3) by H = -hbar^2/(2m) * nabla^2 + V(r) where V(r) encodes the strong and electromagnetic forces. The eigenvalues E_n of H give the binding energies of nuclei, and Z_n = round(E_n / E_0) gives the atomic numbers. The 'periodicity' of the table arises because the eigenvalues of H have shell structure (like the hydrogen atom): the n-th shell has degeneracy 2n^2 (from the angular momentum quantum number), giving shell sizes 2, 8, 18, 32, 50, 72 \u2014 the noble gas atomic numbers 2, 10, 28, 60, 110 are the cumulative sums. The 'stability islands' (magic numbers 2, 8, 20, 28, 50, 82, 126) correspond to extra degeneracies in the nuclear potential. Test: solve the Schrodinger equation for a Woods-Saxon potential (model nuclear potential) and show that the eigenvalue degeneracies match the periodic table structure. Compute the 'predicted' periodic table from the eigenvalues and compare with reality. Impact: chemistry IS applied spectral theory. The periodic table is the spectrum of a Hamiltonian, and every chemical property is an eigenvalue.",
     "domains": [
       "Novelty",
@@ -87,7 +87,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T21:40:59.612742+00:00",
     "title": "The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
   },
@@ -9730,7 +9730,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
   },
   {
-    "consumed_by_exp_id": "601f17f4",
+    "consumed_by_exp_id": "",
     "description": "Prime gaps \u2014 the spaces between consecutive primes \u2014 are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable \u2014 given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random \u2014 they are a solvable crossword puzzle with deterministic rules.",
     "domains": [
       "Novelty",
@@ -9740,7 +9740,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.78,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-09T19:37:23.883933+00:00",
     "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
   },
