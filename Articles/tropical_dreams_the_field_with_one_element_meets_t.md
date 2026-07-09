@@ -1,98 +1,243 @@
-# The Phantom Field: How the Smallest Possible Number System Turned Out to Be Tropical
+# Tropical Dreams: When the Field with One Element Learned to Count
 
-*A mathematical connection hiding in plain sight for decades has finally come into focus: the mysterious "field with one element" and tropical geometry are two faces of the same coin.*
+## A field that shouldn't exist
 
----
+Mathematicians have a habit of falling in love with objects that do not exist.
+The most famous of these ghosts is called **the field with one element**, written
+$\mathbb{F}_1$. It has haunted number theory for more than half a century.
 
-## The Field That Shouldn't Exist
+The trouble started with a beautiful accident. When you count solutions to
+equations over a finite field with $q$ elements, the answers arrange themselves
+into tidy formulas — the celebrated Weil conjectures. Take the projective line:
+over the field with $q$ elements it has exactly $q + 1$ points. A projective
+plane has $q^2 + q + 1$. In general, projective $n$-space has
 
-In the basement of mathematics, beneath the integers, beneath even the simplest counting numbers, there lurks a phantom. Mathematicians call it **F₁** — the "field with one element." It shouldn't exist. By every standard definition, a field must have at least two elements: a zero and a one. And yet, for over half a century, tantalizing patterns in number theory have whispered that something is down there. Something simpler than anything we've ever seen.
+$$
+1 + q + q^2 + \cdots + q^n = \frac{q^{n+1} - 1}{q - 1}
+$$
 
-The story begins in 1957, when the French mathematician Jacques Tits noticed something strange. He was studying geometric structures called "buildings" — abstract scaffoldings that encode the symmetries of algebraic groups. Over a field with *q* elements, these buildings have a precise combinatorial structure that depends on *q*. But what happens when you set *q* = 1?
+points. Now do something forbidden: set $q = 1$. The formula collapses to
+$n + 1$. Somehow, mysteriously, the "number of points of projective $n$-space
+over a field with one element" wants to be $n + 1$ — even though no field with a
+single element can exist, because in any field the additive zero and the
+multiplicative one must be different.
 
-Formally, nothing. You can't have a field with one element. But Tits observed that if you *pretend* there is one and naively substitute *q* = 1 into every formula, you get beautifully consistent answers. The "building over F₁" turns out to be a familiar object: a simple set, with nothing more than the ability to point at things. No addition. No multiplication. Just *existence*.
+For decades $\mathbb{F}_1$ was a slogan without a definition. It was the name we
+gave to a pattern we could see but not touch: the shadow that finite fields cast
+as $q$ slides down toward $1$. Everyone agreed the shadow was real. Nobody could
+agree on what was casting it.
 
-This was the first sign that the phantom might be real.
+## A different world where plus means minimum
 
-## Tropical Dreaming
+Meanwhile, in a neighboring part of mathematics, a strange arithmetic was
+quietly reshaping algebraic geometry. It is called the **tropical semiring**, and
+it is defined on the real numbers together with a point at infinity,
+$\mathbb{R} \cup \{\infty\}$, by two deceptively simple rules:
 
-Half a world away, in a completely different corner of mathematics, another revolution was brewing. In the 1990s, mathematicians began exploring what happens when you rewrite the rules of algebra. Instead of the familiar operations — adding and multiplying numbers — they replaced addition with "take the minimum" and multiplication with "ordinary addition."
+$$
+a \oplus b = \min(a, b), \qquad a \odot b = a + b.
+$$
 
-The result was a strange new arithmetic:
+Addition becomes *taking the smaller of two numbers*. Multiplication becomes
+*ordinary addition*. This is not a game; it is the arithmetic that governs
+optimization, scheduling, the shortest path through a network, and the limiting
+behavior of polynomials as their coefficients are stretched to extremes.
 
-> 3 ⊕ 5 = min(3, 5) = 3
-> 3 ⊗ 5 = 3 + 5 = 8
+The tropical world has one feature that feels like a defect until you realize it
+is a fingerprint. Its addition is **idempotent**:
 
-This is the **tropical semiring**, named (perhaps apocryphally) after the Brazilian mathematician Imre Simon. At first glance, it looks like a mathematical joke. But tropical arithmetic has a superpower: it turns curved geometry into straight-line geometry. A parabola becomes a pair of rays meeting at a corner. A circle becomes a polygon. Differential equations become piecewise-linear puzzles.
+$$
+a \oplus a = \min(a, a) = a.
+$$
 
-Tropical geometry — the study of shapes in this min-plus world — exploded into one of the most active areas of modern mathematics. It found applications in optimization, phylogenetics, auction theory, and even string theory.
+Adding something to itself changes nothing. And there is no subtraction — you
+cannot undo a minimum, because once you have thrown away the larger of two
+numbers, it is gone forever. There are no additive inverses.
 
-But here's what nobody expected: the phantom field and the tropical revolution were heading toward the same destination.
+Now look back at $\mathbb{F}_1$. What would a "field" with one element have to
+look like? It would have a multiplication but no genuine addition, because
+addition is exactly the structure that forces zero and one apart. The tropical
+semiring has a rich multiplication (ordinary $+$) and an addition so degenerate
+($\min$) that it barely deserves the name. **The defect of the tropical world is
+precisely the defect that** $\mathbb{F}_1$ **was supposed to have.**
 
-## The Collision
+This is the dream that organizes everything below: *the field with one element is
+tropical, and tropical geometry is the geometry of $\mathbb{F}_1$.* The two
+ghosts are the same ghost.
 
-The connection hides in a single word: **idempotent**.
+## From polytopes to varieties, and back
 
-In tropical arithmetic, adding something to itself gives you back the same thing:
+To turn a dream into mathematics you need a dictionary, and the dictionary here
+runs through convex polytopes — the higher-dimensional cousins of polygons and
+polyhedra.
 
-> 3 ⊕ 3 = min(3, 3) = 3
+A tropical variety, in its simplest incarnation, is encoded by a **polytope**
+$P$: a bounded region cut out by finitely many flat faces, like a triangle, a
+square, a tetrahedron, or a cube. This polytope is the tropical / $\mathbb{F}_1$
+object. It knows nothing yet about complex numbers or classical geometry; it is
+pure combinatorics, a shape with vertices, edges, and faces.
 
-This is radically different from ordinary arithmetic, where 3 + 3 = 6. In tropical world, doubling is the identity. This is exactly what you'd expect in a world where "the field has one element" — because in such a field, the only scalar is 1, so scaling by 1 is the identity. The equation *a + a = a* is the algebraic fingerprint of characteristic 1.
+Then comes **base change**. There is a classical machine, older than tropical
+geometry, that turns a lattice polytope into an honest geometric space — a
+**toric variety**. You can think of base change as "tensoring up to $\mathbb{Z}$":
+you take the skeletal $\mathbb{F}_1$-shape and pour in the integers, and out comes
+a genuine variety $X_P$ over the usual numbers, one that carries topology,
+cohomology, and all the classical invariants. The simplest example: the standard
+$n$-dimensional simplex $\Delta^n$ (a triangle when $n = 2$, a tetrahedron when
+$n = 3$) base-changes to projective $n$-space $\mathbb{P}^n$.
 
-This observation, which crystallized through the work of Alain Connes, Katia Consani, and others in the 2000s, led to a breathtaking conjecture: **tropical geometry IS the geometry of F₁.** The tropical semiring isn't just analogous to the field with one element — it *is* the field with one element, in the most precise categorical sense.
+So we have a two-sided picture:
 
-## Vertices, Polytopes, and the Point-Counting Miracle
+- **The $\mathbb{F}_1$ side:** a polytope $P$, a purely combinatorial object.
+- **The classical side:** the toric variety $X_P$, obtained by base change to
+  $\mathbb{Z}$.
 
-To understand why this matters, consider a cube. A cube has 8 vertices, 12 edges, and 6 faces. Its Euler characteristic — the alternating sum of face counts — is 8 − 12 + 6 = 2.
+The whole conjecture is that these two sides carry *the same information*. And
+information, to be compared, must be counted.
 
-Now, the cube is a special kind of geometric object called a **toric variety** (when you complexify and compactify it appropriately). Toric varieties are built from polytopes — the cube from a cube-shaped polytope, a triangle-based shape from a triangular polytope, and so on.
+## The two ways of counting must agree
 
-Here's the miracle: if you count the "points over F₁" of a toric variety, you get the number of vertices of its polytope. And the Euler characteristic of the toric variety equals this vertex count. The phantom field, which we can't even define properly, is giving us correct topological information about real geometric objects.
+Here is where the story becomes a theorem. Each side has a natural notion of
+"size," and the claim is that they coincide.
 
-In the language of tropical geometry, the "F₁-points" of a tropical variety are exactly the vertices of its Newton polytope — the corners where the piecewise-linear structure changes direction. The "corner locus" of a tropical curve, where the minimum is achieved by two different terms simultaneously, is the tropical variety itself.
+**Counting on the** $\mathbb{F}_1$ **side.** The $\mathbb{F}_1$-points of the
+polytope $P$ are its **vertices** — the corners. A triangle has $3$; a square has
+$4$; a tetrahedron has $4$; a cube has $8$. This is the tropical cardinality: how
+many corners does the shape have?
 
-## From F₁ to ℤ: The Base Change
+**Counting on the classical side.** Every geometric space has an **Euler
+characteristic**, $\chi$, the most robust integer you can attach to a shape. For
+a surface it is (vertices) $-$ (edges) $+$ (faces); in general it is the
+alternating sum of Betti numbers,
 
-Perhaps the deepest aspect of the F₁-tropical correspondence is **base change**. In ordinary algebraic geometry, you can "extend scalars" — take a geometric object defined over the rationals and study it over the reals, or over the complex numbers. The analogue for F₁ is:
+$$
+\chi(X) = \sum_{i} (-1)^i b_i(X),
+$$
 
-> Start with an F₁-object (a monoid with an absorbing zero) and "tensor with ℤ" to get an honest algebraic object.
+where $b_i$ counts the $i$-dimensional holes. The Euler characteristic is the
+number that survives cutting, gluing, and deforming; it is the arithmetic
+signature of a space's topology.
 
-When you base-change a free F₁-module of rank *r* to ℤ, you get a free ℤ-module of rank *r*. The monoid algebra ℤ[M] of a commutative monoid M is exactly the coordinate ring of the toric variety associated to M. This gives a precise functor:
+> **Main correspondence.** For the toric varieties considered here, the Euler
+> characteristic of the base change equals the number of $\mathbb{F}_1$-points:
+> $$ \chi(X_P) = \#\{\text{vertices of } P\} = \#\mathbb{F}_1\text{-points}. $$
 
-> F₁-algebras → ℤ-algebras → Toric varieties
+The topological invariant on the classical side is nothing but the corner-count
+on the combinatorial side. The dream now has a number attached to it, and the
+number checks out.
 
-The tropical semiring sits at the F₁ end of this pipeline. Its "geometry" is the piecewise-linear world of tropical varieties. Base-changing to ℤ inflates these skeletal tropical objects into full algebraic varieties.
+## Why it is true: two clean mechanisms
 
-## The Order Within
+The result rests on two structural facts, and understanding them is more
+satisfying than the statement itself.
 
-One of the most elegant consequences of the F₁-tropical connection is the emergence of **order from algebra**. In any F₁-algebra, the idempotent addition induces a natural partial order:
+**Mechanism 1: odd holes vanish.** For projective space, and for the varieties we
+build from it, the odd-dimensional Betti numbers are all zero — there are no
+odd-dimensional holes. Projective $n$-space has exactly one even hole in each
+dimension $0, 2, 4, \dots, 2n$ and nothing in between. Its list of Betti numbers
+reads $1, 0, 1, 0, 1, \dots$. This is why its **Poincaré polynomial**, the
+bookkeeping device $\sum_i b_i\, t^i$, is
 
-> a ≤ b if and only if a ⊕ b = a
+$$
+P_{\mathbb{P}^n}(t) = 1 + t^2 + t^4 + \cdots + t^{2n}.
+$$
 
-This turns every F₁-algebra into a meet-semilattice — a partially ordered set where every pair of elements has a greatest lower bound (their tropical sum). The multiplicative structure respects this order: scaling preserves the ordering, just as adding a constant to both sides of an inequality preserves it.
+When the odd terms vanish, a small miracle occurs. The Euler characteristic is
+the Poincaré polynomial evaluated at $t = -1$, while the **total Betti number**
+(the sum of *all* the holes, with no signs) is the polynomial evaluated at
+$t = +1$. If every odd coefficient is zero, the minus signs never fire, and the
+two evaluations agree:
 
-This means that the F₁-world is inherently *ordered*, not *additive*. Where ordinary algebra has sums and differences, F₁-algebra has comparisons and selections. This is why tropical geometry "linearizes" — it replaces the arithmetic of fields with the logic of comparisons.
+$$
+\chi(X) = P_X(-1) = P_X(1) = \sum_i b_i(X).
+$$
 
-## What It All Means
+The alternating sum stops alternating. For $\mathbb{P}^n$ this common value is
+$n + 1$ — exactly the number of vertices of the simplex $\Delta^n$.
 
-The identification of F₁ with tropical geometry resolves one of the deepest puzzles in modern mathematics. For decades, the field with one element was a mysterious ghost, manifesting only through suspicious patterns in formulas. Now we can say what it actually is: it is the world of min-plus arithmetic, where addition is idempotent and geometry is piecewise-linear.
+**Mechanism 2: products multiply.** The interesting toric varieties are built as
+**products** of projective spaces, $\mathbb{P}^{n_1} \times \cdots \times
+\mathbb{P}^{n_k}$, which correspond to **product polytopes** $\Delta^{n_1} \times
+\cdots \times \Delta^{n_k}$. Two facts click together here.
 
-This has profound implications:
+On the combinatorics side, the vertices of a product polytope are exactly the
+tuples of vertices of the factors, so the corners simply multiply:
 
-**For number theory**: The Weil conjectures, which count points on varieties over finite fields F_q, take a particularly clean form when q = 1. The F₁-tropical correspondence says these "q = 1" formulas are computing tropical invariants — vertex counts, Euler characteristics, and f-vectors of polytopes.
+$$
+\#\text{vertices}(P \times Q) = \#\text{vertices}(P) \cdot \#\text{vertices}(Q).
+$$
 
-**For algebraic geometry**: Toric varieties, which form the most tractable class of algebraic varieties, are precisely the varieties that "come from F₁" via base change. This suggests that toric geometry is, in a deep sense, the simplest kind of geometry — the geometry that exists "before" you choose a field.
+On the topology side, the Poincaré polynomial of a product is the **product** of
+the Poincaré polynomials (a Künneth-type convolution — a Cauchy product of the
+Betti sequences). Because each factor has only even holes, so does the product,
+and Mechanism 1 applies again. Evaluating the product polynomial at $t = 1$ gives
+the product of the total Betti numbers:
 
-**For combinatorics**: The F₁-Betti numbers of a simplicial complex — the counts of faces of each dimension — are literally binomial coefficients. The formula β_k = C(n+1, k+1) for the complete simplicial complex on n+1 vertices is the tropical shadow of the Betti numbers of projective space.
+$$
+\chi\big(\textstyle\prod_i \mathbb{P}^{n_i}\big)
+= \prod_i (n_i + 1)
+= \prod_i \#\text{vertices}(\Delta^{n_i})
+= \#\text{vertices}\big(\textstyle\prod_i \Delta^{n_i}\big).
+$$
 
-## The Road Ahead
+The two counts march in lockstep because both are *multiplicative*, and they
+start from the same base case $\chi(\mathbb{P}^n) = n + 1$. That is the whole
+proof, in spirit: a shared base case propagated by a shared product rule.
 
-Much remains to be done. The precise relationship between F₁-schemes and tropical schemes is still being worked out. The dream is a full "Spec F₁" — a spectrum functor for the field with one element that mirrors the classical construction in algebraic geometry.
+And notice what powers the argument at bottom. The reason the alternating sum
+degenerates into a plain sum — the reason $\chi$ counts vertices rather than
+some signed combination of them — traces back to idempotency, the very
+fingerprint of the tropical world. No additive inverses on the tropical side; no
+cancellation on the topological side. The absence of subtraction in
+$\mathbb{F}_1$ is the absence of minus signs in the Euler characteristic.
 
-But the central insight is now clear: the field with one element is not a phantom. It is the tropical world, the world of minimums and piecewise-linear maps, the world where algebra reduces to order and geometry reduces to combinatorics. It has been hiding in plain sight all along, waiting in the warm latitudes of tropical mathematics for someone to recognize its true identity.
+## A worked example
 
-The smallest field turned out to be the most beautiful.
+Take $\mathbb{P}^2 \times \mathbb{P}^1$, the toric variety of the prism
+$\Delta^2 \times \Delta^1$ (a triangle times a segment).
 
----
+- **Corners.** The triangle has $3$ vertices, the segment has $2$, so the prism
+  has $3 \times 2 = 6$ vertices. Six $\mathbb{F}_1$-points.
+- **Topology.** The Poincaré polynomials are $1 + t^2 + t^4$ and $1 + t^2$. Their
+  product is
+  $$
+  (1 + t^2 + t^4)(1 + t^2) = 1 + 2t^2 + 2t^4 + t^6.
+  $$
+  Every exponent is even. Evaluating at $t = 1$ gives $1 + 2 + 2 + 1 = 6$, and at
+  $t = -1$ the same $6$, because nothing cancels.
 
-*The mathematical results described in this article have been rigorously verified using computer-assisted formal methods. The F₁-algebra structure, the order-theoretic properties, the polytope correspondence, and the Betti number calculations are all provably correct — not just plausible, but certain.*
+Euler characteristic $6$, vertex count $6$. The classical invariant and the
+combinatorial invariant are the same integer, arrived at by completely different
+routes.
+
+## What it means
+
+Reading the correspondence from left to right, it says that a purely
+combinatorial gadget — the corners of a polytope, a thing a child could count —
+predicts a deep topological invariant of a complex algebraic variety. Reading it
+from right to left, it says that the topology of these varieties is, at heart,
+combinatorics in disguise; the holes are bookkeeping for corners.
+
+But the deepest reading is the one we started with. The reason the accounting
+works is that both worlds are built on the same broken arithmetic — an addition
+with no inverse, a $\min$ that cannot be undone, a $+$ that has forgotten how to
+subtract. That brokenness is not a bug. It is the signature of the field with one
+element, and it is written identically in the idempotent semiring of tropical
+geometry and in the sign-free Euler characteristics of toric varieties.
+
+The field with one element was never a field. It was a way of counting corners.
+And tropical geometry, all along, was the place where that counting lives. Two
+ghosts, one shadow.
+
+## The road ahead
+
+The correspondence proved here covers products of projective spaces, where the
+two load-bearing mechanisms — no odd holes, multiplicativity — are cleanest. The
+natural horizon is every smooth projective toric variety: there a classical cell
+decomposition attaches one even-dimensional cell to each torus-fixed point, so
+odd holes again vanish and the Euler characteristic degenerates to a fixed-point
+count, matching the vertices of the moment polytope. Refining the scalar count
+into the full Poincaré polynomial turns the combinatorial *h*-vector of the
+polytope into the Betti numbers of the variety, and the classical symmetry of
+that vector — the Dehn–Sommerville relations — becomes Poincaré duality. The
+corner-counting dream, it seems, has room to grow.
