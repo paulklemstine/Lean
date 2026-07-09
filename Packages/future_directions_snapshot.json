@@ -17835,6 +17835,36 @@
     "title": "Exact maximum size of a Schubert subspace code for q=2, n=6, k=3, d=(4,5,6) at minimum distance 4"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Yun2017",
+      "Yun2019",
+      "Waldspurger1985",
+      "Gross1986",
+      "RapoportZink1996"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a cuspidal automorphic representation \\(\\pi\\) of \\(\\PGL_2\\) over the function field \\(F\\) of a smooth projective curve \\(X\\) with conductor equal to an arbitrary effective divisor \\(\\Sigma\\), the \\(r\\)-th derivative at the central point of the Forbes–Jones base‑change \\(L\\)-function \\(L_{F'/F}(\\pi,s)\\) is (up to an explicit constant depending only on local data at \\(\\Sigma\\) and the chosen Haar measures) equal to the self‑intersection number of the Heegner‑Drinfeld cycle \\(Z_{\\pi}^{r}\\) inside the integral model of the moduli stack of \\(\\PGL_2\\)-shtukas with \\(\\Gamma_0(\\Sigma)\\) level structure and supersingular legs at a fixed set of infinite places. In other words, there exists a constant \\(C assemblies(r,\\Sigma)\\in\\Q^\\times\\) such that\n\\[\n\\langle Z_{\\pi}^{r},Z_{\\pi}^{r}\\rangle\n= C\\bigl(r,\\Sigma\\bigr)\\cdot L_{F'/F}^{(r)}(\\pi,\\tfrac12).\\n\\]\nThe conjecture is formulated for all integers \\(r\\ge 1\\) and all finite – but not necessarily square‑free – divisors \\(\\Sigma\\).",
+    "domain_bridges": [
+      "Algebraic Geometry",
+      "Automorphic Forms",
+      "Intersection Theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0780",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The strategy combines the geometric Satake equivalence on the moduli stack of shtukas with deeper level structure, the geometric trace formula for the relative trace of the unramified Hecke algebra, and an analysis of the deformation theory of the Heegner‑Drinfeld cycle inside the integral model. One first constructs a canonical class \\([Z_{\\pi}^{r}]\\) in the Chow group of the integral stack for any non‑square‑free level \\(\\Sigma\\), then shows that the cycle class satisfies a Lefschetz trace formula relating its self‑intersection to a weighted orbital integral. Using the explicit description of the weighted orbital integral in terms of the local components of \\(\\pi\\) at the points of \\(\\Sigma\\), one reduces the global identity to the local comparison of test functions, which is established via a local Waldspurger–Gross–Zagier lemma for the deeper parahoric level. Finally, a global spectral expansion produces the derivative of the base‑change \\(L\\)-function on contactar side, yielding t",
+    "research_mode": "team",
+    "source_exp_id": "2607.07531v1",
+    "status": "available",
+    "timestamp": "2026-07-09T18:43:32.596120+00:00",
+    "title": "Higher Gross‑Zagier Formula for Non‑Square‑Free Level on Shtukas"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "factor complexity",
@@ -17855,7 +17885,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0780",
+    "id": "fd_0781",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Utilize the structural description of ternary minimal complexity words (e.g., Arnoux-Rauzy/episturmian). Analyze bispecial factors and their left/right extensions to show that for any target k one can choose G_n as a stabilizer of a suitable partition of positions, interpolating between abelian equivalence (G_n=S_n) and identity (G_n=Id). Proceed by induction on n, with base cases verified by finite enumeration.",
@@ -17880,7 +17910,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0781",
+    "id": "fd_0782",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use a short t‑model of the ΘZero graph together with a monotone guidance that always selects a big component of weight >½; apply the Dominated Guided Separator lemma to obtain a separator of size O(tk log k) and argue that its closed neighbourhood hits all Θ_t‑induced minors.",
@@ -17915,7 +17945,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0782",
+    "id": "fd_0783",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "We will formalise the conjecture in Lean 4 by defining the predicate \\`is_reflected_bounded_growth\\` on vectors of natural numbers, the monotonicity and inequality/parity conditions, and the associated product of \\(q\\)-integers.  The plan is:\n\n1. Implement the definitions in Lean.\n2. Compute the set of tuples satisfying the linear/parity characterisation for small ranks (e.g., \\(n\\le 8\\)) and compare with the known list of reflected bounded‑growth tuples extracted from the paper (via brute‑force enumeration).\n3. Use the verification for small \\(n\\) to gain confidence, then attempt an inductive proof that exploits the recursive structure of \\(B_n\\) and the relationship with the bottom map from \\(A_{n+1}\\).\n\nThe final theorem will assert the equivalence described above.",
@@ -17944,7 +17974,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0783",
+    "id": "fd_0784",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Start from the identity ∑_{n≤y} M(⌊y/n⌋) = 1. Split the sum at n = ⌊√y⌋ using summation by parts to express ∑_{n≤κ_y} M(⌊y/n⌋) in terms of M(⌊√y⌋) and a sum involving μ(n). Define S(y,u) by isolating the terms with n ≤ ⌊y/u⌋. Verify that ∑_{k≤y/u} M(⌊y/k⌋) = S(y,u) when ⌊√y⌋ < u. Apply the generalized Möbius inversion formula ∑_{k≤x} μ(k) G(⌊x/k⌋) = F(x) where G(y) = ∑_{k≤y/u} F(⌊y/k⌋) to obtain the result.",
@@ -17971,7 +18001,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0784",
+    "id": "fd_0785",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "p-biased measure integration over the Boolean lattice followed by continuous integration across the bias parameter p ∈ [0,1] to recover the optimal coefficient 1/6",
@@ -17998,7 +18028,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0785",
+    "id": "fd_0786",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the notion of cluster picture and minimal regular model for genus 2 curves in Lean 4 using mathlib's discrete valuation ring and algebraic curve libraries. For a family of explicit curves in characteristic 2 with tame reduction (e.g., given by y^2 = f(x) with f separable and odd degree extension for semistability), computationally derive the cluster picture and verify it maps to the expected Namikawa-Ueno label and invariants. Then adapt the authors' p≠2 proof: because tame reduction implies the relevant inertia group has odd order, the wild ramification obstacles in characteristic 2 are absent, allowing the same resolution and component group calculations.",
@@ -18007,6 +18037,33 @@
     "status": "available",
     "timestamp": "2026-07-09T18:21:59.032628+00:00",
     "title": "Tame reduction classification for genus 2 curves in characteristic 2"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "BuchananCliftonCulverONeillRombachYin2023",
+      "BuchananCliftonCulverFranklNieOzekiRombachYin2026"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any integer k ≥ 2, the minimum number of complete bipartite graphs needed to cover each edge of the complete graph K_{2k+1} an odd number of times is exactly k+1. This confirms Conjecture 1.2 of Buchanan et al. (2023) and determines b₂(n) for all odd n.",
+    "domain_bridges": [
+      "algebraic combinatorics",
+      "spectral graph theory",
+      "finite fields",
+      "combinatorial matrix theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0787",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish the lower bound b₂(K_{2k+1}) ≥ k+1 using the F₂-rank bound b₂(G) ≥ r₂(A_G)/2, where the adjacency matrix of K_{2k+1} over F₂ has rank 2k. For the upper bound, construct an explicit odd cover of size k+1 using finite field constructions, such as symmetric conference matrices or Paley-type graphs, leveraging the fact that 2k+1 is odd.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07448v1",
+    "status": "available",
+    "timestamp": "2026-07-09T18:44:00.462337+00:00",
+    "title": "Odd cover number for complete graphs of odd order"
   },
   {
     "ambition_level": "extension",

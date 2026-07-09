@@ -9524,12 +9524,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a cuspidal automorphic representation \\(\\pi\\) of \\(\\PGL_2\\) over the function field \\(F\\) of a smooth projective curve \\(X\\) with conductor equal to an arbitrary effective divisor \\(\\Sigma\\), the \\(r\\)-th derivative at the central point of the Forbes\u2013Jones base\u2011change \\(L\\)-function \\(L_{F'/F}(\\pi,s)\\) is (up to an explicit constant depending only on local data at \\(\\Sigma\\) and the chosen Haar measures) equal to the self\u2011intersection number of the Heegner\u2011Drinfeld cycle \\(Z_{\\pi}^{r}\\) inside the integral model of the moduli stack of \\(\\PGL_2\\)-shtukas with \\(\\Gamma_0(\\Sigma)\\) level structure and supersingular legs at a fixed set of infinite places. In other words, there exists a constant \\(C assemblies(r,\\Sigma)\\in\\Q^\\times\\) such that\n\\[\n\\langle Z_{\\pi}^{r},Z_{\\pi}^{r}\\rangle\n= C\\bigl(r,\\Sigma\\bigr)\\cdot L_{F'/F}^{(r)}(\\pi,\\tfrac12).\\n\\]\nThe conjecture is formulated for all integers \\(r\\ge 1\\) and all finite \u2013 but not necessarily square\u2011free \u2013 divisors \\(\\Sigma\\).",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0780",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07531v1",
+    "status": "available",
+    "timestamp": "2026-07-09T18:43:32.596120+00:00",
+    "title": "Higher Gross\u2011Zagier Formula for Non\u2011Square\u2011Free Level on Shtukas"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "We conjecture that every aperiodic infinite word over a ternary alphabet whose factor complexity satisfies p(n)=2n+1 for all n\u22651 possesses the universal group complexity property: for each length n and each integer k with p_ab(n) \u2264 k \u2264 p(n) there exists a subgroup G \u2264 S_n such that the group complexity p^G(n)=k.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0780",
+    "id": "fd_0781",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07620v1",
@@ -9543,7 +9558,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0781",
+    "id": "fd_0782",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07697v1",
@@ -9558,7 +9573,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0782",
+    "id": "fd_0783",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07659v1",
@@ -9572,7 +9587,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0783",
+    "id": "fd_0784",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07566v1",
@@ -9587,7 +9602,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0784",
+    "id": "fd_0785",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07564v1",
@@ -9602,13 +9617,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0785",
+    "id": "fd_0786",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07558v1",
     "status": "available",
     "timestamp": "2026-07-09T18:21:59.032628+00:00",
     "title": "Tame reduction classification for genus 2 curves in characteristic 2"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any integer k \u2265 2, the minimum number of complete bipartite graphs needed to cover each edge of the complete graph K_{2k+1} an odd number of times is exactly k+1. This confirms Conjecture 1.2 of Buchanan et al. (2023) and determines b\u2082(n) for all odd n.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0787",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07448v1",
+    "status": "available",
+    "timestamp": "2026-07-09T18:44:00.462337+00:00",
+    "title": "Odd cover number for complete graphs of odd order"
   },
   {
     "consumed_by_exp_id": "",
