@@ -8460,11 +8460,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "If a family of complementary configurations degenerates to a configuration where some planes intersect, then the limit of the cross-ratio valuations (as the parameters approach the degenerate case) equals the intersection degree of the cycles obtained by spreading the original cycles to the valuation ring.",
+    "description": "For every positive integer k, the overcubic partition k-tuple function b_k(n) (with generating function f\u2084\u1d4f/(f\u2081\u00b2\u1d4f f\u2082\u1d4f) where f_m = (q^m; q^m)_\u221e) satisfies the same three fundamental congruences as the classical partition function: b_k(5n+4) \u2261 0 (mod 5), b_k(7n+5) \u2261 0 (mod 7), and b_k(11n+6) \u2261 0 (mod 11) for all n \u2265 0.",
     "domains": [
       "Algebra"
     ],
     "id": "fd_0700",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07270v1",
+    "status": "available",
+    "timestamp": "2026-07-09T04:34:57.488797+00:00",
+    "title": "Ramanujan-Type Congruences for All Overcubic Partition k-Tuples"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "If a family of complementary configurations degenerates to a configuration where some planes intersect, then the limit of the cross-ratio valuations (as the parameters approach the degenerate case) equals the intersection degree of the cycles obtained by spreading the original cycles to the valuation ring.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0701",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06477v1",
@@ -8479,7 +8493,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0701",
+    "id": "fd_0702",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06455v1",
@@ -8494,7 +8508,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0702",
+    "id": "fd_0703",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07555v1",
@@ -8509,7 +8523,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0703",
+    "id": "fd_0704",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07427v1",
@@ -8524,7 +8538,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0704",
+    "id": "fd_0705",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07458v1",
@@ -8538,7 +8552,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0705",
+    "id": "fd_0706",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07448v1",
@@ -8552,7 +8566,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0706",
+    "id": "fd_0707",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07328v1",
@@ -8567,7 +8581,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0707",
+    "id": "fd_0708",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07308v1",
@@ -8582,7 +8596,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0708",
+    "id": "fd_0709",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07256v1",
@@ -8596,13 +8610,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0709",
+    "id": "fd_0710",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07239v1",
     "status": "available",
     "timestamp": "2026-07-09T04:17:26.671029+00:00",
     "title": "Hamiltonicity of (K\u2081\u222aP\u2084)-free 1-tough graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For coprime integers \u2113, \u03bc \u22652, the number of overpartitions R\u0304_\u2113,\u03bc(n) modulo 4 is congruent to 0 or 1, which are the only perfect squares modulo 4.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0711",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07259v1",
+    "status": "available",
+    "timestamp": "2026-07-09T04:36:39.711348+00:00",
+    "title": "R\u0304_\u2113,\u03bc(n) modulo 4 is always a perfect square"
   },
   {
     "consumed_by_exp_id": "",
