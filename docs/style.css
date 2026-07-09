@@ -547,10 +547,11 @@ body {
 
 .welcome-title {
     font-family: var(--font-heading);
-    font-size: 6rem;
+    font-size: clamp(2rem, 7vw, 4.5rem);
     font-weight: 900;
     margin: 0 0 10px 0;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.1em;
+    word-break: break-word;
     background: linear-gradient(135deg, #ff4466 0%, #ffcc22 18%, #44ff88 36%, #22ccff 54%, #8844ff 72%, #ff44cc 100%);
     background-size: 300% 300%;
     animation: gradientCycle 6s ease-in-out infinite, textGlow 4s ease-in-out infinite;

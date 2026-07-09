@@ -8635,6 +8635,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For the Wenger graph W_5(q) (the k=5 case where the girth conjecture is known to hold), any f-degree fault tolerant 9-spanner must have at least (1/20) * f^(4/5) * n^(6/5) edges for all prime powers q \u2265 2 and all f \u2264 q^4 / 10, where n = 2q^5 is the number of vertices. This strengthens the asymptotic \u03a9(f^(1-1/k) n^(1+1/k)) lower bound of the paper with an explicit constant factor for the largest known explicit construction.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0712",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07576v1",
+    "status": "available",
+    "timestamp": "2026-07-09T04:50:03.649402+00:00",
+    "title": "Explicit Constant Factor for Wenger Graph DFT Spanner Lower Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For every composition \u03b1 of length r \u2264 R, the differential operator \u2202_\u03b1 = \u2202_{i1}\u22ef\u2202_{ir} acting on the polynomial ring \u211a[X_1,\u2026,X_R] yields a non-zero scalar multiple of the basis element X_{i1}\u2227\u22ef\u2227X_{ir} in \u2227^r V, where \u2202_i = (1/i!)\u00b7(d/dX_i)|_{X=0}. Moreover, the scalar equals the sign of the permutation that sorts (i1,\u2026,ir). This equality holds for all r and can be tested computationally for small values.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0712",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07667v1",
+    "status": "available",
+    "timestamp": "2026-07-09T04:50:32.617687+00:00",
+    "title": "Finite-type boson-fermion correspondence for Schubert differential operators"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers \u2014 anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension \u2014 they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property \u2014 it's not about content quality but about the sheaf cohomology of the social network.",
     "domains": [
       "Novelty",
