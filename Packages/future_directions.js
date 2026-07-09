@@ -3327,7 +3327,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of a sharp k-antichain with maximal (n-1)-dimensional Hausdorff measure"
   },
   {
-    "consumed_by_exp_id": "382fdcde",
+    "consumed_by_exp_id": "",
     "description": "For any finite Coxeter group W and any generic point a in the fundamental chamber, the number of maximal persistent simplices in the canonical subdivision of the Coxeter permutahedron P^W(a) equals |W|. This conjecture asserts a bijection between maximal persistent simplices and group elements, independent of the specific generic a.",
     "domains": [
       "Pythagorean",
@@ -3337,7 +3337,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28680v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T14:11:48.051564+00:00",
     "title": "Persistent Maximal Simplices Count Equals Order of the Coxeter Group"
   },
@@ -6028,7 +6028,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Factorization of Cyclotomic Gauss Sum Matrix"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6d195403",
     "description": "For any graph of order n \u2265 8, if it contains strictly more than T(n) = (n^2 - 3n)/2 - \u2308n/2\u2309 + 2 edges, then every edge in the graph has strictly positive Ollivier/Lin-Lu-Yau curvature.",
     "domains": [
       "Bridges"
@@ -6037,7 +6037,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T23:29:27.413260+00:00",
     "title": "Positive Curvature Threshold for Lin-Lu-Yau Curvature"
   },
@@ -6157,7 +6157,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Geometric monodromy groups of exceptional degree-5 rational functions are cyclic or dihedral"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c5715a86",
     "description": "For every doubly regular tournament on n vertices (where n \u2261 3 mod 4 and n \u2265 3), the metric dimension \u03b2(G) is at most \u23083\u00b7log\u2082(n)\u2309. This provides an explicit constant in the O(log n) bound established for related families in the paper, extending the probabilistic method of Babai to the directed tournament setting with a constructive resolvability guarantee.",
     "domains": [
       "Logic"
@@ -6166,7 +6166,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05152v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T05:40:17.241598+00:00",
     "title": "Explicit logarithmic bound on metric dimension of doubly regular tournaments"
   },
@@ -8357,11 +8357,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a cuspidal automorphic representation \u03c0 of PGL\u2082 over a function field F of a curve X over F_q with conductor \u03a3 being a single point with multiplicity 2, the self-intersection number of the corresponding Heegner-Drinfeld cycle on the moduli space of shtukas with level \u0393\u2080(2) is non-zero, implying the second derivative of the base change L-function L_{F'/F}(\u03c0, s) at s=1/2 is non-zero.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0695",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07531v1",
+    "status": "available",
+    "timestamp": "2026-07-09T02:57:46.925877+00:00",
+    "title": "Non-vanishing of Heegner-Drinfeld self-intersection at deeper level"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "If a family of complementary configurations degenerates to a configuration where some planes intersect, then the limit of the cross-ratio valuations (as the parameters approach the degenerate case) equals the intersection degree of the cycles obtained by spreading the original cycles to the valuation ring.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0695",
+    "id": "fd_0696",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06477v1",
@@ -8376,7 +8391,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0696",
+    "id": "fd_0697",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06455v1",
@@ -8391,7 +8406,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0697",
+    "id": "fd_0698",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07555v1",
@@ -8406,7 +8421,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0698",
+    "id": "fd_0699",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07427v1",
@@ -8421,13 +8436,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0699",
+    "id": "fd_0700",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07458v1",
     "status": "available",
     "timestamp": "2026-07-09T02:33:36.890665+00:00",
     "title": "Analytic spread equals linear matroid rank for forest H"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for all integers $r\\ge2$ and $n\\ge r+1$, the minimum number $b_{r+1}(n+1)$ of complete $(r+1)\\!$-partite $(r+1)\\!$-graphs needed to odd\u2011cover the complete $(r+1)\\!$-uniform hypergraph $K_{n+1}^{(r+1)}$ equals the minimum number $b_{r}(n)$ of complete $r$\\!\u2011partite $r$\\!\u2011graphs needed to odd\u2011cover $K_n^{(r)}$. In symbols, $$b_{r+1}(n+1)=b_{r}(n)\\,.$$",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0701",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07448v1",
+    "status": "available",
+    "timestamp": "2026-07-09T02:58:11.648430+00:00",
+    "title": "Recursive relation for odd cover numbers of complete hypergraphs"
   },
   {
     "consumed_by_exp_id": "e158da3a",

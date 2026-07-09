@@ -6072,7 +6072,7 @@
     "catalog_references": [
       "math.CO"
     ],
-    "consumed_by_exp_id": "382fdcde",
+    "consumed_by_exp_id": "",
     "description": "For any finite Coxeter group W and any generic point a in the fundamental chamber, the number of maximal persistent simplices in the canonical subdivision of the Coxeter permutahedron P^W(a) equals |W|. This conjecture asserts a bijection between maximal persistent simplices and group elements, independent of the specific generic a.",
     "domain_bridges": [
       "math.MG",
@@ -6088,7 +6088,7 @@
     "proof_strategy": "Use the fact that the normal fan of P^W(a) is the W-braid arrangement independent of a. Maximal persistent simplices correspond to chambers where a certain set of root inequalities are tight; each such chamber is uniquely associated to an element of W via the action on a. Show that genericity ensures each chamber yields exactly one maximal persistent simplex, giving a bijection.",
     "research_mode": "team",
     "source_exp_id": "2606.28680v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T14:11:48.051564+00:00",
     "title": "Persistent Maximal Simplices Count Equals Order of the Coxeter Group"
   },
@@ -11176,7 +11176,7 @@
       "Ollivier curvature",
       "Extremal graph theory"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6d195403",
     "description": "For any graph of order n ≥ 8, if it contains strictly more than T(n) = (n^2 - 3n)/2 - ⌈n/2⌉ + 2 edges, then every edge in the graph has strictly positive Ollivier/Lin-Lu-Yau curvature.",
     "domain_bridges": [
       "Discrete differential geometry",
@@ -11191,7 +11191,7 @@
     "proof_strategy": "Formalize the Lin-Lu-Yau curvature using the 1-Wasserstein distance between probability measures on vertices. Establish structural properties of graphs with non-positive curvature edges, and demonstrate that exceeding the edge threshold T(n) precludes the existence of such subgraphs, thereby forcing all edge curvatures to be strictly positive.",
     "research_mode": "team",
     "source_exp_id": "2607.02297v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T23:29:27.413260+00:00",
     "title": "Positive Curvature Threshold for Lin-Lu-Yau Curvature"
   },
@@ -11421,7 +11421,7 @@
       "05C20",
       "05C85"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c5715a86",
     "description": "For every doubly regular tournament on n vertices (where n ≡ 3 mod 4 and n ≥ 3), the metric dimension β(G) is at most ⌈3·log₂(n)⌉. This provides an explicit constant in the O(log n) bound established for related families in the paper, extending the probabilistic method of Babai to the directed tournament setting with a constructive resolvability guarantee.",
     "domain_bridges": [
       "graph_theory",
@@ -11437,7 +11437,7 @@
     "proof_strategy": "Adapt Babai's probabilistic method: for a doubly regular tournament on n=4k+3 vertices, every vertex has out-degree 2k+1 and every pair of distinct vertices shares exactly k common out-neighbours. Sample a random set S of size ⌈3·log₂(n)⌉ vertices. For any pair (u,v) of distinct vertices, compute the probability over the random choice of S that all s ∈ S give d(s,u)=d(s,v). Use the strong regularity properties to bound this probability below 1/n², then take a union bound over all pairs. The key structural lemma is that in a doubly regular tournament, for any distinct u,v, the set {s : d(s,u) ≠ d(s,v)} has size at least n/3, giving each sample at least a 1/3 chance of distinguishing u from v.",
     "research_mode": "team",
     "source_exp_id": "2607.05152v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T05:40:17.241598+00:00",
     "title": "Explicit logarithmic bound on metric dimension of doubly regular tournaments"
   },
@@ -15632,6 +15632,35 @@
     "title": "No Schubert code can exceed the size of a maximal partial spread in the extremal distance case"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Yun2017",
+      "Yun2019",
+      "Gross1986",
+      "Waldspurger1985"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a cuspidal automorphic representation π of PGL₂ over a function field F of a curve X over F_q with conductor Σ being a single point with multiplicity 2, the self-intersection number of the corresponding Heegner-Drinfeld cycle on the moduli space of shtukas with level Γ₀(2) is non-zero, implying the second derivative of the base change L-function L_{F'/F}(π, s) at s=1/2 is non-zero.",
+    "domain_bridges": [
+      "automorphic forms",
+      "intersection theory",
+      "moduli spaces of shtukas"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0695",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Apply the higher Gross-Zagier formula from the paper, analyzing the geometry of moduli spaces at non-square-free levels, specifically focusing on singularity structures of integral models and their cohomological properties to compute the intersection number.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07531v1",
+    "status": "available",
+    "timestamp": "2026-07-09T02:57:46.925877+00:00",
+    "title": "Non-vanishing of Heegner-Drinfeld self-intersection at deeper level"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "[B] $10.48550/ARXIV.2201.03794$"
@@ -15644,7 +15673,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0695",
+    "id": "fd_0696",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a family of configurations dispersing the cycles over the valuation ring, show that the cross-ratio valuation is preserved under deformation, and compute the limit using intersection-theoretic methods.",
@@ -15672,7 +15701,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0696",
+    "id": "fd_0697",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Utilize the paper's β-closed walk expansion and the sufficient condition via a walk-realizable {P4}-supporter. Reduce the search to a linear programming feasibility problem for coefficients of β-closed walk counts. Compute a concrete finite witness (e.g., with bounded walk length) satisfying the LP, then formalize the induced-subgraph expansion and supporter criterion in Lean 4 to verify the implication.",
@@ -15700,7 +15729,7 @@
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0697",
+    "id": "fd_0698",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Verify the conjecture for classes of biserial algebras where both magnitude and Grothendieck rank are computable: (1) Hereditary biserial algebras (where magnitude relates to Dynkin type), (2) Self-injective biserial algebras (where Coxeter duality provides constraints), (3) Use induction on the complexity of the Auslander-Reiten quiver structure. The key is establishing that representation-finiteness creates a perfect matching between indecomposable modules and Grothendieck group generators, reflected in the magnitude calculation.",
@@ -15730,7 +15759,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0698",
+    "id": "fd_0699",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct the formal group via the universal property of the tangent space of Ig_μ, use the Hodge type embedding to identify the differential operators with components of the logarithm map, then prove the coproduct compatibility by analyzing the group structure on Ig_μ via p-adic Fourier theory and the Mantovan correspondence.",
@@ -15760,7 +15789,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0699",
+    "id": "fd_0700",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Formalize determinantal ideal J_{G,H} in Lean using mathlib's commutative algebra and graph theory. 2. Define analytic spread as dimension of special fiber ring. 3. Define linear matroid M_{G,H} from incidence matrix of G over a perfect field. 4. Prove by induction on number of edges of H: base case |E(H)|=1 known from paper. For forest H, decompose into single edges; use exact sequences or properties of reductions of determinantal ideals to show that adding an edge increases both analytic spread and matroid rank by 1, preserving equality. 5. Bridge to existing matroid theory API in mathlib (or develop minimal matroid library).",
@@ -15769,6 +15798,33 @@
     "status": "available",
     "timestamp": "2026-07-09T02:33:36.890665+00:00",
     "title": "Analytic spread equals linear matroid rank for forest H"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Buchanan et al., Journal of Graph Theory 2026",
+      "Leader & Tan, Eur. J. Comb. 2026",
+      "Graham–Pollak theorem (JCT B 1972)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for all integers $r\\ge2$ and $n\\ge r+1$, the minimum number $b_{r+1}(n+1)$ of complete $(r+1)\\!$-partite $(r+1)\\!$-graphs needed to odd‑cover the complete $(r+1)\\!$-uniform hypergraph $K_{n+1}^{(r+1)}$ equals the minimum number $b_{r}(n)$ of complete $r$\\!‑partite $r$\\!‑graphs needed to odd‑cover $K_n^{(r)}$. In symbols, $$b_{r+1}(n+1)=b_{r}(n)\\,.$$",
+    "domain_bridges": [
+      "finite‑field linear algebra over $\\mathbb{F}_2$",
+      "$\\mathbb{F}_2$‑rank lower bounds for odd covers",
+      "construction of odd covers via bipartite subgraph complementations"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0701",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Extend the proof of $b_3(n+1)=b_2(n)$ to arbitrary uniformity.  Develop a systematic 'shifting' construction that lifts an optimal odd cover of $K_n^{(r)}$ to an odd cover of $K_{n+1}^{(r+1)}$ of the same size, showing $b_{r+1}(n+1)\\le b_r(n)$.  Simultaneously, apply the $\\mathbb{F}_2$ rank bound $b_r(G)\\ge r_2(A_G)/2$ to complete $(r+1)\\!$-uniform hypergraphs to obtain $b_{r+1}(n+1)\\ge b_r(n)$.  Together these give equality.  The combinatorial details involve analysing the adjacency tensors of complete hypergraphs over $\\mathbb{F}_2$ and using induction on $r$.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07448v1",
+    "status": "available",
+    "timestamp": "2026-07-09T02:58:11.648430+00:00",
+    "title": "Recursive relation for odd cover numbers of complete hypergraphs"
   },
   {
     "ambition_level": "extension",

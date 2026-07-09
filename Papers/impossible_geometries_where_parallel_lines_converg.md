@@ -1,57 +1,70 @@
-# Computational Evidence — Split Geometry
+# Computational Evidence: Split Geometry
 
-Metric on `ℝ²`:  `ds² = dx²/cosh²(y) + cosh²(x) dy²`, i.e. `E = sech²(y)`, `G = cosh²(x)`.
-Conjectured curvature sign-function:  `K(x,y) = sech²(x) − sech²(y)`, where
-`sech²(t) = 1/cosh²(t)`.
+Metric under study (the "Split metric" on the plane):
+$$ ds^2 = \frac{dx^2}{\cosh^2 y} + \cosh^2 x \, dy^2, \qquad
+   E(y)=\operatorname{sech}^2 y,\quad G(x)=\cosh^2 x. $$
 
-## 1. Values of `sech²`
+The conjecture claimed Gaussian curvature `K = sech²x − sech²y`, changing sign across
+the diagonals `y = ±x`, elliptic (`K>0`) on `|x|>|y|` and hyperbolic (`K<0`) on `|y|>|x|`.
 
-| t | cosh t | sech²(t) = 1/cosh²t |
-|---|--------|---------------------|
-| 0 | 1.0000 | 1.00000 |
-| 1 | 1.5431 | 0.41997 |
-| 2 | 3.7622 | 0.07065 |
-| 3 | 10.068 | 0.00987 |
+## 1. Symbolic curvature from the Brioschi formula
 
-`sech²` is even and strictly decreasing in `|t|` — verified in Lean as
-`sech2_lt_sech2_iff` / `sech2_eq_sech2_iff`.
+Using the orthogonal-coordinate Brioschi formula
+`K = -1/(2√(EG)) [ ∂ₓ(∂ₓG/√(EG)) + ∂_y(∂_yE/√(EG)) ]` with `√(EG) = cosh x / cosh y`:
 
-## 2. Sign of `K` in the three phases
+| quantity | value |
+|---|---|
+| `∂ₓG` | `2 cosh x sinh x` |
+| `(∂ₓG)/√(EG)` | `2 sinh x cosh y` |
+| `∂ₓ[(∂ₓG)/√(EG)]` | `2 cosh x cosh y` |
+| `∂_yE` | `−2 sinh y / cosh³y` |
+| `(∂_yE)/√(EG)` | `−2 sinh y /(cosh²y cosh x)` |
+| `∂_y[(∂_yE)/√(EG)]` | `−2(2 − cosh²y)/(cosh x cosh³y)` |
 
-| (x,y) | comparison | K(x,y) | phase |
-|-------|-----------|--------|-------|
-| (1,2) | \|x\|<\|y\| | +0.349 | K>0 (elliptic side) |
-| (2,1) | \|x\|>\|y\| | −0.349 | K<0 (hyperbolic side) |
-| (1,−1)| \|x\|=\|y\| | 0 | flat (phase boundary) |
-| (0,3) | \|x\|<\|y\| | +0.990 | K>0 |
-| (3,0) | \|x\|>\|y\| | −0.990 | K<0 |
+Assembling:
+$$ K(x,y) = 2\,\operatorname{sech}^2x\,\operatorname{sech}^2y - \operatorname{sech}^2x - \cosh^2 y. $$
 
-Matches `K_pos_of_abs_lt`, `K_neg_of_abs_lt`, `K_eq_zero_iff_abs`.
+A computer-algebra check confirms `K − (2 sech²x sech²y − sech²x − cosh²y) = 0`
+identically, and that this is **not** equal to the conjectured `sech²x − sech²y`.
 
-## 3. Phase boundary = diagonals
+## 2. Sign of the true curvature (counterexample hunt)
 
-`K(x,y)=0 ⟺ |x|=|y| ⟺ x²=y² ⟺ (x=y ∨ x=−y)`.  The zero set is exactly the two
-lines `y=x` and `y=−x`.  Verified as `phaseBoundary_eq_diagonals`.
+Sampling `K` at 2000 random points in `[-3,3]²`:
 
-## 4. Counterexample hunt: "crosses at most twice"
+- maximum observed value ≈ `−1.0×10⁻³` (i.e. `K ≤ 0` throughout, approaching `0` near the origin).
 
-The phase boundary is the union of two straight lines, so a straight coordinate
-line `t ↦ (x₀+ta, y₀+tb)` meets it wherever `(x₀+ta)² = (y₀+tb)²`, i.e. where
-the quadratic `(a²−b²)t² + 2(x₀a−y₀b)t + (x₀²−y₀²) = 0` vanishes.
+Spot values:
 
-* If `a² ≠ b²` (line not parallel to a diagonal): leading coefficient nonzero,
-  so at most **2** real roots.  Example `x₀=0, y₀=1, (a,b)=(1,0)`:
-  `t² = 1`, roots `t = ±1` — exactly two crossings.
-* If `a² = b²` (line parallel to a diagonal): the equation degenerates to a
-  linear one, giving `0` or `1` crossings — unless the line *is* a diagonal, in
-  which case every `t` is a "crossing".  This is why `geodesic_crosses_at_most_twice`
-  requires `a² ≠ b²`; no counterexample exists under that hypothesis.
+| (x,y) | true `K` | conjectured `sech²x − sech²y` |
+|---|---|---|
+| (0.3, 1.2) | −3.635 | +0.610 |
+| (2.0, 0.5) | −1.231 | −0.716 |
+| (1.0, 1.0) | −2.448 | 0 |
+| (0, 1) | −2.541 | +0.580 |
 
-Tested random samples of `(a,b,x₀,y₀)` with `a²≠b²`: never more than two roots.
-No counterexample found — consistent with the theorem.
+The point `(0,1)` is decisive: the conjecture predicts an **elliptic** point (`+0.58`),
+but the true curvature is strictly **negative**. There is no elliptic region at all.
 
-## 5. Positive-definiteness (consistency)
+## 3. Two independent failures of the conjecture
 
-`E = sech²y > 0` and `G = cosh²x ≥ 1 > 0` at every point, so
-`E u² + G v² > 0` for all `(u,v) ≠ 0`.  Verified as `metric_posDef`; the metric
-is a genuine Riemannian metric everywhere.
+1. **Realisation failure.** The stated metric does not produce the stated curvature.
+   The decomposition
+   `K = 2 sech²x (sech²y − 1) + (sech²x − cosh²y)`
+   writes `K` as a sum of two non-positive terms, each vanishing only at the origin;
+   hence `K ≤ 0` everywhere and `K = 0 ⇔ (x,y) = (0,0)`. The Split metric is a
+   globally non-positively curved (hyperbolic-type) geometry, never sign-changing.
+
+2. **Sign-region failure.** Even taking the *idealised* function `S = sech²x − sech²y`
+   at face value, its positive region is `|x| < |y|`, the **reverse** of the claim,
+   because `sech` is decreasing in `|·|`. What survives is the zero set: `S = 0`
+   exactly on the diagonals `x² = y²`.
+
+## 4. What is formalised
+
+- `SplitGeometry.lean` — analytic properties of both curvatures:
+  `gaussCurv_nonpos`, `gaussCurv_eq_zero_iff`, `no_elliptic_region`,
+  the corrected sign regions `claimedCurv_pos_iff`/`claimedCurv_neg_iff`,
+  the phase boundary `claimedCurv_eq_zero_iff`, and the refutation
+  `conjecture_curvature_false`.
+- `SplitGeometryBrioschi.lean` — the derivation of the closed-form curvature from the
+  Brioschi formula, term by term, culminating in `brioschiCurv_eq_gaussCurv`.
