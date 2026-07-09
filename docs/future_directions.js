@@ -33,7 +33,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
   },
   {
-    "consumed_by_exp_id": "6b9c675a",
+    "consumed_by_exp_id": "",
     "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long \u2014 the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static \u2014 they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
     "domains": [
       "Novelty",
@@ -43,7 +43,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T16:01:43.810023+00:00",
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
   },
@@ -2510,7 +2510,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Even Harmonic Strength of Antipodal Spherical Designs Contains 2"
   },
   {
-    "consumed_by_exp_id": "6c21e233",
+    "consumed_by_exp_id": "",
     "description": "Formalize the proof that the transformation matrix $H_{\\mathcal{F}}$ associated with the interval subdivision of a finite simplicial complex is totally positive (TP). This requires defining the $h$-vector of a simplicial complex, the interval subdivision operation, the resulting transformation matrix $H_{\\mathcal{F}}$, and proving that all its minors are non-negative.",
     "domains": [
       "Geometry",
@@ -2520,7 +2520,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T09:05:38.885794+00:00",
     "title": "Total Positivity of the Interval Subdivision Transformation Matrix"
   },
@@ -3572,20 +3572,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-05T03:01:06.348760+00:00",
     "title": "Counterexample to Mason's log-concavity conjecture for matroid flat counts"
-  },
-  {
-    "consumed_by_exp_id": "c2c03fe8",
-    "description": "The paper introduces a tensor-amplification framework for proving Sidorenko-type inequalities in graphon classes, providing two transfer principles and formalizing structural closure properties.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "fd_0320",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02260v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-05T03:34:51.895674+00:00",
-    "title": "Tensor Amplification and Spectral Transfer for Sidorenko-Type Inequalities"
   },
   {
     "consumed_by_exp_id": "",
@@ -6607,7 +6593,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimality of the cake-cutting constant \u03bc\u2082"
   },
   {
-    "consumed_by_exp_id": "901a2c39",
+    "consumed_by_exp_id": "",
     "description": "For a complete multipartite graph G = K_{n_1,...,n_m} with n_1 \u2264 ... \u2264 n_m, the path-free complex PF_t(G) is vertex decomposable if and only if t \u2265 2n_{m-1} - 1. Equivalently, this is exactly the range where PF_t(G) is shellable and sequentially Cohen-Macaulay. For t \u2264 2n_{m-1} - 2, the complex fails to be sequentially Cohen-Macaulay.",
     "domains": [
       "Bridges"
@@ -6616,7 +6602,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05358v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T13:11:19.325737+00:00",
     "title": "Vertex decomposability threshold for path-free complexes of complete multipartite graphs"
   },
@@ -7732,7 +7718,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The \u221a2-Threshold Conjecture for Rips Filtration Approximation"
   },
   {
-    "consumed_by_exp_id": "00f256fb",
+    "consumed_by_exp_id": "",
     "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card \u2014 you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier \u2014 it's an opportunity. You can WIN at the game of undecidability.",
     "domains": [
       "Novelty",
@@ -7742,7 +7728,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T16:01:43.960880+00:00",
     "title": "Godel's Casino: Incomplete but Winnable Games"
   },
@@ -9790,6 +9776,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nDerived from the cycle studying monochromatic Pythagorean triples in the level sets\nof completely multiplicative colourings of the positive integers.\n\n## 1. Existence of a single monochromatic triple for every completely multiplicative colouring\n\n**Conjecture.** For every finite abelian group `G` and every completely multiplicative\ncolouring `f : \u2115\u207a \u2192 G`, at least one Pythagorean triple `(x, y, z)` satisfies\n`f(x) = f(y) = f(z)`.\n\n**The key insight is** that once *one* monochromatic triple exists, scaling forces a\nmonochromatic triple of *every* colour in the image \u2014 so the entire general-colour\nproblem collapses to this single existence statement. The remaining difficulty is\npurely analytic: forcing the first coincidence of three multiplicative values on a\nPythagorean configuration.\n\n**Why now?** The reduction proved this cycle cleanly separates the algebraic layer\n(fully settled) from the analytic layer, so effort can be concentrated on the one\nstatement that actually carries the weight, rather than re-deriving the group-theoretic\nscaffolding for each colour.\n\n## 2. Density of realising scales\n\n**Conjecture.** If a completely multiplicative colouring admits a monochromatic\nPythagorean triple of colour `\u03c9`, then the set of scaling factors `t` producing a\nmonochromatic triple of a *prescribed* colour has positive natural density, with density\ndetermined by the index of the kernel of `f` restricted to the multiplicative monoid.\n\n**The key insight is** that the scaling factor must land in a fixed coset of the level\nset of `f`, and the frequency of such integers is a multiplicative-function counting\nproblem governed by the colour subgroup's index.\n\n**Why now?** The coset description of \"which scales work\" emerged directly from this\ncycle's reduction; quantifying its density is the natural refinement from a qualitative\nexistence result to a quantitative one.\n\n## 3. Simultaneous monochromatic triples across several colours\n\n**Conjecture.** For every completely multiplicative colouring into a finite abelian\ngroup of order `m`, one can find `m` pairwise-disjoint Pythagorean triples, each\nmonochromatic, realising `m` distinct colours simultaneously.\n\n**The key insight is** that scaling a single monochromatic seed triple by\nindependently chosen factors from distinct cosets yields triples of distinct colours,\nand disjointness can be arranged by spacing the scales along a fast-growing sequence.\n\n**Why now?** The all-or-nothing dichotomy guarantees each colour is individually\nrealisable; the open step is upgrading individual realisability to a simultaneous,\ndisjoint family, which packages the reduction into a Ramsey-type partition statement.\n\n## 4. Beyond Pythagorean: scale-invariant Diophantine configurations\n\n**Conjecture.** The reduction is not special to `x\u00b2 + y\u00b2 = z\u00b2`. For any homogeneous\nDiophantine relation `P(x\u2081, \u2026, x_r) = 0` invariant under simultaneous scaling, the\ncolour spectrum of monochromatic solutions under a completely multiplicative colouring\nis all-or-nothing.\n\n**The key insight is** that only two ingredients were used \u2014 scale invariance of the\nconfiguration and the subgroup structure of the image \u2014 neither of which mentions the\nPythagorean equation specifically.\n\n**Why now?** Having isolated the exact hypotheses driving the dichotomy, the abstract\nversion costs almost nothing and immediately covers sums of two squares, Markov-type\nequations, and higher-power analogues.\n\n## 5. Non-abelian and infinite colour groups\n\n**Conjecture.** For colourings into a finite (possibly non-abelian) group, the\nachievable colours of monochromatic Pythagorean triples form a union of conjugacy-class\ntranslates of the image subgroup; for suitable infinite torsion groups the subgroup\nclosure argument survives verbatim.\n\n**The key insight is** that the inverse-closure step used finiteness only to express an\ninverse as a positive power; any group in which every element has finite order supports\nthe same argument, while non-commutativity replaces cosets by two-sided translates.\n\n**Why now?** The single place commutativity and finiteness entered the proof is now\nexplicit, making it a well-posed question exactly which of the two can be relaxed and at\nwhat cost.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0797",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "26e5c4d5",
+    "status": "available",
+    "timestamp": "2026-07-09T20:30:12.097598+00:00",
+    "title": "Derived from the cycle studying monochromatic Pythagorean triples in the level s"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearrangement of the primes q_1, q_2, ... such that the sequence of ratios q_n / p_n converges to 1. In other words, you can shuffle the primes almost arbitrarily and the room numbers barely change. More precisely, the set of permutations sigma for which p_{sigma(n)} / p_n has a limit is dense in the symmetric group (with the topology of pointwise convergence). But NOT every permutation works: the permutation that swaps all even-indexed primes with odd-indexed ones gives q_{2n}/p_{2n} = p_{2n-1}/p_{2n} which converges to 1 by the prime number theorem, but the permutation that reverses order gives q_n/p_n = p_{N-n}/p_n which diverges. Test: compute q_n/p_n for 10 random permutations of the first 10^6 primes and verify that most ratios converge to 1. Find the exact density of 'well-behaved' permutations. Impact: the primes are robust under rearrangement \u2014 their asymptotic density is a topological invariant of the permutation group.",
     "domains": [
       "Novelty",
@@ -9804,7 +9805,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "352dbc27",
     "description": "Cycle 8202f9a7 (Q=0.675) proved 19 theorems in Novelty but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Develop a verified computational pipeline in Lean 4 that makes the conditional refinement of Page's theorem effective and algorithmic: for a given \u03b5>0, compute explicit C(\u03b5), Q\u2080(\u03b5) and enumerate primi",
     "domains": [
       "Novelty"
@@ -9813,7 +9814,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7249863157894737,
     "research_mode": "team",
     "source_exp_id": "8202f9a7",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T19:55:16.452095+00:00",
     "title": "Close Proofs: Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
   },

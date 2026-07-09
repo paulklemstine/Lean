@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "0ffedaae",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE DIRECTIONS — Erdős–Rényi Threshold Phenomena\n\nThis cycle generalized the catalog's triangle (`K_3`) threshold to the full\n**general clique `K_r` appearance threshold** in `Algebra/ErdosRenyi/",
-      "quality_score": 0.69956,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-06-28T18:50:39",
-      "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
-    },
-    {
       "cycle_id": "203b440f",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Frankl's Union-Closed Conjecture\n\nDerived from this cycle's findings (the singleton injection `frankl_singleton`,\nthe top-element lemma `sup_mem`, the 3-universe theorem `frankl_",
@@ -2501,6 +2491,16 @@
       "theorem_count": 19,
       "timestamp": "2026-07-09T19:55:16",
       "title": "Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
+    },
+    {
+      "cycle_id": "26e5c4d5",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\nDerived from the cycle studying monochromatic Pythagorean triples in the level sets\nof completely multiplicative colourings of the positive integers.\n\n## 1. Existence of a single",
+      "quality_score": 0.63,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-09T20:30:17",
+      "title": "Monochromatic Pythagorean Triples in Every Level Set of Completely Multiplicative Functions"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7115
     }
   ],
-  "last_updated": "2026-07-09T19:55:16",
+  "last_updated": "2026-07-09T20:30:17",
   "open_questions": [
     {
       "context": "continued to `s = -1` at all.  This file proves the rigorous, sorry-free facts on",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "1d985141",
-        "quality": 0.751851,
-        "theorems": 12,
-        "title": "Proof Strategy Mining from Deep Mathematics"
-      },
-      {
         "cycle_id": "49f14a50",
         "quality": 0.51904,
         "theorems": 21,
@@ -4009,6 +4003,12 @@
         "quality": 0.4996542252252253,
         "theorems": 14,
         "title": "Infinite Log-Concavity of Total d-Hoggatt Numbers"
+      },
+      {
+        "cycle_id": "26e5c4d5",
+        "quality": 0.63,
+        "theorems": 13,
+        "title": "Monochromatic Pythagorean Triples in Every Level Set of Completely Multiplicativ"
       }
     ]
   }
