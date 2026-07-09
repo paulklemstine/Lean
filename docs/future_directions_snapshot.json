@@ -16260,6 +16260,36 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Tate's table for elliptic curves Kodaira types",
+      "Namikawa-Ueno classification of genus 2 reduction types",
+      "Silverman's exposition of Tate's algorithm",
+      "Cluster pictures for genus 2 curves over local fields"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For each of the 106 reduction type families for genus 2 curves over local fields with p ≠ 2, there exists a computable bijection between cluster pictures (as defined in the paper) and reduction types. Specifically, each cluster picture in the complete list associated to a reduction type corresponds to exactly one Weierstrass model, and every smooth projective genus 2 curve over K with that reduction type realizes each of its listed cluster pictures through some minimal Weierstrass equation. Moreover, the valuation of the discriminant and the Birch-Swinnerton-Dyer fudge factor are constant across all Weierstrass models realizing the same cluster picture.",
+    "domain_bridges": [
+      "Elliptic curve Kodaira classification → Genus 2 Namikawa-Ueno classification",
+      "Reduction types ↔ Cluster pictures correspondence",
+      "Weierstrass models ↔ Minimal regular models",
+      "Discriminant valuation ↔ Conductor exponent"
+    ],
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_0718",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish the bijection by constructing an explicit algorithm: (1) Given a genus 2 curve with specified reduction type, produce its cluster picture via the dual graph of the special fiber; (2) Given a cluster picture, construct a Weierstrass model realizing it; (3) Prove that different Weierstrass models with the same cluster picture have identical discriminant valuations and BSD fudge factors using Tate's uniformization theory and semistable reduction techniques. The key is showing the combinatorial data in cluster pictures completely determines the arithmetic invariants.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07558v1",
+    "status": "available",
+    "timestamp": "2026-07-09T07:35:15.817541+00:00",
+    "title": "Cluster Picture Bijection Conjecture for Genus 2 Curves"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Schubert calculus",
       "boson-fermion correspondence",
       "exterior algebra",
@@ -16276,7 +16306,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0718",
+    "id": "fd_0719",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove by induction on r using generating function identities for exterior powers and sign-reversing arguments; verify base case r=1 and use the relation ∂_i X_j = δ_{ij} to deduce the action on higher wedges, then extend to arbitrary compositions.",
@@ -16297,7 +16327,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0719",
+    "id": "fd_0720",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine probabilistic models of prime factor distributions with known upper and lower bounds for ω(n) and constructions of integers with many small prime factors; likely requires sieve methods and deep results on smooth numbers.",
@@ -16325,7 +16355,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0720",
+    "id": "fd_0721",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use p-adic analysis and properties of multinomial coefficients modulo prime powers, potentially relating to generalized hypergeometric functions and their p-integrality properties. The approach would involve analyzing the generating function of S_l^{(m)}(n) and applying p-adic differential equations.",
@@ -16355,7 +16385,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0721",
+    "id": "fd_0722",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the identity Σ_{n≤x} M(x/n) = 1, prove the grouping into S_1 and S_2 components, apply Möbius inversion to derive the main formula, and verify correctness through induction on bounded intervals. The proof requires careful handling of floor function identities and the constraint ν_x < u < x to ensure all terms are well-defined.",
@@ -16383,7 +16413,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0722",
+    "id": "fd_0723",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Characterize the optimizer of the variational problem via Lagrange multipliers on the Boolean lattice, establish convexity properties of the p-biased measure under IU constraints, and prove uniqueness of extremal families through exchange arguments and majorization theory.",
@@ -16408,7 +16438,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0723",
+    "id": "fd_0724",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Choose a monomial order that yields a squarefree initial ideal in(J_{G,H}) whose Stanley–Reisner complex is precisely the independence complex of the linear matroid M_{G,H}. 2. Show that the special fiber ring S/J_{G,H} ⊗_k k[m] has the same Hilbert function as the face ring of that complex, hence its Krull dimension (the analytic spread) equals dim(Δ)+1. 3. For a squarefree simplicial complex, dim(Δ)+1 equals the size of the largest face, which is the rank of the represented matroid. 4. Conclude ℓ(J_{G,H}) = rank(M_{G,H}).",
@@ -16417,6 +16447,32 @@
     "status": "available",
     "timestamp": "2026-07-09T07:15:45.131819+00:00",
     "title": "Analytic Spread of Determinantal Ideals Equals Rank of Associated Linear Matroid"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Buchanan et al. (JGT, 2026)",
+      "Graham-Pollak theorem"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For all integers n ≥ 2, the value of b₂(n) is equal to ⌈n/2⌉ if n ≡ 0, 1, or 7 modulo 8, and equal to ⌈n/2⌉ + 1 otherwise. This conjecture formalizes the resolved cases in the paper and provides a complete characterization of b₂(n) for all n.",
+    "domain_bridges": [
+      "Graph Theory",
+      "Linear Algebra over GF(2)",
+      "Symmetry and Modular Arithmetic"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0725",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The proof would involve verifying the modular conditions and leveraging the lower bound from Buchanan et al. combined with constructive upper bounds. By analyzing the structure of bicliques and their symmetric differences, one can show that the conjectured values are achievable and minimal.",
+    "research_mode": "team",
+    "source_exp_id": "2607.07448v1",
+    "status": "available",
+    "timestamp": "2026-07-09T07:37:31.681056+00:00",
+    "title": "Conjecture on the exact values of b₂(n) for all n"
   },
   {
     "ambition_level": "extension",

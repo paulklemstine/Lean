@@ -24864,7 +24864,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.CO",
         "math.MG"
@@ -24887,7 +24887,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0519",
-      "last_attempt_time": "2026-07-09T07:15:50.561487+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem no_kplus1_inline_explicit {k n : ℕ} (hk : k ≥ 3) (hn : n ≥ k) :\n    f k n = k * n := by\n  sorry\n-- where f k n : ℕ is the maximum cardinality of a subset S of\n-- Fin n × Fin n such that no Euclidean line contains k+1 points of S",
       "lineage_refs": [],
@@ -31287,7 +31287,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
@@ -31304,7 +31304,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0653",
-      "last_attempt_time": "2026-07-09T07:15:56.344169+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -31328,7 +31328,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
@@ -31345,7 +31345,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0654",
-      "last_attempt_time": "2026-07-09T07:16:01.181823+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -34410,6 +34410,57 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "Tate's table for elliptic curves Kodaira types",
+        "Namikawa-Ueno classification of genus 2 reduction types",
+        "Silverman's exposition of Tate's algorithm",
+        "Cluster pictures for genus 2 curves over local fields"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For each of the 106 reduction type families for genus 2 curves over local fields with p ≠ 2, there exists a computable bijection between cluster pictures (as defined in the paper) and reduction types. Specifically, each cluster picture in the complete list associated to a reduction type corresponds to exactly one Weierstrass model, and every smooth projective genus 2 curve over K with that reduction type realizes each of its listed cluster pictures through some minimal Weierstrass equation. Moreover, the valuation of the discriminant and the Birch-Swinnerton-Dyer fudge factor are constant across all Weierstrass models realizing the same cluster picture.",
+      "domain_bridges": [
+        "Elliptic curve Kodaira classification → Genus 2 Namikawa-Ueno classification",
+        "Reduction types ↔ Cluster pictures correspondence",
+        "Weierstrass models ↔ Minimal regular models",
+        "Discriminant valuation ↔ Conductor exponent"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry",
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0718",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem cluster_picture_bijection (p : ℕ) (hp : p ≠ 2) (K : Type*) [local_field p K] (C : projective_curve K) (hC : genus C = 2) : ∃! cluster_picture φ, φ ∈ cluster_pictures C ∧ reduction_type C = φ.reduction_type ∧ discriminant_valuation C = φ.discriminant_val ∧ bsd_fudge_factor C = φ.bsd_factor",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Establish the bijection by constructing an explicit algorithm: (1) Given a genus 2 curve with specified reduction type, produce its cluster picture via the dual graph of the special fiber; (2) Given a cluster picture, construct a Weierstrass model realizing it; (3) Prove that different Weierstrass models with the same cluster picture have identical discriminant valuations and BSD fudge factors using Tate's uniformization theory and semistable reduction techniques. The key is showing the combinatorial data in cluster pictures completely determines the arithmetic invariants.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.07558v1",
+      "source_path": "http://arxiv.org/abs/2607.07558v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T07:35:15.817541+00:00",
+      "title": "Cluster Picture Bijection Conjecture for Genus 2 Curves"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "Schubert calculus",
         "boson-fermion correspondence",
         "exterior algebra",
@@ -34433,7 +34484,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0718",
+      "id": "fd_0719",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem schubert_exterior_relation (r : ℕ) (indices : Fin r → ℕ) : (∂_indices.productDiff) = (signPermutation indices) • (exteriorMonomial indices) := by sorry",
@@ -34475,7 +34526,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0719",
+      "id": "fd_0720",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem new_abc_conjecture (y : ℕ) : Filter.limsup (fun n : ℕ => ((∑ j in Finset.Icc 1 y, ω (n + j)) * Real.log (Real.log n)) / Real.log n) = (1 : ℝ) := by sorry",
@@ -34524,7 +34575,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0720",
+      "id": "fd_0721",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem generalized_supercongruence (l m : ℕ) (p : ℕ) (hp : prime p) (h1 : ¬(p ∣ (l + 1))) (h2 : ¬(p ∣ binomial (l + 1) 2)) : (∑ n in finset.range (p - 1), ((-1) ^ (m * n) / (n ^ (m - 1))) * S l m n) % p ^ 2 = 0",
@@ -34575,7 +34626,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0721",
+      "id": "fd_0722",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mertens_combinatorial_identity (x : ℕ) (u : ℕ) (hx : x ≥ 1) (hu : ⌊Real.sqrt x⌋ < u ∧ u < x) : Mertens.mertens x = ∑ k in Finset.range (x / u + 1), μ k * S (x / k) u",
@@ -34624,7 +34675,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0722",
+      "id": "fd_0723",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem iu_p_biased_lubell_maximum (n : ℕ) (𝓕 : set (finset (fin n))) (h𝓕 : is_iu_family 𝓕) : ∃ p_opt : ℝ, p_opt ∈ [0,1] ∧ Λ_p 𝓕 ≤ Λ_p 𝓕_extremal p_opt ∧ (∀ q, Λ_q 𝓕 ≤ Λ_q 𝓕_extremal q)",
@@ -34670,7 +34721,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0723",
+      "id": "fd_0724",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem analytic_spread_eq_matroid_rank {G H : SimpleGraph ℕ} (J : Ideal (PolynomialRing ℚ (fin (V G) × fin (V H)))) (hJ : J = determinantalIdeal G H) (M : Matroid ℚ (fin (V G) × fin (V H))) (hM : M = linearMatroidOfPair G H) : analyticSpread J = matroidRank M := by sorry",
@@ -34690,6 +34741,53 @@
       "thread_id": "",
       "timestamp": "2026-07-09T07:15:45.131819+00:00",
       "title": "Analytic Spread of Determinantal Ideals Equals Rank of Associated Linear Matroid"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Buchanan et al. (JGT, 2026)",
+        "Graham-Pollak theorem"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For all integers n ≥ 2, the value of b₂(n) is equal to ⌈n/2⌉ if n ≡ 0, 1, or 7 modulo 8, and equal to ⌈n/2⌉ + 1 otherwise. This conjecture formalizes the resolved cases in the paper and provides a complete characterization of b₂(n) for all n.",
+      "domain_bridges": [
+        "Graph Theory",
+        "Linear Algebra over GF(2)",
+        "Symmetry and Modular Arithmetic"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0725",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem b2_values (n : ℕ) (h : n ≥ 2) : b₂(n) = if n % 8 = 0 ∨ n % 8 = 1 ∨ n % 8 = 7 then Nat.ceil (n / 2) else Nat.ceil (n / 2) + 1",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "The proof would involve verifying the modular conditions and leveraging the lower bound from Buchanan et al. combined with constructive upper bounds. By analyzing the structure of bicliques and their symmetric differences, one can show that the conjectured values are achievable and minimal.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.07448v1",
+      "source_path": "http://arxiv.org/abs/2607.07448v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-09T07:37:31.681056+00:00",
+      "title": "Conjecture on the exact values of b₂(n) for all n"
     },
     {
       "ambition_level": "extension",
@@ -34776,11 +34874,11 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "famous_subtask",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "famous_subtask",
-    "famous_subtask"
+    "cross_domain_bridge",
+    "cross_domain_bridge"
   ]
 }

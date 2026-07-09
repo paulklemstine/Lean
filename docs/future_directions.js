@@ -8692,12 +8692,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For each of the 106 reduction type families for genus 2 curves over local fields with p \u2260 2, there exists a computable bijection between cluster pictures (as defined in the paper) and reduction types. Specifically, each cluster picture in the complete list associated to a reduction type corresponds to exactly one Weierstrass model, and every smooth projective genus 2 curve over K with that reduction type realizes each of its listed cluster pictures through some minimal Weierstrass equation. Moreover, the valuation of the discriminant and the Birch-Swinnerton-Dyer fudge factor are constant across all Weierstrass models realizing the same cluster picture.",
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_0718",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07558v1",
+    "status": "available",
+    "timestamp": "2026-07-09T07:35:15.817541+00:00",
+    "title": "Cluster Picture Bijection Conjecture for Genus 2 Curves"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For every composition \u03b1 of length r \u2264 R, the differential operator \u2202_\u03b1 = \u2202_{i1}\u22ef\u2202_{ir} acting on the polynomial ring \u211a[X_1,\u2026,X_R] yields a non-zero scalar multiple of the basis element X_{i1}\u2227\u22ef\u2227X_{ir} in \u2227^r V, where \u2202_i = (1/i!)\u00b7(d/dX_i)|_{X=0}. Moreover, the scalar equals the sign of the permutation that sorts (i1,\u2026,ir). This equality holds for all r and can be tested computationally for small values.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0718",
+    "id": "fd_0719",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07667v1",
@@ -8711,7 +8726,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0719",
+    "id": "fd_0720",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07641v1",
@@ -8725,7 +8740,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0720",
+    "id": "fd_0721",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07638v1",
@@ -8740,7 +8755,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0721",
+    "id": "fd_0722",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07566v1",
@@ -8755,7 +8770,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0722",
+    "id": "fd_0723",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07564v1",
@@ -8770,13 +8785,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0723",
+    "id": "fd_0724",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07458v1",
     "status": "available",
     "timestamp": "2026-07-09T07:15:45.131819+00:00",
     "title": "Analytic Spread of Determinantal Ideals Equals Rank of Associated Linear Matroid"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For all integers n \u2265 2, the value of b\u2082(n) is equal to \u2308n/2\u2309 if n \u2261 0, 1, or 7 modulo 8, and equal to \u2308n/2\u2309 + 1 otherwise. This conjecture formalizes the resolved cases in the paper and provides a complete characterization of b\u2082(n) for all n.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0725",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.07448v1",
+    "status": "available",
+    "timestamp": "2026-07-09T07:37:31.681056+00:00",
+    "title": "Conjecture on the exact values of b\u2082(n) for all n"
   },
   {
     "consumed_by_exp_id": "ad8ddf45",
