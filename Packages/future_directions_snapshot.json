@@ -3,6 +3,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 39669115 (Q=0.830), which proved 25 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Sudoku is a constraint satisfaction problem (CSP). Random Sudoku instances exhibit a phase transition: for n^2 x n^2 grids, the probability of having a solution drops from ~1 to ~0 around a critical density of pre-filled cells. Conjecture: the phase transition occurs at density d_c(n) = (n^2 - 1) / ",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_39669115_b97c8d44",
+    "lineage_refs": [],
+    "priority_score": 0.9299999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "39669115",
+    "status": "available",
+    "timestamp": "2026-07-10T08:22:03.393022+00:00",
+    "title": "Deepening: The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 48961a11 (Q=0.830), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a werewolf). The villagers win if all werewolves are eliminated; the werewolves win if they equal or outnu",
     "domain_bridges": [],
     "domains": [
@@ -9585,7 +9604,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "da4694df",
     "description": "Conway's surreal numbers No form a proper class containing all real numbers, all ordinal numbers, and all infinitesimals. Every real number r has a surreal representation r = {r - 1 | r + 1}. Every ordinal alpha has a surreal representation alpha = {alpha |}. Every infinitesimal epsilon = {0 | 1, 1/2, 1/4, ...}. The surreal numbers form a field (in fact, a real-closed field). Conjecture: the subfield of surreals born by day omega (the set of surreals with finite birthdays) is isomorphic to the field of real algebraic numbers extended with all dyadic rationals. More precisely: No_{omega} = Q[2^{-n} : n in N] (the rationals extended with all dyadic rationals). The subfield born by day omega^2 contains all real numbers that are algebraic over the dyadic rationals, plus all infinitesimals that are algebraic over the reals. Conjecture: No_{omega^2} = R(x) where x is the smallest positive infinitesimal. Test: compute the field structure of surreals born by day omega and verify the isomorphism with the dyadic rationals. Impact: the surreal number hierarchy encodes the constructive hierarchy of real number fields — each birthday level adds exactly the algebraic closures needed.",
     "domain_bridges": [],
     "domains": [
@@ -9598,7 +9617,7 @@
     "proof_strategy": "Define No_alpha = {surreals with birthday < alpha}. No_0 = empty. No_1 = {0} = {{|}}. No_2 = {-1, 0, 1} (three surreals). No_3 = {-2, -1/2, -1, -1/4, 0, 1/4, 1/2, 1, 2} (but actually No_3 has 7 surreals). By day omega: No_omega = all dyadic rationals m/2^n for m in Z, n in N. This is a field: the dyadic rationals are closed under +, -, *, / (for nonzero). Proof: m/2^n + k/2^l = (m*2^l + k*2^n)/2^{n+l} which is dyadic. Product: (m/2^n)(k/2^l) = mk/2^{n+l}. Reciprocal: 1/(m/2^n) = 2^n/m which is rational (not always dyadic). Wait: 1/3 is not dyadic. So No_omega is not closed under reciprocals of odd denominators. Correction: No_omega is the ring of dyadic rationals, not a field. The field of fractions is Q (all rationals). Conjecture revised: the field of fractions of No_omega is Q, the rationals. No_{omega^2} includes all real numbers that can be constructed by day omega^2, which includes all real algebraic numbers (since each algebraic number has a finite Dedekind cut representation). Test: enumerate surreals by birthday and verify field closure.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T07:16:52.229414+00:00",
     "title": "The Arithmetic of Games: Surreal Numbers as Number Fields"
   },
@@ -9641,26 +9660,6 @@
     "status": "in_progress",
     "timestamp": "2026-07-10T03:33:45.828923+00:00",
     "title": "Sheaf Cohomology of Data: The Topology of Missing Information"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "39669115",
-    "description": "Sudoku is a constraint satisfaction problem (CSP). Random Sudoku instances exhibit a phase transition: for n^2 x n^2 grids, the probability of having a solution drops from ~1 to ~0 around a critical density of pre-filled cells. Conjecture: the phase transition occurs at density d_c(n) = (n^2 - 1) / n^2, independent of the specific constraint structure. For standard 9x9 Sudoku (n=3): d_c = 8/9 ≈ 0.889. For 4x4 Sudoku (n=2): d_c = 3/4 = 0.75. For 16x16 (n=4): d_c = 15/16 ≈ 0.9375. The 'hardness' of random Sudoku peaks at the phase transition: instances with density near d_c take exponentially longer to solve than easy (low density) or trivial (high density) instances. Conjecture: the computational hardness of Sudoku at the phase transition is O(exp(n^2)) for backtracking algorithms, matching the theoretical prediction for CSPs at criticality. Test: generate random Sudoku instances at varying densities, measure solver time, and verify the phase transition at d_c. Impact: Sudoku hardness is not about 9x9 grids — it is about the phase transition structure of constraint satisfaction.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0856",
-    "lineage_refs": [],
-    "priority_score": 0.78,
-    "proof_strategy": "Define random Sudoku(G, d) as a G x G grid with d * G^2 cells pre-filled uniformly at random, subject to the constraint that the pre-filled cells are consistent (no two same numbers in the same row/column/box). For n^2 x n^2 grids: G = n^2. The density d = (# pre-filled) / G^2. Phase transition: P(solvable) as a function of d. For n=2 (4x4): d_c = 3/4. For n=3 (9x9): d_c = 8/9. Theoretical basis: the number of solutions of an empty G x G grid is S(G). Adding a constraint reduces the solution count by approximately S(G)/G. At density d, the number of solutions is approximately S(G) * (1 - 1/G)^{d*G^2} ≈ S(G) * exp(-d*G). This is > 0 when d < (ln S(G))/G ≈ (G-1)/G = d_c. Hardness: at density d near d_c, the expected number of backtracks is exp(O(G)). Test: generate 10000 random Sudoku instances at each density from 0.5 to 0.99, solve with backtracking, measure time, verify phase transition at d_c.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T06:43:53.271153+00:00",
-    "title": "The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction"
   },
   {
     "ambition_level": "extension",
@@ -9860,6 +9859,26 @@
     "status": "available",
     "timestamp": "2026-07-10T08:05:52.335311+00:00",
     "title": "This project formalises the *algebraic skeleton* of the \"topology of Bach\""
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes a **cross-domain bridge**: Sudoku (a constraint satisfaction problem)\nis identified with proper vertex coloring (graph theory), and the shared structural invariant\n— the number of symbols `n²` — is pinned down as the chromatic number of the Sudoku constraint\ngraph.\n\nMain results in `Bridges/SudokuChromatic.lean`:\n\n- `isSudokuSolution_iff_properColoring` — a filling is a valid Sudoku solution iff it is a\n  proper coloring of the Sudoku constraint graph (the CSP ↔ graph-coloring bridge).\n- `exists_isSudokuSolution` — every empty `n²×n²` Sudoku is solvable (`n ≥ 1`), by an explicit\n  arithmetic construction.\n- `sudokuGraph_colorable` — the constraint graph is `n²`-colorable.\n- `firstRow_isClique` / `firstRow_card` — a full row is a clique of size `n²`.\n- `sudokuGraph_chromaticNumber` — the chromatic number is exactly `n²`.\n\n## Natural next steps\n\n1. **Clique number and other invariants.** We proved `ω ≥ n²` via a full row and `χ = n²`.\n   One could show `ω = n²` exactly (no larger clique exists), and compute the independence\n   number and fractional chromatic number of the Sudoku graph.\n\n2. **Counting solutions ↔ counting colorings.** The number of completed Sudoku grids equals\n   the number of proper `n²`-colorings, i.e. the evaluation of the chromatic polynomial of the\n   Sudoku graph at `n²`. Formalizing this connection would tie the enumeration of Sudoku grids\n   (known for `9×9`: 6,670,903,752,021,072,936,960) to graph polynomials.\n\n3. **Latin squares and partial bridges.** Dropping the block constraints yields the rook's\n   graph, whose proper colorings are exactly Latin squares. The block constraints refine this;\n   formalizing the tower rook-graph → Sudoku-graph would connect design theory to coloring.\n\n4. **List coloring / precoloring extension.** A Sudoku *puzzle* (with clues) is a\n   precoloring-extension problem. The NP-completeness of generalized Sudoku is exactly the\n   NP-completeness of precoloring extension for this graph family — a bridge to complexity\n   theory. Formalizing the reduction would make the \"P vs NP of Sudoku\" framing rigorous.\n\n5. **The phase-transition conjecture.** The empirical claim that random instances undergo a\n   solvability phase transition at clue density `d_c = (n²-1)/n²` is asymptotic and probabilistic;\n   it is not a theorem and, to our knowledge, has no closed-form proof. A rigorous treatment\n   would require second-moment / interpolation methods from the theory of random CSPs\n   (analogous to random `k`-SAT thresholds). The chromatic-number invariant proved here is the\n   deterministic backbone such an analysis would build on: the clique of `n²` mutually\n   constrained cells is the local structure whose density governs hardness.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Pythagorean"
+    ],
+    "id": "fd_0866",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "39669115",
+    "status": "available",
+    "timestamp": "2026-07-10T08:21:57.460456+00:00",
+    "title": "This project formalizes a **cross-domain bridge**: Sudoku (a constraint satisfac"
   },
   {
     "ambition_level": "extension",
