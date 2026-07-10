@@ -8,7 +8,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "8c745e9f",
     "filename": "real_rootedness_of_the_square_of_the_eulerian_tria.json",
-    "pkg_num": 384,
+    "pkg_num": 382,
     "quality": "substantial",
     "quality_score": 0.82,
     "quality_tier": "gold",
@@ -19,7 +19,7 @@ window.PACKAGE_INDEX = [
     "domain": "NumberTheory",
     "exp_id": "bb33d4fa",
     "filename": "minimalobstructions_to_total_rainbow_forests_fail_.json",
-    "pkg_num": 383,
+    "pkg_num": 381,
     "quality": "substantial",
     "quality_score": 0.78,
     "quality_tier": "gold",
@@ -30,7 +30,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "34e9f39c",
     "filename": "knots_and_lattices_the_alexander_polynomial_as_a_l.json",
-    "pkg_num": 382,
+    "pkg_num": 380,
     "quality": "substantial",
     "quality_score": 0.82,
     "quality_tier": "gold",
@@ -41,7 +41,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "e40b9050",
     "filename": "algebraic_geometry_of_neural_networks_varieties_of.json",
-    "pkg_num": 381,
+    "pkg_num": 379,
     "quality": "substantial",
     "quality_score": 0.82,
     "quality_tier": "gold",
@@ -52,33 +52,11 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "6c565e60",
     "filename": "galois_theory_of_cellular_automata_which_rules_hav.json",
-    "pkg_num": 380,
+    "pkg_num": 378,
     "quality": "substantial",
     "quality_score": 0.72,
     "quality_tier": "gold",
     "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
-  },
-  {
-    "date": "2026-07-10T13:28:07Z",
-    "domain": "General",
-    "exp_id": "",
-    "filename": "crystallographic_groups_and_music_the_17_wallpaper.json",
-    "pkg_num": 378,
-    "quality": "unrated",
-    "quality_score": null,
-    "quality_tier": "unrated",
-    "title": "Untitled Research"
-  },
-  {
-    "date": "2026-07-10T13:28:07Z",
-    "domain": "General",
-    "exp_id": "",
-    "filename": "the_collatz_conjecture_is_undecidable_what_if_3n1_.json",
-    "pkg_num": 379,
-    "quality": "unrated",
-    "quality_score": null,
-    "quality_tier": "unrated",
-    "title": "Untitled Research"
   },
   {
     "date": "2026-07-10T13:11:39Z",
@@ -4808,12 +4786,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Reflection Duality for d-Balanced Partitions"
   },
-  "crystallographic_groups_and_music_the_17_wallpaper.json": {
-    "domain": "General",
-    "exp_id": "",
-    "source_exp_ids": [],
-    "title": "Untitled Research"
-  },
   "cusicks_sum_of_digits_conjecture_with_explicit_bia.json": {
     "domain": "Applications",
     "exp_id": "53364cc2",
@@ -6883,12 +6855,6 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "The Metric Geometry of Surprise: Humor as a Diameter Invariant"
-  },
-  "the_collatz_conjecture_is_undecidable_what_if_3n1_.json": {
-    "domain": "General",
-    "exp_id": "",
-    "source_exp_ids": [],
-    "title": "Untitled Research"
   },
   "the_fourier_analysis_of_collatz_spectral_gaps_in_t.json": {
     "domain": "Geometry",

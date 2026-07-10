@@ -2679,6 +2679,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every n \u2265 0, the n-th row generating function of the square of the Eulerian triangle\u2014defined as the polynomial \u2211_k (\u2211_j A(n,j)\u00b7A(j,k)) x^k where A(n,k) is the Eulerian number counting permutations of [n] with k descents\u2014has only real roots. This extends the paper's results on powers of Pascal, Stirling, and Narayana triangles to the still-open Eulerian case.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0417",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01572v1",
+    "status": "available",
+    "timestamp": "2026-07-06T01:27:06.611331+00:00",
+    "title": "Real-rootedness of the square of the Eulerian triangle"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For all integers a, b with 3 \u2264 a \u2264 b, there exists a constant C > 0 such that for any n-vertex graph G that is K_{3,b+1}-free, the number of labeled copies of K_{a,b} in G is at most C * n^3. This captures the main asymptotic upper bound result of the paper, resolving the generalized Tur\u00e1n problem for these parameters.",
     "domains": [
       "Bridges"
@@ -5255,7 +5269,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The Fundamental Theorem of Cakes: Algebraic Geometry of Baking"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b1691bd9",
     "description": "The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surface V(f) = {x : f(x) = 0} is a piecewise linear hypersurface. Conjecture: every rational homology class in H_{n-2}(V(f), Q) is represented by an algebraic cycle (a subvariety of V(f) of codimension 1). Since V(f) is piecewise linear, its homology groups are finitely generated and every cycle is a formal sum of linear pieces. Each linear piece is an algebraic cycle (a hyperplane section). Conjecture: the piecewise linear Hodge conjecture holds \u2014 every homology class in V(f) is a sum of hyperplane sections. This is TRUE for piecewise linear varieties because every face of a polyhedron is cut out by a linear equation. The deeper conjecture: for a ReLU network with L layers and widths (n, w_1, ..., w_L, 1), the Hodge numbers h^{p,q}(V(f)) satisfy h^{p,q} <= (w_1 choose p) * (w_L choose q) * prod_{i=2}^{L-1} w_i. Test: compute H_{n-2}(V(f)) for small ReLU networks and verify that every class is represented by hyperplane sections. Impact: the Hodge conjecture is trivially true for neural network decision surfaces. The non-trivial content is the BOUND on Hodge numbers.",
     "domains": [
       "Novelty",
@@ -5265,7 +5279,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.76,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T12:39:07.666361+00:00",
     "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
   },
