@@ -41,25 +41,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 643186e8 (Q=0.820), which proved 18 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do — as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: ",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "push_643186e8_75258500",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "643186e8",
-    "status": "available",
-    "timestamp": "2026-07-09T22:51:25.551096+00:00",
-    "title": "Deepening: Tropical Dreams: The Field with One Element Meets Tropical Geometry"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 7ca0f553 (Q=0.820), which proved 61 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Infinite chess is chess on an infinite board. It is known that there are positions where White can force checkmate but only in omega (the first infinite ordinal) moves. Conjecture: There exists a position on the infinite chess board where White can force checkmate in exactly omega^omega moves, but n",
     "domain_bridges": [],
     "domains": [
@@ -97,25 +78,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "4de79d68",
-    "description": "Building on cycle c05d7abb (Q=0.820), which proved 27 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearr",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_c05d7abb_b95081ef",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "c05d7abb",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T00:21:15.177603+00:00",
-    "title": "Deepening: Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle e7035fce (Q=0.820), which proved 21 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Mendeleev's periodic table arranges elements by atomic number Z, but Z is just the charge of the nucleus. Conjecture: the periodic table is the spectrum of an operator on a Hilbert space of dimension equal to the number of stable isotopes. Define the 'nuclear Hamiltonian' H on L^2(R^3) by H = -hbar^",
     "domain_bridges": [],
@@ -135,7 +97,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "a5663e2a",
+    "consumed_by_exp_id": "",
     "description": "Two quantum particles are entangled if measuring one instantly affects the other. But entanglement is also a topological property: if you represent the state of two qubits as a curve in R^3, entanglement IS the linking number. Conjecture: For any pure state of two qubits |psi> in C^2 tensor C^2, the concurrence C(psi) = 2|alpha*delta - beta*gamma| (where psi = alpha|00> + beta|01> + gamma|10> + delta|11>) equals the absolute value of the linking number of two curves derived from the Hopf fibration applied to psi. Specifically, map psi to S^7 via normalization, then project to S^4 via the Hopf map, and the preimages of two points in S^4 are linked circles in S^7 whose linking number equals the concurrence. This means: entanglement is MEASURED by topology, and maximally entangled states correspond to the Hopf link (linking number 1). Test: for 1000 random two-qubit states, compute the concurrence and the linking number of the Hopf preimages, and verify they are equal. Prove the equality for the Bell states. Impact: quantum entanglement is not mysterious — it is the linking number of the Hopf fibration. Two particles are entangled if and only if their Hopf preimages are linked.",
     "domain_bridges": [],
     "domains": [
@@ -148,7 +110,7 @@
     "proof_strategy": "Define the Hopf fibration: S^3 -> S^2 by (z1, z2) -> (2*z1*z2_bar, |z1|^2 - |z2|^2). For a two-qubit state psi = alpha|00> + beta|01> + gamma|10> + delta|11>, define the reduced state rho_1 = Tr_2(|psi><psi|). The concurrence is C = 2|alpha*delta - beta*gamma|. Map: given psi, form the complex matrix M = [[alpha, beta], [gamma, delta]]. The concurrence equals 2|det(M)| = 2|alpha*delta - beta*gamma|. Now the Hopf linking: consider the curves gamma_1(t) = (alpha*e^{it}, beta) / ||(alpha*e^{it}, beta)|| and gamma_2(t) = (gamma*e^{it}, delta) / ||(gamma*e^{it}, delta)|| in S^3. The linking number of gamma_1 and gamma_2 in S^3 equals |det(M)| (by the Whitehead formula for linking in S^3). Therefore C = 2 * |linking number|. Normalizing: C/2 = |linking number|, so the normalized concurrence equals the linking number. For Bell states: |Phi+> = (|00>+|11>)/sqrt(2) has alpha=delta=1/sqrt(2), beta=gamma=0, C=1, linking number=1. For product states: |00> has C=0, linking number=0. Test: verify for 1000 random states.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-09T21:40:59.530765+00:00",
     "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
   },
@@ -190,25 +152,6 @@
     "status": "in_progress",
     "timestamp": "2026-07-09T23:08:57.326588+00:00",
     "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Cycle 643186e8 (Q=0.820) proved 18 theorems in Algebra but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do — as if there were a field with q^0 = 1 element. Tropical geometry replaces ad",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "sorry_fill_643186e8_4a7acee6",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "643186e8",
-    "status": "available",
-    "timestamp": "2026-07-09T22:51:25.650060+00:00",
-    "title": "Close Proofs: Tropical Dreams: The Field with One Element Meets Tropical Geometry"
   },
   {
     "ambition_level": "extension",
@@ -1110,25 +1053,6 @@
     "status": "available",
     "timestamp": "2026-07-02T09:49:21.006265+00:00",
     "title": "Perfect Pairings in Periodic Riemann Functions Yield Serre-Type Duality"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "A complete classification exists for all bidihedral groups up to isomorphism.",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0059",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Inductive verification on subgroup structures",
-    "research_mode": "team",
-    "source_exp_id": "2607.00352v1",
-    "status": "available",
-    "timestamp": "2026-07-02T10:27:44.557266+00:00",
-    "title": "Bidihedral Group Classification"
   },
   {
     "ambition_level": "grand_challenge",
@@ -10120,33 +10044,6 @@
     "title": "Overfull Conjecture"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "math.CO",
-      "math.NT"
-    ],
-    "consumed_by_exp_id": "794fdf29",
-    "description": "For a prime power q and a positive integer n, the maximum codimension of a cyclically covering subspace of F_q^n, denoted h_q(n), is zero if and only if every nonzero cyclic code in F_q^n contains a codeword of full Hamming weight.",
-    "domain_bridges": [
-      "Finite Fields",
-      "Cyclic Codes",
-      "Combinatorics of Vector Spaces"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0461",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Establish the duality between cyclically covering subspaces and cyclic codes. Show that a subspace failing to cyclically cover F_q^n implies the existence of a vector outside the union of its cyclic shifts, which translates under orthogonal complementation to a nonzero cyclic code lacking any full-weight codeword, and vice versa.",
-    "research_mode": "team",
-    "source_exp_id": "2607.02239v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T16:37:22.623666+00:00",
-    "title": "Equivalence of Vanishing Cyclically Covering Codimension and Full-Weight Cyclic Codes"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "Fyodorov_Hiary_Keating_2012",
@@ -12617,7 +12514,7 @@
       "rook_polynomials",
       "multinomial_coefficients"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6490730e",
     "description": "For all natural numbers m, a, and d, the sum over all m-tuples (i_1, ..., i_m) of non-negative integers summing to d of the product of binomial coefficients ∏_{j=1}^{m} C(a + i_j, a) equals C(ma + d + m - 1, d). This generalizes the identity stated in the paper for m=3 (used to simplify the Bogart-Longyear formula for 3-row Latin rectangles), where the paper claims it is 'easily proved with dots and dividers.' The generalization connects directly to Gessel's framework through multisymmetric function generating series.",
     "domain_bridges": [
       "generating_functions",
@@ -12634,7 +12531,7 @@
     "proof_strategy": "Use generating functions: (1) establish that the ordinary generating function for C(a+i, a) is (1-x)^{-(a+1)} via the negative binomial theorem; (2) the product of m copies gives (1-x)^{-m(a+1)}, so the LHS is the coefficient of x^d; (3) extract the coefficient as C(m(a+1)+d-1, d) = C(ma+d+m-1, d). Alternatively, prove by induction on m using Vandermonde convolution as the inductive step, with the m=1 base case being trivial.",
     "research_mode": "team",
     "source_exp_id": "2607.05214v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T16:25:25.291005+00:00",
     "title": "Generalized Multinomial Convolution Identity for Latin Rectangle Enumeration"
   },
@@ -18811,6 +18708,46 @@
     "status": "available",
     "timestamp": "2026-07-10T01:48:32.389766+00:00",
     "title": "The file `Catalog/Pythagorean/InfiniteChessOmega.lean` develops an abstract,"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes the bridge\n\n> `h_q(n) = 0`  ⇔  every nonzero cyclic code in `𝔽_q^n` has a full-weight codeword,\n\nwhere `h_q(n)` is the maximum codimension of a cyclically covering subspace of\n`𝔽_q^n`.  The proof (in `CyclicCoveringFullWeight.lean`) goes through a\nFourier/duality map `phi a : x ↦ (k ↦ ⟪a, shiftᵏ x⟫)` whose range is a cyclic code\nand whose associated hyperplane `ker ⟪a,·⟫` is cyclically covering exactly when that\nrange omits all full-weight words.\n\n## Natural next steps\n\n1. **Quantitative version.** Formalize `h_q(n)` as an actual natural number\n   (maximum codimension) and prove the sharper statement `h_q(n) = n − max { dim C :\n   C cyclic, C has no full-weight codeword }`, refining the present `= 0` boundary\n   case into an exact formula.\n\n2. **Positivity criteria.** Prove `h_q(n) ≥ 1` whenever `n` is not coprime to `q`\n   or, more generally, whenever `xⁿ − 1` has a nontrivial repeated/degree factor,\n   using the even-weight code as an explicit witness (as in the `n = 3` example).\n\n3. **Known values.** Formalize small exact values such as `h₂(3) = 1` and the\n   coprime cases `h_q(n) = 0` when every nonzero cyclic code is full-weight.\n\n4. **Reversal-free bridge.** The current argument uses the coordinate reversal\n   `rev` to move a codeword to a functional. It would be cleaner to package the\n   correspondence `a ↦ ⟨a⟩` (single-generator cyclic code) as an explicit bijection\n   between covering hyperplanes and nonzero cyclic codes without full-weight words,\n   via the ring `𝔽_q[x]/(xⁿ − 1)`.\n\n5. **Ring-theoretic refactor.** Recast cyclic codes as ideals of\n   `𝔽_q[x]/(xⁿ − 1)` and the shift as multiplication by `x`, connecting to\n   Mathlib's `Polynomial` / quotient-ring API and to BCH/Reed–Solomon theory.\n\n6. **Covering-code connections.** Relate `h_q(n)` to covering radii and to the\n   normalized-covering-codimension lower bounds studied by Cameron–Ellis–Raynaud,\n   opening a path toward asymptotic estimates.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_0829",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "794fdf29",
+    "status": "available",
+    "timestamp": "2026-07-10T01:48:39.431002+00:00",
+    "title": "This project formalizes the bridge"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Hilbert's Hotel for Primes — deepening: future directions\n\nThis cycle deepens the earlier work in `Novelty/PrimeHotelRearrangement.lean` (well-behaved\nprime-hotel rearrangements: displacement ratio `p(σ n)/p(n) → 1`).  The new file\n`Novelty/PrimeHotelSubgroup.lean` settles the *algebraic and topological status* of the class\nof well-behaved rearrangements.\n\n## What was proved this cycle\n\n* `wellBehaved_comp` — well-behaved rearrangements are closed under composition.\n* `wellBehaved_inv` — closed under inversion.\n* `wellBehavedSubgroup` — hence they form a **subgroup** of `Sym(ℕ) = Equiv.Perm ℕ`.\n* `wellBehavedSubgroup_ne_top` — the subgroup is **proper** (there is a badly behaved rearrangement).\n* `wellBehavedSubgroup_dense` — the subgroup is dense (agrees with any permutation on any finite\n  initial segment).\n* `exists_not_wellBehaved_agree` — **contrarian genericity**: the *complement* is also dense.\n  For every `σ` and `N` there is a badly behaved permutation agreeing with `σ` on `{0,…,N-1}`.\n  Hence membership in `WellBehaved` cannot be decided from any finite initial segment; the class\n  is a proper dense subgroup whose complement is dense too.\n\nThe genericity result is powered by `badPermFrom a`, an involution supported entirely on indices\n`≥ a`, whose displacement ratio is `≥ 2` infinitely often.\n\n### Contrarian outcome\nThe natural bold conjecture \"the well-behaved rearrangements are *not* closed under the group\noperations\" turned out to be **false**: they do form a subgroup.  The genuinely contrarian, and\nproved, statement is that this proper subgroup and its complement are *both* topologically dense.\n\n## Directions not yet formalized\n\n1. **Bounded displacement ⇒ well behaved.**  If `|σ n − n| ≤ K` then\n   `p(n−K) ≤ p(σ n) ≤ p(n+K)`, so the ratio is squeezed between `p(n±K)/p(n)`.  Proving these\n   tend to `1` requires `p_{n+K}/p_n → 1`, i.e. prime gaps are `o(p_n)` — a PNT-level fact that\n   is not readily available in Mathlib.  A self-contained proof of `p_{n+1}/p_n → 1` would unlock\n   this and show `BoundedDisplacement ⊆ WellBehaved`.\n\n2. **Index of the subgroup.**  Is `[Sym(ℕ) : wellBehavedSubgroup]` infinite?  The genericity\n   result strongly suggests the quotient is large; making this precise (e.g. exhibiting infinitely\n   many pairwise-incongruent badly behaved permutations) is a natural next step.\n\n3. **Topology.**  State density with respect to an explicit topology on `Equiv.Perm ℕ`\n   (pointwise-convergence / product topology) rather than the combinatorial \"agree on an initial\n   segment\" formulation, and prove `wellBehavedSubgroup` is a proper dense subgroup as a genuine\n   topological statement.\n\n4. **Quantitative well-behavedness.**  Classify rearrangements by the *rate* at which the ratio\n   converges (e.g. `p(σ n)/p(n) = 1 + O(1/log n)`), and ask whether the bounded-rate class is\n   still a subgroup.\n\n\n# Hilbert's Hotel for Primes — deepening: future directions\n\nThis cycle deepens the earlier work in `Novelty/PrimeHotelRearrangement.lean` (well-behaved\nprime-hotel rearrangements: displacement ratio `p(σ n)/p(n) → 1`).  The new file\n`Novelty/PrimeHotelSubgroup.lean` settles the *algebraic and topological status* of the class\nof well-behaved rearrangements.\n\n## What was proved this cycle\n\n* `wellBehaved_comp` — well-behaved rearrangements are closed under composition.\n* `wellBehaved_inv` — closed under inversion.\n* `wellBehavedSubgroup` — hence they form a **subgroup** of `Sym(ℕ) = Equiv.Perm ℕ`.\n* `wellBehavedSubgroup_ne_top` — the subgroup is **proper** (there is a badly behaved rearrangement).\n* `wellBehavedSubgroup_dense` — the subgroup is dense (agrees with any permutation on any finite\n  initial segment).\n* `exists_not_wellBehaved_agree` — **contrarian genericity**: the *complement* is also dense.\n  For every `σ` and `N` there is a badly behaved permutation agreeing with `σ` on `{0,…,N-1}`.\n  Hence membership in `WellBehaved` cannot be decided from any finite initial segment; the class\n  is a proper dense subgroup whose complement is dense too.\n\nThe genericity result is powered by `badPermFrom a`, an involution supported entirely on indices\n`≥ a`, whose displacement ratio is `≥ 2` infinitely often.\n\n### Contrarian outcome\nThe natural bold conjecture \"the well-behaved rearrangements are *not* closed under the group\noperations\" turned out to be **false**: they do form a subgroup.  The genuinely contrarian, and\nproved, statement is that this proper subgroup and its complement are *both* topologically dense.\n\n## Directions not yet formalized\n\n1. **Bounded displacement ⇒ well behaved.**  If `|σ n − n| ≤ K` then\n   `p(n−K) ≤ p(σ n) ≤ p(n+K)`, so the ratio is squeezed between `p(n±K)/p(n)`.  Proving these\n   tend to `1` requires `p_{n+K}/p_n → 1`, i.e. prime gaps are `o(p_n)` — a PNT-level fact that\n   is not readily available in Mathlib.  A self-contained proof of `p_{n+1}/p_n → 1` would unlock\n   this and show `BoundedDisplacement ⊆ WellBehaved`.\n\n2. **Index of the subgroup.**  Is `[Sym(ℕ) : wellBehavedSubgroup]` infinite?  The genericity\n   result strongly suggests the quotient is large; making this precise (e.g. exhibiting infinitely\n   many pairwise-incongruent badly behaved permutations) is a natural next step.\n\n3. **Topology.**  State density with respect to an explicit topology on `Equiv.Perm ℕ`\n   (pointwise-convergence / product topology) rather than the combinatorial \"agree on an initial\n   segment\" formulation, and prove `wellBehavedSubgroup` is a proper dense subgroup as a genuine\n   topological statement.\n\n4. **Quantitative well-behavedness.**  Classify rearrangements by the *rate* at which the ratio\n   converges (e.g. `p(σ n)/p(n) = 1 + O(1/log n)`), and ask whether the bounded-rate class is\n   still a subgroup.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0830",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4de79d68",
+    "status": "available",
+    "timestamp": "2026-07-10T01:48:44.797658+00:00",
+    "title": "This cycle deepens the earlier work in `Novelty/PrimeHotelRearrangement.lean` (w"
   },
   {
     "ambition_level": "extension",

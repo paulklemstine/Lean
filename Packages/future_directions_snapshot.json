@@ -41,25 +41,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 643186e8 (Q=0.820), which proved 18 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do — as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: ",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "push_643186e8_75258500",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "643186e8",
-    "status": "available",
-    "timestamp": "2026-07-09T22:51:25.551096+00:00",
-    "title": "Deepening: Tropical Dreams: The Field with One Element Meets Tropical Geometry"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 7ca0f553 (Q=0.820), which proved 61 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Infinite chess is chess on an infinite board. It is known that there are positions where White can force checkmate but only in omega (the first infinite ordinal) moves. Conjecture: There exists a position on the infinite chess board where White can force checkmate in exactly omega^omega moves, but n",
     "domain_bridges": [],
     "domains": [
@@ -171,25 +152,6 @@
     "status": "in_progress",
     "timestamp": "2026-07-09T23:08:57.326588+00:00",
     "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Cycle 643186e8 (Q=0.820) proved 18 theorems in Algebra but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do — as if there were a field with q^0 = 1 element. Tropical geometry replaces ad",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "sorry_fill_643186e8_4a7acee6",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "643186e8",
-    "status": "available",
-    "timestamp": "2026-07-09T22:51:25.650060+00:00",
-    "title": "Close Proofs: Tropical Dreams: The Field with One Element Meets Tropical Geometry"
   },
   {
     "ambition_level": "extension",
@@ -1091,25 +1053,6 @@
     "status": "available",
     "timestamp": "2026-07-02T09:49:21.006265+00:00",
     "title": "Perfect Pairings in Periodic Riemann Functions Yield Serre-Type Duality"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "A complete classification exists for all bidihedral groups up to isomorphism.",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0059",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Inductive verification on subgroup structures",
-    "research_mode": "team",
-    "source_exp_id": "2607.00352v1",
-    "status": "available",
-    "timestamp": "2026-07-02T10:27:44.557266+00:00",
-    "title": "Bidihedral Group Classification"
   },
   {
     "ambition_level": "grand_challenge",
@@ -12571,7 +12514,7 @@
       "rook_polynomials",
       "multinomial_coefficients"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6490730e",
     "description": "For all natural numbers m, a, and d, the sum over all m-tuples (i_1, ..., i_m) of non-negative integers summing to d of the product of binomial coefficients ∏_{j=1}^{m} C(a + i_j, a) equals C(ma + d + m - 1, d). This generalizes the identity stated in the paper for m=3 (used to simplify the Bogart-Longyear formula for 3-row Latin rectangles), where the paper claims it is 'easily proved with dots and dividers.' The generalization connects directly to Gessel's framework through multisymmetric function generating series.",
     "domain_bridges": [
       "generating_functions",
@@ -12588,7 +12531,7 @@
     "proof_strategy": "Use generating functions: (1) establish that the ordinary generating function for C(a+i, a) is (1-x)^{-(a+1)} via the negative binomial theorem; (2) the product of m copies gives (1-x)^{-m(a+1)}, so the LHS is the coefficient of x^d; (3) extract the coefficient as C(m(a+1)+d-1, d) = C(ma+d+m-1, d). Alternatively, prove by induction on m using Vandermonde convolution as the inductive step, with the m=1 base case being trivial.",
     "research_mode": "team",
     "source_exp_id": "2607.05214v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T16:25:25.291005+00:00",
     "title": "Generalized Multinomial Convolution Identity for Latin Rectangle Enumeration"
   },
