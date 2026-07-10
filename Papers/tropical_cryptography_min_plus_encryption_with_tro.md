@@ -1,58 +1,73 @@
-# Computational Evidence — Tropical Discrete Logarithm (min-plus) eigenvalue attack
+# Computational Evidence: Tropical Matrix Powers, Walks, and Eigenvalues
 
-All numbers below were produced by a self-contained min-plus computation over `ℚ`
-(verified in Lean; reproduced here). The formal theorems live in
-`Catalog/Tropical/TropicalDiscreteLog.lean` and
-`Catalog/Bridges/TropicalStrongDivisibilityDLog.lean`.
+All statements below are *proved* in `Catalog/Tropical/TropicalCryptoConnector.lean`.
+This note records the small-case computations that motivated them.
 
-## Setup
+The tropical (min-plus) semiring `Tropical (WithTop ℤ)` uses `min` for `+` and
+integer `+` for `*`. The multiplicative unit is `trop 0` and the additive unit
+is `trop ⊤ = ∞`.
 
-Tropical (min-plus) matrix–vector action `(A ⊗ v)_i = min_j (A_{ij} + v_j)`, with
+## 1. Matrix power = shortest walk weight (`Matrix.pow_apply_eq_sum_path`)
 
+Take the min-plus matrix
 ```
-A = [[3, 5],
-     [5, 3]]          (constant diagonal c = 3)
-v = (0, 1)            (tropical eigenvector)
+A = | 1  3 |
+    | 2  0 |
 ```
+The tropical product `(A ⊗ A)_{ij} = min_k (A_{ik} + A_{kj})`:
 
-`(c, v) = (3, (0,1))` is a tropical eigenpair: `A ⊗ v = v + 3`, verified
-`A ⊗ v = (3, 4) = v + 3`.
+| entry | candidates (2-step walks i→k→j) | min |
+|-------|----------------------------------|-----|
+| (0,0) | 0→0→0: 1+1=2, 0→1→0: 3+2=5       | **2** |
+| (0,1) | 0→0→1: 1+3=4, 0→1→1: 3+0=3       | **3** |
+| (1,0) | 1→0→0: 2+1=3, 1→1→0: 0+2=2       | **2** |
+| (1,1) | 1→0→1: 2+3=5, 1→1→1: 0+0=0       | **0** |
 
-## 1. Eigenvalue additivity under powers  (`tropMatPow_eigenpair`)
-
-The residual `(A^{⊗t} ⊗ v)_i − v_i` measured after `t` applications, at both coordinates:
-
-| genuine power `t` | residual coord 0 | residual coord 1 | predicted `t·c` |
-|-------------------|------------------|------------------|-----------------|
-| 1                 | 3                | 3                | 3               |
-| 2                 | 6                | 6                | 6               |
-| 3                 | 9                | 9                | 9               |
-| 5                 | 15               | 15              | 15              |
-
-The residual is **constant across coordinates** and equals `t·c` exactly — this is the
-leak that breaks the TDLP: `k = residual/c − 1`.
-
-## 2. Strong divisibility leak  (`tdlp_divisibility_leak`, `tropical_eigenvalue_gcd`)
-
-The leaked eigenvalue sequence is `t ↦ c·t`. For `c = 3`:
-
+So
 ```
-gcd( eig(4), eig(6) ) = gcd(12, 18) = 6 = 3 · gcd(4,6) = eig(gcd(4,6)).
+A^{⊗2} = | 2  3 |
+         | 2  0 |
 ```
+Each entry `(A^{⊗2})_{ij}` is exactly the **minimum total weight of a 2-step
+walk** from `i` to `j`. The theorem `Matrix.pow_apply_eq_sum_path` proves the
+general identity (over any commutative semiring)
+```
+(A^k)_{ij} = Σ_{walks p: i→…→j of length k}  Π_t A_{p_t, p_{t+1}} ,
+```
+which under `Σ = min`, `Π = +` is the Bellman/Floyd shortest-walk recursion.
+This is the algebra ↔ combinatorial-optimization bridge, and it is exactly the
+"shortest-path attack" surface for the tropical discrete logarithm problem.
 
-So the public eigenvalues form a *strong divisibility sequence*: their divisibility
-lattice mirrors the divisibility lattice of the exponents.
+## 2. Tropical eigenvalues are additive (`tropical_eigenvalue_additive`)
 
-## 3. Counterexample hunt — the boundary `c = 0`
+An eigenpair `A ⊗ v = λ ⊗ v` (scalar `λ`, i.e. `A *ᵥ v = λ • v`) satisfies
+```
+A^{⊗k} ⊗ v = λ^{⊗k} ⊗ v ,   with   untrop(λ^{⊗k}) = k · untrop(λ).
+```
+Example: `λ = trop 5` gives `untrop(λ^{⊗3}) = 3·5 = 15`. So the min-plus
+eigenvalue scales *linearly* with the power `k`.
 
-For `c = 0` (the boundary eigenvalue of `Tropical/EigenzeroNoLeak.lean`) the sequence is
-identically `0`, every value divides every other, and **no** exponent information leaks.
-This is the precise complement of the broken regime: the `↔` in `tdlp_divisibility_leak`
-genuinely requires `0 < c`. No counterexample to the guarded statements was found.
+**Cryptographic consequence.** The tropical Diffie–Hellman proposal publishes
+`B = A^{⊗k}` and asks the adversary to recover `k` (the TDLP). Additivity turns
+the multiplicative problem into a *linear* one:
+```
+k = untrop(λ(B)) / untrop(λ(A))     (whenever untrop(λ(A)) ≠ 0).
+```
+This is precisely why min-plus matrix powering is **not** a one-way function in
+general — the eigenvalue is a cheap linear invariant that leaks `k`. Our formal
+proof isolates the exact algebraic identity responsible.
 
-## OEIS
+## 3. Counterexample hunt
 
-The eigenvalue sequence `t ↦ c·t` is the multiples-of-`c` sequence (e.g. `c=1` is
-A000027, the identity sequence, which is also the `idSDS` of
-`Bridges/StrongDivisibilitySequences.lean`). The strong divisibility property of `c·t`
-is `Nat.gcd_mul_left`.
+No counterexamples were sought for the main theorems because they are
+*equalities* proved for all inputs, not universal conjectures over a search
+space. The relevant "counterexample" content is negative *for cryptography*:
+the additivity identity in §2 is itself the obstruction to security, and it
+holds unconditionally. The `untrop(λ(A)) = 0` degenerate case (where the linear
+attack fails to determine `k`) is faithfully reflected by the division
+condition above.
+
+## 4. OEIS
+
+No integer sequence is central to these results (they are structural identities
+over an arbitrary index set / semiring), so no OEIS entry applies.
