@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6490730e",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\nThis project formalizes the **generalized multinomial convolution identity**\n$$ \\sum_{i_1 + \\cdots + i_m = d} \\prod_{j=1}^{m} \\binom{a + i_j}{a}\n     = \\binom{ma + d + m - 1}{d},",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-10T03:16:46",
-      "title": "Generalized Multinomial Convolution Identity for Latin Rectangle Enumeration"
-    },
-    {
       "cycle_id": "4d9b342d",
       "domain": "Physics",
       "key_insight": "# Future Directions\n\nThis project formalizes a **cross-domain connector**: the Eckmann–Hilton\nargument, which links homotopy theory (two ways of composing loops-between-loops)\nto algebra (commutative",
@@ -499,19 +489,19 @@
       "theorem_count": 22,
       "timestamp": "2026-07-10T19:32:10",
       "title": "Formalizing the Probabilistic Method: Erdos Meets Lean"
+    },
+    {
+      "cycle_id": "f0772bca",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Combinatorics of Register Allocation\n\nThis cycle established that for programs whose variables occupy contiguous live ranges, the\ninterference graph is an interval graph, and",
+      "quality_score": 0.83,
+      "sorry_count": 3,
+      "theorem_count": 18,
+      "timestamp": "2026-07-10T20:20:23",
+      "title": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Coloring"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "35d54dba",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Independence Ratio Floor of the Plane\n\nThe independence ratio of a finite configuration of points in the plane — the\nlargest fraction of the points that can be chosen with no",
-      "quality_score": 0.527476,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-01T23:54:40",
-      "title": "Minimum Independence Ratio Constraint"
-    },
     {
       "cycle_id": "307e78f2",
       "domain": "Novelty",
@@ -2501,15 +2491,19 @@
       "theorem_count": 12,
       "timestamp": "2026-07-10T20:20:14",
       "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proof?"
+    },
+    {
+      "cycle_id": "f0772bca",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Combinatorics of Register Allocation\n\nThis cycle established that for programs whose variables occupy contiguous live ranges, the\ninterference graph is an interval graph, and",
+      "quality_score": 0.83,
+      "sorry_count": 3,
+      "theorem_count": 18,
+      "timestamp": "2026-07-10T20:20:23",
+      "title": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Coloring"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c22096e0",
-      "domain": "Novelty",
-      "name": "VertexArrows",
-      "quality": 0.7
-    },
     {
       "cycle_id": "c22096e0",
       "domain": "Novelty",
@@ -2803,17 +2797,16 @@
       "domain": "Cryptography",
       "name": "not_arrows_of_two_mul_choose_lt",
       "quality": 0.79
+    },
+    {
+      "cycle_id": "f0772bca",
+      "domain": "Novelty",
+      "name": "Interfere",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-10T20:20:14",
+  "last_updated": "2026-07-10T20:20:23",
   "open_questions": [
-    {
-      "context": "on `ℝ²` as a product — no `sorry`, no `native_decide`.",
-      "cycle_id": "2e937390",
-      "domain": "Novelty",
-      "sorry_count": 1,
-      "timestamp": "2026-07-05T21:33:41"
-    },
     {
       "context": "Critique (Critic): All proofs are `sorry`-free and reuse the `EdgeColoring` API from `Defs`.",
       "cycle_id": "e545fdf8",
@@ -3016,6 +3009,13 @@
       "domain": "Logic",
       "sorry_count": 4,
       "timestamp": "2026-07-10T20:20:14"
+    },
+    {
+      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
+      "cycle_id": "f0772bca",
+      "domain": "Novelty",
+      "sorry_count": 3,
+      "timestamp": "2026-07-10T20:20:23"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "8b2bab35",
-        "quality": 0.83,
-        "theorems": 19,
-        "title": "Deepening: Graph Coloring with Emotions: The Chromatic Polynomial Meets Psycholo"
-      },
-      {
         "cycle_id": "ff42203a",
         "quality": 0.72,
         "theorems": 13,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 29,
         "title": "Deepening: Algebraic Geometry of Neural Networks: Varieties of Decision Boundari"
+      },
+      {
+        "cycle_id": "f0772bca",
+        "quality": 0.83,
+        "theorems": 18,
+        "title": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Colorin"
       }
     ],
     "NumberTheory": [
