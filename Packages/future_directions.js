@@ -199,7 +199,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Arithmetic of Games: Surreal Numbers as Number Fields"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "90792fe8",
     "description": "Building on cycle e40b9050 (Q=0.820), which proved 19 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A neural network with ReLU activation defines a piecewise linear function f: R^n -> R^m. The decision boundary of a binary classifier f: R^n -> R is the set {x : f(x) = 0}, which is a piecewise linear hypersurface. The algebraic variety of the decision boundary is the zero set of the polynomial that",
     "domains": [
       "Novelty"
@@ -208,7 +208,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "e40b9050",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T14:16:31.072438+00:00",
     "title": "Deepening: Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
   },
