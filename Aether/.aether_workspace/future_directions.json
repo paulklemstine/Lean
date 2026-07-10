@@ -26113,7 +26113,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "f0066eca",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -26140,7 +26140,7 @@
       "source": "",
       "source_exp_id": "92e61cee",
       "source_path": "Conjecture on Leading Term Cancellation",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-10T13:11:38.329718+00:00",
       "title": "Deepening: Conjecture on Leading Term Cancellation"
