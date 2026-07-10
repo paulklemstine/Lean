@@ -1,275 +1,306 @@
-# The Mathematical Uncanny Valley: Trust Dynamics in Proof Evaluation
+# The Lazy Caterer Hierarchy: Truncated Pascal Rows and the Layer Recurrence
 
 ## Abstract
 
-We introduce and formally verify a mathematical model of the "uncanny valley" phenomenon in proof evaluation. By analogy with Mori's uncanny valley in robotics, we conjecture and prove that trust in mathematical proofs is non-monotone in rigor level: informal intuitions and fully formal proofs are trusted, while "almost rigorous" proofs with small gaps trigger disproportionate suspicion. We define the **suspicion function** S(r) = r²(1-r), model trust as U(r) = r - αS(r) where α is the community's suspicion sensitivity, and prove five main results: (1) the suspicion function is bounded by 4/27 on [0,1], achieved at r = 2/3; (2) for α > 4, the trust model exhibits the valley phenomenon; (3) the threshold α = 4 is sharp; (4) continuous valley functions have interior minima; and (5) the valley is universal across all suspicion functions satisfying mild conditions. All results are formalized and verified in Lean 4 with Mathlib.
+The lazy caterer sequence counts the maximal number of planar regions produced by
+$n$ straight lines, and the cake sequence counts the maximal number of spatial
+regions produced by $n$ planes. Although these two sequences are usually presented
+through unrelated closed forms — a quadratic $\tfrac{n(n+1)}{2}+1$ and a cubic
+$\tfrac{n^3+5n+6}{6}$ — we show that they are consecutive truncations of a single
+row of Pascal's triangle: the lazy caterer number is the sum of the first three
+binomial coefficients of row $n$, and the cake number is the sum of the first
+four. From this vantage point we derive a suite of exact structural identities:
+a first-difference recurrence, a constant second difference, a bridge to
+triangular numbers, a closed form for partial sums in terms of tetrahedral
+numbers, strict monotonicity, and a periodic parity law. The centrepiece is the
+**layer recurrence** $c(n+1) = c(n) + p(n)$, which promotes the two-dimensional
+count to the three-dimensional count by accumulating exactly one further binomial
+column. We interpret this recurrence as a geometric incarnation of Pascal's rule
+and use it to frame a general "dimensional tower" in which every floor is a
+truncated Pascal prefix generated from the floor beneath it. All identities are
+stated with full proof sketches, and numerical demonstrations are provided.
 
-**Keywords**: proof evaluation, trust dynamics, uncanny valley, epistemic barriers, formal verification, mathematical sociology
-
----
+**Keywords:** lazy caterer number, cake number, hyperplane arrangement, Pascal's
+triangle, binomial coefficient, region counting, triangular number, tetrahedral
+number, parity law, combinatorial recurrence.
 
 ## 1. Introduction
 
-The evaluation of mathematical proofs is typically treated as a binary process: a proof is either correct or incorrect. However, in practice, mathematicians routinely evaluate arguments at varying levels of rigor, from informal sketches to machine-verified formal proofs. This evaluation is not merely logical but also psychological — a mathematician's confidence in an argument depends not just on its logical content but on its *presentation* of rigor.
+A classical problem in combinatorial geometry asks: what is the maximal number of
+pieces into which $n$ straight cuts can divide a convex region of the plane? The
+answer, the **lazy caterer sequence**, begins
 
-We propose that this trust dynamic exhibits a non-monotone pattern analogous to Mori's uncanny valley in robotics [Mori, 1970]. Specifically:
+$$1,\,2,\,4,\,7,\,11,\,16,\,22,\,29,\dots$$
 
-1. **Low rigor** (informal sketches): Moderate trust. The argument is understood as a guide to the key ideas, not a claim of completeness.
-2. **High rigor** (formal proofs): High trust. The argument has been thoroughly checked.
-3. **Intermediate rigor** (almost-rigorous proofs): Low trust. The argument claims completeness but fails to deliver it, triggering heightened scrutiny.
+Its natural three-dimensional analogue asks for the maximal number of pieces into
+which $n$ planar cuts can divide a solid convex body. The answer, the **cake
+sequence**, begins
 
-This pattern — trust that increases, then decreases, then increases again — defines the **mathematical uncanny valley**.
+$$1,\,2,\,4,\,8,\,15,\,26,\,42,\,64,\dots$$
 
-### 1.1 Related Work
+The maximum in each case is attained by placing the cuts in *general position*:
+every new line crosses all previous lines at distinct points, and every new plane
+meets all previous planes in distinct lines, with no three cuts sharing a common
+intersection.
 
-The uncanny valley hypothesis originated in robotics [Mori, 1970] and has been studied extensively in human-robot interaction [MacDorman & Ishiguro, 2006]. Extensions to other domains include the uncanny valley of the mind [Gray & Wegner, 2012] and the uncanny valley in virtual characters [Tinwell, 2014].
+These sequences are traditionally introduced through their closed forms and then
+left as isolated curiosities. The purpose of this paper is to develop them
+*together*, exhibiting both as truncations of a common object — a row of Pascal's
+triangle — and to isolate the single recurrence that binds one dimension to the
+next. This reframing turns a list of ad-hoc formulas into the two lowest floors of
+a uniform hierarchy and makes each identity a transparent consequence of binomial
+arithmetic.
 
-In mathematics, related observations appear in the literature on mathematical practice. Lakatos [1976] described the dialectical process by which proofs are refined through counterexamples. De Millo, Lipton, and Perlis [1979] argued that mathematical proofs are social processes, not formal objects. More recently, Hales [2014] discussed how the formal verification of the Kepler conjecture resolved persistent doubts about the original proof.
+Our contributions are:
 
-The specific observation that "almost-right" proofs face disproportionate skepticism appears anecdotally throughout mathematics but has not, to our knowledge, been formalized.
-
-### 1.2 Contributions
-
-We make the following contributions:
-
-1. **Novel mathematical model**: We introduce the suspicion function S(r) = r²(1-r) and the valley trust model U(r) = r - αS(r), providing a precise framework for the uncanny valley in proof evaluation.
-
-2. **Sharp threshold theorem**: We prove that the critical suspicion sensitivity α = 4 is a sharp threshold: below it, trust is monotone in rigor; above it, the uncanny valley appears.
-
-3. **Universal epistemic barrier**: We prove that the valley phenomenon is not specific to our model but arises universally for any trust model with suspicion penalty.
-
-4. **Interior minimum theorem**: We prove that the minimum trust level always occurs at an interior rigor level, never at the extremes.
-
-5. **Formal verification**: All results are verified in Lean 4 with Mathlib, providing the highest level of mathematical certainty.
-
----
+1. A unified development of the plane and space region counts as consecutive
+   truncated Pascal rows (Sections 3 and 5).
+2. A complete set of exact identities for the lazy caterer numbers: recurrence,
+   binomial form, triangular-number bridge, constant second difference, strict
+   monotonicity, tetrahedral partial sums, and a periodic parity law (Section 4).
+3. The **layer recurrence** $c(n+1)=c(n)+p(n)$ and its interpretation as a
+   dimensional lift driven by Pascal's rule (Section 5).
+4. A conjectural general framework — the dimensional tower $H_d$ — extending the
+   hierarchy to arbitrary dimension (Section 7).
 
 ## 2. Definitions
 
-### 2.1 The Suspicion Function
+Throughout, $n$ ranges over the non-negative integers and $\binom{n}{k}$ denotes
+the binomial coefficient, with $\binom{n}{k}=0$ for $k>n$.
 
-**Definition 2.1** (Suspicion Function). The *suspicion function* S : [0,1] → ℝ is defined by:
+**Definition 2.1 (Lazy caterer number).** The *lazy caterer number* $p(n)$ is the
+maximal number of regions into which the plane can be divided by $n$ lines. We
+take as its working definition the closed form
 
-$$S(r) = r^2(1-r)$$
+$$p(n) \;=\; \frac{n(n+1)}{2} + 1,$$
 
-The factor r² represents the *expectation of rigor*: a proof at high rigor level creates strong expectations of completeness. The factor (1-r) represents the *incompleteness*: the gap between claimed and actual rigor. Their product captures the key dynamic — suspicion is maximized when both expectation and incompleteness are significant.
+where the division is exact because $n(n+1)$ is always even.
 
-### 2.2 The Valley Trust Model
+**Definition 2.2 (Cake number).** The *cake number* $c(n)$ is the maximal number
+of regions into which space can be divided by $n$ planes. We take as its working
+definition the closed form
 
-**Definition 2.2** (Valley Trust Model). For suspicion sensitivity α ≥ 0, the *valley trust model* U_α : [0,1] → ℝ is:
+$$c(n) \;=\; \frac{n^3 + 5n + 6}{6},$$
 
-$$U_\alpha(r) = r - \alpha \cdot S(r) = r - \alpha r^2(1-r)$$
+where the division is exact because $n^3 + 5n + 6 \equiv 0 \pmod 6$ for all $n$.
 
-The term r represents the *raw rigor contribution* — more rigorous arguments carry more information. The term αS(r) is the *suspicion penalty* — the trust deficit caused by gaps in an apparently rigorous argument.
+**Definition 2.3 (Triangular and tetrahedral numbers).** The $n$-th triangular
+number is $T_n = 0 + 1 + \dots + n = \binom{n+1}{2}$, and the tetrahedral numbers
+are $\binom{n+2}{3}$.
 
-### 2.3 The Valley Property
+A short computation confirms the announced initial values:
+$p(0),\dots,p(6) = 1,2,4,7,11,16,22$ and $c(0),\dots,c(6) = 1,2,4,8,15,26,42$.
 
-**Definition 2.3** (HasValley). A function f : ℝ → ℝ has the *valley property* on (a,b) if:
+## 3. The plane count as a truncated Pascal row
 
-$$a < b \quad \text{and} \quad \exists x \in (a,b), \quad f(x) < f(a) \wedge f(x) < f(b)$$
+**Theorem 3.1 (Binomial form).** For every $n$,
 
-This formalizes the essential shape of the uncanny valley: the function dips below both endpoint values at some interior point.
+$$p(n) = \binom{n}{0} + \binom{n}{1} + \binom{n}{2}.$$
 
-### 2.4 The Epistemic Barrier
+*Proof sketch.* Using $\binom{n}{0}=1$, $\binom{n}{1}=n$, and
+$\binom{n}{2}=\tfrac{n(n-1)}{2}$, the right-hand side equals
+$1 + n + \tfrac{n(n-1)}{2} = \tfrac{n^2+n}{2}+1 = \tfrac{n(n+1)}{2}+1 = p(n)$.
+The only care needed is that natural-number division is exact here, which follows
+because $n(n-1)$ and $n(n+1)$ are even; clearing denominators reduces the identity
+to a polynomial equation verified directly. $\square$
 
-**Definition 2.4** (Epistemic Barrier). An *epistemic barrier* is a triple (p, h, w) where:
-- p ∈ (0,1) is the peak rigor level (where suspicion is maximal)
-- h > 0 is the barrier height (maximum trust deficit)
-- w > 0 is the barrier width (range of affected rigor levels)
+This is the structural statement that organizes everything that follows: $p$ is
+the sum of the first *three* entries of row $n$ of Pascal's triangle.
 
-### 2.5 Valley Depth
+## 4. Structural identities for the lazy caterer numbers
 
-**Definition 2.5** (Valley Depth). The *valley depth* of f at point x relative to endpoints a, b is:
+**Theorem 4.1 (First-difference recurrence).** For every $n$,
 
-$$D(f, a, b, x) = \min(f(a), f(b)) - f(x)$$
+$$p(n+1) = p(n) + (n+1).$$
 
-Positive depth indicates that f(x) is below both endpoints — the valley is present.
+*Proof sketch.* Substituting the closed form,
+$p(n+1) = \tfrac{(n+1)(n+2)}{2}+1$ and $p(n) = \tfrac{n(n+1)}{2}+1$; their
+difference is $\tfrac{(n+1)(n+2) - n(n+1)}{2} = \tfrac{(n+1)\cdot 2}{2} = n+1$.
+Geometrically, the $(n+1)$-st line, in general position, is cut by the $n$
+existing lines into $n+1$ sub-segments and rays, each of which splits one existing
+region in two, adding $n+1$ regions. $\square$
 
----
+**Theorem 4.2 (Bridge to triangular numbers).** For every $n$,
 
-## 3. Main Results
+$$p(n) = 1 + \sum_{k=0}^{n} k = 1 + T_n.$$
 
-### 3.1 The Suspicion Peak Theorem
+*Proof sketch.* The sum $\sum_{k=0}^n k = \tfrac{n(n+1)}{2}$ is the $n$-th
+triangular number; adding $1$ recovers the closed form of Definition 2.1. $\square$
 
-**Theorem 3.1** (Suspicion Bound). For all r ∈ [0,1]:
+**Theorem 4.3 (Constant second difference).** For every $n$,
 
-$$S(r) = r^2(1-r) \leq \frac{4}{27}$$
+$$p(n+2) + p(n) = 2\,p(n+1) + 1.$$
 
-with equality at r = 2/3.
+*Proof sketch.* Apply Theorem 4.1 twice:
+$p(n+2) = p(n+1) + (n+2)$ and $p(n+1) = p(n) + (n+1)$. Substituting,
+$p(n+2)+p(n) = \bigl(p(n+1)+(n+2)\bigr) + \bigl(p(n+1)-(n+1)\bigr) = 2p(n+1)+1$.
+The second difference $p(n+2)-2p(n+1)+p(n)$ is therefore the constant $1$, the
+discrete analogue of a curve of unit curvature. $\square$
 
-*Proof sketch*. By the AM-GM inequality applied to the triple (r/2, r/2, 1-r):
+**Theorem 4.4 (Strict monotonicity).** The sequence $p$ is strictly increasing:
+$p(n) < p(n+1)$ for all $n$.
 
-$$\frac{r}{2} \cdot \frac{r}{2} \cdot (1-r) \leq \left(\frac{r/2 + r/2 + (1-r)}{3}\right)^3 = \frac{1}{27}$$
+*Proof sketch.* By Theorem 4.1, $p(n+1) - p(n) = n+1 \ge 1 > 0$. Strict
+monotonicity of a sequence on the natural numbers follows from strict increase at
+each successive step. $\square$
 
-Multiplying by 4 gives S(r) ≤ 4/27. Equality holds when r/2 = 1-r, i.e., r = 2/3. ∎
+**Theorem 4.5 (Tetrahedral partial sums).** For every $n$,
 
-*Interpretation*. The maximum suspicion is 4/27 ≈ 0.148, occurring at rigor level 2/3. This means the most suspicious proofs are those that are about two-thirds rigorous — detailed enough to create strong expectations but with a significant remaining gap of 1/3.
+$$\sum_{k=0}^{n} p(k) = (n+1) + \binom{n+2}{3}.$$
 
-### 3.2 Valley Existence
+*Proof sketch.* Induct on $n$. The base case $n=0$ reads $p(0)=1 = 1 + \binom{2}{3}
+= 1 + 0$. For the inductive step, using Theorem 4.2 write $p(k) = 1 + T_k$, so the
+sum equals $(n+1) + \sum_{k=0}^n T_k$. The sum of the first $n+1$ triangular
+numbers is the tetrahedral number $\binom{n+2}{3}$ (the "hockey-stick" identity
+$\sum_{k=0}^n \binom{k+1}{2} = \binom{n+2}{3}$). Combining gives the claim. The
+constant term $(n+1)$ is precisely the accumulation of the $n+1$ copies of the
+leading $1$ in $p(k) = 1 + T_k$. $\square$
 
-**Theorem 3.2** (Valley Existence). For α > 4, the valley trust model U_α has the valley property on (0,1):
+This identity is the first sign of the dimensional lift: summing a floor-two
+quantity ($p$, sum of three Pascal columns) produces a floor-three quantity (the
+tetrahedral $\binom{n+2}{3}$) plus a constant column.
 
-$$\exists r \in (0,1), \quad U_\alpha(r) < U_\alpha(0) = 0 \quad \text{and} \quad U_\alpha(r) < U_\alpha(1) = 1$$
+**Theorem 4.6 (Parity law).** For every $n$,
 
-*Proof sketch*. The witness is r = 1/2. We compute:
+$$p(n) \text{ is odd} \iff n \equiv 0 \text{ or } 3 \pmod 4.$$
 
-$$U_\alpha(1/2) = 1/2 - \alpha \cdot (1/4) \cdot (1/2) = 1/2 - \alpha/8$$
-
-For α > 4, this gives U_α(1/2) < 1/2 - 4/8 = 0 = U_α(0). Also U_α(1/2) < 0 < 1 = U_α(1). ∎
-
-*Interpretation*. When α > 4, a proof at rigor level 1/2 is trusted *less than no proof at all*. The suspicion penalty from the visible gaps overwhelms the information content of the rigorous parts.
-
-### 3.3 Sharp Threshold
-
-**Theorem 3.3** (Sharp Threshold). For 0 ≤ α ≤ 4, the valley trust model is nonnegative on [0,1]:
-
-$$\forall r \in [0,1], \quad U_\alpha(r) \geq 0$$
-
-*Proof sketch*. We need r ≥ αr²(1-r) for r ∈ [0,1]. For r = 0, this is trivial. For r > 0, dividing by r gives 1 ≥ αr(1-r). Since r(1-r) ≤ 1/4 (from (2r-1)² ≥ 0) and α ≤ 4, we get αr(1-r) ≤ 4 · 1/4 = 1. ∎
-
-*Interpretation*. Theorems 3.2 and 3.3 together show that α = 4 is a **phase transition** for the trust model. Below α = 4, the mathematical community is forgiving enough that more rigor always helps. Above α = 4, the uncanny valley appears. The critical sensitivity α = 4 is the reciprocal of the maximum of r(1-r), reflecting the geometric structure of the unit interval.
-
-### 3.4 Valley Depth Monotonicity
-
-**Theorem 3.4** (Monotonicity in α). For α₁ ≤ α₂ and r ∈ [0,1]:
-
-$$U_{\alpha_2}(r) \leq U_{\alpha_1}(r)$$
-
-*Proof sketch*. The difference U_{α₁}(r) - U_{α₂}(r) = (α₂ - α₁) · S(r) ≥ 0 since α₂ ≥ α₁ and S(r) ≥ 0 on [0,1]. ∎
-
-*Interpretation*. As a mathematical community becomes more sophisticated in detecting errors (higher α), the uncanny valley gets deeper. Expert communities pay a higher cost for near-misses.
-
-### 3.5 Interior Minimum Theorem
-
-**Theorem 3.5** (Interior Minimum). Let f : [0,1] → ℝ be continuous with the valley property on (0,1). Then f attains its minimum on [0,1] at an interior point:
-
-$$\exists x \in (0,1), \quad \forall y \in [0,1], \quad f(x) \leq f(y)$$
-
-*Proof sketch*. By the Extreme Value Theorem (compactness of [0,1] and continuity of f), f attains its minimum at some x₀ ∈ [0,1]. By the valley property, there exists z ∈ (0,1) with f(z) < f(0) and f(z) < f(1). Since f(x₀) ≤ f(z) < f(0), we have x₀ ≠ 0. Since f(x₀) ≤ f(z) < f(1), we have x₀ ≠ 1. Thus x₀ ∈ (0,1). ∎
-
-*Interpretation*. The minimum trust level necessarily occurs at an intermediate rigor level. One cannot reach the bottom of the uncanny valley by being either completely informal or completely formal. This is a topological consequence of the valley shape.
-
-### 3.6 The Epistemic Barrier Theorem
-
-**Theorem 3.6** (Universal Epistemic Barrier). Let S : [0,1] → ℝ be any function with S(0) = S(1) = 0, S ≥ 0 on [0,1], and max S = M > 0. If αM > 1, then:
-
-$$\exists r \in (0,1), \quad r - \alpha S(r) < 0$$
-
-*Proof sketch*. Let r₀ be where S(r₀) = M. Since S(0) = S(1) = 0 and M > 0, we have r₀ ∈ (0,1). Then r₀ - αS(r₀) = r₀ - αM < 1 - αM < 0 since r₀ < 1 and αM > 1. ∎
-
-*Interpretation*. This is the most general result: the uncanny valley appears for **any** suspicion function, not just S(r) = r²(1-r). The only requirements are: suspicion vanishes at zero rigor and full rigor, is nonneg in between, and the sensitivity parameter is large enough. The threshold is αM > 1, or equivalently α > 1/M.
-
----
-
-## 4. Algorithms
-
-### 4.1 Valley Detection Algorithm
-
-Given a trust function U : [0,1] → ℝ sampled at n points, detect whether the uncanny valley is present:
-
-```
-VALLEY-DETECT(U, n):
-  samples ← [U(i/n) for i = 0..n]
-  left_val ← samples[0]
-  right_val ← samples[n]
-  threshold ← min(left_val, right_val)
-  for i = 1 to n-1:
-    if samples[i] < threshold:
-      return VALLEY_FOUND at rigor i/n
-  return NO_VALLEY
-```
-
-### 4.2 Optimal Suspicion Sensitivity Estimation
-
-Given empirical trust data {(rᵢ, tᵢ)}ᵢ, estimate the suspicion sensitivity α:
-
-```
-ESTIMATE-ALPHA(data):
-  α ← minimize Σᵢ (tᵢ - U_α(rᵢ))² over α ≥ 0
-  return α
-```
-
-This is a one-parameter least-squares problem with closed-form solution:
-
-$$\hat{\alpha} = \frac{\sum_i (r_i - t_i) \cdot S(r_i)}{\sum_i S(r_i)^2}$$
-
----
-
-## 5. Discussion
-
-### 5.1 The Phase Transition at α = 4
-
-The sharp threshold at α = 4 is perhaps the most striking result. It implies that whether the uncanny valley exists is not a matter of degree but a **phase transition**. Below the critical sensitivity, the mathematical landscape is benign: more effort always leads to more trust. Above it, the landscape develops a valley that deepens monotonically with sensitivity.
-
-The critical value 4 = 1/max{r(1-r)} has a geometric interpretation. The function r(1-r) measures the "exposure" of a proof at rigor level r — the product of rigor and incompleteness. The maximum exposure 1/4 occurs at r = 1/2. The critical α is the reciprocal of this maximum exposure.
-
-### 5.2 Connection to Bayesian Updating
-
-The valley model can be interpreted in a Bayesian framework. A mathematician's prior belief about proof correctness is updated by observing the rigor level. An informal argument carries low prior weight but also low evidence of error. A nearly-complete argument carries high prior weight but provides strong evidence of a potential error (the gap itself becomes informative).
-
-In this framework, the suspicion function S(r) = r²(1-r) arises naturally as the product of the prior weight r² and the error signal (1-r).
-
-### 5.3 Implications for Mathematical Practice
-
-Our results suggest several practical implications:
-
-1. **The "all or nothing" principle**: Mathematicians should either present informal sketches (low r) or complete proofs (high r), avoiding the valley of intermediate rigor.
-
-2. **Audience-dependent rigor**: The optimal rigor level depends on α, which varies by audience. Expert audiences have higher α and deeper valleys.
-
-3. **The cost of formal verification**: The valley model explains the value of formal verification: it moves proofs from the valley (r ≈ 0.9) to the peak (r = 1), crossing the steepest part of the trust curve.
-
-### 5.4 Limitations
-
-Our model has several limitations:
-
-1. **Single parameter**: The rigor level r is one-dimensional, while real proofs have complex multi-dimensional structures.
-2. **Specific functional form**: The choice S(r) = r²(1-r) is motivated but not uniquely determined.
-3. **No empirical calibration**: The model predictions await systematic empirical testing.
-4. **Static model**: Real trust is updated dynamically as mathematicians engage with an argument.
-
----
-
-## 6. Conjectures and Future Work
-
-### 6.1 Open Conjecture: Optimal Valley Location
-
-**Conjecture 6.1**. For the valley model U_α with α > 4, the rigor level rmin that minimizes U_α satisfies:
-
-$$r_{\min} = \frac{1 - \sqrt{1 - 3/\alpha}}{3}$$
-
-This follows from setting U'_α(r) = 0, i.e., 1 - α(2r - 3r²) = 0, giving 3αr² - 2αr + 1 = 0 with the smaller root as the minimum.
-
-**Test**: For α = 12, the formula predicts rmin = (1 - √(3/4))/3 ≈ 0.045. Numerically minimize U₁₂ and compare.
-
-### 6.2 Multi-dimensional Extension
-
-Real proofs have multiple dimensions of rigor: logical structure, computational verification, generality of hypotheses, etc. A multi-dimensional valley model U(r₁, ..., rₙ) may exhibit valley *surfaces* rather than valley *points*.
-
-### 6.3 Dynamic Trust Model
-
-In practice, trust is updated as a mathematician reads through a proof. A dynamic model U(r, t) where t is the "reading progress" could capture how early gaps affect evaluation of later arguments.
-
----
-
-## 7. Formal Verification
-
-All theorems in this paper are formalized and verified in Lean 4 with Mathlib. The formalization comprises:
-
-- 5 definitions (suspicionFn, valleyModel, HasValley, EpistemicBarrier, valleyDepth)
-- 10 theorems, all proved without `sorry`
-- Clean axiom usage (only propext, Classical.choice, Quot.sound)
-
-The formalization serves as both a verification of our results and a demonstration of the paper's thesis: fully formal proofs (r = 1) inspire the highest confidence.
-
----
-
-## References
-
-1. Mori, M. (1970). The uncanny valley. *Energy*, 7(4), 33-35.
-2. MacDorman, K. F., & Ishiguro, H. (2006). The uncanny advantage of using androids in cognitive and social science research. *Interaction Studies*, 7(3), 297-337.
-3. Gray, K., & Wegner, D. M. (2012). Feeling robots and human zombies: Mind perception and the uncanny valley. *Cognition*, 125(1), 125-130.
-4. Lakatos, I. (1976). *Proofs and Refutations*. Cambridge University Press.
-5. De Millo, R. A., Lipton, R. J., & Perlis, A. J. (1979). Social processes and proofs of theorems and programs. *Communications of the ACM*, 22(5), 271-280.
-6. Hales, T. C. (2014). *Dense Sphere Packings: A Blueprint for Formal Proofs*. Cambridge University Press.
-7. Tinwell, A. (2014). *The Uncanny Valley in Games and Animation*. CRC Press.
+*Proof sketch.* Since $p(n) = \tfrac{n(n+1)}{2}+1$, the parity of $p(n)$ is the
+opposite of the parity of the triangular number $T_n = \tfrac{n(n+1)}{2}$. Writing
+$n = 4q + r$ with $r \in \{0,1,2,3\}$ and reducing $\tfrac{n(n+1)}{2} \bmod 2$
+case by case shows $T_n$ is even exactly when $r \in \{0,3\}$, hence $p(n)$ is odd
+exactly then. The four-beat period reflects the base-two behaviour of binomial
+sums: parities of truncated Pascal rows are ultimately governed by the binary
+digits of $n$ via Lucas' theorem. $\square$
+
+## 5. The space count and the layer recurrence
+
+**Theorem 5.1 (Binomial form for cake numbers).** For every $n$,
+
+$$c(n) = \binom{n}{0} + \binom{n}{1} + \binom{n}{2} + \binom{n}{3}.$$
+
+*Proof sketch.* Using $\binom{n}{2}=\tfrac{n(n-1)}{2}$ and
+$\binom{n}{3}=\tfrac{n(n-1)(n-2)}{6}$, the right-hand side is
+$1 + n + \tfrac{n(n-1)}{2} + \tfrac{n(n-1)(n-2)}{6}$. Putting everything over $6$
+and expanding the numerator gives $\tfrac{6 + 6n + 3n(n-1) + n(n-1)(n-2)}{6} =
+\tfrac{n^3 + 5n + 6}{6} = c(n)$. Exactness of the divisions follows from the
+divisibility facts $2 \mid n(n-1)$ and $6 \mid n(n-1)(n-2)$. $\square$
+
+Thus $c$ is the sum of the first *four* entries of row $n$ — exactly one binomial
+column more than $p$. This single column is the whole difference between dimension
+two and dimension three.
+
+**Theorem 5.2 (Layer recurrence).** For every $n$,
+
+$$c(n+1) = c(n) + p(n).$$
+
+*Proof sketch (algebraic).* Expand both binomial forms via Pascal's rule
+$\binom{n+1}{k} = \binom{n}{k} + \binom{n}{k-1}$:
+
+$$
+c(n+1) = \sum_{k=0}^{3}\binom{n+1}{k}
+= \sum_{k=0}^{3}\binom{n}{k} + \sum_{k=0}^{3}\binom{n}{k-1}
+= c(n) + \sum_{k=0}^{2}\binom{n}{k}
+= c(n) + p(n),
+$$
+
+where the second telescoped sum, after re-indexing, is exactly the first three
+columns of row $n$, namely $p(n)$. Equivalently one verifies the polynomial
+identity $\tfrac{(n+1)^3+5(n+1)+6}{6} = \tfrac{n^3+5n+6}{6} + \tfrac{n(n+1)}{2}+1$
+after clearing denominators. $\square$
+
+*Proof sketch (geometric).* Introduce the $(n+1)$-st plane into an arrangement of
+$n$ planes in general position. The $n$ existing planes meet the new plane in $n$
+lines, themselves in general position within the new plane. These lines partition
+the new plane into $p(n)$ two-dimensional regions. Each such region is the
+cross-section, on the new plane, of exactly one existing three-dimensional cell,
+and the new plane slices that cell into two. Hence the number of new cells created
+equals $p(n)$, which is precisely the increment $c(n+1)-c(n)$. The
+three-dimensional counting problem contains, on each new cut, a faithful copy of
+the two-dimensional problem one dimension down. $\square$
+
+The layer recurrence is the structural heart of the hierarchy. Algebraically it is
+Pascal's rule; geometrically it says that *adding a hyperplane in dimension $d$*
+and *cutting the induced arrangement in dimension $d-1$* are the same
+combinatorial act.
+
+## 6. Algorithms
+
+We record the elementary algorithms underlying the numerical demonstrations.
+
+**Algorithm 6.1 (Region counts by recurrence).** Given a target $N$, compute the
+arrays $p(0),\dots,p(N)$ and $c(0),\dots,c(N)$ using only additions, via
+$p(0)=1$, $p(n+1)=p(n)+(n+1)$, $c(0)=1$, $c(n+1)=c(n)+p(n)$. This runs in
+$O(N)$ integer additions and requires no multiplication or division, and it makes
+the layer recurrence the *definition* of the space sequence.
+
+**Algorithm 6.2 (Pascal-prefix evaluation).** For a dimension $d$, compute
+$H_d(n) = \sum_{k=0}^{d} \binom{n}{k}$ by summing the first $d+1$ entries of row
+$n$ of Pascal's triangle. Rows may be generated incrementally by Pascal's rule,
+giving all region counts up to dimension $d$ and index $n$ in $O(dn)$ additions.
+
+## 7. A general dimensional tower
+
+The pattern of Sections 3–5 suggests a uniform statement. Define, for each
+dimension $d \ge 0$,
+
+$$H_d(n) = \binom{n}{0} + \binom{n}{1} + \dots + \binom{n}{d},$$
+
+the sum of the first $d+1$ entries of row $n$ of Pascal's triangle. Then $H_1(n) =
+n+1$ (regions of a line cut by $n$ points), $H_2 = p$ (lazy caterer), and $H_3 = c$
+(cake). The following statements are established for $d \le 3$ and conjectured in
+general.
+
+**Conjecture 7.1 (Dimensional layer recurrence).** For all $d \ge 1$,
+$H_d(n+1) = H_d(n) + H_{d-1}(n)$, and $H_d$ is a degree-$d$ polynomial in $n$ with
+leading term $n^d/d!$. Consequently the maximal number of regions cut by $n$
+hyperplanes in general position in $d$-space is $H_d(n)$.
+
+**Conjecture 7.2 (Uniform parity law).** For each $d$, the parity of $H_d(n)$ is a
+purely periodic function of $n$ whose period is a power of two, with the density of
+odd values a dyadic rational determined by $d$. The period-4 law of Theorem 4.6 is
+the $d=2$ shadow.
+
+**Conjecture 7.3 (Partial sums climb one floor).**
+$\sum_{k=0}^n H_d(k) = (n+1) + \bigl(H_{d+1}(n) - 1\bigr)$, generalizing the
+tetrahedral partial-sum identity of Theorem 4.5.
+
+## 8. Applications and discussion
+
+Region counts of hyperplane arrangements are a recurring quantity across applied
+mathematics. In linear optimization, the cells of an arrangement of constraint
+hyperplanes are the candidate regions of a feasibility or classification problem;
+$H_d(n)$ bounds their number. In computational geometry, the same counts bound the
+combinatorial complexity of arrangements built from straight cuts and thus the
+worst-case size of many geometric data structures. In the analysis of
+piecewise-linear models, where each unit contributes a hyperplane threshold and
+each activation pattern is a cell, $H_d(n)$ furnishes an upper bound on the number
+of distinct linear pieces a model can express.
+
+The conceptual payoff of the hierarchy view is unification: two closed forms that
+appear unrelated — a quadratic and a cubic — are recognized as neighbouring rungs
+of one ladder, generated by the single elementary rule of Pascal's triangle. The
+momentary coincidence $1,2,4,8$ in the cake numbers is explained precisely: a full
+Pascal row sums to $2^n$, so a truncation to the first four columns coincides with
+the full row until the row acquires a fifth entry at $n=4$, at which point $16$
+correctly becomes $15$.
+
+## 9. Future work
+
+The natural program is to establish Conjectures 7.1–7.3 in full generality by
+induction on the dimension $d$, using Pascal's rule as the sole engine, and to add
+an *extremal rigidity* companion: among all arrangements of $n$ hyperplanes in
+$d$-space, the maximum $H_d(n)$ should be attained only by arrangements in general
+position, any degeneracy strictly lowering the count. A second thread is the
+arithmetic of the tower: matching the observed period-4 parity to the binary-digit
+prediction of Lucas' theorem, and computing the exact dyadic densities of odd
+values floor by floor.
+
+## 10. Conclusion
+
+The lazy caterer numbers and the cake numbers, so often treated as separate
+puzzles with separate formulas, are two consecutive truncations of a single row of
+Pascal's triangle. Reading them this way makes their recurrences, their triangular
+and tetrahedral shadows, their strict growth, and their parity rhythm transparent,
+and it isolates the layer recurrence $c(n+1)=c(n)+p(n)$ as the mechanism that
+lifts one dimension to the next. What begins as a caterer's knife ends as a single
+diagonal thread through one of the oldest objects in mathematics.
