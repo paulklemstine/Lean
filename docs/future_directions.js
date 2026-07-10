@@ -59,7 +59,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Generalized Multinomial Convolution Identity for Latin Rectangle Enumeration"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6528f137",
     "description": "Building on cycle 7e49f0c7 (Q=0.830), which proved 17 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Galois group of a random polynomial over Q is S_n with probability 1. This is the Hilbert irreducibility theorem in probabilistic form. But what about random polynomials over finite fields? For f in F_p[x] of degree n chosen uniformly at random, the Galois group is S_n with probability approachi",
     "domains": [
       "Novelty"
@@ -68,7 +68,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "7e49f0c7",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T08:38:04.731918+00:00",
     "title": "Deepening: Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
   },
@@ -370,7 +370,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Pr"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "25448d9e",
     "description": "Cycle 3fa70466 (Q=0.790) proved 10 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In 1952, Turing showed that reaction-diffusion equations produce patterns (spots, stripes, spirals) that explain biological morphogenesis. But Turing patterns are solutions to PDEs, which are hard to ",
     "domains": [
       "Novelty"
@@ -379,7 +379,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8400000000000001,
     "research_mode": "team",
     "source_exp_id": "3fa70466",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T08:38:10.272652+00:00",
     "title": "Close Proofs: Turing's Flowers: Morphogenesis as Algebraic Geometry"
   },
