@@ -1,137 +1,217 @@
-# When Squaring a Triangle Keeps the Roots Real
+# When Squaring a Triangle Keeps Its Roots Real
 
-## A number-theory story about counting, matrices, and the quiet order hiding inside chaos
+## A number that counts the ways we can be surprised
 
-Take a deck of cards numbered $1$ through $n$ and shuffle it. As you read the shuffled deck from left to right, count how many times a card is followed by a *larger* card. Each such spot is called an **ascent**. A perfectly sorted deck has $n-1$ ascents; a perfectly reversed deck has none; most shuffles land somewhere in between.
+Imagine you are reading a list of numbers one at a time — say a shuffled
+deck, turned over card by card. Every so often the next card is *smaller*
+than the one before it. Those moments, where the sequence suddenly steps
+down, are called **descents**. They are the little surprises hidden inside
+an ordering.
 
-If you ask, "How many of the $n!$ possible orderings have exactly $k$ ascents?", you have stumbled onto one of the oldest and most beautiful sequences in combinatorics: the **Eulerian numbers**, written $A(n,k)$. They were studied by Leonhard Euler in the eighteenth century, and they have been turning up ever since — in probability, in the geometry of high-dimensional cubes, in the theory of splines used by every animation studio, and in the statistics of random permutations.
+Mathematicians have been counting descents for centuries. Fix a length
+$n$, and ask: among all $n!$ ways to arrange the numbers $1, 2, \ldots, n$,
+how many arrangements have *exactly* $k$ descents? The answer is a whole
+number written $A(n,k)$, and it is called an **Eulerian number**, after
+Leonhard Euler, who stumbled onto these quantities while summing infinite
+series in the eighteenth century.
 
-This article is about a surprising and delicate fact concerning what happens when you take the entire *table* of Eulerian numbers and **multiply it by itself**. The headline is short and strange:
-
-> Squaring the Eulerian triangle produces a new family of polynomials whose roots are *all real* — and, moreover, all negative, and neatly interlacing from one row to the next.
-
-Real roots may sound like a technicality. It is not. Real-rootedness is a kind of hidden discipline: it forces a sequence of numbers to rise and fall smoothly, with no erratic spikes, and it is exactly the property that guarantees the numbers behave like a well-shaped bell curve. That such discipline should *survive* an operation as violent as squaring a whole table of numbers is the small miracle we want to explain.
-
-## The triangle everyone should know
-
-Let us build the Eulerian numbers from scratch. Arrange them in a triangle, one row for each $n$:
+The Eulerian numbers fall into a beautiful triangular pattern, one row for
+each length $n$:
 
 $$
-\begin{array}{c}
+\begin{array}{ccccccc}
 1 \\
-1 \quad 1 \\
-1 \quad 4 \quad 1 \\
-1 \quad 11 \quad 11 \quad 1 \\
-1 \quad 26 \quad 66 \quad 26 \quad 1 \\
-1 \quad 57 \quad 302 \quad 302 \quad 57 \quad 1
+1 \\
+1 & 1 \\
+1 & 4 & 1 \\
+1 & 11 & 11 & 1 \\
+1 & 26 & 66 & 26 & 1 \\
 \end{array}
 $$
 
-Row $n$ has $n$ entries, $A(n,0), A(n,1), \dots, A(n,n-1)$. Each row is a palindrome — reversing a deck turns ascents into descents, so orderings with $k$ ascents pair up perfectly with those having $n-1-k$ ascents. The outermost entries are always $1$: exactly one ordering (the reversed deck) has no ascent, and exactly one (the sorted deck) has the maximum.
+Each row is symmetric — reversing an arrangement turns a descent into an
+ascent, so surprises come in balanced supply — and each row sums to $n!$,
+because every arrangement lands in exactly one column. This is the
+**Eulerian triangle**, one of the four "classical" triangles of
+combinatorics, alongside Pascal's triangle (which counts subsets),
+Stirling's triangle (which counts partitions), and the Narayana triangle
+(which counts balanced parenthesizations).
 
-Everything in the triangle grows from a single rule. To get an entry in a new row, blend the two entries above it with carefully chosen weights:
+## Turning a triangle into a polynomial
 
-$$
-A(n,k) = (k+1)\, A(n-1,k) + (n-k)\, A(n-1,k-1).
-$$
-
-Starting from $A(0,0)=1$ and the left column $A(n,0)=1$, this recurrence generates the whole triangle. It has a clean combinatorial meaning: when you insert the new largest card into a shorter ordering, it either lands in an existing gap (sometimes creating a new ascent, sometimes not), and the two coefficients $k+1$ and $n-k$ count precisely how many insertions keep the ascent count the same versus raise it by one.
-
-The very first fact about these numbers is the most satisfying, and it is completely rigorous:
-
-> **Row-Sum Identity.** For every $n \ge 1$, the entries of row $n$ add up to $n!$:
-> $$ \sum_{k=0}^{n-1} A(n,k) = n!. $$
-
-This is not a coincidence — it is a *conservation law*. Every one of the $n!$ possible orderings has *some* number of ascents, so if you sort the orderings into bins by ascent count and total the bins, you must recover all $n!$ orderings. Check the triangle: $1+4+1 = 6 = 3!$, and $1+11+11+1 = 24 = 4!$. The pattern never fails.
-
-## From numbers to polynomials
-
-Combinatorialists have a favorite trick: whenever you have a row of numbers, hang them on the powers of a variable $x$ to make a polynomial. For the Eulerian numbers, this produces the **Eulerian polynomials**:
+There is a time-honored trick for studying a row of numbers: hang them on
+the powers of a variable $x$ and read off a **polynomial**. From row $n$
+of the Eulerian triangle we get the *Eulerian polynomial*
 
 $$
-A_n(x) = \sum_{k=0}^{n-1} A(n,k)\, x^k.
+A_n(x) = \sum_k A(n,k)\, x^k.
 $$
 
-So $A_3(x) = 1 + 4x + x^2$ and $A_4(x) = 1 + 11x + 11x^2 + x^3$. These polynomials are famous, and they possess a jewel of a property that has been known for over a century:
+For example $A_3(x) = 1 + 4x + x^2$ and $A_4(x) = 1 + 11x + 11x^2 + x^3$.
 
-> **Every Eulerian polynomial has only real roots** — in fact only negative real roots.
+Why bother? Because a polynomial has **roots** — the values of $x$ where it
+equals zero — and the roots encode deep structure. A polynomial is called
+**real-rooted** when *all* of its roots are ordinary real numbers, with no
+imaginary parts hiding in the complex plane. Real-rootedness is not a
+curiosity; it is a certificate of good behavior. It guarantees that the
+coefficients are **log-concave** (each is at least the geometric mean of its
+neighbors) and **unimodal** (they rise to a single peak and then fall),
+two properties that combinatorialists prize because they say the counts are
+smooth and bell-shaped rather than erratic. It is a classical theorem that
+every Eulerian polynomial is real-rooted, and in fact all of its roots are
+negative.
 
-Why should anyone care where a polynomial vanishes? Because a polynomial with nonnegative coefficients has *all real roots* if and only if its coefficients are *log-concave with no internal gaps* — meaning each coefficient is at least the geometric mean of its neighbors. Log-concavity is the mathematical signature of "smooth, single-peaked, bell-like" data. Real roots are the certificate that a counting sequence is as well-behaved as a Gaussian. The Eulerian numbers famously satisfy a central limit theorem: the number of ascents in a random permutation is approximately normally distributed, and real-rootedness is the engine behind that fact.
+## Squaring the triangle
 
-## The bold move: square the triangle
+Here is where our story begins. A triangle of numbers is really a
+lower-triangular **matrix**, and matrices can be *multiplied*. What happens
+if we multiply the Eulerian triangle by itself — if we **square** it?
 
-Now for the twist that gives this story its name. Think of the Eulerian triangle not as a picture but as an infinite lower-triangular **matrix** $M$, whose entry in row $n$, column $k$ is $A(n,k)$. Matrices can be multiplied, and in particular a matrix can be multiplied by itself. What is $M^2$?
-
-The rule for matrix multiplication says that the entry of $M^2$ in row $n$, column $k$ is a sum of products along a row and down a column:
+The rule for matrix multiplication says the entry in row $n$, column $k$ of
+the square is
 
 $$
-T(n,k) = \sum_{j} A(n,j)\, A(j,k).
+C(n,k) = \sum_{j} A(n,j)\, A(j,k).
 $$
 
-You march across row $n$ of the triangle, and for each entry you march down column $k$, multiply the matching pairs, and add everything up. It is a genuinely tangled double sum — every entry of the answer mixes together contributions from the entire triangle.
-
-Hang the resulting numbers on powers of $x$ again, and you get the **squared-triangle row polynomials**, the true heroes of this article:
+You can read this as a two-step counting process: first record how many
+descents an arrangement of length $n$ has (that is $A(n,j)$), then feed that
+descent count $j$ back into the triangle and read off $A(j,k)$, summing over
+all the intermediate values $j$. The result is a brand-new triangle — the
+**square of the Eulerian triangle** — with its own rows and its own row
+polynomials
 
 $$
-S_n(x) = \sum_{k} T(n,k)\, x^k = \sum_{k}\Bigl(\sum_j A(n,j)\,A(j,k)\Bigr) x^k.
+B_n(x) = \sum_k C(n,k)\, x^k.
 $$
 
-Written out, the first few are:
+The first several of these polynomials are strikingly clean:
 
 $$
 \begin{aligned}
-S_3(x) &= 6 + x, \\
-S_4(x) &= 24 + 15x + x^2, \\
-S_5(x) &= 120 + 181x + 37x^2 + x^3, \\
-S_6(x) &= 720 + 2163x + 995x^2 + 83x^3 + x^4.
+B_0 &= 1, & B_1 &= 1, & B_2 &= 2, \\
+B_3 &= x + 6, & B_4 &= x^2 + 15x + 24, \\
+B_5 &= x^3 + 37x^2 + 181x + 120, \\
+B_6 &= x^4 + 83x^3 + 995x^2 + 2163x + 720, \\
+B_7 &= x^5 + 177x^4 + 4613x^3 + 23739x^2 + 27133x + 5040.
 \end{aligned}
 $$
 
-Two features leap out, and both can be proved.
+Two patterns leap out. Each polynomial is **monic** — its leading
+coefficient is exactly $1$ — and each has **constant term $n!$**. The
+constant term is no accident: setting $x = 0$ recovers $C(n,0) = \sum_j
+A(n,j) = n!$, because every arrangement of length $n$ contributes to the
+first column and the whole row sums to $n!$.
 
-First, **the constant term is always $n!$**. Look: the constant term of $S_n$ is $\sum_j A(n,j)\,A(j,0)$, and since the left column of the triangle is all ones ($A(j,0)=1$), this collapses to $\sum_j A(n,j)$ — which is exactly the row sum $n!$ from before. The conservation law resurfaces, now sitting quietly at the bottom of each squared polynomial.
+And now the real question. The individual Eulerian polynomials are
+real-rooted. But squaring the triangle blends whole rows together in the
+combination $B_n = \sum_j A(n,j)\, A_j(x)$. Blending real-rooted polynomials
+is a dangerous business: a *sum* of real-rooted polynomials can easily
+develop complex roots. So there is no free lunch here. **Does squaring the
+Eulerian triangle preserve real-rootedness?**
 
-Second, **the degree is $n-2$**, two less than you might naively guess. The reason is structural: the Eulerian matrix is triangular, so multiplying it by itself pushes the nonzero entries inward, trimming two columns off each row.
+## The answer, row by row
 
-## The miracle: the roots stay real
-
-Here is where the surprise lands. There is no obvious reason a wild double sum like $S_n$ should be well-behaved. Squaring can and often does destroy real-rootedness; generic products of nice polynomials go complex. Yet when we compute the roots of $S_n$, we find:
-
-$$
-\begin{array}{c|l}
-n & \text{roots of } S_n(x) \\ \hline
-3 & -6 \\
-4 & -13.18,\ -1.82 \\
-5 & -31.35,\ -4.86,\ -0.79 \\
-6 & -69.04,\ -11.28,\ -2.28,\ -0.41 \\
-7 & -146.64,\ -23.98,\ -4.87,\ -1.28,\ -0.23
-\end{array}
-$$
-
-Every root is **real**. Every root is **negative**. And if you place two consecutive rows side by side, their roots **interlace** like the teeth of a zipper — between any two neighboring roots of $S_{n+1}$ sits exactly one root of $S_n$. These are not floating-point coincidences; they can be certified exactly, with no rounding, using a classical tool called a **Sturm sequence** that counts real roots by tracking sign changes in a chain of polynomial remainders.
-
-> **The Central Claim.** For every $n$, the squared-triangle polynomial $S_n(x)$ has only real, negative roots, and the roots of consecutive rows interlace.
-
-## Why it should be true: the secret ingredient is interlacing
-
-The double sum defining $S_n$ looks hopeless, but a change of perspective dissolves it. Group the terms not by the inner index but by the outer one:
+Compute the roots and a pattern emerges immediately. For every row we can
+check, all the roots are **real, negative, and simple** (no repeats):
 
 $$
-S_n(x) = \sum_{k}\Bigl(\sum_j A(n,j) A(j,k)\Bigr) x^k = \sum_{j} A(n,j) \Bigl(\sum_k A(j,k)\, x^k\Bigr) = \sum_{j} A(n,j)\, A_j(x).
+\begin{aligned}
+B_3:&\quad -6, \\
+B_4:&\quad -1.82,\ -13.18, \\
+B_5:&\quad -0.79,\ -4.86,\ -31.35, \\
+B_6:&\quad -0.41,\ -2.28,\ -11.28,\ -69.04, \\
+B_7:&\quad -0.23,\ -1.28,\ -4.87,\ -23.98,\ -146.64.
+\end{aligned}
 $$
 
-Read that again: **the squared-triangle polynomial is just a weighted sum of the ordinary Eulerian polynomials**, where the weights $A(n,j)$ are themselves Eulerian numbers — all of them nonnegative. The tangled double sum was, in disguise, a simple nonnegative recombination of objects we already understand.
+These are not tidy rational numbers. Starting from $B_4$, whose roots are
+$(-15 \pm \sqrt{129})/2$, the roots are genuinely **irrational**. So there
+is no cheap way to "see" the factorization; the real-rootedness has to be
+earned.
 
-This reframing is the key that unlocks the door, because of a powerful principle in the theory of polynomials:
+**The main result of this work is a rigorous proof that $B_n$ is
+real-rooted — that it factors completely into real linear pieces — for every
+$n$ up to $7$.**
 
-> If a family of polynomials shares a *common interlacer* — a single polynomial whose roots separate the roots of every member — then **any nonnegative combination of the family is again real-rooted.**
+The proof rests on one clean structural idea, which we might call the
+*saturation principle*. Any polynomial of degree $m$ has **at most** $m$
+roots. So if you can *find* $m$ genuinely different real numbers, each of
+which makes the polynomial vanish, you have used up the entire root budget:
+there is no room left for a stray complex root. The polynomial must factor
+into $m$ real linear pieces. Real-rootedness — a statement about *all*
+roots, including invisible complex ones — collapses into the concrete task
+of **locating enough real roots**.
 
-This is the method of *interlacing families*, a circle of ideas that has, in recent years, resolved long-standing problems far afield (it lies behind the celebrated proof of the existence of infinite families of expander graphs). The Eulerian polynomials are the textbook example of such a compatible, interlacing family. Once we know $S_n$ is a nonnegative blend of them, real-rootedness is no longer a mystery about a double sum; it is a statement about whether the specific weights $A(n,\cdot)$ respect the interlacing structure. The chaos has been organized into a single, sharp question.
+How do we locate them without solving the equation? With the
+**Intermediate Value Theorem**, the humble but powerful fact that a
+continuous curve which is negative at one point and positive at another
+*must* cross zero somewhere in between. Evaluate $B_n$ at a ladder of
+integer inputs $\ldots, -3, -2, -1, 0$ and watch the sign flip. Each flip
+traps a root inside a unit interval. For the rows up to $B_7$, the
+consecutive integers separate the roots perfectly: enough sign changes
+appear to catch every root, the budget saturates, and real-rootedness
+follows.
 
-## Why this matters
+The quadratic case, $B_4 = x^2 + 15x + 24$, gets an even more elementary
+treatment: its **discriminant** is $15^2 - 4\cdot 24 = 129 > 0$, and the
+familiar rule that a quadratic with positive discriminant has two real
+roots seals it.
 
-Real-rootedness is one of the deepest recurring themes in modern combinatorics precisely because it is a bridge. On one side sits *counting* — concrete, discrete tallies of permutations, trees, lattice paths. On the other sits *analysis and geometry* — the smooth world of polynomials, roots, and inequalities. Real-rootedness is the passport that lets a result travel between them: it instantly delivers log-concavity, unimodality (the counts rise then fall, with a single peak), and central-limit behavior, all for free.
+## The wall at $n = 8$
 
-The same phenomenon has recently been established for the squares of several other classical triangles — Pascal's triangle, the Stirling triangle, the Narayana triangle. In each case, squaring the triangle preserved real-rootedness. The Eulerian triangle was the conspicuous, stubborn holdout: its rows are richer, its recurrence more intricate, and the question of whether *its* square keeps the roots real remained open. The results assembled here — the exact row-sum and constant-term identities, the degree formula, the reduction to a weighted sum of Eulerian polynomials, and the certified real, negative, interlacing spectra for every case computed — bring the Eulerian case into line with its cousins and pin down exactly where the remaining difficulty lives.
+Every good story about a pattern needs the moment the pattern gets *hard* —
+the place where the easy argument runs out of road. For the squared
+Eulerian triangle, that place is $n = 8$.
 
-There is something almost philosophical in the picture. You start with the pure chaos of shuffled cards. You organize that chaos into a triangle. You then perform an operation — squaring — that scrambles the whole triangle into itself. And out the other side comes not more chaos but *more order*: a family of polynomials whose roots march down the negative axis in perfect, interlacing formation. It is a reminder that in mathematics the deepest structures are often the ones that refuse to break, no matter how hard you shake them.
+The eighth row polynomial is
+$$
+B_8 = x^6 + 367x^5 + 19563x^4 + 204247x^3 + 546551x^2 + 364395x + 40320,
+$$
+and numerically its roots are still all real, negative, and simple:
+approximately $-0.14$, $-0.79$, $-2.72$, $-9.12$, $-49.19$, and $-305.04$.
+The mathematics is still true. But look at the two smallest: $-0.14$ and
+$-0.79$ **both lie between $-1$ and $0$**. Two roots have crowded into a
+single unit interval. The ladder of consecutive integers can no longer tell
+them apart — one interval, two roots, only one sign change. The
+elementary separation argument, so effective through $B_7$, breaks exactly
+here. Finer, fractional brackets would be needed to pry the two roots apart,
+and pinning down such brackets for *every* $n$ at once is precisely the
+obstruction that keeps the general problem open.
+
+This is the honest state of affairs, and it is what makes the subject
+alive. We can prove the theorem for each concrete row we test, and the
+numerical evidence marches on far beyond where our elementary proof
+reaches — yet a single argument covering *all* $n$ remains a conjecture.
+
+## Why anyone should care
+
+Real-rootedness is a bridge between three worlds that rarely meet so
+cleanly. In **combinatorics** it certifies that a sequence of counts is
+unimodal and log-concave — smooth, single-peaked, well-behaved. In
+**algebra** it says a polynomial factors as far as it possibly can over the
+real numbers. In **analysis** it is caught by nothing more exotic than the
+sign of a continuous function.
+
+The larger vision is a *closure property*. The Pascal, Stirling, and
+Narayana triangles are already known to have real-rooted squares. If the
+Eulerian triangle — historically the most stubborn of the four — joins
+them, it suggests a unifying law: that squaring, and more generally
+multiplying, preserves real-rootedness for a whole class of well-structured
+combinatorial triangles. The engine behind such a law would be
+**interlacing**: the roots of consecutive rows are conjectured to alternate,
+each root of one row nestled between two roots of the next. Interlacing is
+the hidden scaffolding that would let real-rootedness *propagate* by
+induction from one row to the next, upgrading a stack of individually
+verified cases into a single clean theorem.
+
+There is even a whisper of asymptotics in the data. Because the negated
+roots always multiply to exactly $n!$, and the largest of them drifts
+steadily toward zero while the smallest plunges roughly like $-n^2$, the
+roots spread themselves across an enormous dynamic range in a way that
+seems governed by a precise, still-unproven law.
+
+So the square of the Eulerian triangle sits at a frontier: proven where we
+can reach, conjectured where we cannot yet, and pointing toward a general
+principle about why counting the surprises in an ordering should produce
+polynomials whose roots are all, remarkably, real.
