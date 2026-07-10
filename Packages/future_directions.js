@@ -456,6 +456,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian closed categories and that they exhibit strange-loop topology. Connect to the Yoneda lemma and self-reference in type theory.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0943",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T21:24:54.521992+00:00",
+    "title": "Consciousness as Emergent Fixed Point"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Langlands program connects Galois groups (shapes) to automorphic forms (colors). Think of it this way: a Galois group is the group of symmetries of a shape (like the rotational symmetries of a polygon). An automorphic form is a coloring that respects the shape's symmetries (like a coloring of the polygon's vertices that is invariant under rotation). The Langlands correspondence says: for every 'shape' (Galois representation), there is a matching 'color' (automorphic form) and vice versa. Conjecture: This correspondence is a bijection between irreducible representations of Gal(Q_bar/Q) and cuspidal automorphic representations of GL_n over Q. For n=1, this is class field theory (every abelian extension of Q corresponds to a Dirichlet character). For n=2, this is the modularity theorem (every elliptic curve over Q corresponds to a weight-2 cusp form). The toddler version: each shape has exactly one matching color, and each color has exactly one matching shape. Test: verify the correspondence for all degree-2 extensions of Q up to discriminant 1000. Verify that each quadratic field Q(sqrt(d)) corresponds to a Dirichlet character chi_d via the correspondence chi_d(p) = (d/p) (Legendre symbol). Impact: Langlands is just shape-color matching. Shapes and colors are two ways of seeing the same mathematical object.",
     "domains": [
       "Novelty",
@@ -569,7 +584,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8e21378d",
     "description": "Cycle f0772bca (Q=0.830) proved 18 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Register allocation in a compiler assigns variables to CPU registers. The interference graph G has variables as vertices and edges between variables that are 'live' at the same time. Register allocati",
     "domains": [
       "Novelty"
@@ -578,7 +593,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "f0772bca",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T20:20:23.650892+00:00",
     "title": "Close Proofs: The Combinatorics of Compiler Optimization: Register Allocation as Gra"
   },
@@ -5443,21 +5458,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
   },
   {
-    "consumed_by_exp_id": "523eb163",
-    "description": "Ramsey's theorem for graphs states that R(k,l) = the minimum n such that any 2-coloring of the edges of K_n contains a red K_k or a blue K_l. For hypergraphs: R_r(k,l) = the minimum n such that any 2-coloring of the r-tuples of an n-set contains a red K_k^{(r)} or a blue K_l^{(r)}. The growth rate is an open problem: R_3(4,4) = 13 (known), R_3(5,5) is between 34 and 55, and R_3(k,k) is believed to grow like a double exponential 2^{c*k^2}. Conjecture: R_3(k,k) ~ 2^{2^{ck}} for some constant c > 0. This is a tower function (height 2 exponential). More precisely: the lower bound R_3(k,k) >= 2^{ck^2} (from the probabilistic method) and the upper bound R_3(k,k) <= 2^{2^{ck}} (from the stepping-up lemma). The gap is between a single exponential and a double exponential. Conjecture: the true growth rate is double exponential, and the upper bound is tight. This would mean that 3-uniform Ramsey numbers grow much faster than graph Ramsey numbers. Test: compute R_3(k,k) for k = 3, 4, 5, 6 by exhaustive search and verify the growth rate. Impact: 3-uniform Ramsey numbers are double exponential. Combinatorics at the hypergraph level is fundamentally harder than at the graph level.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0930",
-    "priority_score": 0.77,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T18:27:39.373493+00:00",
-    "title": "Hypergraph Ramsey Theory: Beyond Graphs"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle b77ed1ec (Q=0.720) proved 24 theorems in Tropical but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The Collatz conjecture (3n+1 problem) states that every positive integer eventually reaches 1 under the map T(n) = n/2 (n even) or 3n+1 (n odd). Despite being verified up to 2^68, a proof remains elus",
     "domains": [
@@ -6249,6 +6249,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T21:08:57.881447+00:00",
     "title": "The file `StoneDualityNeuralNetworks.lean` formalizes the finite-Boolean-algebra"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Hypergraph Ramsey Theory\n\nThis project develops `r`-uniform hypergraph Ramsey theory from scratch across\nseveral self-contained Lean files. All files listed below compile with no `sorry`\nand use only the standard axioms (`propext`, `Classical.choice`, `Quot.sound`,\nplus `Lean.ofReduceBool`/`Lean.trustCompiler` for the `native_decide` arithmetic\nchecks).\n\n## What is currently formalized\n\n* **`Logic/HypergraphRamsey.lean`** \u2014 the core chain around the Ramsey property\n  `RamseyProp r k l n`: monotonicity (`mono_left`, `mono_right`, `mono_n`), color\n  symmetry (`symm`), the degenerate regime `k < r`, and the exact boundary value\n  `R_r(r, l) = l` for `r \u2264 l` (`RamseyNumber_r_l`, with corollaries `R3_3_3`,\n  `R2_2_2`). It also introduces the `tower` function and proves the growth\n  separation `4^k < tower 2 k` for `k \u2265 5` (`four_pow_lt_tower`).\n\n* **`Catalog/Cryptography/HypergraphRamseyDefs.lean` +\n  `Catalog/Cryptography/HypergraphRamseyTheorems.lean`** \u2014 the probabilistic\n  (first-moment) lower bound, proved in full by a finite double-counting /\n  pigeonhole argument: `prob_method_counting_ineq` and its corollary\n  `prob_method_lower_bound` (if `2\u00b7C(n,k) < 2^{C(k,3)}` then `R_3(k,k) > n`),\n  instantiated at `R3_5_5_prob_lower_bound : \u00ac HypergraphRamseyProp 11 3 5 5`.\n  Also: tower-function arithmetic, the stepping-up bound `steppingUpBound`, the\n  general separation `tower_beats_exp` / `four_pow_lt_tower`, and structural\n  monotonicity of monochromatic cliques and the diagonal Ramsey property.\n\n* **`Catalog/Applications/HypergraphRamsey/Defs.lean` +\n  `.../ProbabilisticBound.lean`** \u2014 the probabilistic lower bound generalized to\n  arbitrary uniformity `r`: `hyper_ramsey_counting_lower_bound` (if\n  `2\u00b7C(n,k) < 2^{C(k,r)}` then `\u00ac HyperRamseyProp r n k k`), again via a complete\n  finite averaging argument, plus the growth estimate\n  `lower_upper_gap_three_uniform`.\n\n* **`.../Basic.lean` + `.../TowerGrowth.lean`** \u2014 the tower-type *upper* bounds.\n  These are derived from the Erd\u0151s\u2013Rado stepping-up recursion, which is packaged\n  as the explicit predicate `SteppingUpProperty` (see below). Given it,\n  `hyper_ramsey_tower_bound` and `tower_of_towers` show that iterating stepping-up\n  `h` times lifts a base Ramsey property to a tower-sized ground set\n  `towerExp h N`, i.e. `h` extra levels of uniformity cost a height-`h` tower.\n\n## The one hypothesis that remains open: the stepping-up recursion\n\nThe single mathematical ingredient not proved from first principles is the\nErd\u0151s\u2013Rado **stepping-up recursion** in its clean structural form\n\n```\nSteppingUpProperty :\n  1 \u2264 r \u2192 r \u2264 k \u2192 HyperRamseyProp r N k k \u2192 HyperRamseyProp (r+1) (2^N) (k+1) (k+1)\n```\n\nIt is stated in `Basic.lean` and threaded as an explicit hypothesis through the\ntower-growth theorems, so those results are honest *conditional* statements\n(\"tower growth **follows from** stepping-up\") rather than relying on any `sorry`\nor extra axiom. Discharging `SteppingUpProperty` unconditionally is the natural\nnext milestone; the standard proof is the greedy nesting argument:\n\n1. In any 2-coloring of the `(r+1)`-subsets of a set of `2^N` vertices, build a\n   nested sequence `x_0, x_1, \u2026, x_N` with shrinking candidate tails `A_0 \u2287 A_1 \u2287 \u2026`\n   such that the color of `{x_{i_1},\u2026,x_{i_r}, y}` (for `y` past all the `x_{i_j}`)\n   depends only on the index set `{i_1,\u2026,i_r}`, not on `y`.\n2. This induces a 2-coloring of the `r`-subsets of `{0,\u2026,N-1}`; since\n   `N = R_r(k,k)`, it has a monochromatic `k`-set of indices.\n3. The corresponding `k` vertices plus one tail vertex form a monochromatic\n   `(k+1)`-clique for the original coloring.\n\nThe delicate part of a formalization is the size bookkeeping that guarantees the\n`2^N` bound suffices at every step.\n\n## Further directions\n\n* **Erd\u0151s\u2013Rado existence recursion.** Formalize\n  `R_r(k, l) \u2264 R_{r-1}(R_r(k-1, l), R_r(k, l-1)) + 1`, whose base cases are\n  pigeonhole (`r = 1`) and the graph recursion (`r = 2`). This yields finiteness\n  of all hypergraph Ramsey numbers.\n* **Graph case as a corollary.** Derive `R_2(k,k) \u2264 4^k` and combine with\n  `four_pow_lt_tower` for a fully rigorous graph-vs-hypergraph separation.\n* **Concrete diagonal values.** `R_3(4,4) = 13` needs structural search\n  machinery; a direct `decide`-style verification is infeasible\n  (`2^{C(13,3)} = 2^286` colorings) and would require heavy pruning.\n\nThe central open problem \u2014 whether `R_3(k,k)` truly grows double-exponentially,\nclosing the gap between the probabilistic lower bound and the stepping-up upper\nbound \u2014 remains open in the literature.\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_0944",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "523eb163",
+    "status": "available",
+    "timestamp": "2026-07-10T21:25:18.926266+00:00",
+    "title": "This project develops `r`-uniform hypergraph Ramsey theory from scratch across"
   },
   {
     "consumed_by_exp_id": "",

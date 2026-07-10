@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "73d4b43b",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The Directed-Acyclic Structure of Dependency Networks\n\nThis cycle established the two load-bearing invariants of a finite dependency network:\na conservation law (aggregate in-deg",
-      "quality_score": 0.78,
-      "sorry_count": 4,
-      "theorem_count": 14,
-      "timestamp": "2026-07-10T05:00:51",
-      "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
-    },
-    {
       "cycle_id": "dd8b10c1",
       "domain": "Applications",
       "key_insight": "# Future Directions: the arithmetic backbone of decorated-surface moduli\n\nThis cycle isolated the exact integer identity behind the dimension of the moduli of genus-`g`\nsurfaces with `n` marked featur",
@@ -499,19 +489,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-10T21:09:03",
       "title": "Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
+    },
+    {
+      "cycle_id": "523eb163",
+      "domain": "Logic",
+      "key_insight": "# Future Directions: Hypergraph Ramsey Theory\n\nThis project develops `r`-uniform hypergraph Ramsey theory from scratch across\nseveral self-contained Lean files. All files listed below compile with no",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 35,
+      "timestamp": "2026-07-10T21:25:24",
+      "title": "Hypergraph Ramsey Theory: Beyond Graphs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f955b422",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Signings, Spectral Moments, and the Bilu–Linial Frontier\n\nThe results of this cycle separate the existence of a good edge-signing into two clean\nhalves: an elementary *averaging*",
-      "quality_score": 0.6399900000000001,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-02T01:24:33",
-      "title": "Improved Bilu-Linial Spectral Bound via Interlacing Families"
-    },
     {
       "cycle_id": "946cfca3",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-10T21:09:03",
       "title": "Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
+    },
+    {
+      "cycle_id": "523eb163",
+      "domain": "Logic",
+      "key_insight": "# Future Directions: Hypergraph Ramsey Theory\n\nThis project develops `r`-uniform hypergraph Ramsey theory from scratch across\nseveral self-contained Lean files. All files listed below compile with no",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 35,
+      "timestamp": "2026-07-10T21:25:24",
+      "title": "Hypergraph Ramsey Theory: Beyond Graphs"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "92e61cee",
-      "domain": "Novelty",
-      "name": "heatKernelLeading_trace",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "92e61cee",
-      "domain": "Novelty",
-      "name": "trace_zero_of_leading_vanishes",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "0884751e",
-      "domain": "Novelty",
-      "name": "is",
-      "quality": 0.72
-    },
     {
       "cycle_id": "0884751e",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "linearRegions_card_le_card",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "523eb163",
+      "domain": "Logic",
+      "name": "is",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "523eb163",
+      "domain": "Logic",
+      "name": "towerExp_zero",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "523eb163",
+      "domain": "Logic",
+      "name": "towerExp_succ",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-10T21:09:03",
+  "last_updated": "2026-07-10T21:25:24",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "43854327",
-        "quality": 0.43844913758865245,
-        "theorems": 6,
-        "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
-      },
-      {
         "cycle_id": "4ab1c862",
         "quality": 0.5380114482758622,
         "theorems": 10,
@@ -3513,6 +3507,12 @@
         "quality": 0.62,
         "theorems": 12,
         "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proo"
+      },
+      {
+        "cycle_id": "523eb163",
+        "quality": 0.72,
+        "theorems": 35,
+        "title": "Hypergraph Ramsey Theory: Beyond Graphs"
       }
     ],
     "MachineLearning": [

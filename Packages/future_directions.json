@@ -6060,7 +6060,7 @@
         "biconvex bipartite graphs",
         "parameterized complexity"
       ],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Pythagorean",
         "Logic"
@@ -6790,7 +6790,7 @@
         "Linear Algebra",
         "Enumerative Combinatorics"
       ],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Geometry",
         "Logic"
@@ -8900,7 +8900,7 @@
         "dense_suborder",
         "rational_order"
       ],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Logic",
         "Pythagorean"
@@ -10063,7 +10063,7 @@
         "formal_verification",
         "dynamical_systems"
       ],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Pythagorean",
         "Logic"
@@ -11931,7 +11931,7 @@
         "Hilbert space theory",
         "Exact arithmetic verification"
       ],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Pythagorean",
         "Logic"
@@ -12174,7 +12174,7 @@
         "graph_theory",
         "constructive_mathematics"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Logic"
       ],
@@ -14337,7 +14337,7 @@
         "probabilistic_method",
         "design_theory"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Logic"
       ],
@@ -18280,7 +18280,7 @@
         "formal arithmetic identities",
         "Dirichlet convolutions"
       ],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Pythagorean",
         "Logic"
@@ -18918,7 +18918,7 @@
         "Monotonic embeddings and geometric graph theory",
         "Rotation systems and cell decompositions of complete graph drawings"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Logic"
       ],
@@ -20196,7 +20196,7 @@
         "combinatorial_geometry",
         "linear_algebra"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges",
         "Logic"
@@ -20443,7 +20443,7 @@
         "Probabilistic Method",
         "Topological Graph Theory"
       ],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Computation",
         "Logic"
@@ -24007,7 +24007,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Topological Quantum Compiling via Braid Groups\n\n## What this project establishes (all machine-checked, no `sorry`, no extra axioms)\n\nWorking with the **reduced Burau representation** of the braid group `B₄` — which\nis genuinely `3 × 3` — over an arbitrary commutative ring with parameter `t`,\n`BurauB4.lean` proves:\n\n1. **It is a representation of `B₄`.** All Artin braid relations hold for every\n   `t`: `σ₁σ₂σ₁ = σ₂σ₁σ₂`, `σ₂σ₃σ₂ = σ₃σ₂σ₃`, `σ₁σ₃ = σ₃σ₁`, and each generator\n   has determinant `−t` (invertible when `t` is a unit).\n2. **The image is infinite.** At `t = −1` the element `ρ(σ₁σ₃)` is a nontrivial\n   unipotent `I + N` (`N ≠ 0`, `N² = 0`), so `ρ(σ₁σ₃)ⁿ = I + nN`, its powers are\n   pairwise distinct, and it has infinite order in `SL₃(ℤ)`.\n3. **The image is non-abelian.** `ρ(σ₁)ρ(σ₂) ≠ ρ(σ₂)ρ(σ₁)`, hence the image\n   cannot lie inside any abelian (maximal-torus) closed subgroup.\n4. **Contrarian result — universality is parameter-dependent.** At `t = 1` every\n   generator is an involution and the representation collapses to the finite\n   permutation action of `S₄`. So \"braiding is universal\" is *false* for a generic\n   parameter; the conjecture can hold only at special roots of unity. This is a\n   concrete refutation of the naive universal reading.\n\n## Honest gap versus the stated conjecture\n\nThe prompt's conjecture (\"`ρ₅(B₄)` is dense in `SU(3)`\") has two features that we\ndid **not** (and with current formalized mathematics essentially *cannot*)\nestablish directly:\n\n* **Topological density in a Lie group.** Proving a finitely generated subgroup\n  is dense in `SU(3)` requires the classification of closed subgroups of a\n  compact connected Lie group plus a Zariski-density / Lie-algebra-generation\n  argument, together with Solovay–Kitaev for the effective statement. Mathlib\n  does not yet have this machinery packaged for `SU(3)`.\n* **The unitary specialization.** The reduced Burau matrices are unitary only\n  after conjugating by the (parameter-dependent) Hermitian Burau form and\n  normalizing the determinant; the `t = −1` specialization we use for\n  infiniteness lands in `SL₃(ℤ)`, not literally in `SU(3)`. Establishing\n  unitarity at `t = e^{2πi/5}` is a separate finite computation over `ℂ`.\n\nAlso note a factual inconsistency in the prompt itself: the dimension formula\n`U((k−1)(n−1)+1)` gives `U(13)` for `k=5, n=4`, not `U(3)`. The correct\n`3`-dimensional object is the *reduced Burau* representation used here (Fibonacci\nanyons on 4 strands do have a small fusion space, and the reduced Burau\ndimension `n−1 = 3` is the honest match).\n\n## Concrete next steps\n\n1. **Unitarity at the physical root of unity.** Define the Hermitian Burau form\n   `J(t)` and prove `ρ(σᵢ)* J ρ(σᵢ) = J` at `t = e^{2πi/5}`; deduce the image\n   lands in `U(3)` (and in `SU(3)` after scaling by `(−t)^{−1/…}`).\n2. **Infinite order at the root of unity.** Show a specific braid word has an\n   eigenvalue that is an irrational rotation (argument an irrational multiple of\n   `π`), giving infinite order directly inside `SU(3)` rather than via `SL₃(ℤ)`.\n3. **Zariski density.** Prove the Lie algebra generated by `log ρ(σᵢ)` is all of\n   `su(3)`; this is the algebraic heart of density and is finite linear algebra\n   over `ℝ`, plausibly formalizable.\n4. **From Zariski-dense to topologically dense.** Import/develop the theorem that\n   a Zariski-dense subgroup of a compact simple Lie group is topologically dense\n   — the remaining Lie-theoretic input.\n5. **General `Bₙ`.** The definitions here extend verbatim to the `(n−1)`-\n   dimensional reduced Burau representation of `Bₙ`; the braid-relation proofs\n   should generalize with an indexed family of block matrices.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Logic"
@@ -24130,7 +24130,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Homological Quantum Codes\n\nThis cycle established the exact dictionary \"logical qubits = middle homology\"\nfor the chain-complex model of CSS codes, and used it to compute the logical\ndimension of the hypercube homological code, refuting the folklore \"one qubit\"\nlaw for the hypercube *graph*. The following conjectures extend those findings.\n\n## 1. The distance of the hypercube homological code\n\n**Conjecture.** For the hypercube graph `Qₙ` (`n ≥ 2`), the homological code\n`HQECC(Qₙ)` has minimum distance equal to the girth of `Qₙ`, namely `4`,\nindependent of `n`; consequently it does **not** achieve the quantum Singleton\nbound `d = 2^{n/2}` for `n ≥ 5`.\n\nThe key insight is that in a one-dimensional complex the shortest nontrivial\ncycle is a shortest graph cycle, and every hypercube contains a 4-cycle while\ncontaining no triangle. Distance is therefore a girth invariant, decoupled from\nthe exponentially large number of encoded qubits computed in this cycle.\n\nWhy now? The present cycle pins down the encoded dimension `β₁(Qₙ) = 2ⁿ⁻¹(n−2)+1`\nexactly; the natural next parameter is the distance, and the girth heuristic is\ndirectly testable on the same family that already contradicted the qubit count.\n\n## 2. Euler characteristic as a code-rate obstruction\n\n**Conjecture.** For any connected graph complex, the code rate `k/n` of its\nhomological code equals `1 − (V−1)/E`, and among all connected graphs on a fixed\nnumber of edges the rate is maximized precisely by graphs with a single vertex\nof many loops (bouquets) and minimized by trees (rate `0`).\n\nThe key insight is that the Euler identity `β₀ − β₁ = V − E`, proved this cycle,\nturns the rate into a purely combinatorial ratio; extremizing it is a discrete\nisoperimetric problem on the vertex/edge counts.\n\nWhy now? The Euler identity was just established in full additive generality over\nan arbitrary field, so the rate formula is an immediate corollary awaiting an\nextremal analysis.\n\n## 3. Every finite-dimensional homology group is a logical space\n\n**Conjecture.** For every field `K` and every pair of natural numbers `k ≤ n`\nthere is a length-two chain complex over `K` with middle space of dimension `n`\nwhose homology has dimension exactly `k`; hence every logical/physical dimension\npair `(k, n)` is realized by some CSS chain complex.\n\nThe key insight is that the dimension formula `k = n − rank d₁ − rank d₂` proved\nthis cycle is not just an inequality but an exact accounting, so realizability\nreduces to choosing two maps with prescribed ranks summing to `n − k`.\n\nWhy now? With the exact dimension theorem in hand, the realizability question\nbecomes a rank-prescription problem in linear algebra rather than a homological\nmystery.\n\n## 4. Cohomological duality of the two check families\n\n**Conjecture.** For a CSS chain complex the `X`-logical space `ker d₁ / im d₂`\nand the `Z`-logical space `ker d₂ᵀ / im d₁ᵀ` have equal dimension, and this common\ndimension is a self-dual topological invariant of the complex.\n\nThe key insight is that transposition exchanges kernels and cokernels while\npreserving ranks, so the dimension formula forces the two homologies to match;\nCSS self-duality is thus a shadow of rank symmetry.\n\nWhy now? The additive rank-nullity backbone developed this cycle applies verbatim\nto the transposed complex, making the duality statement a direct next theorem\nrather than a separate development.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Geometry"
@@ -24253,7 +24253,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nThis project formalizes the *order-theoretic bridge* connecting structural\ngraph/matroid theory (Robertson–Seymour forbidden minors) with commutative\nalgebra (Dickson's lemma / finite generation of monomial ideals). The single\ntheorem `WQOFiniteBasis.exists_finite_generating_family` — every upper set of a\nwell-quasi-order is generated by its finite antichain of minimal elements —\nspecializes to both, and its dual `exists_finite_forbidden_family` is the\nabstract Robertson–Seymour corollary.\n\nFiles:\n- `Catalog/Novelty/ExcludedMinors/WellQuasiOrderFiniteBasis.lean` — the abstract\n  WQO finite-basis engine (Robertson–Seymour / Dickson bridge).\n- `Catalog/Novelty/ExcludedMinors/ZnGain.lean` — a concrete, fully proved\n  excluded-minor instance: over every cyclic group `ℤ/n` (`n ≥ 2`) the\n  parallel-class slice of the Zaslavsky/Funk conjecture holds with single\n  excluded minor `(n+1)K₂` (`digon_excluded_minor`), together with the\n  divisibility monotonicity law `gainable_mono_of_dvd`. This realizes, in one\n  concrete family, the \"explicit minor order + forbidden minor\" pattern that the\n  abstract engine describes in general.\n\n## Natural next steps\n\n1. **Instantiate to an explicit minor order on matroids.** Build a `PartialOrder`\n   on (isomorphism classes of) matroids from the minor relation, so that\n   `robertson_seymour_of_wqo` applies literally to a Lean `Matroid` type. The\n   hard input — that a given class is WQO — would remain a hypothesis, but the\n   forbidden-minor corollary would then be a genuine matroid statement.\n\n2. **Formalize the graph-minor `PartialOrder`.** Similarly, equip finite\n   `SimpleGraph`s (up to isomorphism) with the minor order and derive the finite\n   forbidden-minor characterization of any minor-closed graph property, *given*\n   the Robertson–Seymour WQO hypothesis.\n\n3. **Dickson → Hilbert basis theorem.** Connect `dickson` to Mathlib's monomial\n   ideals: show the minimal-generator set produced here is a generating set of\n   the corresponding `MonomialIdeal`, recovering finite generation as a corollary\n   and linking to Gröbner-basis infrastructure.\n\n4. **Higman's lemma.** Extend from the finite product `Fin k → ℕ` to the WQO of\n   finite words / `List` over a WQO alphabet (Higman's lemma). Mathlib already\n   has some `PartiallyWellOrderedOn` machinery for subsequences; combining it\n   with the finite-basis engine here would give finite obstruction sets for\n   subword-closed languages.\n\n5. **Kruskal's tree theorem** as a further WQO input, feeding the same\n   finite-obstruction corollary for tree-minor-closed families.\n\n6. **Effective / decidable versions.** For decidable minor tests and finite\n   ambient data, turn the abstract finite `Set` of obstructions into a concrete\n   `Finset`, yielding a decision procedure schema for membership in a\n   minor-closed class.\n\n## Scope note\n\nThe deep theorems (Robertson–Seymour itself; Geelen–Gerards–Whittle WQO for\n`F_q`-representable matroids) are the *hypotheses* consumed by the bridge, not\nits conclusions. The contribution here is the reusable engine that converts any\nsuch WQO input into the finite forbidden-minor / finite-generation output, made\nfully formal and axiom-clean in Lean 4 + Mathlib.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Logic"
@@ -25278,7 +25278,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Borsuk–Ulam and Social Choice\n\n## What was proved (file `BorsukUlamArrow.lean`, no `sorry`, standard axioms only)\n\n**Part I — the genuine topological kernel.**\n- `borsuk_ulam_1d`: the one-dimensional Borsuk–Ulam theorem. Every continuous\n  `2π`-periodic `f : ℝ → ℝ` (a continuous map `S¹ → ℝ¹`) has an antipodal\n  coincidence `f x = f (x + π)`. Proof via the intermediate value theorem on\n  `g(x) = f(x) − f(x+π)`, which is odd under the half-turn.\n- `no_strict_antipodal_preference` / `no_strict_antipodal_preference'`: the\n  honest social-choice reading — a continuous periodic \"social score\" cannot\n  *strictly* prefer every profile over its antipode. This is precisely the\n  \"contradiction with Pareto efficiency\" invoked in the mission description,\n  correctly isolated to where it actually holds.\n\n**Part II — the contrarian disproof.**\n- `avg` and the lemmas `avg_continuous`, `avg_unanimity`, `avg_anonymous`,\n  `avg_monotone` (strong Pareto/monotonicity), `avg_translation_invariant`\n  (neutrality under a common shift), `avg_not_dictatorial`, packaged as\n  `continuous_nondictatorial_aggregator_exists`: for every `n ≥ 2` the mean is a\n  continuous, unanimous (Pareto), anonymous, **non-dictatorial** aggregation\n  rule on the contractible domain `ℝ`. This **disproves** the mission's strong\n  conjecture that *\"any social choice function on `n` alternatives is either\n  discontinuous or dictatorial.\"*\n\n## Assessment of the mission conjecture\n\nThe bold claim \"Arrow's impossibility theorem is a corollary of Borsuk–Ulam\" is,\nas literally stated, **not correct**, and the derived slogan \"continuous ⟹\ndictatorial\" is **false**. Two independent reasons:\n\n1. **Domain topology matters.** Borsuk–Ulam produces an obstruction only on a\n   *non-contractible* space (a sphere). If the space of preferences is\n   contractible (a line, an interval, a simplex of von Neumann–Morgenstern\n   utilities), the mean is a continuous, anonymous, non-dictatorial, unanimous\n   rule — no obstruction exists. Our `continuous_nondictatorial_aggregator_exists`\n   makes this precise.\n\n2. **Discrete vs. continuous.** Arrow's theorem is about aggregation of *discrete\n   linear orders* satisfying Independence of Irrelevant Alternatives (IIA). There\n   is no ambient topology and no continuity hypothesis, so a continuity-based\n   argument cannot be a literal proof of it.\n\n## The correct topological statement (Chichilnisky / Baryshnikov)\n\nThe real theorem in \"topological social choice\" is **Chichilnisky's**: there is\nno continuous, anonymous, unanimity-respecting aggregation map\n`(S¹)^k → S¹` (more generally `(Sⁿ)^k → Sⁿ`). Baryshnikov (1993) later gave a\n*genuinely* topological derivation of Arrow's discrete theorem by building a\nnerve/CW model of the preference data and invoking such obstructions. So the\nhonest form of the mission's thesis is:\n\n> *Topological obstructions of Borsuk–Ulam type govern aggregation on\n> spheres; Arrow's discrete theorem can be recovered through a nerve\n> construction, but not by the naive `S^{n-1} → ℝ^{n-1}` argument.*\n\nConcrete next targets, in increasing difficulty:\n1. **Chichilnisky, k=2 agents on `S¹`.** Prove: no continuous\n   `F : S¹ × S¹ → S¹` with `F(x,x) = x` (unanimity) and `F(x,y) = F(y,x)`\n   (anonymity). Engine: the induced map on `π₁(S¹) = ℤ` must be\n   `(a,b) ↦ a·d + b·d` with `d = 1` (unanimity) yet symmetric-degree constraints\n   force a contradiction. A clean degree-theory formalization is feasible on top\n   of Mathlib's `π₁(S¹) ≃ ℤ` machinery.\n2. **General `k` on `S¹`**, then `Sⁿ` via Borsuk–Ulam-style parity.\n3. **Baryshnikov's nerve reduction** from the discrete Arrow setting to the\n   topological one — the deepest step, and the actual \"social choice is topology\"\n   statement.\n\n## Reusable artifacts\n\n`borsuk_ulam_1d` (IVT form) and the `avg` aggregator lemmas are stated generically\nand can be reused for any 1-D antipodal-coincidence argument or for building\nlarger continuous aggregation examples.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Logic",
         "Pythagorean"
@@ -25688,7 +25688,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Forced Structure in Symbolic Sequences\n\nThis cycle established two complementary \"forcing\" thresholds for sequences over a\nfinite alphabet: a *linear* pigeonhole threshold that forces repeated contiguous\nblocks, and a *relational* Ramsey threshold that forces monochromatic motifs under\npairwise comparison. The following conjectures extend these findings.\n\n## 1. Sharpness of the block-repetition threshold (de Bruijn saturation)\n\n**Conjecture.** For every alphabet size `q` and block length `m`, there exists a\ncyclic sequence of length `q ^ m` all of whose `m`-mers are distinct, so the\npigeonhole bound `N ≤ q ^ m` on repeat-free window counts is attained exactly.\n\n**The key insight is** that the extremal converse proved here (`N ≤ q ^ m` for\nrepeat-free windows) is only an upper bound; matching it requires an Eulerian\ncircuit in the de Bruijn graph on `(m-1)`-mers, turning an existence question into\na graph-connectivity statement.\n\n**Why now?** The exact upper bound is already in hand; pairing it with a\nconstructive Eulerian-circuit argument would close the extremal problem completely\nand give a certified generator of maximal repeat-free codes.\n\n## 2. Interpolating the two-color triangle count\n\n**Conjecture.** Every symmetric two-colouring of the complete graph on six\nvertices contains at least two monochromatic triangles, and this count grows\nlinearly in the number of vertices beyond the threshold.\n\n**The key insight is** that the single triangle produced by the pigeonhole proof is\nnever isolated: the same fixed-vertex argument applied to each vertex yields\noverlapping forced triangles whose union cannot be a single triangle.\n\n**Why now?** With the base case `R(3,3) ≤ 6` verified structurally, the counting\nrefinement (Goodman-type bounds) is the natural next quantitative step and is\nwithin reach of the same fixed-vertex pigeonhole method.\n\n## 3. Subsequence (non-contiguous) repetition thresholds\n\n**Conjecture.** The minimal length forcing a repeated `m`-block among all *ordered\nsubsequences* of a `q`-ary word grows like `q ^ m` up to a factor polynomial in\n`m`, strictly larger than the contiguous threshold but with the same exponential\norder.\n\n**The key insight is** that a subsequence repeat is a monotone-pattern condition,\nso the correct tool is a Dilworth/Erdős–Szekeres decomposition layered on top of\nthe contiguous pigeonhole, rather than pigeonhole alone.\n\n**Why now?** The contiguous threshold is fully settled here, isolating exactly the\ngap that the subsequence version must bridge and giving a concrete comparison\ntarget.\n\n## 4. Colour-dependent Ramsey motifs for larger palettes\n\n**Conjecture.** For an alphabet of `r` similarity classes, pairwise comparison of\n`R(3; r)` loci forces a monochromatic triangle, and the fixed-vertex pigeonhole\nproof generalizes verbatim with the two-level pigeonhole replaced by an `r`-level\none.\n\n**The key insight is** that the boolean dichotomy in the inner step is the only\nplace where `r = 2` is used; replacing it by an `r`-way pigeonhole preserves the\nentire argument structure.\n\n**Why now?** The two-colour case is proved with an explicit, transferable proof\nskeleton, making the multi-colour generalization a direct structural extension\nrather than a new idea.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Logic"
@@ -25770,7 +25770,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Geometry of the Logistic–Tent Conjugacy\n\nThis cycle established an exact topological conjugacy between the smooth logistic\nmap `f(x)=4x(1-x)` and the piecewise-linear tent map `T(t)=1-|2t-1|`, implemented\nby the strictly increasing homeomorphism `h(t)=sin²(πt/2)` of the unit interval.\nFixed points, a period-two orbit, and the intertwining of all iterates transfer\nverbatim between the two systems. The following conjectures push the same\ngeometric bridge further.\n\n## 1. Every period is realised, and the count is exponential\n\n**Conjecture.** For each `n ≥ 1` the logistic map has exactly `2ⁿ` points of period\ndividing `n` in the unit interval, and it possesses points of *exact* period `n`\nfor every `n`.\n\nThe key insight is that the conjugacy reduces counting logistic periodic points to\ncounting tent periodic points, and the tent map's `n`-fold iterate is a sawtooth\nwith `2ⁿ` full ramps, each crossing the diagonal exactly once. Why now? The exact\nconjugacy `fⁿ = h ∘ Tⁿ ∘ h⁻¹` and the bijectivity of `h` are already in hand, so\nthe transcendental fixed-point count for `f` becomes a purely combinatorial count\nof sawtooth crossings.\n\n## 2. Density of periodic seeds and topological transitivity\n\n**Conjecture.** The periodic points of the logistic map are dense in `[0,1]`, and\nthe map is topologically transitive; together with sensitive dependence this\ncertifies Devaney chaos on the whole interval.\n\nThe key insight is that a homeomorphism preserves density and transitivity, so it\nsuffices to prove them for the tent map, where periodic seeds are the dyadic-type\nrationals `k/(2ⁿ±1)` and are manifestly dense. Why now? With `h` proven to be a\nhomeomorphism, every topological property of the tent map — the transparent model\n— transfers directly to the logistic map without any smooth analysis.\n\n## 3. Invariant density and the arcsine law\n\n**Conjecture.** The logistic map preserves the arcsine measure with density\n`1 / (π √(x(1-x)))`, which is exactly the pushforward under `h` of the uniform\n(Lebesgue) measure preserved by the tent map.\n\nThe key insight is that `h` conjugates the uniform-preserving tent map to the\nlogistic map, so the invariant density of `f` must be the image of the flat density\nunder the change of variables `x = sin²(πt/2)`, whose Jacobian produces the arcsine\nweight. Why now? The explicit, differentiable conjugating map `h` makes the\nchange-of-variables computation elementary, turning a statement about a smooth\nchaotic system into a one-line pushforward of Lebesgue measure.\n\n## 4. Cryptographic fragility is coordinate-independent\n\n**Conjecture.** Any invariant an attacker can compute from a logistic keystream\n(bias, autocorrelation, algebraic degree of seed recovery) has an exact tent-map\ncounterpart obtainable by applying `h⁻¹`; hence the \"chaos cipher\" offers no\nsecurity beyond its piecewise-linear shadow.\n\nThe key insight is that a keystream masked by logistic iterates is, in the `h`\ncoordinate, masked by tent iterates — a binary shift map whose bits are read\ndirectly off the seed. Why now? The exact conjugacy makes \"look how complicated\nthe parabola orbit is\" quantifiable: complexity claimed in the smooth coordinate\nevaporates in the conjugate linear coordinate, giving a rigorous no-go statement\nfor logistic-map stream ciphers.\n\n\n# Future Directions: Geometry of the Logistic–Tent Conjugacy\n\nThis cycle established an exact topological conjugacy between the smooth logistic\nmap `f(x)=4x(1-x)` and the piecewise-linear tent map `T(t)=1-|2t-1|`, implemented\nby the strictly increasing homeomorphism `h(t)=sin²(πt/2)` of the unit interval.\nFixed points, a period-two orbit, and the intertwining of all iterates transfer\nverbatim between the two systems. The following conjectures push the same\ngeometric bridge further.\n\n## 1. Every period is realised, and the count is exponential\n\n**Conjecture.** For each `n ≥ 1` the logistic map has exactly `2ⁿ` points of period\ndividing `n` in the unit interval, and it possesses points of *exact* period `n`\nfor every `n`.\n\nThe key insight is that the conjugacy reduces counting logistic periodic points to\ncounting tent periodic points, and the tent map's `n`-fold iterate is a sawtooth\nwith `2ⁿ` full ramps, each crossing the diagonal exactly once. Why now? The exact\nconjugacy `fⁿ = h ∘ Tⁿ ∘ h⁻¹` and the bijectivity of `h` are already in hand, so\nthe transcendental fixed-point count for `f` becomes a purely combinatorial count\nof sawtooth crossings.\n\n## 2. Density of periodic seeds and topological transitivity\n\n**Conjecture.** The periodic points of the logistic map are dense in `[0,1]`, and\nthe map is topologically transitive; together with sensitive dependence this\ncertifies Devaney chaos on the whole interval.\n\nThe key insight is that a homeomorphism preserves density and transitivity, so it\nsuffices to prove them for the tent map, where periodic seeds are the dyadic-type\nrationals `k/(2ⁿ±1)` and are manifestly dense. Why now? With `h` proven to be a\nhomeomorphism, every topological property of the tent map — the transparent model\n— transfers directly to the logistic map without any smooth analysis.\n\n## 3. Invariant density and the arcsine law\n\n**Conjecture.** The logistic map preserves the arcsine measure with density\n`1 / (π √(x(1-x)))`, which is exactly the pushforward under `h` of the uniform\n(Lebesgue) measure preserved by the tent map.\n\nThe key insight is that `h` conjugates the uniform-preserving tent map to the\nlogistic map, so the invariant density of `f` must be the image of the flat density\nunder the change of variables `x = sin²(πt/2)`, whose Jacobian produces the arcsine\nweight. Why now? The explicit, differentiable conjugating map `h` makes the\nchange-of-variables computation elementary, turning a statement about a smooth\nchaotic system into a one-line pushforward of Lebesgue measure.\n\n## 4. Cryptographic fragility is coordinate-independent\n\n**Conjecture.** Any invariant an attacker can compute from a logistic keystream\n(bias, autocorrelation, algebraic degree of seed recovery) has an exact tent-map\ncounterpart obtainable by applying `h⁻¹`; hence the \"chaos cipher\" offers no\nsecurity beyond its piecewise-linear shadow.\n\nThe key insight is that a keystream masked by logistic iterates is, in the `h`\ncoordinate, masked by tent iterates — a binary shift map whose bits are read\ndirectly off the seed. Why now? The exact conjugacy makes \"look how complicated\nthe parabola orbit is\" quantifiable: complexity claimed in the smooth coordinate\nevaporates in the conjugate linear coordinate, giving a rigorous no-go statement\nfor logistic-map stream ciphers.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Geometry"
@@ -26478,7 +26478,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.72,
       "parent_direction": "",
       "priority_score": 0.77,
       "proof_strategy": "3-uniform Ramsey number R_3(k,k): minimum n such that any red/blue coloring of the 3-element subsets of [n] contains a monochromatic set of size k. Known values: R_3(3,3) = 13 (proved), R_3(4,4) is between 34 and 55 (current bounds). Lower bound (probabilistic method): R_3(k,k) >= 2^{ck^2} for some constant c. Proof: color each 3-set randomly. P(monochromatic K_k^{(3)}) < 2 * C(n,k) * 2^{-C(k,3)}. This is < 1 when n < 2^{k^2/6}. So R_3(k,k) > 2^{k^2/6}. Upper bound (stepping-up lemma): if R_3(k,k) = n, then R_3(2k, 2k) <= 2^{2n}. This gives R_3(k,k) <= 2^{2^{ck}}. Conjecture: R_3(k,k) ~ 2^{2^{ck}} (double exponential). The stepping-up lemma shows that if R_3(k,k) is at least n, then R_3(2k,2k) is at most 2^{2n}. Starting from R_3(3,3) = 13: R_3(6,6) <= 2^{26} = 2^{2^{4.7}}. Starting from R_3(4,4) >= 34: R_3(8,8) <= 2^{68} = 2^{2^{6.1}}. The pattern: R_3(2^j, 2^j) <= 2^{2^{cj}} for some constant c. Taking k = 2^j: R_3(k,k) <= 2^{2^{c*log(k)}} = 2^{k^{c'}} which is single exponential, not double exponential. Wait, the correct analysis: the stepping-up lemma gives R_3(k+1, k+1) >= 2^{R_3(k,k) - 1}. So R_3(4,4) >= 2^{R_3(3,3) - 1} = 2^{12} = 4096. But R_3(4,4) is known to be between 34 and 55, so the stepping-up lemma gives a very weak lower bound. The correct conjecture: R_3(k,k) is at least 2^{2^{ck}} for large k. Test: enumerate all 2-colorings of the 3-sets of [n] for n = 4, 5, 6, ..., find the maximum k such that there exists a coloring with no monochromatic K_k^{(3)}.",
@@ -26489,7 +26489,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-07-10T18:27:39.373493+00:00",
       "title": "Hypergraph Ramsey Theory: Beyond Graphs"
@@ -26713,7 +26713,7 @@
       "depth_estimate": 3,
       "description": "Prove that any sufficiently powerful formal system necessarily contains strange loops: statements that refer to their own unprovability. Formalize Gödel's first incompleteness theorem as a fixed-point in the lattice of provability predicates. Explore whether consciousness arises from tangled hierarchies of self-referential symbols.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Novelty",
         "Logic"
@@ -26795,7 +26795,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n`Logic/ProofSearchInformation.lean` formalizes the counting core of the\ninformation-theoretic limits of encoding and proof search: no code compresses\nevery message, most messages are incompressible, and the candidate space of a\ngiven description length is exponential. The file now also includes the\nquantitative fraction bound `incompressible_fraction`, proving over `ℚ` that for\nslack `c ≤ n` the fraction of messages with description length `≥ n - c` is at\nleast `1 - 2^{-c}`. Natural extensions:\n\n1. **Kraft's inequality.** Add prefix-free codes over `List Bool` and prove\n   `∑ 2^{-|c(x)|} ≤ 1`, connecting the counting bound to expected code length and\n   Shannon's source-coding theorem.\n\n2. **Prefix-free description length = Kolmogorov complexity.** Instantiate the\n   `BinStr` description model with a concrete universal decoder and recover the\n   standard incompressibility theorem `K(x) ≥ |x| - c` for most `x`.\n\n3. **Proofs as descriptions.** Replace the abstract `BinStr` code with an encoding\n   of Lean/first-order proof terms and state the search lower bound directly for\n   proof objects, making the \"find vs. verify\" gap explicit for a real proof\n   calculus.\n\n4. **Average-case over random theorems.** Formalize a distribution on statements\n   and prove the average description length is `Θ(n)`, matching the mission's\n   conjecture that random statements have no short certificate.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Logic"
@@ -26992,6 +26992,88 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian closed categories and that they exhibit strange-loop topology. Connect to the Yoneda lemma and self-reference in type theory.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.1,
+      "domains": [
+        "Novelty",
+        "Logic"
+      ],
+      "github_issue": 0,
+      "id": "fd_0943",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.86,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "seed",
+      "source_path": "seed:manual_v2",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-10T21:24:54.521992+00:00",
+      "title": "Consciousness as Emergent Fixed Point"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions: Hypergraph Ramsey Theory\n\nThis project develops `r`-uniform hypergraph Ramsey theory from scratch across\nseveral self-contained Lean files. All files listed below compile with no `sorry`\nand use only the standard axioms (`propext`, `Classical.choice`, `Quot.sound`,\nplus `Lean.ofReduceBool`/`Lean.trustCompiler` for the `native_decide` arithmetic\nchecks).\n\n## What is currently formalized\n\n* **`Logic/HypergraphRamsey.lean`** — the core chain around the Ramsey property\n  `RamseyProp r k l n`: monotonicity (`mono_left`, `mono_right`, `mono_n`), color\n  symmetry (`symm`), the degenerate regime `k < r`, and the exact boundary value\n  `R_r(r, l) = l` for `r ≤ l` (`RamseyNumber_r_l`, with corollaries `R3_3_3`,\n  `R2_2_2`). It also introduces the `tower` function and proves the growth\n  separation `4^k < tower 2 k` for `k ≥ 5` (`four_pow_lt_tower`).\n\n* **`Catalog/Cryptography/HypergraphRamseyDefs.lean` +\n  `Catalog/Cryptography/HypergraphRamseyTheorems.lean`** — the probabilistic\n  (first-moment) lower bound, proved in full by a finite double-counting /\n  pigeonhole argument: `prob_method_counting_ineq` and its corollary\n  `prob_method_lower_bound` (if `2·C(n,k) < 2^{C(k,3)}` then `R_3(k,k) > n`),\n  instantiated at `R3_5_5_prob_lower_bound : ¬ HypergraphRamseyProp 11 3 5 5`.\n  Also: tower-function arithmetic, the stepping-up bound `steppingUpBound`, the\n  general separation `tower_beats_exp` / `four_pow_lt_tower`, and structural\n  monotonicity of monochromatic cliques and the diagonal Ramsey property.\n\n* **`Catalog/Applications/HypergraphRamsey/Defs.lean` +\n  `.../ProbabilisticBound.lean`** — the probabilistic lower bound generalized to\n  arbitrary uniformity `r`: `hyper_ramsey_counting_lower_bound` (if\n  `2·C(n,k) < 2^{C(k,r)}` then `¬ HyperRamseyProp r n k k`), again via a complete\n  finite averaging argument, plus the growth estimate\n  `lower_upper_gap_three_uniform`.\n\n* **`.../Basic.lean` + `.../TowerGrowth.lean`** — the tower-type *upper* bounds.\n  These are derived from the Erdős–Rado stepping-up recursion, which is packaged\n  as the explicit predicate `SteppingUpProperty` (see below). Given it,\n  `hyper_ramsey_tower_bound` and `tower_of_towers` show that iterating stepping-up\n  `h` times lifts a base Ramsey property to a tower-sized ground set\n  `towerExp h N`, i.e. `h` extra levels of uniformity cost a height-`h` tower.\n\n## The one hypothesis that remains open: the stepping-up recursion\n\nThe single mathematical ingredient not proved from first principles is the\nErdős–Rado **stepping-up recursion** in its clean structural form\n\n```\nSteppingUpProperty :\n  1 ≤ r → r ≤ k → HyperRamseyProp r N k k → HyperRamseyProp (r+1) (2^N) (k+1) (k+1)\n```\n\nIt is stated in `Basic.lean` and threaded as an explicit hypothesis through the\ntower-growth theorems, so those results are honest *conditional* statements\n(\"tower growth **follows from** stepping-up\") rather than relying on any `sorry`\nor extra axiom. Discharging `SteppingUpProperty` unconditionally is the natural\nnext milestone; the standard proof is the greedy nesting argument:\n\n1. In any 2-coloring of the `(r+1)`-subsets of a set of `2^N` vertices, build a\n   nested sequence `x_0, x_1, …, x_N` with shrinking candidate tails `A_0 ⊇ A_1 ⊇ …`\n   such that the color of `{x_{i_1},…,x_{i_r}, y}` (for `y` past all the `x_{i_j}`)\n   depends only on the index set `{i_1,…,i_r}`, not on `y`.\n2. This induces a 2-coloring of the `r`-subsets of `{0,…,N-1}`; since\n   `N = R_r(k,k)`, it has a monochromatic `k`-set of indices.\n3. The corresponding `k` vertices plus one tail vertex form a monochromatic\n   `(k+1)`-clique for the original coloring.\n\nThe delicate part of a formalization is the size bookkeeping that guarantees the\n`2^N` bound suffices at every step.\n\n## Further directions\n\n* **Erdős–Rado existence recursion.** Formalize\n  `R_r(k, l) ≤ R_{r-1}(R_r(k-1, l), R_r(k, l-1)) + 1`, whose base cases are\n  pigeonhole (`r = 1`) and the graph recursion (`r = 2`). This yields finiteness\n  of all hypergraph Ramsey numbers.\n* **Graph case as a corollary.** Derive `R_2(k,k) ≤ 4^k` and combine with\n  `four_pow_lt_tower` for a fully rigorous graph-vs-hypergraph separation.\n* **Concrete diagonal values.** `R_3(4,4) = 13` needs structural search\n  machinery; a direct `decide`-style verification is infeasible\n  (`2^{C(13,3)} = 2^286` colorings) and would require heavy pruning.\n\nThe central open problem — whether `R_3(k,k)` truly grows double-exponentially,\nclosing the gap between the probabilistic lower bound and the stepping-up upper\nbound — remains open in the literature.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.1,
+      "domains": [
+        "Logic",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0944",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "523eb163",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/523eb163",
+      "status": "available",
+      "thread_id": "th_0f92f9ae",
+      "timestamp": "2026-07-10T21:25:18.926266+00:00",
+      "title": "This project develops `r`-uniform hypergraph Ramsey theory from scratch across"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
@@ -27120,7 +27202,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 207fb5b4 (Q=0.830), which proved 24 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Calderbank-Shor-Steane (CSS) quantum error-correcting codes are constructed from classical linear codes C_1, C_2 with C_2 perp subset C_1. The CSS code encodes dim(C_1) - dim(C_2) logical qubits. This is exactly the definition of a cohomology group: H^1(C_1, C_2) = C_1 / C_2. Conjecture: every C",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Applications"
       ],
@@ -29200,7 +29282,7 @@
       "depth_estimate": 3,
       "description": "Cycle cd868ba0 (Q=0.620) proved 12 theorems in Logic but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The information content of a Lean 4 proof is the number of bits needed to specify the proof among all possible proofs of the same theorem. For a theorem T with proof P, the information content is I(P)",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Logic"
       ],
@@ -29270,11 +29352,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "8e21378d",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -29286,7 +29368,7 @@
       ],
       "github_issue": 0,
       "id": "sorry_fill_f0772bca_b92c20f5",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-10T21:25:38.886899+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -29301,7 +29383,7 @@
       "source": "",
       "source_exp_id": "f0772bca",
       "source_path": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Colorin",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-10T20:20:23.650892+00:00",
       "title": "Close Proofs: The Combinatorics of Compiler Optimization: Register Allocation as Gra"
@@ -29310,102 +29392,102 @@
   "pruned": [],
   "recent_domain_counts": {
     "Algebra": 2,
-    "Computation": 3,
+    "Computation": 4,
     "Cryptography": 1,
     "Geometry": 1,
     "Logic": 7,
-    "Novelty": 15
+    "Novelty": 16
   },
   "recent_theme_keywords": {
-    "'stone": 1,
-    "2^{w_1+...+w_l}": 1,
-    "activation": 1,
-    "algebra": 1,
+    "2-coloring": 1,
+    "2^{2^{ck}}": 1,
+    "2^{c*k^2}": 1,
+    "2^{ck^2}": 1,
+    "3-uniform": 1,
     "attacks": 2,
     "because": 3,
-    "binary": 1,
-    "boolean": 1,
-    "boundary": 1,
+    "believed": 1,
+    "beyond": 1,
     "building": 3,
-    "classifier": 1,
-    "clopen": 1,
-    "compute": 1,
-    "conjecture": 15,
-    "connects": 1,
-    "contains": 3,
-    "correspond": 1,
+    "combinatorics": 1,
+    "compute": 2,
+    "conjecture": 16,
+    "constant": 1,
+    "contains": 4,
     "counting": 2,
     "cycles": 4,
-    "decision": 1,
     "deepening": 3,
     "deeper": 3,
-    "defined": 1,
     "deterministic": 2,
-    "dimension": 1,
     "direction": 3,
-    "duality": 1,
-    "duals": 1,
-    "equals": 1,
+    "double": 1,
+    "exhaustive": 1,
     "expected": 2,
+    "exponential": 1,
     "extend": 3,
-    "function": 6,
+    "faster": 1,
+    "function": 7,
+    "fundamentally": 1,
     "general": 3,
-    "generated": 1,
-    "geometric": 1,
-    "hyperplanes": 1,
-    "impact": 11,
-    "isomorphic": 1,
-    "layers": 1,
-    "learning": 1,
+    "graphs": 1,
+    "growth": 1,
+    "harder": 1,
+    "height": 1,
+    "hypergraph": 1,
+    "hypergraphs": 1,
+    "impact": 12,
+    "k_k^{(r)}": 1,
+    "k_l^{(r)}": 1,
+    "known": 1,
+    "lemma": 1,
     "length": 4,
-    "linear": 1,
-    "machine": 1,
+    "level": 1,
     "measure": 3,
+    "method": 1,
+    "minimum": 1,
     "moreover": 2,
     "needed": 2,
-    "network": 1,
-    "networks": 1,
-    "neural": 1,
-    "neuron": 1,
     "novelty": 3,
     "number": 8,
+    "numbers": 1,
     "original": 3,
-    "pattern": 1,
-    "patterns": 1,
-    "points": 1,
-    "possible": 1,
+    "precisely": 1,
+    "probabilistic": 1,
+    "problem": 1,
     "proofs": 3,
     "proved": 6,
+    "r(k,l": 1,
+    "r-tuples": 1,
+    "r_3(4,4": 1,
+    "r_3(5,5": 1,
+    "r_3(k,k": 1,
+    "r_r(k,l": 1,
+    "ramsey": 1,
+    "ramsey's": 1,
     "random": 7,
-    "realizations": 1,
-    "regions": 1,
     "remaining": 3,
     "result": 3,
     "results": 2,
-    "s(b(f": 1,
     "satisfy": 2,
-    "semantics": 1,
+    "search": 1,
     "sequence": 4,
     "series": 2,
     "setting": 5,
+    "single": 1,
     "sorries": 4,
     "specifically": 4,
     "standard": 2,
     "statement": 3,
-    "states": 4,
-    "stone": 1,
+    "states": 5,
+    "stepping-up": 1,
     "strongest": 4,
     "structure": 3,
-    "subset": 1,
-    "syntax": 1,
-    "theorem": 7,
+    "theorem": 8,
     "theorems": 5,
-    "theory": 5,
+    "theory": 6,
+    "tight": 1,
     "topology": 4,
     "triangle": 2,
-    "u(0.8": 1,
-    "u(0.99": 1,
-    "u(1.0": 1,
     "ultrafilters": 1,
     "uncanny": 1,
     "unique": 1,
@@ -29415,7 +29497,7 @@
     "varying": 1,
     "verification": 1,
     "verified": 1,
-    "verify": 8,
+    "verify": 9,
     "vertices": 2
   },
   "selection_log": [
