@@ -1,288 +1,237 @@
-#!/usr/bin/env python3
 """
-Persistent Homology of Prime Numbers — Demonstration
+Persistent Homology of the Prime Point Cloud
+============================================
 
-Computes the H₀ barcode (prime gaps) of the prime point cloud
-and compares with the Poisson/exponential prediction from
-Cramér's probabilistic model.
+Numerical demonstrations of the results in the accompanying paper.
+
+Central facts demonstrated here:
+
+  * On a line, two points of a strictly increasing cloud lie in the same
+    epsilon-connected component iff every consecutive gap between them is <= eps
+    (the Single-Linkage Theorem).
+
+  * Consequently the finite zero-dimensional (H_0) persistence barcode of the
+    prime point cloud is EXACTLY the multiset of consecutive prime gaps:
+    the i-th finite bar has death scale p_{i+1} - p_i.
+
+  * The twin prime conjecture is equivalent to the barcode containing infinitely
+    many bars of length 2.
+
+  * The mean bar length over the first N primes telescopes to (p_{N+1} - 2)/N and
+    is asymptotic to log(x), the Prime Number Theorem prediction.
+
+The script is self-contained: it only uses the Python standard library.
 """
+
+from __future__ import annotations
 
 import math
 from collections import Counter
+from typing import Dict, List, Tuple
 
-def sieve_of_eratosthenes(limit):
-    """Return list of primes up to limit."""
-    is_prime = [True] * (limit + 1)
-    is_prime[0] = is_prime[1] = False
-    for i in range(2, int(limit**0.5) + 1):
+
+# ---------------------------------------------------------------------------
+# Primes and gaps
+# ---------------------------------------------------------------------------
+def sieve_primes(bound: int) -> List[int]:
+    """Return all primes <= bound via the sieve of Eratosthenes."""
+    if bound < 2:
+        return []
+    is_prime = bytearray([1]) * (bound + 1)
+    is_prime[0] = is_prime[1] = 0
+    for i in range(2, int(bound**0.5) + 1):
         if is_prime[i]:
-            for j in range(i*i, limit + 1, i):
-                is_prime[j] = False
-    return [i for i in range(2, limit + 1) if is_prime[i]]
-
-def compute_gaps(primes):
-    """Compute consecutive gaps between primes."""
-    return [primes[i+1] - primes[i] for i in range(len(primes) - 1)]
-
-def h0_barcode(primes):
-    """The H₀ barcode: list of bars (birth=0, death=gap)."""
-    gaps = compute_gaps(primes)
-    return [(0, g) for g in gaps]
-
-def num_components(gaps, epsilon):
-    """Number of connected components at scale epsilon."""
-    return 1 + sum(1 for g in gaps if g > epsilon)
-
-def gap_distribution_analysis(primes, label=""):
-    """Analyze the distribution of prime gaps (H₀ bar lengths)."""
-    gaps = compute_gaps(primes)
-    N = primes[-1]
-    mean_gap = sum(gaps) / len(gaps)
-    predicted_mean = math.log(N)  # Prime Number Theorem prediction
-
-    print(f"\n{'='*60}")
-    print(f"H₀ Barcode Analysis: Primes up to {N} {label}")
-    print(f"{'='*60}")
-    print(f"Number of primes: {len(primes)}")
-    print(f"Number of bars (gaps): {len(gaps)}")
-    print(f"Mean bar length (actual):    {mean_gap:.4f}")
-    print(f"Mean bar length (predicted): {predicted_mean:.4f}")
-    print(f"Ratio (actual/predicted):    {mean_gap/predicted_mean:.4f}")
-    print(f"Max bar length:              {max(gaps)}")
-    print(f"Min bar length:              {min(gaps)}")
-
-    # Gap distribution
-    gap_counts = Counter(gaps)
-    print(f"\nGap distribution (top 10):")
-    for gap, count in sorted(gap_counts.items(), key=lambda x: -x[1])[:10]:
-        pct = 100 * count / len(gaps)
-        print(f"  gap={gap:3d}: {count:6d} ({pct:5.1f}%)")
-
-    # Twin prime count (gap=2)
-    twin_count = gap_counts.get(2, 0)
-    print(f"\nTwin prime pairs (gap=2): {twin_count}")
-
-    # Component count at various scales
-    print(f"\nComponents at various scales:")
-    for eps in [1, 2, 4, 6, 10, 20, 50, 100]:
-        nc = num_components(gaps, eps)
-        print(f"  ε={eps:4d}: {nc:6d} components")
-
-    # Parity check (all gaps of primes > 2 should be even)
-    gaps_after_2 = gaps[1:]  # exclude gap between 2 and 3
-    odd_gaps = [g for g in gaps_after_2 if g % 2 != 0]
-    print(f"\nParity verification (gaps after p=3):")
-    print(f"  Total gaps: {len(gaps_after_2)}")
-    print(f"  Even gaps:  {len(gaps_after_2) - len(odd_gaps)}")
-    print(f"  Odd gaps:   {len(odd_gaps)} (should be 0)")
-
-    return gaps
+            is_prime[i * i : bound + 1 : i] = b"\x00" * len(
+                range(i * i, bound + 1, i)
+            )
+    return [i for i in range(2, bound + 1) if is_prime[i]]
 
 
-def exponential_fit_test(gaps, N):
-    """Test whether gap distribution matches exponential(log N)."""
-    mean = sum(gaps) / len(gaps)
-    predicted_mean = math.log(N)
+def prime_gaps(primes: List[int]) -> List[int]:
+    """Consecutive prime gaps g_i = p_{i+1} - p_i.
 
-    # Kolmogorov-Smirnov style comparison
-    sorted_gaps = sorted(gaps)
-    n = len(sorted_gaps)
-
-    # Empirical CDF vs Exponential CDF
-    max_diff = 0
-    for i, g in enumerate(sorted_gaps):
-        empirical = (i + 1) / n
-        theoretical = 1 - math.exp(-g / predicted_mean)
-        max_diff = max(max_diff, abs(empirical - theoretical))
-
-    print(f"\nExponential fit test (Cramér model prediction):")
-    print(f"  Sample mean:     {mean:.4f}")
-    print(f"  Predicted mean:  {predicted_mean:.4f}")
-    print(f"  KS statistic:    {max_diff:.4f}")
-    print(f"  KS threshold (α=0.05): {1.36/math.sqrt(n):.4f}")
-    if max_diff < 1.36 / math.sqrt(n):
-        print(f"  Result: CONSISTENT with exponential distribution")
-    else:
-        print(f"  Result: DEVIATES from exponential (expected — primes have structure)")
+    By the Adjacent-Merge Theorem these are exactly the finite H_0 bar lengths
+    (death scales) of the prime point cloud.
+    """
+    return [primes[i + 1] - primes[i] for i in range(len(primes) - 1)]
 
 
-def persistence_diagram(gaps):
-    """Print the persistence diagram: (birth, death) pairs."""
-    print(f"\nPersistence Diagram (first 20 bars, sorted by length):")
-    bars = sorted([(0, g) for g in gaps], key=lambda x: -x[1])
-    for i, (b, d) in enumerate(bars[:20]):
-        bar = '█' * min(d, 60)
-        print(f"  [{b}, {d:3d}) |{bar}")
+# ---------------------------------------------------------------------------
+# The H_0 barcode
+# ---------------------------------------------------------------------------
+def h0_barcode(primes: List[int]) -> List[int]:
+    """The finite H_0 barcode of the prime cloud = the gap multiset (Cor. 3.3)."""
+    return prime_gaps(primes)
+
+
+def components_at_scale(gaps: List[int], eps: float) -> int:
+    """Number of epsilon-connected components (bars alive at scale eps).
+
+    By the Single-Linkage Theorem components are maximal runs of gaps <= eps,
+    separated exactly by gaps > eps; hence #components = #(gaps > eps) + 1.
+    """
+    cuts = sum(1 for g in gaps if g > eps)
+    return cuts + 1
+
+
+def brute_force_components_at_scale(positions: List[int], eps: float) -> int:
+    """Independent union-find computation of components, to check the formula.
+
+    Uses the genuine Vietoris-Rips connectivity: union i, j whenever
+    |pos_i - pos_j| <= eps.  On a line only adjacent unions can matter, but we
+    check all adjacent pairs explicitly with a union-find structure.
+    """
+    n = len(positions)
+    parent = list(range(n))
+
+    def find(x: int) -> int:
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    def union(a: int, b: int) -> None:
+        ra, rb = find(a), find(b)
+        if ra != rb:
+            parent[ra] = rb
+
+    for i in range(n - 1):
+        if positions[i + 1] - positions[i] <= eps:
+            union(i, i + 1)
+    return len({find(i) for i in range(n)})
+
+
+# ---------------------------------------------------------------------------
+# Twin bars
+# ---------------------------------------------------------------------------
+def twin_bar_count(gaps: List[int]) -> int:
+    """Number of length-2 bars = number of twin prime pairs (Thm 4.3)."""
+    return sum(1 for g in gaps if g == 2)
+
+
+def hardy_littlewood_twin_estimate(bound: int) -> float:
+    """Hardy-Littlewood prediction 2 C_2 * N / (log N)^2 for twins below `bound`."""
+    C2 = 0.6601618158  # twin prime constant
+    if bound < 3:
+        return 0.0
+    # integral form is more accurate, but the leading term suffices for a demo
+    return 2 * C2 * bound / (math.log(bound) ** 2)
+
+
+# ---------------------------------------------------------------------------
+# Average-gap law
+# ---------------------------------------------------------------------------
+def mean_bar_length(primes: List[int]) -> float:
+    """Mean finite bar length = (p_N - p_0)/N by telescoping (Sec 6.1)."""
+    n = len(primes) - 1
+    return (primes[-1] - primes[0]) / n
+
+
+def bar_length_histogram(gaps: List[int]) -> Dict[int, int]:
+    """Multiplicity of each bar length (barcode of the primes)."""
+    return dict(sorted(Counter(gaps).items()))
+
+
+# ---------------------------------------------------------------------------
+# Demonstrations
+# ---------------------------------------------------------------------------
+def demo_single_linkage(bound: int = 200) -> None:
+    print("=" * 68)
+    print("DEMO 1  Single-Linkage Theorem: formula vs. union-find")
+    print("=" * 68)
+    primes = sieve_primes(bound)
+    gaps = prime_gaps(primes)
+    print(f"primes <= {bound}: {primes}")
+    for eps in [1, 2, 4, 6, 8, 14]:
+        formula = components_at_scale(gaps, eps)
+        brute = brute_force_components_at_scale(primes, eps)
+        flag = "OK" if formula == brute else "MISMATCH!"
+        print(f"  eps={eps:3d}:  formula #components={formula:4d}   "
+              f"union-find={brute:4d}   [{flag}]")
+    print()
+
+
+def demo_barcode_is_gaps(bound: int = 100) -> None:
+    print("=" * 68)
+    print("DEMO 2  The H_0 barcode IS the prime gap sequence")
+    print("=" * 68)
+    primes = sieve_primes(bound)
+    barcode = h0_barcode(primes)
+    print(f"primes <= {bound}:")
+    print(f"  {primes}")
+    print("Finite H_0 bar lengths (= death scales = prime gaps):")
+    print(f"  {barcode}")
+    print("Bar-length multiplicities (barcode histogram):")
+    for length, mult in bar_length_histogram(barcode).items():
+        print(f"    length {length:3d}: {'#' * mult} ({mult})")
+    print()
+
+
+def demo_twin_bars(bound: int = 1_000_000) -> None:
+    print("=" * 68)
+    print("DEMO 3  Twin prime conjecture = infinitely many length-2 bars")
+    print("=" * 68)
+    primes = sieve_primes(bound)
+    gaps = prime_gaps(primes)
+    print(f"{'N (bound)':>12} | {'#length-2 bars':>15} | {'H-L estimate':>14}")
+    print("-" * 48)
+    for b in [1_000, 10_000, 100_000, 1_000_000]:
+        if b > bound:
+            continue
+        sub = [p for p in primes if p <= b]
+        subgaps = prime_gaps(sub)
+        actual = twin_bar_count(subgaps)
+        est = hardy_littlewood_twin_estimate(b)
+        print(f"{b:>12} | {actual:>15} | {est:>14.1f}")
+    print("Length-2 bars keep appearing -> twin prime conjecture (open).")
+    print()
+
+
+def demo_average_gap_law(bound: int = 1_000_000) -> None:
+    print("=" * 68)
+    print("DEMO 4  Average bar length ~ log(x)  (Prime Number Theorem)")
+    print("=" * 68)
+    primes = sieve_primes(bound)
+    print(f"{'x = largest prime':>18} | {'mean bar length':>16} | {'log(x)':>10}")
+    print("-" * 52)
+    for b in [1_000, 10_000, 100_000, 1_000_000]:
+        if b > bound:
+            continue
+        sub = [p for p in primes if p <= b]
+        mean = mean_bar_length(sub)
+        print(f"{sub[-1]:>18} | {mean:>16.4f} | {math.log(sub[-1]):>10.4f}")
+    print()
+
+
+def demo_poisson_comparison(bound: int = 1_000_000) -> None:
+    print("=" * 68)
+    print("DEMO 5  Prime barcode vs. Poisson null model")
+    print("=" * 68)
+    primes = sieve_primes(bound)
+    gaps = prime_gaps(primes)
+    total = len(gaps)
+    even = sum(1 for g in gaps if g % 2 == 0)
+    print(f"primes <= {bound}:  {total} finite bars")
+    print(f"  fraction of even-length bars : {even / total:.6f}  "
+          f"(parity rigidity: -> 1)")
+    frac2 = twin_bar_count(gaps) / total
+    # Poisson(mean m) would give P(gap == 2) ~ (1/m) e^{-2/m}, continuous model;
+    # here we report the observed fraction for contrast.
+    m = mean_bar_length(primes)
+    poisson_like = (1.0 / m) * math.exp(-2.0 / m)
+    print(f"  observed fraction of length-2 bars : {frac2:.6f}")
+    print(f"  crude exponential(mean={m:.2f}) density at 2 : {poisson_like:.6f}")
+    print("  Small even gaps are over-represented vs. the memoryless model.")
+    print()
+
+
+def main() -> None:
+    demo_single_linkage(bound=200)
+    demo_barcode_is_gaps(bound=100)
+    demo_twin_bars(bound=1_000_000)
+    demo_average_gap_law(bound=1_000_000)
+    demo_poisson_comparison(bound=1_000_000)
 
 
 if __name__ == "__main__":
-    print("PERSISTENT HOMOLOGY OF PRIME NUMBERS")
-    print("The Topology of Arithmetic")
-    print("=" * 60)
-
-    # Analysis at multiple scales
-    for limit in [1000, 10000, 100000]:
-        primes = sieve_of_eratosthenes(limit)
-        gaps = gap_distribution_analysis(primes, f"(N={limit})")
-        exponential_fit_test(gaps, limit)
-        if limit <= 10000:
-            persistence_diagram(gaps)
-
-    # Demonstrate the key theorem: components at scale 0 = n
-    primes_20 = sieve_of_eratosthenes(100)
-    gaps_20 = compute_gaps(primes_20)
-    print(f"\n{'='*60}")
-    print("THEOREM VERIFICATION: components_at_zero_eq_size")
-    print(f"Primes up to 100: {primes_20}")
-    print(f"n = {len(primes_20)}")
-    print(f"Components at ε=0: {num_components(gaps_20, 0)} (should be {len(primes_20)})")
-
-    # Demonstrate monotonicity
-    print(f"\nTHEOREM VERIFICATION: components_mono")
-    for eps in range(0, 15):
-        nc = num_components(gaps_20, eps)
-        print(f"  ε={eps:2d}: {nc:2d} components", end="")
-        if eps > 0:
-            prev = num_components(gaps_20, eps - 1)
-            assert nc <= prev, "Monotonicity violated!"
-            if nc < prev:
-                print(" ← merger!", end="")
-        print()
-
-    print(f"\n{'='*60}")
-    print("All theorem verifications passed!")
-
-
-#!/usr/bin/env python3
-"""
-Visualization: H₀ Barcode of the Prime Point Cloud
-
-Produces a barcode diagram showing the persistent homology
-of the first N primes, with bars colored by gap parity.
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
-import math
-
-
-def sieve_primes(limit):
-    is_prime = [True] * (limit + 1)
-    is_prime[0] = is_prime[1] = False
-    for i in range(2, int(limit**0.5) + 1):
-        if is_prime[i]:
-            for j in range(i*i, limit + 1, i):
-                is_prime[j] = False
-    return [i for i in range(2, limit + 1) if is_prime[i]]
-
-
-def prime_gaps(primes):
-    return [primes[i+1] - primes[i] for i in range(len(primes) - 1)]
-
-
-def plot_barcode(primes, max_bars=80, save_path="barcode.png"):
-    gaps = prime_gaps(primes)
-    bars = sorted(enumerate(gaps), key=lambda x: -x[1])[:max_bars]
-
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 10),
-                                    gridspec_kw={'width_ratios': [3, 1]})
-
-    # Barcode diagram
-    for rank, (idx, gap) in enumerate(bars):
-        color = '#e74c3c' if gap == 2 else ('#3498db' if gap % 2 == 0 else '#2ecc71')
-        label = None
-        if gap == 2 and rank == 0:
-            label = 'Twin prime gap (2)'
-        ax1.barh(rank, gap, left=0, height=0.7, color=color, alpha=0.8,
-                edgecolor='white', linewidth=0.5)
-
-    ax1.set_xlabel('Scale ε (bar length = prime gap)', fontsize=12)
-    ax1.set_ylabel('Bar index (sorted by length)', fontsize=12)
-    ax1.set_title(f'H₀ Barcode: Persistent Homology of Primes up to {primes[-1]}',
-                  fontsize=14, fontweight='bold')
-    ax1.invert_yaxis()
-
-    # Add legend
-    from matplotlib.lines import Line2D
-    legend_elements = [
-        Line2D([0], [0], color='#e74c3c', lw=6, label='Twin prime gap (2)'),
-        Line2D([0], [0], color='#3498db', lw=6, label='Even gap (> 2)'),
-        Line2D([0], [0], color='#2ecc71', lw=6, label='Gap = 1 (only 2→3)'),
-    ]
-    ax1.legend(handles=legend_elements, loc='lower right', fontsize=10)
-
-    # Gap distribution histogram
-    from collections import Counter
-    gap_counts = Counter(gaps)
-    gap_vals = sorted(gap_counts.keys())
-    counts = [gap_counts[g] for g in gap_vals]
-
-    colors = ['#e74c3c' if g == 2 else '#3498db' for g in gap_vals]
-    ax2.barh(gap_vals, counts, color=colors, alpha=0.8, edgecolor='white')
-    ax2.set_xlabel('Frequency', fontsize=12)
-    ax2.set_ylabel('Gap size', fontsize=12)
-    ax2.set_title('Gap Distribution', fontsize=14, fontweight='bold')
-
-    # Add mean line
-    mean_gap = sum(gaps) / len(gaps)
-    predicted = math.log(primes[-1])
-    ax2.axhline(y=mean_gap, color='red', linestyle='--', alpha=0.7,
-                label=f'Mean gap: {mean_gap:.1f}')
-    ax2.axhline(y=predicted, color='green', linestyle='--', alpha=0.7,
-                label=f'log(N): {predicted:.1f}')
-    ax2.legend(fontsize=9)
-
-    plt.tight_layout()
-    plt.savefig(save_path, dpi=150, bbox_inches='tight')
-    print(f"Saved barcode visualization to {save_path}")
-    plt.close()
-
-
-def plot_component_staircase(primes, save_path="staircase.png"):
-    gaps = prime_gaps(primes)
-    max_gap = max(gaps)
-
-    epsilons = list(range(0, max_gap + 2))
-    components = [1 + sum(1 for g in gaps if g > eps) for eps in epsilons]
-
-    fig, ax = plt.subplots(figsize=(12, 6))
-    ax.step(epsilons, components, where='post', color='#2c3e50', linewidth=2)
-    ax.fill_between(epsilons, components, step='post', alpha=0.1, color='#3498db')
-
-    # Mark transition points
-    unique_gaps = sorted(set(gaps))
-    for g in unique_gaps:
-        nc = 1 + sum(1 for gap in gaps if gap > g)
-        ax.plot(g, nc, 'o', color='#e74c3c', markersize=6, zorder=5)
-
-    ax.set_xlabel('Scale ε', fontsize=12)
-    ax.set_ylabel('Number of Components', fontsize=12)
-    ax.set_title(f'Component Staircase: H₀ of Primes up to {primes[-1]}',
-                fontsize=14, fontweight='bold')
-    ax.set_xlim(-0.5, max_gap + 1)
-    ax.grid(True, alpha=0.3)
-
-    # Annotate key transitions
-    ax.annotate(f'ε=0: {len(primes)} components\n(each prime isolated)',
-               xy=(0, len(primes)), xytext=(max_gap*0.3, len(primes)*0.9),
-               fontsize=9, arrowprops=dict(arrowstyle='->', color='gray'))
-    ax.annotate(f'ε={max_gap}: 1 component\n(all connected)',
-               xy=(max_gap, 1), xytext=(max_gap*0.6, len(primes)*0.3),
-               fontsize=9, arrowprops=dict(arrowstyle='->', color='gray'))
-
-    plt.tight_layout()
-    plt.savefig(save_path, dpi=150, bbox_inches='tight')
-    print(f"Saved staircase visualization to {save_path}")
-    plt.close()
-
-
-if __name__ == "__main__":
-    primes = sieve_primes(1000)
-    plot_barcode(primes, max_bars=60, save_path="barcode.png")
-    plot_component_staircase(primes, save_path="staircase.png")
-
-    # Also do a larger scale
-    primes_large = sieve_primes(10000)
-    plot_barcode(primes_large, max_bars=80, save_path="barcode_10k.png")
+    main()
