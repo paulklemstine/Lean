@@ -199,20 +199,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Arithmetic of Games: Surreal Numbers as Number Fields"
   },
   {
-    "consumed_by_exp_id": "90792fe8",
-    "description": "Building on cycle e40b9050 (Q=0.820), which proved 19 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A neural network with ReLU activation defines a piecewise linear function f: R^n -> R^m. The decision boundary of a binary classifier f: R^n -> R is the set {x : f(x) = 0}, which is a piecewise linear hypersurface. The algebraic variety of the decision boundary is the zero set of the polynomial that",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_e40b9050_f60113bd",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "e40b9050",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T14:16:31.072438+00:00",
-    "title": "Deepening: Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle e7035fce (Q=0.820), which proved 21 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Mendeleev's periodic table arranges elements by atomic number Z, but Z is just the charge of the nucleus. Conjecture: the periodic table is the spectrum of an operator on a Hilbert space of dimension equal to the number of stable isotopes. Define the 'nuclear Hamiltonian' H on L^2(R^3) by H = -hbar^",
     "domains": [
@@ -5343,7 +5329,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "523eb163",
     "description": "Ramsey's theorem for graphs states that R(k,l) = the minimum n such that any 2-coloring of the edges of K_n contains a red K_k or a blue K_l. For hypergraphs: R_r(k,l) = the minimum n such that any 2-coloring of the r-tuples of an n-set contains a red K_k^{(r)} or a blue K_l^{(r)}. The growth rate is an open problem: R_3(4,4) = 13 (known), R_3(5,5) is between 34 and 55, and R_3(k,k) is believed to grow like a double exponential 2^{c*k^2}. Conjecture: R_3(k,k) ~ 2^{2^{ck}} for some constant c > 0. This is a tower function (height 2 exponential). More precisely: the lower bound R_3(k,k) >= 2^{ck^2} (from the probabilistic method) and the upper bound R_3(k,k) <= 2^{2^{ck}} (from the stepping-up lemma). The gap is between a single exponential and a double exponential. Conjecture: the true growth rate is double exponential, and the upper bound is tight. This would mean that 3-uniform Ramsey numbers grow much faster than graph Ramsey numbers. Test: compute R_3(k,k) for k = 3, 4, 5, 6 by exhaustive search and verify the growth rate. Impact: 3-uniform Ramsey numbers are double exponential. Combinatorics at the hypergraph level is fundamentally harder than at the graph level.",
     "domains": [
       "Novelty",
@@ -5353,7 +5339,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.77,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T18:27:39.373493+00:00",
     "title": "Hypergraph Ramsey Theory: Beyond Graphs"
   },
@@ -6074,6 +6060,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T18:43:37.812924+00:00",
     "title": "This project formalizes two cross-domain bridge theorems around the tropical"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Algebraic Geometry of ReLU Decision Boundaries\n\nThis cycle established two structural results about rectifier networks:\n\n1. **A depth-free characterization.** A real-valued function on `\u211d\u207f` is computed\n   by a feed-forward ReLU network of *arbitrary* depth and width if and only if\n   it is a tropical rational function (a difference of two finite maxima of\n   affine forms). The generating operations of a network \u2014 affine combination,\n   scalar reweighting, and rectification \u2014 are exactly the closure operations of\n   the difference structure of the max-plus semiring.\n\n2. **Boundaries live on algebraic hypersurfaces.** The decision boundary of a\n   tropical rational classifier `f = p \u2212 q` is contained in the real zero locus\n   of a single explicit multivariate polynomial: the product, over all pairs of\n   affine pieces of `p` and `q`, of the affine differences of those pieces.\n\nFrom these findings we extract the following bold, testable conjectures.\n\n## Conjecture 1 \u2014 Minimal algebraic degree equals essential piece count\n\nFor a tropical rational classifier whose two parts are genuinely presented with\n`m` and `k` affine pieces, the boundary polynomial has degree `m\u00b7k`, but the\n*minimal* degree of an algebraic hypersurface containing the decision boundary\nequals the number of pieces that are actually active on the boundary, which can\nbe far smaller.\n\nThe key insight is that only the affine pieces attaining the shared maximum on\nthe boundary contribute crossings, so the inactive factors are removable and the\ntrue algebraic complexity of the boundary is governed by an *activation pattern*\nrather than by the raw architecture. Why now? The explicit product form of the\nboundary polynomial makes \"removable factor\" a precise, checkable notion for the\nfirst time, turning a qualitative folklore observation into a degree bound one\ncan compute piece by piece.\n\n## Conjecture 2 \u2014 Depth compresses algebraic degree exponentially\n\nThere exist target hypersurfaces whose defining boundary polynomial, when the\nclassifier is realized by a shallow network, has degree exponential in the input\ndimension, yet which are realized by a deep network whose boundary polynomial has\nonly polynomial degree.\n\nThe key insight is that composition of tropical rational functions multiplies\npiece counts, so depth trades a wide max-of-affines (high algebraic degree at one\nlayer) for an iterated composition (low degree per layer), mirroring the known\ndepth\u2013width separations for counting linear regions. Why now? The depth-free\ncharacterization guarantees both realizations compute the *same* function class,\nso the comparison of their algebraic degrees is well posed and isolates depth as\nthe sole variable.\n\n## Conjecture 3 \u2014 The boundary variety is reducible exactly at shared pieces\n\nThe algebraic hypersurface carrying the decision boundary factors into\nirreducible affine hyperplanes, and two classifiers are boundary-equivalent\n(identical decision sets) if and only if their boundary polynomials share the\nsame radical.\n\nThe key insight is that each factor `A \u2212 B` is linear, so the boundary variety is\nautomatically a *hyperplane arrangement*, and equality of decision sets should be\ndetectable purely from which hyperplanes appear with which multiplicities. Why\nnow? Expressing the boundary as a concrete product of linear forms reduces a\ngeometric equivalence question to comparison of squarefree parts of explicit\npolynomials, a fully algebraic and decidable problem.\n\n## Conjecture 4 \u2014 Curved boundaries require smooth activations\n\nAny classifier whose decision boundary contains a smooth piece of strictly\npositive curvature cannot be a tropical rational function; equivalently, no\nfinite ReLU network has a curved decision boundary, and the minimal number of\nsmooth (e.g. sigmoidal) units needed grows with the total curvature.\n\nThe key insight is that tropical rationality forces the boundary onto a finite\nhyperplane arrangement, which is flat almost everywhere, so curvature is a hard\nobstruction rather than a matter of approximation quality. Why now? With the\ncontainment in an explicit linear-factor variety in hand, \"flatness of the\nboundary\" becomes a theorem about the zero set of a product of affine forms,\nproviding a rigorous lower bound mechanism against purely rectifier\narchitectures.\n\n## Conjecture 5 \u2014 Tropical rank controls generalization on the boundary\n\nThe number of distinct affine pieces active in a neighbourhood of the decision\nboundary \u2014 the *local tropical rank* \u2014 is a tighter capacity measure for the\nclassifier near the boundary than global parameter counts, and controls the\nsample complexity of learning the boundary to a given accuracy.\n\nThe key insight is that generalization near a decision surface is dictated by how\nmany linear regions meet the surface, and the boundary polynomial's local factor\nstructure counts exactly those regions. Why now? The correspondence between\nnetwork functions and tropical rational functions gives a canonical,\narchitecture-independent way to count boundary-adjacent regions, decoupling\ncapacity from the incidental size of the network.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0933",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "90792fe8",
+    "status": "available",
+    "timestamp": "2026-07-10T19:15:47.795796+00:00",
+    "title": "Two structural results about rectifier networks:"
   },
   {
     "consumed_by_exp_id": "76f66aa5",
