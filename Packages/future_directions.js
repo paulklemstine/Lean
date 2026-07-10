@@ -117,6 +117,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 298c68ef (Q=0.780), which proved 66 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic stateme",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_298c68ef_0fdfff64",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "298c68ef",
+    "status": "available",
+    "timestamp": "2026-07-10T04:25:48.919565+00:00",
+    "title": "Deepening: Godel's Casino: Incomplete but Winnable Games"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 3716954d (Q=0.780), which proved 29 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, ",
     "domains": [
       "Applications"
@@ -217,7 +231,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Zeta Function of a Graph: Number Theory on Networks"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5ac317b9",
     "description": "The Riemann zeta function zeta(s) has zeros at the non-trivial points s = 1/2 + i*gamma_n where gamma_n are the imaginary parts of the zeros. The Fourier transform of the zero counting function N(t) = #{gamma_n <= t} is related to the distribution of primes by the explicit formula. But what if we take the Fourier transform of zeta itself? Define Z(t) = zeta(1/2 + it) as a function of the real variable t. The Fourier transform Z_hat(w) = integral_{-inf}^{inf} Z(t) * e^{-2*pi*i*w*t} dt. Conjecture: Z_hat(w) has sharp peaks at w = log(p)/2*pi for each prime p. This is because the explicit formula expresses zeta(1/2+it) as a sum over primes: zeta(1/2+it) ~ sum_{p} p^{-1/2-it} = sum_{p} e^{-it*log(p)} / sqrt(p), which is a sum of complex exponentials with frequencies log(p). The Fourier transform of a sum of exponentials is a sum of delta functions at the frequencies log(p)/2*pi. So Z_hat(w) = sum_{p} delta(w - log(p)/2*pi) / sqrt(p) + (error from zeros and smooth terms). The peaks at w = log(p)/2*pi give a 'spectrogram' of the primes. Test: compute Z_hat(w) numerically for the first 10^6 zeros and verify the peaks at log(2)/2*pi, log(3)/2*pi, log(5)/2*pi, etc. Impact: you can HEAR the primes by playing the Fourier transform of the Riemann zeta function \u2014 each prime is a distinct note.",
     "domains": [
       "Novelty",
@@ -227,7 +241,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T04:08:16.263156+00:00",
     "title": "The Fourier Transform of the Riemann Zeta: Hearing the Primes"
   },
@@ -7846,21 +7860,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The \u221a2-Threshold Conjecture for Rips Filtration Approximation"
   },
   {
-    "consumed_by_exp_id": "298c68ef",
-    "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card \u2014 you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier \u2014 it's an opportunity. You can WIN at the game of undecidability.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0656",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T16:01:43.960880+00:00",
-    "title": "Godel's Casino: Incomplete but Winnable Games"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Every finite simple subcubic outerplanar graph admits a vertex partition (R,B) such that the blue vertices induce a graph of maximum degree at most one, the red vertices induce a graph with no isolated vertices and containing no simple path of three edges, and the red subgraph has minimum degree at least one.",
     "domains": [
@@ -10189,6 +10188,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T03:34:07.433543+00:00",
     "title": "This project formalizes a **cross-domain connector**: the Eckmann\u2013Hilton"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# G\u00f6del's Casino \u2014 Results and Future Directions\n\n## What was proved (`Catalog/Logic/GodelCasino.lean`)\n\nWe formalize a self-contained betting game (\"G\u00f6del's Casino\") over a finite space of\nmodels `\u03a9`. A statement is its truth-value assignment `s : \u03a9 \u2192 Bool`; a bet is a\n`Bool`; the per-world payoff is `+1` for a correct bet and `-1` otherwise. We evaluate\nbets both adversarially (worst world) and in expectation under the uniform prior\n(`expProfit`).\n\nThe mission's conjecture \u2014 that undecidable statements are *individually* winnable with a\nguaranteed positive expected profit, with a universal `\u2265 1/3` lower bound \u2014 is a\n**contrarian target**, and we settle it as follows.\n\n**Structure of the game.**\n- `payoff_zero_sum`, `expProfit_zero_sum`: the game is zero-sum; TRUE and FALSE bets on a\n  statement have opposite expected profits.\n- `sum_payoff_true`, `expProfit_true_formula`: the exact closed form\n  `expProfit s true = (2\u00b7#true \u2212 #worlds)/#worlds`.\n\n**Decidable statements are fully winnable.**\n- `expProfit_valid`, `expProfit_unsat`, `optProfit_valid`: valid/unsatisfiable statements\n  pay the maximum `1`.\n- `sound_strategy_wins`: the abstract \"bet TRUE on provable \u03a3\u2081\" strategy \u2014 if a proof\n  system is *sound* (only proves valid statements) then betting TRUE on a provable\n  statement wins. Crucially, this edge exists precisely because a provable statement is\n  decidable-true, not independent.\n\n**Independence cannot be beaten (the refutation).**\n- `expProfit_balanced`: a *balanced* statement (true in exactly half the worlds) gives\n  expected profit `0` for **every** bet.\n- `independent_has_loss`: for **any** independent statement and **any** bet, some world\n  yields payoff `-1`; the worst-case (guaranteed) profit is `\u2264 -1 < 0`.\n- `casino_no_edge_on_independent`: there is an independent statement (the two-world\n  `id` card, a Continuum-Hypothesis-like \"right in some model\" card) on which every bet\n  has expected profit exactly `0`. **This refutes the individual-winnability claim.**\n- `no_one_third_bound` / `one_third_bound_false`: a deck of balanced cards has average\n  optimal profit `0 < 1/3`, refuting the universal `\u2265 1/3` bound.\n\n**The honest positive statement.**\n- `optProfit_nonneg`: optimal profit is never negative.\n- `decidable_deck_wins`: a deck of *decidable* cards is won every round (`= 1`).\n- The evidence (`ComputationalEvidence.md`) shows a mixed deck with a fraction `f` of\n  decidable cards has average optimal profit exactly `f`.\n\n**Verdict.** The player's entire edge comes from the *decidable* cards; genuine\nincompleteness contributes exactly zero to expected profit and costs `1` in the worst\ncase. In this precise game-theoretic sense, incompleteness *is* a barrier, not a free\nlunch. The refined true statement is: \"You can win at the decidable fragment; the\nundecidable fragment is exactly a fair coin (expected `0`) or an adversarial loss.\"\n\n## Modeling notes / faithfulness\n\n- The refutation is not a technicality: the balanced two-world card is the exact analogue\n  of the mission's headline example (CH, \"right in some model\"). Betting either way is\n  right in one model and wrong in the other, so the symmetric expectation is `0` and the\n  adversarial value is `-1`.\n- An independent statement that is *biased* (not balanced) does admit a positive-expected\n  bet (e.g. `1/2` for a 3-of-4 card). So the real dividing line is **balance**, not\n  independence. This is a sharper statement than the original conjecture.\n\n## Future directions\n\n1. **Priors and calibration.** Replace the uniform prior over a finite world set with a\n   general probability measure and characterize exactly which statements admit a positive\n   expected bet (answer: those with `P(true) \u2260 1/2`). Relate this to a Bayesian agent's\n   credence in an independent sentence.\n\n2. **Repeated play / bankroll.** Add Kelly-style betting and study the almost-sure growth\n   rate of a bankroll: prove that the log-optimal growth is driven solely by the decidable\n   fraction and the calibration gap `|2\u00b7P(true) \u2212 1|` of the biased cards.\n\n3. **Genuine arithmetic hierarchy.** Connect the abstract `IsValid`/`IsIndependent`\n   predicates to Mathlib's first-order logic: model \u03a3\u2081-completeness of a consistent r.e.\n   theory and formalize that a true \u03a3\u2081 sentence is provable, making `sound_strategy_wins`\n   a corollary of a real metamathematical theorem rather than an abstract hypothesis.\n\n4. **Adversarial vs. stochastic gap.** Formalize the minimax value of the casino as a\n   two-player zero-sum game (house chooses the world, player the bet) and prove the value\n   equals the calibration gap, with balanced cards having value `0`.\n\n5. **Multi-valued / many-model bets.** Generalize `Bool` bets to bets on which of several\n   models is the \"real\" one, and study when a hedging portfolio across models beats the\n   single-bet value.\n",
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_0845",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "298c68ef",
+    "status": "available",
+    "timestamp": "2026-07-10T04:25:42.854637+00:00",
+    "title": "We formalize a self-contained betting game (\"G\u00f6del's Casino\") over a finite spac"
   },
   {
     "consumed_by_exp_id": "90bde271",

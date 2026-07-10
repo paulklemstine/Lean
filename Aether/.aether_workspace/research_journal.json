@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d80d981e",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions: Metric Rigidity of the Petersen Graph across Valued Cayley Geometries\n\nThis cycle established that the Petersen graph — and, more generally, any graph\ncarrying an odd closed walk",
-      "quality_score": 0.87056,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-02T03:51:06",
-      "title": "Non-embeddability of the Petersen graph into tropical abelian Cayley graphs"
-    },
-    {
       "cycle_id": "8b6fc6d0",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions — Congruence Rigidity of Sums of Squares\n\nThis cycle established that the entries of an integer right triangle are forced into\nstrong divisibility patterns — one leg is a multiple",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-10T03:34:13",
       "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
+    },
+    {
+      "cycle_id": "298c68ef",
+      "domain": "Applications",
+      "key_insight": "# Gödel's Casino — Results and Future Directions\n\n## What was proved (`Catalog/Logic/GodelCasino.lean`)\n\nWe formalize a self-contained betting game (\"Gödel's Casino\") over a finite space of\nmodels `Ω`",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 66,
+      "timestamp": "2026-07-10T04:25:48",
+      "title": "Godel's Casino: Incomplete but Winnable Games"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e0366114",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — Bounded Prime Gaps (Zhang–Maynard formalization)\n\nThis cycle formalized the *elementary scaffolding* around `liminf (p_{n+1} - p_n) ≤ 246`:\nadmissible tuples (with a finite-check",
-      "quality_score": 0.4133402545454546,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-29T08:21:20",
-      "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
-    },
     {
       "cycle_id": "fdb1bb82",
       "domain": "NumberTheory",
@@ -2501,21 +2491,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-10T03:34:13",
       "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
+    },
+    {
+      "cycle_id": "298c68ef",
+      "domain": "Applications",
+      "key_insight": "# Gödel's Casino — Results and Future Directions\n\n## What was proved (`Catalog/Logic/GodelCasino.lean`)\n\nWe formalize a self-contained betting game (\"Gödel's Casino\") over a finite space of\nmodels `Ω`",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 66,
+      "timestamp": "2026-07-10T04:25:48",
+      "title": "Godel's Casino: Incomplete but Winnable Games"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "935491ef",
-      "domain": "Probability",
-      "name": "gammaBasis_coeff",
-      "quality": 0.70296
-    },
-    {
-      "cycle_id": "935491ef",
-      "domain": "Probability",
-      "name": "gammaBasis_coeff_nonneg",
-      "quality": 0.70296
-    },
     {
       "cycle_id": "935491ef",
       "domain": "Probability",
@@ -2803,9 +2791,21 @@
       "domain": "Physics",
       "name": "vcomp_eq_hcomp",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "298c68ef",
+      "domain": "Applications",
+      "name": "payoff_zero_sum",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "298c68ef",
+      "domain": "Applications",
+      "name": "expProfit_zero_sum",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-10T03:34:13",
+  "last_updated": "2026-07-10T04:25:48",
   "open_questions": [
     {
       "context": "mathematics).  It is recorded here as a hypothesis, with an honest `sorry`, and is used only; sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "ee6f49cd",
-        "quality": 0.7998400000000001,
-        "theorems": 29,
-        "title": "Classification of Discrete d-Pseudomanifolds with 2d+7 Vertices"
-      },
-      {
         "cycle_id": "244691c2",
         "quality": 0.8009580000000001,
         "theorems": 24,
@@ -3141,6 +3135,12 @@
         "quality": 0.78,
         "theorems": 29,
         "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
+      },
+      {
+        "cycle_id": "298c68ef",
+        "quality": 0.78,
+        "theorems": 66,
+        "title": "Godel's Casino: Incomplete but Winnable Games"
       }
     ],
     "Bridges": [
