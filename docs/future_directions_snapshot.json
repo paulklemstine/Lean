@@ -483,6 +483,26 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The Galois group of a random polynomial over Q is S_n with probability 1. This is the Hilbert irreducibility theorem in probabilistic form. But what about random polynomials over finite fields? For f in F_p[x] of degree n chosen uniformly at random, the Galois group is S_n with probability approaching 1 as p grows. Conjecture: the probability that Gal(f) is NOT S_n is O(p^{-1/2}) for fixed n, and the exceptional cases concentrate at polynomials with discriminant zero or small Galois groups. More precisely, P(Gal(f) != S_n) = c_n / sqrt(p) + O(1/p) where c_n depends only on n. For n=2: P(Gal(f) != S_2) = P(discriminant = 0) = 1/p. For n=3: P(Gal(f) != S_3) = P(f has a rational root) = 3/p + O(1/p^2). Test: enumerate all monic polynomials of degree n over F_p for small p and n, compute Galois groups, verify P(Gal != S_n) ~ c_n / sqrt(p). Impact: random polynomials have maximal Galois groups — algebraic randomness is generic.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0855",
+    "lineage_refs": [],
+    "priority_score": 0.82,
+    "proof_strategy": "For a random monic polynomial f(x) = x^n + a_{n-1}x^{n-1} + ... + a_0 over F_p, the Galois group is a subgroup of S_n. Compute P(Gal(f) = S_n) by counting. For n=2: Gal(f) = S_2 unless discriminant = a_1^2 - 4*a_0 = 0, which happens for p choices of a_1 (each gives one a_0), so P = 1 - p/p^2 = 1 - 1/p. For n=3: Gal(f) != S_3 iff f has a rational root (3 choices of root, each determines f) or Gal = A_3 (discriminant is a square). Count both cases. For general n: use the fact that random permutations have cycle structure converging to the Poisson-Dirichlet distribution. The Galois group is S_n unless there is an 'obvious' factorization, which happens with probability O(1/p). Test: implement in Lean 4 + Python. For p=2..100 and n=2..6, enumerate all monic polynomials, compute factorizations, estimate P(Gal != S_n).",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T05:52:57.383904+00:00",
+    "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [
       "math.NT"
     ],
@@ -9525,6 +9545,26 @@
     "status": "available",
     "timestamp": "2026-07-10T05:18:18.532777+00:00",
     "title": "Close Proofs: The Fundamental Theorem of Cakes: Algebraic Geometry of Baking"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Bach's chorales are the gold standard of Western harmony. But what if we could MEASURE the harmonic complexity using topology? Encode each chord as a point in a 12-dimensional space (one dimension per pitch class). A sequence of chords traces a path in this space. Compute the persistent homology of the point cloud of all chords in a Bach chorale. Conjecture: Bach's chorales have persistent H_1 (1-dimensional cycles) that survive across a wide range of scales, indicating circular harmonic motion (the circle of fifths). In contrast, random chord sequences have H_1 bars that die quickly. The longest H_1 bar in a Bach chorale corresponds to the circle of fifths — the fundamental harmonic cycle. Pop music has shorter H_1 bars (less complex harmonic cycles). Atonal music has no persistent H_1 (no harmonic cycles). Test: compute persistent homology barcodes for 100 Bach chorales, 100 pop songs, and 100 atonal pieces. Verify: Bach has H_1 bars of length > 0.5 (in normalized pitch-class space), pop has bars of length 0.2-0.5, atonal has no persistent H_1. Impact: the topology of music IS its harmonic structure. Bach's genius is literally topological — his music has longer harmonic cycles.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0854",
+    "lineage_refs": [],
+    "priority_score": 0.76,
+    "proof_strategy": "Encode each chord as a binary vector in {0,1}^12 (pitch class set). Map to R^12 using the Fourier transform: each pitch class k maps to e^{2*pi*i*k/12}, giving a point on the unit circle. A chord maps to the sum of its pitch class vectors, normalized. Compute persistent homology of the point cloud of all chords in a piece using Vietoris-Rips complexes. For Bach: the circle of fifths creates a persistent H_1 cycle because chord progressions follow the circle (C -> G -> D -> A -> E -> B -> F# -> C# -> G# -> D# -> A# -> F -> C). This cycle survives across multiple scales. For pop: the cycle is shorter (typically I -> V -> vi -> IV -> I, a 4-chord loop). For atonal: no persistent cycle. Compute: Rips filtration for epsilon = 0.1, 0.2, ..., 1.0. Measure H_1 bar lengths. Test: verify Bach H_1 bars > 0.5, pop H_1 bars 0.2-0.5, atonal H_1 bars < 0.2.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T05:52:57.315450+00:00",
+    "title": "Persistent Homology of Musical Harmony: The Topology of Bach"
   },
   {
     "ambition_level": "extension",

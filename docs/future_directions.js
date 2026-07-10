@@ -361,6 +361,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The Galois group of a random polynomial over Q is S_n with probability 1. This is the Hilbert irreducibility theorem in probabilistic form. But what about random polynomials over finite fields? For f in F_p[x] of degree n chosen uniformly at random, the Galois group is S_n with probability approaching 1 as p grows. Conjecture: the probability that Gal(f) is NOT S_n is O(p^{-1/2}) for fixed n, and the exceptional cases concentrate at polynomials with discriminant zero or small Galois groups. More precisely, P(Gal(f) != S_n) = c_n / sqrt(p) + O(1/p) where c_n depends only on n. For n=2: P(Gal(f) != S_2) = P(discriminant = 0) = 1/p. For n=3: P(Gal(f) != S_3) = P(f has a rational root) = 3/p + O(1/p^2). Test: enumerate all monic polynomials of degree n over F_p for small p and n, compute Galois groups, verify P(Gal != S_n) ~ c_n / sqrt(p). Impact: random polynomials have maximal Galois groups \u2014 algebraic randomness is generic.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0855",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T05:52:57.383904+00:00",
+    "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For a large prime r, a real number 0 <= q <= 1, and x such that 1 <= x <= r^0.499, the average value of the 2q-th power of the magnitude of the Dirichlet character sum mod r is bounded below by a constant multiple of x^q. Specifically, there exists a constant C_q > 0 such that (1/(r-1)) * sum_{chi mod r} |sum_{n <= x} chi(n)|^{2q} >= C_q * x^q.",
     "domains": [
       "Pythagorean"
@@ -5127,6 +5142,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T05:18:18.532777+00:00",
     "title": "Close Proofs: The Fundamental Theorem of Cakes: Algebraic Geometry of Baking"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Bach's chorales are the gold standard of Western harmony. But what if we could MEASURE the harmonic complexity using topology? Encode each chord as a point in a 12-dimensional space (one dimension per pitch class). A sequence of chords traces a path in this space. Compute the persistent homology of the point cloud of all chords in a Bach chorale. Conjecture: Bach's chorales have persistent H_1 (1-dimensional cycles) that survive across a wide range of scales, indicating circular harmonic motion (the circle of fifths). In contrast, random chord sequences have H_1 bars that die quickly. The longest H_1 bar in a Bach chorale corresponds to the circle of fifths \u2014 the fundamental harmonic cycle. Pop music has shorter H_1 bars (less complex harmonic cycles). Atonal music has no persistent H_1 (no harmonic cycles). Test: compute persistent homology barcodes for 100 Bach chorales, 100 pop songs, and 100 atonal pieces. Verify: Bach has H_1 bars of length > 0.5 (in normalized pitch-class space), pop has bars of length 0.2-0.5, atonal has no persistent H_1. Impact: the topology of music IS its harmonic structure. Bach's genius is literally topological \u2014 his music has longer harmonic cycles.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0854",
+    "priority_score": 0.76,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T05:52:57.315450+00:00",
+    "title": "Persistent Homology of Musical Harmony: The Topology of Bach"
   },
   {
     "consumed_by_exp_id": "",
