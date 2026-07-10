@@ -5545,7 +5545,7 @@
         "Recursive decompositions in combinatorial structures",
         "Statistical refinement in enumeration"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Logic"
@@ -9741,7 +9741,7 @@
         "biconvex bipartite graphs",
         "parameterized complexity"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Logic"
@@ -10949,7 +10949,7 @@
         "Linear Algebra",
         "Enumerative Combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Logic"
@@ -14689,7 +14689,7 @@
         "dense_suborder",
         "rational_order"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Logic",
         "Pythagorean"
@@ -16618,7 +16618,7 @@
         "Matroid Theory",
         "Tropical Geometry"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Logic"
@@ -17194,7 +17194,7 @@
         "formal_verification",
         "dynamical_systems"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Logic"
@@ -18349,7 +18349,7 @@
         "topological_dynamics",
         "finite_graph_theory"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Logic"
@@ -20181,7 +20181,7 @@
         "Hilbert space theory",
         "Exact arithmetic verification"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Logic"
@@ -20562,7 +20562,7 @@
         "graph_theory",
         "constructive_mathematics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Logic"
       ],
@@ -21587,7 +21587,7 @@
         "quadratic_forms",
         "galois_theory"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Logic"
@@ -21838,7 +21838,7 @@
         "Algebraic combinatorics (orthogonal Grassmannian)",
         "Valued matroid theory"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Logic"
@@ -24834,7 +24834,7 @@
         "probabilistic_method",
         "design_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Logic"
       ],
@@ -29390,7 +29390,7 @@
         "lexicographic_orders",
         "finite_set_theory"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Logic"
@@ -30378,7 +30378,7 @@
         "Coxeter_length_gap_to_forest_structure",
         "pattern_avoidance_to_graph_acyclicity"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Logic"
@@ -31068,7 +31068,7 @@
         "formal arithmetic identities",
         "Dirichlet convolutions"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Logic"
@@ -31410,24 +31410,24 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "298c68ef",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
       "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card — you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier — it's an opportunity. You can WIN at the game of undecidability.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Novelty",
         "Logic"
       ],
       "github_issue": 0,
       "id": "fd_0656",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-10T00:56:46.948522+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -31442,7 +31442,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-08T16:01:43.960880+00:00",
       "title": "Godel's Casino: Incomplete but Winnable Games"
@@ -31952,7 +31952,7 @@
         "Monotonic embeddings and geometric graph theory",
         "Rotation systems and cell decompositions of complete graph drawings"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Logic"
       ],
@@ -33698,7 +33698,7 @@
         "Homological Algebra",
         "Combinatorics"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Logic"
@@ -34912,7 +34912,7 @@
         "combinatorial_geometry",
         "linear_algebra"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges",
         "Logic"
@@ -35257,7 +35257,7 @@
         "Probabilistic Method",
         "Topological Graph Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Logic"
@@ -38125,7 +38125,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nFile: `Bridges/PageSiegelRefinement.lean`\n\n## What is proved\n\nThe file formalizes, and proves in full (no `sorry`, only the standard axioms\n`propext`, `Classical.choice`, `Quot.sound`), a **conditional refinement of\nPage's theorem** on Landau–Siegel zeros, framed as a *connector* between two\nareas:\n\n* **Zero location / complex analysis** — the repulsion of real zeros of Dirichlet\n  `L`-functions (`DirichletCharacter.LFunction`), packaged as `Repulsion`, and the\n  mission's premise `NonRealExclusion` (no non-real zeros near `s = 1`).\n* **Asymptotics + finiteness** — the pivot `exists_threshold`\n  (`m^{-ε} log m → 0`, from `isLittleO_log_rpow_atTop`) and the abstract\n  `repulsion_subsingleton`, which turns a repulsion inequality into a\n  `Subsingleton` (\"at most one\").\n\nThe main theorem `page_siegel_refinement` wires these together: for every `ε > 0`\nthere are effective `C > 0`, `Q₀ > 1` such that the Deuring–Heilbronn bridge\n`NonRealExclusion → Repulsion` together with `NonRealExclusion` forces the set of\nexceptional primitive quadratic characters (real zero in `[1 - q^{-ε}, 1)`) to be\na `Set.Subsingleton`.\n\n## Honest scope / what is assumed\n\nTwo genuinely deep analytic facts are isolated as **explicit hypotheses** rather\nthan proved from scratch (this is what makes the result *conditional*, matching\nthe paper's own framing):\n\n1. `NonRealExclusion` — the hypothesis of the statement itself.\n2. The bridge `NonRealExclusion → Repulsion` — the Deuring–Heilbronn / Landau\n   zero-repulsion mechanism, whose usual proof rests on the non-negativity of the\n   Dirichlet coefficients of `ζ(s) L(s,χ₁) L(s,χ₂) L(s,χ₁χ₂)`.\n\nEverything *downstream* of these inputs — the effective constant, the monotonicity\nargument, and the passage to \"at most one\" — is a Lean theorem.\n\n## Concrete next steps\n\n1. **Discharge the bridge.** Prove `NonRealExclusion → Repulsion` inside Lean.\n   Mathlib already provides the key positivity input\n   `DirichletCharacter.norm_LFunction_product_ge_one` (the `3–4–1` trick); the\n   remaining work is the explicit log-derivative estimates and the choice of the\n   auxiliary point `s = 1 + δ`.\n\n2. **Replace the `min`-conductor repulsion by the classical `log(q₁q₂)` form.**\n   The abstract lemma is stated with `log (min conductor)`; deriving the sharper\n   `log(q₁q₂)` version and re-deriving `repulsion_subsingleton` from it would make\n   the constant match Landau's exactly.\n\n3. **Non-vacuity via character theory.** Connect `ExcSet` to the Kronecker-symbol\n   description of primitive real characters, so that \"at most one character\" is\n   phrased at the level of fundamental discriminants.\n\n4. **Effective `C(ε)`.** The proof currently fixes `C = 1`; tracking the optimal\n   `C(ε)` through the bridge would yield the fully effective statement.\n\n5. **Remove `Classical.choice`.** The zero witness is extracted with\n   `Classical.choose`; a constructive selection (or `Set.Subsingleton` proved\n   directly) would trim the axiom footprint.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Logic",
         "Algebra"
@@ -38330,7 +38330,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Self-Improving Proofs\n\nThe file `SelfImprovingProofs.lean` formalises a proof-refinement system for a\nfixed target proposition `T`: an abstract type of candidate proofs, a\n`ℕ`-valued complexity `C`, a validity predicate, and a soundness guarantee.\nRefinement is `C(P') < C(P)` between valid candidates. We proved:\n\n* refinement is **well-founded** (`System.refines_wellFounded`) — no infinite\n  strict simplification;\n* finite chains are **length-bounded** by the initial complexity\n  (`nat_finite_strict_chain_bounded`), and this bound is **tight**\n  (`nat_strict_chain_achievable`, `chainSystem_arbitrarily_long`): for every `m`\n  there is a genuine refinement chain of exactly `m` steps — finite, but with no\n  uniform length bound;\n* every non-increasing refinement process **halts**\n  (`System.process_halts`, `nat_noninc_eventually_constant`);\n* a **simplest proof exists** (`System.exists_simplest`);\n* but the halting limit need **not** be simplest\n  (`refinement_limit_not_optimal`), with a concrete `√2` counterexample whose\n  soundness is Mathlib's `irrational_sqrt_two`.\n\n## Directions\n\n1. **Syntactic complexity.** Replace the abstract `complexity : Proof → ℕ` with\n   a genuine measure on Lean `Expr`/tactic scripts (`length + depth + #lemmas`)\n   and re-derive the theorems for that concrete `C`.\n\n2. **Steepest-descent refinement.** Model a refinement *strategy* as a function\n   choosing the next candidate, and characterise which strategies do reach the\n   global minimum (e.g. always pick a strict refinement when one exists). The\n   current counterexample shows arbitrary non-increasing strategies fail.\n\n3. **Multi-objective complexity.** Take `C` valued in a well-order other than\n   `ℕ` (lexicographic `length ×ₗ depth ×ₗ #lemmas`, or ordinals) and check which\n   results survive; well-foundedness generalises to any `WellFoundedLT`.\n\n4. **Uncomputability of the optimum.** Formalise that \"the Kolmogorov-minimal\n   proof\" is not computable, sharpening why local refinement cannot in general\n   attain it.\n\n5. **Quantitative arbitrariness (done, extendable).** The tightness of the\n   length bound is now formalised: `chainSystem_arbitrarily_long` builds, for\n   every `m`, a system with a strict refinement chain of exactly `m` steps,\n   matching the `10^100` remark. A natural extension is to exhibit chains whose\n   *length as a function of the theorem's statement size* grows faster than any\n   computable function, sharpening the \"arbitrarily long\" slogan quantitatively.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Logic"
@@ -39900,7 +39900,6 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "cross_domain_bridge",
     "famous_subtask",
     "cross_domain_bridge",
     "cross_domain_bridge",
@@ -39915,6 +39914,7 @@
     "famous_subtask",
     "famous_subtask",
     "famous_subtask",
-    "cross_domain_bridge"
+    "cross_domain_bridge",
+    "famous_subtask"
   ]
 }

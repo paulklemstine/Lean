@@ -14597,7 +14597,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "298c68ef",
     "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card — you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier — it's an opportunity. You can WIN at the game of undecidability.",
     "domain_bridges": [],
     "domains": [
@@ -14610,7 +14610,7 @@
     "proof_strategy": "Define Godel's Casino: each round, the house presents a statement phi in the language of arithmetic. The player bets TRUE or FALSE. If ZFC proves phi, TRUE wins. If ZFC proves not-phi, FALSE wins. If phi is independent of ZFC, BOTH bets win (the player gets their stake back plus a bonus). Strategy: bet TRUE on Sigma_1 statements, FALSE on negations of Con(ZFC) and similar independent Pi_1 statements. Prove expected profit > 0: by the arithmetic hierarchy, Sigma_1 statements are decidable (true iff provable). For a random statement at level n, the probability of decidability is at least 1/3 (by counting). So E[profit] >= (1/3) * (stake) > 0. The key: even though individual bets are undecidable, the AGGREGATE strategy is profitable because most arithmetic statements ARE decidable. Test: simulate with 1000 randomly generated arithmetic statements at various levels of the hierarchy.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T16:01:43.960880+00:00",
     "title": "Godel's Casino: Incomplete but Winnable Games"
   },
@@ -18738,6 +18738,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes a small algebraic complexity theory of recipes, modelling a\nrecipe by its cooking time `C(R)` and verification time `V(R)` and classifying recipes\nas quick (`C = V`, \"P = NP\"), traditional (`V < C`, \"P ≠ NP\"), or overhard (`C < V`,\n\"NP-hard\"). The `Logic/RecipeComplexity.lean` file proves a chain of results:\n\n1. Trichotomy of recipe classes and their relation to physicality (`V ≤ C`).\n2. Sequential composition `seq` makes `Recipe` a commutative monoid.\n3. Closure of the classes under composition (`IsQuick.seq`,\n   `IsTraditional.seq_physical`, `IsPhysical.seq`).\n4. Speedup `C − V` is additive over physical recipes.\n5. Repetition (`n` servings) scales `C` and `V` linearly and preserves the classes.\n6. Batches (menus) sum cooking/verification times; **Batch Quickness Theorem**: a menu\n   of physical recipes is globally quick iff every dish is quick.\n7. Rational cooking ratio `C/V` characterization of the three classes.\n\n## Natural next steps\n\n- **Weighted/parallel cooking.** Model kitchens with `k` cooks as a `max`-plus rather\n  than `plus` composition, and study when parallelism turns a traditional menu quick.\n- **A genuine reduction relation.** Introduce `R ⪯ S` (\"recipe `R` reduces to `S`\") and\n  prove the classes are downward/upward closed, mirroring polynomial-time reductions.\n- **Cost hierarchies.** Define recipe families indexed by input size `n` with\n  `C, V : ℕ → ℕ`, and formalize asymptotic separations (`V = o(C)`), giving a faithful\n  analogue of `P ⊊ NP`-style time-hierarchy statements.\n- **Amortized speedup.** Study `speedup (batch L) / length L` and prove averaging\n  inequalities over menus.\n- **Overhard closure.** Characterize exactly when composing dishes preserves\n  overhardness, and connect to the (informal) \"destructive verification\" motivation of\n  the soufflé.\n- **Probabilistic verification.** Replace exact tasting by sampling and formalize a\n  BPP-flavoured \"taste a spoonful\" model.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0823",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "acc2ac17",
+    "status": "available",
+    "timestamp": "2026-07-10T00:56:24.645000+00:00",
+    "title": "This project formalizes a small algebraic complexity theory of recipes, modellin"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "The Erdos-Renyi random graph G(n, p) has n vertices where each edge appears independently with probability p. At p = log(n)/n, G(n,p) becomes connected. But what if p is COMPLEX? Define G(n, z) where z is a complex number: each edge (i,j) appears with 'probability' z, meaning the edge weight is z instead of 0 or 1. The resulting 'complex graph' is a weighted complete graph where edge (i,j) has weight z if the edge exists and 0 otherwise. The adjacency matrix A_z has entries that are either z or 0. Conjecture: The complex eigenvalues of A_z trace out a circle of radius |z|*sqrt(n) in the complex plane, centered at the origin. As n -> infinity, the empirical spectral distribution of A_z converges to the circular law (like the Ginibre ensemble) because A_z is a random matrix with i.i.d. entries of mean z*p and variance |z|^2*p*(1-p). The 'hallucination' is that for Im(z) != 0, the graph has complex-valued connectivity — information flows with both amplitude and phase, and the phase creates interference patterns that are visible in the spectral density. Test: generate A_z for n = 1000 with z = 0.5 + 0.3i, compute eigenvalues, and verify they lie in a disk of radius sqrt(n)*|z|. Compare with the Ginibre ensemble prediction. Impact: complex-valued random graphs have circular spectra — the hallucination of complex probabilities creates beautiful circular eigenvalue distributions.",
     "domain_bridges": [],
     "domains": [
@@ -18772,26 +18792,6 @@
     "status": "in_progress",
     "timestamp": "2026-07-09T19:55:16.452095+00:00",
     "title": "Close Proofs: Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "acc2ac17",
-    "description": "Every recipe is an algorithm: it takes ingredients (inputs) and produces a dish (output). The question is: can you verify a good dish faster than you can cook it? This is exactly P vs NP, but in the kitchen. Define the verification time V(R) of a recipe R as the time it takes to taste the dish and determine if it's good. Define the cooking time C(R) as the time it takes to prepare the dish. Conjecture: For most traditional recipes, C(R) > V(R) — cooking takes longer than tasting (P != NP in the kitchen). But there exist 'quick recipes' where C(R) = V(R) — assemble-and-serve dishes like salads (P = NP in the kitchen). The interesting class is 'NP-hard recipes' — dishes where even VERifying the result is hard. Example: is the souffle risen? You can only verify by cutting it open, which destroys it. Theorem: souffle verification is co-NP-hard because determining if a souffle will rise requires simulating the thermodynamic process, which is PSPACE-hard. More formally: the souffle function S(ingredients, temperature, time) -> {risen, collapsed} requires computing the Navier-Stokes equations for the batter, which is PSPACE-hard. Test: classify 100 recipes by their C(R)/V(R) ratio. Verify that P = NP recipes have C = V, while P != NP recipes have C >> V. Impact: computational complexity is not abstract — it shows up in your kitchen. Some dishes are inherently harder to make than to verify.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0804",
-    "lineage_refs": [],
-    "priority_score": 0.71,
-    "proof_strategy": "Define kitchen complexity: a recipe R is a tuple (ingredients, operations, output). Verification time V(R) = time to determine output quality (tasting). Cooking time C(R) = time to execute operations. Define Kitchen-P = {R : C(R) = O(poly(|R|))} — recipes that can be cooked in polynomial time. Define Kitchen-NP = {R : V(R) = O(poly(|R|))} — recipes that can be verified in polynomial time. Prove: salad is in Kitchen-P (chop and mix, linear time). Prove: souffle is Kitchen-NP-hard: verifying a souffle's rise requires computing the Navier-Stokes dynamics of the batter, which is PSPACE-hard. Prove Kitchen-P != Kitchen-NP for souffles: the Navier-Stokes computation cannot be shortcut. Classify 100 recipes: P=P (salads, sandwiches, smoothies), P<NP (baked goods, braises, ferments), P<<NP (souffles, tempered chocolate, molecular gastronomy). Test: time 50 people making 10 recipes each, measure cooking time vs verification time.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-09T21:23:09.226908+00:00",
-    "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
   },
   {
     "ambition_level": "extension",

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "52dd778d",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: sign changes of symmetric-power coefficients on thin sets\n\nThese conjectures grow out of the central finding of this cycle: the constraint \"`n` is a sum\nof `m` squares\" stops bind",
-      "quality_score": 0.7232000000000001,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-01T15:21:02",
-      "title": "Infinite Sign Changes of Symmetric Power L-Function Coefficients over Sums of m Squares for All Even"
-    },
-    {
       "cycle_id": "dd442784",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Homology of Latin Square Graphs\n\nThese conjectures are distilled from the current cycle's findings on the clique\nstructure of Latin square graphs. Each is falsifiable and, we beli",
@@ -499,19 +489,19 @@
       "theorem_count": 27,
       "timestamp": "2026-07-10T00:21:15",
       "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
+    },
+    {
+      "cycle_id": "acc2ac17",
+      "domain": "Logic",
+      "key_insight": "# Future Directions\n\nThis project formalizes a small algebraic complexity theory of recipes, modelling a\nrecipe by its cooking time `C(R)` and verification time `V(R)` and classifying recipes\nas quick",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 46,
+      "timestamp": "2026-07-10T00:56:33",
+      "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0a1f99db",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — derived from the `ramseyNumber` cycle\n\nThis cycle turned the catalog's `Arrows` lemmas into a single numeric function\n`ramseyNumber : ℕ → ℕ → ℕ` carrying exact values, monotonici",
-      "quality_score": 0.57392,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T23:14:30",
-      "title": "Ramsey Theory: Bounds and Constructions"
-    },
     {
       "cycle_id": "cfea11f0",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 27,
       "timestamp": "2026-07-10T00:21:15",
       "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
+    },
+    {
+      "cycle_id": "acc2ac17",
+      "domain": "Logic",
+      "key_insight": "# Future Directions\n\nThis project formalizes a small algebraic complexity theory of recipes, modelling a\nrecipe by its cooking time `C(R)` and verification time `V(R)` and classifying recipes\nas quick",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 46,
+      "timestamp": "2026-07-10T00:56:33",
+      "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ee6f49cd",
-      "domain": "Applications",
-      "name": "incidence_double_count",
-      "quality": 0.7998400000000001
-    },
-    {
-      "cycle_id": "244691c2",
-      "domain": "Applications",
-      "name": "produces",
-      "quality": 0.8009580000000001
-    },
-    {
-      "cycle_id": "244691c2",
-      "domain": "Applications",
-      "name": "det_u",
-      "quality": 0.8009580000000001
-    },
     {
       "cycle_id": "244691c2",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "p_ne_zero_real",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "acc2ac17",
+      "domain": "Logic",
+      "name": "below",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "acc2ac17",
+      "domain": "Logic",
+      "name": "Recipe",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "acc2ac17",
+      "domain": "Logic",
+      "name": "recipe_trichotomy",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-10T00:21:15",
+  "last_updated": "2026-07-10T00:56:33",
   "open_questions": [
     {
       "context": "All four compile with no `sorry` and only the standard axioms.; All compile with no `sorry`; the convex chain bottoms out in genuine Mathlib",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "3e68faef",
-        "quality": 0.52278,
-        "theorems": 129,
-        "title": "Derived from the Phase A cycle that produced `Fitness.lean`,"
-      },
-      {
         "cycle_id": "032896b2",
         "quality": 0.547645269003818,
         "theorems": 150,
@@ -3513,6 +3507,12 @@
         "quality": 0.49753964866339334,
         "theorems": 10,
         "title": "Characterization of the Aharoni-Korman Conjecture via Saturated Chains"
+      },
+      {
+        "cycle_id": "acc2ac17",
+        "quality": 0.72,
+        "theorems": 46,
+        "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
       }
     ],
     "MachineLearning": [
