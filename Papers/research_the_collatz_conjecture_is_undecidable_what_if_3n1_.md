@@ -1,251 +1,172 @@
-# Collatz Orbit Structure, Affine Encoding, and Proof-Theoretic Barriers
+# The Collatz Map: Dynamics, a Min-Plus Stopping-Time Recurrence, and the Logic of Halting
 
 ## Abstract
 
-We develop a rigorous structural theory of the Collatz map T(n) = n/2 (n even) or 3n+1 (n odd), formalizing three classes of results: (1) the tree structure of Collatz orbits, including the orbit merge theorem showing orbits that intersect remain merged; (2) an affine encoding over ℚ showing that each parity word determines a unique linear map, with composition corresponding to word concatenation; and (3) an abstract proof-barrier framework demonstrating that Π₂⁰ statements whose witness functions outgrow every provably total function are unprovable in the bounding proof system. All results are formalized in Lean 4 with complete machine-checked proofs.
+The Collatz (or $3n+1$) map sends an even positive integer $n$ to $n/2$ and an odd $n$ to $3n+1$; the Collatz conjecture asserts that iterating this map from any positive integer eventually reaches $1$. We give a rigorous, self-contained development of the elementary dynamical theory of the map, isolate the precise logical shape of the conjecture and of any putative refutation, and exhibit a **min-plus (tropical) recurrence** governing the total stopping time. Our contributions are fourfold. First, we characterize the orbits of powers of two exactly: $2^m$ reaches $1$ in precisely $m$ steps. Second, we prove that the halting predicate is invariant along the orbit — reaching $1$ from $n \neq 1$ is equivalent to reaching $1$ from $T(n)$ — and we identify the negation of the conjecture with the existence of a single positive counterexample. Third, we show that the (a priori unbounded) halting predicate is the countable union of decidable bounded predicates, exposing the search structure underlying all numerical verification and the absence of any uniform certificate bound. Fourth, we prove that the total stopping time satisfies a Bellman-type shortest-path law, $\sigma(n) = 1 + \sigma(T(n))$ for $n \neq 1$ with $\sigma(1)=0$, which is precisely the fixed-point equation of a shortest-path operator in the tropical semiring $(\mathbb{N}\cup\{\infty\}, \min, +)$. We discuss how this reframing situates the conjecture within tropical dynamics and the logic of provability, and we record concrete verified orbits and open directions. All results stated as theorems are unconditional; the conjecture itself is never assumed.
+
+**Keywords:** Collatz conjecture, $3n+1$ problem, tropical semiring, min-plus algebra, stopping time, shortest path, Bellman equation, decidability, arithmetic dynamics.
+
+---
 
 ## 1. Introduction
 
-The Collatz conjecture (3n+1 problem) states that for every positive integer n, the orbit under T eventually reaches 1. Despite verification up to 2⁶⁸ (Barina, 2020) and partial results bounding the density of counterexamples (Tao, 2019), the conjecture remains open.
+The Collatz conjecture is among the most accessible unsolved problems in mathematics. Its statement requires nothing beyond parity and division, yet it has resisted proof since the 1930s and has been verified numerically for all starting values up to roughly $2^{68}$. The problem's resistance is often attributed to the competition between two forces: the contraction $n \mapsto n/2$ on even inputs and the expansion $n \mapsto 3n+1$ on odd inputs. Probabilistic heuristics suggest orbits contract on average by a factor near $3/4$ per odd step, so almost all orbits should descend to $1$; but such heuristics say nothing rigorous about *every* orbit, and a single divergent or non-trivially cyclic orbit would refute the conjecture.
 
-Our work addresses three fundamental aspects:
+This paper does not resolve the conjecture. Instead it does three things that we believe clarify *why* the problem is hard and *where* its difficulty is concentrated:
 
-1. **Structural dynamics**: We prove that the Collatz graph has tree structure (Theorem 2.1), classify inverse preimages (Theorem 2.3), and establish the parity ratio bound (Theorem 2.5).
+1. It develops the elementary dynamics rigorously, including the exact stopping time of powers of two and the orbit-invariance of the halting predicate.
+2. It pins down the logical form of the conjecture and its negation, and it decomposes the halting predicate into a countable union of decidable bounded predicates — making explicit the "search with no a priori bound" that any verification confronts.
+3. It exhibits a tropical (min-plus) recurrence for the total stopping time, connecting the Collatz dynamics to shortest-path theory and dynamic programming.
 
-2. **Algebraic encoding**: We show that Collatz orbits are affine maps over ℚ parameterized by parity words, with composition law (Theorem 3.3), connecting dynamics to linear algebra.
+Throughout, we are careful to separate what is proved unconditionally from what is speculative. The much-discussed possibility that the conjecture is independent of strong base theories is *not* claimed as a theorem; it is recorded only as motivation and as a future direction. Every result labeled Theorem, Proposition, or Lemma below is established unconditionally, and the conjecture is never used as a hypothesis.
 
-3. **Proof barriers**: We formalize an abstract incompleteness result (Theorem 4.1) showing when Π₂⁰ statements resist proof, and apply it to the Collatz setting.
+## 2. Definitions
 
-### 1.1 Catalog References
+Throughout, $\mathbb{N} = \{0, 1, 2, \dots\}$ and $T^{(k)}$ denotes the $k$-fold composition of $T$, with $T^{(0)}$ the identity.
 
-This work extends and deepens the following catalog results:
-- `Catalog/Novelty/CollatzUndecidability.lean`: `conjecture_iff_all_bounded`, basic orbit structure
-- `Catalog/Novelty/CollatzSpectral/Theorems.lean`: `collatz_even_step_lt`
-- `Catalog/Bridges/CollatzUndecidability.lean`: `collatzStep_odd_then_even`
-- `Catalog/Computation/CollatzTropical.lean`: `collatz_odd_produces_even`
+**Definition 2.1 (Collatz map).** The *Collatz map* $T : \mathbb{N} \to \mathbb{N}$ is
+$$
+T(n) = \begin{cases} n/2, & n \equiv 0 \pmod 2,\\ 3n+1, & n \equiv 1 \pmod 2.\end{cases}
+$$
 
-## 2. Orbit Structure
+**Definition 2.2 (Reaches).** A number $n$ *reaches* $1$, written $\mathrm{Reaches}(n)$, if there exists $k \in \mathbb{N}$ with $T^{(k)}(n) = 1$.
 
-### 2.1 Definitions
+**Definition 2.3 (Collatz conjecture).** The *Collatz conjecture* is the proposition
+$$
+\mathrm{Collatz} :\equiv \forall n,\ (0 < n) \Rightarrow \mathrm{Reaches}(n).
+$$
 
-**Definition 2.1** (Collatz Step). T : ℕ → ℕ defined by T(n) = n/2 if n is even, 3n+1 if n is odd.
+**Definition 2.4 (Bounded halting predicate).** For $b, n \in \mathbb{N}$, say $n$ *reaches $1$ within $b$ steps*, written $\mathrm{ReachesWithin}(b, n)$, if there exists $k \le b$ with $T^{(k)}(n) = 1$. For each fixed $b$ this predicate is decidable, since it is a finite disjunction over $k \in \{0, 1, \dots, b\}$.
 
-**Definition 2.2** (Iteration). T_iter(n, k) = T^[k](n), the k-fold iterate.
+**Definition 2.5 (Total stopping time).** If $\mathrm{Reaches}(n)$ holds, the *total stopping time* $\sigma(n)$ is the least $k$ with $T^{(k)}(n) = 1$; equivalently $\sigma(n) = \min\{k : T^{(k)}(n) = 1\}$, which is well defined by the least-number principle.
 
-**Definition 2.3** (Reachability). reaches_one(n) ⟺ ∃k, T_iter(n, k) = 1.
+## 3. Elementary evaluation and the fixed cycle
 
-### 2.2 Orbit Merge Theorem
+We record the defining case split and the unique cycle through $1$.
 
-**Theorem 2.1** (Orbit Determinism). If T_iter(a, j) = T_iter(b, k), then for all m ≥ 0, T_iter(a, j+m) = T_iter(b, k+m).
+**Lemma 3.1 (Evaluation).** For all $n$: if $n$ is even then $T(n) = n/2$; if $n$ is odd then $T(n) = 3n+1$. In particular $T(2n) = n$ for all $n$, and $T(1) = 4$.
 
-*Proof sketch.* By induction on m. The base case is the hypothesis. The inductive step follows from T being a function: applying T to equal values yields equal values. □
+*Proof.* Immediate from Definition 2.1 by case analysis on $n \bmod 2$; the identity $T(2n) = 2n/2 = n$ uses exactness of division by $2$ on even inputs. $\qquad\blacksquare$
 
-**Corollary 2.2** (Reachability Transfer). If T_iter(a, j) = T_iter(b, k) and reaches_one(a), then reaches_one(b).
+**Lemma 3.2 (The cycle through $1$).** $T^{(3)}(1) = 1$; explicitly $1 \to 4 \to 2 \to 1$.
 
-*Proof.* From reaches_one(a), obtain K with T_iter(a, K) = 1. Using periodicity of the 1→4→2→1 cycle, find K' ≥ j with T_iter(a, K') = 1. Then T_iter(b, k + (K' - j)) = 1 by the orbit merge theorem. □
+*Proof.* $T(1) = 4$, $T(4) = 2$, $T(2) = 1$ by direct computation. $\qquad\blacksquare$
 
-**Significance**: This theorem establishes that the Collatz graph is a *forest* — a directed acyclic graph where each node has at most one successor. The conjecture is equivalent to this forest being a single tree rooted at the 1→4→2→1 cycle.
+Lemma 3.2 shows that "$\mathrm{Reaches}(n)$" captures the intended terminal behavior: once the orbit meets $1$ it enters the trivial $3$-cycle and never escapes.
 
-### 2.3 Inverse Preimage Classification
+## 4. Orbit invariance of the halting predicate
 
-**Theorem 2.3** (Even Preimage). T(2n) = n for all n.
+The halting predicate propagates both forward and backward along the orbit, away from the fixed point.
 
-**Theorem 2.4** (Odd Preimage Classification). If m is odd and T(m) = n, then n ≡ 4 (mod 6). Conversely, for n ≥ 4 with n ≡ 4 (mod 6), the odd preimage m = (n-1)/3 exists.
+**Lemma 4.1 (Backward invariance).** If $\mathrm{Reaches}(T(n))$ then $\mathrm{Reaches}(n)$.
 
-*Example*: n = 10 has odd preimage m = 3 (since 3·3+1 = 10 and 10 ≡ 4 mod 6). n = 12 has no odd preimage (12 ≡ 0 mod 6).
+*Proof.* If $T^{(k)}(T(n)) = 1$ then $T^{(k+1)}(n) = 1$ by the composition law $T^{(k+1)}(n) = T^{(k)}(T(n))$. $\qquad\blacksquare$
 
-*Generalization*: This classification extends naturally to arbitrary affine maps n ↦ an + b: the preimage structure depends on the residue class of n modulo 2a.
+**Lemma 4.2 (Forward invariance).** If $n \neq 1$ and $\mathrm{Reaches}(n)$, then $\mathrm{Reaches}(T(n))$.
 
-*Boundary*: The classification is complete for single-step preimages but does not extend to multi-step inverse iteration, which grows exponentially.
+*Proof.* Let $k$ be least with $T^{(k)}(n) = 1$. If $k = 0$ then $n = 1$, contradicting $n \neq 1$; hence $k = k'+1$ and $T^{(k')}(T(n)) = T^{(k'+1)}(n) = 1$, so $\mathrm{Reaches}(T(n))$. $\qquad\blacksquare$
 
-### 2.4 Syracuse Acceleration
+**Theorem 4.3 (Orbit invariance).** For $n \neq 1$,
+$$
+\mathrm{Reaches}(n) \iff \mathrm{Reaches}(T(n)).
+$$
 
-**Definition 2.4** (Syracuse Function). S(n) = (3n+1)/2.
+*Proof.* Combine Lemmas 4.1 and 4.2. $\qquad\blacksquare$
 
-**Theorem 2.5** (Two-Step Equivalence). For odd n: T(T(n)) = S(n).
+Theorem 4.3 says the halting question is a property of the *orbit graph* rather than of any particular starting point: it is stable under single-step reparametrization. This is the structural fact that makes acceleration schemes (e.g. the odd-step map $n \mapsto (3n+1)/2$) natural to study, since they only reparametrize the same graph.
 
-**Theorem 2.6** (Syracuse Growth). For odd n ≥ 1: S(n) ≥ n.
+## 5. Powers of two: exact stopping time
 
-*Proof.* S(n) = (3n+1)/2 ≥ (2n+1)/2 > n for n ≥ 1. □
+**Theorem 5.1 (Powers of two).** For every $m \in \mathbb{N}$, $T^{(m)}(2^m) = 1$. Consequently $\mathrm{Reaches}(2^m)$ and $\sigma(2^m) = m$.
 
-### 2.5 Parity Ratio Bound
+*Proof.* Induct on $m$. For $m = 0$, $T^{(0)}(1) = 1$. For the step, write $2^{m+1} = 2 \cdot 2^m$; then $T(2^{m+1}) = 2^m$ by Lemma 3.1, so
+$$
+T^{(m+1)}(2^{m+1}) = T^{(m)}\big(T(2^{m+1})\big) = T^{(m)}(2^m) = 1
+$$
+by the inductive hypothesis. Thus $\mathrm{Reaches}(2^m)$. Minimality of $m$ (so that $\sigma(2^m) = m$) follows because the orbit $2^m \to 2^{m-1} \to \cdots \to 1$ is strictly decreasing and does not meet $1$ before step $m$. $\qquad\blacksquare$
 
-**Theorem 2.7** (Parity Exclusion). If T_iter(n, i) is odd, then T_iter(n, i+1) is even.
+Powers of two are thus the *geodesics* of the orbit graph: their stopping time equals their $2$-adic exponent with no detour, providing an exact benchmark against which the erratic orbits of other integers can be measured.
 
-**Theorem 2.8** (Odd Step Bound). In any orbit segment of length k, the number of odd values is at most ⌈k/2⌉.
+## 6. Concrete orbits
 
-*Proof.* By strong induction on k. For k ≤ 1, the bound is trivial. For k+2, by parity exclusion, at most one of positions k and k+1 can have an odd value. Combined with the inductive hypothesis for k, the bound follows. □
+Two nontrivial orbits illustrate the wide variation in stopping times.
 
-*PEGB for Theorem 2.8*:
-- **Proof**: Complete formal proof by strong induction with case analysis on consecutive parities.
-- **Example**: The orbit of 3 starts 3(odd), 10(even), 5(odd), 16(even), 8(even), 4(even), 2(even), 1(odd). In the first 4 values: 2 odd, 2 even. Bound: ⌈4/2⌉ = 2. Tight.
-- **Generalization**: For generalized Collatz maps T_a,b(n) = n/d (d|n) or an+b (d∤n), the parity ratio depends on the divisibility properties of an+b.
-- **Boundary**: The bound ⌈k/2⌉ is tight (achievable), so no improvement is possible without additional structural constraints.
+**Proposition 6.1.** $\mathrm{Reaches}(7)$ with $\sigma(7) = 16$, and $\mathrm{Reaches}(27)$ with $\sigma(27) = 111$.
 
-### 2.6 Cycle Analysis
+*Proof.* Direct finite computation of the orbits:
+$$
+7 \to 22 \to 11 \to 34 \to 17 \to 52 \to 26 \to 13 \to 40 \to 20 \to 10 \to 5 \to 16 \to 8 \to 4 \to 2 \to 1
+$$
+uses $16$ steps, and the orbit of $27$ (which peaks at $9232$) reaches $1$ in $111$ steps. $\qquad\blacksquare$
 
-**Theorem 2.9** (No Fixed Points). For n ≥ 2, T(n) ≠ n.
+The contrast between $\sigma(7) = 16$ and $\sigma(27) = 111$ — despite the closeness of the starting values — is the empirical face of the problem's difficulty: stopping time is a wildly irregular function of the input.
 
-**Theorem 2.10** (No Two-Cycles). For n ≥ 2, T(T(n)) ≠ n.
+## 7. The logical shape of the conjecture
 
-*Proof.* Case analysis on parity. If n is even: T(n) = n/2, so T(T(n)) is either n/4 (if n/2 is even, requiring n = 0) or 3(n/2)+1 (if n/2 is odd, requiring n = -2). Both impossible for n ≥ 2. If n is odd: T(T(n)) = (3n+1)/2, requiring n = -1. □
+**Theorem 7.1 (Refutation is a single counterexample).**
+$$
+\lnot\,\mathrm{Collatz} \iff \exists n,\ (0 < n) \land \lnot\,\mathrm{Reaches}(n).
+$$
 
-*PEGB for Theorem 2.10*:
-- **Proof**: Direct case analysis on parity, resolving to arithmetic contradictions.
-- **Example**: n=2: T(2)=1, T(1)=4 ≠ 2. n=3: T(3)=10, T(10)=5 ≠ 3.
-- **Generalization**: For the map n ↦ an+b, c-cycles exist iff certain Diophantine equations have solutions. For a=3, b=1, no cycles of length ≤ 68 exist besides the trivial 1→4→2→1 cycle (Eliahou, 1993).
-- **Boundary**: The no-cycle result extends to all known cycle lengths but a general proof for all cycle lengths remains open.
+*Proof.* $\mathrm{Collatz}$ is the universally quantified implication $\forall n,\ 0 < n \Rightarrow \mathrm{Reaches}(n)$; its negation is, by the standard prenex laws, $\exists n,\ 0 < n \land \lnot\mathrm{Reaches}(n)$. $\qquad\blacksquare$
 
-### 2.7 Residue Class Propagation
+Theorem 7.1 makes the fundamental asymmetry explicit: the conjecture is $\Pi_2$ in form (a "for all $n$ there exists $k$" statement), whereas any refutation is witnessed by a single $n$. This is why a disproof could in principle be a finite object, while a proof must control all orbits simultaneously.
 
-**Theorem 2.11** (Mod 4 Structure). The residue class mod 4 determines the parity *two steps ahead*:
-- n ≡ 0 (mod 4): T(n) is even.
-- n ≡ 1 (mod 4): T(T(n)) is even.
-- n ≡ 3 (mod 4): T(T(n)) is odd.
+**Theorem 7.2 (Search decomposition).** For all $n$,
+$$
+\mathrm{Reaches}(n) \iff \exists b,\ \mathrm{ReachesWithin}(b, n).
+$$
 
-*Significance*: This is the beginning of the "2-adic" perspective on Collatz dynamics. The behavior of the first k steps is determined by n mod 2^k (for appropriate k), connecting Collatz dynamics to p-adic analysis.
+*Proof.* If $T^{(k)}(n) = 1$ then $\mathrm{ReachesWithin}(k, n)$ holds with witness $k \le k$. Conversely, if $\mathrm{ReachesWithin}(b, n)$ holds then some $k \le b$ satisfies $T^{(k)}(n) = 1$, so $\mathrm{Reaches}(n)$. $\qquad\blacksquare$
 
-### 2.8 Bounded-Universal Gap
+Because each $\mathrm{ReachesWithin}(b, \cdot)$ is decidable (Definition 2.4), Theorem 7.2 exhibits $\mathrm{Reaches}$ as a countable union of decidable bounded predicates — a $\Sigma_1$ predicate. Verification is therefore always possible for numbers that *do* halt (search until a witness $b$ appears), but there is **no uniform bound** on $b$ as a function of $n$. The growth rate of the least such $b$ — equivalently of $\sigma(n)$ — is precisely the quantity that any completeness or independence argument must control. Numerical verification up to $2^{68}$ is exactly the assertion that a finite (input-dependent) bound suffices for all $n$ in that range; the conjecture is the assertion that a finite bound always suffices.
 
-**Theorem 2.12** (Equivalence). The Collatz conjecture is equivalent to ∀N, collatz_up_to(N).
+## 8. The min-plus stopping-time recurrence
 
-*This is the formal statement of the "proof barrier"*: while each bounded instance is decidable (by computation), the universal conjunction requires a *proof* — and that proof may not exist in any fixed formal system.
+We now identify the stopping time as a shortest-path function.
 
-## 3. Affine Encoding
+**Theorem 8.1 (Bellman / min-plus recurrence).** $\sigma(1) = 0$, and for every $n \neq 1$ that reaches $1$,
+$$
+\sigma(n) = 1 + \sigma\big(T(n)\big).
+$$
 
-### 3.1 Parity Words and Affine Maps
+*Proof.* $\sigma(1) = 0$ because $T^{(0)}(1) = 1$ and no smaller index exists. For $n \neq 1$: by Lemma 4.2, $T(n)$ reaches $1$, so $\sigma(T(n))$ is defined. We show $\sigma(n) = \sigma(T(n)) + 1$ by verifying the two defining properties of the least witness. First, $T^{(\sigma(T(n))+1)}(n) = T^{(\sigma(T(n)))}(T(n)) = 1$, so $\sigma(T(n))+1$ is a witness. Second, minimality: suppose $j < \sigma(T(n))+1$ with $T^{(j)}(n) = 1$. If $j = 0$ then $n = 1$, contradiction; so $j = i+1$ with $i < \sigma(T(n))$ and $T^{(i)}(T(n)) = T^{(i+1)}(n) = 1$, contradicting minimality of $\sigma(T(n))$. Hence $\sigma(n) = \sigma(T(n)) + 1$. $\qquad\blacksquare$
 
-**Definition 3.1** (Parity Word). A parity word w ∈ {true, false}* encodes the sequence of odd/even steps.
+**Tropical interpretation.** Work in the *min-plus semiring* $\mathbb{T} = (\mathbb{N} \cup \{\infty\}, \oplus, \otimes)$ where $a \oplus b = \min(a,b)$ and $a \otimes b = a + b$, with additive identity $\infty$ and multiplicative identity $0$. Model the positive integers as the vertex set of a directed graph $G$ with a single outgoing edge $n \to T(n)$ of weight $1$, and a distinguished terminal vertex $1$ with $\sigma(1) = 0$. The general shortest-path (Bellman) equation in $\mathbb{T}$ reads
+$$
+\sigma(n) = \bigoplus_{m : n \to m} \big(w(n,m) \otimes \sigma(m)\big),
+$$
+which, because $T$ is a function (a unique successor $m = T(n)$ of weight $1$), collapses to $\sigma(n) = 1 \otimes \sigma(T(n)) = 1 + \sigma(T(n))$ — exactly Theorem 8.1. Thus the Collatz total stopping time is the shortest-path (indeed unique-path) length to the sink $1$ in the tropical weighting of the orbit graph. Equivalently, $\sigma$ is a fixed point of the tropical Bellman operator $\Phi$ defined by $(\Phi f)(1) = 0$ and $(\Phi f)(n) = 1 + f(T(n))$; the Collatz conjecture is exactly the statement that this operator has a *total* (everywhere-finite) least fixed point on the positive integers.
 
-**Definition 3.2** (Multiplier and Offset).
-- multiplier([]) = 1, multiplier(true::w) = 3·multiplier(w), multiplier(false::w) = multiplier(w)/2
-- offset([]) = 0, offset(true::w) = 3·offset(w) + 1, offset(false::w) = offset(w)/2
+This reframing places Collatz within the well-developed theory of shortest paths and min-plus linear algebra, and it converts the conjecture from a statement about integer arithmetic into a statement about **global reachability of a sink in an infinite min-plus dynamical system.**
 
-**Definition 3.3** (Affine Image). affine_image(w, q) = multiplier(w)·q + offset(w).
+## 9. Algorithms
 
-### 3.2 Main Results
+We summarize the computational content extracted above.
 
-**Theorem 3.1** (Positivity). multiplier(w) > 0 for all w.
+**Algorithm A (Orbit / stopping time).** Given $n \ge 1$, iterate $T$, counting steps, until $1$ is reached. This computes $\sigma(n)$ and the full orbit. It terminates iff $\mathrm{Reaches}(n)$; by Theorem 7.2 there is no a priori step bound.
 
-**Theorem 3.2** (Injectivity). For fixed w, affine_image(w, ·) is injective.
+**Algorithm B (Bounded verifier).** Given $n$ and a budget $b$, iterate $T$ at most $b$ times and report whether $1$ was reached. This decides $\mathrm{ReachesWithin}(b, n)$ and always terminates. Range verification up to $N$ runs Algorithm B (with a generous $b$) for each $n \le N$.
 
-*Proof.* Since multiplier(w) > 0, the affine map q ↦ multiplier(w)·q + offset(w) is strictly monotone. □
+**Algorithm C (Tropical fixed-point sweep).** On a finite window $\{1, \dots, N\}$ closed appropriately under $T$, initialize $\sigma(1) = 0$ and $\sigma(n) = \infty$ otherwise, then repeatedly apply the tropical Bellman update $\sigma(n) \leftarrow \min(\sigma(n),\, 1 + \sigma(T(n)))$ until stabilization. This is Bellman–Ford specialized to the single-successor Collatz graph and recovers $\sigma$ on the window.
 
-**Theorem 3.3** (Composition Law). 
-- multiplier(w₁ ++ w₂) = multiplier(w₁) · multiplier(w₂)
-- offset(w₁ ++ w₂) = multiplier(w₁) · offset(w₂) + offset(w₁)
-- affine_image(w₁ ++ w₂, q) = affine_image(w₁, affine_image(w₂, q))
+## 10. Applications and connections
 
-*Proof.* All three by induction on w₁, using the recursive definitions and ring arithmetic. □
+- **Arithmetic dynamics.** The orbit-invariance theorem shows halting is a graph property, clarifying why accelerated maps share the same undecidability profile.
+- **Tropical geometry / optimization.** The stopping time is a genuine shortest-path function; techniques from min-plus linear algebra and dynamic programming apply directly to the finite-window problem (Algorithm C).
+- **Logic of provability.** The search decomposition (Theorem 7.2) isolates the growth of the certificate bound as the sole obstacle to a finite proof, which is the precise quantity relevant to any independence phenomenon.
 
-*PEGB for Theorem 3.3*:
-- **Proof**: Induction on w₁ with ring normalization.
-- **Example**: w₁ = [true], w₂ = [false]. multiplier([true,false]) = 3/2 = 3·(1/2) = multiplier([true])·multiplier([false]). offset([true,false]) = (3·0+1)/2 = 1/2. And 3·0 + 1 = 1 = multiplier([true])·offset([false]) + offset([true]) = 3·0 + 1. ✓
-- **Generalization**: This is an instance of a more general phenomenon: any piecewise-affine dynamical system has orbits describable by products of affine matrices, forming a *free semigroup action*.
-- **Boundary**: The encoding is exact for orbits following a *known* parity word. The difficulty is that the parity word is not known a priori — it depends on the starting value, creating a self-referential structure.
+## 11. Discussion: the independence question
 
-### 3.3 Connection to Linear Algebra
+It is often speculated that the Collatz conjecture might be independent of strong base theories — true in the standard model of arithmetic yet unprovable. The intuition is that a proof would require bounding the stopping time $\sigma(n)$ by a provably total function, and the extreme irregularity of $\sigma$ (Proposition 6.1) suggests such a bound, if it exists, may outgrow the provably total functions of weak arithmetic. We emphasize that **this paper asserts no such independence result.** What we *do* establish is the exact structural setting in which such a question lives: $\mathrm{Collatz}$ is $\Pi_2$; its refutation is a single $\Sigma_1$ witness (Theorem 7.1); and its positive content is a countable union of decidable facts with no uniform bound (Theorem 7.2). Any future independence argument must engage precisely this structure.
 
-The affine image can be represented as matrix multiplication:
+## 12. Future work
 
-$$\begin{pmatrix} n_k \\ 1 \end{pmatrix} = M_{w_{k-1}} \cdots M_{w_0} \begin{pmatrix} n_0 \\ 1 \end{pmatrix}$$
+- **Uniqueness of the tropical fixed point.** Upgrade Theorem 8.1 to show $\sigma$ is the *least* fixed point of the Bellman operator $\Phi$, and that $\Phi$ contracts in a natural graph metric on the halting set.
+- **Certificate-bound growth.** Investigate whether the least verification budget $b(N)$ (equivalently $\max_{n \le N} \sigma(n)$) can be bounded by any primitive-recursive function admitting a low-complexity proof.
+- **Accelerated map reduction.** Prove that the halting problems for $T$ and the odd-step map $n \mapsto (3n+1)/2$ are interreducible by stopping-time-preserving translations, transferring any structural phenomenon between them.
+- **Cycle exclusion.** Develop tropical/min-plus obstructions to nontrivial cycles, i.e. finite closed walks in the orbit graph avoiding the sink $1$.
 
-where $M_{\text{true}} = \begin{pmatrix} 3 & 1 \\ 0 & 1 \end{pmatrix}$ and $M_{\text{false}} = \begin{pmatrix} 1/2 & 0 \\ 0 & 1 \end{pmatrix}$.
+## 13. Conclusion
 
-The Collatz conjecture becomes: for every n ∈ ℕ⁺, there exists a word w such that multiplier(w)·n + offset(w) = 1.
-
-## 4. Abstract Proof Barriers
-
-### 4.1 Framework
-
-**Definition 4.1** (Formal System). A pair (provable, sound) where:
-- provable : (ℕ → Prop) → Prop assigns "provability" to predicates
-- sound : provable(P) → ∀n, P(n) ensures soundness
-
-**Definition 4.2** (Π₂⁰ Statement). A statement ∀n.∃k.R(n,k) with R decidable.
-
-**Definition 4.3** (Witness Function). For a true Π₂⁰ statement with ∀n.∃k.R(n,k), the witness function w(n) = min{k : R(n,k)}.
-
-### 4.2 Main Barrier Theorem
-
-**Theorem 4.1** (Abstract Proof Barrier). Let F be a formal system and S a true Π₂⁰ statement. If for every function f such that F proves "∀n.∃k ≤ f(n).R(n,k)", there exists n₀ with w(n) > f(n) for all n ≥ n₀, then F cannot prove "∀n.∃k.R(n,k)".
-
-*Proof.* By contraposition. If the system could bound the witness with the witness function itself, then the hypothesis would require the witness to eventually exceed itself — a contradiction. □
-
-*PEGB for Theorem 4.1*:
-- **Proof**: Contrapositive argument using the witness function as the bounding function.
-- **Example**: Goodstein's theorem is a Π₂⁰ statement true in ℕ but unprovable in PA, with witness function growing faster than any PA-provable function.
-- **Generalization**: The framework applies to any formal system satisfying the soundness and bounded completeness axioms — not just PA.
-- **Boundary**: The theorem requires the formal system to have a notion of "provably total function." Systems without this (e.g., full second-order arithmetic) may prove statements that PA cannot.
-
-### 4.3 Additional Results
-
-**Theorem 4.2** (Consecutive Halvings). For odd n ≥ 1, the first j+1 iterates of T starting from 3n+1 are halvings for j < ν₂(3n+1), where ν₂ is the 2-adic valuation.
-
-**Theorem 4.3** (Logarithmic Descent). For even n ≥ 2, log₂(T(n)) < log₂(n).
-
-## 5. Algorithms
-
-### 5.1 Orbit Computation
-
-```
-function collatz_orbit(n):
-    orbit = [n]
-    while n ≠ 1:
-        if n is even: n = n / 2
-        else: n = 3n + 1
-        orbit.append(n)
-    return orbit
-```
-
-### 5.2 Parity Encoding
-
-```
-function parity_encode(n, k):
-    word = []
-    for i in range(k):
-        word.append(n % 2 == 1)
-        n = T(n)
-    return word
-
-function affine_decode(word):
-    mult = 1, off = 0
-    for b in word:
-        if b: mult *= 3, off = 3*off + 1
-        else: mult /= 2, off /= 2
-    return (mult, off)
-```
-
-## 6. Discussion
-
-### 6.1 Structural Implications
-
-The tree structure of Collatz orbits (Theorem 2.1) constrains the topology of the Collatz graph: it is an arborescence (rooted directed tree) with root at the 1→4→2→1 cycle. Combined with the inverse preimage classification (Theorem 2.4), this gives a complete local description of the graph: each node n has exactly one descendant T(n), one even ancestor 2n, and at most one odd ancestor (n-1)/3 (when n ≡ 4 mod 6).
-
-### 6.2 The Affine Encoding Bridge
-
-The affine encoding (Section 3) bridges Collatz dynamics and linear algebra. The composition law shows that the Collatz semigroup — the semigroup generated by the two affine maps — acts on ℚ. The Collatz conjecture becomes a question about the *orbit* of each positive integer under this semigroup action reaching a specific point.
-
-This connects to the theory of *iterated function systems* (IFS) in dynamical systems, where the long-term behavior of random compositions of affine maps is well-studied. The Collatz map is an IFS where the choice of map at each step is determined by the current value rather than being random.
-
-### 6.3 Independence and the Fast-Growing Hierarchy
-
-The proof barrier framework (Theorem 4.1) does not prove that the Collatz conjecture is independent of PA. It formalizes the *mechanism* by which such independence would manifest: through the witness function outgrowing the provably total functions. Whether this actually occurs for Collatz remains open.
-
-However, the framework gives a precise target: to establish independence, one would need to show that the Collatz stopping time function eventually dominates every PA-provable function. This is equivalent to showing that the stopping time function grows faster than the fast-growing hierarchy at level ε₀.
-
-## 7. Future Work
-
-1. Extend the cycle analysis beyond 2-cycles to arbitrary cycle lengths.
-2. Formalize the connection between parity words and Diophantine equations.
-3. Investigate whether the Collatz stopping time function grows at the rate of specific ordinal-indexed functions in the fast-growing hierarchy.
-4. Explore tropical and p-adic approaches to the Collatz map using the affine encoding.
-
-## References
-
-1. L. Collatz, "On the motivation and origin of the 3n+1 problem," 1937.
-2. T. Tao, "Almost all orbits of the Collatz map attain almost bounded values," *Forum of Mathematics, Pi*, 2022.
-3. S. Eliahou, "The 3x+1 problem: new lower bounds on nontrivial cycle lengths," *Discrete Mathematics*, 1993.
-4. K. Gödel, "Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I," 1931.
-5. J.H. Conway, "Unpredictable iterations," *Proceedings of the Number Theory Conference*, 1972.
-6. R. Goodstein, "On the restricted ordinal theorem," *Journal of Symbolic Logic*, 1944.
+From a rule expressible in a single sentence we have extracted a rigorous elementary theory: the exact stopping time of powers of two, the orbit-invariance of halting, the single-witness form of any refutation, the decomposition of halting into decidable bounded searches, and a tropical Bellman recurrence identifying the stopping time as a shortest-path function. Together these results do not solve the Collatz conjecture, but they locate its difficulty with precision — in the uncontrolled growth of a certificate bound — and they connect the problem to tropical dynamics and the logic of provability. The conjecture remains open; its structure, at least, is now sharply drawn.
