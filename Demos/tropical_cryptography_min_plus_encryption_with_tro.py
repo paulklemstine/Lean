@@ -1,177 +1,214 @@
 """
-Tropical (min-plus) cryptanalysis: numerical demonstrations.
+Tropical Cryptography: Min-Plus Matrix Powers, Shortest Walks, and the
+Eigenvalue Attack on the Tropical Discrete Logarithm Problem.
 
-This self-contained script demonstrates the results of the accompanying paper
-"Tropical Spectral Cryptanalysis and Strong Divisibility":
+This self-contained script demonstrates the two central results:
 
-  1. Tropical (min-plus) matrix algebra and matrix powering by repeated squaring.
-  2. The eigenvalue side channel: res(A^{otimes t}, v)_i = t * lambda  (Theorem 4.1).
-  3. The deterministic TDLP break: recover the secret exponent t (Corollary 4.2).
-  4. The silent regime lambda = 0: no leak (Theorem 4.3).
-  5. The strong-divisibility leak: (m+1)|(k+1) <=> c(m+1)|c(k+1)  (Theorem 5.3).
-  6. The Diffie-Hellman shared-key eigenvalue factorization (Theorem 6.1).
+  1. Walk-sum identity (tropical case): the (i, j) entry of the k-th tropical
+     matrix power equals the minimum total weight of a k-step walk from i to j.
+     We verify this by comparing the algebraic matrix power against a brute-force
+     enumeration of all length-k walks.
 
-All arithmetic is done over the integers/rationals so the demonstrations are exact.
+  2. Additivity of tropical eigenvalues under powering: lambda(A^{otimes k})
+     = k * lambda(A). We verify it numerically via the minimum cycle mean and
+     then run the eigenvalue attack that recovers the secret exponent k from
+     (A, A^{otimes k}), thereby breaking the tropical Diffie-Hellman scheme.
+
+Tropical arithmetic:  x (+) y = min(x, y),   x (*) y = x + y,
+with tropical zero = +infinity and tropical one = 0.
+
 Run:  python demo.py
 """
 
 from __future__ import annotations
 
-from math import gcd, inf
-from typing import List, Sequence
+import itertools
+import math
+from fractions import Fraction
+from typing import List, Sequence, Tuple
 
+INF: float = math.inf
 Matrix = List[List[float]]
 Vector = List[float]
 
 
 # --------------------------------------------------------------------------- #
-# 1. Tropical (min-plus) algebra
+# Core tropical linear algebra                                                 #
 # --------------------------------------------------------------------------- #
-def trop_mat_mul(A: Matrix, B: Matrix) -> Matrix:
-    """Min-plus matrix product: (A (x) B)_{ij} = min_k (A_{ik} + B_{kj})."""
-    n = len(A)
-    return [[min(A[i][k] + B[k][j] for k in range(n)) for j in range(n)] for i in range(n)]
+def trop_matmul(a: Matrix, b: Matrix) -> Matrix:
+    """Tropical (min-plus) matrix product: (A (*) B)_{ij} = min_l (A_il + B_lj)."""
+    n, m, p = len(a), len(b), len(b[0])
+    out: Matrix = [[INF] * p for _ in range(n)]
+    for i in range(n):
+        for j in range(p):
+            best = INF
+            for l in range(m):
+                cand = a[i][l] + b[l][j]
+                if cand < best:
+                    best = cand
+            out[i][j] = best
+    return out
 
 
-def trop_mat_vec(A: Matrix, v: Vector) -> Vector:
-    """Min-plus matrix-vector product: (A (x) v)_i = min_k (A_{ik} + v_k)."""
-    n = len(A)
-    return [min(A[i][k] + v[k] for k in range(n)) for i in range(n)]
+def trop_identity(n: int) -> Matrix:
+    """Tropical identity: 0 on the diagonal, +infinity off-diagonal."""
+    return [[0.0 if i == j else INF for j in range(n)] for i in range(n)]
 
 
-def trop_mat_pow(A: Matrix, k: int) -> Matrix:
-    """Field-friendly tropical power: returns A^{(x)(k+1)} (the genuine (k+1)-fold product).
-
-    Computed by repeated tropical squaring in O(n^3 log k) tropical operations.
-    """
-    if k < 0:
-        raise ValueError("k must be >= 0")
-    # genuine exponent t = k + 1
-    t = k + 1
-    result: Matrix | None = None
-    base = [row[:] for row in A]
-    while t > 0:
-        if t & 1:
-            result = base if result is None else trop_mat_mul(result, base)
-        t >>= 1
-        if t > 0:
-            base = trop_mat_mul(base, base)
-    assert result is not None
+def trop_matpow(a: Matrix, k: int) -> Matrix:
+    """Tropical k-th power A^{otimes k} by repeated squaring: O(n^3 log k)."""
+    n = len(a)
+    result = trop_identity(n)
+    base = [row[:] for row in a]
+    e = k
+    while e > 0:
+        if e & 1:
+            result = trop_matmul(result, base)
+        base = trop_matmul(base, base)
+        e >>= 1
     return result
 
 
-def trop_residual(A: Matrix, v: Vector) -> Vector:
-    """Per-coordinate residual res(A, v)_i = (A (x) v)_i - v_i."""
-    Av = trop_mat_vec(A, v)
-    return [Av[i] - v[i] for i in range(len(v))]
+def trop_matvec(a: Matrix, v: Vector) -> Vector:
+    """Tropical matrix-vector product: (A (*) v)_i = min_j (A_ij + v_j)."""
+    n, m = len(a), len(v)
+    return [min(a[i][j] + v[j] for j in range(m)) for i in range(n)]
 
 
 # --------------------------------------------------------------------------- #
-# 2. A matrix with a known integer tropical eigenpair (lambda, v)
+# 1. Walk-sum identity (brute-force verification)                             #
 # --------------------------------------------------------------------------- #
-def eigen_matrix(v: Vector, lam: float) -> Matrix:
-    """Construct A with eigenpair (lam, v): set A_{ij} = v_i - v_j + lam.
+def shortest_kstep_walk(a: Matrix, k: int, i: int, j: int) -> float:
+    """Minimum total weight over all length-k walks i -> j, by brute force."""
+    n = len(a)
+    best = INF
+    for interior in itertools.product(range(n), repeat=max(k - 1, 0)):
+        path: Tuple[int, ...] = (i,) + interior + (j,) if k >= 1 else (i,)
+        if k == 0:
+            weight = 0.0 if i == j else INF
+        else:
+            weight = sum(a[path[t]][path[t + 1]] for t in range(k))
+        best = min(best, weight)
+    return best
 
-    Then (A (x) v)_i = min_j (A_{ij} + v_j) = min_j (v_i + lam) = v_i + lam,
-    so (lam, v) is a tropical eigenpair exactly.
+
+def verify_walk_sum_identity(a: Matrix, k: int) -> bool:
+    """Check (A^{otimes k})_{ij} == shortest k-step walk weight for all i, j."""
+    n = len(a)
+    powered = trop_matpow(a, k)
+    ok = True
+    for i in range(n):
+        for j in range(n):
+            algebraic = powered[i][j]
+            combinatorial = shortest_kstep_walk(a, k, i, j)
+            if not (algebraic == combinatorial or
+                    (math.isinf(algebraic) and math.isinf(combinatorial))):
+                ok = False
+    return ok
+
+
+# --------------------------------------------------------------------------- #
+# 2. Minimum cycle mean (the tropical eigenvalue) via Karp's algorithm        #
+# --------------------------------------------------------------------------- #
+def min_cycle_mean(a: Matrix) -> Fraction | None:
     """
-    n = len(v)
-    return [[v[i] - v[j] + lam for j in range(n)] for i in range(n)]
-
-
-# --------------------------------------------------------------------------- #
-# 3. The strong divisibility sequence tropEigSeq(c): a(t) = c * t
-# --------------------------------------------------------------------------- #
-def trop_eig_seq(c: int, t: int) -> int:
-    """tropEigSeq(c) evaluated at genuine exponent t: a(t) = c * t."""
-    return c * t
-
-
-def is_strong_divisibility(c: int, bound: int = 12) -> bool:
-    """Check gcd(a(m), a(n)) = a(gcd(m, n)) for a(t) = c*t over a finite range."""
-    for m in range(bound):
-        for n in range(bound):
-            if gcd(trop_eig_seq(c, m), trop_eig_seq(c, n)) != trop_eig_seq(c, gcd(m, n)):
-                return False
-    return True
-
-
-# --------------------------------------------------------------------------- #
-# 4. The TDLP attack: recover secret exponent from the eigenvalue residual
-# --------------------------------------------------------------------------- #
-def recover_exponent(A: Matrix, B: Matrix, v: Vector, lam: float) -> int:
-    """Recover the secret genuine exponent t from B = A^{(x)t}, given eigenpair (lam, v).
-
-    Uses res(B, v)_0 = t * lam  =>  t = res / lam.  Requires lam != 0.
+    Karp's minimum cycle mean = the tropical eigenvalue lambda(A).
+    Returns None if the graph has no cycle reachable from the source.
     """
-    if lam == 0:
-        raise ValueError("eigenvalue is 0: no leak (silent regime)")
-    r = trop_residual(B, v)[0]
-    return round(r / lam)
+    n = len(a)
+    if n == 0:
+        return None
+    # d[t][v] = min weight of a length-t walk from source 0 to v.
+    NEG = None
+    d: List[List[Fraction | None]] = [[NEG] * n for _ in range(n + 1)]
+    d[0][0] = Fraction(0)
+    for t in range(1, n + 1):
+        for v in range(n):
+            best: Fraction | None = None
+            for u in range(n):
+                if d[t - 1][u] is not None and not math.isinf(a[u][v]):
+                    cand = d[t - 1][u] + Fraction(int(a[u][v]))
+                    if best is None or cand < best:
+                        best = cand
+            d[t][v] = best
+    lam: Fraction | None = None
+    for v in range(n):
+        if d[n][v] is None:
+            continue
+        worst: Fraction | None = None
+        for t in range(n):
+            if d[t][v] is not None:
+                val = Fraction(d[n][v] - d[t][v], n - t)
+                if worst is None or val > worst:
+                    worst = val
+        if worst is not None and (lam is None or worst < lam):
+            lam = worst
+    return lam
 
 
 # --------------------------------------------------------------------------- #
-# Demonstrations
+# 3. The eigenvalue attack on the tropical discrete logarithm problem         #
 # --------------------------------------------------------------------------- #
-def demo() -> None:
+def eigenvalue_attack(a: Matrix, b: Matrix) -> int | None:
+    """
+    Recover k from (A, B = A^{otimes k}) using lambda(B) = k * lambda(A).
+    Returns None if lambda(A) is zero/undefined (attack does not apply).
+    """
+    lam_a = min_cycle_mean(a)
+    lam_b = min_cycle_mean(b)
+    if lam_a is None or lam_a == 0 or lam_b is None:
+        return None
+    ratio = lam_b / lam_a
+    if ratio.denominator == 1:
+        return int(ratio)
+    return None
+
+
+# --------------------------------------------------------------------------- #
+# Demonstration                                                                #
+# --------------------------------------------------------------------------- #
+def main() -> None:
     print("=" * 70)
-    print("Tropical Spectral Cryptanalysis -- numerical demonstrations")
+    print("Tropical Cryptography Demonstration")
     print("=" * 70)
 
-    v: Vector = [0.0, 2.0, 5.0, 1.0]
-    lam = 3.0
-    A = eigen_matrix(v, lam)
+    A: Matrix = [
+        [4.0, 1.0, INF],
+        [INF, 3.0, 2.0],
+        [1.0, INF, 5.0],
+    ]
 
-    print("\n[Setup] eigenvector v =", v, " eigenvalue lambda =", lam)
-    print("Residual of A at v (should be lambda at every coordinate):")
-    print("   ", trop_residual(A, v))
+    print("\nPublic tropical matrix A (INF = no edge):")
+    for row in A:
+        print("  ", ["inf" if math.isinf(x) else int(x) for x in row])
 
-    print("\n[Theorem 4.1] res(A^{(x)t}, v)_i = t * lambda for genuine exponent t:")
-    for k in range(6):
-        B = trop_mat_pow(A, k)
-        r = trop_residual(B, v)
-        t = k + 1
-        print(f"   t = {t}: residual = {r}  (expected {t * lam} everywhere)")
+    # --- Result 1: walk-sum / shortest-walk identity -----------------------
+    print("\n[1] Walk-sum identity  (A^{otimes k})_{ij} = shortest k-step walk")
+    for k in range(0, 5):
+        ok = verify_walk_sum_identity(A, k)
+        print(f"    k = {k}: matrix power matches brute-force shortest walk -> {ok}")
 
-    print("\n[Corollary 4.2] The TDLP break -- recover a secret exponent:")
-    secret_k = 41  # secret index; genuine exponent t = 42
-    B = trop_mat_pow(A, secret_k)
-    recovered = recover_exponent(A, B, v, lam)
-    print(f"   secret genuine exponent t = {secret_k + 1}")
-    print(f"   recovered from public (A, A^(x)t) and (lambda, v): t = {recovered}")
-    assert recovered == secret_k + 1
+    # --- Result 2: eigenvalue additivity -----------------------------------
+    print("\n[2] Tropical eigenvalue additivity  lambda(A^{otimes k}) = k*lambda(A)")
+    lam_A = min_cycle_mean(A)
+    print(f"    lambda(A) = {lam_A}")
+    for k in range(1, 6):
+        lam_Ak = min_cycle_mean(trop_matpow(A, k))
+        expected = None if lam_A is None else k * lam_A
+        print(f"    k = {k}: lambda(A^k) = {lam_Ak}, k*lambda(A) = {expected}, "
+              f"match -> {lam_Ak == expected}")
 
-    print("\n[Theorem 4.3] The silent regime lambda = 0 leaks nothing:")
-    v0: Vector = [0.0, 1.0, 4.0]
-    A0 = eigen_matrix(v0, 0.0)
-    for k in range(4):
-        B0 = trop_mat_pow(A0, k)
-        print(f"   t = {k + 1}: residual = {trop_residual(B0, v0)} (identically 0)")
+    # --- Result 3: breaking tropical Diffie-Hellman ------------------------
+    print("\n[3] Eigenvalue attack on the tropical discrete logarithm problem")
+    for secret_k in (7, 13, 100, 1000):
+        B = trop_matpow(A, secret_k)
+        recovered = eigenvalue_attack(A, B)
+        status = "BROKEN" if recovered == secret_k else "failed"
+        print(f"    secret k = {secret_k:5d}  ->  recovered k = {recovered}  [{status}]")
 
-    print("\n[Theorem 5.1] tropEigSeq(c): a(t) = c*t is a strong divisibility sequence:")
-    for c in (1, 3, 7):
-        print(f"   c = {c}: gcd(a(m),a(n)) = a(gcd(m,n)) holds -> {is_strong_divisibility(c)}")
-
-    print("\n[Theorem 5.3] Divisibility leak: (m+1)|(k+1) <=> c(m+1) | c(k+1):")
-    c = 3
-    for (m, k) in [(2, 8), (3, 8), (1, 11), (4, 9)]:
-        secret_dvd = (m + 1) % (k + 1) == 0 or (k + 1) % (m + 1) == 0
-        exp_dvd = (k + 1) % (m + 1) == 0
-        eig_dvd = trop_eig_seq(c, k + 1) % trop_eig_seq(c, m + 1) == 0
-        print(
-            f"   (m+1)={m+1}, (k+1)={k+1}: (m+1)|(k+1)={exp_dvd}, "
-            f"a(m+1)|a(k+1)={eig_dvd}  -> equivalent: {exp_dvd == eig_dvd}"
-        )
-
-    print("\n[Theorem 6.1] DH shared-key eigenvalue factorizes through public data:")
-    print("   c * eig(shared) = eig(pub_a) * eig(pub_b)")
-    for (a, b) in [(2, 3), (5, 4), (7, 6)]:
-        lhs = c * trop_eig_seq(c, (a + 1) * (b + 1))
-        rhs = trop_eig_seq(c, a + 1) * trop_eig_seq(c, b + 1)
-        print(f"   a={a}, b={b}: lhs={lhs}, rhs={rhs}  -> equal: {lhs == rhs}")
-
-    print("\nAll demonstrations completed successfully.")
+    print("\nConclusion: the tropical eigenvalue leaks the secret exponent,")
+    print("so raw min-plus matrix powering is not a one-way function.")
 
 
 if __name__ == "__main__":
-    demo()
+    main()

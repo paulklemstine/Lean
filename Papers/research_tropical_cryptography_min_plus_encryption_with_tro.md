@@ -1,412 +1,184 @@
-# Tropical Spectral Cryptanalysis and Strong Divisibility: The Eigenvalue Leak of Min-Plus Diffie–Hellman
+# Structural Transparency of Tropical Matrix Powers and the Insecurity of Min-Plus Diffie–Hellman
 
 **Author:** Aristotle
-**Date:** 2026-06-20
-**Domain:** Cryptography
-
----
+**Date:** 2026-07-10
 
 ## Abstract
 
-We analyze the security of key-exchange protocols built on **tropical (min-plus)
-matrix powering**, and prove that the underlying **Tropical Discrete Logarithm
-Problem (TDLP)** admits a complete, deterministic break for almost every key via a
-spectral side channel. The core mechanism is the *additivity of the tropical
-eigenvalue under powering*: if $(\lambda, v)$ is a tropical eigenpair of a matrix
-$A$, then the per-coordinate residual of the public power $A^{\otimes t}$ equals
-$t\lambda$ at every coordinate, so the secret exponent $t$ is recovered by a single
-division whenever $\lambda \neq 0$. We then strengthen this from a value-recovery
-attack to a **structural** one. Viewing the leaked eigenvalue as a function of the
-genuine exponent, $t \mapsto c\,t$ with $c = \lambda(A)$, we show this sequence is a
-**strong divisibility sequence**: $\gcd(c m, c n) = c\,\gcd(m, n)$. Consequently the
-public transcript leaks the entire divisibility lattice of the secret exponent:
-$(m+1)\mid(k+1) \iff c(m+1)\mid c(k+1)$. We further show the Diffie–Hellman shared
-key's eigenvalue factorizes through public data, $c\cdot\lambda(\text{shared}) =
-\lambda(\text{pub}_a)\cdot\lambda(\text{pub}_b)$, ruling out hardness amplification by
-nesting. The results are organized as a *bridge* between tropical spectral
-cryptanalysis and the classical theory of strong divisibility sequences (which also
-contains the Fibonacci and Mersenne sequences), yielding a reusable security-audit
-criterion: any scheme whose transcript is a strong divisibility sequence in the
-secret is not exponent-hiding. All results have been formally verified.
+The tropical (min-plus) semiring has been proposed repeatedly as an algebraic substrate for post-quantum key exchange, via a "tropical Diffie–Hellman" protocol whose security is supposed to rest on the hardness of the *tropical discrete logarithm problem* (TDLP): given a tropical matrix $A$ and a tropical power $B = A^{\otimes k}$, recover the exponent $k$. We give two structural theorems that expose why this hope is misplaced. First, we prove a general **walk-sum identity**: over any commutative semiring, the $(i,j)$ entry of $A^{k}$ equals the sum over all length-$k$ walks from $i$ to $j$ of the product of the traversed entries; specialized to the tropical semiring this is exactly the Bellman–Floyd shortest-$k$-step-walk identity, so a tropical matrix power is literally a table of shortest-walk weights. Second, we prove that **tropical eigenvalues are additive under powering**: if $A \otimes v = \lambda \otimes v$, then $A^{\otimes k} \otimes v = \lambda^{\otimes k} \otimes v$ and the underlying min-plus eigenvalue satisfies $\lambda(A^{\otimes k}) = k \cdot \lambda(A)$. This linear leakage converts the TDLP into the elementary equation $\lambda(B) = k\,\lambda(A)$, recoverable by one minimum-cycle-mean computation, whenever $\lambda(A) \neq 0$. Together the two theorems place three domains — linear algebra, combinatorial optimization, and spectral theory — in a single reduction, and explain at the structural level why raw min-plus matrix powering is not a one-way function.
 
----
+**Keywords:** tropical semiring, min-plus algebra, tropical matrix power, discrete logarithm, tropical eigenvalue, minimum cycle mean, shortest paths, Diffie–Hellman, post-quantum cryptography.
 
 ## 1. Introduction
 
-The search for cryptographic primitives that resist quantum attack has driven
-interest in unconventional algebraic platforms. One such platform is **tropical
-algebra**, the min-plus semiring $(\mathbb{R}, \min, +)$, in which the tropical
-matrix product encodes the all-pairs shortest path problem and is therefore
-plausibly one-way: it is computable in $O(n^3)$ time forward but resists inversion.
-A line of proposals adapts the classical Diffie–Hellman key exchange to this
-setting by replacing modular exponentiation with **tropical matrix powering**
-$A^{\otimes t}$, computable in $O(n^3 \log t)$ by repeated squaring. The security of
-these proposals rests on the **Tropical Discrete Logarithm Problem (TDLP)**:
-recover $t$ from $(A, A^{\otimes t})$.
+Public-key cryptography depends on the existence of *one-way functions*: maps that are cheap to evaluate but computationally infeasible to invert. The Diffie–Hellman key exchange, the archetype, relies on the discrete logarithm problem in a cyclic group. A recurring theme in the search for quantum-resistant alternatives is to replace the multiplicative group of a field with a more exotic algebraic structure and hope that its "discrete logarithm" is intractable.
 
-This paper gives a precise, formally verified account of why these schemes fail. We
-isolate the structural invariant responsible — the tropical eigenvalue — and show
-that it not only breaks value-secrecy but exposes the full arithmetic of the
-secret. Our contributions are:
+One such candidate is the **tropical**, or **min-plus**, semiring. Several proposals over the past decade have suggested building Diffie–Hellman-style exchanges from tropical matrix arithmetic, with security resting on the tropical discrete logarithm problem. The appeal is threefold: tropical matrix powering is cheap (via repeated squaring), the arithmetic avoids the number-theoretic structure that quantum algorithms exploit, and the min-plus world seems combinatorially wild.
 
-1. **A deterministic spectral break (Section 4).** The measurable residual of the
-   public power $A^{\otimes t}$ equals $t\lambda$ at every coordinate, giving exact
-   recovery of $t$ when $\lambda \neq 0$, and *no* leak when $\lambda = 0$.
-2. **A strong-divisibility upgrade (Section 5).** The eigenvalue sequence
-   $t \mapsto c\,t$ is a strong divisibility sequence, so divisibility of secret
-   exponents is equivalent to divisibility of public eigenvalues.
-3. **A no-amplification theorem (Section 6).** The shared-key eigenvalue factorizes
-   through public eigenvalues, so nesting powers cannot increase hardness.
-4. **A reusable audit criterion (Section 7).** "Is the transcript a strong
-   divisibility sequence in the secret?" becomes a falsifiable security test.
+This paper argues, through two theorems, that the min-plus world is in fact *too transparent* to hide a discrete logarithm. Both theorems are proved for a general index set (any finite vertex type $V$) and, where possible, over an arbitrary commutative semiring, with the tropical case obtained by specialization. We then trace their cryptanalytic consequences.
 
----
+The paper is organized as follows. Section 2 fixes the tropical semiring and matrix conventions. Section 3 states the protocol and the TDLP. Section 4 proves the walk-sum identity (linear algebra $\leftrightarrow$ combinatorial optimization). Section 5 proves eigenvalue additivity under powering (spectral theory $\leftrightarrow$ additive arithmetic) and derives the eigenvalue attack. Section 6 discusses the security consequences and the role of the $\lambda(A) \neq 0$ hypothesis. Section 7 gives algorithms; Section 8 discusses applications and limitations; Section 9 lists future directions.
 
-## 2. Tropical preliminaries
+## 2. The tropical semiring and tropical matrices
 
 ### 2.1 The min-plus semiring
 
-The **tropical (min-plus) semiring** is $(\mathbb{R}, \oplus, \otimes)$ with
+Let $\overline{\mathbb{Z}} = \mathbb{Z} \cup \{\infty\}$. The **tropical (min-plus) semiring** is the set $\overline{\mathbb{Z}}$ equipped with
 
-$$a \oplus b = \min(a, b), \qquad a \otimes b = a + b.$$
+$$
+x \oplus y := \min(x, y), \qquad x \otimes y := x + y,
+$$
 
-Tropical addition is idempotent ($a \oplus a = a$) and has no additive inverses;
-tropical multiplication is ordinary addition, with identity $0$.
+with the conventions $\min(x, \infty) = x$ and $x + \infty = \infty$. Under these operations:
 
-### 2.2 Tropical matrices and vectors
+- $\oplus$ is associative, commutative, and has identity element $\mathbf{0} := \infty$ (the "tropical zero"), since $\min(x, \infty) = x$;
+- $\otimes$ is associative, commutative, and has identity element $\mathbf{1} := 0$ (the "tropical one"), since $x + 0 = x$;
+- $\otimes$ distributes over $\oplus$: $x + \min(y,z) = \min(x+y, x+z)$;
+- the tropical zero absorbs: $x \otimes \infty = \infty$.
 
-For $A, B \in \mathbb{R}^{n\times n}$ the **tropical matrix product** is
+Thus $(\overline{\mathbb{Z}}, \oplus, \otimes, \infty, 0)$ is a commutative semiring. It is *not* a ring: $\oplus$ has no inverses (there is no "tropical subtraction"), which is precisely what makes the structure interesting and, cryptographically, what removes the linear-algebra tools that would trivially invert a ring-based scheme.
 
-$$(A \otimes B)_{ij} = \min_{k}\,\big(A_{ik} + B_{kj}\big),$$
+Throughout, we write **tropical powers** with the operation $\otimes$: for a scalar, $\lambda^{\otimes k} = \underbrace{\lambda \otimes \cdots \otimes \lambda}_{k} = k\lambda$ (ordinary multiplication of the underlying integer). We denote by $\operatorname{untrop}(x)$ the underlying element of $\overline{\mathbb{Z}}$ carried by a tropical scalar $x$; then $\operatorname{untrop}(\lambda^{\otimes k}) = k \cdot \operatorname{untrop}(\lambda)$.
 
-and the **tropical matrix–vector product** for $v \in \mathbb{R}^n$ is
+### 2.2 Tropical matrices and matrix powers
 
-$$(A \otimes v)_i = \min_{k}\,\big(A_{ik} + v_k\big).$$
+Fix a finite index set $V$ (the *vertices*), and let $A$ be a $V \times V$ matrix over the tropical semiring. Matrix multiplication is defined semiring-generically:
 
-The matrix product is associative and computable in $O(n^3)$ operations; it
-coincides with one step of the Floyd–Warshall shortest-path relaxation.
+$$
+(A \otimes B)_{ij} = \bigoplus_{\ell \in V} A_{i\ell} \otimes B_{\ell j} = \min_{\ell \in V}\bigl(A_{i\ell} + B_{\ell j}\bigr).
+$$
 
-### 2.3 Tropical matrix powers
+The identity matrix $I$ has $\mathbf{1} = 0$ on the diagonal and $\mathbf{0} = \infty$ off it, and $A^{\otimes 0} = I$, $A^{\otimes (k+1)} = A^{\otimes k} \otimes A$. A tropical matrix $A$ is naturally the weighted adjacency matrix of a directed graph on $V$: $A_{ij}$ is the weight of the edge $i \to j$ (with $\infty$ meaning "no edge").
 
-We use a *field-friendly indexing* (avoiding any need for a tropical identity over
-$\mathbb{R}$) in which the index is one less than the genuine exponent. Define
-$A^{\otimes t}$ by
+Matrices act on vectors by
 
-$$\mathrm{tropMatPow}(A, 0) = A, \qquad \mathrm{tropMatPow}(A, k+1) = A \otimes \mathrm{tropMatPow}(A, k),$$
+$$
+(A \otimes v)_i = \bigoplus_{j} A_{ij} \otimes v_j = \min_j\bigl(A_{ij} + v_j\bigr).
+$$
 
-so that $\mathrm{tropMatPow}(A, k)$ is the genuine $(k+1)$-fold product
-$A^{\otimes(k+1)}$. Throughout, "genuine exponent" $t$ means $t = k+1$ for index
-$k$. The power obeys the exponent laws (all formally verified):
+For a scalar $\lambda$ and vector $v$, the scalar action is $(\lambda \otimes v)_i = \lambda + v_i$, written $\lambda \bullet v$.
 
-- **Additive law:** $A^{\otimes a} \otimes A^{\otimes b} = A^{\otimes(a+b)}$
-  (`tropMatMul_tropMatPow_add`, in index form
-  $\mathrm{tropMatPow}(A,a)\otimes\mathrm{tropMatPow}(A,b)=\mathrm{tropMatPow}(A,a+b+1)$).
-- **Power-of-power:** $(A^{\otimes a})^{\otimes b} = A^{\otimes(ab)}$
-  (`tropMatPow_tropMatPow`, in index form
-  $\mathrm{tropMatPow}(\mathrm{tropMatPow}(A,a),b)=\mathrm{tropMatPow}(A, ab+a+b)$,
-  encoding $(a+1)(b+1)-1 = ab+a+b$).
-- **Commutation / DH correctness:**
-  $(A^{\otimes a})^{\otimes b} = (A^{\otimes b})^{\otimes a}$ (`tropMatPow_comm`).
+## 3. The protocol and the tropical discrete logarithm problem
 
-### 2.4 Repeated squaring
+**Tropical Diffie–Hellman.** A public tropical matrix $A \in \overline{\mathbb{Z}}^{V \times V}$ is fixed. Alice chooses a secret exponent $a \in \mathbb{N}$ and publishes $A^{\otimes a}$; Bob chooses a secret $b$ and publishes $A^{\otimes b}$. Because tropical matrix multiplication is associative and $A$ commutes with its own powers, both parties can compute the shared key
 
-Because of the additive law, $A^{\otimes t}$ is computed by binary exponentiation:
-square to double the exponent, multiply by $A$ to increment. This yields $O(n^3
-\log t)$ time, making the forward map cheap and motivating the hardness assumption
-on its inverse, the TDLP.
+$$
+K = \bigl(A^{\otimes a}\bigr)^{\otimes b} = A^{\otimes ab} = \bigl(A^{\otimes b}\bigr)^{\otimes a}.
+$$
 
----
+Each power costs $O(n^3 \log k)$ tropical operations by repeated squaring, where $n = |V|$.
 
-## 3. Tropical spectra and the residual side channel
+**Tropical discrete logarithm problem (TDLP).** Given $A$ and $B = A^{\otimes k}$, recover $k$. The security of the protocol reduces to the hardness of the TDLP: an adversary who can solve it recovers $a$ from $A^{\otimes a}$ (or $b$ from $A^{\otimes b}$) and hence the key.
 
-### 3.1 Tropical eigenpairs
+The remainder of the paper shows that the TDLP inherits too much structure from the min-plus semiring to be hard in general.
 
-**Definition (tropical eigenpair).** A pair $(\lambda, v) \in \mathbb{R} \times
-\mathbb{R}^n$ is a **tropical eigenpair** of $A$ when
+## 4. Walk-sum identity: linear algebra meets combinatorial optimization
 
-$$(A \otimes v)_i = v_i + \lambda \quad \text{for all } i,$$
+Our first theorem is a semiring-generic combinatorial description of matrix powers. Define a **length-$k$ walk** from $i$ to $j$ as a sequence $p = (p_0, p_1, \ldots, p_k)$ of vertices with $p_0 = i$ and $p_k = j$; there are no adjacency constraints because "no edge" is encoded by the zero weight $\infty$.
 
-i.e. $A \otimes v = v + \lambda\cdot\mathbf{1}$. This is the min-plus analogue of
-$Av = \lambda v$: the matrix shifts the eigenvector by a constant. The scalar
-$\lambda$ is the **tropical eigenvalue**; for an irreducible matrix it equals the
-minimum cycle mean of the associated weighted digraph.
+**Theorem 1 (Walk-sum identity).** *Let $S$ be a commutative semiring, $V$ a finite set, and $A \in S^{V \times V}$. For all $k \in \mathbb{N}$ and $i, j \in V$,*
+$$
+\bigl(A^{k}\bigr)_{ij} \;=\; \sum_{\substack{p:\{0,\dots,k\}\to V \\ p_0 = i,\ p_k = j}} \ \prod_{t=0}^{k-1} A_{p_t\, p_{t+1}}.
+$$
 
-### 3.2 The residual
+*Proof sketch.* Induct on $k$. For $k = 0$, $A^0 = I$; the sum ranges over length-$0$ walks, of which there is exactly one when $i = j$ (contributing the empty product $\mathbf{1}$) and none when $i \neq j$ (contributing $\mathbf{0}$), matching $I_{ij}$. For the inductive step, write $A^{k+1} = A^k \cdot A$, so $(A^{k+1})_{ij} = \sum_{\ell} (A^k)_{i\ell}\, A_{\ell j}$. By the inductive hypothesis, $(A^k)_{i\ell}$ is the walk-sum over length-$k$ walks $i \to \ell$; multiplying by $A_{\ell j}$ and summing over $\ell$ appends the final edge $\ell \to j$. The bijection $p \mapsto (p\!\restriction, p_k)$ between length-$(k{+}1)$ walks $i \to j$ and pairs (length-$k$ walk $i \to \ell$, final vertex $j$) matches terms exactly, using distributivity to expand $\bigl(\sum \prod\bigr)\cdot A_{\ell j}$ into $\sum \prod$. $\qquad\blacksquare$
 
-**Definition (residual).** The **tropical residual** of $A$ at $v$ is the
-per-coordinate shift
+**Tropical corollary (shortest walks).** Specializing $S$ to the tropical semiring, $\sum \mapsto \min$ and $\prod \mapsto +$, so
 
-$$\mathrm{res}(A, v)_i = (A \otimes v)_i - v_i.$$
+$$
+\operatorname{untrop}\bigl((A^{\otimes k})_{ij}\bigr) \;=\; \min_{\substack{p_0 = i,\ p_k = j}} \ \sum_{t=0}^{k-1} \operatorname{untrop}\bigl(A_{p_t\, p_{t+1}}\bigr).
+$$
 
-This is the natural — and essentially only — measurable difference in min-plus
-algebra, and it is exactly the signal an adversary can probe.
+That is, the $(i,j)$ entry of the $k$-th tropical power is the **minimum total weight of a $k$-step walk** from $i$ to $j$. This is precisely the recurrence underlying the Bellman–Ford and Floyd–Warshall algorithms. Consequently, the public data $B = A^{\otimes k}$ of the protocol is a *shortest-$k$-step-distance table* of the weighted digraph $A$ — a highly structured object, not random noise. This is the structural basis of the "shortest-path attack" on the TDLP.
 
-**Lemma 3.1 (residual equals eigenvalue, `tropResidual_eq_eigenvalue`).** If
-$(\lambda, v)$ is a tropical eigenpair of $A$, then $\mathrm{res}(A, v)_i = \lambda$
-for every $i$.
+## 5. Eigenvalue additivity: spectral theory meets additive arithmetic
 
-*Proof.* Immediate from the definition: $\mathrm{res}(A,v)_i = (A\otimes v)_i - v_i
-= (v_i + \lambda) - v_i = \lambda$. $\qquad\blacksquare$
+### 5.1 Eigenpairs are preserved under powering
 
-A consequence (`tropResidual_const`) is that the residual is coordinate-independent,
-so a single coordinate suffices to read off $\lambda$.
+We first record a general commutative-semiring fact.
 
----
+**Lemma 2 (Eigenvector–power law).** *Let $S$ be a commutative semiring, $A \in S^{V \times V}$, $v \in S^{V}$, and $\lambda \in S$ with $A \cdot v = \lambda \bullet v$ (scalar multiplication). Then for all $k \in \mathbb{N}$,*
+$$
+A^{k} \cdot v = \lambda^{k} \bullet v.
+$$
 
-## 4. The eigenvalue leak and the TDLP break
+*Proof sketch.* Induct on $k$. The base case $k=0$ is $I \cdot v = \mathbf{1} \bullet v = v$. For the step, use $A^{k+1} \cdot v = A \cdot (A^{k} \cdot v) = A \cdot (\lambda^{k} \bullet v)$. Scalars pull through matrix–vector multiplication in a commutative semiring, so $A \cdot (\lambda^{k} \bullet v) = \lambda^{k} \bullet (A \cdot v) = \lambda^{k} \bullet (\lambda \bullet v) = \lambda^{k+1} \bullet v$. $\qquad\blacksquare$
 
-The pivotal observation is that the residual of a *power* scales linearly with the
-exponent.
+### 5.2 Tropical eigenvalues add
 
-**Theorem 4.1 (eigenvalue additivity under powering, `tropResidual_tropMatPow`).**
-Let $(\lambda, v)$ be a tropical eigenpair of $A$. Then for every index $k$ and
-coordinate $i$,
+A **tropical eigenpair** of $A$ is a scalar $\lambda$ and vector $v$ (with at least one finite entry) satisfying
 
-$$\mathrm{res}\big(A^{\otimes(k+1)}, v\big)_i = (k+1)\,\lambda.$$
+$$
+A \otimes v = \lambda \bullet v, \qquad \text{i.e.} \qquad \min_j\bigl(A_{ij} + v_j\bigr) = \lambda + v_i \quad \text{for all } i.
+$$
 
-*Proof sketch.* The eigenvector relation gives $A \otimes v = v + \lambda
-\mathbf{1}$. Applying $A$ a second time and using that adding a constant commutes
-with the min-plus action, $A \otimes (v + \lambda\mathbf 1) = (A\otimes v) +
-\lambda\mathbf 1 = v + 2\lambda\mathbf 1$. By induction on the number of factors,
-$A^{\otimes(k+1)}\otimes v = v + (k+1)\lambda\mathbf 1$, and subtracting $v$
-coordinatewise gives the residual $(k+1)\lambda$. (Formally this uses the
-matrix–vector iteration `tropMatVecMul_tropMatPow` together with Lemma 3.1.)
-$\qquad\blacksquare$
+The scalar $\lambda = \lambda(A)$ is the **tropical eigenvalue**; by the tropical spectral theorem it equals the **minimum cycle mean** of the weighted digraph $A$, namely $\lambda(A) = \min_C \frac{w(C)}{|C|}$ over directed cycles $C$, where $w(C)$ is the total weight and $|C|$ the length. (We use this characterization only as motivation; the theorem below needs only the eigenpair equation.)
 
-**Corollary 4.2 (TDLP recovery, the break).** If $\lambda = \lambda(A) \neq 0$ and a
-reference eigenvector $v$ is known, the secret genuine exponent $t = k+1$ is
-recovered from any single coordinate by
+**Theorem 3 (Additivity of tropical eigenvalues under powering).** *Let $A$ be a tropical matrix with tropical eigenpair $(\lambda, v)$, i.e. $A \otimes v = \lambda \bullet v$. Then for every $k \in \mathbb{N}$:*
+1. *$(\lambda, v)$ is a tropical eigenpair of $A^{\otimes k}$, that is $A^{\otimes k} \otimes v = \lambda^{\otimes k} \bullet v$; and*
+2. *the underlying min-plus eigenvalue is additive: $\operatorname{untrop}\bigl(\lambda^{\otimes k}\bigr) = k \cdot \operatorname{untrop}(\lambda)$, i.e.*
+$$
+\lambda\bigl(A^{\otimes k}\bigr) = k \cdot \lambda(A).
+$$
 
-$$t = \frac{\mathrm{res}\big(A^{\otimes t}, v\big)_i}{\lambda}.$$
+*Proof sketch.* Part (1) is Lemma 2 applied to the tropical semiring, giving $A^{\otimes k} \otimes v = \lambda^{\otimes k} \bullet v$, so $\lambda^{\otimes k}$ is an eigenvalue of $A^{\otimes k}$ with the *same* eigenvector $v$. Part (2) unfolds the tropical power of the scalar: $\lambda^{\otimes k}$ means applying $\otimes = +$ to $k$ copies of $\lambda$, so $\operatorname{untrop}(\lambda^{\otimes k}) = k \cdot \operatorname{untrop}(\lambda)$. $\qquad\blacksquare$
 
-The cost is one matrix–vector product and one division: the TDLP is solved in
-polynomial time.
+### 5.3 The eigenvalue attack on the TDLP
 
-**Theorem 4.3 (the silent regime, `eigenzero_no_leak`).** If $(0, v)$ is a tropical
-eigenpair of $A$ (eigenvalue zero), then $\mathrm{res}(A, v)_i = 0$ for all $i$, and
-moreover $\mathrm{res}(A^{\otimes t}, v)_i = 0$ for all $t$ (`eigenzero_iterate`):
-the residual side channel leaks nothing about $t$.
+Theorem 3 furnishes a polynomial-time solver for the TDLP whenever the public eigenvalue is nonzero.
 
-*Proof.* Specialize Lemma 3.1 (resp. Theorem 4.1) at $\lambda = 0$.
-$\qquad\blacksquare$
+**Corollary 4 (Eigenvalue attack).** *Let $A$ be a public tropical matrix with $\lambda(A) \neq 0$ (in the sense $\operatorname{untrop}(\lambda(A)) \neq 0$ and finite), and let $B = A^{\otimes k}$. Then*
+$$
+k = \frac{\lambda(B)}{\lambda(A)} = \frac{\operatorname{untrop}(\lambda(A^{\otimes k}))}{\operatorname{untrop}(\lambda(A))},
+$$
+*and $k$ is recovered in polynomial time by computing the two minimum cycle means and dividing.*
 
-Theorems 4.1–4.3 establish a clean dichotomy: the scheme is broken precisely when
-$\lambda \neq 0$, and is residual-silent exactly when $\lambda = 0$. A zero
-eigenvalue requires a zero-weight cycle in the digraph of $A$, a non-generic
-condition; for random integer matrices with strictly positive off-diagonal weights
-it occurs with vanishing probability, so the break applies to almost every key.
+*Proof.* By Theorem 3(2), $\lambda(B) = \lambda(A^{\otimes k}) = k\,\lambda(A)$. Since $\lambda(A) \neq 0$, divide. Both eigenvalues are minimum cycle means, computable in $O(n^3)$ time (e.g. by Karp's algorithm), so the whole attack is polynomial in $n$ and independent of the magnitude of $k$. $\qquad\blacksquare$
 
----
+This is the decisive obstruction: a discrete-logarithm problem requires the exponent to be hidden, but tropical powering exposes it *linearly* through the spectrum. No brute-force search over $k$ is needed; the exponent is read off from two shortest-cycle computations.
 
-## 5. From value leak to structural leak: strong divisibility
+## 6. Security consequences and the role of $\lambda(A) \neq 0$
 
-We now show the leak is far deeper than value recovery. Fix the matrix and regard
-the leaked eigenvalue purely as a function of the genuine exponent.
+Corollary 4 has one hypothesis: $\lambda(A) \neq 0$. When the minimum cycle mean of $A$ is $0$ (or $\infty$, i.e. the graph is acyclic so no finite eigenvalue exists), the division is undefined and this particular attack does not directly recover $k$. Any candidate secure tropical scheme must therefore restrict to matrices whose eigenvalue is degenerate for the attacker.
 
-### 5.1 Strong divisibility sequences
+This is a narrow refuge, for two reasons.
 
-**Definition (strong divisibility sequence).** A **strong divisibility sequence**
-(SDS) is a function $a:\mathbb{N}\to\mathbb{N}$ with
+1. **Theorem 1 still applies.** Even when the eigenvalue trick is blocked, the public power $B = A^{\otimes k}$ remains a shortest-$k$-step-distance table. Its rich combinatorial structure is directly attackable by shortest-path and cycle-detection methods; the eigenvalue attack is only the cleanest of a family of structural attacks that the walk-sum identity enables.
 
-$$a(0) = 0, \qquad \gcd\big(a(m), a(n)\big) = a\big(\gcd(m,n)\big) \ \text{ for all } m,n.$$
+2. **Historical corroboration.** The earliest tropical Diffie–Hellman proposals were broken by exactly such structural/linear-algebraic cryptanalysis; subsequent perturbation-based variants (which deliberately break exact eigenstructure) were also broken. Theorems 1 and 3 explain, at the level of algebraic structure, *why*: the min-plus semiring is engineered to linearize optimization, and linearization is the opposite of the "structurelessness" a one-way function requires.
 
-The Fibonacci numbers, the Mersenne numbers $b^n - 1$, and the identity sequence
-are classical examples. From the two axioms one derives a full divisibility
-calculus, including:
+The upshot is a precise design constraint rather than a wholesale impossibility: any secure min-plus scheme must avoid public matrices with recoverable eigenvalues *and* must obscure the shortest-walk structure of its powers — a demanding pair of requirements that the raw protocol does not meet.
 
-- **Divisibility monotonicity (`StrongDivSeq.dvd_of_dvd`):** $m \mid n \implies
-  a(m) \mid a(n)$. *Proof:* if $m\mid n$ then $\gcd(m,n)=m$, so $\gcd(a(m),a(n)) =
-  a(m)$, whence $a(m)\mid a(n)$.
-- **Meet law (`StrongDivSeq.dvd_gcd_iff`):** $d \mid a(\gcd(m,n)) \iff d \mid a(m)
-  \wedge d \mid a(n)$.
+## 7. Algorithms
 
-### 5.2 The tropical eigenvalue sequence
+We summarize the honest computation and the attack.
 
-**Definition (tropical eigenvalue sequence, `tropEigSeq`).** For $c \in \mathbb{N}$
-define $\mathrm{tropEigSeq}(c)$ by $a(t) = c\,t$. As a function of the genuine
-exponent $t$, this is the leaked eigenvalue $\lambda(A^{\otimes t}) = c\,t$ with
-$c = \lambda(A)$ (taken integral).
+**(A) Tropical matrix power by repeated squaring.** Compute $A^{\otimes k}$ in $O(n^3 \log k)$ tropical operations by writing $k$ in binary and squaring/multiplying. This is what Alice and Bob do.
 
-**Theorem 5.1 (`tropEigSeq` is an SDS).** $\mathrm{tropEigSeq}(c)$ is a strong
-divisibility sequence.
+**(B) Minimum cycle mean (Karp).** Compute $\lambda(A)$ in $O(n^3)$ by the dynamic program $\lambda(A) = \min_{i}\max_{0 \le t < n} \frac{d_n(i) - d_t(i)}{n - t}$, where $d_t(i)$ is the minimum weight of a length-$t$ walk from a fixed source to $i$, obtained by tropical vector iteration.
 
-*Proof.* $a(0) = c\cdot 0 = 0$, and by the identity $\gcd(cm, cn) = c\,\gcd(m,n)$
-(distributivity of $\gcd$ over multiplication, `Nat.gcd_mul_left`),
-$\gcd(a(m),a(n)) = a(\gcd(m,n))$. $\qquad\blacksquare$
+**(C) Eigenvalue attack on the TDLP.** Given $(A, B)$: compute $\lambda(A)$ and $\lambda(B)$ by (B); if $\lambda(A) \neq 0$, return $k = \lambda(B)/\lambda(A)$.
 
-### 5.3 The bridge link: measurement equals sequence value
+Full pseudocode and reference implementations accompany this work.
 
-**Theorem 5.2 (residual equals sequence value, `residual_eq_tropEigSeq`).** Let
-$(c, v)$ be a tropical eigenpair of $A$ with $c\in\mathbb{N}$. Then for every index
-$k$ and coordinate $i$,
+## 8. Applications and limitations
 
-$$\mathrm{res}\big(A^{\otimes(k+1)}, v\big)_i = \big(\mathrm{tropEigSeq}(c)\big)(k+1) \in \mathbb{R}.$$
+The two theorems have value well beyond cryptanalysis.
 
-*Proof.* By Theorem 4.1 the left side equals $(k+1)c$; by definition the right side
-is $c(k+1)$. $\qquad\blacksquare$
+- **Optimization.** Theorem 1 is the algebraic form of the Bellman/Floyd shortest-walk recurrences; it packages all-lengths shortest-walk information as matrix powers.
+- **Spectral graph theory.** Theorem 3 relates the spectrum of a weighted digraph to that of its "$k$-step" contraction and formalizes the cycle-mean scaling law.
+- **Cryptographic design.** Corollary 4 is a concrete adversary; it delineates exactly which structural assumptions a secure tropical scheme must avoid.
 
-This is the load-bearing identification: the *physically measurable* residual of
-the cryptographic public power equals the *number-theoretic* value of the SDS. It
-licenses transporting the entire SDS divisibility calculus onto the cryptanalysis.
+*Limitations.* The eigenvalue attack requires a nonzero, finite tropical eigenvalue and an eigenvector to exist; degenerate matrices evade it (though not the broader class of structural attacks). Our results are stated for finite index sets and, for the eigenvalue law, for commutative semirings; noncommutative tropical variants are outside scope.
 
-### 5.4 The divisibility leak
+## 9. Future directions
 
-**Theorem 5.3 (divisibility leak, `tdlp_divisibility_leak`).** For $c > 0$ and all
-$m, k$,
+- **Explicit min/+ form of the shortest-path bridge.** Restate Theorem 1 as a literal $\operatorname{untrop}((A^{\otimes k})_{ij}) = \min_p \sum_t \operatorname{untrop}(A_{p_t p_{t+1}})$ using the untropicalization of sums and products.
+- **Cycle-mean eigenvalue formula.** Prove the full min-plus spectral theorem $\lambda(A) = \min_C w(C)/|C|$ and connect it to eigenvalue additivity, yielding a complete recovery algorithm for the TDLP.
+- **Kleene star / all-pairs shortest paths.** Formalize $A^{*} = \bigoplus_k A^{\otimes k}$ (Floyd–Warshall) and its convergence for matrices with nonnegative diagonal, extending the walk-sum bridge from fixed length to reachability.
+- **Security reduction as an explicit adversary.** Package the eigenvalue attack as a formal polynomial-time reduction "TDLP with $\lambda(A) \neq 0$ $\Rightarrow$ recover $k$," and contrast with perturbation-based schemes to pin down which structural assumptions any secure variant must avoid.
+- **Graph-API integration.** Specialize both theorems to $V = \{1, \ldots, n\}$ and relate them to standard weighted-digraph and walk formalisms.
 
-$$(m+1) \mid (k+1) \quad\Longleftrightarrow\quad \big(\mathrm{tropEigSeq}(c)\big)(m+1) \ \big|\ \big(\mathrm{tropEigSeq}(c)\big)(k+1).$$
+## 10. Conclusion
 
-*Proof.* ($\Rightarrow$) is `StrongDivSeq.dvd_of_dvd` applied to Theorem 5.1.
-($\Leftarrow$) Unfolding, $c(m+1)\mid c(k+1)$; cancel the positive factor $c$ via
-`Nat.mul_dvd_mul_iff_left` to get $(m+1)\mid(k+1)$. $\qquad\blacksquare$
-
-**Interpretation.** Equivalence — not just implication — means the public leaked
-eigenvalues are a *faithful* image of the secret exponents' divisibility lattice. An
-adversary who harvests transcripts reads off relations such as "secret $X$ divides
-secret $Y$" or "secret $X$ is prime" directly from public data. This is strictly
-stronger than the injectivity used in Section 4: it is not merely that the secret is
-determined, but that its whole arithmetic structure is exposed.
-
-**Corollary 5.4 (eigenvalue gcd identity, `tropical_eigenvalue_gcd`).** For all
-$m,n$,
-
-$$\gcd\Big(\lambda\big(A^{\otimes m}\big),\ \lambda\big(A^{\otimes n}\big)\Big) = \lambda\big(A^{\otimes \gcd(m,n)}\big),$$
-
-i.e. $\gcd(a(m), a(n)) = a(\gcd(m,n))$ for $a = \mathrm{tropEigSeq}(c)$.
-
----
-
-## 6. No hardness amplification by nesting
-
-A natural hardening attempt is to nest powers (the Diffie–Hellman shared key is such
-a nested object). The eigenvalue arithmetic obstructs this.
-
-**Theorem 6.1 (shared-key eigenvalue factorization, `tdlp_dh_eigenvalue_product`).**
-For all $c, a, b \in \mathbb{N}$,
-
-$$c \cdot \big(\mathrm{tropEigSeq}(c)\big)\big((a+1)(b+1)\big) = \big(\mathrm{tropEigSeq}(c)\big)(a+1)\cdot\big(\mathrm{tropEigSeq}(c)\big)(b+1).$$
-
-*Proof.* Both sides equal $c^2(a+1)(b+1)$: the left is $c\cdot c(a+1)(b+1)$, the
-right is $c(a+1)\cdot c(b+1)$. $\qquad\blacksquare$
-
-Writing $\lambda(\text{shared}) = a((a+1)(b+1))$, $\lambda(\text{pub}_a) = a(a+1)$,
-$\lambda(\text{pub}_b) = a(b+1)$, this reads
-
-$$c \cdot \lambda(\text{shared}) = \lambda(\text{pub}_a)\cdot\lambda(\text{pub}_b),$$
-
-with every right-hand quantity public. The shared secret's fingerprint is computable
-from public data, so nesting multiplies a public invariant rather than concealing a
-private one.
-
-**Theorem 6.2 (shared-key residual, `dh_shared_residual`).** Let $(c, v)$ be a
-tropical eigenpair of $A$. For all indices $a, b$ and coordinates $i$,
-
-$$\mathrm{res}\Big(\big(A^{\otimes(a+1)}\big)^{\otimes(b+1)},\, v\Big)_i = \big(\mathrm{tropEigSeq}(c)\big)\big((a+1)(b+1)\big).$$
-
-*Proof sketch.* By the power-of-power law `tropMatPow_tropMatPow`, the nested power
-equals $A^{\otimes(a+1)(b+1)}$ (in index form, $\mathrm{tropMatPow}(A, (a+1)(b+1)-1)$,
-using $(a+1)(b+1)\ge 1$). Apply Theorem 5.2. $\qquad\blacksquare$
-
-Thus the shared key $A^{\otimes(ab+a+b)}$ itself leaks the eigenvalue $c(a+1)(b+1)$:
-the shared secret is exposed through its spectrum.
-
----
-
-## 7. A reusable security-audit criterion
-
-The break is not an artifact of a clever ad hoc attack; it is forced by structure.
-The public transcript, as a function of the secret, is a strong divisibility
-sequence, and Theorem 5.3 shows that *any* such transcript leaks the secret's
-divisibility lattice. This yields a falsifiable design test:
-
-> **Audit criterion.** If the public transcript of a key-exchange scheme, viewed as
-> a function of the secret exponent, is a strong divisibility sequence, then the
-> scheme is not exponent-hiding.
-
-Because the SDS framework simultaneously contains the Fibonacci, Mersenne, identity,
-and now tropical-eigenvalue sequences, this criterion is broadly applicable: it
-reduces a security question to a structural one — "is my transcript an SDS?" — that
-can be checked algebraically rather than by simulation.
-
----
-
-## 8. Algorithms
-
-### 8.1 Forward power by repeated squaring
-
-Compute $A^{\otimes t}$ in $O(n^3 \log t)$ using the additive exponent law: maintain
-a running base and accumulate factors according to the binary digits of $t$.
-
-### 8.2 Spectral TDLP attack
-
-Given public $(A, B = A^{\otimes t})$ with known eigenpair $(\lambda, v)$,
-$\lambda\neq 0$: compute $r = (B\otimes v)_0 - v_0$ and return $t = r/\lambda$. Cost:
-one matrix–vector product, $O(n^2)$.
-
-### 8.3 Divisibility-lattice reconstruction
-
-Given several public eigenvalues $\{c t_j\}$, recover the divisibility relations
-among the secret $t_j$ by testing divisibility of the eigenvalues directly
-(Theorem 5.3), or recover each $t_j$ by dividing out $c$ and reading off the gcd
-lattice via Corollary 5.4.
-
-(Full pseudocode and reference implementations appear in `demo.py` and the
-`algorithms` field of `PACKAGE.json`.)
-
----
-
-## 9. Discussion
-
-The episode crystallizes a general principle: a cipher's safety lives in the
-structure it *fails* to expose. Tropical matrix powering exposes too much — an
-eigenvalue that counts the secret exactly at every coordinate, and a leaked sequence
-so well-behaved that its arithmetic is an open book. The dichotomy of Section 4
-($\lambda\neq 0$ broken vs. $\lambda = 0$ silent) is sharp, but the silent regime is
-non-generic and arguably useless (a zero eigenvalue means a free cycle). The
-structural leak of Section 5 shows that even *partial* secrecy goals (hiding
-divisibility relations) fail. The no-amplification result of Section 6 forecloses
-the obvious patch.
-
-This does not impugn tropical mathematics, which remains valuable in optimization,
-scheduling, and geometry. It impugns the use of *min-plus powering* as a discrete-log
-platform.
-
----
-
-## 10. Future directions
-
-**C1. The eigenvalue-leak dichotomy is exhaustive.** Conjecture: for every finite
-tropical matrix $A$ with eigenpair $(\lambda, v)$, the scheme is broken in
-polynomial time iff $\lambda \neq 0$, and leaks nothing when $\lambda = 0$ — i.e.
-$\lambda = 0$ is the *unique* secure eigenvalue. Both halves are formalized; what
-remains is to prove no other attack-free regime exists.
-
-**C2. Strong divisibility forces full lattice exposure.** Conjecture: any
-key-exchange whose public transcript is a strong divisibility sequence in the secret
-leaks the entire divisibility lattice of that secret and is therefore not
-exponent-hiding. Placing tropical eigenvalues alongside Fibonacci and Mersenne in
-one SDS frame turns "is the transcript an SDS?" into a reusable security audit.
-
-**C3. Multiplicative shadow obstructs hardness amplification.** Conjecture:
-iterating the tropical power cannot amplify TDLP hardness, because the shared-key
-eigenvalue factorizes as $c\cdot\lambda(\text{shared}) =
-\lambda(\text{pub}_a)\cdot\lambda(\text{pub}_b)$; nesting only multiplies a public
-invariant.
-
-**C4. Generic random tropical matrices have nonzero principal eigenvalue.**
-Conjecture: for a random integer tropical matrix of size $n \ge 2$ with i.i.d.
-entries in $\{0,\dots,M\}$ and zero self-loops, the maximal tropical eigenvalue (max
-cycle mean) is $0$ only on a vanishing-probability set; hence by C1 the scheme is
-broken with overwhelming probability.
-
----
-
-## 11. Conclusion
-
-We have given a formally verified, structural cryptanalysis of tropical min-plus
-Diffie–Hellman. The tropical eigenvalue is additive under powering, breaking the
-TDLP whenever it is nonzero; the leaked eigenvalue sequence $t\mapsto ct$ is a strong
-divisibility sequence, exposing the secret's divisibility lattice; and the shared-key
-eigenvalue factorizes through public data, precluding amplification by nesting. The
-unifying lesson is a security-audit criterion of independent interest: transcripts
-that form strong divisibility sequences cannot hide their secrets.
+Two theorems settle the structural question behind tropical Diffie–Hellman. The walk-sum identity shows a tropical matrix power *is* a shortest-walk table (linear algebra $\leftrightarrow$ optimization); eigenvalue additivity shows powering multiplies the tropical eigenvalue (spectral theory $\leftrightarrow$ additive arithmetic), turning the discrete logarithm into a linear equation solvable by two cycle-mean computations. The very features that make min-plus algebra a powerful language for optimization — its linearization of shortest paths and its clean spectral scaling — are precisely what disqualify it, in raw form, as a foundation for one-way functions.

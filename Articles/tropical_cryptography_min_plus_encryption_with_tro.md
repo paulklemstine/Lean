@@ -1,208 +1,101 @@
-# The Secret That Counts Itself: How a "Tropical" Cipher Gives Away Its Own Key
+# The Secret Life of Shortest Paths: Why "Tropical" Cryptography Isn't as Safe as It Looks
 
-Imagine a lock whose tumblers are made of shortest paths through a map of cities,
-where every product is a sum and every sum is a minimum. For a few years, a small
-but enthusiastic corner of cryptography believed that locks like this might be the
-key to surviving the quantum era. They are built from **tropical arithmetic** — a
-strange and beautiful algebra in which addition is replaced by "take the smaller of
-two numbers," and multiplication is replaced by ordinary addition. The hope was
-audacious: that this exotic algebra could hide secrets in a way that no quantum
-computer could unravel.
+## A different kind of arithmetic
 
-This is the story of why one of those locks quietly leaks its key — and how the
-leak turns out to be far more total than anyone first suspected. The secret
-exponent does not merely slip out. The public data broadcasts the *entire
-arithmetic structure* of the secret, like a sealed envelope that helpfully prints
-all the factors of the number inside it on the outside.
+Imagine an arithmetic in which addition and multiplication are not the operations you learned in school. Instead, "adding" two numbers means *taking the smaller of them*, and "multiplying" two numbers means *adding them in the ordinary sense*. This strange-sounding system is called the **tropical semiring** (or **min-plus algebra**), and despite its playful name — coined in honor of the Brazilian mathematician Imre Simon — it is a serious and beautiful piece of mathematics with deep connections to optimization, geometry, and computer science.
 
-## A new pair of glasses for arithmetic
+To keep the two worlds straight, we write $\oplus$ for tropical addition and $\otimes$ for tropical multiplication:
 
-Start with the rules. In ordinary arithmetic we have two operations, $+$ and
-$\times$. Tropical (or **min-plus**) arithmetic keeps the symbols but swaps their
-meaning:
+$$
+x \oplus y = \min(x, y), \qquad x \otimes y = x + y.
+$$
 
-$$a \oplus b = \min(a, b), \qquad a \otimes b = a + b.$$
+The numbers themselves are the integers together with an extra symbol $\infty$, which plays the role of a "zero" for this arithmetic: $\min(x, \infty) = x$, just as $x + 0 = x$ in ordinary arithmetic. And the ordinary number $0$ plays the role of the tropical "one," because $x \otimes 0 = x + 0 = x$.
 
-So "tropical multiplication" is just regular addition, and "tropical addition" is
-choosing the minimum. It looks like a typo, but it is a fully consistent algebra,
-and it shows up everywhere shortest paths and scheduling and optimization live.
+Why would anyone bother with such a thing? Because it turns hard combinatorial questions into clean algebraic ones. The single most important example is **shortest paths**. If you weight the roads of a map and want the cheapest route between two cities, you are — without knowing it — doing tropical arithmetic. Every time you compare two routes you take a *minimum* (tropical addition); every time you extend a route by one more road you *add* a distance (tropical multiplication). This is the secret that makes the tropical world tick, and, as we will see, it is also the secret that unravels a tempting idea for building codes.
 
-Here is the punchline that makes it interesting: the tropical product of two
-matrices is exactly the recipe for combining distance tables. If $A$ and $B$ are
-$n \times n$ matrices, their tropical product is
+## A tempting idea: encryption from the tropics
 
-$$(A \otimes B)_{ij} = \min_{k}\,\big(A_{ik} + B_{kj}\big).$$
+Modern cryptography rests on **one-way functions**: computations that are easy to perform but effectively impossible to reverse. The most famous example underlies the Diffie–Hellman key exchange, which lets two strangers, Alice and Bob, agree on a shared secret over a public channel that everyone can hear. Its security rests on the *discrete logarithm problem*: given a number $g$ and a power $g^k$, it is believed to be very hard to recover the exponent $k$.
 
-Read that slowly. It says: to get from $i$ to $j$, try every intermediate stop $k$,
-add the cost $A_{ik}$ of getting to $k$ to the cost $B_{kj}$ of leaving $k$, and
-keep the cheapest route. This is the **all-pairs shortest path** computation in
-disguise. Computing it forward is easy — about $n^3$ operations. Running it
-*backward* — recovering $A$ from the product — is the kind of tangled inverse
-problem that cryptographers love, because easy-one-way, hard-the-other-way is the
-raw material of every cipher.
+In the last decade, researchers asked a natural question: could we replace ordinary numbers with **tropical matrices** and get a new, possibly quantum-resistant, cryptosystem? The plan is seductively simple. Fix a public tropical matrix $A$. Alice secretly picks an exponent $a$ and publishes the tropical power $A^{\otimes a}$; Bob secretly picks $b$ and publishes $A^{\otimes b}$. Each then raises the other's matrix to their own secret exponent, and both arrive at the same shared key $A^{\otimes ab}$. An eavesdropper who sees $A$, $A^{\otimes a}$, and $A^{\otimes b}$ would — so the hope goes — be unable to recover the secret exponents.
 
-## Building a lock out of powers
+Computing a tropical matrix power is genuinely cheap: by repeated squaring one reaches $A^{\otimes k}$ in about $\log k$ matrix multiplications, so the honest parties do only $O(n^3 \log k)$ arithmetic. The entire security of the scheme therefore hinges on one question, the **tropical discrete logarithm problem (TDLP)**:
 
-To build a key-exchange protocol you need a one-way *staircase*, not just a
-one-way step. So fix a tropical matrix $A$ and multiply it by itself, tropically,
-again and again. Write the result as a **tropical power**. In the formal
-development this is indexed so that $A^{\otimes 1} = A$ and each step prepends one
-more factor:
+> Given the public matrix $A$ and one of its tropical powers $B = A^{\otimes k}$, recover the exponent $k$.
 
-$$A^{\otimes (k+1)} = A \otimes A^{\otimes k}.$$
+Is this really hard? This article tells the story of two theorems that answer the question — and the answer is not comforting for the would-be cryptographer.
 
-So $A^{\otimes t}$ is the $t$-fold tropical product of $A$ with itself. Crucially,
-you can compute $A^{\otimes t}$ in about $n^3 \log t$ operations by *repeated
-squaring* — the same trick that lets your phone compute enormous powers for RSA in
-the blink of an eye. Doubling the exponent costs only one extra matrix multiply.
+## Tropical matrices *are* shortest paths
 
-These powers obey exactly the laws you would want from exponents. Multiplying two
-powers of the same matrix adds their exponents,
+First we need to understand what a tropical matrix power actually *computes*. Ordinary matrix multiplication combines rows and columns using $+$ and $\times$. Tropical matrix multiplication does the same bookkeeping but with $\oplus = \min$ and $\otimes = +$:
 
-$$A^{\otimes a} \otimes A^{\otimes b} = A^{\otimes (a+b)},$$
+$$
+(A \otimes B)_{ij} = \min_{\ell}\bigl(A_{i\ell} + B_{\ell j}\bigr).
+$$
 
-and raising a power to a power multiplies them,
+Read this out loud: to get from $i$ to $j$ in two steps, try every intermediate stop $\ell$, add the cost of the first leg to the cost of the second, and keep the cheapest total. That is exactly the recursive definition of a shortest two-step route in a weighted graph whose adjacency matrix is $A$.
 
-$$\big(A^{\otimes a}\big)^{\otimes b} = A^{\otimes (ab)}.$$
+The first of our two theorems says this pattern holds at every power, not just the second. It is completely general — it holds in *any* arithmetic where you have an "add" and a "multiply" satisfying the usual distributive laws — and only afterward do we specialize to the tropics.
 
-That second law is the heart of a **Diffie–Hellman key exchange**, the protocol
-that lets two strangers agree on a shared secret over an open line. Alice picks a
-secret exponent $a$ and publishes $A^{\otimes a}$. Bob picks a secret $b$ and
-publishes $A^{\otimes b}$. Each then raises the *other's* matrix to their own
-secret. Because the exponents multiply the same way regardless of order,
+**Theorem 1 (Powers count walks).** *Let $A$ be an $n \times n$ matrix over any commutative semiring, indexed by a set $V$ of vertices. Then the $(i,j)$ entry of the $k$-th power is a sum over all length-$k$ walks from $i$ to $j$:*
+$$
+\bigl(A^{k}\bigr)_{ij} = \sum_{\substack{p_0, p_1, \ldots, p_k \\ p_0 = i,\; p_k = j}} \ \prod_{t=0}^{k-1} A_{p_t\, p_{t+1}}.
+$$
+*Here a "walk" is any sequence of $k+1$ vertices starting at $i$ and ending at $j$, and the product runs over the $k$ edges it traverses.*
 
-$$\big(A^{\otimes a}\big)^{\otimes b} = A^{\otimes (ab)} = \big(A^{\otimes b}\big)^{\otimes a},$$
+In ordinary arithmetic this is the familiar fact that the powers of an adjacency matrix count paths. But translate the sum and product into tropical language — turn each $\sum$ into a $\min$ and each $\prod$ into a $+$ — and it becomes something far more evocative:
 
-both of them arrive at the identical shared key $A^{\otimes (ab)}$. An eavesdropper
-sees $A$, $A^{\otimes a}$, and $A^{\otimes b}$ — but to reconstruct $A^{\otimes
-(ab)}$ they would seemingly need one of the secret exponents. Finding $k$ from $A$
-and $A^{\otimes k}$ is the **Tropical Discrete Logarithm Problem (TDLP)**, and the
-whole edifice rests on it being hard.
+$$
+\bigl(A^{\otimes k}\bigr)_{ij} = \min_{\text{length-}k\text{ walks } i \to j} \ \sum_{t=0}^{k-1} A_{p_t\, p_{t+1}}.
+$$
 
-It is not.
+**The $(i,j)$ entry of the $k$-th tropical power is the minimum total weight of a $k$-step walk from $i$ to $j$.** This is precisely the identity at the heart of the classical Bellman–Ford and Floyd–Warshall shortest-path algorithms. A tropical matrix power is not an abstract object at all — it is a table of shortest $k$-step distances.
 
-## The eigenvalue that keeps a tally
+This already sounds an alarm. An eavesdropper facing $B = A^{\otimes k}$ is not staring at random noise; they are staring at a shortest-path table, and shortest-path structure is exactly what a century of algorithmic graph theory knows how to exploit.
 
-Every tropical matrix has a hidden number attached to it: its **tropical
-eigenvalue**. In ordinary linear algebra, an eigenvector $v$ is a direction that a
-matrix merely stretches: $Av = \lambda v$. The tropical analogue replaces stretch
-with shift. A vector $v$ is a tropical eigenvector with eigenvalue $\lambda$ when
-applying the matrix simply adds the same constant $\lambda$ to every coordinate:
+## The fatal leak: eigenvalues that add up
 
-$$(A \otimes v)_i = \min_k\big(A_{ik} + v_k\big) = v_i + \lambda \quad \text{for every } i.$$
+The second theorem delivers the decisive blow. To state it we need the tropical analogue of an eigenvalue. In ordinary linear algebra, $\lambda$ is an eigenvalue of $A$ with eigenvector $v$ when $A v = \lambda v$. Tropically, the same equation reads
 
-Geometrically, $\lambda$ is the *minimum average cost of a cycle* in the network
-$A$ describes — the cheapest loop you can run forever. It is an intrinsic
-fingerprint of the matrix.
+$$
+A \otimes v = \lambda \otimes v, \qquad \text{that is,} \qquad \min_{j}\bigl(A_{ij} + v_j\bigr) = \lambda + v_i \ \text{ for every } i.
+$$
 
-Now define the quantity an eavesdropper can actually *measure*. Given a published
-matrix and a known reference vector $v$, look at how much the matrix shifts each
-coordinate. We call this the **residual**:
+Here $\lambda$ is a single number — the **tropical eigenvalue** — and $v$ is the corresponding eigenvector. Geometrically, $\lambda$ measures the "cost per step" of cycling through the graph forever along the most efficient loop; it is the minimum cycle mean.
 
-$$\mathrm{res}(A, v)_i = (A \otimes v)_i - v_i.$$
+Now watch what happens when we take powers. If $A \otimes v = \lambda \otimes v$, then applying $A$ again gives $A^{\otimes 2} \otimes v = \lambda \otimes \lambda \otimes v$, and in general the eigenvector survives every power while the eigenvalue simply repeats. In tropical language, "repeating $\lambda$ $k$ times under $\otimes$" means *adding $\lambda$ to itself $k$ times* — ordinary multiplication. That is the content of our second theorem.
 
-For a genuine eigenpair this residual is exactly $\lambda$, identically, in every
-coordinate. No averaging, no statistics, no noise: read off any single entry and
-you have the eigenvalue on the nose.
+**Theorem 2 (Tropical eigenvalues are additive under powering).** *Suppose $v$ is a tropical eigenvector of $A$ with eigenvalue $\lambda$, so that $A \otimes v = \lambda \otimes v$. Then for every exponent $k$, the same $v$ is a tropical eigenvector of $A^{\otimes k}$, and its eigenvalue is*
+$$
+\lambda\bigl(A^{\otimes k}\bigr) = k \cdot \lambda(A).
+$$
+*(In ordinary numbers: the min-plus eigenvalue of the $k$-th power is exactly $k$ times the min-plus eigenvalue of $A$.)*
 
-Here is where the lock springs open. Watch what the eigenvalue does as you climb
-the staircase of powers. The defining property of an eigenvector is that the matrix
-shifts it by $\lambda$ — so applying the matrix $t$ times shifts it by $\lambda$
-exactly $t$ times. In residual language, the central cryptanalytic fact is:
+This is where the discrete logarithm dies. The whole point of a discrete-logarithm-style problem is that the exponent $k$ should be buried, recoverable only by brute force. But Theorem 2 hands the attacker a linear equation. The eigenvalue $\lambda(A)$ of the public matrix can be computed quickly — it is the minimum cycle mean of a weighted graph, obtainable by classical algorithms such as Karp's. The eigenvalue $\lambda(B)$ of the intercepted power $B = A^{\otimes k}$ can be computed just as quickly. And then the secret exponent falls out of a single division:
 
-$$\mathrm{res}\big(A^{\otimes t}, v\big)_i = t\,\lambda \quad \text{for every coordinate } i.$$
+$$
+k = \frac{\lambda\bigl(A^{\otimes k}\bigr)}{\lambda(A)}, \qquad \text{provided } \lambda(A) \neq 0.
+$$
 
-**The tropical eigenvalue is additive under powering.** The public matrix
-$A^{\otimes t}$ doesn't just contain a faint shadow of the secret exponent $t$ — it
-broadcasts $t\lambda$ at *every single coordinate*, a number that grows in perfect
-lockstep with the secret. If you know $\lambda = \lambda(A)$ (which you do, because
-$A$ is public), recovering the secret is a single division:
+No brute force, no quantum computer, no clever number theory — just two shortest-path computations and one division. The would-be one-way function leaks the secret through its spectrum.
 
-$$t = \frac{\mathrm{res}\big(A^{\otimes t}, v\big)_i}{\lambda}.$$
+## Where the danger hides — and where it doesn't
 
-The "discrete logarithm" that was supposed to be hard collapses into grade-school
-arithmetic. There is exactly one escape hatch: if $\lambda = 0$, then the residual
-is identically zero no matter what $t$ is, and the side channel goes silent. But a
-zero eigenvalue means the network has a free cycle — a loop you can traverse at no
-cost — which is a fragile, non-generic condition. For a randomly built tropical
-matrix it essentially never happens. The lock is open for almost every key.
+The attack has one visible loophole: it requires $\lambda(A) \neq 0$ in the tropical sense (that is, the minimum cycle mean must be a genuine finite nonzero number, not $\infty$). If the public matrix is engineered so that its tropical eigenvalue vanishes or is undefined, the division above becomes meaningless and this particular attack stalls.
 
-## The leak is worse than a stolen key
+But that observation is a warning, not a rescue. It tells us that *any* tropical scheme hoping to be secure must actively avoid the entire family of matrices with usable eigenvalues — and Theorems 1 and 2 together show just how much structure a tropical power carries even when the eigenvalue trick is blocked. The shortest-path identity of Theorem 1 means the public data $B = A^{\otimes k}$ still encodes a rich combinatorial object that shortest-path and cycle-detection algorithms can pick apart. Historically, this is exactly what has happened: the earliest tropical Diffie–Hellman proposals were broken, patched with random perturbations, and broken again. Our two theorems explain *why* at the structural level: the tropical world is transparent to the very algorithms — shortest paths, minimum cycle means — that gave it life.
 
-You might think that recovering the secret exponent is the end of the story — the
-worst that can happen. It isn't. The deeper discovery in this work is that the
-public data leaks not just the *value* of the secret, but its entire **divisibility
-structure**.
+## The moral of the story
 
-To see this, freeze the matrix and stare only at the leaked numbers. As the secret
-exponent $t$ ranges over $1, 2, 3, \dots$, the leaked eigenvalue traces out the
-sequence
+There is a lovely irony here. The tropical semiring is powerful *precisely because* it linearizes optimization: shortest paths, scheduling problems, and dynamic programming all become matrix algebra. That same linearization is poison for cryptography, whose lifeblood is the *absence* of exploitable structure. A good one-way function must look like chaos; a tropical matrix power looks like a shortest-path table with an eigenvalue stamped on its forehead.
 
-$$t \;\longmapsto\; c \cdot t, \qquad \text{where } c = \lambda(A).$$
+The two theorems in this article draw a bright line between three mathematical worlds that rarely meet in the same sentence:
 
-Call this the **tropical eigenvalue sequence**. It is the simplest possible
-sequence — a constant times the index — and that simplicity is precisely the
-weapon. This sequence has a remarkable property shared by famous sequences like the
-Fibonacci numbers and the Mersenne numbers: it is a **strong divisibility
-sequence**. That means two things hold together: the sequence vanishes at index
-$0$, and the greatest common divisor of two terms is the term at the greatest
-common divisor of the indices:
+- **Linear algebra** (matrix powers),
+- **Combinatorial optimization** (shortest walks in weighted graphs), and
+- **Spectral theory** (eigenvalues and cycle means).
 
-$$\gcd\big(c\cdot m,\; c\cdot n\big) = c \cdot \gcd(m, n).$$
+Theorem 1 fuses the first two: a matrix power *is* a catalogue of walks, and tropically a catalogue of shortest walks. Theorem 2 fuses the first and third: taking powers multiplies the tropical eigenvalue, turning an exponent into a simple linear coefficient.
 
-That single identity is a powerhouse. It implies that one secret exponent divides
-another **if and only if** the corresponding leaked eigenvalues divide each other.
-Formally, for any positive eigenvalue $c$,
-
-$$(m+1) \mid (k+1) \quad\Longleftrightarrow\quad c(m+1) \mid c(k+1).$$
-
-Translate that out of symbols. Suppose an eavesdropper has watched several past
-sessions and harvested their public matrices and leaked eigenvalues. They can now
-read off statements like "Tuesday's secret divides Friday's secret" or "this key
-is a prime number of steps long" — purely from the public transcript, without ever
-recovering the raw exponents. The envelope doesn't just leak the number inside; it
-prints the number's complete factorization lattice on the outside. A side channel
-that was supposed to be, at worst, a single number, turns out to expose an entire
-web of arithmetic relationships.
-
-## Nesting doesn't help
-
-A natural last-ditch defense is to make the problem harder by *nesting*: raise $A$
-to a secret power, then raise the result to another secret power, hoping the
-compounded difficulty foils the attacker. The shared key in the Diffie–Hellman
-exchange is exactly such a nested object. But the eigenvalue arithmetic follows
-along obediently. With Alice's exponent $a$ and Bob's exponent $b$, the shared
-key's eigenvalue satisfies a clean factorization in terms of the *public*
-eigenvalues alone:
-
-$$c \cdot \lambda(\text{shared}) = \lambda(\text{Alice's public}) \cdot \lambda(\text{Bob's public}).$$
-
-Every quantity on the right is visible to the eavesdropper. The shared secret's
-fingerprint is computable from public data, so nesting multiplies a public
-invariant rather than hiding a private one. There is no hardness amplification to
-be had: the multiplicative shadow of the additive eigenvalue law tracks every move.
-
-## What the wreckage teaches
-
-It is tempting to read this as a purely negative result — another candidate
-post-quantum cipher consigned to the scrapheap. That is the headline, and it is
-true: tropical Diffie–Hellman, in this matrix-power form, is broken for essentially
-every key, and broken *thoroughly*. But the more durable lesson is a positive one
-about how to *audit* cryptography.
-
-The fatal flaw was not a clever attack; it was a structural inevitability. The
-public transcript was a strong divisibility sequence in the secret, and **any**
-scheme whose transcript is a strong divisibility sequence cannot hide the secret's
-divisibility lattice. That gives designers a sharp, reusable question to ask of any
-new proposal: *Is my public transcript, viewed as a function of the secret, a
-strong divisibility sequence?* If the answer is yes, the scheme leaks — no
-simulation, no statistics, just algebra. The same framework that unifies the
-Fibonacci and Mersenne sequences now doubles as a security litmus test.
-
-Tropical arithmetic remains genuinely beautiful and genuinely useful, from
-scheduling theory to the geometry of optimization. What this episode shows is that
-beauty is not security. A cipher's safety lives in the structure it *fails* to
-expose, and min-plus powering exposes too much: an eigenvalue that faithfully
-counts the secret, coordinate by coordinate, and a sequence so well-behaved that
-its arithmetic is an open book. Sometimes the most dangerous thing a secret can do
-is keep a perfect tally of itself.
+For the cryptographer, the lesson is sobering but valuable: min-plus algebra, in its raw form, is the wrong soil for a one-way function, because its beautiful transparency is exactly the property an attacker needs. For the mathematician, the lesson is exhilarating: the same handful of ideas that route packets across the internet and schedule trains through a network also decide, in a single elegant stroke, the fate of a cryptographic dream. Sometimes the deepest security question is really a question about shortest paths — and the tropics answer it in the open.
