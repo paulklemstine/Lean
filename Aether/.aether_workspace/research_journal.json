@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f4462f16",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — No-Stretching of Quotient Labelings from Edge Partitions\n\nThese conjectures grew out of a single structural discovery: when the edges of a\nconnected graph are partitioned into cl",
-      "quality_score": 0.79052,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-02T02:29:19",
-      "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
-    },
-    {
       "cycle_id": "135cab00",
       "domain": "Novelty",
       "key_insight": "# Future Directions — dominant weights of the form `λ_{D,I} = 2ρ − β_I − β_D`\n\nThe results of this cycle isolate the weight-theoretic core of the `π_{D,I}` construction: in the\nsimply-laced setting, d",
@@ -499,19 +489,19 @@
       "theorem_count": 81,
       "timestamp": "2026-07-10T02:59:14",
       "title": "The Topology of Knotted Light: How Laser Beams Get Tangled"
+    },
+    {
+      "cycle_id": "6490730e",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\nThis project formalizes the **generalized multinomial convolution identity**\n$$ \\sum_{i_1 + \\cdots + i_m = d} \\prod_{j=1}^{m} \\binom{a + i_j}{a}\n     = \\binom{ma + d + m - 1}{d},",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-10T03:16:46",
+      "title": "Generalized Multinomial Convolution Identity for Latin Rectangle Enumeration"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "03afc47a",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — GL(1) Langlands / global class field theory\n\nDerived from this cycle's findings (the canonical, order-preserving cyclotomic correspondence\nin `LanglandsGL1Correspondence.lean` an",
-      "quality_score": 0.6182000000000001,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-29T05:14:56",
-      "title": "Langlands Correspondence: GL(1) Case"
-    },
     {
       "cycle_id": "c78b961d",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 81,
       "timestamp": "2026-07-10T02:59:14",
       "title": "The Topology of Knotted Light: How Laser Beams Get Tangled"
+    },
+    {
+      "cycle_id": "6490730e",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\nThis project formalizes the **generalized multinomial convolution identity**\n$$ \\sum_{i_1 + \\cdots + i_m = d} \\prod_{j=1}^{m} \\binom{a + i_j}{a}\n     = \\binom{ma + d + m - 1}{d},",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-10T03:16:46",
+      "title": "Generalized Multinomial Convolution Identity for Latin Rectangle Enumeration"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "59aff0ea",
-      "domain": "Applications",
-      "name": "densityZero_of_count_le",
-      "quality": 0.8076800000000002
-    },
-    {
-      "cycle_id": "e50512ae",
-      "domain": "Applications",
-      "name": "is",
-      "quality": 0.74264
-    },
-    {
-      "cycle_id": "e50512ae",
-      "domain": "Applications",
-      "name": "sliceRankLE_zero",
-      "quality": 0.74264
-    },
     {
       "cycle_id": "e50512ae",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "ApproxLipschitzWith",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "6490730e",
+      "domain": "MachineLearning",
+      "name": "negBinom_conv",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "6490730e",
+      "domain": "MachineLearning",
+      "name": "sum_antidiagonalTuple_succ",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "6490730e",
+      "domain": "MachineLearning",
+      "name": "multinomial_conv",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-10T02:59:14",
+  "last_updated": "2026-07-10T03:16:46",
   "open_questions": [
     {
       "context": "mathematics).  It is recorded here as a hypothesis, with an honest `sorry`, and is used only; sorry",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "ad454ca1",
-        "quality": 0.6776,
-        "theorems": 15,
-        "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
-      },
-      {
         "cycle_id": "3847ce48",
         "quality": 0.75084,
         "theorems": 9,
@@ -3575,6 +3569,12 @@
         "quality": 0.78,
         "theorems": 81,
         "title": "The Topology of Knotted Light: How Laser Beams Get Tangled"
+      },
+      {
+        "cycle_id": "6490730e",
+        "quality": 0.83,
+        "theorems": 8,
+        "title": "Generalized Multinomial Convolution Identity for Latin Rectangle Enumeration"
       }
     ],
     "Novelty": [

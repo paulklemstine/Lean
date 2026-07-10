@@ -4,6 +4,20 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 6490730e (Q=0.830), which proved 8 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For all natural numbers m, a, and d, the sum over all m-tuples (i_1, ..., i_m) of non-negative integers summing to d of the product of binomial coefficients \u220f_{j=1}^{m} C(a + i_j, a) equals C(ma + d + m - 1, d). This generalizes the identity stated in the paper for m=3 (used to simplify the Bogart-L",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_6490730e_4c7375d5",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "6490730e",
+    "status": "available",
+    "timestamp": "2026-07-10T03:16:46.250984+00:00",
+    "title": "Deepening: Generalized Multinomial Convolution Identity for Latin Rectangle Enumeration"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 7e60f6c2 (Q=0.830), which proved 23 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search fractal dimension D(T) of a theorem T as the Hausdorff dimension of the set of all successful proof path",
     "domains": [
       "Bridges"
@@ -130,7 +144,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Topology of Knotted Light: How Laser Beams Get Tangled"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ee4d4ab6",
     "description": "In 2023, Smith et al. discovered 'the hat' \u2014 a single tile shape that tiles the plane but only aperiodically (no periodic tiling exists). This solved the aperiodic monotile problem. But deeper questions remain: How many distinct aperiodic monotiles exist? Conjecture: The set of aperiodic monotiles forms a 1-parameter family (the 'hat spectrum') parameterized by a continuous parameter t in [0,1] where t=0 gives the hat, t=1 gives the turtle (a known variant), and intermediate values give intermediate shapes. The key property: each shape in the hat spectrum tiles the plane aperiodically, and no two shapes in the spectrum admit a common periodic tiling. The boundary of the hat spectrum is the curve in R^2 that separates the region of aperiodic monotiles from the region of periodic tiles. This boundary is a piecewise-smooth curve determined by the constraint that the tile must enforce a hierarchical substitution rule. Test: parameterize the hat spectrum by interpolating between the hat and turtle, compute the substitution rule for each t, and verify that the substitution rule enforces aperiodicity for all t in [0,1]. Impact: aperiodic monotiles are not isolated curiosities \u2014 they form a continuous family, and the hat is just one point on the spectrum.",
     "domains": [
       "Novelty",
@@ -140,7 +154,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T02:06:58.773372+00:00",
     "title": "The Aperiodic Monotile: One Shape to Tile Them All"
   },
@@ -215,6 +229,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T02:59:14.834105+00:00",
     "title": "Close Proofs: The Topology of Knotted Light: How Laser Beams Get Tangled"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The primes have density 0 in the integers, but what is the Hausdorff dimension of the set of primes viewed as a subset of R? Define the 'prime fractal' P as the set of primes with the metric d(p,q) = |1/log(p) - 1/log(q)|. This metric stretches out the primes so that the twin primes are close together and the large primes are spread out. Conjecture: The Hausdorff dimension dim_H(P, d) = 1. The primes with this metric are essentially a 1-dimensional set \u2014 they fill out a line when viewed through the logarithmic lens. This is because the prime number theorem pi(x) ~ x/log(x) means that in the d-metric, the 'length' of the primes up to x is sum_{p <= x} d(p, p+1) ~ sum_{p <= x} 1/(p*log(p)) ~ log(log(x)), which diverges. So the primes are 'long enough' to be 1-dimensional. But the Hausdorff dimension might be > 1 if the primes have fractal structure at small scales. In fact, dim_H(P, d) > 1 would mean the primes are more than a line \u2014 they have 'wrinkles' that fill more space. The twin prime conjecture predicts that there are infinitely many pairs of primes at d-distance ~ 1/(p*log(p)), creating a fractal dust that increases the dimension. Conjecture: dim_H(P, d) = 1 + epsilon where epsilon depends on the density of twin primes. If the twin prime conjecture is true, epsilon > 0. Test: estimate dim_H(P, d) by box-counting for primes up to 10^12 and verify it is close to 1 (or slightly above). Impact: the primes are a fractal with dimension 1 + epsilon, where epsilon measures the abundance of twin primes. If twin primes are infinite, the primes are more than a line \u2014 they are a fractal curve.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0836",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T03:16:18.428249+00:00",
+    "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
   },
   {
     "consumed_by_exp_id": "",
@@ -6776,20 +6805,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Threshold for No-$(k+1)$-in-line Problem"
   },
   {
-    "consumed_by_exp_id": "6490730e",
-    "description": "For all natural numbers m, a, and d, the sum over all m-tuples (i_1, ..., i_m) of non-negative integers summing to d of the product of binomial coefficients \u220f_{j=1}^{m} C(a + i_j, a) equals C(ma + d + m - 1, d). This generalizes the identity stated in the paper for m=3 (used to simplify the Bogart-Longyear formula for 3-row Latin rectangles), where the paper claims it is 'easily proved with dots and dividers.' The generalization connects directly to Gessel's framework through multisymmetric function generating series.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "fd_0561",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.05214v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T16:25:25.291005+00:00",
-    "title": "Generalized Multinomial Convolution Identity for Latin Rectangle Enumeration"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "There exists a constant \u03b4 > 0 such that for every n \u2265 2, there is a set P of n points in \u211d\u00b2 where every subset A \u2286 P of size \u2265 2 contains a distance occurring at least \u2308|A|\u00b2/n^(1\u2212\u03b4)\u2309 times as an ordered pair. This is the main theorem of the paper, establishing that Minkowski grids derived from number fields of high degree have robustly many repeated distances, vertically amplifying the Croot\u2013Mao\u2013Pohoata\u2013Sheffer\u2013Yip robust Ramanujan estimate for the ordinary square grid.",
     "domains": [
@@ -10172,6 +10187,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-09T19:55:16.452095+00:00",
     "title": "Close Proofs: Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a werewolf). The villagers win if all werewolves are eliminated; the werewolves win if they equal or outnumber villagers. Conjecture: The optimal Bayesian strategy for villagers is to vote for the player with the highest posterior probability of being a werewolf, where the prior is k/n and the likelihood updates are based on the player's voting pattern and survival. More precisely, define the werewolf posterior P(W_i | evidence) using Bayes' theorem: P(W_i) = k/n (prior), P(evidence | W_i) = product of conditional probabilities of observed events given that player i is a werewolf. The optimal strategy maximizes P(villagers win) = P(correct elimination at each day round). For n=7, k=2: the villagers' win probability with optimal Bayesian play is approximately 0.36 (known from game theory). Conjecture: For general n and k, the villagers' win probability is approximately C * (1 - k/(n-k))^2 where C is a constant depending on the information structure. Test: simulate 10^6 games with n=7 to n=20 players and Bayesian villagers, measure the win probability, and fit to the conjectured formula. Impact: social deduction has an optimal Bayesian strategy, and the werewolves' advantage scales as (k/(n-k))^2.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0837",
+    "priority_score": 0.72,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T03:16:18.512491+00:00",
+    "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
   },
   {
     "consumed_by_exp_id": "",
