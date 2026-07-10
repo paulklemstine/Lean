@@ -1,429 +1,234 @@
-#!/usr/bin/env python3
 """
-Demo: Ramsey Theory of DNA — K-mer Avoidance in Genetic Codes
-=============================================================
+Numerical demonstrations of forced structure in symbolic sequences.
 
-Numerical demonstrations of the pigeonhole principle for k-mers,
-subword complexity profiles, composition bias effects, and
-de Bruijn sequence construction.
+Two forcing phenomena are illustrated:
+
+1. Linear forcing (pigeonhole block-repetition threshold): over a q-symbol
+   alphabet there are only q**m distinct length-m blocks, so once more than
+   q**m sliding windows are examined two must coincide. The threshold is sharp:
+   de Bruijn sequences expose exactly q**m distinct windows before repeating.
+
+2. Relational forcing (Ramsey R(3,3) <= 6): every symmetric two-coloring of the
+   pairs among six objects contains a monochromatic triangle.
+
+All functions are self-contained with type hints.
 """
 
+from __future__ import annotations
+
+import itertools
 import random
-import math
-from collections import Counter
-from typing import List, Tuple, Dict, Optional
+from typing import Dict, List, Optional, Sequence, Tuple
 
-# ============================================================
-# Core Functions (inlined for standalone operation)
-# ============================================================
+# --------------------------------------------------------------------------- #
+# 1. Linear forcing: repeated m-mers along a sequence                          #
+# --------------------------------------------------------------------------- #
 
-BASES = ['A', 'C', 'G', 'T']
+DNA: str = "ACGT"
 
 
-def kmer_at(seq: List[str], k: int, i: int) -> Tuple[str, ...]:
-    return tuple(seq[i:i + k])
+def mer(seq: Sequence[int], m: int, i: int) -> Tuple[int, ...]:
+    """The length-m contiguous block (m-mer) of `seq` starting at position i."""
+    return tuple(seq[i + j] for j in range(m))
 
 
-def all_kmers(seq: List[str], k: int) -> List[Tuple[str, ...]]:
-    if k <= 0 or len(seq) < k:
-        return []
-    return [kmer_at(seq, k, i) for i in range(len(seq) - k + 1)]
+def first_repeated_mer(
+    seq: Sequence[int], m: int
+) -> Optional[Tuple[int, int, Tuple[int, ...]]]:
+    """Return (i, j, block) for the first repeated m-mer, or None if none exists.
 
-
-def subword_complexity(seq: List[str], k: int) -> int:
-    return len(set(all_kmers(seq, k)))
-
-
-def is_repeat_free(seq: List[str], k: int) -> bool:
-    kmers = all_kmers(seq, k)
-    return len(kmers) == len(set(kmers))
-
-
-def find_first_repeat(seq: List[str], k: int) -> Optional[Tuple[int, int, Tuple[str, ...]]]:
-    seen: Dict[Tuple[str, ...], int] = {}
-    for i in range(len(seq) - k + 1):
-        kmer = kmer_at(seq, k, i)
-        if kmer in seen:
-            return (seen[kmer], i, kmer)
-        seen[kmer] = i
+    By the pigeonhole threshold, if the number of windows exceeds q**m a repeat
+    is guaranteed; this loop returns it as early as it appears.
+    """
+    seen: Dict[Tuple[int, ...], int] = {}
+    windows = len(seq) - m + 1
+    for i in range(windows):
+        block = mer(seq, m, i)
+        if block in seen:
+            return seen[block], i, block
+        seen[block] = i
     return None
 
 
-def compositional_entropy(seq: List[str]) -> float:
-    if not seq:
-        return 0.0
-    counts = Counter(seq)
-    n = len(seq)
-    return -sum((c / n) * math.log2(c / n) for c in counts.values() if c > 0)
+def distinct_mer_count(seq: Sequence[int], m: int, n_windows: int) -> int:
+    """Number of distinct m-mers among the first `n_windows` window positions."""
+    blocks = {mer(seq, m, i) for i in range(min(n_windows, len(seq) - m + 1))}
+    return len(blocks)
 
 
-def generate_de_bruijn(alpha: int, k: int) -> List[int]:
-    sequence: List[int] = []
-    a = [0] * (alpha * k)
+def repeat_free_windows(seq: Sequence[int], m: int) -> int:
+    """Largest prefix length of windows that are all distinct (repeat-free run)."""
+    seen: Dict[Tuple[int, ...], int] = {}
+    windows = len(seq) - m + 1
+    for i in range(windows):
+        block = mer(seq, m, i)
+        if block in seen:
+            return i  # windows 0..i-1 were distinct
+        seen[block] = i
+    return windows
+
+
+def de_bruijn(q: int, m: int) -> List[int]:
+    """A de Bruijn sequence B(q, m): a cyclic q-ary word of length q**m in which
+    every length-m block occurs exactly once (Prefer-largest / FKM algorithm)."""
+    a: List[int] = [0] * (q * m)
+    out: List[int] = []
+
     def db(t: int, p: int) -> None:
-        if t > k:
-            if k % p == 0:
-                sequence.extend(a[1:p + 1])
+        if t > m:
+            if m % p == 0:
+                out.extend(a[1 : p + 1])
         else:
             a[t] = a[t - p]
             db(t + 1, p)
-            for j in range(a[t - p] + 1, alpha):
-                a[t] = j
+            for c in range(a[t - p] + 1, q):
+                a[t] = c
                 db(t + 1, t)
+
     db(1, 1)
-    sequence.extend(sequence[:k - 1])
-    return sequence
+    return out
 
 
-# ============================================================
-# DEMO 1: Pigeonhole Principle Verification
-# ============================================================
+def random_dna(length: int, seed: int = 0) -> List[int]:
+    """A uniformly random nucleotide sequence of the given length."""
+    rng = random.Random(seed)
+    return [rng.randrange(4) for _ in range(length)]
 
-def demo_pigeonhole():
+
+# --------------------------------------------------------------------------- #
+# 2. Relational forcing: Ramsey R(3,3) <= 6                                    #
+# --------------------------------------------------------------------------- #
+
+def monochromatic_triangle(
+    color: List[List[bool]],
+) -> Optional[Tuple[int, int, int, bool]]:
+    """Given a symmetric 6x6 Boolean color matrix, return (a, b, d, x) for a
+    monochromatic triangle of color x, following the fixed-vertex pigeonhole
+    proof of R(3,3) <= 6. Never returns None for a valid 6-vertex coloring."""
+    n = len(color)
+    v = 0
+    # Bucket v's neighbors by edge color.
+    buckets: Dict[bool, List[int]] = {True: [], False: []}
+    for k in range(n):
+        if k != v:
+            buckets[color[v][k]].append(k)
+    for x, nbrs in buckets.items():
+        if len(nbrs) >= 3:
+            a, b, d = nbrs[0], nbrs[1], nbrs[2]
+            # If any inner edge is color x, it closes an x-triangle with v.
+            if color[a][b] == x:
+                return (v, a, b, x)
+            if color[a][d] == x:
+                return (v, a, d, x)
+            if color[b][d] == x:
+                return (v, b, d, x)
+            # Otherwise all inner edges are the opposite color -> {a,b,d} mono.
+            return (a, b, d, not x)
+    return None
+
+
+def verify_ramsey_R33_exhaustive() -> bool:
+    """Check ALL 2**15 symmetric two-colorings of K_6: each has a mono triangle."""
+    pairs = list(itertools.combinations(range(6), 2))
+    for bits in range(1 << len(pairs)):
+        color = [[False] * 6 for _ in range(6)]
+        for idx, (i, j) in enumerate(pairs):
+            c = bool((bits >> idx) & 1)
+            color[i][j] = c
+            color[j][i] = c
+        if monochromatic_triangle(color) is None:
+            return False
+    return True
+
+
+def pentagon_coloring_on_five() -> List[List[bool]]:
+    """The triangle-free two-coloring of K_5 witnessing R(3,3) > 5:
+    color edge {i,j} True iff j - i is +/-1 mod 5 (the pentagon)."""
+    color = [[False] * 5 for _ in range(5)]
+    for i in range(5):
+        for j in range(5):
+            if i != j:
+                d = (j - i) % 5
+                color[i][j] = d in (1, 4)
+    return color
+
+
+def has_mono_triangle_general(color: List[List[bool]]) -> bool:
+    """Brute-force: does the coloring have any monochromatic triangle?"""
+    n = len(color)
+    for a, b, d in itertools.combinations(range(n), 3):
+        if color[a][b] == color[a][d] == color[b][d]:
+            return True
+    return False
+
+
+# --------------------------------------------------------------------------- #
+# Demonstration driver                                                         #
+# --------------------------------------------------------------------------- #
+
+def main() -> None:
     print("=" * 70)
-    print("DEMO 1: Pigeonhole Principle for DNA K-mers")
-    print("=" * 70)
-    print()
-    
-    for k in [2, 3, 4, 5]:
-        threshold = 4**k + k
-        max_free = 4**k + k - 1
-        print(f"  k = {k}: 4^{k} = {4**k} possible {k}-mers")
-        print(f"    Ramsey threshold: {threshold}")
-        print(f"    Max repeat-free length: {max_free}")
-        
-        # Generate random sequences and find where first repeat occurs
-        first_repeats = []
-        for _ in range(1000):
-            seq = [random.choice(BASES) for _ in range(max_free + 10)]
-            result = find_first_repeat(seq, k)
-            if result:
-                first_repeats.append(result[1])
-        
-        if first_repeats:
-            avg = sum(first_repeats) / len(first_repeats)
-            print(f"    Average first repeat position (random): {avg:.1f}")
-            print(f"    Ratio to threshold: {avg / threshold:.3f}")
-        print()
-    
-    # Verify the theorem: sequence of length 260 always has repeated 4-mer
-    print("  Verification: 10000 random DNA sequences of length 260...")
-    all_have_repeat = True
-    for _ in range(10000):
-        seq = [random.choice(BASES) for _ in range(260)]
-        if is_repeat_free(seq, 4):
-            all_have_repeat = False
-            break
-    print(f"    All have repeated 4-mer: {all_have_repeat} ✓")
-    print()
-
-
-# ============================================================
-# DEMO 2: De Bruijn Sequences — Optimal Repeat-Free Sequences
-# ============================================================
-
-def demo_de_bruijn():
-    print("=" * 70)
-    print("DEMO 2: De Bruijn Sequences — Optimal K-mer Coverage")
-    print("=" * 70)
-    print()
-    
-    for k in [2, 3, 4]:
-        db_seq = generate_de_bruijn(4, k)
-        dna_seq = [BASES[x] for x in db_seq]
-        n = len(dna_seq)
-        c = subword_complexity(dna_seq, k)
-        is_free = is_repeat_free(dna_seq, k)
-        
-        print(f"  De Bruijn sequence (k={k}):")
-        print(f"    Length: {n} (= 4^{k} + {k} - 1 = {4**k + k - 1})")
-        print(f"    Distinct {k}-mers: {c} (= 4^{k} = {4**k})")
-        print(f"    Is {k}-repeat-free: {is_free}")
-        if n <= 30:
-            print(f"    Sequence: {''.join(dna_seq)}")
-        else:
-            print(f"    First 30 bases: {''.join(dna_seq[:30])}...")
-        print()
-
-
-# ============================================================
-# DEMO 3: Subword Complexity Profiles
-# ============================================================
-
-def demo_complexity_profiles():
-    print("=" * 70)
-    print("DEMO 3: Subword Complexity Profiles")
-    print("=" * 70)
-    print()
-    
-    n = 500
-    
-    # Random uniform DNA
-    random_seq = [random.choice(BASES) for _ in range(n)]
-    
-    # AT-biased DNA (70% AT, 30% GC — like some organisms)
-    biased_weights = [0.35, 0.15, 0.15, 0.35]  # A, C, G, T
-    biased_seq = random.choices(BASES, weights=biased_weights, k=n)
-    
-    # Periodic DNA (microsatellite-like: ATATATAT...)
-    periodic_seq = [BASES[i % 2 * 3] for i in range(n)]  # AT repeat
-    
-    sequences = {
-        "Random uniform": random_seq,
-        "AT-biased (70%)": biased_seq,
-        "Periodic (AT)n": periodic_seq,
-    }
-    
-    for name, seq in sequences.items():
-        h = compositional_entropy(seq)
-        print(f"  {name}:")
-        print(f"    Entropy: {h:.3f} bits (max = {math.log2(4):.3f})")
-        print(f"    Complexity profile C(k):")
-        for k in [1, 2, 3, 4, 5, 6]:
-            c = subword_complexity(seq, k)
-            max_c = min(n - k + 1, 4**k)
-            ratio = c / max_c if max_c > 0 else 0
-            print(f"      C({k}) = {c:6d} / {max_c:6d} = {ratio:.3f}")
-        
-        # Find first repeat
-        for k in [3, 4, 5, 6]:
-            result = find_first_repeat(seq, k)
-            if result:
-                pos = result[1]
-                print(f"    First {k}-mer repeat at position {pos} "
-                      f"(threshold = {4**k + k})")
-        print()
-
-
-# ============================================================
-# DEMO 4: Composition Bias Effect on Repeat Distance
-# ============================================================
-
-def demo_composition_bias():
-    print("=" * 70)
-    print("DEMO 4: Composition Bias and K-mer Repeat Forcing")
-    print("=" * 70)
-    print()
-    
-    k = 4
-    n = 1000
-    num_trials = 1000
-    
-    bias_levels = [
-        ("Uniform (25% each)", [0.25, 0.25, 0.25, 0.25]),
-        ("Mild bias (30/20/30/20)", [0.30, 0.20, 0.30, 0.20]),
-        ("Strong bias (40/10/40/10)", [0.40, 0.10, 0.40, 0.10]),
-        ("Extreme bias (45/5/45/5)", [0.45, 0.05, 0.45, 0.05]),
-        ("Binary (50/0/50/0)", [0.50, 0.00, 0.50, 0.00]),
-    ]
-    
-    for name, weights in bias_levels:
-        # Fix zero weights
-        adj_weights = [max(w, 0.001) for w in weights]
-        
-        first_repeats = []
-        for _ in range(num_trials):
-            if sum(w > 0.01 for w in weights) <= 2:
-                bases_used = [b for b, w in zip(BASES, weights) if w > 0.01]
-                seq = [random.choice(bases_used) for _ in range(n)]
-            else:
-                seq = random.choices(BASES, weights=adj_weights, k=n)
-            result = find_first_repeat(seq, k)
-            if result:
-                first_repeats.append(result[1])
-        
-        if first_repeats:
-            avg = sum(first_repeats) / len(first_repeats)
-            eff_alpha = len([w for w in weights if w > 0.01])
-            theory_threshold = eff_alpha ** k + k
-            print(f"  {name}:")
-            print(f"    Effective alphabet: {eff_alpha}")
-            print(f"    Theoretical threshold: {theory_threshold}")
-            print(f"    Avg first repeat: {avg:.1f}")
-            print(f"    Compression ratio: {avg / (4**k + k):.3f}")
-    print()
-
-
-# ============================================================
-# DEMO 5: Ramsey Threshold Table
-# ============================================================
-
-def demo_threshold_table():
-    print("=" * 70)
-    print("DEMO 5: Ramsey Thresholds for Various Alphabets and K-mer Lengths")
-    print("=" * 70)
-    print()
-    
-    alphas = [2, 3, 4, 5, 10, 20]
-    ks = [1, 2, 3, 4, 5, 6, 8, 10]
-    
-    header = 'a\\k'
-    print(f"  {header:>6}", end="")
-    for k in ks:
-        print(f"  {k:>10}", end="")
-    print()
-    print("  " + "-" * (6 + 12 * len(ks)))
-    
-    for alpha in alphas:
-        print(f"  {alpha:>6}", end="")
-        for k in ks:
-            threshold = alpha ** k + k
-            if threshold > 10**9:
-                print(f"  {'> 10^9':>10}", end="")
-            else:
-                print(f"  {threshold:>10}", end="")
-        print()
-    
-    print()
-    print("  Table shows α^k + k: minimum sequence length guaranteeing")
-    print("  a repeated k-mer over alphabet of size α.")
-    print()
-
-
-# ============================================================
-# RUN ALL DEMOS
-# ============================================================
-
-if __name__ == "__main__":
-    random.seed(42)
-    
-    print()
-    print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║  RAMSEY THEORY OF DNA: K-MER AVOIDANCE IN GENETIC CODES           ║")
-    print("║  Numerical Demonstrations                                          ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
-    print()
-    
-    demo_pigeonhole()
-    demo_de_bruijn()
-    demo_complexity_profiles()
-    demo_composition_bias()
-    demo_threshold_table()
-    
-    print("=" * 70)
-    print("All demonstrations complete.")
+    print("1. LINEAR FORCING: repeated m-mers (q = 4, DNA)")
     print("=" * 70)
 
+    # Tetramer threshold: 4**4 = 256, so 257 windows force a repeat.
+    print(f"Number of possible tetramers 4^4 = {4 ** 4}")
+    print("Threshold: any 257 consecutive windows contain a repeated tetramer.")
+    seq = random_dna(257 + 3, seed=1)  # 257 full 4-mer windows
+    rep = first_repeated_mer(seq, 4)
+    assert rep is not None, "pigeonhole guarantees a repeat"
+    i, j, block = rep
+    letters = "".join(DNA[b] for b in block)
+    print(f"  First repeated tetramer '{letters}' at positions {i} and {j}\n")
 
-#!/usr/bin/env python3
-"""
-Visualization: Subword Complexity Profiles for DNA Sequences
+    # Hexamer corrected constant: 4**6 = 4096, need L >= 4102 raw bases.
+    print(f"Number of possible hexamers 4^6 = {4 ** 6}")
+    print("Threshold: 4097 windows force a repeated hexamer -> L >= 4102 bases.")
+    seq6 = random_dna(4102, seed=2)
+    rep6 = first_repeated_mer(seq6, 6)
+    assert rep6 is not None
+    print(f"  Repeated hexamer found (positions {rep6[0]}, {rep6[1]}).\n")
 
-Compares complexity profiles C(k) for random, biased, and periodic
-DNA sequences against theoretical bounds.
-"""
+    print("=" * 70)
+    print("2. SHARPNESS: de Bruijn sequences saturate the bound N <= q^m")
+    print("=" * 70)
+    for q, m in [(2, 3), (4, 2), (4, 3)]:
+        db = de_bruijn(q, m)
+        cyclic = db + db[: m - 1]  # unwrap the cycle to expose all q^m windows
+        rf = repeat_free_windows(cyclic, m)
+        print(f"  B({q},{m}): length {len(db)} = q^m = {q ** m}; "
+              f"repeat-free windows = {rf} (= q^m).")
+    print()
 
-import random
-import math
-from collections import Counter
-from typing import List, Tuple
+    print("=" * 70)
+    print("3. RANDOM vs FORCED repetition")
+    print("=" * 70)
+    rand_seq = random_dna(4000, seed=7)
+    rf_rand = repeat_free_windows(rand_seq, 4)
+    print(f"  Random genome: first tetramer repeat after {rf_rand} windows "
+          f"(upper limit {4 ** 4}).")
+    # A low-complexity 'microsatellite' region repeats almost immediately.
+    micro = ([0, 1] * 2000)  # 'ACACAC...' -> tetramer ACAC repeats at once
+    rf_micro = repeat_free_windows(micro, 4)
+    print(f"  Microsatellite (ACAC...): first tetramer repeat after "
+          f"{rf_micro} windows -> heavily forced by biology.\n")
 
-# Try matplotlib, fall back gracefully
-try:
-    import matplotlib
-    matplotlib.use('Agg')
-    import matplotlib.pyplot as plt
-    HAS_MPL = True
-except ImportError:
-    HAS_MPL = False
-    print("matplotlib not available; generating text output instead.")
-
-
-BASES = ['A', 'C', 'G', 'T']
-
-
-def kmer_at(seq: List[str], k: int, i: int) -> Tuple[str, ...]:
-    return tuple(seq[i:i + k])
-
-
-def subword_complexity(seq: List[str], k: int) -> int:
-    if k <= 0 or len(seq) < k:
-        return 0
-    kmers = set()
-    for i in range(len(seq) - k + 1):
-        kmers.add(kmer_at(seq, k, i))
-    return len(kmers)
-
-
-def compositional_entropy(seq: List[str]) -> float:
-    if not seq:
-        return 0.0
-    counts = Counter(seq)
-    n = len(seq)
-    return -sum((c / n) * math.log2(c / n) for c in counts.values() if c > 0)
-
-
-def main():
-    random.seed(42)
-    n = 2000
-    max_k = 10
-    
-    # Generate sequences
-    random_seq = [random.choice(BASES) for _ in range(n)]
-    biased_seq = random.choices(BASES, weights=[0.4, 0.1, 0.1, 0.4], k=n)
-    periodic_seq = ['A' if i % 4 < 2 else ('C' if i % 4 == 2 else 'G')
-                    for i in range(n)]
-    
-    sequences = {
-        "Random uniform (H=2.0)": random_seq,
-        "AT-biased 80% (H≈1.5)": biased_seq,
-        "Periodic ACG (H=1.58)": periodic_seq,
-    }
-    
-    ks = list(range(1, max_k + 1))
-    
-    # Compute profiles
-    profiles = {}
-    for name, seq in sequences.items():
-        h = compositional_entropy(seq)
-        profiles[name] = [subword_complexity(seq, k) for k in ks]
-    
-    # Theoretical bound
-    theory_bound = [min(n - k + 1, 4**k) for k in ks]
-    
-    if HAS_MPL:
-        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-        
-        # Plot 1: Absolute complexity
-        colors = ['#2196F3', '#FF5722', '#4CAF50']
-        for (name, profile), color in zip(profiles.items(), colors):
-            ax1.plot(ks, profile, 'o-', label=name, color=color, linewidth=2)
-        ax1.plot(ks, theory_bound, 'k--', label='Theoretical max (4^k)',
-                 linewidth=1.5, alpha=0.5)
-        ax1.set_xlabel('k-mer length k', fontsize=12)
-        ax1.set_ylabel('Distinct k-mers C(k)', fontsize=12)
-        ax1.set_title('Subword Complexity Profiles', fontsize=14)
-        ax1.set_yscale('log')
-        ax1.legend(fontsize=9)
-        ax1.grid(True, alpha=0.3)
-        
-        # Plot 2: Normalized complexity (C(k) / 4^k)
-        for (name, profile), color in zip(profiles.items(), colors):
-            normalized = [c / (4**k) for c, k in zip(profile, ks)]
-            ax2.plot(ks, normalized, 'o-', label=name, color=color, linewidth=2)
-        ax2.axhline(y=1.0, color='k', linestyle='--', alpha=0.3,
-                     label='Maximum (de Bruijn)')
-        ax2.set_xlabel('k-mer length k', fontsize=12)
-        ax2.set_ylabel('C(k) / 4^k (normalized)', fontsize=12)
-        ax2.set_title('Normalized Complexity (Saturation)', fontsize=14)
-        ax2.legend(fontsize=9)
-        ax2.grid(True, alpha=0.3)
-        ax2.set_ylim(0, 1.1)
-        
-        plt.tight_layout()
-        plt.savefig('complexity_profiles.png', dpi=150, bbox_inches='tight')
-        print("Saved complexity_profiles.png")
-    else:
-        print("\nSubword Complexity Profiles:")
-        print(f"{'k':>4} {'Theory':>10}", end="")
-        for name in profiles:
-            print(f" {name[:15]:>16}", end="")
-        print()
-        for i, k in enumerate(ks):
-            print(f"{k:>4} {theory_bound[i]:>10}", end="")
-            for profile in profiles.values():
-                print(f" {profile[i]:>16}", end="")
-            print()
+    print("=" * 70)
+    print("4. RELATIONAL FORCING: Ramsey R(3,3) <= 6")
+    print("=" * 70)
+    ok = verify_ramsey_R33_exhaustive()
+    print(f"  All 2^15 = 32768 symmetric two-colorings of K_6 checked: "
+          f"every one has a monochromatic triangle -> {ok}")
+    # Show the R(3,3) > 5 witness: the pentagon coloring of K_5 is triangle-free.
+    penta = pentagon_coloring_on_five()
+    print(f"  Pentagon two-coloring of K_5 has a monochromatic triangle? "
+          f"{has_mono_triangle_general(penta)}  (False => R(3,3) > 5)")
+    # A concrete K_6 example.
+    example = [[bool((i + j) % 2) for j in range(6)] for i in range(6)]
+    for i in range(6):
+        example[i][i] = False
+    tri = monochromatic_triangle(example)
+    print(f"  Example K_6 coloring -> monochromatic triangle {tri}")
 
 
 if __name__ == "__main__":
