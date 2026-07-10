@@ -6000,7 +6000,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Tensor Amplification and Spectral Transfer for Sidorenko-Type Inequali"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "00abb0ac",
     "description": "An argumentation framework AF = (A, R) consists of a set of arguments A and an attack relation R subset A x A. The preferred extensions of AF are the maximal admissible sets (subsets S of A that defend themselves against all attacks and are maximal with this property). Conjecture: the preferred extensions of AF form a simplicial complex K(AF) on the vertex set A. The homology groups H_n(K(AF)) measure the 'holes' in the argumentation structure. H_0 measures the number of connected components (independent debate threads). H_1 measures circular arguments (cycles where each argument attacks the next, and the last attacks the first). H_2 measures 'spheres' of arguments (3D cycles where arguments form a spherical shell). Conjecture: for any argumentation framework, the Euler characteristic chi(K(AF)) = |A| - |R| + sum_{n>=2} (-1)^n * dim(H_n) equals |preferred extensions| - |grounded extension size|. This connects the topology of the argument to its semantics. Test: construct K(AF) for 100 argumentation frameworks from debate transcripts, compute homology groups, and verify the Euler characteristic formula. Impact: arguments have topology. Circular arguments are 1-holes, and 3D argument spheres are 2-holes. The shape of a debate is a topological invariant.",
     "domains": [
       "Novelty",
@@ -6010,7 +6010,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.67,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T13:27:23.259777+00:00",
     "title": "The Topology of Argumentation: Why Debates Have Holes"
   },
