@@ -1778,6 +1778,17 @@ Research mode: {concept.research_mode}
                         except Exception as e:
                             print(f"[Extract] Failed to parse Aristotle self-score file {f}: {e}")
                         continue  # Don't treat self-score files as package deliverables
+
+                    # Verify that the JSON file has a 'title' field or is a list (future directions)
+                    try:
+                        import json as _json
+                        data = _json.loads(fp.read_text(encoding="utf-8", errors="ignore"))
+                        if isinstance(data, dict) and "title" not in data:
+                            print(f"[Extract] Skipping JSON file {f} because it lacks a 'title' field")
+                            continue
+                    except Exception as e:
+                        print(f"[Extract] Failed to verify JSON file {f}: {e}")
+
                     # JSON package files (PACKAGE.json or similar)
                     json_package_files.append(fp)
                 elif f.endswith(".md") and f not in ("README.md", "PROMPT.md"):
