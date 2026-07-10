@@ -102,6 +102,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle a1a5801c (Q=0.830), which proved 13 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Entropy H(X) = -sum p(x) log p(x) measures the information content of a random variable. In category theory, a functor F: C -> D 'loses information' when it maps non-isomorphic objects to isomorphic ones. Define the 'functorial entropy' H(F) as the expected information lost by F: H(F) = -sum_{d in O",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_a1a5801c_723b33fc",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "a1a5801c",
+    "status": "available",
+    "timestamp": "2026-07-10T16:36:47.813346+00:00",
+    "title": "Deepening: Categorification of Entropy: The Information Loss of Functors"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 34e9f39c (Q=0.820), which proved 20 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Alexander polynomial Delta_K(t) of a knot K is a Laurent polynomial that encodes topological information about the knot. Conjecture: for any knot K with n crossings, the Alexander polynomial Delta_K(t) can be expressed as the generating function of lattice paths in Z^2 that avoid a region determ",
     "domains": [
       "Applications"
@@ -369,6 +383,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Aperiodic Monotile: One Shape to Tile Them All"
   },
   {
+    "consumed_by_exp_id": "3a52b537",
+    "description": "The probabilistic method proves existence by showing that a random structure has the desired property with positive probability. Key results: (1) Erdos's lower bound on Ramsey numbers: R(k,k) > 2^{k/2}. (2) The Lovasz local lemma: if bad events A_1, ..., A_n satisfy P(A_i) <= p and each A_i is independent of all but d others, and e*p*(d+1) <= 1, then P(AND not A_i) > 0. (3) Turan's theorem: the maximum number of edges in a K_{r+1}-free graph on n vertices is (1 - 1/r) * n^2/2. Conjecture: all three results can be formalized in Lean 4 without axiom of choice. The key is to replace non-constructive existence proofs with explicit constructions: (1) The probabilistic proof of R(k,k) > 2^{k/2} uses the expectation argument, which is constructive (compute the expected number of monochromatic K_k and show it's less than 1). (2) The Lovasz local lemma can be made constructive via Moser-Tardos algorithm. (3) Turan's theorem has an explicit construction (the Turan graph). Conjecture: the Moser-Tardos algorithm runs in expected time O(n*d*log(1/p)) and produces a satisfying assignment with probability 1 (constructive LLL). Test: formalize all three results in Lean 4 and verify the proofs compile. Impact: the probabilistic method is constructive. Erdos's existence proofs are algorithms in disguise.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0916",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-10T16:36:20.054846+00:00",
+    "title": "Formalizing the Probabilistic Method: Erdos Meets Lean"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "The Langlands program connects Galois groups (shapes) to automorphic forms (colors). Think of it this way: a Galois group is the group of symmetries of a shape (like the rotational symmetries of a polygon). An automorphic form is a coloring that respects the shape's symmetries (like a coloring of the polygon's vertices that is invariant under rotation). The Langlands correspondence says: for every 'shape' (Galois representation), there is a matching 'color' (automorphic form) and vice versa. Conjecture: This correspondence is a bijection between irreducible representations of Gal(Q_bar/Q) and cuspidal automorphic representations of GL_n over Q. For n=1, this is class field theory (every abelian extension of Q corresponds to a Dirichlet character). For n=2, this is the modularity theorem (every elliptic curve over Q corresponds to a weight-2 cusp form). The toddler version: each shape has exactly one matching color, and each color has exactly one matching shape. Test: verify the correspondence for all degree-2 extensions of Q up to discriminant 1000. Verify that each quadratic field Q(sqrt(d)) corresponds to a Dirichlet character chi_d via the correspondence chi_d(p) = (d/p) (Legendre symbol). Impact: Langlands is just shape-color matching. Shapes and colors are two ways of seeing the same mathematical object.",
     "domains": [
@@ -424,6 +453,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T01:14:02.439834+00:00",
     "title": "Close Proofs: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Pr"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle a1a5801c (Q=0.830) proved 13 theorems in Computation but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Entropy H(X) = -sum p(x) log p(x) measures the information content of a random variable. In category theory, a functor F: C -> D 'loses information' when it maps non-isomorphic objects to isomorphic o",
+    "domains": [
+      "Computation"
+    ],
+    "id": "sorry_fill_a1a5801c_6c02ebc9",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "a1a5801c",
+    "status": "available",
+    "timestamp": "2026-07-10T16:36:47.874532+00:00",
+    "title": "Close Proofs: Categorification of Entropy: The Information Loss of Functors"
   },
   {
     "consumed_by_exp_id": "",
@@ -540,6 +583,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-08T16:01:43.810023+00:00",
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Riemann-Roch theorem for graphs (Baker-Norine, 2007) states that for a divisor D on a graph G, l(D) - l(K_G - D) = deg(D) + 1 - g(G) where l(D) is the rank of D, K_G is the canonical divisor, and g(G) is the genus (cyclomatic number). The chip-firing game is a combinatorial model: vertices hold chips, and 'firing' a vertex sends one chip along each incident edge. Conjecture: for the complete graph K_n, the canonical divisor K_{K_n} has rank (n-1)(n-2)/2 - 1, and the Riemann-Roch formula gives l(D) = deg(D) + 1 - (n-1)(n-2)/2 + l(K_{K_n} - D). For D = K_{K_n} (the canonical divisor itself): l(K_{K_n}) = (n-1)(n-2)/2 - 1 + 1 - (n-1)(n-2)/2 + l(0) = 0 + l(0). But l(0) = 0 (the empty divisor has rank 0). So l(K_{K_n}) = 0. Wait, this gives l(K_{K_n}) = 0, but the canonical divisor of K_n should have positive rank. Conjecture: the canonical divisor of K_n is K_{K_n} = sum_v (deg(v) - 1) * v = (n-2) * sum_v v, and l(K_{K_n}) = (n-1)(n-2)/2 - 1 (it achieves the genus minus 1). Test: compute the canonical divisor and verify the Riemann-Roch formula for K_n with n = 3, 4, 5, 6. Impact: chip-firing on complete graphs encodes the same information as the Riemann-Roch theorem on projective curves.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0915",
+    "priority_score": 0.81,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T16:36:19.999072+00:00",
+    "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
   },
   {
     "consumed_by_exp_id": "",
@@ -5883,6 +5941,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Elementary but rigorous scaffolding around the Collat"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Categorification of Entropy\n\nThe file `FunctorialEntropy.lean` develops the information loss of a functor as the\nconditional entropy of the domain object given its image, for functors between\nfinite categories (modelled by the map they induce on the finite object sets).\nProven results: nonnegativity, the faithfulness criterion `H(F)=0 \u2194 F injective`,\nthe uniform-fiber formula `H(F)=log(|Ob C|/|Ob D|)`, the constant-functor value\n`log n`, the maximum-loss bound `H(F) \u2264 log n`, and the data-processing\ninequality `H(f) \u2264 H(g\u2218f)`. Natural extensions:\n\n1. **Chain rule / additivity.** Prove `H(g\u2218f) = H(f) + H_f(g)` for an appropriate\n   \"relative\" loss `H_f(g)`, mirroring `H(X,Y)=H(X)+H(Y|X)`.\n\n2. **Weighted / non-uniform priors.** Replace the uniform distribution on `Ob C`\n   by an arbitrary probability weight `w : Ob C \u2192 \u211d\u22650`, recovering full Shannon\n   conditional entropy; re-derive all theorems in that generality.\n\n3. **Morphism-level entropy.** The present notion only sees the action of `F` on\n   objects. A finer invariant would weight by hom-set collapse, quantifying loss\n   of morphism information (relating to faithfulness in the categorical sense,\n   not just injectivity on objects).\n\n4. **Infinite categories.** Formalize the description's `H(U)=\u221e` claim for the\n   forgetful functor `Top \u2192 Set` via an extended-nonnegative-reals or a limit of\n   finite truncations, once a suitable fiber-cardinality measure is available.\n\n5. **Functoriality of entropy itself.** Investigate whether `F \u21a6 H(F)` is\n   monotone/continuous with respect to natural orders on functors, and its\n   behaviour under products and coproducts of categories (expected additivity).\n\n6. **Connection to Leinster's magnitude / Baez\u2013Fritz\u2013Leinster entropy.** Compare\n   this conditional-entropy invariant with the categorical characterizations of\n   entropy in the literature.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0917",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a1a5801c",
+    "status": "available",
+    "timestamp": "2026-07-10T16:36:42.227177+00:00",
+    "title": "The file `FunctorialEntropy.lean` develops the information loss of a functor as "
+  },
+  {
     "consumed_by_exp_id": "76f66aa5",
     "description": "A ReLU network f: R -> R with L layers of width w is a piecewise linear function with at most w^L pieces. By the universal approximation theorem, such networks can approximate any continuous function. But HOW WELL can they approximate specific constants? Conjecture: a ReLU network with L layers of width w can approximate pi to within epsilon using O(w * L * log(1/epsilon)) parameters. More precisely, there exists a ReLU network f with L = O(log(log(1/epsilon))) layers and w = O(log(1/epsilon)) width such that |f(1) - pi| < epsilon. This is because pi can be computed by the Leibniz formula pi/4 = 1 - 1/3 + 1/5 - ..., and a ReLU network can implement the partial sums. The number of terms needed is O(1/epsilon), and each term can be computed by a constant-depth ReLU subnetwork. The depth needed is O(log(1/epsilon)) for the sum and O(log(log(1/epsilon))) for the individual terms. Conjecture: the approximation rate for rational numbers by ReLU networks is O(1/(w^L)), matching the piecewise linear structure. For irrational numbers like pi, the rate is O(1/(w * L * 2^L)), which is slower but still exponential in depth. Test: construct ReLU networks that approximate pi, e, and sqrt(2) and measure the approximation error as a function of network size. Impact: ReLU networks approximate constants at a rate determined by their depth and width. Pi requires O(log(log(1/epsilon))) depth.",
     "domains": [
@@ -5911,21 +5984,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-10T00:38:41.094757+00:00",
     "title": "Erdos-Renyi on Acid: Random Graphs That Hallucinate"
-  },
-  {
-    "consumed_by_exp_id": "a1a5801c",
-    "description": "Entropy H(X) = -sum p(x) log p(x) measures the information content of a random variable. In category theory, a functor F: C -> D 'loses information' when it maps non-isomorphic objects to isomorphic ones. Define the 'functorial entropy' H(F) as the expected information lost by F: H(F) = -sum_{d in Ob(D)} p(d) * log(p(d)) where p(d) = |F^{-1}(d)| / |Ob(C)|. Conjecture: For the forgetful functor U: Top -> Set that forgets the topology, H(U) = log(2^{aleph_0}) = aleph_0 (infinite entropy, because uncountably many topologies map to the same set). For the abelianization functor Ab: Grp -> AbGrp, H(Ab) = log(2) (each abelian group has 2 non-abelian preimages on average: G and G x Z/2Z). For the inclusion functor Inc: FinGrp -> Grp, H(Inc) = 0 (no information loss, since finite groups embed as themselves). Conjecture: H(F) = 0 iff F is faithful, and H(F) = infinity iff F identifies infinitely many non-isomorphic objects. For finite categories: H(F) = log(|Ob(C)| / |Ob(D)|) when F is 'uniform' (each fiber has the same size). Test: compute H(F) for various functors between finite categories and verify the formula. Impact: entropy is not just a measure-theoretic concept \u2014 it is the information-theoretic shadow of functoriality. Every functor loses information, and the entropy measures how much.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0896",
-    "priority_score": 0.73,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T12:39:07.582861+00:00",
-    "title": "Categorification of Entropy: The Information Loss of Functors"
   },
   {
     "consumed_by_exp_id": "",
@@ -5971,7 +6029,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Ramanujan's Taxicab Number as a Sum of Three Cubes: 1729 Revisited"
   },
   {
-    "consumed_by_exp_id": "e95bc545",
+    "consumed_by_exp_id": "",
     "description": "A periodic rhythm in music is a function f: Z -> {0, 1} that is periodic: f(n + p) = f(n) for some period p. The symmetry group of a rhythm with period p is a subgroup of Z/pZ. But music also has 2D patterns: a drum pattern is a function g: Z x Z -> {0, 1} (onset grid in time x pitch). The symmetry group of a drum pattern is a subgroup of Z x Z, which is a wallpaper group in 1D. In 2D, the wallpaper groups classify all possible symmetries of periodic patterns. There are exactly 17 wallpaper groups in 2D. Conjecture: the 17 wallpaper groups correspond to 17 fundamentally different types of rhythmic structure in music. Specifically: (1) p1: no symmetry (free rhythm), (2) p2: 2-fold rotational symmetry (call-and-response), (3) pm: mirror symmetry (palindrome), (4) pg: glide reflection (canon), (5) cm: mirror + glide (round), (6) pmm: double mirror (bilateral palindrome), (7) pmg: mirror + glide (inverted canon), (8) pgg: double glide (double canon), (9) cmm: double mirror + glide (round + palindrome), (10) p4: 4-fold rotation (4-bar cycle), (11) p4m: 4-fold + mirrors (variations on a theme), (12) p4g: 4-fold + glides (inverted variations), (13) p3: 3-fold rotation (3-bar blues), (14) p3m1: 3-fold + mirrors, (15) p31m: 3-fold + glides, (16) p6: 6-fold rotation (whole-tone scale symmetry), (17) p6m: 6-fold + mirrors (maximal symmetry, the 'perfect' rhythm). Test: classify 1000 drum patterns by their wallpaper group and verify the distribution matches musical practice. Impact: there are exactly 17 types of rhythm in music, classified by the wallpaper groups.",
     "domains": [
       "Novelty",
@@ -5981,7 +6039,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.68,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-10T10:13:59.325235+00:00",
     "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm"
   },

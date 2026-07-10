@@ -944,7 +944,7 @@
         "extremal graph theory",
         "combinatorial optimization"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -1461,7 +1461,7 @@
         "Stochastic approximation methods",
         "Limit theorems for combinatorial structures"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Computation"
       ],
@@ -4401,7 +4401,7 @@
         "computational_complexity",
         "forbidden_subgraph_classes"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -4590,7 +4590,7 @@
         "algorithmic number theory",
         "computational complexity"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -5163,7 +5163,7 @@
         "math.CO",
         "math.PR"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -11060,7 +11060,7 @@
         "Algorithms",
         "Reconfiguration Theory"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -11836,7 +11836,7 @@
         "Probability Theory",
         "Analytic Number Theory"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -12614,7 +12614,7 @@
         "math.CO",
         "cs.IT"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Computation"
       ],
@@ -13055,7 +13055,7 @@
         "Quantum Gravity",
         "Statistical Mechanics"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -13400,7 +13400,7 @@
         "polyhedral combinatorics (matching polytope)",
         "combinatorial optimization (edge coloring algorithms)"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -13451,7 +13451,7 @@
         "quantum_gravity_microstate_counts",
         "conformal_field_theory_operator_counts"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Computation",
         "Pythagorean"
@@ -19759,7 +19759,7 @@
         "Lean 4 formalization",
         "Plane trees"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -19854,7 +19854,7 @@
         "induced packing treewidth",
         "tree decomposition-based parameters"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -20003,7 +20003,7 @@
         "Probabilistic combinatorics",
         "Algebraic algorithms"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Computation",
         "Pythagorean"
@@ -20443,7 +20443,7 @@
         "Probabilistic Method",
         "Topological Graph Theory"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Computation",
         "Logic"
@@ -20875,7 +20875,7 @@
         "computability_theory",
         "geometric_measure_theory"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Computation",
         "Pythagorean"
@@ -21265,7 +21265,7 @@
         "Erdős–Pósa Property",
         "Parameterized Algorithms"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -23843,7 +23843,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThis project formalizes a **cross-domain bridge**: Sudoku (a constraint satisfaction problem)\nis identified with proper vertex coloring (graph theory), and the shared structural invariant\n— the number of symbols `n²` — is pinned down as the chromatic number of the Sudoku constraint\ngraph.\n\nMain results in `Bridges/SudokuChromatic.lean`:\n\n- `isSudokuSolution_iff_properColoring` — a filling is a valid Sudoku solution iff it is a\n  proper coloring of the Sudoku constraint graph (the CSP ↔ graph-coloring bridge).\n- `exists_isSudokuSolution` — every empty `n²×n²` Sudoku is solvable (`n ≥ 1`), by an explicit\n  arithmetic construction.\n- `sudokuGraph_colorable` — the constraint graph is `n²`-colorable.\n- `firstRow_isClique` / `firstRow_card` — a full row is a clique of size `n²`.\n- `sudokuGraph_chromaticNumber` — the chromatic number is exactly `n²`.\n\n## Natural next steps\n\n1. **Clique number and other invariants.** We proved `ω ≥ n²` via a full row and `χ = n²`.\n   One could show `ω = n²` exactly (no larger clique exists), and compute the independence\n   number and fractional chromatic number of the Sudoku graph.\n\n2. **Counting solutions ↔ counting colorings.** The number of completed Sudoku grids equals\n   the number of proper `n²`-colorings, i.e. the evaluation of the chromatic polynomial of the\n   Sudoku graph at `n²`. Formalizing this connection would tie the enumeration of Sudoku grids\n   (known for `9×9`: 6,670,903,752,021,072,936,960) to graph polynomials.\n\n3. **Latin squares and partial bridges.** Dropping the block constraints yields the rook's\n   graph, whose proper colorings are exactly Latin squares. The block constraints refine this;\n   formalizing the tower rook-graph → Sudoku-graph would connect design theory to coloring.\n\n4. **List coloring / precoloring extension.** A Sudoku *puzzle* (with clues) is a\n   precoloring-extension problem. The NP-completeness of generalized Sudoku is exactly the\n   NP-completeness of precoloring extension for this graph family — a bridge to complexity\n   theory. Formalizing the reduction would make the \"P vs NP of Sudoku\" framing rigorous.\n\n5. **The phase-transition conjecture.** The empirical claim that random instances undergo a\n   solvability phase transition at clue density `d_c = (n²-1)/n²` is asymptotic and probabilistic;\n   it is not a theorem and, to our knowledge, has no closed-form proof. A rigorous treatment\n   would require second-moment / interpolation methods from the theory of random CSPs\n   (analogous to random `k`-SAT thresholds). The chromatic-number invariant proved here is the\n   deterministic backbone such an analysis would build on: the clique of `n²` mutually\n   constrained cells is the local structure whose density governs hardness.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Computation",
         "Pythagorean"
@@ -23925,7 +23925,7 @@
       "depth_estimate": 3,
       "description": "# Stochastic Galois Theory over Finite Fields — Results and Future Directions\n\n## What was proved (all `sorry`-free, axioms `propext`/`Classical.choice`/`Quot.sound`)\n\n**`Catalog/Novelty/StochasticGaloisRoots.lean` — the expected-roots identity.**\nFor a monic degree-`n` polynomial over a finite commutative ring `K` (`q = |K|`, `n ≥ 1`),\nencoded by its coefficient vector `v : Fin n → K`,\n```\n∑ v, #{ r : K | monicEval n v r = 0 } = q^n            (total_root_incidences)\n```\ni.e. **the expected number of roots of a uniformly random monic degree-`n` polynomial is\nexactly `1`**. The proof is a clean double count: swap the sum over polynomials with the\nsum over base points, and observe that for a fixed `r` exactly `q^{n-1}` polynomials\nvanish at `r` (the constant coefficient is forced). A specialization\n`total_root_incidences_zmod` phrases it over `F_p`.\n\nThis is the cleanest universally-true instance of the \"random polynomial = random\npermutation\" dictionary: roots ↔ linear factors ↔ **fixed points of the Frobenius\npermutation**, and a uniform permutation in `S_n` also has exactly one fixed point on\naverage.\n\n**`Catalog/Novelty/StochasticGaloisDegreeTwo.lean` — exact degree-2 statistics.**\nOver a finite field `K` of odd characteristic (`q = |K|`):\n```\n2 · #{ reducible quadratics }   = q(q+1)                (card_reducible)\n2 · #{ irreducible quadratics } = q(q-1)                (card_irreducible)\n#{ quadratics with a repeated root } = q                (card_double_root)\n```\nproved from the two structural facts `sum_nroots` (total incidences `= q^2`) and\n`nroots_le_two` (a quadratic has `≤ 2` roots), via completing the square\n(`nroots_eq_disc`) and the square-root count lemmas. Consequences: proportion irreducible\n`→ 1/2` (the `S_2` `2`-cycle fraction) and proportion with vanishing discriminant `= 1/q`.\n\n**`Catalog/Novelty/StochasticGaloisCyclic.lean` — a structural correction.**\n```\nIsEmpty ((L ≃ₐ[K] L) ≃* Equiv.Perm (Fin n))   for finite L and n ≥ 3   (finiteField_gal_ne_symm)\n```\nOver a finite field every Galois group is cyclic (Frobenius), hence abelian, hence never\nisomorphic to the non-abelian `S_n` for `n ≥ 3`. The prompt's conjecture that\n`P(Gal = S_n) → 1` is therefore false at the group-theoretic level: `P(Gal = S_n) = 0`\nfor `n ≥ 3`. What survives is the *cycle-type/factorization* heuristic, not the\n\"maximal group\" one.\n\n## The corrected picture\n\nOver `ℚ`, Hilbert irreducibility gives `Gal = S_n` for almost all polynomials. Over `F_q`\nthis fails: Galois groups are cyclic. The right analogue is **Frobenius equidistribution**\n— the factorization type of a random monic degree-`n` polynomial (the cycle type of\nFrobenius on the roots) is distributed like the cycle type of a uniform random permutation\nin `S_n` as `q → ∞`. The proved theorems are the two cleanest exact cases of this:\nthe fixed-point count in all degrees, and the complete `n = 2` distribution.\n\n## Concrete next steps\n\n1. **Degree-3 full distribution.** Prove `#{irreducible monic cubics} = (q^3 - q)/3` and\n   the split of reducible cubics into `(x-r)(x-s)(x-t)` types, matching the `S_3` cycle\n   distribution `{3-cycles : 1/3, transpositions : 1/2, identity : 1/6}` in the limit. The\n   incidence method here generalizes: also count `∑ (#roots choose 2)` to access pair\n   statistics.\n\n2. **Gauss's formula in general.** Formalize `I_q(n) = (1/n) ∑_{d|n} μ(d) q^{n/d}` for the\n   number of monic irreducibles of degree `n` over `F_q`, giving proportion `→ 1/n`, the\n   `n`-cycle fraction. Mathlib has `X^{q^n} - X` factoring through irreducibles of degree\n   `d | n`; the Möbius inversion is the missing piece.\n\n3. **Higher moments / cycle index.** Prove that the `k`-th factorial moment of the number\n   of degree-`1` factors tends to `1` (Poisson(1) limit), the polynomial shadow of the\n   fixed-point Poisson law for random permutations. The `k = 1` case is exactly\n   `total_root_incidences`; `k = 2` needs the ordered-pair incidence count.\n\n4. **Squarefree density.** Prove `#{monic squarefree degree-n} = q^n - q^{n-1}` for\n   `n ≥ 2` (discriminant `≠ 0`), so the non-separable proportion is exactly `1/q` — the\n   general-`n` version of `card_double_root`, and the honest reading of the prompt's\n   `P(discriminant = 0)` claim.\n\n5. **Chebotarev over `F_q(t)`.** Frame the above as the function-field Chebotarev density\n   theorem for `S_n`-covers, connecting to the arithmetic (rather than geometric)\n   monodromy that genuinely can be `S_n`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "Computation"
@@ -24089,7 +24089,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Chaos and Cryptography via the Logistic Map\n\nThis cycle established the exact semiconjugacy `f(sin² t) = sin²(2 t)` of the\nfull-strength logistic map `f(x) = 4x(1-x)` to angle doubling, and derived from\nit (i) sensitive dependence on initial conditions with an explicit collapsing\nfamily of seeds, and (ii) the exponential algebraic degree `2ⁿ` of the `n`-th\niterate. The following conjectures push the \"chaos is cryptography\" program\nforward.\n\n## 1. The conjugate coordinate breaks the naive chaos cipher in linear time\n\n**Conjecture.** Recovering the seed of a logistic keystream is *not* as hard as\nsolving a degree-`2ⁿ` polynomial: in the conjugate coordinate `t` where\n`x = sin²(π t)`, the map is the binary shift `t ↦ 2t (mod 1)`, so each iterate\nmerely reveals one more bit of `t`. Consequently the seed is recoverable to `n`\nbits of precision from `O(n)` keystream samples with `O(n)` arithmetic, i.e. in\ntime polynomial in the security parameter.\n\n*The key insight is* that the very degree-`2ⁿ` structure advertised as a hardness\nbarrier is an artifact of the wrong coordinate system; conjugacy linearizes the\napparent nonlinearity and collapses the exponential to a shift.\n\n*Why now?* We have proved the exact conjugacy that makes the coordinate change\nrigorous rather than heuristic, so the cryptanalytic reduction can be stated and\nverified as a theorem rather than asserted.\n\n## 2. The invariant density is the arcsine law, and it is the unique absolutely\ncontinuous invariant measure\n\n**Conjecture.** The measure `dμ = dx / (π √(x(1-x)))` on `(0,1)` is invariant\nunder `f`, is the pushforward of the uniform (Lebesgue/Haar) measure on the\ndoubling circle under `t ↦ sin²(π t)`, and is the unique `f`-invariant measure\nabsolutely continuous with respect to Lebesgue measure.\n\n*The key insight is* that ergodic-theoretic \"randomness\" of the keystream is\nexactly the equidistribution of the doubling map transported through the\nconjugacy; the biased arcsine density — not a uniform one — is what a raw\nlogistic keystream actually emits, revealing an exploitable statistical bias.\n\n*Why now?* The conjugacy to angle doubling is in hand, so the invariance and\nuniqueness reduce to known equidistribution facts for the doubling map pulled\nback along a smooth change of variables.\n\n## 3. Sensitivity gives a matching decryption-instability lower bound\n\n**Conjecture.** For every seed there exist perturbations of size `ε` whose\n`n`-th iterates differ by a constant `c > 0` once `n ≥ log₂(1/ε) + O(1)`, and\nthis threshold is tight: below it the outputs differ by `O(2ⁿ ε)`. Hence any\nfinite-precision implementation with `p` bits loses all correlation with the true\norbit after exactly `p` steps — the period and the sensitivity horizon coincide.\n\n*The key insight is* that the stretching factor `2ⁿ` controls both the divergence\nrate (from above) and the precision-loss rate (from below), so avalanche speed\nand numerical unreliability are two readings of the same Lyapunov exponent\n`log 2`.\n\n*Why now?* We have an explicit seed family realizing the `O(1)` separation after\nlinearly many steps; upgrading it to a two-sided bound needs only the mean-value\ncontrol of `f'` that the conjugacy supplies.\n\n## 4. Polynomial iterates factor through Chebyshev-type structure\n\n**Conjecture.** The degree-`2ⁿ` iterate polynomials `fⁿ` are affinely conjugate\nto the Chebyshev polynomials `T_{2ⁿ}`, and their real roots (the pre-images of a\nfixed point) are exactly `sin²(kπ/2ⁿ⁺¹)` for the appropriate range of `k`,\nequidistributed with the arcsine law of Conjecture 2.\n\n*The key insight is* that both the logistic map and the Chebyshev family are\nsemiconjugate to angle doubling, so they must coincide up to an affine change of\nvariable, turning \"solve a degree-`2ⁿ` equation\" into \"read off `2ⁿ` explicit\ntrigonometric roots.\"\n\n*Why now?* The polynomial-iterate degree theorem and the trigonometric\nconjugacy are both established here, so the identification of roots is a direct\nconsequence rather than a numerical observation.\n\n\n# Future Directions: Chaos and Cryptography via the Logistic Map\n\nThis cycle established the exact semiconjugacy `f(sin² t) = sin²(2 t)` of the\nfull-strength logistic map `f(x) = 4x(1-x)` to angle doubling, and derived from\nit (i) sensitive dependence on initial conditions with an explicit collapsing\nfamily of seeds, and (ii) the exponential algebraic degree `2ⁿ` of the `n`-th\niterate. The following conjectures push the \"chaos is cryptography\" program\nforward.\n\n## 1. The conjugate coordinate breaks the naive chaos cipher in linear time\n\n**Conjecture.** Recovering the seed of a logistic keystream is *not* as hard as\nsolving a degree-`2ⁿ` polynomial: in the conjugate coordinate `t` where\n`x = sin²(π t)`, the map is the binary shift `t ↦ 2t (mod 1)`, so each iterate\nmerely reveals one more bit of `t`. Consequently the seed is recoverable to `n`\nbits of precision from `O(n)` keystream samples with `O(n)` arithmetic, i.e. in\ntime polynomial in the security parameter.\n\n*The key insight is* that the very degree-`2ⁿ` structure advertised as a hardness\nbarrier is an artifact of the wrong coordinate system; conjugacy linearizes the\napparent nonlinearity and collapses the exponential to a shift.\n\n*Why now?* We have proved the exact conjugacy that makes the coordinate change\nrigorous rather than heuristic, so the cryptanalytic reduction can be stated and\nverified as a theorem rather than asserted.\n\n## 2. The invariant density is the arcsine law, and it is the unique absolutely\ncontinuous invariant measure\n\n**Conjecture.** The measure `dμ = dx / (π √(x(1-x)))` on `(0,1)` is invariant\nunder `f`, is the pushforward of the uniform (Lebesgue/Haar) measure on the\ndoubling circle under `t ↦ sin²(π t)`, and is the unique `f`-invariant measure\nabsolutely continuous with respect to Lebesgue measure.\n\n*The key insight is* that ergodic-theoretic \"randomness\" of the keystream is\nexactly the equidistribution of the doubling map transported through the\nconjugacy; the biased arcsine density — not a uniform one — is what a raw\nlogistic keystream actually emits, revealing an exploitable statistical bias.\n\n*Why now?* The conjugacy to angle doubling is in hand, so the invariance and\nuniqueness reduce to known equidistribution facts for the doubling map pulled\nback along a smooth change of variables.\n\n## 3. Sensitivity gives a matching decryption-instability lower bound\n\n**Conjecture.** For every seed there exist perturbations of size `ε` whose\n`n`-th iterates differ by a constant `c > 0` once `n ≥ log₂(1/ε) + O(1)`, and\nthis threshold is tight: below it the outputs differ by `O(2ⁿ ε)`. Hence any\nfinite-precision implementation with `p` bits loses all correlation with the true\norbit after exactly `p` steps — the period and the sensitivity horizon coincide.\n\n*The key insight is* that the stretching factor `2ⁿ` controls both the divergence\nrate (from above) and the precision-loss rate (from below), so avalanche speed\nand numerical unreliability are two readings of the same Lyapunov exponent\n`log 2`.\n\n*Why now?* We have an explicit seed family realizing the `O(1)` separation after\nlinearly many steps; upgrading it to a two-sided bound needs only the mean-value\ncontrol of `f'` that the conjugacy supplies.\n\n## 4. Polynomial iterates factor through Chebyshev-type structure\n\n**Conjecture.** The degree-`2ⁿ` iterate polynomials `fⁿ` are affinely conjugate\nto the Chebyshev polynomials `T_{2ⁿ}`, and their real roots (the pre-images of a\nfixed point) are exactly `sin²(kπ/2ⁿ⁺¹)` for the appropriate range of `k`,\nequidistributed with the arcsine law of Conjecture 2.\n\n*The key insight is* that both the logistic map and the Chebyshev family are\nsemiconjugate to angle doubling, so they must coincide up to an affine change of\nvariable, turning \"solve a degree-`2ⁿ` equation\" into \"read off `2ⁿ` explicit\ntrigonometric roots.\"\n\n*Why now?* The polynomial-iterate degree theorem and the trigonometric\nconjugacy are both established here, so the identification of roots is a direct\nconsequence rather than a numerical observation.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Computation"
@@ -24288,7 +24288,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "e95bc545",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -24316,7 +24316,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-07-10T10:13:59.325235+00:00",
       "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm"
@@ -24458,7 +24458,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — The Thermodynamics of Sorting\n\nThis project formalizes the information-theoretic (Landauer / second-law) content of the\n\"thermodynamics of sorting\" mission. Below we record what was **proved**, what was\n**refuted**, and open threads.\n\n## Proved (all with only `propext`, `Classical.choice`, `Quot.sound`)\n\n**`EntropyLowerBound.lean` — the entropy lower bound.**\n- `DTree.leaves_le_two_pow_height`: a binary decision tree of height `h` has `≤ 2^h` leaves.\n- `sorting_comparison_lower_bound`: any decision tree that sorts `n` elements (`≥ n!`\n  leaves) has height `≥ ⌈log₂(n!)⌉`. This is the entropy lower bound: worst-case\n  comparisons `≥` the Shannon entropy `log₂(n!)` of the uniform distribution over inputs.\n- `factorial_ge_half_pow`: `(n/2)^(n/2) ≤ n!`.\n- `log_pow_ge`: `k·⌊log_b a⌋ ≤ ⌊log_b(a^k)⌋`.\n- `log_factorial_ge`: `(n/2)·⌊log₂(n/2)⌋ ≤ ⌊log₂(n!)⌋`, i.e. `log₂(n!) = Ω(n log n)`.\n- `sorting_nlogn_lower_bound`: hence any correct comparison sort makes `Ω(n log n)`\n  comparisons — the `n log n` lower bound *as a consequence of entropy accounting*.\n\n**`BubbleSortContrarian.lean` — a contrarian correction.**\n- `bubbleComparisons_eq`: bubble sort makes exactly `n(n-1)/2` comparisons (Gauss sum).\n- `bubble_sq_identity`: `2·C(n) + n = n²`, so `C(n) = (n²-n)/2`.\n- `bubble_lt_sq`: `C(n) < n²` for `n ≥ 1` — **the brief's `W_bubble = kT·n²` is refuted**;\n  the true work is `(n²-n)/2·kT`, overcounted by the quoted `n²` by a factor approaching 2.\n- `bubble_ge_entropy_floor`: `(n/2)·⌊log₂(n/2)⌋ ≤ C(n)`, so bubble sort still pays at least\n  the `Ω(n log n)` entropy floor (and asymptotically much more — the \"wasted\" work).\n\n**`Irreversibility.lean` — irreversibility = information erasure.**\n- `sort_perm_invariant`: all `n!` permutations of a list map to the *same* sorted output.\n- `sort_collapse_witness`, `sort_not_injective`: the sorting map is not injective, hence\n  irreversible; by Landauer's principle it must dissipate work, unlike a reversible map.\n\n## Refuted\n\n- **`W_bubble = kT·n²`** (as literally stated): the exact comparison count is `(n²-n)/2`,\n  not `n²`. Formalized in `bubble_lt_sq` / `bubble_sq_identity`.\n\n## Open / harder directions\n\n1. **Tightness of the entropy bound.** The bound `⌈log₂(n!)⌉` is *not* always achievable:\n   sorting 12 elements requires 30 comparisons while `⌈log₂(12!)⌉ = 29`. Formalizing the\n   Ford–Johnson (merge-insertion) analysis, or the `S(n) ≠ ⌈log₂ n!⌉` gaps, would sharpen\n   the \"minimum work `= kT·log(n!)`\" conjecture into its correct (only-asymptotic) form.\n\n2. **Upper bound / achievability.** Formalize that merge sort achieves `≤ n⌈log₂ n⌉`\n   comparisons, matching the lower bound up to constants, closing the `Θ(n log n)` window\n   thermodynamically.\n\n3. **Real-analytic Stirling.** Replace the elementary `Ω(n log n)` bound with the sharp\n   `log(n!) = n log n - n + O(log n)` (Mathlib's `Stirling`) to pin the leading constant of\n   `W_min / kT`.\n\n4. **Reversible sorting.** Formalize a reversible sorter (retaining the permutation as\n   output) and show its Landauer cost is `0`, contrasting with the irreversible map here —\n   making precise the brief's \"if sorting is reversible it does no work\".\n\n5. **Beyond comparison sorts.** Radix/counting sort escape the `log₂(n!)` comparison bound;\n   a thermodynamic account of their bit-erasure would test the second-law framing outside\n   the comparison model.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Computation",
         "Pythagorean"
@@ -24991,7 +24991,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nThis project formalizes the combinatorial-fixed-point core of the \"Sperner ⇒ Nash\"\nprogram in two files:\n\n* `Sperner1D.lean` — the one-dimensional Sperner lemma (parity form and oriented\n  existence form), a discrete intermediate value theorem, and a discrete Brouwer\n  fixed point.\n* `Nash.lean` — finite two-player games, mixed strategies, expected payoffs, Nash\n  equilibria, the **pure-deviation principle** (`isNash_of_pure`: linearity of\n  expected payoff reduces equilibrium checking to pure strategies), and two worked\n  equilibria (Matching Pennies uniform mixed NE, Prisoner's Dilemma mutual-defection\n  NE).\n\nNatural extensions, roughly in order of effort:\n\n1. **Higher-dimensional Sperner.**  Generalize `Sperner1D.parity` to a triangulated\n   `n`-simplex: any Sperner colouring has an odd number of fully labelled cells.  A\n   clean route is the \"door/room\" (index) argument, which is a parity count of\n   boundary faces analogous to the 1-D edge count already proved here.\n\n2. **Discrete Brouwer in higher dimension.**  From the `n`-dimensional Sperner lemma,\n   extract an approximate fixed point of any map of the discrete simplex, mirroring\n   `Sperner1D.discrete_brouwer`.\n\n3. **Limit to continuous Brouwer.**  Refine the triangulation (barycentric\n   subdivision) and pass to the limit using compactness to obtain Brouwer's theorem\n   on the standard simplex.  Mathlib already has a Brouwer fixed point theorem, so an\n   interesting target is instead to *reprove* it via Sperner and compare.\n\n4. **Nash existence.**  Combine (3) with the best-response construction: the map\n   sending a profile to its (regularized) best response is continuous on the product\n   of simplices; a fixed point is a Nash equilibrium.  The pure-deviation principle\n   `isNash_of_pure` proved here is exactly the finiteness needed to certify the fixed\n   point as an equilibrium.\n\n5. **Zero-sum / minimax.**  Specialize to two-player zero-sum games and connect the\n   equilibrium payoff to the minimax value; this only needs the pure-deviation\n   principle plus LP duality.\n\n6. **Algorithmic content.**  `Sperner1D.exists_fully_coloured` is constructive (it\n   isolates a specific oriented edge).  Turning the higher-dimensional analogue into\n   a verified path-following (Lemke–Howson / Scarf) procedure would give a\n   machine-checked Nash-equilibrium algorithm.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Computation"
@@ -25084,7 +25084,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.83,
       "parent_direction": "",
       "priority_score": 0.73,
       "proof_strategy": "Define functorial entropy: for a functor F: C -> D between finite categories, H(F) = -sum_{d in Ob(D)} (|F^{-1}(d)| / |Ob(C)|) * log(|F^{-1}(d)| / |Ob(C)|). This measures the information lost when F identifies non-isomorphic objects. Properties: (1) H(F) >= 0, with equality iff F is injective on objects up to isomorphism (i.e., F maps non-isomorphic objects to non-isomorphic objects). (2) H(F) is maximized when all fibers have the same size: H(F) = log(|Ob(C)| / |Ob(D)|). (3) H(G circ F) >= H(F) + H(G) for composable functors (subadditivity). (4) For the forgetful functor U: Top -> Set: H(U) = infinity because |F^{-1}(S)| = infinity for every set S with |S| >= 2 (there are uncountably many topologies on S). (5) For abelianization Ab: Grp -> AbGrp: each abelian group A has |F^{-1}(A)| = infinity (there are infinitely many non-abelian groups with abelianization A), so H(Ab) = infinity. Wait, this contradicts the conjecture. Correction: for finite groups, Ab: FinGrp -> FinAbGrp. Each finite abelian group A has finitely many preimages. H(Ab) = log(sum |F^{-1}(A)| / |FinAbGrp|). For small groups: Z/2Z has preimages Z/2Z (abelian) and S_3 (non-abelian with abelianization Z/2Z). Z/3Z has preimages Z/3Z and... (need to enumerate). Test: enumerate all groups of order <= 32, compute their abelianizations, and calculate H(Ab).",
@@ -25095,7 +25095,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-07-10T12:39:07.582861+00:00",
       "title": "Categorification of Entropy: The Information Loss of Functors"
@@ -25155,7 +25155,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Stochastic Galois Theory over Finite Fields\n\nThis cycle sharpened the \"random polynomial behaves like a random permutation\"\ncorrespondence over finite fields. Over the rationals a generic polynomial has the full\nsymmetric Galois group, but over a finite field every Galois group is cyclic, so the\ncorrect invariant is not the group itself but the *cycle type of the Frobenius\npermutation*, i.e. the factorization type. We established two exact, dimension-free\nfirst-moment identities — the expected number of roots of a random monic polynomial and\nthe expected number of fixed points of a random permutation are both exactly `1` — and we\ncomputed the exact proportion of `n`-cycles in the symmetric group (`1/n`), the\ncombinatorial value shadowed by the proportion of irreducible polynomials. The following\nconjectures push the correspondence from first moments toward the full distribution.\n\n## 1. Exact second-moment matching of the factorization/cycle statistic\n\n**Conjecture.** For every finite field of order `q` and every degree `n ≥ 1`, the second\nmoment of the number of linear factors of a uniformly random monic degree-`n` polynomial\nequals the second moment of the number of fixed points of a uniformly random permutation\nof `n` letters, up to an explicit finite correction that vanishes as `q → ∞`; in the\nlimit both second moments equal `2`, the value forced by the two leading falling\nfactorials of the Poisson(1) law.\n\nThe key insight is that fixed points and roots are governed by the same inclusion–exclusion\nskeleton: the `k`-th factorial moment counts ordered `k`-tuples of distinct fixed\npoints/roots, and each such tuple is \"free\" to leading order, so the falling factorial\nmoments are all `1` in the limit — the signature of the Poisson(1) distribution.\n\nWhy now? The first-moment identity proved this cycle is exactly the `k = 1` instance of\nthis factorial-moment hierarchy, and its proof (double counting an incidence indicator)\nextends verbatim to ordered tuples, making the second moment the natural and immediate\nnext rung.\n\n## 2. A Poisson limit law for low-degree factors\n\n**Conjecture.** Fix `d ≥ 1`. As `q → ∞`, the number of monic irreducible factors of degree\n`d` of a uniformly random monic degree-`n` polynomial converges in distribution to a\nPoisson random variable with mean `1/d`, jointly and independently across distinct `d`,\nmirroring exactly the Poisson limit for the number of `d`-cycles of a uniformly random\npermutation.\n\nThe key insight is that the Frobenius permutation transports the classical\nGoncharov–Kolchin cycle-count limit for random permutations onto the polynomial side, with\nthe degree-`d` irreducible factors playing the role of the `d`-cycles and the mean `1/d`\nbeing precisely the `n`-independent proportion computed here for the top degree `d = n`.\n\nWhy now? We proved the exact top-degree count `#{n\\text{-cycles}} \\cdot n = n!`\n(proportion `1/n`); recognizing `1/n` as the `d = n` case of the family of means `1/d`\nidentifies the exact target law for every `d` simultaneously.\n\n## 3. The squarefree / separable dichotomy as a derangement analogue\n\n**Conjecture.** The proportion of monic degree-`n` polynomials over a finite field of order\n`q` that are separable (squarefree) equals `1 - 1/q` for every `n ≥ 2`, and this is the\nfinite-field counterpart of the statement that a random permutation has no repeated cycle\nconstraint; the \"non-squarefree\" polynomials are the exact analogue of the fixed-point\ndefect measured by derangements.\n\nThe key insight is that repeated factors correspond to coincidences forced by the\ndiscriminant vanishing, whose probability is controlled by a single codimension-one\ncondition, giving the clean `1/q` defect independent of `n`.\n\nWhy now? The degree-`2` computation isolated the repeated-root locus as exactly `q` of the\n`q^2` quadratics (proportion `1/q`); the conjecture asserts this `1/q` defect is universal\nin `n`, an immediately testable and structurally natural extrapolation.\n\n## 4. Effective bridge with explicit error term\n\n**Conjecture.** For every finite field of order `q` and degree `n ≥ 1`, the difference\nbetween the arithmetic factorization statistic and the corresponding permutation statistic\nis bounded in total variation by `C(n) / q` for an explicit polynomial constant `C(n)`,\nso the correspondence is not merely asymptotic but *effective* with a first-order rate.\n\nThe key insight is that the incidence double-counting used for the first moment produces\nerror terms that are themselves incidence counts of strictly lower degree, yielding a self\n-similar recursion whose solution is a rational function of `q` with controlled numerator.\n\nWhy now? The exact (zero-error) first-moment identity proved this cycle is the base case of\nthat recursion; quantifying how the higher moments deviate by `O(1/q)` turns a qualitative\ndictionary into a quantitative theorem.\n\n## 5. Beyond `S_n`: the arithmetic monodromy of structured families\n\n**Conjecture.** For a one-parameter family of monic polynomials whose generic geometric\nmonodromy group is a proper transitive subgroup `G ≤ S_n` (for example a family with a\nbuilt-in symmetry forcing `G` to be imprimitive), the finite-field factorization\nstatistics converge to the conjugacy-class statistics of `G`, not of `S_n`, and the\nfirst-moment identity of this cycle holds with `n` replaced by the average number of fixed\npoints of `G` acting on `n` letters.\n\nThe key insight is that Frobenius equidistributes in the arithmetic monodromy group, so\nevery group-theoretic average over `G` has an exact finite-field shadow, and the fixed\n-point average is Burnside's mark of the number of orbits of `G`.\n\nWhy now? Having pinned the `G = S_n` case to an exact identity, the orbit-counting\n(Burnside) reformulation of \"expected number of roots\" makes the subgroup generalization a\ndirect substitution, opening the door to testing the dictionary against families with\nprescribed symmetry.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Computation"
@@ -25606,7 +25606,7 @@
       "depth_estimate": 3,
       "description": "A Sudoku puzzle is a constraint satisfaction problem on a 9x9 grid. The 'spectral gap' of a Sudoku puzzle is the gap between the two largest eigenvalues of the transition matrix of the Markov chain that randomly swaps two compatible entries. The spectral gap determines the mixing time: the number of swaps needed to generate a uniformly random solution. Conjecture: the spectral gap of a Sudoku puzzle undergoes a phase transition at the critical density d_c = 17/81 (the density of the minimal number of clues, 17, divided by 81). For puzzles with fewer than 17 clues, the spectral gap is large (the Markov chain mixes quickly, meaning there are many solutions). For puzzles with exactly 17 clues, the spectral gap is minimal (the chain mixes slowly, meaning solutions are hard to find). For puzzles with more than 30 clues, the spectral gap is zero (the chain is reducible, meaning the puzzle has a unique solution and no swaps are possible). Conjecture: the spectral gap lambda_1 - lambda_2 of the Sudoku Markov chain satisfies: lambda_1 - lambda_2 > epsilon for d < 17/81 (many solutions, fast mixing), lambda_1 - lambda_2 ~ 0 for d ~ 17/81 (critical point, slow mixing), and the chain is absorbing for d > 30/81 (unique solution, no mixing). Test: compute the spectral gap for Sudoku puzzles with varying numbers of clues and verify the phase transition. Impact: Sudoku has a spectral gap phase transition. The hardness of the puzzle is determined by the gap, not by the number of clues.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Novelty",
         "Computation"
@@ -25647,7 +25647,7 @@
       "depth_estimate": 3,
       "description": "# Future directions — Persistent Cycles in Randomized Graphs\n\n## What was established\n\nThe mission target — *for every `ε>0` there is `K` such that for `d ≥ K` and\n`p ∈ [εd/log n, d/log n]`, `G_p` a.a.s. contains a cycle of length `≥ d − εd`* —\nis a deep asymptotic random-graph theorem well beyond what can be fully\nformalized in one pass.  In **contrarian** mode we isolated its provable core,\nstated bold conjectures around it, and settled each.  All results are machine\nchecked (`propext, Classical.choice, Quot.sound` only) and each file compiles\nindependently.\n\n### `Retention.lean` — the independent edge-retention model (PROVED)\n* `sum_weight` — the retention weights form a probability mass function.\n* `prob_survives` — **exact survival law**: a fixed edge set `S` survives with\n  probability `p^{|S|}`.\n* `prob_nonneg`, `prob_mono`, `prob_le_one`, `prob_union_le` — a small but\n  complete probability calculus (monotonicity, boundedness, union bound).\n* `exp_surviving_eq` — linearity of expectation: expected number of surviving\n  members of a family `F` equals `∑_{S∈F} p^{|S|}`.\n\n### `Contrarian.lean` — conjectures proved and disproved\n* **DISPROVED** `single_structure_fragility` — the naive conjecture \"one fixed\n  long cycle survives a.a.s. for `p<1`\" is false; its survival probability is\n  `p^L → 0`.\n* **PROVED** `prob_survivor_family_le` — finite union bound over a family of\n  cycles: `P(some cycle survives) ≤ ∑ p^{|S|}` (the true first-moment tool).\n* **PROVED** `prob_survives_antitone` — longer cycles are (weakly) harder to keep.\n* **PROVED** `exp_retained_edges` — expected number of retained edges is `p·|E|`.\n* `exists_survivor_of_pos` — positive expected count forces an actual survivor.\n\n### `LongPath.lean` — the deterministic engine (PROVED)\n* `exists_long_path` — **Erdős–Gallai / Dirac backbone**: minimum degree `≥ k`\n  forces a path of length `≥ k`.\n* `exists_long_path_of_minDegree` — the minimum-degree phrasing.\n\n## Natural next steps\n\n1. **Long cycles, not just paths.** Upgrade `exists_long_path` to\n   `min degree ≥ k ⇒ circumference ≥ k+1` (Dirac's cycle theorem): from the\n   maximal path, take the farthest neighbour of an endpoint and close the cycle\n   with `Walk.takeUntil` / rotation.  This is the deterministic statement most\n   directly matching the mission's \"cycle of length `≥ d − εd`\".\n\n2. **Second moment / lower bound on persistence.** The union bound gives only an\n   upper bound on `P(survivor)`.  Adding a Chebyshev/Paley–Zygmund second-moment\n   estimate on `expSurviving` would turn \"positive expectation\" into\n   \"a.a.s. a survivor\", the positive half of the persistence theorem.\n\n3. **Couple the two halves.** Combine `prob_survives`/`exp_retained_edges` with\n   `exists_long_path` applied to the *retained* subgraph: show that `G_p` keeps\n   min degree `≈ pd` with high probability, then invoke the deterministic bound\n   to force a long path/cycle. This is the skeleton of the full theorem.\n\n4. **Sharpness.** Formalize that `K_{k+1}` (degree `k`, circumference `k+1`) and\n   `C_n` (degree `2`) make the deterministic bounds tight, and quantify the loss\n   in the `d − εd` slack.\n\n5. **Genuine measure-theoretic model.** Replace the finite mass-function `weight`\n   by a `MeasureTheory` product Bernoulli measure to state the `n → ∞`\n   asymptotics (`atTop`/`a.a.s.`) verbatim as in the mission statement.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Computation",
         "Pythagorean"
@@ -25837,6 +25837,129 @@
       "thread_id": "th_23e587e8",
       "timestamp": "2026-07-10T16:20:39.693781+00:00",
       "title": "Elementary but rigorous scaffolding around the Collat"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "famous_subtask",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The Riemann-Roch theorem for graphs (Baker-Norine, 2007) states that for a divisor D on a graph G, l(D) - l(K_G - D) = deg(D) + 1 - g(G) where l(D) is the rank of D, K_G is the canonical divisor, and g(G) is the genus (cyclomatic number). The chip-firing game is a combinatorial model: vertices hold chips, and 'firing' a vertex sends one chip along each incident edge. Conjecture: for the complete graph K_n, the canonical divisor K_{K_n} has rank (n-1)(n-2)/2 - 1, and the Riemann-Roch formula gives l(D) = deg(D) + 1 - (n-1)(n-2)/2 + l(K_{K_n} - D). For D = K_{K_n} (the canonical divisor itself): l(K_{K_n}) = (n-1)(n-2)/2 - 1 + 1 - (n-1)(n-2)/2 + l(0) = 0 + l(0). But l(0) = 0 (the empty divisor has rank 0). So l(K_{K_n}) = 0. Wait, this gives l(K_{K_n}) = 0, but the canonical divisor of K_n should have positive rank. Conjecture: the canonical divisor of K_n is K_{K_n} = sum_v (deg(v) - 1) * v = (n-2) * sum_v v, and l(K_{K_n}) = (n-1)(n-2)/2 - 1 (it achieves the genus minus 1). Test: compute the canonical divisor and verify the Riemann-Roch formula for K_n with n = 3, 4, 5, 6. Impact: chip-firing on complete graphs encodes the same information as the Riemann-Roch theorem on projective curves.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Novelty",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0915",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.81,
+      "proof_strategy": "Define the divisor group Div(G) = Z^{V(G)} (formal sums of vertices). The canonical divisor K_G = sum_v (deg(v) - 2) * v. For K_n: deg(v) = n-1 for all v, so K_{K_n} = (n-3) * sum_v v (since deg(v) - 2 = n-3 for each v). Wait, the canonical divisor is K_G = sum_v (deg(v) - 2) * v? No, Baker-Norine define K_G differently. The canonical divisor in Baker-Norine is K_G = sum_v (deg(v) - 2) * v = (n-3) * sum_v v for K_n. The genus g(K_n) = |E| - |V| + 1 = n(n-1)/2 - n + 1 = (n-1)(n-2)/2. Riemann-Roch: l(D) - l(K_G - D) = deg(D) + 1 - g(G). For D = K_G = (n-3) * sum_v v: l(K_G) - l(0) = deg(K_G) + 1 - g(K_n). deg(K_G) = n(n-3). g(K_n) = (n-1)(n-2)/2. l(0) = 0 (empty divisor). So l(K_G) = n(n-3) + 1 - (n-1)(n-2)/2 = n^2 - 3n + 1 - (n^2 - 3n + 2)/2 = (2n^2 - 6n + 2 - n^2 + 3n - 2)/2 = (n^2 - 3n)/2 = n(n-3)/2. For n=3: l(K_G) = 0. For n=4: l(K_G) = 2. For n=5: l(K_G) = 5. Test: verify by chip-firing on K_3, K_4, K_5, K_6.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "seed",
+      "source_path": "seed:manual_v2",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-10T16:36:19.999072+00:00",
+      "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 1,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "3a52b537",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The probabilistic method proves existence by showing that a random structure has the desired property with positive probability. Key results: (1) Erdos's lower bound on Ramsey numbers: R(k,k) > 2^{k/2}. (2) The Lovasz local lemma: if bad events A_1, ..., A_n satisfy P(A_i) <= p and each A_i is independent of all but d others, and e*p*(d+1) <= 1, then P(AND not A_i) > 0. (3) Turan's theorem: the maximum number of edges in a K_{r+1}-free graph on n vertices is (1 - 1/r) * n^2/2. Conjecture: all three results can be formalized in Lean 4 without axiom of choice. The key is to replace non-constructive existence proofs with explicit constructions: (1) The probabilistic proof of R(k,k) > 2^{k/2} uses the expectation argument, which is constructive (compute the expected number of monochromatic K_k and show it's less than 1). (2) The Lovasz local lemma can be made constructive via Moser-Tardos algorithm. (3) Turan's theorem has an explicit construction (the Turan graph). Conjecture: the Moser-Tardos algorithm runs in expected time O(n*d*log(1/p)) and produces a satisfying assignment with probability 1 (constructive LLL). Test: formalize all three results in Lean 4 and verify the proofs compile. Impact: the probabilistic method is constructive. Erdos's existence proofs are algorithms in disguise.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Novelty",
+        "Logic"
+      ],
+      "github_issue": 0,
+      "id": "fd_0916",
+      "last_attempt_time": "2026-07-10T16:37:02.027926+00:00",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.86,
+      "proof_strategy": "Erdos lower bound on R(k,k): color the edges of K_n randomly with 2 colors. P(monochromatic K_k) < 2 * C(n,k) * 2^{-C(k,2)} < 1 when n < 2^{k/2}. This proves R(k,k) > 2^{k/2}. Constructive version: derandomize using the method of conditional expectations. Define f(c) = E[number of monochromatic K_k | coloring c] for a partial coloring c. At each step, choose the color that minimizes f. This is deterministic and produces a coloring with no monochromatic K_k. Lovasz Local Lemma (constructive - Moser-Tardos): given events A_1, ..., A_n with dependency graph G where each A_i is independent of events not adjacent in G, and P(A_i) <= p and e*p*(d+1) <= 1 (where d is the max degree in G), the Moser-Tardos algorithm: (1) Sample all variables. (2) While some A_i occurs: resample the variables in A_i. (3) Return the assignment. Expected running time: O(n*d*log(1/p)). Turan's theorem: the Turan graph T(n,r) has n vertices partitioned into r parts of sizes ceil(n/r) or floor(n/r), with edges between vertices in different parts. |E(T(n,r))| = (1 - 1/r) * n^2/2 (approximately). T(n,r) is K_{r+1}-free. Any K_{r+1}-free graph has at most this many edges. Proof: induction on n, with the key lemma that adding an edge to a K_{r+1}-free graph either creates a K_{r+1} or reduces the number of edges by at least 1. Test: formalize all three proofs in Lean 4.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "seed",
+      "source_path": "seed:manual_v2",
+      "status": "in_progress",
+      "thread_id": "",
+      "timestamp": "2026-07-10T16:36:20.054846+00:00",
+      "title": "Formalizing the Probabilistic Method: Erdos Meets Lean"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions — Categorification of Entropy\n\nThe file `FunctorialEntropy.lean` develops the information loss of a functor as the\nconditional entropy of the domain object given its image, for functors between\nfinite categories (modelled by the map they induce on the finite object sets).\nProven results: nonnegativity, the faithfulness criterion `H(F)=0 ↔ F injective`,\nthe uniform-fiber formula `H(F)=log(|Ob C|/|Ob D|)`, the constant-functor value\n`log n`, the maximum-loss bound `H(F) ≤ log n`, and the data-processing\ninequality `H(f) ≤ H(g∘f)`. Natural extensions:\n\n1. **Chain rule / additivity.** Prove `H(g∘f) = H(f) + H_f(g)` for an appropriate\n   \"relative\" loss `H_f(g)`, mirroring `H(X,Y)=H(X)+H(Y|X)`.\n\n2. **Weighted / non-uniform priors.** Replace the uniform distribution on `Ob C`\n   by an arbitrary probability weight `w : Ob C → ℝ≥0`, recovering full Shannon\n   conditional entropy; re-derive all theorems in that generality.\n\n3. **Morphism-level entropy.** The present notion only sees the action of `F` on\n   objects. A finer invariant would weight by hom-set collapse, quantifying loss\n   of morphism information (relating to faithfulness in the categorical sense,\n   not just injectivity on objects).\n\n4. **Infinite categories.** Formalize the description's `H(U)=∞` claim for the\n   forgetful functor `Top → Set` via an extended-nonnegative-reals or a limit of\n   finite truncations, once a suitable fiber-cardinality measure is available.\n\n5. **Functoriality of entropy itself.** Investigate whether `F ↦ H(F)` is\n   monotone/continuous with respect to natural orders on functors, and its\n   behaviour under products and coproducts of categories (expected additivity).\n\n6. **Connection to Leinster's magnitude / Baez–Fritz–Leinster entropy.** Compare\n   this conditional-entropy invariant with the categorical characterizations of\n   entropy in the literature.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.1,
+      "domains": [
+        "Algebra",
+        "Computation"
+      ],
+      "github_issue": 0,
+      "id": "fd_0917",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "a1a5801c",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/a1a5801c",
+      "status": "available",
+      "thread_id": "th_5b3a87ba",
+      "timestamp": "2026-07-10T16:36:42.227177+00:00",
+      "title": "The file `FunctorialEntropy.lean` develops the information loss of a functor as "
     },
     {
       "ambition_level": "extension",
@@ -26850,9 +26973,49 @@
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
+      "description": "Building on cycle a1a5801c (Q=0.830), which proved 13 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Entropy H(X) = -sum p(x) log p(x) measures the information content of a random variable. In category theory, a functor F: C -> D 'loses information' when it maps non-isomorphic objects to isomorphic ones. Define the 'functorial entropy' H(F) as the expected information lost by F: H(F) = -sum_{d in O",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Computation"
+      ],
+      "github_issue": 0,
+      "id": "push_a1a5801c_723b33fc",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9299999999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "a1a5801c",
+      "source_path": "Categorification of Entropy: The Information Loss of Functors",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-10T16:36:47.813346+00:00",
+      "title": "Deepening: Categorification of Entropy: The Information Loss of Functors"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
       "description": "Building on cycle a9aa7bbf (Q=0.800), which proved 18 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Sorting a list of n elements reduces the entropy from log(n!) bits to 0 bits, doing thermodynamic work W = kT * log(n!) in the process. But this is only true if sorting is irreversible — if the sorted list uniquely determines the input, then sorting is reversible and does no thermodynamic work. The ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Geometry"
       ],
@@ -27570,6 +27733,46 @@
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
+      "description": "Cycle a1a5801c (Q=0.830) proved 13 theorems in Computation but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Entropy H(X) = -sum p(x) log p(x) measures the information content of a random variable. In category theory, a functor F: C -> D 'loses information' when it maps non-isomorphic objects to isomorphic o",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Computation"
+      ],
+      "github_issue": 0,
+      "id": "sorry_fill_a1a5801c_6c02ebc9",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.85,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "a1a5801c",
+      "source_path": "Categorification of Entropy: The Information Loss of Functors",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-10T16:36:47.874532+00:00",
+      "title": "Close Proofs: Categorification of Entropy: The Information Loss of Functors"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
       "description": "Cycle b77ed1ec (Q=0.720) proved 24 theorems in Tropical but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The Collatz conjecture (3n+1 problem) states that every positive integer eventually reaches 1 under the map T(n) = n/2 (n even) or 3n+1 (n odd). Despite being verified up to 2^68, a proof remains elus",
       "domain_bridges": [],
       "domain_quality_penalty": 0.0,
@@ -27612,7 +27815,7 @@
       "depth_estimate": 3,
       "description": "Cycle c2c03fe8 (Q=0.630) proved 25 theorems in Computation but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The paper introduces a tensor-amplification framework for proving Sidorenko-type inequalities in graphon classes, providing two transfer principles and formalizing structural closure properties.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Computation"
       ],
@@ -27721,85 +27924,76 @@
   ],
   "pruned": [],
   "recent_domain_counts": {
+    "Algebra": 1,
     "Computation": 2,
     "Logic": 1,
-    "Novelty": 3
+    "Novelty": 4
   },
   "recent_theme_keywords": {
-    "argument": 1,
-    "arithmetic": 1,
-    "can't": 1,
-    "collatz": 1,
-    "computable": 1,
-    "con(pa": 1,
-    "concrete": 1,
-    "conjecture": 3,
-    "consistency": 1,
-    "consistent": 1,
+    "'functorial": 1,
+    "'loses": 1,
+    "'uniform'": 1,
+    "-sum_{d": 1,
+    "abelian": 1,
+    "abelianization": 1,
+    "abgrp": 1,
+    "aleph_0": 1,
+    "average": 1,
+    "because": 1,
+    "categories": 1,
+    "categorification": 1,
+    "category": 1,
+    "compute": 1,
+    "concept": 1,
+    "conjecture": 4,
     "contains": 2,
-    "counterexample": 1,
+    "content": 1,
     "cycles": 2,
-    "despite": 1,
-    "diophantine": 1,
-    "diverges": 1,
-    "elusive": 1,
-    "equivalence": 1,
-    "equivalent": 1,
-    "eventually": 1,
-    "example": 1,
-    "faster": 1,
-    "formalize": 1,
-    "function": 1,
-    "godel's": 1,
-    "halting": 1,
-    "impact": 2,
-    "incompleteness": 1,
-    "independent": 1,
-    "integer": 1,
+    "define": 1,
+    "entropy": 1,
+    "entropy'": 1,
+    "expected": 1,
+    "faithful": 1,
+    "fingrp": 1,
+    "finite": 1,
+    "forgetful": 1,
+    "forgets": 1,
+    "formula": 1,
+    "functor": 1,
+    "functoriality": 1,
+    "functors": 1,
+    "groups": 1,
+    "h(inc": 1,
+    "identifies": 1,
+    "impact": 3,
+    "inclusion": 1,
+    "infinite": 1,
+    "infinitely": 1,
+    "infinity": 1,
+    "information": 1,
+    "information'": 1,
+    "information-theoretic": 1,
+    "isomorphic": 1,
     "length": 2,
-    "meaning": 1,
-    "microsatellites": 1,
-    "minimum": 1,
-    "model": 1,
-    "monochromatic": 1,
-    "needs": 1,
-    "neither": 1,
-    "not-con(pa": 1,
-    "novelty": 1,
-    "nucleotides": 1,
-    "obtained": 1,
-    "original": 1,
-    "persistent": 1,
-    "pigeonhole": 1,
-    "positive": 1,
-    "precisely": 1,
-    "predicts": 1,
-    "probability": 1,
-    "problem": 1,
-    "provably": 1,
+    "log(2": 1,
+    "log(2^{aleph_0}": 1,
+    "log(p(d": 1,
+    "log(|ob(c)|": 1,
+    "measure-theoretic": 1,
+    "measures": 1,
+    "non-abelian": 1,
+    "non-isomorphic": 1,
+    "ob(d)}": 1,
+    "objects": 1,
+    "preimages": 1,
     "proved": 2,
-    "q=0.830": 1,
-    "r*x*(1-x": 1,
-    "ramsey": 1,
-    "ramsey's": 1,
-    "random": 2,
-    "randomized": 1,
-    "reaches": 1,
-    "refute": 1,
-    "regions": 1,
-    "remaining": 1,
-    "remains": 1,
-    "repeated": 1,
-    "repeats": 1,
-    "result": 1,
-    "retaining": 1,
-    "satisfies": 1,
-    "second": 1,
-    "sensitivity": 1,
+    "random": 3,
     "sequence": 2,
     "sequences": 1,
     "setting": 1,
+    "shadow": 1,
     "simplest": 1,
+    "size": 1,
     "smaller": 1,
     "sorries": 1,
     "specifically": 2,
@@ -27815,17 +28009,27 @@
     "subsequential": 1,
     "subtle": 1,
     "surely": 1,
+    "themselves": 1,
     "theorem": 2,
     "theorems": 1,
-    "theory": 2,
+    "theory": 3,
     "theta(k": 1,
+    "topologies": 1,
+    "topology": 1,
     "trajectories": 1,
     "triangle": 1,
     "true-but-unprovable": 1,
+    "uncountably": 1,
     "undecidable": 1,
     "unprovable": 1,
+    "variable": 1,
+    "various": 1,
     "verified": 1,
-    "verify": 1
+    "verify": 2,
+    "z/2z": 1,
+    "|f^{-1}(d)|": 1,
+    "|ob(c)|": 1,
+    "|ob(d)|": 1
   },
   "selection_log": []
 }

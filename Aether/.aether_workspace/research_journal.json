@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7e60f6c2",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Fractal Dimension of Proof Search\n\nThis cycle established, for uniform self-similar search spaces, the exact identity\n`succ = total^D` with `D = log s / log b ∈ [0,1]`, reinterpr",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 23,
-      "timestamp": "2026-07-10T00:21:09",
-      "title": "Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
-    },
-    {
       "cycle_id": "c05d7abb",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Hilbert's Hotel for Primes\n\nThe file `PrimeHotelRearrangement.lean` formalizes, entirely without the prime number theorem:\n\n* **Finite support ⇒ well behaved** (`wellBehaved_of_f",
@@ -499,19 +489,19 @@
       "theorem_count": 24,
       "timestamp": "2026-07-10T16:20:42",
       "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
+    },
+    {
+      "cycle_id": "a1a5801c",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Categorification of Entropy\n\nThe file `FunctorialEntropy.lean` develops the information loss of a functor as the\nconditional entropy of the domain object given its image, for fun",
+      "quality_score": 0.83,
+      "sorry_count": 3,
+      "theorem_count": 13,
+      "timestamp": "2026-07-10T16:36:47",
+      "title": "Categorification of Entropy: The Information Loss of Functors"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "33af5349",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — Spectral Geometry of the Hypercube and Sensitivity\n\nThis cycle established the spectral core of Huang's method: a recursively defined signed\nadjacency matrix of the `n`-cube that",
-      "quality_score": 0.48355851612903233,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-01T17:45:13",
-      "title": "Sensitivity Conjecture Extensions"
-    },
     {
       "cycle_id": "e5cb827b",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 24,
       "timestamp": "2026-07-10T16:20:42",
       "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
+    },
+    {
+      "cycle_id": "a1a5801c",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Categorification of Entropy\n\nThe file `FunctorialEntropy.lean` develops the information loss of a functor as the\nconditional entropy of the domain object given its image, for fun",
+      "quality_score": 0.83,
+      "sorry_count": 3,
+      "theorem_count": 13,
+      "timestamp": "2026-07-10T16:36:47",
+      "title": "Categorification of Entropy: The Information Loss of Functors"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ff42203a",
-      "domain": "Novelty",
-      "name": "asserts",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "ff42203a",
-      "domain": "Novelty",
-      "name": "says",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "a9aa7bbf",
-      "domain": "Geometry",
-      "name": "bubbleComparisons_eq",
-      "quality": 0.8
-    },
     {
       "cycle_id": "a9aa7bbf",
       "domain": "Geometry",
@@ -2803,17 +2785,28 @@
       "domain": "Tropical",
       "name": "valid_iff",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "a1a5801c",
+      "domain": "Computation",
+      "name": "sum_fiberCard",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "a1a5801c",
+      "domain": "Computation",
+      "name": "term_nonneg",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "a1a5801c",
+      "domain": "Computation",
+      "name": "entropy_nonneg",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-10T16:20:42",
+  "last_updated": "2026-07-10T16:36:47",
   "open_questions": [
-    {
-      "context": "non-vacuous.  No hidden `sorry`; `#print axioms` uses only the standard set.",
-      "cycle_id": "95c356ab",
-      "domain": "Applications",
-      "sorry_count": 1,
-      "timestamp": "2026-07-03T20:14:15"
-    },
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
       "cycle_id": "4120a115",
@@ -3016,6 +3009,13 @@
       "domain": "Tropical",
       "sorry_count": 5,
       "timestamp": "2026-07-10T16:20:42"
+    },
+    {
+      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
+      "cycle_id": "a1a5801c",
+      "domain": "Computation",
+      "sorry_count": 3,
+      "timestamp": "2026-07-10T16:36:47"
     }
   ],
   "research_threads": {
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "2e536cee",
-        "quality": 0.7725600000000001,
-        "theorems": 15,
-        "title": "Discrepancy of Random Linear Codes for All Hamming Balls"
-      },
-      {
         "cycle_id": "4aec8950",
         "quality": 0.6655200000000001,
         "theorems": 18,
@@ -3327,6 +3321,12 @@
         "quality": 0.72,
         "theorems": 16,
         "title": "Persistent Cycles in Randomized Graphs via Hyperstable Structural Constraints"
+      },
+      {
+        "cycle_id": "a1a5801c",
+        "quality": 0.83,
+        "theorems": 13,
+        "title": "Categorification of Entropy: The Information Loss of Functors"
       }
     ],
     "Cryptography": [
