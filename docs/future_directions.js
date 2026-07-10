@@ -215,6 +215,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 2c002c80 (Q=0.780), which proved 25 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Sperner's lemma states that any proper coloring of a triangulated simplex with n+1 colors has at least one fully colored simplex. This is a combinatorial analog of Brouwer's fixed point theorem. Nash's theorem states that every finite game has a mixed strategy Nash equilibrium, proved using Kakutani",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_2c002c80_c6a62f96",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "2c002c80",
+    "status": "available",
+    "timestamp": "2026-07-10T12:23:22.264886+00:00",
+    "title": "Deepening: Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theo"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 2fed8c0e (Q=0.780), which proved 12 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Collatz map T: N -> N defined by T(n) = n/2 if n even, 3n+1 if n odd, is conjectured to always reach 1. The Collatz conjecture is equivalent to: the orbit of every n under T eventually reaches the cycle {1, 4, 2, 1}. Define the Collatz Fourier transform: F_T(omega) = sum_{n=1}^{N} e^{2*pi*i*omeg",
     "domains": [
       "Geometry"
@@ -5243,21 +5257,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sheaf Cohomology of Data: The Topology of Missing Information"
   },
   {
-    "consumed_by_exp_id": "2c002c80",
-    "description": "Sperner's lemma states that any proper coloring of a triangulated simplex with n+1 colors has at least one fully colored simplex. This is a combinatorial analog of Brouwer's fixed point theorem. Nash's theorem states that every finite game has a mixed strategy Nash equilibrium, proved using Kakutani's fixed point theorem. Conjecture: Sperner's lemma directly implies Nash's theorem. Specifically, given an n-player game with strategies S_1, ..., S_n, construct the n-simplex Delta = Delta(S_1 x ... x S_n) of mixed strategy profiles. Define a Sperner coloring of Delta by: color vertex v with color i if player i's best response to v is strategy i. By Sperner's lemma, there exists a fully colored simplex. The center of this simplex is an approximate Nash equilibrium (each player is approximately best-responding). Taking the limit as the triangulation gets finer gives an exact Nash equilibrium. Conjecture: this construction gives a constructive proof of Nash's theorem that yields a triangulation-based algorithm for finding Nash equilibria with complexity O(N^{n}) where N is the total number of pure strategies. Test: implement the Sperner-based algorithm for 2-player games and verify it finds all Nash equilibria. Impact: Nash equilibria are combinatorial fixed points. Sperner's lemma is the fundamental theorem of game theory.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0874",
-    "priority_score": 0.77,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T09:41:52.060214+00:00",
-    "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle dd8b10c1 (Q=0.720) proved 54 theorems in Applications but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: A cake is a smooth projective variety over R: it has a base (a smooth manifold with boundary), frosting (a sheaf of sections supported on the boundary), and layers (a stratification by codimension). T",
     "domains": [
@@ -5663,6 +5662,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThis project formalizes the combinatorial-fixed-point core of the \"Sperner \u21d2 Nash\"\nprogram in two files:\n\n* `Sperner1D.lean` \u2014 the one-dimensional Sperner lemma (parity form and oriented\n  existence form), a discrete intermediate value theorem, and a discrete Brouwer\n  fixed point.\n* `Nash.lean` \u2014 finite two-player games, mixed strategies, expected payoffs, Nash\n  equilibria, the **pure-deviation principle** (`isNash_of_pure`: linearity of\n  expected payoff reduces equilibrium checking to pure strategies), and two worked\n  equilibria (Matching Pennies uniform mixed NE, Prisoner's Dilemma mutual-defection\n  NE).\n\nNatural extensions, roughly in order of effort:\n\n1. **Higher-dimensional Sperner.**  Generalize `Sperner1D.parity` to a triangulated\n   `n`-simplex: any Sperner colouring has an odd number of fully labelled cells.  A\n   clean route is the \"door/room\" (index) argument, which is a parity count of\n   boundary faces analogous to the 1-D edge count already proved here.\n\n2. **Discrete Brouwer in higher dimension.**  From the `n`-dimensional Sperner lemma,\n   extract an approximate fixed point of any map of the discrete simplex, mirroring\n   `Sperner1D.discrete_brouwer`.\n\n3. **Limit to continuous Brouwer.**  Refine the triangulation (barycentric\n   subdivision) and pass to the limit using compactness to obtain Brouwer's theorem\n   on the standard simplex.  Mathlib already has a Brouwer fixed point theorem, so an\n   interesting target is instead to *reprove* it via Sperner and compare.\n\n4. **Nash existence.**  Combine (3) with the best-response construction: the map\n   sending a profile to its (regularized) best response is continuous on the product\n   of simplices; a fixed point is a Nash equilibrium.  The pure-deviation principle\n   `isNash_of_pure` proved here is exactly the finiteness needed to certify the fixed\n   point as an equilibrium.\n\n5. **Zero-sum / minimax.**  Specialize to two-player zero-sum games and connect the\n   equilibrium payoff to the minimax value; this only needs the pure-deviation\n   principle plus LP duality.\n\n6. **Algorithmic content.**  `Sperner1D.exists_fully_coloured` is constructive (it\n   isolates a specific oriented edge).  Turning the higher-dimensional analogue into\n   a verified path-following (Lemke\u2013Howson / Scarf) procedure would give a\n   machine-checked Nash-equilibrium algorithm.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0894",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2c002c80",
+    "status": "available",
+    "timestamp": "2026-07-10T12:23:16.155145+00:00",
+    "title": "This project formalizes the combinatorial-fixed-point core of the \"Sperner \u21d2 Nas"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Erdos-Renyi random graph G(n, p) has n vertices where each edge appears independently with probability p. At p = log(n)/n, G(n,p) becomes connected. But what if p is COMPLEX? Define G(n, z) where z is a complex number: each edge (i,j) appears with 'probability' z, meaning the edge weight is z instead of 0 or 1. The resulting 'complex graph' is a weighted complete graph where edge (i,j) has weight z if the edge exists and 0 otherwise. The adjacency matrix A_z has entries that are either z or 0. Conjecture: The complex eigenvalues of A_z trace out a circle of radius |z|*sqrt(n) in the complex plane, centered at the origin. As n -> infinity, the empirical spectral distribution of A_z converges to the circular law (like the Ginibre ensemble) because A_z is a random matrix with i.i.d. entries of mean z*p and variance |z|^2*p*(1-p). The 'hallucination' is that for Im(z) != 0, the graph has complex-valued connectivity \u2014 information flows with both amplitude and phase, and the phase creates interference patterns that are visible in the spectral density. Test: generate A_z for n = 1000 with z = 0.5 + 0.3i, compute eigenvalues, and verify they lie in a disk of radius sqrt(n)*|z|. Compare with the Ginibre ensemble prediction. Impact: complex-valued random graphs have circular spectra \u2014 the hallucination of complex probabilities creates beautiful circular eigenvalue distributions.",
     "domains": [
       "Novelty",
@@ -5689,6 +5703,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-09T19:55:16.452095+00:00",
     "title": "Close Proofs: Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Ramsey's theorem states that any 2-coloring of the edges of K_6 contains a monochromatic K_3 (a triangle of one color). Applied to DNA: any sequence of 4^6 + 1 = 4097 nucleotides must contain a repeated 6-mer (by pigeonhole). But Ramsey theory for subsequences is more subtle: what is the minimum length L(k) of a DNA sequence over {A, C, G, T} such that every subsequence of length k contains a repeated 4-mer? Conjecture: L(k) = Theta(k * 4^4 * log(4^4)) = Theta(k * 256 * 8) = Theta(k * 2048). More precisely, by the Lovasz local lemma, L(k) >= 4^{4k/5} for sequences that avoid repeated k-mers in all subsequences. Conjecture: for real genomes, the actual L(k) is much smaller because real DNA has low complexity regions (microsatellites, Alu repeats) that create forced repeats. Specifically, the human genome has L(4) ~ 1000 (any 1000 consecutive bases contain a repeated 4-mer in some subsequence), while the random genome has L(4) ~ 4^4 * log(4^4) ~ 5000. Test: compute L(k) for real genomes vs random genomes and verify the factor-of-5 compression. Impact: DNA avoids subsequential repeats in a way that Ramsey theory predicts, but real genomes are 5x more 'forced' than random sequences.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0893",
+    "priority_score": 0.71,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T12:22:45.928895+00:00",
+    "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
   },
   {
     "consumed_by_exp_id": "",

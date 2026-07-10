@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0a41cc78",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — 2-adic valuation of shifted Perrin numbers\n\nDerived from this cycle's findings: the Perrin sequence `R` (`R0=3, R1=0, R2=2`,\n`R(n+3)=R(n+1)+R(n)`) has `R mod 2^k` periodic with p",
-      "quality_score": 0.7258007692307691,
-      "sorry_count": 3,
-      "theorem_count": 13,
-      "timestamp": "2026-07-04T22:07:22",
-      "title": "Explicit Formula for 2-adic Valuation of Shifted Perrin Numbers"
-    },
-    {
       "cycle_id": "bdd384c4",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThese conjectures are distilled from a study of *phantom topologies*: a \"reality\" is\nthe topology all observers agree on (the common open sets of a family of finer observer\ntopolo",
@@ -499,19 +489,19 @@
       "theorem_count": 22,
       "timestamp": "2026-07-10T12:07:09",
       "title": "Deepening: Persistent Homology of Prime Numbers: The Topology of Arithmetic"
+    },
+    {
+      "cycle_id": "2c002c80",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\nThis project formalizes the combinatorial-fixed-point core of the \"Sperner ⇒ Nash\"\nprogram in two files:\n\n* `Sperner1D.lean` — the one-dimensional Sperner lemma (parity form and o",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 25,
+      "timestamp": "2026-07-10T12:23:22",
+      "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "650b150d",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Convex Position and the Combinatorics of Plane Graphs\n\nThis cycle studied the number of crossing-free (plane) straight-line graphs on a\nplanar point set, with an eye on the conjec",
-      "quality_score": 0.516675,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-07-01T04:02:29",
-      "title": "Convex Position Minimizes Plane Graphs"
-    },
     {
       "cycle_id": "562c0234",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 22,
       "timestamp": "2026-07-10T12:07:09",
       "title": "Deepening: Persistent Homology of Prime Numbers: The Topology of Arithmetic"
+    },
+    {
+      "cycle_id": "2c002c80",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\nThis project formalizes the combinatorial-fixed-point core of the \"Sperner ⇒ Nash\"\nprogram in two files:\n\n* `Sperner1D.lean` — the one-dimensional Sperner lemma (parity form and o",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 25,
+      "timestamp": "2026-07-10T12:23:22",
+      "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "48961a11",
-      "domain": "Applications",
-      "name": "is",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "48961a11",
-      "domain": "Applications",
-      "name": "choose_identity",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "48961a11",
-      "domain": "Applications",
-      "name": "posterior_eq_prior",
-      "quality": 0.83
-    },
     {
       "cycle_id": "b152086d",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "posdef_quadratic_bounded",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "2c002c80",
+      "domain": "Applications",
+      "name": "pureDist_isDist",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "2c002c80",
+      "domain": "Applications",
+      "name": "E1_pure",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "2c002c80",
+      "domain": "Applications",
+      "name": "E2_pure",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-10T12:07:09",
+  "last_updated": "2026-07-10T12:23:22",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "996ff4be",
-        "quality": 0.78,
-        "theorems": 14,
-        "title": "The Category Theory of Jokes: Universal Properties of Humor"
-      },
-      {
         "cycle_id": "9696343b",
         "quality": 0.72,
         "theorems": 29,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 22,
         "title": "Deepening: Persistent Homology of Prime Numbers: The Topology of Arithmetic"
+      },
+      {
+        "cycle_id": "2c002c80",
+        "quality": 0.78,
+        "theorems": 25,
+        "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theo"
       }
     ],
     "Bridges": [
