@@ -18711,7 +18711,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "48961a11",
     "description": "In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a werewolf). The villagers win if all werewolves are eliminated; the werewolves win if they equal or outnumber villagers. Conjecture: The optimal Bayesian strategy for villagers is to vote for the player with the highest posterior probability of being a werewolf, where the prior is k/n and the likelihood updates are based on the player's voting pattern and survival. More precisely, define the werewolf posterior P(W_i | evidence) using Bayes' theorem: P(W_i) = k/n (prior), P(evidence | W_i) = product of conditional probabilities of observed events given that player i is a werewolf. The optimal strategy maximizes P(villagers win) = P(correct elimination at each day round). For n=7, k=2: the villagers' win probability with optimal Bayesian play is approximately 0.36 (known from game theory). Conjecture: For general n and k, the villagers' win probability is approximately C * (1 - k/(n-k))^2 where C is a constant depending on the information structure. Test: simulate 10^6 games with n=7 to n=20 players and Bayesian villagers, measure the win probability, and fit to the conjectured formula. Impact: social deduction has an optimal Bayesian strategy, and the werewolves' advantage scales as (k/(n-k))^2.",
     "domain_bridges": [],
     "domains": [
@@ -18724,7 +18724,7 @@
     "proof_strategy": "Define the Bayesian villager strategy: at each day round, each villager computes P(W_i | evidence) for all players i, where evidence includes voting patterns and survival. Update rule: P(W_i | day_vote) proportional to P(day_vote | W_i) * P(W_i). Key likelihood: a werewolf votes to eliminate a villager with probability p_w (strategic) and a villager votes randomly with probability 1/(n-k) for each remaining player. P(villager votes for j | i is werewolf) = p_w * I(j is villager) / (n-k) + (1-p_w) * 1/(n-1). For n=7, k=2: compute optimal p_w by backward induction. The game tree has depth at most 5 (n-k rounds at most). Compute P(villagers win) by Monte Carlo simulation with 10^6 trials. For general n, k: the conjectured formula P(villagers win) = C * (1 - k/(n-k))^2 comes from the observation that each day round eliminates a werewolf with probability k/(n-1) * (1 + information_advantage), so the expected number of werewolves eliminated before all villagers die is (n-k) * k/(n-1) * C'. Simplify to get C * (1 - k/(n-k))^2. Test: verify for n=7 to n=20.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T03:16:18.512491+00:00",
     "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
   },
