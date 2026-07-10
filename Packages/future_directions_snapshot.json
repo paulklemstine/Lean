@@ -675,7 +675,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ff42203a",
     "description": "The Robertson-Seymour theorem states that the set of finite graphs is well-quasi-ordered by the minor relation: any infinite sequence of graphs contains two where one is a minor of the other. This implies that any minor-closed graph property is characterized by a finite set of forbidden minors. Conjecture: the same theorem holds for representable matroids over any finite field. Specifically, for any finite field F_q, the set of F_q-representable matroids is well-quasi-ordered by the matroid minor relation. This would generalize the Robertson-Seymour theorem from graphs (F_2-representable matroids) to all finite fields. The conjecture is known to fail for general matroids (by the existence of infinite antichains of non-representable matroids), but for F_q-representable matroids with q <= 3, it is open. Conjecture: for F_3 (ternary matroids), the set of excluded minors for representability is finite. The current known excluded minors for F_3 are: the Fano matroid F_7, its dual F_7*, and the non-Pappus matroid. Test: enumerate ternary matroids of rank 3 on 9 elements, verify that all but the known excluded minors are F_3-representable. Impact: Robertson-Seymour for matroids would unify graph minor theory and matroid theory under a single well-quasi-ordering theorem.",
     "domain_bridges": [],
     "domains": [
@@ -688,7 +688,7 @@
     "proof_strategy": "Define matroid minor: M' is a minor of M if M' can be obtained from M by a sequence of deletions and contractions. The Robertson-Seymour theorem for graphs: for any infinite sequence G_1, G_2, ..., there exist i < j such that G_i is a minor of G_j. Conjecture: the same holds for F_q-representable matroids. For q=2 (graphs): this is Robertson-Seymour. For q=3: this is open. Known result: the set of excluded minors for F_3-representability is {F_7, F_7*, non-Pappus}. The conjecture would follow from: (1) F_3-representable matroids are well-quasi-ordered under the minor relation, and (2) any minor-closed class of F_3-representable matroids has finitely many excluded minors. Step (1) requires showing that F_3-representable matroids contain no infinite antichain. The known antichains (uniform matroids U_{2,n} for n >= 4) are NOT F_3-representable for large n. Step (2) follows from (1) by the same argument as Robertson-Seymour. Test: enumerate all rank-3 matroids on 9 elements (there are ~100), check F_3-representability, verify that excluded minors are exactly F_7, F_7*, non-Pappus.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T08:37:34.442057+00:00",
     "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
   },
