@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "fb9fd2df",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Fractional colouring of the plane via independence ratios\n\nThis cycle isolated a single, domain-free inequality — the fractional chromatic number\nof a finite graph is at least it",
-      "quality_score": 0.8091999999999999,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-07-01T13:29:33",
-      "title": "The 29-vertex augmented unit-distance graph has geometric fractional chromatic number strictly great"
-    },
-    {
       "cycle_id": "8875d434",
       "domain": "Computation",
       "key_insight": "# Future Directions — Independence Ratios of Unit-Distance Graphs\n\nThis cycle established a clean, sharp relationship between colourability and the\nindependence ratio of finite graphs, instantiated it",
@@ -499,19 +489,19 @@
       "theorem_count": 29,
       "timestamp": "2026-07-09T23:44:05",
       "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
+    },
+    {
+      "cycle_id": "7e60f6c2",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Fractal Dimension of Proof Search\n\nThis cycle established, for uniform self-similar search spaces, the exact identity\n`succ = total^D` with `D = log s / log b ∈ [0,1]`, reinterpr",
+      "quality_score": 0.83,
+      "sorry_count": 4,
+      "theorem_count": 23,
+      "timestamp": "2026-07-10T00:21:09",
+      "title": "Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9ecd5b8c",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS — EML Interpolation Theory (this cycle)\n\nThis cycle extended the catalog's EML approximation programme in two directions\nthat were previously only available in dimension one or in",
-      "quality_score": 0.7327899999999999,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-06-28T22:46:15",
-      "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
-    },
     {
       "cycle_id": "bfc7b99e",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 29,
       "timestamp": "2026-07-09T23:44:05",
       "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
+    },
+    {
+      "cycle_id": "7e60f6c2",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Fractal Dimension of Proof Search\n\nThis cycle established, for uniform self-similar search spaces, the exact identity\n`succ = total^D` with `D = log s / log b ∈ [0,1]`, reinterpr",
+      "quality_score": 0.83,
+      "sorry_count": 4,
+      "theorem_count": 23,
+      "timestamp": "2026-07-10T00:21:09",
+      "title": "Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3a1da3d1",
-      "domain": "Applications",
-      "name": "digitsum_modEq_nine",
-      "quality": 0.71008
-    },
-    {
-      "cycle_id": "3a1da3d1",
-      "domain": "Applications",
-      "name": "digitsum_modEq_three",
-      "quality": 0.71008
-    },
-    {
-      "cycle_id": "3a1da3d1",
-      "domain": "Applications",
-      "name": "IsFangPair",
-      "quality": 0.71008
-    },
     {
       "cycle_id": "fbcfb71f",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Applications",
       "name": "zeroOneSequences_uncountable",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "7e60f6c2",
+      "domain": "Bridges",
+      "name": "logSuccCount_growth",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "7e60f6c2",
+      "domain": "Bridges",
+      "name": "logSuccCount_subadditive",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "7e60f6c2",
+      "domain": "Bridges",
+      "name": "searchDim_eq_entropy_ratio",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-09T23:44:05",
+  "last_updated": "2026-07-10T00:21:09",
   "open_questions": [
-    {
-      "context": "for the star half; the conjunction is `sorry`-free and uses both results literally.; `omega`.  Both `sorry`-free.; `sorry`-free.",
-      "cycle_id": "db606ba2",
-      "domain": "Applications",
-      "sorry_count": 3,
-      "timestamp": "2026-06-28T07:31:47"
-    },
     {
       "context": "All four compile with no `sorry` and only the standard axioms.; All compile with no `sorry`; the convex chain bottoms out in genuine Mathlib",
       "cycle_id": "5f11db87",
@@ -3016,6 +3009,13 @@
       "domain": "Algebra",
       "sorry_count": 4,
       "timestamp": "2026-07-09T22:51:25"
+    },
+    {
+      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "7e60f6c2",
+      "domain": "Bridges",
+      "sorry_count": 4,
+      "timestamp": "2026-07-10T00:21:09"
     }
   ],
   "research_threads": {
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "701dddb6",
-        "quality": 0.78684,
-        "theorems": 6,
-        "title": "Pólya tree coefficient recurrence formula"
-      },
-      {
         "cycle_id": "d7fd1af1",
         "quality": 0.67919,
         "theorems": 10,
@@ -3203,6 +3197,12 @@
         "quality": 0.7426819999999998,
         "theorems": 19,
         "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
+      },
+      {
+        "cycle_id": "7e60f6c2",
+        "quality": 0.83,
+        "theorems": 23,
+        "title": "Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
       }
     ],
     "Combinatorics": [

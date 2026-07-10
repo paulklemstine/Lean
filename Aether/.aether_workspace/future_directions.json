@@ -610,7 +610,7 @@
         "Sidon sets",
         "convolution inequalities"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -656,7 +656,7 @@
         "Graph Product Theory",
         "Domination in Hypergraphs"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -1021,7 +1021,7 @@
         "graph theory (clique-width)",
         "computational complexity"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -1969,7 +1969,7 @@
         "Algebraic geometry to combinatorics via geometric invariant theory",
         "Representation theory to geometric combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -4419,7 +4419,7 @@
         "nilperfect ring theory",
         "Dieudonné modules"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -4563,7 +4563,7 @@
         "the theory of matroids",
         "computational complexity"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Bridges"
@@ -4998,7 +4998,7 @@
         "Dieudonné theory",
         "p-adic Hodge theory"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Bridges"
@@ -5976,7 +5976,7 @@
         "probabilistic powerdomains",
         "Euclidean convex analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -6471,7 +6471,7 @@
         "L₁ Space Analysis",
         "Functional Inequalities"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -7505,7 +7505,7 @@
         "Cartesian product of partial cubes",
         "harmonic-even partial cubes"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -7803,7 +7803,7 @@
         "Cycle matroid rank function",
         "Uniform matroid rank function"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -8033,7 +8033,7 @@
       "depth_estimate": 3,
       "description": "The exponent α must equal 103/64 for the derived bound to hold universally regardless of κ.",
       "domain_bridges": "Interconnected with Dirichlet class formulations",
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -8314,7 +8314,7 @@
         "Set Theory",
         "Finite Combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -9078,7 +9078,7 @@
         "Parameterized Complexity",
         "Digraph Decomposition"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -10325,7 +10325,7 @@
         "Computational Number Theory (Rational Certificates)",
         "Hilbert Space Theory (Weighted Direct Sums)"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -10901,7 +10901,7 @@
         "harmonic_analysis",
         "algebraic_combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -12136,7 +12136,7 @@
       "domain_bridges": [
         "math.NT"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -12910,7 +12910,7 @@
         "topological graph theory",
         "graph coloring"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -13192,7 +13192,7 @@
         "analytic number theory",
         "real algebraic geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -14153,7 +14153,7 @@
         "Combinatorics",
         "FiniteFieldTheory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -14444,7 +14444,7 @@
         "finite geometry",
         "coding theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -15789,7 +15789,7 @@
         "finite-binary-channel coding",
         "probabilistic chains"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -16084,7 +16084,7 @@
         "graph theory",
         "γ-positivity in polynomials"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -17434,7 +17434,7 @@
         "Graph Theory",
         "Discrete Mathematics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -17483,7 +17483,7 @@
         "graph_theory",
         "generating_functions"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -17772,7 +17772,7 @@
         "Graph_Theory",
         "Design_Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -17819,7 +17819,7 @@
         "Polyhedral Geometry",
         "Polynomial Root Analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -18012,7 +18012,7 @@
         "roots of unity",
         "Fibonacci and Lucas numbers"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -18198,7 +18198,7 @@
         "LinearAlgebra",
         "Combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -19895,7 +19895,7 @@
         "Eulerian numbers",
         "Matrix products of combinatorial triangles"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -19943,7 +19943,7 @@
         "Combinatorics",
         "Graph Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -19991,7 +19991,7 @@
         "Linear Algebra",
         "Real Analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -20375,7 +20375,7 @@
         "cs.GT",
         "cs.DS"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -21247,7 +21247,7 @@
         "real analysis",
         "convex optimization"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -22375,7 +22375,7 @@
         "p_adic_galois_representations",
         "local_Langlands_correspondence"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Bridges"
@@ -22776,7 +22776,7 @@
         "tropical_geometry",
         "algebraic_combinatorics"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Bridges"
@@ -23269,7 +23269,7 @@
         "deformation_theory--representation_theory",
         "tannakian_categories--algebraic_groups"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Bridges"
@@ -24062,7 +24062,7 @@
         "Mathlib.CategoryTheory.Monoidal.Rigid",
         "Mathlib.CategoryTheory.Monoidal.NaturalTransformation"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Bridges"
@@ -24256,7 +24256,7 @@
         "Linear_algebra",
         "Abstract_algebra"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -24303,7 +24303,7 @@
         "Discrete differential geometry",
         "Optimal transport"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -24543,7 +24543,7 @@
         "finite_model_theory",
         "minor_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -25129,7 +25129,7 @@
         "harmonic_analysis_padic",
         "local_class_field_theory"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Bridges"
@@ -25227,7 +25227,7 @@
         "Harmonic analysis on reductive groups",
         "Symplectic representations and dual pairs"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Bridges"
@@ -25560,7 +25560,7 @@
         "Linear Algebra",
         "Complex Analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -25954,7 +25954,7 @@
         "hypergeometric_functions",
         "CM_elliptic_curves"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Bridges"
@@ -26244,7 +26244,7 @@
         "Sampling theory → Zero distribution of L-functions",
         "Functional equations → Reflected zero pairs"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -26341,7 +26341,7 @@
         "analytic_number_theory",
         "diophantine_approximation"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Bridges"
@@ -26633,7 +26633,7 @@
         "infinite_words_substitutions",
         "cyclic_avoidability"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -26681,7 +26681,7 @@
         "combinatorial_topology",
         "commutative_algebra"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -26727,7 +26727,7 @@
         "Constant-amortized-time algorithms",
         "Combinatorial superset properties"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -27364,7 +27364,7 @@
         "Simplicial Complexes",
         "Combinatorial Algebra"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -27959,7 +27959,7 @@
         "potential_theory_energy_minimization",
         "combinatorics_of_finite_metric_spaces"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -28568,7 +28568,7 @@
         "Probability Theory",
         "Asymptotic Analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -28760,7 +28760,7 @@
         "graph_theory",
         "logic_and_combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -28958,7 +28958,7 @@
         "analytic_number_theory",
         "computational_number_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -29058,7 +29058,7 @@
         "Formal languages and inductive types",
         "Enumerative combinatorics ↔ algebraic involution theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -30032,7 +30032,7 @@
         "combinatorics",
         "binomial_coefficients"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -30180,7 +30180,7 @@
         "hadamard_matrices",
         "finite_group_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -30230,7 +30230,7 @@
         "Diagonal harmonics and nabla operator theory",
         "Modified Hall-Littlewood polynomials"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -30524,7 +30524,7 @@
         "arithmetic_geometry_over_finite_fields",
         "symplectic_group_representations"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Bridges"
@@ -31668,7 +31668,7 @@
         "Algebraic Combinatorics",
         "Spectral Graph Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -31905,7 +31905,7 @@
         "Randomized algorithms",
         "Extremal combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -34624,7 +34624,7 @@
         "Raney numbers",
         "Catalan combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -34912,7 +34912,7 @@
         "combinatorial_geometry",
         "linear_algebra"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges",
         "Logic"
@@ -35112,7 +35112,7 @@
         "Token sliding reconfiguration ↔ optimization value realization",
         "Logical meta-theorems ↔ parameterized complexity classification"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Bridges"
@@ -36225,7 +36225,7 @@
         "math.GR (Group Theory)",
         "math.HR (Dynamics)"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -36370,7 +36370,7 @@
         "extremal graph theory",
         "topological graph theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -36707,7 +36707,7 @@
         "Combinatorial designs over finite rings",
         "Algebraic number theory via embedding determinants"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -36903,7 +36903,7 @@
         "Poincaré polynomials → Quiver representations via perverse sheaves",
         "Rational smoothness → Geometric representation theory via Springer fibers"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges",
         "Pythagorean"
@@ -37244,7 +37244,7 @@
         "combinatorial matrix theory",
         "algebraic geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -37691,7 +37691,7 @@
         "formal verification",
         "algorithm verification"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -37921,7 +37921,7 @@
       "depth_estimate": 3,
       "description": "Bypassed",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -38043,7 +38043,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThis project proves the upper half of the generalized Turán result\n`ex(n, K_{a,b}, K_{3,b+1}) = Θ(n^3)` and, as a **connector**, re-expresses the combinatorial\ncardinality bound in the language of asymptotic analysis.\n\n## What is proved\n\nFile `Catalog/Bridges/GenTuranAsymptoticBridge.lean` (self-contained, imports only `Mathlib`):\n\n* `KabCopies_cubic_of_K3tFree` — the combinatorial core: every `K_{3,b+1}`-free graph on a\n  finite vertex set has at most `C(b, b) · C(b, a-3) · n^3 = C(b, a-3) · n^3` copies of\n  `K_{a,b}` when `3 ≤ a` and `3 ≤ b` (KST-style double count on a 3-element core).\n* `genTuran_KabCopies_isBigO` — **the bridge**: for any sequence of `K_{3,b+1}`-free graphs,\n  `n ↦ #{copies of K_{a,b}}` is `O(n^3)` in the Landau sense (`Asymptotics.IsBigO`), with the\n  Landau constant equal to the combinatorial constant `C(b, a-3)`.\n* `genTuran_density_tendsto_zero` — the probabilistic/analytic reading: the copy density\n  `#copies / n^{a+b}` tends to `0`.\n\n## Natural next steps\n\n1. **Matching lower bound (the `Θ` half).** Construct, for infinitely many `n`, `K_{3,b+1}`-free\n   graphs with `Ω(n^3)` copies of `K_{a,b}`. The parity subtlety in the literature lives in this\n   construction; formalizing it would upgrade the `O(n^3)` bridge to a two-sided `Θ(n^3)`\n   asymptotic equivalence (`Asymptotics.IsTheta`).\n\n2. **Extremal function as an object.** Define `ex(n, K_{a,b}, K_{3,t})` as the supremum of\n   `KabCopies` over all `K_{3,t}`-free graphs on `Fin n`, and state the bridge directly for this\n   parameter (`IsBigO`/`IsTheta`), rather than for arbitrary sequences. This requires a\n   `Fintype (SimpleGraph (Fin n))` sup with classical decidability.\n\n3. **General `K_{s,t}` forbidden graphs.** Replace the forbidden `K_{3,b+1}` (and the anchoring\n   triple) by `K_{s, ·}`, giving `ex(n, K_{a,b}, K_{s,t}) = O(n^s)` under the analogous\n   common-neighborhood cap on `s`-sets. The double count generalizes verbatim with `s` in place\n   of `3`.\n\n4. **Sharper constants.** The current constant `C(b, a-3)` is not optimized. Investigate the\n   exact extremal constant and whether the KST cap can be tightened for specific `(a,b)`.\n\n5. **Further cross-domain bridges.** The `IsBigO` framing invites connections to (a) incidence\n   geometry / the Zarankiewicz problem (0-1 matrices with no `s×t` all-ones submatrix), and\n   (b) random-graph thresholds, where the vanishing density\n   `genTuran_density_tendsto_zero` becomes a first-moment statement.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Bridges"
@@ -38125,7 +38125,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nFile: `Bridges/PageSiegelRefinement.lean`\n\n## What is proved\n\nThe file formalizes, and proves in full (no `sorry`, only the standard axioms\n`propext`, `Classical.choice`, `Quot.sound`), a **conditional refinement of\nPage's theorem** on Landau–Siegel zeros, framed as a *connector* between two\nareas:\n\n* **Zero location / complex analysis** — the repulsion of real zeros of Dirichlet\n  `L`-functions (`DirichletCharacter.LFunction`), packaged as `Repulsion`, and the\n  mission's premise `NonRealExclusion` (no non-real zeros near `s = 1`).\n* **Asymptotics + finiteness** — the pivot `exists_threshold`\n  (`m^{-ε} log m → 0`, from `isLittleO_log_rpow_atTop`) and the abstract\n  `repulsion_subsingleton`, which turns a repulsion inequality into a\n  `Subsingleton` (\"at most one\").\n\nThe main theorem `page_siegel_refinement` wires these together: for every `ε > 0`\nthere are effective `C > 0`, `Q₀ > 1` such that the Deuring–Heilbronn bridge\n`NonRealExclusion → Repulsion` together with `NonRealExclusion` forces the set of\nexceptional primitive quadratic characters (real zero in `[1 - q^{-ε}, 1)`) to be\na `Set.Subsingleton`.\n\n## Honest scope / what is assumed\n\nTwo genuinely deep analytic facts are isolated as **explicit hypotheses** rather\nthan proved from scratch (this is what makes the result *conditional*, matching\nthe paper's own framing):\n\n1. `NonRealExclusion` — the hypothesis of the statement itself.\n2. The bridge `NonRealExclusion → Repulsion` — the Deuring–Heilbronn / Landau\n   zero-repulsion mechanism, whose usual proof rests on the non-negativity of the\n   Dirichlet coefficients of `ζ(s) L(s,χ₁) L(s,χ₂) L(s,χ₁χ₂)`.\n\nEverything *downstream* of these inputs — the effective constant, the monotonicity\nargument, and the passage to \"at most one\" — is a Lean theorem.\n\n## Concrete next steps\n\n1. **Discharge the bridge.** Prove `NonRealExclusion → Repulsion` inside Lean.\n   Mathlib already provides the key positivity input\n   `DirichletCharacter.norm_LFunction_product_ge_one` (the `3–4–1` trick); the\n   remaining work is the explicit log-derivative estimates and the choice of the\n   auxiliary point `s = 1 + δ`.\n\n2. **Replace the `min`-conductor repulsion by the classical `log(q₁q₂)` form.**\n   The abstract lemma is stated with `log (min conductor)`; deriving the sharper\n   `log(q₁q₂)` version and re-deriving `repulsion_subsingleton` from it would make\n   the constant match Landau's exactly.\n\n3. **Non-vacuity via character theory.** Connect `ExcSet` to the Kronecker-symbol\n   description of primitive real characters, so that \"at most one character\" is\n   phrased at the level of fundamental discriminants.\n\n4. **Effective `C(ε)`.** The proof currently fixes `C = 1`; tracking the optimal\n   `C(ε)` through the bridge would yield the fully effective statement.\n\n5. **Remove `Classical.choice`.** The zero witness is extracted with\n   `Classical.choose`; a constructive selection (or `Set.Subsingleton` proved\n   directly) would trim the axiom footprint.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Logic",
         "Algebra"
@@ -38177,7 +38177,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.7,
+      "outcome_quality": 0.82,
       "parent_direction": "",
       "priority_score": 0.74,
       "proof_strategy": "Define a rearrangement of primes as a bijection sigma: N -> N, giving q_n = p_{sigma(n)}. Define a well-behaved rearrangement as one where q_n/p_n -> 1. Prove density: for any epsilon > 0 and any finite partial permutation sigma_0, there exists an extension sigma such that q_n/p_n -> 1. Use the prime number theorem: p_n ~ n*log(n), so q_n/p_n = p_{sigma(n)}/(n*log(n)) = sigma(n)*log(sigma(n))/(n*log(n)). For this to converge to 1, we need sigma(n) ~ n, i.e., sigma must be 'close to the identity' in the sense that sigma(n)/n -> 1. Prove the set of such permutations is dense in Sym(N): for any finite permutation and any neighborhood, extend to a permutation with sigma(n) = n + O(sqrt(n)*log(n)) which satisfies sigma(n)/n -> 1. Prove the reversal fails: sigma(n) = N-n gives sigma(n)/n = (N-n)/n -> infinity. Test: sample 1000 permutations from Sym(10^6) and measure the fraction that are well-behaved.",
@@ -38188,7 +38188,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-07-09T20:12:33.003700+00:00",
       "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
@@ -39148,6 +39148,47 @@
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
+      "description": "# Future Directions — Hilbert's Hotel for Primes\n\nThe file `PrimeHotelRearrangement.lean` formalizes, entirely without the prime number theorem:\n\n* **Finite support ⇒ well behaved** (`wellBehaved_of_finite_support`): if a rearrangement\n  moves only finitely many guests, the displacement ratio `p(σ n)/p n` is *eventually equal*\n  to `1`.\n* **Approximation** (`exists_finiteSupport_perm_agree`): every permutation of `ℕ` agrees, on\n  any finite initial segment, with some finitely supported permutation (built by composing\n  transpositions).\n* **Density** (`wellBehaved_dense`): the well-behaved rearrangements are dense in the symmetric\n  group `Sym(ℕ)` for the topology of pointwise convergence — the paper's central claim.\n* **Not universal** (`exists_not_wellBehaved`): an explicit involution assembled from a sparse\n  family of prime-doubling long-range swaps has displacement ratio `≥ 2` infinitely often, so\n  it is not well behaved.\n\n## Natural next steps\n\n1. **Topologize the statement.** Replace the \"agrees on `{0,…,N-1}`\" formulation of density by\n   the actual `Pi`-topology on `Equiv.Perm ℕ` (or `ℕ → ℕ`) and prove `Dense {σ | WellBehaved σ}`\n   as a `Dense` predicate. The current lemma is exactly the neighborhood-basis form of this.\n\n2. **The swap-even/odd example, honestly.** Prove that `σ : n ↦ n ⊕ 1` is well behaved. This\n   needs `p_{n+1}/p_n → 1`, i.e. that prime gaps are `o(p_n)`. With Mathlib's prime number\n   theorem this should be reachable; it is the canonical \"well behaved but not eventually\n   identity\" example.\n\n3. **Characterize well-behaved permutations.** Conjecture: `σ` is well behaved iff\n   `p(σ n)/p n → 1`, and (using PNT, `p_n ~ n log n`) this is equivalent to\n   `σ n / n → 1`. Thus the well-behaved permutations are precisely those with asymptotically\n   unit density distortion — a clean topological/asymptotic invariant.\n\n4. **Quantify the \"exact density\" question.** The mission asks for the density of well-behaved\n   permutations. Topologically the set is dense but *meager* (it is a countable-to-one shadow of\n   an `Fσ`-type condition); making \"density\" precise (Baire category, or a natural measure on\n   `Sym(ℕ)`) and computing it is open-ended and interesting.\n\n5. **Ratios with limits ≠ 1.** Generalize `WellBehaved` to \"the ratio has *a* limit `L`\" and\n   study which `L` are attainable and how the corresponding permutations sit inside `Sym(ℕ)`.\n\n6. **Other room-filling sequences.** Replace primes by any strictly monotone `a : ℕ → ℕ` with\n   `a` tending to infinity; the finite-support density argument is unchanged, and the negative\n   result goes through whenever `a` is unbounded. Only the *rate* results (steps 2–4) are\n   arithmetic-specific.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0820",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "c05d7abb",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/c05d7abb",
+      "status": "available",
+      "thread_id": "th_f6e54da7",
+      "timestamp": "2026-07-10T00:21:12.467848+00:00",
+      "title": "The file `PrimeHotelRearrangement.lean` formalizes, entirely without the prime n"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
       "description": "Building on cycle 3716954d (Q=0.780), which proved 29 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: L-functions are the DNA of mathematics — each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, ",
       "domain_bridges": [],
       "domain_quality_penalty": 0.0,
@@ -39215,6 +39256,46 @@
       "thread_id": "",
       "timestamp": "2026-07-09T22:51:25.551096+00:00",
       "title": "Deepening: Tropical Dreams: The Field with One Element Meets Tropical Geometry"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 7e60f6c2 (Q=0.830), which proved 23 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search fractal dimension D(T) of a theorem T as the Hausdorff dimension of the set of all successful proof path",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "github_issue": 0,
+      "id": "push_7e60f6c2_123317db",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9299999999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "7e60f6c2",
+      "source_path": "Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-10T00:21:09.914957+00:00",
+      "title": "Deepening: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
     },
     {
       "ambition_level": "extension",
@@ -39380,6 +39461,46 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Cycle 7e60f6c2 (Q=0.830) proved 23 theorems in Bridges but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search frac",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "github_issue": 0,
+      "id": "sorry_fill_7e60f6c2_44d07820",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.85,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "7e60f6c2",
+      "source_path": "Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-10T00:21:09.997327+00:00",
+      "title": "Close Proofs: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
       "attempt_count": 1,
       "catalog_references": [],
       "category": "",
@@ -39463,97 +39584,96 @@
     "Bridges": 2,
     "Cryptography": 1,
     "Logic": 2,
-    "Novelty": 7,
-    "NumberTheory": 2,
+    "Novelty": 8,
+    "NumberTheory": 3,
     "Physics": 3,
     "Tropical": 2
   },
   "recent_theme_keywords": {
-    "'easy'": 1,
-    "'hard'": 1,
-    "'obvious'": 1,
-    "1/epsilon": 1,
-    "actual": 1,
-    "always": 4,
+    "'well-behaved'": 1,
+    "accommodate": 1,
+    "almost": 1,
+    "always": 5,
     "amplification": 3,
-    "applicable": 1,
-    "balanced": 1,
-    "branching": 1,
-    "change": 2,
+    "arbitrarily": 1,
+    "asymptotic": 1,
+    "barely": 1,
+    "change": 3,
     "classes": 3,
     "closure": 3,
-    "compute": 3,
-    "conjecture": 7,
-    "contains": 5,
-    "correlate": 1,
-    "correlates": 1,
+    "compute": 4,
+    "conjecture": 8,
+    "containing": 1,
+    "contains": 6,
+    "converge": 1,
+    "convergence": 1,
+    "converges": 1,
     "corresponding": 4,
-    "define": 1,
-    "derivation": 1,
-    "determines": 1,
-    "difficulty": 1,
-    "dimension": 1,
-    "direct": 1,
-    "epsilon": 1,
-    "estimate": 1,
-    "exists": 2,
-    "explored": 1,
-    "explores": 1,
-    "exponentially": 1,
-    "factor": 1,
-    "focused": 1,
+    "density": 1,
+    "diverges": 1,
+    "even-indexed": 1,
+    "exists": 3,
     "formalizing": 3,
-    "fractal": 1,
     "framework": 3,
     "geometry": 2,
     "graphon": 3,
-    "hausdorff": 1,
-    "impact": 7,
-    "impossibly": 1,
+    "group": 1,
+    "guest": 1,
+    "guests": 1,
+    "hilbert's": 1,
+    "hotel": 1,
+    "impact": 8,
     "inequalities": 3,
-    "inference": 1,
+    "infinite": 1,
+    "infinitely": 1,
     "introduces": 3,
+    "invariant": 1,
     "lattice": 3,
-    "length": 1,
-    "mathlib": 1,
-    "neither": 1,
-    "number": 8,
-    "o(1/length(t": 1,
+    "manager": 1,
+    "number": 9,
+    "numbers": 1,
+    "odd-indexed": 1,
+    "p_{2n-1}/p_{2n}": 1,
+    "p_{n-n}/p_n": 1,
+    "p_{sigma(n)}": 1,
+    "permutation": 1,
+    "permutations": 1,
     "points": 2,
-    "possible": 1,
+    "pointwise": 1,
+    "precisely": 1,
+    "prime": 1,
+    "primes": 1,
     "principles": 3,
-    "proof": 1,
-    "proof-search": 1,
-    "proofs": 1,
     "properties": 3,
-    "prover": 1,
     "providing": 3,
     "proving": 3,
-    "representations": 1,
-    "require": 1,
-    "roughly": 1,
-    "sampling": 1,
-    "satisfying": 1,
-    "search": 1,
-    "searches": 1,
-    "selberg": 1,
-    "sequence": 2,
-    "shortest": 1,
-    "showing": 1,
+    "q_n/p_n": 1,
+    "q_{2n}/p_{2n}": 1,
+    "random": 1,
+    "ratios": 1,
+    "rearrange": 1,
+    "rearrangement": 1,
+    "reverses": 1,
+    "robust": 1,
+    "rooms": 1,
+    "sequence": 3,
+    "shuffle": 1,
     "sidorenko-type": 3,
     "spectral": 3,
-    "stars": 1,
     "steps": 1,
     "structural": 3,
     "structure": 3,
     "successful": 1,
+    "symmetric": 1,
     "tensor": 5,
     "tensor-amplification": 3,
     "tensor_z": 2,
-    "theorem": 4,
+    "theorem": 5,
     "theorems": 1,
-    "there": 1,
+    "there": 2,
     "those": 1,
+    "topological": 1,
+    "topology": 1,
     "transfer": 3,
     "trees": 1,
     "trivially": 1,
@@ -39562,11 +39682,12 @@
     "uncountably": 1,
     "universe": 1,
     "variety": 3,
-    "verify": 5,
+    "verify": 6,
     "vertices": 2,
     "weight": 1,
     "well-behaved": 1,
-    "words": 1,
+    "words": 2,
+    "works": 1,
     "{infinity}": 2,
     "|vertices(p)|": 2
   },

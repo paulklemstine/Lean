@@ -1,212 +1,207 @@
-# Asymptotically Identity Permutations and Prime Rearrangements
+# Rearranging the Primes: Density and Rigidity of Displacement Ratios in the Prime Hotel
 
 ## Abstract
 
-We introduce and study the class of *asymptotically identity permutations* of the natural numbers — bijections σ : ℕ → ℕ satisfying σ(n)/n → 1 as n → ∞. We prove that this class forms a subgroup of the symmetric group S_ℕ (closed under composition and inversion, containing the identity), and establish that it is dense in S_ℕ with respect to the topology of pointwise convergence. We demonstrate that permutations with bounded displacement |σ(n) - n| ≤ k are asymptotically identity, and provide the concrete example of the adjacent swap permutation. Via the Prime Number Theorem, we prove a log ratio lemma showing that log(σ(n))/log(n) → 1 whenever σ is asymptotically identity, establishing that prime rearrangements by such permutations preserve the asymptotic growth rate p_{σ(n)}/p_n → 1. All results are formalized in Lean 4 with complete machine-verified proofs.
+We study rearrangements of an infinite indexed family of guests, where room $n$ of an infinite hotel is occupied by the $n$-th prime $p_n$. A rearrangement is a permutation $\sigma$ of the natural numbers; after rearranging, room $n$ holds the prime $p_{\sigma(n)}$. We measure the disruption caused by $\sigma$ through the *displacement ratio* $R_\sigma(n) = p_{\sigma(n)}/p_n$, and we call $\sigma$ *well behaved* when $R_\sigma(n) \to 1$, i.e. when guests asymptotically retain their magnitude. We prove three results. First, every finitely supported permutation is well behaved, with displacement ratio eventually equal to $1$. Second — the central result — the well-behaved permutations are *dense* in the symmetric group $\operatorname{Sym}(\mathbb{N})$ under the topology of pointwise convergence: every permutation is matched on any finite initial segment by a well-behaved one. Third, the property is not universal: we construct an explicit involution, assembled from a sparse family of prime-doubling long-range swaps, whose displacement ratio is $\ge 2$ infinitely often and hence fails to converge. All three results depend only on the primes being a strictly increasing unbounded sequence, so they hold verbatim for any such sequence; the Prime Number Theorem is not required. We conclude with conjectures, in particular a proposed characterization of well-behaved permutations via $\sigma(n)/n \to 1$, and a discussion of how to quantify the "density" of well-behaved permutations in the sense of Baire category.
 
-**Keywords**: permutations of natural numbers, asymptotic analysis, prime number theorem, topological groups, formal verification
+**Keywords:** prime numbers, symmetric group, permutations of $\mathbb{N}$, pointwise convergence, density, asymptotic invariants, displacement ratio, finite support.
 
 ---
 
 ## 1. Introduction
 
-The prime numbers exhibit a striking duality: individually unpredictable, collectively regular. The Prime Number Theorem (PNT) establishes that the n-th prime p_n satisfies p_n ~ n log n, providing a precise asymptotic description of prime distribution. A natural question arises: how robust is this asymptotic behavior under rearrangement?
+Hilbert's hotel is a classical illustration of the counterintuitive arithmetic of infinite sets: a fully occupied hotel with rooms indexed by $\mathbb{N}$ can still accommodate new guests by relabeling. We adopt the hotel as a staging ground for a question about the *stability of the prime numbers under rearrangement*.
 
-More precisely, given a bijection σ : ℕ → ℕ, define the rearranged prime sequence q_n = p_{σ(n)}. When does q_n/p_n → 1? This question, inspired by Hilbert's Hotel thought experiment, leads to a rich mathematical structure that we develop in this paper.
+Assign to room $n \in \mathbb{N}$ the $n$-th prime $p_n$. Because there are infinitely many primes, every room is occupied. A *rearrangement of the guests* is a bijection $\sigma : \mathbb{N} \to \mathbb{N}$; we interpret it as sending the guest originally in room $\sigma(n)$ into room $n$, so that after the rearrangement room $n$ holds the prime $p_{\sigma(n)}$.
 
-We introduce the concept of an *asymptotically identity* (AsympId) permutation and prove that the AsympId permutations form a subgroup of S_ℕ. This subgroup is dense in the pointwise convergence topology but has measure zero among finite permutations, creating an interesting topological-measure-theoretic dichotomy.
+The quantity of interest is how much the magnitude of a room's occupant changes. We define the **displacement ratio**
+$$
+R_\sigma(n) = \frac{p_{\sigma(n)}}{p_n},
+$$
+and declare $\sigma$ **well behaved** when $R_\sigma(n) \to 1$ as $n \to \infty$: asymptotically, the prime now in room $n$ is essentially the same size as the one that used to be there.
 
-### 1.1 Related Work
+Two questions drive the paper:
 
-The study of permutations preserving summability properties of series has a long history, beginning with Riemann's rearrangement theorem (1867). Levi (1905) and Steinitz (1913) generalized this to series in ℝⁿ. The permutations preserving absolute convergence were characterized by Agnew (1955) as those with bounded displacement. Our work extends this perspective to multiplicative asymptotics of prime sequences.
+1. **How plentiful are well-behaved rearrangements?** We show they are *dense* in the natural topology on $\operatorname{Sym}(\mathbb{N})$: no finite observation can rule out well-behavedness.
+2. **Is well-behavedness automatic?** We show it is not, by an explicit construction.
 
-The topology of pointwise convergence on S_ℕ has been studied extensively in descriptive set theory; S_ℕ is a Polish group homeomorphic to the Baire space. Our density result (Theorem 6) shows that AsympId permutations are a dense subgroup in this topology.
-
----
-
-## 2. Definitions
-
-**Definition 1 (Asymptotically Identity Permutation).** A bijection σ : ℕ → ℕ is *asymptotically identity* if
-
-$$\lim_{n \to \infty} \frac{\sigma(n)}{n} = 1.$$
-
-We write AsympId(σ) for this property.
-
-**Definition 2 (Eventually Fixed Permutation).** A bijection σ : ℕ → ℕ is *eventually fixed* if there exists N ∈ ℕ such that σ(n) = n for all n ≥ N.
-
-**Definition 3 (Bounded Displacement Permutation).** A bijection σ : ℕ → ℕ has *bounded displacement* k if |σ(n) - n| ≤ k for all n ∈ ℕ.
-
-**Definition 4 (Adjacent Swap).** The adjacent swap permutation is defined by
-$$\text{AdjacentSwap}(n) = \begin{cases} n+1 & \text{if } n \text{ is even} \\ n-1 & \text{if } n \text{ is odd} \end{cases}$$
+A pleasant feature of the analysis is its economy. The only property of the sequence $n \mapsto p_n$ that we use is that it is strictly increasing and tends to infinity. Consequently, all main results hold for an arbitrary strictly increasing unbounded sequence $a : \mathbb{N} \to \mathbb{N}$; nothing about primality beyond monotone growth is needed, and in particular the Prime Number Theorem is *not* invoked.
 
 ---
 
-## 3. Fundamental Results
+## 2. Definitions and basic properties of the prime rooms
 
-### 3.1 Bijections of ℕ Tend to Infinity
+Let $p : \mathbb{N} \to \mathbb{N}$ enumerate the primes in increasing order, $p_0 = 2, p_1 = 3, p_2 = 5, \dots$ (we index from $0$ for convenience). We record the elementary facts we rely on.
 
-**Theorem 1 (perm_tendsto_atTop).** *For any bijection σ : ℕ → ℕ, σ(n) → ∞ as n → ∞ (in the real-valued sense).*
+**Proposition 2.1 (Basic properties).**
+1. $p_n$ is prime for every $n$; in particular $p_n > 0$ and $(p_n : \mathbb{R}) \ne 0$.
+2. $p$ is strictly monotone: $m < n \implies p_m < p_n$. Hence $p$ is injective.
+3. $p_n \to \infty$ as $n \to \infty$.
 
-*Proof sketch.* For any bound b, the set {a ∈ ℕ : σ(a) < b} is finite (being the preimage of a finite set under an injective function). Let N = 1 + max{a : σ(a) < b}. Then for n ≥ N, σ(n) ≥ b. □
+*Proof.* Enumerating an infinite set of naturals in increasing order yields a strictly monotone function whose values are exactly that set; the set of primes is infinite (Euclid), giving (1)–(2). A strictly monotone function $\mathbb{N} \to \mathbb{N}$ tends to infinity, giving (3). $\square$
 
-This lemma is foundational: it ensures that compositions of the form f ∘ σ preserve limits at infinity.
+Everything below uses only Proposition 2.1(2)–(3).
 
-### 3.2 Eventually Fixed Implies AsympId
+**Definition 2.2 (Displacement ratio).** For $\sigma \in \operatorname{Sym}(\mathbb{N})$ and $n \in \mathbb{N}$, set
+$$
+R_\sigma(n) = \frac{p_{\sigma(n)}}{p_n} \in \mathbb{R}.
+$$
 
-**Theorem 2 (asympId_of_eventuallyFixed).** *If σ is eventually fixed, then σ is asymptotically identity.*
+**Definition 2.3 (Well behaved).** A permutation $\sigma \in \operatorname{Sym}(\mathbb{N})$ is *well behaved* if $R_\sigma(n) \to 1$ as $n \to \infty$.
 
-*Proof.* Let N be such that σ(n) = n for all n ≥ N. For n ≥ max(N, 1), σ(n)/n = n/n = 1. Hence σ(n)/n is eventually constant at 1, so it converges to 1. □
-
-### 3.3 The Identity is AsympId
-
-**Theorem 3 (asympId_id).** *The identity permutation is asymptotically identity.*
-
-This follows immediately from Theorem 2, since the identity is eventually fixed (with N = 0).
-
----
-
-## 4. Subgroup Structure
-
-### 4.1 Composition Closure
-
-**Theorem 4 (asympId_comp).** *If AsympId(σ) and AsympId(τ), then AsympId(σ ∘ τ).*
-
-*Proof sketch.* Write
-$$\frac{(\sigma \circ \tau)(n)}{n} = \frac{\sigma(\tau(n))}{\tau(n)} \cdot \frac{\tau(n)}{n}.$$
-
-The second factor converges to 1 by AsympId(τ). For the first factor, by Theorem 1, τ(n) → ∞, so the sequence σ(τ(n))/τ(n) is the composition of the sequence σ(m)/m (which tends to 1 by AsympId(σ)) with τ(n) → ∞. By the composition of limits, σ(τ(n))/τ(n) → 1. The product of two sequences each converging to 1 converges to 1. □
-
-### 4.2 Inverse Closure
-
-**Theorem 5 (asympId_inv).** *If AsympId(σ), then AsympId(σ⁻¹).*
-
-*Proof sketch.* Let m = σ⁻¹(n), so σ(m) = n. Then
-$$\frac{\sigma^{-1}(n)}{n} = \frac{m}{\sigma(m)} = \frac{1}{\sigma(m)/m}.$$
-
-As n → ∞, m = σ⁻¹(n) → ∞ (by Theorem 1 applied to σ⁻¹), and σ(m)/m → 1 (by AsympId(σ)). Therefore σ⁻¹(n)/n → 1/1 = 1. □
-
-### 4.3 Subgroup Theorem
-
-**Theorem 6 (asympId_subgroup_properties).** *The set G = {σ ∈ S_ℕ : AsympId(σ)} forms a subgroup of S_ℕ:*
-1. *1 ∈ G (Theorem 3)*
-2. *σ, τ ∈ G ⟹ σ ∘ τ ∈ G (Theorem 4)*
-3. *σ ∈ G ⟹ σ⁻¹ ∈ G (Theorem 5)*
+We give $\operatorname{Sym}(\mathbb{N}) \subseteq \mathbb{N}^{\mathbb{N}}$ the topology of **pointwise convergence**: a basic neighborhood of $\sigma$ is
+$$
+U_{\sigma, N} = \{ \tau : \tau(i) = \sigma(i) \text{ for all } i < N \}, \qquad N \in \mathbb{N}.
+$$
+A set $S \subseteq \operatorname{Sym}(\mathbb{N})$ is dense iff every $U_{\sigma, N}$ meets $S$, i.e. iff for every $\sigma$ and $N$ there is a member of $S$ agreeing with $\sigma$ on $\{0, \dots, N-1\}$.
 
 ---
 
-## 5. Examples and Bounded Displacement
+## 3. Finitely supported rearrangements are well behaved
 
-### 5.1 Adjacent Swap
+The *support* of $\sigma$ is $\operatorname{supp}(\sigma) = \{ n : \sigma(n) \ne n \}$. We say $\sigma$ is *finitely supported* if $\operatorname{supp}(\sigma)$ is finite.
 
-**Theorem 7 (asympId_adjacentSwap).** *The adjacent swap permutation is asymptotically identity.*
+**Lemma 3.1 (Eventually identity).** If $\operatorname{supp}(\sigma)$ is finite, there is $N$ with $\sigma(n) = n$ for all $n \ge N$.
 
-*Proof sketch.* For even n, AdjacentSwap(n) = n+1, so the ratio is (n+1)/n = 1 + 1/n. For odd n, the ratio is (n-1)/n = 1 - 1/n. In both cases, |ratio - 1| ≤ 1/n → 0. □
+*Proof.* A finite set of naturals is bounded above by some $M$; take $N = M + 1$. Any $n \ge N$ lies outside $\operatorname{supp}(\sigma)$, so $\sigma(n) = n$. $\square$
 
-This example is notable because it moves *every* element of ℕ, yet is still asymptotically identity.
+**Lemma 3.2 (Eventual identity implies well behaved).** If there is $N$ with $\sigma(n) = n$ for all $n \ge N$, then $\sigma$ is well behaved; indeed $R_\sigma(n) = 1$ for all $n \ge N$.
 
-### 5.2 Bounded Displacement
+*Proof.* For $n \ge N$, $\sigma(n) = n$, so $R_\sigma(n) = p_n / p_n = 1$ (using $p_n \ne 0$). A sequence eventually equal to the constant $1$ converges to $1$. $\square$
 
-**Theorem 8 (asympId_of_bounded_displacement).** *If |σ(n) - n| ≤ k for all n, then AsympId(σ).*
+**Theorem 3.3 (Finite support ⇒ well behaved).** Every finitely supported permutation is well behaved.
 
-*Proof.* |σ(n)/n - 1| = |σ(n) - n|/n ≤ k/n → 0. □
+*Proof.* Combine Lemmas 3.1 and 3.2. $\square$
 
-This generalizes the adjacent swap (which has k = 1) and shows that "local" rearrangements are always asymptotically identity.
-
----
-
-## 6. Connection to Primes
-
-### 6.1 The Log Ratio Lemma
-
-**Theorem 9 (log_ratio_tendsto_one).** *If AsympId(σ), then log(σ(n))/log(n) → 1.*
-
-*Proof sketch.* Write log(σ(n))/log(n) = (log(n) + log(σ(n)/n))/log(n) = 1 + log(σ(n)/n)/log(n). Since σ(n)/n → 1, log(σ(n)/n) → log(1) = 0 by continuity. Since log(n) → ∞, the ratio log(σ(n)/n)/log(n) → 0. □
-
-### 6.2 Prime Rearrangement Corollary
-
-**Corollary.** *If AsympId(σ) and p_n denotes the n-th prime, then p_{σ(n)}/p_n → 1.*
-
-*Informal proof.* By PNT, p_n ~ n log(n). Therefore
-$$\frac{p_{\sigma(n)}}{p_n} \sim \frac{\sigma(n) \log(\sigma(n))}{n \log(n)} = \frac{\sigma(n)}{n} \cdot \frac{\log(\sigma(n))}{\log(n)} \to 1 \cdot 1 = 1$$
-by Theorems 4 and 9. (Formalizing this corollary would require a formal PNT in Mathlib, which is not yet available.)
+In particular the identity permutation is well behaved (trivially, $R_{\mathrm{id}}(n) \equiv 1$).
 
 ---
 
-## 7. Density and Topology
+## 4. Density of well-behaved rearrangements
 
-### 7.1 Density in Pointwise Convergence
+The heart of the paper is that well-behavedness cannot be detected on any finite window.
 
-The symmetric group S_ℕ carries the topology of pointwise convergence: σ_α → σ iff σ_α(n) → σ(n) for each fixed n. Basic open sets have the form {σ : σ(i) = a_i for i = 1,...,N} for fixed N and values a_1,...,a_N.
+**Lemma 4.1 (Finite-support approximation).** For every $\sigma \in \operatorname{Sym}(\mathbb{N})$ and every $N \in \mathbb{N}$, there is a finitely supported permutation $\tau$ with $\tau(i) = \sigma(i)$ for all $i < N$.
 
-**Theorem (Density, informal).** *The AsympId subgroup is dense in S_ℕ.*
+*Proof.* Induction on $N$.
 
-*Proof sketch.* Given any finite partial specification (σ(1) = a_1, ..., σ(N) = a_N) with distinct a_i, extend to a full permutation that fixes all elements ≥ M for some sufficiently large M. By Theorem 2, this extension is AsympId. □
+*Base $N = 0$.* Take $\tau = \mathrm{id}$; the condition "$\tau(i) = \sigma(i)$ for all $i < 0$" is vacuous, and $\mathrm{id}$ has empty support.
 
-### 7.2 Measure-Theoretic Rarity
+*Step $N \to N+1$.* Suppose $\tau$ is finitely supported with $\tau(i) = \sigma(i)$ for all $i < N$. We adjust $\tau$ at index $N$ without breaking the earlier agreements. Consider the transposition $\operatorname{swap}(\tau(N), \sigma(N))$ (the identity if $\tau(N) = \sigma(N)$), and set
+$$
+\tau' = \operatorname{swap}(\tau(N), \sigma(N)) \circ \tau.
+$$
+Then $\tau'(N) = \operatorname{swap}(\tau(N), \sigma(N))(\tau(N)) = \sigma(N)$, so $\tau'$ agrees with $\sigma$ at $N$.
 
-**Conjecture (Density Conjecture).** *For any ε ∈ (0, 1), the fraction of permutations of {1,...,N} satisfying max_n |σ(n)/n - 1| < ε tends to 0 as N → ∞.*
+We check the earlier agreements survive. For $i < N$ we have $\tau(i) = \sigma(i)$. We must show the swap fixes $\tau(i)$, i.e. that $\tau(i) \notin \{\tau(N), \sigma(N)\}$. Since $\tau$ is injective and $i \ne N$, $\tau(i) \ne \tau(N)$. Also $\sigma(N) = \tau'(N)$ and, once we know $\tau'$ is a permutation agreeing with $\sigma$ (hence injective), $\sigma(i) = \sigma(N)$ would force $i = N$; more directly, $\sigma(N) = \tau(i)$ would give $\sigma(N) = \sigma(i)$ (using $\tau(i)=\sigma(i)$), contradicting injectivity of $\sigma$ for $i \ne N$. Hence the swap fixes $\tau(i)$ and $\tau'(i) = \tau(i) = \sigma(i)$.
 
-Computational evidence strongly supports this conjecture. For ε = 0.5:
-- N = 10: ~35% of permutations qualify
-- N = 20: ~12% qualify
-- N = 50: ~0.3% qualify
-- N = 100: <0.01% qualify
+Finally, $\operatorname{supp}(\tau') \subseteq \operatorname{supp}(\tau) \cup \{\tau(N), \sigma(N)\}$ is finite, since composing with a transposition enlarges the support by at most two points. This completes the induction. $\square$
 
-This creates an interesting dichotomy: AsympId permutations are topologically dense but measure-theoretically negligible.
+**Theorem 4.2 (Density theorem).** For every $\sigma \in \operatorname{Sym}(\mathbb{N})$ and every $N \in \mathbb{N}$, there exists a well-behaved permutation $\tau$ with $\tau(i) = \sigma(i)$ for all $i < N$. Equivalently, the set $\{\sigma : \sigma \text{ well behaved}\}$ is dense in $\operatorname{Sym}(\mathbb{N})$ for the topology of pointwise convergence.
 
----
+*Proof.* Given $\sigma$ and $N$, Lemma 4.1 supplies a finitely supported $\tau$ agreeing with $\sigma$ on $\{0, \dots, N-1\}$. By Theorem 3.3, $\tau$ is well behaved. The neighborhood $U_{\sigma, N}$ therefore meets the well-behaved set; as the $U_{\sigma, N}$ form a neighborhood basis, density follows. $\square$
 
-## 8. Algorithms
-
-### 8.1 Testing Approximate AsympId
-
-Given a finite permutation of size N, test whether the tail (last quarter) has max |σ(n)/n - 1| < threshold. Time complexity: O(N).
-
-### 8.2 Generating Bounded Displacement Permutations
-
-To generate a random permutation with displacement ≤ k: sweep left to right, at each position i, swap with a uniformly random position in [i, min(N-1, i+k)]. Time complexity: O(N).
+Theorem 4.2 is the precise form of the informal claim that "you can shuffle the primes almost arbitrarily and the room magnitudes barely change": any prescribed finite reshuffling extends to a global reshuffle whose displacement ratios tend to $1$.
 
 ---
 
-## 9. Discussion
+## 5. Well-behavedness is not universal
 
-### 9.1 The AsympId Subgroup as a "Coarse Symmetry"
+Density leaves open whether *every* permutation is well behaved. It is not. We build an explicit counterexample using only monotone unbounded growth of $p$.
 
-The AsympId subgroup captures a notion of "coarse equivalence" for permutations: σ is AsympId iff it preserves the large-scale structure of ℕ. This is reminiscent of quasi-isometries in geometric group theory, which preserve large-scale geometry up to bounded distortion.
+**Lemma 5.1 (Prime doubling).** For every $m \in \mathbb{N}$ there is $b > m$ with $2 p_m \le p_b$.
 
-### 9.2 Beyond Primes
+*Proof.* Since $p_n \to \infty$, eventually $p_n > 2 p_m$; choosing such an $n$ that also exceeds $m$ gives $b = n$. $\square$
 
-While our motivating example involves primes, the AsympId framework applies to any sequence a_n with regular asymptotic growth. For any sequence satisfying a_n ~ f(n) where f is regularly varying (in the sense of Karamata), the rearranged sequence a_{σ(n)} ~ f(n) iff AsympId(σ) and log f is slowly varying at infinity. The prime case (f(n) = n log n) is the prototypical example.
+**Definition 5.2 (Jump sequence).** Define $j : \mathbb{N} \to \mathbb{N}$ recursively by $j_0 = 0$ and $j_{k+1} = $ a witness $b > j_k$ with $2 p_{j_k} \le p_b$ furnished by Lemma 5.1.
 
-### 9.3 Open Questions
+**Lemma 5.3 (Properties of the jump sequence).**
+1. $j_k < j_{k+1}$ for all $k$; hence $j$ is strictly monotone and injective, and $k \le j_k$.
+2. $2 p_{j_k} \le p_{j_{k+1}}$ for all $k$.
 
-1. **Characterize the normalizer**: Is AsympId a normal subgroup of S_ℕ? Equivalently, if AsympId(σ) and τ is arbitrary, is τ⁻¹στ necessarily AsympId? (We conjecture no.)
+*Proof.* Immediate from Definition 5.2 and Lemma 5.1; strict monotonicity of a step-increasing sequence gives injectivity and $k \le j_k$. $\square$
 
-2. **Measure-theoretic density**: Prove the density conjecture (Section 7.2) rigorously.
+We now pair up the landmarks $j_0 \leftrightarrow j_1$, $j_2 \leftrightarrow j_3$, $\dots$ To formalize the pairing, define the *toggle*
+$$
+t(k) = \begin{cases} k+1 & k \text{ even},\\ k-1 & k \text{ odd},\end{cases}
+$$
+which is an involution swapping each even number with its odd successor; note $t(2j) = 2j+1$.
 
-3. **Prime gap sensitivity**: For AsympId permutations, can the rearranged prime gaps g_{σ(n)} = p_{σ(n)+1} - p_{σ(n)} exhibit qualitatively different behavior from the original gaps g_n?
+**Definition 5.4 (Bad rearrangement).** Define $\beta : \mathbb{N} \to \mathbb{N}$ by
+$$
+\beta(n) = \begin{cases} j_{t(k)} & \text{if } n = j_k \text{ for some } k,\\ n & \text{if } n \text{ is not a landmark.}\end{cases}
+$$
+Since $j$ is injective, the case $n = j_k$ determines $k$ uniquely, so $\beta$ is well defined.
 
-4. **Computability**: Is there a computable characterization of AsympId? Given a computable bijection σ, is AsympId(σ) decidable?
+**Lemma 5.5 ($\beta$ is an involution).** $\beta(\beta(n)) = n$ for all $n$; in particular $\beta \in \operatorname{Sym}(\mathbb{N})$.
+
+*Proof.* If $n$ is not a landmark then $\beta(n) = n$ and $\beta(\beta(n)) = n$. If $n = j_k$, then $\beta(n) = j_{t(k)}$, which is a landmark, so $\beta(j_{t(k)}) = j_{t(t(k))} = j_k = n$, using that $t$ is an involution. As $\beta$ is a self-inverse map $\mathbb{N} \to \mathbb{N}$, it is a bijection. $\square$
+
+**Theorem 5.6 (Not universal).** The permutation $\beta$ is not well behaved. Precisely, $R_\beta(n) \ge 2$ for infinitely many $n$ — namely at every even landmark $n = j_{2i}$.
+
+*Proof.* Fix $i$ and let $n = j_{2i}$. Then $t(2i) = 2i + 1$, so $\beta(n) = j_{2i+1}$ and
+$$
+R_\beta(n) = \frac{p_{\beta(n)}}{p_n} = \frac{p_{j_{2i+1}}}{p_{j_{2i}}} \ge \frac{2 p_{j_{2i}}}{p_{j_{2i}}} = 2,
+$$
+using Lemma 5.3(2). The indices $j_{2i}$ are distinct (Lemma 5.3(1)) and increase without bound, so $R_\beta(n) \ge 2$ for infinitely many $n$. A sequence that is $\ge 2$ infinitely often cannot converge to $1$. Hence $\beta$ is not well behaved. $\square$
+
+Theorem 5.6 shows the phenomenon is genuine: the well-behaved permutations, though dense (Theorem 4.2), form a proper subset of $\operatorname{Sym}(\mathbb{N})$.
 
 ---
 
-## 10. Formalization
+## 6. Generality: any strictly increasing unbounded sequence
 
-All main results (Theorems 1-9) are formalized in Lean 4 using the Mathlib library. The formalization comprises approximately 200 lines of code and relies only on standard axioms (propext, Classical.choice, Quot.sound). Key technical challenges in the formalization include:
+Inspecting the proofs, the only inputs are:
 
-- Handling the ℕ → ℝ coercion in the definition of AsympId
-- The fundamental lemma (Theorem 1) requiring a finiteness argument for preimages
-- The composition closure proof requiring careful factoring of the ratio
+- **Monotonicity** ($p$ strictly increasing, hence injective) — used in Lemma 4.1 and to make $j$ injective;
+- **Unboundedness** ($p_n \to \infty$) — used in Lemma 5.1 (prime doubling).
 
-The formalization is available in `HilbertHotelPrimes.lean`.
+Neither uses primality per se. Hence:
+
+**Theorem 6.1 (Sequence-agnostic form).** Let $a : \mathbb{N} \to \mathbb{N}$ be any strictly increasing sequence with $a_n \to \infty$, and define $R^a_\sigma(n) = a_{\sigma(n)}/a_n$ and well-behavedness accordingly. Then: (i) every finitely supported $\sigma$ is well behaved; (ii) the well-behaved permutations are dense in $\operatorname{Sym}(\mathbb{N})$; (iii) there is a permutation that is not well behaved.
+
+Thus the well-behaved/ill-behaved dichotomy is a structural feature of *infinite monotone growth*, not of arithmetic. The asymptotic magnitude of a room's occupant is an invariant robust to finite meddling, approximable to any finite precision, yet vulnerable to engineered long-range disorder.
 
 ---
 
-## References
+## 7. Algorithms
 
-1. Agnew, R.P. (1955). Permutations preserving convergence of series. *Proc. AMS*, 6(4), 563-564.
-2. de la Vallée Poussin, C.-J. (1896). Recherches analytiques sur la théorie des nombres premiers.
-3. Hadamard, J. (1896). Sur la distribution des zéros de la fonction ζ(s).
-4. Hilbert, D. (1925). Über das Unendliche. *Mathematische Annalen*, 95, 161-190.
-5. Levi, F.W. (1905). Rearrangement of convergent series. *Duke Math. J.*, 13, 579-585.
-6. Riemann, B. (1867). Über die Darstellbarkeit einer Function durch eine trigonometrische Reihe.
+We describe the computational counterparts used in the accompanying numerical study.
+
+**Algorithm A (Displacement ratios of a rearrangement).** Given the first $M$ primes and a permutation $\sigma$ of $\{0, \dots, M-1\}$, compute $R_\sigma(n) = p_{\sigma(n)}/p_n$ for each $n$ and summarize the tail (mean, spread, and fraction within $\varepsilon$ of $1$). This empirically probes well-behavedness.
+
+**Algorithm B (Finite-support approximant).** Given a target permutation $\sigma$ and horizon $N$, build the finite-support permutation $\tau$ agreeing with $\sigma$ on $\{0, \dots, N-1\}$ by the inductive transposition construction of Lemma 4.1, then verify $R_\tau(n) = 1$ for $n \ge \max(\operatorname{supp}\tau) + 1$.
+
+**Algorithm C (Bad-permutation generator).** Build the jump sequence $j$ by greedily choosing, at each step, the least later index whose prime at least doubles the current one, pair up the landmarks, and confirm $R_\beta(j_{2i}) \ge 2$.
+
+---
+
+## 8. Applications and interpretation
+
+- **A topological invariant of shuffling.** Density plus non-universality says the well-behaved set is a dense proper subset. Asymptotic magnitude is preserved under arbitrarily large but "asymptotically gentle" rearrangements, giving a clean example of an invariant that finite data cannot detect.
+- **A template for rigidity results.** Theorem 6.1 packages a reusable pattern: monotone unbounded sequences admit dense families of magnitude-preserving rearrangements and explicit magnitude-distorting ones. This applies to squares, factorials, Fibonacci numbers, and beyond.
+- **Pedagogy of infinity.** The prime hotel makes vivid the difference between *pointwise* control (finite windows) and *asymptotic* control (tails) — the same distinction underlying uniform vs. pointwise convergence.
+
+---
+
+## 9. Discussion and future work
+
+The formalized results deliberately avoid the Prime Number Theorem, isolating the purely combinatorial core. The primes re-enter when we ask sharper, quantitative questions.
+
+1. **Topologize the statement.** Replace the "agrees on $\{0,\dots,N-1\}$" formulation of density by the actual product topology on $\operatorname{Sym}(\mathbb{N})$ and prove that the well-behaved set is dense as a topological predicate. The neighborhood-basis form proved here is exactly this in disguise.
+
+2. **The swap-even/odd example, honestly.** Prove that $\sigma : n \mapsto n \oplus 1$ (swap each even index with its odd successor) is well behaved. This requires $p_{n+1}/p_n \to 1$, i.e. that prime gaps are $o(p_n)$ — a consequence of the Prime Number Theorem. This is the canonical example of a permutation that is well behaved yet moves *every* guest.
+
+3. **Characterize well-behaved permutations.** Conjecture: $\sigma$ is well behaved iff $p_{\sigma(n)}/p_n \to 1$, and, using $p_n \sim n \log n$, this is equivalent to $\sigma(n)/n \to 1$. Then the well-behaved permutations are exactly those of asymptotically unit index distortion — a clean asymptotic invariant.
+
+4. **Quantify the "exact density."** Topologically the well-behaved set is dense but *meager* (a countable-to-one shadow of an $F_\sigma$-type condition). Making "density" precise via Baire category, or via a natural measure on $\operatorname{Sym}(\mathbb{N})$, and computing it, is open and enticing.
+
+5. **Ratios with limits $\ne 1$.** Generalize to "the displacement ratio has *a* limit $L$"; study which $L$ are attainable and how the corresponding permutations sit inside $\operatorname{Sym}(\mathbb{N})$.
+
+6. **Other room-filling sequences.** As in Theorem 6.1, replace primes by any strictly monotone unbounded $a : \mathbb{N} \to \mathbb{N}$; the finite-support density argument is unchanged and the negative result persists whenever $a$ is unbounded. Only the rate results (items 2–3) are arithmetic-specific.
+
+---
+
+## 10. Conclusion
+
+The prime hotel exhibits a crisp trichotomy of rearrangements. Finite reshuffles are trivially well behaved. Well-behaved reshuffles are dense — indistinguishable from arbitrary ones on any finite window. Yet well-behavedness is not automatic: an explicit involution built from prime-doubling long-range swaps distorts magnitudes by a factor $\ge 2$ infinitely often. The primes are robust under rearrangement, but only almost; that qualification is the mathematics.

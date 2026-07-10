@@ -4,6 +4,20 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 7e60f6c2 (Q=0.830), which proved 23 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search fractal dimension D(T) of a theorem T as the Hausdorff dimension of the set of all successful proof path",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_7e60f6c2_123317db",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "7e60f6c2",
+    "status": "available",
+    "timestamp": "2026-07-10T00:21:09.914957+00:00",
+    "title": "Deepening: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 643186e8 (Q=0.820), which proved 18 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do \u2014 as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: ",
     "domains": [
       "Algebra"
@@ -101,6 +115,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-09T22:51:25.650060+00:00",
     "title": "Close Proofs: Tropical Dreams: The Field with One Element Meets Tropical Geometry"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 7e60f6c2 (Q=0.830) proved 23 theorems in Bridges but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search frac",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "sorry_fill_7e60f6c2_44d07820",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "7e60f6c2",
+    "status": "available",
+    "timestamp": "2026-07-10T00:21:09.997327+00:00",
+    "title": "Close Proofs: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
   },
   {
     "consumed_by_exp_id": "",
@@ -9951,21 +9979,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The file `SelfImprovingProofs.lean` formalises a proof-refinement system for a"
   },
   {
-    "consumed_by_exp_id": "7e60f6c2",
-    "description": "When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search fractal dimension D(T) of a theorem T as the Hausdorff dimension of the set of all successful proof paths for T. If D(T) < 1, the proof is 'easy' (few paths work, so search is focused). If D(T) > 1, the proof is 'hard' (many paths must be explored). Conjecture: For theorems in ZFC, D(T) = 1 + O(1/length(T)). In other words, most theorems have fractal dimension close to 1 \u2014 proof search is neither trivially easy nor impossibly hard, but balanced at the edge. Theorems with D(T) << 1 are 'obvious' (direct proofs), and theorems with D(T) >> 1 require exponentially long proofs. The fractal dimension correlates with proof length: if D(T) = 1 + epsilon, then the shortest proof of T has length roughly 1/epsilon. Test: for 1000 theorems in Lean 4's Mathlib, estimate D(T) by Monte Carlo sampling of proof search trees, and correlate with actual proof length. Impact: proof difficulty is a fractal \u2014 the dimension of the proof search space determines how hard the theorem is.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0801",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-09T21:05:18.624938+00:00",
-    "title": "Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions: Tensor Amplification and Spectral Transfer for Sidorenko-Type Inequalities\n\nThis cycle established a tensor-amplification engine for Sidorenko-type inequalities on weighted\ngraphs: closed-walk counts are multiplicative under the tensor product (spectral transfer), the\nSidorenko ratio is therefore multiplicative, the Sidorenko property is closed under tensor products\n(Transfer Principle I), and surpluses/deficits are strictly amplified by self-tensoring (Transfer\nPrinciple II). The even cycles `C\u2082` and `C\u2084` were shown to satisfy Sidorenko for *all* symmetric\nweightings \u2014 with no positivity hypothesis \u2014 seeding an entire tensor-closed class. The following\nconjectures grow directly out of these findings.\n\n## Conjecture 1 (Sign-free even-cycle Sidorenko for all lengths)\n\nEvery even cycle `C\u2082\u2098` satisfies `t(C\u2082\u2098, A) \u2265 t(K\u2082, A)^{2m}` for every symmetric weighted graph\n`A`, with no assumption on the signs of the entries.\n\n*The key insight is* that the closed-walk count `tr(A^{2m})` is intrinsically a sum of squares of\nthe entries of `A\u1d50`, so a chain of `m` Cauchy\u2013Schwarz steps \u2014 each passing from `A\u02b3` to `A^{2r}`\nthrough the squared row sums \u2014 never inspects a sign; the nonnegativity usually imposed on graphons\nis a red herring for even cycles.\n\n*Why now?* The `C\u2084` case was just proved in exactly this sign-free, doubling form, exposing the\nrecursive `A\u02b3 \u21a6 A^{2r}` structure. Turning that one step into an induction on `m` is the natural\nand immediate next target, and it would settle the even-cycle case of Sidorenko in the discrete\nmodel in one stroke.\n\n## Conjecture 2 (Amplification dichotomy and the ratio spectrum)\n\nUnder the tensor product the Sidorenko ratio behaves as a discrete dynamical system with exactly\ntwo fixed points, `0` and `1`: for a fixed cycle `C\u2096`, the closure of the set of achievable ratios\n`{R(A)}` under multiplication is the whole interval `[0, \u221e)`, and iterated self-tensoring sends\nevery `R \u2260 1` monotonically to a fixed point (`R > 1 \u2192 \u221e`, `0 < R < 1 \u2192 0`).\n\n*The key insight is* that multiplicativity of the ratio converts a single graph with `R \u2260 1` into a\ngeometric orbit `R, R\u00b2, R\u2074, \u2026`, so the *existence* of any surplus or deficit, however tiny, already\nwitnesses arbitrarily extreme behaviour \u2014 the inequality has no \"almost-tight\" regime that is\nstable under tensoring.\n\n*Why now?* The multiplicativity identity and both strict amplification laws are now in hand; what\nremains is to characterise which ratios are realizable and to prove the orbit-closure statement,\nmaking the qualitative \"amplification\" picture into a precise structural theorem.\n\n## Conjecture 3 (Spectral transfer beyond cycles)\n\nThe multiplicativity `t(H, A \u2297 B) = t(H, A)\u00b7t(H, B)` holds for *every* pattern graph `H`, not only\ncycles, and consequently the Sidorenko property for any bipartite `H` is closed under tensor\nproducts and its ratio is amplified by self-tensoring.\n\n*The key insight is* that homomorphism counts are contractions of tensor powers of the adjacency\noperator, and the Kronecker product acts diagonally on every such contraction, so multiplicativity\nis a property of the pattern-independent tensor structure rather than of the special trace formula\nfor cycles.\n\n*Why now?* The cycle case reduced entirely to `(A \u2297 B)\u1d4f = A\u1d4f \u2297 B\u1d4f` together with multiplicativity\nof the trace; the same two ingredients, applied to the general homomorphism-count functional,\nshould yield the pattern-independent statement and thereby a uniform tensor-closure principle for\nall of Sidorenko's conjecture.\n\n## Conjecture 4 (Extremal rigidity of the tight case)\n\nFor an even cycle `C\u2096`, equality `t(C\u2096, A) = t(K\u2082, A)\u1d4f` forces `A` to be a constant weighting (a\nrescaled complete looped graph), and this rigidity is preserved and detected by the tensor product:\n`R(A) = 1` if and only if `A` is constant.\n\n*The key insight is* that each Cauchy\u2013Schwarz step in the even-cycle proof is tight exactly when\nthe relevant vectors are proportional to the all-ones vector, so equality throughout propagates\nback to constancy of the original weighting, and the fixed point `R = 1` of the amplification map\ncorresponds precisely to the extremal graphons.\n\n*Why now?* The proof of `C\u2084` already isolates the exact Cauchy\u2013Schwarz steps whose equality cases\nmust be analysed, and the amplification map's fixed point at `1` gives an independent, dynamical\nhandle on the extremal set; combining the two should convert the inequalities into rigidity\ntheorems.\n",
     "domains": [
@@ -10069,6 +10082,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-09T23:44:00.622037+00:00",
     "title": "This project formalizes, in Lean 4, the cardinality dichotomy behind the \"cosmic"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Fractal Dimension of Proof Search\n\nThis cycle established, for uniform self-similar search spaces, the exact identity\n`succ = total^D` with `D = log s / log b \u2208 [0,1]`, reinterpreted `D` as a relative\nsearch entropy `entropy(s)/entropy(b)`, and showed that `D = 1` is a sharp\nthreshold rather than a generic value. The following conjectures extend these\nfindings.\n\n## Conjecture 1 \u2014 Variable-branching entropy has no closed form, yet dimension persists\n\nFor a search space whose successful sub-branching factor `s_i` varies with depth,\nthe count of successful depth-`n` paths is `\u220f_{i<n} s_i`, and the search dimension\nis the limit `D = lim (\u2211 log s_i) / (\u2211 log b_i)` whenever it exists. We conjecture\nthat `D` is well defined and lies in `[0,1]` for every bounded branching profile,\nand that the bridge identity `succ = total^D` holds asymptotically (to first order\nin the exponent) even when no closed form for the growth rate exists.\n\nThe key insight is that the fractal dimension is a *ratio of Fekete growth rates*,\nso it survives the loss of a closed form exactly because Fekete's limit is defined\nfor all subadditive profiles, not only the additive (uniform) ones.\n\nWhy now? The uniform case has been pinned down to an exact power law, isolating\nprecisely the additivity assumption that makes it closed-form; relaxing that one\nassumption is the natural and immediate next test.\n\n## Conjecture 2 \u2014 Codimension, not dimension, predicts search cost\n\nDefine the pruning codimension `\u03ba = 1 \u2212 D`. We conjecture that the expected number\nof nodes an ideal pruning search expands before finding a proof scales like\n`total^{1\u2212\u03ba} = total^{D}`, so that small codimension (`D` near `1`) forces\nnear-exhaustive search while large codimension yields focused search. Equivalently,\nthe shortest-proof length correlates with `1/\u03ba`, recovering the informal\n\"`length \u2248 1/\u03b5`\" slogan with `\u03b5 = \u03ba` rather than `\u03b5 = D \u2212 1`.\n\nThe key insight is that difficulty is governed by how fast successful paths thin\nout among all paths \u2014 the codimension \u2014 and the density law `(s/b)^n = total^{D\u22121}`\nmakes that thinning rate exactly `\u03ba`.\n\nWhy now? Our density/codimension theorem already gives the exponential thinning\nrate in closed form; connecting it to an operational search-cost model is the\nmissing operational half.\n\n## Conjecture 3 \u2014 A dimension spectrum for mixed proof strategies\n\nWhen several inference strategies with different success ratios are interleaved,\nthe set of successful paths becomes a *multifractal*: its coarse H\u00f6lder exponents\nform a nondegenerate interval, and the associated Legendre-transform spectrum is\nstrictly concave unless all strategies share one ratio. We conjecture that a proof\nproblem is \"strategy-homogeneous\" if and only if its dimension spectrum is a single\npoint, giving an intrinsic test for whether one dominant tactic suffices.\n\nThe key insight is that heterogeneity of tactics is precisely multifractality of\nthe success set, so the width of the spectrum measures how many genuinely different\nproof strategies a theorem admits.\n\nWhy now? The single-ratio (monofractal) case is now fully proved and gives the\ndegenerate spectrum as a baseline against which the multifractal case can be\ncalibrated.\n\n## Conjecture 4 \u2014 Entropy subadditivity across composed goals\n\nFor goals `A` and `B` solved in sequence (the search tree of `A` followed by that\nof each `A`-leaf's continuation into `B`), the search entropy is subadditive:\n`entropy(A ; B) \u2264 entropy(A) + entropy(B)`, with equality iff the continuations are\nindependent of the `A`-path. We conjecture this makes total search dimension a\nsubadditive functional on proof composition, so decomposition never increases\nfractal difficulty and strictly decreases it under genuine dependence.\n\nThe key insight is that proof composition is a product of branching processes, and\nthe logarithm of a product of counts is exactly the additive quantity to which\nFekete's subadditive machinery applies.\n\nWhy now? We have already proved that the log-count is (sub)additive in depth for a\nsingle goal; lifting subadditivity from depth to goal-composition is the direct\nstructural generalization.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0819",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7e60f6c2",
+    "status": "available",
+    "timestamp": "2026-07-10T00:21:05.685512+00:00",
+    "title": "This cycle established, for uniform self-similar search spaces, the exact identi"
   },
   {
     "consumed_by_exp_id": "c05d7abb",
