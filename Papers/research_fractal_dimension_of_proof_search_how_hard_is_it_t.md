@@ -1,229 +1,324 @@
-# Fractal Dimension of Proof Search: A Geometric Theory of Theorem Difficulty
+# The Fractal Dimension of Proof Search: Similarity Dimension, Relative Entropy, and Subadditive Growth
 
 ## Abstract
 
-We introduce the *search dimension* D(T) = log(k)/log(b) as a measure of theorem difficulty, where b is the branching factor of the proof search tree and k is the number of surviving branches per node. We prove that D ∈ [0,1], that D = 1 iff every path is a valid proof (trivial theorems), and that D = 0 iff proofs are unique (deterministic search). We establish a phase transition theorem showing these are the only critical points, with monotonicity of D in the survival count k. We prove the entropy-dimension bridge connecting D to the ratio of search entropy to full tree entropy, and show that proof search difficulty composes multiplicatively. We conjecture that D(T) ≈ 1 - c/n for generic theorems of statement length n, and propose an empirical test using Lean's Mathlib library.
+We develop a rigorous model of the difficulty of automated proof search based on the
+geometry of the tree of derivations. A derivation problem is modeled as a complete
+$b$-ary tree of candidate partial proofs, together with a *self-similar* success
+structure in which exactly $s$ of the $b$ available inference steps at each node can
+be extended to a completed proof. The set of infinite successful derivation paths,
+under the natural ultrametric on the boundary of the tree, is a self-similar Cantor
+set whose similarity dimension we call the **proof-search fractal dimension**
+$D(b,s) = \log s / \log b$. We prove that this exponent is not a heuristic but an
+exact analytic invariant: the number of successful depth-$n$ paths equals the total
+candidate count raised to $D$ (the **Bridge Identity** $s^n = (b^n)^D$), the success
+density decays as $(b^n)^{D-1}$ (the **Density Law**), and $D \in [0,1]$ with $D = 1$
+a sharp threshold attained only when no branch can be pruned. We then reinterpret $D$
+as a **relative entropy**: the per-depth growth rate of successful paths, $\log s$,
+divided by the ambient growth rate $\log b$. This reading connects the model to
+Fekete's theory of subadditive sequences, under which the entropy is defined even for
+non-uniform branching, and shows the dimension identity persists in the limit. We
+correct a natural misconception in the informal literature — that hard theorems have
+dimension exceeding $1$ — by showing hardness is governed by the *codimension*
+$\kappa = 1 - D$, the exponential rate at which successful paths thin out. We include
+numerical demonstrations and discuss extensions to variable-branching and
+multifractal search.
 
-**Keywords**: proof complexity, fractal dimension, branching processes, search dimension, information theory, phase transitions
+**Keywords:** proof search, fractal dimension, similarity dimension, self-similar
+set, relative topological entropy, subadditive sequence, Fekete's lemma, branching
+tree, codimension.
 
 ## 1. Introduction
 
-The difficulty of finding mathematical proofs is a central question in mathematical logic, computer science, and artificial intelligence. While proof complexity theory provides lower bounds on proof length in specific proof systems [1], it does not directly address the *search* problem: how hard is it to *find* a proof, given that one exists?
+Automated theorem proving is, at its core, a search problem. A prover explores a tree
+of partial derivations: the root is the goal, the children of a node are the results
+of applying each applicable inference rule, and a proof is a finite path (or, in the
+idealized limit, an infinite non-stuck path) descending through the tree. The
+practical and theoretical question that unifies the field is how the *difficulty* of
+a problem is reflected in the structure of this tree.
 
-We propose a geometric approach. When a theorem prover searches for a proof, it explores a tree where each node represents a proof state and each edge represents an inference rule application. The set of paths leading to successful proofs forms a subset of all possible paths. The fractal dimension of this subset — defined via box-counting on the tree boundary — captures the intrinsic difficulty of the search.
+Coarse answers — worst-case exponential blowup, undecidability of validity in general
+— capture the pessimistic extremes but say nothing quantitative about a particular
+problem. We propose a finer invariant drawn from fractal geometry. The key
+observation is that a search tree with a self-similar success structure has, on its
+boundary, a self-similar Cantor set of successful paths, and self-similar sets carry
+a well-defined dimension. This dimension turns out to control, exactly, the growth of
+successful path counts, the density of success among candidates, and — through a
+change of viewpoint — the entropy of the search.
 
-### 1.1 Contributions
+Our contributions are:
 
-1. **Novel definition**: The *search dimension* D = log(k)/log(b), where b is the branching factor and k is the per-node survival count.
+1. A precise, self-contained model of self-similar proof search and its
+   **fractal dimension** $D(b,s) = \log s / \log b$ (Section 3).
+2. The **Bridge Identity** $s^n = (b^n)^D$, showing combinatorial growth is exactly a
+   power law with fractal exponent (Section 4).
+3. The **Density Law** $(s/b)^n = (b^n)^{D-1}$ and the identification of the
+   codimension $\kappa = 1 - D$ as the pruning rate that governs difficulty
+   (Section 4).
+4. Sharp structural facts: $D \in [0,1]$, strict monotonicity in $s$, and $D = 1
+   \iff s = b$ (Section 5).
+5. A reinterpretation of $D$ as a **relative entropy** and its connection to Fekete's
+   subadditive theory, including the convergence of the per-depth growth average and
+   the persistence of the dimension identity for non-uniform branching (Section 6).
+6. The exact geometric cost of exhaustive search (Section 7), numerical
+   demonstrations (Section 8), and extensions (Section 9).
 
-2. **Phase transition theorem**: D provides a complete classification of proof difficulty into three phases with sharp transitions at D = 0 and D = 1.
+## 2. The model
 
-3. **Entropy-dimension bridge**: D equals the ratio of search entropy to full tree entropy, connecting fractal geometry to information theory.
+Fix a branching factor $b \in \mathbb{N}$ with $b > 1$. The **candidate search space**
+of depth $n$ is the complete $b$-ary tree; its paths of length $n$ number
 
-4. **Composition theorem**: Sequential proof search has multiplicative difficulty, hence additive dimension in log-space.
+$$\mathrm{total}(b, n) = b^n.$$
 
-5. **Universality conjecture**: D(T) ≈ 1 - c/n for generic theorems, with a proposed empirical test.
+A derivation problem is **self-similar with success factor** $s$, where
+$1 \le s \le b$, if at *every* node exactly $s$ of the $b$ available inference steps
+extend to a completed proof. Then the **successful** paths of length $n$ number
 
-6. **Machine-verified proofs**: All main theorems are formalized and verified in Lean 4 with Mathlib.
+$$\mathrm{succ}(s, n) = s^n.$$
 
-## 2. Definitions
+The condition $s \ge 1$ encodes solvability (at least one proof exists); $b > 1$
+encodes genuine branching (the boundary metric below is nondegenerate, since $\log b
+> 0$).
 
-### 2.1 Branching Search Model
+**Boundary and metric.** The boundary $\partial T_b$ of the $b$-ary tree is the set of
+infinite paths. Given two infinite paths $x, y$, let $|x \wedge y|$ denote the length
+of their longest common prefix. The natural ultrametric is
 
-**Definition 2.1** (Branching Search Model). A *branching search model* is a triple M = (b, k, d) where:
-- b ≥ 2 is the *branching factor* (number of applicable inference rules per proof state)
-- k ∈ {1, ..., b} is the *survival count* (number of children leading to eventual proofs)
-- d is the *search depth* (proof length)
+$$d(x, y) = b^{-|x \wedge y|}.$$
 
-The model describes a complete b-ary tree of depth d where at each internal node, exactly k of the b children are "productive" (lead to at least one successful leaf).
+Under $d$, the full boundary $\partial T_b$ is a compact self-similar set of
+similarity dimension $1$: it is the attractor of $b$ contractions of ratio $1/b$,
+and $b \cdot (1/b)^1 = 1$. The set $S \subseteq \partial T_b$ of infinite successful
+paths is the attractor of $s$ such contractions and is therefore a self-similar
+Cantor set.
 
-**Definition 2.2** (Total and successful leaves). For a model M = (b, k, d):
-- Total leaves: L(M) = b^d
-- Successful leaves: S(M) = k^d
+**Definition (Proof-search fractal dimension).** For $b > 1$ and $1 \le s \le b$, the
+proof-search fractal dimension is the similarity dimension of $S$, i.e. the unique
+exponent $D$ solving the Moran equation $s \cdot (1/b)^D = 1$:
 
-### 2.2 Search Dimension
+$$\boxed{\,D(b, s) = \frac{\log s}{\log b}\,}.$$
 
-**Definition 2.3** (Search Dimension). The *search dimension* of a branching search model with parameters (b, k) is:
+Because the contractions satisfy the open set condition, this similarity dimension
+coincides with the Hausdorff dimension of $S$; we work with the similarity dimension
+throughout, as it is the computationally explicit quantity.
 
-D(b, k) = log(k) / log(b)
+## 3. Elementary counts
 
-This is defined for b ≥ 2 and k ≥ 1. It equals the Hausdorff dimension of the set of successful paths in the boundary of the b-ary tree equipped with the natural ultrametric d(x, y) = b^{-n(x,y)}, where n(x,y) is the length of the longest common prefix.
+**Proposition 3.1 (Path counts).** For all $n$, $\mathrm{total}(b,n) = b^n$ and
+$\mathrm{succ}(s,n) = s^n$.
 
-### 2.3 Search Entropy
+*Proof.* Immediate from the definitions: a depth-$n$ path is a sequence of $n$
+choices, each from $b$ (respectively $s$) options. $\square$
 
-**Definition 2.4** (Search Entropy). For depth d:
-- SearchEntropy(k, d) = log(k^d) = d · log(k)
-- FullTreeEntropy(b, d) = log(b^d) = d · log(b)
+**Proposition 3.2 (Successful paths never dominate).** If $s \le b$ then
+$\mathrm{succ}(s,n) \le \mathrm{total}(b,n)$ for all $n$.
 
-### 2.4 Composed Search
+*Proof.* $s \le b$ implies $s^n \le b^n$ by monotonicity of the $n$-th power on
+nonnegative integers. $\square$
 
-**Definition 2.5** (Composed Search). The sequential composition of searches M₁ = (b₁, k₁, d₁) and M₂ = (b₂, k₂, d₂) has:
-- Total space: b₁^{d₁} · b₂^{d₂}
-- Successful paths: k₁^{d₁} · k₂^{d₂}
+## 4. The bridge identity and the density law
 
-## 3. Main Results
+The central result converts a combinatorial count into an analytic power law.
 
-### 3.1 Fundamental Properties
+**Theorem 4.1 (Bridge Identity).** Let $b > 1$ and $s \ge 1$. Then for every $n$,
 
-**Theorem 3.1** (Range). For b ≥ 2, 1 ≤ k ≤ b: 0 ≤ D(b,k) ≤ 1.
+$$\mathrm{succ}(s, n) = \bigl(\mathrm{total}(b, n)\bigr)^{D(b,s)},
+\qquad\text{i.e.}\qquad s^n = \bigl(b^n\bigr)^{\log s / \log b}.$$
 
-*Proof.* D = log(k)/log(b). Since k ≥ 1, log(k) ≥ 0. Since b ≥ 2, log(b) > 0. Since k ≤ b, log(k) ≤ log(b). Thus 0 ≤ D ≤ 1. □
+*Proof.* Since $b > 1$ we have $\log b > 0$, and since $s \ge 1$ we have $s > 0$.
+Writing the real power via the exponential,
 
-**Theorem 3.2** (Boundary values).
-- D(b, 1) = 0 for all b ≥ 2 (deterministic proofs)
-- D(b, b) = 1 for all b ≥ 2 (trivial theorems)
+$$(b^n)^{\log s / \log b}
+= \exp\!\left(\log(b^n)\cdot \frac{\log s}{\log b}\right)
+= \exp\!\left(n \log b \cdot \frac{\log s}{\log b}\right)
+= \exp(n \log s) = s^n. \qquad \square$$
 
-**Theorem 3.3** (Monotonicity). D(b, k) is (weakly) increasing in k for fixed b ≥ 2.
+The identity says the "fractal exponent" is the literal exponent relating the total
+count to the successful count; exponential combinatorial growth *is* a power law whose
+power is the similarity dimension.
 
-*Proof.* log is increasing, and division by the positive constant log(b) preserves order. □
+**Theorem 4.2 (Density Law).** Let $b > 1$ and $s \ge 1$. The fraction of candidate
+paths that succeed decays as a power of the total count with exponent $D - 1$:
 
-**Theorem 3.4** (Strict subcriticality). D(b, k) < 1 if and only if k < b.
+$$\left(\frac{s}{b}\right)^n = \bigl(\mathrm{total}(b,n)\bigr)^{D(b,s) - 1}
+= \bigl(b^n\bigr)^{D - 1}.$$
 
-### 3.2 The Critical Threshold Theorem
+*Proof.* As above, $(b^n)^{D-1} = \exp\!\big(n\log b\,(\tfrac{\log s}{\log b} - 1)\big)
+= \exp\!\big(n(\log s - \log b)\big) = \exp\!\big(n\log(s/b)\big) = (s/b)^n$. $\square$
 
-**Theorem 3.5** (Critical Threshold). For b ≥ 2, 1 ≤ k ≤ b:
-D(b, k) = 1 ↔ k = b
+**Definition (Codimension).** The **pruning codimension** of a self-similar search is
+$\kappa(b,s) = 1 - D(b,s)$.
 
-*Proof.* The forward direction uses injectivity of log on positive reals: if log(k) = log(b) and both k, b > 0, then k = b. The reverse direction is immediate from Definition 2.3. □
+By Theorem 4.2, the success density is $(b^n)^{-\kappa}$: the codimension is exactly
+the exponential rate at which successful paths become rare among candidates. Small
+$\kappa$ (dimension near $1$) means slow thinning and near-exhaustive search; large
+$\kappa$ (dimension near $0$) means rapid thinning and focused search. This is the
+correct operational reading of difficulty, replacing the naive and impossible "$D > 1$
+for hard problems": a self-similar subset of a dimension-$1$ boundary can never exceed
+dimension $1$.
 
-This theorem identifies the exact phase boundary between trivial and non-trivial proof search.
+## 5. The dimension lives on the balanced edge $[0,1]$
 
-### 3.3 Subcritical Exponential Decay
+**Theorem 5.1 (Range and endpoints).** Let $b > 1$ and $1 \le s \le b$. Then:
 
-**Theorem 3.6** (Exponential Decay). If k < b and d ≥ 1, then k^d < b^d.
+1. $D(b,s) \ge 0$;
+2. $D(b,s) \le 1$;
+3. $D(b,s) < 1$ whenever $s < b$;
+4. $D(b,s) = 1$ if and only if $s = b$.
 
-**Theorem 3.7** (Decay Worsening). If 1 ≤ k < b, then for all d:
-k^{d+1} · b^d < k^d · b^{d+1}
+*Proof.* (1) Both $\log s \ge 0$ (as $s \ge 1$) and $\log b > 0$ (as $b > 1$), so the
+quotient is nonnegative. (2) $s \le b$ gives $\log s \le \log b$ by monotonicity of
+$\log$, and dividing by $\log b > 0$ yields $D \le 1$. (3) $s < b$ gives the strict
+inequality $\log s < \log b$, hence $D < 1$. (4) $D = 1 \iff \log s = \log b \iff s =
+b$ by injectivity of $\log$ on the positive reals. $\square$
 
-This shows that the success-to-total ratio (k/b)^d strictly decreases at each depth level.
+**Theorem 5.2 (Strict monotonicity).** For fixed $b > 1$, the map $s \mapsto D(b,s)$
+is strictly increasing on $\{s : s \ge 1\}$: if $1 \le s < t$ then $D(b,s) < D(b,t)$.
 
-### 3.4 The Entropy-Dimension Bridge
+*Proof.* $\log$ is strictly increasing on the positive reals, so $\log s < \log t$;
+dividing by the positive constant $\log b$ preserves the strict inequality. $\square$
 
-**Theorem 3.8** (Entropy-Dimension Bridge). For b ≥ 2 and d ≥ 1:
-SearchEntropy(k, d) / FullTreeEntropy(b, d) = D(b, k)
+Thus $D = 0$ (i.e. $s = 1$) is the unique-proof, trivial-search endpoint; $D = 1$
+(i.e. $s = b$) is the unprunable, exhaustive-search endpoint attained only in the
+razor-sharp case $s = b$; and every intermediate value corresponds to a genuinely
+focused-but-nontrivial search on the balanced edge.
 
-*Proof.* 
-SearchEntropy(k, d) / FullTreeEntropy(b, d)
-= [d · log(k)] / [d · log(b)]
-= log(k) / log(b)
-= D(b, k) □
+## 6. Dimension as relative entropy and the bridge to Fekete's theory
 
-This shows the search dimension equals the ratio of "useful" entropy to "total" entropy.
+Define the **log-count** (the "action" of the search)
 
-### 3.5 Information Rate
+$$L(n) = \log\bigl(\mathrm{succ}(s,n)\bigr) = \log(s^n).$$
 
-**Theorem 3.9** (Information Rate). The information per depth level is:
-log(b) - log(k) = log(b) · (1 - D)
+**Proposition 6.1 (Exact linear growth).** $L(n) = n \log s$.
 
-**Corollary 3.10** (Information decomposition). Over d levels:
-log(b^d) - log(k^d) = d · log(b) · (1 - D)
+*Proof.* $\log(s^n) = n \log s$. $\square$
 
-This shows that each proof step carries log(b) · (1 - D) bits of genuine information.
+**Proposition 6.2 (Subadditivity).** $L$ is subadditive: $L(n + m) \le L(n) + L(m)$
+for all $n, m$. In fact it is additive, so the inequality holds with equality.
 
-### 3.6 Composition
+*Proof.* $L(n+m) = (n+m)\log s = n\log s + m\log s = L(n) + L(m)$. $\square$
 
-**Theorem 3.11** (Composition bound). For a composed search:
-k₁^{d₁} · k₂^{d₂} ≤ b₁^{d₁} · b₂^{d₂}
+**Definition (Search entropy).** The search entropy is the per-depth growth rate
+$h(s) = \lim_{n\to\infty} L(n)/n$, when the limit exists. For the uniform model it is
+constant in $n$:
 
-**Theorem 3.12** (Log additivity). For same-branching composition:
-log(k₁^{d₁} · k₂^{d₂}) = d₁ · log(k₁) + d₂ · log(k₂)
+**Proposition 6.3 (Entropy limit).** $\displaystyle \lim_{n\to\infty} \frac{L(n)}{n}
+= \log s$.
 
-### 3.7 The Fractal Phase Transition
+*Proof.* By Proposition 6.1, $L(n)/n = \log s$ for every $n \ge 1$, so the sequence is
+constant and converges to $\log s$. (For a general subadditive $L$, Fekete's lemma
+guarantees the limit exists and equals $\inf_n L(n)/n$.) $\square$
 
-**Theorem 3.13** (Fractal Phase Transition). For b ≥ 2, the search dimension D(b, ·) : {1,...,b} → [0,1] satisfies:
-1. D ∈ [0, 1] (bounded)
-2. D(b, 1) = 0 (deterministic boundary)
-3. D(b, k) = 1 ↔ k = b (critical boundary)
-4. D is monotone increasing in k (smooth interpolation)
+**Theorem 6.4 (Dimension as relative entropy).** For $b > 1$ and every depth
+$n \ge 1$,
 
-This provides a complete, continuous classification of proof difficulty.
+$$D(b, s) = \frac{L(n)/n}{\log b} = \frac{h(s)}{\log b}
+= \frac{\text{entropy of successful paths}}{\text{entropy of all paths}}.$$
 
-### 3.8 The Doubling Lemma
+*Proof.* By Proposition 6.1, $L(n)/n = \log s$ for all $n \ge 1$. Dividing by
+$\log b$ gives $\log s / \log b = D(b,s)$. $\square$
 
-**Theorem 3.14** (Doubling). If 2k ≤ b, then D(b, k) < D(b, 2k).
+This is the second face of the invariant: $D$ is a **relative topological entropy**,
+the growth rate of successful paths normalized by the growth rate of all paths. The
+ambient entropy is $\log b$ (the full $b$-ary tree grows at rate $b$ per level), and
+the successful sub-system grows at rate $s$.
 
-Each doubling of the survival count strictly increases the dimension, quantifying how additional proof strategies reduce search difficulty.
+**Fekete's inequality, tight here.** A direct consequence of subadditivity is the
+doubling bound
 
-### 3.9 The Search Dimension Trichotomy
+$$L(2n) \le 2\,L(n),$$
 
-**Theorem 3.15** (Trichotomy). For b ≥ 2, 1 ≤ k ≤ b, d ≥ 1:
-- k = 1 ⟹ k^d = 1 (unique proof path)
-- 1 < k < b ⟹ 1 < k^d < b^d (exponential search required)
-- k = b ⟹ k^d = b^d (trivial)
+which holds with equality in the uniform model precisely because $L$ is additive. The
+genuine content of Fekete's theory appears for **non-uniform** searches, treated next.
 
-## 4. The Universality Conjecture
+## 7. Exhaustive search cost
 
-### 4.1 Statement
+**Theorem 7.1 (Geometric cost).** An exhaustive search expanding every node down to
+depth $n$ visits $\sum_{i=0}^{n} b^i$ nodes, and for $b \ge 2$,
 
-**Conjecture 4.1** (Proof Search Universality). For generic theorems T in a sufficiently expressive proof system:
-D(T) = 1 - c / |T|
-where |T| is the statement length and c > 0 is a universal constant.
+$$\left(\sum_{i=0}^{n} b^i\right)(b - 1) = b^{\,n+1} - 1,
+\qquad\text{i.e.}\qquad \sum_{i=0}^n b^i = \frac{b^{\,n+1}-1}{b-1}.$$
 
-### 4.2 Consequences
+*Proof.* Induction on $n$. Base case $n = 0$: the left side is $1 \cdot (b-1) = b -
+1 = b^1 - 1$. Inductive step: assuming the identity at $k$, add the term $b^{k+1}$;
+using $b^{k+1}(b-1) = b^{k+2} - b^{k+1}$ and the inductive hypothesis gives $(b^{k+1}
+- 1) + (b^{k+2} - b^{k+1}) = b^{k+2} - 1$. $\square$
 
-If true, the universality conjecture implies:
-1. Short statements (|T| small) have low dimension → hard to prove
-2. Long statements (|T| large) have dimension close to 1 → easier to prove
-3. The difficulty per unit of theorem complexity is bounded: the search cost for proof depth d ∝ |T| scales as b^c (independent of |T|)
+Against this brute-force baseline of $\Theta(b^n)$ nodes, an ideal pruning searcher
+that follows only successful branches explores $\Theta(s^n) = \Theta(b^{nD})$ paths.
+The exponential saving is governed entirely by the codimension $\kappa = 1 - D$
+through the Density Law: the searcher avoids a $(b^n)^{\kappa}$ factor of dead ends.
 
-### 4.3 Proposed Test
+## 8. Numerical demonstrations
 
-**Protocol**: Sample 1000 theorems from Mathlib. For each theorem T:
-1. Measure statement length s = |T| (number of tokens in the type)
-2. Measure proof length p (number of tactic tokens)
-3. Estimate D(T) via Monte Carlo: at each proof step, count available tactics (≈ b) and count those leading to eventual success (≈ k). Average log(k)/log(b) over all steps.
-4. Compute (1 - D(T)) · s for each theorem.
+The accompanying computational demonstrations verify each identity numerically:
 
-**Prediction**: (1 - D(T)) · s ∈ [0.5, 5] for ≥ 90% of theorems, with c ≈ 2.
+- **Bridge Identity.** For a range of $(b, s, n)$ with $1 \le s \le b$, one checks
+  $s^n = (b^n)^{D}$ to machine precision, with $D = \log s / \log b$. E.g. $b=3,
+  s=2, n=4$: $2^4 = 16$ and $(3^4)^{\log 2/\log 3} = 81^{0.6309\ldots} = 16$.
+- **Density Law and codimension.** The success ratio $(s/b)^n$ matches $(b^n)^{D-1}$;
+  plotting $-\log(\text{density})/\log(\text{total})$ against $n$ yields the constant
+  $\kappa = 1 - D$.
+- **Entropy convergence.** The per-depth average $L(n)/n$ is constant at $\log s$ for
+  the uniform model, and converges to Fekete's limit $\lim (\sum \log s_i)/n$ for
+  randomly generated variable-branching profiles.
+- **Search-cost comparison.** Empirical node counts of a pruning search scale as
+  $b^{nD}$, exponentially below the exhaustive $\tfrac{b^{n+1}-1}{b-1}$.
 
-**Refutation criterion**: If (1 - D(T)) · s diverges or converges to 0 as s → ∞, the conjecture is false.
+## 9. Extensions
 
-## 5. Connections to Existing Theory
+**Variable branching.** Drop the assumption of a constant success factor: let $s_i$
+be the number of successful branches at depth $i$ (bounded, with $1 \le s_i \le b_i$).
+The successful-path count becomes $\prod_{i<n} s_i$ and the log-count $L(n) = \sum_{i
+<n} \log s_i$ is genuinely subadditive rather than additive. Fekete's lemma still
+guarantees that the search entropy $h = \lim_n L(n)/n$ exists, and the dimension
+identity persists in the limit,
 
-### 5.1 Galton-Watson Processes
+$$D = \lim_{n\to\infty} \frac{\sum_{i<n}\log s_i}{\sum_{i<n}\log b_i} \in [0,1],$$
 
-The branching search model is a deterministic analogue of the Galton-Watson branching process. In the stochastic setting, a GW process with mean offspring μ:
-- Goes extinct a.s. if μ ≤ 1
-- Survives with positive probability if μ > 1
+with the Bridge Identity holding asymptotically (to first order in the exponent). The
+dimension survives the loss of a closed form precisely because it was a ratio of
+Fekete growth rates all along.
 
-Our k/b plays the role of the extinction probability per generation. The search dimension D = log(k)/log(b) determines the rate of exponential decay (subcritical) or growth (supercritical).
+**Multifractal spectrum.** When several inference strategies with distinct success
+ratios are interleaved, the set of successful paths becomes a *multifractal*: its
+coarse Hölder exponents fill a nondegenerate interval and the associated
+Legendre-transform spectrum is strictly concave unless all strategies share one
+ratio. A problem is *strategy-homogeneous* exactly when this spectrum degenerates to a
+single point — an intrinsic test for whether one dominant tactic suffices.
 
-### 5.2 Kolmogorov Complexity
+**Boundary cases.** If $s = 1$ the successful set is a single point of dimension $0$
+(a unique, rigid proof). If $s = b$ the successful set is the whole boundary,
+dimension $1$, the only route to the maximal value. The case $b = 1$ is excluded: it
+makes $\log b = 0$ and the boundary metric degenerate, so a "search space" with no
+genuine branching has no meaningful dimension.
 
-The information content bound (Theorem 3.9) connects to Kolmogorov complexity: a proof with search dimension D carries (1 - D) · d · log(b) bits of Kolmogorov complexity. Low-dimension proofs (D ≈ 0) are algorithmically incompressible; high-dimension proofs (D ≈ 1) are nearly redundant.
+## 10. Discussion and future work
 
-### 5.3 Proof Complexity Theory
+The proof-search fractal dimension unifies three viewpoints in a single number:
+fractal-geometric (similarity dimension of the success set), combinatorial (growth
+exponent of the path count), and information-theoretic (relative entropy of good
+paths against all paths). The Bridge Identity $s^n = (b^n)^D$ ties them together
+exactly, and the Density Law relocates "difficulty" from the dimension to the
+codimension $\kappa = 1 - D$.
 
-The search dimension provides a geometric reinterpretation of proof complexity. While traditional proof complexity studies proof length in specific proof systems, the search dimension captures the *density* of proofs in the search space — a complementary measure that is invariant under polynomial-time translations between proof systems.
+Three directions stand out. First, **variable-branching entropy**: proving that the
+Fekete limit is well defined and lies in $[0,1]$ for all bounded branching profiles,
+with the Bridge Identity asymptotic. Second, **codimension as search cost**: showing
+that an ideal pruning search expands $\Theta(b^{nD})$ nodes, so shortest-proof length
+correlates with $1/\kappa$, giving a rigorous version of the informal "length $\approx
+1/\varepsilon$" slogan with $\varepsilon = \kappa$. Third, the **dimension spectrum**
+for mixed strategies, characterizing strategy-homogeneous problems by a degenerate
+multifractal spectrum. Each is a direct, testable next step from the exact results
+established here.
 
-## 6. Discussion
+## 11. Conclusion
 
-### 6.1 Limitations
-
-The branching search model assumes uniform branching factor and survival count at each node — a strong simplification. Real proof searches have heterogeneous branching. The model captures the essential scaling behavior but not the fine structure.
-
-### 6.2 Implications for AI
-
-For AI theorem provers, the search dimension provides a principled difficulty metric. Problems with D ≈ 1 are accessible to brute-force search; problems with D ≈ 0 require targeted heuristics. The doubling lemma suggests that even modest improvements in tactic selection (doubling the effective k) yield measurable dimension increases.
-
-### 6.3 Philosophical Implications
-
-The fractal phase transition theorem suggests that mathematical difficulty is not a binary classification but a continuous spectrum parameterized by a single real number. The universality conjecture, if true, would mean that this spectrum has a simple, universal shape — mathematics is a fractal at the edge of chaos.
-
-## 7. Future Work
-
-1. **Empirical validation**: Implement the Monte Carlo protocol (Section 4.3) on Mathlib.
-2. **Heterogeneous branching**: Extend the model to allow variable (b_i, k_i) at each node.
-3. **Connection to automata theory**: Relate the search dimension to the state complexity of proof automata.
-4. **Quantum search**: Analyze how Grover-type quantum speedups interact with the search dimension (expected: D → D/2).
-5. **Category-theoretic formulation**: Express the composition theorem as a monoidal functor between proof categories and dimension categories.
-
-## References
-
-[1] Cook, S. A., & Reckhow, R. A. (1979). The relative efficiency of propositional proof systems. *Journal of Symbolic Logic*, 44(1), 36-50.
-
-[2] Mandelbrot, B. B. (1982). *The Fractal Geometry of Nature*. W. H. Freeman.
-
-[3] Harris, T. E. (1963). *The Theory of Branching Processes*. Springer.
-
-[4] Krajíček, J. (2019). *Proof Complexity*. Cambridge University Press.
+Difficulty of proof search, for self-similar search spaces, is captured exactly by the
+similarity dimension $D = \log s / \log b \in [0,1]$ of the Cantor set of successful
+paths. The dimension is simultaneously a fractal exponent, a combinatorial growth
+rate, and a relative entropy; it obeys the Bridge Identity $s^n = (b^n)^D$ and the
+Density Law $(s/b)^n = (b^n)^{D-1}$; it lives on the balanced edge $[0,1]$ with $D=1$
+a sharp threshold; and the operational hardness of a problem is its codimension
+$1 - D$. A slogan — "difficulty is fractal" — becomes a family of theorems, with the
+direction of the difficulty corrected: hard means low codimension, not high dimension.

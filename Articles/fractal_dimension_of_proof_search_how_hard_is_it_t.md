@@ -1,77 +1,179 @@
-# The Hidden Geometry of Hard Problems
+# The Fractal Dimension of Proof Search
 
-## How the Shape of Search Spaces Reveals Why Some Theorems Are Harder Than Others
+*How hard is it to find a proof? Surprisingly, the answer has the geometry of a snowflake.*
 
----
+## A search that branches like a tree
 
-*What if the difficulty of solving a problem could be measured by a single number — a "dimension" that captures the geometry of all possible solutions?*
+Imagine you are trying to prove a theorem, not by a flash of insight, but the way a
+tireless machine would: step by step, trying every rule of inference that might
+apply, backtracking when a path leads nowhere, pressing on when it looks promising.
+Every time you write down a line of a proof, you face a choice. Maybe five different
+lemmas could be invoked next; maybe fifty. Each choice opens a new set of choices.
+The set of all possible partial proofs fans out into an enormous branching tree.
 
----
+At the root sits your theorem. At each node sit the possible next steps. A complete
+proof is a path from the root down through the tree, never getting stuck. The
+question that haunts everyone who has ever run an automated prover — or stared at a
+blackboard past midnight — is simply: *how hard is it to find one of those paths?*
 
-In 1975, the mathematician Benoit Mandelbrot introduced the world to fractals — objects with fractional dimension, neither fully one-dimensional like a line nor two-dimensional like a plane, but somewhere in between. A coastline, he argued, has a dimension of about 1.2: more complex than a straight line, but less complex than a filled plane. This single number, the fractal dimension, captures the essential complexity of the coastline's shape.
+The usual answers are crude. "It's exponential." "It's undecidable in general."
+"Some theorems are just hard." These are true but unsatisfying. They don't tell you
+*how* hard a specific theorem is, and they don't give you a number you can measure.
+This article is about a sharper answer, one borrowed from an unexpected place: the
+mathematics of fractals.
 
-Now, a surprising connection has emerged between fractal geometry and the difficulty of mathematical proof. When a mathematician — or a computer — searches for a proof, they explore a tree of possibilities. At each step, several inference rules might apply. Some lead toward a valid proof; others lead to dead ends. The set of all successful proof paths through this tree forms a geometric object, and that object has a fractal dimension.
+## The shape of the successful paths
 
-This dimension turns out to be a precise measure of how hard the theorem is to prove.
+Let's make the tree concrete. Suppose that at every node there are exactly $b$
+possible next steps — we call $b$ the **branching factor**. If you never pruned
+anything, the number of candidate partial proofs of length $n$ would be $b^n$: the
+complete $b$-ary tree, growing explosively with depth.
 
-## The Proof Search Tree
+But not every step leads to a real proof. Most branches are dead ends — they look
+plausible for a while and then get stuck. Suppose the problem is *self-similar*:
+at every node, exactly $s$ of the $b$ available steps can actually be extended all
+the way to a finished proof, where $1 \le s \le b$. Then the number of genuinely
+**successful** paths of length $n$ is not $b^n$ but
 
-Imagine you're trying to prove a mathematical theorem. At each step, you have several options: apply this lemma, try that substitution, rewrite using this identity. Each choice branches the search into multiple paths, like a tree growing from a single trunk into an ever-widening canopy.
+$$s^n.$$
 
-If the theorem is trivial — say, "1 + 1 = 2" — then almost every path through the tree leads to a valid proof. The set of successful paths fills the entire tree. Its fractal dimension is 1, the maximum possible value.
+Now here is the leap. Consider the *infinite* successful paths — the idealized
+limit of proofs that never terminate but never get stuck either. These form a set
+sitting inside the boundary of the tree. If we measure distance between two paths by
+how long they agree before diverging, using the natural metric
 
-If the theorem requires a flash of insight — a single clever step that most people would miss — then only a tiny fraction of paths succeed. The successful paths form a thin, sparse set within the full tree. Their fractal dimension drops toward 0.
+$$d(x, y) = b^{-(\text{length of common prefix})},$$
 
-Most interesting theorems fall somewhere in between. The successful paths form a set with dimension strictly between 0 and 1: a fractal subset of the search space, neither filling it completely nor collapsing to a single thread.
+then this set of successful paths is a genuine fractal — a self-similar Cantor set,
+the same species of object as the Cantor middle-thirds set or the Sierpiński gasket.
+And like every self-similar fractal, it has a **dimension**.
 
-## The Three Phases of Difficulty
+## The dimension is a ratio of logarithms
 
-This framework reveals three distinct phases of mathematical difficulty, separated by sharp transitions:
+For a self-similar set built by keeping $s$ out of every $b$ pieces at each scale,
+the similarity dimension is the ratio of logarithms
 
-**Phase I: The Trivial Regime (D = 1).** Every path works. The theorem is so easy that you can't fail to prove it, no matter what steps you take. Think of verifying an arithmetic identity by direct computation.
+$$D(b, s) = \frac{\log s}{\log b}.$$
 
-**Phase II: The Interesting Regime (0 < D < 1).** This is where real mathematics lives. Some paths work, others don't. The dimension D measures the ratio of "useful" search directions to "total" search directions. A dimension of 0.7 means that about 70% of the information needed to find a proof is already present in the structure of the problem — you just need the remaining 30%.
+This single number — call it the **proof-search fractal dimension** — turns out to
+capture everything about how focused or how sprawling the search is. It is not a
+metaphor. It is the literal exponent that converts one count into another, as the
+next result makes precise.
 
-**Phase III: The Deterministic Regime (D = 0).** Only one path works. The proof requires a unique sequence of steps, each of which is the only viable option at that stage. These are the proofs that seem to require divine inspiration — unless you happen to stumble upon exactly the right sequence, you'll never find it.
+**The Bridge Identity.** *For a self-similar search space with branching factor
+$b > 1$ and at least one proof ($s \ge 1$), the number of successful paths of depth
+$n$ is exactly the total number of candidate paths raised to the fractal dimension:*
 
-The transition between these phases is not gradual. It's a phase transition, analogous to water freezing into ice. As the dimension crosses certain thresholds, the qualitative nature of the search changes abruptly.
+$$s^n \;=\; \bigl(b^n\bigr)^{D(b,s)}.$$
 
-## Why Composition Matters
+The proof is a one-line calculation once you notice that
+$(b^n)^{\log s / \log b} = e^{n \log b \cdot (\log s / \log b)} = e^{n \log s} = s^n$,
+but its meaning is anything but trivial. Combinatorial growth — the raw counting of
+branches — is *exactly* a power law, and the power is the fractal dimension. The
+sprawling tree and the smooth analytic exponent are two faces of one coin.
 
-One of the most striking findings is how proof difficulty composes. If you need to prove theorem A and then use it to prove theorem B, the total difficulty is not the sum of the individual difficulties — it's the product.
+## Where does difficulty live? In the codimension
 
-This multiplicative structure has profound implications. It means that long proofs aren't just linearly harder than short ones; they're exponentially harder, with the exponent determined by the dimension gap (1 - D). A proof with dimension 0.9 that requires 100 steps has a total search cost proportional to 10^(100 × 0.1) = 10^10 — ten billion candidates to examine. But a proof with dimension 0.5 of the same length requires 10^50 candidates, a number larger than the number of atoms in the universe.
+It is tempting to say "big dimension means hard theorem." The truth is more elegant.
+The dimension $D$ always lives in the interval $[0, 1]$, and both endpoints have
+crisp meanings.
 
-This explains a common experience among mathematicians: short proofs of deep results feel magical because the dimension gap is large — there are very few paths to the answer, and finding one requires navigating an exponentially vast search space.
+**The dimension lives on the edge.** *For $b > 1$ and $1 \le s \le b$ we always have
+$0 \le D(b,s) \le 1$. Moreover $D = 1$ if and only if $s = b$, and $D < 1$ the moment
+even a single branch can be pruned ($s < b$). The dimension is also strictly
+increasing in $s$: more ways to succeed genuinely raises the dimension.*
 
-## The Information-Theoretic Connection
+So the "hardest" case, $D = 1$, is precisely the one where *nothing* can be pruned —
+every branch succeeds, so no search strategy can beat blind exhaustion. This is a
+razor-sharp threshold, not a generic value: you reach $D = 1$ only when $s = b$
+exactly. At the other extreme, $D = 0$ means $s = 1$: there is a unique proof path,
+the successful set is a single point, and search is trivial.
 
-The fractal dimension of proof search connects to a beautiful idea from information theory. Every proof is, in a precise sense, a message. It conveys the information needed to convince a skeptic that a theorem is true. The dimension D determines how much information each step of the proof carries.
+The quantity that really governs difficulty is therefore not the dimension but its
+complement, the **codimension** $\kappa = 1 - D$. It measures how fast the good
+paths thin out among all the paths. This is made exact by a companion law.
 
-At dimension 1, each step carries zero information — the next move is completely predictable. At dimension 0, each step carries maximum information — it's a genuine surprise, encoding real mathematical content.
+**The Density Law.** *Under the same hypotheses, the fraction of candidate paths
+that succeed decays as*
 
-The information rate per proof step equals log(b) × (1 - D), where b is the number of available inference rules. This formula shows that the "density of insight" in a proof is directly proportional to the dimension gap. Dense, elegant proofs have high information rate (low dimension); sprawling, computational proofs have low information rate (high dimension).
+$$\left(\frac{s}{b}\right)^n = \bigl(b^n\bigr)^{D - 1} = \bigl(b^n\bigr)^{-\kappa}.$$
 
-## The Universality Conjecture
+The codimension $\kappa = 1 - D$ is exactly the exponential rate at which successful
+paths become rare. When $\kappa$ is tiny (dimension near $1$), the good paths barely
+thin out — search is close to exhaustive and painfully expensive. When $\kappa$ is
+large (dimension near $0$), the good paths vanish so fast that a smart searcher
+homes in almost immediately. Difficulty is the *slowness of thinning*, and the
+Density Law puts a number on it.
 
-Perhaps the most provocative finding is a conjecture about the typical dimension of mathematical theorems. Preliminary analysis suggests that for "generic" theorems in a sufficiently expressive proof system:
+This also corrects a natural but mistaken intuition. One might guess that "hard"
+theorems have dimension *greater* than $1$. For a self-similar subset of a tree that
+is impossible: a piece can never be more dimensional than the whole, which sits at
+dimension $1$. Hardness is not excess dimension; it is *deficient codimension*.
 
-D(T) ≈ 1 - c / n
+## The same number, seen as entropy
 
-where n is the length of the theorem's statement and c is a universal constant.
+There is a second, equally illuminating way to read $D$. Take logarithms of the
+successful-path count and define $L(n) = \log(s^n) = n \log s$. This is the "action"
+of the search, and its per-step average $L(n)/n$ is a growth rate — an **entropy**.
+For the uniform self-similar model it is exactly $\log s$ at every depth, and in
+general it is the limit
 
-If true, this would mean that proof difficulty is a fractal — self-similar across scales. Short statements have low dimension (they're hard to prove because the dimension gap c/n is large relative to 1). Long statements have dimension close to 1 (they're relatively easier because the gap shrinks). And the transition between "hard" and "easy" follows a simple inverse law.
+$$\text{entropy} = \lim_{n \to \infty} \frac{L(n)}{n} = \log s.$$
 
-This conjecture is falsifiable. One could examine a large corpus of mathematical theorems, estimate the fractal dimension of their proof searches, and check whether the relationship D ≈ 1 - c/n holds. If it does, it would suggest that mathematics has a deep, previously unsuspected geometric structure: the space of provable theorems is a fractal, and its dimension determines how hard each theorem is to prove.
+The ambient tree has its own entropy, $\log b$, the growth rate of *all* paths. And
+the fractal dimension is nothing but the ratio of the two:
 
-## The Edge of Chaos
+$$D(b, s) = \frac{\text{entropy of successful paths}}{\text{entropy of all paths}}
+= \frac{\log s}{\log b}.$$
 
-The most tantalizing implication is that mathematics lives at a critical point — the edge between order and chaos. If the typical dimension were much less than 1, then most theorems would be incredibly hard to prove, and mathematics would grind to a halt. If the typical dimension were exactly 1, then every theorem would be trivial, and mathematics would be boring.
+In other words, the proof-search fractal dimension is a **relative entropy** — the
+information-theoretic growth rate of good paths measured against the growth rate of
+the whole search. This is the classical dictionary of dynamical systems, where such
+ratios are called relative topological entropies, and it means our fractal exponent
+is simultaneously a geometric dimension, a combinatorial growth rate, and an entropy.
 
-Instead, the dimension hovers just below 1, maintaining a delicate balance. There are always enough successful paths to make progress possible, but never so many that the journey is effortless. This is the same "edge of chaos" phenomenon that appears in cellular automata, neural networks, and biological evolution — systems that are most creative and productive when they're poised between rigid order and formless randomness.
+The bridge to entropy also connects the story to a century-old piece of analysis:
+Fekete's lemma on subadditive sequences. A sequence $L$ with
+$L(n + m) \le L(n) + L(m)$ always has a well-defined average limit $L(n)/n$. Our
+$L(n) = n \log s$ is additive — the extreme, tight case of subadditivity — which is
+exactly why the entropy has a clean closed form. For example, doubling the search
+depth at most doubles the log-count:
 
-The fractal dimension of proof search may be telling us something profound about the nature of mathematical knowledge itself: it lives at the boundary between the obviously true and the hopelessly complex, in a sweet spot where human (and machine) intelligence can just barely reach the answers.
+$$L(2n) \le 2\,L(n),$$
 
----
+with equality here. The real power of Fekete's theory appears when the branching is
+*non-uniform* — when the success factor $s_i$ varies with depth. Then the good-path
+count is a product $\prod_i s_i$, no closed form survives, but Fekete's limit still
+exists and still defines the entropy, and the identity $D = \text{entropy}/\log b$
+still holds in the limit. The dimension survives the loss of a formula because it was
+a ratio of growth rates all along.
 
-*The geometry of proof search suggests that mathematical difficulty is not a binary — easy or hard — but a continuous spectrum, measured by a single number: the fractal dimension of the space of valid proofs. This dimension captures the essential tension at the heart of mathematics: the balance between structure and surprise, between the predictable and the profound.*
+## Counting the cost
+
+None of this would matter if it didn't connect to real work. Consider the crudest
+strategy: exhaustive search that expands every node down to depth $n$. How many nodes
+does it visit? Summing the geometric series of the full tree gives the exact count
+
+$$\sum_{i=0}^{n} b^i = \frac{b^{\,n+1} - 1}{b - 1},$$
+
+a clean closed form. Against this baseline, the Density Law tells you how much an
+*ideal* pruning searcher could save: it needs to explore only about $b^{nD}$ paths
+rather than $b^n$, an exponential saving governed entirely by the codimension. The
+gap between $b^n$ and $b^{nD}$ — between brute force and inspired search — is
+measured, node for node, by $\kappa = 1 - D$.
+
+## Why this is beautiful
+
+Start with a slogan — "some theorems are harder to prove than others" — and you end
+with a single number that is at once a fractal dimension, a relative entropy, and a
+Fekete growth rate, tied together by the exact identity $s^n = (b^n)^D$. The
+sprawling, combinatorial mess of a proof-search tree turns out to have the clean
+self-similar geometry of a Cantor set, and the difficulty of the theorem is written
+in the geometry of that set.
+
+The dimension lives on a knife's edge in $[0, 1]$. Push it to $0$ and the proof is
+essentially unique; push it to $1$ and no cleverness can save you from checking
+everything. Most interesting theorems live in between, on the balanced edge where
+search is neither trivial nor hopeless — where a good idea about which branch to try
+next is worth exactly $1 - D$ in the exponent. Difficulty, it turns out, is fractal,
+and its dimension is something you can compute.
