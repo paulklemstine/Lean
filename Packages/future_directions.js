@@ -186,6 +186,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 823f5582 (Q=0.820), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surface V(f) = {x : f(x) = 0} is a piecewise linear hypersurface. Conjecture: every rational homology cla",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_823f5582_9b56b8fd",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "823f5582",
+    "status": "available",
+    "timestamp": "2026-07-10T21:41:40.173065+00:00",
+    "title": "Deepening: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 84ab5171 (Q=0.820), which proved 55 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s",
     "domains": [
       "Applications"
@@ -241,7 +255,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "478ae68b",
     "description": "Prove that any sufficiently powerful formal system necessarily contains strange loops: statements that refer to their own unprovability. Formalize G\u00f6del's first incompleteness theorem as a fixed-point in the lattice of provability predicates. Explore whether consciousness arises from tangled hierarchies of self-referential symbols.",
     "domains": [
       "Novelty",
@@ -251,7 +265,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T19:47:59.488401+00:00",
     "title": "Strange Loops: Self-Reference and G\u00f6del's Incompleteness"
   },
@@ -441,6 +455,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Develop a rigorous theory of infinite games where moves are indexed by transfinite ordinals. Prove that Zermelo's theorem extends: every such game has a determined outcome under AD. Formalize the connection between the determinacy hierarchy and large cardinal axioms.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0945",
+    "priority_score": 0.87,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T21:41:17.722375+00:00",
+    "title": "Transfinite Game Theory: Games That Last Forever"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "In 2023, Smith et al. discovered 'the hat' \u2014 a single tile shape that tiles the plane but only aperiodically (no periodic tiling exists). This solved the aperiodic monotile problem. But deeper questions remain: How many distinct aperiodic monotiles exist? Conjecture: The set of aperiodic monotiles forms a 1-parameter family (the 'hat spectrum') parameterized by a continuous parameter t in [0,1] where t=0 gives the hat, t=1 gives the turtle (a known variant), and intermediate values give intermediate shapes. The key property: each shape in the hat spectrum tiles the plane aperiodically, and no two shapes in the spectrum admit a common periodic tiling. The boundary of the hat spectrum is the curve in R^2 that separates the region of aperiodic monotiles from the region of periodic tiles. This boundary is a piecewise-smooth curve determined by the constraint that the tile must enforce a hierarchical substitution rule. Test: parameterize the hat spectrum by interpolating between the hat and turtle, compute the substitution rule for each t, and verify that the substitution rule enforces aperiodicity for all t in [0,1]. Impact: aperiodic monotiles are not isolated curiosities \u2014 they form a continuous family, and the hat is just one point on the spectrum.",
     "domains": [
       "Novelty",
@@ -540,6 +569,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T00:21:09.997327+00:00",
     "title": "Close Proofs: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 823f5582 (Q=0.820) proved 16 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surfa",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_823f5582_048a7cd6",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "823f5582",
+    "status": "available",
+    "timestamp": "2026-07-10T21:41:40.242627+00:00",
+    "title": "Close Proofs: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision"
   },
   {
     "consumed_by_exp_id": "",
@@ -715,7 +758,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
   },
   {
-    "consumed_by_exp_id": "d58a4cc2",
+    "consumed_by_exp_id": "",
     "description": "The Riemann-Roch theorem for graphs (Baker-Norine, 2007) states that for a divisor D on a graph G, l(D) - l(K_G - D) = deg(D) + 1 - g(G) where l(D) is the rank of D, K_G is the canonical divisor, and g(G) is the genus (cyclomatic number). The chip-firing game is a combinatorial model: vertices hold chips, and 'firing' a vertex sends one chip along each incident edge. Conjecture: for the complete graph K_n, the canonical divisor K_{K_n} has rank (n-1)(n-2)/2 - 1, and the Riemann-Roch formula gives l(D) = deg(D) + 1 - (n-1)(n-2)/2 + l(K_{K_n} - D). For D = K_{K_n} (the canonical divisor itself): l(K_{K_n}) = (n-1)(n-2)/2 - 1 + 1 - (n-1)(n-2)/2 + l(0) = 0 + l(0). But l(0) = 0 (the empty divisor has rank 0). So l(K_{K_n}) = 0. Wait, this gives l(K_{K_n}) = 0, but the canonical divisor of K_n should have positive rank. Conjecture: the canonical divisor of K_n is K_{K_n} = sum_v (deg(v) - 1) * v = (n-2) * sum_v v, and l(K_{K_n}) = (n-1)(n-2)/2 - 1 (it achieves the genus minus 1). Test: compute the canonical divisor and verify the Riemann-Roch formula for K_n with n = 3, 4, 5, 6. Impact: chip-firing on complete graphs encodes the same information as the Riemann-Roch theorem on projective curves.",
     "domains": [
       "Novelty",
@@ -725,7 +768,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-10T16:36:19.999072+00:00",
     "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
   },
@@ -5486,21 +5529,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The Fundamental Theorem of Cakes: Algebraic Geometry of Baking"
   },
   {
-    "consumed_by_exp_id": "823f5582",
-    "description": "The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surface V(f) = {x : f(x) = 0} is a piecewise linear hypersurface. Conjecture: every rational homology class in H_{n-2}(V(f), Q) is represented by an algebraic cycle (a subvariety of V(f) of codimension 1). Since V(f) is piecewise linear, its homology groups are finitely generated and every cycle is a formal sum of linear pieces. Each linear piece is an algebraic cycle (a hyperplane section). Conjecture: the piecewise linear Hodge conjecture holds \u2014 every homology class in V(f) is a sum of hyperplane sections. This is TRUE for piecewise linear varieties because every face of a polyhedron is cut out by a linear equation. The deeper conjecture: for a ReLU network with L layers and widths (n, w_1, ..., w_L, 1), the Hodge numbers h^{p,q}(V(f)) satisfy h^{p,q} <= (w_1 choose p) * (w_L choose q) * prod_{i=2}^{L-1} w_i. Test: compute H_{n-2}(V(f)) for small ReLU networks and verify that every class is represented by hyperplane sections. Impact: the Hodge conjecture is trivially true for neural network decision surfaces. The non-trivial content is the BOUND on Hodge numbers.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0897",
-    "priority_score": 0.76,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T12:39:07.666361+00:00",
-    "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions: Log-Concavity in the d-Hoggatt Hierarchy\n\nThis cycle established a sharp dichotomy for the *total* d-Hoggatt numbers\n`H_d(n) = \u2211_k H_d(n,k)`: the `d = 1` totals `2^n` are infinitely log-concave\n(indeed log-linear), while the `d = 2` totals (Catalan numbers) are strictly\nlog-convex, and the `d = 3` totals (Baxter numbers) are empirically log-convex.\nThe following conjectures are the natural next targets.\n\n## Conjecture 1 \u2014 Universal log-convexity of the totals for d \u2265 2\n\nFor every `d \u2265 2`, the total d-Hoggatt numbers are strictly log-convex:\n`H_d(n+1)\u00b2 < H_d(n) \u00b7 H_d(n+2)` for all `n \u2265 0`.\n\nThe key insight is that each `H_d(n)` is a positively weighted sum of products\nof binomial coefficients whose dominant growth ratio increases with `n`, so the\ntotals inherit the log-convexity of the Catalan case rather than the\nlog-concavity of the individual rows. Why now? The Catalan (`d = 2`) case is now\nsettled from a two-term recurrence, and the Baxter (`d = 3`) case matches it\nterm-by-term in the computed data, suggesting a single recurrence-driven\nargument covers the whole family.\n\n## Conjecture 2 \u2014 Row-sum log-convexity is a summation phenomenon\n\nIf `T(n,k)` is any triangle whose rows are log-concave and whose row-ratio\n`T(n+1,k)/T(n,k)` is nondecreasing in `n`, then the row sums `S(n) = \u2211_k T(n,k)`\nare log-convex.\n\nThe key insight is that log-convexity of the totals is not special to Hoggatt\ntriangles but follows from monotone amplification of a common growth factor\nacross rows, a Chebyshev-sum / rearrangement effect. Why now? Having seen the\nsame negative discriminant `\u0394_n < 0` for both Catalan and Baxter totals, the\nphenomenon is clearly structural rather than coincidental and deserves a triangle\n-level hypothesis.\n\n## Conjecture 3 \u2014 Infinite log-concavity of the rows\n\nFor every `d \u2265 1`, each fixed row `k \u21a6 H_d(n,k)` of the d-Hoggatt triangle is\ninfinitely log-concave.\n\nThe key insight is that the log-concavity operator, when applied to a finite\npositive log-concave row with the golden-ratio-squared safety factor\n`a_k\u00b2 \u2265 ((3+\u221a5)/2) \u00b7 a_{k-1} a_{k+1}`, reproduces that same safety factor, so a\nsingle closure lemma propagates through all iterates. Why now? The threshold\nconstant `(3+\u221a5)/2` is exactly the fixed point of the operator's worst-case\nratio, and the toolkit built this cycle (the operator `\ud835\udcdb`, its annihilation of\nlog-linear sequences, and closure under products) already contains the moving\nparts needed to attack the closure lemma.\n\n## Conjecture 4 \u2014 A log-concave \"renormalization\" of the totals\n\nFor every `d \u2265 2` there is an explicit positive normalizing sequence `w_d(n)`\n(e.g. a ratio of factorials) such that the renormalized totals\n`H_d(n) / w_d(n)` are infinitely log-concave, even though the raw totals are\nlog-convex.\n\nThe key insight is that log-convexity of the totals is caused by a smooth,\npredictable growth factor which can be divided out, leaving a residual sequence\ngoverned by the same infinite-log-concavity mechanism as the rows. Why now? The\nexact growth ratio `(n+2)(2n+3)/((2n+1)(n+3))` for the Catalan totals is now\nknown in closed form, giving a concrete first candidate for `w_2` and a template\nfor higher `d`.\n\n## Conjecture 5 \u2014 Tropical dequantization of the dichotomy\n\nUnder the tropical (min-plus) limit that sends a positive sequence `a_n` to its\nvaluations `v_n = \u2212log a_n`, log-concavity becomes convexity of `v` and\nlog-linearity becomes affinity of `v`. The `d = 1`/`d \u2265 2` dichotomy then reads:\n`v` is affine for `d = 1` and strictly concave for `d \u2265 2`.\n\nThe key insight is that the log-concavity operator degenerates, in the tropical\nlimit, to a second finite difference, so infinite log-concavity corresponds to a\nsequence of iterated finite differences retaining a fixed sign \u2014 a purely\npiecewise-linear, tropical-geometric condition. Why now? Casting the numeric\ndichotomy in the min-plus semiring links this combinatorial question to tropical\nconvexity, where second-difference sign conditions are the natural objects and\npowerful piecewise-linear tools are available.\n",
     "domains": [
@@ -6264,6 +6292,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T21:25:18.926266+00:00",
     "title": "This project develops `r`-uniform hypergraph Ramsey theory from scratch across"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Algebraic Cycles in Decision Surfaces\n\nThis cycle established two independent, verified facts about the decision surface\n`V(f) = {x : f(x) = 0}` of a rectified-linear classifier: (i) every homology\nclass of the surface is represented by a cycle supported on its linear cells,\neach of which is an algebraic (hyperplane-section) piece \u2014 the piecewise-linear\nanalogue of the Hodge property holds by construction; and (ii) every Betti number\nof the surface is bounded by the number of cells, which is in turn bounded by the\nnetwork's activation-pattern count `\u220f\u1d62 2^{w\u1d62} = 2^{\u03a3\u1d62 w\u1d62}`. The results below\npush from the *total* count toward the *bigraded* refinement conjectured for the\nindividual Hodge numbers.\n\n## Conjecture 1 \u2014 The bigraded Hodge-number bound\n\nFor a network with hidden widths `(w\u2081, \u2026, w_L)`, the Hodge numbers of the\ndecision surface satisfy\n`h^{p,q}(V(f)) \u2264 C(w\u2081, p) \u00b7 C(w_L, q) \u00b7 \u220f_{i=2}^{L-1} w\u1d62`.\n\nThe key insight is that the first and last hidden layers act as the two\n\"polarised\" directions of the arrangement \u2014 the first layer selects which `p`\ninput hyperplanes bound a face and the last selects which `q` output half-spaces\nco-bound it, while the interior layers only multiply the number of affine pieces\nlinearly. This factorises the cell count into a K\u00fcnneth-style product that\nmatches the `(p, q)`-bigrading rather than the crude total `2^{\u03a3 w\u1d62}`.\n\nWhy now? The total-count bound `\u03b2 \u2264 2^{\u03a3 w\u1d62}` is now proved and is visibly loose\nfor shallow-and-wide versus deep-and-narrow networks of equal neuron count; a\nbound that separates the roles of the boundary layers is the natural next\ninvariant, and the activation-pattern model already exposes the per-layer factors\nneeded to state it.\n\n## Conjecture 2 \u2014 Depth manufactures homology, width manufactures cycles\n\nFor the depth-`k` \"tent\" family, the top Betti number of the level-set surface\ngrows like `2^{k}` while the number of independent algebraic cells needed to\ngenerate it grows only linearly in the width per layer.\n\nThe key insight is that iterated folding creates exponentially many topological\nhandles from linearly many linear pieces, so the ratio (Betti number)/(cells per\nlayer) is itself an intrinsic complexity measure separating deep from shallow\nrepresentations. This complements the existing width lower bounds obtained from\ncounting sign changes.\n\nWhy now? The catalog already proves an exponential count of distinct level-`1/2`\ncrossings for the deep tent; reinterpreting those crossings as generators of the\ntop homology of the decision surface turns a crossing count directly into a Betti\nnumber, closing the loop between analytic oscillation and topological complexity.\n\n## Conjecture 3 \u2014 Exactness detects redundant neurons\n\nIf a hidden neuron is never simultaneously active with its layer-mates on any\ninput, then the corresponding boundary map is not of full rank and the exact\nidentity `\u03b2 + rank B = rank Z` forces a strictly larger Betti number than the\ngeneric bound predicts.\n\nThe key insight is that pruning-invariance and topology are dual: a neuron that\ncarries no independent cell contributes nothing to `rank B`, so the surface's\nhomology *increases* precisely where the network is *over-parameterised*, giving\na homological certificate for prunability.\n\nWhy now? The rank identity is now available in exact form, and the region-count\nbound provides the generic baseline against which a rank deficiency can be\nmeasured; together they make \"redundant neuron \u21d2 homology anomaly\" a testable\nstatement rather than a heuristic.\n\n## Conjecture 4 \u2014 A three-valued refinement of the region count\n\nThe number of *nonempty* faces of the arrangement of a single hidden layer of\nwidth `m` is bounded by `3^m` (one sign in `{-, 0, +}` per neuron), and this\nbound is attained only in general position; each linear dependence among the\nneuron weights strictly reduces the realised face count.\n\nThe key insight is that the gap between the realised count and `3^m` is exactly\nthe combinatorial rank defect of the weight matrix, so the *geometry* of the\ndecision surface reads off the *linear algebra* of the first layer.\n\nWhy now? Both the `2^m` (on/off) and `3^m` (signed) counts are now formalised;\ncomparing them against the realised-region bound isolates the general-position\nhypothesis as the single missing ingredient, which is a concrete and checkable\nnext target.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0946",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "823f5582",
+    "status": "available",
+    "timestamp": "2026-07-10T21:41:33.880097+00:00",
+    "title": "Two independent, verified facts about the decision surfac"
   },
   {
     "consumed_by_exp_id": "",
