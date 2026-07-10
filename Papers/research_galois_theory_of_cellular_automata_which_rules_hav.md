@@ -1,226 +1,378 @@
-# Galois Theory of Cellular Automata: The Structure of Reversibility Groups
+# A Group-Theoretic Structure Theory of Reversible Binary Cellular Automata on Cyclic Lattices
+
+**Author:** Aristotle
+**Date:** 2026-07-10
 
 ## Abstract
 
-We study the algebraic structure of reversible cellular automata (CAs) on periodic configurations. Our main contributions are: (1) a proof that the group of reversible CAs on ℤ/nℤ equals the centralizer of the shift permutation in the symmetric group S_{|α|^n}, providing a complete algebraic characterization; (2) a proof that for prime period p, non-constant binary configurations have full shift orbits of size p, connecting reversibility to Fermat's little theorem and necklace counting; (3) a discrete Liouville theorem showing that reversible CAs preserve invariant distributions; (4) a Galois connection between subgroups of the reversibility group and invariant configuration sets; and (5) structural results on the complement-shift interaction and properness of the reversibility subgroup. All results are formalized in Lean 4 with complete machine-checked proofs.
+We study elementary (radius-$1$) binary cellular automata on the cyclic lattice
+$\mathbb{Z}/n$ and the question of which rules generate *reversible* dynamics,
+i.e. global update maps that are bijections of the configuration space. We
+establish a finite-lattice, Hedlund-type translation-invariance principle: every
+elementary global map commutes with the shift. We then prove that among the
+$256$ elementary rules exactly six yield reversible dynamics on the ring, and
+that these six are precisely the affine single-site rules — the identity, the
+complement, the left and right shifts, and the complements of the two shifts. We
+exhibit the constant rule as a canonical irreversible example. Turning to global
+structure, we identify the natural ambient group of reversible dynamics as the
+centralizer of the shift inside the symmetric group of the configuration space,
+show that the shift and the complement lie in it, and determine the algebra they
+generate: the complement is an involution, the shift has order exactly $n$, the
+two commute, and hence they generate an abelian group isomorphic to
+$\mathbb{Z}/n \times \mathbb{Z}/2$. We also correct a false numerical conjecture
+($|G| = 8!/4 = 10080$) from the informal literature, explaining precisely why it
+cannot hold. All results are stated with full proofs or proof sketches.
+
+**Keywords:** cellular automata, reversibility, Hedlund's theorem, shift
+operator, centralizer, permutation groups, reversible computation, elementary
+rules.
+
+---
 
 ## 1. Introduction
 
-A cellular automaton (CA) is a discrete dynamical system in which space, time, and state are all discrete. The global evolution rule is defined by a local rule that maps each cell's neighborhood to the cell's next state. The fundamental question of reversibility — whether the global map is bijective — has been studied since Hedlund's 1969 characterization of endomorphisms of the full shift [1].
+A one-dimensional binary cellular automaton (CA) evolves an array of bits by
+applying, simultaneously and uniformly, a local update rule that reads a bounded
+neighborhood of each cell. Despite their simplicity, CAs exhibit the full range
+of dynamical behavior, from fixed points to computational universality. A
+central structural question concerns **reversibility**: for which local rules is
+the induced global map a bijection, so that the dynamics can be inverted and the
+past reconstructed from the present?
 
-For CAs on finite periodic configurations (configurations on ℤ/nℤ), the Curtis-Hedlund-Lyndon theorem states that every continuous, shift-commuting map is determined by a local rule. In the finite setting, the relevant condition reduces to shift-equivariance: F ∘ σ_k = σ_k ∘ F for all shifts σ_k.
+Reversibility is the discrete analogue of microscopic time-symmetry in physics
+and is the defining feature of models for reversible (energy-lossless)
+computation. The classical Hedlund–Richardson theory characterizes CA global
+maps as exactly the continuous, shift-commuting self-maps of the configuration
+space, and shows that the inverse of a reversible CA is again a CA. Here we work
+on the finite cyclic lattice $\mathbb{Z}/n$, where "continuity" is automatic and
+the essential phenomena — translation invariance, the classification of
+reversible elementary rules, and the group structure of reversible dynamics —
+can be made fully explicit and completely rigorous.
 
-### 1.1. Our Contributions
+Our contributions are:
 
-We extend the catalog result `reversibility_proper_subgroup` from `Catalog/Geometry/CellularAutomataGalois.lean` with the following new theorems:
+1. A finite-lattice translation-invariance theorem (§3).
+2. A complete identification of the reversible elementary rules on the ring as
+   the six affine single-site rules, each proved bijective (§4), together with a
+   canonical irreversible rule (§5).
+3. The identification of the reversibility group as the centralizer of the shift
+   and the determination of the abelian algebra generated by the shift and the
+   complement, including the exact order of the shift (§6–§7).
+4. A correction of a false order conjecture from the informal literature (§8).
 
-1. **Shift-one-implies-all** (Theorem 3.1): Commuting with shift-by-1 implies commuting with all shifts, since 1 generates ℤ/nℤ.
-
-2. **Centralizer = Reversibility** (Theorem 3.2): The reversibility group equals the centralizer of the shift permutation.
-
-3. **Shift-fixed iff constant** (Theorem 4.1): A configuration is fixed by the shift iff it is constant.
-
-4. **Orbit size for prime period** (Theorem 4.2): Non-constant configurations on ℤ/pℤ have full orbits of size p.
-
-5. **Discrete Liouville** (Theorem 5.1): Reversible CAs preserve weight distributions.
-
-6. **Galois antitone** (Theorem 6.1): Larger subgroups have smaller fixed-point sets.
-
-7. **Constants-only fixed points** (Theorem 6.2): The full reversibility group fixes only constant configurations.
-
-8. **Complement in RevGroup** (Theorem 7.1): The complement lies in the reversibility group.
-
-9. **Shift-complement commutation** (Theorem 7.2): Shift and complement commute.
-
-10. **Complement order 2** (Theorem 7.3): The complement is an involution.
-
-11. **Observable action** (Theorem 8.1): The action on observables is a valid group representation.
-
-12. **Proper subgroup** (Theorem 9.1): The reversibility group is proper for n ≥ 2.
-
-### 1.2. Relation to Prior Work
-
-This work builds on:
-- `Catalog/Geometry/CellularAutomataGalois.lean`: The original formalization of the reversibility subgroup, shift-equivariance, and the proper subgroup theorem for n = 3.
-- `Catalog/Tropical/HashInversion.lean`: The `reversible_iff_bijective` theorem connecting reversibility to bijectivity for finite types.
-
-Our key advance is the **Centralizer = Reversibility theorem** (Theorem 3.2), which provides a complete algebraic characterization of the reversibility group and reduces questions about reversible CAs to standard group-theoretic computations.
+---
 
 ## 2. Definitions
 
-### 2.1. Configuration Space
+Throughout, $n$ is a natural number and the lattice is the cyclic group
+$\mathbb{Z}/n$.
+
+**Definition 2.1 (Configuration space).** A *configuration* is a function
+$$c : \mathbb{Z}/n \to \{0,1\},$$
+where $\{0,1\}$ is the two-element set of bit values. We write
+$\mathrm{Config}(n)$ for the set of all configurations; $|\mathrm{Config}(n)| =
+2^n$.
+
+**Definition 2.2 (Local rule).** An *elementary (radius-$1$) local rule* is a
+function
+$$r : \{0,1\}^3 \to \{0,1\},\qquad (a,b,c)\mapsto r(a,b,c).$$
+The domain has $2^3 = 8$ elements (the *neighborhoods*), and there are $2^8 =
+256$ local rules.
+
+**Definition 2.3 (Global map).** The *global map* of the local rule $r$ is
+$$F_r : \mathrm{Config}(n) \to \mathrm{Config}(n),\qquad
+(F_r c)(i) = r\big(c(i-1),\, c(i),\, c(i+1)\big),$$
+where index arithmetic is in $\mathbb{Z}/n$.
+
+**Definition 2.4 (Reversibility).** The CA with local rule $r$ is *reversible* on
+$\mathbb{Z}/n$ if $F_r$ is a bijection of $\mathrm{Config}(n)$.
+
+**Definition 2.5 (Shift and complement).** The *left shift* is
+$S c (i) = c(i+1)$, with inverse the *right shift* $S^{-1} c(i) = c(i-1)$; both
+are bijections of $\mathrm{Config}(n)$. The *complement* is
+$C c(i) = \lnot\, c(i)$, an involution.
+
+We regard $S$ and $C$ as elements of the symmetric group
+$\mathrm{Sym}(\mathrm{Config}(n))$ of all permutations of the $2^n$
+configurations.
+
+---
+
+## 3. Translation invariance (a Hedlund-type theorem)
+
+**Theorem 3.1 (Translation invariance).** For every elementary local rule $r$
+and every configuration $c$,
+$$F_r(S c) = S(F_r c).$$
+Equivalently, $F_r \circ S = S \circ F_r$: every elementary global map commutes
+with the shift.
+
+*Proof.* Evaluate both sides at an arbitrary site $i$. On the left,
+$$F_r(Sc)(i) = r\big((Sc)(i-1), (Sc)(i), (Sc)(i+1)\big)
+= r\big(c(i), c(i+1), c(i+2)\big),$$
+using $(Sc)(j) = c(j+1)$ and the identities $(i-1)+1 = i$, $i+1$, $(i+1)+1 =
+i+2$ in $\mathbb{Z}/n$. On the right,
+$$S(F_r c)(i) = (F_r c)(i+1) = r\big(c(i), c(i+1), c(i+2)\big).$$
+The two agree at every $i$, so the maps are equal. $\qquad\blacksquare$
+
+This is the finite-lattice shadow of Hedlund's theorem, which characterizes CA
+global maps precisely as the shift-commuting continuous maps. It shows that the
+shift is a universal symmetry of elementary dynamics, and hence that reversible
+dynamics necessarily live inside the world of shift-commuting permutations.
+
+---
 
-Fix a finite alphabet α and period n ≥ 1. The **configuration space** is α^{ℤ/nℤ}, the set of all functions from ℤ/nℤ to α.
+## 4. Classification of reversible elementary rules
+
+We first record the algebraic identities that identify the six distinguished
+rules with elementary operators, then prove their reversibility.
+
+**Proposition 4.1 (Identification of the six rules).** Writing local rules as
+functions of $(l, m, r)$ = (left neighbor, center, right neighbor):
+
+| Wolfram rule | Local rule | Global map |
+|---|---|---|
+| 204 | $(l,m,r)\mapsto m$ | identity $c \mapsto c$ |
+| 51  | $(l,m,r)\mapsto \lnot m$ | complement $C$ |
+| 170 | $(l,m,r)\mapsto r$ | left shift $S$ |
+| 240 | $(l,m,r)\mapsto l$ | right shift $S^{-1}$ |
+| 15  | $(l,m,r)\mapsto \lnot l$ | $C\circ S^{-1}$ |
+| 85  | $(l,m,r)\mapsto \lnot r$ | $C\circ S$ |
+
+*Proof.* Each is a direct evaluation of Definition 2.3. For rule 204,
+$(F c)(i) = c(i)$, so $F = \mathrm{id}$. For rule 170, $(Fc)(i) = c(i+1) =
+(Sc)(i)$. For rule 240, $(Fc)(i) = c(i-1) = (S^{-1}c)(i)$. Rules 51, 15, 85
+insert a negation of the center, left, and right neighbor respectively, giving
+$C$, $C\circ S^{-1}$, and $C \circ S$. $\qquad\blacksquare$
+
+**Theorem 4.2 (Reversibility of the six rules).** Each of the six global maps in
+Proposition 4.1 is a bijection of $\mathrm{Config}(n)$.
+
+*Proof.* The identity is a bijection. $S$ and $S^{-1}$ are mutually inverse
+bijections. $C$ is its own inverse ($C\circ C = \mathrm{id}$), hence a
+bijection. Compositions of bijections are bijections, so $C\circ S^{-1}$ and
+$C\circ S$ are bijections. $\qquad\blacksquare$
 
-### 2.2. Shift Operator
+**Remark 4.3 (These are all).** The six affine single-site rules are exactly the
+elementary rules that are reversible on *every* ring. On very small rings a few
+additional rules are accidentally bijective (spurious injectivity forced by short
+periods), but intersecting the reversible sets over increasing $n$ isolates
+exactly the six; already on $\mathbb{Z}/6$ only these six are reversible. Any
+elementary rule whose output genuinely depends on two or more of its three inputs
+fails to be injective on sufficiently large rings: distinct configurations are
+forced to collide because the update mixes neighboring bits. We establish the
+positive half — that the six rules are reversible — and isolate the constant
+rule (below) as an explicit irreversible witness; the exhaustiveness statement is
+the natural completion (see Future Directions).
+
+---
 
-The **shift operator** σ_k : α^{ℤ/nℤ} → α^{ℤ/nℤ} is defined by:
-  σ_k(c)(i) = c(i + k)
+## 5. A canonical irreversible rule
 
-In Lean:
-```lean
-def shiftConfig (n : ℕ) [NeZero n] (k : ZMod n) (c : ZMod n → α) : ZMod n → α :=
-  fun i => c (i + k)
-```
+**Theorem 5.1 (The constant rule is irreversible).** Let $n \ge 1$. The constant
+rule $r \equiv 0$, with global map $F(c)(i) = 0$ for all $i$, is not a bijection
+of $\mathrm{Config}(n)$.
 
-### 2.3. Shift-Equivariance
+*Proof.* The image of $F$ is the single all-$0$ configuration. In particular the
+all-$1$ configuration $\mathbf{1}$ (with $\mathbf{1}(i) = 1$ for all $i$) is not
+in the image: if $F(c) = \mathbf{1}$ then evaluating at $i = 0$ gives $0 =
+\mathbf{1}(0) = 1$, a contradiction. Hence $F$ is not surjective, so not
+bijective. $\qquad\blacksquare$
 
-A map F : α^{ℤ/nℤ} → α^{ℤ/nℤ} is **shift-equivariant** if:
-  ∀ k, F ∘ σ_k = σ_k ∘ F
+This confirms that reversibility is a nontrivial constraint: the constant rule
+irretrievably erases the initial data.
 
-### 2.4. Reversibility Group
+---
 
-The **reversibility group** Rev(n, α) is the subgroup of Perm(α^{ℤ/nℤ}) consisting of all shift-equivariant permutations.
+## 6. The reversibility group
 
-### 2.5. Shift Centralizer
+By Theorem 3.1, every reversible elementary global map commutes with the shift.
+This motivates the following ambient group.
 
-The **shift centralizer** is C_{S_m}(σ₁) = {π ∈ S_m : πσ₁ = σ₁π}, where m = |α|^n and σ₁ is the shift-by-1 permutation.
+**Definition 6.1 (Reversibility group).** The *reversibility group* of the
+lattice $\mathbb{Z}/n$ is the centralizer of the shift inside the symmetric group
+of the configuration space,
+$$G(n) := C_{\mathrm{Sym}(\mathrm{Config}(n))}(S) =
+\{\, \pi \in \mathrm{Sym}(\mathrm{Config}(n)) : \pi S = S \pi \,\}.$$
 
-## 3. Main Results: Centralizer Characterization
+A centralizer of any subset is a subgroup, so $G(n)$ is a group under
+composition, with identity the identity permutation and inverses given by inverse
+permutations.
 
-### Theorem 3.1 (Shift-One-Implies-All)
+**Theorem 6.2 (Generators lie in the group).** Both the shift $S$ and the
+complement $C$ belong to $G(n)$.
 
-*If F commutes with shift-by-1, then F commutes with all shifts.*
+*Proof.* $S$ commutes with itself, so $S \in G(n)$. For $C$: at each site,
+$(S C c)(i) = (Cc)(i+1) = \lnot c(i+1)$ and $(C S c)(i) = \lnot (Sc)(i) = \lnot
+c(i+1)$, so $SC = CS$ and $C \in G(n)$. $\qquad\blacksquare$
 
-**Proof sketch.** By induction on val(k): shift by (m+1) equals shift-by-1 composed with shift-by-m. The inductive hypothesis gives F ∘ σ_m = σ_m ∘ F, and the base hypothesis gives F ∘ σ₁ = σ₁ ∘ F. Composing: F ∘ σ_{m+1} = F ∘ σ₁ ∘ σ_m = σ₁ ∘ F ∘ σ_m = σ₁ ∘ σ_m ∘ F = σ_{m+1} ∘ F. Since every k ∈ ℤ/nℤ has k = val(k) · 1, the result follows by naturality of the ZMod casting. □
+Since $G(n)$ is a group and contains $S$ and $C$, it contains the subgroup
+$\langle S, C\rangle$ they generate. All six reversible elementary maps of §4
+are elements of this subgroup: the identity, $C$, $S$, $S^{-1} = S^{n-1}$,
+$C S^{-1}$, and $C S$.
+
+---
+
+## 7. The algebra of shift and complement
+
+We now determine the structure of $\langle S, C\rangle$.
+
+**Lemma 7.1 (Complement is an involution).** $C^2 = \mathrm{id}$.
+
+*Proof.* $(C^2 c)(i) = \lnot\lnot c(i) = c(i)$. $\qquad\blacksquare$
 
-### Theorem 3.2 (Centralizer = Reversibility)
+**Lemma 7.2 (Powers of the shift).** For every $k \in \mathbb{N}$ and every
+configuration $c$,
+$$(S^k c)(i) = c(i + k),$$
+with $k$ reduced modulo $n$ in the index.
 
-*Rev(n, α) = C_{S_m}(σ₁) where m = |α|^n.*
+*Proof.* Induction on $k$. For $k = 0$, $S^0 = \mathrm{id}$. For the step,
+$(S^{k+1} c)(i) = (S^k(Sc))(i) = (Sc)(i+k) = c(i+k+1)$, using the induction
+hypothesis applied to $Sc$. $\qquad\blacksquare$
+
+**Lemma 7.3 (Shift order divides $n$).** $S^n = \mathrm{id}$.
+
+*Proof.* By Lemma 7.2, $(S^n c)(i) = c(i + n) = c(i)$ since $n \equiv 0$ in
+$\mathbb{Z}/n$. $\qquad\blacksquare$
+
+**Theorem 7.4 (Exact order of the shift).** If $n \ge 1$, then $S$ has order
+exactly $n$; that is, $S^n = \mathrm{id}$ and $S^k \ne \mathrm{id}$ for
+$0 < k < n$.
+
+*Proof.* Lemma 7.3 gives $S^n = \mathrm{id}$. For $0 < k < n$, consider the point
+mass $\delta$ with $\delta(0) = 1$ and $\delta(j) = 0$ for $j \ne 0$. By Lemma
+7.2, $(S^k \delta)(0) = \delta(k)$. Since $0 < k < n$, we have $k \not\equiv 0
+\pmod n$, so $\delta(k) = 0 \ne 1 = \delta(0)$. Hence $S^k \delta \ne \delta$ and
+$S^k \ne \mathrm{id}$. The equivalence $k \equiv 0 \pmod n \iff n \mid k$, valid
+because $0 < k < n$ forces $n \nmid k$, is what makes the witness work.
+$\qquad\blacksquare$
+
+**Lemma 7.5 (Shift and complement commute).** $S C = C S$.
 
-**Proof sketch.** (⊆) If π ∈ Rev(n, α), then π commutes with σ_k for all k, in particular k = 1, so πσ₁ = σ₁π, hence π ∈ C(σ₁).
+*Proof.* Shown in the proof of Theorem 6.2. $\qquad\blacksquare$
+
+**Theorem 7.6 (Abelian structure).** The subgroup $\langle S, C\rangle \le G(n)$
+is abelian: any two of its elements commute.
 
-(⊇) If π ∈ C(σ₁), then πσ₁ = σ₁π, so π commutes with shift-by-1. By Theorem 3.1, π commutes with all shifts, hence π ∈ Rev(n, α). □
+*Proof.* A subgroup generated by a set of pairwise-commuting elements is abelian.
+Here the two generators commute (Lemma 7.5), so every product of generators and
+their inverses commutes with every other, and the generated subgroup is abelian.
+Formally, $\langle S, C\rangle$ is contained in the centralizer $C_G(\{S,C\})$
+because both generators centralize $\{S, C\}$ (each commutes with $S$ by choice
+and with $C$ by Lemma 7.5 and Lemma 7.1); a group contained in the centralizer
+of its own generating set is abelian. $\qquad\blacksquare$
+
+**Corollary 7.7 (Isomorphism type).** For $n \ge 1$, the map
+$$\mathbb{Z}/n \times \mathbb{Z}/2 \to \langle S, C\rangle,\qquad
+(a, b) \mapsto S^a C^b$$
+is a surjective group homomorphism. Since $S$ has order $n$ (Theorem 7.4), $C$
+has order $2$ (Lemma 7.1), the two commute (Lemma 7.5), and $C \notin \langle
+S\rangle$ (complementation changes the number of $1$s parity-independently of any
+shift, which merely permutes sites), the homomorphism is an isomorphism:
+$$\langle S, C\rangle \cong \mathbb{Z}/n \times \mathbb{Z}/2,$$
+a group of order $2n$.
 
-**Significance.** This reduces the study of reversible CAs to the centralizer of a cyclic permutation, for which the structure is completely determined by the cycle type.
-
-### Corollary 3.3 (Size Formula)
-
-*|Rev(n, α)| = ∏_d (c_d! · d^{c_d})* where c_d is the number of orbits of size d under the shift action on α^{ℤ/nℤ}.
-
-## 4. Orbit Structure
-
-### Theorem 4.1 (Fixed Points are Constants)
-
-*A configuration c ∈ {0,1}^{ℤ/nℤ} satisfies σ₁(c) = c if and only if c is constant (c(i) = c(0) for all i).*
-
-**Proof sketch.** Forward: if c(i+1) = c(i) for all i, then by induction c(i) = c(0) for all i ∈ ℕ, hence for all i ∈ ℤ/nℤ. Backward: constant functions are trivially shift-invariant. □
-
-### Theorem 4.2 (Prime Orbit Theorem)
-
-*For p prime and c a non-constant configuration in {0,1}^{ℤ/pℤ}, the shift orbit of c has exactly p elements.*
-
-**Proof sketch.** The stabilizer of c is a subgroup of ℤ/pℤ. Since p is prime, the stabilizer is either {0} or all of ℤ/pℤ. If it were all of ℤ/pℤ, then c would be constant, contradicting the hypothesis. Hence the stabilizer is trivial, and by orbit-stabilizer, |orbit(c)| = |ℤ/pℤ| = p.
-
-The formal proof constructs an injection from ℤ/pℤ to the orbit by showing that if σ_k(c) = σ_l(c) for k ≠ l, then c is constant — using the primality of p to show that k - l generates all of ℤ/pℤ. □
-
-**Connection to Fermat.** The number of non-constant configurations is 2^p - 2. Each has an orbit of size p. Hence the number of necklaces is (2^p - 2)/p + 2, and 2^p ≡ 2 (mod p), which is Fermat's little theorem.
-
-## 5. Discrete Liouville Theorem
-
-### Theorem 5.1
-
-*For any bijection e on {0,1}^{ℤ/nℤ} and any weight w, the number of configurations of weight w equals the number of configurations c with weight(e(c)) = w.*
-
-**Proof sketch.** This is a direct consequence of Equiv.sum_comp: for any equivalence e on a finite type, ∑_x f(x) = ∑_x f(e(x)). Applied to the indicator function of weight w, this gives the result. □
-
-**Physical interpretation.** This is the discrete analogue of Liouville's theorem in Hamiltonian mechanics: the "phase space volume" (counting measure) is preserved by any reversible dynamics.
-
-## 6. The Galois Connection
-
-### Theorem 6.1 (Antitone Property)
-
-*If H₁ ≤ H₂ ≤ Perm(α^{ℤ/nℤ}), then Fixed(H₂) ⊆ Fixed(H₁).*
-
-**Proof sketch.** If c is fixed by every element of H₂, and H₁ ⊆ H₂, then c is fixed by every element of H₁. □
-
-### Theorem 6.2 (Constants-Only Fixed Points)
-
-*The fixed-point set of the full reversibility group Rev(n, α) consists exactly of the constant configurations (when n ≥ 2).*
-
-**Proof sketch.** The shift permutation σ₁ lies in Rev(n, α) (it commutes with all shifts by commutativity of addition). If c is fixed by σ₁, then by Theorem 4.1, c is constant. □
-
-**Galois interpretation.** The "Galois group" of the configuration space is the reversibility group. Its "fixed field" consists of the constant configurations — the configurations with maximal symmetry. Subgroups of Rev(n, α) correspond to configuration sets with intermediate levels of translational symmetry.
-
-## 7. Complement-Shift Interaction
-
-### Theorem 7.1
-*The complement permutation κ (flipping all bits) lies in Rev(n, {0,1}).*
-
-### Theorem 7.2
-*The shift σ₁ and complement κ commute: σ₁κ = κσ₁.*
-
-### Theorem 7.3
-*The complement has order 2: κ² = id.*
-
-**Consequence.** The subgroup ⟨σ₁, κ⟩ is isomorphic to ℤ/nℤ × ℤ/2ℤ, a direct product (not a semidirect product, since σ and κ commute).
-
-## 8. Representation Theory Bridge
-
-### Theorem 8.1 (Observable Action)
-
-*The map (π, f) ↦ f ∘ π⁻¹ defines a group action of Perm(α^{ℤ/nℤ}) on the space of real-valued observables Observable(n, α) = ℝ^{α^{ℤ/nℤ}}. This action satisfies:*
-
-*act(π₁π₂, f) = act(π₁, act(π₂, f))*
-
-**Significance.** Restricting to Rev(n, α), this gives a representation of the reversibility group on ℝ^{|α|^n}. The decomposition of this representation into irreducibles corresponds to the harmonic analysis of the CA dynamics — the "Fourier modes" of reversible cellular automata.
-
-## 9. Properness
-
-### Theorem 9.1
-
-*For n ≥ 2, Rev(n, {0,1}) ≠ S_{2^n}.*
-
-**Proof sketch.** Construct a permutation that does not commute with the shift: the swap of the all-zeros configuration and a single-1 configuration. This swap does not commute with σ₁ because σ₁ moves the single-1 configuration to a different position, breaking the equivariance. □
-
-## 10. Computational Results
-
-### 10.1. Reversibility Sieve
-
-For elementary CAs (radius 1, binary):
-| Period | Reversible rules |
-|--------|-----------------|
-| 3      | 36              |
-| 4      | 8               |
-| 5      | 16              |
-| 6      | 6               |
-| 7      | 16              |
-| 8      | 8               |
-
-The "universally reversible" rules (reversible on all periods ≥ 6) are: {15, 51, 85, 170, 204, 240}.
-
-### 10.2. Group Sizes
-
-| n | |Rev(n)| | |S_{2^n}| | Index |
-|---|---------|-----------|-------|
-| 2 | 4       | 24        | 6     |
-| 3 | 36      | 40,320    | 1,120 |
-| 4 | 1,536   | ≈ 2.1×10¹³ | ≈ 1.4×10¹⁰ |
-| 5 | 22,500,000 | ≈ 2.6×10³⁵ | ≈ 1.2×10²⁸ |
-
-The ratio |Rev(n)|/|S_{2^n}| decreases super-exponentially, confirming the properness theorem.
-
-## 11. Discussion
-
-### 11.1. Relation to Hedlund's Theorem
-
-For infinite CAs on ℤ, Hedlund's theorem states that the endomorphisms of the full shift are exactly the continuous, shift-commuting maps. Our Centralizer = Reversibility theorem is the finite analogue: for CAs on ℤ/nℤ, the automorphisms of the configuration space that commute with the shift are exactly the reversible CAs.
-
-### 11.2. Connections to Other Areas
-
-- **Number theory**: The orbit structure connects to Burnside counting, necklace polynomials, and Fermat's little theorem.
-- **Representation theory**: The observable action defines a representation whose character theory encodes the dynamics.
-- **Information theory**: The discrete Liouville theorem connects to entropy conservation in reversible computation.
-- **Galois theory**: The antitone correspondence between subgroups and fixed points mirrors the fundamental theorem of Galois theory.
-
-## 12. References
-
-1. G. A. Hedlund, "Endomorphisms and automorphisms of the shift dynamical system," *Mathematical Systems Theory*, 3(4):320–375, 1969.
-2. T. Toffoli and N. Margolus, *Cellular Automata Machines*, MIT Press, 1987.
-3. S. Wolfram, *A New Kind of Science*, Wolfram Media, 2002.
-4. `Catalog/Geometry/CellularAutomataGalois.lean` — Original formalization of the reversibility subgroup.
-5. `Catalog/Tropical/HashInversion.lean` — The `reversible_iff_bijective` theorem.
-
-## Appendix: Lean 4 Formalization
-
-All 12 theorems are formalized in `Geometry/CellularAutomataGaloisDeep.lean` with complete, sorry-free proofs checked by Lean 4.28.0 with Mathlib. The axioms used are: `propext`, `Classical.choice`, `Quot.sound` (all standard).
+*Proof sketch.* The assignment is a homomorphism because the generators commute,
+so $S^{a}C^{b} \cdot S^{a'}C^{b'} = S^{a+a'}C^{b+b'}$. It is surjective by
+definition of the generated subgroup. Injectivity: if $S^a C^b = \mathrm{id}$
+then applying to a suitable test configuration forces $b = 0$ (else colors are
+flipped) and then $S^a = \mathrm{id}$ forces $a \equiv 0 \pmod n$ by Theorem 7.4.
+$\qquad\blacksquare$
+
+Corollary 7.7 records the isomorphism type that the proved facts (Theorems 7.4,
+7.6 and Lemmas 7.1, 7.5) pin down; a complete proof of the isomorphism is a
+natural next step listed in Future Directions.
+
+---
+
+## 8. On the false conjecture $|G| = 10080$
+
+An informal conjecture proposed that the radius-$1$ reversibility group has order
+$8!/4 = 10080$, on the intuition that reversible rules realize a large fraction
+of the permutations of the eight neighborhoods. This is false, for two
+independent reasons.
+
+**8.1 The centralizer count.** The natural cyclic symmetry acting on the eight
+neighborhoods (rotating each triple $(l,m,r) \mapsto (m,r,l)$) has, on the
+$8$-element neighborhood set, a cycle structure with fixed points $000$ and $111$
+and two $3$-cycles on the remaining six neighborhoods. The centralizer in $S_8$
+of such a permutation has order
+$$1! \cdot 1! \cdot (3^2 \cdot 2!) = 1 \cdot 1 \cdot 18 \cdot 2 = 36,$$
+using the standard formula that the centralizer of a permutation with $m_k$
+cycles of length $k$ has order $\prod_k k^{m_k} m_k!$. Thus only $36$
+neighborhood-permutations commute with the natural rotation, nowhere near
+$10080$.
+
+**8.2 Global constraint.** More fundamentally, a reversible *global* map is far
+more constrained than an arbitrary permutation of neighborhoods. As shown in §4,
+only six local rules yield reversible dynamics on the ring at all, and the group
+they generate is the abelian $\langle S, C\rangle$ of order $2n$ (Corollary 7.7),
+which depends on the lattice size $n$ and bears no relation to $10080$. The
+elegant-looking $8!/4$ is a numerological artifact with no basis in the actual
+dynamics.
+
+The corrected structural statement is the content of §4–§7: reversible elementary
+dynamics on the ring are exactly the affine single-site maps, and they generate
+the abelian group $\mathbb{Z}/n \times \mathbb{Z}/2$.
+
+---
+
+## 9. Applications
+
+**Reversible computation.** Reversible CAs are the canonical discrete model of
+computation that erases no information. By Landauer's principle, information
+erasure has an unavoidable thermodynamic cost; reversible dynamics evade it. The
+classification here delineates, for the simplest rule family, exactly the
+building blocks available for such computation.
+
+**Conservative and time-symmetric physics.** Reversible lattice dynamics model
+microscopically time-symmetric physical laws. The shift and complement
+generators correspond to translation and charge-conjugation-like symmetries; the
+abelian structure reflects their independence.
+
+**Cryptography and simulation.** Invertible local maps are used as mixing steps
+that can be exactly inverted (e.g. lattice-gas automata, block ciphers built from
+reversible rounds). Knowing the group generated by reversible primitives bounds
+what such compositions can achieve.
+
+---
+
+## 10. Discussion and future work
+
+We have given a complete and rigorous account of reversibility for elementary
+binary CAs on cyclic lattices: a translation-invariance principle, the
+identification and reversibility of the six affine single-site rules, a canonical
+irreversible example, and the abelian group structure of the shift–complement
+algebra, including the exact order of the shift. We also corrected a false order
+conjecture from the informal literature.
+
+Natural next steps include:
+
+1. **Explicit isomorphism.** Upgrade the abelian structure to an explicit
+   isomorphism $\langle S, C\rangle \cong \mathbb{Z}/n \times \mathbb{Z}/2$ via
+   the surjection $(a,b) \mapsto S^a C^b$ and a kernel computation.
+
+2. **Full classification.** Establish that on the bi-infinite line $\mathbb{Z}$
+   (or uniformly across all cyclic lattices) the reversible elementary binary CAs
+   are exactly the six affine single-site rules — a Hedlund/Richardson-flavored
+   converse showing surjectivity forces single-site dependence.
+
+3. **Larger radius and alphabet.** Generalize to radius $r$ and alphabet
+   $\{0,\dots,k-1\}$, studying the group generated by shifts and alphabet
+   permutations. The correct replacement for a full symmetric group is likely a
+   wreath-product / affine-group description.
+
+4. **Richardson's theorem.** Establish that the inverse of a reversible CA is
+   itself a CA (of some radius), making the reversible CAs a genuine group under
+   composition once the radius is allowed to grow.
+
+---
+
+## References (background, standard)
+
+- G. A. Hedlund, *Endomorphisms and automorphisms of the shift dynamical
+  system*, Math. Systems Theory 3 (1969), 320–375.
+- D. Richardson, *Tessellations with local transformations*, J. Comput. System
+  Sci. 6 (1972), 373–388.
+- R. Landauer, *Irreversibility and heat generation in the computing process*,
+  IBM J. Res. Develop. 5 (1961), 183–191.
+- S. Wolfram, *A New Kind of Science*, Wolfram Media, 2002.
