@@ -243,6 +243,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 2fed8c0e (Q=0.780), which proved 12 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Collatz map T: N -> N defined by T(n) = n/2 if n even, 3n+1 if n odd, is conjectured to always reach 1. The Collatz conjecture is equivalent to: the orbit of every n under T eventually reaches the cycle {1, 4, 2, 1}. Define the Collatz Fourier transform: F_T(omega) = sum_{n=1}^{N} e^{2*pi*i*omeg",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "push_2fed8c0e_cffdf0ef",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "2fed8c0e",
+    "status": "available",
+    "timestamp": "2026-07-10T11:50:35.030003+00:00",
+    "title": "Deepening: The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 3716954d (Q=0.780), which proved 29 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, ",
     "domains": [
       "Applications"
@@ -5211,21 +5225,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
   },
   {
-    "consumed_by_exp_id": "2fed8c0e",
-    "description": "The Collatz map T: N -> N defined by T(n) = n/2 if n even, 3n+1 if n odd, is conjectured to always reach 1. The Collatz conjecture is equivalent to: the orbit of every n under T eventually reaches the cycle {1, 4, 2, 1}. Define the Collatz Fourier transform: F_T(omega) = sum_{n=1}^{N} e^{2*pi*i*omega*T(n)/n} for N large. Conjecture: F_T has a spectral gap: |F_T(omega)| < C for all irrational omega, where C < sqrt(N). This would mean that the Collatz map does not concentrate energy at any irrational frequency \u2014 it is 'mixing' in the Fourier sense. Moreover, the spectral gap is related to the convergence rate: the wider the gap, the faster the orbit reaches 1. Conjecture: for the orbit of n, the number of steps to reach 1 is O(log(n)), which is equivalent to F_T having a spectral gap of width Omega(1/log(n)). Test: compute F_T for n up to 10^6 and measure the spectral gap. Compare with the spectral gaps of related maps (5n+1, 7n+1) which do NOT always converge. Impact: the Collatz conjecture is a spectral gap problem. Convergence to 1 means the Fourier transform has no resonances at irrational frequencies.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0871",
-    "priority_score": 0.79,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T09:25:50.998306+00:00",
-    "title": "The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prime gaps \u2014 the spaces between consecutive primes \u2014 are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable \u2014 given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random \u2014 they are a solvable crossword puzzle with deterministic rules.",
     "domains": [
@@ -5613,6 +5612,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T11:50:15.132555+00:00",
     "title": "The file `SurrealDyadicBirthday.lean` establishes the arithmetic backbone for th"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n**Theme.** *The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map* \u2014\na connector between **arithmetic dynamics** (the Collatz / 3n+1 map) and\n**Fourier analysis** (character/exponential sums and their spectral gap).\n\n## What is proved (`Catalog/Geometry/CollatzFourierSpectralGap.lean`)\n\n* **Spectral gap** for the geometric character sum: for every non-integer\n  frequency `\u03c9`, `\u2016\u03a3_{n<N} e(\u03c9)^n\u2016 \u2264 1/|sin(\u03c0\u03c9)|`, a bound **uniform in `N`**\n  (`spectral_gap`), together with the complementary **full resonance**\n  `\u03a3_{n<N} e(m)^n = N` at integer frequencies `m` (`full_resonance`). This is the\n  precise dichotomy \"energy concentrates only at integer frequencies\".\n* **Half-angle modulus** identity `\u2016e(\u03c9) \u2212 1\u2016 = 2|sin(\u03c0\u03c9)|` (`norm_e_sub_one`)\n  and unit modulus `\u2016e(\u03c9)\u2016 = 1` (`norm_e`), the analytic core of the gap.\n* **The connector**: the Collatz branch selector is the Fourier character at the\n  Nyquist frequency, `collatz n = if (e(1/2))^n = 1 then n/2 else 3n+1`\n  (`fourier_selects_branch`), and the resulting parity decomposition of the\n  Collatz Fourier transform (`collatzFourier_parity_split`).\n* **Dynamics**: powers of two collapse, `collatz^[k](2^k) = 1`\n  (`collatz_iterate_pow_two`), the cleanest convergence-to-cycle instance.\n\n## Natural next steps\n\n1. **Higher-frequency character detection.** The Nyquist character `e(1/2)`\n   detects parity. Characters `e(k/2^j)` detect residues mod `2^j`, which is the\n   natural setting for the 2-adic (\"Terras\") encoding of the Collatz map. Prove a\n   general \"character selects residue class\" lemma and use it to write the\n   accelerated Collatz map as a finite Fourier expansion.\n\n2. **Weyl-type bounds for the Collatz Fourier transform.** Starting from\n   `collatzFourier_parity_split`, bound each parity sub-sum. The even branch is a\n   genuine linear phase `\u03c9\u00b7(n/2)` and admits the same geometric-series spectral\n   gap; the odd branch `\u03c9\u00b7(3n+1)` is again linear, so a two-term spectral gap\n   bound for `collatzFourier` should be provable unconditionally.\n\n3. **From gaps to stopping times.** Formalize the heuristic in the mission: relate\n   the *width* of a spectral gap to an averaged stopping-time bound. A tractable\n   first target is the exact stopping time for `2^k` (done) generalized to\n   `n\u00b72^k`, giving `O(log n)` stopping times on a positive-density set.\n\n4. **Comparison maps 5n+1, 7n+1.** The branch-selection bridge is identical for\n   `qn+1`; only the odd-branch coefficient changes. Formalize the family and\n   isolate exactly where divergence (for `5n+1`) enters the Fourier picture.\n\n5. **Discrete orthogonality.** Add the finite orthogonality relation\n   `\u03a3_{n<N} e(k/N)^n = N\u00b7[N \u2223 k]` to connect the continuous spectral gap with the\n   discrete Fourier transform used in the `10^6` numerical experiment.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0887",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2fed8c0e",
+    "status": "available",
+    "timestamp": "2026-07-10T11:50:24.568314+00:00",
+    "title": "**Theme.** *The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map* \u2014"
   },
   {
     "consumed_by_exp_id": "",

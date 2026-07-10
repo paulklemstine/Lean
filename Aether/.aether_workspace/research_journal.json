@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ee6f49cd",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures arising from the study of discrete pseudomanifolds at\nthe vertex threshold, the combinatorial suspension operation, and the minimal\ntriangulation of",
-      "quality_score": 0.7998400000000001,
-      "sorry_count": 0,
-      "theorem_count": 29,
-      "timestamp": "2026-07-04T14:40:33",
-      "title": "Classification of Discrete d-Pseudomanifolds with 2d+7 Vertices"
-    },
-    {
       "cycle_id": "244691c2",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nDerived from the study of the stabilizer of a regular unipotent conjugacy class\nunder the center of the simply connected cover, modeled on `SL₂ → PGL₂` and its\ncharacteristic-`p`",
@@ -499,19 +489,19 @@
       "theorem_count": 17,
       "timestamp": "2026-07-10T11:50:21",
       "title": "The Arithmetic of Games: Surreal Numbers as Number Fields"
+    },
+    {
+      "cycle_id": "2fed8c0e",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions\n\n**Theme.** *The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map* —\na connector between **arithmetic dynamics** (the Collatz / 3n+1 map) and\n**Fourier analysis** (charac",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-10T11:50:34",
+      "title": "The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3131feed",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Additive Structure of the Primes\n\nThese conjectures grow out of the present cycle's study of two-prime and\nthree-prime representations: the smallest-summand phenomenon, the order",
-      "quality_score": 0.41286596521739133,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-06-30T19:23:48",
-      "title": "Goldbach Verification Framework"
-    },
     {
       "cycle_id": "83afa678",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 17,
       "timestamp": "2026-07-10T11:50:21",
       "title": "The Arithmetic of Games: Surreal Numbers as Number Fields"
+    },
+    {
+      "cycle_id": "2fed8c0e",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions\n\n**Theme.** *The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map* —\na connector between **arithmetic dynamics** (the Collatz / 3n+1 map) and\n**Fourier analysis** (charac",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-10T11:50:34",
+      "title": "The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "73d4b43b",
-      "domain": "Applications",
-      "name": "transGen_isStrictOrder",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "73d4b43b",
-      "domain": "Applications",
-      "name": "exists_source",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "4d30d98b",
-      "domain": "Novelty",
-      "name": "already",
-      "quality": 0.83
-    },
     {
       "cycle_id": "4d30d98b",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "powHalf_pos",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "2fed8c0e",
+      "domain": "Geometry",
+      "name": "norm_e",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "2fed8c0e",
+      "domain": "Geometry",
+      "name": "e_pow",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "2fed8c0e",
+      "domain": "Geometry",
+      "name": "norm_e_sub_one",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-10T11:50:21",
+  "last_updated": "2026-07-10T11:50:34",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "c235005e",
-        "quality": 0.5303045714285715,
-        "theorems": 11,
-        "title": "Symmetrized Monomial Generates T-Ideal in Acyclic Path Algebras"
-      },
-      {
         "cycle_id": "1311df1d",
         "quality": 0.8125600000000002,
         "theorems": 15,
@@ -3451,6 +3445,12 @@
         "quality": 0.8,
         "theorems": 18,
         "title": "The Thermodynamics of Sorting: Entropy and Computational Work"
+      },
+      {
+        "cycle_id": "2fed8c0e",
+        "quality": 0.78,
+        "theorems": 12,
+        "title": "The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
       }
     ],
     "Logic": [
