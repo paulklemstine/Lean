@@ -159,7 +159,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Aperiodic Monotile: One Shape to Tile Them All"
   },
   {
-    "consumed_by_exp_id": "f37280c7",
+    "consumed_by_exp_id": "",
     "description": "The Langlands program connects Galois groups (shapes) to automorphic forms (colors). Think of it this way: a Galois group is the group of symmetries of a shape (like the rotational symmetries of a polygon). An automorphic form is a coloring that respects the shape's symmetries (like a coloring of the polygon's vertices that is invariant under rotation). The Langlands correspondence says: for every 'shape' (Galois representation), there is a matching 'color' (automorphic form) and vice versa. Conjecture: This correspondence is a bijection between irreducible representations of Gal(Q_bar/Q) and cuspidal automorphic representations of GL_n over Q. For n=1, this is class field theory (every abelian extension of Q corresponds to a Dirichlet character). For n=2, this is the modularity theorem (every elliptic curve over Q corresponds to a weight-2 cusp form). The toddler version: each shape has exactly one matching color, and each color has exactly one matching shape. Test: verify the correspondence for all degree-2 extensions of Q up to discriminant 1000. Verify that each quadratic field Q(sqrt(d)) corresponds to a Dirichlet character chi_d via the correspondence chi_d(p) = (d/p) (Legendre symbol). Impact: Langlands is just shape-color matching. Shapes and colors are two ways of seeing the same mathematical object.",
     "domains": [
       "Novelty",
@@ -169,7 +169,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-09T23:08:57.326588+00:00",
     "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
   },
@@ -202,7 +202,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Pr"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4d30d98b",
     "description": "The Ihara zeta function of a finite graph G is zeta_G(u) = prod_{[C]} (1 - u^{|C|})^{-1} where the product is over prime cycles (closed walks that are not powers of shorter walks). For a (q+1)-regular graph, zeta_G(u) = (1-u^2)^{-(n-1)(q-1)/2} * det(I - A*u + (q-1)*u^2*I)^{-1} where A is the adjacency matrix. This is the graph analog of the Riemann zeta function. Conjecture: The Riemann hypothesis holds for zeta_G if and only if G is a Ramanujan graph (all non-trivial eigenvalues of the adjacency matrix satisfy |lambda| <= 2*sqrt(q)). This is a theorem of Ihara, but the deeper conjecture is: the zeta function of a Ramanujan graph encodes the same spectral information as the Riemann zeta function restricted to the critical strip. Specifically, if zeta_G satisfies RH, then the 'prime cycles' of G are distributed like the primes in Z, and the 'explicit formula' for zeta_G (analogous to the explicit formula for the Riemann zeta) relates the cycle counts to the eigenvalues of A. Test: compute zeta_G for 10 Ramanujan graphs (paley graphs, lubotzky-phillips-sarnak graphs) and verify the Riemann hypothesis. Compare the 'prime cycle counting function' with the prime counting function pi(x). Impact: graphs have zeta functions, Ramanujan graphs satisfy RH, and the prime cycles in a graph are distributed like the primes in Z.",
     "domains": [
       "Novelty",
@@ -212,7 +212,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T01:31:04.802327+00:00",
     "title": "The Zeta Function of a Graph: Number Theory on Networks"
   },
@@ -1630,21 +1630,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T11:59:32.474562+00:00",
     "title": "Exact 5-Rank Realization in Lecacheux P\u00f3lya Groups"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "This conjecture formalizes the existence of long square-free sequences under generalized equivalence relations, linking combinatorial growth to algebraic constraints. It targets the parameterization of morphic structures in Lean 4's framework.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0144",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.00674v1",
-    "status": "available",
-    "timestamp": "2026-07-03T12:21:38.085440+00:00",
-    "title": "Extending Pattern Analysis in Combinatorial Structures"
   },
   {
     "consumed_by_exp_id": "",
@@ -4811,20 +4796,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-05T21:16:37.395514+00:00",
     "title": "Finitely Generated Schottky Group"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "For any matroid of rank r \u2264 k, any two pairs of bases with the same multiset union can be transformed into each other via a sequence of symmetric exchanges.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0407",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02208v1",
-    "status": "available",
-    "timestamp": "2026-07-05T21:57:06.806565+00:00",
-    "title": "Symmetric Exchange Generation in Rank-Bounded Matroids"
   },
   {
     "consumed_by_exp_id": "",
@@ -9786,6 +9757,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "A dataset with missing values is a sheaf on a poset: the poset is the set of feature subsets (ordered by inclusion), and the sheaf assigns to each feature subset the set of complete observations on those features. The missing data creates 'holes' in the sheaf: H^0 measures the global sections (complete observations) and H^1 measures the obstructions to patching local observations into global ones. Conjecture: For a dataset with missing rate r, the dimension of H^1 is approximately r * n * (r * log(1/r)), where n is the number of features. This means: the 'amount of missing information' grows super-linearly with the missing rate, and imputation is fundamentally harder than interpolation because H^1 > 0 means there is no consistent way to fill in the missing data. The sheaf-theoretic imputation: fill in missing values by finding the section s in H^0 that minimizes the coboundary delta(s) in H^1. This is the maximum likelihood imputation under the assumption that the data is locally consistent. Test: generate synthetic datasets with known ground truth, introduce missing values at rate r, compute H^0 and H^1 of the data sheaf, and verify dim(H^1) ~ r*n*r*log(1/r). Compare sheaf-theoretic imputation with standard methods (mean, KNN, MICE). Impact: missing data is a topological problem, and the sheaf cohomology tells you exactly how much information is lost and whether it can be recovered.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0839",
+    "priority_score": 0.78,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T03:33:45.828923+00:00",
+    "title": "Sheaf Cohomology of Data: The Topology of Missing Information"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Congruence Rigidity of Sums of Squares\n\nThis cycle established that the entries of an integer right triangle are forced into\nstrong divisibility patterns \u2014 one leg is a multiple of three, the legs jointly carry a\nfactor of four, one entry is a multiple of five \u2014 and that a four-dimensional right\n\"box\" (a solution of `a\u00b2 + b\u00b2 + c\u00b2 = d\u00b2`) is even more rigid: at most one of its three\nspatial edges can be odd. We also pinned down exactly which whole numbers can serve as a\nleg. These findings point to several bold, testable conjectures.\n\n## 1. The correct modulus for a power of two grows with the power\n**Conjecture.** In any solution of `a\u00b2 + b\u00b2 = c\u00b2`, the two-adic valuation of the leg\nproduct `a\u00b7b` is governed one level deeper than naive reduction suggests: deciding\nwhether `2^k` divides `a\u00b7b` is a question about residues modulo `2^{k+1}`, never modulo\n`2^k`.\n*The key insight is* that a difference of two odd squares is always divisible by eight,\nso each additional factor of two in the product must be certified one binary place\nfurther out than one would guess. *Why now?* Having isolated the exact `mod 8`\nobstruction behind the factor of four, we can test the pattern mechanically for `k = 3,\n4, 5` and either confirm a clean \"shift-by-one\" law or expose its first exception.\n\n## 2. A universal super-divisor for higher-dimensional right figures\n**Conjecture.** For every dimension `r`, solutions of `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` obey a single\nuniversal divisibility law: there is a constant `D(r)`, depending only on `r`, such that\n`D(r)` divides the product `x\u2081\u00b7x\u2082\u00b7\u22ef\u00b7x_r` for *every* solution, and `D(r)` is the largest\nsuch constant.\n*The key insight is* that reduction to a finite residue ring turns \"for all solutions\"\ninto a finite, decidable statement, so the optimal constant `D(r)` is computable and\nshould grow in a structured (conjecturally multiplicative-over-primes) way. *Why now?*\nThe three-dimensional case already yields `4 \u2223 x\u2081x\u2082x\u2083`; comparing it against the planar\nconstant `12` suggests a dimension-indexed sequence worth charting and predicting.\n\n## 3. Parity collapse in higher dimensions\n**Conjecture.** As the number of squared terms increases, the number of edges permitted to\nbe odd stays uniformly bounded: in `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` at most three of the `x_i` can be\nodd, regardless of `r`.\n*The key insight is* that the sum of squares equals the count of odd terms modulo four,\nwhile a perfect square is `0` or `1` modulo four, capping the admissible odd-count no\nmatter how many terms are added. *Why now?* We proved the cap is \"at most one\" in three\ndimensions; extending the modular bookkeeping to arbitrary `r` is a self-contained next\nstep that would reveal whether the cap is truly dimension-independent.\n\n## 4. A sharp threshold characterization of legs in every dimension\n**Conjecture.** Just as the whole numbers that are a leg of a right triangle are exactly\nthose `\u2265 3`, in each higher dimension there is a sharp finite threshold above which every\ninteger appears as an edge of some right figure, and the finitely many exceptions can be\nlisted explicitly.\n*The key insight is* that a single explicit construction, split according to the parity of\nthe target edge, realizes all sufficiently large values, while the small exceptions are\nforced by a factorization that would otherwise require a vanishing edge. *Why now?* The\nplanar threshold `3` and its sharpness (the failures at `1` and `2`) give a template that\nshould transfer verbatim to the box equation and beyond.\n\n## 5. Divisibility as a sieve against near-solutions\n**Conjecture.** The combined congruence obstructions (`12 \u2223 a\u00b7b`, `60 \u2223 a\u00b7b\u00b7c`, and their\nhigher-dimensional analogues) are strong enough that a random integer triple satisfying\nthem has a positive, computable probability of being genuinely Pythagorean \u2014 i.e. the\ncongruence conditions capture a constant fraction of the \"arithmetic mass\" of true\nsolutions.\n*The key insight is* that each universal divisor removes a fixed proportion of impostors,\nso stacking independent prime-power obstructions multiplies into a sieve of predictable\ndensity. *Why now?* With the exact obstructions in hand for the primes `2, 3, 5`, one can\nimmediately measure how much of the solution set they explain and calibrate whether a few\nmore primes suffice to pin down solutions almost completely.\n",
     "domains": [
       "Pythagorean",
@@ -9843,21 +9829,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-09T19:54:56.644469+00:00",
     "title": "This project formalises a **local-to-global principle for coordinate influences*"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nFile: `Bridges/PageSiegelRefinement.lean`\n\n## What is proved\n\nThe file formalizes, and proves in full (no `sorry`, only the standard axioms\n`propext`, `Classical.choice`, `Quot.sound`), a **conditional refinement of\nPage's theorem** on Landau\u2013Siegel zeros, framed as a *connector* between two\nareas:\n\n* **Zero location / complex analysis** \u2014 the repulsion of real zeros of Dirichlet\n  `L`-functions (`DirichletCharacter.LFunction`), packaged as `Repulsion`, and the\n  mission's premise `NonRealExclusion` (no non-real zeros near `s = 1`).\n* **Asymptotics + finiteness** \u2014 the pivot `exists_threshold`\n  (`m^{-\u03b5} log m \u2192 0`, from `isLittleO_log_rpow_atTop`) and the abstract\n  `repulsion_subsingleton`, which turns a repulsion inequality into a\n  `Subsingleton` (\"at most one\").\n\nThe main theorem `page_siegel_refinement` wires these together: for every `\u03b5 > 0`\nthere are effective `C > 0`, `Q\u2080 > 1` such that the Deuring\u2013Heilbronn bridge\n`NonRealExclusion \u2192 Repulsion` together with `NonRealExclusion` forces the set of\nexceptional primitive quadratic characters (real zero in `[1 - q^{-\u03b5}, 1)`) to be\na `Set.Subsingleton`.\n\n## Honest scope / what is assumed\n\nTwo genuinely deep analytic facts are isolated as **explicit hypotheses** rather\nthan proved from scratch (this is what makes the result *conditional*, matching\nthe paper's own framing):\n\n1. `NonRealExclusion` \u2014 the hypothesis of the statement itself.\n2. The bridge `NonRealExclusion \u2192 Repulsion` \u2014 the Deuring\u2013Heilbronn / Landau\n   zero-repulsion mechanism, whose usual proof rests on the non-negativity of the\n   Dirichlet coefficients of `\u03b6(s) L(s,\u03c7\u2081) L(s,\u03c7\u2082) L(s,\u03c7\u2081\u03c7\u2082)`.\n\nEverything *downstream* of these inputs \u2014 the effective constant, the monotonicity\nargument, and the passage to \"at most one\" \u2014 is a Lean theorem.\n\n## Concrete next steps\n\n1. **Discharge the bridge.** Prove `NonRealExclusion \u2192 Repulsion` inside Lean.\n   Mathlib already provides the key positivity input\n   `DirichletCharacter.norm_LFunction_product_ge_one` (the `3\u20134\u20131` trick); the\n   remaining work is the explicit log-derivative estimates and the choice of the\n   auxiliary point `s = 1 + \u03b4`.\n\n2. **Replace the `min`-conductor repulsion by the classical `log(q\u2081q\u2082)` form.**\n   The abstract lemma is stated with `log (min conductor)`; deriving the sharper\n   `log(q\u2081q\u2082)` version and re-deriving `repulsion_subsingleton` from it would make\n   the constant match Landau's exactly.\n\n3. **Non-vacuity via character theory.** Connect `ExcSet` to the Kronecker-symbol\n   description of primitive real characters, so that \"at most one character\" is\n   phrased at the level of fundamental discriminants.\n\n4. **Effective `C(\u03b5)`.** The proof currently fixes `C = 1`; tracking the optimal\n   `C(\u03b5)` through the bridge would yield the fully effective statement.\n\n5. **Remove `Classical.choice`.** The zero witness is extracted with\n   `Classical.choose`; a constructive selection (or `Set.Subsingleton` proved\n   directly) would trim the axiom footprint.\n",
-    "domains": [
-      "Logic",
-      "Algebra"
-    ],
-    "id": "fd_0795",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "8202f9a7",
-    "status": "available",
-    "timestamp": "2026-07-09T19:55:02.128218+00:00",
-    "title": "File: `Bridges/PageSiegelRefinement.lean`"
   },
   {
     "consumed_by_exp_id": "",
@@ -10160,6 +10131,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formal"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes a **cross-domain connector**: the Eckmann\u2013Hilton\nargument, which links homotopy theory (two ways of composing loops-between-loops)\nto algebra (commutative monoids). See\n`Catalog/Bridges/RecipeHomotopyEckmannHilton.lean`.\n\n## What was proved\n\n* `RecipeHomotopy.InterchangeStructure` \u2014 two unital binary operations sharing a\n  unit and satisfying the interchange law.\n* `hcomp_eq_vcomp` / `vcomp_eq_hcomp` \u2014 the two operations coincide.\n* `vcomp_comm`, `vcomp_assoc`, `hcomp_comm` \u2014 the resulting operation is\n  commutative and associative.\n* `InterchangeStructure.toCommMonoid` \u2014 the topology\u2192algebra bridge: the raw data\n  assembles into a `CommMonoid`.\n* `InterchangeStructure.ofCommMonoid` \u2014 the algebra\u2192topology direction, showing\n  the correspondence is genuine and the hypotheses non-vacuous.\n* `RecipeHomotopy.eckmann_hilton` \u2014 the headline packaged statement.\n\n## Natural next steps\n\n1. **Connect to Mathlib's homotopy API.** Instantiate `InterchangeStructure` on\n   an actual double-groupoid / strict 2-group, or on the endomorphisms of a\n   point in a strict monoidal category, and derive that the corresponding\n   monoid is commutative. A longer-term target is to feed this into a proof that\n   `\u03c0\u2082` of a pointed topological space is abelian via the two concatenation\n   operations on `C(I\u00d7I, X)` rel boundary.\n\n2. **H-space fundamental groups.** Show that for a topological monoid `M`, the\n   pointwise multiplication and path concatenation on loops satisfy interchange,\n   hence `\u03c0\u2081 M` is abelian. This upgrades the abstract bridge to a concrete\n   topological corollary.\n\n3. **Braided / non-unital relaxations.** Explore what survives when the shared\n   unit is weakened (e.g. only a weak/homotopy unit), the setting where the\n   Eckmann\u2013Hilton collapse fails and braidings appear \u2014 the entry point to\n   `E_n`-operads and the \"recipe cuisine as homotopy type\" analogy of the mission.\n\n4. **Quantitative/graded versions.** Formalize a graded Eckmann\u2013Hilton where the\n   interchange law holds up to a fixed cocycle, connecting to the appearance of\n   graded-commutativity in cohomology rings.\n\n## Relation to the mission conjecture\n\nThe mission conjectures that recipe spaces have the homotopy type of a\nCW-complex and that \"combining methods in two ways is consistent\" (interchange).\nThe Eckmann\u2013Hilton theorem is the precise, provable core of that intuition: it is\nexactly *why* the higher structure of such a space must be abelian, and it is the\ncanonical example of a theorem bridging two seemingly unrelated areas \u2014\ntopology and algebra.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0840",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4d9b342d",
+    "status": "available",
+    "timestamp": "2026-07-10T03:34:07.433543+00:00",
+    "title": "This project formalizes a **cross-domain connector**: the Eckmann\u2013Hilton"
+  },
+  {
     "consumed_by_exp_id": "90bde271",
     "description": "The Erdos-Renyi random graph G(n, p) has n vertices where each edge appears independently with probability p. At p = log(n)/n, G(n,p) becomes connected. But what if p is COMPLEX? Define G(n, z) where z is a complex number: each edge (i,j) appears with 'probability' z, meaning the edge weight is z instead of 0 or 1. The resulting 'complex graph' is a weighted complete graph where edge (i,j) has weight z if the edge exists and 0 otherwise. The adjacency matrix A_z has entries that are either z or 0. Conjecture: The complex eigenvalues of A_z trace out a circle of radius |z|*sqrt(n) in the complex plane, centered at the origin. As n -> infinity, the empirical spectral distribution of A_z converges to the circular law (like the Ginibre ensemble) because A_z is a random matrix with i.i.d. entries of mean z*p and variance |z|^2*p*(1-p). The 'hallucination' is that for Im(z) != 0, the graph has complex-valued connectivity \u2014 information flows with both amplitude and phase, and the phase creates interference patterns that are visible in the spectral density. Test: generate A_z for n = 1000 with z = 0.5 + 0.3i, compute eigenvalues, and verify they lie in a disk of radius sqrt(n)*|z|. Compare with the Ginibre ensemble prediction. Impact: complex-valued random graphs have circular spectra \u2014 the hallucination of complex probabilities creates beautiful circular eigenvalue distributions.",
     "domains": [
@@ -10260,21 +10246,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-09T21:05:48.019889+00:00",
     "title": "Close Proofs: Tensor Amplification and Spectral Transfer for Sidorenko-Type Inequali"
-  },
-  {
-    "consumed_by_exp_id": "4d9b342d",
-    "description": "In homotopy type theory (HoTT), equal things can be equal in different ways \u2014 there can be multiple paths between two points. Apply this to cooking: two recipes can produce the same dish, but the paths (methods) may differ. The type of a dish is its flavor profile (a point in taste space R^n where n is the number of flavor dimensions). Two recipes are 'equal' if they produce the same flavor profile, but the path between them (the transformation from one recipe to another) may not be unique. Conjecture: The space of all recipes that produce a given flavor profile has the homotopy type of a CW-complex whose cells correspond to the possible ingredient substitutions. For example, the space of recipes that produce 'chocolate chip cookies' has the homotopy type of S^0 (two points: with nuts and without nuts), because the only binary choice is nuts/no-nuts. More complex dishes have higher homotopy groups: the space of recipes for 'curry' has pi_1 = Z (generated by the loop 'add more spice -> simmer -> add more coconut milk -> simmer -> add more spice'), representing the fundamental cycle of Indian cooking. Test: enumerate 100 recipes for chocolate chip cookies and compute the homotopy groups of the resulting simplicial complex. Impact: cooking is homotopy theory. Every dish is a point, every substitution is a path, and every cuisine is a homotopy type.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0826",
-    "priority_score": 0.66,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T01:31:04.727628+00:00",
-    "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
   },
   {
     "consumed_by_exp_id": "339ccc20",

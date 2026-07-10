@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "135cab00",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — dominant weights of the form `λ_{D,I} = 2ρ − β_I − β_D`\n\nThe results of this cycle isolate the weight-theoretic core of the `π_{D,I}` construction: in the\nsimply-laced setting, d",
-      "quality_score": 0.7176246153846154,
-      "sorry_count": 1,
-      "theorem_count": 13,
-      "timestamp": "2026-07-02T02:48:24",
-      "title": "Classification of ρ-dominant elements in B(ρ) for symmetrizable Kac-Moody algebras"
-    },
-    {
       "cycle_id": "d80d981e",
       "domain": "Tropical",
       "key_insight": "# Future Directions: Metric Rigidity of the Petersen Graph across Valued Cayley Geometries\n\nThis cycle established that the Petersen graph — and, more generally, any graph\ncarrying an odd closed walk",
@@ -499,19 +489,19 @@
       "theorem_count": 8,
       "timestamp": "2026-07-10T03:16:46",
       "title": "Generalized Multinomial Convolution Identity for Latin Rectangle Enumeration"
+    },
+    {
+      "cycle_id": "4d9b342d",
+      "domain": "Physics",
+      "key_insight": "# Future Directions\n\nThis project formalizes a **cross-domain connector**: the Eckmann–Hilton\nargument, which links homotopy theory (two ways of composing loops-between-loops)\nto algebra (commutative",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-10T03:34:13",
+      "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c78b961d",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Extremal Graph Theory (Turán / Kruskal–Katona / Roth)\n\nBold, falsifiable conjectures derived from this cycle's findings\n(`Shared/TuranMantel.lean`, `Shared/RothThreeAP.lean`,\n`Sh",
-      "quality_score": 0.4367097362637363,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-29T08:19:46",
-      "title": "Extremal Graph Theory: Turán and Szemerédi"
-    },
     {
       "cycle_id": "e0366114",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 8,
       "timestamp": "2026-07-10T03:16:46",
       "title": "Generalized Multinomial Convolution Identity for Latin Rectangle Enumeration"
+    },
+    {
+      "cycle_id": "4d9b342d",
+      "domain": "Physics",
+      "key_insight": "# Future Directions\n\nThis project formalizes a **cross-domain connector**: the Eckmann–Hilton\nargument, which links homotopy theory (two ways of composing loops-between-loops)\nto algebra (commutative",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-10T03:34:13",
+      "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e50512ae",
-      "domain": "Applications",
-      "name": "SliceRankLE",
-      "quality": 0.74264
-    },
-    {
-      "cycle_id": "048b9775",
-      "domain": "Computation",
-      "name": "sqForm_apply",
-      "quality": 0.7059866666666667
-    },
-    {
-      "cycle_id": "048b9775",
-      "domain": "Computation",
-      "name": "exists_cup_one",
-      "quality": 0.7059866666666667
-    },
     {
       "cycle_id": "935491ef",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "multinomial_conv",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "4d9b342d",
+      "domain": "Physics",
+      "name": "linking",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "4d9b342d",
+      "domain": "Physics",
+      "name": "then",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "4d9b342d",
+      "domain": "Physics",
+      "name": "vcomp_eq_hcomp",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-10T03:16:46",
+  "last_updated": "2026-07-10T03:34:13",
   "open_questions": [
     {
       "context": "mathematics).  It is recorded here as a hypothesis, with an honest `sorry`, and is used only; sorry",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "50adb4ee",
-        "quality": 0.49653899999999995,
-        "theorems": 8,
-        "title": "Necessity of Homological Condition for Spectral Radius Bound"
-      },
-      {
         "cycle_id": "6ddef5de",
         "quality": 0.66248,
         "theorems": 10,
@@ -3761,6 +3755,12 @@
         "quality": 0.69272,
         "theorems": 17,
         "title": "Girão-Kittipassorn-Narayanan Conjecture on Long Nontrivial Cycles"
+      },
+      {
+        "cycle_id": "4d9b342d",
+        "quality": 0.7,
+        "theorems": 10,
+        "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
       }
     ],
     "Probability": [
