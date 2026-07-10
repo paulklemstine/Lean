@@ -212,6 +212,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle da4694df (Q=0.820), which proved 17 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conway's surreal numbers No form a proper class containing all real numbers, all ordinal numbers, and all infinitesimals. Every real number r has a surreal representation r = {r - 1 | r + 1}. Every ordinal alpha has a surreal representation alpha = {alpha |}. Every infinitesimal epsilon = {0 | 1, 1/",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_da4694df_09d40bd2",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "da4694df",
+    "status": "available",
+    "timestamp": "2026-07-10T11:50:21.285776+00:00",
+    "title": "Deepening: The Arithmetic of Games: Surreal Numbers as Number Fields"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle e7035fce (Q=0.820), which proved 21 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Mendeleev's periodic table arranges elements by atomic number Z, but Z is just the charge of the nucleus. Conjecture: the periodic table is the spectrum of an operator on a Hilbert space of dimension equal to the number of stable isotopes. Define the 'nuclear Hamiltonian' H on L^2(R^3) by H = -hbar^",
     "domain_bridges": [],
     "domains": [
@@ -9602,26 +9621,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "da4694df",
-    "description": "Conway's surreal numbers No form a proper class containing all real numbers, all ordinal numbers, and all infinitesimals. Every real number r has a surreal representation r = {r - 1 | r + 1}. Every ordinal alpha has a surreal representation alpha = {alpha |}. Every infinitesimal epsilon = {0 | 1, 1/2, 1/4, ...}. The surreal numbers form a field (in fact, a real-closed field). Conjecture: the subfield of surreals born by day omega (the set of surreals with finite birthdays) is isomorphic to the field of real algebraic numbers extended with all dyadic rationals. More precisely: No_{omega} = Q[2^{-n} : n in N] (the rationals extended with all dyadic rationals). The subfield born by day omega^2 contains all real numbers that are algebraic over the dyadic rationals, plus all infinitesimals that are algebraic over the reals. Conjecture: No_{omega^2} = R(x) where x is the smallest positive infinitesimal. Test: compute the field structure of surreals born by day omega and verify the isomorphism with the dyadic rationals. Impact: the surreal number hierarchy encodes the constructive hierarchy of real number fields — each birthday level adds exactly the algebraic closures needed.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0858",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Define No_alpha = {surreals with birthday < alpha}. No_0 = empty. No_1 = {0} = {{|}}. No_2 = {-1, 0, 1} (three surreals). No_3 = {-2, -1/2, -1, -1/4, 0, 1/4, 1/2, 1, 2} (but actually No_3 has 7 surreals). By day omega: No_omega = all dyadic rationals m/2^n for m in Z, n in N. This is a field: the dyadic rationals are closed under +, -, *, / (for nonzero). Proof: m/2^n + k/2^l = (m*2^l + k*2^n)/2^{n+l} which is dyadic. Product: (m/2^n)(k/2^l) = mk/2^{n+l}. Reciprocal: 1/(m/2^n) = 2^n/m which is rational (not always dyadic). Wait: 1/3 is not dyadic. So No_omega is not closed under reciprocals of odd denominators. Correction: No_omega is the ring of dyadic rationals, not a field. The field of fractions is Q (all rationals). Conjecture revised: the field of fractions of No_omega is Q, the rationals. No_{omega^2} includes all real numbers that can be constructed by day omega^2, which includes all real algebraic numbers (since each algebraic number has a finite Dedekind cut representation). Test: enumerate surreals by birthday and verify field closure.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T07:16:52.229414+00:00",
-    "title": "The Arithmetic of Games: Surreal Numbers as Number Fields"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "6c565e60",
     "description": "A cellular automaton (CA) rule f: A^Z -> A^Z is a function from configurations to configurations. The CA is reversible if f is bijective. By Hedlund's theorem, a CA is reversible iff its local rule is a permutation. But which CA rules have reversible dynamics? Conjecture: the set of reversible CA rules of radius r on alphabet A is a group under composition, isomorphic to a subgroup of S_{|A|^{2r+1}}. Specifically, the reversibility group G(r, A) is the subgroup of S_{|A|^{2r+1}} generated by the local rules of all reversible CAs of radius r. Conjecture: for binary CAs (A = {0, 1}) with radius r, G(r, {0, 1}) = S_{2^{2r+1}} for r >= 2. This means that any permutation of the 2^{2r+1} possible local neighborhoods can be achieved by composing reversible CA rules. For r = 1 (elementary CAs), G(1, {0, 1}) is a proper subgroup of S_8, and its structure is related to the 256 elementary CA rules. Conjecture: G(1, {0, 1}) has order 8! / 4 = 10080, consisting of the permutations that commute with the shift operator. Test: enumerate all 256 elementary CA rules, identify the reversible ones (Rule 15, 51, 85, 170, 204, 240), compute the group generated by their local rules, and verify the structure. Impact: reversible CAs form a group whose structure determines the landscape of reversible computation.",
     "domain_bridges": [],
@@ -9638,26 +9637,6 @@
     "status": "in_progress",
     "timestamp": "2026-07-10T10:13:59.395451+00:00",
     "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "2fed8c0e",
-    "description": "The Collatz map T: N -> N defined by T(n) = n/2 if n even, 3n+1 if n odd, is conjectured to always reach 1. The Collatz conjecture is equivalent to: the orbit of every n under T eventually reaches the cycle {1, 4, 2, 1}. Define the Collatz Fourier transform: F_T(omega) = sum_{n=1}^{N} e^{2*pi*i*omega*T(n)/n} for N large. Conjecture: F_T has a spectral gap: |F_T(omega)| < C for all irrational omega, where C < sqrt(N). This would mean that the Collatz map does not concentrate energy at any irrational frequency — it is 'mixing' in the Fourier sense. Moreover, the spectral gap is related to the convergence rate: the wider the gap, the faster the orbit reaches 1. Conjecture: for the orbit of n, the number of steps to reach 1 is O(log(n)), which is equivalent to F_T having a spectral gap of width Omega(1/log(n)). Test: compute F_T for n up to 10^6 and measure the spectral gap. Compare with the spectral gaps of related maps (5n+1, 7n+1) which do NOT always converge. Impact: the Collatz conjecture is a spectral gap problem. Convergence to 1 means the Fourier transform has no resonances at irrational frequencies.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0871",
-    "lineage_refs": [],
-    "priority_score": 0.79,
-    "proof_strategy": "Define F_T(omega) = (1/N) * sum_{n=1}^{N} e^{2*pi*i*omega*T(n)/n}. For rational omega = p/q: F_T(p/q) measures the correlation between T(n)/n and the frequency p/q. For T(n) = n/2 (even case) or T(n) = (3n+1)/2 (odd case, accelerating), the ratio T(n)/n is either 1/2 or approximately 3/2 + 1/(2n). The spectral gap of F_T is: gap = inf_{|omega|>0} |F_T(omega)| / F_T(0). For a mixing map, F_T(omega) -> 0 as N -> infinity for irrational omega. This is the von Neumann ergodic theorem for the 3n+1 map. If the 3n+1 map is mixing (which is conjectured but not known), then F_T has a spectral gap. The connection to Collatz convergence: if T is mixing, then the orbit of n visits the set {1} with positive density, which implies it eventually reaches 1. The spectral gap width determines the convergence rate: a gap of width delta gives convergence in O(log(n)/delta) steps. Test: compute F_T(omega) for N = 10^6 and measure the spectral gap. Compare with 5n+1 (which has orbits that may diverge) and n+1 (which converges in n steps).",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T09:25:50.998306+00:00",
-    "title": "The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
   },
   {
     "ambition_level": "extension",
@@ -10157,6 +10136,46 @@
     "status": "available",
     "timestamp": "2026-07-10T11:33:38.999046+00:00",
     "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Surreal Numbers as Number Fields\n\nThe file `SurrealDyadicBirthday.lean` establishes the arithmetic backbone for the\n\"surreals born on finite days = dyadic rationals\" picture. The main achieved results:\n\n- `birthday_powHalf` : `(powHalf n).birthday = n + 1` (exact birthday of `2^{-n}`).\n- `birthday_powHalf_lt_omega0` : every power of one half is born before day `ω`.\n- `powHalf_pos`, `powHalf_ne_zero`, `powHalf_succ_lt`, `powHalf_strictAnti`,\n  `powHalf_injective`, `two_pow_mul_powHalf` : the powers of one half form a strictly\n  decreasing sequence of distinct positive dyadic surreals with `2^n · 2^{-n} = 1`.\n- `dyadicMap_injective` : **the dyadic rationals `ℤ[1/2]` embed injectively into the\n  surreals** — this resolves the `TODO` left open in\n  `Mathlib/SetTheory/Surreal/Dyadic.lean`.\n- `dyadicSubgroup`, `mem_dyadicSubgroup`, `dyadicSubgroup_coe`, `powHalf_mem_dyadic`,\n  `dyadicEquiv` : the dyadic surreals form an additive subgroup that is group-isomorphic\n  to `ℤ[1/2]`.\n- `powHalf_mul_powHalf` : `2^{-m} · 2^{-n} = 2^{-(m+n)}` — the powers of one half multiply\n  by adding exponents (the arithmetic heart of multiplicativity).\n- `dyadicMap_one`, `dyadicMap_mul` : **`dyadicMap` is multiplicative and unital**,\n  resolving the Mathlib `TODO` \"show the maps ... into the surreals are multiplicative\".\n- `dyadicRingHom`, `dyadicRingHom_injective`, `dyadicSubring`, `dyadicRingEquiv` :\n  **the dyadic rationals `ℤ[1/2]` embed into the surreals as a ring homomorphism, and are\n  ring-isomorphic to the subring of dyadic surreals** (`ℤ[1/2] ≃+* dyadicSubring`).\n\n## Natural next steps\n\n1. **`No_ω` is exactly `ℤ[1/2]`.** Prove the converse containment: every surreal with\n   finite birthday is dyadic. The \"simplicity theorem\" (a numeric game equals the\n   simplest number strictly between its options) is the key tool; combined with the\n   birthday bound this pins `No_ω` down to `ℤ[1/2]`. Note the informal conjecture that\n   `No_ω = ℚ + dyadics` is *false*: `1/3 ∉ No_ω`.\n\n2. **Reals into surreals.** Extend `dyadicMap` along dyadic Dedekind cuts / Cauchy\n   sequences to an ordered-field embedding `ℝ ↪ Surreal` (the second `TODO` in\n   `Surreal/Dyadic.lean`). The image is exactly `No_ω`-completion, born by day `ω`.\n\n3. **Birthdays of sums and products.** Characterise `birthday (m • powHalf n)` and more\n   generally birthdays of dyadic surreals, matching the \"denominator height\" `n + 1`\n   plus a term counting the binary length of `m`.\n\n4. **Day `ω` and infinitesimals.** The smallest positive infinitesimal `ε = {0 | 1,\n   1/2, 1/4, ...}` first appears at day `ω`. Formalise `ε`, prove `0 < ε < powHalf n`\n   for all `n`, and begin the structure theory of `No_{ω·2}` and `No_{ω^2}` toward the\n   Hahn-series description `No ≅ ℝ((t^{No}))` of Conway/Gonshor.\n\n## Ordinal-strength remark\n\n`dyadicMap_injective` and `dyadicEquiv` show that the *countable* field `ℤ[1/2]` sits\nfaithfully inside the proper-class field `No`, entirely within the finite-birthday\nfragment `No_ω`. This is the concrete \"constructive hierarchy\" base case: each birthday\nlevel adds exactly the algebraic data needed, and the finite levels already contain a\ncopy of the smallest nontrivial subring of ℚ closed under halving.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0886",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "da4694df",
+    "status": "available",
+    "timestamp": "2026-07-10T11:50:15.132555+00:00",
+    "title": "The file `SurrealDyadicBirthday.lean` establishes the arithmetic backbone for th"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n**Theme.** *The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map* —\na connector between **arithmetic dynamics** (the Collatz / 3n+1 map) and\n**Fourier analysis** (character/exponential sums and their spectral gap).\n\n## What is proved (`Catalog/Geometry/CollatzFourierSpectralGap.lean`)\n\n* **Spectral gap** for the geometric character sum: for every non-integer\n  frequency `ω`, `‖Σ_{n<N} e(ω)^n‖ ≤ 1/|sin(πω)|`, a bound **uniform in `N`**\n  (`spectral_gap`), together with the complementary **full resonance**\n  `Σ_{n<N} e(m)^n = N` at integer frequencies `m` (`full_resonance`). This is the\n  precise dichotomy \"energy concentrates only at integer frequencies\".\n* **Half-angle modulus** identity `‖e(ω) − 1‖ = 2|sin(πω)|` (`norm_e_sub_one`)\n  and unit modulus `‖e(ω)‖ = 1` (`norm_e`), the analytic core of the gap.\n* **The connector**: the Collatz branch selector is the Fourier character at the\n  Nyquist frequency, `collatz n = if (e(1/2))^n = 1 then n/2 else 3n+1`\n  (`fourier_selects_branch`), and the resulting parity decomposition of the\n  Collatz Fourier transform (`collatzFourier_parity_split`).\n* **Dynamics**: powers of two collapse, `collatz^[k](2^k) = 1`\n  (`collatz_iterate_pow_two`), the cleanest convergence-to-cycle instance.\n\n## Natural next steps\n\n1. **Higher-frequency character detection.** The Nyquist character `e(1/2)`\n   detects parity. Characters `e(k/2^j)` detect residues mod `2^j`, which is the\n   natural setting for the 2-adic (\"Terras\") encoding of the Collatz map. Prove a\n   general \"character selects residue class\" lemma and use it to write the\n   accelerated Collatz map as a finite Fourier expansion.\n\n2. **Weyl-type bounds for the Collatz Fourier transform.** Starting from\n   `collatzFourier_parity_split`, bound each parity sub-sum. The even branch is a\n   genuine linear phase `ω·(n/2)` and admits the same geometric-series spectral\n   gap; the odd branch `ω·(3n+1)` is again linear, so a two-term spectral gap\n   bound for `collatzFourier` should be provable unconditionally.\n\n3. **From gaps to stopping times.** Formalize the heuristic in the mission: relate\n   the *width* of a spectral gap to an averaged stopping-time bound. A tractable\n   first target is the exact stopping time for `2^k` (done) generalized to\n   `n·2^k`, giving `O(log n)` stopping times on a positive-density set.\n\n4. **Comparison maps 5n+1, 7n+1.** The branch-selection bridge is identical for\n   `qn+1`; only the odd-branch coefficient changes. Formalize the family and\n   isolate exactly where divergence (for `5n+1`) enters the Fourier picture.\n\n5. **Discrete orthogonality.** Add the finite orthogonality relation\n   `Σ_{n<N} e(k/N)^n = N·[N ∣ k]` to connect the continuous spectral gap with the\n   discrete Fourier transform used in the `10^6` numerical experiment.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0887",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2fed8c0e",
+    "status": "available",
+    "timestamp": "2026-07-10T11:50:24.568314+00:00",
+    "title": "**Theme.** *The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map* —"
   },
   {
     "ambition_level": "extension",

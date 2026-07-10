@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "fbcfb71f",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — A Bestiary of Arithmetic Monsters\n\nThese conjectures grew directly out of the casting-out-nines analysis of\ndigit-permutation factorizations and the binary-digit-sum bridge.\n\n##",
-      "quality_score": 0.75424,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-04T08:03:45",
-      "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-    },
-    {
       "cycle_id": "ee6f49cd",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nBold, falsifiable conjectures arising from the study of discrete pseudomanifolds at\nthe vertex threshold, the combinatorial suspension operation, and the minimal\ntriangulation of",
@@ -499,19 +489,19 @@
       "theorem_count": 18,
       "timestamp": "2026-07-10T10:46:04",
       "title": "The Thermodynamics of Sorting: Entropy and Computational Work"
+    },
+    {
+      "cycle_id": "da4694df",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Surreal Numbers as Number Fields\n\nThe file `SurrealDyadicBirthday.lean` establishes the arithmetic backbone for the\n\"surreals born on finite days = dyadic rationals\" picture. The",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-07-10T11:50:21",
+      "title": "The Arithmetic of Games: Surreal Numbers as Number Fields"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d5c197ae",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Probabilistic Birch–Swinnerton-Dyer\n\nThis cycle established two probabilistic pillars of the Birch–Swinnerton-Dyer\ncircle: the Sato–Tate measure `(2/π) sin²θ dθ` is a genuine pro",
-      "quality_score": 0.4285765151515152,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-06-30T18:00:55",
-      "title": "Birch and Swinnerton-Dyer Conjecture"
-    },
     {
       "cycle_id": "3131feed",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-10T11:18:05",
       "title": "Close Proofs: Graph Coloring with Emotions: The Chromatic Polynomial Meets Psycholog"
+    },
+    {
+      "cycle_id": "da4694df",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Surreal Numbers as Number Fields\n\nThe file `SurrealDyadicBirthday.lean` establishes the arithmetic backbone for the\n\"surreals born on finite days = dyadic rationals\" picture. The",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-07-10T11:50:21",
+      "title": "The Arithmetic of Games: Surreal Numbers as Number Fields"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "298c68ef",
-      "domain": "Applications",
-      "name": "payoff_zero_sum",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "298c68ef",
-      "domain": "Applications",
-      "name": "expProfit_zero_sum",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "73d4b43b",
-      "domain": "Applications",
-      "name": "Acyclic",
-      "quality": 0.78
-    },
     {
       "cycle_id": "73d4b43b",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Geometry",
       "name": "bubble_lt_sq",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "da4694df",
+      "domain": "Applications",
+      "name": "birthday_powHalf",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "da4694df",
+      "domain": "Applications",
+      "name": "birthday_powHalf_lt_omega0",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "da4694df",
+      "domain": "Applications",
+      "name": "powHalf_pos",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-10T11:18:05",
+  "last_updated": "2026-07-10T11:50:21",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "dd8b10c1",
-        "quality": 0.72,
-        "theorems": 54,
-        "title": "The Fundamental Theorem of Cakes: Algebraic Geometry of Baking"
-      },
-      {
         "cycle_id": "48961a11",
         "quality": 0.83,
         "theorems": 16,
@@ -3141,6 +3135,12 @@
         "quality": 0.6,
         "theorems": 0,
         "title": "Close Proofs: Graph Coloring with Emotions: The Chromatic Polynomial Meets Psych"
+      },
+      {
+        "cycle_id": "da4694df",
+        "quality": 0.82,
+        "theorems": 17,
+        "title": "The Arithmetic of Games: Surreal Numbers as Number Fields"
       }
     ],
     "Bridges": [
