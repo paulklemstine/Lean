@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-10T20:20:25.484392+00:00",
+  "last_updated": "2026-07-10T20:52:49.607000+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -3691,6 +3691,7 @@
       "outcome_quality": 0.62,
       "phase": "A_only",
       "phase_a_prompt_version": "v24",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v24",
@@ -3762,6 +3763,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-10T20:20:25.462152+00:00",
       "title": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Coloring"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 10,
+      "domain": "Combinatorics",
+      "duration_seconds": 955.3695113658905,
+      "end_time": 1783716754.478986,
+      "files_integrated": 4,
+      "job_id": "0643b2b3",
+      "outcome_quality": 0.82,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "sorry_density": 0.36363636363636365,
+      "start_time": 1783715799.1094747,
+      "strategy_count": 0,
+      "theorem_count": 11,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 9,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-10T20:52:49.587234+00:00",
+      "title": "The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
     }
   ]
 }
