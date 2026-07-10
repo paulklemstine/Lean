@@ -87,7 +87,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
   },
   {
-    "consumed_by_exp_id": "f0066eca",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 92e61cee (Q=0.830), which proved 11 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The leading $1/N$ term in the heat-kernel expansion vanishes under the given conditions.",
     "domains": [
       "Novelty"
@@ -96,12 +96,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "92e61cee",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-10T13:11:38.329718+00:00",
     "title": "Deepening: Conjecture on Leading Term Cancellation"
   },
   {
-    "consumed_by_exp_id": "e17898c1",
+    "consumed_by_exp_id": "9d20b474",
     "description": "Building on cycle e37aa20a (Q=0.830), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The logistic map f(x) = r*x*(1-x) for r = 4 exhibits chaotic dynamics: small changes in initial conditions lead to exponentially diverging trajectories (Lyapunov exponent lambda = log(2)). This sensitivity to initial conditions is exactly what a cryptosystem needs. Conjecture: The logistic map at r ",
     "domains": [
       "Novelty"
@@ -1258,7 +1258,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-existence of solutions for (a^n+1)(b^n+1)=x\u00b2 when gcd(a,b) > 1 and n is even"
   },
   {
-    "consumed_by_exp_id": "3aea7ea7",
+    "consumed_by_exp_id": "bb33d4fa",
     "description": "For an edge-colored graph that is a minimal obstruction to total rainbow forests, there exists a unique subset A \u2286 E(G) where r\u2081(A) + r\u2082(E\\A) < t, and this failure is strict for no other subset.",
     "domains": [
       "Bridges"
@@ -2072,7 +2072,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "A structural decomposition theorem for countable FAC posets via scattered components"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f5358691",
     "description": "For every \\(\\epsilon > 0\\), there exists \\(K > 0\\) such that for all \\(d \\ge K\\) and \\(p \\in [\\epsilon d/\\log n, d/\\log n]\\), a graph \\(G\\) with average degree \\(d\\) satisfies: the random subgraph \\(G_p\\) obtained by retaining each edge of \\(G\\) independently with probability \\(p\\) contains a cycle of length at least \\(d - \\epsilon d\\) asymptotically almost surely as \\(n \\to \\infty\\).",
     "domains": [
       "Computation"
@@ -2081,7 +2081,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T23:36:00.875596+00:00",
     "title": "Persistent Cycles in Randomized Graphs via Hyperstable Structural Constraints"
   },
@@ -2666,7 +2666,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Unconditional Euclidean Systems for Ray Classes in Totally Real Galois Fields"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8c745e9f",
     "description": "For every n \u2265 0, the n-th row generating function of the square of the Eulerian triangle\u2014defined as the polynomial \u2211_k (\u2211_j A(n,j)\u00b7A(j,k)) x^k where A(n,k) is the Eulerian number counting permutations of [n] with k descents\u2014has only real roots. This extends the paper's results on powers of Pascal, Stirling, and Narayana triangles to the still-open Eulerian case.",
     "domains": [
       "Bridges"
@@ -2675,7 +2675,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01572v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T01:27:06.611331+00:00",
     "title": "Real-rootedness of the square of the Eulerian triangle"
   },
@@ -5557,7 +5557,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "All deliverable files of this cycle now compile end-to-end and are `sorry`-free."
   },
   {
-    "consumed_by_exp_id": "5ea78655",
+    "consumed_by_exp_id": "",
     "description": "The Collatz conjecture (3n+1 problem) states that every positive integer eventually reaches 1 under the map T(n) = n/2 (n even) or 3n+1 (n odd). Despite being verified up to 2^68, a proof remains elusive. Conjecture: the Collatz conjecture is independent of Peano Arithmetic (PA). That is, PA can neither prove nor refute the statement 'for all n, the Collatz sequence starting at n eventually reaches 1'. This would mean the conjecture is TRUE (in the standard model) but UNPROVABLE in PA. The argument: the Collatz map is a Diophantine function that grows faster than any provably total computable function in PA. Specifically, the halting problem for Collatz (does the orbit of n reach 1?) is at least as hard as the consistency of PA, which by Godel's second incompleteness theorem is unprovable in PA. Conjecture: the Collatz conjecture is equivalent to Con(PA) over a weak base theory, meaning that if PA is consistent, then PA does not prove Collatz. Test: formalize the equivalence between Collatz and Con(PA) in Lean 4. Show that a counterexample to Collatz (an n whose orbit diverges or cycles) would imply not-Con(PA). Impact: Collatz might be the simplest true-but-unprovable statement in arithmetic \u2014 a concrete example of Godel's incompleteness.",
     "domains": [
       "Novelty",
@@ -5567,7 +5567,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-10T11:33:38.999046+00:00",
     "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
   },
@@ -5766,7 +5766,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cd5a9d7d",
     "description": "Ramsey's theorem states that any 2-coloring of the edges of K_6 contains a monochromatic K_3 (a triangle of one color). Applied to DNA: any sequence of 4^6 + 1 = 4097 nucleotides must contain a repeated 6-mer (by pigeonhole). But Ramsey theory for subsequences is more subtle: what is the minimum length L(k) of a DNA sequence over {A, C, G, T} such that every subsequence of length k contains a repeated 4-mer? Conjecture: L(k) = Theta(k * 4^4 * log(4^4)) = Theta(k * 256 * 8) = Theta(k * 2048). More precisely, by the Lovasz local lemma, L(k) >= 4^{4k/5} for sequences that avoid repeated k-mers in all subsequences. Conjecture: for real genomes, the actual L(k) is much smaller because real DNA has low complexity regions (microsatellites, Alu repeats) that create forced repeats. Specifically, the human genome has L(4) ~ 1000 (any 1000 consecutive bases contain a repeated 4-mer in some subsequence), while the random genome has L(4) ~ 4^4 * log(4^4) ~ 5000. Test: compute L(k) for real genomes vs random genomes and verify the factor-of-5 compression. Impact: DNA avoids subsequential repeats in a way that Ramsey theory predicts, but real genomes are 5x more 'forced' than random sequences.",
     "domains": [
       "Novelty",
@@ -5776,7 +5776,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.71,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T12:22:45.928895+00:00",
     "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
   },
@@ -5810,7 +5810,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Ramanujan's Taxicab Number as a Sum of Three Cubes: 1729 Revisited"
   },
   {
-    "consumed_by_exp_id": "96d0d4ab",
+    "consumed_by_exp_id": "",
     "description": "A periodic rhythm in music is a function f: Z -> {0, 1} that is periodic: f(n + p) = f(n) for some period p. The symmetry group of a rhythm with period p is a subgroup of Z/pZ. But music also has 2D patterns: a drum pattern is a function g: Z x Z -> {0, 1} (onset grid in time x pitch). The symmetry group of a drum pattern is a subgroup of Z x Z, which is a wallpaper group in 1D. In 2D, the wallpaper groups classify all possible symmetries of periodic patterns. There are exactly 17 wallpaper groups in 2D. Conjecture: the 17 wallpaper groups correspond to 17 fundamentally different types of rhythmic structure in music. Specifically: (1) p1: no symmetry (free rhythm), (2) p2: 2-fold rotational symmetry (call-and-response), (3) pm: mirror symmetry (palindrome), (4) pg: glide reflection (canon), (5) cm: mirror + glide (round), (6) pmm: double mirror (bilateral palindrome), (7) pmg: mirror + glide (inverted canon), (8) pgg: double glide (double canon), (9) cmm: double mirror + glide (round + palindrome), (10) p4: 4-fold rotation (4-bar cycle), (11) p4m: 4-fold + mirrors (variations on a theme), (12) p4g: 4-fold + glides (inverted variations), (13) p3: 3-fold rotation (3-bar blues), (14) p3m1: 3-fold + mirrors, (15) p31m: 3-fold + glides, (16) p6: 6-fold rotation (whole-tone scale symmetry), (17) p6m: 6-fold + mirrors (maximal symmetry, the 'perfect' rhythm). Test: classify 1000 drum patterns by their wallpaper group and verify the distribution matches musical practice. Impact: there are exactly 17 types of rhythm in music, classified by the wallpaper groups.",
     "domains": [
       "Novelty",
@@ -5820,7 +5820,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.68,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-10T10:13:59.325235+00:00",
     "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm"
   },

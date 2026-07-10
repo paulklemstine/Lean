@@ -116,7 +116,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f0066eca",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 92e61cee (Q=0.830), which proved 11 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The leading $1/N$ term in the heat-kernel expansion vanishes under the given conditions.",
     "domain_bridges": [],
     "domains": [
@@ -128,14 +128,14 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "92e61cee",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-10T13:11:38.329718+00:00",
     "title": "Deepening: Conjecture on Leading Term Cancellation"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "e17898c1",
+    "consumed_by_exp_id": "9d20b474",
     "description": "Building on cycle e37aa20a (Q=0.830), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The logistic map f(x) = r*x*(1-x) for r = 4 exhibits chaotic dynamics: small changes in initial conditions lead to exponentially diverging trajectories (Lyapunov exponent lambda = log(2)). This sensitivity to initial conditions is exactly what a cryptosystem needs. Conjecture: The logistic map at r ",
     "domain_bridges": [],
     "domains": [
@@ -2071,7 +2071,7 @@
       "Edmonds' Matroid Intersection Theorem",
       "Rainbow Forest Inequality"
     ],
-    "consumed_by_exp_id": "3aea7ea7",
+    "consumed_by_exp_id": "bb33d4fa",
     "description": "For an edge-colored graph that is a minimal obstruction to total rainbow forests, there exists a unique subset A ⊆ E(G) where r₁(A) + r₂(E\\A) < t, and this failure is strict for no other subset.",
     "domain_bridges": [
       "Cycle matroid rank function",
@@ -3599,7 +3599,7 @@
     "catalog_references": [
       "arXiv:2310.12345 [math.CO]"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f5358691",
     "description": "For every \\(\\epsilon > 0\\), there exists \\(K > 0\\) such that for all \\(d \\ge K\\) and \\(p \\in [\\epsilon d/\\log n, d/\\log n]\\), a graph \\(G\\) with average degree \\(d\\) satisfies: the random subgraph \\(G_p\\) obtained by retaining each edge of \\(G\\) independently with probability \\(p\\) contains a cycle of length at least \\(d - \\epsilon d\\) asymptotically almost surely as \\(n \\to \\infty\\).",
     "domain_bridges": [
       "Probabilistic Method",
@@ -3615,7 +3615,7 @@
     "proof_strategy": "Combine hyperstable structure theorems (via Pokrovskiy's work on bounded-degree trees) with probabilistic counting arguments for cycle persistence in sparse random graphs.",
     "research_mode": "team",
     "source_exp_id": "2607.02483v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T23:36:00.875596+00:00",
     "title": "Persistent Cycles in Randomized Graphs via Hyperstable Structural Constraints"
   },
@@ -4707,7 +4707,7 @@
       "Eulerian numbers",
       "triangular matrix products"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8c745e9f",
     "description": "For every n ≥ 0, the n-th row generating function of the square of the Eulerian triangle—defined as the polynomial ∑_k (∑_j A(n,j)·A(j,k)) x^k where A(n,k) is the Eulerian number counting permutations of [n] with k descents—has only real roots. This extends the paper's results on powers of Pascal, Stirling, and Narayana triangles to the still-open Eulerian case.",
     "domain_bridges": [
       "Polynomial real-rootedness",
@@ -4723,7 +4723,7 @@
     "proof_strategy": "Attempt to decompose the Eulerian triangle square as a product of triangles whose individual real-rootedness preservation is known, or extend the rectangular additive convolution framework to construct an interlacing chain for the squared Eulerian row generating functions. Alternatively, establish that the Eulerian triangle square arises from a Narayana-type transformation applied to a suitable real-rooted polynomial.",
     "research_mode": "team",
     "source_exp_id": "2607.01572v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T01:27:06.611331+00:00",
     "title": "Real-rootedness of the square of the Eulerian triangle"
   },
@@ -10087,7 +10087,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "5ea78655",
+    "consumed_by_exp_id": "",
     "description": "The Collatz conjecture (3n+1 problem) states that every positive integer eventually reaches 1 under the map T(n) = n/2 (n even) or 3n+1 (n odd). Despite being verified up to 2^68, a proof remains elusive. Conjecture: the Collatz conjecture is independent of Peano Arithmetic (PA). That is, PA can neither prove nor refute the statement 'for all n, the Collatz sequence starting at n eventually reaches 1'. This would mean the conjecture is TRUE (in the standard model) but UNPROVABLE in PA. The argument: the Collatz map is a Diophantine function that grows faster than any provably total computable function in PA. Specifically, the halting problem for Collatz (does the orbit of n reach 1?) is at least as hard as the consistency of PA, which by Godel's second incompleteness theorem is unprovable in PA. Conjecture: the Collatz conjecture is equivalent to Con(PA) over a weak base theory, meaning that if PA is consistent, then PA does not prove Collatz. Test: formalize the equivalence between Collatz and Con(PA) in Lean 4. Show that a counterexample to Collatz (an n whose orbit diverges or cycles) would imply not-Con(PA). Impact: Collatz might be the simplest true-but-unprovable statement in arithmetic — a concrete example of Godel's incompleteness.",
     "domain_bridges": [],
     "domains": [
@@ -10100,7 +10100,7 @@
     "proof_strategy": "The argument proceeds in three steps. Step 1: Show that the Collatz halting problem (given n, does T^k(n) = 1 for some k?) is Pi^0_2-complete. This means it is at least as hard as any Pi^0_2 statement, including Con(PA). Step 2: Show that if Collatz is false (there exists n whose orbit diverges or cycles), then Con(PA) implies a contradiction. This would mean not-Collatz implies not-Con(PA), i.e., Collatz follows from Con(PA). Step 3: Show that if Collatz is true, then PA cannot prove it, because the proof would require a consistency-strength beyond PA. The key: the Collatz map can simulate any Turing machine. Specifically, Conway (1972) showed that a generalization of the Collatz map (the 'Fractran' language) is Turing-complete. The specific 3n+1 map is not known to be Turing-complete, but it is conjectured that the set of Collatz orbits encodes the set of PA-proofs. If this is the case, then Collatz is equivalent to Con(PA). Test: formalize the Fractran encoding of Turing machines in Lean 4, show that the 3n+1 map can simulate a register machine, and establish the reduction from Collatz to Con(PA).",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-10T11:33:38.999046+00:00",
     "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
   },
@@ -10366,7 +10366,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cd5a9d7d",
     "description": "Ramsey's theorem states that any 2-coloring of the edges of K_6 contains a monochromatic K_3 (a triangle of one color). Applied to DNA: any sequence of 4^6 + 1 = 4097 nucleotides must contain a repeated 6-mer (by pigeonhole). But Ramsey theory for subsequences is more subtle: what is the minimum length L(k) of a DNA sequence over {A, C, G, T} such that every subsequence of length k contains a repeated 4-mer? Conjecture: L(k) = Theta(k * 4^4 * log(4^4)) = Theta(k * 256 * 8) = Theta(k * 2048). More precisely, by the Lovasz local lemma, L(k) >= 4^{4k/5} for sequences that avoid repeated k-mers in all subsequences. Conjecture: for real genomes, the actual L(k) is much smaller because real DNA has low complexity regions (microsatellites, Alu repeats) that create forced repeats. Specifically, the human genome has L(4) ~ 1000 (any 1000 consecutive bases contain a repeated 4-mer in some subsequence), while the random genome has L(4) ~ 4^4 * log(4^4) ~ 5000. Test: compute L(k) for real genomes vs random genomes and verify the factor-of-5 compression. Impact: DNA avoids subsequential repeats in a way that Ramsey theory predicts, but real genomes are 5x more 'forced' than random sequences.",
     "domain_bridges": [],
     "domains": [
@@ -10379,7 +10379,7 @@
     "proof_strategy": "Define the subsequence Ramsey number L(k, s, alphabet) as the minimum length of a sequence over the given alphabet such that every subsequence of length k contains a repeated s-mer. For DNA: alphabet = {A, C, G, T}, s = 4 (4-mers). L(k, 4, 4) = minimum length of a DNA sequence such that every length-k subsequence has a repeated 4-mer. By the pigeonhole principle: any sequence of length 4^4 + 1 = 257 has a repeated 4-mer (not subsequence, but substring). For subsequences: we need every length-k subsequence to contain a repeated 4-mer. The longest sequence with NO subsequence of length k containing a repeated 4-mer is called the 'subsequence-Ramsey avoidance sequence'. Conjecture: this sequence has length O(k * 4^4 * log(4^4)). Proof sketch: by the Lovasz local lemma, the probability that a random sequence of length n avoids repeated 4-mers in all subsequences is positive when n < k * 4^4 * log(4^4). Test: generate random DNA sequences of varying lengths, extract all subsequences of length k, check for repeated 4-mers. Compare with real genomes (human chromosome 1, E. coli genome). Verify that real genomes hit the threshold at L ~ 1000 (much shorter than the random L ~ 5000).",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T12:22:45.928895+00:00",
     "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
   },
@@ -10425,7 +10425,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "96d0d4ab",
+    "consumed_by_exp_id": "",
     "description": "A periodic rhythm in music is a function f: Z -> {0, 1} that is periodic: f(n + p) = f(n) for some period p. The symmetry group of a rhythm with period p is a subgroup of Z/pZ. But music also has 2D patterns: a drum pattern is a function g: Z x Z -> {0, 1} (onset grid in time x pitch). The symmetry group of a drum pattern is a subgroup of Z x Z, which is a wallpaper group in 1D. In 2D, the wallpaper groups classify all possible symmetries of periodic patterns. There are exactly 17 wallpaper groups in 2D. Conjecture: the 17 wallpaper groups correspond to 17 fundamentally different types of rhythmic structure in music. Specifically: (1) p1: no symmetry (free rhythm), (2) p2: 2-fold rotational symmetry (call-and-response), (3) pm: mirror symmetry (palindrome), (4) pg: glide reflection (canon), (5) cm: mirror + glide (round), (6) pmm: double mirror (bilateral palindrome), (7) pmg: mirror + glide (inverted canon), (8) pgg: double glide (double canon), (9) cmm: double mirror + glide (round + palindrome), (10) p4: 4-fold rotation (4-bar cycle), (11) p4m: 4-fold + mirrors (variations on a theme), (12) p4g: 4-fold + glides (inverted variations), (13) p3: 3-fold rotation (3-bar blues), (14) p3m1: 3-fold + mirrors, (15) p31m: 3-fold + glides, (16) p6: 6-fold rotation (whole-tone scale symmetry), (17) p6m: 6-fold + mirrors (maximal symmetry, the 'perfect' rhythm). Test: classify 1000 drum patterns by their wallpaper group and verify the distribution matches musical practice. Impact: there are exactly 17 types of rhythm in music, classified by the wallpaper groups.",
     "domain_bridges": [],
     "domains": [
@@ -10438,7 +10438,7 @@
     "proof_strategy": "Define a drum pattern as a function g: Z_m x Z_n -> {0, 1} (onset grid with m time steps and n pitch classes). The symmetry group of g is the set of (a, b, R) in Z_m x Z_n x D_n such that g(R*x + a, R*y + b) = g(x, y) for all (x, y). Here D_n is the dihedral group of order 2n. For 2D patterns with translation lattice L, the symmetry group is a wallpaper group. The 17 wallpaper groups are: p1, p2, pm, pg, cm, pmm, pmg, pgg, cmm, p4, p4m, p4g, p3, p3m1, p31m, p6, p6m. Each corresponds to a different type of rhythmic symmetry. p1: no symmetry (most common in free jazz). p2: 2-fold rotation (AABB form). pm: mirror (palindromic, like 'I Palindrome I' by They Might Be Giants). pg: glide (canon, like 'Row Row Row Your Boat'). p4: 4-fold (4/4 time with 4-bar phrases). p6: 6-fold (6/8 time with whole-tone symmetry). p6m: maximal symmetry (only achievable with hexagonal grids, corresponds to the most symmetric possible rhythm). Test: encode 1000 drum patterns as 2D grids, compute their symmetry groups, classify into the 17 wallpaper groups, and compare with musical genre.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-10T10:13:59.325235+00:00",
     "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm"
   },
