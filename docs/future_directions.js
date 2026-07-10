@@ -46,6 +46,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 7ca0f553 (Q=0.820), which proved 61 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Infinite chess is chess on an infinite board. It is known that there are positions where White can force checkmate but only in omega (the first infinite ordinal) moves. Conjecture: There exists a position on the infinite chess board where White can force checkmate in exactly omega^omega moves, but n",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "push_7ca0f553_ee0b2c0b",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "7ca0f553",
+    "status": "available",
+    "timestamp": "2026-07-10T01:48:37.054969+00:00",
+    "title": "Deepening: Infinite Chess: Checkmate in Omega Moves"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 84ab5171 (Q=0.820), which proved 55 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s",
     "domains": [
       "Applications"
@@ -9871,21 +9885,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
   },
   {
-    "consumed_by_exp_id": "7ca0f553",
-    "description": "Infinite chess is chess on an infinite board. It is known that there are positions where White can force checkmate but only in omega (the first infinite ordinal) moves. Conjecture: There exists a position on the infinite chess board where White can force checkmate in exactly omega^omega moves, but not in fewer. More precisely, define the game value v(P) of a position P as the smallest ordinal alpha such that White can force checkmate in at most alpha moves. The known results give positions with v(P) = omega. The conjecture is that v(P) can be arbitrarily large below omega^omega. The key construction: create a position where White must first solve a 'puzzle' that takes omega moves, and then another puzzle that takes omega moves for each of omega starting positions, giving omega^2 total moves. Iterating, one can reach omega^n for any n, and omega^omega by a diagonal argument. Test: construct explicit positions with game values omega, omega^2, omega^3, and omega^omega on the infinite board. Verify by computation that no strategy achieves checkmate in fewer moves. Impact: chess on an infinite board has transfinite game values \u2014 the complexity of checkmate goes beyond the finite ordinals into the transfinite.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0809",
-    "priority_score": 0.76,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-09T22:15:49.669051+00:00",
-    "title": "Infinite Chess: Checkmate in Omega Moves"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Congruence Rigidity of Sums of Squares\n\nThis cycle established that the entries of an integer right triangle are forced into\nstrong divisibility patterns \u2014 one leg is a multiple of three, the legs jointly carry a\nfactor of four, one entry is a multiple of five \u2014 and that a four-dimensional right\n\"box\" (a solution of `a\u00b2 + b\u00b2 + c\u00b2 = d\u00b2`) is even more rigid: at most one of its three\nspatial edges can be odd. We also pinned down exactly which whole numbers can serve as a\nleg. These findings point to several bold, testable conjectures.\n\n## 1. The correct modulus for a power of two grows with the power\n**Conjecture.** In any solution of `a\u00b2 + b\u00b2 = c\u00b2`, the two-adic valuation of the leg\nproduct `a\u00b7b` is governed one level deeper than naive reduction suggests: deciding\nwhether `2^k` divides `a\u00b7b` is a question about residues modulo `2^{k+1}`, never modulo\n`2^k`.\n*The key insight is* that a difference of two odd squares is always divisible by eight,\nso each additional factor of two in the product must be certified one binary place\nfurther out than one would guess. *Why now?* Having isolated the exact `mod 8`\nobstruction behind the factor of four, we can test the pattern mechanically for `k = 3,\n4, 5` and either confirm a clean \"shift-by-one\" law or expose its first exception.\n\n## 2. A universal super-divisor for higher-dimensional right figures\n**Conjecture.** For every dimension `r`, solutions of `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` obey a single\nuniversal divisibility law: there is a constant `D(r)`, depending only on `r`, such that\n`D(r)` divides the product `x\u2081\u00b7x\u2082\u00b7\u22ef\u00b7x_r` for *every* solution, and `D(r)` is the largest\nsuch constant.\n*The key insight is* that reduction to a finite residue ring turns \"for all solutions\"\ninto a finite, decidable statement, so the optimal constant `D(r)` is computable and\nshould grow in a structured (conjecturally multiplicative-over-primes) way. *Why now?*\nThe three-dimensional case already yields `4 \u2223 x\u2081x\u2082x\u2083`; comparing it against the planar\nconstant `12` suggests a dimension-indexed sequence worth charting and predicting.\n\n## 3. Parity collapse in higher dimensions\n**Conjecture.** As the number of squared terms increases, the number of edges permitted to\nbe odd stays uniformly bounded: in `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` at most three of the `x_i` can be\nodd, regardless of `r`.\n*The key insight is* that the sum of squares equals the count of odd terms modulo four,\nwhile a perfect square is `0` or `1` modulo four, capping the admissible odd-count no\nmatter how many terms are added. *Why now?* We proved the cap is \"at most one\" in three\ndimensions; extending the modular bookkeeping to arbitrary `r` is a self-contained next\nstep that would reveal whether the cap is truly dimension-independent.\n\n## 4. A sharp threshold characterization of legs in every dimension\n**Conjecture.** Just as the whole numbers that are a leg of a right triangle are exactly\nthose `\u2265 3`, in each higher dimension there is a sharp finite threshold above which every\ninteger appears as an edge of some right figure, and the finitely many exceptions can be\nlisted explicitly.\n*The key insight is* that a single explicit construction, split according to the parity of\nthe target edge, realizes all sufficiently large values, while the small exceptions are\nforced by a factorization that would otherwise require a vanishing edge. *Why now?* The\nplanar threshold `3` and its sharpness (the failures at `1` and `2`) give a template that\nshould transfer verbatim to the box equation and beyond.\n\n## 5. Divisibility as a sieve against near-solutions\n**Conjecture.** The combined congruence obstructions (`12 \u2223 a\u00b7b`, `60 \u2223 a\u00b7b\u00b7c`, and their\nhigher-dimensional analogues) are strong enough that a random integer triple satisfying\nthem has a positive, computable probability of being genuinely Pythagorean \u2014 i.e. the\ncongruence conditions capture a constant fraction of the \"arithmetic mass\" of true\nsolutions.\n*The key insight is* that each universal divisor removes a fixed proportion of impostors,\nso stacking independent prime-power obstructions multiplies into a sieve of predictable\ndensity. *Why now?* With the exact obstructions in hand for the primes `2, 3, 5`, one can\nimmediately measure how much of the solution set they explain and calibrate whether a few\nmore primes suffice to pin down solutions almost completely.\n",
     "domains": [
@@ -10184,6 +10183,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T01:13:55.845049+00:00",
     "title": "These conjectures are distilled from the current cycle, which paired an analytic"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe file `Catalog/Pythagorean/InfiniteChessOmega.lean` develops an abstract,\nfaithful model of winning game trees and their **ordinal game values**, and\nproves that the values `\u03c9`, `\u03c9\u207f` (every `n`), and `\u03c9^\u03c9` are realised by\nexplicit positions, forming a strictly increasing transfinite hierarchy.\n\n## What is proved\n\n* `value_graft` \u2014 sequential composition is additive: `value (graft A B) =\n  value B + value A` (correctly right-additive for ordinals).\n* `value_omegaGame = \u03c9` and `omegaGame_value_infinite` \u2014 the classical\n  \"mate in \u03c9\": White forces mate but in no finite number of moves.\n* `value_opowGame n = \u03c9 ^ n` \u2014 explicit positions of value `\u03c9\u207f` for all `n`.\n* `value_omegaOmegaGame = \u03c9 ^ \u03c9` \u2014 an explicit diagonal position of value `\u03c9^\u03c9`.\n* `value_opowGame_strictMono`, `value_opowGame_lt_omegaOmega` \u2014 the hierarchy is\n  strict and `\u03c9^\u03c9` dominates every finite power.\n\n## Natural next steps\n\n1. **Beyond \u03c9^\u03c9.** The same building blocks (`step`, `bsup`, `graft`)\n   generalise: a `bsup` over a family whose values cofinally approach any given\n   limit realises that limit. One could prove `\u2200 \u03b1 < \u03b5\u2080, \u2203 P, value P = \u03b1` by\n   recursion on Cantor normal form, using `graft` for `+`, `graftN`/a\n   multiplication combinator for `\u00b7`, and a diagonal `bsup` for `\u03c9^\u00b7`.\n\n2. **A minimality/optimality theorem.** Formalise that `value P` is exactly the\n   least ordinal in which the winner can force a win, by defining a strategy\n   semantics (winner's move-count ordinal) and proving it agrees with `value`.\n   This would turn \"cannot be done in fewer moves\" from a definitional fact into\n   a theorem about explicit play.\n\n3. **Winner nodes with branching.** Extend `Game` with a genuine `wsup`\n   (winner chooses among many moves, value = infimum) and prove infimum\n   commutes with left addition, giving the full min/sup value calculus.\n\n4. **Connection to actual infinite chess.** Bridge the abstract trees to a\n   concrete board model (pieces on `\u2124 \u00d7 \u2124`), realising `omegaGame`,\n   `opowGame n`, and `omegaOmegaGame` as literal chess positions, recovering the\n   Evans\u2013Hamkins transfinite game-value results inside Lean.\n\n5. **Ordinal arithmetic reusables.** `add_iSup_nat`, `iSup_mul_succ`, and\n   `iSup_opow_succ` are clean, generally useful facts about how ordinal\n   `+`, `\u00b7`, and `^` interact with countable suprema; they could be stated for\n   arbitrary small index types and contributed upstream.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0828",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7ca0f553",
+    "status": "available",
+    "timestamp": "2026-07-10T01:48:32.389766+00:00",
+    "title": "The file `Catalog/Pythagorean/InfiniteChessOmega.lean` develops an abstract,"
   },
   {
     "consumed_by_exp_id": "",

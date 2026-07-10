@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f1070a48",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: independence ratio, unit distances, and colourings of the plane\n\nThese conjectures are distilled from the present cycle, which isolates the reduction\n\"independence ratio below `1/",
-      "quality_score": 0.8322400000000001,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-07-01T20:10:19",
-      "title": "Existence of a finite unit-distance graph in R² with independence ratio below 1/4"
-    },
-    {
       "cycle_id": "a725bb00",
       "domain": "Applications",
       "key_insight": "# Future Directions — Metric embeddings of the Petersen graph into abelian Cayley graphs\n\nThis cycle established a clean two-part obstruction: a *metric* principle (an\nisometric image of an edge is an",
@@ -499,19 +489,19 @@
       "theorem_count": 751,
       "timestamp": "2026-07-10T01:14:02",
       "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
+    },
+    {
+      "cycle_id": "7ca0f553",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions\n\nThe file `Catalog/Pythagorean/InfiniteChessOmega.lean` develops an abstract,\nfaithful model of winning game trees and their **ordinal game values**, and\nproves that the values `ω`",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 61,
+      "timestamp": "2026-07-10T01:48:37",
+      "title": "Infinite Chess: Checkmate in Omega Moves"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f589dfb5",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Schnorr Σ-protocol (derived from this cycle)\n\nThis cycle proved, on top of the catalog's `SchnorrIdentification` and `SchnorrFiatShamir`:\nknowledge soundness for arbitrary public",
-      "quality_score": 0.55062,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T23:19:56",
-      "title": "Zero-Knowledge Proofs: Schnorr Protocol"
-    },
     {
       "cycle_id": "60145036",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 751,
       "timestamp": "2026-07-10T01:14:02",
       "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
+    },
+    {
+      "cycle_id": "7ca0f553",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions\n\nThe file `Catalog/Pythagorean/InfiniteChessOmega.lean` develops an abstract,\nfaithful model of winning game trees and their **ordinal game values**, and\nproves that the values `ω`",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 61,
+      "timestamp": "2026-07-10T01:48:37",
+      "title": "Infinite Chess: Checkmate in Omega Moves"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "244691c2",
-      "domain": "Applications",
-      "name": "det_l",
-      "quality": 0.8009580000000001
-    },
-    {
-      "cycle_id": "242f16a7",
-      "domain": "Novelty",
-      "name": "cyc_def",
-      "quality": 0.79104
-    },
-    {
-      "cycle_id": "242f16a7",
-      "domain": "Novelty",
-      "name": "zmod_m_add_m",
-      "quality": 0.79104
-    },
     {
       "cycle_id": "242f16a7",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "recipe_trichotomy",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "7ca0f553",
+      "domain": "Pythagorean",
+      "name": "deforms",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "7ca0f553",
+      "domain": "Pythagorean",
+      "name": "LipschitzWith",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "7ca0f553",
+      "domain": "Pythagorean",
+      "name": "ApproxLipschitzWith",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-10T01:14:02",
+  "last_updated": "2026-07-10T01:48:37",
   "open_questions": [
     {
       "context": "Main results (all sorry-free):; sorry-free, to an explicit finite list of quartic Thue equations whose known; What survived: the entire *structural* reduction is fully formal and sorry-free.",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "3db2ad68",
-        "quality": 0.3935206787878788,
-        "theorems": 6,
-        "title": "Close Proofs: These conjectures continue the research cycle begun in"
-      },
-      {
         "cycle_id": "67990ab1",
         "quality": 0.48928166666666667,
         "theorems": 8,
@@ -3885,6 +3879,12 @@
         "quality": 0.4666111,
         "theorems": 8,
         "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
+      },
+      {
+        "cycle_id": "7ca0f553",
+        "quality": 0.82,
+        "theorems": 61,
+        "title": "Infinite Chess: Checkmate in Omega Moves"
       }
     ],
     "Shared": [
