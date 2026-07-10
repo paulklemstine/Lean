@@ -5313,7 +5313,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sheaf Cohomology of Data: The Topology of Missing Information"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cd868ba0",
     "description": "The information content of a Lean 4 proof is the number of bits needed to specify the proof among all possible proofs of the same theorem. For a theorem T with proof P, the information content is I(P) = -log_2(P(proof of T has length |P|)). Conjecture: the expected information content of a proof of a theorem with statement length n is I(n) = Theta(n * log(n)). This means that proofs are typically longer than their statements by a factor of log(n), matching the known results on proof complexity. Moreover, the search problem (finding a proof given the theorem) has time complexity 2^{I(n)} = 2^{Theta(n * log(n))}, which matches the complexity of brute-force search over all proofs of length n * log(n). Conjecture: proof search in Lean 4 is EXPTIME-hard, and the average-case complexity of finding a proof of a random theorem of length n is 2^{Theta(n)} (exponential in n, not n*log(n), because most random theorems are unprovable). Test: measure the length of Lean 4 proofs vs theorem statement length for 1000 theorems in Mathlib and verify I(n) ~ n * log(n). Impact: proof search has fundamental information-theoretic limits. Finding a proof is exponentially harder than verifying one.",
     "domains": [
       "Novelty",
@@ -5323,7 +5323,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.78,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T17:39:51.525996+00:00",
     "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proof?"
   },

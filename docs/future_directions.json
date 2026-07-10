@@ -26211,11 +26211,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "cd868ba0",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -26228,7 +26228,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0924",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-10T17:56:26.950407+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -26243,7 +26243,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-10T17:39:51.525996+00:00",
       "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proof?"
@@ -28482,6 +28482,7 @@
     "zero-in-sequence": 1
   },
   "selection_log": [
+    "famous_subtask",
     "famous_subtask",
     "famous_subtask"
   ]
