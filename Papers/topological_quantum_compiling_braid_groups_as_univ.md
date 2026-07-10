@@ -1,63 +1,61 @@
-# Computational Evidence — Topological Quantum Compiling (Fibonacci anyons, k = 5)
+# Computational Evidence: Reduced Burau representation of `B₄`
 
-This note records the small-case computations that informed the formal results
-in `FibonacciAnyonBraid.lean` and `FibonacciMatrixInfiniteOrder.lean`.
+All computations below were carried out in Lean 4 / Mathlib over `ℚ` (exact
+arithmetic, no floating point) and are reproduced by the theorems in
+`BurauB4.lean`.
 
-## 1. The Fibonacci loop value
+## 1. The representation and its matrices
 
-For the Jones / Temperley–Lieb representation at the root of unity
-`A = e^{2πi/5}`, the loop value is `δ = -(A² + A⁻²) = 2·cos(π/5)`.
+For a parameter `t`, the reduced Burau representation of `B₄` is 3-dimensional
+(`n − 1 = 3`), matching the "`3 × 3` matrices" of the prompt:
 
-Numerically `2·cos(π/5) = 1.6180339887… = (1 + √5)/2 = φ` (the golden ratio).
+```
+σ₁ ↦ [-t 0 0; 1 1 0; 0 0 1]
+σ₂ ↦ [ 1 t 0; 0 -t 0; 0 1 1]
+σ₃ ↦ [ 1 0 0; 0 1 t; 0 0 -t]
+```
 
-Verified symbolically in Lean via `Real.cos_pi_div_five : cos(π/5) = (1+√5)/4`,
-and `δ² = δ + 1` (`Real.goldenRatio_sq`). This is the defining quadratic of the
-Fibonacci fusion category.
+## 2. Braid relations hold for every parameter (small-case check)
 
-## 2. Powers of the Burau / Fibonacci `Q`-matrix
+Numerically checked `σ₁σ₂σ₁ = σ₂σ₁σ₂`, `σ₂σ₃σ₂ = σ₃σ₂σ₃`, `σ₁σ₃ = σ₃σ₁` at
+`t ∈ {2, −1, 3, 5/7, 0}` — all `true`. This is then *proved for all `t`* over any
+commutative ring (`braid_rel_12/23/13`).
 
-`Q = !![1,1;1,0]`. Computed in Lean with `#eval`:
+Determinant: `det(σᵢ) = −t` for each generator (checked, then proved).
 
-| n | Qⁿ                | Fibonacci reading |
-|---|-------------------|-------------------|
-| 1 | `!![1,1;1,0]`     | `!![F2,F1;F1,F0]` |
-| 2 | `!![2,1;1,1]`     | `!![F3,F2;F2,F1]` |
-| 3 | `!![3,2;2,1]`     | `!![F4,F3;F3,F2]` |
-| 5 | `!![8,5;5,3]`     | `!![F6,F5;F5,F4]` |
+## 3. Counterexample hunt for "always universal"
 
-Pattern: `Qⁿ⁺¹ = !![F(n+2),F(n+1);F(n+1),F(n)]` (proved as `Q_pow`).
-The off-diagonal entry `F(n+1) ≥ 1` is never `0`, so `Qᵐ ≠ I` for every `m ≥ 1`
-— hence `Q` has **infinite order**. The eigenvalues of `Q` are `φ` and `-1/φ`;
-`|φ| > 1` is the hyperbolicity that forces infinite order. This is the discrete
-shadow of an irrational rotation angle in `SU(3)`.
+The prompt suggests braiding is universal. We tested the parameter dependence.
 
-OEIS: the entry sequence is the Fibonacci numbers, **A000045**
-(0,1,1,2,3,5,8,13,…).
+* `t = 1`: `σᵢ² = I` for `i = 1,2,3` (checked and proved, `burau_involution_*`).
+  The image is then the permutation representation of `S₄`, which is **finite**.
+  → **Counterexample to "braiding is universal for every parameter".** The
+  density conjecture is inherently parameter-dependent.
 
-## 3. The Burau braid `σ₁σ₂⁻¹`
+* `t = −1`: generators lie in `SL₃(ℤ)` (`det = 1`). We searched short words for
+  an infinite-order element:
+    - `σ₁σ₂σ₃` has char. poly `(x−1)(x²+1)` → eigenvalues `1, ±i` → **order 4**.
+    - `σ₁σ₂` has char. poly `(x−1)(x²−x+1)` → 6th roots of unity → **finite**.
+    - `σ₁σ₃ = [1 0 0; 1 1 −1; 0 0 1] = I + N` with `N ≠ 0`, `N² = 0`
+      → **infinite order** (unipotent). Powers: `(σ₁σ₃)ⁿ = I + nN`, all distinct.
 
-With the explicit `B₃` Jones-specialization Burau matrices
-`σ₁ ↦ !![1,1;0,1]`, `σ₂ ↦ !![1,0;-1,1]`:
+  This last element is the witness formalized as `braidW`; it proves the image is
+  infinite (`braidW_infinite_order`, `braidW_pow_injective`).
 
-* `σ₁σ₂σ₁ = σ₂σ₁σ₂ = !![0,1;-1,1]` — the braid relation holds (`burau_braid_relation`).
-* `σ₂ · σ₂⁻¹ = I` with `σ₂⁻¹ ↦ !![1,0;1,1]` (`s2_mul_s2inv`).
-* `σ₁σ₂⁻¹ = !![2,1;1,1] = Q²` (`burau_word_eq_Q_sq`), exhibiting an explicit
-  braid of infinite order.
+* Non-commutativity: `σ₁σ₂ ≠ σ₂σ₁` at `t = −1` (checked, proved
+  `burau_noncommute`), so the image is non-abelian.
 
-By contrast `σ₁σ₂ ↦ !![0,1;-1,1]` is *elliptic* (order 6), so the
-infinite-order phenomenon is genuinely word-dependent — a non-trivial check that
-ruled out the naive conjecture "every length-2 braid word is infinite order".
+## 4. Summary table (`t = −1`, over `ℚ`)
 
-## 4. Counterexample hunt for the commutator identity
+| element      | determinant | order       |
+|--------------|-------------|-------------|
+| `σ₁`         | 1           | ∞ (unipotent) |
+| `σ₁σ₂`       | 1           | 6           |
+| `σ₁σ₂σ₃`     | 1           | 4           |
+| `σ₁σ₃`       | 1           | ∞ (unipotent) |
 
-Tested `[jonesOp A X, jonesOp A Y] = A⁻² [X,Y]` symbolically: the scalar cross
-terms `(A·A⁻¹)` cancel only because the base field is commutative. Over a
-non-commutative scalar ring the identity would fail — recorded as the boundary
-of `jonesOp_commutator`.
+## 5. OEIS
 
-## Conclusion
-
-The computational landscape is fully consistent with the two formalized pillars
-(non-abelian braiding + an infinite-order braid). No counterexamples were found.
-The full analytic density-in-`SU(3)` claim was *not* tested numerically here and
-remains a future direction.
+No integer sequence was central to the formalized claims, so no OEIS lookup
+applies. The entry sequence of `(σ₁σ₃)ⁿ` is simply `(σ₁σ₃)ⁿ_{2,1} = n`
+(the identity map `n ↦ n`), which is what forces infinite order.
