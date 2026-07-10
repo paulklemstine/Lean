@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0c573935",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Surreal Topology\n\n## What was proved\n\nThe surreal-topology deliverable establishes a cross-domain bridge between\nConway's surreal numbers (combinatorial game theory / set theory)",
-      "quality_score": 0.7426819999999998,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-08T20:32:40",
-      "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
-    },
-    {
       "cycle_id": "492f9d48",
       "domain": "Algebra",
       "key_insight": "# Future Directions — Split Geometry\n\nThe file `Algebra/SplitGeometry.lean` formalizes, with complete proofs and no\n`sorry`, the algebraic/analytic skeleton of the Split Geometry:\n\n* the metric `ds² =",
@@ -499,19 +489,19 @@
       "theorem_count": 38,
       "timestamp": "2026-07-10T14:00:20",
       "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
+    },
+    {
+      "cycle_id": "e40b9050",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Algebraic Geometry of Neural Decision Boundaries\n\nThis cycle established that a rectified-linear classifier's decision boundary is\na *tropical hypersurface*, and that its algebrai",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-10T14:16:31",
+      "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c4e68c8d",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Signed Total Roman Domination and the Complexity Frontier\n\nThis cycle established a sharp structural fact: in a graph of minimum degree at least one,\na single vertex of degree th",
-      "quality_score": 0.6812400000000001,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-01T13:02:10",
-      "title": "STRD Domatic Number Equals One for Graphs with a Degree-3 Vertex"
-    },
     {
       "cycle_id": "fb9fd2df",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 38,
       "timestamp": "2026-07-10T14:00:20",
       "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
+    },
+    {
+      "cycle_id": "e40b9050",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Algebraic Geometry of Neural Decision Boundaries\n\nThis cycle established that a rectified-linear classifier's decision boundary is\na *tropical hypersurface*, and that its algebrai",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-10T14:16:31",
+      "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "39669115",
-      "domain": "Applications",
-      "name": "isSudokuSolution_iff_properColoring",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "39669115",
-      "domain": "Applications",
-      "name": "sudokuVal_lt",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "39669115",
-      "domain": "Applications",
-      "name": "base_n_unique",
-      "quality": 0.83
-    },
     {
       "cycle_id": "7e49f0c7",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "shift_apply",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "e40b9050",
+      "domain": "Novelty",
+      "name": "monomial_le_tropVal",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "e40b9050",
+      "domain": "Novelty",
+      "name": "exists_monomial_eq_tropVal",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "e40b9050",
+      "domain": "Novelty",
+      "name": "tropVal_convex",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-10T14:00:20",
+  "last_updated": "2026-07-10T14:16:31",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "4936bb72",
-        "quality": 0.85,
-        "theorems": 11,
-        "title": "Deepening: The Zeta Function of a Graph: Number Theory on Networks"
-      },
-      {
         "cycle_id": "7e49f0c7",
         "quality": 0.83,
         "theorems": 17,
@@ -3637,6 +3631,12 @@
         "quality": 0.72,
         "theorems": 10,
         "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
+      },
+      {
+        "cycle_id": "e40b9050",
+        "quality": 0.82,
+        "theorems": 19,
+        "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
       }
     ],
     "NumberTheory": [

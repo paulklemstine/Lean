@@ -116,7 +116,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5125e235",
     "description": "Building on cycle 92e61cee (Q=0.830), which proved 11 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The leading $1/N$ term in the heat-kernel expansion vanishes under the given conditions.",
     "domain_bridges": [],
     "domains": [
@@ -128,7 +128,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "92e61cee",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T13:11:38.329718+00:00",
     "title": "Deepening: Conjecture on Leading Term Cancellation"
   },
@@ -207,6 +207,25 @@
     "status": "available",
     "timestamp": "2026-07-10T11:50:21.285776+00:00",
     "title": "Deepening: The Arithmetic of Games: Surreal Numbers as Number Fields"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle e40b9050 (Q=0.820), which proved 19 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A neural network with ReLU activation defines a piecewise linear function f: R^n -> R^m. The decision boundary of a binary classifier f: R^n -> R is the set {x : f(x) = 0}, which is a piecewise linear hypersurface. The algebraic variety of the decision boundary is the zero set of the polynomial that",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_e40b9050_f60113bd",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e40b9050",
+    "status": "available",
+    "timestamp": "2026-07-10T14:16:31.072438+00:00",
+    "title": "Deepening: Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
   },
   {
     "ambition_level": "extension",
@@ -515,26 +534,6 @@
     "status": "failed",
     "timestamp": "2026-07-10T04:08:16.263156+00:00",
     "title": "The Fourier Transform of the Riemann Zeta: Hearing the Primes"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "e40b9050",
-    "description": "A neural network with ReLU activation defines a piecewise linear function f: R^n -> R^m. The decision boundary of a binary classifier f: R^n -> R is the set {x : f(x) = 0}, which is a piecewise linear hypersurface. The algebraic variety of the decision boundary is the zero set of the polynomial that best approximates f. Conjecture: for a ReLU network with L layers of widths (n, w_1, ..., w_L, 1), the decision boundary is a piecewise linear hypersurface with at most 2^L * prod w_i regions, and the degree of the best polynomial approximation is at most 2^L. More precisely, the decision boundary V(f) = {x : f(x) = 0} is a tropical hypersurface (a piecewise linear object that is the 'skeleton' of an algebraic variety). The tropical variety of the decision boundary has degree at most 2^L and at most prod_{i=1}^{L} (w_i choose 2) singularities. Conjecture: the VC dimension of a ReLU network with L layers and total width W is at most L * W * log(W), matching the known bound up to log factors. Test: train ReLU networks on synthetic data, extract decision boundaries, and verify they are tropical hypersurfaces with the predicted degree and singularity count. Impact: neural network decision boundaries are tropical varieties. The complexity of the network (L, W) determines the algebraic complexity of the boundary.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0883",
-    "lineage_refs": [],
-    "priority_score": 0.84,
-    "proof_strategy": "A ReLU network f: R^n -> R with L layers computes a piecewise linear function. The number of linear regions is at most prod_{i=1}^{L} sum_{j=0}^{min(n,w_i)} (w_i choose j) (Montufar et al., 2014). For wide networks (w_i >= n): this is at most prod_{i=1}^{L} 2^{w_i-1} = 2^{sum w_i - L}. The decision boundary B = {x : f(x) = 0} is a piecewise linear hypersurface. Each linear piece of f defines a halfspace, and B is the union of boundaries of these halfspaces. The algebraic approximation: by the Weierstrass approximation theorem, there exists a polynomial p of degree d such that ||f - p|| < epsilon. The variety V(p) = {x : p(x) = 0} approximates B. For piecewise linear f with K regions, the degree of p needed is d ~ K^{1/n} (by approximation theory). The tropical variety: V(f) is a tropical hypersurface defined by the tropical polynomial max_j(alpha_j + x . beta_j) where the max is over the linear pieces. The degree of this tropical polynomial is the number of different linear pieces, which is at most 2^L. The singularities of V(f) are points where 3+ linear pieces meet, and there are at most prod (w_i choose 2) such points. Test: train 2-layer and 3-layer ReLU networks on 2D synthetic data, extract the decision boundary, count linear regions and singularities, verify against the bounds.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T11:01:43.864773+00:00",
-    "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
   },
   {
     "ambition_level": "extension",
@@ -10303,6 +10302,26 @@
     "status": "available",
     "timestamp": "2026-07-10T14:00:12.482522+00:00",
     "title": "This project formalizes a rigorous fragment of the \"Galois theory of reversible"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Algebraic Geometry of Neural Decision Boundaries\n\nThis cycle established that a rectified-linear classifier's decision boundary is\na *tropical hypersurface*, and that its algebraic complexity is governed by two\nexact arithmetic laws of the max-plus algebra: monomial counts **add** under a\nrectified-linear activation and **multiply** under composition of independent\nunits. From these findings we distil the following bold, testable conjectures.\n\n## 1. Exact monomial-count recursion for layered networks\n\n**Conjecture.** For a layered rectified-linear network of depth `L` with layer\nwidths `w_1, …, w_L`, the number of affine monomials in the numerator of the\ncomputed tropical rational function satisfies the exact recursion\n`m_{k+1} = m_k + d_k`, where `d_k` is the current denominator count, and hence is\nbounded above by `2^L · ∏_i w_i`; moreover this bound is attained on an open set\nof weights.\n\n**The key insight is** that a rectified-linear activation applied to a tropical\nrational `p ⊖ q` returns `max(p,q) ⊖ q`, so the numerator's monomial set is the\n*disjoint union* of the numerator and denominator sets — turning depth into\naddition and width into multiplication of monomial counts.\n\n**Why now?** The two combining laws (union under activation, product under\ncomposition) have been isolated as clean, weight-independent identities, so the\nrecursion can now be tracked exactly rather than estimated, and the tightness of\nthe classical `2^L` region bound can be tested layer by layer on trained\nnetworks.\n\n## 2. The singular locus is a codimension-two tropical stratum\n\n**Conjecture.** The non-smooth points of the decision boundary — where three or\nmore affine pieces meet — form a tropical stratum of codimension two, and their\nnumber is bounded by `∏_i (w_i choose 2)`.\n\n**The key insight is** that a boundary point is singular exactly when the maximum\ndefining the tropical polynomial is attained by three or more monomials\nsimultaneously, an incidence condition of the same combinatorial type that\ngoverns the vertices of tropical curves.\n\n**Why now?** Having characterized the boundary as the equalizer `{p = q}` of two\ncontinuous convex tropical polynomials, the singular locus can be described\npurely as a multiplicity-of-argmax condition, making the codimension count a\ncombinatorial question about which monomial families tie.\n\n## 3. Curvature-free certified robustness radius\n\n**Conjecture.** Because each tropical polynomial is convex and piecewise linear,\nthe certified robustness radius at a correctly classified point equals the\nclassification margin divided by twice the sum of the two dominant monomial\nslopes — with no dependence on any second-order (curvature) term.\n\n**The key insight is** that convexity forces the local Lipschitz constant to be\nrealized by a single affine piece, so the robustness certificate depends only on\nthe active monomial's weights, not on the global network.\n\n**Why now?** With convexity and continuity of the tropical value established, the\nlocal-to-global reduction needed for a tight, curvature-free certificate is\navailable, and can be benchmarked against gradient-based robustness bounds.\n\n## 4. Depth versus width: an addition/multiplication trade-off law\n\n**Conjecture.** At a fixed total monomial budget `B`, the class of decision\nboundaries expressible by a depth-`L` width-`w` network is strictly richer when\nthe budget is spent on depth (`B ≈ 2^L`) than on width (`B ≈ ∏ w_i`), because\naddition of monomial families under activation produces non-convex boundaries\nunreachable by a single convex tropical polynomial.\n\n**The key insight is** that width alone builds a single convex tropical\npolynomial, whereas depth introduces subtraction (`p ⊖ q`) and thus genuine\ntropical *rationality*, escaping convexity.\n\n**Why now?** The precise split between the additive (activation) and\nmultiplicative (composition) growth mechanisms makes the depth/width expressivity\ngap a concrete, falsifiable comparison rather than a heuristic slogan.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0904",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e40b9050",
+    "status": "available",
+    "timestamp": "2026-07-10T14:16:24.434577+00:00",
+    "title": "That a rectified-linear classifier's decision boundary is"
   },
   {
     "ambition_level": "extension",

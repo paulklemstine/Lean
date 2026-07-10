@@ -1,60 +1,67 @@
-# Computational Evidence — Certificates of minimal rainbow-forest obstructions
+# Computational Evidence
 
-## Setup
+## Object under study
 
-For two matroids on a common ground set `E` with rank functions `r₁, r₂`, Edmonds'
-Matroid Intersection Theorem gives
+For two matroid rank functions `r₁, r₂` on a finite ground set `E` (the edge set of an
+edge-coloured graph), the **Edmonds intersection objective** is
 
-    max |common independent set| = min_{A ⊆ E} ( r₁(A) + r₂(E∖A) ).
+    obj(A) = r₁(A) + r₂(E \ A),   A ⊆ E.
 
-For total rainbow forests, `r₁` is the cycle-matroid rank (forests) and `r₂` the
-partition-matroid rank of the colouring (rainbow sets). The Rainbow Forest Inequality at
-level `t` is the family of inequalities `obj(A) := r₁(A) + r₂(E∖A) ≥ t`. A *minimal /
-tight* obstruction is a configuration with `min_A obj(A) = t − 1`.
+By Edmonds' Matroid Intersection Theorem, `min_A obj(A)` equals the maximum size of a total
+rainbow forest (a common independent set of the graphic matroid `M₁` and the colour
+partition matroid `M₂`).  The **Rainbow Forest Inequality (RFI)** at target `t` says
+`obj(A) ≥ t` for all `A`.
 
-The mission conjecture claims the failing subset `A` is **unique**.
+The mission conjecture: a *minimal obstruction* fails RFI for a *unique* subset `A`.
 
-## Small-case exploration
+## Reading "minimal obstruction" as edge-deletion minimality
 
-We treat `obj` abstractly as a submodular set function and enumerate its minimizers on
-tiny ground sets.
+`G` is an edge-minimal obstruction if RFI fails for `G` but holds for every single-edge
+deletion `G - e` (rank of the deletion equals ambient rank on subsets of `E \ {e}`).
 
-- **|E| = 1 (`E = {e}`).** `obj` takes two values `obj(∅)`, `obj({e})`. Any submodular
-  function is minimized either at a single subset or at both; if the minimum is attained
-  twice the two minimizers are `∅ ⊆ {e}`, comparable.
+### Small-case calculation (ground set `E = {a, b}`, free matroids `r(A) = |A|`)
 
-- **|E| = 2 (`E = {a, b}`).** Enumerate the concave-of-cardinality objective
-  `g(A) = −(|A| − 1)²`, giving values
+| A        | r₁(A) | r₂(Aᶜ) | obj(A) |
+|----------|-------|--------|--------|
+| ∅        | 0     | 2      | 2      |
+| {a}      | 1     | 1      | 2      |
+| {b}      | 1     | 1      | 2      |
+| {a,b}    | 2     | 0      | 2      |
 
-  | A        | ∅  | {a} | {b} | {a,b} |
-  |----------|----|-----|-----|-------|
-  | g(A)     | −1 | 0   | 0   | −1    |
+So `obj ≡ 2`.  For target `t = 3`, RFI fails for **every** subset (4 of them), immediately
+contradicting the "unique failing subset" reading even before deletion.
 
-  The minimum `−1` is attained at **two** subsets, `∅` and `{a,b}`. They are comparable
-  (`∅ ⊆ {a,b}`) and their intersection/union are again minimizers — the minimizers form a
-  2-element chain. This already **refutes uniqueness** while confirming the lattice
-  structure.
+### Deletion test
 
-- **Non-lattice attempt.** The convex variant `(|A| − 1)²` is minimized at the two
-  incomparable singletons `{a}, {b}`, but this function is **not** submodular
-  (`obj(∅)+obj(E) = 2 > 0 = obj({a})+obj({b})`). So incomparable multiple minimizers force
-  a violation of submodularity: the sublattice property is exactly what submodularity buys.
+Delete `a`.  New ground set `{b}`, subsets `∅, {b}`:
 
-## What the evidence says
+| A     | r₁(A) | r₂(({b})\A) | value |
+|-------|-------|-------------|-------|
+| ∅     | 0     | 1           | 1     |
+| {b}   | 1     | 0           | 1     |
 
-1. Multiple failing subsets do occur, so the literal uniqueness conjecture is **false**.
-2. Whenever the objective is genuinely submodular (as matroid-intersection objectives
-   always are), the failing subsets are closed under `∪` and `∩`: they form a sublattice.
-3. Hence a **unique smallest** and a **unique largest** failing subset always exist,
-   sandwiching all the others. Uniqueness of a single failing subset is the degenerate case
-   where these two extremes coincide.
+Both values are `< 3`, so `G - a` **still fails** RFI.  By symmetry so does `G - b`.  The
+obstruction is *not* repaired by any deletion — there is no edge-minimal obstruction.
 
-These observations drove the formal development in `Obstruction.lean`, where the sublattice
-property, the extremal certificates, and an explicit two-certificate counterexample are all
-established.
+## Counterexample hunt / structural finding
 
-## OEIS / counterexample notes
+The deletion table is not an accident.  For any monotone `r₁, r₂` and any `A ⊆ E`, put
+`A' = A \ {e} ⊆ E \ {e}`.  Then
 
-No integer sequence is intrinsic to the qualitative statement, so no OEIS lookup applies.
-The counterexample hunt (above) succeeded on the smallest non-trivial ground set, so no
-larger search was needed.
+    obj_{G-e}(A') = r₁(A\{e}) + r₂((E\{e}) \ A)  ≤  r₁(A) + r₂(E\A) = obj_G(A),
+
+using monotonicity twice (`A\{e} ⊆ A` and `(E\{e})\A ⊆ E\A`).  Hence
+`min obj_{G-e} ≤ min obj_G`: **RFI-failure can only propagate to deletions, never be
+cured.**  Therefore an edge-minimal obstruction cannot exist.  This is proved formally as
+`no_edge_minimal_obstruction`.
+
+## OEIS
+
+No integer sequence is central to the claim; the content is a monotonicity/structural
+inequality rather than an enumeration, so an OEIS search is not applicable.
+
+## Conclusion
+
+The evidence points not to a uniqueness phenomenon but to a *collapse*: the certifying
+subset of an RFI obstruction survives every edge deletion.  This motivated the formal
+theorems in `Speculative/RainbowForestDeletion.lean`.

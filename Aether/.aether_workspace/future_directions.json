@@ -23925,7 +23925,7 @@
       "depth_estimate": 3,
       "description": "# Stochastic Galois Theory over Finite Fields — Results and Future Directions\n\n## What was proved (all `sorry`-free, axioms `propext`/`Classical.choice`/`Quot.sound`)\n\n**`Catalog/Novelty/StochasticGaloisRoots.lean` — the expected-roots identity.**\nFor a monic degree-`n` polynomial over a finite commutative ring `K` (`q = |K|`, `n ≥ 1`),\nencoded by its coefficient vector `v : Fin n → K`,\n```\n∑ v, #{ r : K | monicEval n v r = 0 } = q^n            (total_root_incidences)\n```\ni.e. **the expected number of roots of a uniformly random monic degree-`n` polynomial is\nexactly `1`**. The proof is a clean double count: swap the sum over polynomials with the\nsum over base points, and observe that for a fixed `r` exactly `q^{n-1}` polynomials\nvanish at `r` (the constant coefficient is forced). A specialization\n`total_root_incidences_zmod` phrases it over `F_p`.\n\nThis is the cleanest universally-true instance of the \"random polynomial = random\npermutation\" dictionary: roots ↔ linear factors ↔ **fixed points of the Frobenius\npermutation**, and a uniform permutation in `S_n` also has exactly one fixed point on\naverage.\n\n**`Catalog/Novelty/StochasticGaloisDegreeTwo.lean` — exact degree-2 statistics.**\nOver a finite field `K` of odd characteristic (`q = |K|`):\n```\n2 · #{ reducible quadratics }   = q(q+1)                (card_reducible)\n2 · #{ irreducible quadratics } = q(q-1)                (card_irreducible)\n#{ quadratics with a repeated root } = q                (card_double_root)\n```\nproved from the two structural facts `sum_nroots` (total incidences `= q^2`) and\n`nroots_le_two` (a quadratic has `≤ 2` roots), via completing the square\n(`nroots_eq_disc`) and the square-root count lemmas. Consequences: proportion irreducible\n`→ 1/2` (the `S_2` `2`-cycle fraction) and proportion with vanishing discriminant `= 1/q`.\n\n**`Catalog/Novelty/StochasticGaloisCyclic.lean` — a structural correction.**\n```\nIsEmpty ((L ≃ₐ[K] L) ≃* Equiv.Perm (Fin n))   for finite L and n ≥ 3   (finiteField_gal_ne_symm)\n```\nOver a finite field every Galois group is cyclic (Frobenius), hence abelian, hence never\nisomorphic to the non-abelian `S_n` for `n ≥ 3`. The prompt's conjecture that\n`P(Gal = S_n) → 1` is therefore false at the group-theoretic level: `P(Gal = S_n) = 0`\nfor `n ≥ 3`. What survives is the *cycle-type/factorization* heuristic, not the\n\"maximal group\" one.\n\n## The corrected picture\n\nOver `ℚ`, Hilbert irreducibility gives `Gal = S_n` for almost all polynomials. Over `F_q`\nthis fails: Galois groups are cyclic. The right analogue is **Frobenius equidistribution**\n— the factorization type of a random monic degree-`n` polynomial (the cycle type of\nFrobenius on the roots) is distributed like the cycle type of a uniform random permutation\nin `S_n` as `q → ∞`. The proved theorems are the two cleanest exact cases of this:\nthe fixed-point count in all degrees, and the complete `n = 2` distribution.\n\n## Concrete next steps\n\n1. **Degree-3 full distribution.** Prove `#{irreducible monic cubics} = (q^3 - q)/3` and\n   the split of reducible cubics into `(x-r)(x-s)(x-t)` types, matching the `S_3` cycle\n   distribution `{3-cycles : 1/3, transpositions : 1/2, identity : 1/6}` in the limit. The\n   incidence method here generalizes: also count `∑ (#roots choose 2)` to access pair\n   statistics.\n\n2. **Gauss's formula in general.** Formalize `I_q(n) = (1/n) ∑_{d|n} μ(d) q^{n/d}` for the\n   number of monic irreducibles of degree `n` over `F_q`, giving proportion `→ 1/n`, the\n   `n`-cycle fraction. Mathlib has `X^{q^n} - X` factoring through irreducibles of degree\n   `d | n`; the Möbius inversion is the missing piece.\n\n3. **Higher moments / cycle index.** Prove that the `k`-th factorial moment of the number\n   of degree-`1` factors tends to `1` (Poisson(1) limit), the polynomial shadow of the\n   fixed-point Poisson law for random permutations. The `k = 1` case is exactly\n   `total_root_incidences`; `k = 2` needs the ordered-pair incidence count.\n\n4. **Squarefree density.** Prove `#{monic squarefree degree-n} = q^n - q^{n-1}` for\n   `n ≥ 2` (discriminant `≠ 0`), so the non-separable proportion is exactly `1/q` — the\n   general-`n` version of `card_double_root`, and the honest reading of the prompt's\n   `P(discriminant = 0)` claim.\n\n5. **Chebotarev over `F_q(t)`.** Frame the above as the function-field Chebotarev density\n   theorem for `S_n`-covers, connecting to the arithmetic (rather than geometric)\n   monodromy that genuinely can be `S_n`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Computation"
@@ -24294,7 +24294,7 @@
       "depth_estimate": 3,
       "description": "A periodic rhythm in music is a function f: Z -> {0, 1} that is periodic: f(n + p) = f(n) for some period p. The symmetry group of a rhythm with period p is a subgroup of Z/pZ. But music also has 2D patterns: a drum pattern is a function g: Z x Z -> {0, 1} (onset grid in time x pitch). The symmetry group of a drum pattern is a subgroup of Z x Z, which is a wallpaper group in 1D. In 2D, the wallpaper groups classify all possible symmetries of periodic patterns. There are exactly 17 wallpaper groups in 2D. Conjecture: the 17 wallpaper groups correspond to 17 fundamentally different types of rhythmic structure in music. Specifically: (1) p1: no symmetry (free rhythm), (2) p2: 2-fold rotational symmetry (call-and-response), (3) pm: mirror symmetry (palindrome), (4) pg: glide reflection (canon), (5) cm: mirror + glide (round), (6) pmm: double mirror (bilateral palindrome), (7) pmg: mirror + glide (inverted canon), (8) pgg: double glide (double canon), (9) cmm: double mirror + glide (round + palindrome), (10) p4: 4-fold rotation (4-bar cycle), (11) p4m: 4-fold + mirrors (variations on a theme), (12) p4g: 4-fold + glides (inverted variations), (13) p3: 3-fold rotation (3-bar blues), (14) p3m1: 3-fold + mirrors, (15) p31m: 3-fold + glides, (16) p6: 6-fold rotation (whole-tone scale symmetry), (17) p6m: 6-fold + mirrors (maximal symmetry, the 'perfect' rhythm). Test: classify 1000 drum patterns by their wallpaper group and verify the distribution matches musical practice. Impact: there are exactly 17 types of rhythm in music, classified by the wallpaper groups.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Algebra"
@@ -24622,7 +24622,7 @@
       "depth_estimate": 3,
       "description": "The Collatz conjecture (3n+1 problem) states that every positive integer eventually reaches 1 under the map T(n) = n/2 (n even) or 3n+1 (n odd). Despite being verified up to 2^68, a proof remains elusive. Conjecture: the Collatz conjecture is independent of Peano Arithmetic (PA). That is, PA can neither prove nor refute the statement 'for all n, the Collatz sequence starting at n eventually reaches 1'. This would mean the conjecture is TRUE (in the standard model) but UNPROVABLE in PA. The argument: the Collatz map is a Diophantine function that grows faster than any provably total computable function in PA. Specifically, the halting problem for Collatz (does the orbit of n reach 1?) is at least as hard as the consistency of PA, which by Godel's second incompleteness theorem is unprovable in PA. Conjecture: the Collatz conjecture is equivalent to Con(PA) over a weak base theory, meaning that if PA is consistent, then PA does not prove Collatz. Test: formalize the equivalence between Collatz and Con(PA) in Lean 4. Show that a counterexample to Collatz (an n whose orbit diverges or cycles) would imply not-Con(PA). Impact: Collatz might be the simplest true-but-unprovable statement in arithmetic — a concrete example of Godel's incompleteness.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Logic"
@@ -24786,7 +24786,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Turing's Flowers: Morphogenesis as Algebraic Geometry\n\nThe file `Catalog/Novelty/TuringFlowersAlgebraicGeometry.lean` establishes the\ndegree/Chebyshev correspondence and the boundedness dichotomy that separates the\nthree linear-onset morphological classes (spots, stripes, labyrinths). Twelve\ntheorems are proved, all `sorry`-free. Natural next steps:\n\n## 1. Genus from complexification\nThe strongest form of the guiding conjecture reads pattern topology from the genus of\nthe complexified projective curve `T_n(X) − c = 0`. Formalizing this needs the theory\nof real/complex plane curves (smooth models, genus–degree formula\n`g = (d−1)(d−2)/2`, real ovals vs. non-compact branches). This is presently the main\nmissing piece; Mathlib does not yet carry the genus–degree formula in usable form.\n\n## 2. Exact degree of arbitrary multi-mode superpositions\nShow that a superposition `∑_{k=1}^{m} a_k cos(k θ)` with `a_m ≠ 0` is a polynomial of\ndegree exactly `m` in `X = cos θ` (leading coefficient `2^{m-1} a_m`). This upgrades\n`mode_as_poly` from single modes to genuine patterns and pins the algebraic degree to\nthe highest active mode.\n\n## 3. Two-dimensional level sets and lattices\nExtend the 1-D `cos(nx)` analysis to planar modes `cos(k·x)` for wave vectors on a\nhexagonal/square lattice, and connect the number of lattice orbits to the algebraic\ndegree of the resulting real variety (the sextic case corresponds to the classic\nhexagonal three-mode instability).\n\n## 4. Sharpness of the ellipse bound\n`ellipse_bounded` uses the loose radius `c/a + c/b`. Replace it with the sharp\nenclosing radius `√(c/min(a,b))` and prove tightness by exhibiting a point achieving\nit, giving a metric characterization of spot size in terms of diffusion anisotropy.\n\n## 5. Periodicity lattice of stripes\n`stripe_periodic` records invariance under a single generator `2π`. Formalize the full\ntranslation lattice and the quotient torus, framing a stripe pattern as a function on\n`ℝ / 2πℤ` and linking mode count to winding number.\n\n## 6. Link to the PDE\nConnect the algebraic level sets back to genuine reaction–diffusion dynamics: derive\nthe linear dispersion relation, identify the band of unstable wave numbers, and show\nthat the truncated Fourier expansion at onset lands in the polynomial class studied\nhere.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Algebra",
         "Geometry"
@@ -25114,7 +25114,7 @@
       "depth_estimate": 3,
       "description": "The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surface V(f) = {x : f(x) = 0} is a piecewise linear hypersurface. Conjecture: every rational homology class in H_{n-2}(V(f), Q) is represented by an algebraic cycle (a subvariety of V(f) of codimension 1). Since V(f) is piecewise linear, its homology groups are finitely generated and every cycle is a formal sum of linear pieces. Each linear piece is an algebraic cycle (a hyperplane section). Conjecture: the piecewise linear Hodge conjecture holds — every homology class in V(f) is a sum of hyperplane sections. This is TRUE for piecewise linear varieties because every face of a polyhedron is cut out by a linear equation. The deeper conjecture: for a ReLU network with L layers and widths (n, w_1, ..., w_L, 1), the Hodge numbers h^{p,q}(V(f)) satisfy h^{p,q} <= (w_1 choose p) * (w_L choose q) * prod_{i=2}^{L-1} w_i. Test: compute H_{n-2}(V(f)) for small ReLU networks and verify that every class is represented by hyperplane sections. Impact: the Hodge conjecture is trivially true for neural network decision surfaces. The non-trivial content is the BOUND on Hodge numbers.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Novelty",
         "Algebra"
@@ -25196,7 +25196,7 @@
       "depth_estimate": 3,
       "description": "An automatic sequence is one generated by a deterministic finite automaton (DFA). The Thue-Morse sequence 01101001... is 2-automatic. The Rudin-Shapiro sequence is 2-automatic. The paperfolding sequence is 2-automatic. Conjecture: a sequence (a_n) is k-automatic iff its generating function G(x) = sum a_n x^n is algebraic over Q(x) of degree at most k. This is known (Christol's theorem): a formal power series over F_k is algebraic iff its coefficient sequence is k-automatic. But Christol's theorem only works over finite fields. For sequences over Z (or Q), the conjecture is: a sequence (a_n) over Z is k-automatic iff it satisfies a linear recurrence with polynomial coefficients of degree at most k-1 in n. Conjecture: the halting problem for k-automatic sequences is decidable: given a DFA that generates (a_n), it is decidable whether there exists n such that a_n = 0 (the 'zero in sequence' problem). This is TRUE for k-automatic sequences (by the pumping lemma: if the DFA accepts any string, it accepts an infinite number, so a_n = 0 infinitely often). But for morphic sequences (generalizations of automatic sequences), the problem is open. Conjecture: the zero-in-sequence problem for morphic sequences is decidable. Test: implement the decidability algorithm for k-automatic sequences and verify on 100 test sequences. Impact: automatic sequences have decidable halting problems. The boundary between decidability and undecidability in sequence theory is the boundary between automatic and morphic.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Novelty",
         "Logic"
@@ -25319,7 +25319,7 @@
       "depth_estimate": 3,
       "description": "An argumentation framework AF = (A, R) consists of a set of arguments A and an attack relation R subset A x A. The preferred extensions of AF are the maximal admissible sets (subsets S of A that defend themselves against all attacks and are maximal with this property). Conjecture: the preferred extensions of AF form a simplicial complex K(AF) on the vertex set A. The homology groups H_n(K(AF)) measure the 'holes' in the argumentation structure. H_0 measures the number of connected components (independent debate threads). H_1 measures circular arguments (cycles where each argument attacks the next, and the last attacks the first). H_2 measures 'spheres' of arguments (3D cycles where arguments form a spherical shell). Conjecture: for any argumentation framework, the Euler characteristic chi(K(AF)) = |A| - |R| + sum_{n>=2} (-1)^n * dim(H_n) equals |preferred extensions| - |grounded extension size|. This connects the topology of the argument to its semantics. Test: construct K(AF) for 100 argumentation frameworks from debate transcripts, compute homology groups, and verify the Euler characteristic formula. Impact: arguments have topology. Circular arguments are 1-holes, and 3D argument spheres are 2-holes. The shape of a debate is a topological invariant.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Logic"
@@ -26232,23 +26232,23 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "5125e235",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
       "description": "Building on cycle 92e61cee (Q=0.830), which proved 11 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The leading $1/N$ term in the heat-kernel expansion vanishes under the given conditions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Novelty"
       ],
       "github_issue": 0,
       "id": "push_92e61cee_15280faa",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-10T14:16:43.672852+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -26263,7 +26263,7 @@
       "source": "",
       "source_exp_id": "92e61cee",
       "source_path": "Conjecture on Leading Term Cancellation",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-10T13:11:38.329718+00:00",
       "title": "Deepening: Conjecture on Leading Term Cancellation"
@@ -26507,6 +26507,46 @@
       "thread_id": "",
       "timestamp": "2026-07-10T09:26:12.203685+00:00",
       "title": "Deepening: Cryptography from Chaos: Encrypting with the Logistic Map"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle e40b9050 (Q=0.820), which proved 19 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A neural network with ReLU activation defines a piecewise linear function f: R^n -> R^m. The decision boundary of a binary classifier f: R^n -> R is the set {x : f(x) = 0}, which is a piecewise linear hypersurface. The algebraic variety of the decision boundary is the zero set of the polynomial that",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Novelty"
+      ],
+      "github_issue": 0,
+      "id": "push_e40b9050_f60113bd",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9199999999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "e40b9050",
+      "source_path": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-10T14:16:31.072438+00:00",
+      "title": "Deepening: Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
     },
     {
       "ambition_level": "extension",
