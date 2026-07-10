@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2f34538d",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Prime-Base Binomial Congruences\n\nThis cycle established that, for every fixed base `q`, every prime `p` satisfies\nthe congruence `C(qp, p) ≡ qᵖ (mod p)` — both sides collapse to",
-      "quality_score": 0.7903600000000002,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-07-03T22:28:46",
-      "title": "Infinitely Many Solutions to Prime-Base Binomial Congruences"
-    },
-    {
       "cycle_id": "3a1da3d1",
       "domain": "Applications",
       "key_insight": "# Future Directions — Vampire Numbers and the Fang Congruence\n\n## 1. The mod-9 residue distribution is asymptotically saturated\nEvery digit-preserving factorization forces `(x-1)(y-1) ≡ 1` modulo nine",
@@ -499,19 +489,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-10T09:58:06",
       "title": "Deepening: Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology"
+    },
+    {
+      "cycle_id": "ff42203a",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nThis project formalizes the *order-theoretic bridge* connecting structural\ngraph/matroid theory (Robertson–Seymour forbidden minors) with commutative\nalgebra (Dickson's lemma / fi",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-10T09:58:20",
+      "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e6cf72d1",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures emerging from this cycle's two findings:\n(i) the concave bump is rational but not polynomial in the max-plus world, the\nobstruction being convexity;",
-      "quality_score": 0.65752,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-06-30T12:19:05",
-      "title": "Universal Approximation: Quantitative Bounds"
-    },
     {
       "cycle_id": "65d4cbfc",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-10T09:58:06",
       "title": "Deepening: Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology"
+    },
+    {
+      "cycle_id": "ff42203a",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nThis project formalizes the *order-theoretic bridge* connecting structural\ngraph/matroid theory (Robertson–Seymour forbidden minors) with commutative\nalgebra (Dickson's lemma / fi",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-10T09:58:20",
+      "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6490730e",
-      "domain": "MachineLearning",
-      "name": "negBinom_conv",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "6490730e",
-      "domain": "MachineLearning",
-      "name": "sum_antidiagonalTuple_succ",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "6490730e",
-      "domain": "MachineLearning",
-      "name": "multinomial_conv",
-      "quality": 0.83
-    },
     {
       "cycle_id": "4d9b342d",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "pairColors_card",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "ff42203a",
+      "domain": "Novelty",
+      "name": "This",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "ff42203a",
+      "domain": "Novelty",
+      "name": "asserts",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "ff42203a",
+      "domain": "Novelty",
+      "name": "says",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-10T09:58:06",
+  "last_updated": "2026-07-10T09:58:20",
   "open_questions": [
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "c05d7abb",
-        "quality": 0.82,
-        "theorems": 27,
-        "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
-      },
-      {
         "cycle_id": "14000bf9",
         "quality": 0.82,
         "theorems": 46,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 19,
         "title": "Deepening: Graph Coloring with Emotions: The Chromatic Polynomial Meets Psycholo"
+      },
+      {
+        "cycle_id": "ff42203a",
+        "quality": 0.72,
+        "theorems": 13,
+        "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
       }
     ],
     "NumberTheory": [

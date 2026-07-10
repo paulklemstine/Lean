@@ -249,7 +249,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9f734f3e",
     "description": "Building on cycle 3fa70466 (Q=0.790), which proved 10 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In 1952, Turing showed that reaction-diffusion equations produce patterns (spots, stripes, spirals) that explain biological morphogenesis. But Turing patterns are solutions to PDEs, which are hard to analyze. Conjecture: Turing patterns are algebraic varieties. Specifically, the zero set of a Turing",
     "domain_bridges": [],
     "domains": [
@@ -261,7 +261,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "3fa70466",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T08:38:10.188131+00:00",
     "title": "Deepening: Turing's Flowers: Morphogenesis as Algebraic Geometry"
   },

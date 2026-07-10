@@ -23925,7 +23925,7 @@
       "depth_estimate": 3,
       "description": "# Stochastic Galois Theory over Finite Fields — Results and Future Directions\n\n## What was proved (all `sorry`-free, axioms `propext`/`Classical.choice`/`Quot.sound`)\n\n**`Catalog/Novelty/StochasticGaloisRoots.lean` — the expected-roots identity.**\nFor a monic degree-`n` polynomial over a finite commutative ring `K` (`q = |K|`, `n ≥ 1`),\nencoded by its coefficient vector `v : Fin n → K`,\n```\n∑ v, #{ r : K | monicEval n v r = 0 } = q^n            (total_root_incidences)\n```\ni.e. **the expected number of roots of a uniformly random monic degree-`n` polynomial is\nexactly `1`**. The proof is a clean double count: swap the sum over polynomials with the\nsum over base points, and observe that for a fixed `r` exactly `q^{n-1}` polynomials\nvanish at `r` (the constant coefficient is forced). A specialization\n`total_root_incidences_zmod` phrases it over `F_p`.\n\nThis is the cleanest universally-true instance of the \"random polynomial = random\npermutation\" dictionary: roots ↔ linear factors ↔ **fixed points of the Frobenius\npermutation**, and a uniform permutation in `S_n` also has exactly one fixed point on\naverage.\n\n**`Catalog/Novelty/StochasticGaloisDegreeTwo.lean` — exact degree-2 statistics.**\nOver a finite field `K` of odd characteristic (`q = |K|`):\n```\n2 · #{ reducible quadratics }   = q(q+1)                (card_reducible)\n2 · #{ irreducible quadratics } = q(q-1)                (card_irreducible)\n#{ quadratics with a repeated root } = q                (card_double_root)\n```\nproved from the two structural facts `sum_nroots` (total incidences `= q^2`) and\n`nroots_le_two` (a quadratic has `≤ 2` roots), via completing the square\n(`nroots_eq_disc`) and the square-root count lemmas. Consequences: proportion irreducible\n`→ 1/2` (the `S_2` `2`-cycle fraction) and proportion with vanishing discriminant `= 1/q`.\n\n**`Catalog/Novelty/StochasticGaloisCyclic.lean` — a structural correction.**\n```\nIsEmpty ((L ≃ₐ[K] L) ≃* Equiv.Perm (Fin n))   for finite L and n ≥ 3   (finiteField_gal_ne_symm)\n```\nOver a finite field every Galois group is cyclic (Frobenius), hence abelian, hence never\nisomorphic to the non-abelian `S_n` for `n ≥ 3`. The prompt's conjecture that\n`P(Gal = S_n) → 1` is therefore false at the group-theoretic level: `P(Gal = S_n) = 0`\nfor `n ≥ 3`. What survives is the *cycle-type/factorization* heuristic, not the\n\"maximal group\" one.\n\n## The corrected picture\n\nOver `ℚ`, Hilbert irreducibility gives `Gal = S_n` for almost all polynomials. Over `F_q`\nthis fails: Galois groups are cyclic. The right analogue is **Frobenius equidistribution**\n— the factorization type of a random monic degree-`n` polynomial (the cycle type of\nFrobenius on the roots) is distributed like the cycle type of a uniform random permutation\nin `S_n` as `q → ∞`. The proved theorems are the two cleanest exact cases of this:\nthe fixed-point count in all degrees, and the complete `n = 2` distribution.\n\n## Concrete next steps\n\n1. **Degree-3 full distribution.** Prove `#{irreducible monic cubics} = (q^3 - q)/3` and\n   the split of reducible cubics into `(x-r)(x-s)(x-t)` types, matching the `S_3` cycle\n   distribution `{3-cycles : 1/3, transpositions : 1/2, identity : 1/6}` in the limit. The\n   incidence method here generalizes: also count `∑ (#roots choose 2)` to access pair\n   statistics.\n\n2. **Gauss's formula in general.** Formalize `I_q(n) = (1/n) ∑_{d|n} μ(d) q^{n/d}` for the\n   number of monic irreducibles of degree `n` over `F_q`, giving proportion `→ 1/n`, the\n   `n`-cycle fraction. Mathlib has `X^{q^n} - X` factoring through irreducibles of degree\n   `d | n`; the Möbius inversion is the missing piece.\n\n3. **Higher moments / cycle index.** Prove that the `k`-th factorial moment of the number\n   of degree-`1` factors tends to `1` (Poisson(1) limit), the polynomial shadow of the\n   fixed-point Poisson law for random permutations. The `k = 1` case is exactly\n   `total_root_incidences`; `k = 2` needs the ordered-pair incidence count.\n\n4. **Squarefree density.** Prove `#{monic squarefree degree-n} = q^n - q^{n-1}` for\n   `n ≥ 2` (discriminant `≠ 0`), so the non-separable proportion is exactly `1/q` — the\n   general-`n` version of `card_double_root`, and the honest reading of the prompt's\n   `P(discriminant = 0)` claim.\n\n5. **Chebotarev over `F_q(t)`.** Frame the above as the function-field Chebotarev density\n   theorem for `S_n`-covers, connecting to the arithmetic (rather than geometric)\n   monodromy that genuinely can be `S_n`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Algebra",
         "Computation"
@@ -24171,7 +24171,7 @@
       "depth_estimate": 3,
       "description": "Sperner's lemma states that any proper coloring of a triangulated simplex with n+1 colors has at least one fully colored simplex. This is a combinatorial analog of Brouwer's fixed point theorem. Nash's theorem states that every finite game has a mixed strategy Nash equilibrium, proved using Kakutani's fixed point theorem. Conjecture: Sperner's lemma directly implies Nash's theorem. Specifically, given an n-player game with strategies S_1, ..., S_n, construct the n-simplex Delta = Delta(S_1 x ... x S_n) of mixed strategy profiles. Define a Sperner coloring of Delta by: color vertex v with color i if player i's best response to v is strategy i. By Sperner's lemma, there exists a fully colored simplex. The center of this simplex is an approximate Nash equilibrium (each player is approximately best-responding). Taking the limit as the triangulation gets finer gives an exact Nash equilibrium. Conjecture: this construction gives a constructive proof of Nash's theorem that yields a triangulation-based algorithm for finding Nash equilibria with complexity O(N^{n}) where N is the total number of pure strategies. Test: implement the Sperner-based algorithm for 2-player games and verify it finds all Nash equilibria. Impact: Nash equilibria are combinatorial fixed points. Sperner's lemma is the fundamental theorem of game theory.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Novelty",
         "Computation"
@@ -24524,23 +24524,23 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "9f734f3e",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
       "description": "Building on cycle 3fa70466 (Q=0.790), which proved 10 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In 1952, Turing showed that reaction-diffusion equations produce patterns (spots, stripes, spirals) that explain biological morphogenesis. But Turing patterns are solutions to PDEs, which are hard to analyze. Conjecture: Turing patterns are algebraic varieties. Specifically, the zero set of a Turing",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Novelty"
       ],
       "github_issue": 0,
       "id": "push_3fa70466_a76d3023",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-10T09:58:33.432226+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -24555,7 +24555,7 @@
       "source": "",
       "source_exp_id": "3fa70466",
       "source_path": "Turing's Flowers: Morphogenesis as Algebraic Geometry",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-10T08:38:10.188131+00:00",
       "title": "Deepening: Turing's Flowers: Morphogenesis as Algebraic Geometry"
@@ -24814,7 +24814,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 7e49f0c7 (Q=0.830), which proved 17 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Galois group of a random polynomial over Q is S_n with probability 1. This is the Hilbert irreducibility theorem in probabilistic form. But what about random polynomials over finite fields? For f in F_p[x] of degree n chosen uniformly at random, the Galois group is S_n with probability approachi",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Novelty"
       ],
@@ -25134,7 +25134,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle e37aa20a (Q=0.830), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The logistic map f(x) = r*x*(1-x) for r = 4 exhibits chaotic dynamics: small changes in initial conditions lead to exponentially diverging trajectories (Lyapunov exponent lambda = log(2)). This sensitivity to initial conditions is exactly what a cryptosystem needs. Conjecture: The logistic map at r ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Novelty"
       ],
@@ -25254,7 +25254,7 @@
       "depth_estimate": 3,
       "description": "Cycle 3fa70466 (Q=0.790) proved 10 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In 1952, Turing showed that reaction-diffusion equations produce patterns (spots, stripes, spirals) that explain biological morphogenesis. But Turing patterns are solutions to PDEs, which are hard to ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Novelty"
       ],
