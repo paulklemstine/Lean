@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "a725bb00",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Metric embeddings of the Petersen graph into abelian Cayley graphs\n\nThis cycle established a clean two-part obstruction: a *metric* principle (an\nisometric image of an edge is an",
-      "quality_score": 0.7976880000000001,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-01T23:31:29",
-      "title": "Petersen Graph Non-Embeddability into Abelian Cayley Graphs"
-    },
-    {
       "cycle_id": "35d54dba",
       "domain": "Novelty",
       "key_insight": "# Future Directions — The Independence Ratio Floor of the Plane\n\nThe independence ratio of a finite configuration of points in the plane — the\nlargest fraction of the points that can be chosen with no",
@@ -2501,6 +2491,16 @@
       "theorem_count": 22,
       "timestamp": "2026-07-10T19:32:10",
       "title": "Formalizing the Probabilistic Method: Erdos Meets Lean"
+    },
+    {
+      "cycle_id": "cd868ba0",
+      "domain": "Logic",
+      "key_insight": "# Future Directions\n\n`Logic/ProofSearchInformation.lean` formalizes the counting core of the\ninformation-theoretic limits of encoding and proof search: no code compresses\nevery message, most messages",
+      "quality_score": 0.62,
+      "sorry_count": 4,
+      "theorem_count": 12,
+      "timestamp": "2026-07-10T20:20:14",
+      "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proof?"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.79
     }
   ],
-  "last_updated": "2026-07-10T19:32:10",
+  "last_updated": "2026-07-10T20:20:14",
   "open_questions": [
-    {
-      "context": "necessary.  All main theorems are `sorry`-free and use genuine arguments",
-      "cycle_id": "054477b4",
-      "domain": "Novelty",
-      "sorry_count": 1,
-      "timestamp": "2026-07-04T22:19:10"
-    },
     {
       "context": "on `ℝ²` as a product — no `sorry`, no `native_decide`.",
       "cycle_id": "2e937390",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 4,
       "timestamp": "2026-07-10T19:15:53"
+    },
+    {
+      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "cd868ba0",
+      "domain": "Logic",
+      "sorry_count": 4,
+      "timestamp": "2026-07-10T20:20:14"
     }
   ],
   "research_threads": {
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "a2ad5506",
-        "quality": 0.38339676363636366,
-        "theorems": 6,
-        "title": "Self-Modifying Research via Reflective Type Theory"
-      },
-      {
         "cycle_id": "43854327",
         "quality": 0.43844913758865245,
         "theorems": 6,
@@ -3513,6 +3507,12 @@
         "quality": 0.83,
         "theorems": 56,
         "title": "Deepening: Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Pr"
+      },
+      {
+        "cycle_id": "cd868ba0",
+        "quality": 0.62,
+        "theorems": 12,
+        "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proo"
       }
     ],
     "MachineLearning": [
