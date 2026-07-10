@@ -136,6 +136,26 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "In 2023, Smith et al. discovered 'the hat' — a single tile shape that tiles the plane but only aperiodically (no periodic tiling exists). This solved the aperiodic monotile problem. But deeper questions remain: How many distinct aperiodic monotiles exist? Conjecture: The set of aperiodic monotiles forms a 1-parameter family (the 'hat spectrum') parameterized by a continuous parameter t in [0,1] where t=0 gives the hat, t=1 gives the turtle (a known variant), and intermediate values give intermediate shapes. The key property: each shape in the hat spectrum tiles the plane aperiodically, and no two shapes in the spectrum admit a common periodic tiling. The boundary of the hat spectrum is the curve in R^2 that separates the region of aperiodic monotiles from the region of periodic tiles. This boundary is a piecewise-smooth curve determined by the constraint that the tile must enforce a hierarchical substitution rule. Test: parameterize the hat spectrum by interpolating between the hat and turtle, compute the substitution rule for each t, and verify that the substitution rule enforces aperiodicity for all t in [0,1]. Impact: aperiodic monotiles are not isolated curiosities — they form a continuous family, and the hat is just one point on the spectrum.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0831",
+    "lineage_refs": [],
+    "priority_score": 0.86,
+    "proof_strategy": "Define the hat spectrum: for t in [0,1], the tile H_t is the convex hull of the 14 vertices of the hat tile with one edge parameterized by t. At t=0, H_0 is the hat. At t=1, H_1 is the turtle. For intermediate t, H_t is the interpolated shape. The substitution rule for H_t is a function of t: the tile H_t admits a substitution rule with expansion factor lambda(t) where lambda(0) = sqrt(3) + 2 (the hat expansion factor) and lambda(1) = sqrt(3) + 2 (the turtle expansion factor, same as the hat). Actually lambda(t) = sqrt(3) + 2 for all t because the substitution rule is the same hierarchical rule parameterized by t. Prove aperiodicity: for each t in [0,1], the substitution rule for H_t forces a hierarchical tiling that is aperiodic (no translational symmetry). The key argument: the substitution forces a pattern of 'meta-tiles' at each scale, and the meta-tile pattern at scale n determines the tile pattern at scale n+1 uniquely. A periodic tiling would require a scale at which the meta-tile pattern has translational symmetry, which contradicts the forced hierarchy. Test: implement the substitution rule for H_t for t = 0, 0.25, 0.5, 0.75, 1 and verify each produces an aperiodic tiling.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T02:06:58.773372+00:00",
+    "title": "The Aperiodic Monotile: One Shape to Tile Them All"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "f37280c7",
     "description": "The Langlands program connects Galois groups (shapes) to automorphic forms (colors). Think of it this way: a Galois group is the group of symmetries of a shape (like the rotational symmetries of a polygon). An automorphic form is a coloring that respects the shape's symmetries (like a coloring of the polygon's vertices that is invariant under rotation). The Langlands correspondence says: for every 'shape' (Galois representation), there is a matching 'color' (automorphic form) and vice versa. Conjecture: This correspondence is a bijection between irreducible representations of Gal(Q_bar/Q) and cuspidal automorphic representations of GL_n over Q. For n=1, this is class field theory (every abelian extension of Q corresponds to a Dirichlet character). For n=2, this is the modularity theorem (every elliptic curve over Q corresponds to a weight-2 cusp form). The toddler version: each shape has exactly one matching color, and each color has exactly one matching shape. Test: verify the correspondence for all degree-2 extensions of Q up to discriminant 1000. Verify that each quadratic field Q(sqrt(d)) corresponds to a Dirichlet character chi_d via the correspondence chi_d(p) = (d/p) (Legendre symbol). Impact: Langlands is just shape-color matching. Shapes and colors are two ways of seeing the same mathematical object.",
     "domain_bridges": [],
@@ -18228,6 +18248,26 @@
     "status": "available",
     "timestamp": "2026-07-09T19:32:54.891692+00:00",
     "title": "Bypassed"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Every mathematical proof is a directed acyclic graph (DAG): nodes are statements, edges are implications, and the acyclicity comes from the fact that you can't prove A from B and B from A without a circular argument (which is not a valid proof). Conjecture: The DAG of all mathematical proofs has a scale-free structure: the in-degree distribution follows a power law P(k) ~ k^{-gamma} with gamma ≈ 2.5. This means most theorems are proved from a small number of foundational results (the 'hubs'), and there are exponentially many theorems that depend on these hubs. The top 10 hub theorems in mathematics are: (1) Zorn's Lemma, (2) The Intermediate Value Theorem, (3) The Fundamental Theorem of Calculus, (4) The Sylow Theorems, (5) The Baire Category Theorem, (6) Hahn-Banach Theorem, (7) Urysohn's Lemma, (8) The Pigeonhole Principle, (9) Induction, (10) The Law of Excluded Middle. Conjecture: removing any of the top 10 hubs disconnects the proof DAG into at least 2 large components, each containing more than 10% of all theorems. This means mathematics is fragile: removing one foundational theorem makes many other theorems unprovable. Test: construct the proof DAG from Lean 4's Mathlib (all proofs and their dependencies), compute the in-degree distribution, and verify the power law. Impact: mathematics is a scale-free network, and its most important theorems are its most connected nodes — the hubs that hold the entire structure together.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0832",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct the proof DAG: nodes = theorems in Mathlib, edges = (A, B) if theorem A is used in the proof of theorem B. Compute in-degree distribution P(k) = #{theorems with k dependents}/N. Fit power law P(k) ~ k^{-gamma} using maximum likelihood estimation (Clauset-Shalizi-Newman method). Compute hub scores: theorems with highest in-degree are the hubs. Identify the top 10 hubs by in-degree. Test robustness: for each of the top 10 hubs, remove the hub and all its outgoing edges, and compute the size of the largest connected component. If the DAG is scale-free with gamma ≈ 2.5, removing a hub should fragment the DAG into components of size proportional to N^{1/(gamma-1)}. Compute: for gamma = 2.5, component sizes after hub removal are ~ N^{0.67} ≈ N^{2/3}. Test: build the DAG from Mathlib's dependency graph and verify.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T02:06:58.855559+00:00",
+    "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
   },
   {
     "ambition_level": "extension",
