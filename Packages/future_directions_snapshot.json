@@ -10492,6 +10492,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "A ReLU network f: R -> R with L layers of width w is a piecewise linear function with at most w^L pieces. By the universal approximation theorem, such networks can approximate any continuous function. But HOW WELL can they approximate specific constants? Conjecture: a ReLU network with L layers of width w can approximate pi to within epsilon using O(w * L * log(1/epsilon)) parameters. More precisely, there exists a ReLU network f with L = O(log(log(1/epsilon))) layers and w = O(log(1/epsilon)) width such that |f(1) - pi| < epsilon. This is because pi can be computed by the Leibniz formula pi/4 = 1 - 1/3 + 1/5 - ..., and a ReLU network can implement the partial sums. The number of terms needed is O(1/epsilon), and each term can be computed by a constant-depth ReLU subnetwork. The depth needed is O(log(1/epsilon)) for the sum and O(log(log(1/epsilon))) for the individual terms. Conjecture: the approximation rate for rational numbers by ReLU networks is O(1/(w^L)), matching the piecewise linear structure. For irrational numbers like pi, the rate is O(1/(w * L * 2^L)), which is slower but still exponential in depth. Test: construct ReLU networks that approximate pi, e, and sqrt(2) and measure the approximation error as a function of network size. Impact: ReLU networks approximate constants at a rate determined by their depth and width. Pi requires O(log(log(1/epsilon))) depth.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0912",
+    "lineage_refs": [],
+    "priority_score": 0.74,
+    "proof_strategy": "Leibniz formula: pi/4 = sum_{k=0}^{infinity} (-1)^k / (2k+1). The partial sum S_n = sum_{k=0}^{n-1} (-1)^k / (2k+1) approximates pi/4 with error O(1/n). To achieve |f(1) - pi| < epsilon, we need n = O(1/epsilon) terms. ReLU implementation: each term t_k = (-1)^k / (2k+1) can be computed as t_k = ReLU(1/(2k+1)) - 2*ReLU(1/(2k+1) - 1/2) (alternating sign). The division 1/(2k+1) requires a ReLU network with O(log(k)) depth (using binary long division). The sum of n terms requires O(log(n)) depth (tree reduction). Total: L = O(log(n) + log(log(n))) = O(log(1/epsilon)) layers. Width: w = O(n) for parallel summation, or w = O(1) for sequential summation with O(n) depth. For the tree reduction: L = O(log(1/epsilon)), w = O(1/epsilon). Better construction: use Machin's formula pi/4 = 4*arctan(1/5) - arctan(1/239), which converges much faster. arctan(1/n) = 1/n - 1/(3n^3) + 1/(5n^5) - ... converges in O(n) terms. For Machin: n terms give error O(1/5^{2n+1}), so only O(log(1/epsilon)) terms needed. Total: L = O(log(log(1/epsilon))), w = O(log(1/epsilon)). Test: implement in Python + Lean 4, measure approximation error vs network size.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T16:04:37.324196+00:00",
+    "title": "Diophantine Approximation on Neural Networks: How Well Can ReLU Approximate Pi?"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "The Erdos-Renyi random graph G(n, p) has n vertices where each edge appears independently with probability p. At p = log(n)/n, G(n,p) becomes connected. But what if p is COMPLEX? Define G(n, z) where z is a complex number: each edge (i,j) appears with 'probability' z, meaning the edge weight is z instead of 0 or 1. The resulting 'complex graph' is a weighted complete graph where edge (i,j) has weight z if the edge exists and 0 otherwise. The adjacency matrix A_z has entries that are either z or 0. Conjecture: The complex eigenvalues of A_z trace out a circle of radius |z|*sqrt(n) in the complex plane, centered at the origin. As n -> infinity, the empirical spectral distribution of A_z converges to the circular law (like the Ginibre ensemble) because A_z is a random matrix with i.i.d. entries of mean z*p and variance |z|^2*p*(1-p). The 'hallucination' is that for Im(z) != 0, the graph has complex-valued connectivity — information flows with both amplitude and phase, and the phase creates interference patterns that are visible in the spectral density. Test: generate A_z for n = 1000 with z = 0.5 + 0.3i, compute eigenvalues, and verify they lie in a disk of radius sqrt(n)*|z|. Compare with the Ginibre ensemble prediction. Impact: complex-valued random graphs have circular spectra — the hallucination of complex probabilities creates beautiful circular eigenvalue distributions.",
     "domain_bridges": [],
     "domains": [
