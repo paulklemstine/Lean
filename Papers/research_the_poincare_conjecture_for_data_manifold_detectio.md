@@ -1,366 +1,169 @@
-# Algebraic Circuit Complexity: Formally Verified Foundations for Degree-Depth Tradeoffs, Evaluation Soundness, and Polynomial Identity Testing
+# The Poincaré Conjecture for Data: Sharp Scaling of the Manifold-Detection Threshold
 
 ## Abstract
 
-We present a formally verified foundation for algebraic circuit complexity theory, establishing core definitions and fundamental theorems in a machine-checked mathematical framework. Our formalization introduces algebraic circuits as an inductive type over commutative semirings with $n$ input variables, defines evaluation semantics, and establishes a canonical mapping to multivariate polynomial rings. We prove five principal results: (1) the **Evaluation Soundness Theorem**, establishing that circuit evaluation coincides with polynomial evaluation; (2) the **Degree-Depth Tradeoff**, showing that circuit degree is bounded by $2^{\text{depth}}$; (3) the **Work-Span Inequality**, proving $\text{size} \geq \text{depth} + 1$; (4) **Depth Lower Bounds** from degree information; and (5) the **Ideal Structure** of zero-function circuits, providing algebraic foundations for Polynomial Identity Testing. We also formalize circuit substitution with a semantics-preservation theorem, complexity bounds, and gate-counting inequalities. These results connect algebra (polynomial rings, ideals) to computation (circuit complexity, PIT) and provide verified building blocks for further work on algebraic complexity classes VP and VNP.
+The *Poincaré conjecture for data* proposes a topological criterion for manifold detection: a point cloud whose multiscale homology matches that of a $d$-sphere should lie near a $d$-sphere, and the smallest scale $\varepsilon_\star$ at which the Vietoris–Rips complex acquires the homology of $S^d$ — the *Poincaré threshold* — was conjectured to obey the exact law $\varepsilon_\star = C\,d^{1/2}\,n^{-1/d}$, where $n$ is the number of sample points and $C > 0$ a universal constant. We isolate three separable assertions inside this formula and settle each rigorously in a clean, Nerve-Lemma-faithful discrete model — the Chebyshev ($\ell^\infty$) grid cube $\{0,\dots,m-1\}^d$, in which covering the cube to radius $r$ plays the role of resolving the shape at scale $\varepsilon$. We prove: (1) a **packing lower bound** $m^d \le |S|\,(2r+1)^d$ for every $r$-cover $S$, yielding the scaling $2r+1 \ge m\,n^{-1/d}$; (2) **sharpness** of the exponent $-1/d$, via an explicit grid cover attaining minimal size exactly $t^d = (m/(2r+1))^d$ when $m=(2r+1)t$, together with a matching minimality bound; and (3) the sharp norm comparison $\|x\|_\infty \le \|x\|_2 \le \sqrt d\,\|x\|_\infty$ with the constant $\sqrt d$ attained, showing the $d^{1/2}$ prefactor is a metric-conversion artifact rather than topology. Finally we **disprove** the exact equality: the minimal covering radius is a step function of $n$ (for $m=7$, $d=1$ it equals $1$ throughout $n\in\{3,4,5,6\}$), so no positive constant $C$ can reproduce the threshold exactly. The conjectured identity must be downgraded to a scaling relation $\varepsilon_\star \asymp d^{1/2} n^{-1/d}$.
 
-**Keywords:** algebraic circuits, polynomial identity testing, degree-depth tradeoff, circuit complexity, formal verification, algebraic complexity theory
-
----
+**Keywords:** persistent homology, manifold detection, Vietoris–Rips complex, covering number, packing bound, Chebyshev metric, curse of dimensionality, topological data analysis.
 
 ## 1. Introduction
 
-Algebraic circuit complexity studies the resources required to compute multivariate polynomials using the elementary operations of addition and multiplication. Introduced by Valiant [1] in 1979, the algebraic circuit model provides a clean framework for studying computational complexity in the polynomial setting, paralleling the Boolean circuit model for discrete computation.
+### 1.1 From Poincaré's theorem to a question about data
 
-The central objects are *straight-line programs* — directed acyclic graphs where internal nodes perform addition or multiplication, leaf nodes hold constants or input variables, and a designated output node produces the computed polynomial. The *size* (number of gates) and *depth* (longest path from input to output) of a circuit are the primary complexity measures, corresponding to total sequential work and parallel time, respectively.
+The Poincaré conjecture, proved by Perelman, asserts that every simply connected closed $3$-manifold is homeomorphic to the $3$-sphere. Reformulated for finite data, one asks whether a point cloud whose topological signature matches that of a sphere must in fact be sampled from (or near) a sphere. The tool that makes "topological signature" precise for finite data is *persistent homology*: at each scale $\varepsilon$, one builds the Vietoris–Rips complex $\mathrm{VR}_\varepsilon(X)$ on the point cloud $X=\{x_1,\dots,x_n\}\subset\mathbb R^D$ by declaring a finite subset to span a simplex when its diameter is below $\varepsilon$, and records how the homology evolves with $\varepsilon$.
 
-Despite decades of research, the algebraic circuit model harbors some of the deepest open problems in mathematics:
+For a $d$-sphere, the target signature is unmistakable: $H_0 = \mathbb Z$, $H_d = \mathbb Z$, and $H_k = 0$ for $0 < k < d$. There is a window of scales $\varepsilon$ in which a well-sampled sphere exhibits exactly this signature; below the window the cloud is disconnected dust, above it the complex is contractible. The **Poincaré threshold** $\varepsilon_\star$ is the infimum of scales at which the sphere signature first appears — the fundamental quantity of manifold detection.
 
-- **Valiant's Conjecture (VP ≠ VNP):** The algebraic analogue of P ≠ NP, asserting that the permanent polynomial cannot be computed by polynomial-size circuits.
-- **Polynomial Identity Testing (PIT):** Given a circuit, determine whether it computes the zero polynomial — solvable in randomized polynomial time, but no deterministic polynomial-time algorithm is known.
-- **Circuit Lower Bounds:** Proving super-polynomial lower bounds on circuit size for explicit polynomial families remains a major challenge.
+### 1.2 The conjectured law and our contributions
 
-In this work, we present a machine-verified formalization of the foundational definitions and theorems of algebraic circuit complexity (@file Catalog/Algebra/AlgebraicCircuitComplexity.lean). The formalization covers the complete pipeline from circuit definition through evaluation semantics, structural invariants, the degree-depth tradeoff, and the algebraic structure of polynomial identity testing.
+The conjecture posits an exact law
+$$\varepsilon_\star \;=\; C\, d^{1/2}\, n^{-1/d}, \qquad C>0 \text{ universal.}$$
+We decompose this into three independent claims and resolve each:
 
-### 1.1 Contributions
+1. **The exponent claim** ($\varepsilon_\star \propto n^{-1/d}$): *proved and sharp.*
+2. **The dimensional-prefactor claim** ($d^{1/2}$): *proved to be a metric artifact* — the exact $\ell^\infty\!\to\!\ell^2$ conversion constant.
+3. **The exact-equality claim** (a single constant $C$ makes it an identity): *disproved*; the threshold is a step function of $n$.
 
-Our principal contributions are:
+Net verdict: $\varepsilon_\star \asymp d^{1/2} n^{-1/d}$ holds as a scaling relation, but the clean equality is false.
 
-1. **Inductive circuit formalization** over arbitrary commutative semirings with a clean, compositional structure.
-2. **Evaluation soundness** linking circuit semantics to formal multivariate polynomial evaluation.
-3. **Degree-depth tradeoff** with tight exponential bound: $\text{degreeBound}(C) \leq 2^{\text{depth}(C)}$.
-4. **Work-span inequality**: $\text{size}(C) \geq \text{depth}(C) + 1$.
-5. **PIT algebraic foundations**: zero-function circuits form an ideal, closed under addition and multiplication.
-6. **Substitution semantics**: circuit composition preserves evaluation.
-7. **Complexity bounds**: combining structural invariants with resource bounds.
+### 1.3 A discrete model faithful to the topology
 
-### 1.2 Related Work
+To reason about thresholds without the analytic overhead of curved manifolds, we use a discrete surrogate that preserves the essential covering combinatorics and connects to topology through the Nerve Lemma. All results below are stated and proved in this model.
 
-The algebraic circuit model was introduced by Valiant [1]. The degree-depth tradeoff is a classical result appearing in Strassen [2] and Bürgisser, Clausen, and Shokrollahi [3]. Polynomial identity testing has been extensively studied; we refer to the survey by Saxena [4] for background. The connection between circuit depth and neural network expressivity has been explored by Telgarsky [5] and Eldan and Shamir [6].
+## 2. The discrete model and definitions
 
----
+Throughout, $d,m,r,t,n$ denote natural numbers.
 
-## 2. Definitions
+**Definition 2.1 (Grid cube).** The *discrete $d$-cube of side $m$* is the set $Q_{m,d} = \{0,1,\dots,m-1\}^d$, which we represent as functions $\mathrm{Fin}\,d \to \mathrm{Fin}\,m$. It has $|Q_{m,d}| = m^d$ points and plays the role of a densely sampled cube-like object.
 
-### 2.1 Algebraic Circuits
+**Definition 2.2 (Chebyshev closeness).** For a radius $r$ and centers/points $s,x \in Q_{m,d}$, we say $x$ is *$r$-close* to $s$, written $\mathrm{ChebClose}(r,s,x)$, if in every coordinate $i$,
+$$\bigl|\,x_i - s_i\,\bigr| \le r,$$
+i.e. the Chebyshev ($\ell^\infty$) distance satisfies $\|x-s\|_\infty \le r$.
 
-**Definition 2.1 (Algebraic Circuit).** Let $R$ be a commutative semiring and $n \in \mathbb{N}$. An *algebraic circuit* over $R$ with $n$ input variables is inductively defined as one of:
+**Definition 2.3 (Chebyshev ball).** The *ball* $B_r(s) = \{\, x \in Q_{m,d} : \mathrm{ChebClose}(r,s,x)\,\}$.
 
-- $\texttt{const}(r)$ for $r \in R$ (constant gate),
-- $\texttt{var}(i)$ for $i \in \{0, \ldots, n-1\}$ (input gate),
-- $\texttt{add}(C_1, C_2)$ (addition gate), or
-- $\texttt{mul}(C_1, C_2)$ (multiplication gate),
+**Definition 2.4 ($r$-cover).** A finite set $S \subseteq Q_{m,d}$ is an *$r$-cover* if every $x \in Q_{m,d}$ is $r$-close to some $s \in S$, i.e. $Q_{m,d} = \bigcup_{s\in S} B_r(s)$.
 
-where $C_1, C_2$ are algebraic circuits over $R$ with $n$ inputs.
+**Definition 2.5 (Minimal covering radius / discrete Poincaré threshold).** For a fixed sample budget $n$,
+$$\mathrm{minRad}(m,n) \;=\; \inf\{\, r : \text{some } S \text{ with } |S|\le n \text{ is an } r\text{-cover of } Q_{m,d}\,\}.$$
 
-This corresponds to the type `AlgCircuit R n` in @file Catalog/Algebra/AlgebraicCircuitComplexity.lean.
+**Dictionary to persistent homology.** The ambient object is $Q_{m,d}$; a point cloud / landmark set is a finite $S$; the scale $\varepsilon$ is the $\ell^\infty$ radius $r$. The statement "$\mathrm{VR}_\varepsilon(X)$ recovers the homology of the object" is modelled by "$S$ is an $r$-cover." This is exactly the Nerve-Lemma hypothesis under which the Čech/Rips complex of $S$ (with balls of radius $r$) is homotopy equivalent to the union of balls, hence to the cube. Thus $\mathrm{minRad}(m,n)$ is the discrete Poincaré threshold at sample budget $n$.
 
-### 2.2 Evaluation Semantics
+## 3. The scaling law: a sharp packing bound
 
-**Definition 2.2 (Evaluation).** The *evaluation* of a circuit $C$ on an assignment $v : \{0, \ldots, n-1\} \to R$ is defined recursively:
+### 3.1 Ball size
 
-$$
-\text{eval}(C, v) = \begin{cases}
-r & \text{if } C = \texttt{const}(r) \\
-v(i) & \text{if } C = \texttt{var}(i) \\
-\text{eval}(C_1, v) + \text{eval}(C_2, v) & \text{if } C = \texttt{add}(C_1, C_2) \\
-\text{eval}(C_1, v) \cdot \text{eval}(C_2, v) & \text{if } C = \texttt{mul}(C_1, C_2)
-\end{cases}
-$$
+**Lemma 3.1 (Coordinate count).** For any center value $c$, the number of grid coordinates within distance $r$ is at most $2r+1$:
+$$\bigl|\{\, a \in \mathrm{Fin}\,m : |a - c| \le r \,\}\bigr| \le 2r+1.$$
+*Proof sketch.* The admissible values inject, via $a \mapsto a$ as an integer, into the interval $[c-r,\,c+r] \cap \mathbb Z$, which has at most $2r+1$ elements. $\square$
 
-### 2.3 Structural Invariants
+**Lemma 3.2 (Ball cardinality).** Every Chebyshev ball satisfies $|B_r(s)| \le (2r+1)^d$.
+*Proof sketch.* The ball factors as a product over coordinates, $B_r(s) = \prod_{i} \{a : |a - s_i| \le r\}$, so its size is the product of the coordinate counts, each $\le 2r+1$ by Lemma 3.1; hence $|B_r(s)| \le (2r+1)^d$. $\square$
 
-**Definition 2.3 (Depth).** The *depth* of a circuit is the length of the longest root-to-leaf path:
+### 3.2 The lower bound and its scaling form
 
-$$
-\text{depth}(C) = \begin{cases}
-0 & \text{if } C \in \{\texttt{const}(r), \texttt{var}(i)\} \\
-1 + \max(\text{depth}(C_1), \text{depth}(C_2)) & \text{if } C \in \{\texttt{add}(C_1, C_2), \texttt{mul}(C_1, C_2)\}
-\end{cases}
-$$
+**Theorem 3.3 (Packing lower bound).** If $S$ is an $r$-cover of $Q_{m,d}$, then
+$$m^d \;\le\; |S|\cdot (2r+1)^d.$$
+*Proof sketch.* Since the balls $\{B_r(s)\}_{s\in S}$ cover the cube, $m^d = |Q_{m,d}| \le \bigl|\bigcup_{s\in S} B_r(s)\bigr| \le \sum_{s \in S} |B_r(s)| \le |S|\,(2r+1)^d$, using subadditivity of cardinality under union and Lemma 3.2. $\square$
 
-**Definition 2.4 (Size).** The *size* of a circuit is the total number of gates:
+**Theorem 3.4 (The $n^{-1/d}$ scaling law).** Let $d\ge 1$, $m\ge 1$, and let $S$ be an $r$-cover with $n = |S|$. Then
+$$m \;\le\; n^{1/d}\,(2r+1), \qquad\text{equivalently}\qquad 2r+1 \;\ge\; m\, n^{-1/d}.$$
+*Proof sketch.* Raise the inequality of Theorem 3.3 to the power $1/d$: since $x\mapsto x^{1/d}$ is monotone on $[0,\infty)$, $(m^d)^{1/d} \le (n\,(2r+1)^d)^{1/d}$, and $(m^d)^{1/d}=m$, $(n(2r+1)^d)^{1/d}=n^{1/d}(2r+1)$ by the laws of real exponents. $\square$
 
-$$
-\text{size}(C) = \begin{cases}
-1 & \text{if } C \in \{\texttt{const}(r), \texttt{var}(i)\} \\
-1 + \text{size}(C_1) + \text{size}(C_2) & \text{if } C \in \{\texttt{add}(C_1, C_2), \texttt{mul}(C_1, C_2)\}
-\end{cases}
-$$
+Interpreting $2r+1$ as the (discrete) detection scale and $n$ as the sample budget, Theorem 3.4 is exactly the conjectured $\varepsilon_\star \gtrsim n^{-1/d}$: the covering radius cannot decay faster than $n^{-1/d}$.
 
-**Definition 2.5 (Degree Bound).** The *syntactic degree bound* of a circuit:
+## 4. Sharpness of the exponent
 
-$$
-\text{degreeBound}(C) = \begin{cases}
-0 & \text{if } C = \texttt{const}(r) \\
-1 & \text{if } C = \texttt{var}(i) \\
-\max(\text{degreeBound}(C_1), \text{degreeBound}(C_2)) & \text{if } C = \texttt{add}(C_1, C_2) \\
-\text{degreeBound}(C_1) + \text{degreeBound}(C_2) & \text{if } C = \texttt{mul}(C_1, C_2)
-\end{cases}
-$$
+The lower bound is attained by a regular grid, so the exponent $-1/d$ cannot be improved.
 
-**Definition 2.6 (Gate Counts).** The *multiplicative gate count* $\mu(C)$ and *additive gate count* $\alpha(C)$ count the number of multiplication and addition gates, respectively.
+**Construction 4.1 (Grid cover).** Assume $m = (2r+1)\,t$. Partition each coordinate axis $\{0,\dots,m-1\}$ into $t$ consecutive blocks of length $2r+1$. The *block center* of block $k \in \{0,\dots,t-1\}$ is
+$$c_k \;=\; k\,(2r+1) + r,$$
+the midpoint of block $k$. The grid cover is the product set
+$$S_{\mathrm{grid}} = \{\, s : \mathrm{Fin}\,d \to \mathrm{Fin}\,m \ \mid\ \forall i,\ s_i = c_{k_i} \text{ for some } k_i \,\} = \prod_{i=1}^{d}\{c_0,\dots,c_{t-1}\}.$$
 
-### 2.4 Polynomial Representation
+**Lemma 4.2 (Blocks are covered).** For every coordinate value $v \in \{0,\dots,m-1\}$, writing $v = (2r+1)q + \rho$ with $0 \le \rho < 2r+1$, the block center $c_q = q(2r+1)+r$ satisfies $|v - c_q| = |\rho - r| \le r$.
+*Proof sketch.* Since $0\le \rho \le 2r$, we have $-r \le \rho - r \le r$. $\square$
 
-**Definition 2.7 (Polynomial Map).** The *polynomial representation* of a circuit $C$ is the element $\text{toMvPolynomial}(C) \in R[x_0, \ldots, x_{n-1}]$ defined recursively:
+**Theorem 4.3 (Existence of an optimal cover).** When $m=(2r+1)t$, the set $S_{\mathrm{grid}}$ is an $r$-cover of $Q_{m,d}$ with exactly $|S_{\mathrm{grid}}| = t^d$ points.
+*Proof sketch.* Cover: given any $x$, choose in each coordinate the block center of $x_i$'s block; by Lemma 4.2 this center is within radius $r$ in every coordinate, so $x$ is $r$-close to the resulting product point. Count: the block-center map $k \mapsto c_k$ is injective (distinct blocks have distinct centers because $c_k = k(2r+1)+r$ is strictly increasing in $k$), so the $d$-fold product of the $t$ centers has exactly $t^d$ elements. $\square$
 
-$$
-\text{toMvPolynomial}(C) = \begin{cases}
-r & \text{if } C = \texttt{const}(r) \\
-x_i & \text{if } C = \texttt{var}(i) \\
-\text{toMvPolynomial}(C_1) + \text{toMvPolynomial}(C_2) & \text{if } C = \texttt{add}(C_1, C_2) \\
-\text{toMvPolynomial}(C_1) \cdot \text{toMvPolynomial}(C_2) & \text{if } C = \texttt{mul}(C_1, C_2)
-\end{cases}
-$$
+**Theorem 4.4 (Minimality).** When $m=(2r+1)t$, every $r$-cover of $Q_{m,d}$ has at least $t^d$ points.
+*Proof sketch.* By Theorem 3.3, $m^d \le |S|\,(2r+1)^d$; substitute $m^d = (2r+1)^d t^d$ and cancel the positive factor $(2r+1)^d$ to get $t^d \le |S|$. $\square$
 
----
+**Corollary 4.5 (Exact minimal cover size).** When $m = (2r+1)t$, the minimal $r$-cover size is *exactly* $t^d = (m/(2r+1))^d$. Consequently the minimal radius scales as $2r+1 = m\,n^{-1/d}$ along this family, and no exponent other than $-1/d$ is consistent with both the lower bound (Theorem 3.3) and the achievability (Theorem 4.3). $\square$
 
-## 3. Main Results
+## 5. The $\sqrt{d}$ prefactor is a metric artifact
 
-### 3.1 Evaluation Soundness
+The packing analysis is cleanest in the Chebyshev metric, but spheres and the Rips parameter live in the Euclidean metric. Converting between them introduces exactly the factor $\sqrt d$.
 
-**Theorem 3.1 (Evaluation Soundness).** *For any algebraic circuit $C$ over a commutative semiring $R$ with $n$ inputs, and any assignment $v : \{0, \ldots, n-1\} \to R$:*
+**Lemma 5.1 (Lower comparison).** For $x \in \mathbb R^d$ and any coordinate $i$,
+$$|x_i| \;\le\; \Bigl(\textstyle\sum_{j} x_j^2\Bigr)^{1/2} = \|x\|_2.$$
+*Proof sketch.* $x_i^2 \le \sum_j x_j^2$ since the omitted terms are nonnegative; take square roots. $\square$
 
-$$\text{eval}(C, v) = \text{eval}_{\text{poly}}(v, \text{toMvPolynomial}(C))$$
+**Lemma 5.2 (Upper comparison).** If $|x_i| \le M$ for all $i$ (with $M \ge 0$), then
+$$\|x\|_2 = \Bigl(\textstyle\sum_j x_j^2\Bigr)^{1/2} \;\le\; \sqrt d\, M.$$
+*Proof sketch.* Each $x_j^2 \le M^2$, so $\sum_j x_j^2 \le d\,M^2$; take square roots and use $\sqrt{d M^2} = \sqrt d\, M$. $\square$
 
-*where $\text{eval}_{\text{poly}}$ denotes polynomial evaluation in $R[x_0, \ldots, x_{n-1}]$.*
+Together, Lemmas 5.1–5.2 give the two-sided comparison
+$$\|x\|_\infty \;\le\; \|x\|_2 \;\le\; \sqrt d\,\|x\|_\infty.$$
 
-**Proof sketch.** By structural induction on $C$. The base cases ($\texttt{const}$ and $\texttt{var}$) follow from the definitions of polynomial evaluation on constants and indeterminates. The inductive cases ($\texttt{add}$ and $\texttt{mul}$) follow from the fact that polynomial evaluation is a ring homomorphism, preserving addition and multiplication. ∎
+**Theorem 5.3 (Sharpness of $\sqrt d$).** The constant $\sqrt d$ in Lemma 5.2 is optimal: for the all-ones vector $\mathbf 1 = (1,\dots,1)$, $\|\mathbf 1\|_\infty = 1$ while
+$$\|\mathbf 1\|_2 = \Bigl(\textstyle\sum_{j=1}^d 1^2\Bigr)^{1/2} = \sqrt d = \sqrt d \cdot \|\mathbf 1\|_\infty.$$
+*Proof sketch.* Direct evaluation of the sum of $d$ ones. $\square$
 
-*Formalized as* `eval_eq_mvpolynomial_eval` *in* @file Catalog/Algebra/AlgebraicCircuitComplexity.lean.
+**Interpretation.** An $\ell^\infty$ covering radius $r$ corresponds to a Euclidean radius somewhere in $[r,\ \sqrt d\, r]$, and the worst case is exactly $\sqrt d\, r$. Hence when the Chebyshev threshold $2r+1 \asymp m\,n^{-1/d}$ is re-expressed in the Euclidean scale in which $S^d$ and the Rips parameter are measured, it picks up precisely the factor $\sqrt d$. The $d^{1/2}$ prefactor is therefore a **metric-conversion constant**, not intrinsic topology.
 
-**Corollary 3.2 (Semantic Equivalence).** *If $C_1$ and $C_2$ are circuits with $\text{toMvPolynomial}(C_1) = \text{toMvPolynomial}(C_2)$, then $\text{eval}(C_1, v) = \text{eval}(C_2, v)$ for all assignments $v$.*
+## 6. Disproof of the exact power law
 
-*Formalized as* `circuits_with_same_poly_agree`.
+The exponent and prefactor claims survive; the claim of an *exact* identity does not.
 
-### 3.2 The Degree-Depth Tradeoff
+**Definitions (1-D covering).** For the line grid $\{0,\dots,m-1\}$, say it is *$r$-coverable with $n$ samples* if some $S$ with $|S|\le n$ satisfies: every point is within Chebyshev distance $r$ of some $s\in S$. Let $\mathrm{minRad}(m,n)$ be the least such $r$.
 
-**Theorem 3.3 (Degree-Depth Tradeoff).** *For any algebraic circuit $C$:*
+**Lemma 6.1.** For $m=7$: $\{1,3,5\}$ is a $1$-cover, so $7$ is $1$-coverable with $3$ samples. Hence also with $4$ samples.
+*Proof sketch.* Each of $0,1,2$ is within $1$ of $1$; each of $2,3,4$ within $1$ of $3$; each of $4,5,6$ within $1$ of $5$. $\square$
 
-$$\text{degreeBound}(C) \leq 2^{\text{depth}(C)}$$
+**Lemma 6.2.** For $m=7$, radius $0$ is impossible with fewer than $7$ samples: a $0$-cover forces $S$ to contain every point (each point is $0$-close only to itself), so $|S|\ge 7$. In particular $7$ is not $0$-coverable with $3$ or with $4$ samples.
+*Proof sketch.* $|x-s|=0 \iff x=s$, so $r=0$ requires $S \supseteq \{0,\dots,6\}$, i.e. $|S|\ge 7 > 4$. $\square$
 
-**Proof sketch.** By structural induction on $C$.
+**Proposition 6.3 (Two equal thresholds).** $\mathrm{minRad}(7,3) = 1$ and $\mathrm{minRad}(7,4) = 1$.
+*Proof sketch.* By Lemma 6.1 radius $1$ is achievable with $3$ (hence $4$) samples, so $\mathrm{minRad}\le 1$; by Lemma 6.2 radius $0$ is not achievable with $3$ or $4$ samples, so $\mathrm{minRad}\ge 1$. $\square$
 
-- *Base cases:* Constants have degree bound 0 and variables have degree bound 1, both $\leq 2^0 = 1$.
-- *Addition:* $\text{degreeBound}(\texttt{add}(C_1, C_2)) = \max(\text{degreeBound}(C_1), \text{degreeBound}(C_2))$. By induction, each is $\leq 2^{\text{depth}(C_i)} \leq 2^{\max(\text{depth}(C_1), \text{depth}(C_2))} \leq 2^{1 + \max(\text{depth}(C_1), \text{depth}(C_2))}$.
-- *Multiplication:* $\text{degreeBound}(\texttt{mul}(C_1, C_2)) = \text{degreeBound}(C_1) + \text{degreeBound}(C_2) \leq 2^{\text{depth}(C_1)} + 2^{\text{depth}(C_2)} \leq 2 \cdot 2^{\max(\text{depth}(C_1), \text{depth}(C_2))} = 2^{1 + \max(\text{depth}(C_1), \text{depth}(C_2))}$. ∎
+**Corollary 6.4 (Step function).** $\mathrm{minRad}(7,3) = \mathrm{minRad}(7,4)$ although $3 \ne 4$. Indeed the minimal radius stays pinned at $1$ for all $n \in \{3,4,5,6\}$: it is constant on a range and drops only at the endpoints ($n=7$ reaches $0$; $n=1$ needs radius $3$). The threshold is a *staircase* in $n$, not a smooth curve. $\square$
 
-*Formalized as* `degreeBound_le_two_pow_depth` *in* @file Catalog/Algebra/AlgebraicCircuitComplexity.lean.
+**Theorem 6.5 (No exact inverse power law).** There is no constant $C>0$ with
+$$\mathrm{minRad}(7,3) = C/3 \quad\text{and}\quad \mathrm{minRad}(7,4) = C/4.$$
+*Proof sketch.* Substituting Proposition 6.3 gives $1 = C/3$ and $1 = C/4$, forcing $C=3$ and $C=4$ simultaneously — impossible. Equivalently, $C/3 = C/4$ would force $C=0$, contradicting $C>0$. $\square$
 
-**Remark.** The bound is tight: iterated squaring of a single variable produces a circuit of depth $d$ computing $x^{2^d}$.
+**Discussion.** The one-dimensional case is the law $\varepsilon_\star = C/n$. A strictly decreasing, injective function of $n$ cannot equal a step function that is constant on a range. Hence the *equality* in the conjecture is false; only the *scaling* $\varepsilon_\star \asymp d^{1/2} n^{-1/d}$ (up to bounded multiplicative constants) is tenable. The failure is generic: any integer-valued covering radius is piecewise constant in $n$, so no continuous strictly-monotone law can match it exactly.
 
-### 3.3 Depth Lower Bound
+## 7. Algorithms
 
-**Theorem 3.4 (Depth Lower Bound from Degree).** *If $C$ is a circuit with $\text{degreeBound}(C) > 2^d$, then $\text{depth}(C) > d$.*
+We record the constructive procedures underlying the theorems.
 
-**Proof sketch.** Contrapositive of Theorem 3.3: if $\text{depth}(C) \leq d$, then $\text{degreeBound}(C) \leq 2^{\text{depth}(C)} \leq 2^d$. ∎
+**Algorithm A (Minimal covering radius, exact).** Given $m,n$, compute $\mathrm{minRad}(m,n)$ by searching $r=0,1,2,\dots$ and testing coverability. In one dimension, radius $r$ is coverable with $n$ samples iff $\lceil m/(2r+1)\rceil \le n$ (greedy left-to-right placement of centers at $r, 3r+1, \dots$ is optimal). This gives the closed form $\mathrm{minRad}(m,n) = \min\{ r : \lceil m/(2r+1)\rceil \le n\}$.
 
-*Formalized as* `depth_lower_bound_from_degree` *in* @file Catalog/Algebra/AlgebraicCircuitComplexity.lean.
+**Algorithm B (Grid cover generator).** Given $m=(2r+1)t$ and $d$, output the $t^d$ product points whose coordinates are the block centers $c_k = k(2r+1)+r$, $k=0,\dots,t-1$. This realizes the optimal cover of Theorem 4.3.
 
-**Corollary 3.5.** *Any circuit computing a polynomial of degree $d$ must have depth at least $\lceil \log_2 d \rceil$.*
+**Algorithm C (Packing certificate).** Given an alleged $r$-cover $S$, verify the lower bound is respected by checking $m^d \le |S|(2r+1)^d$; and verify $S$ is genuinely a cover by testing each cube point against the balls of $S$.
 
-### 3.4 Work-Span Inequality
+## 8. Applications
 
-**Theorem 3.6 (Work ≥ Span).** *For any algebraic circuit $C$:*
+- **Sample-complexity budgeting.** Theorem 3.4 quantifies how many landmarks are needed to resolve a $d$-dimensional shape to scale $\varepsilon$: $n \gtrsim (m/\varepsilon)^d$. The intrinsic dimension $d$, not the ambient dimension $D$, controls the budget.
+- **Metric selection.** Theorem 5.3 shows that quoting a detection threshold without naming the metric is ambiguous up to a factor $\sqrt d$; the $\ell^\infty$ radius is the natural quantity for packing, the $\ell^2$ radius for Euclidean geometry.
+- **Landmark subsampling.** Construction 4.1 is an explicit, provably optimal landmark set for cube-like regions, useful for witness-complex and landmark-based persistence pipelines.
+- **Threshold estimation caveat.** Corollary 6.4 warns practitioners that empirical threshold-vs-$n$ curves are staircases; fitting a smooth $C n^{-1/d}$ recovers the exponent but should not be expected to fit an exact constant.
 
-$$\text{size}(C) \geq \text{depth}(C) + 1$$
+## 9. Discussion and future work
 
-**Proof sketch.** By structural induction. Base cases: leaf nodes have size 1 and depth 0. For internal nodes:
+We have shown that the Poincaré-for-data threshold obeys a sharp $n^{-1/d}$ scaling, that the $\sqrt d$ prefactor is an $\ell^\infty\!\to\!\ell^2$ conversion constant, and that the conjectured clean equality is false — the threshold is an integer-valued staircase, matched only up to constants.
 
-$$\text{size}(\texttt{op}(C_1, C_2)) = 1 + \text{size}(C_1) + \text{size}(C_2) \geq 1 + (\text{depth}(C_1) + 1) + (\text{depth}(C_2) + 1)$$
+**Future directions.**
+- **From cubes to spheres.** Replace the Chebyshev cube by a discretization of $S^d$ carrying an Ahlfors-regular measure, for which $\mu(\text{ball}) \asymp \varepsilon^d$; the same volume-packing argument should transfer, yielding the threshold scaling for genuine spheres.
+- **General manifolds and reach.** Extend to manifolds of positive reach, relating the constant to curvature and injectivity radius.
+- **Persistence-window width.** Study not only where the sphere signature appears but the full interval of scales over which it persists, and its scaling in $n$.
+- **Noise and near-manifolds.** Quantify the "$\varepsilon$-close to $S^d$" tolerance and the stability of detection under sub-Gaussian noise.
+- **Constants and phase transitions.** Characterize the exact staircase (jump locations) and the sharp constants in the scaling relation across dimensions.
 
-which exceeds $1 + \max(\text{depth}(C_1), \text{depth}(C_2)) + 1 = \text{depth}(\texttt{op}(C_1, C_2)) + 1$. ∎
+## 10. Conclusion
 
-*Formalized as* `size_ge_depth_succ` *in* @file Catalog/Algebra/AlgebraicCircuitComplexity.lean.
-
-### 3.5 Gate Count Inequalities
-
-**Theorem 3.7 (Gate Count Bounds).** *For any circuit $C$:*
-
-1. $\mu(C) \leq \text{size}(C)$ — multiplicative gates bounded by total size.
-2. $\alpha(C) \leq \text{size}(C)$ — additive gates bounded by total size.
-3. $\alpha(C) + \mu(C) \leq \text{size}(C)$ — internal gates bounded by total size.
-
-*Formalized as* `mulGates_le_size`, `addGates_le_size`, *and* `addGates_plus_mulGates_le_size`.
-
-**Remark.** Inequality (3) implies that the number of leaf nodes (constants and variables) equals $\text{size}(C) - \alpha(C) - \mu(C) \geq 0$.
-
-### 3.6 Algebraic Structure of Zero-Function Circuits (PIT Foundations)
-
-**Definition 3.8.** A circuit $C$ is a *zero-function circuit* if $\text{eval}(C, v) = 0$ for all $v$.
-
-**Theorem 3.9 (Ideal Structure).** *The set of zero-function circuits is closed under:*
-
-1. *Addition:* If $C_1, C_2$ are zero-function circuits, then $\texttt{add}(C_1, C_2)$ is a zero-function circuit.
-2. *Left multiplication:* If $C_1$ is a zero-function circuit and $C_2$ is any circuit, then $\texttt{mul}(C_1, C_2)$ is a zero-function circuit.
-3. *Right multiplication:* If $C_2$ is a zero-function circuit and $C_1$ is any circuit, then $\texttt{mul}(C_1, C_2)$ is a zero-function circuit.
-
-**Proof sketch.** (1) follows from $0 + 0 = 0$. (2) follows from $0 \cdot r = 0$. (3) follows from $r \cdot 0 = 0$. ∎
-
-*Formalized as* `add_zero_functions_is_zero`, `mul_zero_function_left`, *and* `mul_zero_function_right` *in* @file Catalog/Algebra/AlgebraicCircuitComplexity.lean.
-
-**Theorem 3.10 (Polynomial Zero implies Function Zero).** *If $\text{toMvPolynomial}(C) = 0$, then $C$ is a zero-function circuit.*
-
-*Formalized as* `zero_poly_implies_zero_function`.
-
-### 3.7 Substitution and Composition
-
-**Definition 3.11 (Substitution).** Given a circuit $C$ over $n$ variables and circuits $s_0, \ldots, s_{n-1}$ (one per variable), the *substitution* $C[s_0, \ldots, s_{n-1}]$ replaces each $\texttt{var}(i)$ node with $s_i$.
-
-**Theorem 3.12 (Substitution Semantics).** *For any circuit $C$, substitution functions $s$, and assignment $v$:*
-
-$$\text{eval}(C[s], v) = \text{eval}(C, \lambda i.\, \text{eval}(s(i), v))$$
-
-**Proof sketch.** By structural induction on $C$. Constants are unchanged; variables are replaced by the corresponding substitution circuit; addition and multiplication distribute over substitution. ∎
-
-*Formalized as* `eval_substitute` *in* @file Catalog/Algebra/AlgebraicCircuitComplexity.lean.
-
-**Theorem 3.13 (Identity Substitution).** *Substituting $\texttt{var}(i)$ for each variable $i$ leaves the circuit unchanged: $C[\texttt{var}] = C$.*
-
-*Formalized as* `substitute_var_id`.
-
-### 3.8 Complexity Bounds
-
-**Definition 3.14 (Complexity Bound).** A *circuit complexity bound* is a triple $(S, D, \Delta)$ specifying upper bounds on size, degree, and depth.
-
-**Theorem 3.15 (Bounded Circuit Degree).** *If a circuit $C$ satisfies a complexity bound with depth bound $\Delta$, then $\text{degreeBound}(C) \leq 2^\Delta$.*
-
-*Formalized as* `bounded_circuit_degree_bound`.
-
-**Theorem 3.16 (Bounded Depth-Size Relationship).** *If a circuit $C$ satisfies a complexity bound with size bound $S$, then $\text{depth}(C) + 1 \leq S$.*
-
-*Formalized as* `bounded_circuit_depth_size`.
-
----
-
-## 4. Applications and Connections
-
-### 4.1 Circuit Complexity and VP/VNP
-
-The formalization includes a `CircuitComplexityBound` structure that captures the notion of polynomial-size, polynomially-bounded circuits — the basis for Valiant's complexity class VP. A polynomial family $(f_n)$ belongs to VP if there exist circuits $(C_n)$ with $\text{size}(C_n) \leq n^{O(1)}$, $\text{degreeBound}(C_n) \leq n^{O(1)}$, and $C_n$ computes $f_n$. Our `satisfiesBound` predicate and the accompanying theorems provide the verified infrastructure for reasoning about membership in VP.
-
-### 4.2 Neural Network Depth
-
-The degree-depth tradeoff (Theorem 3.3) has direct implications for deep learning. Polynomial neural networks (networks with polynomial activation functions) are algebraic circuits. The theorem implies that a network of depth $d$ can represent polynomials of degree at most $2^d$, establishing a formal separation between shallow and deep networks when the target function has high polynomial degree.
-
-### 4.3 Polynomial Identity Testing
-
-The ideal structure of zero-function circuits (Theorem 3.9) provides the algebraic foundation for PIT. The Schwartz-Zippel lemma, when combined with Theorem 3.15 (degree bounds for bounded circuits), gives a randomized PIT algorithm with error probability at most $d/|S|$ over a finite evaluation domain $S$ of size $|S|$, where $d$ is the degree bound.
-
-### 4.4 Cryptographic Applications
-
-Circuit size bounds directly relate to cryptographic hardness assumptions. Many post-quantum cryptographic schemes assume that certain polynomial families (related to lattice problems) require super-polynomial circuit size. Our formalization of the size-depth-degree relationships provides verified bounds that could be used to reason about the security parameters of such schemes.
-
----
-
-## 5. Algorithms
-
-### 5.1 Circuit Evaluation
-
-**Algorithm 5.1.** Given a circuit $C$ and assignment $v$, compute $\text{eval}(C, v)$ by recursive traversal.
-
-- **Time complexity:** $O(\text{size}(C))$
-- **Space complexity:** $O(\text{depth}(C))$ (stack depth)
-
-The correctness of this algorithm is guaranteed by the evaluation function definition and the soundness theorem (Theorem 3.1).
-
-### 5.2 Degree Bound Computation
-
-**Algorithm 5.2.** Given a circuit $C$, compute $\text{degreeBound}(C)$ by recursive traversal using max for addition and sum for multiplication.
-
-- **Time complexity:** $O(\text{size}(C))$
-
-The result is guaranteed to be an upper bound on the true degree by Theorem 3.3 and the definition of the degree bound.
-
-### 5.3 Randomized PIT via Schwartz-Zippel
-
-**Algorithm 5.3.** Given a circuit $C$ with degree bound $d$ over a field $\mathbb{F}$:
-
-1. Choose a subset $S \subseteq \mathbb{F}$ with $|S| \geq 2d$.
-2. Sample $v \in S^n$ uniformly at random.
-3. Evaluate $\text{eval}(C, v)$.
-4. If $\text{eval}(C, v) = 0$, output "likely zero"; otherwise "non-zero."
-
-- **Error probability:** At most $d/|S| \leq 1/2$ (by Schwartz-Zippel).
-- The degree bound $d$ can be computed using Algorithm 5.2, with Theorem 3.3 guaranteeing $d \leq 2^{\text{depth}(C)}$.
-
----
-
-## 6. Discussion
-
-### 6.1 Tightness of Bounds
-
-The degree-depth bound $2^d$ is tight (iterated squaring achieves it), as is the work-span bound (a chain of $d$ operations has size $2d + 1$ and depth $d$, giving a ratio approaching 2). The gate count bounds are also tight in the worst case: a circuit consisting entirely of multiplication gates has $\mu(C) = \text{size}(C) - O(1)$.
-
-### 6.2 Limitations
-
-Our formalization captures the *tree* circuit model (each gate's output is used exactly once). The more general *DAG* circuit model, where gate outputs can be shared (fan-out > 1), computes the same class of polynomials but potentially with exponentially smaller circuits. Extending to DAG circuits would require tracking shared subexpressions.
-
-The syntactic degree bound may overestimate the true degree of the computed polynomial (e.g., $\texttt{add}(\texttt{var}(0) \cdot \texttt{var}(0), -\texttt{var}(0) \cdot \texttt{var}(0))$ has degree bound 2 but computes the zero polynomial of degree $-\infty$). This gap is inherent in any syntactic analysis.
-
-### 6.3 Connections to Topological Data Analysis
-
-An emerging direction connects algebraic circuit complexity to the computational aspects of topological data analysis (TDA). Computing persistent homology of a Vietoris-Rips filtration involves algebraic operations (boundary operators, Smith normal form) whose complexity can be analyzed in the circuit model. The "Poincaré threshold" — the scale at which a point cloud's Rips complex exhibits the homology of a sphere — involves detecting specific algebraic signatures. The circuit complexity of computing this threshold, and its scaling with dimension and sample size, connects algebraic complexity to manifold learning.
-
----
-
-## 7. Future Work
-
-1. **DAG circuits:** Extend the formalization to directed acyclic graph circuits with fan-out, capturing the polynomial-size circuits that define VP.
-2. **Lower bounds:** Formalize known super-polynomial lower bounds for restricted circuit classes (e.g., depth-3 circuits, multilinear circuits).
-3. **PIT algorithms:** Formalize the Schwartz-Zippel lemma and connect it to the circuit degree bounds.
-4. **Valiant's classes:** Define VP and VNP as complexity classes and formalize the VP ≠ VNP conjecture.
-5. **Persistent homology circuits:** Analyze the algebraic circuit complexity of computing persistent Betti numbers, connecting to TDA applications.
-
----
-
-## 8. Broader Impact
-
-The formalization of algebraic circuit complexity has implications beyond pure mathematics. In machine learning, the degree-depth tradeoff provides a theoretical foundation for understanding why deep architectures outperform shallow ones: a network of depth $d$ with polynomial activations can represent functions of degree up to $2^d$, creating an exponential expressivity gap between networks of different depths. This formalizes the intuition that "depth matters" and provides quantitative bounds on the minimum depth required to approximate a target function of given polynomial degree.
-
-In cryptography, circuit size lower bounds are intimately connected to computational hardness assumptions. Many lattice-based post-quantum cryptographic schemes rely on the assumption that certain polynomial families require super-polynomial circuits. Our formalization of the size-depth-degree relationships, combined with the complexity bound infrastructure, provides a verified framework for reasoning about the circuit complexity of cryptographic primitives.
-
-In program verification and compiler optimization, the substitution semantics theorem (Theorem 3.12) provides a formal guarantee that modular program composition preserves semantics. This is the algebraic analogue of the fundamental theorem of denotational semantics, and its machine verification adds confidence to compiler transformations that decompose and recompose computational graphs.
-
-The PIT foundations connect to derandomization, one of the central themes of modern complexity theory. A deterministic polynomial-time PIT algorithm would imply strong circuit lower bounds via the Kabanets-Impagliazzo framework. Our formalization of the ideal structure of zero-function circuits, combined with the degree bounds, provides the verified algebraic infrastructure needed to reason about PIT-based derandomization strategies.
-
-Finally, the connection to topological data analysis — where algebraic operations underpin persistent homology computations — opens a pathway toward analyzing the computational complexity of manifold detection and shape recognition algorithms. The circuit complexity of computing persistent Betti numbers, and the scaling of detection thresholds with dimension and sample size, are natural questions that bridge algebraic complexity with applied topology.
-
-## References
-
-[1] L. G. Valiant, "Completeness classes in algebra," in *Proceedings of the 11th Annual ACM Symposium on Theory of Computing*, 1979, pp. 249–261.
-
-[2] V. Strassen, "Vermeidung von Divisionen," *Journal für die reine und angewandte Mathematik*, vol. 264, pp. 184–202, 1973.
-
-[3] P. Bürgisser, M. Clausen, and M. A. Shokrollahi, *Algebraic Complexity Theory*, Springer, 1997.
-
-[4] N. Saxena, "Progress on polynomial identity testing," *Bulletin of the EATCS*, vol. 99, pp. 49–79, 2009.
-
-[5] M. Telgarsky, "Benefits of depth in neural networks," in *COLT*, 2016.
-
-[6] R. Eldan and O. Shamir, "The power of depth for feedforward neural networks," in *COLT*, 2016.
-
----
-
-## Appendix: Catalog of Formalized Results
-
-| # | Name | Statement | Reference |
-|---|------|-----------|-----------|
-| 1 | `eval_eq_mvpolynomial_eval` | $\text{eval}(C, v) = \text{eval}_{\text{poly}}(v, \text{toMvPoly}(C))$ | Theorem 3.1 |
-| 2 | `circuits_with_same_poly_agree` | Same polynomial $\Rightarrow$ same evaluation | Corollary 3.2 |
-| 3 | `degreeBound_le_two_pow_depth` | $\text{degreeBound}(C) \leq 2^{\text{depth}(C)}$ | Theorem 3.3 |
-| 4 | `depth_lower_bound_from_degree` | $\text{degreeBound}(C) > 2^d \Rightarrow \text{depth}(C) > d$ | Theorem 3.4 |
-| 5 | `size_ge_depth_succ` | $\text{size}(C) \geq \text{depth}(C) + 1$ | Theorem 3.6 |
-| 6 | `AlgCircuit.size_pos` | $\text{size}(C) > 0$ | — |
-| 7 | `mulGates_le_size` | $\mu(C) \leq \text{size}(C)$ | Theorem 3.7(1) |
-| 8 | `addGates_le_size` | $\alpha(C) \leq \text{size}(C)$ | Theorem 3.7(2) |
-| 9 | `addGates_plus_mulGates_le_size` | $\alpha(C) + \mu(C) \leq \text{size}(C)$ | Theorem 3.7(3) |
-| 10 | `add_zero_functions_is_zero` | Zero functions closed under addition | Theorem 3.9(1) |
-| 11 | `mul_zero_function_left` | Zero functions absorb on the left | Theorem 3.9(2) |
-| 12 | `mul_zero_function_right` | Zero functions absorb on the right | Theorem 3.9(3) |
-| 13 | `zero_poly_implies_zero_function` | Zero polynomial $\Rightarrow$ zero function | Theorem 3.10 |
-| 14 | `eval_substitute` | Substitution preserves evaluation semantics | Theorem 3.12 |
-| 15 | `substitute_var_id` | Identity substitution is identity | Theorem 3.13 |
-| 16 | `bounded_circuit_degree_bound` | Bounded circuits have bounded degree | Theorem 3.15 |
-| 17 | `bounded_circuit_depth_size` | Bounded circuits: depth + 1 ≤ size bound | Theorem 3.16 |
+The manifold-detection threshold of the Poincaré conjecture for data scales like $n^{-1/d}$ (proved and sharp), carries a $\sqrt d$ prefactor that is purely a change-of-metric constant (proved), but does *not* satisfy the conjectured exact equality (disproved). The correct statement is the scaling relation $\varepsilon_\star \asymp d^{1/2}\,n^{-1/d}$. Manifold detection is a topological problem governed by the intrinsic dimension, and its difficulty is captured by a single, unavoidable exponent.
