@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7a9dcf2f",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\nThe Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formalizes\nthe exact algebra behind the \"knotted light\" OAM/Alexander-polynomial conjecture for\nthe four",
-      "quality_score": 0.78,
-      "sorry_count": 3,
-      "theorem_count": 81,
-      "timestamp": "2026-07-10T02:59:14",
-      "title": "The Topology of Knotted Light: How Laser Beams Get Tangled"
-    },
-    {
       "cycle_id": "6490730e",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions\n\nThis project formalizes the **generalized multinomial convolution identity**\n$$ \\sum_{i_1 + \\cdots + i_m = d} \\prod_{j=1}^{m} \\binom{a + i_j}{a}\n     = \\binom{ma + d + m - 1}{d},",
@@ -499,19 +489,19 @@
       "theorem_count": 29,
       "timestamp": "2026-07-10T19:15:53",
       "title": "Deepening: Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
+    },
+    {
+      "cycle_id": "3a52b537",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions\n\nThis project formalizes the constructive core of the probabilistic method around three\nErdős-flavoured results. What is proved and what remains:\n\n## What is proved (0 sorries)\n\n##",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 22,
+      "timestamp": "2026-07-10T19:32:10",
+      "title": "Formalizing the Probabilistic Method: Erdos Meets Lean"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7469cf90",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nBold, testable conjectures distilled from this cycle's study of three\nreusable proof patterns: max-plus (tropical) simplification, reflective\nsmall-case primality testing, and row",
-      "quality_score": 0.6437080000000001,
-      "sorry_count": 4,
-      "theorem_count": 15,
-      "timestamp": "2026-07-01T23:10:20",
-      "title": "Proof Automation: Custom Lean 4 Tactics"
-    },
     {
       "cycle_id": "a725bb00",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 29,
       "timestamp": "2026-07-10T19:15:53",
       "title": "Deepening: Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
+    },
+    {
+      "cycle_id": "3a52b537",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions\n\nThis project formalizes the constructive core of the probabilistic method around three\nErdős-flavoured results. What is proved and what remains:\n\n## What is proved (0 sorries)\n\n##",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 22,
+      "timestamp": "2026-07-10T19:32:10",
+      "title": "Formalizing the Probabilistic Method: Erdos Meets Lean"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2c002c80",
-      "domain": "Applications",
-      "name": "E1_pure",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "2c002c80",
-      "domain": "Applications",
-      "name": "E2_pure",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "c22096e0",
-      "domain": "Novelty",
-      "name": "VertexArrows",
-      "quality": 0.7
-    },
     {
       "cycle_id": "c22096e0",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "IsTropPoly",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "3a52b537",
+      "domain": "Cryptography",
+      "name": "card_edgesWithin",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "3a52b537",
+      "domain": "Cryptography",
+      "name": "card_filter_isMono_le",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "3a52b537",
+      "domain": "Cryptography",
+      "name": "not_arrows_of_two_mul_choose_lt",
+      "quality": 0.79
     }
   ],
-  "last_updated": "2026-07-10T19:15:53",
+  "last_updated": "2026-07-10T19:32:10",
   "open_questions": [
     {
       "context": "necessary.  All main theorems are `sorry`-free and use genuine arguments",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "9c488c94",
-        "quality": 0.6903199999999999,
-        "theorems": 9,
-        "title": "Representation Theory: Character Tables of S_n"
-      },
-      {
         "cycle_id": "e94880cd",
         "quality": 0.65224,
         "theorems": 8,
@@ -3389,6 +3383,12 @@
         "quality": 0.82,
         "theorems": 17,
         "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
+      },
+      {
+        "cycle_id": "3a52b537",
+        "quality": 0.79,
+        "theorems": 22,
+        "title": "Formalizing the Probabilistic Method: Erdos Meets Lean"
       }
     ],
     "Geometry": [

@@ -228,6 +228,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 3a52b537 (Q=0.790), which proved 22 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The probabilistic method proves existence by showing that a random structure has the desired property with positive probability. Key results: (1) Erdos's lower bound on Ramsey numbers: R(k,k) > 2^{k/2}. (2) The Lovasz local lemma: if bad events A_1, ..., A_n satisfy P(A_i) <= p and each A_i is indep",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "push_3a52b537_7c44a098",
+    "priority_score": 0.89,
+    "research_mode": "team",
+    "source_exp_id": "3a52b537",
+    "status": "available",
+    "timestamp": "2026-07-10T19:32:10.856151+00:00",
+    "title": "Deepening: Formalizing the Probabilistic Method: Erdos Meets Lean"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Two quantum particles are entangled if measuring one instantly affects the other. But entanglement is also a topological property: if you represent the state of two qubits as a curve in R^3, entanglement IS the linking number. Conjecture: For any pure state of two qubits |psi> in C^2 tensor C^2, the concurrence C(psi) = 2|alpha*delta - beta*gamma| (where psi = alpha|00> + beta|01> + gamma|10> + delta|11>) equals the absolute value of the linking number of two curves derived from the Hopf fibration applied to psi. Specifically, map psi to S^7 via normalization, then project to S^4 via the Hopf map, and the preimages of two points in S^4 are linked circles in S^7 whose linking number equals the concurrence. This means: entanglement is MEASURED by topology, and maximally entangled states correspond to the Hopf link (linking number 1). Test: for 1000 random two-qubit states, compute the concurrence and the linking number of the Hopf preimages, and verify they are equal. Prove the equality for the Bell states. Impact: quantum entanglement is not mysterious \u2014 it is the linking number of the Hopf fibration. Two particles are entangled if and only if their Hopf preimages are linked.",
     "domains": [
       "Novelty",
@@ -367,21 +381,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-10T02:06:58.773372+00:00",
     "title": "The Aperiodic Monotile: One Shape to Tile Them All"
-  },
-  {
-    "consumed_by_exp_id": "3a52b537",
-    "description": "The probabilistic method proves existence by showing that a random structure has the desired property with positive probability. Key results: (1) Erdos's lower bound on Ramsey numbers: R(k,k) > 2^{k/2}. (2) The Lovasz local lemma: if bad events A_1, ..., A_n satisfy P(A_i) <= p and each A_i is independent of all but d others, and e*p*(d+1) <= 1, then P(AND not A_i) > 0. (3) Turan's theorem: the maximum number of edges in a K_{r+1}-free graph on n vertices is (1 - 1/r) * n^2/2. Conjecture: all three results can be formalized in Lean 4 without axiom of choice. The key is to replace non-constructive existence proofs with explicit constructions: (1) The probabilistic proof of R(k,k) > 2^{k/2} uses the expectation argument, which is constructive (compute the expected number of monochromatic K_k and show it's less than 1). (2) The Lovasz local lemma can be made constructive via Moser-Tardos algorithm. (3) Turan's theorem has an explicit construction (the Turan graph). Conjecture: the Moser-Tardos algorithm runs in expected time O(n*d*log(1/p)) and produces a satisfying assignment with probability 1 (constructive LLL). Test: formalize all three results in Lean 4 and verify the proofs compile. Impact: the probabilistic method is constructive. Erdos's existence proofs are algorithms in disguise.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0916",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T16:36:20.054846+00:00",
-    "title": "Formalizing the Probabilistic Method: Erdos Meets Lean"
   },
   {
     "consumed_by_exp_id": "",
@@ -586,7 +585,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d58a4cc2",
     "description": "The Riemann-Roch theorem for graphs (Baker-Norine, 2007) states that for a divisor D on a graph G, l(D) - l(K_G - D) = deg(D) + 1 - g(G) where l(D) is the rank of D, K_G is the canonical divisor, and g(G) is the genus (cyclomatic number). The chip-firing game is a combinatorial model: vertices hold chips, and 'firing' a vertex sends one chip along each incident edge. Conjecture: for the complete graph K_n, the canonical divisor K_{K_n} has rank (n-1)(n-2)/2 - 1, and the Riemann-Roch formula gives l(D) = deg(D) + 1 - (n-1)(n-2)/2 + l(K_{K_n} - D). For D = K_{K_n} (the canonical divisor itself): l(K_{K_n}) = (n-1)(n-2)/2 - 1 + 1 - (n-1)(n-2)/2 + l(0) = 0 + l(0). But l(0) = 0 (the empty divisor has rank 0). So l(K_{K_n}) = 0. Wait, this gives l(K_{K_n}) = 0, but the canonical divisor of K_n should have positive rank. Conjecture: the canonical divisor of K_n is K_{K_n} = sum_v (deg(v) - 1) * v = (n-2) * sum_v v, and l(K_{K_n}) = (n-1)(n-2)/2 - 1 (it achieves the genus minus 1). Test: compute the canonical divisor and verify the Riemann-Roch formula for K_n with n = 3, 4, 5, 6. Impact: chip-firing on complete graphs encodes the same information as the Riemann-Roch theorem on projective curves.",
     "domains": [
       "Novelty",
@@ -596,7 +595,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T16:36:19.999072+00:00",
     "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
   },
@@ -5270,6 +5269,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The Poincare conjecture (proved by Perelman) states that every simply connected closed 3-manifold is homeomorphic to the 3-sphere. For data: a point cloud X = {x_1, ..., x_n} in R^d may or may not lie on a manifold. Conjecture: the Poincare conjecture for data states that if the persistent homology of X satisfies H_0(X) = Z, H_1(X) = 0, H_2(X) = 0, ..., H_{d-1}(X) = 0, then X lies on (or near) a d-sphere. More precisely, if the Vietoris-Rips complex of X at scale epsilon has the homology of S^d (trivial homology except H_0 = Z and H_d = Z), then X is epsilon-close to a subset of S^d. Conjecture: the smallest epsilon such that VR_epsilon(X) has the homology of S^d is the 'Poincare threshold' of X, and it satisfies epsilon_star = C * d^{1/2} * n^{-1/d} for some constant C, where n is the number of points. This is the manifold detection threshold: below epsilon_star, X looks like a d-sphere; above epsilon_star, X looks like something else. Test: generate point clouds on S^d for d = 1, 2, 3 and compute the Poincare threshold. Impact: the Poincare conjecture for data says that manifold detection is a topological problem, and the detection threshold scales as n^{-1/d}.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0934",
+    "priority_score": 0.79,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T19:31:41.534502+00:00",
+    "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prime gaps \u2014 the spaces between consecutive primes \u2014 are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable \u2014 given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random \u2014 they are a solvable crossword puzzle with deterministic rules.",
     "domains": [
       "Novelty",
@@ -6075,6 +6089,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T19:15:47.795796+00:00",
     "title": "Two structural results about rectifier networks:"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes the constructive core of the probabilistic method around three\nErd\u0151s-flavoured results. What is proved and what remains:\n\n## What is proved (0 sorries)\n\n### `ErdosRamseyLowerBound.lean` \u2014 Erd\u0151s's Ramsey lower bound\n* `not_arrows_of_two_mul_choose_lt`: the union-bound counting theorem. If\n  `2 \u00b7 C(n,k) < 2^{C(k,2)}` then `K_n` has a red/blue edge-colouring with no monochromatic\n  `K_k` (`R(k,k) > n`). This is Erd\u0151s's 1947 argument done entirely by finite counting over\n  `Finset`s.\n* `not_arrows_pow`: the explicit bound `R(k,k) > 2^{k/2}` for `k \u2265 3`.\n* Concrete instances `not_arrows_5_4` (`R(4,4) > 5`) and `not_arrows_8_6` (`R(6,6) > 8`).\n\n### `TuranEdgeBound.lean` \u2014 Tur\u00e1n's theorem, real-analytic form\n* `CliqueFree.two_mul_card_edgeFinset_le` and `CliqueFree.card_edgeFinset_le_turan_real`:\n  a `K_{r+1}`-free graph on `n` vertices has at most `(1 \u2212 1/r)\u00b7n\u00b2/2` edges, derived from\n  Mathlib's exact extremal optimum (the explicitly-constructed Tur\u00e1n graph).\n\n### `ProbabilisticMethod.lean` \u2014 the method itself, and the independent LLL\n* `measure_iInter_compl_pos_of_sum_lt_one` / `exists_forall_notMem_of_sum_measure_lt_one`:\n  the first-moment / union-bound existence principle in a general probability space.\n* `iIndep_measure_iInter_compl_eq_prod` / `iIndep_measure_iInter_compl_pos`: the Lov\u00e1sz\n  Local Lemma in the independent (`d = 0`) case, `P(\u22c2 A\u1d62\u1d9c) = \u220f (1 \u2212 P(A\u1d62)) > 0`.\n\n### `LovaszLocalLemmaChain.lean` \u2014 the general chain-rule positivity principle\n* `measure_biInter_compl_pos_of_cond_lt`: if every bad event is *conditionally avoidable* given\n  any positively-probable family of already-avoided events (`P(A\u1d62 \u2229 \u22c2_{j\u2208S} A\u2c7c\u1d9c) < P(\u22c2_{j\u2208S} A\u2c7c\u1d9c)`\n  for `i \u2209 S`), then *every* finite family `\u22c2_{j\u2208S} A\u2c7c\u1d9c` has positive probability (induction on `S`).\n* `measure_iInter_compl_pos_of_cond_lt` / `exists_forall_notMem_of_cond_lt`: hence `P(\u22c2\u1d62 A\u1d62\u1d9c) > 0`\n  and some outcome avoids every bad event. This is the measure-theoretic backbone of the Local\n  Lemma *without* full independence; specialising the hypothesis to independent events recovers\n  the independent case above.\n\n## Natural next steps\n\n1. **General (asymmetric) Lov\u00e1sz Local Lemma.** With the chain-rule positivity principle\n   (`LovaszLocalLemmaChain.lean`) in place, the remaining work is to *verify its conditional\n   hypothesis* from a dependency graph of maximum degree `d` with `e\u00b7p\u00b7(d+1) \u2264 1`. The standard\n   route is the induction on conditional probabilities `P(A\u1d62 | \u22c2_{j\u2208S} A\u2c7c\u1d9c) \u2264 2p`; this requires\n   developing conditional-probability estimates (and the mutual-independence-from-non-neighbours\n   hypothesis) on top of Mathlib's `ProbabilityTheory`.\n\n2. **Moser\u2013Tardos constructive LLL.** Formalize the resampling algorithm and its expected\n   `O(n\u00b7d)` running-time bound (the witness-tree / entropy-compression argument), turning the\n   existence statement into an algorithm with a proved termination bound.\n\n3. **Ramsey numbers as a defined quantity.** Combine the lower bound here with a finiteness /\n   upper-bound proof to define `R(k,k)` and state `2^{k/2} < R(k,k) \u2264 4^k` as bounds on a single\n   number.\n\n4. **Tighten the Ramsey constant.** Sharpen the first-moment argument (deletion method) to the\n   classical `R(k,k) > (1+o(1)) \u00b7 (k/e) \u00b7 2^{k/2}`.\n\n5. **Tur\u00e1n extremal uniqueness in real form.** Package the equality case (`|E(G)| =\n   (1\u22121/r)\u00b7n\u00b2/2` iff `G \u2245 T(n,r)` with `r | n`) alongside the inequality.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0935",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3a52b537",
+    "status": "available",
+    "timestamp": "2026-07-10T19:32:04.621612+00:00",
+    "title": "This project formalizes the constructive core of the probabilistic method around"
   },
   {
     "consumed_by_exp_id": "76f66aa5",
