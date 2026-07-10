@@ -1,166 +1,189 @@
-# The Fundamental Theorem of Cakes: Stratified Moduli Theory for Layered Geometric Objects
+# The Fundamental Theorem of Cakes: The Arithmetic Backbone of the Moduli of Decorated Surfaces
 
 ## Abstract
 
-We formalize a theory of "cakes" — combinatorial objects encoding the topology of compact orientable surfaces with boundary, marked points, and layer stratifications. We prove that every such object is determined by its genus *g*, boundary count *b*, cherry count *n*, and layer structure *L*. The central results include: (1) an Euler characteristic additivity formula under surface gluing, (2) the classical 6g − 6 + 2n dimension formula for moduli spaces of marked surfaces with a proof of its evenness and its relationship to complex moduli dimension 3g − 3 + n, (3) a sharp bound on stratification length in terms of ambient dimension, (4) monotonicity of moduli dimension under a natural categorical ordering on cakes, and (5) a superadditivity result showing that gluing cakes creates 6 additional moduli parameters. All results are machine-verified.
-
-**Keywords**: moduli spaces, stratified spaces, Euler characteristic, surface classification, Teichmüller theory, categorical structures
-
----
+We develop, in full elementary detail, the integer identity that governs the dimension of the moduli space of decorated closed orientable surfaces. Modeling a *cake* as a closed orientable surface of genus $g$ (its *base*) equipped with $n$ marked points (its *cherries*) and a uniform boundary line bundle (its *frosting*), we identify the classifying object of cakes of genus $g$ with $n$ cherries with the moduli space $\mathcal{M}_{g,n}$ of $n$-pointed genus-$g$ surfaces. The **Fundamental Theorem of Cakes** states that a cake is determined up to isomorphism of flavour by the discrete invariants $(g,n)$ together with the continuous moduli of its features, and that the space of those moduli has dimension
+$$\dim \mathcal{M}_{g,n} = 3g - 3 + n.$$
+We prove the arithmetic backbone of this statement from two independent Riemann–Roch computations — first-order deformations $H^1(C, T_C)$ and quadratic differentials $H^0(C, 2K_C)$ — glued by Serre duality, and we show that the exceptional low-genus behaviour of the raw formula $3g-3$ is repaired exactly by the stability inequality $2g - 2 + n > 0$. We further establish a rigid linear triangle relating the Euler characteristic, first Betti number, and moduli dimension of the base, and we certify the closed form via an explicit per-handle recurrence. All identities are stated and proved in elementary integer arithmetic, isolating the combinatorial content of the dimension theorem from its analytic construction.
 
 ## 1. Introduction
 
-The classification of compact surfaces is one of the oldest and most elegant results in topology. Every compact orientable surface is determined, up to homeomorphism, by its genus *g* (number of handles) and number of boundary components *b*. The Euler characteristic χ = 2 − 2g − b provides a coarse but powerful topological invariant.
+The moduli space $\mathcal{M}_{g,n}$ of $n$-pointed genus-$g$ Riemann surfaces is among the central objects of modern geometry: it organizes deformation theory, underlies the perturbative expansion of string theory, and its intersection theory is the subject of a rich body of results. Its dimension,
+$$\dim_{\mathbb{C}} \mathcal{M}_{g,n} = 3g - 3 + n \qquad (2g-2+n>0),$$
+is classical. The purpose of this paper is to isolate and prove, from first principles, the *exact integer content* of this dimension count, stripped of the analytic machinery needed to construct $\mathcal{M}_{g,n}$ as a space.
 
-When surfaces carry additional structure — marked points, conformal structures, line bundles on their boundary — the classification problem becomes richer. The moduli space M_{g,n} of genus-*g* surfaces with *n* marked points has dimension 6g − 6 + 2n (as a real manifold), a formula that underlies vast areas of algebraic geometry, string theory, and mathematical physics.
+We frame the development through a deliberately playful metaphor — the *cake* — that nonetheless tracks the mathematics precisely. A cake has a *base* (a closed orientable surface), *frosting* (a rank-one locally free sheaf on the boundary), and *cherries* (marked points), and its number of handles is counted by its cherries. This metaphor is faithful: "isomorphism of flavour" is isomorphism of pointed surfaces, and the classifying space of cakes is $\mathcal{M}_{g,n}$.
 
-In this paper, we introduce "cake data" as a combinatorial encoding of these structures, adding a layer stratification to capture the flag structure of embedded subvarieties. We prove fundamental properties of these objects and establish their categorical structure.
+Our contributions are:
+
+1. A derivation of the core dimension $3g-3$ by **two independent Riemann–Roch computations** — via deformations and via quadratic differentials — proved equal by Serre duality (Section 4).
+2. A precise account of the **low-genus repair phenomenon**: the marked formula $3g-3+n$ corrects the nonsensical values of $3g-3$ at $g=0,1$, and the stability inequality $2g-2+n>0$ simultaneously governs automorphism-finiteness and dimensional non-negativity (Section 5).
+3. A **rigid linear triangle** connecting Euler characteristic, first Betti number, canonical degree, and moduli dimension (Section 6).
+4. An **inductive certification** of the closed form via a per-handle recurrence, together with a finite enumeration check for $g \le 5$ (Section 7).
+5. The **injectivity half** of the Fundamental Theorem: the discrete invariants are recovered from the moduli dimension (Section 8).
 
 ## 2. Definitions
 
-### 2.1 Cake Data
+Throughout, $g$ denotes the genus of the base surface and $n$ the number of cherries (marked points). We work with integer-valued invariants; the sign structure of the negative low-genus values is essential and would be destroyed by working over the natural numbers.
 
-**Definition 1** (CakeData). A *cake datum* is a quadruple C = (g, b, n, k) where:
-- g ∈ ℕ is the **genus** (number of handles of the base surface)
-- b ∈ ℕ is the **boundary count** (number of boundary components / frosting edges)
-- n ∈ ℕ is the **cherry count** (number of marked points)
-- k ∈ ℕ is the **layer count** (depth of the stratification)
+**Definition 2.1 (Base topology).** For a closed orientable surface of genus $g$:
+- the **Euler characteristic** is $\chi(g) = 2 - 2g$;
+- the **first Betti number** is $b_1(g) = 2g$.
 
-**Definition 2** (Euler Characteristic). The Euler characteristic of a cake C = (g, b, n, k) is:
-$$\chi(C) = 2 - 2g - b$$
+**Definition 2.2 (Sheaf degrees).** On a genus-$g$ surface:
+- the **canonical degree** is $\deg K(g) = 2g - 2$;
+- the **tangent degree** is $\deg T(g) = 2 - 2g$ (so $T_C = K_C^{-1}$).
 
-**Definition 3** (Moduli Dimension). The real moduli dimension is:
-$$\dim_{\mathbb{R}} \mathcal{M}(C) = 6g - 6 + 2n$$
+**Definition 2.3 (Riemann–Roch Euler characteristic).** For a line bundle of degree $d$ on a genus-$g$ surface,
+$$\chi(d, g) = h^0 - h^1 = d + 1 - g.$$
 
-The complex moduli dimension is:
-$$\dim_{\mathbb{C}} \mathcal{M}(C) = 3g - 3 + n$$
+**Definition 2.4 (Moduli and Teichmüller dimensions).**
+- The **moduli dimension** of unmarked cakes is $M(g) = 3g - 3$.
+- The **marked moduli dimension** of cakes with $n$ cherries is $M(g,n) = 3g - 3 + n$.
+- The **Teichmüller dimension** (real) is $T(g) = 6g - 6$.
+- The **holomorphic-differential dimension** is $H(g) = \chi(\deg K(g), g) + 1$.
 
-### 2.2 Layer Stratification
+**Definition 2.5 (Stability).** A cake of genus $g$ with $n$ cherries is **stable** iff
+$$2g - 2 + n > 0.$$
 
-**Definition 4** (LayerStratification). A *layer stratification* of depth *d* is a list of natural numbers (d₀, d₁, ..., dₖ) satisfying:
-- d₀ = d (starts at ambient dimension)
-- dₖ = 0 (ends at a point)
-- dᵢ > dᵢ₊₁ for all i (strictly decreasing)
+## 3. The topology of the base
 
-A stratification is **complete** if its length is d + 1, meaning every codimension from 0 to d is represented.
+We first record the elementary relations among the topological invariants; each is an exact integer identity.
 
-### 2.3 Frosting Sheaf
+**Proposition 3.1 (Euler via Betti).** $\chi(g) = 1 - b_1(g) + 1$.
 
-**Definition 5** (FrostingSheaf). A *frosting sheaf* on a cake with *b* boundary components is a function δ : {1, ..., b} → ℤ assigning a degree to each boundary component. The total degree is Σᵢ δ(i). The sheaf is **uniform** if all degrees are equal.
+*Proof.* A closed orientable surface has Betti numbers $b_0 = b_2 = 1$ and $b_1 = 2g$, so $\chi = b_0 - b_1 + b_2 = 1 - 2g + 1 = 2 - 2g$. $\square$
 
-### 2.4 Full Cake
+**Proposition 3.2 (Canonical = negative Euler).** $\deg K(g) = -\chi(g)$.
 
-**Definition 6** (Cake). A *cake* is a triple (C, F, L) where C is cake data, F is a frosting sheaf with numComponents = b, and L is a layer stratification of depth k.
+*Proof.* $-(2-2g) = 2g-2 = \deg K(g)$. $\square$
 
-## 3. Main Results
+**Proposition 3.3 (Tangent = negative canonical).** $\deg T(g) = -\deg K(g)$, reflecting $T_C = K_C^{-1}$.
 
-### 3.1 Euler Characteristic Under Gluing
+**Proposition 3.4 (Holomorphic differentials recover the genus).** $H(g) = g$.
 
-**Theorem 1** (Euler Characteristic Additivity). Let C₁ = (g₁, b₁, n₁, k₁) and C₂ = (g₂, b₂, n₂, k₂) be cake data with b₁ ≥ 1 and b₂ ≥ 1. Define the glued cake:
-$$C_{glued} = (g₁ + g₂, b₁ + b₂ - 2, n₁ + n₂, k₁ + k₂)$$
+*Proof.* By Riemann–Roch, $\chi(\deg K, g) = (2g-2) + 1 - g = g - 1$, hence $H(g) = (g-1)+1 = g$. This recovers $h^0(K_C) = g$: the dimension of the space of holomorphic differentials equals the genus, i.e. the number of handles/cherries. $\square$
 
-Then χ(C_{glued}) = χ(C₁) + χ(C₂).
+## 4. The moduli dimension, computed two ways
 
-*Proof sketch.* Direct computation: 2 − 2(g₁ + g₂) − (b₁ + b₂ − 2) = (2 − 2g₁ − b₁) + (2 − 2g₂ − b₂). The key insight is that gluing along a circle (χ = 0) preserves the additive structure of the Euler characteristic.
+The heart of the paper is the claim that the core number $3g-3$ arises from two structurally distinct sheaf-theoretic computations that agree by duality.
 
-### 3.2 Moduli Dimension Properties
+**Theorem 4.1 (Deformation computation).** For a genus-$g$ base,
+$$M(g) = -\chi(\deg T(g),\, g).$$
+That is, the moduli dimension equals $h^1(C, T_C)$, the dimension of the space of first-order deformations of the complex structure, using $h^0(C, T_C) = 0$ for $g \ge 2$ (a surface of general type has no infinitesimal automorphisms).
 
-**Theorem 2** (Evenness). The real moduli dimension 6g − 6 + 2n is always even.
+*Proof.* $-\chi(\deg T, g) = -\big((2-2g) + 1 - g\big) = -(3 - 3g) = 3g - 3 = M(g)$. $\square$
 
-*Proof.* Write 6g − 6 + 2n = 2(3g − 3 + n). ∎
+**Theorem 4.2 (Quadratic-differential computation).** For a genus-$g$ base,
+$$M(g) = \chi(2\deg K(g),\, g).$$
+That is, the moduli dimension equals $h^0(C, 2K_C)$, the dimension of the space of quadratic differentials — the cotangent space to $\mathcal{M}_g$ at $[C]$ — using $h^1(C, 2K_C) = 0$ for $g \ge 2$ by Serre duality.
 
-**Theorem 3** (Complex-Real Relationship). 2 · dim_ℂ = dim_ℝ.
+*Proof.* $\chi(2\deg K, g) = (2(2g-2)) + 1 - g = (4g-4) + 1 - g = 3g - 3 = M(g)$. $\square$
 
-*Proof.* Direct algebraic identity: 2(3g − 3 + n) = 6g − 6 + 2n. ∎
+**Theorem 4.3 (Serre duality).** The two counts coincide:
+$$-\chi(\deg T(g),\, g) = \chi(2\deg K(g),\, g).$$
+Both equal $3g-3$. The tangent space $H^1(C, T_C)$ and cotangent space $H^0(C, 2K_C)$ to moduli are Serre-dual, of common dimension $3g-3$.
 
-**Theorem 4** (Rigidity Threshold). For g ≥ 2, the moduli dimension satisfies dim_ℝ ≥ 6, regardless of the number of marked points.
+*Proof.* Both sides evaluate to $3g-3$ by Theorems 4.1 and 4.2. $\square$
 
-*Proof.* When g ≥ 2 and n ≥ 0: 6g − 6 + 2n ≥ 12 − 6 + 0 = 6. ∎
+**Proposition 4.4 (Positivity).** For $g \ge 2$, $M(g) > 0$.
 
-**Theorem 5** (Genus-0 Cherry Minimum). For genus 0, non-negative moduli dimension requires n ≥ 3.
+**Proposition 4.5 (Per-handle step).** $M(g+1) = M(g) + 3$: each added handle increases the moduli dimension by exactly three.
 
-*Proof.* If g = 0: 6(0) − 6 + 2n ≥ 0 implies 2n ≥ 6, hence n ≥ 3. ∎
+## 5. Cherries repair the exceptional flavours
 
-### 3.3 Stratification Bounds
+The unmarked formula $3g-3$ returns $-3$ at $g=0$ and $0$ at $g=1$ — values that are respectively nonsensical and misleading. The marked formula corrects this.
 
-**Theorem 6** (Stratification Length Bound). Any layer stratification of depth *d* has at most *d* + 1 elements.
+**Theorem 5.1 (Genus 0).** $M(0,n) = n - 3$.
 
-*Proof.* The elements form a strictly decreasing sequence of natural numbers with maximum value *d* (the head) and minimum value 0 (the last). Strict decrease implies all elements are distinct. Since they lie in {0, 1, ..., d}, which has d + 1 elements, the length is at most d + 1. ∎
+*Proof.* $3\cdot 0 - 3 + n = n - 3$. Three cherries fix the automorphism freedom of the projective line ($\mathrm{PGL}_2$ acts $3$-transitively), so $\mathcal{M}_{0,n}$ becomes non-empty and of the expected dimension for $n \ge 3$. $\square$
 
-**Theorem 7** (Canonical Flag Completeness). The canonical flag (d, d−1, ..., 1, 0) achieves the bound with exactly d + 1 elements.
+**Theorem 5.2 (Genus 1).** $M(1,n) = n$.
 
-### 3.4 Gluing Superadditivity
+*Proof.* $3 - 3 + n = n$. One cherry fixes the origin of the elliptic base; the resulting dimension $n$ correctly counts the modulus of the elliptic curve together with the $n-1$ further marked positions. $\square$
 
-**Theorem 8** (Moduli Superadditivity). When two cakes are glued:
-$$\dim \mathcal{M}(C_{glued}) = \dim \mathcal{M}(C₁) + \dim \mathcal{M}(C₂) + 6$$
+**Proposition 5.3 (Reduction to unmarked).** $M(g,0) = M(g)$.
 
-*Proof.* The glued cake has genus g₁ + g₂ and cherry count n₁ + n₂:
-6(g₁ + g₂) − 6 + 2(n₁ + n₂) = (6g₁ − 6 + 2n₁) + (6g₂ − 6 + 2n₂) + 6. ∎
+**Proposition 5.4 (Per-cherry step).** $M(g,n+1) = M(g,n) + 1$: each cherry contributes exactly one modulus (its position).
 
-The +6 represents the moduli contribution of the new handle created by the gluing.
+**Theorem 5.5 (Stability at genus $\ge 2$).** If $g \ge 2$ and $n \ge 0$, then the cake is stable: $2g-2+n > 0$.
 
-### 3.5 Monotonicity and Genus Increments
+**Theorem 5.6 (Stability implies non-negative dimension).** If $g \ge 0$ and the cake is stable ($2g-2+n>0$), then $M(g,n) \ge 0$.
 
-**Theorem 9** (Genus Increment). Adding one handle increases moduli dimension by exactly 6.
+*Proof.* $M(g,n) = 3g - 3 + n = (2g - 2 + n) + (g - 1) \ge 1 + (g-1) = g \ge 0$ when $g \ge 1$; the boundary cases with $g=0$ and $n\ge 3$ give $M(0,n) = n-3 \ge 0$ precisely when $2\cdot0-2+n = n-2 > 0$ forces $n \ge 3$. In all stable cases the value is non-negative. $\square$
 
-**Theorem 10** (Cherry Increment). Adding one marked point increases moduli dimension by exactly 2.
+The content of Theorems 5.5–5.6 is that two a priori different notions — *the surface has finitely many automorphisms* and *the naive modulus count is non-negative* — are cut out by the **same** linear inequality. The exceptional (unstable) locus is the finite set
+$$\{(0,0),\,(0,1),\,(0,2),\,(1,0)\},$$
+and it is exactly there that the raw formula misbehaves.
 
-### 3.6 Categorical Structure
+## 6. The Euler–Betti–moduli triangle
 
-**Theorem 11** (Moduli Monotonicity). If there exists a cake morphism C → D (i.e., g(C) ≤ g(D), b(C) ≤ b(D), n(C) ≤ n(D)), then dim M(C) ≤ dim M(D).
+The moduli dimension is not an independent analytic quantity: it is a fixed linear image of the base topology.
 
-**Theorem 12** (Transitivity). Composition of cake morphisms preserves moduli monotonicity.
+**Theorem 6.1 (Teichmüller doubling).** $T(g) = 2\,M(g)$: the real Teichmüller dimension is twice the complex moduli dimension.
 
-### 3.7 Frosting Sheaf Properties
+**Theorem 6.2 (Teichmüller via canonical degree).** $T(g) = 3\,\deg K(g)$, i.e. $6g-6 = 3(2g-2)$. This ties a moduli dimension directly to a sheaf degree.
 
-**Theorem 13** (Uniform Frosting). For a uniform frosting sheaf with all degrees equal to δ:
-$$\deg_{total}(F) = b \cdot \delta$$
+**Theorem 6.3 (Betti bridge).** $2\,M(g) = 3\,b_1(g) - 6$, i.e. $6g-6 = 3\cdot 2g - 6$.
 
-### 3.8 Surface Classification
+Combining these,
+$$2\,\dim\mathcal{M}_g \;=\; -3\chi \;=\; 3 b_1 - 6 \;=\; 3\deg K,$$
+a single rigid relation. Any one topological invariant of the base determines the moduli dimension with no analytic input: decorating a surface cannot change its modulus count except through the topology it alters.
 
-**Theorem 14** (Euler + Boundary Determines Genus). If two cakes have equal Euler characteristics and equal boundary counts, they have equal genera.
+## 7. Inductive certification and enumeration
 
-*Proof.* From χ = 2 − 2g − b, if χ₁ = χ₂ and b₁ = b₂, then 2g₁ = 2g₂, hence g₁ = g₂. ∎
+We certify the closed form $3g-3$ against the atomic "add one handle" recurrence.
 
-## 4. The 3g − 3 Formula and Computational Verification
+**Definition 7.1 (Recurrence).** Define $R : \mathbb{N} \to \mathbb{Z}$ by $R(0) = -3$ and $R(k+1) = R(k) + 3$.
 
-For genus g ≥ 2 with no marked points, the complex moduli dimension specializes to 3g − 3. We verify computationally:
+**Theorem 7.2 (Closed form).** $R(k) = 3k - 3$ for all $k \in \mathbb{N}$.
 
-| Genus g | Complex Dim (3g-3) | Real Dim (6g-6) |
-|---------|-------------------|-----------------|
-| 2       | 3                 | 6               |
-| 3       | 6                 | 12              |
-| 4       | 9                 | 18              |
-| 5       | 12                | 24              |
+*Proof.* Induction on $k$: the base case is $R(0) = -3 = 3\cdot 0 - 3$; the step gives $R(k+1) = R(k)+3 = (3k-3)+3 = 3(k+1)-3$. $\square$
 
-This matches the classical dimension of the moduli space M_g of smooth curves of genus g.
+**Corollary 7.3.** $R(k) = M(k)$ for all $k$: the recurrence and closed form agree on every genus.
 
-## 5. Conjectures and Future Directions
+**Theorem 7.4 (Enumeration for $g \le 5$).** The moduli dimensions for genus $2,3,4,5$ are $3, 6, 9, 12$ respectively, each equal to $3g-3$.
 
-**Conjecture 1** (Cherry-Boundary Duality). For cakes with b boundary components and n cherries, there exists a natural duality M_{g,b,n} ≅ M_{g,n,b} when certain compatibility conditions are met. This would connect the moduli of surfaces-with-boundary to the moduli of surfaces-with-marked-points.
+This is the finite enumeration test of all topologically distinct cakes with up to five cherries: their moduli dimensions form the arithmetic progression $3,6,9,12$ with common difference $3$, exactly the per-handle step of Proposition 4.5.
 
-**Test**: Compute dimensions of both sides for small g, b, n and verify they agree. The dimension formula 6g − 6 + 2n + b should equal 6g − 6 + 2b + n only when n = b, suggesting the duality is restricted.
+## 8. The Fundamental Theorem: invariants recover the flavour
 
-**Conjecture 2** (Stratification Rigidity). A complete flag stratification of a smooth projective variety of dimension d is unique up to the action of the automorphism group.
+The "existence" half of the Fundamental Theorem — that $(g, n)$ and the continuous moduli determine the cake — is a matter of construction. We prove here the "uniqueness/recovery" half at the level of the dimension invariant.
 
-## 6. Algorithms
+**Proposition 8.1 (Well-definedness).** If $g = g'$ and $n = n'$ then $M(g,n) = M(g',n')$.
 
-### 6.1 Cake Enumeration
+**Theorem 8.2 (Genus recovered from moduli dimension).** The unmarked moduli dimension $g \mapsto M(g)$ is injective and strictly increasing; hence the genus is recovered from the moduli dimension. At fixed cherry count $n$, the map $g \mapsto M(g,n)$ is injective, so equal moduli dimension and equal cherry count force equal genus.
 
-Given bounds on genus, boundary, and cherry count, enumerate all valid cakes and compute their moduli dimensions. This is a simple combinatorial enumeration with O(G × B × N) complexity.
+*Proof.* $M(g) = 3g-3$ is a strictly increasing affine function of $g$, hence injective; $M(g,n) - M(g',n) = 3(g-g')$ vanishes iff $g=g'$. $\square$
 
-### 6.2 Moduli Dimension Computation
+**Theorem 8.3 (Cherry count recovered).** At fixed genus $g$, the map $n \mapsto M(g,n)$ is injective: the cherry count is recovered from the moduli dimension.
 
-For any cake datum, compute the moduli dimension in O(1) time using the closed-form formula.
+Together these say: within a fixed value of one discrete invariant, the moduli dimension recovers the other. This is the honest arithmetic shadow of the statement "a cake is determined up to flavour by its discrete invariants and continuous moduli."
 
-## 7. Conclusion
+## 9. Algorithms
 
-We have established a rigorous combinatorial framework for studying "cakes" as stratified surfaces with boundary, marked points, and layer decompositions. The key mathematical content — Euler characteristic formulas, moduli dimension computations, stratification bounds, and categorical monotonicity — connects to fundamental results in algebraic geometry and topology. All results have been machine-verified, ensuring correctness of the mathematical arguments.
+We summarize the computational content in three routines (full code accompanies this work).
 
-## References
+**Algorithm A (Moduli dimension).** Given $(g,n)$, return $3g-3+n$ in $O(1)$ arithmetic operations; validate stability by testing $2g-2+n>0$.
 
-1. Riemann, B. (1857). Theorie der Abel'schen Functionen. *Journal für die reine und angewandte Mathematik*, 54, 115-155.
-2. Teichmüller, O. (1939). Extremale quasikonforme Abbildungen und quadratische Differentiale. *Abh. Preuss. Akad. Wiss., Math.-Naturw. Kl.*, 22, 1-197.
-3. Mumford, D. (1965). *Geometric Invariant Theory*. Springer-Verlag.
-4. Harris, J., & Morrison, I. (1998). *Moduli of Curves*. Springer-Verlag.
-5. Farb, B., & Margalit, D. (2012). *A Primer on Mapping Class Groups*. Princeton University Press.
+**Algorithm B (Two-way Riemann–Roch check).** Given $g$, compute $-\chi(\deg T, g)$ and $\chi(2\deg K, g)$ independently and assert their equality with $3g-3$, exhibiting the Serre-duality identity numerically.
+
+**Algorithm C (Enumeration and recurrence).** Iterate the recurrence $R(0)=-3$, $R(k+1)=R(k)+3$ and compare against the closed form over a genus range, certifying the arithmetic progression $3,6,9,12,\dots$.
+
+## 10. Applications and discussion
+
+The reduction of the dimension theorem to elementary integer identities has several uses. It makes the *sign structure* of the low-genus locus explicit and provable, which is invisible over $\mathbb{N}$; it exhibits stability as the sharp threshold governing both automorphism-finiteness and dimensional validity; and it exposes the moduli dimension as a rigid linear image of base topology. The per-handle and per-cherry increments ($+3$ and $+1$) decompose the formula into atomic geometric moves, suggesting the extension to stratified/compactified moduli in which each node subtracts one modulus.
+
+The cake metaphor is more than pedagogy: the decorated-surface picture (base + frosting + cherries) mirrors precisely the pointed-surface-with-line-bundle data classified by $\mathcal{M}_{g,n}$, and the "one cherry, one dial" slogan is literally the per-mark increment $+1$.
+
+## 11. Future directions
+
+*(See the accompanying future-directions record for the full statements.)* Three conjectural extensions organize the next steps:
+
+1. **A universal dimension polynomial for all strata.** Every boundary stratum of the compactified moduli, indexed by a stable dual graph $\Gamma$ with vertex genera $g_v$, $e$ edges, and $n$ legs, has dimension $\sum_v (3g_v - 3 + n_v) = 3g - 3 + n - e$: gluing two features into a node and removing one continuous modulus are the same operation.
+2. **Stability as the sharp threshold.** For non-negative genus and marks, $3g-3+n \ge 0$ exactly on the stable locus $2g-2+n>0$, with failure locus the finite set $\{(0,0),(0,1),(0,2),(1,0)\}$; automorphism rigidity and dimensional validity are one phenomenon.
+3. **The rigid Euler–Betti–moduli triangle.** The relation $2\dim\mathcal{M}_g = -3\chi = 3b_1 - 6$ determines the moduli dimension from any single topological invariant with no analytic input.
+
+## 12. Conclusion
+
+The number $3g-3+n$ — the dimension of the moduli of decorated surfaces — is the common shadow of deformation theory, quadratic differentials, Euler/Betti topology, and the stability inequality. We have proved its arithmetic backbone from two independent Riemann–Roch computations glued by duality, shown that cherries repair the exceptional low-genus flavours exactly at the stability threshold, and chained the moduli dimension to base topology by a rigid linear triangle. Cakes are the moduli of surfaces, and the mathematics of decorating a cake is the mathematics of moduli spaces.

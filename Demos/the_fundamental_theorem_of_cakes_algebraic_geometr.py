@@ -1,297 +1,217 @@
-#!/usr/bin/env python3
 """
-Stratified Cake Theory: Numerical Demonstrations
+The Fundamental Theorem of Cakes: numerical demonstrations.
 
-Demonstrates the key mathematical results from the Fundamental Theorem of Cakes:
-- Euler characteristic computation
-- Moduli dimension formulas
-- Stratification properties
-- Gluing superadditivity
-"""
+A *cake* is a closed orientable surface of genus ``g`` (the base) with ``n``
+marked points (cherries) and a uniform boundary line bundle (frosting). The
+classifying object of such cakes is the moduli space M_{g,n} of n-pointed
+genus-g surfaces, whose dimension is ``3g - 3 + n`` on the stable locus.
 
-from dataclasses import dataclass
-from typing import List, Tuple
+This script demonstrates, purely arithmetically:
 
+  * the moduli dimension formula and its per-handle / per-cherry increments;
+  * the two Riemann-Roch computations of ``3g - 3`` (deformations and
+    quadratic differentials) and their agreement by Serre duality;
+  * the stability inequality ``2g - 2 + n > 0`` and the low-genus repair;
+  * the rigid Euler-Betti-moduli-canonical triangle;
+  * the inductive recurrence and the enumeration check for g <= 5.
 
-@dataclass
-class CakeData:
-    """Combinatorial topology of a cake."""
-    genus: int
-    boundary: int
-    cherries: int
-    layers: int
-
-    def euler_char(self) -> int:
-        """Euler characteristic: χ = 2 - 2g - b"""
-        return 2 - 2 * self.genus - self.boundary
-
-    def moduli_dim_real(self) -> int:
-        """Real moduli dimension: 6g - 6 + 2n"""
-        return 6 * self.genus - 6 + 2 * self.cherries
-
-    def moduli_dim_complex(self) -> int:
-        """Complex moduli dimension: 3g - 3 + n"""
-        return 3 * self.genus - 3 + self.cherries
-
-    def complexity(self) -> int:
-        """Combined complexity measure."""
-        return 3 * self.genus + self.boundary + self.cherries + self.layers
-
-    def __repr__(self) -> str:
-        return f"Cake(g={self.genus}, b={self.boundary}, n={self.cherries}, k={self.layers})"
-
-
-def glue_cakes(c1: CakeData, c2: CakeData) -> CakeData:
-    """Glue two cakes along one boundary component each."""
-    assert c1.boundary >= 1 and c2.boundary >= 1, "Both cakes need boundary for gluing"
-    return CakeData(
-        genus=c1.genus + c2.genus,
-        boundary=c1.boundary + c2.boundary - 2,
-        cherries=c1.cherries + c2.cherries,
-        layers=c1.layers + c2.layers,
-    )
-
-
-def canonical_flag(d: int) -> List[int]:
-    """Canonical complete flag stratification: d, d-1, ..., 1, 0"""
-    return list(range(d, -1, -1))
-
-
-def demo_euler_characteristics():
-    """Demonstrate Euler characteristic computation for classical surfaces."""
-    print("=" * 60)
-    print("EULER CHARACTERISTICS OF CLASSICAL SURFACES")
-    print("=" * 60)
-    surfaces = [
-        ("Sphere", CakeData(0, 0, 0, 1)),
-        ("Torus", CakeData(1, 0, 0, 1)),
-        ("Genus-2", CakeData(2, 0, 0, 1)),
-        ("Disk", CakeData(0, 1, 0, 1)),
-        ("Annulus", CakeData(0, 2, 0, 1)),
-        ("Pair of pants", CakeData(0, 3, 0, 1)),
-        ("Torus with hole", CakeData(1, 1, 0, 1)),
-    ]
-    for name, cake in surfaces:
-        print(f"  {name:20s}: g={cake.genus}, b={cake.boundary}, χ = {cake.euler_char()}")
-    print()
-
-
-def demo_moduli_dimensions():
-    """Demonstrate the 3g-3 and 6g-6+2n formulas."""
-    print("=" * 60)
-    print("MODULI DIMENSIONS (3g-3 FORMULA)")
-    print("=" * 60)
-    for g in range(0, 6):
-        cake = CakeData(g, 0, 0, 1)
-        print(f"  Genus {g}: dim_C = {cake.moduli_dim_complex()}, dim_R = {cake.moduli_dim_real()}")
-    print()
-
-    print("With cherries (genus 2):")
-    for n in range(0, 6):
-        cake = CakeData(2, 0, n, 1)
-        print(f"  n={n}: dim_C = {cake.moduli_dim_complex()}, dim_R = {cake.moduli_dim_real()}")
-    print()
-
-
-def demo_gluing_superadditivity():
-    """Demonstrate the +6 superadditivity under gluing."""
-    print("=" * 60)
-    print("GLUING SUPERADDITIVITY")
-    print("=" * 60)
-    pairs = [
-        (CakeData(0, 1, 3, 1), CakeData(0, 1, 3, 1)),
-        (CakeData(1, 1, 0, 1), CakeData(1, 1, 0, 1)),
-        (CakeData(1, 2, 1, 2), CakeData(0, 1, 4, 1)),
-    ]
-    for c1, c2 in pairs:
-        glued = glue_cakes(c1, c2)
-        d1, d2, dg = c1.moduli_dim_real(), c2.moduli_dim_real(), glued.moduli_dim_real()
-        print(f"  {c1} + {c2}")
-        print(f"    → {glued}")
-        print(f"    dim(glued) = {dg} = {d1} + {d2} + 6 ✓" if dg == d1 + d2 + 6 else "    MISMATCH!")
-        print()
-
-
-def demo_stratification():
-    """Demonstrate canonical flags and length bounds."""
-    print("=" * 60)
-    print("CANONICAL FLAG STRATIFICATIONS")
-    print("=" * 60)
-    for d in range(1, 6):
-        flag = canonical_flag(d)
-        print(f"  d={d}: {flag}  (length = {len(flag)} = d+1 = {d+1} ✓)")
-    print()
-
-
-def demo_cherry_genus_tradeoff():
-    """Demonstrate the minimum cherry count for non-negative moduli dim."""
-    print("=" * 60)
-    print("CHERRY-GENUS TRADE-OFF")
-    print("=" * 60)
-    print("  Minimum cherries for dim_R ≥ 0:")
-    for g in range(0, 5):
-        min_n = max(0, (6 - 6 * g + 1) // 2)  # ceil((6-6g)/2)
-        if 6 * g - 6 + 2 * min_n < 0:
-            min_n += 1
-        cake = CakeData(g, 0, min_n, 1)
-        print(f"    Genus {g}: need n ≥ {min_n}, dim_R = {cake.moduli_dim_real()}")
-    print()
-
-
-def demo_even_dimension():
-    """Verify that real moduli dimension is always even."""
-    print("=" * 60)
-    print("EVENNESS OF REAL MODULI DIMENSION")
-    print("=" * 60)
-    all_even = True
-    for g in range(10):
-        for n in range(10):
-            d = 6 * g - 6 + 2 * n
-            if d % 2 != 0:
-                all_even = False
-                print(f"  COUNTEREXAMPLE: g={g}, n={n}, dim={d}")
-    if all_even:
-        print("  Verified: 6g - 6 + 2n is even for all g,n ∈ [0,9] ✓")
-    print()
-
-
-if __name__ == "__main__":
-    print("\n🎂 STRATIFIED CAKE THEORY: NUMERICAL DEMONSTRATIONS 🎂\n")
-    demo_euler_characteristics()
-    demo_moduli_dimensions()
-    demo_gluing_superadditivity()
-    demo_stratification()
-    demo_cherry_genus_tradeoff()
-    demo_even_dimension()
-    print("All demonstrations complete.")
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Gluing Superadditivity
-
-Bar chart showing how moduli dimension of glued cakes exceeds
-the sum of components by exactly 6.
+All functions are self-contained and use only integer arithmetic.
 """
 
-import matplotlib.pyplot as plt
-import numpy as np
+from __future__ import annotations
 
 
-def moduli_real(g: int, n: int) -> int:
-    return 6 * g - 6 + 2 * n
+# ---------------------------------------------------------------------------
+# Base-surface invariants
+# ---------------------------------------------------------------------------
+
+def euler_char(g: int) -> int:
+    """Euler characteristic of a closed orientable genus-g surface: 2 - 2g."""
+    return 2 - 2 * g
 
 
-def main():
-    # Define pairs to glue (each must have boundary >= 1)
-    pairs = [
-        ((0, 1, 3, 1), (0, 1, 3, 1)),  # two disks with 3 cherries
-        ((1, 1, 0, 1), (1, 1, 0, 1)),  # two tori with hole
-        ((1, 2, 1, 2), (0, 1, 4, 1)),  # mixed
-        ((2, 1, 0, 1), (0, 1, 5, 1)),  # genus 2 + sphere with 5 pts
-        ((1, 1, 2, 1), (1, 1, 2, 1)),  # two genus-1 with 2 cherries
-    ]
-
-    labels = []
-    dim1_vals = []
-    dim2_vals = []
-    bonus_vals = []
-
-    for (g1, b1, n1, k1), (g2, b2, n2, k2) in pairs:
-        d1 = moduli_real(g1, n1)
-        d2 = moduli_real(g2, n2)
-        g_glued = g1 + g2
-        n_glued = n1 + n2
-        d_glued = moduli_real(g_glued, n_glued)
-
-        labels.append(f"({g1},{n1})+({g2},{n2})")
-        dim1_vals.append(d1)
-        dim2_vals.append(d2)
-        bonus_vals.append(6)
-
-    x = np.arange(len(labels))
-    width = 0.6
-
-    fig, ax = plt.subplots(figsize=(10, 6))
-    bars1 = ax.bar(x, dim1_vals, width, label='dim(C₁)', color='#3498db')
-    bars2 = ax.bar(x, dim2_vals, width, bottom=dim1_vals, label='dim(C₂)', color='#2ecc71')
-    bars3 = ax.bar(x, bonus_vals, width,
-                   bottom=[d1 + d2 for d1, d2 in zip(dim1_vals, dim2_vals)],
-                   label='Gluing bonus (+6)', color='#e74c3c', hatch='//')
-
-    ax.set_xlabel('Gluing pair (genus, cherries)', fontsize=12)
-    ax.set_ylabel('Real moduli dimension', fontsize=12)
-    ax.set_title('Gluing Superadditivity: dim(C₁⊕C₂) = dim(C₁) + dim(C₂) + 6',
-                 fontsize=14)
-    ax.set_xticks(x)
-    ax.set_xticklabels(labels, rotation=15)
-    ax.legend(fontsize=11)
-    ax.grid(axis='y', alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('gluing_superadditivity.png', dpi=150)
-    plt.show()
+def first_betti(g: int) -> int:
+    """First Betti number of a genus-g surface: 2g."""
+    return 2 * g
 
 
-if __name__ == '__main__':
-    main()
+def canonical_deg(g: int) -> int:
+    """Degree of the canonical bundle K_C: 2g - 2."""
+    return 2 * g - 2
 
 
-#!/usr/bin/env python3
-"""
-Visualization: Moduli Dimension Landscape
-
-A heatmap showing how the complex moduli dimension 3g-3+n varies
-with genus g and cherry count n. Highlights the "rigidity threshold"
-where moduli dimension first becomes non-negative.
-"""
-
-import matplotlib.pyplot as plt
-import numpy as np
+def tangent_deg(g: int) -> int:
+    """Degree of the tangent bundle T_C = K_C^{-1}: 2 - 2g."""
+    return 2 - 2 * g
 
 
-def moduli_dim_complex(g: int, n: int) -> int:
+def rr_chi(d: int, g: int) -> int:
+    """Riemann-Roch Euler characteristic of a degree-d line bundle: d + 1 - g."""
+    return d + 1 - g
+
+
+# ---------------------------------------------------------------------------
+# Moduli / Teichmuller dimensions
+# ---------------------------------------------------------------------------
+
+def moduli_dim(g: int) -> int:
+    """Dimension of M_g (unmarked): 3g - 3."""
+    return 3 * g - 3
+
+
+def moduli_dim_marked(g: int, n: int) -> int:
+    """Dimension of M_{g,n}: 3g - 3 + n."""
     return 3 * g - 3 + n
 
 
-def main():
-    max_g = 8
-    max_n = 12
-    g_vals = np.arange(0, max_g + 1)
-    n_vals = np.arange(0, max_n + 1)
-    G, N = np.meshgrid(g_vals, n_vals, indexing='ij')
-    D = 3 * G - 3 + N
-
-    fig, ax = plt.subplots(figsize=(10, 7))
-    im = ax.imshow(D, origin='lower', aspect='auto',
-                   cmap='RdYlGn', vmin=-3, vmax=24,
-                   extent=[-0.5, max_n + 0.5, -0.5, max_g + 0.5])
-
-    # Mark the rigidity threshold (dim = 0 contour)
-    ax.contour(n_vals, g_vals, D, levels=[0], colors='black',
-               linewidths=2, linestyles='--')
-
-    # Annotate cells
-    for g in range(max_g + 1):
-        for n in range(max_n + 1):
-            d = moduli_dim_complex(g, n)
-            color = 'white' if d < 0 else 'black'
-            ax.text(n, g, str(d), ha='center', va='center',
-                    fontsize=7, color=color, fontweight='bold')
-
-    ax.set_xlabel('Number of Cherries (n)', fontsize=12)
-    ax.set_ylabel('Genus (g)', fontsize=12)
-    ax.set_title('Complex Moduli Dimension: 3g − 3 + n\n'
-                 '(Dashed line = rigidity threshold, dim = 0)',
-                 fontsize=14)
-    ax.set_xticks(range(0, max_n + 1))
-    ax.set_yticks(range(0, max_g + 1))
-
-    cbar = plt.colorbar(im, ax=ax, label='dim_ℂ M_{g,n}')
-    plt.tight_layout()
-    plt.savefig('moduli_landscape.png', dpi=150)
-    plt.show()
+def teich_dim(g: int) -> int:
+    """Real Teichmuller dimension of a genus-g surface: 6g - 6."""
+    return 6 * g - 6
 
 
-if __name__ == '__main__':
+def holo_diff_dim(g: int) -> int:
+    """Dimension of H^0(K_C) via Riemann-Roch: chi(K) + 1 = g."""
+    return rr_chi(canonical_deg(g), g) + 1
+
+
+def is_stable(g: int, n: int) -> bool:
+    """Stability of an n-pointed genus-g cake: 2g - 2 + n > 0."""
+    return 2 * g - 2 + n > 0
+
+
+# ---------------------------------------------------------------------------
+# The two Riemann-Roch computations of 3g - 3
+# ---------------------------------------------------------------------------
+
+def dim_via_deformations(g: int) -> int:
+    """h^1(T_C) = -chi(T_C), the space of first-order deformations."""
+    return -rr_chi(tangent_deg(g), g)
+
+
+def dim_via_quadratic(g: int) -> int:
+    """h^0(2K_C) = chi(2K_C), the space of quadratic differentials."""
+    return rr_chi(2 * canonical_deg(g), g)
+
+
+# ---------------------------------------------------------------------------
+# Inductive recurrence
+# ---------------------------------------------------------------------------
+
+def dim_rec(k: int) -> int:
+    """Recurrence R(0) = -3, R(k+1) = R(k) + 3; closed form 3k - 3."""
+    value = -3
+    for _ in range(k):
+        value += 3
+    return value
+
+
+# ---------------------------------------------------------------------------
+# Demonstrations
+# ---------------------------------------------------------------------------
+
+def demo_dimension_table() -> None:
+    print("=" * 70)
+    print("Moduli dimension dim M_{g,n} = 3g - 3 + n  (marked genus/cherries)")
+    print("=" * 70)
+    header = "g \\ n |" + "".join(f"{n:5d}" for n in range(6))
+    print(header)
+    print("-" * len(header))
+    for g in range(6):
+        row = f"{g:5d} |"
+        for n in range(6):
+            row += f"{moduli_dim_marked(g, n):5d}"
+        print(row)
+    print()
+
+
+def demo_two_riemann_roch() -> None:
+    print("=" * 70)
+    print("Two independent Riemann-Roch computations of 3g - 3")
+    print("(deformations vs quadratic differentials, equal by Serre duality)")
+    print("=" * 70)
+    print(f"{'g':>3} {'-chi(T_C)':>12} {'chi(2K_C)':>12} {'3g-3':>8} {'agree?':>8}")
+    for g in range(2, 8):
+        a = dim_via_deformations(g)
+        b = dim_via_quadratic(g)
+        c = moduli_dim(g)
+        print(f"{g:>3} {a:>12} {b:>12} {c:>8} {str(a == b == c):>8}")
+    print()
+
+
+def demo_stability_and_repair() -> None:
+    print("=" * 70)
+    print("Stability 2g-2+n>0 vs. non-negativity of 3g-3+n")
+    print("=" * 70)
+    exceptional = []
+    for g in range(0, 4):
+        for n in range(0, 5):
+            stable = is_stable(g, n)
+            dim = moduli_dim_marked(g, n)
+            if not stable:
+                exceptional.append((g, n))
+            flag = "" if stable == (dim >= 0) else "  <-- MISMATCH"
+            print(f"  (g={g}, n={n}): stable={stable!s:5}  dim={dim:3d}"
+                  f"  dim>=0={dim >= 0!s:5}{flag}")
+    print()
+    print(f"Exceptional (unstable) locus found: {sorted(set(exceptional))}")
+    print("Expected finite failure set: [(0, 0), (0, 1), (0, 2), (1, 0)]")
+    print()
+
+
+def demo_triangle() -> None:
+    print("=" * 70)
+    print("The rigid Euler-Betti-moduli-canonical triangle")
+    print("  2*dim M_g = -3*chi = 3*b1 - 6 = 3*deg K = 6g - 6")
+    print("=" * 70)
+    print(f"{'g':>3} {'2*M(g)':>8} {'-3*chi':>8} {'3*b1-6':>8} "
+          f"{'3*degK':>8} {'6g-6':>8}")
+    for g in range(2, 8):
+        a = 2 * moduli_dim(g)
+        b = -3 * euler_char(g)
+        c = 3 * first_betti(g) - 6
+        d = 3 * canonical_deg(g)
+        e = teich_dim(g)
+        print(f"{g:>3} {a:>8} {b:>8} {c:>8} {d:>8} {e:>8}")
+        assert a == b == c == d == e
+    print("All five columns agree for every genus.\n")
+
+
+def demo_recurrence_and_enumeration() -> None:
+    print("=" * 70)
+    print("Inductive recurrence and enumeration check for g <= 5")
+    print("=" * 70)
+    for g in range(0, 6):
+        rec = dim_rec(g)
+        closed = moduli_dim(g)
+        print(f"  g={g}: R(g)={rec:3d}  3g-3={closed:3d}  match={rec == closed}")
+    print()
+    enumerated = [moduli_dim(g) for g in (2, 3, 4, 5)]
+    print(f"Moduli dimensions for g=2,3,4,5: {enumerated}")
+    print("Expected arithmetic progression: [3, 6, 9, 12] (step +3 per handle)")
+    assert enumerated == [3, 6, 9, 12]
+    print()
+
+
+def demo_recovery() -> None:
+    print("=" * 70)
+    print("Fundamental Theorem (recovery half): invariants from dimension")
+    print("=" * 70)
+    print("Genus recovered from unmarked moduli dimension (strictly increasing):")
+    dims = {g: moduli_dim(g) for g in range(2, 8)}
+    print(f"  {dims}")
+    assert len(set(dims.values())) == len(dims)  # injective
+    print("  -> map g |-> 3g-3 is injective; genus is recovered.\n")
+
+
+def main() -> None:
+    demo_dimension_table()
+    demo_two_riemann_roch()
+    demo_stability_and_repair()
+    demo_triangle()
+    demo_recurrence_and_enumeration()
+    demo_recovery()
+    print("All demonstrations completed successfully.")
+
+
+if __name__ == "__main__":
     main()
