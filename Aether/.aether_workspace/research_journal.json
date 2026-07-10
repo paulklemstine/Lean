@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "aad22603",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Positive p-Energies and Path Extremality\n\n## 1. Full path-minimality for all exponents p ≥ 2\n\n**Conjecture.** For every connected bipartite graph `G` on `n` vertices and every re",
-      "quality_score": 0.8748400000000001,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-03T05:21:46",
-      "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
-    },
-    {
       "cycle_id": "bb3ce4ee",
       "domain": "Computation",
       "key_insight": "# Future Directions — Dark Mathematics\n\nFive bold, falsifiable conjectures arising from this cycle's finding that darkness —\nknowing a witness must exist while being unable to name one — is real, stra",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-10T07:33:38",
       "title": "Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology"
+    },
+    {
+      "cycle_id": "956fff13",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Topology of Arithmetic\n\nThis cycle established that the zero-dimensional persistent barcode of the prime\npoint cloud on the line is exactly the sequence of prime gaps, and th",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-10T07:49:37",
+      "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b86be6e3",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions: Symmetry, Balance, and the Existence of Canonical Metrics\n\nThe cycle established a clean separation between two ingredients of the\nYau–Tian–Donaldson principle for toric Fano vari",
-      "quality_score": 0.6648000000000001,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-06-29T22:39:38",
-      "title": "Kähler-Einstein Metrics and K-Stability"
-    },
     {
       "cycle_id": "60fa5375",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-10T07:33:38",
       "title": "Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology"
+    },
+    {
+      "cycle_id": "956fff13",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Topology of Arithmetic\n\nThis cycle established that the zero-dimensional persistent barcode of the prime\npoint cloud on the line is exactly the sequence of prime gaps, and th",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-10T07:49:37",
+      "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "55f141e7",
-      "domain": "Applications",
-      "name": "levels_injective",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "643186e8",
-      "domain": "Algebra",
-      "name": "itself",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "643186e8",
-      "domain": "Algebra",
-      "name": "of",
-      "quality": 0.82
-    },
     {
       "cycle_id": "643186e8",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "humor_eq_zero_iff",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "956fff13",
+      "domain": "Novelty",
+      "name": "rather",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "956fff13",
+      "domain": "Novelty",
+      "name": "gap_le_sub",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "956fff13",
+      "domain": "Novelty",
+      "name": "edge_gaps",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-10T07:33:38",
+  "last_updated": "2026-07-10T07:49:37",
   "open_questions": [
     {
       "context": "`RhoDom.dominant_singleton_iff`, so it is not a self-contained restatement.  No `sorry`, no",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "4231f6a2",
-        "quality": 0.50904,
-        "theorems": 12,
-        "title": "Characterization of Extremal Graphs for Positive Lin--Lu--Yau Curvature"
-      },
-      {
         "cycle_id": "eb8019d8",
         "quality": 0.49735784528301885,
         "theorems": 14,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 13,
         "title": "Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology"
+      },
+      {
+        "cycle_id": "956fff13",
+        "quality": 0.82,
+        "theorems": 12,
+        "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
       }
     ],
     "NumberTheory": [

@@ -130,6 +130,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 956fff13 (Q=0.820), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The sequence of primes 2, 3, 5, 7, 11, 13, ... defines a point cloud in R where the n-th prime p_n is at position p_n on the real line. The gaps between primes create a topological structure. Define the persistent homology of the prime point cloud as the Rips filtration R_epsilon = {p_n : |p_m - p_n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_956fff13_71de901b",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "956fff13",
+    "status": "available",
+    "timestamp": "2026-07-10T07:49:37.464120+00:00",
+    "title": "Deepening: Persistent Homology of Prime Numbers: The Topology of Arithmetic"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle e7035fce (Q=0.820), which proved 21 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Mendeleev's periodic table arranges elements by atomic number Z, but Z is just the charge of the nucleus. Conjecture: the periodic table is the spectrum of an operator on a Hilbert space of dimension equal to the number of stable isotopes. Define the 'nuclear Hamiltonian' H on L^2(R^3) by H = -hbar^",
     "domains": [
       "Applications"
@@ -429,21 +443,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-08T16:01:43.810023+00:00",
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
-  },
-  {
-    "consumed_by_exp_id": "956fff13",
-    "description": "The sequence of primes 2, 3, 5, 7, 11, 13, ... defines a point cloud in R where the n-th prime p_n is at position p_n on the real line. The gaps between primes create a topological structure. Define the persistent homology of the prime point cloud as the Rips filtration R_epsilon = {p_n : |p_m - p_n| <= epsilon}. As epsilon increases, more primes are connected, and the topology changes. Conjecture: The persistent H_0 (connected components) of the prime point cloud has the same barcode as a Poisson point process with intensity 1/log(x). Specifically, the bar lengths in H_0 follow an exponential distribution with mean equal to the average prime gap (which is approximately log(x) by the prime number theorem). The persistent H_1 (1-dimensional holes) of the prime point cloud appears at scale epsilon ~ log(x)^2, corresponding to prime pairs (p, p+2k) where 2k is a specific even gap. The longest H_1 bar corresponds to the twin prime conjecture: it persists from epsilon = 2 (the twin prime scale) to epsilon = infinity. Test: compute persistent homology of the primes up to 10^6 using Rips filtration and compare with the Poisson point process prediction. Verify that H_0 bar lengths are exponentially distributed with mean log(x). Impact: primes have topology \u2014 their gaps create persistent homology that encodes the twin prime conjecture and other arithmetic properties.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0846",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T04:42:50.779645+00:00",
-    "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
   },
   {
     "consumed_by_exp_id": "7e49f0c7",
@@ -5348,6 +5347,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T07:33:31.958556+00:00",
     "title": "The emotional chromatic number `emoChrom G = min { k \u2265 3 : G is k-colorable }` i"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Topology of Arithmetic\n\nThis cycle established that the zero-dimensional persistent barcode of the prime\npoint cloud on the line is exactly the sequence of prime gaps, and that the twin\nprime conjecture is the assertion that a length-`2` bar recurs forever.  The\nfollowing conjectures push the program further.\n\n## 1. The gap-value spectrum is the set of barcode step-points\n\n**Conjecture.** For the prime point cloud, the set of scales at which the number\nof connected components strictly decreases equals the set of values attained by\nthe gap sequence, and each even number `2k` that occurs as a gap contributes a\npositive-density family of bars of that exact death scale.\n\n*The key insight is* that on a line the barcode is a lossless recording of the\ngap multiset, so distributional questions about prime gaps (Polignac-type\nstatements) become questions about the multiplicity of individual bar lengths.\n\n*Why now?* The single-linkage characterisation proved this cycle turns \"how many\ngaps equal `2k`\" into \"how many bars have death scale `2k`\", making every result\non gap frequencies immediately a statement about barcode multiplicities.\n\n## 2. A persistence-stability form of the average gap law\n\n**Conjecture.** The empirical distribution of the first `N` finite `H_0` bar\nlengths, rescaled by `log p_N`, converges to a fixed limiting profile; in\nparticular the mean bar length is asymptotic to `log p_N`.\n\n*The key insight is* that the average bar length over the first `N` primes equals\n`(p_N \u2212 p_1)/N`, a telescoping identity, so the prime number theorem controls the\nfirst moment of the barcode directly.\n\n*Why now?* With the barcode identified with the gap sequence, the mean-length\nstatement is exactly `(p_{N+1} \u2212 2)/N \u2192 ` the average gap, and only the higher\nmoments and the shape of the limiting profile remain open.\n\n## 3. Higher homology from the two-dimensional prime lattice\n\n**Conjecture.** Embedding primes as the planar cloud `p_n \u21a6 (p_n, p_{n+1})` and\nrunning the Rips filtration produces a first non-trivial `H_1` class whose birth\nscale is governed by admissible gap patterns `(g_n, g_{n+1})`, and the shortest\npersistent loop corresponds to the smallest admissible triple of consecutive\ngaps.\n\n*The key insight is* that genuine one-dimensional holes require at least three\npoints arranged non-collinearly, which on the gap side means a constraint on\nconsecutive gap *pairs* rather than single gaps.\n\n*Why now?* The one-dimensional theory is now fully understood, so the natural\nnext obstruction \u2014 the first appearance of `H_1` \u2014 isolates exactly the\ncombinatorics of consecutive-gap patterns, a well-studied but topologically\nunexploited object.\n\n## 4. Barcode rigidity distinguishes primes from random gap models\n\n**Conjecture.** The prime barcode differs measurably from that of a Poisson point\nprocess of matching local intensity: the fraction of length-`2` bars stays\nbounded away from the Poisson prediction, detectable purely from the barcode.\n\n*The key insight is* that twin primes are anomalously frequent compared with a\nmemoryless gap model, and this anomaly survives as a persistent statistical\nsignature in the length-`2` bar count.\n\n*Why now?* The exact identification of length-`2` bars with twin pairs gives a\nclean, model-free statistic on which prime and Poisson barcodes can be compared\nhead to head.\n",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0863",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "956fff13",
+    "status": "available",
+    "timestamp": "2026-07-10T07:49:31.767532+00:00",
+    "title": "That the zero-dimensional persistent barcode of the prime"
   },
   {
     "consumed_by_exp_id": "",
