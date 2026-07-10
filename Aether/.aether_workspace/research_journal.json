@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "048b9775",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\nFive falsifiable conjectures growing out of the study of the characteristic-two\ncup-product form of a pro-2 Demushkin group and its canonical (Kummer/orientation) class.\n\n## 1. Th",
-      "quality_score": 0.7059866666666667,
-      "sorry_count": 4,
-      "theorem_count": 18,
-      "timestamp": "2026-07-06T15:29:27",
-      "title": "Vanishing of the Benson--Krause--Schwede canonical class for pro-2 Demushkin groups"
-    },
-    {
       "cycle_id": "935491ef",
       "domain": "Probability",
       "key_insight": "# Future Directions\n\n## 1. Unimodality is not enough: the persistent gamma-gap of flat symmetric sequences\n\n**Conjecture.** For every degree `n ≥ 2`, the all-ones symmetric polynomial\n`1 + t + t^2 + ⋯",
@@ -499,19 +489,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-10T13:11:38",
       "title": "Conjecture on Leading Term Cancellation"
+    },
+    {
+      "cycle_id": "0884751e",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Borsuk–Ulam and Social Choice\n\n## What was proved (file `BorsukUlamArrow.lean`, no `sorry`, standard axioms only)\n\n**Part I — the genuine topological kernel.**\n- `borsuk_ulam_1d`:",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-10T13:11:44",
+      "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3257177e",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Autocorrelation of Simultaneously Visible Lattice Points\n\nThis cycle established the local (per-prime) backbone of the autocorrelation of the\nset `V_S` of lattice points simultan",
-      "quality_score": 0.5029119272727274,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-01T12:34:06",
-      "title": "Euler Product for Autocorrelation of Simultaneously Visible Lattice Points"
-    },
     {
       "cycle_id": "ddab9e68",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-10T13:11:38",
       "title": "Conjecture on Leading Term Cancellation"
+    },
+    {
+      "cycle_id": "0884751e",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Borsuk–Ulam and Social Choice\n\n## What was proved (file `BorsukUlamArrow.lean`, no `sorry`, standard axioms only)\n\n**Part I — the genuine topological kernel.**\n- `borsuk_ulam_1d`:",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-10T13:11:44",
+      "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4936bb72",
-      "domain": "Novelty",
-      "name": "localFactor_funeq",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "4936bb72",
-      "domain": "Novelty",
-      "name": "localFactor_factor",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "4936bb72",
-      "domain": "Novelty",
-      "name": "det_funeq",
-      "quality": 0.85
-    },
     {
       "cycle_id": "9696343b",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "trace_zero_of_leading_vanishes",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "0884751e",
+      "domain": "Novelty",
+      "name": "is",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "0884751e",
+      "domain": "Novelty",
+      "name": "borsuk_ulam_1d",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "0884751e",
+      "domain": "Novelty",
+      "name": "no_strict_antipodal_preference",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-10T13:11:38",
+  "last_updated": "2026-07-10T13:11:44",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "956fff13",
-        "quality": 0.82,
-        "theorems": 12,
-        "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
-      },
-      {
         "cycle_id": "4936bb72",
         "quality": 0.85,
         "theorems": 11,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 11,
         "title": "Conjecture on Leading Term Cancellation"
+      },
+      {
+        "cycle_id": "0884751e",
+        "quality": 0.72,
+        "theorems": 10,
+        "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
       }
     ],
     "NumberTheory": [

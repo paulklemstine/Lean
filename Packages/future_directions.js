@@ -101,7 +101,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Conjecture on Leading Term Cancellation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e17898c1",
     "description": "Building on cycle e37aa20a (Q=0.830), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The logistic map f(x) = r*x*(1-x) for r = 4 exhibits chaotic dynamics: small changes in initial conditions lead to exponentially diverging trajectories (Lyapunov exponent lambda = log(2)). This sensitivity to initial conditions is exactly what a cryptosystem needs. Conjecture: The logistic map at r ",
     "domains": [
       "Novelty"
@@ -110,7 +110,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "e37aa20a",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T09:26:12.203685+00:00",
     "title": "Deepening: Cryptography from Chaos: Encrypting with the Logistic Map"
   },
@@ -5257,21 +5257,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The Fundamental Theorem of Cakes: Algebraic Geometry of Baking"
   },
   {
-    "consumed_by_exp_id": "0884751e",
-    "description": "Arrow's impossibility theorem states that no ranked voting system can be fair (Pareto efficient, non-dictatorial, and independent of irrelevant alternatives). The Borsuk-Ulam theorem states that every continuous function f: S^n -> R^n maps some pair of antipodal points to the same value: f(x) = f(-x). Conjecture: Arrow's theorem is a corollary of Borsuk-Ulam. Specifically, define the 'preference sphere' S^{n-1} as the set of all preference profiles over n alternatives, where antipodal points represent opposite preferences (x prefers A > B > C, -x prefers C > B > A). Define f: S^{n-1} -> R^{n-1} by f(x) = (social_preference(x)_1, ..., social_preference(x)_{n-1}). By Borsuk-Ulam, there exists x such that f(x) = f(-x), meaning the social preference for profile x equals the social preference for profile -x. This contradicts Pareto efficiency (if all voters prefer A to B, the social preference should prefer A to B). Therefore, no continuous voting function satisfies all of Arrow's axioms. Conjecture: this proof generalizes: any social choice function on n alternatives is either discontinuous or dictatorial. Test: formalize the Borsuk-Ulam proof of Arrow's theorem in Lean 4. Impact: social choice theory is topology. Arrow's impossibility is a topological theorem about spheres.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0882",
-    "priority_score": 0.76,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T11:01:43.795536+00:00",
-    "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surface V(f) = {x : f(x) = 0} is a piecewise linear hypersurface. Conjecture: every rational homology class in H_{n-2}(V(f), Q) is represented by an algebraic cycle (a subvariety of V(f) of codimension 1). Since V(f) is piecewise linear, its homology groups are finitely generated and every cycle is a formal sum of linear pieces. Each linear piece is an algebraic cycle (a hyperplane section). Conjecture: the piecewise linear Hodge conjecture holds \u2014 every homology class in V(f) is a sum of hyperplane sections. This is TRUE for piecewise linear varieties because every face of a polyhedron is cut out by a linear equation. The deeper conjecture: for a ReLU network with L layers and widths (n, w_1, ..., w_L, 1), the Hodge numbers h^{p,q}(V(f)) satisfy h^{p,q} <= (w_1 choose p) * (w_L choose q) * prod_{i=2}^{L-1} w_i. Test: compute H_{n-2}(V(f)) for small ReLU networks and verify that every class is represented by hyperplane sections. Impact: the Hodge conjecture is trivially true for neural network decision surfaces. The non-trivial content is the BOUND on Hodge numbers.",
     "domains": [
@@ -5720,6 +5705,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T13:11:32.187048+00:00",
     "title": "The results of this cycle establish that the leading correction to a spectral"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Borsuk\u2013Ulam and Social Choice\n\n## What was proved (file `BorsukUlamArrow.lean`, no `sorry`, standard axioms only)\n\n**Part I \u2014 the genuine topological kernel.**\n- `borsuk_ulam_1d`: the one-dimensional Borsuk\u2013Ulam theorem. Every continuous\n  `2\u03c0`-periodic `f : \u211d \u2192 \u211d` (a continuous map `S\u00b9 \u2192 \u211d\u00b9`) has an antipodal\n  coincidence `f x = f (x + \u03c0)`. Proof via the intermediate value theorem on\n  `g(x) = f(x) \u2212 f(x+\u03c0)`, which is odd under the half-turn.\n- `no_strict_antipodal_preference` / `no_strict_antipodal_preference'`: the\n  honest social-choice reading \u2014 a continuous periodic \"social score\" cannot\n  *strictly* prefer every profile over its antipode. This is precisely the\n  \"contradiction with Pareto efficiency\" invoked in the mission description,\n  correctly isolated to where it actually holds.\n\n**Part II \u2014 the contrarian disproof.**\n- `avg` and the lemmas `avg_continuous`, `avg_unanimity`, `avg_anonymous`,\n  `avg_monotone` (strong Pareto/monotonicity), `avg_translation_invariant`\n  (neutrality under a common shift), `avg_not_dictatorial`, packaged as\n  `continuous_nondictatorial_aggregator_exists`: for every `n \u2265 2` the mean is a\n  continuous, unanimous (Pareto), anonymous, **non-dictatorial** aggregation\n  rule on the contractible domain `\u211d`. This **disproves** the mission's strong\n  conjecture that *\"any social choice function on `n` alternatives is either\n  discontinuous or dictatorial.\"*\n\n## Assessment of the mission conjecture\n\nThe bold claim \"Arrow's impossibility theorem is a corollary of Borsuk\u2013Ulam\" is,\nas literally stated, **not correct**, and the derived slogan \"continuous \u27f9\ndictatorial\" is **false**. Two independent reasons:\n\n1. **Domain topology matters.** Borsuk\u2013Ulam produces an obstruction only on a\n   *non-contractible* space (a sphere). If the space of preferences is\n   contractible (a line, an interval, a simplex of von Neumann\u2013Morgenstern\n   utilities), the mean is a continuous, anonymous, non-dictatorial, unanimous\n   rule \u2014 no obstruction exists. Our `continuous_nondictatorial_aggregator_exists`\n   makes this precise.\n\n2. **Discrete vs. continuous.** Arrow's theorem is about aggregation of *discrete\n   linear orders* satisfying Independence of Irrelevant Alternatives (IIA). There\n   is no ambient topology and no continuity hypothesis, so a continuity-based\n   argument cannot be a literal proof of it.\n\n## The correct topological statement (Chichilnisky / Baryshnikov)\n\nThe real theorem in \"topological social choice\" is **Chichilnisky's**: there is\nno continuous, anonymous, unanimity-respecting aggregation map\n`(S\u00b9)^k \u2192 S\u00b9` (more generally `(S\u207f)^k \u2192 S\u207f`). Baryshnikov (1993) later gave a\n*genuinely* topological derivation of Arrow's discrete theorem by building a\nnerve/CW model of the preference data and invoking such obstructions. So the\nhonest form of the mission's thesis is:\n\n> *Topological obstructions of Borsuk\u2013Ulam type govern aggregation on\n> spheres; Arrow's discrete theorem can be recovered through a nerve\n> construction, but not by the naive `S^{n-1} \u2192 \u211d^{n-1}` argument.*\n\nConcrete next targets, in increasing difficulty:\n1. **Chichilnisky, k=2 agents on `S\u00b9`.** Prove: no continuous\n   `F : S\u00b9 \u00d7 S\u00b9 \u2192 S\u00b9` with `F(x,x) = x` (unanimity) and `F(x,y) = F(y,x)`\n   (anonymity). Engine: the induced map on `\u03c0\u2081(S\u00b9) = \u2124` must be\n   `(a,b) \u21a6 a\u00b7d + b\u00b7d` with `d = 1` (unanimity) yet symmetric-degree constraints\n   force a contradiction. A clean degree-theory formalization is feasible on top\n   of Mathlib's `\u03c0\u2081(S\u00b9) \u2243 \u2124` machinery.\n2. **General `k` on `S\u00b9`**, then `S\u207f` via Borsuk\u2013Ulam-style parity.\n3. **Baryshnikov's nerve reduction** from the discrete Arrow setting to the\n   topological one \u2014 the deepest step, and the actual \"social choice is topology\"\n   statement.\n\n## Reusable artifacts\n\n`borsuk_ulam_1d` (IVT form) and the `avg` aggregator lemmas are stated generically\nand can be reused for any 1-D antipodal-coincidence argument or for building\nlarger continuous aggregation examples.\n",
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_0901",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0884751e",
+    "status": "available",
+    "timestamp": "2026-07-10T13:11:41.437670+00:00",
+    "title": "**Part I \u2014 the genuine topological kernel.**"
   },
   {
     "consumed_by_exp_id": "",
