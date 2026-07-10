@@ -101,7 +101,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Categorification of Entropy: The Information Loss of Functors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fd7d55eb",
     "description": "Building on cycle f0772bca (Q=0.830), which proved 18 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Register allocation in a compiler assigns variables to CPU registers. The interference graph G has variables as vertices and edges between variables that are 'live' at the same time. Register allocation is equivalent to coloring G with k colors (k = number of registers). Conjecture: for SSA-form pro",
     "domains": [
       "Novelty"
@@ -110,7 +110,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "f0772bca",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T20:20:23.542160+00:00",
     "title": "Deepening: The Combinatorics of Compiler Optimization: Register Allocation as Graph Colorin"
   },
@@ -310,6 +310,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T10:46:04.413215+00:00",
     "title": "Deepening: The Thermodynamics of Sorting: Entropy and Computational Work"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Lucas-Penrose argument that human minds can see truths that formal systems cannot prove about themselves. Prove or disprove: there exists a computational system that can consistently recognize its own G\u00f6del sentences. Connect to Chaitin's incompleteness theorem and the Berry paradox.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0952",
+    "priority_score": 0.89,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T22:30:11.227768+00:00",
+    "title": "Mind vs G\u00f6del: Can Minds Outperform Algorithms?"
   },
   {
     "consumed_by_exp_id": "",
@@ -667,6 +682,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-10T04:08:16.263156+00:00",
     "title": "The Fourier Transform of the Riemann Zeta: Hearing the Primes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that cellular automata can perform transfinite computations when run on ordinals instead of N. Formalize a Rule 110 analog on omega-squared and prove it achieves super-Turing computation. Connect to Infinite Time Turing Machines and ordinal computation.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0951",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T22:30:11.162948+00:00",
+    "title": "Cellular Automata at the Ordinals: Transfinite Computation"
   },
   {
     "consumed_by_exp_id": "",
@@ -6455,7 +6485,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Ramanujan's Taxicab Number as a Sum of Three Cubes: 1729 Revisited"
   },
   {
-    "consumed_by_exp_id": "7900b8be",
+    "consumed_by_exp_id": "",
     "description": "Arrow's impossibility theorem states that no ranked voting system with 3+ alternatives can be Pareto efficient, non-dictatorial, and independent of irrelevant alternatives (IIA). Conjecture: Arrow's theorem is a curvature statement. The space of preference profiles is a Riemannian manifold M with the Fisher information metric. The social welfare function F: M -> M is a mapping from profiles to social preferences. Arrow's conditions translate to geometric conditions: (1) Pareto efficiency means F preserves the direction of unanimous preference (F is 'forward-looking'). (2) IIA means F is a local mapping (the social preference at x depends only on local information near x). (3) Non-dictatorial means F is not a projection onto a single voter's preference. Conjecture: the only smooth, local, forward-looking maps on a positively curved manifold are projections (dictatorships). This is because a positively curved manifold has the property that parallel transport around a small loop rotates vectors (Holonomy), and a local, forward-looking map must preserve this holonomy, which forces it to be a projection. Conjecture: the curvature of the preference space is related to the 'polarization' of the electorate: when preferences are polarized (bimodal), the curvature is positive (sphere-like), and Arrow's theorem applies. When preferences are unimodal (consensus), the curvature is zero (flat), and majority rule works. Test: compute the curvature of the preference space for synthetic election data and verify the connection to Arrow's theorem. Impact: Arrow's impossibility is a theorem of differential geometry. Voting is curved.",
     "domains": [
       "Novelty",
@@ -6465,7 +6495,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-10T18:11:39.634722+00:00",
     "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
   },
