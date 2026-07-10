@@ -1,499 +1,237 @@
-#!/usr/bin/env python3
 """
-Lattice Paths and the Alexander Polynomial — Demonstration
+Knots and Lattices: numerical demonstrations.
 
-This script demonstrates the core results:
-1. Area computation for lattice paths
-2. The area complement theorem: area(p) + area(swap(p)) = m * n
-3. Path counting: number of paths = C(m+n, n)
-4. The q-binomial coefficient as a lattice path generating function
-5. Testing the trefoil conjecture
+Self-contained Python illustrating the main results:
+
+  1. The unsigned area generating function has non-negative coefficients,
+     so it can never equal the trefoil polynomial t - 1 + t^{-1}
+     (its t^0 coefficient is -1).  [Refutation]
+  2. The signed state sum reproduces the trefoil polynomial from three
+     states of areas (1, 0, -1) and signs (+1, -1, +1).  [Rescue]
+  3. An area-negating, sign-preserving involution makes a signed state
+     sum palindromic, i.e. Delta(t) = Delta(t^{-1}).  [Reciprocity]
+  4. Monotone lattice paths from (0,0) to (n,n) are the n-subsets of a
+     2n-set; there are C(2n,n) of them, and a family's shadow obeys the
+     Kruskal-Katona bound.  [Substrate]
+
+No external dependencies.
 """
 
+from __future__ import annotations
+
+from dataclasses import dataclass
 from itertools import combinations
 from math import comb
-from collections import Counter
+from typing import Callable, Dict, Iterable, List, Sequence, Tuple
+
+# ---------------------------------------------------------------------------
+# Coefficient functions (Laurent polynomials as dict: exponent -> coefficient)
+# ---------------------------------------------------------------------------
+
+Coeffs = Dict[int, int]
 
 
-def encode_path(m: int, n: int, north_positions: tuple) -> list:
-    """Encode a lattice path as a list of 'E' and 'N' steps.
-    
-    Args:
-        m: number of East steps
-        n: number of North steps
-        north_positions: positions (0-indexed) where North steps occur
-    
-    Returns:
-        List of 'E' and 'N' characters
-    """
-    path = ['E'] * (m + n)
-    for pos in north_positions:
-        path[pos] = 'N'
-    return path
+def is_nonneg(c: Coeffs) -> bool:
+    """A coefficient map is non-negative if every coefficient is >= 0."""
+    return all(v >= 0 for v in c.values())
 
 
-def area(path: list) -> int:
-    """Compute the area under a lattice path.
-    
-    Each East step at height h contributes h to the area.
-    """
-    h = 0
-    total = 0
-    for step in path:
-        if step == 'E':
-            total += h
-        else:
-            h += 1
-    return total
+def is_palindromic(c: Coeffs) -> bool:
+    """Palindromic: coefficient of t^k equals coefficient of t^{-k}."""
+    keys = set(c) | {-k for k in c}
+    return all(c.get(k, 0) == c.get(-k, 0) for k in keys)
 
 
-def swap_path(path: list) -> list:
-    """Swap E <-> N in every step."""
-    return ['N' if s == 'E' else 'E' for s in path]
+def poly_str(c: Coeffs) -> str:
+    """Render a coefficient map as a readable Laurent polynomial."""
+    terms: List[str] = []
+    for k in sorted(c, reverse=True):
+        v = c[k]
+        if v == 0:
+            continue
+        power = "1" if k == 0 else (f"t^{{{k}}}")
+        terms.append(f"{v:+d}*{power}")
+    return " ".join(terms) if terms else "0"
 
 
-def enumerate_paths(m: int, n: int):
-    """Enumerate all lattice paths from (0,0) to (m,n).
-    
-    Each path is represented as a list of 'E' and 'N' steps.
-    """
-    for north_pos in combinations(range(m + n), n):
-        yield encode_path(m, n, north_pos)
+# ---------------------------------------------------------------------------
+# The trefoil polynomial  t - 1 + t^{-1}
+# ---------------------------------------------------------------------------
+
+TREFOIL: Coeffs = {1: 1, 0: -1, -1: 1}
 
 
-def q_binomial_from_paths(m: int, n: int) -> dict:
-    """Compute the q-binomial coefficient [m+n choose n]_q
-    as the generating function of lattice paths by area.
-    
-    Returns:
-        Dictionary mapping area value -> count of paths with that area
-    """
-    area_counts = Counter()
-    for path in enumerate_paths(m, n):
-        area_counts[area(path)] += 1
-    return dict(sorted(area_counts.items()))
+# ---------------------------------------------------------------------------
+# Enumeration models
+# ---------------------------------------------------------------------------
+
+@dataclass(frozen=True)
+class State:
+    """An abstract state with an integer area and a +/-1 sign."""
+    label: int
+    area: int
+    sign: int  # +1 or -1
 
 
-def q_binomial_formula(m: int, n: int) -> dict:
-    """Compute [m+n choose n]_q using the recurrence:
-    [a+b choose b]_q = [a+b-1 choose b-1]_q + q^b * [a+b-1 choose b]_q
-    
-    Returns polynomial as {power: coefficient} dictionary.
-    """
-    # dp[i][j] = polynomial for [i+j choose j]_q
-    dp = {}
-    
-    for i in range(m + 1):
-        for j in range(n + 1):
-            if i == 0 or j == 0:
-                dp[(i, j)] = {0: 1}
-            else:
-                # [i+j choose j]_q = [i+j-1 choose j-1]_q + q^j * [i+j-1 choose j]_q
-                p1 = dp[(i, j-1)]  # [i+j-1 choose j-1]_q
-                p2 = dp[(i-1, j)]  # [i+j-1 choose j]_q  (shifted by q^j... wait)
-                
-                # Actually: first step E -> paths(i-1, j), area unchanged
-                # first step N -> paths(i, j-1), area += i (from area_shift)
-                result = {}
-                for k, v in p1.items():
-                    result[k] = result.get(k, 0) + v
-                for k, v in p2.items():
-                    result[k + i] = result.get(k + i, 0) + v
-                dp[(i, j)] = result
-    
-    return dict(sorted(dp[(m, n)].items()))
+def area_gf(states: Sequence[State]) -> Coeffs:
+    """Unsigned area generating function: count of states of each area."""
+    out: Coeffs = {}
+    for s in states:
+        out[s.area] = out.get(s.area, 0) + 1
+    return out
 
 
-def positions_from(path: list) -> list:
-    """Compute positions visited by a lattice path starting from (0,0)."""
-    x, y = 0, 0
-    positions = [(x, y)]
-    for step in path:
-        if step == 'E':
-            x += 1
-        else:
-            y += 1
-        positions.append((x, y))
-    return positions
+def signed_gf(states: Sequence[State]) -> Coeffs:
+    """Signed state sum: sum of signs of states of each area."""
+    out: Coeffs = {}
+    for s in states:
+        out[s.area] = out.get(s.area, 0) + s.sign
+    return {k: v for k, v in out.items()}
 
 
-def is_valid_trefoil(path: list) -> bool:
-    """Check if a path avoids the trefoil forbidden region."""
-    forbidden = {(1, 2), (2, 1)}
-    for pos in positions_from(path):
-        if pos in forbidden:
-            return False
-    return True
+# ---------------------------------------------------------------------------
+# Result 1 & 2: refutation and rescue
+# ---------------------------------------------------------------------------
 
-
-# ============================================================
-# DEMONSTRATIONS
-# ============================================================
-
-print("=" * 60)
-print("LATTICE PATHS AND THE ALEXANDER POLYNOMIAL")
-print("=" * 60)
-
-# Demo 1: Area Complement Theorem
-print("\n--- Demo 1: Area Complement Theorem ---")
-print("For any path p: area(p) + area(swap(p)) = m * n")
-print()
-
-for m, n in [(2, 2), (3, 3), (2, 4), (4, 2)]:
-    print(f"Paths from (0,0) to ({m},{n}):")
-    all_verified = True
-    for path in enumerate_paths(m, n):
-        a1 = area(path)
-        a2 = area(swap_path(path))
-        if a1 + a2 != m * n:
-            all_verified = False
-            print(f"  FAILED: {''.join(path)}, area={a1}, swap_area={a2}")
-        
-    total = sum(1 for _ in enumerate_paths(m, n))
-    print(f"  All {total} paths satisfy: area + swap_area = {m*n} ✓")
-
-# Demo 2: Path Count = Binomial Coefficient
-print("\n--- Demo 2: Path Count = C(m+n, n) ---")
-
-for m in range(6):
-    for n in range(6):
-        count = sum(1 for _ in enumerate_paths(m, n))
-        expected = comb(m + n, n)
-        assert count == expected, f"FAILED at ({m},{n})"
-
-print("Verified: pathCount(m,n) = C(m+n,n) for all m,n ≤ 5 ✓")
-
-# Show some values
-for m in range(5):
-    row = [comb(m + n, n) for n in range(5)]
-    print(f"  m={m}: {row}")
-
-# Demo 3: Q-Binomial Coefficients
-print("\n--- Demo 3: Q-Binomial (Gaussian Binomial) Coefficients ---")
-print("The q-binomial [m+n choose n]_q = Σ q^{area(p)}")
-print()
-
-for m, n in [(2, 2), (3, 2), (3, 3)]:
-    gf = q_binomial_from_paths(m, n)
-    print(f"[{m+n} choose {n}]_q (from paths {m}×{n}):")
-    terms = []
-    for k in sorted(gf.keys()):
-        coeff = gf[k]
-        if coeff == 1:
-            terms.append(f"q^{k}")
-        else:
-            terms.append(f"{coeff}q^{k}")
-    print(f"  = {' + '.join(terms)}")
-    print(f"  Evaluated at q=1: {sum(gf.values())} = C({m+n},{n}) ✓")
-    
-    # Verify palindromicity
-    max_area = m * n
-    is_palindromic = all(
-        gf.get(k, 0) == gf.get(max_area - k, 0)
-        for k in range(max_area + 1)
-    )
-    print(f"  Palindromic (from complement theorem): {is_palindromic} ✓")
+def demo_refutation_and_rescue() -> None:
+    print("=" * 70)
+    print("Results 1 & 2: Refutation of the unsigned model, signed rescue")
+    print("=" * 70)
+    print(f"Trefoil polynomial:            {poly_str(TREFOIL)}")
+    print(f"  coefficient of t^0:          {TREFOIL.get(0, 0)}")
+    print(f"  is non-negative?             {is_nonneg(TREFOIL)}")
+    print()
+    print("Any unsigned area generating function has non-negative coefficients,")
+    print("so it can NEVER equal the trefoil polynomial (t^0 coeff = -1).")
     print()
 
-# Demo 4: Area Shift Lemma
-print("--- Demo 4: Area Shift Lemma ---")
-print("areaAux(h, p) = area(p) + h * countE(p)")
-
-def area_aux(h: int, path: list) -> int:
-    total = 0
-    for step in path:
-        if step == 'E':
-            total += h
-        else:
-            h += 1
-    return total
-
-for path in list(enumerate_paths(2, 2))[:3]:
-    path_str = ''.join(path)
-    countE = path.count('E')
-    base_area = area(path)
-    for h in range(4):
-        computed = area_aux(h, path)
-        expected = base_area + h * countE
-        assert computed == expected
-    print(f"  Path {path_str}: area={base_area}, countE={countE}, "
-          f"shift verified for h=0..3 ✓")
-
-# Demo 5: Trefoil Conjecture Test
-print("\n--- Demo 5: Trefoil Knot Lattice ---")
-print("Alexander polynomial of trefoil: t^{-1} - 1 + t")
-print()
-
-m, n = 3, 3
-total_paths = 0
-valid_paths = 0
-valid_areas = Counter()
-
-for path in enumerate_paths(m, n):
-    total_paths += 1
-    if is_valid_trefoil(path):
-        valid_paths += 1
-        a = area(path)
-        valid_areas[a] = valid_areas.get(a, 0) + 1
-
-print(f"Total paths from (0,0) to (3,3): {total_paths}")
-print(f"Valid paths (avoiding forbidden region): {valid_paths}")
-print(f"Area distribution of valid paths:")
-for a in sorted(valid_areas.keys()):
-    print(f"  area = {a}: {valid_areas[a]} paths")
-
-print(f"\nGenerating function of valid paths:")
-terms = []
-for k in sorted(valid_areas.keys()):
-    coeff = valid_areas[k]
-    if coeff == 1:
-        terms.append(f"t^{k}")
-    else:
-        terms.append(f"{coeff}·t^{k}")
-print(f"  GF = {' + '.join(terms)}")
-
-# Demo 6: Verify recurrence Q(m+1, n+1) = Q(m, n+1) + q^{m+1} * Q(m+1, n)
-print("\n--- Demo 6: Q-Binomial Recurrence ---")
-print("Q(m+1, n+1; q) = Q(m, n+1; q) + q^{m+1} · Q(m+1, n; q)")
-
-for m, n in [(1, 1), (2, 1), (2, 2), (3, 2)]:
-    q_left = q_binomial_from_paths(m + 1, n + 1)
-    q1 = q_binomial_from_paths(m, n + 1)
-    q2 = q_binomial_from_paths(m + 1, n)
-    
-    # Compute q1 + q^{m+1} * q2
-    q_right = dict(q1)
-    for k, v in q2.items():
-        shifted_k = k + (m + 1)
-        q_right[shifted_k] = q_right.get(shifted_k, 0) + v
-    
-    match = all(q_left.get(k, 0) == q_right.get(k, 0) 
-                for k in set(list(q_left.keys()) + list(q_right.keys())))
-    print(f"  Q({m+1},{n+1}) recurrence: {'✓' if match else '✗'}")
-
-print("\n" + "=" * 60)
-print("All demonstrations completed successfully.")
-print("=" * 60)
+    # The three-state signed model of the rescue theorem.
+    states = [
+        State(label=0, area=1, sign=+1),
+        State(label=1, area=0, sign=-1),
+        State(label=2, area=-1, sign=+1),
+    ]
+    unsigned = area_gf(states)
+    signed = signed_gf(states)
+    print(f"Three states (area, sign): "
+          f"{[(s.area, s.sign) for s in states]}")
+    print(f"  unsigned area GF:            {poly_str(unsigned)}"
+          f"   (non-neg={is_nonneg(unsigned)}, != trefoil)")
+    print(f"  signed state sum:            {poly_str(signed)}")
+    print(f"  signed sum == trefoil?       {signed == TREFOIL}")
+    print()
 
 
-#!/usr/bin/env python3
-"""
-Visualization: Lattice paths colored by area.
-"""
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
-from itertools import combinations
-import numpy as np
+# ---------------------------------------------------------------------------
+# Result 3: reciprocity from an involution
+# ---------------------------------------------------------------------------
+
+def demo_reciprocity() -> None:
+    print("=" * 70)
+    print("Result 3: Reciprocity from an area-negating, sign-preserving")
+    print("          involution  =>  palindromic signed state sum")
+    print("=" * 70)
+    states = [
+        State(label=0, area=1, sign=+1),
+        State(label=1, area=0, sign=-1),
+        State(label=2, area=-1, sign=+1),
+    ]
+    # phi: swap the two outer states, fix the central one.
+    phi: Dict[int, int] = {0: 2, 1: 1, 2: 0}
+    by_label = {s.label: s for s in states}
+
+    involution = all(phi[phi[s.label]] == s.label for s in states)
+    area_neg = all(by_label[phi[s.label]].area == -s.area for s in states)
+    sign_pres = all(by_label[phi[s.label]].sign == s.sign for s in states)
+    signed = signed_gf(states)
+
+    print(f"  phi is an involution?        {involution}")
+    print(f"  phi negates area?            {area_neg}")
+    print(f"  phi preserves sign?          {sign_pres}")
+    print(f"  signed state sum:            {poly_str(signed)}")
+    print(f"  is palindromic?              {is_palindromic(signed)}")
+    print()
 
 
-def enumerate_paths(m, n):
-    total = m + n
-    for north_pos in combinations(range(total), n):
-        path = ['E'] * total
-        for pos in north_pos:
-            path[pos] = 'N'
-        yield path
+# ---------------------------------------------------------------------------
+# Result 4: lattice-path substrate and Kruskal-Katona shadow
+# ---------------------------------------------------------------------------
+
+def lattice_paths(n: int) -> List[Tuple[int, ...]]:
+    """Monotone paths (0,0)->(n,n) as n-subsets of {0,...,2n-1}."""
+    return [tuple(c) for c in combinations(range(2 * n), n)]
 
 
-def compute_area(path):
-    h, total = 0, 0
-    for step in path:
-        if step == 'E':
-            total += h
-        else:
-            h += 1
-    return total
+def shadow(family: Iterable[Tuple[int, ...]]) -> List[Tuple[int, ...]]:
+    """The shadow: all (n-1)-subsets obtained by deleting one element."""
+    out = set()
+    for s in family:
+        for i in range(len(s)):
+            out.add(s[:i] + s[i + 1:])
+    return sorted(out)
 
 
-def path_coordinates(path):
-    x, y = [0], [0]
-    cx, cy = 0, 0
-    for step in path:
-        if step == 'E':
-            cx += 1
-        else:
-            cy += 1
-        x.append(cx)
-        y.append(cy)
-    return x, y
+def demo_lattice_paths() -> None:
+    print("=" * 70)
+    print("Result 4: Lattice paths, the count C(2n,n), and Kruskal-Katona")
+    print("=" * 70)
+    for n in range(1, 6):
+        paths = lattice_paths(n)
+        print(f"  n={n}: #paths = {len(paths):5d}   C(2n,n) = {comb(2 * n, n):5d}"
+              f"   match={len(paths) == comb(2 * n, n)}")
+    print()
+
+    # Kruskal-Katona: a family of size >= C(k,n) has shadow >= C(k,n-1).
+    n, k = 3, 4
+    all_paths = lattice_paths(n)
+    family = all_paths[: comb(k, n)]  # take exactly C(k,n) paths
+    sh = shadow(family)
+    print(f"  n={n}, k={k}: family size = {len(family)} = C(k,n) = {comb(k, n)}")
+    print(f"    shadow size = {len(sh)},  bound C(k,n-1) = {comb(k, n - 1)}")
+    print(f"    Kruskal-Katona bound holds? {len(sh) >= comb(k, n - 1)}")
+    print()
 
 
-def plot_lattice_paths_by_area(m, n, ax=None):
-    if ax is None:
-        fig, ax = plt.subplots(1, 1, figsize=(8, 8))
-    
-    paths = list(enumerate_paths(m, n))
-    areas = [compute_area(p) for p in paths]
-    max_area = m * n
-    
-    cmap = plt.cm.viridis
-    
-    for path, a in sorted(zip(paths, areas), key=lambda x: x[1]):
-        x, y = path_coordinates(path)
-        color = cmap(a / max_area if max_area > 0 else 0)
-        ax.plot(x, y, '-', color=color, alpha=0.6, linewidth=1.5)
-    
-    # Grid
-    for i in range(m + 1):
-        ax.axvline(i, color='lightgray', linewidth=0.5)
-    for j in range(n + 1):
-        ax.axhline(j, color='lightgray', linewidth=0.5)
-    
-    ax.set_xlim(-0.1, m + 0.1)
-    ax.set_ylim(-0.1, n + 0.1)
-    ax.set_aspect('equal')
-    ax.set_xlabel('x (East)')
-    ax.set_ylabel('y (North)')
-    ax.set_title(f'Lattice paths (0,0)→({m},{n}), colored by area\n'
-                 f'{len(paths)} paths, areas 0–{max_area}')
-    
-    sm = plt.cm.ScalarMappable(cmap=cmap, norm=plt.Normalize(0, max_area))
-    plt.colorbar(sm, ax=ax, label='Area')
-    return ax
+# ---------------------------------------------------------------------------
+# A tiny "signed realization" algorithm: build states for any target poly
+# ---------------------------------------------------------------------------
+
+def realize_as_signed_states(target: Coeffs) -> List[State]:
+    """Emit |c_k| states of area k with sign(c_k) for each exponent k."""
+    states: List[State] = []
+    label = 0
+    for k in sorted(target, reverse=True):
+        v = target[k]
+        s = 1 if v > 0 else -1
+        for _ in range(abs(v)):
+            states.append(State(label=label, area=k, sign=s))
+            label += 1
+    return states
 
 
-def plot_area_distribution(m, n, ax=None):
-    if ax is None:
-        fig, ax = plt.subplots(1, 1, figsize=(8, 5))
-    
-    areas = [compute_area(p) for p in enumerate_paths(m, n)]
-    from collections import Counter
-    counts = Counter(areas)
-    
-    x_vals = sorted(counts.keys())
-    y_vals = [counts[x] for x in x_vals]
-    
-    ax.bar(x_vals, y_vals, color='steelblue', alpha=0.8)
-    ax.set_xlabel('Area')
-    ax.set_ylabel('Number of paths')
-    ax.set_title(f'Area distribution for paths (0,0)→({m},{n})\n'
-                 f'q-binomial [{m+n} choose {n}]_q')
-    
-    # Mark palindromic symmetry
-    max_area = m * n
-    ax.axvline(max_area / 2, color='red', linestyle='--', alpha=0.5,
-               label=f'Symmetry axis (area={max_area}/2)')
-    ax.legend()
-    return ax
+def demo_signed_realization() -> None:
+    print("=" * 70)
+    print("Algorithm: realize an arbitrary Laurent polynomial as a signed sum")
+    print("=" * 70)
+    targets: List[Coeffs] = [
+        TREFOIL,
+        {2: 1, 1: -3, 0: 5, -1: -3, -2: 1},  # a palindromic example
+    ]
+    for t in targets:
+        st = realize_as_signed_states(t)
+        rebuilt = signed_gf(st)
+        print(f"  target:   {poly_str(t)}")
+        print(f"  #states:  {len(st)}   rebuilt == target? {rebuilt == t}")
+        print(f"  palindromic target? {is_palindromic(t)}")
+        print()
 
 
-def plot_complement_theorem(m, n, ax=None):
-    if ax is None:
-        fig, ax = plt.subplots(1, 1, figsize=(8, 5))
-    
-    paths = list(enumerate_paths(m, n))
-    areas = [compute_area(p) for p in paths]
-    swap_areas = [compute_area(['N' if s == 'E' else 'E' for s in p]) for p in paths]
-    
-    indices = range(len(paths))
-    ax.bar(indices, areas, color='steelblue', alpha=0.7, label='area(p)')
-    ax.bar(indices, swap_areas, bottom=areas, color='coral', alpha=0.7, label='area(swap(p))')
-    ax.axhline(m * n, color='black', linestyle='--', label=f'm·n = {m*n}')
-    
-    ax.set_xlabel('Path index')
-    ax.set_ylabel('Area')
-    ax.set_title(f'Area Complement Theorem: area(p) + area(swap(p)) = {m}·{n} = {m*n}')
-    ax.legend()
-    return ax
+def main() -> None:
+    demo_refutation_and_rescue()
+    demo_reciprocity()
+    demo_lattice_paths()
+    demo_signed_realization()
 
 
 if __name__ == "__main__":
-    fig, axes = plt.subplots(1, 3, figsize=(20, 6))
-    
-    plot_lattice_paths_by_area(3, 3, axes[0])
-    plot_area_distribution(3, 3, axes[1])
-    plot_complement_theorem(3, 3, axes[2])
-    
-    plt.tight_layout()
-    plt.savefig('lattice_paths_visualization.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved visualization to lattice_paths_visualization.png")
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Q-binomial coefficients and their properties.
-"""
-import matplotlib.pyplot as plt
-import numpy as np
-from itertools import combinations
-from collections import Counter
-from functools import lru_cache
-
-
-def enumerate_paths(m, n):
-    total = m + n
-    for north_pos in combinations(range(total), n):
-        path = ['E'] * total
-        for pos in north_pos:
-            path[pos] = 'N'
-        yield path
-
-
-def compute_area(path):
-    h, total = 0, 0
-    for step in path:
-        if step == 'E':
-            total += h
-        else:
-            h += 1
-    return total
-
-
-@lru_cache(maxsize=None)
-def q_binomial(m, n):
-    if m == 0 or n == 0:
-        return {0: 1}
-    p1 = q_binomial(m - 1, n)
-    p2 = q_binomial(m, n - 1)
-    result = dict(p1)
-    for k, v in p2.items():
-        result[k + m] = result.get(k + m, 0) + v
-    return result
-
-
-def plot_qbinomial_heatmap():
-    fig, axes = plt.subplots(2, 3, figsize=(18, 10))
-    
-    params = [(2, 2), (3, 2), (3, 3), (4, 3), (4, 4), (5, 3)]
-    
-    for ax, (m, n) in zip(axes.flat, params):
-        qb = q_binomial(m, n)
-        max_area = m * n
-        x = list(range(max_area + 1))
-        y = [qb.get(k, 0) for k in x]
-        
-        colors = ['steelblue' if qb.get(k, 0) == qb.get(max_area - k, 0) else 'coral' for k in x]
-        ax.bar(x, y, color='steelblue', alpha=0.8)
-        ax.set_title(f'[{m+n} choose {n}]_q  (paths {m}×{n})')
-        ax.set_xlabel('Area (power of q)')
-        ax.set_ylabel('Coefficient')
-        
-        # Mark symmetry
-        ax.axvline(max_area / 2, color='red', linestyle='--', alpha=0.4)
-        
-        # Unimodality check
-        coeffs = [qb.get(k, 0) for k in range(max_area + 1)]
-        is_unimodal = True
-        peak = max(range(len(coeffs)), key=lambda i: coeffs[i])
-        for i in range(peak):
-            if coeffs[i] > coeffs[i + 1]:
-                is_unimodal = False
-        for i in range(peak, len(coeffs) - 1):
-            if coeffs[i] < coeffs[i + 1]:
-                is_unimodal = False
-        
-        status = "✓ unimodal" if is_unimodal else "✗ not unimodal"
-        ax.text(0.95, 0.95, status, transform=ax.transAxes, ha='right', va='top',
-                fontsize=9, color='green' if is_unimodal else 'red')
-    
-    plt.suptitle('Gaussian Binomial Coefficients as Lattice Path Area Distributions\n'
-                 '(All are palindromic by the Area Complement Theorem)', fontsize=14)
-    plt.tight_layout()
-    plt.savefig('qbinomial_visualization.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved to qbinomial_visualization.png")
-
-
-if __name__ == "__main__":
-    plot_qbinomial_heatmap()
+    main()
