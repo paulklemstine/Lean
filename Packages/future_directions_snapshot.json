@@ -10067,7 +10067,7 @@
       "math.CO",
       "math.NT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "794fdf29",
     "description": "For a prime power q and a positive integer n, the maximum codimension of a cyclically covering subspace of F_q^n, denoted h_q(n), is zero if and only if every nonzero cyclic code in F_q^n contains a codeword of full Hamming weight.",
     "domain_bridges": [
       "Finite Fields",
@@ -10084,7 +10084,7 @@
     "proof_strategy": "Establish the duality between cyclically covering subspaces and cyclic codes. Show that a subspace failing to cyclically cover F_q^n implies the existence of a vector outside the union of its cyclic shifts, which translates under orthogonal complementation to a nonzero cyclic code lacking any full-weight codeword, and vice versa.",
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T16:37:22.623666+00:00",
     "title": "Equivalence of Vanishing Cyclically Covering Codimension and Full-Weight Cyclic Codes"
   },

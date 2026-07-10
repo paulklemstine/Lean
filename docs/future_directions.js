@@ -73,6 +73,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Power\u2011of\u2011Two Perfect Matching Count in Class\u202fB Graphs"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle e7035fce (Q=0.820), which proved 21 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Mendeleev's periodic table arranges elements by atomic number Z, but Z is just the charge of the nucleus. Conjecture: the periodic table is the spectrum of an operator on a Hilbert space of dimension equal to the number of stable isotopes. Define the 'nuclear Hamiltonian' H on L^2(R^3) by H = -hbar^",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_e7035fce_bd8c0405",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "e7035fce",
+    "status": "available",
+    "timestamp": "2026-07-10T00:21:21.581372+00:00",
+    "title": "Deepening: The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
+  },
+  {
     "consumed_by_exp_id": "a5663e2a",
     "description": "Two quantum particles are entangled if measuring one instantly affects the other. But entanglement is also a topological property: if you represent the state of two qubits as a curve in R^3, entanglement IS the linking number. Conjecture: For any pure state of two qubits |psi> in C^2 tensor C^2, the concurrence C(psi) = 2|alpha*delta - beta*gamma| (where psi = alpha|00> + beta|01> + gamma|10> + delta|11>) equals the absolute value of the linking number of two curves derived from the Hopf fibration applied to psi. Specifically, map psi to S^7 via normalization, then project to S^4 via the Hopf map, and the preimages of two points in S^4 are linked circles in S^7 whose linking number equals the concurrence. This means: entanglement is MEASURED by topology, and maximally entangled states correspond to the Hopf link (linking number 1). Test: for 1000 random two-qubit states, compute the concurrence and the linking number of the Hopf preimages, and verify they are equal. Prove the equality for the Bell states. Impact: quantum entanglement is not mysterious \u2014 it is the linking number of the Hopf fibration. Two particles are entangled if and only if their Hopf preimages are linked.",
     "domains": [
@@ -158,21 +172,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-08T16:01:43.810023+00:00",
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
-  },
-  {
-    "consumed_by_exp_id": "e7035fce",
-    "description": "Mendeleev's periodic table arranges elements by atomic number Z, but Z is just the charge of the nucleus. Conjecture: the periodic table is the spectrum of an operator on a Hilbert space of dimension equal to the number of stable isotopes. Define the 'nuclear Hamiltonian' H on L^2(R^3) by H = -hbar^2/(2m) * nabla^2 + V(r) where V(r) encodes the strong and electromagnetic forces. The eigenvalues E_n of H give the binding energies of nuclei, and Z_n = round(E_n / E_0) gives the atomic numbers. The 'periodicity' of the table arises because the eigenvalues of H have shell structure (like the hydrogen atom): the n-th shell has degeneracy 2n^2 (from the angular momentum quantum number), giving shell sizes 2, 8, 18, 32, 50, 72 \u2014 the noble gas atomic numbers 2, 10, 28, 60, 110 are the cumulative sums. The 'stability islands' (magic numbers 2, 8, 20, 28, 50, 82, 126) correspond to extra degeneracies in the nuclear potential. Test: solve the Schrodinger equation for a Woods-Saxon potential (model nuclear potential) and show that the eigenvalue degeneracies match the periodic table structure. Compute the 'predicted' periodic table from the eigenvalues and compare with reality. Impact: chemistry IS applied spectral theory. The periodic table is the spectrum of a Hamiltonian, and every chemical property is an eigenvalue.",
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_0808",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-09T21:40:59.612742+00:00",
-    "title": "The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
   },
   {
     "consumed_by_exp_id": "",
@@ -5494,7 +5493,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Overfull Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "794fdf29",
     "description": "For a prime power q and a positive integer n, the maximum codimension of a cyclically covering subspace of F_q^n, denoted h_q(n), is zero if and only if every nonzero cyclic code in F_q^n contains a codeword of full Hamming weight.",
     "domains": [
       "Pythagorean",
@@ -5504,7 +5503,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T16:37:22.623666+00:00",
     "title": "Equivalence of Vanishing Cyclically Covering Codimension and Full-Weight Cyclic Codes"
   },
@@ -10126,6 +10125,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T00:21:12.467848+00:00",
     "title": "The file `PrimeHotelRearrangement.lean` formalizes, entirely without the prime n"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Shell Structure as Spectral Degeneracy\n\nThese conjectures are distilled from the present cycle, which established that the\nCoulomb closed-shell numbers `2,10,28,60,110` and the oscillator magic numbers\n`2,8,20,40,70,112` are cubic cumulative sums of eigenvalue degeneracies, and that\neach shell energy is literally an eigenvalue of a diagonal Hamiltonian.\n\n## 1. A two-parameter family of \"periodic tables\"\n**Conjecture.** For every affine-quadratic degeneracy law `d(k) = a k\u00b2 + b k + c`\nwith `a>0`, the cumulative filling `F(n) = \u2211_{k\u2264n} d(k)` is a cubic polynomial, and\nthe pair `(a,b,c)` is uniquely recoverable from any four consecutive fillings.\nThus each admissible triple names a distinct shell table, and the Coulomb and\noscillator tables are two lattice points in this space.\n\nThe key insight is that shell \"periods\" are Faulhaber sums, so the *entire* table is\nencoded in three numbers \u2014 the degeneracy polynomial \u2014 rather than in a list of\nnoble-gas atomic numbers.\n\nWhy now? Closed-form degeneracy sums for both the Coulomb and oscillator models are\nnow in hand, exposing them as neighbouring instances of one polynomial family and\ninviting a classification of all quadratic-degeneracy tables.\n\n## 2. Spin\u2013orbit as a rank-one spectral perturbation reproducing `28, 50, 82`\n**Conjecture.** Adding a diagonal spin\u2013orbit term `\u03be \u00b7 l\u00b7s` to the isotropic\noscillator Hamiltonian shifts the cumulative fillings from `2,8,20,40,70,112` to the\nempirical magic numbers `2,8,20,28,50,82,126`, and the required shifts are exactly\nthe partial sums of the highest-`j` sublevel sizes at each level.\n\nThe key insight is that the empirical magic numbers are not new degeneracies but a\n*reordering* of oscillator sublevels induced by a single diagonal perturbation, so\nthe \"islands of stability\" are a perturbed spectrum, not a separate phenomenon.\n\nWhy now? The bare-oscillator boundary case (`40\u226028`, `70\u226050`) is pinned down here as\nthe precise place the diagonal model breaks, isolating spin\u2013orbit as the one missing\ndiagonal term to be added and checked.\n\n## 3. The Madelung rule as a spectral ordering theorem\n**Conjecture.** The observed noble-gas numbers `2,10,18,36,54,86` are the cumulative\ndegeneracies of the same `2n\u00b2` shells re-summed in order of increasing `n+l` (ties\nbroken by increasing `n`); equivalently, they are the ordered eigenvalue\nmultiplicities of a Hamiltonian whose energies are monotone in `n+l`.\n\nThe key insight is that switching from pure `n`-ordering to `(n+l)`-ordering is a\npermutation of the *same* eigenvalues, so real chemistry differs from the Coulomb\ntable only by the sorting key of the spectrum.\n\nWhy now? The present cycle shows the pure-`n` Coulomb table diverges from reality\nexactly past `Z=10`, precisely where `(n+l)` ordering first overtakes `n` ordering,\nmaking the Madelung rule the natural next spectral statement to formalize.\n\n## 4. Trace invariants as chemical sum rules\n**Conjecture.** For a diagonal shell Hamiltonian truncated to `d` levels, the power\ntraces `tr(H\u1d4f) = \u2211 E\u2099\u1d4f` are the elementary symmetric data of the spectrum, and\nweighted trace ratios reproduce measurable bulk quantities (e.g. mean binding energy\nper shell) as `d \u2192 \u221e` for the Rydberg energies `E\u2099 = -1/(n+1)\u00b2`, whose traces\nconverge to values of the Riemann zeta function.\n\nThe key insight is that every additive shell property is a trace of a power of the\nHamiltonian, so \"chemical averages\" are spectral moments and their limits are zeta\nvalues.\n\nWhy now? With the diagonal Hamiltonian and its trace formula established, the\n`\u2211 1/(n+1)^{2k} = \u03b6(2k)` limit is one convergence argument away, turning shell\naverages into a bridge between spectral theory and analytic number theory.\n\n\n# Future Directions \u2014 Shell Structure as Spectral Degeneracy\n\nThese conjectures are distilled from the present cycle, which established that the\nCoulomb closed-shell numbers `2,10,28,60,110` and the oscillator magic numbers\n`2,8,20,40,70,112` are cubic cumulative sums of eigenvalue degeneracies, and that\neach shell energy is literally an eigenvalue of a diagonal Hamiltonian.\n\n## 1. A two-parameter family of \"periodic tables\"\n**Conjecture.** For every affine-quadratic degeneracy law `d(k) = a k\u00b2 + b k + c`\nwith `a>0`, the cumulative filling `F(n) = \u2211_{k\u2264n} d(k)` is a cubic polynomial, and\nthe pair `(a,b,c)` is uniquely recoverable from any four consecutive fillings.\nThus each admissible triple names a distinct shell table, and the Coulomb and\noscillator tables are two lattice points in this space.\n\nThe key insight is that shell \"periods\" are Faulhaber sums, so the *entire* table is\nencoded in three numbers \u2014 the degeneracy polynomial \u2014 rather than in a list of\nnoble-gas atomic numbers.\n\nWhy now? Closed-form degeneracy sums for both the Coulomb and oscillator models are\nnow in hand, exposing them as neighbouring instances of one polynomial family and\ninviting a classification of all quadratic-degeneracy tables.\n\n## 2. Spin\u2013orbit as a rank-one spectral perturbation reproducing `28, 50, 82`\n**Conjecture.** Adding a diagonal spin\u2013orbit term `\u03be \u00b7 l\u00b7s` to the isotropic\noscillator Hamiltonian shifts the cumulative fillings from `2,8,20,40,70,112` to the\nempirical magic numbers `2,8,20,28,50,82,126`, and the required shifts are exactly\nthe partial sums of the highest-`j` sublevel sizes at each level.\n\nThe key insight is that the empirical magic numbers are not new degeneracies but a\n*reordering* of oscillator sublevels induced by a single diagonal perturbation, so\nthe \"islands of stability\" are a perturbed spectrum, not a separate phenomenon.\n\nWhy now? The bare-oscillator boundary case (`40\u226028`, `70\u226050`) is pinned down here as\nthe precise place the diagonal model breaks, isolating spin\u2013orbit as the one missing\ndiagonal term to be added and checked.\n\n## 3. The Madelung rule as a spectral ordering theorem\n**Conjecture.** The observed noble-gas numbers `2,10,18,36,54,86` are the cumulative\ndegeneracies of the same `2n\u00b2` shells re-summed in order of increasing `n+l` (ties\nbroken by increasing `n`); equivalently, they are the ordered eigenvalue\nmultiplicities of a Hamiltonian whose energies are monotone in `n+l`.\n\nThe key insight is that switching from pure `n`-ordering to `(n+l)`-ordering is a\npermutation of the *same* eigenvalues, so real chemistry differs from the Coulomb\ntable only by the sorting key of the spectrum.\n\nWhy now? The present cycle shows the pure-`n` Coulomb table diverges from reality\nexactly past `Z=10`, precisely where `(n+l)` ordering first overtakes `n` ordering,\nmaking the Madelung rule the natural next spectral statement to formalize.\n\n## 4. Trace invariants as chemical sum rules\n**Conjecture.** For a diagonal shell Hamiltonian truncated to `d` levels, the power\ntraces `tr(H\u1d4f) = \u2211 E\u2099\u1d4f` are the elementary symmetric data of the spectrum, and\nweighted trace ratios reproduce measurable bulk quantities (e.g. mean binding energy\nper shell) as `d \u2192 \u221e` for the Rydberg energies `E\u2099 = -1/(n+1)\u00b2`, whose traces\nconverge to values of the Riemann zeta function.\n\nThe key insight is that every additive shell property is a trace of a power of the\nHamiltonian, so \"chemical averages\" are spectral moments and their limits are zeta\nvalues.\n\nWhy now? With the diagonal Hamiltonian and its trace formula established, the\n`\u2211 1/(n+1)^{2k} = \u03b6(2k)` limit is one convergence argument away, turning shell\naverages into a bridge between spectral theory and analytic number theory.\n",
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_0821",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e7035fce",
+    "status": "available",
+    "timestamp": "2026-07-10T00:21:17.714659+00:00",
+    "title": "These conjectures are distilled from the present cycle, which established that t"
   },
   {
     "consumed_by_exp_id": "352dbc27",
