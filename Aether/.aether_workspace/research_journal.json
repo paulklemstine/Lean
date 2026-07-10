@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "996ff4be",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: The Geometry and Universal Structure of Surprise\n\nThis cycle established two complementary pillars. First, *surprise* — the gap between\nthe most conservative and most divergent re",
-      "quality_score": 0.78,
-      "sorry_count": 3,
-      "theorem_count": 14,
-      "timestamp": "2026-07-10T07:17:30",
-      "title": "The Category Theory of Jokes: Universal Properties of Humor"
-    },
-    {
       "cycle_id": "34a8cfea",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Emotional Chromatic Number of Social Networks\n\nThe emotional chromatic number `emoChrom G = min { k ≥ 3 : G is k-colorable }` is the smallest\nnumber of emotion categories (at lea",
@@ -499,19 +489,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-10T23:50:32",
       "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
+    },
+    {
+      "cycle_id": "0faef071",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Tangled Hierarchies and Self-Referential Soundness\n\nThis cycle established, over Gödel–Löb frames, that the semantic Löb principle\n`□(□A → A) ⊆ □A` collapses any internal proof o",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 16,
+      "timestamp": "2026-07-10T23:50:39",
+      "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "135cab00",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — dominant weights of the form `λ_{D,I} = 2ρ − β_I − β_D`\n\nThe results of this cycle isolate the weight-theoretic core of the `π_{D,I}` construction: in the\nsimply-laced setting, d",
-      "quality_score": 0.7176246153846154,
-      "sorry_count": 1,
-      "theorem_count": 13,
-      "timestamp": "2026-07-02T02:48:24",
-      "title": "Classification of ρ-dominant elements in B(ρ) for symmetrizable Kac-Moody algebras"
-    },
     {
       "cycle_id": "d80d981e",
       "domain": "Tropical",
@@ -2501,21 +2491,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-10T23:50:32",
       "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
+    },
+    {
+      "cycle_id": "0faef071",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Tangled Hierarchies and Self-Referential Soundness\n\nThis cycle established, over Gödel–Löb frames, that the semantic Löb principle\n`□(□A → A) ⊆ □A` collapses any internal proof o",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 16,
+      "timestamp": "2026-07-10T23:50:39",
+      "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "34e9f39c",
-      "domain": "Applications",
-      "name": "trefoil_zero",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "34e9f39c",
-      "domain": "Applications",
-      "name": "trefoil_one",
-      "quality": 0.82
-    },
     {
       "cycle_id": "bb33d4fa",
       "domain": "NumberTheory",
@@ -2803,17 +2791,22 @@
       "domain": "Bridges",
       "name": "shift_map_add",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "0faef071",
+      "domain": "Applications",
+      "name": "and",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "0faef071",
+      "domain": "Applications",
+      "name": "is",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-10T23:50:32",
+  "last_updated": "2026-07-10T23:50:39",
   "open_questions": [
-    {
-      "context": "## Sorry inventory (genuinely hard sub-steps, all non-circular); proved *without* reference to any sunflower bound.  (Hard; left as `sorry`.) -/; sorry",
-      "cycle_id": "e50512ae",
-      "domain": "Applications",
-      "sorry_count": 7,
-      "timestamp": "2026-07-06T09:42:26"
-    },
     {
       "context": "the still-open Aharoni–Korman conjecture and is left as `sorry`.; sorry -- FALSE: refuted by `obstruction_direction_false`; is the genuinely open content (a form of the Aharoni–Korman conjecture), lef",
       "cycle_id": "2058237b",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 4,
       "timestamp": "2026-07-10T21:41:40"
+    },
+    {
+      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "0faef071",
+      "domain": "Applications",
+      "sorry_count": 4,
+      "timestamp": "2026-07-10T23:50:39"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "9b14e09c",
-        "quality": 0.82,
-        "theorems": 32,
-        "title": "Deepening: The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
-      },
-      {
         "cycle_id": "81ffd6ce",
         "quality": 0.6,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 16,
         "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
+      },
+      {
+        "cycle_id": "0faef071",
+        "quality": 0.82,
+        "theorems": 16,
+        "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
       }
     ],
     "Bridges": [
