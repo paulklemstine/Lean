@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8b7f43f1",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — good-manifold counts and the exponential tier\n\nThese conjectures grow out of the finding that the good-manifold count of an\n`n`-nice polytope has a finite exceptional head follow",
-      "quality_score": 0.7303200000000001,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-02T08:56:33",
-      "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
-    },
-    {
-      "cycle_id": "4055f798",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Combinatorics of the Universal Library\n\nThe universal library — the space of *all* strings of a fixed length over a\nfixed alphabet — is finite yet astronomically large. Our cycle",
-      "quality_score": 0.7906799999999999,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-02T09:02:20",
-      "title": "The Library of Babel: Combinatorics of the Universal Library"
-    },
-    {
       "cycle_id": "4b429121",
       "domain": "Probability",
       "key_insight": "# Future Directions — Zero-Knowledge Certification of Proofs\n\nThis cycle established three probabilistic pillars of a zero-knowledge\nproof-checking protocol: (i) independent repetition multiplies a pr",
@@ -499,29 +479,29 @@
       "theorem_count": 14,
       "timestamp": "2026-07-10T05:00:51",
       "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
+    },
+    {
+      "cycle_id": "dd8b10c1",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: the arithmetic backbone of decorated-surface moduli\n\nThis cycle isolated the exact integer identity behind the dimension of the moduli of genus-`g`\nsurfaces with `n` marked featur",
+      "quality_score": 0.72,
+      "sorry_count": 6,
+      "theorem_count": 54,
+      "timestamp": "2026-07-10T05:18:18",
+      "title": "The Fundamental Theorem of Cakes: Algebraic Geometry of Baking"
+    },
+    {
+      "cycle_id": "4d30d98b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Number Theory on Networks via the Ihara Zeta Function\n\nThis cycle proved the arithmetic core of the Ihara–Ramanujan correspondence: a\nsingle spectral local factor `q u² − λ u + 1`",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-10T05:18:26",
+      "title": "The Zeta Function of a Graph: Number Theory on Networks"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d379c591",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — Chromatic Polynomial Theory\n\nThis cycle established the counting form of the chromatic polynomial `P(G, q)` (the number\nof proper `q`-colorings of a finite simple graph), its clo",
-      "quality_score": 0.64372,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-06-29T16:26:24",
-      "title": "Graph Coloring: Chromatic Polynomial Theory"
-    },
-    {
-      "cycle_id": "e94880cd",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions: Pairings, BLS Signatures, and Aggregation\n\nThis cycle established the algebraic security spine of pairing-based signatures:\nbilinearity and completeness (the BLS verification equa",
-      "quality_score": 0.65224,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-06-29T16:49:02",
-      "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
-    },
     {
       "cycle_id": "3ec587ed",
       "domain": "Applications",
@@ -2501,27 +2481,29 @@
       "theorem_count": 14,
       "timestamp": "2026-07-10T05:00:51",
       "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
+    },
+    {
+      "cycle_id": "dd8b10c1",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: the arithmetic backbone of decorated-surface moduli\n\nThis cycle isolated the exact integer identity behind the dimension of the moduli of genus-`g`\nsurfaces with `n` marked featur",
+      "quality_score": 0.72,
+      "sorry_count": 6,
+      "theorem_count": 54,
+      "timestamp": "2026-07-10T05:18:18",
+      "title": "The Fundamental Theorem of Cakes: Algebraic Geometry of Baking"
+    },
+    {
+      "cycle_id": "4d30d98b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Number Theory on Networks via the Ihara Zeta Function\n\nThis cycle proved the arithmetic core of the Ihara–Ramanujan correspondence: a\nsingle spectral local factor `q u² − λ u + 1`",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-10T05:18:26",
+      "title": "The Zeta Function of a Graph: Number Theory on Networks"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0c573935",
-      "domain": "Bridges",
-      "name": "finiteSurreals_isClosed",
-      "quality": 0.7426819999999998
-    },
-    {
-      "cycle_id": "492f9d48",
-      "domain": "Algebra",
-      "name": "sech2_pos",
-      "quality": 0.8151999999999999
-    },
-    {
-      "cycle_id": "492f9d48",
-      "domain": "Algebra",
-      "name": "gE_pos",
-      "quality": 0.8151999999999999
-    },
     {
       "cycle_id": "492f9d48",
       "domain": "Algebra",
@@ -2803,17 +2785,28 @@
       "domain": "Applications",
       "name": "exists_source",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "4d30d98b",
+      "domain": "Novelty",
+      "name": "already",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "4d30d98b",
+      "domain": "Novelty",
+      "name": "collapses",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "4d30d98b",
+      "domain": "Novelty",
+      "name": "exhibits",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-10T05:00:51",
+  "last_updated": "2026-07-10T05:18:26",
   "open_questions": [
-    {
-      "context": "+    -- current Mathlib, so the step is left as the single documented `sorry`.; sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
-      "cycle_id": "8875d434",
-      "domain": "Computation",
-      "sorry_count": 5,
-      "timestamp": "2026-07-01T15:19:18"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "7469cf90",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 4,
       "timestamp": "2026-07-10T05:00:51"
+    },
+    {
+      "context": "+Everything in this file is complete and `sorry`-free.; +range as a self-contained, `sorry`-free statement.  It isolates exactly the part; -    sorry",
+      "cycle_id": "dd8b10c1",
+      "domain": "Applications",
+      "sorry_count": 6,
+      "timestamp": "2026-07-10T05:18:18"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "4bc47ce8",
-        "quality": 0.69479,
-        "theorems": 6,
-        "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
-      },
-      {
         "cycle_id": "bb909d34",
         "quality": 0.8344800000000001,
         "theorems": 10,
@@ -3141,6 +3135,12 @@
         "quality": 0.78,
         "theorems": 14,
         "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
+      },
+      {
+        "cycle_id": "dd8b10c1",
+        "quality": 0.72,
+        "theorems": 54,
+        "title": "The Fundamental Theorem of Cakes: Algebraic Geometry of Baking"
       }
     ],
     "Bridges": [
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "24d6d8b7",
-        "quality": 0.511,
-        "theorems": 7,
-        "title": "Discrete homotopy groups of quasisymmetric cubical sets"
-      },
-      {
         "cycle_id": "7e56c098",
         "quality": 0.30634774285714284,
         "theorems": 3,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 46,
         "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
+      },
+      {
+        "cycle_id": "4d30d98b",
+        "quality": 0.83,
+        "theorems": 9,
+        "title": "The Zeta Function of a Graph: Number Theory on Networks"
       }
     ],
     "NumberTheory": [

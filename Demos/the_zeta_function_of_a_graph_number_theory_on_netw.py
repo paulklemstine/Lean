@@ -1,290 +1,239 @@
-#!/usr/bin/env python3
 """
-Demo: The Ihara Zeta Function and the Graph Riemann Hypothesis
+Numerical demonstrations for:
 
-Demonstrates the connection between Ramanujan graphs, the Ihara zeta function,
-and the graph-theoretic analog of the Riemann Hypothesis.
+    The Riemann Hypothesis for the Ihara Zeta Function of a Regular Graph
+
+Core mathematical facts illustrated here:
+
+  * For a (q+1)-regular graph with adjacency eigenvalue lambda, the local factor
+        p_lambda(u) = q*u^2 - lambda*u + 1
+    has all complex roots on the circle |u| = 1/sqrt(q) if and only if
+        |lambda| <= 2*sqrt(q)      (the Ramanujan bound).
+
+  * Summed over the nontrivial spectrum this is exactly:
+        zeta_G satisfies the Riemann Hypothesis  <=>  G is a Ramanujan graph.
+
+  * The trivial eigenvalue lambda = q+1 factors as (q*u - 1)(u - 1), whose roots
+    1 and 1/q lie OFF the critical circle -- hence RH is imposed only on the
+    nontrivial spectrum.
+
+The script is fully self-contained (standard library only) and uses complex
+arithmetic implemented by hand to avoid external dependencies.
 """
 
-import numpy as np
-from algorithms import (
-    complete_graph_adj, petersen_graph_adj, cycle_graph_adj, paley_graph_adj,
-    check_ramanujan, prime_cycle_count, spectral_gap, graph_rh_test,
-    ihara_determinant, ihara_zeta_poles,
-)
+from __future__ import annotations
+
+import cmath
+import math
+from typing import List, Tuple
 
 
-def separator(title: str):
-    print(f"\n{'='*60}")
-    print(f"  {title}")
-    print(f"{'='*60}\n")
+# ---------------------------------------------------------------------------
+# Local factor and its roots
+# ---------------------------------------------------------------------------
+def local_factor(q: float, lam: float, u: complex) -> complex:
+    """Evaluate the Ihara local factor p_lambda(u) = q*u^2 - lambda*u + 1."""
+    return q * u * u - lam * u + 1.0
 
 
-def demo_ramanujan_check():
-    """Check the Ramanujan property for several graph families."""
-    separator("1. Ramanujan Property Check")
+def local_factor_roots(q: float, lam: float) -> Tuple[complex, complex]:
+    """Return the two complex roots of q*u^2 - lambda*u + 1 via the quadratic
+    formula (using complex square roots so it is valid for any discriminant)."""
+    disc = complex(lam * lam - 4.0 * q)
+    sqrt_disc = cmath.sqrt(disc)
+    r_plus = (lam + sqrt_disc) / (2.0 * q)
+    r_minus = (lam - sqrt_disc) / (2.0 * q)
+    return r_plus, r_minus
 
-    # Complete graph K_n is (n-1)-regular, q = n-2
-    for n in [4, 5, 6, 7]:
-        A = complete_graph_adj(n)
-        q = n - 2
-        is_ram, max_nt, evs = check_ramanujan(A, q)
-        bound = 2 * np.sqrt(q)
-        print(f"K_{n}: (q+1)={q+1}-regular, 2√q={bound:.3f}, "
-              f"max |λ_nt|={max_nt:.3f}, Ramanujan={is_ram}")
 
+def on_critical_circle(q: float, u: complex, tol: float = 1e-9) -> bool:
+    """Test whether |u| = 1/sqrt(q) up to tolerance."""
+    return abs(abs(u) - 1.0 / math.sqrt(q)) < tol
+
+
+def satisfies_ramanujan(q: float, lam: float) -> bool:
+    """Ramanujan spectral bound |lambda| <= 2*sqrt(q)."""
+    return abs(lam) <= 2.0 * math.sqrt(q) + 1e-12
+
+
+# ---------------------------------------------------------------------------
+# Demo 1: the local equivalence, eigenvalue by eigenvalue
+# ---------------------------------------------------------------------------
+def demo_local_equivalence() -> None:
+    print("=" * 70)
+    print("DEMO 1: roots on the circle  <=>  Ramanujan bound (local factor)")
+    print("=" * 70)
+    q = 4.0
+    crit = 1.0 / math.sqrt(q)
+    print(f"q = {q},  critical radius 1/sqrt(q) = {crit:.6f},  "
+          f"Ramanujan bound 2*sqrt(q) = {2*math.sqrt(q):.6f}\n")
+    for lam in [0.0, 2.0, 4.0 - 1e-9, 4.0, 4.5, 5.0]:
+        r1, r2 = local_factor_roots(q, lam)
+        ok1, ok2 = on_critical_circle(q, r1), on_critical_circle(q, r2)
+        both_on = ok1 and ok2
+        ram = satisfies_ramanujan(q, lam)
+        status = "MATCH" if both_on == ram else "*** MISMATCH ***"
+        print(f"lambda = {lam:6.3f} | roots |u| = ({abs(r1):.5f}, {abs(r2):.5f}) "
+              f"| on-circle={str(both_on):5} | Ramanujan={str(ram):5} | {status}")
     print()
 
-    # Petersen graph: 3-regular, q=2
-    A = petersen_graph_adj()
-    is_ram, max_nt, evs = check_ramanujan(A, 2)
-    print(f"Petersen: 3-regular, 2√2={2*np.sqrt(2):.3f}, "
-          f"max |λ_nt|={max_nt:.3f}, Ramanujan={is_ram}")
 
-    print()
-
-    # Paley graphs
-    primes_1mod4 = [5, 13, 17, 29, 37, 41, 53, 61, 73, 89]
-    print("Paley graphs (known Ramanujan):")
-    for p in primes_1mod4:
-        A = paley_graph_adj(p)
-        q = (p - 1) // 2 - 1
-        is_ram, max_nt, evs = check_ramanujan(A, q)
-        bound = 2 * np.sqrt(q)
-        print(f"  Paley({p}): {(p-1)//2}-regular, q={q}, 2√q={bound:.3f}, "
-              f"max |λ_nt|={max_nt:.3f}, Ramanujan={is_ram}")
+# ---------------------------------------------------------------------------
+# Demo 2: the trivial eigenvalue lambda = q+1
+# ---------------------------------------------------------------------------
+def demo_trivial_eigenvalue() -> None:
+    print("=" * 70)
+    print("DEMO 2: the trivial eigenvalue lambda = q+1 escapes the circle")
+    print("=" * 70)
+    for q in [2.0, 3.0, 4.0, 9.0]:
+        lam = q + 1.0
+        r1, r2 = local_factor_roots(q, lam)
+        crit = 1.0 / math.sqrt(q)
+        print(f"q = {q:4.1f} | lambda = q+1 = {lam:4.1f} | roots = "
+              f"({r1.real:.4f}, {r2.real:.4f}) | expected (1/q, 1) = "
+              f"({1/q:.4f}, {1.0:.4f}) | critical 1/sqrt(q) = {crit:.4f}")
+    print("Roots are always 1 and 1/q -- off the circle for q > 1.\n")
 
 
-def demo_graph_rh():
-    """Test the Graph Riemann Hypothesis on specific graphs."""
-    separator("2. Graph Riemann Hypothesis")
-
-    graphs = [
-        ("Petersen", petersen_graph_adj(), 2),
-        ("K_6", complete_graph_adj(6), 4),
-        ("Paley(13)", paley_graph_adj(13), 5),
-        ("Paley(29)", paley_graph_adj(29), 13),
-    ]
-
-    for name, A, q in graphs:
-        passes, desc = graph_rh_test(A, q)
-        print(f"--- {name} ---")
-        print(desc)
-        print()
-
-
-def demo_prime_cycles():
-    """Compare prime cycle distribution to prime numbers."""
-    separator("3. Prime Cycle Distribution")
-
-    # Petersen graph
-    A = petersen_graph_adj()
-    P = prime_cycle_count(A, 12)
-    print("Petersen graph prime cycle counts P(k):")
-    for k in range(1, 13):
-        print(f"  k={k:2d}: P(k) = {P[k]:.1f}")
-
-    print()
-
-    # Paley(13) graph
-    A = paley_graph_adj(13)
-    P = prime_cycle_count(A, 10)
-    print("Paley(13) prime cycle counts P(k):")
-    for k in range(1, 11):
-        print(f"  k={k:2d}: P(k) = {P[k]:.1f}")
+# ---------------------------------------------------------------------------
+# Adjacency-matrix eigenvalues (symmetric Jacobi eigen-solver, no numpy)
+# ---------------------------------------------------------------------------
+def symmetric_eigenvalues(mat: List[List[float]], iters: int = 100) -> List[float]:
+    """Jacobi rotation eigenvalue solver for a real symmetric matrix."""
+    n = len(mat)
+    a = [row[:] for row in mat]
+    for _ in range(iters):
+        # find largest off-diagonal magnitude
+        p, qi, best = 0, 1, 0.0
+        for i in range(n):
+            for j in range(i + 1, n):
+                if abs(a[i][j]) > best:
+                    best, p, qi = abs(a[i][j]), i, j
+        if best < 1e-12:
+            break
+        app, aqq, apq = a[p][p], a[qi][qi], a[p][qi]
+        theta = 0.5 * math.atan2(2.0 * apq, aqq - app) if aqq != app else math.pi / 4
+        c, s = math.cos(theta), math.sin(theta)
+        for k in range(n):
+            akp, akq = a[k][p], a[k][qi]
+            a[k][p] = c * akp - s * akq
+            a[k][qi] = s * akp + c * akq
+        for k in range(n):
+            akp, akq = a[p][k], a[qi][k]
+            a[p][k] = c * akp - s * akq
+            a[qi][k] = s * akp + c * akq
+    return sorted((a[i][i] for i in range(n)), reverse=True)
 
 
-def demo_ihara_determinant():
-    """Compute the Ihara determinant for varying u."""
-    separator("4. Ihara Determinant Values")
-
-    A = petersen_graph_adj()
-    q = 2
-    print("Petersen graph: det(I - uA + u²I) for various u:")
-    for u in [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7]:
-        d = ihara_determinant(A, q, u)
-        print(f"  u={u:.1f}: det = {d:.6f}")
-
-
-def demo_spectral_gaps():
-    """Compare spectral gaps across graph families."""
-    separator("5. Spectral Gaps")
-
-    print("Graph             | q  | Gap       | (√q-1)²  | Ratio")
-    print("-" * 60)
-
-    graphs = [
-        ("K_4", complete_graph_adj(4), 2),
-        ("K_6", complete_graph_adj(6), 4),
-        ("Petersen", petersen_graph_adj(), 2),
-        ("Paley(5)", paley_graph_adj(5), 1),
-        ("Paley(13)", paley_graph_adj(13), 5),
-        ("Paley(17)", paley_graph_adj(17), 7),
-        ("Paley(29)", paley_graph_adj(29), 13),
-    ]
-
-    for name, A, q in graphs:
-        gap = spectral_gap(A, q)
-        opt = (np.sqrt(q) - 1) ** 2
-        ratio = gap / opt if opt > 0 else float('inf')
-        print(f"  {name:15s} | {q:2d} | {gap:9.4f} | {opt:8.4f} | {ratio:.4f}")
+def paley_graph(p: int) -> List[List[float]]:
+    """Adjacency matrix of the Paley graph on p vertices (p prime, p = 1 mod 4).
+    Vertices i~j iff (i-j) is a nonzero quadratic residue mod p. This is a
+    ((p-1)/2)-regular Ramanujan graph."""
+    squares = {(x * x) % p for x in range(1, p)}
+    mat = [[0.0] * p for _ in range(p)]
+    for i in range(p):
+        for j in range(p):
+            if i != j and (i - j) % p in squares:
+                mat[i][j] = 1.0
+    return mat
 
 
-def demo_zeta_poles():
-    """Visualize pole locations of the Ihara zeta function."""
-    separator("6. Zeta Function Poles")
+def cycle_graph(n: int) -> List[List[float]]:
+    """Adjacency matrix of the n-cycle C_n, a 2-regular graph (q = 1)."""
+    mat = [[0.0] * n for _ in range(n)]
+    for i in range(n):
+        mat[i][(i + 1) % n] = 1.0
+        mat[(i + 1) % n][i] = 1.0
+    return mat
 
-    A = petersen_graph_adj()
-    q = 2
-    poles = ihara_zeta_poles(A, q)
 
-    print("Petersen graph Ihara zeta poles:")
-    print(f"  Critical circle radius: 1/√q = 1/√2 = {1/np.sqrt(2):.4f}")
-    print(f"  Number of poles: {len(poles)}")
+# ---------------------------------------------------------------------------
+# Demo 3: certified spectral RH test on real graphs
+# ---------------------------------------------------------------------------
+def rh_test(mat: List[List[float]], name: str) -> None:
+    eigs = symmetric_eigenvalues(mat)
+    degree = int(round(max(eigs)))          # top eigenvalue = q+1 for regular graph
+    q = degree - 1
+    trivial = eigs[0]
+    nontrivial = eigs[1:]
+    bound = 2.0 * math.sqrt(q) if q > 0 else 0.0
+    max_nontrivial = max(abs(l) for l in nontrivial)
+    is_ram = max_nontrivial <= bound + 1e-6
+    print(f"{name}")
+    print(f"  vertices = {len(mat)}, degree q+1 = {degree}  (q = {q})")
+    print(f"  trivial eigenvalue = {trivial:.4f}  (= q+1 = {q+1})")
+    print(f"  Ramanujan bound 2*sqrt(q) = {bound:.4f}")
+    print(f"  max |nontrivial eigenvalue| = {max_nontrivial:.4f}")
+    print(f"  => Ramanujan / RH for zeta_G: {is_ram}\n")
 
-    # Check how many lie on the critical circle
-    crit_radius = 1 / np.sqrt(q)
-    on_circle = sum(1 for p in poles if abs(abs(p) - crit_radius) < 1e-10)
-    print(f"  Poles on critical circle: {on_circle}")
-    print(f"  (Graph RH: all non-trivial poles should be on |u|=1/√q)")
 
-    print("\n  Pole locations (showing |u|):")
-    for i, p in enumerate(sorted(poles, key=lambda x: abs(x))):
-        print(f"    pole {i+1}: |u| = {abs(p):.6f}  "
-              f"{'← on critical circle' if abs(abs(p) - crit_radius) < 1e-10 else ''}")
+def demo_real_graphs() -> None:
+    print("=" * 70)
+    print("DEMO 3: certified spectral RH test on explicit graphs")
+    print("=" * 70)
+    rh_test(paley_graph(5), "Paley graph P(5)")
+    rh_test(paley_graph(13), "Paley graph P(13)")
+    rh_test(paley_graph(17), "Paley graph P(17)")
+    rh_test(cycle_graph(6), "Cycle graph C_6 (q = 1)")
+
+
+# ---------------------------------------------------------------------------
+# Demo 4: prime-cycle counting vs the q^m/m heuristic
+# ---------------------------------------------------------------------------
+def prime_cycle_counts(mat: List[List[float]], max_len: int) -> List[int]:
+    """Count prime (primitive, non-backtracking, closed) cycles by length using
+    the non-backtracking (Hashimoto) edge matrix B: trace(B^m) counts closed
+    non-backtracking walks of length m; Mobius inversion extracts primitives."""
+    # build directed edges
+    edges = [(i, j) for i in range(len(mat)) for j in range(len(mat)) if mat[i][j]]
+    m = len(edges)
+    B = [[0] * m for _ in range(m)]
+    for a, (i, j) in enumerate(edges):
+        for b, (k, l) in enumerate(edges):
+            if j == k and l != i:      # follow edge, no backtrack
+                B[a][b] = 1
+
+    def matmul(X, Y):
+        return [[sum(X[r][t] * Y[t][c] for t in range(m)) for c in range(m)]
+                for r in range(m)]
+
+    power = [[1 if r == c else 0 for c in range(m)] for r in range(m)]
+    Nm = []  # number of closed non-backtracking walks of length k, k=1..max_len
+    for _ in range(max_len):
+        power = matmul(power, B)
+        Nm.append(sum(power[i][i] for i in range(m)))
+
+    # primitive counts via Mobius: sum_{d | k} d * Prim(d) = N_k  (each primitive
+    # of length d contributes d closed walks of length k when d | k as its powers)
+    prim = [0] * (max_len + 1)
+    for k in range(1, max_len + 1):
+        total = Nm[k - 1]
+        for d in range(1, k):
+            if k % d == 0:
+                total -= d * prim[d]
+        prim[k] = total // k
+    return prim[1:]
+
+
+def demo_prime_cycle_theorem() -> None:
+    print("=" * 70)
+    print("DEMO 4: prime-cycle counts vs the q^m/m heuristic (Ramanujan graph)")
+    print("=" * 70)
+    mat = paley_graph(13)          # 6-regular, q = 5
+    q = 5
+    max_len = 6
+    prim = prime_cycle_counts(mat, max_len)
+    print(f"Paley graph P(13): q = {q}\n")
+    print(f"{'m':>3} | {'#prime cycles len m':>20} | {'q^m/m heuristic':>18}")
+    for m_len in range(1, max_len + 1):
+        heur = q ** m_len / m_len
+        print(f"{m_len:>3} | {prim[m_len-1]:>20} | {heur:>18.1f}")
+    print("\nCounts grow at the exponential rate q^m predicted by the "
+          "prime-cycle theorem.\n")
 
 
 if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║  The Ihara Zeta Function: Number Theory on Networks     ║")
-    print("║  Connecting Graph Spectra to the Riemann Hypothesis     ║")
-    print("╚══════════════════════════════════════════════════════════╝")
-
-    demo_ramanujan_check()
-    demo_graph_rh()
-    demo_prime_cycles()
-    demo_ihara_determinant()
-    demo_spectral_gaps()
-    demo_zeta_poles()
-
-    separator("Summary")
-    print("Key findings:")
-    print("• Complete graphs K_n are always Ramanujan (trivially)")
-    print("• Paley graphs satisfy the Graph Riemann Hypothesis")
-    print("• The spectral gap of Ramanujan graphs is ≥ (√q - 1)²")
-    print("• Prime cycles in Ramanujan graphs distribute like primes in ℤ")
-    print("• The Ihara zeta function poles lie on the critical circle |u| = 1/√q")
-
-
-#!/usr/bin/env python3
-"""Visualization: Ihara Zeta Function Poles and the Critical Circle."""
-
-import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-
-
-def paley_graph_adj(p):
-    qr = set()
-    for x in range(1, p):
-        qr.add((x * x) % p)
-    A = np.zeros((p, p))
-    for i in range(p):
-        for j in range(p):
-            if i != j and ((j - i) % p) in qr:
-                A[i, j] = 1.0
-    return A
-
-
-def petersen_graph_adj():
-    edges = [
-        (0,1),(1,2),(2,3),(3,4),(4,0),
-        (5,7),(7,9),(9,6),(6,8),(8,5),
-        (0,5),(1,6),(2,7),(3,8),(4,9),
-    ]
-    A = np.zeros((10, 10))
-    for i, j in edges:
-        A[i, j] = 1.0
-        A[j, i] = 1.0
-    return A
-
-
-def ihara_zeta_poles(A, q):
-    eigenvalues = np.linalg.eigvalsh(A)
-    poles = []
-    for lam in eigenvalues:
-        disc = lam**2 - 4 * (q - 1)
-        if q <= 1:
-            continue
-        if disc >= 0:
-            u1 = (lam + np.sqrt(disc)) / (2 * (q - 1))
-            u2 = (lam - np.sqrt(disc)) / (2 * (q - 1))
-        else:
-            u1 = (lam + 1j * np.sqrt(-disc)) / (2 * (q - 1))
-            u2 = (lam - 1j * np.sqrt(-disc)) / (2 * (q - 1))
-        poles.extend([u1, u2])
-    return np.array(poles)
-
-
-fig, axes = plt.subplots(1, 3, figsize=(18, 6))
-
-# 1. Petersen graph poles
-A = petersen_graph_adj()
-q = 2
-poles = ihara_zeta_poles(A, q)
-crit_r = 1 / np.sqrt(q)
-
-ax = axes[0]
-theta = np.linspace(0, 2*np.pi, 100)
-ax.plot(crit_r * np.cos(theta), crit_r * np.sin(theta), 'r--', alpha=0.7, label=f'|u|=1/√{q}')
-ax.plot(np.cos(theta), np.sin(theta), 'b--', alpha=0.3, label='|u|=1')
-ax.scatter(np.real(poles), np.imag(poles), c='darkblue', s=50, zorder=5)
-ax.set_title('Petersen Graph (3-regular)\nIhara Zeta Poles', fontsize=12)
-ax.set_xlabel('Re(u)')
-ax.set_ylabel('Im(u)')
-ax.set_aspect('equal')
-ax.legend(fontsize=9)
-ax.grid(True, alpha=0.3)
-
-# 2. Paley(13) poles
-A = paley_graph_adj(13)
-q = 5
-poles = ihara_zeta_poles(A, q)
-crit_r = 1 / np.sqrt(q)
-
-ax = axes[1]
-ax.plot(crit_r * np.cos(theta), crit_r * np.sin(theta), 'r--', alpha=0.7, label=f'|u|=1/√{q}')
-ax.plot(np.cos(theta), np.sin(theta), 'b--', alpha=0.3, label='|u|=1')
-ax.scatter(np.real(poles), np.imag(poles), c='darkgreen', s=30, zorder=5)
-ax.set_title('Paley(13) Graph (6-regular)\nIhara Zeta Poles', fontsize=12)
-ax.set_xlabel('Re(u)')
-ax.set_ylabel('Im(u)')
-ax.set_aspect('equal')
-ax.legend(fontsize=9)
-ax.grid(True, alpha=0.3)
-
-# 3. Eigenvalue distribution comparison
-A_pet = petersen_graph_adj()
-A_pal = paley_graph_adj(13)
-evs_pet = np.linalg.eigvalsh(A_pet)
-evs_pal = np.linalg.eigvalsh(A_pal)
-
-ax = axes[2]
-ax.hist(evs_pet, bins=15, alpha=0.6, color='blue', label='Petersen', density=True)
-ax.hist(evs_pal, bins=15, alpha=0.6, color='green', label='Paley(13)', density=True)
-# Kesten-McKay distribution for reference
-q_pet = 2
-x = np.linspace(-2*np.sqrt(q_pet), 2*np.sqrt(q_pet), 200)
-km = np.sqrt(4*q_pet - x**2) * (q_pet + 1) / (2 * np.pi * ((q_pet+1)**2 - x**2))
-km = np.where(np.isfinite(km) & (km > 0), km, 0)
-ax.plot(x, km, 'r-', linewidth=2, label='Kesten-McKay (q=2)')
-ax.set_title('Eigenvalue Distribution\nvs. Kesten-McKay Law', fontsize=12)
-ax.set_xlabel('Eigenvalue λ')
-ax.set_ylabel('Density')
-ax.legend(fontsize=9)
-ax.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('ihara_zeta_visualization.png', dpi=150, bbox_inches='tight')
-print("Saved: ihara_zeta_visualization.png")
+    demo_local_equivalence()
+    demo_trivial_eigenvalue()
+    demo_real_graphs()
+    demo_prime_cycle_theorem()
