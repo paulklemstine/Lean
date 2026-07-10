@@ -1,83 +1,166 @@
-# The Emotional Geometry of Friendship
+# Graph Coloring with Emotions: Counting the Moods a Friendship Network Can Hold
 
-## Why Your Social Network Needs at Least Three Feelings
+Imagine a party. Everyone in the room has a mood — happy, sad, angry, afraid,
+disgusted, surprised — and there is one social rule: no two close friends are
+allowed to be in the *same* mood at the same time. Two friends both fuming?
+Awkward. Two friends both radiating joy? Redundant. The room feels most alive,
+this rule insists, when adjacent people carry contrasting feelings.
 
-Imagine mapping every friendship you have onto a giant web — you at the center, your friends radiating outward, their friendships linking them to each other. Now imagine you must assign each person in this web one of a small set of emotional states — happiness, sadness, anger, fear, disgust, surprise — with one rule: no two friends can share the same emotion.
+How many moods does the room *need* so that this rule can be satisfied at all?
+And once the room is large and tangled with friendships, how many *different
+ways* are there to hand out moods legally? These two innocent questions turn out
+to be old friends of mathematicians in disguise. They are questions about
+**graph coloring**, and they connect a whimsical thought experiment about human
+emotion to one of the most elegant objects in combinatorics: the **chromatic
+polynomial**.
 
-How many emotions do you actually need?
+## From a party to a graph
 
-This question, it turns out, sits at the intersection of graph theory, social psychology, and a branch of mathematics called chromatic theory. And the answer reveals something surprising about the structure of human relationships.
+Strip away the personalities and you are left with a **graph**: a collection of
+dots (people) and lines (friendships). A "mood assignment" that obeys the
+no-two-friends-alike rule is exactly what mathematicians call a **proper
+coloring** — a way of painting each dot with one of $k$ colors so that no line
+connects two dots of the same color. The moods are just colors with feelings.
 
-## The Pigeonhole Principle of Feelings
+The magic begins when you *count* the legal colorings. For a graph $G$ and a
+palette of $k$ colors, let $\chi_G(k)$ denote the number of proper $k$-colorings.
+A century ago George Birkhoff discovered something remarkable: this count is
+always a **polynomial** in $k$. Feed in the number of available moods, and a
+single fixed polynomial spits out the number of legal mood assignments. It is
+called the chromatic polynomial, and it encodes, in its coefficients and its
+roots, a surprising amount about the shape of the network.
 
-The mathematical framework is elegant. Represent each person as a dot (a "vertex") and draw a line (an "edge") between any two people who are friends. The minimum number of emotions — or colors, in mathematical language — needed so that no two connected friends share the same one is called the *chromatic number* of the network.
+For example, take a **triangle** — three people who are all mutual friends,
+$K_3$. With $k$ moods, the first person has $k$ choices, the second must differ
+($k-1$ choices), and the third must differ from both ($k-2$ choices). So
+$$\chi_{K_3}(k) = k(k-1)(k-2).$$
+Plug in $k = 2$ and you get $2 \cdot 1 \cdot 0 = 0$: with only two moods, a
+triangle of friends is *impossible* to satisfy. Plug in $k = 6$ and you get
+$6 \cdot 5 \cdot 4 = 120$ perfectly valid emotional configurations.
 
-For a group where everyone knows everyone else — a "clique" — the answer is simple and absolute: you need exactly as many emotions as there are people. If five colleagues all know each other, five distinct emotions are required. This is the pigeonhole principle applied to feelings: with fewer emotional categories than mutual friends, some pair of friends must collide.
+## The six basic emotions
 
-This result, while intuitive, has a rigorous proof rooted in combinatorics. If you try to assign only four emotions to five mutual friends, the pigeonhole principle guarantees that at least two friends get the same emotion. And since they're friends — connected by an edge — this violates the "no shared emotions" rule.
+Psychologists since Paul Ekman have argued that human faces broadcast six
+"basic" emotions the whole world recognizes: **happiness, sadness, anger, fear,
+disgust, surprise**. Six moods. So it is irresistible to ask: given a real
+social network, how many ways can you assign these six emotions to people so
+that no two friends feel the same? The answer is simply $\chi_G(6)$ — evaluate
+the network's chromatic polynomial at six.
 
-## The Odd Cycle Problem
+But there is a subtler and more interesting question hiding underneath. Not
+*how many* colorings, but *how few colors are enough*? This is the network's
+**chromatic number** $\chi(G)$: the smallest palette size for which at least one
+legal coloring exists. A triangle needs three; a single friendship needs two; a
+lonely person with no friends needs only one.
 
-But cliques are extreme. Most social networks have a more nuanced structure. Consider a circular chain of friendships: Alice is friends with Bob, Bob with Carol, Carol with Dave, and so on, until the last person is friends with Alice again, closing the loop.
+Here the emotion story adds a human twist. A palette of one emotion is no
+palette at all — it means everyone feels the same thing, which is not an
+emotional *life*, it is a mood. Even two emotions is a thin caricature: the
+world split into the happy and the sad. Genuine emotional texture, we argue,
+requires **at least three** categories. So we define the **emotional chromatic
+number** of a network:
 
-For even-length loops — say, four or six people — you can get away with just two emotions, alternating around the circle like a checkerboard. But something breaks when the loop has an odd number of people. Three friends in a triangle, five friends in a pentagon, seven in a heptagon — in each case, the alternating pattern fails.
+> $\chi_E(G)$ is the smallest number $k$ of emotions, **with $k \ge 3$**, such
+> that the network admits a legal assignment of $k$ emotions in which no two
+> friends share a feeling.
 
-Why? Start assigning: person 1 gets emotion A, person 2 gets B, person 3 gets A, and so on. When you reach the last person, they need to be different from both their neighbors. But with an odd number of people, the last person's neighbors have the same emotion, and the last person is trapped — whichever of the two emotions they choose, it matches one neighbor.
+In symbols, $\chi_E(G)$ is the least $k \ge 3$ with $\chi_G(k) > 0$. It is the
+ordinary chromatic number with a floor bolted on at three: enough colors to be
+legal, but never fewer than three, because emotional life is not binary.
 
-This is why odd cycles need three emotions. It's a fundamental result in graph theory, and it reveals a deep structural asymmetry between even and odd social configurations.
+## What the emotional chromatic number knows
 
-## The Three-Emotion Threshold
+This single number turns out to have a clean and satisfying theory. Three
+results anchor it.
 
-Here's where the mathematics takes a psychological turn. Psychologists have long argued that binary emotional classification — happy vs. sad, good vs. bad — is too simplistic to capture the human experience. Paul Ekman's influential theory identifies six basic emotions: happiness, sadness, anger, fear, disgust, and surprise.
+**Cliques: everyone different.** A *clique* is a group of $n$ people who are all
+mutual friends — the complete graph $K_n$. Since every pair is joined, every
+person must feel something different, so at least $n$ emotions are required, and
+$n$ clearly suffice. Applying the floor,
+$$\chi_E(K_n) = \max(n, 3).$$
+A pair of best friends ($K_2$) needs, emotionally speaking, *three* categories
+to breathe, even though two colors would technically separate them. A triangle,
+a foursome, a five-person clique: each needs exactly as many emotions as it has
+members.
 
-Inspired by this, we define the *emotional chromatic number* of a social network: the minimum number of emotions needed for a "consistent" assignment, with the constraint that at least three emotions must be available. This threshold of three isn't arbitrary — it reflects the psychological insight that meaningful emotional differentiation requires more than binary polarization.
+**Cycles: the ring always needs three.** A *cycle* $C_n$ is a ring of friends —
+person 1 befriends person 2 befriends person 3, all the way around back to
+person 1. Classical coloring theory says a cycle needs two colors when its
+length $n$ is **even** (just alternate) and three colors when $n$ is **odd**
+(the alternation collides when it wraps around). But emotionally, the floor
+erases this distinction:
+$$\chi_E(C_n) = 3 \quad \text{for every } n \ge 3.$$
+Every friendship ring, long or short, even or odd, needs exactly three
+emotions — no more, no less. The even rings *could* get by with two colors
+mathematically, but not emotionally.
 
-The key structural theorem is surprising in its simplicity: the emotional chromatic number equals either three (if the network's standard chromatic number is one, two, or three) or the standard chromatic number itself (if the network requires more than three colors). In mathematical notation, χ_E(G) = max(3, χ(G)).
+**The six-emotion window.** Real friendship networks are not cliques of a
+thousand people; they are sparse, locally clustered webs. If a network can be
+legally colored with six emotions at all — that is, if $\chi(G) \le 6$ — then
+its emotional chromatic number lands squarely in the window
+$$3 \le \chi_E(G) \le 6.$$
+The lower bound is the emotional floor; the upper bound is the six basic
+emotions. This is why Ekman's palette feels "big enough" for ordinary social
+life: the vast majority of human networks are colorable well within six colors,
+so six emotions comfortably cover them, while three is always the irreducible
+minimum.
 
-## What This Means for Real Networks
+## The myth of the two-emotion split
 
-The implications cascade through social science. Consider these scenarios:
+There is a piece of folklore worth puncturing. A network is **bipartite** when
+its people split cleanly into two camps with all friendships running *between*
+the camps and none inside — think of a dating app graph, or students versus
+teachers. Bipartite graphs are exactly the graphs colorable with two colors, and
+so the chromatic polynomial of any bipartite graph with at least one edge
+vanishes at... well, the folklore says "$k = 2$," implying two emotions never
+work for a split community.
 
-**The Book Club** (a cycle of friendships): Whether even or odd, the emotional chromatic number is 3. Even-length friendship cycles technically need only 2 colors, but our threshold pushes this to 3 — a mathematical echo of the psychological insight that two emotional categories are insufficient for genuine expression.
+The truth is the reverse. Bipartite graphs are precisely the ones for which two
+emotions *do* work: $\chi_G(2) = 2 > 0$ for a connected bipartite graph, because
+you can paint one camp happy and the other sad. The genuine root sits at
+$k = 1$: a single emotion fails the moment there is even one friendship, since
+that friendship demands a contrast. So the honest statement is that *every*
+network with at least one edge has $\chi_G(1) = 0$, and bipartite networks are
+the ones that *first succeed* at $k = 2$. Emotionally, though, we never let them
+stop there — the floor pushes them up to three, which is why a cleanly split
+community still, in the emotional sense, needs $\chi_E = 3$.
 
-**The Executive Team** (a clique): If six executives all know each other, the emotional chromatic number is 6 — matching Ekman's six basic emotions exactly. This means that in a fully connected group of six, each person needs their own unique emotional state for the assignment to be consistent. Add a seventh person, and even six basic emotions are not enough.
+## Why a polynomial for a party?
 
-**Sparse Social Networks**: Most real-world social networks are sparse — the average person has a few hundred connections, not thousands. For any network where the largest clique has six or fewer members, six emotions suffice. This is the "six emotions theorem": any network that is 6-colorable admits an assignment using Ekman's six basic emotions.
+It is worth pausing on how strange and lovely Birkhoff's discovery is. There is
+no obvious reason that the number of legal mood assignments should be a *smooth
+polynomial* in the number of moods. Counting problems are usually jagged. Yet
+the count $\chi_G(k)$ is governed by a single algebraic law, provable by a
+beautiful recursive principle called **deletion–contraction**: to count the
+colorings of a network, pick any friendship, count the colorings that ignore it,
+and subtract the colorings that would illegally merge its two endpoints. This
+recursion peels the graph apart edge by edge and reassembles the polynomial from
+the pieces. It is the engine behind every computation above, and it is why the
+whole subject hangs together.
 
-## The Clique as Emotional Bottleneck
+The polynomial's roots — the values of $k$ where the count drops to zero — mark
+the palette sizes that are *impossible*. The largest integer root, plus one, is
+essentially the chromatic number. So the roots of an abstract polynomial are
+telling you something concrete and human: how much emotional diversity a
+community structurally demands.
 
-One of the deepest results connects the local structure of a network to its global emotional requirements. If your social network contains a clique of size k — a group of k people who are all mutual friends — then you need at least k emotions for the entire network. The clique acts as an emotional bottleneck.
+## Emotional diversity as a measurement
 
-This has a concrete social interpretation: the most tightly connected group in your network determines the minimum emotional vocabulary for the whole network. A family dinner where all seven relatives know each other forces the entire extended social graph to use at least seven emotional categories.
+Step back and the picture is this. Every social network carries a hidden number,
+$\chi_E(G)$, that measures the *minimum emotional diversity* the network can
+tolerate without two friends echoing each other. Tightly knit cliques demand a
+lot — one distinct feeling per member. Sprawling sparse webs of ordinary
+friendships demand little — usually three, occasionally four or five, and almost
+never more than six. The chromatic polynomial refines this from a single number
+into a full spectrum: not just *how few* emotions are needed, but *how many
+ways* a given emotional palette can be legally deployed.
 
-## Counting Possibilities: The Chromatic Polynomial
-
-Beyond the minimum number of emotions, we can ask: *how many* valid emotion assignments exist? The chromatic polynomial χ_G(k) answers this — it counts the number of proper k-colorings of the network G.
-
-For a network of n mutual friends (a complete graph), the chromatic polynomial is the falling factorial: k × (k-1) × (k-2) × ... × (k-n+1). With 6 emotions and 4 mutual friends, there are 6 × 5 × 4 × 3 = 360 valid assignments.
-
-For a cycle of n friends, the polynomial is (k-1)^n + (-1)^n(k-1). Evaluating at k = 6 for a circular chain of 5 friends gives 5^5 - 5 = 3120 valid assignments. The sheer number of possibilities explodes as the network grows sparser — more room for emotional diversity.
-
-## The Emotional Diversity Gap
-
-We introduce a new quantity: the *emotional diversity gap*, defined as the difference between the number of available emotions and the minimum required (with the three-emotion floor). A network with emotional chromatic number 3 using 6 available emotions has a gap of 3 — substantial room for flexibility. A complete graph of 6 people using 6 emotions has a gap of 0 — every person's emotion is essentially determined.
-
-High diversity gaps suggest socially resilient networks: there are many valid ways to distribute emotional states, so the network can absorb changes (a friend changes their emotion) without creating conflicts. Low diversity gaps suggest rigidity — the emotional assignments are tightly constrained by the network structure.
-
-## Beyond Six
-
-What happens if we go beyond Ekman's six? Robert Plutchik's "wheel of emotions" identifies eight primary emotions. The circumplex model of affect uses a continuous space. As the number of available emotions grows, the chromatic polynomial grows rapidly, and every finite network eventually admits an abundance of valid assignments.
-
-The mathematical insight is that the transition point — where the number of valid assignments jumps from zero to a positive (often enormous) number — occurs precisely at the chromatic number. Below it, the network is emotionally rigid. Above it, emotional configurations proliferate exponentially.
-
-## The Mathematics of Social Harmony
-
-This work demonstrates that the chromatic polynomial is not merely a tool for counting colorings. It encodes the *emotional flexibility* of a social network — how much room exists for individuals to express distinct emotional states without conflicting with their friends.
-
-The results suggest a mathematical foundation for understanding emotional dynamics in groups: the structure of the friendship graph constrains the diversity of emotional expression, and the constraints become tighter as the network becomes more densely connected.
-
-In the mathematics of human connection, even our feelings follow the geometry of graphs.
-
----
-
-*This article explores research at the intersection of graph theory and social psychology, formalizing the concept of emotional chromatic numbers and their connection to the structure of social networks.*
+The claim is not, of course, that people literally obey a no-matching-moods
+rule. It is that the mathematics built to answer a playful question — *how many
+moods does a friendship network need?* — is exactly the mathematics of graph
+coloring, one of the deepest and most useful theories in discrete mathematics,
+with applications from scheduling exams to allocating radio frequencies to
+compiling computer programs. The emotions are a costume. Underneath, the
+chromatic polynomial is quietly measuring the combinatorial texture of human
+connection, and telling us that three is the floor, six is a generous ceiling,
+and the shape of your friendships decides where in between you land.
