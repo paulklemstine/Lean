@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3e52c27d",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Manifold-Constrained Dichotomy Counts\n\nThis cycle established that the number of linearly-separable labelings a\nclassifier family can realize on data drawn from a low-dimensional",
-      "quality_score": 0.7916800000000002,
-      "sorry_count": 4,
-      "theorem_count": 23,
-      "timestamp": "2026-07-02T18:55:06",
-      "title": "Manifold-Constrained Kruskal Rank Bounds on Dichotomy Counts"
-    },
-    {
       "cycle_id": "b714fdc8",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nBold, testable conjectures distilled from this cycle's work on the divisibility\n`5 ∣ a⁵ − a`, its decimal-digit sharpening `10 ∣ a⁵ − a`, and the exponent-class\ngeneralisation `5",
@@ -499,19 +489,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-10T05:35:58",
       "title": "The Uncertainty Principle Is a Fourier Thing: Position-Momentum Duality"
+    },
+    {
+      "cycle_id": "996ff4be",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: The Geometry and Universal Structure of Surprise\n\nThis cycle established two complementary pillars. First, *surprise* — the gap between\nthe most conservative and most divergent re",
+      "quality_score": 0.78,
+      "sorry_count": 3,
+      "theorem_count": 14,
+      "timestamp": "2026-07-10T07:17:30",
+      "title": "The Category Theory of Jokes: Universal Properties of Humor"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "47d1dc51",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Obstruction Comparisons over p-adic Function Fields\n\nThis cycle isolated the structural skeleton behind the claim that, for a smooth\nproper rationally connected variety over the f",
-      "quality_score": 0.5394642553191489,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-06-29T20:18:35",
-      "title": "Unramified Obstruction Equals Descent Obstruction for Rationally Connected Varieties over p-adic Fun"
-    },
     {
       "cycle_id": "0a73d6d7",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-10T05:35:58",
       "title": "The Uncertainty Principle Is a Fourier Thing: Position-Momentum Duality"
+    },
+    {
+      "cycle_id": "996ff4be",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: The Geometry and Universal Structure of Surprise\n\nThis cycle established two complementary pillars. First, *surprise* — the gap between\nthe most conservative and most divergent re",
+      "quality_score": 0.78,
+      "sorry_count": 3,
+      "theorem_count": 14,
+      "timestamp": "2026-07-10T07:17:30",
+      "title": "The Category Theory of Jokes: Universal Properties of Humor"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c38e66e4",
-      "domain": "NumberTheory",
-      "name": "matchCount_blockGraph",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "55f141e7",
-      "domain": "Applications",
-      "name": "toTuple_injective",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "55f141e7",
-      "domain": "Applications",
-      "name": "univ_countable",
-      "quality": 0.7
-    },
     {
       "cycle_id": "55f141e7",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Applications",
       "name": "eqOn_zero_of_vanishes_on_open",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "996ff4be",
+      "domain": "Applications",
+      "name": "here",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "996ff4be",
+      "domain": "Applications",
+      "name": "humor_nonneg",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "996ff4be",
+      "domain": "Applications",
+      "name": "humor_eq_zero_iff",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-10T05:35:58",
+  "last_updated": "2026-07-10T07:17:30",
   "open_questions": [
-    {
-      "context": "`Lemmens-Seidel-73`); here we prove the *reduction* to it with zero `sorry`s.; eigenvalue `−3`.  Both rank facts are formalised with zero `sorry`s, reducing; engines are captured here rigorously and w",
-      "cycle_id": "946cfca3",
-      "domain": "Applications",
-      "sorry_count": 8,
-      "timestamp": "2026-07-02T01:59:53"
-    },
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
       "cycle_id": "38047daa",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 4,
       "timestamp": "2026-07-10T05:35:47"
+    },
+    {
+      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
+      "cycle_id": "996ff4be",
+      "domain": "Applications",
+      "sorry_count": 3,
+      "timestamp": "2026-07-10T07:17:30"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "59aff0ea",
-        "quality": 0.8076800000000002,
-        "theorems": 12,
-        "title": "Sign Alternation in q-Hypergeometric Series via Oscillatory Asymptotics Near Roo"
-      },
-      {
         "cycle_id": "e50512ae",
         "quality": 0.74264,
         "theorems": 15,
@@ -3141,6 +3135,12 @@
         "quality": 0.72,
         "theorems": 20,
         "title": "The Uncertainty Principle Is a Fourier Thing: Position-Momentum Duality"
+      },
+      {
+        "cycle_id": "996ff4be",
+        "quality": 0.78,
+        "theorems": 14,
+        "title": "The Category Theory of Jokes: Universal Properties of Humor"
       }
     ],
     "Bridges": [

@@ -201,6 +201,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 996ff4be (Q=0.780), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Category theory studies objects and morphisms between them. A joke has a setup (an object) and a punchline (a morphism that subverts expectations). Define the category Joke where objects are setups and morphisms are punchlines. A joke J: S -> P is a morphism from setup S to punchline P that factors ",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_996ff4be_61f6f32e",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "996ff4be",
+    "status": "available",
+    "timestamp": "2026-07-10T07:17:30.409549+00:00",
+    "title": "Deepening: The Category Theory of Jokes: Universal Properties of Humor"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "In 2023, Smith et al. discovered 'the hat' \u2014 a single tile shape that tiles the plane but only aperiodically (no periodic tiling exists). This solved the aperiodic monotile problem. But deeper questions remain: How many distinct aperiodic monotiles exist? Conjecture: The set of aperiodic monotiles forms a 1-parameter family (the 'hat spectrum') parameterized by a continuous parameter t in [0,1] where t=0 gives the hat, t=1 gives the turtle (a known variant), and intermediate values give intermediate shapes. The key property: each shape in the hat spectrum tiles the plane aperiodically, and no two shapes in the spectrum admit a common periodic tiling. The boundary of the hat spectrum is the curve in R^2 that separates the region of aperiodic monotiles from the region of periodic tiles. This boundary is a piecewise-smooth curve determined by the constraint that the tile must enforce a hierarchical substitution rule. Test: parameterize the hat spectrum by interpolating between the hat and turtle, compute the substitution rule for each t, and verify that the substitution rule enforces aperiodicity for all t in [0,1]. Impact: aperiodic monotiles are not isolated curiosities \u2014 they form a continuous family, and the hat is just one point on the spectrum.",
     "domains": [
       "Novelty",
@@ -331,6 +345,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle 996ff4be (Q=0.780) proved 14 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Category theory studies objects and morphisms between them. A joke has a setup (an object) and a punchline (a morphism that subverts expectations). Define the category Joke where objects are setups an",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_996ff4be_9807c88d",
+    "priority_score": 0.8300000000000001,
+    "research_mode": "team",
+    "source_exp_id": "996ff4be",
+    "status": "available",
+    "timestamp": "2026-07-10T07:17:30.485687+00:00",
+    "title": "Close Proofs: The Category Theory of Jokes: Universal Properties of Humor"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The primes have density 0 in the integers, but what is the Hausdorff dimension of the set of primes viewed as a subset of R? Define the 'prime fractal' P as the set of primes with the metric d(p,q) = |1/log(p) - 1/log(q)|. This metric stretches out the primes so that the twin primes are close together and the large primes are spread out. Conjecture: The Hausdorff dimension dim_H(P, d) = 1. The primes with this metric are essentially a 1-dimensional set \u2014 they fill out a line when viewed through the logarithmic lens. This is because the prime number theorem pi(x) ~ x/log(x) means that in the d-metric, the 'length' of the primes up to x is sum_{p <= x} d(p, p+1) ~ sum_{p <= x} 1/(p*log(p)) ~ log(log(x)), which diverges. So the primes are 'long enough' to be 1-dimensional. But the Hausdorff dimension might be > 1 if the primes have fractal structure at small scales. In fact, dim_H(P, d) > 1 would mean the primes are more than a line \u2014 they have 'wrinkles' that fill more space. The twin prime conjecture predicts that there are infinitely many pairs of primes at d-distance ~ 1/(p*log(p)), creating a fractal dust that increases the dimension. Conjecture: dim_H(P, d) = 1 + epsilon where epsilon depends on the density of twin primes. If the twin prime conjecture is true, epsilon > 0. Test: estimate dim_H(P, d) by box-counting for primes up to 10^12 and verify it is close to 1 (or slightly above). Impact: the primes are a fractal with dimension 1 + epsilon, where epsilon measures the abundance of twin primes. If twin primes are infinite, the primes are more than a line \u2014 they are a fractal curve.",
     "domains": [
       "Novelty",
@@ -343,6 +371,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-10T03:16:18.428249+00:00",
     "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Calderbank-Shor-Steane (CSS) quantum error-correcting codes are constructed from classical linear codes C_1, C_2 with C_2 perp subset C_1. The CSS code encodes dim(C_1) - dim(C_2) logical qubits. This is exactly the definition of a cohomology group: H^1(C_1, C_2) = C_1 / C_2. Conjecture: every CSS code is equivalent to a cohomology computation on a simplicial complex, and vice versa. Specifically, given a simplicial complex K, the CSS code with C_1 = Z_1(K, F_2) (1-cycles) and C_2 = B_1(K, F_2) (1-boundaries) encodes dim(H_1(K, F_2)) logical qubits with distance d = min(length of shortest non-trivial cycle, length of shortest non-trivial cocycle). This is the homological quantum error-correcting code HQECC(K). The distance d equals the systole of K (the length of the shortest non-contractible cycle). Conjecture: for the hypercube Q_n (n-dimensional cube graph), the HQECC encodes 1 qubit with distance d = 2^{n/2} (achieving the quantum Singleton bound). Test: construct HQECC for Q_4, Q_6, Q_8 and verify the parameters. Impact: quantum error correction is cohomology. Every simplicial complex gives a quantum code, and the code parameters are topological invariants.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0859",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T07:16:52.295060+00:00",
+    "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
   },
   {
     "consumed_by_exp_id": "",
@@ -5101,6 +5144,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conway's surreal numbers No form a proper class containing all real numbers, all ordinal numbers, and all infinitesimals. Every real number r has a surreal representation r = {r - 1 | r + 1}. Every ordinal alpha has a surreal representation alpha = {alpha |}. Every infinitesimal epsilon = {0 | 1, 1/2, 1/4, ...}. The surreal numbers form a field (in fact, a real-closed field). Conjecture: the subfield of surreals born by day omega (the set of surreals with finite birthdays) is isomorphic to the field of real algebraic numbers extended with all dyadic rationals. More precisely: No_{omega} = Q[2^{-n} : n in N] (the rationals extended with all dyadic rationals). The subfield born by day omega^2 contains all real numbers that are algebraic over the dyadic rationals, plus all infinitesimals that are algebraic over the reals. Conjecture: No_{omega^2} = R(x) where x is the smallest positive infinitesimal. Test: compute the field structure of surreals born by day omega and verify the isomorphism with the dyadic rationals. Impact: the surreal number hierarchy encodes the constructive hierarchy of real number fields \u2014 each birthday level adds exactly the algebraic closures needed.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0858",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T07:16:52.229414+00:00",
+    "title": "The Arithmetic of Games: Surreal Numbers as Number Fields"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prime gaps \u2014 the spaces between consecutive primes \u2014 are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable \u2014 given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random \u2014 they are a solvable crossword puzzle with deterministic rules.",
     "domains": [
       "Novelty",
@@ -5219,7 +5277,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formal"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e37aa20a",
     "description": "The logistic map f(x) = r*x*(1-x) for r = 4 exhibits chaotic dynamics: small changes in initial conditions lead to exponentially diverging trajectories (Lyapunov exponent lambda = log(2)). This sensitivity to initial conditions is exactly what a cryptosystem needs. Conjecture: The logistic map at r = 4 is a secure pseudorandom generator. Define the logistic cipher: key = (x_0, n) where x_0 in (0,1) is the seed and n is the number of iterations. The keystream is K = (f^n(x_0), f^{n+1}(x_0), ...) where f^n denotes the n-th iterate. The ciphertext is C = M XOR K where M is the plaintext. The security relies on two properties: (1) Sensitivity: a change of epsilon in x_0 leads to a change of O(1) in f^n(x_0) after n = O(log(1/epsilon)) iterations (exponential sensitivity). (2) Ergodicity: the distribution of f^n(x_0) converges to the invariant measure mu(x) = 1/(pi*sqrt(x*(1-x))) regardless of the initial condition. Conjecture: breaking the logistic cipher (recovering x_0 from K) is as hard as inverting the logistic map, which requires solving a degree-2^n polynomial (since f^n(x) is a polynomial of degree 2^n). This is exponential in n. Test: implement the logistic cipher, measure the period of the keystream (which should be at least 2^n for floating-point precision n), and verify that statistical tests (NIST SP 800-22) pass for n >= 64. Impact: chaos IS cryptography \u2014 the logistic map's sensitivity to initial conditions is the same property that makes encryption secure.",
     "domains": [
       "Novelty",
@@ -5229,9 +5287,24 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T05:17:50.875214+00:00",
     "title": "Cryptography from Chaos: Encrypting with the Logistic Map"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: The Geometry and Universal Structure of Surprise\n\nThis cycle established two complementary pillars. First, *surprise* \u2014 the gap between\nthe most conservative and most divergent resolution of a setup \u2014 is a genuine\ngeometric invariant equal to the diameter of the resolution configuration\n(nonnegative, vanishing exactly on constant setups, monotone under refinement, and\nattained). Second, when a *canonical* (terminal) resolution exists, it is unique in the\nstrongest possible sense: up to a unique, coherent isomorphism, and it is rigid. The\nfollowing conjectures push both pillars further.\n\n## 1. Surprise as a genuine metric diameter in higher dimensions\n\n**Conjecture.** For a finite configuration of resolutions embedded in a Euclidean space\nof any dimension, the natural surprise invariant equals the metric diameter of the\nconfiguration's convex hull, and it remains monotone under enrichment and subadditive\nunder overlays of setups.\n\n**The key insight is** that the one-dimensional identity \"surprise = range = greatest\npairwise distance\" is not special to the line: it is a shadow of the general fact that\nthe extreme spread of a compact configuration is realised on its boundary.\n\n**Why now?** The one-dimensional case is fully settled here with an attained diameter\ncharacterisation, giving an exact template \u2014 extremal witnesses plus a uniform bound \u2014\nthat generalises verbatim once \"endpoints\" are replaced by \"hull vertices.\"\n\n## 2. A vanishing dichotomy separating puns from absurdism\n\n**Conjecture.** The surprise invariant admits a sharp threshold: below it, every setup\nis equivalent (after normalisation) to a near-constant configuration; above it, setups\nnecessarily contain two resolutions in \"different categories\" that no refinement can\nreconcile.\n\n**The key insight is** that the zero-surprise characterisation is not merely a boundary\ncase but the base of a stratification: distance from the constant locus measures how\nfar a setup has escaped its expected resolution.\n\n**Why now?** We have proven the exact vanishing locus (surprise `0` iff all resolutions\ncoincide) and that surprise is monotone; a stratification by surprise value is the\nimmediate next quantitative refinement.\n\n## 3. Universal resolutions as limits of refinement chains\n\n**Conjecture.** Every setup whose resolutions form a directed refinement system admits a\nuniversal resolution, obtained as the colimit of the refinement chain, and this colimit\nis automatically rigid.\n\n**The key insight is** that terminality \u2014 proven here to force unique, coherent,\nrigidity-witnessing structure \u2014 is exactly the property a well-behaved colimit inherits,\nso existence of the canonical resolution reduces to directedness of refinements.\n\n**Why now?** The abstract uniqueness and rigidity of terminal resolutions are already in\nhand; the only missing ingredient for a general existence theorem is a construction, and\ndirected colimits supply the standard one.\n\n## 4. Sharp stability of surprise under perturbation\n\n**Status.** The basic stability estimate is now settled: perturbing every resolution of\na setup by at most `\u03b5` changes its surprise by at most `2\u03b5`. This confirms that surprise\nis a robust invariant \u2014 small changes in how each resolution is read cannot produce a\nlarge change in humor.\n\n**Conjecture (next step).** The factor `2` is optimal, and more is true: surprise is a\ncontraction under any reinterpretation that is itself a contraction of the resolution\naxis, and the estimate composes \u2014 a chain of `k` perturbations of sizes `\u03b5\u2081, \u2026, \u03b5_k`\nmoves surprise by at most `2(\u03b5\u2081 + \u22ef + \u03b5_k)`, with equality achieved on suitably\n\"stretched\" two-point setups.\n\n**The key insight is** that surprise is built from two extremal selectors, each of which\nmoves by at most the perturbation size, so their difference is controlled \u2014 and that the\nworst case is realised precisely when the two extremes are pushed apart in opposite\ndirections, which pins down the sharp constant.\n\n**Why now?** The extremal (`IsGreatest`/`IsLeast`) characterisations of the two canonical\nresolutions, together with the just-established `2\u03b5` stability bound, are exactly the\ningredients needed to identify the extremal configurations that make the constant sharp.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0860",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "996ff4be",
+    "status": "available",
+    "timestamp": "2026-07-10T07:17:24.557443+00:00",
+    "title": "Two complementary pillars. First, *surprise* \u2014 the gap be"
   },
   {
     "consumed_by_exp_id": "",
@@ -5334,20 +5407,5 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-10T01:13:32.642655+00:00",
     "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
-  },
-  {
-    "consumed_by_exp_id": "996ff4be",
-    "description": "Category theory studies objects and morphisms between them. A joke has a setup (an object) and a punchline (a morphism that subverts expectations). Define the category Joke where objects are setups and morphisms are punchlines. A joke J: S -> P is a morphism from setup S to punchline P that factors through an unexpected category. The humor of a joke is measured by its 'surprise': the distance between the expected punchline (the limit of the setup category) and the actual punchline. Conjecture: The funniest jokes are those where the setup category has a colimit that is far from the limit. Formally, if S is a setup with expected resolution lim(S) and the actual punchline P is a colimit colim(S'), then the humor H(J) = d(lim(S), colim(S')), where d is a metric on the category of punchlines. Puns have H close to 0 (the punchline is near the expected resolution). Absurdist humor has H large (the punchline is in a completely different category). The universal property of jokes: a joke J is universal if for any other joke J' with the same setup, there is a unique natural transformation J => J'. The funniest jokes are universal \u2014 they are the terminal objects in the category of jokes with a given setup. Test: formalize 100 jokes as category-theoretic objects and compute H(J) for each. Correlate with human funniness ratings. Impact: humor is a colimit. The funnier the joke, the further the punchline is from the expected limit of the setup.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0851",
-    "priority_score": 0.62,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T05:35:24.861903+00:00",
-    "title": "The Category Theory of Jokes: Universal Properties of Humor"
   }
 ];
