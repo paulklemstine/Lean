@@ -1,474 +1,194 @@
-# Flag Complexes and the Clique Recognition Theorem
-
-*A formal treatment of the equivalence between flag complexes and clique
-complexes of simple graphs*
-
----
+# Tangled Hierarchies: A Kripke-Semantic Account of Self-Referential Soundness
 
 ## Abstract
 
-The clique complex (equivalently, the Vietoris–Rips complex) of a simple graph
-is the abstract simplicial complex whose faces are the finite cliques of the
-graph. A simplicial complex is called *flag* (or a *clique complex* in the
-abstract) when every finite vertex set whose pairs are all edges of the complex's
-1-skeleton is itself a face — that is, when the complex withholds no simplex that
-its 1-skeleton permits. We give a self-contained development of the basic theory
-of flag complexes and prove the central structural results: (A) the clique
-complex of any simple graph is flag; (B) the 1-skeleton of a clique complex
-recovers exactly the edges of the original graph; and the converse direction (D)
-that any flag complex equals the clique complex of its own 1-skeleton.
-Combining these yields the **Recognition Theorem** (E): an abstract simplicial
-complex is flag if and only if it equals the clique complex of its own
-1-skeleton. The development is fully formalized and machine-checked; here we
-present the mathematics, the definitions, complete proof sketches, the
-underlying algorithms for working with clique complexes computationally, and a
-discussion of applications to topological data analysis, distributed sensing,
-and geometric group theory.
+We give a self-contained semantic treatment of *self-referential soundness* in Gödel–Löb provability logic and prove, at the level of Kripke frames, that the soundness (equivalently, consistency) predicate of a sufficiently expressive proof system cannot reside inside the system it validates without trivializing it. Modelling a proof system as a Kripke frame whose worlds are theories and whose accessibility relation encodes "provable reachability," we identify the two structural conditions — **transitivity** and **converse well-foundedness** — under which the provability modality validates Löb's axiom. Within this setting we prove a **semantic Löb theorem**, $\Box(\Box A \to A) \subseteq \Box A$, by converse-well-founded induction; we derive the **semantic second incompleteness theorem**, $\Box\,\mathrm{Con} \subseteq \Box\bot$, from the observation that the reflection instance at the false proposition *is* the consistency statement; and we prove the **tangled hierarchy theorem**: no consistent world validates $\Box\,\mathrm{Con}$, so the soundness predicate is unavoidably external. We complement these with a converse — local self-soundness forces consistency — and ground the whole family of results in a single **Lawvere fixed-point** argument, from which Cantor's theorem and Tarski's undefinability of truth follow as the fixed-point-free instance given by Boolean negation. An explicit infinite frame (the natural numbers under $>$) witnesses non-vacuity of every result. We include algorithms that compute the modality on finite frames, verify the collapse concretely, and search for fixed points, together with numerical demonstrations.
 
-**Keywords:** flag complex, clique complex, Vietoris–Rips complex, abstract
-simplicial complex, 1-skeleton, simple graph, simplicial topology.
-
-**MSC 2020:** 05E45 (Combinatorial aspects of simplicial complexes), 05C69
-(cliques), 55U10 (simplicial sets and complexes), 57Q05 (PL-topology).
+**Keywords:** provability logic, Gödel–Löb logic, Löb's theorem, second incompleteness theorem, Kripke semantics, converse well-foundedness, Lawvere fixed-point theorem, Tarski undefinability, self-reference.
 
 ---
 
 ## 1. Introduction
 
-There is a fundamental and recurring move in modern mathematics: replace a
-*discrete* object — a graph — with a *geometric* one — a simplicial complex —
-so that the tools of topology become available. The cleanest such bridge is the
-**clique complex** (also called the **flag complex** or, in the metric setting,
-the **Vietoris–Rips complex**): fill in a simplex on a set of vertices exactly
-when those vertices are pairwise adjacent. This single construction underlies
-topological data analysis, the geometry of CAT(0) cube complexes, the study of
-right-angled Artin and Coxeter groups, and the homotopy theory of independence
-and matching complexes.
+A recurring temptation in the design of reasoning systems — formal theories, program verifiers, self-modelling agents — is to let a system certify its own reliability. The certificate typically takes the shape of a *soundness* or *consistency* statement: "everything I prove is true," or "I never prove a contradiction." The central fact of this paper is that such a certificate cannot live inside the system it certifies. If it does, the system is either inconsistent (its certificate is vacuous) or it cannot produce the certificate at all. We call the resulting stratification a **tangled hierarchy**: the level that would validate a system must sit strictly above it.
 
-A complex built this way has a striking property: it is determined entirely by
-its 1-skeleton. No information lives above the edges; every higher face is forced
-by the edges below it. Complexes with this property are exactly the *flag*
-complexes. The purpose of this paper is to make that statement precise and to
-prove the full equivalence in both directions, working entirely from first
-principles over an arbitrary (possibly infinite) vertex type.
+Our contribution is to present this phenomenon *semantically*, purely in terms of Kripke frames, in a way that is elementary, fully self-contained, and non-vacuous. The classical route to these facts runs through the arithmetization of syntax, Gödel numbering, and the Hilbert–Bernays–Löb derivability conditions. We bypass all of that. We work directly with the modal semantics of the provability operator, isolate the two frame conditions that make provability logic tick, and obtain Löb's theorem, the second incompleteness theorem, and the impossibility of internal consistency proofs as short, transparent semantic lemmas. Beneath them all sits Lawvere's fixed-point theorem, which we prove and use to recover Cantor and Tarski.
 
-The contribution is twofold. Mathematically, we isolate the minimal hypotheses
-under which the flag/clique equivalence holds and present clean proofs.
-Foundationally, every definition and theorem below has been formalized and
-verified in a proof assistant, so the results are stated with the exactness that
-formalization demands — in particular, careful attention to finiteness,
-distinctness of vertices, and the precise membership conditions for faces.
+### 1.1 Contributions
+
+1. A definition of **Gödel–Löb frames** (Section 3) as transitive, converse-well-founded Kripke frames, with box, diamond, and consistency modalities defined as operators on subsets of worlds.
+2. A **semantic Löb theorem** (Section 4) proved by converse-well-founded induction, with an explicit maximal-counterexample argument.
+3. The identity **reflection-at-$\bot$ equals consistency** (Section 5) and, as an immediate corollary, the **semantic second incompleteness theorem** and the **tangled hierarchy theorem**.
+4. A **converse**: local self-soundness at $\bot$ forces consistency (Section 5).
+5. The **Lawvere fixed-point theorem** and its corollaries **Cantor/Tarski** (Section 6).
+6. A concrete **infinite witness frame** and a proof that non-dead worlds cannot prove their own consistency (Section 7).
+7. **Algorithms and numerical demonstrations** on finite frames (Section 8).
 
 ---
 
-## 2. Definitions
+## 2. Preliminaries and notation
 
-Throughout, `α` is an arbitrary type of *vertices*, with decidable equality
-where required for the constructions. We work with `Finset α`, the type of finite
-subsets of `α`, and `Set (Finset α)`, sets of such finite subsets.
+Throughout, a *property* of worlds is identified with the subset of worlds satisfying it. Logical connectives on properties are the corresponding Boolean set operations; the false proposition $\bot$ is the empty set $\varnothing$, and the true proposition $\top$ is the full set of worlds. We write $w \in A$ for "world $w$ satisfies property $A$," and $A \subseteq B$ for "$A$ entails $B$ at every world."
 
-### 2.1 Abstract simplicial complexes
-
-**Definition 2.1 (Abstract simplicial complex).** An *abstract simplicial
-complex* (ASC) on `α` is a set `faces ⊆ Finset α` of finite vertex sets,
-called *faces*, satisfying:
-
-1. **Downward closure.** For every `s ∈ faces` and every `t ⊆ s`, we have
-   `t ∈ faces`.
-2. **Singleton presence.** For every vertex `a`, if `a` belongs to some face
-   `s ∈ faces`, then the singleton `{a} ∈ faces`.
-
-The first axiom is the structural heart of the definition: a face cannot exist
-without all of its sub-faces. The second is a normalization convention ensuring
-the vertex set of the complex is itself recorded as 0-dimensional faces; it
-follows in fact from downward closure (since `{a} ⊆ s`) but is stated explicitly
-for convenience. The *dimension* of a face `s` is `|s| − 1`.
-
-Note that the empty set is a face of any nonempty complex (it is a subset of any
-face), and a complex may be empty.
-
-### 2.2 The 1-skeleton
-
-**Definition 2.2 (1-skeleton).** The *1-skeleton* of an ASC `K`, written
-`oneSkel K`, is the simple graph on vertex type `α` in which distinct vertices
-`a` and `b` are adjacent precisely when the pair `{a, b}` is a face of `K`:
-
-> `(oneSkel K).Adj a b ⟺ a ≠ b ∧ {a, b} ∈ K.faces`.
-
-This is a genuine simple graph: the adjacency relation is
-
-- **symmetric**, because `{a, b} = {b, a}` as finite sets, and
-- **irreflexive**, because the defining condition requires `a ≠ b`.
-
-Formally, `oneSkel K` is obtained as the symmetric–irreflexive closure
-(`fromRel`) of the relation `a ↦ b ↦ {a, b} ∈ K.faces`. The characterization
-above (denoted `oneSkel_adj`) is the working interface to the definition.
-
-### 2.3 The clique complex of a graph
-
-**Definition 2.3 (Clique complex).** Let `G` be a simple graph on `α`. Its
-*clique complex* `cliqueComplex G` is the ASC whose faces are the finite cliques
-of `G`:
-
-> `s ∈ (cliqueComplex G).faces ⟺ (s is finite) ∧ (∀ a, b ∈ s, a ≠ b → G.Adj a b)`.
-
-Here a *clique* is a vertex set all of whose distinct pairs are adjacent. (The
-finiteness clause is automatic for `s : Finset α`, but is recorded as part of
-the membership predicate so that the definition reads correctly when faces are
-viewed inside `Set (Finset α)`.)
-
-**Proposition 2.4.** `cliqueComplex G` is a well-defined abstract simplicial
-complex.
-
-*Proof.* Downward closure: if `s` is a clique and `t ⊆ s`, then any distinct
-pair in `t` is a distinct pair in `s`, hence adjacent; so `t` is a clique.
-Singleton presence: a singleton `{a}` is vacuously a clique (it contains no
-distinct pair), so it is always a face. ∎
-
-### 2.4 The flag property
-
-**Definition 2.5 (Flag complex).** An ASC `K` is *flag*, written `IsFlag K`,
-when every finite vertex set whose distinct pairs are all edges of the
-1-skeleton is itself a face:
-
-> `IsFlag K ⟺ ∀ s : Finset α, (∀ a, b ∈ s, a ≠ b → (oneSkel K).Adj a b) → s ∈ K.faces`.
-
-Intuitively, a flag complex never contains a "hollow" simplex: if the entire
-edge-boundary of a potential simplex is present in the 1-skeleton, the simplex
-itself must be filled in. Flagness is precisely the assertion that *the complex
-contains every clique of its own 1-skeleton*.
+We freely use the material-implication property: for properties $A, B$, the property "$A \to B$" is $\{w \mid w \in A \Rightarrow w \in B\}$, i.e. the complement of $A$ united with $B$.
 
 ---
 
-## 3. Main Results
+## 3. Gödel–Löb frames and the modalities
 
-We now state and prove the structural theorems. The labels (A)–(E) match the
-formalized statements.
+**Definition 3.1 (Gödel–Löb frame).** A *Gödel–Löb frame* $F$ consists of a set $W$ of *worlds* (theories) together with a binary *accessibility relation* $R \subseteq W \times W$ satisfying:
 
-### 3.1 Clique complexes are flag
+- **(Transitivity)** for all $a,b,c$, if $R\,a\,b$ and $R\,b\,c$ then $R\,a\,c$;
+- **(Converse well-foundedness)** the relation $a \prec b :\Leftrightarrow R\,b\,a$ is well-founded; equivalently, there is no infinite ascending chain $w_0, w_1, w_2, \dots$ with $R\,w_i\,w_{i+1}$ for all $i$, and every nonempty set of worlds has an $R$-maximal element.
 
-**Theorem A (`cliqueComplex_isFlag`).** For every simple graph `G`, the complex
-`cliqueComplex G` is flag.
+We read $R\,w\,v$ as "from $w$, the theory $v$ is a provably reachable continuation." Transitivity is the modal axiom **4** (positive introspection): provability of provability. Converse well-foundedness is exactly the frame condition validating Löb's axiom.
 
-*Proof sketch.* Let `s` be a finite vertex set all of whose distinct pairs are
-edges of `oneSkel (cliqueComplex G)`. We must show `s` is a face, i.e. a clique
-of `G`. Fix distinct `a, b ∈ s`. By hypothesis `(oneSkel (cliqueComplex G)).Adj a b`,
-which by `oneSkel_adj` means `a ≠ b` and `{a, b} ∈ (cliqueComplex G).faces`.
-But membership of `{a, b}` in the clique complex means exactly that its two
-distinct elements `a, b` are adjacent in `G`. Hence `G.Adj a b`. Since `a, b`
-were arbitrary distinct elements of `s`, the set `s` is a clique of `G`, so
-`s ∈ (cliqueComplex G).faces`. ∎
+**Definition 3.2 (Box).** For a property $A \subseteq W$, the *box* (provability) modality is
+$$\Box A \;=\; \{\, w \mid \forall v,\ R\,w\,v \Rightarrow v \in A \,\}.$$
+A world validates $\Box A$ (read "$A$ is provable at $w$") iff $A$ holds at every accessible world.
 
-The proof is short precisely because the flag property and the clique-complex
-membership condition are, at the level of pairs, the *same* condition relayed
-through the 1-skeleton. This is the structural reason flagness is automatic for
-clique complexes.
+**Definition 3.3 (Diamond).** The *diamond* (consistency-with) modality is
+$$\Diamond A \;=\; \{\, w \mid \exists v,\ R\,w\,v \wedge v \in A \,\}.$$
 
-### 3.2 The 1-skeleton recovers the edges
+**Definition 3.4 (Consistency).** The *consistency* property is $\mathrm{Con} = \Diamond\top$, i.e.
+$$\mathrm{Con} \;=\; \{\, w \mid \exists v,\ R\,w\,v \,\}.$$
+A world is consistent iff it has an accessible successor. A world with no successor is a *dead end*: it vacuously validates $\Box A$ for every $A$ (including $\Box\bot$), the semantic image of an inconsistent theory that proves everything.
 
-**Theorem B (`clique_pair_iff`).** For distinct vertices `a ≠ b` and any graph
-`G`,
+**Lemma 3.5 (Monotonicity of box).** If $A \subseteq B$ then $\Box A \subseteq \Box B$.
 
-> `{a, b} ∈ (cliqueComplex G).faces ⟺ G.Adj a b`.
-
-*Proof sketch.* (⇒) If `{a, b}` is a face, its distinct elements `a, b` are
-adjacent by the clique condition. (⇐) If `G.Adj a b`, then the only distinct
-pairs in `{a, b}` are `(a, b)` and `(b, a)`, both adjacent (using symmetry of
-`G`), so `{a, b}` is a clique, hence a face. ∎
-
-**Corollary 3.1.** The 1-skeleton of `cliqueComplex G` is `G` itself (as an
-adjacency relation): `(oneSkel (cliqueComplex G)).Adj a b ⟺ G.Adj a b`. Indeed,
-by `oneSkel_adj` the left side is `a ≠ b ∧ {a,b} ∈ (cliqueComplex G).faces`,
-which by Theorem B equals `a ≠ b ∧ G.Adj a b`, and this is just `G.Adj a b`
-since adjacency already forces `a ≠ b`.
-
-Theorem B is the fidelity guarantee: the clique-complex construction neither
-invents nor destroys edges, so the round trip *graph → complex → 1-skeleton*
-returns the original graph.
-
-### 3.3 A note on singletons
-
-**Theorem C (`IsFlag.singleton_mem`).** For any flag complex `K` and any vertex
-`a` with `{a} ∈ K.faces`, the flag property imposes no further constraint on
-`{a}`.
-
-*Remark.* This statement is recorded as a formal triviality (its conclusion is
-`True`). Its content is conceptual: singletons are always faces — both in any
-ASC by the singleton-presence axiom and in any clique complex vacuously — so the
-flag condition, which constrains higher faces via their pairs, says nothing new
-at dimension 0. We include it to make explicit that flagness is a condition on
-edges and above, never on vertices.
-
-### 3.4 Flag complexes are clique complexes of their skeletons
-
-**Theorem D (`IsFlag.eq_cliqueComplex`).** If `K` is a flag complex, then
-
-> `K.faces = (cliqueComplex (oneSkel K)).faces`.
-
-*Proof sketch.* We prove the two inclusions of the set equality, fixing an
-arbitrary finite vertex set `s`.
-
-*(⊆) Every face is a clique of the skeleton.* Suppose `s ∈ K.faces`. We must
-show `s` is a clique of `oneSkel K`. Fix distinct `a, b ∈ s`. The pair
-`{a, b}` is a subset of `s`, so by downward closure `{a, b} ∈ K.faces`. With
-`a ≠ b`, the characterization `oneSkel_adj` gives `(oneSkel K).Adj a b`. Hence
-all distinct pairs of `s` are skeleton-edges, i.e. `s` is a clique of
-`oneSkel K`, i.e. `s ∈ (cliqueComplex (oneSkel K)).faces`.
-
-*(⊇) Every clique of the skeleton is a face.* Suppose `s` is a clique of
-`oneSkel K`, i.e. all its distinct pairs are skeleton-edges. This is verbatim
-the antecedent of the flag property for `s`. Since `K` is flag, we conclude
-`s ∈ K.faces`. ∎
-
-The forward inclusion uses *downward closure* (faces contain their edge-pairs);
-the backward inclusion uses *flagness* (cliques are filled). The two complex
-axioms and the flag property together close the loop exactly.
-
-### 3.5 The Recognition Theorem
-
-**Theorem E (`isFlag_iff_eq_cliqueComplex`).** An abstract simplicial complex
-`K` is flag if and only if it equals the clique complex of its own 1-skeleton:
-
-> `IsFlag K ⟺ K.faces = (cliqueComplex (oneSkel K)).faces`.
-
-*Proof sketch.* (⇒) This is exactly Theorem D. (⇐) Suppose
-`K.faces = (cliqueComplex (oneSkel K)).faces`. To show `K` is flag, take a
-finite `s` all of whose distinct pairs are edges of `oneSkel K`; we must show
-`s ∈ K.faces`. Rewriting through the hypothesis, it suffices to show
-`s ∈ (cliqueComplex (oneSkel K)).faces`, which by Theorem A
-(`cliqueComplex_isFlag` applied to the graph `oneSkel K`) holds provided all
-distinct pairs of `s` are edges of `oneSkel (cliqueComplex (oneSkel K))`. A
-short lemma (`oneSkel_congr`: complexes with equal face sets have equal
-1-skeletons) shows that, under our hypothesis, this latter 1-skeleton coincides
-with `oneSkel K`, so the pair condition transfers directly from the assumption
-on `s`. Hence `s ∈ K.faces` and `K` is flag. ∎
-
-**Auxiliary Lemma (`oneSkel_congr`).** If `K₁.faces = K₂.faces` then
-`oneSkel K₁ = oneSkel K₂`. *Proof.* The adjacency relation of the 1-skeleton
-depends on the face set only through the predicate `{a,b} ∈ faces`; equal face
-sets give equal predicates, hence equal graphs. ∎
-
-Theorem E is the conceptual summit: *flagness is precisely self-recovery from the
-1-skeleton.* The property "I am rebuilt by filling the cliques of my own edges"
-is not merely sufficient for being a clique complex — it is the exact
-characterization.
+*Proof.* If $w \in \Box A$ and $R\,w\,v$, then $v \in A \subseteq B$, so $v \in B$; hence $w \in \Box B$. $\qquad\blacksquare$
 
 ---
 
-## 4. The Round-Trip Picture
+## 4. The semantic Löb theorem
 
-The five theorems organize into two adjoint-flavored maps between graphs and
-complexes:
+The following is the semantic core of the paper. Recall the reflection property "$\Box A \to A$" $= \{w \mid w \in \Box A \Rightarrow w \in A\}$.
 
-- **Skeleton:** `K ↦ oneSkel K`, sending a complex to its underlying graph.
-- **Fill:** `G ↦ cliqueComplex G`, sending a graph to its clique complex.
+**Theorem 4.1 (Semantic Löb).** In every Gödel–Löb frame,
+$$\Box(\Box A \to A) \;\subseteq\; \Box A.$$
+Equivalently: if a world proves "provability of $A$ entails $A$," it already proves $A$.
 
-The results pin down both composites:
+*Proof.* Fix $w \in \Box(\Box A \to A)$ and any successor $v$ with $R\,w\,v$; we must show $v \in A$. Suppose not, so $v \notin A$. Consider the nonempty set
+$$S \;=\; \{\, u \mid R\,w\,u \ \wedge\ u \notin A \,\}, \qquad v \in S.$$
+By converse well-foundedness, $S$ has an $R$-maximal element $u$: that is, $R\,w\,u$, $u \notin A$, and for every $t$ with $R\,u\,t$ and $t \notin A$ we would have a contradiction, because such $t$ satisfies $R\,w\,t$ (by transitivity from $R\,w\,u$ and $R\,u\,t$) and $t \notin A$, so $t \in S$, contradicting maximality of $u$. Hence every $t$ with $R\,u\,t$ satisfies $t \in A$; that is, $u \in \Box A$.
 
-1. **Fill then Skeleton is the identity on graphs.** For any `G`,
-   `oneSkel (cliqueComplex G) = G` (Corollary 3.1, from Theorem B). Filling
-   cliques and then reading off edges returns the original graph exactly.
+Now $R\,w\,u$ and $w \in \Box(\Box A \to A)$ give $u \in (\Box A \to A)$, i.e. $u \in \Box A \Rightarrow u \in A$. Since $u \in \Box A$, we conclude $u \in A$ — contradicting $u \notin A$. Therefore no such $v$ exists, and $w \in \Box A$. $\qquad\blacksquare$
 
-2. **Skeleton then Fill is the identity on flag complexes, and only on them.**
-   For any complex `K`, `cliqueComplex (oneSkel K) = K` *iff* `K` is flag
-   (Theorem E). On non-flag complexes the composite strictly enlarges the
-   complex by filling in the hollow simplices it was missing.
-
-Thus the clique-complex construction embeds the category of simple graphs into
-the category of abstract simplicial complexes as exactly the *flag subcategory*,
-with the 1-skeleton functor as a one-sided inverse that becomes a genuine inverse
-precisely on flag complexes. Flag complexes are, up to this equivalence, *the
-same data as graphs*.
+The proof is a single maximal-counterexample induction; converse well-foundedness is used *exactly once*, to extract the maximal offender $u$, and transitivity is used *exactly once*, to certify that $u$'s successors are also $w$'s successors. These are the only two frame conditions the theorem needs, and both are necessary: on a reflexive point (which is trivially not converse well-founded) Löb's principle fails.
 
 ---
 
-## 5. Algorithms
+## 5. Consistency, incompleteness, and tangling
 
-Although the theory is stated over arbitrary (possibly infinite) vertex types,
-all the constructions are effective on finite graphs and complexes. We record
-the core algorithms; full type-hinted implementations accompany this paper.
+The reduction of incompleteness to Löb is a single algebraic identity.
 
-### 5.1 Clique-complex enumeration
+**Theorem 5.1 (Reflection at $\bot$ is consistency).**
+$$\{\, w \mid w \in \Box\bot \Rightarrow w \in \bot \,\} \;=\; \mathrm{Con}.$$
 
-To materialize `cliqueComplex G` for a finite graph `G`, enumerate all cliques.
-A clean recursive scheme is a Bron–Kerbosch-style traversal, or, for full
-enumeration of *all* faces (not just maximal cliques), a subset-growing search:
+*Proof.* Unfolding, $w \in \Box\bot$ means every successor of $w$ lies in $\varnothing$, which holds iff $w$ has *no* successor. And $w \in \bot$ is impossible. So "$w \in \Box\bot \Rightarrow w \in \bot$" holds iff "$w$ has no successor" is false, i.e. iff $w$ has a successor, i.e. iff $w \in \mathrm{Con}$. $\qquad\blacksquare$
 
-```
-function ALL_CLIQUES(G = (V, E)):
-    faces ← { ∅ }
-    for each clique C already found, in increasing size:
-        for each vertex v adjacent to every member of C with v ∉ C:
-            add C ∪ {v} to faces
-    return faces
-```
+**Theorem 5.2 (Semantic second incompleteness).** In every Gödel–Löb frame,
+$$\Box\,\mathrm{Con} \;\subseteq\; \Box\bot.$$
+A world that proves its own consistency proves falsehood, hence proves everything.
 
-The number of faces can be exponential in |V| (a complete graph on n vertices
-has 2ⁿ faces), which is intrinsic: the clique complex of `Kₙ` is the full
-(n−1)-simplex with all 2ⁿ subsets as faces. Enumeration is therefore output-
-sensitive; the cost is proportional to the (possibly large) size of the complex.
+*Proof.* Instantiate Theorem 4.1 at $A = \bot$: $\Box(\Box\bot \to \bot) \subseteq \Box\bot$. By Theorem 5.1 the antecedent $\Box\bot \to \bot$ equals $\mathrm{Con}$, so $\Box(\Box\bot \to \bot) = \Box\,\mathrm{Con}$. Substituting gives $\Box\,\mathrm{Con} \subseteq \Box\bot$. $\qquad\blacksquare$
 
-### 5.2 Flagness testing
+**Theorem 5.3 (Tangled hierarchy theorem).** Let $w$ be a world with at least one successor (i.e. $w \in \mathrm{Con}$). Then
+$$w \notin \Box\,\mathrm{Con}.$$
+No consistent world proves its own consistency; the soundness/consistency predicate is unavoidably external.
 
-To test whether a given finite complex `K` is flag, one verifies the single
-"missing simplex" condition: for every vertex set `s` whose pairs are all edges
-of `oneSkel K`, check `s ∈ K.faces`. Equivalently, by Theorem E, compute
-`cliqueComplex (oneSkel K)` and test set equality with `K.faces`. Since `K ⊆
-cliqueComplex (oneSkel K)` always holds (Theorem D's ⊆ direction needs only
-downward closure), flagness reduces to checking the reverse inclusion: every
-clique of the 1-skeleton is a face of `K`.
+*Proof.* Suppose $w \in \Box\,\mathrm{Con}$. By Theorem 5.2, $w \in \Box\bot$, so every successor of $w$ lies in $\varnothing$. But $w$ has a successor $v$ by hypothesis, whence $v \in \varnothing$, a contradiction. $\qquad\blacksquare$
 
-```
-function IS_FLAG(K):
-    G ← ONE_SKELETON(K)
-    for each clique C of G:
-        if C ∉ K.faces:
-            return False          # hollow simplex found
-    return True
-```
+The dichotomy is now exact. If a world proves its own consistency then, by Theorem 5.2, it proves $\bot$, and (Theorem 5.1) it has no successor: it is a dead, inconsistent theory whose "consistency proof" is vacuous. If instead the world is genuinely consistent, Theorem 5.3 forbids the proof outright. There is no consistent, self-certifying world.
 
-The witness returned on failure — a clique of the skeleton that is not a face —
-is exactly a *hollow simplex*, the minimal certificate that `K` is not flag.
+A gratifying converse holds as well.
 
-### 5.3 1-skeleton extraction
+**Theorem 5.4 (Soundness forces consistency).** If a world $w$ is locally self-sound at $\bot$ — that is, $w \in \Box\bot \Rightarrow w \in \bot$ — then $w \in \mathrm{Con}$.
 
-Extracting `oneSkel K` is immediate: scan the size-2 faces.
+*Proof.* This is precisely membership of $w$ in the left-hand side of Theorem 5.1, which equals $\mathrm{Con}$. Concretely: local self-soundness at $\bot$ says $w \notin \Box\bot$ (since $w \in \bot$ is impossible), i.e. $w$ has a successor. $\qquad\blacksquare$
 
-```
-function ONE_SKELETON(K):
-    V ← { a : {a} ∈ K.faces }
-    E ← { {a, b} : {a, b} ∈ K.faces ∧ a ≠ b }
-    return (V, E)
-```
+Thus reflection and consistency are two faces of one coin: a world that cannot be duped by a proof of falsehood is automatically a live theory — but, by Theorem 5.3, it cannot internalize this fact as a theorem about itself.
 
 ---
 
-## 6. Applications
+## 6. The diagonal core: Lawvere, Cantor, Tarski
 
-### 6.1 Topological data analysis
+All of the above are shadows of a single fixed-point phenomenon.
 
-Given a finite metric space (a point cloud) and a scale `ε`, the *Vietoris–Rips
-complex* `Rips(X, ε)` is the clique complex of the graph connecting points
-within distance `ε`. Theorem A guarantees `Rips(X, ε)` is flag, and Theorem E
-guarantees it is *fully determined by its edges*. This is the theoretical
-license for the central efficiency of TDA pipelines: persistence software stores
-and updates only the proximity graph, reconstructing higher simplices on demand,
-with the certainty that no homological information is lost. The monotonicity
-`Rips(X, ε) ⊆ Rips(X, ε')` for `ε ≤ ε'` — the basis of *persistent homology* —
-is likewise a statement about the underlying graphs propagated upward by
-flagness.
+**Theorem 6.1 (Lawvere fixed-point).** Let $A, B$ be sets and let $f : A \to (A \to B)$ be *point-surjective*: every function $A \to B$ equals $f(a)$ for some $a \in A$. Then every endomap $g : B \to B$ has a fixed point: there exists $b \in B$ with $g(b) = b$.
 
-### 6.2 Distributed sensing and coverage
+*Proof.* Consider the diagonal map $d : A \to B$, $d(a) = g(f(a)(a))$. By point-surjectivity, $d = f(c)$ for some $c \in A$. Evaluating at $c$: $f(c)(c) = d(c) = g(f(c)(c))$. Hence $b := f(c)(c)$ satisfies $g(b) = b$. $\qquad\blacksquare$
 
-In a sensor network each node knows only its communication neighbors — purely
-1-skeletal, local data. Whether the network covers a region without holes is a
-*global* topological question about the associated complex. Flagness is what
-makes the global question answerable from local data: because the coverage
-complex is the clique complex of the communication graph, its global topology is
-implied by the edges every node already knows, enabling decentralized hole-
-detection protocols.
+**Theorem 6.2 (Cantor / Tarski undefinability).** For no set $A$ is there a point-surjective map $f : A \to (A \to \mathrm{Bool})$. Equivalently, a system cannot carry a surjective self-encoding onto its own two-valued predicates; its truth predicate is not internally definable.
 
-### 6.3 Geometric group theory
+*Proof.* Boolean negation $\lnot : \mathrm{Bool} \to \mathrm{Bool}$ has no fixed point ($\lnot\,\text{true} = \text{false} \neq \text{true}$ and $\lnot\,\text{false} = \text{true} \neq \text{false}$). If a point-surjective $f : A \to (A \to \mathrm{Bool})$ existed, Theorem 6.1 with $g = \lnot$ would produce a fixed point of $\lnot$, a contradiction. $\qquad\blacksquare$
 
-Flag complexes are the natural domain of several rigidity phenomena. Gromov's
-link condition characterizes CAT(0) cube complexes via flagness of vertex links;
-right-angled Artin groups and Coxeter groups are encoded by flag complexes
-(their *defining* / *nerve* complexes); and Davis complexes are built so that
-local flag conditions force global non-positive curvature. In each case the
-operative principle is the one made precise here: a combinatorial condition on
-edges (flagness) determines the entire high-dimensional object and its geometry.
-
-### 6.4 Independence and other induced complexes
-
-The independence complex of a graph `G` is the clique complex of its complement;
-neighborhood, matching, and Hom complexes are likewise clique complexes of
-auxiliary graphs. Theorem E says all of these are recognizable purely by the
-flag test, and that their entire face structure is recoverable from a single
-graph — a uniform organizing principle across an otherwise scattered zoo of
-constructions.
+The conceptual link is that provability, truth, and membership are all instances of a predicate a system tries to apply to its own codes; the diagonal produces the self-referential sentence (the Gödel sentence, the liar, the anti-diagonal set) that the fixed-point-free operator (negation, "unprovable," "not in the set") cannot accommodate. Löb's theorem is the constructive, converse-well-founded refinement of this picture: rather than merely forbidding a fixed point of negation, it computes what the fixed point of the *modalized* transformer $X \mapsto \Box X \to A$ must be, and converse well-foundedness makes that computation terminate rank by rank.
 
 ---
 
-## 7. Discussion
+## 7. A concrete infinite frame
 
-The mathematics here is elementary in the best sense: the proofs are short, but
-they pin down an equivalence that is invoked constantly and rarely stated with
-full precision. Three points deserve emphasis.
+Non-vacuity is essential: the theorems above would be empty if Gödel–Löb frames were degenerate. They are not.
 
-First, **the hypotheses are minimal**. The vertex type is arbitrary; nothing is
-assumed finite except individual faces (which are finite by definition of
-`Finset`). The results therefore apply to clique complexes of infinite graphs,
-where they remain true verbatim. The only structural inputs are downward closure
-and the elementary symmetric/irreflexive nature of the 1-skeleton.
+**Definition 7.1 (Natural-number frame).** Let $\mathbb{N}$ be the worlds with $R\,a\,b :\Leftrightarrow b < a$.
 
-Second, **flagness is a dimension-1 condition with dimension-∞ consequences**.
-The defining clause of `IsFlag` quantifies only over pairs (via the 1-skeleton),
-yet it controls faces of every dimension. This "locality at the edges" is exactly
-what makes flag complexes computationally and conceptually tractable: an object
-of unbounded dimension is specified by a quadratic amount of data.
+**Proposition 7.2.** The natural-number frame is a Gödel–Löb frame.
 
-Third, **the equivalence is sharp**. Theorem E is an "if and only if"; non-flag
-complexes genuinely exist (the boundary of a triangle — three edges, no filled
-2-face — is the smallest example, where the skeleton is a 3-cycle whose clique
-complex *would* fill the triangle). The hollow simplex is the precise obstruction,
-and the recognition test detects it.
+*Proof.* Transitivity: if $b < a$ and $c < b$ then $c < a$. Converse well-foundedness: the relation $a \prec b \Leftrightarrow b < a$ (i.e. the usual $<$) is well-founded on $\mathbb{N}$; there is no infinite strictly descending chain of naturals. $\qquad\blacksquare$
 
-A subtle formalization point worth recording: the singleton-presence axiom in
-Definition 2.1 is logically redundant given downward closure, yet keeping it
-explicit clarifies that the vertex set is part of the data and streamlines the
-proof that `cliqueComplex G` is a valid ASC. Theorem C exists to make the
-conceptual status of singletons unambiguous.
+**Proposition 7.3 (The dead world).** $0 \notin \mathrm{Con}$: world $0$ has no successor (no natural is $< 0$), so it vacuously proves everything and is inconsistent.
+
+**Proposition 7.4 (Live worlds cannot self-certify).** For every $n > 0$: $n \in \mathrm{Con}$ and $n \notin \Box\,\mathrm{Con}$.
+
+*Proof.* Since $0 < n$, we have $R\,n\,0$, so $n$ has a successor and $n \in \mathrm{Con}$. By Theorem 5.3, $n \notin \Box\,\mathrm{Con}$. $\qquad\blacksquare$
+
+In this frame $\Box^k\bot$ is exactly the set $\{0, 1, \dots, k-1\}$ of worlds of rank below $k$: $\Box\bot = \{0\}$ (only $0$ has all-successors-in-$\varnothing$), $\Box\Box\bot = \{0,1\}$, and so on. Consistency $\mathrm{Con} = \{n \mid n \geq 1\}$ is the complement of the rank-$0$ shell, and $\Box\,\mathrm{Con}$ collapses into $\Box\bot = \{0\}$, visibly excluding every live world — a completely explicit instance of the collapse.
 
 ---
 
-## 8. Future Directions
+## 8. Algorithms and computation
 
-The present results characterize *which* complexes are flag. Several natural
-extensions build directly on the formalized core.
+On a **finite** frame the modalities are computable by direct set manipulation, and every theorem above becomes a decidable check. We record the core routines; full type-hinted implementations accompany this paper.
 
-**1. Homotopy and homology invariance through the skeleton.** Theorem E says a
-flag complex is determined by its graph as a *set of faces*. The natural next
-target is to formalize that its *homotopy type* and *simplicial homology* are
-therefore computable from the graph alone, recovering, e.g., that the clique
-complex of a graph with no induced cycles of length ≥ 4 is collapsible. This
-turns the structural recognition theorem into a computational topology engine.
+**Algorithm A (Box operator).** Given the successor lists of a finite frame and a subset $A$ of worlds (as a bitset), compute $\Box A = \{w : \text{succ}(w) \subseteq A\}$ in $O(|W| + |{\to}|)$ time by scanning each world's successors.
 
-**2. Functoriality and the flag–graph equivalence.** Promote the round-trip of
-Section 4 to a formal equivalence of categories between simple graphs (with
-graph homomorphisms) and flag complexes (with simplicial maps). The expected
-statement: `cliqueComplex` and `oneSkel` form an adjoint pair restricting to an
-equivalence on the flag subcategory. This would let theorems about graphs
-transfer mechanically to flag complexes and back.
+**Algorithm B (Consistency and collapse check).** Compute $\mathrm{Con} = \{w : \text{succ}(w) \neq \varnothing\}$, then $\Box\,\mathrm{Con}$ and $\Box\varnothing$, and verify $\Box\,\mathrm{Con} \subseteq \Box\varnothing$ (Theorem 5.2) and, for each $w \in \mathrm{Con}$, that $w \notin \Box\,\mathrm{Con}$ (Theorem 5.3).
 
-**3. Quantitative flagness and the hollow-simplex spectrum.** For a non-flag
-complex, measure *how far* it is from flag by the dimensions and number of its
-hollow simplices (cliques of the skeleton that fail to be faces). Conjecture: the
-minimal hollow simplices form a well-structured obstruction set whose generating
-function is a meaningful invariant, refining the binary flag test of Section 5.2
-into a graded measure.
+**Algorithm C (Löb least fixed point).** For the transformer $\Phi(X) = \Box X \to A = (W \setminus \Box X) \cup A$ on a finite frame, iterate from $\varnothing$ (or from $\Box(\Phi\text{-antecedent})$) to a fixed point; converse well-foundedness guarantees termination, and the fixed point equals $\Box A$, exhibiting the Löb identity numerically.
 
-**4. Persistent flag filtrations.** Formalize the Vietoris–Rips filtration
-`ε ↦ Rips(X, ε)` and prove, from Theorem A, that the entire filtration is a
-sequence of flag complexes determined by a single edge-length function. The
-target is a verified persistence theorem: the persistence module of a Rips
-filtration is computable from the weighted 1-skeleton, with stability under
-perturbation of the metric.
+**Algorithm D (Lawvere / anti-diagonal witness).** Given a candidate encoding $f$ of predicates and an endomap $g$ on values, form the diagonal $d(a) = g(f(a)(a))$; either return the fixed point $f(c)(c)$ when $d = f(c)$, or, for $g = \lnot$, return the anti-diagonal predicate $a \mapsto \lnot f(a)(a)$ that is provably outside the range of $f$, certifying non-surjectivity (Theorem 6.2).
 
-**5. Local flagness and curvature.** Capture Gromov's link condition formally:
-a cube/simplicial complex is locally CAT(0) iff all vertex links are flag.
-Building on the present `IsFlag` predicate, this would connect the combinatorial
-recognition theorem to global geometric (non-positive curvature) consequences,
-the engine behind much of geometric group theory.
+The accompanying demonstration verifies on random finite Gödel–Löb frames that $\Box\,\mathrm{Con} \subseteq \Box\bot$ always holds, that no consistent world lies in $\Box\,\mathrm{Con}$, that the rank identity $\Box^k\bot = \{\text{rank} < k\}$ holds on the natural-number frame, and that the anti-diagonal predicate is never in the range of any candidate encoding into $\mathrm{Bool}$.
 
 ---
 
-## 9. Conclusion
+## 9. Applications and interpretation
 
-We have given a complete, self-contained account of the equivalence between flag
-complexes and clique complexes. The clique complex of any graph is flag and
-faithfully records its edges (Theorems A, B); conversely a complex is flag
-exactly when it is the clique complex of its own 1-skeleton (Theorems D, E).
-Together these results identify flag complexes with simple graphs and explain,
-at the level of definitions, why a one-dimensional skeleton can dictate an
-arbitrarily high-dimensional shape. The skeleton, for a flag complex, remembers
-everything.
+**Formal theories.** The results are the semantic skeleton of Gödel's and Löb's theorems: a consistent, sufficiently expressive theory cannot prove its own consistency, and can prove "$A$ is provable $\to A$" only for the $A$ it already proves. The Kripke picture makes precise *why* the provability predicate must be studied from a metatheory.
+
+**Program verification and trusted computing.** A verifier that could internally certify its own soundness would, by Theorem 5.2, be unsound (it would "prove" everything). Practical trust is therefore layered: a small trusted kernel is validated from outside, and each layer certifies only strictly weaker layers — a concrete tangled hierarchy.
+
+**Self-modelling agents.** An agent whose internal model certifies "all my conclusions are correct" is, by the same collapse, an agent that endorses every conclusion. Calibrated reliability is necessarily represented externally, not as an internal theorem of self-soundness.
+
+**Foundations of self-reference.** Section 6 unifies the liar paradox, Cantor's theorem, Russell's paradox, Tarski's undefinability, and Gödel–Löb incompleteness as instances of one fixed-point law, isolating the fixed-point-free operator (negation) as the single source of impossibility.
+
+---
+
+## 10. Discussion and future directions
+
+The organizing insight is that **converse well-foundedness converts self-reference into terminating recursion stratified by ordinal rank**. This is what turns the reflective principle $\Box(\Box A \to A)$ into the flat $\Box A$, and it suggests several directions.
+
+1. **Uniqueness of modal fixed points on tangled frames.** *Conjecture.* On every transitive, converse-well-founded frame, each modalized predicate transformer has a *unique* fixed point, definable from finite Boolean combinations of iterated consistency statements. The rank-stratification $\Box^k\varnothing = \{\text{rank} < k\}$ forces a fixed point to be constant on each rank shell, converting the de Jongh–Sambin uniqueness folklore into a checkable ordinal induction.
+
+2. **Exact tangling threshold.** *Conjecture.* A proof system can internally express its own soundness for all propositions of quantifier-rank below $k$ but never for rank exactly $k$, and this threshold coincides with the converse-well-founded rank of the canonical frame. Internal soundness is a graded reflection principle, and Löb's collapse acts once the grade reaches the self-referential diagonal; "consistency = reflection at $\bot$" is the base rung.
+
+3. **Polymodal tangling and provability strength.** *Conjecture.* In a polymodal system with modalities $[0], [1], [2], \dots$ of strictly increasing strength, each modality can prove the consistency of all strictly weaker modalities but never its own, and the provable cross-consistencies form a strict linear order isomorphic to the modality index. A stronger operator sees a sparser accessibility relation, spends strictly less ordinal capital, and the gap certifies weaker operators while barring self-certification; antitonicity of rank in the modality index supplies the strict inequalities.
+
+4. **Diagonal-free consistency certificates.** *Conjecture.* A proof system admits a *diagonal-free* consistency certificate — a non-self-referential internal witness of its own consistency — if and only if its canonical frame has an accessible terminal (dead) world reachable in a bounded number of steps, decoupling the witness from the diagonal that Löb's theorem exploits.
+
+---
+
+## 11. Conclusion
+
+Working entirely within Kripke semantics, we have shown that the soundness/consistency predicate of an expressive proof system cannot be internal to that system without collapse. The engine is the semantic Löb theorem, proved by one maximal-counterexample induction using transitivity and converse well-foundedness; its instance at the false proposition is the second incompleteness theorem, and the consistency of a live world then forbids any internal consistency proof. Beneath these lies a single Lawvere fixed-point argument that also yields Cantor and Tarski. An explicit infinite frame confirms that none of the statements is vacuous. Tangled hierarchies are not an accident of a particular formalism; they are a structural law of any system rich enough to reason about its own reasoning.

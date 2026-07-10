@@ -1,269 +1,290 @@
 """
-demo.py — Flag complexes and the Clique Recognition Theorem
-===========================================================
+Tangled Hierarchies: numerical demonstrations of self-referential soundness
+in Goedel-Loeb provability logic, worked out over finite and structured
+Kripke frames.
 
-Self-contained numerical demonstration of the structural theorems relating
-flag complexes and clique complexes of simple graphs.
+A Goedel-Loeb (GL) frame is a set of worlds W with an accessibility relation R
+that is (i) transitive and (ii) converse well-founded (no infinite ascending
+R-chain). We represent a finite frame by, for each world w, the set succ(w) of
+worlds v with R w v. The modalities are:
 
-We model:
-  * a simple graph G as a vertex set plus a set of undirected edges (frozensets
-    of size 2);
-  * an abstract simplicial complex (ASC) as a set of faces (frozensets),
-    required to be downward closed;
-  * the clique complex of G   (`clique_complex`);
-  * the 1-skeleton of an ASC  (`one_skeleton`);
-  * the flag test             (`is_flag`).
+    box A     = { w : succ(w) subset of A }          "A is provable at w"
+    diamond A = { w : succ(w) intersect A nonempty } "A is consistent with w"
+    Con       = diamond(W) = { w : succ(w) nonempty } "w is consistent"
 
-We then verify, on concrete examples, the five theorems:
+The results demonstrated here:
+  * Semantic Loeb:            box(box A -> A) subset box A
+  * Reflection at bottom:     (box {} -> {})  ==  Con
+  * Godel II (semantic):      box Con subset box {}
+  * Tangled hierarchy:        w in Con  =>  w not in box Con
+  * Soundness -> consistency: (box {} -> {}) at w  =>  w in Con
+  * Lawvere / Cantor:         negation has no fixed point => no surjective
+                              self-encoding onto Bool-valued predicates
 
-  A. clique complexes are flag                       (cliqueComplex_isFlag)
-  B. {a,b} is a face of cliqueComplex(G) iff a~b     (clique_pair_iff)
-  C. singletons are always faces                     (IsFlag.singleton_mem)
-  D. flag K  =>  K = cliqueComplex(oneSkel K)        (IsFlag.eq_cliqueComplex)
-  E. K is flag  <=>  K = cliqueComplex(oneSkel K)    (isFlag_iff_eq_cliqueComplex)
-
-Run with:  python3 demo.py
-No third-party dependencies.
+All functions are self-contained with type hints.
 """
 
 from __future__ import annotations
 
 from itertools import combinations
-from typing import FrozenSet, Iterable, List, Set, Tuple
-
-Vertex = int
-Edge = FrozenSet[Vertex]      # a 2-element frozenset {a, b}
-Face = FrozenSet[Vertex]      # any finite face
-Complex = Set[Face]           # a set of faces
+from typing import Callable, Dict, FrozenSet, List, Set, Tuple
 
 
-# --------------------------------------------------------------------------- #
-#  Simple graphs                                                              #
-# --------------------------------------------------------------------------- #
+# ---------------------------------------------------------------------------
+# Finite Goedel-Loeb frames
+# ---------------------------------------------------------------------------
 
-class Graph:
-    """A simple (undirected, loopless) graph."""
-
-    def __init__(self, vertices: Iterable[Vertex],
-                 edges: Iterable[Tuple[Vertex, Vertex]]) -> None:
-        self.vertices: Set[Vertex] = set(vertices)
-        self.edges: Set[Edge] = set()
-        for a, b in edges:
-            if a == b:
-                raise ValueError(f"loops are not allowed: {a}")
-            self.edges.add(frozenset((a, b)))
-            self.vertices.update((a, b))
-
-    def adj(self, a: Vertex, b: Vertex) -> bool:
-        """Adjacency: distinct endpoints joined by an edge."""
-        return a != b and frozenset((a, b)) in self.edges
-
-    def __repr__(self) -> str:
-        es = sorted(tuple(sorted(e)) for e in self.edges)
-        return f"Graph(V={sorted(self.vertices)}, E={es})"
+Frame = Dict[int, Set[int]]  # world -> set of successors (worlds v with R w v)
 
 
-# --------------------------------------------------------------------------- #
-#  Core constructions                                                         #
-# --------------------------------------------------------------------------- #
-
-def is_clique(g: Graph, s: FrozenSet[Vertex]) -> bool:
-    """True iff every distinct pair in s is adjacent in g."""
-    return all(g.adj(a, b) for a, b in combinations(sorted(s), 2))
+def worlds(frame: Frame) -> Set[int]:
+    """The set of all worlds of a finite frame."""
+    return set(frame.keys())
 
 
-def clique_complex(g: Graph) -> Complex:
-    """
-    The clique complex of g: all finite cliques of g, including the empty face
-    and all singletons. Enumerates every subset of every maximal clique.
-    """
-    faces: Complex = {frozenset()}
-    # Subset-growing search: start from singletons, extend by common neighbours.
-    # Simpler (and correct) here: test all subsets of the vertex set, which is
-    # fine for the small demo graphs below.
-    verts = sorted(g.vertices)
-    for r in range(1, len(verts) + 1):
-        for combo in combinations(verts, r):
-            s = frozenset(combo)
-            if is_clique(g, s):
-                faces.add(s)
-    return faces
-
-
-def one_skeleton(k: Complex) -> Graph:
-    """
-    The 1-skeleton of an ASC k: vertices are the singleton faces, edges are the
-    2-element faces.
-    """
-    vertices = {next(iter(f)) for f in k if len(f) == 1}
-    edges = [tuple(f) for f in k if len(f) == 2]
-    return Graph(vertices, edges)  # type: ignore[arg-type]
-
-
-def is_downward_closed(k: Complex) -> bool:
-    """Check the ASC structural axiom: every subset of a face is a face."""
-    for f in k:
-        elems = sorted(f)
-        for r in range(len(elems) + 1):
-            for combo in combinations(elems, r):
-                if frozenset(combo) not in k:
-                    return False
+def is_transitive(frame: Frame) -> bool:
+    """Check R w v and R v u imply R w u for all worlds."""
+    for w, succ_w in frame.items():
+        for v in succ_w:
+            if not frame.get(v, set()).issubset(succ_w):
+                return False
     return True
 
 
-def is_flag(k: Complex) -> bool:
+def is_converse_well_founded(frame: Frame) -> bool:
     """
-    Test the flag property: every set whose distinct pairs are all edges of the
-    1-skeleton is itself a face.  By the Recognition Theorem this is equivalent
-    to k == clique_complex(one_skeleton(k)); we test that directly, and also
-    return the equivalent direct check.
+    Converse well-foundedness: no infinite ascending chain w0 R w1 R w2 ...
+    On a finite frame this is equivalent to the relation being acyclic
+    (irreflexive and containing no directed cycle).
     """
-    g = one_skeleton(k)
-    return clique_complex(g) == set(k)
+    # Detect any cycle reachable via R using DFS colouring.
+    WHITE, GREY, BLACK = 0, 1, 2
+    colour = {w: WHITE for w in frame}
+
+    def dfs(w: int) -> bool:
+        colour[w] = GREY
+        for v in frame.get(w, set()):
+            if colour.get(v, WHITE) == GREY:
+                return False  # back-edge = cycle
+            if colour.get(v, WHITE) == WHITE and not dfs(v):
+                return False
+        colour[w] = BLACK
+        return True
+
+    return all(colour[w] != WHITE or dfs(w) for w in frame)
 
 
-def hollow_simplices(k: Complex) -> List[FrozenSet[Vertex]]:
+def is_gl_frame(frame: Frame) -> bool:
+    """A finite frame is a GL frame iff transitive and converse well-founded."""
+    return is_transitive(frame) and is_converse_well_founded(frame)
+
+
+# ---------------------------------------------------------------------------
+# Modalities as operators on subsets of worlds
+# ---------------------------------------------------------------------------
+
+def box(frame: Frame, a: Set[int]) -> Set[int]:
+    """box A = { w : every successor of w is in A }."""
+    return {w for w in frame if frame[w].issubset(a)}
+
+
+def diamond(frame: Frame, a: Set[int]) -> Set[int]:
+    """diamond A = { w : some successor of w is in A }."""
+    return {w for w in frame if frame[w] & a}
+
+
+def consistency(frame: Frame) -> Set[int]:
+    """Con = { w : w has a successor }."""
+    return {w for w in frame if frame[w]}
+
+
+def implication(frame: Frame, a: Set[int], b: Set[int]) -> Set[int]:
+    """The property (A -> B) = (complement of A) union B."""
+    return (worlds(frame) - a) | b
+
+
+# ---------------------------------------------------------------------------
+# Verifying the theorems on a given finite frame
+# ---------------------------------------------------------------------------
+
+def check_semantic_loeb(frame: Frame, a: Set[int]) -> bool:
+    """box(box A -> A) subset box A."""
+    lhs = box(frame, implication(frame, box(frame, a), a))
+    return lhs.issubset(box(frame, a))
+
+
+def check_reflection_is_consistency(frame: Frame) -> bool:
+    """(box {} -> {}) equals Con."""
+    refl = implication(frame, box(frame, set()), set())
+    return refl == consistency(frame)
+
+
+def check_godel_second(frame: Frame) -> bool:
+    """box Con subset box {}."""
+    return box(frame, consistency(frame)).issubset(box(frame, set()))
+
+
+def check_tangled_hierarchy(frame: Frame) -> bool:
+    """Every consistent world fails to prove its own consistency."""
+    con = consistency(frame)
+    box_con = box(frame, con)
+    return all(w not in box_con for w in con)
+
+
+def check_soundness_forces_consistency(frame: Frame) -> bool:
+    """If (box {} -> {}) holds at w, then w in Con."""
+    refl = implication(frame, box(frame, set()), set())
+    con = consistency(frame)
+    return all(w in con for w in refl)
+
+
+# ---------------------------------------------------------------------------
+# Enumerate all GL frames on a small world set and verify everything
+# ---------------------------------------------------------------------------
+
+def all_relations_on(n: int) -> List[Frame]:
+    """Enumerate every binary relation on {0,...,n-1} as a frame."""
+    pairs = [(a, b) for a in range(n) for b in range(n)]
+    frames: List[Frame] = []
+    for k in range(len(pairs) + 1):
+        for chosen in combinations(pairs, k):
+            frame: Frame = {w: set() for w in range(n)}
+            for (a, b) in chosen:
+                frame[a].add(b)
+            frames.append(frame)
+    return frames
+
+
+def exhaustive_check(n: int) -> Tuple[int, int]:
     """
-    The certificates of non-flagness: cliques of the 1-skeleton that are NOT
-    faces of k (the 'hollow simplices').  Empty list iff k is flag.
+    Over all GL frames on n worlds, verify Loeb, Godel II, reflection,
+    tangled hierarchy, and the soundness converse. Returns
+    (number_of_gl_frames_checked, number_that_passed_all_checks).
     """
-    g = one_skeleton(k)
-    missing = clique_complex(g) - set(k)
-    return sorted(missing, key=lambda f: (len(f), tuple(sorted(f))))
+    checked = 0
+    passed = 0
+    for frame in all_relations_on(n):
+        if not is_gl_frame(frame):
+            continue
+        checked += 1
+        ok = (
+            all(
+                check_semantic_loeb(frame, set(a))
+                for r in range(n + 1)
+                for a in combinations(range(n), r)
+            )
+            and check_reflection_is_consistency(frame)
+            and check_godel_second(frame)
+            and check_tangled_hierarchy(frame)
+            and check_soundness_forces_consistency(frame)
+        )
+        passed += int(ok)
+    return checked, passed
 
 
-# --------------------------------------------------------------------------- #
-#  Pretty printing                                                            #
-# --------------------------------------------------------------------------- #
+# ---------------------------------------------------------------------------
+# The canonical infinite frame: naturals with R a b <=> b < a (truncated)
+# ---------------------------------------------------------------------------
 
-def show_complex(name: str, k: Complex) -> None:
-    by_dim: dict[int, List[Tuple[int, ...]]] = {}
-    for f in k:
-        by_dim.setdefault(len(f), []).append(tuple(sorted(f)))
-    print(f"  {name}:")
-    for size in sorted(by_dim):
-        dim = size - 1
-        faces = sorted(by_dim[size])
-        label = {-1: "empty", 0: "vertices", 1: "edges",
-                 2: "triangles", 3: "tetrahedra"}.get(dim, f"dim-{dim}")
-        print(f"    {label:>10} ({size}-sets): {faces}")
+def nat_frame(bound: int) -> Frame:
+    """Naturals 0..bound-1 with R a b <=> b < a (a GL frame)."""
+    return {a: set(range(a)) for a in range(bound)}
 
 
-# --------------------------------------------------------------------------- #
-#  Demonstrations                                                             #
-# --------------------------------------------------------------------------- #
-
-def demo_theorem_A_and_B() -> None:
-    print("=" * 70)
-    print("THEOREM A  (clique complexes are flag)  and  THEOREM B  (edge fidelity)")
-    print("=" * 70)
-    # The 'paw' graph: a triangle 1-2-3 with a pendant edge 3-4.
-    g = Graph([1, 2, 3, 4], [(1, 2), (2, 3), (1, 3), (3, 4)])
-    print(f"  Graph G = {g}")
-    k = clique_complex(g)
-    show_complex("cliqueComplex(G)", k)
-
-    assert is_downward_closed(k), "clique complex must be downward closed"
-    print(f"\n  Downward closed?  {is_downward_closed(k)}")
-    print(f"  THEOREM A: cliqueComplex(G) is flag?  {is_flag(k)}")
-    assert is_flag(k)
-
-    print("\n  THEOREM B: {a,b} a face of cliqueComplex(G)  <=>  a~b in G")
-    for a, b in combinations(sorted(g.vertices), 2):
-        face = frozenset((a, b)) in k
-        adj = g.adj(a, b)
-        flag = "OK" if face == adj else "MISMATCH"
-        print(f"    pair {{{a},{b}}}: face={face!s:5}  adj={adj!s:5}  [{flag}]")
-        assert face == adj
+def iterated_box_bottom(frame: Frame, k: int) -> Set[int]:
+    """box^k applied to the empty set."""
+    current: Set[int] = set()
+    for _ in range(k):
+        current = box(frame, current)
+    return current
 
 
-def demo_theorem_C() -> None:
-    print("\n" + "=" * 70)
-    print("THEOREM C  (singletons are always faces)")
-    print("=" * 70)
-    g = Graph([1, 2, 3], [(1, 2)])  # 3 is isolated
-    k = clique_complex(g)
-    for v in sorted(g.vertices):
-        present = frozenset((v,)) in k
-        print(f"    singleton {{{v}}} present?  {present}  "
-              f"(vertex {'isolated' if v == 3 else 'in an edge'})")
-        assert present
+def check_rank_identity(bound: int) -> bool:
+    """
+    On the natural-number frame, box^k {} = {0,1,...,k-1} (worlds of rank < k).
+    """
+    frame = nat_frame(bound)
+    return all(
+        iterated_box_bottom(frame, k) == set(range(min(k, bound)))
+        for k in range(bound + 1)
+    )
 
 
-def demo_theorem_D_and_E() -> None:
-    print("\n" + "=" * 70)
-    print("THEOREMS D & E  (Recognition Theorem: flag <=> self-rebuilding)")
-    print("=" * 70)
+# ---------------------------------------------------------------------------
+# Lawvere fixed-point / Cantor: no surjective self-encoding onto Bool
+# ---------------------------------------------------------------------------
 
-    # ---- A flag complex: filled square's triangulation (two triangles) ----
-    g = Graph([1, 2, 3, 4], [(1, 2), (2, 3), (3, 4), (4, 1), (1, 3)])
-    k_flag = clique_complex(g)
-    print("  Flag example K = cliqueComplex of a 4-cycle with one diagonal:")
-    show_complex("K", k_flag)
-    rebuilt = clique_complex(one_skeleton(k_flag))
-    print(f"\n  THEOREM D/E: K == cliqueComplex(oneSkel K)?  {rebuilt == k_flag}")
-    print(f"  is_flag(K) = {is_flag(k_flag)}")
-    assert rebuilt == k_flag and is_flag(k_flag)
-
-    # ---- A NON-flag complex: hollow triangle (3 edges, no 2-face) ----
-    print("\n  Non-flag example: the hollow triangle (boundary of a triangle).")
-    hollow: Complex = {
-        frozenset(),
-        frozenset((1,)), frozenset((2,)), frozenset((3,)),
-        frozenset((1, 2)), frozenset((2, 3)), frozenset((1, 3)),
-        # NOTE: {1,2,3} deliberately ABSENT -> hollow
-    }
-    show_complex("K_hollow", hollow)
-    print(f"\n  downward closed?  {is_downward_closed(hollow)}")
-    print(f"  is_flag(K_hollow) = {is_flag(hollow)}  (expected False)")
-    miss = hollow_simplices(hollow)
-    print(f"  hollow simplices (clique-of-skeleton but not a face): "
-          f"{[tuple(sorted(f)) for f in miss]}")
-    assert not is_flag(hollow)
-    assert [tuple(sorted(f)) for f in miss] == [(1, 2, 3)]
-
-    # Filling the missing 2-face makes it flag again.
-    filled = set(hollow) | {frozenset((1, 2, 3))}
-    print(f"\n  After filling {{1,2,3}}: is_flag = {is_flag(filled)}  (expected True)")
-    assert is_flag(filled)
+def anti_diagonal(f: List[List[bool]]) -> List[bool]:
+    """
+    Given an encoding f: A -> (A -> Bool) as an n x n boolean matrix
+    (row a is the predicate f(a)), return the predicate
+        d(a) = not f(a)(a)
+    which by construction differs from every row f(a) at position a, hence
+    is not in the range of f (Cantor's diagonal / Tarski undefinability).
+    """
+    return [not f[a][a] for a in range(len(f))]
 
 
-def demo_round_trip() -> None:
-    print("\n" + "=" * 70)
-    print("ROUND TRIP  (Corollary: oneSkel(cliqueComplex(G)) == G)")
-    print("=" * 70)
-    g = Graph([1, 2, 3, 4, 5],
-              [(1, 2), (2, 3), (1, 3), (3, 4), (4, 5), (3, 5)])
-    k = clique_complex(g)
-    g2 = one_skeleton(k)
-    same_v = g.vertices == g2.vertices
-    same_e = g.edges == g2.edges
-    print(f"  G              = {g}")
-    print(f"  oneSkel(fill)  = {g2}")
-    print(f"  vertices match? {same_v}   edges match? {same_e}")
-    assert same_v and same_e
+def is_in_range(f: List[List[bool]], pred: List[bool]) -> bool:
+    """Check whether the predicate `pred` equals some row f(a)."""
+    return any(row == pred for row in f)
 
 
-def demo_dimension_explosion() -> None:
-    print("\n" + "=" * 70)
-    print("DIMENSION EXPLOSION  (K_n -> full (n-1)-simplex, 2^n faces)")
-    print("=" * 70)
-    for n in range(1, 7):
-        kn = Graph(range(n),
-                   [(a, b) for a, b in combinations(range(n), 2)])
-        faces = clique_complex(kn)
-        print(f"    K_{n}: |faces| = {len(faces):4d}   (2^{n} = {2 ** n})")
-        assert len(faces) == 2 ** n
+def negation_has_no_fixed_point() -> bool:
+    """Boolean negation has no fixed point; the engine of Cantor/Tarski."""
+    return all((not b) != b for b in (True, False))
 
+
+# ---------------------------------------------------------------------------
+# Demonstration driver
+# ---------------------------------------------------------------------------
 
 def main() -> None:
-    demo_theorem_A_and_B()
-    demo_theorem_C()
-    demo_theorem_D_and_E()
-    demo_round_trip()
-    demo_dimension_explosion()
+    print("=" * 70)
+    print("TANGLED HIERARCHIES: self-referential soundness, numerically")
+    print("=" * 70)
+
+    print("\n[1] Exhaustive verification over all GL frames on 3 worlds")
+    checked, passed = exhaustive_check(3)
+    print(f"    GL frames found: {checked}")
+    print(f"    frames passing Loeb, Godel II, reflection, tangling,")
+    print(f"    and soundness-forces-consistency: {passed}")
+    assert checked == passed and checked > 0
+    print("    -> ALL GL frames satisfy every theorem.")
+
+    print("\n[2] The canonical infinite frame (naturals under >), bound=8")
+    frame = nat_frame(8)
+    print(f"    is a GL frame: {is_gl_frame(frame)}")
+    print(f"    Con (consistent worlds)   = {sorted(consistency(frame))}")
+    print(f"    box(Con)                  = {sorted(box(frame, consistency(frame)))}")
+    print(f"    box(empty) = box(bottom)  = {sorted(box(frame, set()))}")
+    print("    Godel II  (box Con subset box bottom): "
+          f"{check_godel_second(frame)}")
+    print("    Tangled hierarchy (no live world in box Con): "
+          f"{check_tangled_hierarchy(frame)}")
+
+    print("\n[3] Rank identity  box^k(bottom) = {0,...,k-1}")
+    for k in range(5):
+        print(f"    box^{k}(bottom) = {sorted(iterated_box_bottom(frame, k))}")
+    print(f"    identity holds up to bound: {check_rank_identity(8)}")
+
+    print("\n[4] Lawvere / Cantor: no surjective self-encoding onto Bool")
+    print(f"    negation has no fixed point: {negation_has_no_fixed_point()}")
+    # A sample 3x3 encoding; the anti-diagonal escapes its range.
+    f = [
+        [True,  False, True],
+        [False, False, True],
+        [True,  True,  False],
+    ]
+    d = anti_diagonal(f)
+    print(f"    sample encoding rows      = {f}")
+    print(f"    anti-diagonal predicate   = {d}")
+    print(f"    anti-diagonal in range(f) = {is_in_range(f, d)}  (must be False)")
+    assert not is_in_range(f, d)
+    print("    -> the diagonal predicate escapes any finite encoding.")
+
     print("\n" + "=" * 70)
-    print("All assertions passed: the five theorems hold on every example.")
+    print("All demonstrations completed successfully.")
     print("=" * 70)
 
 

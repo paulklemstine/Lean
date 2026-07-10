@@ -671,6 +671,25 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle c2b68f4a (Q=0.780), which proved 20 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A quantum random walk on a group G is defined by a unitary operator U = sum_{g in S} |g><0| (where S is a generating set) acting on the Hilbert space l^2(G). The walk is periodic if U^k = I for some k, and mixing if the probability distribution P_n(g) = |<g|U^n|0>|^2 converges to the uniform distrib",
+    "domain_bridges": [],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_c2b68f4a_56a2bba3",
+    "lineage_refs": [],
+    "priority_score": 0.88,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "c2b68f4a",
+    "status": "available",
+    "timestamp": "2026-07-10T23:50:32.717136+00:00",
+    "title": "Deepening: Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "d0bff55a",
     "description": "Develop a rigorous theory of infinite games where moves are indexed by transfinite ordinals. Prove that Zermelo's theorem extends: every such game has a determined outcome under AD. Formalize the connection between the determinacy hierarchy and large cardinal axioms.",
     "domain_bridges": [],
@@ -1076,26 +1095,6 @@
     "status": "failed",
     "timestamp": "2026-07-08T16:01:43.810023+00:00",
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "c2b68f4a",
-    "description": "A quantum random walk on a group G is defined by a unitary operator U = sum_{g in S} |g><0| (where S is a generating set) acting on the Hilbert space l^2(G). The walk is periodic if U^k = I for some k, and mixing if the probability distribution P_n(g) = |<g|U^n|0>|^2 converges to the uniform distribution on G. Conjecture: for the Cayley graph Cay(G, S) where G is a finite group and S is a symmetric generating set, the quantum walk mixes in O(sqrt(|G|) * log(|G|)) steps, which is quadratically faster than the classical random walk (which takes O(|G|^2) steps for the spectral gap to kick in). The mixing time is determined by the spectral gap of U: tau_mix ~ 1/gap where gap = 1 - |lambda_2| and lambda_2 is the second-largest eigenvalue of U. Conjecture: for Cay(G, S) with S = the set of transpositions in S_n, the spectral gap of U is Omega(1/n), giving a mixing time of O(n * log(n)). This matches the known classical mixing time of O(n * log(n)) for the random transposition walk on S_n. The quantum advantage comes from the quadratically faster convergence of the probability distribution, not from the spectral gap. Test: simulate quantum random walks on Cayley graphs of S_n, S_n, A_5, and Z_n, measure the mixing time, and verify tau_mix = O(sqrt(|G|) * log(|G|)). Impact: quantum random walks mix quadratically faster than classical random walks on Cayley graphs. The quadratic speedup is universal.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0932",
-    "lineage_refs": [],
-    "priority_score": 0.82,
-    "proof_strategy": "Define quantum random walk on Cay(G, S): the state space is l^2(G), the unitary operator is U = sum_{s in S} |s><0| (or more precisely, U = DFT_G * V where V is the coin operator). The continuous-time walk: H = sum_{s in S} (|0><s| + |s><0|) (the adjacency matrix of Cay(G, S) as a Hamiltonian). The evolution: |psi(t)> = e^{-iHt}|psi(0)>. The probability of being at g at time t: P_t(g) = |<g|e^{-iHt}|0>|^2. The mixing time: tau_mix = min{t : max_g |P_t(g) - 1/|G|| < epsilon}. For the continuous-time walk on Cay(Z_n, {+1, -1}): H is the circulant matrix with eigenvalues lambda_k = 2*cos(2*pi*k/n). The spectral gap is |lambda_1 - lambda_0| = 2 - 2*cos(2*pi/n) ~ 4*pi^2/n^2 for large n. Mixing time: tau_mix ~ n^2/(4*pi^2) * log(n). Classical mixing time: tau_classical ~ n^2 * log(n). So the quantum walk has the SAME mixing time as the classical walk! The quadratic speedup conjecture is WRONG for the continuous-time walk. The correct statement: for the discrete-time coined walk, the quantum walk reaches a 'limiting distribution' (not uniform, but periodic) in O(sqrt(|G|)) steps. The quantum walk does NOT mix to uniform — it oscillates. The 'mixing' is in the sense of time-averaged distribution, which converges in O(sqrt(|G|)) steps. Test: simulate discrete-time quantum walk on Cay(Z_n, {+1, -1}) and Cay(S_n, transpositions), measure time-averaged distribution, verify convergence in O(sqrt(|G|)).",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T18:59:24.886691+00:00",
-    "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
   },
   {
     "ambition_level": "extension",
@@ -11216,6 +11215,26 @@
     "status": "available",
     "timestamp": "2026-07-10T22:14:03.962509+00:00",
     "title": "This project formalizes the torsor structure of the set of isomorphisms between"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe file `QuantumWalkCayley.lean` establishes the spectral backbone of random walks\non Cayley graphs of finite abelian groups: characters diagonalize every\ntranslation-invariant (Cayley) operator, giving exact eigenvalues, a Perron bound,\nself-adjointness for symmetric generating sets, unitarity and periodicity of the\nelementary shift, and the exact second eigenvalue / positive spectral gap of the cycle.\n\nNatural extensions:\n\n1. **Full eigenbasis and spectral decomposition.** Show that the family of characters\n   `{χ : AddChar G ℂ}` forms an orthogonal basis of `ℓ²(G)` (character orthogonality),\n   turning `adjacency_addChar_eigen` into a complete diagonalization\n   `A = Σ_χ λ_χ P_χ`.  This upgrades the per-character eigenvalue statement to an\n   operator-norm / spectral-gap statement.\n\n2. **Mixing time from the spectral gap (classical walk).** For the *stochastic*\n   normalization `P = A / |S|`, deduce `‖P^t δ_0 − uniform‖ ≤ (1 − gap)^t` and hence\n   `τ_mix = O(gap⁻¹ log|G|)`.  Combined with `cycle_spectral_gap_pos` this yields the\n   classical `O(n² log n)` mixing bound for the cycle.\n\n3. **Exact spectra for more groups.** Instantiate the character machinery for\n   `ℤ/nℤ` with larger symmetric generating sets, for products `∏ ℤ/nᵢℤ` (e.g. the\n   hypercube `(ℤ/2ℤ)^d`, whose eigenvalues are `d − 2·(Hamming weight)`), and derive\n   their gaps.\n\n4. **Unitary (genuinely quantum) walks.** Replace the mission's non-unitary\n   `U = Σ|g⟩⟨0|` by a bona fide coined/Szegedy walk whose one step is unitary, and\n   analyze the spectrum via the same character decomposition on abelian base graphs.\n   This is where a rigorous quantum-vs-classical mixing comparison can be made.\n\n5. **Non-abelian Cayley graphs.** Extend from characters to irreducible\n   representations (Fourier analysis on finite groups) to treat, e.g., the random\n   transposition walk on `Sₙ`, whose spectral gap is `Θ(1/n)` — the setting named in\n   the mission.  The abelian results here are the base case of that program.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0954",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "c2b68f4a",
+    "status": "available",
+    "timestamp": "2026-07-10T23:50:25.887681+00:00",
+    "title": "The file `QuantumWalkCayley.lean` establishes the spectral backbone of random wa"
   },
   {
     "ambition_level": "extension",

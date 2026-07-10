@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b152086d",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n`Core.lean` formalizes the *analytic engine* behind the uncertainty principle and its\ninstantiation on the Fourier, Laplace, and Mellin transforms:\n\n* the identity-principle uncer",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-10T05:35:58",
-      "title": "The Uncertainty Principle Is a Fourier Thing: Position-Momentum Duality"
-    },
-    {
       "cycle_id": "996ff4be",
       "domain": "Applications",
       "key_insight": "# Future Directions: The Geometry and Universal Structure of Surprise\n\nThis cycle established two complementary pillars. First, *surprise* — the gap between\nthe most conservative and most divergent re",
@@ -499,19 +489,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-10T22:14:14",
       "title": "Isomorphisms of Meaning: When Structures Collide"
+    },
+    {
+      "cycle_id": "c2b68f4a",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\nThe file `QuantumWalkCayley.lean` establishes the spectral backbone of random walks\non Cayley graphs of finite abelian groups: characters diagonalize every\ntranslation-invariant (",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-10T23:50:32",
+      "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f4462f16",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — No-Stretching of Quotient Labelings from Edge Partitions\n\nThese conjectures grew out of a single structural discovery: when the edges of a\nconnected graph are partitioned into cl",
-      "quality_score": 0.79052,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-02T02:29:19",
-      "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
-    },
     {
       "cycle_id": "135cab00",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-10T22:14:14",
       "title": "Isomorphisms of Meaning: When Structures Collide"
+    },
+    {
+      "cycle_id": "c2b68f4a",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\nThe file `QuantumWalkCayley.lean` establishes the spectral backbone of random walks\non Cayley graphs of finite abelian groups: characters diagonalize every\ntranslation-invariant (",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-10T23:50:32",
+      "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e40b9050",
-      "domain": "Novelty",
-      "name": "exists_monomial_eq_tropVal",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "e40b9050",
-      "domain": "Novelty",
-      "name": "tropVal_convex",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "34e9f39c",
-      "domain": "Applications",
-      "name": "areaGF_nonneg",
-      "quality": 0.82
-    },
     {
       "cycle_id": "34e9f39c",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "transport_addOrderOf",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "c2b68f4a",
+      "domain": "Bridges",
+      "name": "shift_add",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "c2b68f4a",
+      "domain": "Bridges",
+      "name": "shift_zero",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "c2b68f4a",
+      "domain": "Bridges",
+      "name": "shift_map_add",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-10T22:14:14",
+  "last_updated": "2026-07-10T23:50:32",
   "open_questions": [
     {
       "context": "## Sorry inventory (genuinely hard sub-steps, all non-circular); proved *without* reference to any sunflower bound.  (Hard; left as `sorry`.) -/; sorry",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "d7fd1af1",
-        "quality": 0.67919,
-        "theorems": 10,
-        "title": "Domain Finiteness"
-      },
-      {
         "cycle_id": "0f17133d",
         "quality": 0.76536,
         "theorems": 10,
@@ -3203,6 +3197,12 @@
         "quality": 0.83,
         "theorems": 23,
         "title": "Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
+      },
+      {
+        "cycle_id": "c2b68f4a",
+        "quality": 0.78,
+        "theorems": 20,
+        "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
       }
     ],
     "Combinatorics": [

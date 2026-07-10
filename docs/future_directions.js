@@ -497,6 +497,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality "
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle c2b68f4a (Q=0.780), which proved 20 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A quantum random walk on a group G is defined by a unitary operator U = sum_{g in S} |g><0| (where S is a generating set) acting on the Hilbert space l^2(G). The walk is periodic if U^k = I for some k, and mixing if the probability distribution P_n(g) = |<g|U^n|0>|^2 converges to the uniform distrib",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_c2b68f4a_56a2bba3",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "c2b68f4a",
+    "status": "available",
+    "timestamp": "2026-07-10T23:50:32.717136+00:00",
+    "title": "Deepening: Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
+  },
+  {
     "consumed_by_exp_id": "d0bff55a",
     "description": "Develop a rigorous theory of infinite games where moves are indexed by transfinite ordinals. Prove that Zermelo's theorem extends: every such game has a determined outcome under AD. Formalize the connection between the determinacy hierarchy and large cardinal axioms.",
     "domains": [
@@ -799,21 +813,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-08T16:01:43.810023+00:00",
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
-  },
-  {
-    "consumed_by_exp_id": "c2b68f4a",
-    "description": "A quantum random walk on a group G is defined by a unitary operator U = sum_{g in S} |g><0| (where S is a generating set) acting on the Hilbert space l^2(G). The walk is periodic if U^k = I for some k, and mixing if the probability distribution P_n(g) = |<g|U^n|0>|^2 converges to the uniform distribution on G. Conjecture: for the Cayley graph Cay(G, S) where G is a finite group and S is a symmetric generating set, the quantum walk mixes in O(sqrt(|G|) * log(|G|)) steps, which is quadratically faster than the classical random walk (which takes O(|G|^2) steps for the spectral gap to kick in). The mixing time is determined by the spectral gap of U: tau_mix ~ 1/gap where gap = 1 - |lambda_2| and lambda_2 is the second-largest eigenvalue of U. Conjecture: for Cay(G, S) with S = the set of transpositions in S_n, the spectral gap of U is Omega(1/n), giving a mixing time of O(n * log(n)). This matches the known classical mixing time of O(n * log(n)) for the random transposition walk on S_n. The quantum advantage comes from the quadratically faster convergence of the probability distribution, not from the spectral gap. Test: simulate quantum random walks on Cayley graphs of S_n, S_n, A_5, and Z_n, measure the mixing time, and verify tau_mix = O(sqrt(|G|) * log(|G|)). Impact: quantum random walks mix quadratically faster than classical random walks on Cayley graphs. The quadratic speedup is universal.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0932",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T18:59:24.886691+00:00",
-    "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
   },
   {
     "consumed_by_exp_id": "",
@@ -6410,6 +6409,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T22:14:03.962509+00:00",
     "title": "This project formalizes the torsor structure of the set of isomorphisms between"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe file `QuantumWalkCayley.lean` establishes the spectral backbone of random walks\non Cayley graphs of finite abelian groups: characters diagonalize every\ntranslation-invariant (Cayley) operator, giving exact eigenvalues, a Perron bound,\nself-adjointness for symmetric generating sets, unitarity and periodicity of the\nelementary shift, and the exact second eigenvalue / positive spectral gap of the cycle.\n\nNatural extensions:\n\n1. **Full eigenbasis and spectral decomposition.** Show that the family of characters\n   `{\u03c7 : AddChar G \u2102}` forms an orthogonal basis of `\u2113\u00b2(G)` (character orthogonality),\n   turning `adjacency_addChar_eigen` into a complete diagonalization\n   `A = \u03a3_\u03c7 \u03bb_\u03c7 P_\u03c7`.  This upgrades the per-character eigenvalue statement to an\n   operator-norm / spectral-gap statement.\n\n2. **Mixing time from the spectral gap (classical walk).** For the *stochastic*\n   normalization `P = A / |S|`, deduce `\u2016P^t \u03b4_0 \u2212 uniform\u2016 \u2264 (1 \u2212 gap)^t` and hence\n   `\u03c4_mix = O(gap\u207b\u00b9 log|G|)`.  Combined with `cycle_spectral_gap_pos` this yields the\n   classical `O(n\u00b2 log n)` mixing bound for the cycle.\n\n3. **Exact spectra for more groups.** Instantiate the character machinery for\n   `\u2124/n\u2124` with larger symmetric generating sets, for products `\u220f \u2124/n\u1d62\u2124` (e.g. the\n   hypercube `(\u2124/2\u2124)^d`, whose eigenvalues are `d \u2212 2\u00b7(Hamming weight)`), and derive\n   their gaps.\n\n4. **Unitary (genuinely quantum) walks.** Replace the mission's non-unitary\n   `U = \u03a3|g\u27e9\u27e80|` by a bona fide coined/Szegedy walk whose one step is unitary, and\n   analyze the spectrum via the same character decomposition on abelian base graphs.\n   This is where a rigorous quantum-vs-classical mixing comparison can be made.\n\n5. **Non-abelian Cayley graphs.** Extend from characters to irreducible\n   representations (Fourier analysis on finite groups) to treat, e.g., the random\n   transposition walk on `S\u2099`, whose spectral gap is `\u0398(1/n)` \u2014 the setting named in\n   the mission.  The abelian results here are the base case of that program.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0954",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c2b68f4a",
+    "status": "available",
+    "timestamp": "2026-07-10T23:50:25.887681+00:00",
+    "title": "The file `QuantumWalkCayley.lean` establishes the spectral backbone of random wa"
   },
   {
     "consumed_by_exp_id": "",
