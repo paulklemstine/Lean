@@ -1,212 +1,191 @@
-# Sperner's Lemma Implies Brouwer's Fixed Point Theorem on the Standard Simplex, with Application to Nash Equilibria
-
-**Author:** Aristotle
-**Date:** 2026-06-23
-**Domain:** Geometry / Combinatorial Topology / Game Theory
-
----
+# Combinatorial Fixed Points and Nash Equilibria: From Sperner's Lemma to the Pure-Deviation Principle
 
 ## Abstract
 
-We present a complete, self-contained derivation of **Brouwer's fixed point theorem** for continuous self-maps of the standard $n$-simplex from **Sperner's lemma**, organized around a small number of elementary lemmas. The development takes Sperner's lemma as an explicit combinatorial hypothesis (in a geometric "rainbow cell" form) and uses *no* topological fixed-point input. The core construction colors each lattice vertex of the $m$-th barycentric subdivision by a *descent coordinate* of the map — a coordinate that the map does not increase — which we show always exists and automatically yields a proper Sperner labelling. Sperner's lemma then produces, at every mesh level, a rainbow cell of diameter $O(1/m)$ across which all colors appear; a compactness-and-squeeze argument extracts a limit point at which the map cannot increase any coordinate, and a "pinning" lemma on the simplex upgrades this to exact equality, i.e. a fixed point. We close the circle to game theory: Brouwer's theorem, applied to Nash's best-response improvement map on a product of strategy simplices, yields the existence of mixed Nash equilibria in every finite game; and the constructive door-following proof of Sperner's lemma furnishes a simplicial algorithm for computing approximate equilibria. The five load-bearing results are stated below as `label_exists`, `eq_of_le_on_stdSimplex`, `tendsto_of_close`, `approx`, and `sperner_implies_brouwer`, together with the supporting `latticeVertex_mem`.
+We present a self-contained development linking the combinatorial core of fixed-point theory to the existence and computation of Nash equilibria in finite games. On the combinatorial side we prove the one-dimensional Sperner lemma in its exact parity form — the number of fully colored edges of a two-colored path has the parity of the endpoint discrepancy — and derive from it a discrete intermediate value theorem and a discrete Brouwer fixed-point theorem. On the game-theoretic side we develop finite two-player games, mixed strategies, and expected payoffs, and prove the **pure-deviation principle**: because expected payoff is linear (an average) in each player's mixed strategy, a strategy profile is a Nash equilibrium as soon as no player can profit by deviating to a *pure* strategy. This reduces the verification of equilibrium — nominally a statement about a continuum of deviations — to finitely many checks, and it is exactly the finiteness that makes Sperner/Brouwer-based algorithms for Nash equilibria possible. We illustrate the framework with two canonical games: Matching Pennies, whose unique equilibrium is fully mixed, and the Prisoner's Dilemma, whose unique equilibrium is mutual defection. Throughout, we emphasize that Nash equilibria are, at heart, *combinatorial fixed points*.
+
+**Keywords:** Sperner's lemma, Brouwer fixed point, Nash equilibrium, mixed strategy, best response, pure-deviation principle, discrete intermediate value theorem, game theory.
 
 ---
 
 ## 1. Introduction
 
-The deep existence theorems of analysis and economics — Brouwer's fixed point theorem and Nash's equilibrium theorem — are usually presented as fruits of algebraic topology (degree theory, homology) or of advanced fixed-point machinery (Kakutani's theorem). Yet there is a far more elementary route. Sperner's lemma (1928), a purely combinatorial statement about colorings of triangulated simplices, encodes the same content as Brouwer's theorem and indeed *implies* it. The deduction is constructive in spirit: it converts a continuous map into a coloring, invokes a counting fact, and passes to a limit.
+Two great existence theorems anchor twentieth-century applied mathematics. **Brouwer's fixed-point theorem** asserts that every continuous self-map of a compact convex set has a fixed point; **Nash's theorem** asserts that every finite game has a mixed-strategy equilibrium. The two are intimately related: Nash's original proof deduces equilibrium existence from a fixed point of a best-response correspondence, via Kakutani's generalization of Brouwer's theorem.
 
-This paper isolates the logical skeleton of that deduction and renders it as a sequence of sharp, individually verifiable lemmas, taking Sperner's lemma itself as a clearly stated hypothesis. The benefit of this organization is twofold. First, it cleanly separates the *one* nontrivial combinatorial input (Sperner) from the *purely elementary* analytic glue (compactness, continuity, and two one-line inequalities about the simplex). Second, it exposes precisely how the discrete object — a rainbow cell — collapses into the continuous object — a fixed point.
+Beneath Brouwer's theorem, in turn, lies a purely combinatorial fact: **Sperner's lemma**, which counts the fully labeled cells of a colored triangulation. Sperner's lemma is elementary, finite, and *constructive*. It thus offers an appealing bottom-up route to the whole edifice: Sperner $\Rightarrow$ Brouwer $\Rightarrow$ Nash, with each arrow refining a finite combinatorial certificate into an analytic existence statement.
 
-We then trace the classical implications: Brouwer $\Rightarrow$ Nash via the best-response improvement map, and the constructive Scarf walk underlying Sperner $\Rightarrow$ an algorithm for approximate equilibria.
+This paper develops both ends of that arc rigorously and makes the connecting principle explicit. We work out the one-dimensional Sperner lemma completely — including the parity statement, an oriented existence corollary, a discrete intermediate value theorem, and a discrete Brouwer fixed point — and we develop the algebra of finite two-player games up to the structural theorem that governs all equilibrium computation: the **pure-deviation principle**. The one-dimensional case is deliberately chosen so that every step is elementary and transparent while exhibiting the exact mechanism (a parity/sign-change count) that generalizes to arbitrary dimension.
 
-**Notation.** Throughout, $n \in \mathbb{N}$ and indices range over the finite set $\{0,1,\dots,n\}$ (denoted $\mathrm{Fin}(n+1)$). For a vector $v = (v_0,\dots,v_n)$ we write $v_i$ for its $i$-th coordinate.
+Our contributions are:
 
----
+1. A clean parity form of the one-dimensional Sperner lemma and its oriented existence corollary (§3).
+2. A discrete intermediate value theorem and a discrete Brouwer fixed point derived from it (§4).
+3. A formal treatment of finite two-player games, culminating in the pure-deviation principle: equilibrium verification reduces to finitely many pure-strategy checks (§5–6).
+4. Worked equilibria for Matching Pennies (fully mixed) and the Prisoner's Dilemma (pure), demonstrating the framework end to end (§7).
 
-## 2. The standard simplex and its subdivisions
-
-### 2.1 The standard simplex
-
-> **Definition 2.1 (Standard simplex).** The *standard $n$-simplex* is
-> $$\Delta^n = \Big\{\, v \in \mathbb{R}^{n+1} : v_i \ge 0 \text{ for all } i,\ \ \textstyle\sum_{i=0}^{n} v_i = 1 \,\Big\}.$$
-
-$\Delta^n$ is compact and convex. The case $n=1$ is a segment, $n=2$ a filled triangle, $n=3$ a tetrahedron. We regard points of $\Delta^n$ as **barycentric weight-vectors**.
-
-### 2.2 Lattice vertices of the $m$-th subdivision
-
-> **Definition 2.2 (Lattice vertex).** For $m \ge 1$ and a lattice point $k=(k_0,\dots,k_n) \in \mathbb{N}^{n+1}$, define
-> $$\mathrm{latticeVertex}(m,k) = \Big(\tfrac{k_0}{m}, \tfrac{k_1}{m}, \dots, \tfrac{k_n}{m}\Big) \in \mathbb{R}^{n+1}.$$
-
-The lattice points with $\sum_i k_i = m$ index the vertices of the standard $m$-fold subdivision (the "grid of mesh $1/m$") of $\Delta^n$.
-
-> **Lemma 2.3 (`latticeVertex_mem`).** If $m \ge 1$ and $\sum_{i} k_i = m$, then $\mathrm{latticeVertex}(m,k) \in \Delta^n$.
-
-*Proof.* Each coordinate $k_i/m \ge 0$ as a quotient of non-negative numbers. Summing, $\sum_i k_i/m = (\sum_i k_i)/m = m/m = 1$. $\qquad\blacksquare$
+We close with the conceptual synthesis — Nash equilibria as combinatorial fixed points — and a roadmap of extensions (§8–9).
 
 ---
 
-## 3. Sperner's lemma as a hypothesis
+## 2. The combinatorial setting
 
-We isolate Sperner's lemma in a geometric, coordinate-friendly form sufficient to drive the fixed-point argument. A *labelling* assigns to each lattice point $k$ a color $L(k) \in \{0,\dots,n\}$. It is **proper** when no lattice point receives a color in a coordinate where it vanishes, i.e. $k_{L(k)} \neq 0$ for all admissible $k$. (This is precisely the boundary condition of classical Sperner colorings: a vertex on the face $\{v_i=0\}$ is never colored $i$.)
+Fix an integer $n \geq 0$. Consider the path graph on vertices $0, 1, \ldots, n$, whose edges are the adjacent pairs $(i, i+1)$ for $0 \le i < n$. A **two-coloring** is a function $c$ assigning to each vertex a Boolean color, which we may read as red/blue or as false/true.
 
-> **Definition 3.1 (`IsSpernerLemma n`).** The proposition $\mathrm{IsSpernerLemma}(n)$ asserts: for every $m \ge 1$ and every proper labelling $L$ of the lattice points with coordinate sum $m$, there exist $n+1$ lattice points $q(0), q(1), \dots, q(n)$ such that
-> 1. **(on the grid)** $\sum_{i} q(s)_i = m$ for each $s$;
-> 2. **(unit-step proximity)** for all $s,t$ and all coordinates $i$, $\big| q(s)_i - q(t)_i \big| \le 1$;
-> 3. **(rainbow)** the map $s \mapsto L(q(s))$ is surjective onto $\{0,\dots,n\}$ — the cell exhibits all $n+1$ colors.
-
-Condition (2) says the $n+1$ points form a single cell of the subdivision; consequently the Euclidean diameter of $\{\mathrm{latticeVertex}(m,q(s))\}$ is at most $\sqrt{n+1}/m$, and in each coordinate any two of them differ by at most $1/m$. This is exactly the geometric content of Sperner's lemma; we *assume* it and do not reprove it here. (Its constructive door-following proof is recalled in §7.)
+**Definition 2.1 (Fully colored edge).** An edge $(i, i+1)$ is *fully colored* if its endpoints receive different colors, $c(i) \neq c(i+1)$. In the language of Sperner's lemma, in dimension one the fully colored edges are exactly the *fully labeled simplices*. We write
+$$\mathrm{FC}(c, n) = \{\, i : 0 \le i < n,\ c(i) \neq c(i+1)\,\}$$
+for the set of (left endpoints of) fully colored edges, and $|\mathrm{FC}(c,n)|$ for its cardinality.
 
 ---
 
-## 4. The descent coloring
+## 3. The one-dimensional Sperner lemma
 
-The link between an arbitrary continuous map and a Sperner labelling is the existence of a *descent coordinate*.
+**Theorem 3.1 (Sperner's lemma, parity form).** For every two-coloring $c$ and every $n \geq 0$,
+$$|\mathrm{FC}(c, n)| \equiv \begin{cases} 0 \pmod 2 & \text{if } c(0) = c(n), \\ 1 \pmod 2 & \text{if } c(0) \neq c(n). \end{cases}$$
 
-> **Lemma 4.1 (Descent coordinate — `label_exists`).** Let $f : \Delta^n \to \Delta^n$ be any self-map and $v \in \Delta^n$. Then there exists a coordinate $i$ with
-> $$v_i > 0 \quad\text{and}\quad f(v)_i \le v_i.$$
-> (Continuity of $f$ is not needed for this lemma.)
+*Proof sketch.* Induct on $n$. For $n = 0$ there are no edges, $c(0) = c(n)$ trivially, and the empty count is even. For the inductive step, compare the path of length $n$ to that of length $n+1$, which adds the single edge $(n, n+1)$.
 
-*Proof.* Suppose not. Then for every $i$ with $v_i > 0$ we have $f(v)_i > v_i$. Because $\sum_i v_i = 1 > 0$, at least one coordinate satisfies $v_i > 0$. For coordinates with $v_i = 0$ we have $f(v)_i \ge 0 = v_i$, so in all cases $f(v)_i \ge v_i$, with strict inequality at some present coordinate. Summing,
-$$1 = \sum_i f(v)_i \;>\; \sum_i v_i = 1,$$
-a contradiction. Hence a descent coordinate exists. $\qquad\blacksquare$
+- If $c(n) = c(n+1)$, the new edge is not fully colored, so the count is unchanged; and the endpoint comparison $c(0)$ versus $c(n+1) = c(n)$ is also unchanged. Both sides of the claimed congruence are preserved.
+- If $c(n) \neq c(n+1)$, the count increases by one, flipping its parity; and the endpoint comparison flips too, since $c(n+1) \neq c(n)$ reverses whether $c(0)$ agrees with the right endpoint. Both sides flip in lockstep.
 
-The descent coordinate gives a canonical coloring of points of $\Delta^n$: color $v$ by (a chosen) descent coordinate $i$. Since a descent coordinate satisfies $v_i > 0$, the resulting labelling of lattice points is automatically **proper**: a lattice vertex $\mathrm{latticeVertex}(m,k)$ colored $i$ has $k_i/m > 0$, hence $k_i \neq 0$. This is exactly the hypothesis required by Definition 3.1.
+In either case the congruence for $n+1$ follows from that for $n$. $\square$
 
----
+The parity form is the sharpest statement: it does not merely assert existence but pins down the count modulo two. Its immediate consequences are the existence results.
 
-## 5. Two elementary facts about the simplex
+**Corollary 3.2 (Existence of a fully colored edge).** If $c(0) \neq c(n)$, then some edge is fully colored: there exists $i < n$ with $c(i) \neq c(i+1)$.
 
-> **Lemma 5.1 (Pinning — `eq_of_le_on_stdSimplex`).** If $x, y \in \Delta^n$ and $x_i \le y_i$ for all $i$, then $x = y$.
+*Proof.* By Theorem 3.1 the count is odd, hence nonzero. Equivalently, and constructively: if *no* edge were fully colored, then $c$ would be constant along the whole path, forcing $c(0) = c(n)$, a contradiction. $\square$
 
-*Proof.* Suppose $x_j < y_j$ for some $j$. Then, using $x_i \le y_i$ everywhere,
-$$1 = \sum_i x_i \;<\; \sum_i y_i = 1,$$
-a contradiction. Hence $x_i = y_i$ for all $i$. $\qquad\blacksquare$
+**Corollary 3.3 (Oriented Sperner existence).** Suppose $c$ satisfies the *Sperner boundary condition* $c(0) = \text{false}$ and $c(n) = \text{true}$. Then there exists $i < n$ with $c(i) = \text{false}$ and $c(i+1) = \text{true}$ — an oriented fully colored edge, with false on the left and true on the right.
 
-This is the rigidity that converts a one-sided coordinate inequality into equality: on the simplex there is "no room" for a coordinatewise-smaller distinct point.
+*Proof sketch.* Induct on $n$, tracking the first index at which the color becomes true. Because the path begins false and ends true, there is a first ascent from false to true, and its location gives the oriented edge. $\square$
 
-> **Lemma 5.2 (Squeeze to a limit — `tendsto_of_close`).** Let $x \in \mathbb{R}^{n+1}$, let $x^{(m)} \to x$ as $m \to \infty$, and let $\varepsilon_m \to 0$. If $q^{(m)} \in \mathbb{R}^{n+1}$ satisfies
-> $$\big| q^{(m)}_j - x^{(m)}_j \big| \le \varepsilon_m \quad\text{for all } m, j,$$
-> then $q^{(m)} \to x$.
-
-*Proof.* Work coordinatewise. For each $j$, $q^{(m)}_j = x^{(m)}_j + \big(q^{(m)}_j - x^{(m)}_j\big)$. The first term tends to $x_j$; the second is bounded in absolute value by $\varepsilon_m \to 0$, hence tends to $0$ by the squeeze theorem. Therefore $q^{(m)}_j \to x_j$ for every $j$, which is convergence in $\mathbb{R}^{n+1}$. $\qquad\blacksquare$
+The orientation in Corollary 3.3 is the source of the lemma's *algorithmic* power: it does not merely certify that a boundary between the colors exists, it specifies the direction of the crossing, so the crossing can be located by a directed search rather than an exhaustive one.
 
 ---
 
-## 6. The approximation step and the main theorem
+## 4. Discrete intermediate value and discrete Brouwer
 
-### 6.1 Approximation from Sperner
+Recoloring by sign turns Sperner's lemma into order-theoretic statements. Given integers $f(0), \ldots, f(n)$, color vertex $j$ false if $f(j) \le 0$ and true if $f(j) > 0$; a fully colored edge is then precisely a sign change.
 
-> **Lemma 6.1 (Approximation — `approx`).** Assume $\mathrm{IsSpernerLemma}(n)$. Let $f:\Delta^n\to\Delta^n$ be continuous, and let $m\ge 1$. Then there exist a base point $x \in \Delta^n$ and points $p_0,\dots,p_n \in \Delta^n$ such that:
-> 1. **(no increase in the matching coordinate)** $f(p_i)_i \le (p_i)_i$ for every $i$;
-> 2. **(proximity)** $\big| (p_i)_j - x_j \big| \le \tfrac{1}{m}$ for all $i,j$.
+**Theorem 4.1 (Discrete intermediate value theorem).** Let $f : \{0, \ldots, n\} \to \mathbb{Z}$ with $n \ge 1$, $f(0) \le 0$, and $f(n) \ge 0$. Then there exists $i < n$ with
+$$f(i) \le 0 \quad\text{and}\quad f(i+1) \ge 0.$$
 
-*Proof.* Define the labelling $L(k)$ on lattice points with $\sum_i k_i = m$ by choosing a descent coordinate of $f$ at $\mathrm{latticeVertex}(m,k)$ (Lemma 4.1, using Lemma 2.3 to see the vertex lies in $\Delta^n$). By the remark following Lemma 4.1, $L$ is proper. Apply $\mathrm{IsSpernerLemma}(n)$ at level $m$ to obtain a rainbow cell $q(0),\dots,q(n)$ satisfying the three properties of Definition 3.1. By surjectivity, choose for each color $i$ an index $s_i$ with $L(q(s_i)) = i$; set $p_i := \mathrm{latticeVertex}(m, q(s_i))$ and $x := \mathrm{latticeVertex}(m, q(0))$. Since $p_i$ is colored $i$, its descent coordinate is $i$, giving $f(p_i)_i \le (p_i)_i$, which is (1). For (2), the unit-step proximity of the cell gives $|q(s_i)_j - q(0)_j| \le 1$ for all $j$, hence after dividing by $m$, $|(p_i)_j - x_j| \le 1/m$. $\qquad\blacksquare$
+*Proof sketch.* If $f$ is identically nonpositive then $f(n) \le 0$ together with $f(n) \ge 0$ gives $f(n) = 0$, and the edge $(n-1, n)$ works. Otherwise let $i+1$ be the first index where $f$ becomes strictly positive; then $f(i) \le 0$ and $f(i+1) > 0 \ge 0$. This is exactly Corollary 3.2/3.3 read through the sign coloring. $\square$
 
-### 6.2 Brouwer from Sperner
+This is the discrete, finite skeleton of the classical intermediate value theorem: a quantity passing from non-positive to non-negative must cross a sign boundary across a single step.
 
-> **Theorem 6.2 (`sperner_implies_brouwer`).** Assume $\mathrm{IsSpernerLemma}(n)$. Then every continuous map $f : \Delta^n \to \Delta^n$ has a fixed point: there exists $x^\star \in \Delta^n$ with $f(x^\star) = x^\star$.
+**Theorem 4.2 (Discrete Brouwer fixed point).** Let $g : \{0, \ldots, n\} \to \{0, \ldots, n\}$ be any self-map, with $n \ge 1$. Then there exists $i < n$ with
+$$i \le g(i) \quad\text{and}\quad g(i+1) \le i+1.$$
+That is, $g$ pushes weakly rightward at $i$ and weakly leftward at $i+1$ — an approximate fixed point straddled by the edge $(i, i+1)$.
 
-*Proof sketch.* For each $m \ge 1$ apply Lemma 6.1 to obtain a base point $x^{(m)}$ and matched points $p_i^{(m)}$ with $f(p_i^{(m)})_i \le (p_i^{(m)})_i$ and $|(p_i^{(m)})_j - x_j^{(m)}| \le 1/m$.
+*Proof sketch.* Apply Theorem 4.1 to the displacement $f(j) = j - g(j)$. Since $g$ maps into $\{0, \ldots, n\}$ we have $f(0) = -g(0) \le 0$ and $f(n) = n - g(n) \ge 0$. The theorem yields $i < n$ with $f(i) \le 0$ (i.e. $i \le g(i)$) and $f(i+1) \ge 0$ (i.e. $g(i+1) \le i+1$). $\square$
 
-Since $\Delta^n$ is compact, the sequence $(x^{(m)})_m$ has a convergent subsequence $x^{(m_\ell)} \to x^\star \in \Delta^n$. Restricting to this subsequence and applying Lemma 5.2 with $\varepsilon_{\ell} = 1/m_\ell \to 0$, we get $p_i^{(m_\ell)} \to x^\star$ for every color $i$.
-
-Fix a coordinate $i$. Along the subsequence, $f(p_i^{(m_\ell)})_i \le (p_i^{(m_\ell)})_i$. The right side tends to $x^\star_i$. By continuity of $f$ (and continuity of the $i$-th coordinate projection), the left side tends to $f(x^\star)_i$. Passing to the limit in the inequality,
-$$f(x^\star)_i \le x^\star_i \qquad \text{for every } i.$$
-Both $f(x^\star)$ and $x^\star$ lie in $\Delta^n$ and are coordinatewise comparable, so Lemma 5.1 forces $f(x^\star) = x^\star$. $\qquad\blacksquare$
-
-This is the complete deduction: a single combinatorial hypothesis (Sperner), the descent coloring, and elementary compactness/continuity glue.
+Theorem 4.2 is the combinatorial fixed point at the heart of the Sperner $\Rightarrow$ Brouwer bridge. In higher dimension, and after refining the triangulation and passing to a limit by compactness, it yields Brouwer's theorem on the simplex; through the best-response construction that in turn yields Nash equilibria. We now develop the algebraic side that meets it.
 
 ---
 
-## 7. The constructive core: door-following and the Scarf algorithm
+## 5. Finite two-player games
 
-Sperner's lemma is not merely true; its proof is an algorithm. We recall the argument for $n=2$ (the general case is an induction on dimension).
+**Definition 5.1 (Finite game).** A *finite two-player game* consists of finite strategy sets $I$ and $J$ and two payoff functions $u_1, u_2 : I \times J \to \mathbb{R}$. The value $u_1(i,j)$ is player 1's payoff, and $u_2(i,j)$ player 2's payoff, when the pure strategy pair $(i,j)$ is played.
 
-Call an edge of a small triangle a **red–green door** if its endpoints carry the colors $0$ and $1$. Counting doors per cell:
+**Definition 5.2 (Mixed strategy).** A *mixed strategy* for a player with strategy set $I$ is a probability distribution $p : I \to \mathbb{R}$, meaning $p_i \ge 0$ for all $i$ and $\sum_{i \in I} p_i = 1$. The **pure strategy** $a \in I$ corresponds to the degenerate distribution $e_a$ with $(e_a)_i = 1$ if $i = a$ and $0$ otherwise; one checks immediately that $e_a$ is a distribution.
 
-- a rainbow cell (colors $0,1,2$) has exactly **one** door;
-- a cell using only colors $0,1$ has **zero or two** doors;
-- any other cell has **zero** doors.
+**Definition 5.3 (Expected payoff).** Under a mixed profile $(p, q)$ with $p$ a distribution on $I$ and $q$ a distribution on $J$, the expected payoffs are
+$$E_1(p, q) = \sum_{i \in I}\sum_{j \in J} p_i\, q_j\, u_1(i,j), \qquad E_2(p, q) = \sum_{i \in I}\sum_{j \in J} p_i\, q_j\, u_2(i,j).$$
 
-Thus a cell is rainbow iff it has an odd number of doors. Treat cells as rooms and the exterior of $\Delta^2$ as one extra room. Each *interior* door borders exactly two rooms; each *boundary* door borders one room and the exterior. A parity / handshake argument shows the number of boundary doors on the colored edge is odd (the one-dimensional Sperner statement), which forces the number of rainbow cells to be odd, hence nonzero.
+**Definition 5.4 (Nash equilibrium).** A profile $(p, q)$ of distributions is a **Nash equilibrium** if neither player can strictly improve by unilateral deviation:
+$$E_1(p', q) \le E_1(p, q) \ \text{ for every distribution } p', \qquad E_2(p, q') \le E_2(p, q) \ \text{ for every distribution } q'.$$
 
-Constructively: enter through a boundary door; each room entered is either rainbow (done) or has exactly one second door to exit by. The path never branches and never repeats a room (a non-rainbow room is entered and left exactly once), so it terminates — necessarily at a rainbow cell. This is **Scarf's algorithm**.
+Note the quantifiers range over the entire simplex of mixed strategies — a continuum of potential deviations. The central structural theorem of §6 collapses this to a finite condition.
 
-> **Algorithm 7.1 (Simplicial fixed-point / Scarf walk).**
-> *Input:* a continuous $f:\Delta^n\to\Delta^n$, mesh level $m$.
-> 1. Build the lattice vertices $\{k : \sum_i k_i = m\}$ and color each by a descent coordinate of $f$ (Lemma 4.1).
-> 2. Start from a boundary door of the subdivision and follow the unique door-path through cells.
-> 3. Halt at the rainbow cell; return its barycenter $\hat x$ as an approximate fixed point.
-> 4. Increase $m$ to refine; $\hat x$ converges to a true fixed point (Theorem 6.2).
+**Lemma 5.5 (Pure-strategy payoffs).** For a pure strategy $a \in I$,
+$$E_1(e_a, q) = \sum_{j \in J} q_j\, u_1(a, j),$$
+and symmetrically $E_2(p, e_b) = \sum_{i \in I} p_i\, u_2(i, b)$.
 
-**Complexity.** A single sweep on a mesh of size $1/m$ touches on the order of $m^{n}$ cells; for game-theoretic applications with $N$ total pure strategies the relevant exponent is governed by $N$ (see §8), giving an $O(m^{N})$ cost per refinement. The approximation error in the matched coordinates is $O(1/m)$ by Lemma 6.1.
+*Proof.* Substitute $e_a$ into Definition 5.3; the inner sum over $i$ collapses to the single term $i = a$ because $(e_a)_i = 0$ otherwise. $\square$
 
 ---
 
-## 8. Application: existence and computation of Nash equilibria
+## 6. The pure-deviation principle
 
-### 8.1 Finite games and equilibria
+The engine of finite game theory is that expected payoff is **linear** — an average — in each player's own randomization.
 
-A *finite game* has players $1,\dots,r$, each with a finite pure-strategy set $S_p$, and payoff functions $u_p$. A **mixed strategy** for player $p$ is a probability vector over $S_p$ — i.e. a point of the simplex $\Delta^{|S_p|-1}$. The joint mixed-strategy space is the product $X = \prod_p \Delta^{|S_p|-1}$, a compact convex polytope (and itself homeomorphic to a simplex for the purposes of fixed-point theory). A **mixed Nash equilibrium** is a profile $\sigma^\star \in X$ at which no player can raise their expected payoff by unilaterally changing their own mixed strategy.
+**Theorem 6.1 (Linearity of expected payoff).** For any distribution $q$ on $J$ and any distribution $p'$ on $I$,
+$$E_1(p', q) = \sum_{i \in I} p'_i\, E_1(e_i, q).$$
+Symmetrically, $E_2(p, q') = \sum_{j \in J} q'_j\, E_2(p, e_j)$.
 
-> **Theorem 8.1 (Nash existence, via Brouwer).** Every finite game has a mixed Nash equilibrium.
+*Proof.* Using Lemma 5.5, $\sum_i p'_i E_1(e_i, q) = \sum_i p'_i \sum_j q_j u_1(i,j) = \sum_i \sum_j p'_i q_j u_1(i,j) = E_1(p', q)$, by distributing the sum. $\square$
 
-*Proof sketch.* Define Nash's improvement map $g : X \to X$ as follows. For player $p$ and pure strategy $a \in S_p$, let
-$$\phi_{p,a}(\sigma) = \max\big(0,\ u_p(a, \sigma_{-p}) - u_p(\sigma)\big)$$
-be the *gain* from deviating to $a$ (how much $a$ beats the current expected payoff). Update
-$$g(\sigma)_{p,a} = \frac{\sigma_{p,a} + \phi_{p,a}(\sigma)}{1 + \sum_{b\in S_p}\phi_{p,b}(\sigma)}.$$
-Each $g(\sigma)_p$ is a valid mixed strategy (nonnegative, summing to $1$), so $g$ maps $X$ into $X$, and $g$ is continuous (payoffs are multilinear, the $\max$ is continuous, the denominator never vanishes). Brouwer's theorem (Theorem 6.2, transported to the polytope $X$) gives a fixed point $\sigma^\star = g(\sigma^\star)$. A short computation shows a fixed point forces all gains $\phi_{p,a}(\sigma^\star) = 0$: if some gain were positive, the renormalization would strictly shift mass toward over-performing strategies and away from at least one strategy in the current support that is *not* a best response — but a strategy in the support cannot do better than the mixture's own value at equilibrium, contradiction. With all gains zero, no unilateral deviation helps; $\sigma^\star$ is a Nash equilibrium. $\qquad\blacksquare$
+Theorem 6.1 says the payoff of a mixed strategy is exactly the $p'$-weighted average of the pure-strategy payoffs $E_1(e_i, q)$. A weighted average of numbers never exceeds the largest of them, and more usefully, never exceeds any common upper bound. This yields the monotonicity lemma:
 
-### 8.2 The combinatorial route and Matching Pennies
+**Lemma 6.2 (Mixed deviations are dominated by pure deviations).** Fix $q$ (a distribution on $J$) and a profile component $p$. If every pure deviation is unprofitable, i.e. $E_1(e_a, q) \le E_1(p, q)$ for all $a \in I$, then every mixed deviation is unprofitable: $E_1(p', q) \le E_1(p, q)$ for every distribution $p'$. The symmetric statement holds for player 2.
 
-Composing §4–§7 with §8.1 gives a fully combinatorial existence proof: color the strategy simplex by descent coordinates of $g$, run the Scarf walk to a rainbow cell, refine. As the mesh $1/m \to 0$, the approximate fixed points converge to an exact equilibrium; for payoffs bounded by $M$ and $N$ total pure strategies, the per-player regret of the mesh-$1/m$ output is $O(M N/m)$, an explicit $\varepsilon$-Nash guarantee.
+*Proof.* By Theorem 6.1, $E_1(p', q) = \sum_i p'_i E_1(e_i, q)$. Since each $p'_i \ge 0$ and $E_1(e_i, q) \le E_1(p, q)$, term-by-term we get $\sum_i p'_i E_1(e_i, q) \le \sum_i p'_i E_1(p, q) = E_1(p, q) \sum_i p'_i = E_1(p, q)$, using $\sum_i p'_i = 1$. $\square$
 
-A canonical test is **Matching Pennies**: two players each choose Heads or Tails; player 1 wins (payoff $+1$) on a match, player 2 wins on a mismatch, zero-sum. This game has *no* pure equilibrium — for any pure profile some player strictly benefits by switching — yet Theorem 8.1 guarantees a mixed one. The descent-coloring algorithm converges to it: each player randomizes uniformly, $\sigma^\star = \big((\tfrac12,\tfrac12),(\tfrac12,\tfrac12)\big)$, where every pure strategy yields expected payoff $0$ and no deviation helps. The accompanying code recovers this equilibrium numerically.
+Combining Lemma 6.2 for both players gives the principle in full.
 
-### 8.3 A worked example: regret surface of a $2\times2$ game
+**Theorem 6.3 (Pure-deviation principle).** Let $(p, q)$ be a profile of distributions. Suppose:
+$$E_1(e_a, q) \le E_1(p, q) \ \text{ for every pure } a \in I, \qquad E_2(p, e_b) \le E_2(p, q) \ \text{ for every pure } b \in J.$$
+Then $(p, q)$ is a Nash equilibrium.
 
-It is instructive to make the fixed-point structure explicit for a general $2\times2$ game. Let player 1 (the *row* player) choose Top with probability $p$ and Bottom with $1-p$, and player 2 (the *column* player) choose Left with probability $q$ and Right with $1-q$. With row payoff matrix $A=(a_{ij})$ and column payoff matrix $B=(b_{ij})$, indices $i,j\in\{0,1\}$ for Top/Left $=0$, the expected payoffs are the bilinear forms
-$$u_1(p,q) = \sum_{i,j} a_{ij}\,p_i q_j, \qquad u_2(p,q) = \sum_{i,j} b_{ij}\,p_i q_j,$$
-with $p_0=p,\,p_1=1-p,\,q_0=q,\,q_1=1-q$. Define the *regret* of a profile $(p,q)$ as the largest unilateral gain available to either player,
-$$\rho(p,q) = \max\Big(\max_{i} \big(u_1(e_i,q)-u_1(p,q)\big),\ \max_{j}\big(u_2(p,e_j)-u_2(p,q)\big)\Big),$$
-where $e_i,e_j$ denote pure deviations. By definition $\rho \ge 0$ always, and $\rho(p,q)=0$ **iff** $(p,q)$ is a Nash equilibrium: no player can improve. The improvement map $g$ of Theorem 8.1 has $(p,q)$ as a fixed point precisely on the zero set of $\rho$. Minimizing $\rho$ over the unit square $[0,1]^2$ — a two-dimensional simplicial search — therefore *computes* equilibria.
+*Proof.* Immediate from Definition 5.4 and two applications of Lemma 6.2. $\square$
 
-For Matching Pennies, $A=\begin{pmatrix}1&-1\\-1&1\end{pmatrix}$ and $B=-A$. A direct computation gives $u_1(p,q) = (2p-1)(2q-1)$, so the row player's deviation gain is $|2q-1|$, vanishing only at $q=\tfrac12$; symmetrically the column player forces $p=\tfrac12$. The regret surface $\rho(p,q)=\max(|2q-1|,|2p-1|)$ has its unique zero at the center $(\tfrac12,\tfrac12)$ — the mixed equilibrium — and rises linearly toward the corners, where some player has a strict deviation worth $1$. This single global minimum is what the accompanying interactive widget renders as a heatmap, and what the grid solver in the demo locates to machine precision. For a coordination game $A=B=\begin{pmatrix}2&0\\0&1\end{pmatrix}$, the regret surface instead vanishes at three points — the two pure equilibria $(1,1)$ and $(0,0)$ and the mixed equilibrium $(\tfrac13,\tfrac13)$ — illustrating that the zero set of $\rho$ recovers the *entire* equilibrium set, not merely one point.
+**Significance.** Definition 5.4 quantifies over infinitely many mixed deviations; Theorem 6.3 replaces this by checking $|I| + |J|$ pure deviations. This is the finiteness that (i) makes equilibrium a *decidable* property of a rational-payoff game, (ii) permits "best response" to be tabulated, and (iii) connects Nash equilibria to the finite combinatorics of Sperner's lemma. In the Sperner/Brouwer construction, the best-response map is defined by comparing finitely many pure payoffs at each mixed profile; a fixed point of that map is, by exactly Theorem 6.3, a Nash equilibrium.
 
 ---
 
-## 9. Discussion
+## 7. Worked equilibria
 
-The architecture above makes precise *which* ingredient is doing the topological work. All of Lemmas 4.1, 5.1, 5.2 and 6.1 are elementary: two are one-line accounting inequalities about vectors summing to $1$, one is a coordinatewise squeeze, and one is bookkeeping over a rainbow cell. The *only* nontrivial input is $\mathrm{IsSpernerLemma}(n)$ — a discrete counting fact. Brouwer's continuous theorem is therefore exactly as strong as a statement about coloring corners, and no more.
+**7.1 Matching Pennies.** Let $I = J = \{\text{H}, \text{T}\}$ with $u_1(a,b) = +1$ if $a = b$ and $-1$ otherwise, and $u_2 = -u_1$ (a zero-sum game): player 1 wins on a match, player 2 on a mismatch. This game has *no* pure equilibrium — for any deterministic pair, the loser strictly prefers to switch.
 
-Two structural remarks are worth recording, drawn from the formal development:
+**Claim.** The uniform profile $p = q = (\tfrac12, \tfrac12)$ is a Nash equilibrium.
 
-- The naive informal statement "the descent map has codomain $\mathbb{R}^{n+1}$" is *false* for an arbitrary map; the correct hypothesis is that the image lies in the simplex (i.e. $f$ is a self-map), which is what makes the summation argument in Lemma 4.1 valid.
-- Continuity of $f$ is used in exactly one place — passing to the limit in Theorem 6.2 — and is genuinely unnecessary for the purely combinatorial Lemma 4.1.
+*Proof.* Both are distributions. Against the uniform $q$, each pure strategy of player 1 yields $E_1(e_a, q) = \tfrac12(+1) + \tfrac12(-1) = 0$, and $E_1(p, q) = 0$ as well, so no pure deviation helps; symmetrically for player 2, each pure payoff is $0 = E_2(p, q)$. By Theorem 6.3, $(p, q)$ is an equilibrium. $\square$
 
-The deduction also clarifies the relationship among existence proofs in game theory. Potential-game existence (a *scalar* certificate: maximize a potential $\Phi$) and supermodular-game existence (an *order* certificate: a Tarski/Knaster–Tarski lattice fixed point) are each strictly weaker than the Brouwer route, which needs neither certificate. The unifying statement is the discrete fixed-point theorem above.
+Matching Pennies exhibits the necessity of *mixed* strategies: equilibrium exists (as Nash's theorem guarantees) but only through randomization. Deliberate unpredictability is the stable behavior.
 
----
+**7.2 Prisoner's Dilemma.** Let $I = J = \{\text{C}, \text{D}\}$ (Cooperate/Defect) with the classic payoffs: mutual cooperation $(3,3)$, mutual defection $(1,1)$, and for a unilateral defection the defector earns $5$ while the cooperator earns $0$.
 
-## 10. Future work
+**Claim.** Mutual defection $(e_{\text{D}}, e_{\text{D}})$ is a Nash equilibrium.
 
-- **Formalizing Sperner itself.** The 1-dimensional parity statement (odd number of color changes along a properly colored segment) is the base case of an induction on dimension; the door-counting (Scarf/Cohen) recursion is the missing combinatorial ingredient that would discharge $\mathrm{IsSpernerLemma}(n)$ as a theorem rather than a hypothesis.
-- **Quantitative $\varepsilon$-Nash.** Convert the $O(1/m)$ proximity of Lemma 6.1 into an explicit per-player regret bound $\varepsilon \le c\,M N/m$ via a Lipschitz estimate on the best-response map, yielding a certified $O(m^{N})$ approximate-equilibrium solver.
-- **Separating existence classes.** Construct a finite game with a pure equilibrium that is neither a potential game nor a supermodular game, formally separating the scalar-certificate, order-certificate, and Brouwer-certificate classes.
-- **Computing the full equilibrium set.** For supermodular games the pure-equilibrium set forms a complete lattice with least and greatest elements obtained by iterating the joint best-response map; making this explicit would compute *all* equilibria, not merely one.
+*Proof.* Both components are (degenerate) distributions. Given player 2 defects, player 1's pure payoffs are $E_1(e_{\text{C}}, e_{\text{D}}) = 0$ and $E_1(e_{\text{D}}, e_{\text{D}}) = 1$; the incumbent choice D is the maximizer, so no pure deviation helps. By symmetry the same holds for player 2. Theorem 6.3 gives the equilibrium. $\square$
+
+The Prisoner's Dilemma illustrates the gap between individual rationality and collective welfare: the unique equilibrium $(1,1)$ is Pareto-dominated by the non-equilibrium outcome $(3,3)$. Equilibrium is a statement about stability, not optimality.
 
 ---
 
-## 11. Summary of formal results
+## 8. Algorithms
 
-| Name | Statement |
-|---|---|
-| `latticeVertex_mem` | Lattice points with coordinate sum $m\ge1$ embed into $\Delta^n$. |
-| `label_exists` | Every point has a descent coordinate $i$: $v_i>0$ and $f(v)_i\le v_i$. |
-| `eq_of_le_on_stdSimplex` | Coordinatewise-comparable simplex points are equal. |
-| `tendsto_of_close` | A sequence squeezed within $\varepsilon_m\to0$ of a convergent sequence shares its limit. |
-| `approx` | At mesh $1/m$, Sperner yields a base point and color-matched neighbors within $1/m$ where $f$ does not increase the matching coordinate. |
-| `sperner_implies_brouwer` | Granting Sperner's lemma, every continuous self-map of $\Delta^n$ has a fixed point. |
+The constructive content of the theory yields concrete algorithms. We record three.
 
-The discrete implies the continuous; the coloring of corners founds the equilibria of games.
+**8.1 Equilibrium verification.** By Theorem 6.3, checking whether $(p, q)$ is a Nash equilibrium requires only: (a) confirm $p, q$ are distributions; (b) compute $E_1(p,q)$ and $E_2(p,q)$; (c) for each pure $a$, verify $E_1(e_a, q) \le E_1(p, q)$; (d) for each pure $b$, verify $E_2(p, e_b) \le E_2(p, q)$. Cost: $O(|I| \cdot |J|)$ arithmetic operations. This is the algorithmic face of the pure-deviation principle.
+
+**8.2 Support enumeration for $2\times 2$ (and general) games.** A Nash equilibrium is characterized by its *support* — the set of pure strategies played with positive probability. On the support, each player must be indifferent among their played pure strategies (else they would shift weight toward the better one), while off-support pure strategies must be no better. This gives, for each candidate pair of supports, a small linear system; solving it and testing feasibility plus the off-support inequalities (again via Theorem 6.3) locates all equilibria. For $2\times 2$ games this enumerates a constant number of cases and finds every equilibrium exactly.
+
+**8.3 Sperner path-following (schematic).** Triangulate the product of strategy simplices; label each vertex by a pure best response of a designated player; by the higher-dimensional Sperner lemma a fully labeled cell exists, and its barycenter is an approximate equilibrium certified by Theorem 6.3. Refining the triangulation drives the approximation to an exact equilibrium. The oriented existence result (Corollary 3.3) is what makes the search *directed* — the higher-dimensional analogue underlies path-following methods of Lemke–Howson/Scarf type.
+
+---
+
+## 9. Discussion and future directions
+
+We have exhibited the arc Sperner $\Rightarrow$ discrete Brouwer, and independently developed the algebra of finite games up to the pure-deviation principle, the exact hinge that connects the finite combinatorial fixed point to equilibrium existence and computation. The unifying theme is that **Nash equilibria are combinatorial fixed points**: fully labeled simplices of a best-response coloring.
+
+Natural extensions, roughly in order of effort:
+
+1. **Higher-dimensional Sperner.** Generalize the parity theorem to a triangulated $n$-simplex: any Sperner coloring has an odd number of fully labeled cells. A clean route is the door/room (index) argument, a parity count of boundary faces analogous to the one-dimensional edge count established here.
+
+2. **Discrete Brouwer in higher dimension.** From the $n$-dimensional Sperner lemma, extract an approximate fixed point of any self-map of the discrete simplex, mirroring the one-dimensional discrete Brouwer theorem.
+
+3. **Limit to continuous Brouwer.** Refine the triangulation (barycentric subdivision) and pass to the limit using compactness to obtain Brouwer's theorem on the standard simplex, and compare with the classical proof.
+
+4. **Nash existence.** Combine (3) with the best-response construction: the map sending a profile to its regularized best response is continuous on the product of simplices, and a fixed point is a Nash equilibrium. The pure-deviation principle is exactly the finiteness needed to certify the fixed point as an equilibrium.
+
+5. **Zero-sum / minimax.** Specialize to two-player zero-sum games and connect the equilibrium payoff to the minimax value; this needs only the pure-deviation principle together with linear-programming duality.
+
+6. **Algorithmic content.** The oriented existence result is constructive. Turning the higher-dimensional analogue into a verified path-following (Lemke–Howson/Scarf) procedure would yield a fully certified Nash-equilibrium algorithm.
+
+---
+
+## 10. Conclusion
+
+Starting from a fact a child can verify — a two-colored fence with red at one end and blue at the other must flip colors an odd number of times — we built a ladder to one of the load-bearing theorems of modern economics. The parity form of the one-dimensional Sperner lemma gives a discrete intermediate value theorem and a discrete Brouwer fixed point; the linearity of expected payoff gives the pure-deviation principle, collapsing equilibrium verification to finitely many checks; and the two meet in the statement that Nash equilibria are combinatorial fixed points. The finite, oriented, constructive nature of Sperner's lemma is not incidental — it is precisely what turns an existence theorem into an algorithm.
