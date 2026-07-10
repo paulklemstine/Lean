@@ -328,20 +328,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
   },
   {
-    "consumed_by_exp_id": "b0a297ce",
-    "description": "Cycle 4936bb72 (Q=0.850) proved 11 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Building on cycle 4d30d98b (Q=0.830), which proved 9 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. ",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_4936bb72_a172f438",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "4936bb72",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T07:49:49.968157+00:00",
-    "title": "Close Proofs: The Zeta Function of a Graph: Number Theory on Networks"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle 7e60f6c2 (Q=0.830) proved 23 theorems in Bridges but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search frac",
     "domains": [
@@ -5523,6 +5509,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T10:45:43.041724+00:00",
     "title": "Conservation law for jigsaw assemblies \u2014 in any validly"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions: number theory on networks\n\n`GraphZetaGlobalRH.lean` lifts the single-eigenvalue (local) Ihara/Ramanujan\ncorrespondence to the **global spectral Ihara zeta** `Z\u207b\u00b9(u) = \u220f_\u03bb (1 \u2212 \u03bbu + qu\u00b2)`\nand proves the full equivalence\n\n    RH for \u03b6_G  \u21d4  G is a Ramanujan graph,\n\ntogether with the global functional equation and Euler-product multiplicativity.\nNatural next steps:\n\n1. **From the spectrum to the adjacency matrix.** Connect `zetaInv` to\n   `det(I \u2212 A u + q u\u00b2 I)` via `Matrix.charpoly` / eigenvalue products, so the\n   results are stated directly for a `(q+1)`-regular graph `G` and its adjacency\n   matrix `A` rather than an abstract spectrum `\u03bb : \u03b9 \u2192 \u2102`.\n\n2. **The full Bass\u2013Ihara formula.** Include the `(1 \u2212 u\u00b2)^{(n\u22121)(q\u22121)/2}`\n   prefactor and prove the determinant identity\n   `\u03b6_G(u)\u207b\u00b9 = (1 \u2212 u\u00b2)^{(n\u22121)(q\u22121)/2} \u00b7 det(I \u2212 A u + q u\u00b2 I)` for regular\n   graphs, deducing the pole structure of `\u03b6_G` itself.\n\n3. **Prime geodesic counting.** Relate `u \u00b7 d/du log Z_G(u)` to the number of\n   closed non-backtracking tailless geodesics `N_m`, giving the graph analogue of\n   the explicit formula, and a \"prime geodesic theorem\" for Ramanujan graphs.\n\n4. **Weighted / irregular graphs.** Generalize the local factor to\n   `det(I \u2212 A u + Q u\u00b2)` with a diagonal degree matrix `Q`, extending the RH\n   dichotomy beyond the regular case.\n\n5. **Counting zeros on the circle.** Turn the qualitative dichotomy into an exact\n   count: the number of zeros of `Z\u207b\u00b9` on `|u| = 1/\u221aq` equals twice the number of\n   eigenvalues in the Ramanujan window, using `Polynomial.roots` multiplicities.\n\n6. **Zeta of coverings and the Ihara determinant of quotients.** Study how\n   `Z\u207b\u00b9` factors under graph coverings (the analogue of Artin factorization of\n   Dedekind zetas), building on the `zetaInv_union` multiplicativity.\n\n\n# Future directions: Carmichael's primitive divisor theorem for Fibonacci numbers\n\nThe files `Catalog/Shared/CarmichaelHelper.lean`, `Catalog/Shared/CarmichaelProof.lean`,\n`Catalog/Speculative/AutoResearch/CarmichaelComposite.lean`, and\n`Catalog/Speculative/CarmichaelPrimitiveDivisor.lean` establish, with complete\n`sorry`-free proofs:\n\n* **Prime case (all `n`).** For every prime `n \u2265 13`, `F(n)` has a primitive prime\n  divisor (`fib_primitive_divisor_prime`). This is fully general.\n* **Composite case (verified range).** For every composite `n` with\n  `13 \u2264 n \u2264 10000`, `F(n)` has a primitive prime divisor\n  (`fib_carmichael_composite`), proved by combining the structural primitivity\n  criterion `primPart_implies_primitive` (a genuine proof via the rank/apparition\n  argument through `Nat.fib_gcd`) with the finite verification `primPart_check`.\n\n## The open tail: unrestricted composite `n`\n\nCarmichael's classical theorem (1913) asserts that `F(n)` has a primitive prime\ndivisor for **all** `n \u2209 {1, 2, 6, 12}`, in particular for every composite\n`n \u2265 14`. The remaining, genuinely deep, ingredient is the composite case for\narbitrarily large `n`. A complete proof requires infrastructure not currently in\nMathlib:\n\n1. **Lifting-the-exponent for the Lucas sequence.** For a prime `p` with rank of\n   apparition `z = z(p)` (least `m > 0` with `p \u2223 F(m)`), control the `p`-adic\n   valuation `v_p(F(n))` in terms of `v_p(F(z))` and `v_p(n/z)`. This is the\n   analogue of the LTE lemma `multiplicity.Int.pow_sub_pow`, transported to the\n   ring `\u2124[\u03c6]` where `F(n) = (\u03b1^n \u2212 \u03b2^n)/\u221a5`.\n\n2. **Classification of intrinsic primes.** Using (1), show that every prime factor\n   of the primitive part `D_n = \u220f_{d \u2223 n} F(d)^{\u03bc(n/d)}` has rank exactly `n`,\n   with the sole possible exception of one \"intrinsic\" prime that divides `n` and\n   occurs to the first power. Consequently the non-primitive part of `D_n` divides\n   `n`.\n\n3. **Analytic size bound.** Prove `|D_n| = \u03b1^{\u03c6(n)} \u00b7 (1 + o(1))` (equivalently a\n   clean lower bound `|D_n| \u2265 c \u00b7 \u03b1^{\u03c6(n)}`) via the closed form and M\u00f6bius\n   inversion, together with a lower bound on Euler's totient `\u03c6(n)`. Since\n   `\u03b1^{\u03c6(n)}` dominates `n` for all `n > 12`, the primitive part exceeds its\n   possible intrinsic factor, forcing a genuine primitive prime divisor.\n\nCombining (2) and (3) yields the unbounded composite case and hence the full\nCarmichael theorem. Formalizing (1)\u2013(3) \u2014 none of which is available off the shelf\nin Mathlib \u2014 is the natural next step; the `primPart` / `fibCoprimePart`\nscaffolding already in place reduces the goal precisely to `1 < primPart n` for\ncomposite `n`, so only the size argument above remains.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0880",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b0a297ce",
+    "status": "available",
+    "timestamp": "2026-07-10T10:45:52.171714+00:00",
+    "title": "`GraphZetaGlobalRH.lean` lifts the single-eigenvalue (local) Ihara/Ramanujan"
   },
   {
     "consumed_by_exp_id": "a9aa7bbf",

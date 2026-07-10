@@ -9,9 +9,9 @@ window.PACKAGE_INDEX = [
     "exp_id": "b0a297ce",
     "filename": "close_proofs_the_zeta_function_of_a_graph_number_t.json",
     "pkg_num": 372,
-    "quality": "unrated",
-    "quality_score": null,
-    "quality_tier": "unrated",
+    "quality": "substantial",
+    "quality_score": 0.83,
+    "quality_tier": "gold",
     "title": "The Zeta Function of a Graph: Number Theory on Networks"
   },
   {
@@ -11182,8 +11182,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "close_proofs_the_zeta_function_of_a_graph_number_t",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.83,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Zeta Function of a Graph: Number Theory on Networks"
     },

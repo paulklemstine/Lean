@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3498198a",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Escher Staircases in Algebra\n\nAn *Escher staircase* is an infinite strictly ascending chain of ideals\n`I₀ ⊂ I₁ ⊂ I₂ ⊂ ⋯` in a commutative ring. A ring admits such a chain exactly",
-      "quality_score": 0.7818800000000001,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-04T05:06:11",
-      "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
-    },
-    {
       "cycle_id": "fbcfb71f",
       "domain": "Applications",
       "key_insight": "# Future Directions — A Bestiary of Arithmetic Monsters\n\nThese conjectures grew directly out of the casting-out-nines analysis of\ndigit-permutation factorizations and the binary-digit-sum bridge.\n\n##",
@@ -499,19 +489,19 @@
       "theorem_count": 32,
       "timestamp": "2026-07-10T10:45:49",
       "title": "Deepening: The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
+    },
+    {
+      "cycle_id": "a9aa7bbf",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — The Thermodynamics of Sorting\n\nThis project formalizes the information-theoretic (Landauer / second-law) content of the\n\"thermodynamics of sorting\" mission. Below we record what",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-07-10T10:46:04",
+      "title": "The Thermodynamics of Sorting: Entropy and Computational Work"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "913b7f3f",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Pairings, Binding, and Aggregate Signatures\n\nThese conjectures grew out of a single structural observation about bilinear\npairings on torsion groups: nondegeneracy *as a form* an",
-      "quality_score": 0.682396,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-06-30T16:07:52",
-      "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
-    },
     {
       "cycle_id": "65ebb6ab",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 32,
       "timestamp": "2026-07-10T10:45:49",
       "title": "Deepening: The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
+    },
+    {
+      "cycle_id": "a9aa7bbf",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — The Thermodynamics of Sorting\n\nThis project formalizes the information-theoretic (Landauer / second-law) content of the\n\"thermodynamics of sorting\" mission. Below we record what",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-07-10T10:46:04",
+      "title": "The Thermodynamics of Sorting: Entropy and Computational Work"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4d9b342d",
-      "domain": "Physics",
-      "name": "linking",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "4d9b342d",
-      "domain": "Physics",
-      "name": "then",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "4d9b342d",
-      "domain": "Physics",
-      "name": "vcomp_eq_hcomp",
-      "quality": 0.7
-    },
     {
       "cycle_id": "298c68ef",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "says",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "a9aa7bbf",
+      "domain": "Geometry",
+      "name": "bubbleComparisons_eq",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "a9aa7bbf",
+      "domain": "Geometry",
+      "name": "bubble_sq_identity",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "a9aa7bbf",
+      "domain": "Geometry",
+      "name": "bubble_lt_sq",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-10T10:45:49",
+  "last_updated": "2026-07-10T10:46:04",
   "open_questions": [
     {
       "context": "`Lemmens-Seidel-73`); here we prove the *reduction* to it with zero `sorry`s.; eigenvalue `−3`.  Both rank facts are formalised with zero `sorry`s, reducing; engines are captured here rigorously and w",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "81f9ab1d",
-        "quality": 0.702,
-        "theorems": 10,
-        "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
-      },
-      {
         "cycle_id": "c235005e",
         "quality": 0.5303045714285715,
         "theorems": 11,
@@ -3451,6 +3445,12 @@
         "quality": 0.6173599999999999,
         "theorems": 12,
         "title": "Explicit Quantitative Lower Bound on Power-Saving for Monic Minkowski Polynomial"
+      },
+      {
+        "cycle_id": "a9aa7bbf",
+        "quality": 0.8,
+        "theorems": 18,
+        "title": "The Thermodynamics of Sorting: Entropy and Computational Work"
       }
     ],
     "Logic": [
