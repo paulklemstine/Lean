@@ -117,6 +117,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 7a9dcf2f (Q=0.780), which proved 81 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Laser beams can carry orbital angular momentum (OAM), creating 'knotted light' \u2014 beams whose wavefronts are linked or knotted. A knotted light beam has a phase singularity (where the amplitude vanishes) that traces out a knot in 3D space. The simplest example is the trefoil beam, whose singularity t",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_7a9dcf2f_786c70cb",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "7a9dcf2f",
+    "status": "available",
+    "timestamp": "2026-07-10T02:59:14.748710+00:00",
+    "title": "Deepening: The Topology of Knotted Light: How Laser Beams Get Tangled"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "In 2023, Smith et al. discovered 'the hat' \u2014 a single tile shape that tiles the plane but only aperiodically (no periodic tiling exists). This solved the aperiodic monotile problem. But deeper questions remain: How many distinct aperiodic monotiles exist? Conjecture: The set of aperiodic monotiles forms a 1-parameter family (the 'hat spectrum') parameterized by a continuous parameter t in [0,1] where t=0 gives the hat, t=1 gives the turtle (a known variant), and intermediate values give intermediate shapes. The key property: each shape in the hat spectrum tiles the plane aperiodically, and no two shapes in the spectrum admit a common periodic tiling. The boundary of the hat spectrum is the curve in R^2 that separates the region of aperiodic monotiles from the region of periodic tiles. This boundary is a piecewise-smooth curve determined by the constraint that the tile must enforce a hierarchical substitution rule. Test: parameterize the hat spectrum by interpolating between the hat and turtle, compute the substitution rule for each t, and verify that the substitution rule enforces aperiodicity for all t in [0,1]. Impact: aperiodic monotiles are not isolated curiosities \u2014 they form a continuous family, and the hat is just one point on the spectrum.",
     "domains": [
       "Novelty",
@@ -187,6 +201,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T01:31:04.802327+00:00",
     "title": "The Zeta Function of a Graph: Number Theory on Networks"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 7a9dcf2f (Q=0.780) proved 81 theorems in MachineLearning but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Laser beams can carry orbital angular momentum (OAM), creating 'knotted light' \u2014 beams whose wavefronts are linked or knotted. A knotted light beam has a phase singularity (where the amplitude vanishe",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "sorry_fill_7a9dcf2f_cb7384d6",
+    "priority_score": 0.8300000000000001,
+    "research_mode": "team",
+    "source_exp_id": "7a9dcf2f",
+    "status": "available",
+    "timestamp": "2026-07-10T02:59:14.834105+00:00",
+    "title": "Close Proofs: The Topology of Knotted Light: How Laser Beams Get Tangled"
   },
   {
     "consumed_by_exp_id": "",
@@ -1867,20 +1895,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For a graph $G$ with minimum degree $\\delta(G) \\ge a + r$, if the spectral radius $\\lambda(G)$ is at least $a + r + b$, then $G$ is fractional ID-$[a,b]$-factor-critical.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "fd_0167",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.31064v1",
-    "status": "available",
-    "timestamp": "2026-07-03T21:44:34.279843+00:00",
-    "title": "Spectral radius threshold for fractional ID-$[a,b]$-factor-critical graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "The conjecture asserts that sum throttling for any graph G is at most twice the product throttling value of its complement, ensuring mathematical consistency.",
     "domains": [
       "Pythagorean",
@@ -2243,20 +2257,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-04T10:58:20.247042+00:00",
     "title": "Eventual congruence of mis\u00e8re P\u2011positions in nuclear escalation ladders"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "There exists an infinite family of graphs with maximum degree d such that for any signing \u03c3, the spectral radius \u03c1(A_\u03c3) \u2265 2\u221a(3(d-1)).",
-    "domains": [
-      "Physics"
-    ],
-    "id": "fd_0198",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.28797v1",
-    "status": "available",
-    "timestamp": "2026-07-04T11:59:32.982186+00:00",
-    "title": "Tightness of the 3-Constant in the Spectral Radius Bound for Signed Adjacency Matrices"
   },
   {
     "consumed_by_exp_id": "",
@@ -6532,21 +6532,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Let G be a finite group and let \u03c3 be a cyclic permutation of G representing a directed Hamiltonian cycle. If left translations by a and b both preserve the undirected cycle (i.e., L_a \u2218 \u03c3 \u2218 L_a^{-1} \u2208 {\u03c3, \u03c3^{-1}} and L_b \u2218 \u03c3 \u2218 L_b^{-1} \u2208 {\u03c3, \u03c3^{-1}}), and the order of a is at least 3, then b conjugates a to either a or a^{-1} (i.e., b * a * b^{-1} \u2208 {a, a^{-1}}).",
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_0542",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.04658v1",
-    "status": "available",
-    "timestamp": "2026-07-07T10:24:39.371499+00:00",
-    "title": "Cyclic-Order Rigidity for Hamiltonian Cycles in Finite Groups"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "The paper establishes a directed analogue of the Bonnet-Myers theorem: for a strongly connected, r-regular simple digraph G with in-curvature \u03ba\u207b(v) \u2265 \u03ba\u2080 > 0 at every vertex, the directed diameter is bounded above by 2r/\u03ba\u2080. The natural rigidity conjecture is that equality in this bound forces G to be a directed cycle. Specifically, if G is a strongly connected, r-regular simple digraph with in-curvature \u03ba\u207b(v) \u2265 \u03ba\u2080 > 0 for all v, and the directed diameter satisfies \u27f6diam(G) = 2r/\u03ba\u2080, then G is isomorphic to a directed cycle C_n (where n = 2r/\u03ba\u2080 + 1). This mirrors Obata's rigidity theorem for the classical Lichnerowicz inequality and would complete the directed Bonnet-Myers picture.",
     "domains": [
       "Pythagorean"
@@ -8632,20 +8617,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Every simple finite graph that is (K\u2081\u222aP\u2084)-free, has toughness at least 1, and has at least 3 vertices is Hamiltonian.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "fd_0710",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.07239v1",
-    "status": "available",
-    "timestamp": "2026-07-09T04:17:26.671029+00:00",
-    "title": "Hamiltonicity of (K\u2081\u222aP\u2084)-free 1-tough graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "For coprime integers \u2113, \u03bc \u22652, the number of overpartitions R\u0304_\u2113,\u03bc(n) modulo 4 is congruent to 0 or 1, which are the only perfect squares modulo 4.",
     "domains": [
       "Pythagorean",
@@ -8953,21 +8924,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-09T12:43:10.045795+00:00",
     "title": "FO Value Discovery Threshold Realizability"
-  },
-  {
-    "consumed_by_exp_id": "7976e906",
-    "description": "For any fixed c in [1, sqrt(2)), there exists a family of finite metric spaces {X_n} with polynomially bounded doubling dimension such that any finitely presented c-approximation to the Vietoris-Rips filtrationrips(X_n) has size at least 2^{Omega(n)}. This establishes that bounded doubling dimension is a necessary geometric assumption for linear-size sparse approximations.",
-    "domains": [
-      "Geometry",
-      "MachineLearning"
-    ],
-    "id": "fd_0733",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.06524v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-09T13:08:02.178509+00:00",
-    "title": "Exponential Lower Bound for Rips c-Approximation in Bounded Doubling Dimension"
   },
   {
     "consumed_by_exp_id": "",
@@ -9347,20 +9303,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-09T13:26:58.075263+00:00",
     "title": "Cyclic identity for the generalized cross-ratio of planes"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The class of cographs (i.e., P\u2084-free graphs) is generalized spectrally closed: no cograph is generalized cospectral with a graph that contains an induced P\u2084.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "fd_0760",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.06455v1",
-    "status": "available",
-    "timestamp": "2026-07-09T13:45:06.223990+00:00",
-    "title": "Generalized spectral closedness of cographs"
   },
   {
     "consumed_by_exp_id": "",
@@ -9813,21 +9755,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
   },
   {
-    "consumed_by_exp_id": "7a9dcf2f",
-    "description": "Laser beams can carry orbital angular momentum (OAM), creating 'knotted light' \u2014 beams whose wavefronts are linked or knotted. A knotted light beam has a phase singularity (where the amplitude vanishes) that traces out a knot in 3D space. The simplest example is the trefoil beam, whose singularity traces a trefoil knot. Conjecture: The OAM spectrum of a knotted light beam encodes the Alexander polynomial of the knot. Specifically, if the singularity of the beam traces a knot K, then the OAM spectrum (the set of allowed angular momentum values) is {l : Delta_K(e^{2*pi*i*l/N}) = 0} where Delta_K is the Alexander polynomial of K and N is the crossing number. For the trefoil (Delta = t^2 - t + 1), the OAM spectrum includes l = 1/6, 5/6 (mod 1), giving OAM values l = 1, 5 (mod 6). For the unknot (Delta = 1), the OAM spectrum is trivial (l = 0 only). For the figure-eight knot (Delta = t^2 - 3t + 1), the OAM values include l = (3 \u00b1 sqrt(5))/2 mod 1. Test: compute the OAM spectrum of trefoil, figure-eight, and cinquefoil beams numerically and verify they match the Alexander polynomial predictions. Impact: knotted light carries knot invariants in its angular momentum \u2014 shining a laser through a knot-shaped hologram encodes the Alexander polynomial in the beam's quantum numbers.",
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_0817",
-    "priority_score": 0.79,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T00:01:24.266197+00:00",
-    "title": "The Topology of Knotted Light: How Laser Beams Get Tangled"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prime gaps \u2014 the spaces between consecutive primes \u2014 are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable \u2014 given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random \u2014 they are a solvable crossword puzzle with deterministic rules.",
     "domains": [
@@ -10099,21 +10026,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Shell Structure as Spectral Degeneracy\n\nThese conjectures are distilled from the present cycle, which established that the\nCoulomb closed-shell numbers `2,10,28,60,110` and the oscillator magic numbers\n`2,8,20,40,70,112` are cubic cumulative sums of eigenvalue degeneracies, and that\neach shell energy is literally an eigenvalue of a diagonal Hamiltonian.\n\n## 1. A two-parameter family of \"periodic tables\"\n**Conjecture.** For every affine-quadratic degeneracy law `d(k) = a k\u00b2 + b k + c`\nwith `a>0`, the cumulative filling `F(n) = \u2211_{k\u2264n} d(k)` is a cubic polynomial, and\nthe pair `(a,b,c)` is uniquely recoverable from any four consecutive fillings.\nThus each admissible triple names a distinct shell table, and the Coulomb and\noscillator tables are two lattice points in this space.\n\nThe key insight is that shell \"periods\" are Faulhaber sums, so the *entire* table is\nencoded in three numbers \u2014 the degeneracy polynomial \u2014 rather than in a list of\nnoble-gas atomic numbers.\n\nWhy now? Closed-form degeneracy sums for both the Coulomb and oscillator models are\nnow in hand, exposing them as neighbouring instances of one polynomial family and\ninviting a classification of all quadratic-degeneracy tables.\n\n## 2. Spin\u2013orbit as a rank-one spectral perturbation reproducing `28, 50, 82`\n**Conjecture.** Adding a diagonal spin\u2013orbit term `\u03be \u00b7 l\u00b7s` to the isotropic\noscillator Hamiltonian shifts the cumulative fillings from `2,8,20,40,70,112` to the\nempirical magic numbers `2,8,20,28,50,82,126`, and the required shifts are exactly\nthe partial sums of the highest-`j` sublevel sizes at each level.\n\nThe key insight is that the empirical magic numbers are not new degeneracies but a\n*reordering* of oscillator sublevels induced by a single diagonal perturbation, so\nthe \"islands of stability\" are a perturbed spectrum, not a separate phenomenon.\n\nWhy now? The bare-oscillator boundary case (`40\u226028`, `70\u226050`) is pinned down here as\nthe precise place the diagonal model breaks, isolating spin\u2013orbit as the one missing\ndiagonal term to be added and checked.\n\n## 3. The Madelung rule as a spectral ordering theorem\n**Conjecture.** The observed noble-gas numbers `2,10,18,36,54,86` are the cumulative\ndegeneracies of the same `2n\u00b2` shells re-summed in order of increasing `n+l` (ties\nbroken by increasing `n`); equivalently, they are the ordered eigenvalue\nmultiplicities of a Hamiltonian whose energies are monotone in `n+l`.\n\nThe key insight is that switching from pure `n`-ordering to `(n+l)`-ordering is a\npermutation of the *same* eigenvalues, so real chemistry differs from the Coulomb\ntable only by the sorting key of the spectrum.\n\nWhy now? The present cycle shows the pure-`n` Coulomb table diverges from reality\nexactly past `Z=10`, precisely where `(n+l)` ordering first overtakes `n` ordering,\nmaking the Madelung rule the natural next spectral statement to formalize.\n\n## 4. Trace invariants as chemical sum rules\n**Conjecture.** For a diagonal shell Hamiltonian truncated to `d` levels, the power\ntraces `tr(H\u1d4f) = \u2211 E\u2099\u1d4f` are the elementary symmetric data of the spectrum, and\nweighted trace ratios reproduce measurable bulk quantities (e.g. mean binding energy\nper shell) as `d \u2192 \u221e` for the Rydberg energies `E\u2099 = -1/(n+1)\u00b2`, whose traces\nconverge to values of the Riemann zeta function.\n\nThe key insight is that every additive shell property is a trace of a power of the\nHamiltonian, so \"chemical averages\" are spectral moments and their limits are zeta\nvalues.\n\nWhy now? With the diagonal Hamiltonian and its trace formula established, the\n`\u2211 1/(n+1)^{2k} = \u03b6(2k)` limit is one convergence argument away, turning shell\naverages into a bridge between spectral theory and analytic number theory.\n\n\n# Future Directions \u2014 Shell Structure as Spectral Degeneracy\n\nThese conjectures are distilled from the present cycle, which established that the\nCoulomb closed-shell numbers `2,10,28,60,110` and the oscillator magic numbers\n`2,8,20,40,70,112` are cubic cumulative sums of eigenvalue degeneracies, and that\neach shell energy is literally an eigenvalue of a diagonal Hamiltonian.\n\n## 1. A two-parameter family of \"periodic tables\"\n**Conjecture.** For every affine-quadratic degeneracy law `d(k) = a k\u00b2 + b k + c`\nwith `a>0`, the cumulative filling `F(n) = \u2211_{k\u2264n} d(k)` is a cubic polynomial, and\nthe pair `(a,b,c)` is uniquely recoverable from any four consecutive fillings.\nThus each admissible triple names a distinct shell table, and the Coulomb and\noscillator tables are two lattice points in this space.\n\nThe key insight is that shell \"periods\" are Faulhaber sums, so the *entire* table is\nencoded in three numbers \u2014 the degeneracy polynomial \u2014 rather than in a list of\nnoble-gas atomic numbers.\n\nWhy now? Closed-form degeneracy sums for both the Coulomb and oscillator models are\nnow in hand, exposing them as neighbouring instances of one polynomial family and\ninviting a classification of all quadratic-degeneracy tables.\n\n## 2. Spin\u2013orbit as a rank-one spectral perturbation reproducing `28, 50, 82`\n**Conjecture.** Adding a diagonal spin\u2013orbit term `\u03be \u00b7 l\u00b7s` to the isotropic\noscillator Hamiltonian shifts the cumulative fillings from `2,8,20,40,70,112` to the\nempirical magic numbers `2,8,20,28,50,82,126`, and the required shifts are exactly\nthe partial sums of the highest-`j` sublevel sizes at each level.\n\nThe key insight is that the empirical magic numbers are not new degeneracies but a\n*reordering* of oscillator sublevels induced by a single diagonal perturbation, so\nthe \"islands of stability\" are a perturbed spectrum, not a separate phenomenon.\n\nWhy now? The bare-oscillator boundary case (`40\u226028`, `70\u226050`) is pinned down here as\nthe precise place the diagonal model breaks, isolating spin\u2013orbit as the one missing\ndiagonal term to be added and checked.\n\n## 3. The Madelung rule as a spectral ordering theorem\n**Conjecture.** The observed noble-gas numbers `2,10,18,36,54,86` are the cumulative\ndegeneracies of the same `2n\u00b2` shells re-summed in order of increasing `n+l` (ties\nbroken by increasing `n`); equivalently, they are the ordered eigenvalue\nmultiplicities of a Hamiltonian whose energies are monotone in `n+l`.\n\nThe key insight is that switching from pure `n`-ordering to `(n+l)`-ordering is a\npermutation of the *same* eigenvalues, so real chemistry differs from the Coulomb\ntable only by the sorting key of the spectrum.\n\nWhy now? The present cycle shows the pure-`n` Coulomb table diverges from reality\nexactly past `Z=10`, precisely where `(n+l)` ordering first overtakes `n` ordering,\nmaking the Madelung rule the natural next spectral statement to formalize.\n\n## 4. Trace invariants as chemical sum rules\n**Conjecture.** For a diagonal shell Hamiltonian truncated to `d` levels, the power\ntraces `tr(H\u1d4f) = \u2211 E\u2099\u1d4f` are the elementary symmetric data of the spectrum, and\nweighted trace ratios reproduce measurable bulk quantities (e.g. mean binding energy\nper shell) as `d \u2192 \u221e` for the Rydberg energies `E\u2099 = -1/(n+1)\u00b2`, whose traces\nconverge to values of the Riemann zeta function.\n\nThe key insight is that every additive shell property is a trace of a power of the\nHamiltonian, so \"chemical averages\" are spectral moments and their limits are zeta\nvalues.\n\nWhy now? With the diagonal Hamiltonian and its trace formula established, the\n`\u2211 1/(n+1)^{2k} = \u03b6(2k)` limit is one convergence argument away, turning shell\naverages into a bridge between spectral theory and analytic number theory.\n",
-    "domains": [
-      "Pythagorean",
-      "Physics"
-    ],
-    "id": "fd_0821",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "e7035fce",
-    "status": "available",
-    "timestamp": "2026-07-10T00:21:17.714659+00:00",
-    "title": "These conjectures are distilled from the present cycle, which established that t"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "# Future Directions\n\nThis project formalizes a small algebraic complexity theory of recipes, modelling a\nrecipe by its cooking time `C(R)` and verification time `V(R)` and classifying recipes\nas quick (`C = V`, \"P = NP\"), traditional (`V < C`, \"P \u2260 NP\"), or overhard (`C < V`,\n\"NP-hard\"). The `Logic/RecipeComplexity.lean` file proves a chain of results:\n\n1. Trichotomy of recipe classes and their relation to physicality (`V \u2264 C`).\n2. Sequential composition `seq` makes `Recipe` a commutative monoid.\n3. Closure of the classes under composition (`IsQuick.seq`,\n   `IsTraditional.seq_physical`, `IsPhysical.seq`).\n4. Speedup `C \u2212 V` is additive over physical recipes.\n5. Repetition (`n` servings) scales `C` and `V` linearly and preserves the classes.\n6. Batches (menus) sum cooking/verification times; **Batch Quickness Theorem**: a menu\n   of physical recipes is globally quick iff every dish is quick.\n7. Rational cooking ratio `C/V` characterization of the three classes.\n\n## Natural next steps\n\n- **Weighted/parallel cooking.** Model kitchens with `k` cooks as a `max`-plus rather\n  than `plus` composition, and study when parallelism turns a traditional menu quick.\n- **A genuine reduction relation.** Introduce `R \u2aaf S` (\"recipe `R` reduces to `S`\") and\n  prove the classes are downward/upward closed, mirroring polynomial-time reductions.\n- **Cost hierarchies.** Define recipe families indexed by input size `n` with\n  `C, V : \u2115 \u2192 \u2115`, and formalize asymptotic separations (`V = o(C)`), giving a faithful\n  analogue of `P \u228a NP`-style time-hierarchy statements.\n- **Amortized speedup.** Study `speedup (batch L) / length L` and prove averaging\n  inequalities over menus.\n- **Overhard closure.** Characterize exactly when composing dishes preserves\n  overhardness, and connect to the (informal) \"destructive verification\" motivation of\n  the souffl\u00e9.\n- **Probabilistic verification.** Replace exact tasting by sampling and formalize a\n  BPP-flavoured \"taste a spoonful\" model.\n",
     "domains": [
       "Algebra",
@@ -10204,6 +10116,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe file `MachineLearning/RipsDoublingLowerBound.lean` establishes, with complete\nLean proofs and only the standard axioms, the combinatorial and metric core behind\nthe statement that *bounded doubling dimension is necessary for linear-size sparse\napproximations of the Vietoris\u2013Rips filtration*:\n\n* the Vietoris\u2013Rips filtration is a monotone, downward-closed, multiplicatively\n  interleaved family of simplicial complexes (`ripsComplex_mono`,\n  `ripsComplex_downClosed`, `ripsComplex_interleave`);\n* the equilateral instance `X_n` is a genuine metric space (`equiDist_isMetric`)\n  whose Rips complex has exactly `2^n` faces at every scale `r \u2265 1`, in particular\n  throughout `[1, \u221a2)` (`card_ripsComplex_equiDist`);\n* any complex containing `Rips(X_n, 1)` \u2014 the exact (`c = 1`) representative of the\n  filtration \u2014 has at least `2^n` faces (`representation_size_lower_bound`);\n* yet `X_n` has doubling dimension exactly `log\u2082 n`: the covering number at the\n  critical scale is exactly `n` (`covering_number_equiDist`, `doublingDim_equiDist`),\n  which is unbounded but only logarithmic.\n\n## What remains for the full theorem\n\nThe headline claim \u2014 *for every fixed `c \u2208 [1, \u221a2)`, any finitely presented\n`c`-approximation to `Rips(X_n)` has size `2^{\u03a9(n)}`* \u2014 requires two ingredients\nthat are beyond the present development and are natural next targets.\n\n1. **Homotopy interleavings and persistent homology.**  A `c`-approximation is not\n   required to *contain* `Rips(r)` as a set of faces; it need only be interleaved\n   *up to homotopy*. Capturing this faithfully needs (i) simplicial homology of the\n   Rips complex as a persistence module over `\u211d`, and (ii) the multiplicative\n   interleaving distance of Chazal et al. 2014. The size lower bound then follows\n   from a lower bound on the number of persistence intervals rather than on the raw\n   face count. The equilateral instance formalized here is contractible at each\n   scale, so a homology-aware lower bound must use a richer family (below).\n\n2. **The `\u221a2` threshold and a hard family with exponential barcode.**  The constant\n   `\u221a2` is exactly the Rips\u2013\u010cech interleaving constant (Jung's theorem; Wagner\n   2016): for `c < \u221a2` a coarser scale cannot merge the two critical scales of the\n   hard instance, so an exponential number of homological features must survive.\n   Formalizing this requires (i) Jung's theorem `circumradius \u2264 diam / \u221a2` in\n   Euclidean space, and (ii) an explicit family (e.g. a suitable subset of the\n   hypercube or cross-polytope net, following Sheehy 2013 / Rabad\u00e1n\u2013Dey 2016) whose\n   persistent homology has `2^{\u03a9(n)}` bars while the doubling dimension grows only\n   polynomially.\n\n## Concrete intermediate milestones\n\n* Formalize simplicial homology `H_k(ripsComplex d r)` as a functor of `r` and its\n  barcode decomposition for finite point clouds.\n* Prove the multiplicative stability/interleaving inequality relating the barcodes\n  of two `c`-interleaved filtrations.\n* Prove Jung's inequality in `EuclideanSpace \u211d (Fin d)`, yielding the `\u221a2` Rips\u2013\u010cech\n  sandwich.\n* Construct the exponential-barcode family and combine the above to obtain the full\n  `2^{\u03a9(n)}` size lower bound for all `c \u2208 [1, \u221a2)`.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0834",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7976e906",
+    "status": "available",
+    "timestamp": "2026-07-10T02:58:58.081111+00:00",
+    "title": "The file `MachineLearning/RipsDoublingLowerBound.lean` establishes, with complet"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formalizes\nthe exact algebra behind the \"knotted light\" OAM/Alexander-polynomial conjecture for\nthe four smallest knots. Natural extensions:\n\n1. **Cyclotomic identification.**  Prove `trefoilPoly = cyclotomic 6 \u2124` and\n   `cinquefoilPoly = cyclotomic 10 \u2124` directly in Mathlib (rather than only proving\n   the individual root facts). This would make the \"roots are exactly the primitive\n   n-th roots of unity\" statement complete, including the *converse* (no spurious\n   roots) via `Polynomial.roots_cyclotomic`.\n\n2. **Torus-knot family.**  The trefoil and cinquefoil are the `(2, 3)` and `(2, 5)`\n   torus knots, with `\u0394_{(2,2k+1)}(t) = (t^{2k+1} + 1)/(t + 1)`. Formalize the general\n   torus-knot Alexander polynomial and show its roots are the `(4k+2)`-th roots of\n   unity that are not `(2k+1)`-th roots \u2014 a uniform generalization of the two cases\n   proved here.\n\n3. **General reciprocity and `\u0394(1) = \u00b11`.**  State and prove the reciprocity law\n   `t^{2g} \u0394(1/t) = \u0394(t)` and the normalization `\u0394(1) = \u00b11` from an abstract\n   axiomatization of Alexander polynomials (e.g. via Seifert matrices `V`,\n   `\u0394(t) = det(V \u2212 t V\u1d40)`), instead of case by case.\n\n4. **Knot determinant as `|\u0394(\u22121)|`.**  Connect the numbers `3, 5, 5` proved here to\n   the determinant defined through a Goeritz or Seifert matrix, and to\n   `p`-colorability (`3`-colorable \u21d4 `3 \u2223 det`).\n\n5. **Off-circle roots and the golden ratio.**  Generalize the figure-eight\n   observation: characterize which knots have all Alexander roots on the unit circle\n   (a necessary condition for genuine root-of-unity OAM quantization). The\n   figure-eight, with roots `\u03c6^{\u00b12}`, is the smallest knot violating this.\n",
+    "domains": [
+      "MachineLearning",
+      "Pythagorean"
+    ],
+    "id": "fd_0835",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7a9dcf2f",
+    "status": "available",
+    "timestamp": "2026-07-10T02:59:09.669263+00:00",
+    "title": "The Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formal"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Erdos-Renyi random graph G(n, p) has n vertices where each edge appears independently with probability p. At p = log(n)/n, G(n,p) becomes connected. But what if p is COMPLEX? Define G(n, z) where z is a complex number: each edge (i,j) appears with 'probability' z, meaning the edge weight is z instead of 0 or 1. The resulting 'complex graph' is a weighted complete graph where edge (i,j) has weight z if the edge exists and 0 otherwise. The adjacency matrix A_z has entries that are either z or 0. Conjecture: The complex eigenvalues of A_z trace out a circle of radius |z|*sqrt(n) in the complex plane, centered at the origin. As n -> infinity, the empirical spectral distribution of A_z converges to the circular law (like the Ginibre ensemble) because A_z is a random matrix with i.i.d. entries of mean z*p and variance |z|^2*p*(1-p). The 'hallucination' is that for Im(z) != 0, the graph has complex-valued connectivity \u2014 information flows with both amplitude and phase, and the phase creates interference patterns that are visible in the spectral density. Test: generate A_z for n = 1000 with z = 0.5 + 0.3i, compute eigenvalues, and verify they lie in a disk of radius sqrt(n)*|z|. Compare with the Ginibre ensemble prediction. Impact: complex-valued random graphs have circular spectra \u2014 the hallucination of complex probabilities creates beautiful circular eigenvalue distributions.",
     "domains": [
       "Novelty",
@@ -10261,7 +10203,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Ramanujan's Taxicab Number as a Sum of Three Cubes: 1729 Revisited"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dd8b10c1",
     "description": "A cake is a smooth projective variety over R: it has a base (a smooth manifold with boundary), frosting (a sheaf of sections supported on the boundary), and layers (a stratification by codimension). The Fundamental Theorem of Cakes states: every cake C is uniquely determined (up to isomorphism of flavor) by its base B, its frosting sheaf F, and its layer stratification L. The frosting sheaf is a locally free sheaf of rank 1 (the cake has uniform frosting thickness) supported on the boundary of the base. The stratification is a flag of subvarieties C = L_0 > L_1 > ... > L_k = {point} where L_i has codimension i and represents the i-th layer. Conjecture: the moduli space of cakes of genus g (g = number of cherries on top) has dimension 3g-3 for g >= 2, mirroring the moduli space of Riemann surfaces. The cherry number g corresponds to the first Betti number of the cake surface, and the moduli are the positions of the g cherries on the surface. Test: enumerate all topologically distinct cakes with g <= 5 cherries and verify that the moduli space has dimension 3g-3. Compute the Teichmuller space of cakes by varying the cherry positions. Impact: cakes are algebraic varieties, and the mathematics of cake decoration IS the mathematics of moduli spaces.",
     "domains": [
       "Novelty",
@@ -10271,7 +10213,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.68,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T22:33:32.914564+00:00",
     "title": "The Fundamental Theorem of Cakes: Algebraic Geometry of Baking"
   },

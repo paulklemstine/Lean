@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "50540462",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Siblings of the Coupon Collector\n\nThis cycle established, in full, the two-type extremality story for every sibling\nindex and, for arbitrary numbers of types, the exact closed fo",
-      "quality_score": 0.7700800000000001,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-02T02:02:27",
-      "title": "Uniform Extremality for Siblings of the Coupon Collector"
-    },
-    {
       "cycle_id": "f4462f16",
       "domain": "Applications",
       "key_insight": "# Future Directions — No-Stretching of Quotient Labelings from Edge Partitions\n\nThese conjectures grew out of a single structural discovery: when the edges of a\nconnected graph are partitioned into cl",
@@ -499,19 +489,19 @@
       "theorem_count": 46,
       "timestamp": "2026-07-10T02:41:36",
       "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
+    },
+    {
+      "cycle_id": "7a9dcf2f",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\nThe Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formalizes\nthe exact algebra behind the \"knotted light\" OAM/Alexander-polynomial conjecture for\nthe four",
+      "quality_score": 0.78,
+      "sorry_count": 3,
+      "theorem_count": 81,
+      "timestamp": "2026-07-10T02:59:14",
+      "title": "The Topology of Knotted Light: How Laser Beams Get Tangled"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3c64518a",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Forbidden pc-minors for Daisy Cubes\n\nDerived from this cycle's formalized findings:\n- `daisy_isometric` — daisy cubes are partial cubes (isometric subgraphs of `Q_n`);\n- `meet_on",
-      "quality_score": 0.79664,
-      "sorry_count": 0,
-      "theorem_count": 24,
-      "timestamp": "2026-06-29T00:21:28",
-      "title": "Complete Characterization of Minimal Forbidden Partial‑Cube Minors for Daisy Cubes"
-    },
     {
       "cycle_id": "03afc47a",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 22,
       "timestamp": "2026-07-10T02:59:06",
       "title": "Exponential Lower Bound for Rips c-Approximation in Bounded Doubling Dimension"
+    },
+    {
+      "cycle_id": "7a9dcf2f",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\nThe Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formalizes\nthe exact algebra behind the \"knotted light\" OAM/Alexander-polynomial conjecture for\nthe four",
+      "quality_score": 0.78,
+      "sorry_count": 3,
+      "theorem_count": 81,
+      "timestamp": "2026-07-10T02:59:14",
+      "title": "The Topology of Knotted Light: How Laser Beams Get Tangled"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0a41cc78",
-      "domain": "Novelty",
-      "name": "pv_zero_of_even",
-      "quality": 0.7258007692307691
-    },
-    {
-      "cycle_id": "59aff0ea",
-      "domain": "Applications",
-      "name": "of",
-      "quality": 0.8076800000000002
-    },
-    {
-      "cycle_id": "59aff0ea",
-      "domain": "Applications",
-      "name": "is",
-      "quality": 0.8076800000000002
-    },
     {
       "cycle_id": "59aff0ea",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "compEquiv_sq_eq_one",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "7a9dcf2f",
+      "domain": "MachineLearning",
+      "name": "deforms",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "7a9dcf2f",
+      "domain": "MachineLearning",
+      "name": "LipschitzWith",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "7a9dcf2f",
+      "domain": "MachineLearning",
+      "name": "ApproxLipschitzWith",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-10T02:59:06",
+  "last_updated": "2026-07-10T02:59:14",
   "open_questions": [
-    {
-      "context": "Main results (all sorry-free):; sorry-free, to an explicit finite list of quartic Thue equations whose known; What survived: the entire *structural* reduction is fully formal and sorry-free.",
-      "cycle_id": "60fa5375",
-      "domain": "Combinatorics",
-      "sorry_count": 4,
-      "timestamp": "2026-06-29T23:28:10"
-    },
     {
       "context": "mathematics).  It is recorded here as a hypothesis, with an honest `sorry`, and is used only; sorry",
       "cycle_id": "fd05632c",
@@ -3016,6 +3009,13 @@
       "domain": "Probability",
       "sorry_count": 1,
       "timestamp": "2026-07-10T01:14:02"
+    },
+    {
+      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
+      "cycle_id": "7a9dcf2f",
+      "domain": "MachineLearning",
+      "sorry_count": 3,
+      "timestamp": "2026-07-10T02:59:14"
     }
   ],
   "research_threads": {
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "71ab9721",
-        "quality": 0.6771,
-        "theorems": 15,
-        "title": "Euler-Mascheroni Constant: Irrationality Approaches"
-      },
-      {
         "cycle_id": "ad454ca1",
         "quality": 0.6776,
         "theorems": 15,
@@ -3575,6 +3569,12 @@
         "quality": 0.62,
         "theorems": 22,
         "title": "Exponential Lower Bound for Rips c-Approximation in Bounded Doubling Dimension"
+      },
+      {
+        "cycle_id": "7a9dcf2f",
+        "quality": 0.78,
+        "theorems": 81,
+        "title": "The Topology of Knotted Light: How Laser Beams Get Tangled"
       }
     ],
     "Novelty": [
