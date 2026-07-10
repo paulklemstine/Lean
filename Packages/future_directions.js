@@ -4,6 +4,20 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 207fb5b4 (Q=0.830), which proved 24 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Calderbank-Shor-Steane (CSS) quantum error-correcting codes are constructed from classical linear codes C_1, C_2 with C_2 perp subset C_1. The CSS code encodes dim(C_1) - dim(C_2) logical qubits. This is exactly the definition of a cohomology group: H^1(C_1, C_2) = C_1 / C_2. Conjecture: every C",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_207fb5b4_b2ff9e96",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "207fb5b4",
+    "status": "available",
+    "timestamp": "2026-07-10T09:26:16.340231+00:00",
+    "title": "Deepening: Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 39669115 (Q=0.830), which proved 25 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Sudoku is a constraint satisfaction problem (CSP). Random Sudoku instances exhibit a phase transition: for n^2 x n^2 grids, the probability of having a solution drops from ~1 to ~0 around a critical density of pre-filled cells. Conjecture: the phase transition occurs at density d_c(n) = (n^2 - 1) / ",
     "domains": [
       "Applications"
@@ -87,6 +101,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle e37aa20a (Q=0.830), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The logistic map f(x) = r*x*(1-x) for r = 4 exhibits chaotic dynamics: small changes in initial conditions lead to exponentially diverging trajectories (Lyapunov exponent lambda = log(2)). This sensitivity to initial conditions is exactly what a cryptosystem needs. Conjecture: The logistic map at r ",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_e37aa20a_6b439247",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "e37aa20a",
+    "status": "available",
+    "timestamp": "2026-07-10T09:26:12.203685+00:00",
+    "title": "Deepening: Cryptography from Chaos: Encrypting with the Logistic Map"
+  },
+  {
     "consumed_by_exp_id": "9b14e09c",
     "description": "Building on cycle 14000bf9 (Q=0.820), which proved 46 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A jigsaw puzzle has N pieces, each with 4 edges. The 'signature' of a piece is the tuple (top, right, bottom, left) of edge types (flat, tab, blank). Two pieces fit together if their adjacent edges are complementary (tab meets blank). Conjecture: Solving a jigsaw puzzle is NP-complete. The reduction",
     "domains": [
@@ -143,7 +171,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "df72d5fe",
     "description": "Building on cycle 956fff13 (Q=0.820), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The sequence of primes 2, 3, 5, 7, 11, 13, ... defines a point cloud in R where the n-th prime p_n is at position p_n on the real line. The gaps between primes create a topological structure. Define the persistent homology of the prime point cloud as the Rips filtration R_epsilon = {p_n : |p_m - p_n",
     "domains": [
       "Novelty"
@@ -152,7 +180,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "956fff13",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T07:49:37.464120+00:00",
     "title": "Deepening: Persistent Homology of Prime Numbers: The Topology of Arithmetic"
   },
@@ -454,21 +482,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-10T03:16:18.428249+00:00",
     "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
-  },
-  {
-    "consumed_by_exp_id": "207fb5b4",
-    "description": "The Calderbank-Shor-Steane (CSS) quantum error-correcting codes are constructed from classical linear codes C_1, C_2 with C_2 perp subset C_1. The CSS code encodes dim(C_1) - dim(C_2) logical qubits. This is exactly the definition of a cohomology group: H^1(C_1, C_2) = C_1 / C_2. Conjecture: every CSS code is equivalent to a cohomology computation on a simplicial complex, and vice versa. Specifically, given a simplicial complex K, the CSS code with C_1 = Z_1(K, F_2) (1-cycles) and C_2 = B_1(K, F_2) (1-boundaries) encodes dim(H_1(K, F_2)) logical qubits with distance d = min(length of shortest non-trivial cycle, length of shortest non-trivial cocycle). This is the homological quantum error-correcting code HQECC(K). The distance d equals the systole of K (the length of the shortest non-contractible cycle). Conjecture: for the hypercube Q_n (n-dimensional cube graph), the HQECC encodes 1 qubit with distance d = 2^{n/2} (achieving the quantum Singleton bound). Test: construct HQECC for Q_4, Q_6, Q_8 and verify the parameters. Impact: quantum error correction is cohomology. Every simplicial complex gives a quantum code, and the code parameters are topological invariants.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0859",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T07:16:52.295060+00:00",
-    "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
   },
   {
     "consumed_by_exp_id": "",
@@ -5227,6 +5240,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The Collatz map T: N -> N defined by T(n) = n/2 if n even, 3n+1 if n odd, is conjectured to always reach 1. The Collatz conjecture is equivalent to: the orbit of every n under T eventually reaches the cycle {1, 4, 2, 1}. Define the Collatz Fourier transform: F_T(omega) = sum_{n=1}^{N} e^{2*pi*i*omega*T(n)/n} for N large. Conjecture: F_T has a spectral gap: |F_T(omega)| < C for all irrational omega, where C < sqrt(N). This would mean that the Collatz map does not concentrate energy at any irrational frequency \u2014 it is 'mixing' in the Fourier sense. Moreover, the spectral gap is related to the convergence rate: the wider the gap, the faster the orbit reaches 1. Conjecture: for the orbit of n, the number of steps to reach 1 is O(log(n)), which is equivalent to F_T having a spectral gap of width Omega(1/log(n)). Test: compute F_T for n up to 10^6 and measure the spectral gap. Compare with the spectral gaps of related maps (5n+1, 7n+1) which do NOT always converge. Impact: the Collatz conjecture is a spectral gap problem. Convergence to 1 means the Fourier transform has no resonances at irrational frequencies.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0871",
+    "priority_score": 0.79,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T09:25:50.998306+00:00",
+    "title": "The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prime gaps \u2014 the spaces between consecutive primes \u2014 are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable \u2014 given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random \u2014 they are a solvable crossword puzzle with deterministic rules.",
     "domains": [
       "Novelty",
@@ -5298,21 +5326,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T02:59:09.669263+00:00",
     "title": "The Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formal"
-  },
-  {
-    "consumed_by_exp_id": "e37aa20a",
-    "description": "The logistic map f(x) = r*x*(1-x) for r = 4 exhibits chaotic dynamics: small changes in initial conditions lead to exponentially diverging trajectories (Lyapunov exponent lambda = log(2)). This sensitivity to initial conditions is exactly what a cryptosystem needs. Conjecture: The logistic map at r = 4 is a secure pseudorandom generator. Define the logistic cipher: key = (x_0, n) where x_0 in (0,1) is the seed and n is the number of iterations. The keystream is K = (f^n(x_0), f^{n+1}(x_0), ...) where f^n denotes the n-th iterate. The ciphertext is C = M XOR K where M is the plaintext. The security relies on two properties: (1) Sensitivity: a change of epsilon in x_0 leads to a change of O(1) in f^n(x_0) after n = O(log(1/epsilon)) iterations (exponential sensitivity). (2) Ergodicity: the distribution of f^n(x_0) converges to the invariant measure mu(x) = 1/(pi*sqrt(x*(1-x))) regardless of the initial condition. Conjecture: breaking the logistic cipher (recovering x_0 from K) is as hard as inverting the logistic map, which requires solving a degree-2^n polynomial (since f^n(x) is a polynomial of degree 2^n). This is exponential in n. Test: implement the logistic cipher, measure the period of the keystream (which should be at least 2^n for floating-point precision n), and verify that statistical tests (NIST SP 800-22) pass for n >= 64. Impact: chaos IS cryptography \u2014 the logistic map's sensitivity to initial conditions is the same property that makes encryption secure.",
-    "domains": [
-      "Novelty",
-      "Cryptography"
-    ],
-    "id": "fd_0848",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T05:17:50.875214+00:00",
-    "title": "Cryptography from Chaos: Encrypting with the Logistic Map"
   },
   {
     "consumed_by_exp_id": "",
@@ -5448,6 +5461,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T09:10:03.969123+00:00",
     "title": "Working with the **reduced Burau representation** of the braid group `B\u2084` \u2014 whic"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Chaos and Cryptography via the Logistic Map\n\nThis cycle established the exact semiconjugacy `f(sin\u00b2 t) = sin\u00b2(2 t)` of the\nfull-strength logistic map `f(x) = 4x(1-x)` to angle doubling, and derived from\nit (i) sensitive dependence on initial conditions with an explicit collapsing\nfamily of seeds, and (ii) the exponential algebraic degree `2\u207f` of the `n`-th\niterate. The following conjectures push the \"chaos is cryptography\" program\nforward.\n\n## 1. The conjugate coordinate breaks the naive chaos cipher in linear time\n\n**Conjecture.** Recovering the seed of a logistic keystream is *not* as hard as\nsolving a degree-`2\u207f` polynomial: in the conjugate coordinate `t` where\n`x = sin\u00b2(\u03c0 t)`, the map is the binary shift `t \u21a6 2t (mod 1)`, so each iterate\nmerely reveals one more bit of `t`. Consequently the seed is recoverable to `n`\nbits of precision from `O(n)` keystream samples with `O(n)` arithmetic, i.e. in\ntime polynomial in the security parameter.\n\n*The key insight is* that the very degree-`2\u207f` structure advertised as a hardness\nbarrier is an artifact of the wrong coordinate system; conjugacy linearizes the\napparent nonlinearity and collapses the exponential to a shift.\n\n*Why now?* We have proved the exact conjugacy that makes the coordinate change\nrigorous rather than heuristic, so the cryptanalytic reduction can be stated and\nverified as a theorem rather than asserted.\n\n## 2. The invariant density is the arcsine law, and it is the unique absolutely\ncontinuous invariant measure\n\n**Conjecture.** The measure `d\u03bc = dx / (\u03c0 \u221a(x(1-x)))` on `(0,1)` is invariant\nunder `f`, is the pushforward of the uniform (Lebesgue/Haar) measure on the\ndoubling circle under `t \u21a6 sin\u00b2(\u03c0 t)`, and is the unique `f`-invariant measure\nabsolutely continuous with respect to Lebesgue measure.\n\n*The key insight is* that ergodic-theoretic \"randomness\" of the keystream is\nexactly the equidistribution of the doubling map transported through the\nconjugacy; the biased arcsine density \u2014 not a uniform one \u2014 is what a raw\nlogistic keystream actually emits, revealing an exploitable statistical bias.\n\n*Why now?* The conjugacy to angle doubling is in hand, so the invariance and\nuniqueness reduce to known equidistribution facts for the doubling map pulled\nback along a smooth change of variables.\n\n## 3. Sensitivity gives a matching decryption-instability lower bound\n\n**Conjecture.** For every seed there exist perturbations of size `\u03b5` whose\n`n`-th iterates differ by a constant `c > 0` once `n \u2265 log\u2082(1/\u03b5) + O(1)`, and\nthis threshold is tight: below it the outputs differ by `O(2\u207f \u03b5)`. Hence any\nfinite-precision implementation with `p` bits loses all correlation with the true\norbit after exactly `p` steps \u2014 the period and the sensitivity horizon coincide.\n\n*The key insight is* that the stretching factor `2\u207f` controls both the divergence\nrate (from above) and the precision-loss rate (from below), so avalanche speed\nand numerical unreliability are two readings of the same Lyapunov exponent\n`log 2`.\n\n*Why now?* We have an explicit seed family realizing the `O(1)` separation after\nlinearly many steps; upgrading it to a two-sided bound needs only the mean-value\ncontrol of `f'` that the conjugacy supplies.\n\n## 4. Polynomial iterates factor through Chebyshev-type structure\n\n**Conjecture.** The degree-`2\u207f` iterate polynomials `f\u207f` are affinely conjugate\nto the Chebyshev polynomials `T_{2\u207f}`, and their real roots (the pre-images of a\nfixed point) are exactly `sin\u00b2(k\u03c0/2\u207f\u207a\u00b9)` for the appropriate range of `k`,\nequidistributed with the arcsine law of Conjecture 2.\n\n*The key insight is* that both the logistic map and the Chebyshev family are\nsemiconjugate to angle doubling, so they must coincide up to an affine change of\nvariable, turning \"solve a degree-`2\u207f` equation\" into \"read off `2\u207f` explicit\ntrigonometric roots.\"\n\n*Why now?* The polynomial-iterate degree theorem and the trigonometric\nconjugacy are both established here, so the identification of roots is a direct\nconsequence rather than a numerical observation.\n\n\n# Future Directions: Chaos and Cryptography via the Logistic Map\n\nThis cycle established the exact semiconjugacy `f(sin\u00b2 t) = sin\u00b2(2 t)` of the\nfull-strength logistic map `f(x) = 4x(1-x)` to angle doubling, and derived from\nit (i) sensitive dependence on initial conditions with an explicit collapsing\nfamily of seeds, and (ii) the exponential algebraic degree `2\u207f` of the `n`-th\niterate. The following conjectures push the \"chaos is cryptography\" program\nforward.\n\n## 1. The conjugate coordinate breaks the naive chaos cipher in linear time\n\n**Conjecture.** Recovering the seed of a logistic keystream is *not* as hard as\nsolving a degree-`2\u207f` polynomial: in the conjugate coordinate `t` where\n`x = sin\u00b2(\u03c0 t)`, the map is the binary shift `t \u21a6 2t (mod 1)`, so each iterate\nmerely reveals one more bit of `t`. Consequently the seed is recoverable to `n`\nbits of precision from `O(n)` keystream samples with `O(n)` arithmetic, i.e. in\ntime polynomial in the security parameter.\n\n*The key insight is* that the very degree-`2\u207f` structure advertised as a hardness\nbarrier is an artifact of the wrong coordinate system; conjugacy linearizes the\napparent nonlinearity and collapses the exponential to a shift.\n\n*Why now?* We have proved the exact conjugacy that makes the coordinate change\nrigorous rather than heuristic, so the cryptanalytic reduction can be stated and\nverified as a theorem rather than asserted.\n\n## 2. The invariant density is the arcsine law, and it is the unique absolutely\ncontinuous invariant measure\n\n**Conjecture.** The measure `d\u03bc = dx / (\u03c0 \u221a(x(1-x)))` on `(0,1)` is invariant\nunder `f`, is the pushforward of the uniform (Lebesgue/Haar) measure on the\ndoubling circle under `t \u21a6 sin\u00b2(\u03c0 t)`, and is the unique `f`-invariant measure\nabsolutely continuous with respect to Lebesgue measure.\n\n*The key insight is* that ergodic-theoretic \"randomness\" of the keystream is\nexactly the equidistribution of the doubling map transported through the\nconjugacy; the biased arcsine density \u2014 not a uniform one \u2014 is what a raw\nlogistic keystream actually emits, revealing an exploitable statistical bias.\n\n*Why now?* The conjugacy to angle doubling is in hand, so the invariance and\nuniqueness reduce to known equidistribution facts for the doubling map pulled\nback along a smooth change of variables.\n\n## 3. Sensitivity gives a matching decryption-instability lower bound\n\n**Conjecture.** For every seed there exist perturbations of size `\u03b5` whose\n`n`-th iterates differ by a constant `c > 0` once `n \u2265 log\u2082(1/\u03b5) + O(1)`, and\nthis threshold is tight: below it the outputs differ by `O(2\u207f \u03b5)`. Hence any\nfinite-precision implementation with `p` bits loses all correlation with the true\norbit after exactly `p` steps \u2014 the period and the sensitivity horizon coincide.\n\n*The key insight is* that the stretching factor `2\u207f` controls both the divergence\nrate (from above) and the precision-loss rate (from below), so avalanche speed\nand numerical unreliability are two readings of the same Lyapunov exponent\n`log 2`.\n\n*Why now?* We have an explicit seed family realizing the `O(1)` separation after\nlinearly many steps; upgrading it to a two-sided bound needs only the mean-value\ncontrol of `f'` that the conjugacy supplies.\n\n## 4. Polynomial iterates factor through Chebyshev-type structure\n\n**Conjecture.** The degree-`2\u207f` iterate polynomials `f\u207f` are affinely conjugate\nto the Chebyshev polynomials `T_{2\u207f}`, and their real roots (the pre-images of a\nfixed point) are exactly `sin\u00b2(k\u03c0/2\u207f\u207a\u00b9)` for the appropriate range of `k`,\nequidistributed with the arcsine law of Conjecture 2.\n\n*The key insight is* that both the logistic map and the Chebyshev family are\nsemiconjugate to angle doubling, so they must coincide up to an affine change of\nvariable, turning \"solve a degree-`2\u207f` equation\" into \"read off `2\u207f` explicit\ntrigonometric roots.\"\n\n*Why now?* The polynomial-iterate degree theorem and the trigonometric\nconjugacy are both established here, so the identification of roots is a direct\nconsequence rather than a numerical observation.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0872",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e37aa20a",
+    "status": "available",
+    "timestamp": "2026-07-10T09:26:05.728828+00:00",
+    "title": "Exact semiconjugacy `f(sin\u00b2 t) = sin\u00b2(2 t)` of the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Homological Quantum Codes\n\nThis cycle established the exact dictionary \"logical qubits = middle homology\"\nfor the chain-complex model of CSS codes, and used it to compute the logical\ndimension of the hypercube homological code, refuting the folklore \"one qubit\"\nlaw for the hypercube *graph*. The following conjectures extend those findings.\n\n## 1. The distance of the hypercube homological code\n\n**Conjecture.** For the hypercube graph `Q\u2099` (`n \u2265 2`), the homological code\n`HQECC(Q\u2099)` has minimum distance equal to the girth of `Q\u2099`, namely `4`,\nindependent of `n`; consequently it does **not** achieve the quantum Singleton\nbound `d = 2^{n/2}` for `n \u2265 5`.\n\nThe key insight is that in a one-dimensional complex the shortest nontrivial\ncycle is a shortest graph cycle, and every hypercube contains a 4-cycle while\ncontaining no triangle. Distance is therefore a girth invariant, decoupled from\nthe exponentially large number of encoded qubits computed in this cycle.\n\nWhy now? The present cycle pins down the encoded dimension `\u03b2\u2081(Q\u2099) = 2\u207f\u207b\u00b9(n\u22122)+1`\nexactly; the natural next parameter is the distance, and the girth heuristic is\ndirectly testable on the same family that already contradicted the qubit count.\n\n## 2. Euler characteristic as a code-rate obstruction\n\n**Conjecture.** For any connected graph complex, the code rate `k/n` of its\nhomological code equals `1 \u2212 (V\u22121)/E`, and among all connected graphs on a fixed\nnumber of edges the rate is maximized precisely by graphs with a single vertex\nof many loops (bouquets) and minimized by trees (rate `0`).\n\nThe key insight is that the Euler identity `\u03b2\u2080 \u2212 \u03b2\u2081 = V \u2212 E`, proved this cycle,\nturns the rate into a purely combinatorial ratio; extremizing it is a discrete\nisoperimetric problem on the vertex/edge counts.\n\nWhy now? The Euler identity was just established in full additive generality over\nan arbitrary field, so the rate formula is an immediate corollary awaiting an\nextremal analysis.\n\n## 3. Every finite-dimensional homology group is a logical space\n\n**Conjecture.** For every field `K` and every pair of natural numbers `k \u2264 n`\nthere is a length-two chain complex over `K` with middle space of dimension `n`\nwhose homology has dimension exactly `k`; hence every logical/physical dimension\npair `(k, n)` is realized by some CSS chain complex.\n\nThe key insight is that the dimension formula `k = n \u2212 rank d\u2081 \u2212 rank d\u2082` proved\nthis cycle is not just an inequality but an exact accounting, so realizability\nreduces to choosing two maps with prescribed ranks summing to `n \u2212 k`.\n\nWhy now? With the exact dimension theorem in hand, the realizability question\nbecomes a rank-prescription problem in linear algebra rather than a homological\nmystery.\n\n## 4. Cohomological duality of the two check families\n\n**Conjecture.** For a CSS chain complex the `X`-logical space `ker d\u2081 / im d\u2082`\nand the `Z`-logical space `ker d\u2082\u1d40 / im d\u2081\u1d40` have equal dimension, and this common\ndimension is a self-dual topological invariant of the complex.\n\nThe key insight is that transposition exchanges kernels and cokernels while\npreserving ranks, so the dimension formula forces the two homologies to match;\nCSS self-duality is thus a shadow of rank symmetry.\n\nWhy now? The additive rank-nullity backbone developed this cycle applies verbatim\nto the transposed complex, making the duality statement a direct next theorem\nrather than a separate development.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0873",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "207fb5b4",
+    "status": "available",
+    "timestamp": "2026-07-10T09:26:14.435602+00:00",
+    "title": "Exact dictionary \"logical qubits = middle homology\""
   },
   {
     "consumed_by_exp_id": "a9aa7bbf",

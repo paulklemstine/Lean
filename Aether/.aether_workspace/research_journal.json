@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5961bdfa",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Sidon sets, convolution kernels, and energy\n\nThese conjectures grew out of a study of Sidon sets (finite sets of integers\nwhose pairwise sums are all distinct) through the lens o",
-      "quality_score": 0.7401600000000002,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-07-03T19:52:39",
-      "title": "Multi-kernel smoothing lemma for Sidon sets"
-    },
-    {
-      "cycle_id": "95c356ab",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## 1. The exact three-colour homothety spectrum of short gap patterns\n\nFor a three-point pattern `{0, p, q}` with `0 < p < q`, define its three-colour\nhomothety number as the leas",
-      "quality_score": 0.8257369999999999,
-      "sorry_count": 1,
-      "theorem_count": 8,
-      "timestamp": "2026-07-03T20:14:15",
-      "title": "Exact value of G₃({0,2,5})"
-    },
-    {
       "cycle_id": "af0095a3",
       "domain": "Novelty",
       "key_insight": "# Future Directions: The Geometry of Observation\n\nThe observer model treats a space's real topology as the *consensus* of many\nobservers — the coarsest agreement of individually sharper points of view",
@@ -499,29 +479,29 @@
       "theorem_count": 22,
       "timestamp": "2026-07-10T09:10:09",
       "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
+    },
+    {
+      "cycle_id": "e37aa20a",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Chaos and Cryptography via the Logistic Map\n\nThis cycle established the exact semiconjugacy `f(sin² t) = sin²(2 t)` of the\nfull-strength logistic map `f(x) = 4x(1-x)` to angle dou",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-10T09:26:12",
+      "title": "Cryptography from Chaos: Encrypting with the Logistic Map"
+    },
+    {
+      "cycle_id": "207fb5b4",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Homological Quantum Codes\n\nThis cycle established the exact dictionary \"logical qubits = middle homology\"\nfor the chain-complex model of CSS codes, and used it to compute the logi",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-07-10T09:26:16",
+      "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "fd05632c",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — Sums of Three Cubes\n\nThe work in this cycle isolates a single, fully explicit local obstruction modulo nine,\nexhibits algebraic families that realise certain values infinitely of",
-      "quality_score": 0.40141157142857153,
-      "sorry_count": 2,
-      "theorem_count": 14,
-      "timestamp": "2026-06-30T06:07:15",
-      "title": "Sums of Three Cubes"
-    },
-    {
-      "cycle_id": "30133a3d",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — sign laws for third-order mock theta coefficients\n\nThese conjectures grow out of the exact analysis of the coefficient sequence `r(n)` of\nRamanujan's third-order mock theta funct",
-      "quality_score": 0.3375488878571429,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-06-30T07:56:37",
-      "title": "Exact sign law for coefficients of Ramanujan's third-order mock theta function ρ(q)"
-    },
     {
       "cycle_id": "efa9038a",
       "domain": "Pythagorean",
@@ -2501,39 +2481,29 @@
       "theorem_count": 22,
       "timestamp": "2026-07-10T09:10:09",
       "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
+    },
+    {
+      "cycle_id": "e37aa20a",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Chaos and Cryptography via the Logistic Map\n\nThis cycle established the exact semiconjugacy `f(sin² t) = sin²(2 t)` of the\nfull-strength logistic map `f(x) = 4x(1-x)` to angle dou",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-10T09:26:12",
+      "title": "Cryptography from Chaos: Encrypting with the Logistic Map"
+    },
+    {
+      "cycle_id": "207fb5b4",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Homological Quantum Codes\n\nThis cycle established the exact dictionary \"logical qubits = middle homology\"\nfor the chain-complex model of CSS codes, and used it to compute the logi",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-07-10T09:26:16",
+      "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4de79d68",
-      "domain": "Logic",
-      "name": "ApproxLipschitzWith",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "14000bf9",
-      "domain": "Novelty",
-      "name": "Edge",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "14000bf9",
-      "domain": "Novelty",
-      "name": "Edge",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "14000bf9",
-      "domain": "Novelty",
-      "name": "compEquiv_sq_eq_one",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "7a9dcf2f",
-      "domain": "MachineLearning",
-      "name": "deforms",
-      "quality": 0.78
-    },
     {
       "cycle_id": "7a9dcf2f",
       "domain": "MachineLearning",
@@ -2803,9 +2773,39 @@
       "domain": "Applications",
       "name": "braid_rel_23",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "e37aa20a",
+      "domain": "Novelty",
+      "name": "is",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "e37aa20a",
+      "domain": "Novelty",
+      "name": "logistic_zero",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "e37aa20a",
+      "domain": "Novelty",
+      "name": "logistic_one",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "207fb5b4",
+      "domain": "Applications",
+      "name": "here",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "207fb5b4",
+      "domain": "Applications",
+      "name": "boundaries_le_cycles",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-10T09:10:09",
+  "last_updated": "2026-07-10T09:26:16",
   "open_questions": [
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "3716954d",
-        "quality": 0.78,
-        "theorems": 29,
-        "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
-      },
-      {
         "cycle_id": "298c68ef",
         "quality": 0.78,
         "theorems": 66,
@@ -3141,6 +3135,12 @@
         "quality": 0.72,
         "theorems": 22,
         "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
+      },
+      {
+        "cycle_id": "207fb5b4",
+        "quality": 0.83,
+        "theorems": 24,
+        "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
       }
     ],
     "Bridges": [
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "6c21e233",
-        "quality": 0.618,
-        "theorems": 20,
-        "title": "Total Positivity of the Interval Subdivision Transformation Matrix"
-      },
-      {
         "cycle_id": "6b9c675a",
         "quality": 0.63,
         "theorems": 18,
@@ -3637,6 +3631,12 @@
         "quality": 0.79,
         "theorems": 10,
         "title": "Turing's Flowers: Morphogenesis as Algebraic Geometry"
+      },
+      {
+        "cycle_id": "e37aa20a",
+        "quality": 0.83,
+        "theorems": 12,
+        "title": "Cryptography from Chaos: Encrypting with the Logistic Map"
       }
     ],
     "NumberTheory": [
