@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-10T12:23:30.800742+00:00",
+  "last_updated": "2026-07-10T12:39:37.293757+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -2946,6 +2946,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-10T12:23:30.758497+00:00",
       "title": "Precise threshold for vertex\u2011Ramsey property in random perturbations"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 60,
+      "domain": "Applications",
+      "duration_seconds": 971.6143522262573,
+      "end_time": 1783687164.471805,
+      "files_integrated": 4,
+      "job_id": "6528f137",
+      "outcome_quality": 0.83,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19d",
+      "phase_a_quality_score": 0.83,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19d",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.5485,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.83,
+        "novelty": 0.83,
+        "proof_depth": 0.83,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.83,
+      "sorry_count": 3,
+      "sorry_density": 0.375,
+      "start_time": 1783686192.8574529,
+      "strategy_count": 0,
+      "theorem_count": 8,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 5,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-10T12:39:37.237710+00:00",
+      "title": "Deepening: Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
     }
   ]
 }

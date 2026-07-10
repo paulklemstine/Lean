@@ -78,25 +78,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "6528f137",
-    "description": "Building on cycle 7e49f0c7 (Q=0.830), which proved 17 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Galois group of a random polynomial over Q is S_n with probability 1. This is the Hilbert irreducibility theorem in probabilistic form. But what about random polynomials over finite fields? For f in F_p[x] of degree n chosen uniformly at random, the Galois group is S_n with probability approachi",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_7e49f0c7_2b89c468",
-    "lineage_refs": [],
-    "priority_score": 0.9299999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "7e49f0c7",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T08:38:04.731918+00:00",
-    "title": "Deepening: Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 7e60f6c2 (Q=0.830), which proved 23 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search fractal dimension D(T) of a theorem T as the Hausdorff dimension of the set of all successful proof path",
     "domain_bridges": [],
@@ -519,7 +500,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e40b9050",
     "description": "A neural network with ReLU activation defines a piecewise linear function f: R^n -> R^m. The decision boundary of a binary classifier f: R^n -> R is the set {x : f(x) = 0}, which is a piecewise linear hypersurface. The algebraic variety of the decision boundary is the zero set of the polynomial that best approximates f. Conjecture: for a ReLU network with L layers of widths (n, w_1, ..., w_L, 1), the decision boundary is a piecewise linear hypersurface with at most 2^L * prod w_i regions, and the degree of the best polynomial approximation is at most 2^L. More precisely, the decision boundary V(f) = {x : f(x) = 0} is a tropical hypersurface (a piecewise linear object that is the 'skeleton' of an algebraic variety). The tropical variety of the decision boundary has degree at most 2^L and at most prod_{i=1}^{L} (w_i choose 2) singularities. Conjecture: the VC dimension of a ReLU network with L layers and total width W is at most L * W * log(W), matching the known bound up to log factors. Test: train ReLU networks on synthetic data, extract decision boundaries, and verify they are tropical hypersurfaces with the predicted degree and singularity count. Impact: neural network decision boundaries are tropical varieties. The complexity of the network (L, W) determines the algebraic complexity of the boundary.",
     "domain_bridges": [],
     "domains": [
@@ -532,7 +513,7 @@
     "proof_strategy": "A ReLU network f: R^n -> R with L layers computes a piecewise linear function. The number of linear regions is at most prod_{i=1}^{L} sum_{j=0}^{min(n,w_i)} (w_i choose j) (Montufar et al., 2014). For wide networks (w_i >= n): this is at most prod_{i=1}^{L} 2^{w_i-1} = 2^{sum w_i - L}. The decision boundary B = {x : f(x) = 0} is a piecewise linear hypersurface. Each linear piece of f defines a halfspace, and B is the union of boundaries of these halfspaces. The algebraic approximation: by the Weierstrass approximation theorem, there exists a polynomial p of degree d such that ||f - p|| < epsilon. The variety V(p) = {x : p(x) = 0} approximates B. For piecewise linear f with K regions, the degree of p needed is d ~ K^{1/n} (by approximation theory). The tropical variety: V(f) is a tropical hypersurface defined by the tropical polynomial max_j(alpha_j + x . beta_j) where the max is over the linear pieces. The degree of this tropical polynomial is the number of different linear pieces, which is at most 2^L. The singularities of V(f) are points where 3+ linear pieces meet, and there are at most prod (w_i choose 2) such points. Test: train 2-layer and 3-layer ReLU networks on 2D synthetic data, extract the decision boundary, count linear regions and singularities, verify against the bounds.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T11:01:43.864773+00:00",
     "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
   },
@@ -9710,6 +9691,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surface V(f) = {x : f(x) = 0} is a piecewise linear hypersurface. Conjecture: every rational homology class in H_{n-2}(V(f), Q) is represented by an algebraic cycle (a subvariety of V(f) of codimension 1). Since V(f) is piecewise linear, its homology groups are finitely generated and every cycle is a formal sum of linear pieces. Each linear piece is an algebraic cycle (a hyperplane section). Conjecture: the piecewise linear Hodge conjecture holds — every homology class in V(f) is a sum of hyperplane sections. This is TRUE for piecewise linear varieties because every face of a polyhedron is cut out by a linear equation. The deeper conjecture: for a ReLU network with L layers and widths (n, w_1, ..., w_L, 1), the Hodge numbers h^{p,q}(V(f)) satisfy h^{p,q} <= (w_1 choose p) * (w_L choose q) * prod_{i=2}^{L-1} w_i. Test: compute H_{n-2}(V(f)) for small ReLU networks and verify that every class is represented by hyperplane sections. Impact: the Hodge conjecture is trivially true for neural network decision surfaces. The non-trivial content is the BOUND on Hodge numbers.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0897",
+    "lineage_refs": [],
+    "priority_score": 0.76,
+    "proof_strategy": "For a ReLU network f: R^n -> R with L layers, the decision surface V(f) is a polyhedral complex. Each linear region of f defines a halfspace H_i = {x : a_i . x + b_i > 0}, and V(f) is the union of boundaries of these halfspaces. The homology H_{n-2}(V(f), Z) is generated by the (n-2)-dimensional faces of V(f). Each such face is the intersection of exactly 2 hyperplanes: face_{ij} = {x : a_i . x + b_i = 0, a_j . x + b_j = 0}. Each face is an algebraic cycle (a codimension-2 subvariety of R^n cut out by 2 linear equations). The Hodge conjecture for V(f): every class in H_{n-2}(V(f), Q) is represented by a formal sum of these faces. This is trivially true because H_{n-2}(V(f), Z) is free abelian generated by the faces. The non-trivial content: the NUMBER of faces is bounded by (w_1 choose 2) * prod_{i=2}^{L} w_i (the product of binomial coefficients of widths). This gives the Hodge number bound h^{1,1}(V(f)) <= (w_1 choose 2) * prod w_i. More generally, h^{p,q}(V(f)) <= (w_1 choose p) * (w_L choose q) * prod w_i. Test: for a 2-layer ReLU network with n=2, w_1=4, compute V(f), enumerate faces, compute H_0(V(f)), and verify every class is a sum of vertices.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T12:39:07.666361+00:00",
+    "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Log-Concavity in the d-Hoggatt Hierarchy\n\nThis cycle established a sharp dichotomy for the *total* d-Hoggatt numbers\n`H_d(n) = ∑_k H_d(n,k)`: the `d = 1` totals `2^n` are infinitely log-concave\n(indeed log-linear), while the `d = 2` totals (Catalan numbers) are strictly\nlog-convex, and the `d = 3` totals (Baxter numbers) are empirically log-convex.\nThe following conjectures are the natural next targets.\n\n## Conjecture 1 — Universal log-convexity of the totals for d ≥ 2\n\nFor every `d ≥ 2`, the total d-Hoggatt numbers are strictly log-convex:\n`H_d(n+1)² < H_d(n) · H_d(n+2)` for all `n ≥ 0`.\n\nThe key insight is that each `H_d(n)` is a positively weighted sum of products\nof binomial coefficients whose dominant growth ratio increases with `n`, so the\ntotals inherit the log-convexity of the Catalan case rather than the\nlog-concavity of the individual rows. Why now? The Catalan (`d = 2`) case is now\nsettled from a two-term recurrence, and the Baxter (`d = 3`) case matches it\nterm-by-term in the computed data, suggesting a single recurrence-driven\nargument covers the whole family.\n\n## Conjecture 2 — Row-sum log-convexity is a summation phenomenon\n\nIf `T(n,k)` is any triangle whose rows are log-concave and whose row-ratio\n`T(n+1,k)/T(n,k)` is nondecreasing in `n`, then the row sums `S(n) = ∑_k T(n,k)`\nare log-convex.\n\nThe key insight is that log-convexity of the totals is not special to Hoggatt\ntriangles but follows from monotone amplification of a common growth factor\nacross rows, a Chebyshev-sum / rearrangement effect. Why now? Having seen the\nsame negative discriminant `Δ_n < 0` for both Catalan and Baxter totals, the\nphenomenon is clearly structural rather than coincidental and deserves a triangle\n-level hypothesis.\n\n## Conjecture 3 — Infinite log-concavity of the rows\n\nFor every `d ≥ 1`, each fixed row `k ↦ H_d(n,k)` of the d-Hoggatt triangle is\ninfinitely log-concave.\n\nThe key insight is that the log-concavity operator, when applied to a finite\npositive log-concave row with the golden-ratio-squared safety factor\n`a_k² ≥ ((3+√5)/2) · a_{k-1} a_{k+1}`, reproduces that same safety factor, so a\nsingle closure lemma propagates through all iterates. Why now? The threshold\nconstant `(3+√5)/2` is exactly the fixed point of the operator's worst-case\nratio, and the toolkit built this cycle (the operator `𝓛`, its annihilation of\nlog-linear sequences, and closure under products) already contains the moving\nparts needed to attack the closure lemma.\n\n## Conjecture 4 — A log-concave \"renormalization\" of the totals\n\nFor every `d ≥ 2` there is an explicit positive normalizing sequence `w_d(n)`\n(e.g. a ratio of factorials) such that the renormalized totals\n`H_d(n) / w_d(n)` are infinitely log-concave, even though the raw totals are\nlog-convex.\n\nThe key insight is that log-convexity of the totals is caused by a smooth,\npredictable growth factor which can be divided out, leaving a residual sequence\ngoverned by the same infinite-log-concavity mechanism as the rows. Why now? The\nexact growth ratio `(n+2)(2n+3)/((2n+1)(n+3))` for the Catalan totals is now\nknown in closed form, giving a concrete first candidate for `w_2` and a template\nfor higher `d`.\n\n## Conjecture 5 — Tropical dequantization of the dichotomy\n\nUnder the tropical (min-plus) limit that sends a positive sequence `a_n` to its\nvaluations `v_n = −log a_n`, log-concavity becomes convexity of `v` and\nlog-linearity becomes affinity of `v`. The `d = 1`/`d ≥ 2` dichotomy then reads:\n`v` is affine for `d = 1` and strictly concave for `d ≥ 2`.\n\nThe key insight is that the log-concavity operator degenerates, in the tropical\nlimit, to a second finite difference, so infinite log-concavity corresponds to a\nsequence of iterated finite differences retaining a fixed sign — a purely\npiecewise-linear, tropical-geometric condition. Why now? Casting the numeric\ndichotomy in the min-plus semiring links this combinatorial question to tropical\nconvexity, where second-difference sign conditions are the natural objects and\npowerful piecewise-linear tools are available.\n",
     "domain_bridges": [],
     "domains": [
@@ -10250,6 +10251,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Stochastic Galois Theory over Finite Fields\n\nThis cycle sharpened the \"random polynomial behaves like a random permutation\"\ncorrespondence over finite fields. Over the rationals a generic polynomial has the full\nsymmetric Galois group, but over a finite field every Galois group is cyclic, so the\ncorrect invariant is not the group itself but the *cycle type of the Frobenius\npermutation*, i.e. the factorization type. We established two exact, dimension-free\nfirst-moment identities — the expected number of roots of a random monic polynomial and\nthe expected number of fixed points of a random permutation are both exactly `1` — and we\ncomputed the exact proportion of `n`-cycles in the symmetric group (`1/n`), the\ncombinatorial value shadowed by the proportion of irreducible polynomials. The following\nconjectures push the correspondence from first moments toward the full distribution.\n\n## 1. Exact second-moment matching of the factorization/cycle statistic\n\n**Conjecture.** For every finite field of order `q` and every degree `n ≥ 1`, the second\nmoment of the number of linear factors of a uniformly random monic degree-`n` polynomial\nequals the second moment of the number of fixed points of a uniformly random permutation\nof `n` letters, up to an explicit finite correction that vanishes as `q → ∞`; in the\nlimit both second moments equal `2`, the value forced by the two leading falling\nfactorials of the Poisson(1) law.\n\nThe key insight is that fixed points and roots are governed by the same inclusion–exclusion\nskeleton: the `k`-th factorial moment counts ordered `k`-tuples of distinct fixed\npoints/roots, and each such tuple is \"free\" to leading order, so the falling factorial\nmoments are all `1` in the limit — the signature of the Poisson(1) distribution.\n\nWhy now? The first-moment identity proved this cycle is exactly the `k = 1` instance of\nthis factorial-moment hierarchy, and its proof (double counting an incidence indicator)\nextends verbatim to ordered tuples, making the second moment the natural and immediate\nnext rung.\n\n## 2. A Poisson limit law for low-degree factors\n\n**Conjecture.** Fix `d ≥ 1`. As `q → ∞`, the number of monic irreducible factors of degree\n`d` of a uniformly random monic degree-`n` polynomial converges in distribution to a\nPoisson random variable with mean `1/d`, jointly and independently across distinct `d`,\nmirroring exactly the Poisson limit for the number of `d`-cycles of a uniformly random\npermutation.\n\nThe key insight is that the Frobenius permutation transports the classical\nGoncharov–Kolchin cycle-count limit for random permutations onto the polynomial side, with\nthe degree-`d` irreducible factors playing the role of the `d`-cycles and the mean `1/d`\nbeing precisely the `n`-independent proportion computed here for the top degree `d = n`.\n\nWhy now? We proved the exact top-degree count `#{n\\text{-cycles}} \\cdot n = n!`\n(proportion `1/n`); recognizing `1/n` as the `d = n` case of the family of means `1/d`\nidentifies the exact target law for every `d` simultaneously.\n\n## 3. The squarefree / separable dichotomy as a derangement analogue\n\n**Conjecture.** The proportion of monic degree-`n` polynomials over a finite field of order\n`q` that are separable (squarefree) equals `1 - 1/q` for every `n ≥ 2`, and this is the\nfinite-field counterpart of the statement that a random permutation has no repeated cycle\nconstraint; the \"non-squarefree\" polynomials are the exact analogue of the fixed-point\ndefect measured by derangements.\n\nThe key insight is that repeated factors correspond to coincidences forced by the\ndiscriminant vanishing, whose probability is controlled by a single codimension-one\ncondition, giving the clean `1/q` defect independent of `n`.\n\nWhy now? The degree-`2` computation isolated the repeated-root locus as exactly `q` of the\n`q^2` quadratics (proportion `1/q`); the conjecture asserts this `1/q` defect is universal\nin `n`, an immediately testable and structurally natural extrapolation.\n\n## 4. Effective bridge with explicit error term\n\n**Conjecture.** For every finite field of order `q` and degree `n ≥ 1`, the difference\nbetween the arithmetic factorization statistic and the corresponding permutation statistic\nis bounded in total variation by `C(n) / q` for an explicit polynomial constant `C(n)`,\nso the correspondence is not merely asymptotic but *effective* with a first-order rate.\n\nThe key insight is that the incidence double-counting used for the first moment produces\nerror terms that are themselves incidence counts of strictly lower degree, yielding a self\n-similar recursion whose solution is a rational function of `q` with controlled numerator.\n\nWhy now? The exact (zero-error) first-moment identity proved this cycle is the base case of\nthat recursion; quantifying how the higher moments deviate by `O(1/q)` turns a qualitative\ndictionary into a quantitative theorem.\n\n## 5. Beyond `S_n`: the arithmetic monodromy of structured families\n\n**Conjecture.** For a one-parameter family of monic polynomials whose generic geometric\nmonodromy group is a proper transitive subgroup `G ≤ S_n` (for example a family with a\nbuilt-in symmetry forcing `G` to be imprimitive), the finite-field factorization\nstatistics converge to the conjugacy-class statistics of `G`, not of `S_n`, and the\nfirst-moment identity of this cycle holds with `n` replaced by the average number of fixed\npoints of `G` acting on `n` letters.\n\nThe key insight is that Frobenius equidistributes in the arithmetic monodromy group, so\nevery group-theoretic average over `G` has an exact finite-field shadow, and the fixed\n-point average is Burnside's mark of the number of orbits of `G`.\n\nWhy now? Having pinned the `G = S_n` case to an exact identity, the orbit-counting\n(Burnside) reformulation of \"expected number of roots\" makes the subgroup generalization a\ndirect substitution, opening the door to testing the dictionary against families with\nprescribed symmetry.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0898",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "6528f137",
+    "status": "available",
+    "timestamp": "2026-07-10T12:39:29.653013+00:00",
+    "title": "This cycle sharpened the \"random polynomial behaves like a random permutation\""
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "The Erdos-Renyi random graph G(n, p) has n vertices where each edge appears independently with probability p. At p = log(n)/n, G(n,p) becomes connected. But what if p is COMPLEX? Define G(n, z) where z is a complex number: each edge (i,j) appears with 'probability' z, meaning the edge weight is z instead of 0 or 1. The resulting 'complex graph' is a weighted complete graph where edge (i,j) has weight z if the edge exists and 0 otherwise. The adjacency matrix A_z has entries that are either z or 0. Conjecture: The complex eigenvalues of A_z trace out a circle of radius |z|*sqrt(n) in the complex plane, centered at the origin. As n -> infinity, the empirical spectral distribution of A_z converges to the circular law (like the Ginibre ensemble) because A_z is a random matrix with i.i.d. entries of mean z*p and variance |z|^2*p*(1-p). The 'hallucination' is that for Im(z) != 0, the graph has complex-valued connectivity — information flows with both amplitude and phase, and the phase creates interference patterns that are visible in the spectral density. Test: generate A_z for n = 1000 with z = 0.5 + 0.3i, compute eigenvalues, and verify they lie in a disk of radius sqrt(n)*|z|. Compare with the Ginibre ensemble prediction. Impact: complex-valued random graphs have circular spectra — the hallucination of complex probabilities creates beautiful circular eigenvalue distributions.",
     "domain_bridges": [],
     "domains": [
@@ -10265,6 +10286,26 @@
     "status": "failed",
     "timestamp": "2026-07-10T00:38:41.094757+00:00",
     "title": "Erdos-Renyi on Acid: Random Graphs That Hallucinate"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Entropy H(X) = -sum p(x) log p(x) measures the information content of a random variable. In category theory, a functor F: C -> D 'loses information' when it maps non-isomorphic objects to isomorphic ones. Define the 'functorial entropy' H(F) as the expected information lost by F: H(F) = -sum_{d in Ob(D)} p(d) * log(p(d)) where p(d) = |F^{-1}(d)| / |Ob(C)|. Conjecture: For the forgetful functor U: Top -> Set that forgets the topology, H(U) = log(2^{aleph_0}) = aleph_0 (infinite entropy, because uncountably many topologies map to the same set). For the abelianization functor Ab: Grp -> AbGrp, H(Ab) = log(2) (each abelian group has 2 non-abelian preimages on average: G and G x Z/2Z). For the inclusion functor Inc: FinGrp -> Grp, H(Inc) = 0 (no information loss, since finite groups embed as themselves). Conjecture: H(F) = 0 iff F is faithful, and H(F) = infinity iff F identifies infinitely many non-isomorphic objects. For finite categories: H(F) = log(|Ob(C)| / |Ob(D)|) when F is 'uniform' (each fiber has the same size). Test: compute H(F) for various functors between finite categories and verify the formula. Impact: entropy is not just a measure-theoretic concept — it is the information-theoretic shadow of functoriality. Every functor loses information, and the entropy measures how much.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0896",
+    "lineage_refs": [],
+    "priority_score": 0.73,
+    "proof_strategy": "Define functorial entropy: for a functor F: C -> D between finite categories, H(F) = -sum_{d in Ob(D)} (|F^{-1}(d)| / |Ob(C)|) * log(|F^{-1}(d)| / |Ob(C)|). This measures the information lost when F identifies non-isomorphic objects. Properties: (1) H(F) >= 0, with equality iff F is injective on objects up to isomorphism (i.e., F maps non-isomorphic objects to non-isomorphic objects). (2) H(F) is maximized when all fibers have the same size: H(F) = log(|Ob(C)| / |Ob(D)|). (3) H(G circ F) >= H(F) + H(G) for composable functors (subadditivity). (4) For the forgetful functor U: Top -> Set: H(U) = infinity because |F^{-1}(S)| = infinity for every set S with |S| >= 2 (there are uncountably many topologies on S). (5) For abelianization Ab: Grp -> AbGrp: each abelian group A has |F^{-1}(A)| = infinity (there are infinitely many non-abelian groups with abelianization A), so H(Ab) = infinity. Wait, this contradicts the conjecture. Correction: for finite groups, Ab: FinGrp -> FinAbGrp. Each finite abelian group A has finitely many preimages. H(Ab) = log(sum |F^{-1}(A)| / |FinAbGrp|). For small groups: Z/2Z has preimages Z/2Z (abelian) and S_3 (non-abelian with abelianization Z/2Z). Z/3Z has preimages Z/3Z and... (need to enumerate). Test: enumerate all groups of order <= 32, compute their abelianizations, and calculate H(Ab).",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T12:39:07.582861+00:00",
+    "title": "Categorification of Entropy: The Information Loss of Functors"
   },
   {
     "ambition_level": "extension",
