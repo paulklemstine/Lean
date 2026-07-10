@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "90ef345f",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — The Quadratic Recurrence and Its Hidden Arithmetic\n\nThese conjectures are distilled from the current cycle, which paired an analytic\nescape estimate for `z ↦ z² + c` with the ari",
-      "quality_score": 0.83,
-      "sorry_count": 1,
-      "theorem_count": 751,
-      "timestamp": "2026-07-10T01:14:02",
-      "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
-    },
-    {
       "cycle_id": "7ca0f553",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions\n\nThe file `Catalog/Pythagorean/InfiniteChessOmega.lean` develops an abstract,\nfaithful model of winning game trees and their **ordinal game values**, and\nproves that the values `ω`",
@@ -499,19 +489,19 @@
       "theorem_count": 32,
       "timestamp": "2026-07-10T17:56:03",
       "title": "That the zero-dimensional persistent homology of the prim"
+    },
+    {
+      "cycle_id": "17fb4d11",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Automatic Sequences and Decidability\n\nThe file `AutomaticSequences.lean` establishes, for an arbitrary DFA `M` over a\nfinite alphabet with finitely many states:\n\n* `accepts_nonem",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-07-10T17:56:08",
+      "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f1070a48",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: independence ratio, unit distances, and colourings of the plane\n\nThese conjectures are distilled from the present cycle, which isolates the reduction\n\"independence ratio below `1/",
-      "quality_score": 0.8322400000000001,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-07-01T20:10:19",
-      "title": "Existence of a finite unit-distance graph in R² with independence ratio below 1/4"
-    },
     {
       "cycle_id": "c732c146",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 32,
       "timestamp": "2026-07-10T17:56:03",
       "title": "That the zero-dimensional persistent homology of the prim"
+    },
+    {
+      "cycle_id": "17fb4d11",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Automatic Sequences and Decidability\n\nThe file `AutomaticSequences.lean` establishes, for an arbitrary DFA `M` over a\nfinite alphabet with finitely many states:\n\n* `accepts_nonem",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-07-10T17:56:08",
+      "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "da4694df",
-      "domain": "Applications",
-      "name": "birthday_powHalf",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "da4694df",
-      "domain": "Applications",
-      "name": "birthday_powHalf_lt_omega0",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "da4694df",
-      "domain": "Applications",
-      "name": "powHalf_pos",
-      "quality": 0.82
-    },
     {
       "cycle_id": "2fed8c0e",
       "domain": "Geometry",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "sauerShelah_full",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "17fb4d11",
+      "domain": "Cryptography",
+      "name": "dichotomy",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "17fb4d11",
+      "domain": "Cryptography",
+      "name": "exists_pump_down",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "17fb4d11",
+      "domain": "Cryptography",
+      "name": "exists_shorter_of_long",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-10T17:56:03",
+  "last_updated": "2026-07-10T17:56:08",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "d4e980c4",
-        "quality": 0.713,
-        "theorems": 13,
-        "title": "RSA Factorization with Partial p+q Knowledge and Small Private Exponent"
-      },
-      {
         "cycle_id": "9c488c94",
         "quality": 0.6903199999999999,
         "theorems": 9,
@@ -3389,6 +3383,12 @@
         "quality": 0.63,
         "theorems": 20,
         "title": "Local-to-Global KKL Theorem for Simplicial Complexes with Local KKL Links"
+      },
+      {
+        "cycle_id": "17fb4d11",
+        "quality": 0.82,
+        "theorems": 17,
+        "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
       }
     ],
     "Geometry": [
