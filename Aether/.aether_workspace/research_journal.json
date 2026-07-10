@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c38e66e4",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions: Power-of-Two Matching Counts\n\nThis cycle established a clean multiplicative law for perfect matchings of *block\ngraphs* — superpositions of identical gadgets with no edges between",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-09T21:23:45",
-      "title": "Power‑of‑Two Perfect Matching Count in Class B Graphs"
-    },
-    {
       "cycle_id": "55f141e7",
       "domain": "Applications",
       "key_insight": "# Future Directions — The L-Function Universe\n\n## What is proved\n\n`Census.lean` builds a self-contained chain culminating in:\n\n* **Countability.** `instCountableSelbergDatum` : the universe of L-funct",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-10T14:32:43",
       "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality for exactly one edge"
+    },
+    {
+      "cycle_id": "8c745e9f",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Real-rootedness under squaring of combinatorial triangles\n\nThese conjectures grow out of an explicit study of the square of the Eulerian triangle,\nwhose `(n, k)` entry is `C(n, k)",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 26,
+      "timestamp": "2026-07-10T15:04:38",
+      "title": "Real-rootedness of the square of the Eulerian triangle"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "52dd778d",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: sign changes of symmetric-power coefficients on thin sets\n\nThese conjectures grow out of the central finding of this cycle: the constraint \"`n` is a sum\nof `m` squares\" stops bind",
-      "quality_score": 0.7232000000000001,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-01T15:21:02",
-      "title": "Infinite Sign Changes of Symmetric Power L-Function Coefficients over Sums of m Squares for All Even"
-    },
     {
       "cycle_id": "dd442784",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-10T14:32:43",
       "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality for exactly one edge"
+    },
+    {
+      "cycle_id": "8c745e9f",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Real-rootedness under squaring of combinatorial triangles\n\nThese conjectures grow out of an explicit study of the square of the Eulerian triangle,\nwhose `(n, k)` entry is `C(n, k)",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 26,
+      "timestamp": "2026-07-10T15:04:38",
+      "title": "Real-rootedness of the square of the Eulerian triangle"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3fa70466",
-      "domain": "Novelty",
-      "name": "double_mode_quadratic",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "3fa70466",
-      "domain": "Novelty",
-      "name": "sextic_from_three_modes",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "9c1224fc",
-      "domain": "Applications",
-      "name": "braid_rel_13",
-      "quality": 0.72
-    },
     {
       "cycle_id": "9c1224fc",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "rainbow_forest_inequality",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "8c745e9f",
+      "domain": "Novelty",
+      "name": "combined",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "8c745e9f",
+      "domain": "Novelty",
+      "name": "applied",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "8c745e9f",
+      "domain": "Novelty",
+      "name": "driven",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-10T14:32:43",
+  "last_updated": "2026-07-10T15:04:38",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "7e49f0c7",
-        "quality": 0.83,
-        "theorems": 17,
-        "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
-      },
-      {
         "cycle_id": "3fa70466",
         "quality": 0.79,
         "theorems": 10,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 19,
         "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
+      },
+      {
+        "cycle_id": "8c745e9f",
+        "quality": 0.82,
+        "theorems": 26,
+        "title": "Real-rootedness of the square of the Eulerian triangle"
       }
     ],
     "NumberTheory": [

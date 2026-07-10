@@ -212,6 +212,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 8c745e9f (Q=0.820), which proved 26 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For every n ≥ 0, the n-th row generating function of the square of the Eulerian triangle—defined as the polynomial ∑_k (∑_j A(n,j)·A(j,k)) x^k where A(n,k) is the Eulerian number counting permutations of [n] with k descents—has only real roots. This extends the paper's results on powers of Pascal, S",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_8c745e9f_1213a55f",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "8c745e9f",
+    "status": "available",
+    "timestamp": "2026-07-10T15:04:38.394336+00:00",
+    "title": "Deepening: Real-rootedness of the square of the Eulerian triangle"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle da4694df (Q=0.820), which proved 17 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conway's surreal numbers No form a proper class containing all real numbers, all ordinal numbers, and all infinitesimals. Every real number r has a surreal representation r = {r - 1 | r + 1}. Every ordinal alpha has a surreal representation alpha = {alpha |}. Every infinitesimal epsilon = {0 | 1, 1/",
     "domain_bridges": [],
     "domains": [
@@ -4690,34 +4709,6 @@
     "status": "available",
     "timestamp": "2026-07-06T01:05:33.477563+00:00",
     "title": "Unconditional Euclidean Systems for Ray Classes in Totally Real Galois Fields"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "math.CO",
-      "real-rooted polynomials",
-      "Eulerian numbers",
-      "triangular matrix products"
-    ],
-    "consumed_by_exp_id": "8c745e9f",
-    "description": "For every n ≥ 0, the n-th row generating function of the square of the Eulerian triangle—defined as the polynomial ∑_k (∑_j A(n,j)·A(j,k)) x^k where A(n,k) is the Eulerian number counting permutations of [n] with k descents—has only real roots. This extends the paper's results on powers of Pascal, Stirling, and Narayana triangles to the still-open Eulerian case.",
-    "domain_bridges": [
-      "Polynomial real-rootedness",
-      "Eulerian numbers",
-      "Matrix products of combinatorial triangles"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0417",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Attempt to decompose the Eulerian triangle square as a product of triangles whose individual real-rootedness preservation is known, or extend the rectangular additive convolution framework to construct an interlacing chain for the squared Eulerian row generating functions. Alternatively, establish that the Eulerian triangle square arises from a Narayana-type transformation applied to a suitable real-rooted polynomial.",
-    "research_mode": "team",
-    "source_exp_id": "2607.01572v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T01:27:06.611331+00:00",
-    "title": "Real-rootedness of the square of the Eulerian triangle"
   },
   {
     "ambition_level": "extension",
@@ -9580,7 +9571,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fee6fccc",
     "description": "The natural gradient algorithm updates parameters theta in the direction of steepest descent on the Fisher information manifold: theta_{t+1} = theta_t - eta * G^{-1}(theta_t) * gradient L(theta_t) where G is the Fisher information matrix. This is equivalent to following the geodesic on the statistical manifold (the Riemannian manifold with metric G). Conjecture: for any optimization problem with loss function L, the natural gradient descent converges to the minimum in O(1/t) iterations, regardless of the condition number of G. This is because the natural gradient follows the geodesic, which is the shortest path on the manifold, and the path length is O(1) (bounded by the diameter of the manifold). In contrast, standard gradient descent takes O(kappa) iterations where kappa is the condition number of G. Conjecture: natural gradient descent with step size eta = 1/t achieves L(theta_t) - L(theta*) = O(1/t) for convex losses, and L(theta_t) - L(theta*) = O(exp(-t/d)) for strongly convex losses, where d is the dimension. Test: compare natural gradient descent and standard gradient descent on logistic regression with varying condition numbers, verify the convergence rates. Impact: optimization is geometry. The natural gradient is the geodesic on the Fisher manifold, and geodesics are the shortest paths.",
     "domain_bridges": [],
     "domains": [
@@ -9593,7 +9584,7 @@
     "proof_strategy": "Define the statistical manifold M = {p(x|theta) : theta in R^d} with the Fisher metric G(theta) = E_{p(x|theta)}[nabla_theta log p(x|theta) nabla_theta log p(x|theta)^T]. The natural gradient is: tilde{nabla} L = G^{-1}(theta) * nabla_theta L. Natural gradient descent: theta_{t+1} = theta_t - eta_t * tilde{nabla} L(theta_t). Convergence analysis: for convex L, the natural gradient descent is equivalent to mirror descent with the Bregman divergence generated by the log-partition function. The convergence rate for mirror descent is O(1/t) for convex objectives and O(exp(-t/d)) for strongly convex objectives. Key insight: the natural gradient reparametrizes the problem so that the Fisher metric becomes the identity, 'whitening' the landscape. This is equivalent to following the geodesic on M, which is the shortest path from theta_0 to theta*. The geodesic distance d(theta_0, theta*) = O(sqrt(d)) (bounded by the diameter of the parameter space). Natural gradient descent covers this distance in O(d) steps, giving convergence rate O(exp(-1/d)). Test: implement natural gradient descent for logistic regression (where G(theta) = X^T diag(p(1-p)) X), compare with standard GD for condition numbers kappa = 1, 10, 100, 1000. Measure convergence rate L(theta_t) - L(theta*) vs t.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T14:48:26.572436+00:00",
     "title": "Information Geometry of Optimization: Natural Gradient Follows Geodesics"
   },
@@ -10375,6 +10366,26 @@
     "status": "available",
     "timestamp": "2026-07-10T14:32:39.876660+00:00",
     "title": "This project analyses the mission conjecture — *\"a minimal obstruction to total "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Real-rootedness under squaring of combinatorial triangles\n\nThese conjectures grow out of an explicit study of the square of the Eulerian triangle,\nwhose `(n, k)` entry is `C(n, k) = ∑_j A(n, j) · A(j, k)` for the Eulerian numbers\n`A(n, k)`, and whose row generating polynomials `B_n(x) = ∑_k C(n, k) · x^k` were found to\nbe real-rooted for every tested row (monic of degree `n − 2`, constant term `n!`, with all\nroots real, negative and simple).\n\n## Conjecture 1 — Full real-rootedness of the squared Eulerian triangle\n\nFor every `n`, the row polynomial `B_n` of the square of the Eulerian triangle has only\nreal roots.\n\nThe key insight is that real-rootedness of `B_n` need not follow from real-rootedness of\nthe individual Eulerian polynomials, because `B_n = ∑_j A(n, j) · A_j` is a *nonnegative*\ncombination of Eulerian polynomials, and such combinations are real-rooted only when the\nsummands interlace compatibly; the data suggest the Eulerian rows supply exactly this\ncompatibility.\n\nWhy now? The rows are monic with all roots negative and simple through degree six, and the\nonly obstruction to a uniform elementary separation argument first appears at `n = 8`\n(two roots crowding into `(−1, 0)`), pinpointing precisely where new interlacing input is\nrequired.\n\n## Conjecture 2 — Interlacing of consecutive squared rows\n\nThe roots of `B_n` and `B_{n+1}` interlace: between any two consecutive roots of `B_{n+1}`\nlies exactly one root of `B_n`.\n\nThe key insight is that a squared triangle inherits a three-term recurrence in disguise, and\ninterlacing of consecutive rows is the structural engine that would *propagate*\nreal-rootedness inductively rather than verifying it row by row.\n\nWhy now? The numerically computed root vectors already exhibit strict interlacing for all\ntested `n`, so the conjecture is sharply testable and, if true, would upgrade Conjecture 1\nfrom finitely many verified rows to a clean induction.\n\n## Conjecture 3 — Squaring preserves real-rootedness for all Eulerian-like triangles\n\nIf a lower-triangular array has real-rooted, interlacing row polynomials with nonnegative\nentries, then so does its matrix square.\n\nThe key insight is that the Pascal, Stirling and Narayana triangles already have\nreal-rooted squares, and the Eulerian evidence suggests the phenomenon is not accidental but\na closure property of the class of totally-nonnegative, interlacing triangles under\nmultiplication.\n\nWhy now? With the Eulerian case — historically the hardest of the four classical triangles —\nfalling into line, a single unifying preservation theorem becomes the natural next target,\nand each classical triangle furnishes an independent stress test.\n\n## Conjecture 4 — Negative, factorial-normalised root asymptotics\n\nThe largest (closest to zero) root of `B_n` tends to `0` and the smallest root grows like\n`−c · n²` for an explicit constant `c`, while `∏(−root) = n!`.\n\nThe key insight is that the constant term `n!` forces the product of the negated roots to be\nexactly `n!`, so the roots cannot all stay bounded; their spread should encode the same\nfactorial growth that governs the Eulerian distribution's variance.\n\nWhy now? The computed root tables already show the extreme roots separating at a rate\nconsistent with a quadratic law, making the asymptotic constant `c` an immediately\nmeasurable target.\n\n## Conjecture 5 — Higher powers stay real-rooted\n\nFor every fixed power `m`, the row polynomials of the `m`-th power of the Eulerian triangle\nare real-rooted for all `n`.\n\nThe key insight is that if squaring preserves real-rootedness through an interlacing\nmechanism (Conjecture 2), then that mechanism should iterate, so every fixed power inherits\nthe property — turning a single closure theorem into an infinite family of results.\n\nWhy now? The square is the first nontrivial power and already the historically open Eulerian\ncase; establishing it opens a direct, testable ladder to all higher powers.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0908",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "8c745e9f",
+    "status": "available",
+    "timestamp": "2026-07-10T15:04:30.851132+00:00",
+    "title": "These conjectures grow out of an explicit study of the square of the Eulerian tr"
   },
   {
     "ambition_level": "extension",
