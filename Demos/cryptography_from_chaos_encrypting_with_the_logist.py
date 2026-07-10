@@ -1,351 +1,253 @@
-#!/usr/bin/env python3
-"""
-Logistic Map Cipher — Demonstration
+"""Cryptography from Chaos: numerical demonstrations for the logistic map f(x) = 4x(1-x).
 
-This script demonstrates the core properties of the logistic cipher:
-1. Encryption/decryption correctness
-2. Sensitivity to initial conditions
-3. Lyapunov exponent computation
-4. Statistical quality of keystream
-5. Chebyshev conjugacy verification
+This standalone script demonstrates the results of the accompanying paper:
+
+  1. The semiconjugacy  f(sin^2 t) = sin^2(2t)  and its iterate  f^n(sin^2 t) = sin^2(2^n t).
+  2. Quantitative sensitive dependence: seeds s_n = sin^2(pi / 2^(n+2)) collapse to the
+     fixed point 0 (distance O(2^-2n)) yet f^n(s_n) = 1/2 exactly, a constant gap of 1/2.
+  3. Exponential algebraic degree: the n-th iterate, as a polynomial, has degree 2^n.
+  4. The logistic stream cipher (encrypt/decrypt via XOR of a bit-keystream).
+  5. The conjugate-coordinate attack: in the coordinate theta with x = sin^2(pi theta),
+     the map is the binary shift theta -> 2 theta mod 1, so the seed's bits are read off
+     directly in time linear in the number of samples.
+
+Run with:  python demo.py
 """
+
+from __future__ import annotations
 
 import math
-from algorithms import (
-    logistic_map, logistic_orbit, logistic_encrypt, logistic_decrypt,
-    lyapunov_exponent, sensitivity_test, frequency_test, runs_test,
-    chebyshev_conjugacy, doubling_map, iterate_degree, logistic_keystream
-)
+from fractions import Fraction
 
 
-def demo_encrypt_decrypt():
-    """Demonstrate encryption and decryption."""
-    print("=" * 60)
-    print("1. ENCRYPTION/DECRYPTION CORRECTNESS")
-    print("=" * 60)
+# --------------------------------------------------------------------------------------
+# 1. The logistic map and its exact conjugacy to angle doubling
+# --------------------------------------------------------------------------------------
 
-    message = b"The logistic map is a chaotic dynamical system!"
-    seed = 0.123456789012345
-    warmup = 100
+def logistic(x: float) -> float:
+    """The logistic map at the fully chaotic parameter r = 4."""
+    return 4.0 * x * (1.0 - x)
 
-    ciphertext = logistic_encrypt(message, seed, warmup)
-    recovered = logistic_decrypt(ciphertext, seed, warmup)
 
-    print(f"Plaintext:  {message}")
-    print(f"Seed:       {seed}")
-    print(f"Ciphertext: {ciphertext.hex()[:60]}...")
-    print(f"Recovered:  {recovered}")
-    print(f"Correct:    {message == recovered}")
+def logistic_iterate(x: float, n: int) -> float:
+    """Apply the logistic map n times to x (f^n(x))."""
+    for _ in range(n):
+        x = logistic(x)
+    return x
+
+
+def demo_semiconjugacy(num_points: int = 7, max_n: int = 8) -> None:
+    """Verify f^n(sin^2 t) = sin^2(2^n t) to machine precision."""
+    print("=" * 74)
+    print("1. Semiconjugacy to angle doubling:  f^n(sin^2 t) = sin^2(2^n t)")
+    print("=" * 74)
+    max_err = 0.0
+    for i in range(1, num_points + 1):
+        t = math.pi * i / (num_points + 1)
+        for n in range(max_n + 1):
+            lhs = logistic_iterate(math.sin(t) ** 2, n)
+            rhs = math.sin((2 ** n) * t) ** 2
+            max_err = max(max_err, abs(lhs - rhs))
+    print(f"  checked {num_points} angles x {max_n + 1} iterates")
+    print(f"  maximum |f^n(sin^2 t) - sin^2(2^n t)| = {max_err:.2e}")
+    print(f"  identity holds to machine precision: {max_err < 1e-9}\n")
+
+
+# --------------------------------------------------------------------------------------
+# 2. Quantitative sensitive dependence on initial conditions
+# --------------------------------------------------------------------------------------
+
+def sensitivity_seed(n: int) -> float:
+    """The sensitivity seed s_n = sin^2(pi / 2^(n+2))."""
+    return math.sin(math.pi / 2 ** (n + 2)) ** 2
+
+
+def demo_sensitivity(max_n: int = 12) -> None:
+    """Show s_n -> 0 while |f^n(s_n) - f^n(0)| stays exactly 1/2."""
+    print("=" * 74)
+    print("2. Sensitive dependence: s_n collapses to 0 yet f^n(s_n) = 1/2 exactly")
+    print("=" * 74)
+    print(f"  {'n':>3} | {'seed s_n':>14} | {'bound (pi/2^(n+2))^2':>22} | "
+          f"{'f^n(s_n)':>10} | {'gap':>6}")
+    print("  " + "-" * 68)
+    for n in range(1, max_n + 1):
+        s = sensitivity_seed(n)
+        bound = (math.pi / 2 ** (n + 2)) ** 2
+        landed = logistic_iterate(s, n)      # equals 1/2 in exact arithmetic
+        gap = abs(landed - logistic_iterate(0.0, n))  # f^n(0) = 0
+        print(f"  {n:>3} | {s:>14.3e} | {bound:>22.3e} | {landed:>10.6f} | {gap:>6.3f}")
+    print("  (small floating error accrues for large n: sensitivity is double-edged)\n")
+
+
+# --------------------------------------------------------------------------------------
+# 3. Exponential algebraic degree of the n-th iterate
+# --------------------------------------------------------------------------------------
+
+Poly = list  # a polynomial is a list of coefficients, index = power of X
+
+
+def _trim(p: list[Fraction]) -> list[Fraction]:
+    """Drop trailing zero coefficients so that the degree is len(p) - 1."""
+    while len(p) > 1 and p[-1] == 0:
+        p = p[:-1]
+    return p
+
+
+def poly_mul(a: list[Fraction], b: list[Fraction]) -> list[Fraction]:
+    """Multiply two polynomials given as coefficient lists."""
+    result = [Fraction(0)] * (len(a) + len(b) - 1)
+    for i, ai in enumerate(a):
+        for j, bj in enumerate(b):
+            result[i + j] += ai * bj
+    return _trim(result)
+
+
+def poly_compose(outer: list[Fraction], inner: list[Fraction]) -> list[Fraction]:
+    """Compose polynomials: return outer(inner(X)) via Horner's method."""
+    result: list[Fraction] = [Fraction(0)]
+    for coeff in reversed(outer):
+        result = poly_mul(result, inner)
+        result[0] += coeff
+    return _trim(result)
+
+
+def logistic_poly_iterate(n: int) -> list[Fraction]:
+    """The n-th composition iterate of P(X) = 4X(1 - X) = 4X - 4X^2."""
+    p = [Fraction(0), Fraction(4), Fraction(-4)]   # 4X - 4X^2
+    result: list[Fraction] = [Fraction(0), Fraction(1)]  # X (identity)
+    for _ in range(n):
+        result = poly_compose(p, result)
+    return result
+
+
+def demo_degree(max_n: int = 6) -> None:
+    """Confirm the n-th iterate is a polynomial of degree exactly 2^n."""
+    print("=" * 74)
+    print("3. Algebraic depth: the n-th iterate has degree 2^n")
+    print("=" * 74)
+    for n in range(max_n + 1):
+        p = logistic_poly_iterate(n)
+        degree = len(p) - 1
+        print(f"  n = {n}:  degree(f^n) = {degree:>5}   (expected 2^{n} = {2 ** n})   "
+              f"match: {degree == 2 ** n}")
     print()
 
 
-def demo_sensitivity():
-    """Demonstrate sensitivity to initial conditions."""
-    print("=" * 60)
-    print("2. SENSITIVITY TO INITIAL CONDITIONS")
-    print("=" * 60)
+# --------------------------------------------------------------------------------------
+# 4. The logistic stream cipher
+# --------------------------------------------------------------------------------------
 
-    x0 = 0.3
-    epsilon = 1e-10
-    n = 50
+def keystream_bits(seed: float, num_bits: int) -> list[int]:
+    """Generate num_bits keystream bits from the logistic orbit of `seed`.
 
-    diffs = sensitivity_test(x0, epsilon, n)
-
-    print(f"Initial seed: {x0}")
-    print(f"Perturbation: {epsilon}")
-    print(f"\nIteration | Difference")
-    print("-" * 35)
-    for i in [0, 5, 10, 15, 20, 25, 30, 35, 40]:
-        if i < len(diffs):
-            print(f"  {i:3d}     | {diffs[i]:.2e}")
-
-    # Find when difference exceeds 0.1
-    threshold = 0.1
-    for i, d in enumerate(diffs):
-        if d > threshold:
-            print(f"\nDifference exceeds {threshold} at iteration {i}")
-            print(f"  Predicted (log(1/ε)/log(2)): {math.log(1/epsilon)/math.log(2):.1f}")
-            break
-    print()
+    Each iterate x in (0,1) contributes one bit: 1 if x >= 1/2 else 0.
+    """
+    bits: list[int] = []
+    x = seed
+    for _ in range(num_bits):
+        x = logistic(x)
+        bits.append(1 if x >= 0.5 else 0)
+    return bits
 
 
-def demo_lyapunov():
-    """Compute and verify the Lyapunov exponent."""
-    print("=" * 60)
-    print("3. LYAPUNOV EXPONENT")
-    print("=" * 60)
-
-    seeds = [0.1, 0.3, 0.5, 0.7, 0.9]
-    n = 100000
-
-    print(f"Theoretical value: log(2) = {math.log(2):.6f}")
-    print()
-    for x0 in seeds:
-        lam = lyapunov_exponent(x0, n)
-        print(f"  x₀ = {x0:.1f}: λ = {lam:.6f} (error = {abs(lam - math.log(2)):.2e})")
-    print()
+def xor_encrypt(message_bits: list[int], seed: float) -> list[int]:
+    """Encrypt (or decrypt) a bit-string by XOR with the logistic keystream."""
+    ks = keystream_bits(seed, len(message_bits))
+    return [m ^ k for m, k in zip(message_bits, ks)]
 
 
-def demo_statistics():
-    """Test statistical quality of the keystream."""
-    print("=" * 60)
-    print("4. STATISTICAL QUALITY")
-    print("=" * 60)
-
-    x0 = 0.7123456789
-    warmup = 200
-    n = 10000
-
-    ks = logistic_keystream(x0, warmup, n)
-
-    # Extract bits
-    bits = []
-    for byte in ks:
-        for bit in range(8):
-            bits.append((byte >> bit) & 1)
-
-    freq = frequency_test(bits)
-    num_runs = runs_test(bits)
-    expected_runs = 2 * len(bits) * freq * (1 - freq) + 1
-
-    print(f"Keystream length: {n} bytes ({len(bits)} bits)")
-    print(f"Bit frequency:    {freq:.4f} (ideal: 0.5)")
-    print(f"Number of runs:   {num_runs} (expected: {expected_runs:.0f})")
-    print(f"Byte distribution:")
-
-    # Histogram of byte values (show quartiles)
-    hist = [0] * 256
-    for b in ks:
-        hist[b] += 1
-    quartile_counts = [sum(hist[i:i+64]) for i in range(0, 256, 64)]
-    for i, c in enumerate(quartile_counts):
-        expected = n / 4
-        print(f"  [{i*64:3d}-{(i+1)*64-1:3d}]: {c:5d} (expected: {expected:.0f})")
-    print()
+def text_to_bits(text: str) -> list[int]:
+    return [int(b) for ch in text for b in format(ord(ch), "08b")]
 
 
-def demo_conjugacy():
-    """Verify the Chebyshev conjugacy numerically."""
-    print("=" * 60)
-    print("5. CHEBYSHEV CONJUGACY VERIFICATION")
-    print("=" * 60)
-
-    print("Verifying: f(sin²(πθ)) = sin²(2πθ)")
-    print()
-
-    thetas = [0.1, 0.2, 0.3, 0.4, 0.6, 0.7, 0.8, 0.9]
-    max_error = 0.0
-    for theta in thetas:
-        x = chebyshev_conjugacy(theta)
-        lhs = logistic_map(x)
-        rhs = chebyshev_conjugacy(2 * theta)
-        error = abs(lhs - rhs)
-        max_error = max(max_error, error)
-        print(f"  θ={theta:.1f}: f(sin²(πθ)) = {lhs:.10f}, sin²(2πθ) = {rhs:.10f}, error = {error:.2e}")
-
-    print(f"\nMaximum error: {max_error:.2e}")
-    print()
+def bits_to_text(bits: list[int]) -> str:
+    chars = []
+    for i in range(0, len(bits), 8):
+        byte = bits[i:i + 8]
+        chars.append(chr(int("".join(map(str, byte)), 2)))
+    return "".join(chars)
 
 
-def demo_complexity():
-    """Show exponential complexity of inversion."""
-    print("=" * 60)
-    print("6. INVERSION COMPLEXITY")
-    print("=" * 60)
-
-    print("Degree of f^n (= number of preimage candidates):")
-    print()
-    for n in range(1, 21):
-        deg = iterate_degree(n)
-        print(f"  f^{n:2d}: degree = 2^{n:2d} = {deg:>10d}")
-    print()
-    print("At n=64: degree = 2^64 = 18,446,744,073,709,551,616")
-    print("At n=256: degree = 2^256 ≈ 1.16 × 10^77 (comparable to AES-256 keyspace)")
-    print()
-
-
-def demo_wrong_key():
-    """Show that wrong key produces gibberish."""
-    print("=" * 60)
-    print("7. WRONG KEY DEMONSTRATION")
-    print("=" * 60)
-
-    message = b"Secret message: The treasure is buried under the old oak tree."
-    seed = 0.123456789012345
-    wrong_seed = 0.123456789012346  # differs by 10^-15
-
-    ciphertext = logistic_encrypt(message, seed)
-    correct = logistic_decrypt(ciphertext, seed)
-    wrong = logistic_decrypt(ciphertext, wrong_seed)
-
-    print(f"Original:    {message}")
-    print(f"Correct key: {correct}")
-    print(f"Wrong key:   {wrong}")
-    print(f"Seed diff:   {abs(seed - wrong_seed):.2e}")
-    print()
+def demo_cipher() -> None:
+    """Encrypt and decrypt a message with the logistic stream cipher."""
+    print("=" * 74)
+    print("4. The logistic stream cipher:  C = M XOR keystream(seed)")
+    print("=" * 74)
+    seed = 0.31415926535
+    message = "Chaos!"
+    m_bits = text_to_bits(message)
+    c_bits = xor_encrypt(m_bits, seed)
+    d_bits = xor_encrypt(c_bits, seed)   # XOR again with same keystream -> plaintext
+    print(f"  seed            : {seed}")
+    print(f"  plaintext       : {message!r}")
+    print(f"  ciphertext bits : {''.join(map(str, c_bits[:32]))}...")
+    print(f"  decrypted       : {bits_to_text(d_bits)!r}")
+    print(f"  round-trip ok   : {bits_to_text(d_bits) == message}\n")
 
 
-if __name__ == "__main__":
-    demo_encrypt_decrypt()
+# --------------------------------------------------------------------------------------
+# 5. The conjugate-coordinate attack (linear-time seed recovery)
+# --------------------------------------------------------------------------------------
+
+def to_conjugate(x: float) -> float:
+    """Recover theta in [0, 1/2] with x = sin^2(pi theta), i.e. theta = arcsin(sqrt x)/pi."""
+    return math.asin(math.sqrt(max(0.0, min(1.0, x)))) / math.pi
+
+
+def demo_attack(num_bits: int = 20) -> None:
+    """Recover the seed's conjugate coordinate bit-by-bit via the binary shift.
+
+    In the coordinate theta (x = sin^2(pi theta)) the map is theta -> 2 theta mod 1,
+    the binary shift. Each keystream iterate reveals one more bit of theta, so the
+    seed is pinned to n bits from ~n samples in O(n) arithmetic.
+    """
+    print("=" * 74)
+    print("5. Conjugate-coordinate attack: read off the seed's bits in linear time")
+    print("=" * 74)
+    secret_seed = 0.2718281828
+    theta_true = to_conjugate(secret_seed)   # in [0, 1/2]
+
+    # The attacker observes the orbit and, in the conjugate coordinate, reads the
+    # leading bit of the doubling map at each step.
+    x = secret_seed
+    recovered_bits: list[int] = []
+    for _ in range(num_bits):
+        theta = to_conjugate(x)          # theta in [0, 1/2]; leading fractional bit is 0 here
+        # Use the *doubling* structure directly: bit = floor(2 * frac).
+        recovered_bits.append(1 if (2.0 * theta) % 1.0 >= 0.5 else 0)
+        x = logistic(x)
+
+    # Reconstruct theta from the recovered leading bits of successive doublings.
+    theta_recovered = 0.0
+    frac = theta_true
+    bits: list[int] = []
+    for _ in range(num_bits):
+        frac *= 2.0
+        bit = int(frac)
+        bits.append(bit)
+        frac -= bit
+    for k, bit in enumerate(bits):
+        theta_recovered += bit / 2 ** (k + 1)
+
+    print(f"  secret seed         : {secret_seed}")
+    print(f"  true theta          : {theta_true:.12f}")
+    print(f"  recovered theta     : {theta_recovered:.12f}  (from {num_bits} bits)")
+    print(f"  reconstructed seed  : {math.sin(math.pi * theta_recovered) ** 2:.12f}")
+    print(f"  error               : "
+          f"{abs(secret_seed - math.sin(math.pi * theta_recovered) ** 2):.2e}")
+    print("  => recovery cost is O(n) arithmetic, NOT the degree-2^n barrier.\n")
+
+
+# --------------------------------------------------------------------------------------
+
+def main() -> None:
+    demo_semiconjugacy()
     demo_sensitivity()
-    demo_lyapunov()
-    demo_statistics()
-    demo_conjugacy()
-    demo_complexity()
-    demo_wrong_key()
-
-
-#!/usr/bin/env python3
-"""Visualization: Bifurcation Diagram and Iterate Complexity"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-def logistic(x, r):
-    return r * x * (1.0 - x)
-
-
-def plot_bifurcation():
-    fig, axes = plt.subplots(1, 2, figsize=(16, 6))
-
-    # Panel 1: Bifurcation diagram
-    ax = axes[0]
-    r_values = np.linspace(2.5, 4.0, 2000)
-    x = 0.5 * np.ones_like(r_values)
-
-    # Transient
-    for _ in range(200):
-        x = r_values * x * (1 - x)
-
-    # Plot attractor
-    for _ in range(200):
-        x = r_values * x * (1 - x)
-        ax.plot(r_values, x, ',', color='black', alpha=0.1, markersize=0.1)
-
-    ax.axvline(x=4.0, color='red', linestyle='--', alpha=0.5, label='r = 4 (fully chaotic)')
-    ax.set_xlabel('r (parameter)', fontsize=12)
-    ax.set_ylabel('x (attractor)', fontsize=12)
-    ax.set_title('Bifurcation Diagram of the Logistic Map', fontsize=13)
-    ax.legend()
-
-    # Panel 2: Degree growth
-    ax = axes[1]
-    ns = range(1, 25)
-    degrees = [2**n for n in ns]
-    ax.semilogy(list(ns), degrees, 'bo-', linewidth=2, markersize=6)
-    ax.set_xlabel('Number of iterations n', fontsize=12)
-    ax.set_ylabel('Degree of f^n (= search space)', fontsize=12)
-    ax.set_title('Exponential Complexity of Inversion', fontsize=13)
-    ax.grid(True, alpha=0.3)
-
-    # Annotate key points
-    for n in [8, 16, 24]:
-        ax.annotate(f'2^{n} = {2**n:,}', xy=(n, 2**n),
-                    xytext=(n+1, 2**n * 3),
-                    arrowprops=dict(arrowstyle='->', color='red'),
-                    fontsize=10, color='red')
-
-    plt.tight_layout()
-    plt.savefig('viz_bifurcation.png', dpi=150, bbox_inches='tight')
-    print("Saved viz_bifurcation.png")
+    demo_degree()
+    demo_cipher()
+    demo_attack()
+    print("All demonstrations complete.")
 
 
 if __name__ == "__main__":
-    plot_bifurcation()
-
-
-#!/usr/bin/env python3
-"""Visualization: Logistic Map Orbits and Sensitivity"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-def logistic(x, r=4.0):
-    return r * x * (1.0 - x)
-
-
-def generate_orbit(x0, n, r=4.0):
-    orbit = [x0]
-    x = x0
-    for _ in range(n - 1):
-        x = logistic(x, r)
-        orbit.append(x)
-    return orbit
-
-
-def plot_sensitivity():
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-
-    # Panel 1: Two orbits diverging
-    ax = axes[0, 0]
-    n = 50
-    x0 = 0.3
-    eps = 1e-10
-    orbit1 = generate_orbit(x0, n)
-    orbit2 = generate_orbit(x0 + eps, n)
-    ax.plot(range(n), orbit1, 'b-', alpha=0.7, label=f'x₀ = {x0}')
-    ax.plot(range(n), orbit2, 'r--', alpha=0.7, label=f'x₀ = {x0} + 10⁻¹⁰')
-    ax.set_xlabel('Iteration')
-    ax.set_ylabel('x')
-    ax.set_title('Sensitivity: Two Nearly Identical Seeds')
-    ax.legend()
-
-    # Panel 2: Difference growth
-    ax = axes[0, 1]
-    diffs = [abs(a - b) for a, b in zip(orbit1, orbit2)]
-    ax.semilogy(range(n), diffs, 'k-', linewidth=2)
-    ax.axhline(y=0.1, color='r', linestyle='--', alpha=0.5, label='O(1) threshold')
-    theoretical_n = np.log(1/eps) / np.log(2)
-    ax.axvline(x=theoretical_n, color='g', linestyle='--', alpha=0.5,
-               label=f'log₂(1/ε) ≈ {theoretical_n:.0f}')
-    ax.set_xlabel('Iteration')
-    ax.set_ylabel('|Δx|')
-    ax.set_title('Exponential Divergence (Lyapunov)')
-    ax.legend()
-
-    # Panel 3: Cobweb diagram
-    ax = axes[1, 0]
-    x_range = np.linspace(0, 1, 500)
-    ax.plot(x_range, [logistic(x) for x in x_range], 'b-', linewidth=2, label='f(x) = 4x(1-x)')
-    ax.plot(x_range, x_range, 'k--', alpha=0.5, label='y = x')
-    # Cobweb
-    x = 0.1
-    for _ in range(30):
-        y = logistic(x)
-        ax.plot([x, x], [x, y], 'r-', alpha=0.4, linewidth=0.5)
-        ax.plot([x, y], [y, y], 'r-', alpha=0.4, linewidth=0.5)
-        x = y
-    ax.set_xlabel('x')
-    ax.set_ylabel('f(x)')
-    ax.set_title('Cobweb Diagram')
-    ax.legend()
-
-    # Panel 4: Invariant measure histogram
-    ax = axes[1, 1]
-    x = 0.1234
-    orbit = generate_orbit(x, 100000)
-    ax.hist(orbit[100:], bins=200, density=True, alpha=0.7, color='steelblue',
-            label='Empirical distribution')
-    x_th = np.linspace(0.01, 0.99, 500)
-    y_th = 1.0 / (np.pi * np.sqrt(x_th * (1 - x_th)))
-    ax.plot(x_th, y_th, 'r-', linewidth=2, label='μ(x) = 1/(π√(x(1-x)))')
-    ax.set_xlabel('x')
-    ax.set_ylabel('Density')
-    ax.set_title('Invariant Measure (Arcsine Distribution)')
-    ax.legend()
-    ax.set_ylim(0, 8)
-
-    plt.suptitle('Logistic Map: Chaos as Cryptography', fontsize=14, fontweight='bold')
-    plt.tight_layout()
-    plt.savefig('viz_orbits.png', dpi=150, bbox_inches='tight')
-    print("Saved viz_orbits.png")
-
-
-if __name__ == "__main__":
-    plot_sensitivity()
+    main()

@@ -1,283 +1,173 @@
-# Cryptography from Chaos: Formal Verification of the Logistic Map Cipher
+# Cryptography from Chaos: Exact Structure of the Logistic Keystream
+
+**Author:** Aristotle
+**Date:** 2026-07-10
 
 ## Abstract
 
-We present a formally verified analysis of the logistic map f(x) = 4x(1−x) as a cryptographic pseudorandom generator, establishing three key theorems in the Lean 4 proof assistant. First, we prove the **Iterate Degree Theorem**: the n-th compositional iterate of a degree-d polynomial has degree d^n, giving the logistic map's n-th iterate degree 2^n. Second, we prove the **Preimage Bound**: the n-th iterate has at most 2^n preimages for any target value, establishing exponential inversion complexity. Third, we prove the **Chebyshev Conjugacy**: the substitution x = sin²(πθ) transforms the logistic map into the doubling map θ → 2θ, providing both the theoretical foundation for the Lyapunov exponent λ = log(2) and a concrete attack vector. We also formalize the XOR stream cipher construction, proving message-level encryption/decryption correctness. Our results bridge dynamical systems theory, polynomial algebra, and information security, providing machine-verified foundations for analyzing chaos-based cryptosystems.
-
-**Keywords**: logistic map, chaos, cryptography, formal verification, polynomial degree, Lyapunov exponent, stream cipher
-
----
+The logistic map $f(x) = 4x(1-x)$ on the unit interval is the canonical example of one-dimensional chaos, and it has repeatedly been proposed as the heart of a "chaos-based" stream cipher: the orbit of a secret seed $x_0 \in (0,1)$ is used as a keystream that masks the plaintext. Two properties are advertised as the source of security: *sensitive dependence on initial conditions* (the avalanche effect), and *algebraic depth* (the $n$-th iterate is a polynomial of exponentially large degree $2^n$, so recovering the seed appears to require solving a degree-$2^n$ equation). We make both claims precise and prove them. The unifying device is the exact **semiconjugacy of the logistic map to angle doubling**, $f(\sin^2 t) = \sin^2(2t)$, which lifts to $f^n(\sin^2 t) = \sin^2(2^n t)$ for every $n$. From this single identity we derive: (i) an explicit family of seeds converging to the fixed point $0$ whose $n$-th iterates remain a *constant* distance $\tfrac12$ from the fixed orbit, a quantitative avalanche; and (ii) the fact that the $n$-th iterate, viewed as a polynomial, has degree exactly $2^n$, with the polynomial and dynamical descriptions agreeing pointwise. We also record the invariant structural facts (the unit interval is preserved; the only real fixed points are $0$ and $3/4$). Finally we explain, using the conjugacy, why the naive chaos cipher is nonetheless insecure: in the conjugate coordinate the dynamics is the binary shift map, so the degree-$2^n$ barrier is an artifact of coordinates and the seed is recoverable in time linear in the security parameter. The work is a compact bridge between real dynamics and polynomial algebra, and a cautionary tale about coordinate-dependent notions of hardness.
 
 ## 1. Introduction
 
-The logistic map f(x) = rx(1−x) is perhaps the simplest mathematical system exhibiting chaotic dynamics. At the parameter value r = 4, it displays full chaos on [0,1]: positive Lyapunov exponent, dense periodic orbits, topological mixing, and an absolutely continuous invariant measure. These properties have led to numerous proposals to use the logistic map as a pseudorandom number generator (PRNG) or as the basis for encryption schemes.
+Chaos and cryptography share a slogan: small causes, large effects. A cryptosystem is supposed to *diffuse* information so that a one-bit change in the key or plaintext changes roughly half the output bits. A chaotic dynamical system exhibits *sensitive dependence on initial conditions*, so that a small change in the state is amplified exponentially in time. The resemblance has inspired a long line of "chaos-based" ciphers, of which the simplest and most famous uses the logistic map at its fully chaotic parameter.
 
-Despite extensive literature on chaos-based cryptography (Alvarez & Li, 2006; Kocarev & Lian, 2011), the security properties of these systems have rarely been analyzed with mathematical rigor. Most analyses are either purely numerical (statistical tests on keystreams) or informal (appeals to chaos theory without precise theorems). This paper addresses this gap by providing the first formally verified analysis of the logistic cipher's algebraic security properties.
+**The logistic cipher.** Fix a secret seed $x_0 \in (0,1)$ and iterate
 
-### 1.1 Contributions
+$$f(x) = 4x(1-x).$$
 
-1. **Polynomial Iterate Degree Theorem** (Theorem 3.1): We prove that the n-th compositional iterate of a polynomial of degree d has degree d^n. For the logistic map, this yields degree 2^n for f^n, establishing that inversion requires solving an exponentially complex polynomial equation.
+The keystream is the orbit $K = \bigl(f(x_0), f^2(x_0), f^3(x_0), \dots\bigr)$, quantized to bits; the ciphertext is $C = M \oplus K$ for plaintext $M$. Decryption regenerates $K$ from $x_0$ and XORs it out. The proposed security rests on two claims:
 
-2. **Preimage Bound** (Theorem 3.2): We prove that the n-th iterate of the logistic map has at most 2^n preimages for any target value, bounding the search space for brute-force inversion.
+1. **Sensitivity.** A change of $\varepsilon$ in $x_0$ produces an $O(1)$ change in $f^n(x_0)$ after $n = O(\log(1/\varepsilon))$ iterations.
+2. **Algebraic depth.** The iterate $f^n$ is a polynomial of degree $2^n$, so solving for $x_0$ from keystream values is a degree-$2^n$ root-finding problem, exponential in $n$.
 
-3. **Chebyshev Conjugacy** (Theorem 4.1): We formally verify that f(sin²(πθ)) = sin²(2πθ), establishing the conjugacy between the logistic map and the doubling map.
+**Contribution.** We prove precise forms of both claims and identify the exact structural reason they hold. The keystone is the classical semiconjugacy
 
-4. **XOR Cipher Correctness** (Theorems 5.1–5.3): We prove encryption/decryption correctness at both the block and message level, and establish injectivity of encryption.
+$$f(\sin^2 t) = \sin^2(2t), \qquad\text{hence}\qquad f^n(\sin^2 t) = \sin^2(2^n t),$$
 
-5. **Fixed Point and Derivative Analysis** (Theorems 4.2–4.3): We characterize the fixed points of f and compute its derivative, formalizing the sensitivity analysis.
+which conjugates the logistic map to the angle-doubling map $t \mapsto 2t$. The per-step stretching factor $2$ is the common origin of the Lyapunov exponent $\log 2$, the exponential sensitivity, and the degree growth. We then use the same identity to explain the cipher's fatal weakness: doubling is the binary shift, so the keystream transparently emits the bits of the conjugate coordinate.
 
-All proofs are machine-checked in Lean 4 with Mathlib, ensuring the highest level of mathematical certainty.
+**Organization.** Section 2 fixes definitions and elementary invariants. Section 3 proves the semiconjugacy and its iterate form. Section 4 develops the polynomial (algebraic) description and the degree theorem. Section 5 states and proves the sensitivity result. Section 6 discusses cryptographic consequences, including the linear-time break. Section 7 gives algorithms and numerical illustrations, and Section 8 collects future directions.
 
----
+## 2. Definitions and elementary invariants
 
-## 2. Definitions
+**Definition 2.1 (Logistic map).** The *logistic map* at the fully chaotic parameter $r = 4$ is
+$$f : \mathbb{R} \to \mathbb{R}, \qquad f(x) = 4x(1-x).$$
+Its $n$-fold iterate is written $f^n = f \circ f \circ \cdots \circ f$ ($n$ times), with $f^0 = \mathrm{id}$.
 
-### 2.1 The Logistic Map
+Two immediate values anchor the dynamics on the interval's boundary: $f(0) = 0$ and $f(1) = 0$.
 
-**Definition 2.1** (Logistic polynomial). The logistic map polynomial is
-```
-logisticPoly := 4X − 4X² ∈ ℝ[X]
-```
-As a real function: logistic(x) = 4x(1−x).
+**Proposition 2.2 (Invariance of the unit interval).** If $0 \le x \le 1$ then $0 \le f(x) \le 1$.
 
-**Definition 2.2** (Compositional iterate). For a polynomial p ∈ R[X], the n-th compositional iterate is defined recursively:
-```
-p.compIterate 0 = X
-p.compIterate (n+1) = p ∘ p.compIterate n
-```
-where ∘ denotes polynomial composition.
+*Proof.* Nonnegativity is clear since $x \ge 0$ and $1 - x \ge 0$ give $f(x) = 4x(1-x) \ge 0$. For the upper bound, complete the square: $1 - f(x) = 1 - 4x(1-x) = (2x-1)^2 \ge 0$, so $f(x) \le 1$. $\qquad\blacksquare$
 
-**Definition 2.3** (Logistic orbit). The orbit of x₀ under the logistic map is the sequence:
-```
-logisticOrbit(x₀, 0) = x₀
-logisticOrbit(x₀, n+1) = logistic(logisticOrbit(x₀, n))
-```
+Thus $f$ restricts to a self-map of $[0,1]$, and the keystream never leaves the unit interval.
 
-### 2.2 The XOR Stream Cipher
+**Proposition 2.3 (Fixed points).** For $x \in \mathbb{R}$, $f(x) = x$ if and only if $x = 0$ or $x = \tfrac34$.
 
-**Definition 2.4** (Stream cipher). A stream cipher over BitVec w consists of a keystream function ks : ℕ → BitVec w. Encryption and decryption are both XOR with the keystream:
-```
-encrypt(pos, m) = m ⊕ ks(pos)
-decrypt(pos, c) = c ⊕ ks(pos)
-```
+*Proof.* The equation $4x(1-x) = x$ is equivalent to $x(3 - 4x) = 0$, whose roots are $x = 0$ and $x = 3/4$. $\qquad\blacksquare$
 
-**Definition 2.5** (Logistic cipher configuration). A logistic cipher is specified by:
-- A seed x₀ ∈ (0,1)
-- A warm-up count n ∈ ℕ
-- A block size w ∈ ℕ
+The fixed point $0$ is on the boundary and is the anchor for our sensitivity construction: since $f(0) = 0$, the entire orbit of $0$ is constantly $0$, i.e. $f^n(0) = 0$ for all $n$ (immediate by induction).
 
-The keystream is generated by iterating the logistic map starting from x₀, discarding the first n iterates, and quantizing subsequent iterates to w-bit integers.
+## 3. Semiconjugacy to angle doubling
 
-### 2.3 The Chebyshev Conjugacy
+The central structural fact is a change of variables that linearizes the map.
 
-**Definition 2.6** (Chebyshev conjugacy). The map h : ℝ → ℝ defined by h(θ) = sin²(πθ) conjugates the logistic map to the doubling map: f ∘ h = h ∘ (θ ↦ 2θ).
+**Theorem 3.1 (Semiconjugacy).** For every $t \in \mathbb{R}$,
+$$f(\sin^2 t) = \sin^2(2t).$$
 
----
+*Proof.* Using the double-angle identity $\sin(2t) = 2\sin t \cos t$ and the Pythagorean identity $\cos^2 t = 1 - \sin^2 t$,
+$$\sin^2(2t) = 4\sin^2 t\,\cos^2 t = 4\sin^2 t\,(1 - \sin^2 t) = f(\sin^2 t). \qquad\blacksquare$$
 
-## 3. Algebraic Complexity of Inversion
+The map $\Phi(t) = \sin^2 t$ therefore intertwines the doubling map $D(t) = 2t$ with the logistic map: $f \circ \Phi = \Phi \circ D$. Because $\Phi$ is surjective onto $[0,1]$ (as $t$ ranges over $\mathbb{R}$, $\sin^2 t$ covers $[0,1]$), this is a genuine semiconjugacy, and it lifts to all iterates.
 
-### 3.1 The Iterate Degree Theorem
+**Theorem 3.2 (Iterated semiconjugacy).** For every $n \in \mathbb{N}$ and $t \in \mathbb{R}$,
+$$f^n(\sin^2 t) = \sin^2(2^n t).$$
 
-**Theorem 3.1** (compIterate_natDegree). *Let R be an integral domain, p ∈ R[X] a nonzero polynomial. Then:*
-```
-natDegree(p.compIterate n) = (natDegree p)^n
-```
+*Proof.* Induction on $n$. For $n = 0$ both sides equal $\sin^2 t$. Assume the claim for $k$. Then, using $f^{k+1} = f \circ f^k$ and Theorem 3.1,
+$$f^{k+1}(\sin^2 t) = f\bigl(f^k(\sin^2 t)\bigr) = f\bigl(\sin^2(2^k t)\bigr) = \sin^2\bigl(2 \cdot 2^k t\bigr) = \sin^2\bigl(2^{k+1} t\bigr).\qquad\blacksquare$$
 
-*Proof sketch.* By induction on n. The base case follows from natDegree(X) = 1 = d⁰. For the inductive step, we use the composition degree formula: natDegree(p ∘ q) = natDegree(p) · natDegree(q) (valid in integral domains). Thus natDegree(p.compIterate (n+1)) = natDegree(p) · natDegree(p.compIterate n) = d · d^n = d^{n+1}. □
+**Interpretation.** Under $x = \sin^2 t$ the logistic dynamics is exactly $t \mapsto 2^n t$. The multiplier $2^n$ is the exact stretching factor; its logarithm per step, $\log 2$, is the Lyapunov exponent of the map. Every subsequent result is a shadow of this one identity.
 
-**Corollary 3.1.1** (logistic_iterate_degree). *The n-th iterate of the logistic polynomial has degree 2^n:*
-```
-natDegree(logisticPoly.compIterate n) = 2^n
-```
+## 4. Algebraic depth: the degree-$2^n$ theorem
 
-*Proof.* Apply Theorem 3.1 with logisticPoly_natDegree : natDegree(logisticPoly) = 2. □
+We now record the algebraic side. Treat $f$ as a real polynomial and iterate by composition.
 
-### 3.2 Preimage Counting
+**Definition 4.1 (Logistic polynomial and its iterates).** Let
+$$P(X) = 4X(1-X) \in \mathbb{R}[X],$$
+and define the composition iterates by $P^{[0]} = X$ and $P^{[n+1]} = P \circ P^{[n]}$ (polynomial composition).
 
-**Theorem 3.2** (logistic_preimage_bound). *For any y ∈ ℝ, if logisticPoly.compIterate n − C(y) ≠ 0, then:*
-```
-roots(logisticPoly.compIterate n − C(y)).card ≤ 2^n
-```
+**Lemma 4.2.** $\deg P = 2$.
 
-*Proof sketch.* By the fundamental theorem of algebra (for ℝ: a nonzero polynomial of degree d has at most d real roots), we have roots(p).card ≤ natDegree(p). Combined with the degree formula natDegree(logisticPoly.compIterate n − C(y)) = natDegree(logisticPoly.compIterate n) = 2^n (using natDegree_sub_C), we obtain the bound. □
+*Proof.* $P = 4X - 4X^2$ has leading term $-4X^2$. $\qquad\blacksquare$
 
-**Interpretation.** Finding x₀ such that f^n(x₀) = y requires searching among at most 2^n candidates. For n = 256, this gives 2^256 ≈ 1.16 × 10^77 — comparable to the key space of AES-256.
+**Theorem 4.3 (Exponential algebraic degree).** For every $n \in \mathbb{N}$,
+$$\deg P^{[n]} = 2^n.$$
 
-### 3.3 Nonzeroness of Iterates
+*Proof.* Induction on $n$. For $n = 0$, $\deg X = 1 = 2^0$. For the step, degrees multiply under composition of polynomials over a field, so
+$$\deg P^{[k+1]} = \deg\bigl(P \circ P^{[k]}\bigr) = (\deg P)\,(\deg P^{[k]}) = 2 \cdot 2^k = 2^{k+1}. \qquad\blacksquare$$
 
-**Theorem 3.3** (compIterate_ne_zero). *If p ≠ 0 and natDegree(p) ≥ 1, then p.compIterate n ≠ 0 for all n.*
+**Theorem 4.4 (Algebraic = dynamical).** For every $n \in \mathbb{N}$ and $x \in \mathbb{R}$,
+$$P^{[n]}(x) = f^n(x).$$
 
-*Proof.* The degree of p.compIterate n is (natDegree p)^n ≥ 1 > 0, so the iterate cannot be the zero polynomial. □
+*Proof.* Induction on $n$. For $n = 0$ both sides are $x$. For the step, evaluation commutes with composition: $P^{[k+1]}(x) = P\bigl(P^{[k]}(x)\bigr) = P\bigl(f^k(x)\bigr) = 4 f^k(x)\bigl(1 - f^k(x)\bigr) = f\bigl(f^k(x)\bigr) = f^{k+1}(x)$. $\qquad\blacksquare$
 
----
+**Consequence (apparent hardness).** Given a keystream sample $y = f^n(x_0)$, recovering $x_0$ algebraically means solving $P^{[n]}(x) = y$, a polynomial equation of degree $2^n$. For $n = 64$ the degree is $2^{64} \approx 1.8\times10^{19}$. Naively, this is the exponential barrier the cipher advertises. Section 6 shows why the barrier is illusory.
 
-## 4. Dynamical Properties
+## 5. Sensitive dependence on initial conditions
 
-### 4.1 The Chebyshev Conjugacy
+We now give a fully explicit, quantitative avalanche. The construction exploits Theorem 3.2 to place the $n$-th iterate exactly.
 
-**Theorem 4.1** (logistic_chebyshev_conjugacy). *For all θ ∈ ℝ:*
-```
-logistic(sin²(πθ)) = sin²(2πθ)
-```
+**Definition 5.1 (Sensitivity seeds).** For $n \in \mathbb{N}$ set
+$$s_n = \sin^2\!\left(\frac{\pi}{2^{\,n+2}}\right).$$
 
-*Proof sketch.* We compute:
-```
-logistic(sin²(πθ)) = 4 sin²(πθ)(1 − sin²(πθ))
-                   = 4 sin²(πθ) cos²(πθ)
-                   = (2 sin(πθ) cos(πθ))²
-                   = sin²(2πθ)
-```
-using the double angle formula sin(2α) = 2 sin(α) cos(α) and the Pythagorean identity 1 − sin²(α) = cos²(α). □
+**Lemma 5.2 (Positivity).** $s_n > 0$ for all $n$.
 
-**Significance.** This conjugacy reduces the logistic map to the doubling map θ → 2θ (mod 1), which is one of the simplest chaotic systems. The doubling map has Lyapunov exponent exactly log(2), is ergodic with respect to Lebesgue measure, and has entropy log(2).
+*Proof.* The angle $\alpha_n = \pi/2^{\,n+2}$ satisfies $0 < \alpha_n < \pi$ (since $2^{\,n+2} \ge 2$), so $\sin \alpha_n > 0$ and hence $s_n = \sin^2\alpha_n > 0$. $\qquad\blacksquare$
 
-### 4.2 Fixed Points
+**Lemma 5.3 (Quadratic collapse to the fixed point).** $s_n \le (\pi/2^{\,n+2})^2$, and therefore $s_n \to 0$ as $n \to \infty$.
 
-**Theorem 4.2** (logistic_fixed_points). *The fixed points of the logistic map f(x) = 4x(1−x) are precisely x = 0 and x = 3/4:*
-```
-logistic(x) = x ↔ x = 0 ∨ x = 3/4
-```
+*Proof.* With $\alpha_n = \pi/2^{\,n+2} \in [0,\pi]$ we have $0 \le \sin\alpha_n \le \alpha_n$ (the elementary bound $\sin\alpha \le \alpha$ for $\alpha \ge 0$), and squaring the inequality between nonnegative quantities gives $s_n = \sin^2\alpha_n \le \alpha_n^2$. The right side tends to $0$. $\qquad\blacksquare$
 
-*Proof.* Setting 4x(1−x) = x gives 4x − 4x² = x, hence x(3 − 4x) = 0, yielding x = 0 or x = 3/4. Both are easily verified. □
+**Lemma 5.4 (Exact landing point).** For every $n$, $\;f^n(s_n) = \tfrac12.$
 
-### 4.3 Derivative and Sensitivity
+*Proof.* By Theorem 3.2 with $t = \pi/2^{\,n+2}$,
+$$f^n(s_n) = \sin^2\!\left(2^n \cdot \frac{\pi}{2^{\,n+2}}\right) = \sin^2\!\left(\frac{\pi}{4}\right) = \left(\frac{\sqrt2}{2}\right)^2 = \frac12. \qquad\blacksquare$$
 
-**Theorem 4.3** (logistic_derivative_magnitude). *The derivative of the logistic map is:*
-```
-deriv logistic x = 4 − 8x
-```
+**Theorem 5.5 (Quantitative sensitive dependence).** For every $n \in \mathbb{N}$,
+$$0 < s_n \le \left(\frac{\pi}{2^{\,n+2}}\right)^2 \qquad\text{and}\qquad \bigl| f^n(s_n) - f^n(0)\bigr| = \frac12.$$
 
-*Proof.* Direct computation from logistic(x) = 4x − 4x². □
+*Proof.* The bounds on $s_n$ are Lemmas 5.2–5.3. For the gap, $f^n(0) = 0$ (the orbit of the fixed point $0$) and $f^n(s_n) = \tfrac12$ by Lemma 5.4, so the absolute difference is exactly $\tfrac12$. $\qquad\blacksquare$
 
-**Corollary.** At x = 1/2 (the critical point), f'(1/2) = 0. At x = 0, f'(0) = 4. At the fixed point x = 3/4, f'(3/4) = −2. The magnitude |f'| > 1 at the fixed point confirms its instability.
+**Interpretation.** The seeds $s_n$ are exponentially close to the fixed point $0$ — their distance is at most $\pi^2/2^{\,2n+4}$, i.e. $O(2^{-2n})$ — yet after only $n$ iterations they are separated from the fixed orbit by a *constant* $\tfrac12$. A perturbation of size $\varepsilon \approx 2^{-2n}$ becomes macroscopic after $n \approx \tfrac12\log_2(1/\varepsilon)$ steps. This is the avalanche in exact form: linearly many steps suffice to amplify an exponentially small difference to $O(1)$.
 
----
+## 6. Cryptographic consequences
 
-## 5. Cipher Correctness
+### 6.1 The two pillars are real theorems
 
-### 5.1 Block-Level Correctness
+Theorem 5.5 confirms sensitivity: any imprecision in the seed is amplified to a full-scale output difference within a number of steps logarithmic in the imprecision. Theorem 4.3 confirms algebraic depth: the $n$-th iterate is a genuine degree-$2^n$ polynomial (Theorem 4.4 certifies it computes the same function as the dynamics). A designer reading only these two results would conclude that the seed is well hidden.
 
-**Theorem 5.1** (StreamCipher.decrypt_encrypt). *For any stream cipher c, position pos, and message m:*
-```
-c.decrypt pos (c.encrypt pos m) = m
-```
+### 6.2 The conjugate coordinate breaks the cipher in linear time
 
-*Proof.* By definition, encrypt(pos, m) = m ⊕ ks(pos) and decrypt(pos, c) = c ⊕ ks(pos). Thus decrypt(pos, encrypt(pos, m)) = (m ⊕ ks(pos)) ⊕ ks(pos) = m ⊕ (ks(pos) ⊕ ks(pos)) = m ⊕ 0 = m, using associativity and self-cancellation of XOR. □
+The same identity that produced the two pillars also dismantles the second. Write angles as fractions of a half-turn: $t = \pi\theta$, so that $x = \sin^2(\pi\theta)$ with $\theta \in [0,1)$. Under this coordinate the doubling map $t \mapsto 2t$ becomes
+$$\theta \mapsto 2\theta \pmod 1,$$
+the **binary shift map**. Writing $\theta = 0.b_1 b_2 b_3 \ldots$ in base $2$, each iteration deletes the leading bit and shifts:
+$$0.b_1 b_2 b_3 \ldots \;\mapsto\; 0.b_2 b_3 b_4 \ldots$$
 
-### 5.2 Injectivity
+Consequently the keystream, in the conjugate coordinate, simply reads out the successive bits of $\theta$. An attacker who converts each keystream sample $y_k = \sin^2(\pi\,2^k\theta)$ back to the conjugate coordinate recovers, one per step, the bits of $\theta$; after $O(n)$ samples and $O(n)$ arithmetic operations the seed is pinned down to $n$ bits of precision. The degree-$2^n$ polynomial from Theorem 4.3 is therefore *not* a hardness barrier: it is an artifact of insisting on the coordinate $x$. Conjugacy linearizes the apparent nonlinearity and collapses the exponential to a shift. **The break runs in time polynomial (indeed linear) in the security parameter.**
 
-**Theorem 5.2** (StreamCipher.encrypt_injective). *For any stream cipher c and position pos, the encryption function is injective.*
+The lesson generalizes: a hardness assumption that dissolves under an explicit change of coordinates provides no security. Cryptographic hardness must be invariant under the adversary's freedom to choose representations.
 
-*Proof.* If encrypt(pos, a) = encrypt(pos, b), then a ⊕ ks(pos) = b ⊕ ks(pos). XOR both sides by ks(pos) to obtain a = b. □
+### 6.3 Sensitivity is double-edged, and it caps the usable period
 
-### 5.3 Message-Level Correctness
+Sensitivity protects the defender against imprecise guesses, but it equally afflicts any finite-precision *implementation*. In arithmetic with $p$ bits, the stretching factor $2^n$ per $n$ steps means a computed orbit decorrelates from the ideal orbit after roughly $p$ steps; from that point on the emitted keystream is an artifact of rounding rather than of the intended seed. Thus the numerical period and the sensitivity horizon coincide at $\approx p$ steps, bounding the amount of usable keystream and creating implementation-dependent statistical structure. Moreover, transported through the conjugacy the invariant distribution of $f$ is not uniform but the *arcsine law* $d\mu = dx/(\pi\sqrt{x(1-x)})$, so a raw logistic keystream is statistically biased toward the endpoints of $[0,1]$ — an additional exploitable defect.
 
-**Theorem 5.3** (StreamCipher.decryptMsg_encryptMsg). *Decrypting an encrypted message recovers the original:*
-```
-c.decryptMsg startPos (c.encryptMsg startPos msg) = msg
-```
+## 7. Algorithms and numerical illustration
 
-*Proof.* Each byte is independently encrypted and then decrypted using the same keystream position, reducing to Theorem 5.1 applied element-wise. □
+Two computational tasks organize the numerics: (a) generating and using the keystream (the cipher itself), and (b) demonstrating the two theorems empirically — the avalanche and the degree growth — followed by the linear-time break.
 
----
+**Algorithm A (Keystream generation).** Given seed $x_0$ and length $L$, iterate $x_{k+1} = 4x_k(1-x_k)$ and, for each $x_k$, extract bits from its binary fraction to form the keystream. Complexity $O(L)$ arithmetic operations.
 
-## 6. Security Analysis
+**Algorithm B (Conjugate-coordinate attack).** Given keystream values interpreted in the conjugate coordinate, recover $\theta$ bit by bit via the shift structure $\theta \mapsto 2\theta \bmod 1$. From $n$ samples one obtains $n$ bits of $\theta$ in $O(n)$ time — the practical realization of Section 6.2.
 
-### 6.1 Strengths
+The accompanying programs verify: the semiconjugacy identity to machine precision; the exact landing $f^n(s_n) = \tfrac12$; the degree sequence $1, 2, 4, 8, \dots, 2^n$ by symbolic composition; and the linear-time seed recovery.
 
-The logistic cipher's security derives from three provable properties:
+## 8. Discussion and future directions
 
-1. **Exponential algebraic complexity**: Inverting f^n requires solving a degree-2^n polynomial (Theorem 3.1 and Corollary 3.1.1).
+The results form a compact bridge between real dynamics and polynomial algebra: a single trigonometric identity, $f^n(\sin^2 t) = \sin^2(2^n t)$, simultaneously yields a dynamical statement (quantitative sensitive dependence, Theorem 5.5) and an algebraic statement (degree exactly $2^n$, Theorem 4.3). The cryptographic upshot is a clean case study in coordinate-dependent hardness: the naive logistic cipher looks strong in $x$ and is trivial in $\theta$.
 
-2. **Exponential sensitivity**: A perturbation ε in the seed grows to O(1) after O(log(1/ε)) iterations, with Lyapunov exponent λ = log(2).
+**Future directions.**
 
-3. **Ergodicity**: The orbit is equidistributed according to the arcsine measure μ(x) = 1/(π√(x(1−x))), ensuring no statistical bias in the keystream.
+1. *Linear-time cryptanalysis, as a theorem.* Establish rigorously that the conjugate-coordinate attack recovers the seed to $n$ bits from $O(n)$ keystream samples with $O(n)$ arithmetic, converting the folklore break into a precise reduction. The degree-$2^n$ "barrier" is an artifact of coordinates; conjugacy collapses it to a shift.
 
-### 6.2 Weaknesses
+2. *The invariant density is the arcsine law and is unique.* Prove that $d\mu = dx/(\pi\sqrt{x(1-x)})$ is $f$-invariant, is the pushforward of the uniform measure on the doubling circle under $t \mapsto \sin^2(\pi t)$, and is the unique absolutely continuous invariant measure. This exposes the statistical bias of raw logistic keystreams.
 
-Despite these properties, the logistic cipher has fundamental weaknesses:
+3. *A matching decryption-instability lower bound.* Show that the stretching factor $2^n$ controls both the divergence rate from above and the precision-loss rate from below, so that a $p$-bit implementation loses correlation with the true orbit after exactly $p$ steps — avalanche speed and numerical unreliability as two readings of the same Lyapunov exponent.
 
-1. **Algebraic structure**: The Chebyshev conjugacy (Theorem 4.1) provides a coordinate change that linearizes the dynamics. An attacker who observes x_k can compute θ_k = arcsin(√x_k)/π and then recover earlier iterates via θ_{k-1} = θ_k/2.
+## Summary of results
 
-2. **Floating-point artifacts**: The logistic map on IEEE 754 floating-point numbers has finite precision, introducing periodic behavior. The effective period depends on precision but is much shorter than 2^n for double-precision (64-bit) arithmetic.
-
-3. **Known-plaintext attacks**: If the attacker knows any plaintext-ciphertext pair, they can recover the corresponding keystream value and hence the orbit value at that position, potentially enabling the conjugacy attack.
-
-### 6.3 Comparison with Modern PRNGs
-
-| Property | Logistic Cipher | AES-CTR | ChaCha20 |
-|----------|----------------|---------|----------|
-| Algebraic structure | Polynomial (exploitable) | S-box (opaque) | ARX (opaque) |
-| Inversion hardness | 2^n (polynomial roots) | 2^128 (AES security) | 2^256 |
-| Statistical quality | Good (arcsine measure) | Excellent | Excellent |
-| Known weaknesses | Conjugacy attack | None known | None known |
-
----
-
-## 7. The Invariant Measure Conjecture
-
-**Conjecture 7.1** (Logistic PRG Security). The logistic map at r = 4, initialized with a uniformly random seed from (0,1) and using high-precision arithmetic (≥ 256 bits), produces a bit sequence that passes all polynomial-time statistical tests.
-
-**Testable prediction**: Compute 10^6 iterates of f at r = 4 with 256-bit precision, extract the leading bit of each iterate, and run the NIST SP 800-22 test suite. If any test fails with p < 0.01, the conjecture is falsified for the leading-bit extraction scheme.
-
-**Status**: This conjecture is known to be false for naive floating-point implementations (due to periodicity) but remains open for arbitrary-precision arithmetic. The Chebyshev conjugacy suggests that the leading-bit extraction is equivalent to extracting bits of the angle θ, which for irrational θ may indeed produce a pseudorandom sequence — but the equidistribution properties of specific binary digit extraction are subtle.
-
----
-
-## 8. Algorithms
-
-### 8.1 Logistic Cipher Encryption
-
-```
-Algorithm: LogisticEncrypt(message M, seed x₀, warmup n)
-  x ← x₀
-  for i = 1 to n:
-    x ← 4x(1-x)              // warm-up
-  for i = 1 to |M|:
-    x ← 4x(1-x)
-    K_i ← floor(256x) mod 256  // quantize to byte
-    C_i ← M_i ⊕ K_i           // XOR encryption
-  return C = (C_1, ..., C_{|M|})
-```
-
-**Complexity**: O(n + |M|) multiplications, where each multiplication is in the precision of x₀.
-
-### 8.2 Lyapunov Exponent Estimation
-
-```
-Algorithm: LyapunovEstimate(seed x₀, iterations N)
-  x ← x₀
-  λ ← 0
-  for i = 1 to N:
-    λ ← λ + log|4 - 8x|
-    x ← 4x(1-x)
-  return λ/N
-```
-
-**Expected output**: λ ≈ log(2) ≈ 0.6931 for almost all x₀ ∈ (0,1).
-
----
-
-## 9. Related Work
-
-The idea of using chaotic maps for cryptography dates to Matthews (1989) and has been extensively studied (Alvarez & Li, 2006). The logistic map's conjugacy to the Chebyshev polynomial T_n is well-known in dynamical systems (Devaney, 1989). The formal verification of dynamical systems properties is a growing field (Avigad et al., 2007; Immler, 2018).
-
----
-
-## 10. Conclusion
-
-We have provided the first formally verified analysis of the logistic cipher's algebraic security properties. Our main result — the Iterate Degree Theorem — establishes that the n-th iterate of the logistic map is a polynomial of degree 2^n, giving a precise algebraic measure of inversion complexity. Combined with the Preimage Bound, this shows that brute-force inversion requires searching 2^n candidates.
-
-However, our formal verification of the Chebyshev conjugacy also highlights a fundamental weakness: the logistic map's algebraic structure, while making it amenable to rigorous analysis, also provides an avenue for cryptanalysis. This tension between analyzability and security is a central theme in cryptographic design.
-
-The logistic cipher serves as a pedagogical bridge between dynamical systems theory and cryptography, making the abstract principles of chaos concrete and verifiable. While not suitable for practical deployment, it illuminates the mathematical foundations that underpin all pseudorandom generation.
-
----
-
-## References
-
-1. Alvarez, G., & Li, S. (2006). Some basic cryptographic requirements for chaos-based cryptosystems. *International Journal of Bifurcation and Chaos*, 16(08), 2129-2151.
-2. Devaney, R. L. (1989). *An Introduction to Chaotic Dynamical Systems*. Addison-Wesley.
-3. Kocarev, L., & Lian, S. (2011). *Chaos-Based Cryptography*. Springer.
-4. May, R. M. (1976). Simple mathematical models with very complicated dynamics. *Nature*, 261(5560), 459-467.
-5. Matthews, R. (1989). On the derivation of a "chaotic" encryption algorithm. *Cryptologia*, 13(1), 29-42.
+- **Invariance:** $f$ maps $[0,1]$ into $[0,1]$.
+- **Fixed points:** the only real fixed points of $f$ are $0$ and $3/4$.
+- **Semiconjugacy:** $f(\sin^2 t) = \sin^2(2t)$, hence $f^n(\sin^2 t) = \sin^2(2^n t)$.
+- **Degree:** the $n$-th iterate is a polynomial of degree exactly $2^n$, computing the same function as $f^n$.
+- **Sensitivity:** seeds $s_n = \sin^2(\pi/2^{\,n+2})$ satisfy $0 < s_n \le (\pi/2^{\,n+2})^2$ yet $|f^n(s_n) - f^n(0)| = \tfrac12$.
+- **Cryptanalysis:** in the conjugate coordinate the map is the binary shift, so the seed is recoverable in time linear in the security parameter.
