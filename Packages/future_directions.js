@@ -199,20 +199,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Thermodynamics of Sorting: Entropy and Computational Work"
   },
   {
-    "consumed_by_exp_id": "9f734f3e",
-    "description": "Building on cycle 3fa70466 (Q=0.790), which proved 10 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In 1952, Turing showed that reaction-diffusion equations produce patterns (spots, stripes, spirals) that explain biological morphogenesis. But Turing patterns are solutions to PDEs, which are hard to analyze. Conjecture: Turing patterns are algebraic varieties. Specifically, the zero set of a Turing",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_3fa70466_a76d3023",
-    "priority_score": 0.89,
-    "research_mode": "team",
-    "source_exp_id": "3fa70466",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T08:38:10.188131+00:00",
-    "title": "Deepening: Turing's Flowers: Morphogenesis as Algebraic Geometry"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Two quantum particles are entangled if measuring one instantly affects the other. But entanglement is also a topological property: if you represent the state of two qubits as a curve in R^3, entanglement IS the linking number. Conjecture: For any pure state of two qubits |psi> in C^2 tensor C^2, the concurrence C(psi) = 2|alpha*delta - beta*gamma| (where psi = alpha|00> + beta|01> + gamma|10> + delta|11>) equals the absolute value of the linking number of two curves derived from the Hopf fibration applied to psi. Specifically, map psi to S^7 via normalization, then project to S^4 via the Hopf map, and the preimages of two points in S^4 are linked circles in S^7 whose linking number equals the concurrence. This means: entanglement is MEASURED by topology, and maximally entangled states correspond to the Hopf link (linking number 1). Test: for 1000 random two-qubit states, compute the concurrence and the linking number of the Hopf preimages, and verify they are equal. Prove the equality for the Bell states. Impact: quantum entanglement is not mysterious \u2014 it is the linking number of the Hopf fibration. Two particles are entangled if and only if their Hopf preimages are linked.",
     "domains": [
@@ -5627,6 +5613,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T11:50:24.568314+00:00",
     "title": "**Theme.** *The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map* \u2014"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Morphogenesis as Algebraic Geometry\n\nThis cycle established the coordinate-free conic classification of two-mode Turing\npatterns: the discriminant `\u0394 = b\u00b2 \u2212 4ac` of the leading quadratic form decides\nwhether a pattern's level set is a compact spot (`\u0394 < 0`) or an unbounded labyrinth\n(`\u0394 > 0`), and the number of active Fourier modes reads off as an exact polynomial\ndegree that is additive under products and stable under superposition. The following\nconjectures push the program toward higher modes, higher dimensions, and genuine\ntopology.\n\n## 1. The degree\u2013genus law for three-mode flowers\n\n**Conjecture.** A generic three-mode planar pattern is the real locus of a sextic\ncurve whose smooth complex model has genus `10`, and the number of compact ovals of\nthe real locus (the visible \"spots\" of the flower) is bounded by Harnack's count\n`g + 1 = 11`; hexagonal spot lattices realize the extremal Harnack curve.\n\n*The key insight is* that mode count controls not just the algebraic degree but the\n**genus** of the complexified pattern, so the combinatorics of spot arrangements is\ngoverned by the topology of a Riemann surface rather than by the PDE dynamics.\n\n*Why now?* The exact degree laws for products and superpositions proved in this cycle\ngive the precise degree of each multi-mode pattern, which is exactly the input Harnack\nand Pl\u00fccker formulas need to convert \"number of modes\" into \"number of ovals.\"\n\n## 2. Discriminant stability under nonlinear saturation\n\n**Conjecture.** For the full (nonlinear) reaction\u2013diffusion pattern near onset, the\nsign of the discriminant of the *linearized* leading form is preserved by the weakly\nnonlinear correction: a spot stays a compact component and a labyrinth stays unbounded\nfor all amplitudes below a computable saturation threshold `A_c`.\n\n*The key insight is* that the bounded/unbounded dichotomy is an **open condition** on\nthe coefficient vector, so it persists under any sufficiently small deformation \u2014 and\nthe amplitude expansion is exactly such a deformation.\n\n*Why now?* We proved boundedness with an *explicit* radius `4k(a+c)/(4ac\u2212b\u00b2)` and\nunboundedness with an *explicit* escaping family; both are quantitative enough to\nsurvive a controlled perturbation, turning a qualitative dichotomy into a stability\ntheorem with an effective threshold.\n\n## 3. Compactness \u21d2 finite spot census\n\n**Conjecture.** Whenever the leading form is positive definite, the pattern's level\nset is not only compact but carries a finite, computable Euler characteristic, and the\nspot count equals `1 + (number of interior critical values crossed)`; the map from\ncoefficient space to spot count is locally constant away from the discriminant wall\n`\u0394 = 0`.\n\n*The key insight is* that upgrading boundedness to **compactness** (proved this cycle\nvia Heine\u2013Borel) makes Morse theory available on the level set, so the discrete spot\ncensus becomes a topological invariant rather than a numerical artifact.\n\n*Why now?* Compactness of the anisotropic spot locus is exactly the hypothesis Morse\ntheory requires; with it in hand, the critical-point count becomes a legitimate\ninvariant to conjecture about.\n\n## 4. Higher-dimensional morphogenesis and definiteness\n\n**Conjecture.** In three spatial dimensions the spot/tube/lamella trichotomy of a\ntwo-mode pattern is decided by the **signature** of the `3\u00d73` symmetric matrix of the\nleading quadratic form: signature `(3,0)` gives compact blobs, `(2,1)` gives unbounded\none-sheeted tubes, and `(1,2)` gives lamellar sheets, with the boundaries exactly the\nloci where an eigenvalue vanishes.\n\n*The key insight is* that the planar discriminant is the two-dimensional shadow of the\n**inertia (signature)** of the quadratic form, so the entire zoology of 3D\nmorphologies is a table of eigenvalue-sign patterns.\n\n*Why now?* The planar proofs here were written frame-independently (they never assumed\naxis alignment), so they generalize verbatim to the diagonalized higher-dimensional\nform once the spectral theorem supplies the eigenbasis.\n\n## 5. Aperiodic flowers from irrational mode ratios\n\n**Conjecture.** A superposition of two modes with irrational frequency ratio produces\na pattern whose level set is a dense, non-algebraic curve, yet every finite truncation\nis algebraic of the exact degree given by the higher mode; the \"defect\" between the\ntruncation and the limit is quantified by a Diophantine approximation exponent of the\nratio.\n\n*The key insight is* that algebraicity is a **finiteness** phenomenon in mode count,\nso irrational mode ratios are precisely the boundary where the algebraic-geometry model\nbreaks and quasicrystalline order takes over.\n\n*Why now?* The exact superposition-degree law proved this cycle pins the degree of\nevery rational truncation, giving a rigorous baseline against which the irrational\nlimit's departure from algebraicity can be measured.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0888",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "9f734f3e",
+    "status": "available",
+    "timestamp": "2026-07-10T11:50:38.660259+00:00",
+    "title": "Coordinate-free conic classification of two-mode Turi"
   },
   {
     "consumed_by_exp_id": "",
