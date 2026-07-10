@@ -1,221 +1,176 @@
-# Gödel's Casino: A Guaranteed-Win Strategy for Betting on Undecidable Sentences
+# Gödel's Casino: A Game-Theoretic Analysis of Betting on Undecidable Statements
 
 ## Abstract
 
-We introduce and rigorously analyze *Gödel's Casino*, a betting game in which a player wagers on the arithmetic truth value of sentences that are **independent** of a fixed formal theory $T$ — sentences $T$ can neither prove nor refute. Naively, such sentences appear to be pure coin flips: undecidable by hypothesis, they seem to offer no rational basis for a bet. We show this intuition is mistaken. Working from three classical properties of arithmetic theories — soundness, compatibility of truth with negation, and $\Sigma_1$-completeness — we prove that the *syntactic shape* of an independent sentence determines its truth value: **every independent $\Pi_1$ sentence is true, and every independent $\Sigma_1$ sentence is false.** These two facts yield a strategy (bet TRUE on $\Pi_1$, FALSE on $\Sigma_1$, hedge otherwise) that never loses a round and strictly profits whenever a $\Sigma_1$ or $\Pi_1$ card is dealt. The total profit over a deck equals the number of decidable-shape cards; if at least one-third of a deck has decidable shape, the guaranteed average profit per round is at least $1/3$. This upgrades the original "positive expected value" conjecture to a *deterministic* win. We also show the naive strategy — motivated by the common but incorrect intuition that consistency statements should be bet FALSE — is the pointwise inverse of the optimal one and loses exactly what the optimal strategy wins. A concrete toy model demonstrates non-vacuity.
+We introduce and rigorously analyze *Gödel's Casino*, a betting game in which a player wagers on the truth value of statements — including statements that are independent of a background theory in the sense of holding in some models and failing in others. Motivated by the provocative conjecture that undecidability can be monetized (that each undecidable statement is individually winnable with strictly positive expected value, subject to a universal per-round lower bound of $1/3$), we build a fully self-contained finite model and settle the conjecture in the negative. We prove that the game is zero-sum with no house edge; that decidable statements (valid or unsatisfiable) are winnable with maximal expected profit $1$; that any *independent* statement suffers a worst-case payoff of $-1$ regardless of the bet; and, decisively, that a *balanced* statement (true in exactly half the worlds) yields expected profit exactly $0$ for every bet. We exhibit an explicit independent statement on which no bet has positive expected value, refuting the individual-winnability claim, and a deck of balanced cards whose average optimal profit is $0$, refuting the $1/3$ bound. The honest positive theory is that optimal profit is nonnegative, that a deck of decidable cards is won every round, and that a mixed deck with a fraction $f$ of decidable cards has average optimal profit exactly $f$. The player's entire edge derives from the decidable fragment; genuine incompleteness contributes exactly zero in expectation and $-1$ in the worst case. In this precise game-theoretic sense, incompleteness is a barrier, not a free lunch.
 
-**Keywords:** incompleteness, arithmetic hierarchy, $\Sigma_1$-completeness, independent sentences, decision theory, consistency statements.
-
----
+**Keywords:** undecidability, independence, incompleteness, zero-sum game, expected value, model theory, decision theory.
 
 ## 1. Introduction
 
-Gödel's First Incompleteness Theorem guarantees that any sound, recursively axiomatized theory $T$ extending a modest fragment of arithmetic possesses sentences that are **independent** of $T$: neither the sentence nor its negation is provable in $T$. The archetype is the consistency statement $\mathrm{Con}(T)$, whose unprovability is the content of the Second Incompleteness Theorem, but there are continuum-many others.
+Gödel's incompleteness theorems and the subsequent independence results of Cohen and others established that formal mathematics is permanently haunted by statements it can neither prove nor refute. The Continuum Hypothesis is the canonical example: it is *independent* of the standard axioms, holding in some models of set theory and failing in others. A recurring popular intuition holds that this multiplicity of models is not merely a limitation but a resource — that if a statement is "right in some model," then a gambler betting on its truth ought to be able to profit.
 
-The standard narrative treats such sentences as an epistemic dead end. If $T$ cannot decide $s$, on what basis could a rational agent commit to "$s$ is true" or "$s$ is false"? *Gödel's Casino* poses precisely this question as a decision problem: a dealer presents independent sentences one at a time, and a player must wager TRUE, FALSE, or decline. We ask whether a strategy exists with a positive edge.
+This paper takes that intuition seriously and tests it inside a precise decision-theoretic model. We formalize a betting game — *Gödel's Casino* — and evaluate a specific optimistic conjecture drawn from the informal literature:
 
-The central observation of this paper is that **independence is not the same as truth-neutrality.** Although $T$ cannot settle an independent sentence *internally*, an external observer who knows the sentence's position in the arithmetic hierarchy can determine its truth value in the standard model $\mathbb{N}$ with certainty. The mechanism is $\Sigma_1$-completeness, the classical fact that true existential (findable) statements cannot escape provability.
+> **Conjecture (Monetizable Undecidability).** There is a betting strategy on statements independent of a theory that guarantees strictly positive expected profit, with each undecidable bet individually winnable and a universal lower bound of $1/3$ expected profit per round.
 
-Our contributions are:
+Our contribution is to show that this conjecture is *false*, to prove exactly which parts of the intuition survive, and to isolate the source of any genuine edge. The analysis is elementary and self-contained: it requires only finite sums of rational numbers and does not depend on any formalization of the arithmetic hierarchy or of set theory. Its purpose is to capture the *game-theoretic content* of the conjecture faithfully, and in that arena the verdict is unambiguous.
 
-1. A clean abstract model of the relevant fragment of a formal theory, isolating exactly the three hypotheses the argument requires (Section 2).
-2. Two core theorems (Section 3): independent $\Pi_1$ sentences are true; independent $\Sigma_1$ sentences are false.
-3. A formal casino model and a strategy with per-card profit in $\{0, +1\}$, hence a guaranteed non-negative outcome; the total deck profit equals the count of decidable-shape cards (Section 4).
-4. A quantitative edge: under a one-third decidable-shape density, the average profit per round is at least $1/3$ (Section 5).
-5. A duality result identifying the naive strategy as the exact inverse of the optimal one (Section 6), and a concrete non-vacuous instance (Section 7).
+## 2. The Model
 
-A recurring theme is a **correction** to the folklore intuition: because $\mathrm{Con}(T)$ is a $\Pi_1$ sentence, the correct bet on it is TRUE, not FALSE. The consistency statement of a sound theory is a genuinely *true* sentence that the theory cannot prove about itself.
+### 2.1 Worlds, statements, and bets
 
----
+Fix a finite, nonempty set $\Omega$ of *worlds* (intuitively, the models of the background theory). A **statement** is a function
 
-## 2. The abstract model of a theory
+$$s : \Omega \to \{\text{true}, \text{false}\},$$
 
-Rather than commit to a specific logical syntax, we model a theory by exactly the data the betting argument consumes. This keeps the results maximally general: any concrete arithmetic theory satisfying the three hypotheses below inherits every theorem.
+recording the truth value of $s$ in each world. A **bet** is an element $b \in \{\text{true}, \text{false}\}$. This identification is deliberate: for betting purposes a statement is exactly its pattern of truth values across worlds, and nothing more.
 
-**Definition 2.1 (Theory).** A *theory* $T$ consists of:
+### 2.2 Payoffs
 
-- a type $\mathrm{Sentence}$ of sentences;
-- a *negation* operation $\neg : \mathrm{Sentence} \to \mathrm{Sentence}$;
-- a *provability* predicate $\mathrm{Provable}(s)$, read "$T \vdash s$";
-- a *truth* predicate $\mathrm{True}(s)$, read "$s$ holds in the standard model $\mathbb{N}$";
-- a *classification* predicate $\mathrm{IsSigma1}(s)$, read "$s$ is syntactically $\Sigma_1$";
+The per-world **payoff** of betting $b$ on statement $s$ in world $\omega$ is
 
-subject to three axioms:
+$$\mathrm{payoff}(s, b, \omega) = \begin{cases} +1 & \text{if } b = s(\omega), \\ -1 & \text{if } b \neq s(\omega). \end{cases}$$
 
-- **(Soundness)** $\mathrm{Provable}(s) \Rightarrow \mathrm{True}(s)$ for all $s$: the theory proves only true sentences.
-- **(Truth respects negation)** $\mathrm{True}(\neg s) \iff \neg\,\mathrm{True}(s)$ for all $s$.
-- **($\Sigma_1$-completeness)** $\mathrm{IsSigma1}(s) \wedge \mathrm{True}(s) \Rightarrow \mathrm{Provable}(s)$ for all $s$: every true $\Sigma_1$ sentence is provable.
+This is a scrupulously symmetric, fair-odds rule: a correct call earns one unit, an incorrect call loses one.
 
-These three hypotheses are theorems, not assumptions, for any sound recursively axiomatized extension of Robinson arithmetic $Q$. Soundness holds for any theory with a standard model; truth-respects-negation is a basic property of the satisfaction relation; and $\Sigma_1$-completeness is the classical representability theorem for $\Sigma_1$ formulas over $Q$. We take them as the defining interface so that the casino analysis is a purely deductive consequence.
+### 2.3 Two evaluations of a bet
 
-**Definition 2.2 ($\Pi_1$).** A sentence $s$ is *$\Pi_1$*, written $\mathrm{IsPi1}(s)$, iff its negation is $\Sigma_1$: $\mathrm{IsPi1}(s) :\iff \mathrm{IsSigma1}(\neg s)$.
+Under the uniform prior over $\Omega$, the **expected profit** of a bet is
 
-This mirrors the classical duality: $\Pi_1$ sentences are exactly the negations of $\Sigma_1$ sentences. A $\Sigma_1$ sentence asserts $\exists n\, P(n)$ with $P$ decidable; a $\Pi_1$ sentence asserts $\forall n\, Q(n)$ with $Q$ decidable.
+$$\mathrm{expProfit}(s, b) = \frac{1}{|\Omega|} \sum_{\omega \in \Omega} \mathrm{payoff}(s, b, \omega).$$
 
-**Definition 2.3 (Independence).** A sentence $s$ is *independent* of $T$, written $\mathrm{Indep}(s)$, iff neither it nor its negation is provable:
-$$\mathrm{Indep}(s) :\iff \neg\,\mathrm{Provable}(s) \ \wedge\ \neg\,\mathrm{Provable}(\neg s).$$
+Against an adversarial house that reveals the least favorable world, the **worst-case profit** is $\min_{\omega} \mathrm{payoff}(s, b, \omega)$. A genuinely winning strategy should perform well under both.
 
-Independent sentences are exactly the "interesting" cards: the game is trivial on sentences $T$ can already decide, so the casino deals only independent ones.
+### 2.4 Classes of statements
 
----
+Let $\mathrm{trueCount}(s) = |\{\omega \in \Omega : s(\omega) = \text{true}\}|$ be the number of worlds in which $s$ holds. We distinguish:
 
-## 3. The mathematical core: shape determines truth
+- $s$ is **valid** if $s(\omega) = \text{true}$ for all $\omega$ (a decidable truth);
+- $s$ is **unsatisfiable** if $s(\omega) = \text{false}$ for all $\omega$ (a decidable falsehood);
+- $s$ is **independent** if $s(\omega) = \text{true}$ for some $\omega$ and $s(\omega') = \text{false}$ for some $\omega'$;
+- $s$ is **balanced** if $2\,\mathrm{trueCount}(s) = |\Omega|$ (true in exactly half the worlds).
 
-We now prove that among independent sentences, syntactic shape pins down the truth value.
+Every balanced statement (in a nonempty world set) is independent; the converse fails.
 
-**Theorem 3.1 (Independent $\Pi_1$ sentences are true).** *Let $s$ be a $\Pi_1$ sentence independent of $T$. Then $\mathrm{True}(s)$.*
+### 2.5 The optimal bet and decks
 
-*Proof.* Suppose not, i.e. $\neg\,\mathrm{True}(s)$. By truth-respects-negation, $\mathrm{True}(\neg s)$. Since $s$ is $\Pi_1$, its negation $\neg s$ is $\Sigma_1$. Applying $\Sigma_1$-completeness to $\neg s$ gives $\mathrm{Provable}(\neg s)$. But independence asserts $\neg\,\mathrm{Provable}(\neg s)$ — contradiction. Hence $\mathrm{True}(s)$. $\qquad\blacksquare$
+The **optimal expected profit** of a statement is the better of the two available bets:
 
-**Theorem 3.2 (Independent $\Sigma_1$ sentences are false).** *Let $s$ be a $\Sigma_1$ sentence independent of $T$. Then $\neg\,\mathrm{True}(s)$.*
+$$\mathrm{optProfit}(s) = \max\bigl(\mathrm{expProfit}(s, \text{true}),\ \mathrm{expProfit}(s, \text{false})\bigr).$$
 
-*Proof.* Suppose $\mathrm{True}(s)$. Since $s$ is $\Sigma_1$, $\Sigma_1$-completeness gives $\mathrm{Provable}(s)$, contradicting the first clause of independence. Hence $\neg\,\mathrm{True}(s)$. $\qquad\blacksquare$
+A **deck** is a finite list of statements $D = [s_1, \dots, s_n]$; one round is played per card, and the deck's average optimal profit is
 
-These two one-line arguments are the entire engine of the casino. Note that neither proof settles $s$ *inside* $T$ — that is impossible by independence. They settle $s$ in the standard model by reasoning *about* $T$'s deductive closure. Undecidability is compatible with a definite external truth value, and shape reveals it.
+$$\mathrm{deckOptProfit}(D) = \frac{1}{n} \sum_{i=1}^{n} \mathrm{optProfit}(s_i).$$
 
-**Corollary 3.3 (Consistency correction).** *If $\mathrm{Con}(T)$, the $\Pi_1$ consistency statement of $T$, is independent of $T$, then it is true.*
+## 3. Structural Results
 
-This corrects the tempting intuition that one should bet FALSE on consistency statements. As the canonical unprovable sentence, $\mathrm{Con}(T)$ *feels* like it should be the losing card; in fact, being $\Pi_1$ and independent, it is true, and the winning bet is TRUE.
+### 3.1 The game is zero-sum
 
----
+**Lemma 1 (Pointwise zero-sum).** For every statement $s$ and world $\omega$,
+$$\mathrm{payoff}(s, \text{true}, \omega) + \mathrm{payoff}(s, \text{false}, \omega) = 0.$$
 
-## 4. The casino and the strategy
+*Proof sketch.* In each world exactly one of the two bets matches $s(\omega)$, paying $+1$, while the other pays $-1$. The two cases $s(\omega) = \text{true}$ and $s(\omega) = \text{false}$ both give $(+1) + (-1) = 0$. $\square$
 
-**Definition 4.1 (Bets and payoffs).** A *bet* is an element of $\{\text{betTrue}, \text{betFalse}, \text{hedge}\}$. The *payoff* of a bet on a sentence $s$ is
-$$
-\mathrm{payoff}(b, s) = \begin{cases}
-+1 & b = \text{betTrue}, \ \mathrm{True}(s); \\
--1 & b = \text{betTrue}, \ \neg\,\mathrm{True}(s); \\
--1 & b = \text{betFalse}, \ \mathrm{True}(s); \\
-+1 & b = \text{betFalse}, \ \neg\,\mathrm{True}(s); \\
-0 & b = \text{hedge}.
-\end{cases}
-$$
-A correct bet wins one chip, a wrong bet loses one chip, and a hedge is a wash.
+**Theorem 2 (Zero-sum game).** For every statement $s$,
+$$\mathrm{expProfit}(s, \text{true}) + \mathrm{expProfit}(s, \text{false}) = 0.$$
 
-**Definition 4.2 (Kinds and the strategy).** Each card carries a declared *kind* in $\{\Sigma_1, \Pi_1, \text{other}\}$. The player's *strategy* maps kind to bet:
-$$
-\mathrm{strat}(\Sigma_1) = \text{betFalse}, \qquad
-\mathrm{strat}(\Pi_1) = \text{betTrue}, \qquad
-\mathrm{strat}(\text{other}) = \text{hedge}.
-$$
+*Proof sketch.* Summing Lemma 1 over all worlds gives a total of $0$; dividing by $|\Omega|$ preserves it. Linearity of the finite sum is all that is needed. $\square$
 
-**Definition 4.3 (Card).** A *card* is a tuple $(s, k, c, i)$ where $s$ is a sentence, $k$ is a declared kind, $c$ is a proof that $s$ genuinely has kind $k$ (i.e. $\mathrm{IsSigma1}(s)$ if $k = \Sigma_1$, $\mathrm{IsPi1}(s)$ if $k = \Pi_1$, and no constraint if $k = \text{other}$), and $i$ is a proof that $s$ is independent of $T$. A card has *decidable shape* iff its kind is $\Sigma_1$ or $\Pi_1$.
+The interpretation is central to everything that follows: the casino has *no built-in edge* in either direction. Any positive expected profit a player achieves must arise entirely from *information* about the card — specifically, from the card being decided one way or the other.
 
-The proof obligations $c$ and $i$ are what make the game honest: the dealer cannot mislabel a card, and every card is genuinely undecidable by $T$.
+### 3.2 A closed form for expected profit
 
-**Definition 4.4 (Card profit).** The profit of playing the strategy on a card $(s,k,c,i)$ is $\mathrm{cardProfit} := \mathrm{payoff}(\mathrm{strat}(k), s)$.
+**Lemma 3 (Total TRUE-payoff).** For every statement $s$,
+$$\sum_{\omega \in \Omega} \mathrm{payoff}(s, \text{true}, \omega) = 2\,\mathrm{trueCount}(s) - |\Omega|.$$
 
-**Theorem 4.5 (Decidable-shape cards win).**
-- If a card's kind is $\Sigma_1$, then $\mathrm{cardProfit} = +1$.
-- If a card's kind is $\Pi_1$, then $\mathrm{cardProfit} = +1$.
-- If a card's kind is $\text{other}$, then $\mathrm{cardProfit} = 0$.
+*Proof sketch.* Partition $\Omega$ into the worlds where $s$ is true (each contributing $+1$) and where $s$ is false (each contributing $-1$). The true worlds number $\mathrm{trueCount}(s)$ and the false worlds number $|\Omega| - \mathrm{trueCount}(s)$, so the sum is $\mathrm{trueCount}(s) - (|\Omega| - \mathrm{trueCount}(s)) = 2\,\mathrm{trueCount}(s) - |\Omega|$. $\square$
 
-*Proof.* For $\Sigma_1$: the strategy bets FALSE, and by Theorem 3.2 the sentence is false, so the FALSE bet is correct and pays $+1$. For $\Pi_1$: the strategy bets TRUE, and by Theorem 3.1 the sentence is true, so the TRUE bet pays $+1$. For $\text{other}$: the strategy hedges, paying $0$ by definition. $\qquad\blacksquare$
+**Theorem 4 (Expected-profit formula).** For every statement $s$,
+$$\mathrm{expProfit}(s, \text{true}) = \frac{2\,\mathrm{trueCount}(s) - |\Omega|}{|\Omega|}.$$
 
-**Corollary 4.6 (Profit is an indicator).** For every card,
-$$\mathrm{cardProfit} = \begin{cases} 1 & \text{if the card has decidable shape},\\ 0 & \text{otherwise}.\end{cases}$$
+This single formula drives the entire analysis. Expected profit on the TRUE bet is a strictly increasing affine function of the fraction of worlds in which the statement holds: it ranges from $-1$ (never true) through $0$ (true in exactly half the worlds) to $+1$ (always true).
 
-**Corollary 4.7 (No single round loses).** $\mathrm{cardProfit} \ge 0$ for every card.
+## 4. Decidable Statements Are Winnable
 
-**Definition 4.8 (Deck profit).** For a deck (finite list) of cards $D = [c_1, \dots, c_N]$, the *deck profit* is $\mathrm{deckProfit}(D) = \sum_{j=1}^{N} \mathrm{cardProfit}(c_j)$.
+**Theorem 5 (Valid statements pay the maximum).** If $s$ is valid, then $\mathrm{expProfit}(s, \text{true}) = 1$.
 
-**Theorem 4.9 (Deck profit equals decidable-shape count).**
-$$\mathrm{deckProfit}(D) = \#\{\, j : c_j \text{ has decidable shape} \,\}.$$
+*Proof sketch.* Validity means $s(\omega) = \text{true}$ in every world, so every payoff for the TRUE bet is $+1$; the average of a constant $1$ is $1$. (Equivalently, $\mathrm{trueCount}(s) = |\Omega|$ in Theorem 4.) $\square$
 
-*Proof.* Sum Corollary 4.6 over the deck; each decidable-shape card contributes $1$ and each other card contributes $0$. $\qquad\blacksquare$
+**Theorem 6 (Unsatisfiable statements pay the maximum).** If $s$ is unsatisfiable, then $\mathrm{expProfit}(s, \text{false}) = 1$.
 
-**Corollary 4.10 (The house never wins).** $\mathrm{deckProfit}(D) \ge 0$ for every deck.
+*Proof sketch.* Symmetric to Theorem 5: every FALSE bet matches, so every payoff is $+1$. $\square$
 
-**Corollary 4.11 (Strict profit).** If $D$ contains at least one decidable-shape card, then $\mathrm{deckProfit}(D) \ge 1 > 0$.
+**Corollary 7.** A valid statement has $\mathrm{optProfit}(s) = 1$ (and, by the zero-sum law, the TRUE bet beats the FALSE bet, which returns $-1$).
 
-Thus the strategy is *guaranteed* to profit — not in expectation, but with certainty — as soon as a single $\Sigma_1$ or $\Pi_1$ card appears.
+These theorems locate the source of all winnings. Decidable statements — those settled in every world — are perfectly winnable, and they are precisely the statements that are *not* undecidable.
 
----
+## 5. Independence Cannot Be Beaten
 
-## 5. The one-third edge
+We now turn to the cards the conjecture actually cares about.
 
-The original conjecture sought merely positive *expected* profit. We can extract a stronger *deterministic* average bound from a density assumption motivated by the arithmetic hierarchy, whose two lowest nontrivial levels are precisely $\Sigma_1$ and $\Pi_1$. As a robust heuristic, a substantial constant fraction — at least one-third — of independent arithmetic sentences at play have single-quantifier ($\Sigma_1$ or $\Pi_1$) shape.
+**Theorem 8 (Guaranteed worst-case loss on independent cards).** If $s$ is independent, then for every bet $b$ there exists a world $\omega$ with $\mathrm{payoff}(s, b, \omega) = -1$.
 
-**Theorem 5.1 (One-third guaranteed edge).** *Let $D$ be a deck of $N \ge 1$ cards, of which at least $N/3$ have decidable shape. Then*
-$$\frac{\mathrm{deckProfit}(D)}{N} \ \ge\ \frac{1}{3}.$$
+*Proof sketch.* Independence supplies a world $\omega_T$ with $s(\omega_T) = \text{true}$ and a world $\omega_F$ with $s(\omega_F) = \text{false}$. If $b = \text{true}$, then in $\omega_F$ the bet mismatches and pays $-1$; if $b = \text{false}$, then in $\omega_T$ the bet mismatches and pays $-1$. $\square$
 
-*Proof.* By Theorem 4.9, $\mathrm{deckProfit}(D)$ equals the number of decidable-shape cards, which is at least $N/3$ by hypothesis. Dividing by $N$ gives the bound. $\qquad\blacksquare$
+Consequently the worst-case (adversarial) profit on any independent statement is $\leq -1 < 0$: against a house that reveals the cruelest world, independence is a strict loss no matter how you bet. Dually, one shows that every independent card also has *some* winning world — independence cuts both ways — but this offers no protection against an adversary.
 
-The contrast with the conjecture is worth emphasizing. "Positive expected value" would tolerate losing rounds averaged out by winning rounds. Theorem 5.1 asserts a floor with no downside risk at all: every round is $0$ or $+1$, and at least a third of them are $+1$.
+**Theorem 9 (Balanced statements have no edge).** If $s$ is balanced, then $\mathrm{expProfit}(s, b) = 0$ for every bet $b$.
 
----
+*Proof sketch.* Balancedness means $2\,\mathrm{trueCount}(s) = |\Omega|$, so the numerator $2\,\mathrm{trueCount}(s) - |\Omega|$ in Theorem 4 vanishes and $\mathrm{expProfit}(s, \text{true}) = 0$. By the zero-sum law (Theorem 2), $\mathrm{expProfit}(s, \text{false}) = 0$ as well. $\square$
 
-## 6. Duality: the naive strategy loses
+**Corollary 10.** A balanced statement has $\mathrm{optProfit}(s) = 0$: it is not winnable even in the optimistic, expected-value sense. A balanced independent card is, in every measurable respect, a fair coin.
 
-To confirm that the winning strategy is doing genuine work, we contrast it with the *naive* strategy $\mathrm{strat}^{\text{naive}}$ that follows the tempting-but-wrong intuition: bet FALSE on $\Pi_1$ (including consistency statements) and TRUE on $\Sigma_1$, hedging otherwise. This inverts the winning bet on every decidable-shape card.
+## 6. Refuting the Conjecture
 
-**Theorem 6.1 (Pointwise inversion).** *For every decidable-shape card, the naive card profit is $-1$; on other cards it is $0$. Consequently, for every card, $\mathrm{naiveCardProfit} = -\,\mathrm{cardProfit}$.*
+**Theorem 11 (An explicit unwinnable independent card).** There exists a statement that is independent yet on which every bet has expected profit exactly $0$.
 
-*Proof.* On a $\Sigma_1$ card the naive strategy bets TRUE, but the sentence is false (Theorem 3.2), so the bet loses: $-1$. On a $\Pi_1$ card it bets FALSE, but the sentence is true (Theorem 3.1), so the bet loses: $-1$. On other cards it hedges: $0$. In every case this is the negation of $\mathrm{cardProfit}$ from Theorem 4.5. $\qquad\blacksquare$
+*Proof sketch.* Take $\Omega = \{\text{true}, \text{false}\}$ (a two-world universe) and let $s$ be the identity, i.e. $s$ reads TRUE in the world "true" and FALSE in the world "false." Then $s$ is independent (it takes both values) and balanced ($\mathrm{trueCount}(s) = 1 = |\Omega|/2$), so by Theorem 9 every bet returns $0$. $\square$
 
-**Corollary 6.2 (Naive deck loses exactly what optimal wins).**
-$$\mathrm{naiveDeckProfit}(D) = -\,\mathrm{deckProfit}(D) = -\,\#\{\text{decidable-shape cards}\}.$$
-In particular, if $D$ has a decidable-shape card, the naive strategy strictly loses.
+This is the miniature Continuum-Hypothesis card: "right in some model, wrong in another." It is genuinely undecidable in the model-theoretic sense that matters, and it is worth *nothing*. This directly refutes the claim that each undecidable statement is individually winnable with strictly positive expected value.
 
-The house edge is therefore real and *directional*: the game is not symmetric, and knowing the correct direction (the content of Theorems 3.1–3.2) is precisely what separates winning from losing.
+**Theorem 12 (The $1/3$ bound fails).** There exists a nonempty deck $D$ with $\mathrm{deckOptProfit}(D) = 0$, hence $\mathrm{deckOptProfit}(D) < 1/3$.
 
----
+*Proof sketch.* Let $D$ consist of a single balanced card (e.g. the identity card of Theorem 11). By Corollary 10 its optimal profit is $0$, so the deck average is $0 < 1/3$. $\square$
 
-## 7. A concrete non-vacuous instance
+The claimed universal lower bound of $1/3$ expected profit per round is therefore not merely loose but false.
 
-The abstract theorems could in principle be vacuous if no theory satisfied Definition 2.1 with a nonempty independent deck. To rule this out we exhibit a small explicit model.
+## 7. The Honest Positive Theory
 
-**Construction 7.1 (Toy theory).** Take $\mathrm{Sentence} = \{\mathsf{t}, \mathsf{f}\}$ (a "true atom" and a "false atom"), with negation swapping them ($\neg\mathsf{t} = \mathsf{f}$, $\neg\mathsf{f} = \mathsf{t}$). Let $\mathrm{True}(\mathsf{t})$ hold and $\mathrm{True}(\mathsf{f})$ fail. Let $\mathrm{Provable}$ be identically false (the theory proves nothing), and let $\mathrm{IsSigma1}$ hold of $\mathsf{f}$ only. One verifies:
+The refutation does not leave the player destitute; it relocates the profit to its true source.
 
-- **Soundness** holds vacuously, since nothing is provable.
-- **Truth respects negation** holds by direct case check on $\{\mathsf{t},\mathsf{f}\}$.
-- **$\Sigma_1$-completeness** holds vacuously: the only $\Sigma_1$ atom is $\mathsf{f}$, which is not true, so there is no true $\Sigma_1$ sentence to prove.
+**Theorem 13 (Optimal profit is nonnegative).** For every statement $s$, $\mathrm{optProfit}(s) \geq 0$.
 
-Now $\mathsf{t}$ is $\Pi_1$ (its negation $\mathsf{f}$ is $\Sigma_1$) and independent (nothing is provable), so it is a legal $\Pi_1$ card. A deck consisting of this single card has $\mathrm{deckProfit} = 1$.
+*Proof sketch.* By the zero-sum law the two bets sum to $0$, so at least one of them is $\geq 0$; the maximum is therefore $\geq 0$. $\square$
 
-**Proposition 7.2.** Construction 7.1 satisfies all axioms of Definition 2.1, admits a nonempty independent deck, and realizes deck profit $1$. Hence the casino theorems are non-vacuous.
+**Theorem 14 (Decidable decks are won every round).** If a nonempty deck $D$ consists entirely of valid statements, then $\mathrm{deckOptProfit}(D) = 1$.
 
-This toy model is deliberately minimal; the intended instances are genuine arithmetic theories such as Peano arithmetic or ZFC, whose $\Sigma_1$-completeness is classical and whose independent $\Pi_1$ decks (headed by $\mathrm{Con}(T)$) are infinite.
+*Proof sketch.* By Corollary 7 each card has optimal profit $1$; the average of constants equal to $1$ is $1$. $\square$
 
----
+More generally, a mixed deck in which a fraction $f$ of the cards are decidable (each paying $1$) and the remaining fraction $1 - f$ are balanced (each paying $0$) has average optimal profit exactly $f$. Every unit of long-run profit is contributed by a decidable card; the undecidable cards contribute exactly zero.
 
-## 8. Algorithms
+**Theorem 15 (Soundness yields a real edge — on decidable cards).** Let $\mathrm{Prov}$ be any predicate on statements such that $\mathrm{Prov}(s)$ implies $s$ is valid (a *sound* proof system proves only validities). Then for any provable statement $s$, $\mathrm{expProfit}(s, \text{true}) = 1$.
 
-The results give directly implementable procedures.
+*Proof sketch.* If $\mathrm{Prov}(s)$ holds then $s$ is valid by soundness, and Theorem 5 applies. $\square$
 
-**Algorithm A (Classify-and-bet).** Given a card's declared kind, return $\text{betTrue}$ if $\Pi_1$, $\text{betFalse}$ if $\Sigma_1$, else $\text{hedge}$. Constant time per card. Correctness is Theorem 4.5.
+Theorem 15 is the rigorous form of the intended sub-strategy "bet TRUE on provable statements." It genuinely wins — but the analysis makes transparent *why*: a provable statement is, by soundness, decidable-true, not independent. The strategy exploits the decidable fragment and touches undecidability not at all.
 
-**Algorithm B (Deck profit).** Fold Algorithm A over a deck, resolving each bet against the (externally determined) truth value and summing payoffs; equivalently, by Theorem 4.9, count decidable-shape cards. Linear time.
+## 8. Discussion
 
-**Algorithm C (One-third certificate).** Given a deck, compute the decidable-shape fraction $\rho$; if $\rho \ge 1/3$, certify by Theorem 5.1 that the guaranteed per-round profit is at least $1/3$. Linear time.
+The results assemble into a single clean dichotomy for the value of a card:
 
----
+| Card type | Expected profit (optimal bet) | Worst-case profit |
+|---|---|---|
+| Valid / unsatisfiable (decidable) | $+1$ | $+1$ |
+| Balanced (independent) | $0$ | $-1$ |
+| General independent | $\in [0, 1)$ | $-1$ |
 
-## 9. Discussion
+The optimistic conjecture conflated two very different phenomena: the genuine winnability of *decidable* statements and the supposed winnability of *undecidable* ones. The formula of Theorem 4 shows expected profit is governed solely by the *fraction of worlds in which a statement holds*. Decidable statements sit at the extremes of this scale (fraction $0$ or $1$) and pay the maximum. Independent statements sit strictly inside, and balanced ones sit at the exact center, worth nothing. No amount of cleverness moves a card along this scale; the scale is fixed by the statement's semantics.
 
-The philosophical upshot is that **unprovability and unknowability come apart.** Gödel's theorems constrain what a theory can establish about itself, but they do not forbid an external analyst from determining the truth value of independent sentences whose form is simple. The arithmetic hierarchy is precisely the ledger of "form," and its lowest rungs are transparent to $\Sigma_1$-completeness.
+The worst-case result (Theorem 8) is if anything more damning for the conjecture: independence is not merely a break-even proposition but a strict loss against an adversary. The "right in some model" property that makes independence sound like an opportunity is exactly the property — being true in some world and false in another — that guarantees a losing world exists.
 
-Three features distinguish our result from a mere probabilistic edge. First, it is *deterministic*: no round loses. Second, it is *constructive*: the winning bet is read off the syntactic kind with no search. Third, it is *robust*: it rests on three hypotheses that hold for every sound recursively axiomatized arithmetic theory, so it applies uniformly to PA, ZFC, and their consistent extensions.
+The verdict, stated carefully, is: *you can win at the decidable fragment; the undecidable fragment is exactly a fair coin (expected $0$) or an adversarial loss ($-1$).* Incompleteness, in this precise game-theoretic sense, is a barrier and not a free lunch. This is a contrarian conclusion relative to the romantic hope that motivated the casino, but it is a sharper and more useful truth: it tells the gambler exactly where value lives (in what can be decided) and exactly where it does not (in what cannot).
 
-The correction regarding consistency statements deserves final emphasis. It is folklore-tempting to view $\mathrm{Con}(T)$ as the emblem of falsifiable-looking unprovability. In truth it is the emblem of *true*-but-unprovable: a $\Pi_1$ sentence, hence — when independent — true, and the winning bet on it is TRUE.
+## 9. Future Directions
 
----
-
-## 10. Future work
-
-Several concrete extensions present themselves.
-
-1. **Grounding in real arithmetic.** Instantiate the abstract theory with a genuine first-order arithmetic development: define sentences, negation, and provability from the actual derivability relation, truth from satisfaction in $\mathbb{N}$, and prove soundness, truth-respects-negation, and $\Sigma_1$-completeness ($\Sigma_1$-completeness of $Q$/PA) as bona fide theorems. The casino results then transfer unconditionally to ZFC-independent arithmetic sentences.
-
-2. **A deck of famous cards.** Assemble explicit cards: $\mathrm{Con}(\mathrm{ZFC})$ (independent $\Pi_1$, TRUE), a Rosser-style independent $\Sigma_1$ sentence (FALSE), and the Continuum Hypothesis (an "other" card, hedged, since it is not arithmetic). Compute the deck profit explicitly.
-
-3. **Minimax optimality of the hedge.** For "other" cards, prove that no non-hedge bet dominates: there exist truth assignments making $\text{betTrue}$ lose and others making $\text{betFalse}$ lose, so the hedge maximizes guaranteed payoff, justifying the third arm of the strategy as minimax-optimal.
-
-4. **A probabilistic layer.** Replace the deterministic count with a genuine expectation over a distribution on decks, recovering the original "expected value" framing as a corollary of the stronger deterministic bound.
-
----
-
-## 11. Conclusion
-
-Gödel's Casino reframes incompleteness from a boundary into a betting table. By isolating three classical properties of arithmetic theories, we proved that independent $\Pi_1$ sentences are true and independent $\Sigma_1$ sentences are false. The resulting strategy — bet TRUE on $\Pi_1$, FALSE on $\Sigma_1$, hedge otherwise — never loses a round, and the total profit over a deck equals its count of single-quantifier cards. Under a one-third density this yields a guaranteed average edge of $1/3$ per round. The impossible game is winnable, provided one plays it from outside the system.
+Several extensions suggest themselves. One may replace the uniform prior over worlds with an arbitrary probability measure, asking how a bettor's subjective credences interact with the zero-sum structure; the expected-profit formula generalizes to $2\,\mathbb{P}[s] - 1$ for the TRUE bet, so the qualitative dichotomy persists but the "balanced" boundary shifts to $\mathbb{P}[s] = 1/2$. One may study *sequential* play in which the revealed world constrains future cards, connecting the casino to online learning and regret minimization. One may allow *fractional* or *hedged* bets and continuous payoffs, recovering a proper scoring-rule perspective. Finally, one may attempt to align the abstract world-model more tightly with genuine proof-theoretic strength — replacing "valid" with "provable in a fixed sound theory" and studying how enlarging the theory (adding independent axioms) migrates cards from the balanced center toward the winnable extremes, quantifying the marginal betting value of each new axiom.
