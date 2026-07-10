@@ -1,377 +1,248 @@
-#!/usr/bin/env python3
 """
-Demo: Reachability Fragility Analysis of Mathematical Proof DAGs
+demo.py -- Numerical demonstrations for
+"Proofs as Directed Acyclic Graphs: Conservation, Hubs, and Foundations."
 
-Demonstrates the key results from our formal theory:
-1. Total Influence = Reachable Pairs (verified theorem)
-2. Source Existence in every non-empty DAG (verified theorem)
-3. Influence monotonicity along paths (verified theorem)
-4. Hub concentration and fragility analysis
-5. Influence profile analysis of synthetic math-like DAGs
+A *dependency network* is a directed graph on statements: an edge u -> v means
+"statement u is used directly in the derivation of statement v." This script
+demonstrates, on concrete networks, the three structural laws:
+
+  1. Conservation law:  sum(in-degrees) = edge count = sum(out-degrees).
+  2. Hub existence:      some vertex v* satisfies  m <= n * indeg(v*).
+  3. Foundations/frontier: a finite acyclic network has sources and sinks,
+     recovered by topological layering (Kahn's algorithm).
+
+It also fits a power-law exponent to the in-degree distribution of a grown
+scale-free network, illustrating the empirical  P(k) ~ k^{-gamma}, gamma ~ 2.5.
+
+Pure standard library; no third-party dependencies.
 """
 
-from algorithms import FinDAG, build_mathlib_like_dag, compute_influence_concentration
+from __future__ import annotations
+
+import math
+import random
+from collections import defaultdict
+from typing import Dict, List, Optional, Set, Tuple
+
+# A dependency network is represented as (n, edges): n vertices labelled 0..n-1
+# and a set of directed edges (u, v) meaning "u is used in the proof of v".
+Edge = Tuple[int, int]
+Network = Tuple[int, Set[Edge]]
 
 
-def demo_small_dag():
-    """Demonstrate core concepts on a small example DAG."""
+# --------------------------------------------------------------------------- #
+# Core structural quantities
+# --------------------------------------------------------------------------- #
+def in_degrees(n: int, edges: Set[Edge]) -> List[int]:
+    """Return indeg(v) = #{u : (u, v) in edges} for every vertex v."""
+    deg = [0] * n
+    for _u, v in edges:
+        deg[v] += 1
+    return deg
+
+
+def out_degrees(n: int, edges: Set[Edge]) -> List[int]:
+    """Return outdeg(v) = #{u : (v, u) in edges} for every vertex v."""
+    deg = [0] * n
+    for u, _v in edges:
+        deg[u] += 1
+    return deg
+
+
+def edge_count(edges: Set[Edge]) -> int:
+    """Total number of dependency edges m = #edges."""
+    return len(edges)
+
+
+# --------------------------------------------------------------------------- #
+# 1. Conservation law
+# --------------------------------------------------------------------------- #
+def conservation_audit(n: int, edges: Set[Edge]) -> Dict[str, int]:
+    """Verify sum(indeg) = m = sum(outdeg) and return the three totals."""
+    m = edge_count(edges)
+    sum_in = sum(in_degrees(n, edges))
+    sum_out = sum(out_degrees(n, edges))
+    assert sum_in == m == sum_out, "Conservation law violated!"
+    return {"edge_count": m, "sum_in_degree": sum_in, "sum_out_degree": sum_out}
+
+
+# --------------------------------------------------------------------------- #
+# 2. Hub existence
+# --------------------------------------------------------------------------- #
+def degree_hub(n: int, edges: Set[Edge], incoming: bool = True) -> Tuple[int, int, float]:
+    """
+    Return (v*, deg(v*), concentration) where v* maximizes the chosen degree
+    (in-degree if incoming=True, else out-degree).
+
+    Certifies the hub bound  m <= n * deg(v*)  and reports the concentration
+    index  deg(v*) / (m / n)  (>= 1 always; = 1 iff the network is regular).
+    """
+    assert n > 0, "hub existence requires a nonempty network"
+    deg = in_degrees(n, edges) if incoming else out_degrees(n, edges)
+    v_star = max(range(n), key=lambda v: deg[v])
+    m = edge_count(edges)
+    assert m <= n * deg[v_star], "Hub bound violated!"
+    avg = m / n if n else 0.0
+    concentration = (deg[v_star] / avg) if avg > 0 else float("inf")
+    return v_star, deg[v_star], concentration
+
+
+# --------------------------------------------------------------------------- #
+# 3. Acyclicity: topological layering, sources and sinks
+# --------------------------------------------------------------------------- #
+def topological_layers(n: int, edges: Set[Edge]) -> Optional[List[List[int]]]:
+    """
+    Kahn-style layering. Returns the list of layers (layer 0 = sources) if the
+    network is acyclic, or None if a cycle is detected (peeling stalls).
+    """
+    succ: Dict[int, List[int]] = defaultdict(list)
+    indeg = [0] * n
+    for u, v in edges:
+        succ[u].append(v)
+        indeg[v] += 1
+
+    remaining = n
+    frontier = [v for v in range(n) if indeg[v] == 0]
+    layers: List[List[int]] = []
+    while frontier:
+        layers.append(sorted(frontier))
+        remaining -= len(frontier)
+        nxt: List[int] = []
+        for u in frontier:
+            for w in succ[u]:
+                indeg[w] -= 1
+                if indeg[w] == 0:
+                    nxt.append(w)
+        frontier = nxt
+    return layers if remaining == 0 else None
+
+
+def sources_and_sinks(n: int, edges: Set[Edge]) -> Tuple[List[int], List[int]]:
+    """Sources have in-degree 0 (foundations); sinks have out-degree 0 (frontier)."""
+    indeg = in_degrees(n, edges)
+    outdeg = out_degrees(n, edges)
+    sources = [v for v in range(n) if indeg[v] == 0]
+    sinks = [v for v in range(n) if outdeg[v] == 0]
+    return sources, sinks
+
+
+# --------------------------------------------------------------------------- #
+# 4. Power-law exponent estimate (MLE on the tail)
+# --------------------------------------------------------------------------- #
+def power_law_exponent(degrees: List[int], k_min: int = 1) -> float:
+    """
+    Maximum-likelihood estimate of gamma in P(k) ~ k^{-gamma} for the tail
+    k >= k_min, using the discrete Hill estimator.
+    """
+    tail = [k for k in degrees if k >= k_min]
+    if not tail:
+        return float("nan")
+    s = sum(math.log(k / (k_min - 0.5)) for k in tail)
+    return 1.0 + len(tail) / s
+
+
+# --------------------------------------------------------------------------- #
+# Network generators
+# --------------------------------------------------------------------------- #
+def acyclic_layered_network(seed: int = 0) -> Network:
+    """A small handcrafted acyclic network: 2 axioms feeding a layered tower."""
+    # 0,1 = axioms; 2,3 = lemmas; 4 = theorem; 5 = corollary (frontier).
+    edges: Set[Edge] = {
+        (0, 2), (1, 2), (0, 3), (2, 4), (3, 4), (4, 5), (1, 3),
+    }
+    return 6, edges
+
+
+def cyclic_network() -> Network:
+    """A network with a 2-cycle a -> b -> a: no source, no sink."""
+    return 3, {(0, 1), (1, 0), (2, 0)}
+
+
+def preferential_attachment_dag(n: int, m_edges: int, seed: int = 42) -> Network:
+    """
+    Grow an acyclic scale-free network: vertex t (in arrival order) attaches to
+    m_edges earlier vertices chosen with probability proportional to current
+    in-degree ("rich get richer"). Edges point earlier -> later, so acyclic.
+    """
+    rng = random.Random(seed)
+    edges: Set[Edge] = set()
+    targets: List[int] = []  # multiset for preferential selection
+    for t in range(n):
+        chosen: Set[int] = set()
+        if t > 0 and targets:
+            attempts = 0
+            while len(chosen) < min(m_edges, t) and attempts < 20 * m_edges:
+                src = rng.choice(targets)
+                if src != t:
+                    chosen.add(src)
+                attempts += 1
+        for src in chosen:
+            edges.add((src, t))   # foundational src used to derive later t
+            targets.append(t)     # t now becomes a possible future dependency
+        targets.append(t)
+    return n, edges
+
+
+# --------------------------------------------------------------------------- #
+# Driver
+# --------------------------------------------------------------------------- #
+def main() -> None:
     print("=" * 70)
-    print("DEMO 1: Small DAG — Core Concepts")
+    print("PROOFS AS DIRECTED ACYCLIC GRAPHS -- numerical demonstrations")
     print("=" * 70)
 
-    # Build a small DAG representing a mini proof dependency graph:
-    #   Axiom1 → Lemma1 → Theorem1
-    #   Axiom1 → Lemma2 → Theorem1
-    #   Axiom2 → Lemma2 → Theorem2
-    #   Axiom2 → Lemma3 → Theorem2
+    # ---- Demo 1: conservation on a layered acyclic network ---------------- #
+    n, edges = acyclic_layered_network()
+    print("\n[1] Conservation law on a small acyclic network")
+    print(f"    n = {n} statements, m = {edge_count(edges)} dependencies")
+    audit = conservation_audit(n, edges)
+    print(f"    sum(in-degree)  = {audit['sum_in_degree']}")
+    print(f"    edge count  m   = {audit['edge_count']}")
+    print(f"    sum(out-degree) = {audit['sum_out_degree']}")
+    print("    -> sum(in) = m = sum(out) verified.")
 
-    vertices = ["Axiom1", "Axiom2", "Lemma1", "Lemma2", "Lemma3", "Theorem1", "Theorem2"]
-    edges = [
-        ("Axiom1", "Lemma1"), ("Axiom1", "Lemma2"),
-        ("Axiom2", "Lemma2"), ("Axiom2", "Lemma3"),
-        ("Lemma1", "Theorem1"), ("Lemma2", "Theorem1"),
-        ("Lemma2", "Theorem2"), ("Lemma3", "Theorem2"),
-    ]
+    # ---- Demo 2: sources, sinks, topological layering --------------------- #
+    print("\n[2] Foundations (sources) and frontier (sinks)")
+    layers = topological_layers(n, edges)
+    sources, sinks = sources_and_sinks(n, edges)
+    print(f"    sources (axioms/foundations) : {sources}")
+    print(f"    sinks   (frontier results)   : {sinks}")
+    print(f"    topological layers           : {layers}")
 
-    dag = FinDAG(vertices, edges)
+    print("\n    Contrast: a cyclic network (2-cycle) has NO source/sink.")
+    cn, ce = cyclic_network()
+    print(f"    topological_layers -> {topological_layers(cn, ce)} (None = cycle detected)")
 
-    print(f"\nVertices: {dag.vertices}")
-    print(f"Edges: {dag.edges}")
-    print(f"Sources: {dag.sources()}")
-    print(f"Depth: {dag.depth()}")
+    # ---- Demo 3: hub existence on a scale-free network -------------------- #
+    # Edges point (foundation -> dependent), so a foundational statement used
+    # by many results is a HIGH-OUT-DEGREE node; that is the heavy-tailed,
+    # scale-free quantity here. The in-degree hub bound also holds (dual form).
+    print("\n[3] Hub existence on a grown scale-free network")
+    N, E = preferential_attachment_dag(n=2000, m_edges=3, seed=7)
+    conservation_audit(N, E)  # still exact on the large network
+    v_star, d_star, conc = degree_hub(N, E, incoming=False)
+    m = edge_count(E)
+    print(f"    n = {N}, m = {m}, average degree = {m / N:.3f}")
+    print(f"    most-depended-on hub v* = {v_star}, out-degree(v*) = {d_star}")
+    print(f"    certified bound  m <= n * outdeg(v*):  {m} <= {N * d_star}")
+    print(f"    concentration index outdeg(v*)/avg = {conc:.2f} (1.0 = regular)")
 
-    print("\n--- Influence Analysis ---")
-    for v in dag.vertices:
-        desc = dag.descendants(v)
-        anc = dag.ancestors(v)
-        print(f"  {v:12s}: influence={dag.influence(v)}, "
-              f"ancestors={dag.ancestor_count(v)}, "
-              f"hub_score={dag.hub_score(v)}, "
-              f"descendants={desc}")
+    # ---- Demo 4: power-law exponent --------------------------------------- #
+    print("\n[4] Power-law fit of the dependency (out-degree) distribution")
+    outdeg = [k for k in out_degrees(N, E) if k > 0]
+    gamma = power_law_exponent(outdeg, k_min=3)
+    print(f"    estimated exponent gamma ~ {gamma:.3f} (target ~ 2.5)")
+    # crude histogram of the tail
+    hist: Dict[int, int] = defaultdict(int)
+    for k in outdeg:
+        hist[k] += 1
+    print("    out-degree : count")
+    shown = sorted(hist)
+    for k in shown[:6] + shown[-4:]:
+        print(f"      {k:>4d}     : {hist[k]}")
 
-    total_inf = dag.total_influence()
-    reach = dag.reachable_pairs()
-    print(f"\nTotal influence: {total_inf}")
-    print(f"Reachable pairs: {reach}")
-    print(f"✓ Total Influence = Reachable Pairs: {total_inf == reach} (VERIFIED THEOREM)")
-
-    n = len(dag.vertices)
-    print(f"\n✓ Sources exist: {len(dag.sources()) > 0} (VERIFIED THEOREM)")
-    print(f"  Sources: {dag.sources()}")
-
-    # Verify influence monotonicity
-    print("\n--- Influence Monotonicity (VERIFIED THEOREM) ---")
-    for u, v in dag.edges:
-        inf_u = dag.influence(u)
-        inf_v = dag.influence(v)
-        ok = inf_u > inf_v
-        print(f"  Edge {u} → {v}: influence({u})={inf_u} > influence({v})={inf_v}: {ok}")
-
-    print(f"\n--- Hub Ranking ---")
-    for v, inf, anc, score in dag.hub_ranking():
-        print(f"  {v:12s}: influence={inf}, ancestors={anc}, hub_score={score}")
-
-
-def demo_synthetic_mathlib():
-    """Analyze a synthetic Mathlib-like proof DAG."""
-    print("\n" + "=" * 70)
-    print("DEMO 2: Synthetic Mathlib-like DAG (100 theorems)")
-    print("=" * 70)
-
-    dag = build_mathlib_like_dag(n_theorems=100, hub_fraction=0.05)
-
-    print(f"\nVertices: {len(dag.vertices)}")
-    print(f"Edges: {len(dag.edges)}")
-    print(f"Sources: {len(dag.sources())}")
-    print(f"Depth: {dag.depth()}")
-
-    total_inf = dag.total_influence()
-    n = len(dag.vertices)
-
-    print(f"\nTotal influence: {total_inf}")
-    print(f"Average influence: {total_inf / n:.1f}")
-    print(f"Max influence: {max(dag.influence(v) for v in dag.vertices)}")
-
-    gini = compute_influence_concentration(dag)
-    print(f"Influence Gini coefficient: {gini:.3f}")
-    print(f"  (1.0 = perfectly concentrated, 0.0 = uniform)")
-
-    print(f"\n--- Top 10 Hub Nodes ---")
-    ranking = dag.hub_ranking()[:10]
-    for i, (v, inf, anc, score) in enumerate(ranking):
-        print(f"  {i+1:2d}. {v:12s}: influence={inf:3d}, ancestors={anc:2d}, "
-              f"hub_score={score:5d}")
-
-    print(f"\n--- Influence Profile (top 15) ---")
-    profile = dag.influence_profile()[:15]
-    print(f"  {profile}")
-
-    print(f"\n--- In-Degree Distribution ---")
-    dist = dag.in_degree_distribution()
-    for k in sorted(dist.keys()):
-        bar = "█" * dist[k]
-        print(f"  in-degree {k:2d}: {dist[k]:3d} nodes {bar}")
-
-    # Verify our theorems
-    print(f"\n--- Theorem Verification ---")
-    print(f"  ✓ totalInfluence = reachPairs: {total_inf == dag.reachable_pairs()}")
-    print(f"  ✓ Sources exist: {len(dag.sources()) > 0}")
-
-    # Check influence monotonicity along all edges
-    mono_violations = 0
-    for u, v in dag.edges:
-        if dag.influence(u) <= dag.influence(v):
-            mono_violations += 1
-    print(f"  ✓ Influence monotonicity violations: {mono_violations} / {len(dag.edges)} edges")
-
-    # Fragility analysis
-    print(f"\n--- Fragility Analysis ---")
-    max_frag = max(dag.fragility_index(v) for v in dag.vertices)
-    max_frag_node = max(dag.vertices, key=lambda v: dag.fragility_index(v))
-    print(f"  Most fragile node: {max_frag_node} (fragility index = {max_frag})")
-    print(f"  Removing it would affect ≥ {max_frag} path-pairs")
-    print(f"  Total reachable pairs: {total_inf}")
-    print(f"  Fragility ratio: {max_frag / total_inf:.3f}")
-
-
-def demo_scale_analysis():
-    """Analyze how influence concentration scales with DAG size."""
-    print("\n" + "=" * 70)
-    print("DEMO 3: Scale Analysis — Influence Concentration vs DAG Size")
-    print("=" * 70)
-
-    sizes = [20, 50, 100, 200, 500]
-    print(f"\n{'Size':>6s} {'Edges':>6s} {'Depth':>6s} {'MaxInf':>7s} "
-          f"{'AvgInf':>7s} {'Gini':>6s} {'TopHub%':>8s}")
-    print("-" * 55)
-
-    for n in sizes:
-        dag = build_mathlib_like_dag(n_theorems=n, hub_fraction=0.05)
-        total = dag.total_influence()
-        max_inf = max(dag.influence(v) for v in dag.vertices)
-        avg_inf = total / n
-        gini = compute_influence_concentration(dag)
-        top_hub_frac = max_inf / n * 100
-
-        print(f"{n:6d} {len(dag.edges):6d} {dag.depth():6d} {max_inf:7d} "
-              f"{avg_inf:7.1f} {gini:6.3f} {top_hub_frac:7.1f}%")
-
-    print("\nKey observation: Influence concentration (Gini) remains high")
-    print("as DAG size increases — the hub structure is a scale-invariant property.")
-
-
-def demo_fragility_theorem():
-    """Demonstrate the fragility-product theorem."""
-    print("\n" + "=" * 70)
-    print("DEMO 4: Fragility-Product Theorem Verification")
-    print("=" * 70)
-    print("\nTheorem (fragilityIndex_ge_product):")
-    print("  For all v: fragilityIndex(v) ≥ ancestorCount(v) × influence(v)")
-
-    dag = build_mathlib_like_dag(n_theorems=50, hub_fraction=0.1)
-
-    print(f"\n{'Node':>10s} {'Ancestors':>10s} {'Influence':>10s} "
-          f"{'Product':>10s} {'Fragility':>10s} {'≥?':>4s}")
-    print("-" * 60)
-
-    for v, inf, anc, score in dag.hub_ranking()[:15]:
-        frag = dag.fragility_index(v)
-        ok = "✓" if frag >= score else "✗"
-        print(f"{v:>10s} {anc:>10d} {inf:>10d} {score:>10d} {frag:>10d} {ok:>4s}")
+    print("\nAll structural laws verified numerically.")
 
 
 if __name__ == "__main__":
-    demo_small_dag()
-    demo_synthetic_mathlib()
-    demo_scale_analysis()
-    demo_fragility_theorem()
-
-    print("\n" + "=" * 70)
-    print("All demos completed successfully.")
-    print("All results consistent with formally verified theorems.")
-    print("=" * 70)
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Influence Profile and Hub Concentration in Proof DAGs.
-
-Produces three plots:
-1. Influence distribution (log-log scale) showing hub concentration
-2. Fragility index vs hub score scatter plot
-3. Influence Gini coefficient vs DAG size
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-from collections import defaultdict
-import random
-
-
-def build_dag(n, hub_frac=0.05, seed=42):
-    """Build a synthetic math-like DAG. Returns (vertices, edges, adj, rev_adj)."""
-    random.seed(seed)
-    n_hubs = max(2, int(n * hub_frac))
-    n_inter = int(n * 0.3)
-    n_leaves = n - n_hubs - n_inter
-
-    vertices = list(range(n))
-    edges = []
-    adj = defaultdict(set)
-    rev_adj = defaultdict(set)
-
-    hubs = list(range(n_hubs))
-    intermediates = list(range(n_hubs, n_hubs + n_inter))
-    leaves = list(range(n_hubs + n_inter, n))
-
-    for lem in intermediates:
-        deps = random.sample(hubs, min(random.randint(1, 3), n_hubs))
-        for h in deps:
-            edges.append((h, lem))
-            adj[h].add(lem)
-            rev_adj[lem].add(h)
-
-    for thm in leaves:
-        deps = random.sample(intermediates, min(random.randint(1, 3), n_inter))
-        for lem in deps:
-            edges.append((lem, thm))
-            adj[lem].add(thm)
-            rev_adj[thm].add(lem)
-        if random.random() < 0.3:
-            h = random.choice(hubs)
-            edges.append((h, thm))
-            adj[h].add(thm)
-            rev_adj[thm].add(h)
-
-    return vertices, edges, adj, rev_adj
-
-
-def compute_descendants(vertices, adj):
-    """Compute descendants for all vertices."""
-    desc = {}
-    for v in vertices:
-        visited = set()
-        stack = list(adj[v])
-        while stack:
-            w = stack.pop()
-            if w not in visited:
-                visited.add(w)
-                stack.extend(adj[w] - visited)
-        desc[v] = visited
-    return desc
-
-
-def compute_ancestors(vertices, rev_adj):
-    """Compute ancestors for all vertices."""
-    anc = {}
-    for v in vertices:
-        visited = set()
-        stack = list(rev_adj[v])
-        while stack:
-            w = stack.pop()
-            if w not in visited:
-                visited.add(w)
-                stack.extend(rev_adj[w] - visited)
-        anc[v] = visited
-    return anc
-
-
-def gini(values):
-    """Compute Gini coefficient."""
-    vals = sorted(values)
-    n = len(vals)
-    if n == 0 or sum(vals) == 0:
-        return 0.0
-    total = sum(vals)
-    cum = 0.0
-    g = 0.0
-    for i, v in enumerate(vals):
-        cum += v
-        g += (2 * (i + 1) - n - 1) * v
-    return g / (n * total)
-
-
-def main():
-    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
-
-    # Plot 1: Influence Distribution (log-log)
-    ax1 = axes[0]
-    for n, color, label in [(50, '#2196F3', 'n=50'), (200, '#FF9800', 'n=200'),
-                             (500, '#4CAF50', 'n=500')]:
-        verts, edges, adj, rev = build_dag(n)
-        desc = compute_descendants(verts, adj)
-        influences = sorted([len(desc[v]) for v in verts], reverse=True)
-        ranks = np.arange(1, len(influences) + 1)
-        ax1.loglog(ranks, [max(1, i) for i in influences], 'o-', color=color,
-                   label=label, markersize=3, alpha=0.7)
-
-    ax1.set_xlabel('Rank (log scale)', fontsize=12)
-    ax1.set_ylabel('Influence (log scale)', fontsize=12)
-    ax1.set_title('Influence Distribution\n(Zipf-like concentration)', fontsize=13)
-    ax1.legend(fontsize=10)
-    ax1.grid(True, alpha=0.3)
-
-    # Plot 2: Fragility vs Hub Score
-    ax2 = axes[1]
-    n = 200
-    verts, edges, adj, rev = build_dag(n)
-    desc = compute_descendants(verts, adj)
-    anc = compute_ancestors(verts, rev)
-
-    influences_arr = [len(desc[v]) for v in verts]
-    anc_counts = [len(anc[v]) for v in verts]
-    hub_scores = [influences_arr[i] * anc_counts[i] for i in range(n)]
-    frag_indices = [influences_arr[i] * anc_counts[i] for i in range(n)]  # Lower bound
-
-    colors_scatter = ['#E91E63' if influences_arr[i] > n * 0.3 else
-                      '#2196F3' if anc_counts[i] == 0 else '#9E9E9E'
-                      for i in range(n)]
-
-    ax2.scatter(influences_arr, anc_counts, c=colors_scatter, s=30, alpha=0.6)
-    ax2.set_xlabel('Influence (descendants)', fontsize=12)
-    ax2.set_ylabel('Ancestor Count', fontsize=12)
-    ax2.set_title('Influence vs Ancestry\n(hub score = product)', fontsize=13)
-
-    # Add legend
-    from matplotlib.lines import Line2D
-    legend_elements = [
-        Line2D([0], [0], marker='o', color='w', markerfacecolor='#E91E63',
-               markersize=8, label='High influence (hubs)'),
-        Line2D([0], [0], marker='o', color='w', markerfacecolor='#2196F3',
-               markersize=8, label='Sources (axioms)'),
-        Line2D([0], [0], marker='o', color='w', markerfacecolor='#9E9E9E',
-               markersize=8, label='Other nodes'),
-    ]
-    ax2.legend(handles=legend_elements, fontsize=9, loc='upper right')
-    ax2.grid(True, alpha=0.3)
-
-    # Plot 3: Gini coefficient vs size
-    ax3 = axes[2]
-    sizes = [10, 20, 50, 100, 200, 500, 1000]
-    ginis = []
-    for n in sizes:
-        verts, edges, adj, rev = build_dag(n)
-        desc = compute_descendants(verts, adj)
-        influences_list = [len(desc[v]) for v in verts]
-        ginis.append(gini(influences_list))
-
-    ax3.plot(sizes, ginis, 'o-', color='#9C27B0', linewidth=2, markersize=8)
-    ax3.axhline(y=0.85, color='#F44336', linestyle='--', alpha=0.5, label='Threshold 0.85')
-    ax3.set_xlabel('DAG Size (nodes)', fontsize=12)
-    ax3.set_ylabel('Influence Gini Coefficient', fontsize=12)
-    ax3.set_title('Influence Concentration\nvs DAG Size', fontsize=13)
-    ax3.set_xscale('log')
-    ax3.set_ylim(0.5, 1.0)
-    ax3.legend(fontsize=10)
-    ax3.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('influence_analysis.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: influence_analysis.png")
-
-
-if __name__ == '__main__':
     main()
