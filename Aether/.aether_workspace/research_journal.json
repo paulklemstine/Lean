@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3fe1db8c",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nDerived from this cycle's study of intersecting families of permutations and the\nfixed-point bridge that recasts coordinate-agreement as a derangement condition.\n\n## 1. The matchi",
-      "quality_score": 0.8246161538461538,
-      "sorry_count": 3,
-      "theorem_count": 13,
-      "timestamp": "2026-07-03T19:50:08",
-      "title": "Proving the Existence of a Sufficiently Large Extremal Family"
-    },
-    {
       "cycle_id": "5961bdfa",
       "domain": "Applications",
       "key_insight": "# Future Directions — Sidon sets, convolution kernels, and energy\n\nThese conjectures grew out of a study of Sidon sets (finite sets of integers\nwhose pairwise sums are all distinct) through the lens o",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-10T08:38:10",
       "title": "Turing's Flowers: Morphogenesis as Algebraic Geometry"
+    },
+    {
+      "cycle_id": "9c1224fc",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Topological Quantum Compiling via Braid Groups\n\n## What this project establishes (all machine-checked, no `sorry`, no extra axioms)\n\nWorking with the **reduced Burau representatio",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 22,
+      "timestamp": "2026-07-10T09:10:09",
+      "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8acf5433",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — equality proofs, forking, and the algebra of identification\n\nThis cycle established two results that sharpen the boundary between *single-statement*\ndiscrete-log proofs and *rela",
-      "quality_score": 0.6049599999999999,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-30T05:25:05",
-      "title": "Zero-Knowledge Proofs: Schnorr Protocol"
-    },
     {
       "cycle_id": "fd05632c",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-10T08:38:10",
       "title": "Turing's Flowers: Morphogenesis as Algebraic Geometry"
+    },
+    {
+      "cycle_id": "9c1224fc",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Topological Quantum Compiling via Braid Groups\n\n## What this project establishes (all machine-checked, no `sorry`, no extra axioms)\n\nWorking with the **reduced Burau representatio",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 22,
+      "timestamp": "2026-07-10T09:10:09",
+      "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7ca0f553",
-      "domain": "Pythagorean",
-      "name": "ApproxLipschitzWith",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "4de79d68",
-      "domain": "Logic",
-      "name": "deforms",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "4de79d68",
-      "domain": "Logic",
-      "name": "LipschitzWith",
-      "quality": 0.83
-    },
     {
       "cycle_id": "4de79d68",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "sextic_from_three_modes",
       "quality": 0.79
+    },
+    {
+      "cycle_id": "9c1224fc",
+      "domain": "Applications",
+      "name": "braid_rel_13",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "9c1224fc",
+      "domain": "Applications",
+      "name": "braid_rel_12",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "9c1224fc",
+      "domain": "Applications",
+      "name": "braid_rel_23",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-10T08:38:10",
+  "last_updated": "2026-07-10T09:10:09",
   "open_questions": [
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "84ab5171",
-        "quality": 0.82,
-        "theorems": 55,
-        "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
-      },
-      {
         "cycle_id": "3716954d",
         "quality": 0.78,
         "theorems": 29,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 25,
         "title": "The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction"
+      },
+      {
+        "cycle_id": "9c1224fc",
+        "quality": 0.72,
+        "theorems": 22,
+        "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
       }
     ],
     "Bridges": [
