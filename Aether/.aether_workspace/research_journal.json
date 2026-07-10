@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3716954d",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThis project formalizes, in Lean 4, the cardinality dichotomy behind the \"cosmic\ncensus of L-functions\": the naive space of Dirichlet series is uncountable, but\nevery arithmetical",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 29,
-      "timestamp": "2026-07-09T23:44:05",
-      "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
-    },
-    {
       "cycle_id": "7e60f6c2",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Fractal Dimension of Proof Search\n\nThis cycle established, for uniform self-similar search spaces, the exact identity\n`succ = total^D` with `D = log s / log b ∈ [0,1]`, reinterpr",
@@ -499,19 +489,19 @@
       "theorem_count": 18,
       "timestamp": "2026-07-10T16:20:37",
       "title": "Deepening: Cryptography from Chaos: Encrypting with the Logistic Map"
+    },
+    {
+      "cycle_id": "b77ed1ec",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — The 3n+1 Map: Tropical Dynamics and the Logic of Halting\n\nThis cycle established the elementary but rigorous scaffolding around the Collatz\nmap: orbit-invariance of the halting p",
+      "quality_score": 0.72,
+      "sorry_count": 5,
+      "theorem_count": 24,
+      "timestamp": "2026-07-10T16:20:42",
+      "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c56262ed",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Worst-Case Lattices and Learning with Errors\n\nThe results of this cycle isolate the ordering data of a lattice (its successive\nminima), the pointwise Gaussian weight, and the sin",
-      "quality_score": 0.456932,
-      "sorry_count": 0,
-      "theorem_count": 26,
-      "timestamp": "2026-07-01T17:18:06",
-      "title": "Learning with Errors: Hardness Reductions"
-    },
     {
       "cycle_id": "33af5349",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 18,
       "timestamp": "2026-07-10T16:20:37",
       "title": "Deepening: Cryptography from Chaos: Encrypting with the Logistic Map"
+    },
+    {
+      "cycle_id": "b77ed1ec",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — The 3n+1 Map: Tropical Dynamics and the Logic of Halting\n\nThis cycle established the elementary but rigorous scaffolding around the Collatz\nmap: orbit-invariance of the halting p",
+      "quality_score": 0.72,
+      "sorry_count": 5,
+      "theorem_count": 24,
+      "timestamp": "2026-07-10T16:20:42",
+      "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "8b2bab35",
-      "domain": "Novelty",
-      "name": "fiber_card",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "8b2bab35",
-      "domain": "Novelty",
-      "name": "pairColors_card",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "ff42203a",
-      "domain": "Novelty",
-      "name": "This",
-      "quality": 0.72
-    },
     {
       "cycle_id": "ff42203a",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Geometry",
       "name": "with",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "b77ed1ec",
+      "domain": "Tropical",
+      "name": "on",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "b77ed1ec",
+      "domain": "Tropical",
+      "name": "value_eq",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "b77ed1ec",
+      "domain": "Tropical",
+      "name": "valid_iff",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-10T16:20:37",
+  "last_updated": "2026-07-10T16:20:42",
   "open_questions": [
-    {
-      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
-      "cycle_id": "bb55b186",
-      "domain": "Applications",
-      "sorry_count": 3,
-      "timestamp": "2026-07-03T19:50:52"
-    },
     {
       "context": "non-vacuous.  No hidden `sorry`; `#print axioms` uses only the standard set.",
       "cycle_id": "95c356ab",
@@ -3016,6 +3009,13 @@
       "domain": "Pythagorean",
       "sorry_count": 3,
       "timestamp": "2026-07-10T15:48:57"
+    },
+    {
+      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "b77ed1ec",
+      "domain": "Tropical",
+      "sorry_count": 5,
+      "timestamp": "2026-07-10T16:20:42"
     }
   ],
   "research_threads": {
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "49f14a50",
-        "quality": 0.51904,
-        "theorems": 21,
-        "title": "Graph Coloring: Chromatic Polynomial Theory"
-      },
-      {
         "cycle_id": "c72330ea",
         "quality": 0.5940000000000001,
         "theorems": 14,
@@ -4009,6 +4003,12 @@
         "quality": 0.63,
         "theorems": 13,
         "title": "Monochromatic Pythagorean Triples in Every Level Set of Completely Multiplicativ"
+      },
+      {
+        "cycle_id": "b77ed1ec",
+        "quality": 0.72,
+        "theorems": 24,
+        "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
       }
     ]
   }

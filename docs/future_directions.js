@@ -5271,6 +5271,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle b77ed1ec (Q=0.720) proved 24 theorems in Tropical but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The Collatz conjecture (3n+1 problem) states that every positive integer eventually reaches 1 under the map T(n) = n/2 (n even) or 3n+1 (n odd). Despite being verified up to 2^68, a proof remains elus",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "sorry_fill_b77ed1ec_0a2f12f6",
+    "priority_score": 0.77,
+    "research_mode": "team",
+    "source_exp_id": "b77ed1ec",
+    "status": "available",
+    "timestamp": "2026-07-10T16:20:42.486105+00:00",
+    "title": "Close Proofs: The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle dd8b10c1 (Q=0.720) proved 54 theorems in Applications but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: A cake is a smooth projective variety over R: it has a base (a smooth manifold with boundary), frosting (a sheaf of sections supported on the boundary), and layers (a stratification by codimension). T",
     "domains": [
       "Applications"
@@ -5584,21 +5598,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "All deliverable files of this cycle now compile end-to-end and are `sorry`-free."
   },
   {
-    "consumed_by_exp_id": "b77ed1ec",
-    "description": "The Collatz conjecture (3n+1 problem) states that every positive integer eventually reaches 1 under the map T(n) = n/2 (n even) or 3n+1 (n odd). Despite being verified up to 2^68, a proof remains elusive. Conjecture: the Collatz conjecture is independent of Peano Arithmetic (PA). That is, PA can neither prove nor refute the statement 'for all n, the Collatz sequence starting at n eventually reaches 1'. This would mean the conjecture is TRUE (in the standard model) but UNPROVABLE in PA. The argument: the Collatz map is a Diophantine function that grows faster than any provably total computable function in PA. Specifically, the halting problem for Collatz (does the orbit of n reach 1?) is at least as hard as the consistency of PA, which by Godel's second incompleteness theorem is unprovable in PA. Conjecture: the Collatz conjecture is equivalent to Con(PA) over a weak base theory, meaning that if PA is consistent, then PA does not prove Collatz. Test: formalize the equivalence between Collatz and Con(PA) in Lean 4. Show that a counterexample to Collatz (an n whose orbit diverges or cycles) would imply not-Con(PA). Impact: Collatz might be the simplest true-but-unprovable statement in arithmetic \u2014 a concrete example of Godel's incompleteness.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0885",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T11:33:38.999046+00:00",
-    "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions: Surreal Numbers as Number Fields\n\nThe file `SurrealDyadicBirthday.lean` establishes the arithmetic backbone for the\n\"surreals born on finite days = dyadic rationals\" picture. The main achieved results:\n\n- `birthday_powHalf` : `(powHalf n).birthday = n + 1` (exact birthday of `2^{-n}`).\n- `birthday_powHalf_lt_omega0` : every power of one half is born before day `\u03c9`.\n- `powHalf_pos`, `powHalf_ne_zero`, `powHalf_succ_lt`, `powHalf_strictAnti`,\n  `powHalf_injective`, `two_pow_mul_powHalf` : the powers of one half form a strictly\n  decreasing sequence of distinct positive dyadic surreals with `2^n \u00b7 2^{-n} = 1`.\n- `dyadicMap_injective` : **the dyadic rationals `\u2124[1/2]` embed injectively into the\n  surreals** \u2014 this resolves the `TODO` left open in\n  `Mathlib/SetTheory/Surreal/Dyadic.lean`.\n- `dyadicSubgroup`, `mem_dyadicSubgroup`, `dyadicSubgroup_coe`, `powHalf_mem_dyadic`,\n  `dyadicEquiv` : the dyadic surreals form an additive subgroup that is group-isomorphic\n  to `\u2124[1/2]`.\n- `powHalf_mul_powHalf` : `2^{-m} \u00b7 2^{-n} = 2^{-(m+n)}` \u2014 the powers of one half multiply\n  by adding exponents (the arithmetic heart of multiplicativity).\n- `dyadicMap_one`, `dyadicMap_mul` : **`dyadicMap` is multiplicative and unital**,\n  resolving the Mathlib `TODO` \"show the maps ... into the surreals are multiplicative\".\n- `dyadicRingHom`, `dyadicRingHom_injective`, `dyadicSubring`, `dyadicRingEquiv` :\n  **the dyadic rationals `\u2124[1/2]` embed into the surreals as a ring homomorphism, and are\n  ring-isomorphic to the subring of dyadic surreals** (`\u2124[1/2] \u2243+* dyadicSubring`).\n\n## Natural next steps\n\n1. **`No_\u03c9` is exactly `\u2124[1/2]`.** Prove the converse containment: every surreal with\n   finite birthday is dyadic. The \"simplicity theorem\" (a numeric game equals the\n   simplest number strictly between its options) is the key tool; combined with the\n   birthday bound this pins `No_\u03c9` down to `\u2124[1/2]`. Note the informal conjecture that\n   `No_\u03c9 = \u211a + dyadics` is *false*: `1/3 \u2209 No_\u03c9`.\n\n2. **Reals into surreals.** Extend `dyadicMap` along dyadic Dedekind cuts / Cauchy\n   sequences to an ordered-field embedding `\u211d \u21aa Surreal` (the second `TODO` in\n   `Surreal/Dyadic.lean`). The image is exactly `No_\u03c9`-completion, born by day `\u03c9`.\n\n3. **Birthdays of sums and products.** Characterise `birthday (m \u2022 powHalf n)` and more\n   generally birthdays of dyadic surreals, matching the \"denominator height\" `n + 1`\n   plus a term counting the binary length of `m`.\n\n4. **Day `\u03c9` and infinitesimals.** The smallest positive infinitesimal `\u03b5 = {0 | 1,\n   1/2, 1/4, ...}` first appears at day `\u03c9`. Formalise `\u03b5`, prove `0 < \u03b5 < powHalf n`\n   for all `n`, and begin the structure theory of `No_{\u03c9\u00b72}` and `No_{\u03c9^2}` toward the\n   Hahn-series description `No \u2245 \u211d((t^{No}))` of Conway/Gonshor.\n\n## Ordinal-strength remark\n\n`dyadicMap_injective` and `dyadicEquiv` show that the *countable* field `\u2124[1/2]` sits\nfaithfully inside the proper-class field `No`, entirely within the finite-birthday\nfragment `No_\u03c9`. This is the concrete \"constructive hierarchy\" base case: each birthday\nlevel adds exactly the algebraic data needed, and the finite levels already contain a\ncopy of the smallest nontrivial subring of \u211a closed under halving.\n",
     "domains": [
@@ -5870,6 +5869,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The 3n+1 Map: Tropical Dynamics and the Logic of Halting\n\nThis cycle established the elementary but rigorous scaffolding around the Collatz\nmap: orbit-invariance of the halting predicate, the exact stopping time of powers\nof two, the decidable bounded halting predicate, the precise logical shape of a\nrefutation, and a min-plus (tropical) recurrence for the total stopping time. The\nfollowing conjectures grow directly out of those findings.\n\n## Conjecture 1 \u2014 The stopping time is the unique fixed point of a tropical operator\n\nDefine, on the min-plus semiring `(\u2115 \u222a {\u221e}, min, +)`, the Bellman operator\n`(\u03a6 f)(1) = 0` and `(\u03a6 f)(n) = 1 + f(T n)` for `n \u2260 1`. Then the total stopping\ntime is the least fixed point of `\u03a6`, and `\u03a6` is a contraction in the natural\ngraph metric on halting orbits.\n\nThe key insight is that halting-time functions for the `3n+1` map are exactly the\nfixed points of a tropical shortest-path operator, so Collatz becomes a statement\nabout global reachability in a min-plus dynamical system rather than about integer\narithmetic. Why now? The recurrence `\u03c3(n) = 1 + \u03c3(T n)` is already isolated and\nverified here; upgrading it to a uniqueness-of-fixed-point theorem only requires a\nwell-founded measure on the halting set, which the orbit-invariance lemmas supply.\n\n## Conjecture 2 \u2014 No uniform certificate bound is provable in a weak base theory\n\nFor each `N`, the statement \"every `n \u2264 N` reaches `1`\" is decidable and provable\nby finite search. The conjecture is that there is **no** primitive-recursive\nfunction `B(N)` with a low-complexity proof that every `n \u2264 N` halts within `B(N)`\nsteps; equivalently, the certified stopping-time bound outgrows every provably\ntotal function of the base theory.\n\nThe key insight is that the halting predicate factors as a countable union of\ndecidable bounded predicates with no uniform bound, which is exactly the signature\nof a statement whose totality is unprovable in weak arithmetic. Why now? The\ndecomposition `Reaches n \u2194 \u2203 b, ReachesWithin b n` is formalized here, pinning the\nopen content to the growth rate of the bound `b` \u2014 the precise quantity an\nindependence argument must control.\n\n## Conjecture 3 \u2014 Collatz is \u03a0\u2082-complete relative to the accelerated map\n\nLet `T'` be the accelerated (odd-step) map `n \u21a6 (3n+1)/2`. The conjecture is that\nthe halting problems for `T` and `T'` are interreducible by primitive-recursive\ntranslations preserving stopping-time parity, so that any independence phenomenon\nfor one transfers to the other.\n\nThe key insight is that acceleration only reparametrizes the orbit graph, leaving\nthe min-plus reachability structure invariant, so undecidability is a property of\nthe graph and not of the particular step function. Why now? The orbit-invariance\nlemmas (`reaches_iff_collatz`) already show the halting predicate is stable under\nsingle-step reparametrization; extending stability to the accelerated map is the\nnatural next reduction.\n\n## Conjecture 4 \u2014 Cycle exclusion is equivalent to a tropical eigenvalue bound\n\nA nontrivial Collatz cycle would be a closed walk in the orbit graph with net\nmultiplier `< 1` in the tropical sense. The conjecture is that the absence of such\ncycles is equivalent to a strict inequality between the tropical (min-plus)\neigenvalue of the odd-step operator and `0`, giving a spectral criterion for the\ncycle half of the conjecture.\n\nThe key insight is that cyclic counterexamples are precisely tropical\neigenvectors, so ruling them out is a statement about the min-plus spectrum rather\nthan about individual integers. Why now? The stopping-time recurrence identifies\nthe map with a shortest-path operator, and min-plus spectral theory provides exactly\nthe eigenvalue machinery needed to phrase cycle exclusion.\n",
+    "domains": [
+      "Pythagorean",
+      "Tropical"
+    ],
+    "id": "fd_0914",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b77ed1ec",
+    "status": "available",
+    "timestamp": "2026-07-10T16:20:39.693781+00:00",
+    "title": "Elementary but rigorous scaffolding around the Collat"
+  },
+  {
+    "consumed_by_exp_id": "76f66aa5",
     "description": "A ReLU network f: R -> R with L layers of width w is a piecewise linear function with at most w^L pieces. By the universal approximation theorem, such networks can approximate any continuous function. But HOW WELL can they approximate specific constants? Conjecture: a ReLU network with L layers of width w can approximate pi to within epsilon using O(w * L * log(1/epsilon)) parameters. More precisely, there exists a ReLU network f with L = O(log(log(1/epsilon))) layers and w = O(log(1/epsilon)) width such that |f(1) - pi| < epsilon. This is because pi can be computed by the Leibniz formula pi/4 = 1 - 1/3 + 1/5 - ..., and a ReLU network can implement the partial sums. The number of terms needed is O(1/epsilon), and each term can be computed by a constant-depth ReLU subnetwork. The depth needed is O(log(1/epsilon)) for the sum and O(log(log(1/epsilon))) for the individual terms. Conjecture: the approximation rate for rational numbers by ReLU networks is O(1/(w^L)), matching the piecewise linear structure. For irrational numbers like pi, the rate is O(1/(w * L * 2^L)), which is slower but still exponential in depth. Test: construct ReLU networks that approximate pi, e, and sqrt(2) and measure the approximation error as a function of network size. Impact: ReLU networks approximate constants at a rate determined by their depth and width. Pi requires O(log(log(1/epsilon))) depth.",
     "domains": [
       "Novelty",
@@ -5879,7 +5893,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.74,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T16:04:37.324196+00:00",
     "title": "Diophantine Approximation on Neural Networks: How Well Can ReLU Approximate Pi?"
   },
