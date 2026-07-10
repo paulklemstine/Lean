@@ -32,6 +32,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 14000bf9 (Q=0.820), which proved 46 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A jigsaw puzzle has N pieces, each with 4 edges. The 'signature' of a piece is the tuple (top, right, bottom, left) of edge types (flat, tab, blank). Two pieces fit together if their adjacent edges are complementary (tab meets blank). Conjecture: Solving a jigsaw puzzle is NP-complete. The reduction",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_14000bf9_00a5bb92",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "14000bf9",
+    "status": "available",
+    "timestamp": "2026-07-10T02:41:36.119425+00:00",
+    "title": "Deepening: The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 7ca0f553 (Q=0.820), which proved 61 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Infinite chess is chess on an infinite board. It is known that there are positions where White can force checkmate but only in omega (the first infinite ordinal) moves. Conjecture: There exists a position on the infinite chess board where White can force checkmate in exactly omega^omega moves, but n",
     "domains": [
       "Pythagorean"
@@ -9784,7 +9798,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bypassed"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "73d4b43b",
     "description": "Every mathematical proof is a directed acyclic graph (DAG): nodes are statements, edges are implications, and the acyclicity comes from the fact that you can't prove A from B and B from A without a circular argument (which is not a valid proof). Conjecture: The DAG of all mathematical proofs has a scale-free structure: the in-degree distribution follows a power law P(k) ~ k^{-gamma} with gamma \u2248 2.5. This means most theorems are proved from a small number of foundational results (the 'hubs'), and there are exponentially many theorems that depend on these hubs. The top 10 hub theorems in mathematics are: (1) Zorn's Lemma, (2) The Intermediate Value Theorem, (3) The Fundamental Theorem of Calculus, (4) The Sylow Theorems, (5) The Baire Category Theorem, (6) Hahn-Banach Theorem, (7) Urysohn's Lemma, (8) The Pigeonhole Principle, (9) Induction, (10) The Law of Excluded Middle. Conjecture: removing any of the top 10 hubs disconnects the proof DAG into at least 2 large components, each containing more than 10% of all theorems. This means mathematics is fragile: removing one foundational theorem makes many other theorems unprovable. Test: construct the proof DAG from Lean 4's Mathlib (all proofs and their dependencies), compute the in-degree distribution, and verify the power law. Impact: mathematics is a scale-free network, and its most important theorems are its most connected nodes \u2014 the hubs that hold the entire structure together.",
     "domains": [
       "Novelty",
@@ -9794,7 +9808,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T02:06:58.855559+00:00",
     "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
   },
@@ -9827,21 +9841,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-09T19:37:23.883933+00:00",
     "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
-  },
-  {
-    "consumed_by_exp_id": "14000bf9",
-    "description": "A jigsaw puzzle has N pieces, each with 4 edges. The 'signature' of a piece is the tuple (top, right, bottom, left) of edge types (flat, tab, blank). Two pieces fit together if their adjacent edges are complementary (tab meets blank). Conjecture: Solving a jigsaw puzzle is NP-complete. The reduction: given a 3-SAT formula with n variables and m clauses, construct a jigsaw puzzle with N = 2n + m + 2 pieces where the only valid assembly corresponds to a satisfying assignment. Variable pieces: each variable x_i has two pieces (TRUE and FALSE), one with a tab and one with a blank on the assignment edge. Only one can be placed (mutual exclusion via complementary edges). Clause pieces: each clause C_j is a piece that has three input edges (one per literal) and one output edge. The piece fits only if at least one input edge is connected to a TRUE literal piece. The top-left corner and bottom-right corner enforce the boundary. Test: construct the reduction explicitly for a small 3-SAT instance (e.g., (x1 OR x2 OR NOT x3) AND (NOT x1 OR x3)) and verify the puzzle has a solution iff the formula is satisfiable. Impact: jigsaw puzzles are NP-complete, so the satisfying snap you feel when completing a puzzle is literally the same as solving a hard computational problem.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0818",
-    "priority_score": 0.77,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T00:01:24.348188+00:00",
-    "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
   },
   {
     "consumed_by_exp_id": "",
@@ -10187,6 +10186,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T01:48:44.797658+00:00",
     "title": "This cycle deepens the earlier work in `Novelty/PrimeHotelRearrangement.lean` (w"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: The Mathematics of Jigsaw Puzzles\n\nThis cycle established that edge complementation is an order-two symmetry whose\nfixed points are exactly the border edges, that encoding truth values in that\nsymmetry makes clause-piece placement equivalent to clause satisfaction, and that\nthe resulting construction is a genuine many-one reduction of Boolean\nsatisfiability into puzzle assembly using `2n + m + 2` pieces. The following\nconjectures push those findings further.\n\n## 1. Assembly hardness survives a bounded palette of edge shapes\n\n**Conjecture.** For every fixed number of distinct interlock shapes `k \u2265 3`, the\nassembly problem restricted to pieces drawn from a `k`-shape alphabet is exactly\nas hard as unrestricted assembly; there is no palette size at which the problem\nbecomes tractable.\n\n*The key insight is* that the reduction never needs more than the single\ncomplementation involution \u2014 one swapped pair plus one self-complementary border\nshape \u2014 so the hardness is carried by the *symmetry* of the alphabet rather than\nits size, and enlarging the palette can only add, never remove, reductions.\n\n*Why now?* We have isolated the reduction's dependence on the alphabet down to\nthe two facts `enc` is injective and complementation is an involution; this makes\nthe palette-size question a precise, testable statement rather than a vague\nintuition about \"enough shapes.\"\n\n## 2. The border is a topological obstruction, not a convenience\n\n**Conjecture.** In any valid assembly the multiset of exposed (unmatched) edges is\nsupported entirely on the fixed-point set of complementation, and its cardinality\nis a topological invariant of the target shape (the length of its boundary),\nindependent of the interior wiring.\n\n*The key insight is* that `comp_fixed_iff_flat` identifies exposed edges with\nself-complementary edges, so counting boundary edges becomes counting fixed points\nof an involution \u2014 a quantity that Burnside-type averaging pins down from the\nsymmetry alone.\n\n*Why now?* The fixed-point characterisation of the border, proved this cycle,\nturns a picture-drawing heuristic (\"flat edges go on the outside\") into an\ninvariant that can be computed and compared across constructions.\n\n## 3. Uniqueness of assembly detects unique satisfiability\n\n**Conjecture.** The constructed puzzle has a *unique* valid assembly (up to the\nsymmetries of the border) if and only if the underlying formula has a unique\nsatisfying assignment; consequently, counting assemblies computes the number of\nsatisfying assignments.\n\n*The key insight is* that the assembly-to-assignment dictionary is a bijection on\nthe nose \u2014 each clause piece placement is forced by, and forces, one satisfied\nliteral choice \u2014 so multiplicities transfer without loss.\n\n*Why now?* With the equivalence `puzzle_solvable_iff_satisfiable` established as a\nterm-level correspondence rather than a mere existence statement, upgrading it to\na counting bijection is the natural next rung.\n\n## 4. Gadget composition is monotone under formula strengthening\n\n**Conjecture.** Adding a clause to a formula can only shrink the set of valid\nassemblies, and every unsolvable instance contains a minimal unsolvable\nsub-collection of clause pieces whose size lower-bounds any resolution-style\ncertificate of unsatisfiability.\n\n*The key insight is* that clause pieces are conjunctive constraints on a shared\npool of variable outputs, so the assembly set is an intersection over clauses and\ntherefore antitone in the clause list.\n\n*Why now?* The per-clause factorisation (`clausePieceFits_iff`) exposes assembly\nas a literal intersection of local conditions, making monotonicity and minimal-\ncore statements directly formalisable.\n\n## 5. Reversible (two-sided) pieces collapse polarity but not hardness\n\n**Conjecture.** Allowing each piece to be flipped so that a literal may be read in\neither polarity yields a problem still as hard as satisfiability, now reducing\nfrom not-all-equal satisfiability rather than ordinary satisfiability.\n\n*The key insight is* that flipping a piece swaps `tab` and `blank` \u2014 it applies the\ncomplementation involution to a whole side \u2014 so a two-sided piece encodes a\nliteral together with its negation, exactly the symmetry that turns SAT into\nNAE-SAT.\n\n*Why now?* Because complementation is already realised as a permutation\n(`compEquiv`), the \"flip\" operation has a precise algebraic meaning, and the\nNAE-SAT variant becomes a concrete reduction to attempt rather than an analogy.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0833",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "14000bf9",
+    "status": "available",
+    "timestamp": "2026-07-10T02:41:30.117723+00:00",
+    "title": "That edge complementation is an order-two symmetry whose"
   },
   {
     "consumed_by_exp_id": "",

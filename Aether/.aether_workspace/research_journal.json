@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b87dcfdc",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Explicit class field theory beyond the cyclotomic case\n\nThis cycle established three load-bearing facts: (i) the cyclotomic Galois group has\norder equal to Euler's totient and is",
-      "quality_score": 0.84436,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-02T01:15:10",
-      "title": "Hilbert 12: Kronecker-Weber Generalization"
-    },
-    {
       "cycle_id": "50540462",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Siblings of the Coupon Collector\n\nThis cycle established, in full, the two-type extremality story for every sibling\nindex and, for arbitrary numbers of types, the exact closed fo",
@@ -499,19 +489,19 @@
       "theorem_count": 56,
       "timestamp": "2026-07-10T01:48:49",
       "title": "Deepening: Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
+    },
+    {
+      "cycle_id": "14000bf9",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: The Mathematics of Jigsaw Puzzles\n\nThis cycle established that edge complementation is an order-two symmetry whose\nfixed points are exactly the border edges, that encoding truth v",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 46,
+      "timestamp": "2026-07-10T02:41:36",
+      "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4f7ad584",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — EML Universal Approximation & Kolmogorov Complexity\n\nDerived from the cycle that produced `EML/KolmogorovComplexityBound.lean` and\n`EML/ComplexityDensityBridge.lean`. Each conjec",
-      "quality_score": 0.6244,
-      "sorry_count": 0,
-      "theorem_count": 24,
-      "timestamp": "2026-06-28T23:48:50",
-      "title": "EML Universal Approximation"
-    },
     {
       "cycle_id": "12b5f4b2",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 56,
       "timestamp": "2026-07-10T01:48:49",
       "title": "Deepening: Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
+    },
+    {
+      "cycle_id": "14000bf9",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: The Mathematics of Jigsaw Puzzles\n\nThis cycle established that edge complementation is an order-two symmetry whose\nfixed points are exactly the border edges, that encoding truth v",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 46,
+      "timestamp": "2026-07-10T02:41:36",
+      "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "bb909d34",
-      "domain": "Applications",
-      "name": "AnabelEquiv",
-      "quality": 0.8344800000000001
-    },
-    {
-      "cycle_id": "0a41cc78",
-      "domain": "Novelty",
-      "name": "R_rec",
-      "quality": 0.7258007692307691
-    },
-    {
-      "cycle_id": "0a41cc78",
-      "domain": "Novelty",
-      "name": "pv_eq",
-      "quality": 0.7258007692307691
-    },
     {
       "cycle_id": "0a41cc78",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "ApproxLipschitzWith",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "14000bf9",
+      "domain": "Novelty",
+      "name": "Edge",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "14000bf9",
+      "domain": "Novelty",
+      "name": "Edge",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "14000bf9",
+      "domain": "Novelty",
+      "name": "compEquiv_sq_eq_one",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-10T01:48:49",
+  "last_updated": "2026-07-10T02:41:36",
   "open_questions": [
     {
       "context": "Main results (all sorry-free):; sorry-free, to an explicit finite list of quartic Thue equations whose known; What survived: the entire *structural* reduction is fully formal and sorry-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "1e8c0c26",
-        "quality": 0.420858,
-        "theorems": 3,
-        "title": "Tightness of Edge Deletion Bound in Hyperstability Extension of Erdős-Gallai The"
-      },
-      {
         "cycle_id": "24d6d8b7",
         "quality": 0.511,
         "theorems": 7,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 27,
         "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
+      },
+      {
+        "cycle_id": "14000bf9",
+        "quality": 0.82,
+        "theorems": 46,
+        "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
       }
     ],
     "NumberTheory": [
