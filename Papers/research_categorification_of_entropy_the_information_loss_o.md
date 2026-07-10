@@ -1,243 +1,173 @@
-# Functorial Entropy: Measuring Information Loss in Functions and Functors
+# Categorification of Entropy: The Information Loss of a Functor
 
 ## Abstract
 
-We develop a theory of **functorial entropy** that assigns to each function f : α → β between finite types a non-negative real number H(f) measuring the information destroyed by f. The entropy H(f) is defined as the weighted logarithmic sum over the fibers of f, and satisfies several fundamental properties: (1) H(f) = 0 if and only if f is injective; (2) H(f) ≤ log|α|; (3) H(g ∘ f) ≥ H(f) for any post-composition (data processing inequality). We establish a bridge to Shannon entropy showing H(f) = log|α| − H_Shannon(fiber distribution), and lift the theory to functors between finite categories. All results are formally verified in the Lean 4 proof assistant with the Mathlib library.
+We quantify the information that a functor loses when it identifies distinct objects. Working with functors between finite categories — equivalently, with the map they induce on finite sets of objects — we define the **functorial entropy** $H(F)$ as the conditional entropy of a uniformly random domain object given its image. Concretely, if $c_d$ denotes the cardinality of the fiber of $F$ over a target object $d$ and $n$ is the number of objects in the domain, then
+$$H(F) = \sum_{d} \frac{c_d}{n}\,\log c_d.$$
+We prove six structural theorems characterizing this invariant: (1) it is nonnegative; (2) it vanishes exactly when $F$ is injective on objects, giving a precise form of the slogan "faithful functors lose no information"; (3) when all fibers share a common size $k$ it equals $\log k = \log(|\mathrm{Ob}\,C|/|\mathrm{Ob}\,D|)$; (4) for a constant functor it attains the value $\log n$; (5) it is bounded above by $\log n$; and (6) it obeys a **data-processing inequality** $H(f) \le H(g\circ f)$, so that composing with a further functor can only increase the loss. We situate these results against the classical Shannon theory they categorify, work through the motivating examples of abelianization, inclusion of finite groups, and the forgetful functor to sets, and outline extensions to weighted priors, morphism-level loss, and infinite categories.
 
-**Keywords**: functorial entropy, information loss, data processing inequality, category theory, formal verification
+**Keywords:** functorial entropy, conditional entropy, categorification, information loss, data-processing inequality, faithful functor, fiber cardinality.
+
+---
 
 ## 1. Introduction
 
-The concept of entropy, originating in thermodynamics and formalized by Shannon [1] for communication theory, measures uncertainty or information content. In category theory, functors between categories can "lose information" by mapping non-isomorphic objects to isomorphic ones. This paper bridges these perspectives by defining a precise measure of information loss for functions between finite types.
+Entropy, in the sense of Shannon, measures the uncertainty of a random variable: for a variable $X$ taking value $x$ with probability $p(x)$,
+$$H(X) = -\sum_x p(x)\log p(x).$$
+Category theory, meanwhile, offers a language for structure-preserving translation between mathematical worlds via **functors** $F : C \to D$. A recurring informal theme is that a functor "loses information" when it maps non-isomorphic objects to isomorphic ones — the paradigmatic case being a *forgetful functor* that discards structure. The qualitative counterpart of this idea is the notion of a **faithful** functor, one that does not conflate distinct data.
 
-Our central definition associates to each function f : α → β a non-negative real number H(f), the *functorial entropy*, that quantifies the irreversible collapse of the domain into fibers. The definition is:
+This paper makes the metaphor quantitative. We assign to each functor between finite categories a real number $H(F) \ge 0$, its **information loss**, and we prove that this number behaves exactly as an information-theoretic measure of forgetting should. The construction is a *categorification* of entropy in the sense that a purely combinatorial/probabilistic quantity is recovered as an invariant of a morphism in a category of categories.
 
-$$H(f) = \sum_{b \in \beta} \frac{|f^{-1}(b)|}{|\alpha|} \cdot \log |f^{-1}(b)|$$
+### 1.1 The naive marginal entropy is the wrong invariant
 
-This generalizes naturally to functors between finite categories by applying the formula to the object map.
+A tempting first definition would push the uniform distribution on the objects of $C$ forward along $F$ and take the ordinary Shannon entropy of the resulting distribution on the objects of $D$:
+$$H_{\mathrm{marg}}(F) = -\sum_d p(d)\log p(d), \qquad p(d) = \frac{c_d}{n}.$$
+This quantity is unsuitable as a measure of *loss*. An injective functor into an $m$-object target already has marginal entropy $\log m > 0$, even though it forgets nothing. The marginal entropy measures the *spread of the image*, conflating the richness of the codomain with the collapsing behaviour of the map. We therefore discard it.
 
-### 1.1 Main Contributions
+### 1.2 Conditional entropy is the right invariant
 
-1. **Zero Characterization** (Theorem 3.1): H(f) = 0 ↔ f is injective
-2. **Post-Composition Monotonicity** (Theorem 4.1): H(g ∘ f) ≥ H(f) for any g
-3. **Superadditivity of t·log(t)** (Theorem 4.2): (a+b)·log(a+b) ≥ a·log(a) + b·log(b)
-4. **Entropy–Shannon Bridge** (Theorem 5.1): H(f) = log|α| − H_Shannon(fiber distribution)
-5. **Categorical Lifting** (Section 6): Extension to functors with composition monotonicity
+The correct measure is the **conditional entropy** $H(C \mid F(C))$ of the domain object given its image, under the uniform distribution on $\mathrm{Ob}\,C$. Given that the image is $d$, the domain object is uniformly distributed over the $c_d$ objects of the fiber, so the residual uncertainty is $\log c_d$; averaging over the image distribution $p(d) = c_d/n$ gives
+$$H(F) = \sum_d \frac{c_d}{n}\,\log c_d. \tag{$\ast$}$$
+This is genuinely the information lost by $F$: it is $0$ precisely when $F$ is injective, and it attains its maximum $\log n$ for a constant functor. Equation $(\ast)$ is the definition we study.
 
-### 1.2 Related Work
+---
 
-Baez, Fritz, and Leinster [2] characterized entropy in a categorical framework using operadic structures. Our approach is complementary: rather than axiomatizing entropy categorically, we measure the information loss inherent in categorical morphisms. Leinster [3] studied the entropy of a finite probability distribution from a categorical perspective. Our work extends this by assigning entropy not to distributions but to functions, with the distribution emerging naturally as the fiber distribution.
+## 2. Setup and definitions
 
-## 2. Definitions
+We model a functor between finite categories by the function it induces on their (finite) sets of objects. Fix finite nonempty sets of objects; write $\alpha = \mathrm{Ob}\,C$ and $\beta = \mathrm{Ob}\,D$, with $n = |\alpha|$.
 
-### 2.1 Fiber Cardinality
+**Definition 2.1 (Fiber cardinality).** For a function $F : \alpha \to \beta$ and a target object $d \in \beta$, the **fiber cardinality** is
+$$c_d := \bigl|\{a \in \alpha : F(a) = d\}\bigr| = |F^{-1}(d)|.$$
 
-**Definition 2.1** (Fiber Cardinality). For f : α → β with α finite and β having decidable equality, the *fiber cardinality* of f over b ∈ β is:
+The fibers partition the domain, whence the elementary but essential identity:
 
-$$\text{fiberCard}(f, b) = |\{a \in \alpha : f(a) = b\}|$$
+**Lemma 2.2 (Fiber partition).** $\displaystyle\sum_{d \in \beta} c_d = |\alpha| = n.$
 
-**Lemma 2.2**. The sum of fiber cardinalities equals |α|:
-$$\sum_{b \in \beta} \text{fiberCard}(f, b) = |\alpha|$$
+*Proof.* The sets $F^{-1}(d)$ for $d \in \beta$ are pairwise disjoint and cover $\alpha$; summing their cardinalities counts each element of $\alpha$ exactly once. $\qquad\blacksquare$
 
-**Lemma 2.3**. f is injective iff every fiber has cardinality ≤ 1.
+**Definition 2.3 (Functorial entropy).** The **functorial entropy**, or **information loss**, of $F : \alpha \to \beta$ is
+$$H(F) := \sum_{d \in \beta} \frac{c_d}{n}\,\log c_d,$$
+with the standard convention that the summand vanishes when $c_d = 0$ (since the weight $c_d/n$ is then $0$). Here $\log$ denotes the natural logarithm; changing the base rescales $H(F)$ by a positive constant and does not affect any of the results below.
 
-### 2.2 Functorial Entropy
+Interpreted probabilistically, $H(F)$ is the conditional entropy $H(A \mid F(A))$ where $A$ is uniform on $\alpha$: it is the expected number of nats needed to specify the exact domain object once its image is known.
 
-**Definition 2.4** (Functorial Entropy). For f : α → β between finite types:
+---
 
-$$H(f) = \sum_{b \in \beta} \frac{\text{fiberCard}(f, b)}{|\alpha|} \cdot \log(\text{fiberCard}(f, b))$$
+## 3. Main results
 
-where log denotes the natural logarithm and we use the convention 0 · log(0) = 0.
+Throughout, $F : \alpha \to \beta$ is a function between finite sets with $|\alpha| = n \ge 1$.
 
-### 2.3 Shannon Entropy
+### 3.1 Nonnegativity
 
-**Definition 2.5** (Shannon Entropy). For a probability distribution p on a finite type ι:
+**Theorem 3.1 (Loss is nonnegative).** $H(F) \ge 0$.
 
-$$H_{\text{Shannon}}(p) = -\sum_{i \in \iota} p(i) \cdot \log(p(i))$$
+*Proof.* Each summand $\frac{c_d}{n}\log c_d$ is a product of two nonnegative factors: the weight $c_d/n \ge 0$, and $\log c_d \ge 0$ because $c_d$ is a nonnegative integer, so either $c_d = 0$ (and the whole term is $0$) or $c_d \ge 1$ and $\log c_d \ge 0$. A sum of nonnegative terms is nonnegative. $\qquad\blacksquare$
 
-### 2.4 Fiber Distribution
+Information cannot be created by translation; $H$ registers only loss.
 
-**Definition 2.6** (Fiber Distribution). The *fiber distribution* of f : α → β is the function:
+### 3.2 The vanishing criterion
 
-$$q(b) = \frac{\text{fiberCard}(f, b)}{|\alpha|}$$
+**Lemma 3.2 (Injectivity via fibers).** $F$ is injective if and only if $c_d \le 1$ for every $d \in \beta$.
 
-This is a valid probability distribution on β (sums to 1, each value in [0, 1]).
+*Proof.* If $F$ is injective, no two distinct elements share an image, so each fiber has at most one element. Conversely, if some fiber had two distinct elements $x \ne y$ with $F(x) = F(y)$, that fiber would have cardinality $\ge 2$; the hypothesis $c_d \le 1$ therefore forbids such a collision, giving injectivity. $\qquad\blacksquare$
 
-### 2.5 Functor Object Entropy
+**Theorem 3.3 (Vanishing criterion).** $H(F) = 0$ if and only if $F$ is injective on objects.
 
-**Definition 2.7** (Functor Object Entropy). For a functor F : C ⥤ D between categories with finite object types:
+*Proof.* By Theorem 3.1 the sum $(\ast)$ has nonnegative terms, so it is zero if and only if every term is zero. The term for $d$ is zero exactly when $c_d = 0$ or $\log c_d = 0$, i.e. when $c_d \in \{0,1\}$, i.e. when $c_d \le 1$. By Lemma 3.2 this holds for all $d$ if and only if $F$ is injective. $\qquad\blacksquare$
 
-$$H_{\text{obj}}(F) = H(F.\text{obj})$$
+This is the precise, quantitative form of the categorical slogan "a faithful functor loses no information," with faithfulness on objects captured by injectivity.
 
-where F.obj : Ob(C) → Ob(D) is the object map of F.
+### 3.3 The uniform-fiber formula
 
-### 2.6 Information Channel
+**Theorem 3.4 (Uniform fibers).** Suppose every fiber has the same cardinality $k$, i.e. $c_d = k$ for all $d \in \beta$. Then
+$$H(F) = \log k.$$
+Moreover, when $F$ is surjective (so no fiber is empty and $|\beta| = m$), Lemma 2.2 gives $n = mk$, whence
+$$H(F) = \log k = \log\frac{n}{m} = \log\frac{|\mathrm{Ob}\,C|}{|\mathrm{Ob}\,D|}.$$
 
-**Definition 2.8** (Information Channel). An *information channel* from α to β is a triple (f, h, h_eq) where f : α → β is a function, h = H(f) is its entropy, and h_eq certifies the equality.
+*Proof.* Substituting $c_d = k$ into $(\ast)$,
+$$H(F) = \sum_{d\in\beta} \frac{k}{n}\log k = \Bigl(\sum_{d\in\beta}\frac{k}{n}\Bigr)\log k = \frac{mk}{n}\log k.$$
+By Lemma 2.2, $\sum_d c_d = mk = n$, so the prefactor $mk/n = 1$ and $H(F) = \log k$. If additionally $k \ge 1$ (surjectivity), $n = mk$ rearranges to $k = n/m$. When $k = 0$ the domain is empty, contradicting $n \ge 1$, so this case does not arise. $\qquad\blacksquare$
 
-## 3. Zero Characterization
+A uniform $k$-to-one functor loses exactly $\log k$ nats: one bit for a two-to-one map, ten bits for a $1024$-to-one map.
 
-**Theorem 3.1** (Zero Characterization). For f : α → β with α nonempty:
-$$H(f) = 0 \iff f \text{ is injective}$$
+### 3.4 The constant functor and the maximum
 
-*Proof sketch.* (⇐) If f is injective, every fiber has size 0 or 1, so each summand in H(f) is either 0 · log(0) = 0 or (1/|α|) · log(1) = 0.
+**Theorem 3.5 (Constant functor).** If $F$ is constant, i.e. $F(a) = d_0$ for all $a \in \alpha$, then
+$$H(F) = \log n.$$
 
-(⇒) If H(f) = 0, then since each summand is non-negative (product of non-negative weight and non-negative log of a natural ≥ 1), every summand must vanish. For fiberCard(f, b) ≥ 2, the summand is strictly positive (both the weight and log(fiberCard) are positive). So every fiber has size ≤ 1, making f injective.
+*Proof.* The single nonempty fiber is over $d_0$, with $c_{d_0} = n$, and all other fibers are empty. Hence $(\ast)$ collapses to the single term $\frac{n}{n}\log n = \log n$. $\qquad\blacksquare$
 
-The strict positivity argument is the key insight: it shows that **even a single non-trivial fiber forces positive entropy**.
+**Theorem 3.6 (Maximum-loss bound).** For every $F$, $\quad H(F) \le \log n.$
 
-**Corollary 3.2**. H(f) > 0 iff f is not injective.
+*Proof.* For each $d$, monotonicity of $\log$ and the bound $c_d \le n$ (Lemma 2.2) give $\log c_d \le \log n$ whenever $c_d \ge 1$; when $c_d = 0$ the term vanishes. Therefore, term by term,
+$$\frac{c_d}{n}\log c_d \le \frac{c_d}{n}\log n.$$
+Summing over $d$ and applying Lemma 2.2,
+$$H(F) \le \sum_d \frac{c_d}{n}\log n = \frac{\log n}{n}\sum_d c_d = \frac{\log n}{n}\cdot n = \log n. \qquad\blacksquare$$
 
-## 4. Composition Monotonicity
+Together, Theorems 3.5 and 3.6 show the constant functor is a *maximizer*: it realizes the ceiling $\log n$, forgetting the entire information content of the domain.
 
-### 4.1 Superadditivity
+### 3.5 The data-processing inequality
 
-**Theorem 4.2** (Superadditivity of t·log(t)). For a, b ≥ 0:
-$$(a + b) \cdot \log(a + b) \geq a \cdot \log(a) + b \cdot \log(b)$$
+The final result is the categorical analogue of the data-processing inequality of information theory: further processing of an image cannot recover information about the source.
 
-*Proof.* Case analysis:
-- If a = 0 or b = 0: immediate (log(0) = 0 in our convention).
-- If a, b > 0: Rewrite the difference as a·log((a+b)/a) + b·log((a+b)/b). Since a+b > a > 0, we have (a+b)/a > 1, so log((a+b)/a) ≥ 0. Similarly for b. Both terms are non-negative.
+**Lemma 3.7 (Fibers of a composite).** Let $f : \alpha \to \beta$ and $g : \beta \to \gamma$ with $\gamma$ finite. For $e \in \gamma$, the fiber of $g\circ f$ over $e$ decomposes along the $f$-fibers of the points lying over $e$:
+$$c^{g\circ f}_e = \sum_{d : g(d) = e} c^{f}_d,$$
+where $c^{g\circ f}_e = |(g\circ f)^{-1}(e)|$ and $c^f_d = |f^{-1}(d)|$.
 
-**Theorem 4.3** (Generalized Superadditivity). For non-negative weights w₁, ..., wₖ:
-$$\sum_i w_i \cdot \log(w_i) \leq \left(\sum_i w_i\right) \cdot \log\left(\sum_i w_i\right)$$
+*Proof.* An element $a \in \alpha$ satisfies $g(f(a)) = e$ if and only if $f(a) = d$ for some (unique) $d$ with $g(d) = e$. Thus $(g\circ f)^{-1}(e)$ is the disjoint union of the sets $f^{-1}(d)$ over those $d$ with $g(d)=e$; taking cardinalities gives the claim. $\qquad\blacksquare$
 
-*Proof.* By induction on the size of the index set, using Theorem 4.2 at each step.
+**Theorem 3.8 (Data-processing inequality).** For $f : \alpha\to\beta$ and $g : \beta\to\gamma$ with $\alpha,\beta,\gamma$ finite and $n = |\alpha| \ge 1$,
+$$H(f) \le H(g\circ f).$$
 
-### 4.2 Post-Composition Monotonicity
+*Proof sketch.* Both sides are averages of fiber log-cardinalities against the uniform distribution on $\alpha$. Group the domain by its $f$-fiber. Within the block of $f$-fibers mapping to a common $e \in \gamma$, superadditivity of $x\mapsto x\log x$ under aggregation — equivalently, concavity of the logarithm, or the fact that merging fibers can only enlarge each surviving log-cardinality — shows that the contribution to $H(g\circ f)$, namely $\frac{1}{n}c^{g\circ f}_e\log c^{g\circ f}_e$, dominates the sum of the corresponding contributions $\frac{1}{n}\sum_{g(d)=e} c^f_d\log c^f_d$ to $H(f)$. Concretely, using Lemma 3.7 and $c^f_d \le c^{g\circ f}_e = \sum_{g(d')=e}c^f_{d'}$ for each $d$ with $g(d)=e$,
+$$\sum_{g(d)=e} c^f_d\log c^f_d \;\le\; \sum_{g(d)=e} c^f_d\log c^{g\circ f}_e \;=\; c^{g\circ f}_e\log c^{g\circ f}_e.$$
+Dividing by $n$ and summing over $e \in \gamma$ yields $H(f) \le H(g\circ f)$. $\qquad\blacksquare$
 
-**Theorem 4.1** (Post-Composition Monotonicity). For f : α → β and g : β → γ:
-$$H(f) \leq H(g \circ f)$$
+Interpretively: once information about the domain has been lost by $f$, no subsequent functor $g$ can restore it, and $g$ typically discards more. Layers of abstraction accumulate loss monotonically.
 
-*Proof sketch.* The fiber of g∘f over c ∈ γ decomposes as:
+---
 
-$$\text{fiberCard}(g \circ f, c) = \sum_{b : g(b) = c} \text{fiberCard}(f, b)$$
+## 4. Worked examples
 
-Regrouping the entropy sum for H(f) by the g-fibers:
+The theory reproduces the values that motivated it.
 
-$$H(f) = \frac{1}{|\alpha|} \sum_c \sum_{b : g(b) = c} \text{fiberCard}(f, b) \cdot \log(\text{fiberCard}(f, b))$$
+**4.1 Inclusion of finite groups.** The inclusion functor from finite groups into all groups sends each finite group to itself; it is injective on (isomorphism classes of) objects. By Theorem 3.3, $H = 0$: no information is lost, consistent with the expectation that an inclusion is faithful.
 
-By the generalized superadditivity (Theorem 4.3), each inner sum satisfies:
+**4.2 Abelianization.** The abelianization functor sends a group to its largest abelian quotient. Distinct non-isomorphic groups can share an abelianization, so the functor is genuinely non-injective. On finite models where each abelian object receives a small, roughly two-element family of preimages, the uniform-fiber formula (Theorem 3.4) gives a loss on the order of $\log 2$ — one bit — matching the informal expectation that each abelian group hides on average a nontrivial noncommutative companion.
 
-$$\sum_{b : g(b) = c} n_b \cdot \log(n_b) \leq m_c \cdot \log(m_c)$$
+**4.3 The forgetful functor to sets.** The functor discarding the topology of a space records only its underlying point-set. Over an infinite set there are uncountably many distinct topologies, so the relevant fibers are infinite and the loss diverges: $H \to \infty$. This is the boundary case flagged for the infinite theory (Section 6): it exemplifies the principle that a functor identifying infinitely many non-isomorphic objects has infinite entropy.
 
-where nᵦ = fiberCard(f, b) and mᶜ = fiberCard(g∘f, c). Summing over c and dividing by |α| yields H(f) ≤ H(g∘f). □
+---
 
-This theorem is the information-theoretic analog of the **data processing inequality**: post-processing can only destroy information, never create it.
+## 5. Algorithms
 
-## 5. The Entropy–Shannon Bridge
+The invariant is directly computable for functors between finite categories.
 
-**Theorem 5.1** (Entropy–Shannon Bridge). For f : α → β with α nonempty:
+**Algorithm A (Functorial entropy).** Given the object map $F : \alpha \to \beta$ as a list of $n$ images:
+1. Tally the fiber cardinalities $c_d$ by a single pass over the domain (a histogram).
+2. Return $\sum_{d : c_d > 0} \frac{c_d}{n}\log c_d$.
 
-$$H(f) = \log|\alpha| - H_{\text{Shannon}}(\text{fiberDist}(f))$$
+This runs in $O(n)$ time and $O(|\beta|)$ space and requires only the object map. Choosing base-$2$ logarithms reports the loss in bits.
 
-*Proof.* Expand the definitions:
+**Algorithm B (Composite loss and the data-processing check).** Given $f : \alpha\to\beta$ and $g : \beta\to\gamma$, compute $H(f)$, $H(g\circ f)$ (via Algorithm A applied to the pointwise composite), and verify $H(f) \le H(g\circ f)$ numerically. This furnishes an empirical confirmation of Theorem 3.8 across random functors.
 
-$$H(f) = \sum_b \frac{n_b}{N} \cdot \log(n_b) = \sum_b \frac{n_b}{N} \cdot (\log N + \log \frac{n_b}{N})$$
-$$= \log N \cdot \sum_b \frac{n_b}{N} + \sum_b \frac{n_b}{N} \cdot \log \frac{n_b}{N} = \log N - H_{\text{Shannon}}(q)$$
+**Algorithm C (Uniform-fiber verification).** Given $F$, test whether all nonempty fibers have equal size $k$; if so, check $H(F) = \log k$ and, when $F$ is surjective, $k = |\alpha|/|\beta|$, confirming Theorem 3.4.
 
-where q(b) = nᵦ/N is the fiber distribution and N = |α|. □
+---
 
-**Corollary 5.2**. H(f) ≤ log|α|, with equality when all elements map to a single output.
+## 6. Discussion and future directions
 
-**Corollary 5.3**. For surjective f : α → β, H(f) ≥ log(|α|/|β|).
+The functorial entropy converts a qualitative categorical notion (faithfulness, forgetfulness) into a quantitative one, and the six theorems show it behaves as an information measure ought to: nonnegative, zero exactly on faithful functors, bounded by the domain's information content, maximized by total collapse, and monotone under composition. The last property, the data-processing inequality, is the structural heart of the theory and mirrors its classical namesake exactly.
 
-## 6. Categorical Extension
+Several natural extensions remain.
 
-### 6.1 Functor Object Entropy
+1. **Chain rule / additivity.** Establish $H(g\circ f) = H(f) + H_f(g)$ for a suitable relative loss $H_f(g)$, mirroring $H(X,Y) = H(X) + H(Y\mid X)$.
+2. **Weighted / non-uniform priors.** Replace the uniform distribution on $\mathrm{Ob}\,C$ by an arbitrary probability weight, recovering the full Shannon conditional entropy and re-deriving all theorems in that generality.
+3. **Morphism-level entropy.** The present invariant sees only the action on objects. A finer invariant would weight by hom-set collapse, quantifying loss of morphism information — the genuinely categorical form of faithfulness.
+4. **Infinite categories.** Formalize $H = \infty$ for the forgetful functor to sets via extended nonnegative reals or a limit of finite truncations, once a fiber-cardinality measure is available.
+5. **Functoriality of entropy itself.** Study whether $F \mapsto H(F)$ is monotone/continuous for natural orders on functors, and its behaviour under products and coproducts of categories (expected additivity).
+6. **Connections to the literature.** Compare this conditional-entropy invariant with categorical characterizations of entropy in the magnitude and Baez–Fritz–Leinster traditions.
 
-The functor object entropy H_obj(F) = H(F.obj) inherits all properties of functorial entropy:
+## 7. Conclusion
 
-1. **Non-negativity**: H_obj(F) ≥ 0
-2. **Zero iff injective on objects**: H_obj(F) = 0 ↔ F.obj injective
-3. **Identity**: H_obj(Id_C) = 0
-4. **Composition monotonicity**: H_obj(F) ≤ H_obj(F ⋙ G)
-
-Property (4) is the categorical data processing inequality: composing functors can only increase information loss on objects.
-
-### 6.2 The Composition Superadditivity Conjecture
-
-**Conjecture 6.1** (Composition Superadditivity). For surjective f : α → β and any g : β → γ:
-
-$$H(g) \leq H(g \circ f)$$
-
-This states that pre-composing with a surjection cannot decrease information loss. Combined with Theorem 4.1, this would give a complete picture of how entropy behaves under composition.
-
-**Evidence**: Verified computationally for hundreds of random functions. The conjecture is a strengthening of the data processing inequality, requiring a comparison between H(g) (defined on β) and H(g∘f) (defined on α), where the domains differ. This makes it significantly harder than Theorem 4.1, which compares entropies on the same domain.
-
-## 7. The Landauer Connection
-
-**Definition 7.1** (Landauer Cost). The Landauer cost of f : α → α at temperature parameter kT is:
-
-$$\text{Cost}(f, kT) = kT \cdot H(f)$$
-
-**Theorem 7.1**. Reversible (bijective) computations have zero Landauer cost.
-
-**Theorem 7.2**. Zero Landauer cost at positive temperature implies injectivity.
-
-These results formalize Landauer's principle: the minimum energy dissipation in a computation is proportional to the information it irreversibly erases.
-
-## 8. Algorithms and Computational Examples
-
-### 8.1 Computing Functorial Entropy
-
-```
-Algorithm ComputeEntropy(f : α → β):
-  N ← |α|
-  for each b ∈ β:
-    n_b ← |{a ∈ α : f(a) = b}|
-  H ← 0
-  for each b ∈ β:
-    if n_b > 0:
-      H ← H + (n_b / N) * log(n_b)
-  return H
-```
-
-Time complexity: O(|α| + |β|). Space complexity: O(|β|).
-
-### 8.2 Examples
-
-| Function | Domain | Codomain | H(f) |
-|----------|--------|----------|------|
-| Identity | Fin n | Fin n | 0 |
-| Constant | Fin n | Fin 1 | log(n) |
-| Mod 2 on Fin 6 | Fin 6 | ZMod 2 | log(3) |
-| Floor on {0,..,5} | Fin 6 | Fin 3 | log(2) |
-
-## 9. Discussion
-
-### 9.1 Relationship to Other Entropy Concepts
-
-Functorial entropy differs from Shannon entropy in a fundamental way: Shannon entropy measures the uncertainty of a random variable, while functorial entropy measures the information destroyed by a deterministic function. The Entropy–Shannon Bridge (Theorem 5.1) makes this precise: H(f) = log|α| − H_Shannon(q), where q is the fiber distribution.
-
-### 9.2 Connections to Algebraic Topology
-
-The fiber structure of a function is a partition of the domain, and partitions form a lattice. Functorial entropy assigns a real-valued "size" to each partition that respects the refinement order: finer partitions (from more injective functions) have lower entropy. This makes H a monotone function from the partition lattice to ℝ, connecting to the theory of valuation functions on lattices.
-
-## 10. Future Work
-
-1. **Composition superadditivity**: Prove or disprove Conjecture 6.1.
-2. **Morphism entropy**: Define entropy for individual morphisms in a category, not just the object map of a functor.
-3. **Infinite types**: Extend to measure-theoretic settings using conditional entropy.
-4. **Quantum functors**: Define entropy for functors between categories enriched over Hilbert spaces.
-5. **Entropy rate**: For endofunctors, define the asymptotic entropy rate as n → ∞ of the n-fold composition.
-
-## References
-
-[1] Shannon, C.E. (1948). "A Mathematical Theory of Communication." Bell System Technical Journal, 27(3), 379–423.
-
-[2] Baez, J.C., Fritz, T., & Leinster, T. (2011). "A characterization of entropy in terms of information loss." Entropy, 13(11), 1945–1957.
-
-[3] Leinster, T. (2021). *Entropy and Diversity: The Axiomatic Approach.* Cambridge University Press.
-
-[4] Landauer, R. (1961). "Irreversibility and Heat Generation in the Computing Process." IBM Journal of Research and Development, 5(3), 183–191.
-
-[5] Cover, T.M., & Thomas, J.A. (2006). *Elements of Information Theory* (2nd ed.). Wiley.
-
-## Appendix: Formal Verification
-
-All theorems in Sections 2–7 have been formally verified in Lean 4 using the Mathlib library. The formalization comprises approximately 500 lines of Lean code across three files:
-
-- `Core.lean`: Basic definitions and the zero characterization theorem
-- `Composition.lean`: Superadditivity, composition monotonicity, and the Shannon bridge
-- `CategoryEntropy.lean`: Categorical lifting and functor entropy
+Every functor casts an information-theoretic shadow. Defining $H(F)$ as the conditional entropy of a domain object given its image yields a computable, nonnegative invariant that vanishes exactly on faithful functors, has a clean closed form for uniform fibers, is maximized by constant functors, is bounded by the domain's total information, and satisfies a data-processing inequality under composition. Entropy is thus not merely a measure-theoretic notion but the information-theoretic shadow of functoriality itself.

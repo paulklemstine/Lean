@@ -1,425 +1,173 @@
-#!/usr/bin/env python3
 """
-Functorial Entropy: Demonstration and Computational Examples
+Categorification of Entropy: The Information Loss of a Functor
+=============================================================
 
-This script computes functorial entropy for various functions between
-finite sets and verifies the key theoretical results:
-1. H(f) = 0 iff f is injective
-2. H(g∘f) ≥ H(f) (composition monotonicity)
-3. H(f) = log|α| - H_Shannon(fiber distribution)
+Numerical demonstrations of the functorial-entropy theory.
+
+For a functor between finite categories, modelled by the map F : Ob(C) -> Ob(D)
+it induces on objects, the *functorial entropy* (information loss) is the
+conditional entropy of a uniformly random domain object given its image:
+
+    H(F) = sum_d (c_d / n) * log(c_d)
+
+where c_d = |F^{-1}(d)| is the fiber cardinality over d and n = |Ob(C)|.
+
+This script verifies, on concrete finite examples, every theorem of the paper:
+  * nonnegativity
+  * H(F) = 0  iff  F injective
+  * uniform-fiber formula  H(F) = log k = log(n/m)
+  * constant functor value  log n
+  * upper bound  H(F) <= log n
+  * data-processing inequality  H(f) <= H(g o f)
+
+All functions are self-contained and type-hinted. Base-2 logarithms report the
+loss in bits.
 """
+
+from __future__ import annotations
 
 import math
+import random
 from collections import Counter
-from itertools import product as cartesian_product
+from typing import Callable, Hashable, Sequence
 
 
-def fiber_card(f: dict, b) -> int:
-    """Compute |f⁻¹(b)| = number of elements mapping to b."""
-    return sum(1 for v in f.values() if v == b)
+# ---------------------------------------------------------------------------
+# Core invariant
+# ---------------------------------------------------------------------------
+
+def fiber_cardinalities(images: Sequence[Hashable]) -> dict[Hashable, int]:
+    """Tally |F^{-1}(d)| for each target object d, given the list of images
+    F(a) as `a` ranges over the (finite) domain."""
+    return dict(Counter(images))
 
 
-def functorial_entropy(f: dict) -> float:
+def functorial_entropy(images: Sequence[Hashable], base: float = 2.0) -> float:
+    """Functorial entropy H(F) = sum_d (c_d/n) log(c_d), in units set by `base`.
+
+    `images[i]` is the image of the i-th domain object under F.
     """
-    Compute H(f) = Σ_b (|f⁻¹(b)|/|α|) · log(|f⁻¹(b)|).
-    
-    Args:
-        f: dict mapping domain elements to codomain elements
-    Returns:
-        The functorial entropy H(f)
-    """
-    n = len(f)
+    n = len(images)
     if n == 0:
         return 0.0
-    
-    fiber_sizes = Counter(f.values())
-    entropy = 0.0
-    for b, size in fiber_sizes.items():
-        if size > 0:
-            entropy += (size / n) * math.log(size)
-    return entropy
+    total = 0.0
+    for c_d in fiber_cardinalities(images).values():
+        if c_d > 0:
+            total += (c_d / n) * math.log(c_d, base)
+    return total
 
 
-def shannon_entropy(probs: list[float]) -> float:
-    """Compute H_Shannon(p) = -Σ p_i · log(p_i)."""
-    return -sum(p * math.log(p) for p in probs if p > 0)
+def apply_map(domain: Sequence[Hashable], F: Callable[[Hashable], Hashable]) -> list[Hashable]:
+    """Compute the list of images F(a) for a in the domain."""
+    return [F(a) for a in domain]
 
 
-def compose(g: dict, f: dict) -> dict:
-    """Compute g ∘ f."""
-    return {a: g[f[a]] for a in f}
+# ---------------------------------------------------------------------------
+# Demonstrations
+# ---------------------------------------------------------------------------
 
+def demo_vanishing_criterion() -> None:
+    """H(F) = 0 exactly for injective functors."""
+    print("=" * 68)
+    print("Vanishing criterion:  H(F) = 0  iff  F is injective")
+    print("=" * 68)
 
-def print_separator():
-    print("=" * 60)
+    injective = ["a", "b", "c", "d"]          # 4 distinct images: injective
+    non_injective = ["x", "x", "y", "z"]      # two objects collapse to 'x'
 
-
-def demo_basic():
-    """Demonstrate basic entropy computations."""
-    print_separator()
-    print("BASIC ENTROPY COMPUTATIONS")
-    print_separator()
-    
-    # Identity function: should have H = 0
-    f_id = {0: 0, 1: 1, 2: 2, 3: 3}
-    h = functorial_entropy(f_id)
-    print(f"Identity on {{0,1,2,3}}: H = {h:.6f} (expected: 0)")
-    
-    # Constant function: should have H = log(n)
-    f_const = {0: 0, 1: 0, 2: 0, 3: 0}
-    h = functorial_entropy(f_const)
-    print(f"Constant on {{0,1,2,3}}: H = {h:.6f} (expected: log(4) = {math.log(4):.6f})")
-    
-    # Mod 2 on {0,..,5}: fibers of size 3, H = log(3)
-    f_mod2 = {i: i % 2 for i in range(6)}
-    h = functorial_entropy(f_mod2)
-    print(f"Mod 2 on {{0,..,5}}: H = {h:.6f} (expected: log(3) = {math.log(3):.6f})")
-    
-    # Floor division by 2: fibers of size 2, H = log(2)
-    f_floor = {i: i // 2 for i in range(6)}
-    h = functorial_entropy(f_floor)
-    print(f"Floor÷2 on {{0,..,5}}: H = {h:.6f} (expected: log(2) = {math.log(2):.6f})")
-    
-    # Non-uniform: f(0)=0, f(1)=f(2)=1
-    f_nonunif = {0: 0, 1: 1, 2: 1}
-    h = functorial_entropy(f_nonunif)
-    print(f"Non-uniform {{0→0, 1→1, 2→1}}: H = {h:.6f}")
+    print(f"  injective map images     {injective}")
+    print(f"    H = {functorial_entropy(injective):.4f} bits   (expected 0)")
+    print(f"  non-injective map images {non_injective}")
+    print(f"    H = {functorial_entropy(non_injective):.4f} bits   (> 0)")
     print()
 
 
-def demo_zero_characterization():
-    """Verify: H(f) = 0 iff f is injective."""
-    print_separator()
-    print("ZERO CHARACTERIZATION: H(f)=0 ↔ f injective")
-    print_separator()
-    
-    n = 4
+def demo_uniform_fiber_formula() -> None:
+    """H(F) = log k = log(n/m) when every fiber has size k."""
+    print("=" * 68)
+    print("Uniform-fiber formula:  H(F) = log k = log(n/m)")
+    print("=" * 68)
+    for k, m in [(2, 3), (4, 2), (5, 5)]:
+        # m targets, each receiving exactly k domain objects.
+        images = [d for d in range(m) for _ in range(k)]
+        n = k * m
+        H = functorial_entropy(images)
+        print(f"  n={n:2d}, m={m}, k={k}:  H = {H:.4f} bits, "
+              f"log2(k) = {math.log2(k):.4f}, log2(n/m) = {math.log2(n / m):.4f}")
+    print()
+
+
+def demo_constant_and_bound() -> None:
+    """Constant functor attains the maximum log n; general F is bounded by it."""
+    print("=" * 68)
+    print("Constant functor attains the maximum;  H(F) <= log n in general")
+    print("=" * 68)
+    n = 8
+    constant = ["*"] * n
+    print(f"  constant functor, n={n}:  H = {functorial_entropy(constant):.4f} bits, "
+          f"log2(n) = {math.log2(n):.4f}")
+
+    random.seed(0)
+    for trial in range(3):
+        images = [random.randrange(4) for _ in range(n)]
+        H = functorial_entropy(images)
+        print(f"  random functor #{trial+1}: images={images}  H={H:.4f} <= {math.log2(n):.4f}  "
+              f"{'OK' if H <= math.log2(n) + 1e-9 else 'FAIL'}")
+    print()
+
+
+def demo_data_processing() -> None:
+    """Data-processing inequality:  H(f) <= H(g o f)."""
+    print("=" * 68)
+    print("Data-processing inequality:  H(f) <= H(g o f)")
+    print("=" * 68)
+    random.seed(1)
+    n, size_b, size_c = 12, 5, 3
     domain = list(range(n))
-    codomain = list(range(n + 1))  # larger codomain
-    
-    injective_count = 0
-    non_injective_count = 0
-    
-    for values in cartesian_product(codomain, repeat=n):
-        f = dict(zip(domain, values))
-        h = functorial_entropy(f)
-        is_inj = len(set(values)) == n
-        
-        if is_inj:
-            assert abs(h) < 1e-10, f"Injective f has H={h} ≠ 0"
-            injective_count += 1
-        else:
-            assert h > 1e-10, f"Non-injective f has H={h} = 0"
-            non_injective_count += 1
-    
-    print(f"Checked all functions Fin({n}) → Fin({len(codomain)}):")
-    print(f"  Injective: {injective_count} (all have H=0 ✓)")
-    print(f"  Non-injective: {non_injective_count} (all have H>0 ✓)")
+    violations = 0
+    for trial in range(5):
+        f_table = {a: random.randrange(size_b) for a in domain}
+        g_table = {b: random.randrange(size_c) for b in range(size_b)}
+        f = lambda a: f_table[a]
+        gof = lambda a: g_table[f_table[a]]
+        Hf = functorial_entropy(apply_map(domain, f))
+        Hgf = functorial_entropy(apply_map(domain, gof))
+        ok = Hf <= Hgf + 1e-9
+        violations += (not ok)
+        print(f"  trial {trial+1}:  H(f) = {Hf:.4f}  <=  H(g o f) = {Hgf:.4f}   "
+              f"{'OK' if ok else 'VIOLATION'}")
+    print(f"  violations: {violations} / 5")
     print()
 
 
-def demo_composition_monotonicity():
-    """Verify: H(g∘f) ≥ H(f) for all f, g."""
-    print_separator()
-    print("COMPOSITION MONOTONICITY: H(g∘f) ≥ H(f)")
-    print_separator()
-    
-    sizes = [(3, 3, 2), (3, 2, 2), (4, 3, 2), (4, 2, 2)]
-    total_checked = 0
-    
-    for na, nb, nc in sizes:
-        violations = 0
-        for f_vals in cartesian_product(range(nb), repeat=na):
-            f = dict(zip(range(na), f_vals))
-            for g_vals in cartesian_product(range(nc), repeat=nb):
-                g = dict(zip(range(nb), g_vals))
-                gf = compose(g, f)
-                
-                h_f = functorial_entropy(f)
-                h_gf = functorial_entropy(gf)
-                
-                if h_gf < h_f - 1e-10:
-                    violations += 1
-                total_checked += 1
-        
-        status = "✓" if violations == 0 else f"✗ ({violations} violations)"
-        print(f"  Fin({na})→Fin({nb})→Fin({nc}): {status}")
-    
-    print(f"Total function pairs checked: {total_checked}")
+def demo_motivating_functors() -> None:
+    """Reproduce the conjectured values on finite models of the motivating
+    functors: inclusion (H=0), abelianization (H ~ log 2)."""
+    print("=" * 68)
+    print("Motivating functors on finite models")
+    print("=" * 68)
+
+    # Inclusion of finite groups: each object maps to itself -> injective.
+    inclusion_images = ["Z/2", "Z/3", "S_3", "Z/4", "V_4"]
+    print(f"  Inclusion FinGrp -> Grp: H = "
+          f"{functorial_entropy(inclusion_images):.4f} bits (expected 0)")
+
+    # Abelianization on a finite model: each abelian target receives exactly
+    # two non-isomorphic preimages (a 2-to-1 uniform functor) -> H = log 2.
+    #   G_i and (G_i x noncomm-companion) both abelianize to A_i.
+    abel_images = [d for d in range(4) for _ in range(2)]
+    print(f"  Abelianization (2-to-1 model): H = "
+          f"{functorial_entropy(abel_images):.4f} bits (expected log2(2) = 1)")
     print()
 
 
-def demo_surjective_composition():
-    """Verify conjecture: H(g) ≤ H(g∘f) when f is surjective."""
-    print_separator()
-    print("CONJECTURE: H(g) ≤ H(g∘f) when f surjective")
-    print_separator()
-    
-    sizes = [(3, 2, 2), (4, 2, 2), (4, 3, 2), (4, 3, 3), (5, 3, 2)]
-    total_checked = 0
-    
-    for na, nb, nc in sizes:
-        violations = 0
-        surj_count = 0
-        for f_vals in cartesian_product(range(nb), repeat=na):
-            f = dict(zip(range(na), f_vals))
-            # Check surjectivity
-            if len(set(f_vals)) < nb:
-                continue
-            surj_count += 1
-            
-            for g_vals in cartesian_product(range(nc), repeat=nb):
-                g = dict(zip(range(nb), g_vals))
-                gf = compose(g, f)
-                
-                h_g = functorial_entropy(g)
-                h_gf = functorial_entropy(gf)
-                
-                if h_gf < h_g - 1e-10:
-                    violations += 1
-                total_checked += 1
-        
-        status = "✓" if violations == 0 else f"✗ ({violations} violations)"
-        print(f"  Fin({na})→Fin({nb})→Fin({nc}) [{surj_count} surj.]: {status}")
-    
-    print(f"Total (surj f, g) pairs checked: {total_checked}")
-    print()
-
-
-def demo_shannon_bridge():
-    """Verify: H(f) = log|α| - H_Shannon(fiber dist)."""
-    print_separator()
-    print("ENTROPY-SHANNON BRIDGE: H(f) = log|α| - H_Shannon(q)")
-    print_separator()
-    
-    test_functions = [
-        ("Identity", {0: 0, 1: 1, 2: 2, 3: 3}),
-        ("Constant", {0: 0, 1: 0, 2: 0, 3: 0}),
-        ("Mod 2", {0: 0, 1: 1, 2: 0, 3: 1}),
-        ("Collapse", {0: 0, 1: 0, 2: 1, 3: 1}),
-        ("Asymmetric", {0: 0, 1: 1, 2: 1, 3: 1}),
-    ]
-    
-    for name, f in test_functions:
-        n = len(f)
-        h_f = functorial_entropy(f)
-        
-        # Compute fiber distribution
-        fiber_sizes = Counter(f.values())
-        all_outputs = set(f.values())
-        probs = [fiber_sizes.get(b, 0) / n for b in range(max(f.values()) + 1)]
-        probs = [p for p in probs if True]  # keep zeros
-        
-        h_shannon = shannon_entropy([p for p in probs if p > 0])
-        bridge = math.log(n) - h_shannon
-        
-        match = abs(h_f - bridge) < 1e-10
-        print(f"  {name:12s}: H={h_f:.6f}, log|α|-S={bridge:.6f} {'✓' if match else '✗'}")
-    
-    print()
-
-
-def demo_landauer():
-    """Demonstrate the Landauer cost computation."""
-    print_separator()
-    print("LANDAUER COST: Cost = kT · H(f)")
-    print_separator()
-    
-    kT = 1.0  # normalized
-    
-    functions = [
-        ("Reversible (permutation)", {0: 1, 1: 2, 2: 0}),
-        ("Erase 1 bit (mod 2)", {0: 0, 1: 1, 2: 0, 3: 1}),
-        ("Total erasure (constant)", {0: 0, 1: 0, 2: 0, 3: 0}),
-    ]
-    
-    for name, f in functions:
-        h = functorial_entropy(f)
-        cost = kT * h
-        print(f"  {name:35s}: H={h:.4f}, Cost={cost:.4f} kT")
-    
-    print()
-    print("At room temperature (T=300K):")
-    kB = 1.380649e-23  # J/K
-    T = 300  # K
-    kT_real = kB * T
-    
-    f_erase = {0: 0, 1: 0}  # erase 1 bit
-    h = functorial_entropy(f_erase)
-    cost = kT_real * h
-    print(f"  Erasing 1 bit: {cost:.4e} J = {cost*1e21:.2f} zJ")
-    print(f"  (Landauer limit: kT·ln(2) = {kT_real * math.log(2):.4e} J)")
-    print()
-
-
-if __name__ == "__main__":
-    print()
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║    FUNCTORIAL ENTROPY: Measuring Information Loss       ║")
-    print("╚══════════════════════════════════════════════════════════╝")
-    print()
-    
-    demo_basic()
-    demo_zero_characterization()
-    demo_composition_monotonicity()
-    demo_surjective_composition()
-    demo_shannon_bridge()
-    demo_landauer()
-    
-    print_separator()
-    print("All demonstrations completed successfully!")
-    print_separator()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Composition monotonicity of functorial entropy.
-
-Shows that H(g∘f) ≥ H(f) for all function pairs, with scatter plots
-colored by the entropy gain.
-"""
-
-import math
-from collections import Counter
-from itertools import product as cartesian_product
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-def functorial_entropy(f_values: tuple, n: int) -> float:
-    if n == 0:
-        return 0.0
-    sizes = Counter(f_values)
-    return sum((s / n) * math.log(s) for s in sizes.values() if s > 0)
-
-
-def main():
-    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
-    fig.suptitle('Composition Monotonicity: H(g∘f) ≥ H(f)\n'
-                 'Every point lies on or above the diagonal',
-                 fontsize=14, fontweight='bold')
-    
-    configs = [
-        (3, 3, 2, 'Fin(3)→Fin(3)→Fin(2)'),
-        (4, 3, 2, 'Fin(4)→Fin(3)→Fin(2)'),
-        (4, 4, 3, 'Fin(4)→Fin(4)→Fin(3)'),
-    ]
-    
-    for ax, (na, nb, nc, title) in zip(axes, configs):
-        h_f_list = []
-        h_gf_list = []
-        
-        for f_vals in cartesian_product(range(nb), repeat=na):
-            h_f = functorial_entropy(f_vals, na)
-            for g_vals in cartesian_product(range(nc), repeat=nb):
-                gf_vals = tuple(g_vals[f_vals[i]] for i in range(na))
-                h_gf = functorial_entropy(gf_vals, na)
-                h_f_list.append(h_f)
-                h_gf_list.append(h_gf)
-        
-        h_f_arr = np.array(h_f_list)
-        h_gf_arr = np.array(h_gf_list)
-        gain = h_gf_arr - h_f_arr
-        
-        sc = ax.scatter(h_f_arr, h_gf_arr, c=gain, cmap='viridis',
-                       s=1, alpha=0.3, rasterized=True)
-        
-        max_val = max(h_f_arr.max(), h_gf_arr.max()) * 1.1
-        ax.plot([0, max_val], [0, max_val], 'r--', linewidth=1, label='H(g∘f) = H(f)')
-        
-        ax.set_xlabel('H(f)')
-        ax.set_ylabel('H(g∘f)')
-        ax.set_title(title)
-        ax.set_aspect('equal')
-        ax.legend(fontsize=8)
-        
-        plt.colorbar(sc, ax=ax, label='Entropy gain H(g∘f) - H(f)')
-        
-        # Verify monotonicity
-        violations = np.sum(gain < -1e-10)
-        ax.text(0.02, 0.98, f'Violations: {violations}',
-                transform=ax.transAxes, verticalalignment='top',
-                fontsize=9, color='green' if violations == 0 else 'red')
-    
-    plt.tight_layout()
-    plt.savefig('composition_monotonicity.png', dpi=150, bbox_inches='tight')
-    print("Saved composition_monotonicity.png")
-
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Entropy landscape of all functions Fin(n) → Fin(m).
-
-Creates a histogram showing the distribution of functorial entropy values
-across all possible functions between small finite sets.
-"""
-
-import math
-from collections import Counter
-from itertools import product as cartesian_product
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-def functorial_entropy(f_values: tuple, n: int) -> float:
-    """Compute H(f) from a tuple of output values."""
-    if n == 0:
-        return 0.0
-    sizes = Counter(f_values)
-    return sum((s / n) * math.log(s) for s in sizes.values() if s > 0)
-
-
-def compute_all_entropies(n: int, m: int) -> list[float]:
-    """Compute H(f) for all functions f : Fin(n) → Fin(m)."""
-    entropies = []
-    for vals in cartesian_product(range(m), repeat=n):
-        entropies.append(functorial_entropy(vals, n))
-    return entropies
-
-
-def main():
-    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
-    fig.suptitle('Functorial Entropy Landscape\nDistribution of H(f) across all functions f : Fin(n) → Fin(m)',
-                 fontsize=14, fontweight='bold')
-    
-    configs = [(4, 4), (4, 3), (4, 2), (5, 3)]
-    
-    for ax, (n, m) in zip(axes.flat, configs):
-        entropies = compute_all_entropies(n, m)
-        
-        # Count injective (H=0) and non-injective
-        n_injective = sum(1 for h in entropies if abs(h) < 1e-10)
-        n_total = len(entropies)
-        
-        ax.hist(entropies, bins=50, color='steelblue', edgecolor='white',
-                alpha=0.8, density=True)
-        
-        # Mark log(n) upper bound
-        ax.axvline(x=math.log(n), color='red', linestyle='--', linewidth=1.5,
-                   label=f'log({n}) = {math.log(n):.2f}')
-        
-        # Mark H=0
-        if n_injective > 0:
-            ax.axvline(x=0, color='green', linestyle=':', linewidth=1.5,
-                       label=f'H=0 ({n_injective}/{n_total} injective)')
-        
-        ax.set_xlabel('Functorial Entropy H(f)')
-        ax.set_ylabel('Density')
-        ax.set_title(f'Fin({n}) → Fin({m})  ({n_total} functions)')
-        ax.legend(fontsize=8)
-        ax.set_xlim(-0.1, math.log(n) + 0.3)
-    
-    plt.tight_layout()
-    plt.savefig('entropy_landscape.png', dpi=150, bbox_inches='tight')
-    print("Saved entropy_landscape.png")
+def main() -> None:
+    demo_vanishing_criterion()
+    demo_uniform_fiber_formula()
+    demo_constant_and_bound()
+    demo_data_processing()
+    demo_motivating_functors()
+    print("All demonstrations complete.")
 
 
 if __name__ == "__main__":

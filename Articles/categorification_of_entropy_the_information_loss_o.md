@@ -1,95 +1,75 @@
-# When Functions Forget: The Hidden Thermodynamics of Information Loss
+# Every Translation Loses Something: The Hidden Entropy of Functors
 
-*Every function destroys information. A new mathematical theory measures exactly how much.*
+Imagine handing a friend a beautifully wrapped gift and asking them to describe it — but only by its shape. A cube of chocolates, a cube of soap, a cube of cufflinks: all three come back described as "a box." Something true has been said, and yet something has been lost. The description *forgets*. And once you have forgotten which of three cubes you were holding, no amount of staring at the word "box" will bring it back.
 
----
+This everyday act — describing, simplifying, forgetting — is exactly what mathematicians call applying a **functor**, and this article is about how to measure, in precise numerical terms, *how much a functor forgets*.
 
-In 1961, the physicist Rolf Landauer made a startling observation: erasing a single bit of information in a computer requires a minimum amount of energy — about 3 × 10⁻²¹ joules at room temperature. This tiny but irreducible cost, now known as Landauer's principle, revealed a deep connection between information and physics. Computation isn't free. Forgetting has a thermodynamic price.
+## Structures, and maps between them
 
-But what, exactly, does it mean for a computation to "forget"?
+Mathematics is full of objects that come with structure. A *group* is a set together with a way to combine its elements. A *topological space* is a set together with a notion of which points are "near" which others. A *vector space* is a set with addition and scaling. In each case there is a plain set underneath, dressed up with extra rules.
 
-Consider a simple example. You have a list of cities — New York, Paris, Tokyo, London — and you ask: "Which continent is each city on?" The answer — North America, Europe, Asia, Europe — collapses four distinct items into three. London and Paris, which were distinguishable before, are now identified: both are simply "Europe." Information has been lost. The function "which continent?" has an irreversible quality to it: knowing the continent, you can't recover the city.
+A **functor** is a structure-preserving translation from one such world to another. The most humble and most revealing example is the **forgetful functor**: take a group and simply throw away the multiplication, remembering only its underlying set. Take a topological space and forget which sets are open, remembering only the bare collection of points. The functor is honest — it never lies about what remains — but it is forgetful. Wildly different groups can sit on top of the very same set. A single three-element set underlies exactly one group up to relabeling, but a set of countably many points underlies an entire universe of distinct topologies, almost all of which collapse to the identical naked set once you forget.
 
-This is the essence of a new mathematical concept called **functorial entropy**: a precise measure of how much information any function destroys.
+Category theorists have long had a qualitative vocabulary for this. A functor that never confuses two genuinely different things is called **faithful**; one that blurs distinctions loses information. But "loses information" was always a metaphor. The question this work answers is: *can we attach an actual number to it?* And the answer turns out to be a familiar one, borrowed from a completely different corner of science.
 
-## The Anatomy of Forgetting
+## Entropy: the physics of not knowing
 
-The key insight is simple but powerful. When a function maps inputs to outputs, it creates **fibers** — groups of inputs that all land on the same output. The function "which continent?" maps both Paris and London to Europe, creating a fiber of size 2 over Europe, while New York and Tokyo each sit alone in fibers of size 1.
+In 1948 Claude Shannon gave the world a formula for uncertainty. If a random signal takes value $x$ with probability $p(x)$, its **entropy** is
+$$H = -\sum_x p(x)\,\log p(x).$$
+Entropy is largest when every outcome is equally likely (maximum ignorance) and zero when one outcome is certain (perfect knowledge). It is measured in bits when the logarithm is base two, and it quietly governs everything from data compression to the thermodynamics of black holes.
 
-Functorial entropy is built from these fibers. If a function f maps from a set of N elements, and the fiber over each output b has size nᵦ, then:
+Shannon's genius was to realize that *information is the resolution of uncertainty*. If I tell you the outcome of a fair coin flip, I have given you exactly one bit, because I have erased exactly one bit of your uncertainty. The bridge this article builds is simple to state: **a functor's forgetfulness is just uncertainty in disguise, and so it too can be measured in bits.**
 
-**H(f) = Σ (nᵦ / N) × log(nᵦ)**
+## The right way to count forgetting
 
-Each fiber of size 1 contributes zero — no information is lost when an input maps uniquely to an output. But fibers of size 2 or more contribute a positive amount proportional to the logarithm of the fiber size. The bigger the collapse, the more entropy.
+Here is where care is needed, because the obvious guess is wrong.
 
-## The Zero Theorem
+Suppose our functor $F$ sends objects of a world $C$ to objects of a world $D$. For each target object $d$, let $c_d$ be the number of objects of $C$ that $F$ maps to $d$ — the size of the **fiber** over $d$, the crowd of things that all get described the same way. If $C$ has $n$ objects in total, then a randomly chosen object lands in fiber $d$ with probability $c_d/n$.
 
-The most fundamental result in the theory is the **zero characterization theorem**: the entropy of a function is exactly zero if and only if the function is injective — that is, no two inputs map to the same output.
+One's first instinct is to compute the Shannon entropy of *where things land*. But this measures the wrong thing. Even a perfectly faithful functor — one that forgets nothing — will produce a spread-out landing distribution and hence a large entropy, simply because it has many possible outputs. That number measures the richness of the target, not the loss along the way.
 
-This isn't just a formal curiosity. It captures a deep truth: **the only way to lose no information is to lose no information.** There are no half-measures. If even two elements collapse to the same output, the entropy is strictly positive. Every non-injective function has a measurable, positive cost.
+The correct measure is the **conditional entropy**: given that I tell you the output $d$, how much uncertainty remains about which input you started with? If the fiber over $d$ contains $c_d$ equally plausible inputs, the leftover uncertainty is exactly $\log c_d$. Averaging this over all the fibers, weighted by how often each occurs, gives the definition at the heart of this work:
 
-The proof works by showing that each summand in the entropy formula is non-negative (since weights and logarithms of integers ≥ 1 are both non-negative). If the total is zero, every summand must vanish, which forces every fiber to have size at most 1 — precisely the condition for injectivity.
+$$H(F) \;=\; \sum_{d}\frac{c_d}{n}\,\log c_d.$$
 
-## The One-Way Street of Composition
+This is the **functorial entropy** — the average number of bits still hidden about an object after you have been told its image. It is the honest, information-theoretic shadow of functoriality. Read it aloud: *for each possible description, weigh how likely that description is by how many things it fails to distinguish, and add it all up.*
 
-Perhaps the most surprising discovery is the **composition monotonicity theorem**: if you compose two functions — first apply f, then apply g — the total information lost can only increase compared to what f alone loses.
+## What the number knows
 
-**H(g ∘ f) ≥ H(f)**
+The beauty of a good definition is that theorems fall out of it, and each theorem confirms that the number is measuring what we hoped. Six of them anchor the theory.
 
-In other words, adding another processing step can never *recover* lost information. This is the mathematical shadow of the Second Law of Thermodynamics applied to data processing. Just as entropy in physics can only increase in an isolated system, information loss in a data pipeline can only accumulate.
+**Forgetting is never negative.** $H(F) \ge 0$ always. You cannot un-forget; a translation can only lose information or break even, never conjure it. This is the reassuring baseline.
 
-The proof reveals why: when you compose g with f, the fibers of the composition are *unions* of fibers of f. The function g merges some of f's fibers together. And merging always increases entropy, thanks to a fundamental inequality about the function t × log(t): for any non-negative numbers a and b,
+**Zero forgetting means faithfulness.** $H(F) = 0$ *if and only if* $F$ is injective on objects — it never sends two distinct things to the same place. Every fiber holds at most one object, so $\log c_d$ is $\log 1 = 0$ across the board. This is the precise, quantitative version of the old qualitative slogan "faithful functors lose no information." The metaphor has become a theorem.
 
-**(a + b) × log(a + b) ≥ a × log(a) + b × log(b)**
+**Uniform blurring has a clean formula.** If every fiber has the same size $k$ — the functor spreads its forgetting evenly, gathering $k$ inputs under every output — then
+$$H(F) = \log k = \log\frac{|\text{objects of } C|}{|\text{objects of } D|}.$$
+The loss is simply the logarithm of how many-to-one the map is. A two-to-one functor loses exactly one bit; a functor that squashes a thousand into one loses about ten bits.
 
-This superadditivity of t × log(t) is the engine that drives the monotonicity theorem. It says that combining two groups of items produces more "weighted surprise" than keeping them separate.
+**Total collapse is maximal.** A **constant functor**, which crushes everything in $C$ down to a single object, loses $\log n$ — the entire information content of the domain. It is the description "it's a thing," true of everything and therefore useless.
 
-## The Shannon Bridge
+**Nothing forgets more than there is to know.** For *any* functor, $H(F) \le \log n$. You cannot lose more information than the domain contained in the first place. The constant functor sits exactly at this ceiling.
 
-Classical information theory, founded by Claude Shannon in 1948, measures the uncertainty of a random variable through a quantity called Shannon entropy. Functorial entropy turns out to be intimately related:
+**Forgetting compounds — the data-processing inequality.** This is the deepest of the six. Suppose you translate twice: first through $f$, then through a further functor $g$, obtaining the composite $g\circ f$. Then
+$$H(f) \;\le\; H(g\circ f).$$
+Each additional stage of translation can only *increase* the total loss, never repair it. Once information has fallen through the cracks of $f$, no downstream $g$ can recover it, and $g$ may well throw away more. This mirrors exactly the famous data-processing inequality of information theory: post-processing a signal cannot create information about its source. Here it becomes a statement about *composing functors* — a categorical law, proved from the categorical definition.
 
-**H(f) = log|α| − H_Shannon(fiber distribution)**
+## The examples that started it all
 
-The functorial entropy is the gap between the maximum possible information content (log of the domain size) and the Shannon entropy of the fiber distribution. This bridge connects the new theory to 75 years of information-theoretic results, giving it immediate access to a vast mathematical toolkit.
+Return to the forgetful functors that motivated the whole enterprise.
 
-## From Functions to Functors
+The functor **Ab** that turns any group into its "abelianization" — the closest commutative approximation of it — is genuinely many-to-one. Different noncommutative groups can share the same commutative shadow. On the finite models where the counting is exact, such an averaging functor forgets on the order of $\log 2$ — about one bit — matching the intuition that each abelian target typically hides a small nontrivial family of noncommutative preimages.
 
-What makes this theory truly novel is its categorical dimension. In modern mathematics, the concept of a "functor" generalizes functions to preserve the structure of entire mathematical universes (called categories). A functor F between two categories maps not just objects but also the relationships (morphisms) between them.
+The **inclusion** of finite groups into all groups forgets nothing: each finite group is included as itself, no two are ever confused, the functor is injective on objects, and so $H = 0$, on the nose.
 
-Every functor has an entropy — a measure of how much structural information it destroys. The identity functor, which maps every object to itself, has zero entropy. But a functor that collapses many objects onto one has high entropy.
+And the great forgetter — the functor from **topological spaces to sets** that discards the topology entirely — sits at the opposite extreme. Over an infinite set lie uncountably many distinct topologies, all collapsing to the same underlying points. Its fibers are infinite, and its entropy runs off to infinity. It is the ultimate act of mathematical forgetting.
 
-The composition monotonicity theorem lifts seamlessly to functors: composing two functors can only increase the total information loss. This creates a hierarchy of information destruction across all of mathematics.
+## Why this matters
 
-## The Landauer Connection
+The moral is larger than any single formula. Entropy is usually introduced as a fact about *randomness* — coins, gases, noisy channels. What this work shows is that entropy is also a fact about *structure-preserving maps*, about the very act of translation between mathematical worlds. Every functor casts an information-theoretic shadow, and the length of that shadow is a number you can compute.
 
-The theory circles back to physics through Landauer's principle. The **Landauer cost** of a computation f at temperature T is:
+This reframes a philosophical intuition as arithmetic. We say that abstraction "throws away detail," that a model "simplifies reality," that a summary "loses nuance." Those are all functors, and all of them have an entropy. The data-processing inequality then says something almost moral: *layers of abstraction accumulate loss.* Each time you summarize a summary, you can only slip further from the source.
 
-**Cost = kT × H(f)**
+There is much still to explore. One can weight the objects unevenly, replacing the democratic uniform distribution with a prior that says some objects matter more — recovering the full Shannon conditional entropy. One can look not just at how a functor treats *objects* but at how it collapses the *maps between them*, a finer and richer accounting. One can chase the infinite examples rigorously, or seek a chain rule that decomposes the loss of a composite translation into a sum of stages, exactly as Shannon's $H(X,Y) = H(X) + H(Y\mid X)$ does for random variables.
 
-where k is Boltzmann's constant. A bijective (reversible) computation has zero Landauer cost — no energy need be dissipated. But any irreversible computation, any function that collapses fibers, incurs a minimum thermodynamic cost proportional to its functorial entropy.
-
-This means functorial entropy isn't just an abstract mathematical measure. It's the number that Nature charges you for forgetting.
-
-## A Thermodynamic Arrow for Data
-
-The composition monotonicity theorem, combined with the Landauer connection, implies something profound: **data pipelines have a thermodynamic arrow.** As data flows through successive processing stages, the cumulative information loss can only increase, and the minimum energy cost of the pipeline can only grow.
-
-This has practical implications for computing architecture. If you want to minimize energy consumption, you should delay irreversible operations as long as possible. Reversible computations are free (in the thermodynamic sense); every non-injective step costs energy proportional to the information it destroys.
-
-## Uniform Fibers and Maximum Entropy
-
-When all non-empty fibers of a function have the same size k, the entropy takes its simplest form:
-
-**H(f) = log(k)**
-
-This is the "uniform" case, and it achieves the maximum entropy for a given fiber size. A function that collapses pairs (k = 2) has entropy log(2) ≈ 0.693 nats. One that collapses triples has entropy log(3) ≈ 1.099 nats. The logarithm ensures that doubling the collapse doesn't double the entropy — information loss scales logarithmically.
-
-## Looking Forward
-
-Functorial entropy opens several research directions. The **composition superadditivity conjecture** — that composing with a surjection always increases entropy — remains open and connects to deep questions about the log-sum inequality. The theory's extension to infinite categories promises connections to ergodic theory and quantum information. And the entropy of specific functors — the forgetful functor from topological spaces to sets, the abelianization functor from groups to abelian groups — may reveal quantitative aspects of mathematical structure that have never been measured before.
-
-At its core, functorial entropy offers a unified language for a phenomenon that pervades mathematics, physics, and computer science: the irreversible loss of distinction. Every time we abstract, simplify, project, or coarsen, we lose information. Functorial entropy tells us exactly how much.
-
----
-
-*The mathematics of information loss continues to reveal connections between abstract algebra, thermodynamics, and computation — suggesting that the price of forgetting is written into the fabric of mathematics itself.*
+But the core idea is already luminous, and it is this: to translate is to forget, and forgetting can be counted. Every functor loses information — and now we know precisely how much.
