@@ -1,478 +1,406 @@
-#!/usr/bin/env python3
 """
-Transfinite Game Values: Demonstrations and Numerical Examples
+Transfinite Game Values in Infinite Chess
+=========================================
 
-This script demonstrates the key concepts from the formalization of
-transfinite game values in infinite chess.
+A self-contained numerical/symbolic demonstration of the ordinal game-value
+hierarchy for infinite chess.
+
+We model winning game trees with three node types:
+
+    * ``mate``      -- checkmate delivered (value 0),
+    * ``step g``    -- a WINNER (White) node with a single forced continuation g
+                       (value = value(g) + 1),
+    * ``bsup f``    -- a LOSER (Black) node offering a countable family of
+                       continuations (value = sup_n (value(f(n)) + 1)).
+
+To compute values exactly we represent ordinals below omega^omega in Cantor
+normal form (CNF) as strictly-descending lists of (exponent, coefficient) terms:
+
+    omega^{e_1} * c_1 + omega^{e_2} * c_2 + ...   with e_1 > e_2 > ... >= 0.
+
+For example:
+    0            -> []
+    1            -> [(0, 1)]
+    omega        -> [(1, 1)]
+    omega^2 * 3 + omega * 5 + 7 -> [(2, 3), (1, 5), (0, 7)]
+
+Suprema of the monotone families that arise here are limits: the leading
+Cantor term grows, so the supremum of ``omega^n * k + 1`` over k is ``omega^{n+1}``
+and the supremum of ``omega^n + 1`` over n is ``omega^omega`` (written here as the
+formal top element).
+
+This script builds the positions of value omega, omega^n, and omega^omega, and
+verifies their values against the closed forms, plus the strict hierarchy.
 """
+
+from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Optional
+from typing import Callable, List, Tuple, Union
 
 
-# --- Ordinal Representation (Cantor Normal Form) ---
+# --------------------------------------------------------------------------- #
+# Ordinals below omega^omega in Cantor normal form, plus a formal top omega^omega
+# --------------------------------------------------------------------------- #
+
+# A CNF ordinal is a list of (exponent, coefficient) pairs, exponents strictly
+# decreasing, coefficients positive integers.
+CNF = List[Tuple[int, int]]
+
 
 @dataclass(frozen=True)
 class Ordinal:
-    """Ordinal in Cantor Normal Form: sum of omega^e_i * c_i terms.
-    
-    Represents ordinals below epsilon_0.
-    Terms are stored in decreasing order of exponents.
-    """
-    terms: tuple  # tuple of (exponent: Ordinal, coefficient: int)
-    
+    """An ordinal < omega^omega (finite CNF) or the formal top omega^omega."""
+    cnf: Tuple[Tuple[int, int], ...]
+    is_omega_omega: bool = False
+
+    # ---- constructors -------------------------------------------------- #
     @staticmethod
-    def zero() -> 'Ordinal':
-        return Ordinal(terms=())
-    
+    def zero() -> "Ordinal":
+        return Ordinal(cnf=())
+
     @staticmethod
-    def finite(n: int) -> 'Ordinal':
-        if n == 0:
-            return Ordinal.zero()
-        return Ordinal(terms=((Ordinal.zero(), n),))
-    
+    def nat(n: int) -> "Ordinal":
+        return Ordinal(cnf=() if n == 0 else ((0, n),))
+
     @staticmethod
-    def omega() -> 'Ordinal':
-        return Ordinal(terms=((Ordinal.finite(1), 1),))
-    
+    def omega_pow(e: int) -> "Ordinal":
+        """omega ** e for a natural number e."""
+        return Ordinal(cnf=((e, 1),))
+
     @staticmethod
-    def omega_pow(e: 'Ordinal') -> 'Ordinal':
-        return Ordinal(terms=((e, 1),))
-    
-    def is_zero(self) -> bool:
-        return len(self.terms) == 0
-    
-    def is_finite(self) -> bool:
-        return len(self.terms) <= 1 and (
-            len(self.terms) == 0 or self.terms[0][0].is_zero()
-        )
-    
-    def to_nat(self) -> Optional[int]:
-        if self.is_zero():
-            return 0
-        if self.is_finite():
-            return self.terms[0][1]
-        return None
-    
+    def omega_omega() -> "Ordinal":
+        return Ordinal(cnf=(), is_omega_omega=True)
+
+    # ---- display ------------------------------------------------------- #
     def __str__(self) -> str:
-        if self.is_zero():
+        if self.is_omega_omega:
+            return "omega^omega"
+        if not self.cnf:
             return "0"
-        parts = []
-        for exp, coeff in self.terms:
-            if exp.is_zero():
-                parts.append(str(coeff))
-            elif exp == Ordinal.finite(1):
-                if coeff == 1:
-                    parts.append("ω")
-                else:
-                    parts.append(f"ω·{coeff}")
+        parts: List[str] = []
+        for e, c in self.cnf:
+            if e == 0:
+                parts.append(str(c))
+            elif e == 1:
+                term = "omega"
+                parts.append(term if c == 1 else f"omega*{c}")
             else:
-                exp_str = str(exp)
-                if coeff == 1:
-                    parts.append(f"ω^({exp_str})")
-                else:
-                    parts.append(f"ω^({exp_str})·{coeff}")
+                term = f"omega^{e}"
+                parts.append(term if c == 1 else f"omega^{e}*{c}")
         return " + ".join(parts)
-    
-    def __lt__(self, other: 'Ordinal') -> bool:
-        """Lexicographic comparison on CNF terms."""
-        for i in range(max(len(self.terms), len(other.terms))):
-            if i >= len(self.terms):
-                return True
-            if i >= len(other.terms):
-                return False
-            e1, c1 = self.terms[i]
-            e2, c2 = other.terms[i]
-            if e1 < e2:
-                return True
-            if e2 < e1:
-                return False
-            if c1 < c2:
-                return True
-            if c2 < c1:
-                return False
-        return False
+
+    # ---- comparison ---------------------------------------------------- #
+    def _key(self) -> Tuple[int, Tuple[Tuple[int, int], ...]]:
+        # omega^omega dominates everything below it.
+        return (1, ()) if self.is_omega_omega else (0, self.cnf)
+
+    def __lt__(self, other: "Ordinal") -> bool:
+        if self.is_omega_omega or other.is_omega_omega:
+            return (not self.is_omega_omega) and other.is_omega_omega
+        # Lexicographic on (exponent, coefficient) with padding.
+        a, b = list(self.cnf), list(other.cnf)
+        for (ea, ca), (eb, cb) in zip(a, b):
+            if ea != eb:
+                return ea < eb
+            if ca != cb:
+                return ca < cb
+        return len(a) < len(b)
+
+    def __eq__(self, other: object) -> bool:  # type: ignore[override]
+        return isinstance(other, Ordinal) and self._key() == other._key()
 
 
-# --- Game Tree Representation ---
+def ord_add(a: Ordinal, b: Ordinal) -> Ordinal:
+    """Ordinal addition a + b (order matters!). Below omega^omega only."""
+    if a.is_omega_omega or b.is_omega_omega:
+        return Ordinal.omega_omega()
+    if not b.cnf:
+        return a
+    if not a.cnf:
+        return b
+    lead_b = b.cnf[0][0]
+    # Every term of a with exponent < lead_b is absorbed (left summand rule).
+    kept = [(e, c) for (e, c) in a.cnf if e > lead_b]
+    # Terms of a with exponent == lead_b merge with b's leading term.
+    same = [c for (e, c) in a.cnf if e == lead_b]
+    result: CNF = list(kept)
+    if same:
+        e = lead_b
+        merged_coeff = same[0] + b.cnf[0][1]
+        result.append((e, merged_coeff))
+        result.extend(b.cnf[1:])
+    else:
+        result.extend(b.cnf)
+    return Ordinal(cnf=tuple(result))
+
+
+def ord_succ(a: Ordinal) -> Ordinal:
+    """a + 1."""
+    return ord_add(a, Ordinal.nat(1))
+
+
+def _coeff_of(a: Ordinal, e: int) -> int:
+    """Coefficient of omega^e in the CNF of ``a`` (0 if absent)."""
+    for (ee, cc) in a.cnf:
+        if ee == e:
+            return cc
+    return 0
+
+
+def _below(a: Ordinal, e: int) -> Ordinal:
+    """The part of ``a`` strictly below omega^e."""
+    return Ordinal(cnf=tuple((ee, cc) for (ee, cc) in a.cnf if ee < e))
+
+
+def ord_sup(values: List[Ordinal]) -> Ordinal:
+    """Exact supremum (limit) of a monotone increasing family of ordinals,
+    inferred from finitely many samples.
+
+    Algorithm (recursion on the leading exponent):
+      * if the leading exponent grows across the tail -> omega^omega;
+      * else, at the stable leading exponent e, if the coefficient of omega^e
+        grows unboundedly -> omega^(e+1);
+      * else the leading term omega^e * c is fixed: peel it off and recurse on
+        the strictly-lower remainder.
+    """
+    if not values:
+        return Ordinal.zero()
+    if any(v.is_omega_omega for v in values):
+        return Ordinal.omega_omega()
+    # Deduplicate consecutive repeats while preserving order.
+    seq: List[Ordinal] = []
+    for v in values:
+        if not seq or seq[-1] != v:
+            seq.append(v)
+    if len(seq) == 1:
+        return seq[0]  # eventually constant
+    a, b = seq[-2], seq[-1]  # last two distinct terms reveal the growth mode
+    ea = a.cnf[0][0] if a.cnf else -1
+    eb = b.cnf[0][0] if b.cnf else -1
+    if eb > ea:
+        return Ordinal.omega_omega()
+    e = eb
+    if _coeff_of(b, e) > _coeff_of(a, e):
+        return Ordinal.omega_pow(e + 1)
+    c = _coeff_of(b, e)
+    head = Ordinal(cnf=((e, c),))
+    return ord_add(head, ord_sup([_below(v, e) for v in seq]))
+
+
+# --------------------------------------------------------------------------- #
+# Game trees
+# --------------------------------------------------------------------------- #
+
+# Every constructed game is pinned in this registry so its ``id`` stays stable
+# for the duration of a run; this makes the identity-keyed value memo sound
+# (otherwise transient nodes could be garbage-collected and their ids reused).
+_REGISTRY: List[object] = []
+
 
 @dataclass
-class GameNode:
-    """A node in a well-founded game tree."""
-    name: str
-    children: list  # list of GameNode
-    value: Optional[Ordinal] = None
+class Mate:
+    def __post_init__(self) -> None:
+        _REGISTRY.append(self)
 
 
-def compute_game_value(node: GameNode) -> Ordinal:
-    """Compute the game value of a node by recursion.
-    
-    v(node) = sup { v(child) + 1 : child in children }
-    For finite games, this gives a natural number.
+@dataclass
+class Step:
+    child: "Game"
+
+    def __post_init__(self) -> None:
+        _REGISTRY.append(self)
+
+
+@dataclass
+class Bsup:
+    # A countable family; we carry an explicit generator and a truncation bound
+    # sufficient to detect the limit for the monotone families we build.
+    family: Callable[[int], "Game"]
+    bound: int
+
+    def __post_init__(self) -> None:
+        _REGISTRY.append(self)
+
+
+@dataclass
+class Graft:
+    """Lazy sequential composition: play ``a`` then ``b``. Its value is computed
+    via the additivity theorem value(graft a b) = value(b) + value(a), which is
+    verified structurally against ``graft_materialize`` on small trees below."""
+    a: "Game"
+    b: "Game"
+
+    def __post_init__(self) -> None:
+        _REGISTRY.append(self)
+
+
+Game = Union[Mate, Step, Bsup, Graft]
+
+
+def value(g: Game) -> Ordinal:
+    """Ordinal game value of a game tree (exact for the constructions here).
+
+    Uses a per-call memo keyed by object identity, so shared subtrees (e.g. the
+    repeated copies inside an iterated graft) are evaluated only once.
     """
-    if not node.children:
-        node.value = Ordinal.zero()
-        return node.value
-    
-    max_child_val = -1
-    for child in node.children:
-        child_val = compute_game_value(child)
-        n = child_val.to_nat()
-        if n is not None:
-            max_child_val = max(max_child_val, n)
-    
-    node.value = Ordinal.finite(max_child_val + 1)
-    return node.value
+    return _value(g, {})
 
 
-# --- Demo 1: Chain Game ---
+def _value(g: Game, memo: dict) -> Ordinal:
+    key = id(g)
+    cached = memo.get(key)
+    if cached is not None:
+        return cached
+    if isinstance(g, Mate):
+        res: Ordinal = Ordinal.zero()
+    elif isinstance(g, Step):
+        res = ord_succ(_value(g.child, memo))
+    elif isinstance(g, Graft):
+        # Additivity under sequential composition (outer game on the right).
+        res = ord_add(_value(g.b, memo), _value(g.a, memo))
+    elif isinstance(g, Bsup):
+        vals = [ord_succ(_value(g.family(n), memo)) for n in range(g.bound)]
+        # The families we build are monotone; ord_sup returns the exact limit.
+        res = ord_sup(vals)
+    else:
+        raise TypeError(f"unknown game node: {g!r}")
+    memo[key] = res
+    return res
 
-def demo_chain_game():
-    """Demonstrate game values for the chain game."""
-    print("=" * 60)
-    print("DEMO 1: Chain Game (Finite Values)")
-    print("=" * 60)
-    print()
-    print("Chain game C_n: positions {0, 1, ..., n}")
-    print("Move: k → k-1 (for k > 0)")
-    print("Position 0 is terminal (checkmate)")
-    print()
-    
+
+# --------------------------------------------------------------------------- #
+# Constructions
+# --------------------------------------------------------------------------- #
+
+def graft(a: Game, b: Game) -> Game:
+    """Sequential composition as a lazy node (fast; value via additivity)."""
+    return Graft(a, b)
+
+
+def graft_materialize(a: Game, b: Game) -> Game:
+    """The honest structural definition: replace every mate leaf of ``a`` with a
+    fresh copy of ``b``. Used to verify additivity on small trees."""
+    if isinstance(a, Mate):
+        return b
+    if isinstance(a, Step):
+        return Step(graft_materialize(a.child, b))
+    if isinstance(a, Bsup):
+        fam = a.family
+        return Bsup(lambda n, fam=fam: graft_materialize(fam(n), b), a.bound)
+    if isinstance(a, Graft):
+        return graft_materialize(materialize(a), b)
+    raise TypeError
+
+
+def materialize(g: Game) -> Game:
+    """Turn lazy Graft nodes into explicit trees (for small trees only)."""
+    if isinstance(g, Graft):
+        return graft_materialize(materialize(g.a), materialize(g.b))
+    if isinstance(g, Step):
+        return Step(materialize(g.child))
+    if isinstance(g, Bsup):
+        fam = g.family
+        return Bsup(lambda n, fam=fam: materialize(fam(n)), g.bound)
+    return g
+
+
+def step_n(n: int, g: Game) -> Game:
+    for _ in range(n):
+        g = Step(g)
+    return g
+
+
+def fin_game(n: int) -> Game:
+    """A forced win in exactly n moves (value n)."""
+    return step_n(n, Mate())
+
+
+def graft_n(k: int, a: Game) -> Game:
+    """k sequential copies of a (value = value(a) * k)."""
+    g: Game = Mate()
+    for _ in range(k):
+        g = graft(a, g)
+    return g
+
+
+BSUP_BOUND = 6  # enough terms to reveal each limit
+
+
+def omega_game() -> Game:
+    """Black picks n; White mates in n forced moves. Value = omega."""
+    return Bsup(fin_game, BSUP_BOUND)
+
+
+def opow_game(n: int) -> Game:
+    """Explicit position of value omega^n."""
+    if n == 0:
+        return Step(Mate())
+    prev = opow_game(n - 1)
+    return Bsup(lambda k, prev=prev: graft_n(k, prev), BSUP_BOUND)
+
+
+def omega_omega_game() -> Game:
+    """Diagonal position of value omega^omega."""
+    return Bsup(opow_game, BSUP_BOUND)
+
+
+# --------------------------------------------------------------------------- #
+# Demonstration
+# --------------------------------------------------------------------------- #
+
+def main() -> None:
+    print("=" * 70)
+    print("TRANSFINITE GAME VALUES IN INFINITE CHESS")
+    print("=" * 70)
+
+    print("\n[1] Grafting realises ordinal addition: value(graft A B) = v(B) + v(A)")
+    print("    (verified structurally: the materialized tree has the same value)")
+    examples = [(fin_game(3), fin_game(2)), (omega_game(), fin_game(4)),
+                (fin_game(5), omega_game()), (omega_game(), omega_game())]
+    for a, b in examples:
+        lazy = value(graft(a, b))
+        material = value(materialize(graft(a, b)))
+        rhs = ord_add(value(b), value(a))
+        print(f"    v(A)={str(value(a)):<8} v(B)={str(value(b)):<8} "
+              f"->  v(graft A B) = {str(lazy):<10} = v(B)+v(A) = {rhs}")
+        assert lazy == rhs == material
+
+    print("\n[2] Mate-in-omega: value(omegaGame) = omega, and no finite bound.")
+    v_omega = value(omega_game())
+    print(f"    v(omegaGame) = {v_omega}")
+    assert v_omega == Ordinal.omega_pow(1)
+    assert all(v_omega != Ordinal.nat(n) for n in range(100))
+    print("    verified: differs from every finite ordinal 0..99")
+
+    print("\n[3] The power hierarchy: value(opowGame n) = omega^n")
     for n in range(6):
-        # Build chain game
-        nodes = [GameNode(name=str(i), children=[]) for i in range(n + 1)]
-        for i in range(1, n + 1):
-            nodes[i].children = [nodes[i - 1]]
-        
-        val = compute_game_value(nodes[n])
-        print(f"  C_{n}: game value at position {n} = {val}")
-    
-    print()
-    print("Theorem (chainGame_value): v(k) = k for all k ≤ n")
-    print()
+        vn = value(opow_game(n))
+        expected = Ordinal.nat(1) if n == 0 else Ordinal.omega_pow(n)
+        print(f"    n={n}:  value = {str(vn):<14}  expected = {expected}")
+        assert vn == expected
 
+    print("\n[4] Strict monotonicity of the hierarchy:")
+    vals = [value(opow_game(n)) for n in range(6)]
+    for i in range(len(vals) - 1):
+        assert vals[i] < vals[i + 1]
+    print("    " + "  <  ".join(str(v) for v in vals))
 
-# --- Demo 2: The ω^n Hierarchy ---
+    print("\n[5] Diagonal position: value(omegaOmegaGame) = omega^omega")
+    v_oo = value(omega_omega_game())
+    print(f"    v(omegaOmegaGame) = {v_oo}")
+    assert v_oo == Ordinal.omega_omega()
 
-def demo_omega_hierarchy():
-    """Demonstrate the ω^n hierarchy."""
-    print("=" * 60)
-    print("DEMO 2: The ω^n Hierarchy")
-    print("=" * 60)
-    print()
-    
-    ordinals = [
-        ("ω^0", Ordinal.finite(1)),
-        ("ω^1", Ordinal.omega()),
-        ("ω^2", Ordinal.omega_pow(Ordinal.finite(2))),
-        ("ω^3", Ordinal.omega_pow(Ordinal.finite(3))),
-        ("ω^4", Ordinal.omega_pow(Ordinal.finite(4))),
-        ("ω^ω", Ordinal.omega_pow(Ordinal.omega())),
-    ]
-    
-    print("The hierarchy of transfinite game values:")
-    print()
-    for name, ordinal in ordinals:
-        print(f"  {name} = {ordinal}")
-    
-    print()
-    print("Theorem (omega_pow_strictMono): ω^n < ω^(n+1) for all n")
-    print("Theorem (omega_pow_omega_eq_iSup): ω^ω = sup_n ω^n")
-    print()
-    
-    print("Separation results:")
-    for n in range(1, 5):
-        for m in range(1, 4):
-            print(f"  ω^{n} · {m} < ω^{n+1}")
-    print()
+    print("\n[6] Strict domination: omega^n < omega^omega for all sampled n")
+    for n in range(8):
+        assert value(opow_game(n)) < v_oo
+    print("    verified for n = 0..7")
 
-
-# --- Demo 3: The Omega Tower and ε₀ ---
-
-def demo_omega_tower():
-    """Demonstrate the omega tower converging to ε₀."""
-    print("=" * 60)
-    print("DEMO 3: The Omega Tower → ε₀")
-    print("=" * 60)
-    print()
-    
-    tower = [
-        Ordinal.finite(1),
-        Ordinal.omega(),
-        Ordinal.omega_pow(Ordinal.omega()),
-        Ordinal.omega_pow(Ordinal.omega_pow(Ordinal.omega())),
-        Ordinal.omega_pow(Ordinal.omega_pow(Ordinal.omega_pow(Ordinal.omega()))),
-    ]
-    
-    print("omegaTower(n) = iterated ω-exponentiation:")
-    print()
-    for i, t in enumerate(tower):
-        print(f"  omegaTower({i}) = {t}")
-    print(f"  omegaTower(5) = ω^(ω^(ω^(ω^ω)))  [too deep to display]")
-    print(f"  ...")
-    print(f"  ε₀ = sup_n omegaTower(n)")
-    print()
-    print("Theorem (omega_pow_epsilon0): ω^(ε₀) = ε₀")
-    print("This is the smallest ordinal with this fixed-point property.")
-    print()
-    
-    print("Key properties of ε₀:")
-    print("  1. ε₀ is strictly above every omegaTower(n)")
-    print("  2. ε₀ is the proof-theoretic ordinal of Peano Arithmetic")
-    print("  3. ε₀ is a fixed point of ordinal exponentiation: ω^(ε₀) = ε₀")
-    print("  4. Every ordinal below ε₀ has a finite Cantor normal form")
-    print()
-
-
-# --- Demo 4: Game Value Cofinality ---
-
-def demo_cofinality():
-    """Demonstrate the cofinality theorem."""
-    print("=" * 60)
-    print("DEMO 4: Cofinality and Limit Values")
-    print("=" * 60)
-    print()
-    
-    print("The cofinality theorem states:")
-    print("  If ∀ β < α, ∃ move to position with value ≥ β,")
-    print("  then the game value ≥ α.")
-    print()
-    
-    print("Example: A game with value ω")
-    print("  From position p, moves go to positions with values 0, 1, 2, 3, ...")
-    print("  For each n, the move to position with value n exists.")
-    print("  No single move reaches value ω (all successors are finite).")
-    print("  But the supremum is ω — this is why ω is a limit ordinal.")
-    print()
-    
-    print("Example: A game with value ω²")
-    print("  From position p, moves reach values ω·0, ω·1, ω·2, ω·3, ...")
-    print("  Each ω·n < ω² (separation theorem).")
-    print("  But sup_n ω·n = ω², demonstrating two-level cofinality.")
-    print()
-
-
-# --- Demo 5: The Bridge Theorem ---
-
-def demo_bridge():
-    """Demonstrate the bridge between well-orders and games."""
-    print("=" * 60)
-    print("DEMO 5: Bridge Theorem — Well-Orders ↔ Game Trees")
-    print("=" * 60)
-    print()
-    
-    print("The Bridge Theorem: wfRank(a) = gameValue(a)")
-    print()
-    print("This identity says that two apparently different concepts")
-    print("are actually the same:")
-    print()
-    print("  ORDER THEORY                  GAME THEORY")
-    print("  ──────────────                ───────────")
-    print("  Well-founded relation    ←→   Game tree")
-    print("  Ordinal rank             ←→   Game value")
-    print("  Minimal element          ←→   Terminal position")
-    print("  Descending chain         ←→   Play sequence")
-    print("  Well-foundedness         ←→   Every play terminates")
-    print()
-    print("Example: The ordinal ω as a well-order")
-    print("  Positions: 0, 1, 2, 3, ... (natural numbers)")
-    print("  Relation: m < n")
-    print("  Rank of n = n (matches game value)")
-    print("  Rank of the whole order = ω")
-    print()
-
-
-def main():
-    """Run all demonstrations."""
-    print()
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║  TRANSFINITE GAME VALUES IN INFINITE CHESS              ║")
-    print("║  Demonstrations and Numerical Examples                  ║")
-    print("╚══════════════════════════════════════════════════════════╝")
-    print()
-    
-    demo_chain_game()
-    demo_omega_hierarchy()
-    demo_omega_tower()
-    demo_cofinality()
-    demo_bridge()
-    
-    print("=" * 60)
-    print("SUMMARY OF FORMALIZED RESULTS")
-    print("=" * 60)
-    print()
-    print("Theorems proved in Lean 4 (no sorry):")
-    print("  1. ordinalGame_gameValue — ordinal game has correct values")
-    print("  2. exists_game_value — every ordinal is a game value")
-    print("  3. chainGame_value — finite chain has value k at position k")
-    print("  4. omega_pow_strictMono — ω^n is strictly increasing")
-    print("  5. omega_pow_omega_eq_iSup — ω^ω = sup_n ω^n")
-    print("  6. omega_pow_epsilon0 — ω^(ε₀) = ε₀")
-    print("  7. omegaTower_strictMono — omega tower is increasing")
-    print("  8. gameValue_cofinal — cofinality characterization")
-    print("  9. gameValue_limit_characterization — limit values")
-    print(" 10. wfRank_eq_gameValue — bridge theorem")
-    print()
+    print("\n" + "=" * 70)
+    print("ALL CHECKS PASSED")
+    print("Hierarchy:  1 < omega < omega^2 < omega^3 < ... < omega^omega")
+    print("=" * 70)
 
 
 if __name__ == "__main__":
     main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: The ω^n Hierarchy of Transfinite Game Values
-
-Generates a plot showing the ordinal hierarchy ω^0, ω^1, ω^2, ..., ω^ω
-and how each level contains the previous ones.
-"""
-import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-import numpy as np
-
-
-def ordinal_label(n: int) -> str:
-    """Pretty label for ω^n."""
-    if n == 0:
-        return "1"
-    if n == 1:
-        return "ω"
-    return f"ω^{n}"
-
-
-def draw_hierarchy():
-    """Draw the ω^n hierarchy as nested boxes with game tree snippets."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 8))
-    
-    # --- Left panel: Nested hierarchy ---
-    ax1.set_xlim(-0.5, 8)
-    ax1.set_ylim(-0.5, 7)
-    ax1.set_aspect('equal')
-    ax1.set_title("The ω^n Hierarchy: Nested Complexity Levels", fontsize=14, fontweight='bold')
-    ax1.axis('off')
-    
-    colors = plt.cm.viridis(np.linspace(0.2, 0.9, 7))
-    
-    for i in range(6, -1, -1):
-        x = 0.3 * (6 - i)
-        y = 0.3 * (6 - i)
-        w = 7.4 - 0.6 * (6 - i)
-        h = 6.4 - 0.6 * (6 - i)
-        
-        rect = mpatches.FancyBboxPatch(
-            (x, y), w, h,
-            boxstyle="round,pad=0.1",
-            facecolor=(*colors[i][:3], 0.15),
-            edgecolor=colors[i],
-            linewidth=2
-        )
-        ax1.add_patch(rect)
-        
-        if i <= 5:
-            label = ordinal_label(i)
-        else:
-            label = "ω^ω"
-        
-        ax1.text(x + 0.15, y + h - 0.3, label,
-                fontsize=12 if i < 6 else 14,
-                fontweight='bold',
-                color=colors[i],
-                verticalalignment='top')
-    
-    # Add descriptive text
-    ax1.text(3.7, 0.7, "Game values grow\ntransfinitely:\neach level strictly\ncontains all\nprevious levels",
-            fontsize=10, ha='center', va='center',
-            style='italic', color='gray')
-    
-    # --- Right panel: Strict separation ---
-    ax2.set_title("Separation: ω^n · m < ω^(n+1)", fontsize=14, fontweight='bold')
-    
-    n_levels = 5
-    bar_data = {}
-    
-    for n in range(n_levels):
-        for m in range(1, 5):
-            bar_data[(n, m)] = n + np.log(m + 1) / np.log(5)
-    
-    x_pos = []
-    heights = []
-    colors_bar = []
-    labels = []
-    
-    idx = 0
-    for n in range(n_levels):
-        for m in range(1, 5):
-            x_pos.append(idx)
-            heights.append(bar_data[(n, m)])
-            colors_bar.append(plt.cm.Set2(n / n_levels))
-            labels.append(f"ω^{n}·{m}")
-            idx += 1
-        # Add separator
-        x_pos.append(idx)
-        heights.append(n + 1)
-        colors_bar.append('red')
-        labels.append(f"ω^{n+1}")
-        idx += 1
-    
-    bars = ax2.bar(x_pos, heights, color=colors_bar, edgecolor='black', linewidth=0.5)
-    
-    # Mark the ω^(n+1) boundaries
-    for i, (x, h, c) in enumerate(zip(x_pos, heights, colors_bar)):
-        if c == 'red':
-            ax2.axhline(y=h, color='red', linestyle='--', alpha=0.3)
-    
-    ax2.set_xticks(x_pos)
-    ax2.set_xticklabels(labels, rotation=45, ha='right', fontsize=7)
-    ax2.set_ylabel("Relative ordinal magnitude (log scale)", fontsize=10)
-    ax2.set_xlabel("Game value (in Cantor Normal Form)", fontsize=10)
-    
-    plt.tight_layout()
-    plt.savefig("hierarchy_visualization.png", dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: hierarchy_visualization.png")
-
-
-def draw_omega_tower():
-    """Draw the omega tower converging to ε₀."""
-    fig, ax = plt.subplots(figsize=(10, 6))
-    
-    # The omega tower grows hyper-exponentially; use log-log-... scale
-    n_values = list(range(8))
-    
-    # Use a symbolic height (log of tower height)
-    heights = [0, 1, 2, 3, 4, 5, 6, 7]
-    
-    tower_labels = [
-        "1", "ω", "ω^ω", "ω^(ω^ω)", "ω^(ω^(ω^ω))",
-        "ω↑↑5", "ω↑↑6", "ω↑↑7"
-    ]
-    
-    colors = plt.cm.inferno(np.linspace(0.2, 0.85, len(n_values)))
-    
-    bars = ax.bar(n_values, [2**h for h in heights], color=colors,
-                  edgecolor='black', linewidth=0.5)
-    
-    ax.set_yscale('log', base=2)
-    ax.set_xlabel("Tower level n", fontsize=12)
-    ax.set_ylabel("omegaTower(n) (symbolic log scale)", fontsize=12)
-    ax.set_title("The Omega Tower: Convergence to ε₀", fontsize=14, fontweight='bold')
-    ax.set_xticks(n_values)
-    ax.set_xticklabels([f"n={i}\n{tower_labels[i]}" for i in n_values],
-                       fontsize=8)
-    
-    # Add ε₀ line
-    ax.axhline(y=2**8.5, color='red', linestyle='--', linewidth=2, label='ε₀ = sup')
-    ax.text(7.5, 2**8.5, 'ε₀', fontsize=14, color='red', fontweight='bold',
-           verticalalignment='bottom')
-    
-    ax.legend(fontsize=11)
-    
-    plt.tight_layout()
-    plt.savefig("omega_tower_visualization.png", dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: omega_tower_visualization.png")
-
-
-if __name__ == "__main__":
-    draw_hierarchy()
-    draw_omega_tower()
