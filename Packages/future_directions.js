@@ -326,7 +326,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Thermodynamics of Sorting: Entropy and Computational Work"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2ace1a06",
     "description": "Formalize the Lucas-Penrose argument that human minds can see truths that formal systems cannot prove about themselves. Prove or disprove: there exists a computational system that can consistently recognize its own G\u00f6del sentences. Connect to Chaitin's incompleteness theorem and the Berry paradox.",
     "domains": [
       "Novelty",
@@ -336,7 +336,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T22:30:11.227768+00:00",
     "title": "Mind vs G\u00f6del: Can Minds Outperform Algorithms?"
   },

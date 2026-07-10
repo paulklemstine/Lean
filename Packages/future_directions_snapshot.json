@@ -440,7 +440,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2ace1a06",
     "description": "Formalize the Lucas-Penrose argument that human minds can see truths that formal systems cannot prove about themselves. Prove or disprove: there exists a computational system that can consistently recognize its own Gödel sentences. Connect to Chaitin's incompleteness theorem and the Berry paradox.",
     "domain_bridges": [],
     "domains": [
@@ -453,7 +453,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T22:30:11.227768+00:00",
     "title": "Mind vs Gödel: Can Minds Outperform Algorithms?"
   },
