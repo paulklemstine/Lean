@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "492f9d48",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — Split Geometry\n\nThe file `Algebra/SplitGeometry.lean` formalizes, with complete proofs and no\n`sorry`, the algebraic/analytic skeleton of the Split Geometry:\n\n* the metric `ds² =",
-      "quality_score": 0.8151999999999999,
-      "sorry_count": 0,
-      "theorem_count": 28,
-      "timestamp": "2026-07-08T21:35:42",
-      "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
-    },
-    {
       "cycle_id": "8d243e81",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nResearch directions arising from the Lean formalization of the split geometry\n`g = sech²(y) dx² + cosh²(x) dy²` on `ℝ²` (see `research_paper.md` and the Lean files in\nthis directo",
@@ -499,19 +489,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-10T14:16:31",
       "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
+    },
+    {
+      "cycle_id": "34e9f39c",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Knots, Lattices, and Signed Enumeration\n\nThis cycle settled the naive \"Alexander polynomial = lattice-path count\"\nconjecture in the negative and isolated the correct signed object",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-10T14:32:36",
+      "title": "Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "fb9fd2df",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Fractional colouring of the plane via independence ratios\n\nThis cycle isolated a single, domain-free inequality — the fractional chromatic number\nof a finite graph is at least it",
-      "quality_score": 0.8091999999999999,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-07-01T13:29:33",
-      "title": "The 29-vertex augmented unit-distance graph has geometric fractional chromatic number strictly great"
-    },
     {
       "cycle_id": "8875d434",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-10T14:16:31",
       "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
+    },
+    {
+      "cycle_id": "34e9f39c",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Knots, Lattices, and Signed Enumeration\n\nThis cycle settled the naive \"Alexander polynomial = lattice-path count\"\nconjecture in the negative and isolated the correct signed object",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-10T14:32:36",
+      "title": "Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7e49f0c7",
-      "domain": "Novelty",
-      "name": "perm_not_comm",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "7e49f0c7",
-      "domain": "Novelty",
-      "name": "for",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "7e49f0c7",
-      "domain": "Novelty",
-      "name": "finiteField_gal_ne_symm",
-      "quality": 0.83
-    },
     {
       "cycle_id": "3fa70466",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "tropVal_convex",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "34e9f39c",
+      "domain": "Applications",
+      "name": "areaGF_nonneg",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "34e9f39c",
+      "domain": "Applications",
+      "name": "trefoil_zero",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "34e9f39c",
+      "domain": "Applications",
+      "name": "trefoil_one",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-10T14:16:31",
+  "last_updated": "2026-07-10T14:32:36",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "9c1224fc",
-        "quality": 0.72,
-        "theorems": 22,
-        "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
-      },
-      {
         "cycle_id": "207fb5b4",
         "quality": 0.83,
         "theorems": 24,
@@ -3141,6 +3135,12 @@
         "quality": 0.72,
         "theorems": 38,
         "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
+      },
+      {
+        "cycle_id": "34e9f39c",
+        "quality": 0.82,
+        "theorems": 20,
+        "title": "Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
       }
     ],
     "Bridges": [

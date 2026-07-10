@@ -116,6 +116,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 34e9f39c (Q=0.820), which proved 20 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Alexander polynomial Delta_K(t) of a knot K is a Laurent polynomial that encodes topological information about the knot. Conjecture: for any knot K with n crossings, the Alexander polynomial Delta_K(t) can be expressed as the generating function of lattice paths in Z^2 that avoid a region determ",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_34e9f39c_2f4be302",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "34e9f39c",
+    "status": "available",
+    "timestamp": "2026-07-10T14:32:36.770001+00:00",
+    "title": "Deepening: Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 7ca0f553 (Q=0.820), which proved 61 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Infinite chess is chess on an infinite board. It is known that there are positions where White can force checkmate but only in omega (the first infinite ordinal) moves. Conjecture: There exists a position on the infinite chess board where White can force checkmate in exactly omega^omega moves, but n",
     "domains": [
       "Pythagorean"
@@ -484,21 +498,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-08T16:01:43.810023+00:00",
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
-  },
-  {
-    "consumed_by_exp_id": "34e9f39c",
-    "description": "The Alexander polynomial Delta_K(t) of a knot K is a Laurent polynomial that encodes topological information about the knot. Conjecture: for any knot K with n crossings, the Alexander polynomial Delta_K(t) can be expressed as the generating function of lattice paths in Z^2 that avoid a region determined by the knot diagram. Specifically, define the 'knot lattice' L_K as the set of lattice paths from (0,0) to (n,n) that avoid the 'forbidden region' R_K determined by the crossing structure of K. Then Delta_K(t) = sum_{p in L_K} t^{area(p)} where area(p) is the area under the path p. This conjecture follows from the state sum formula for the Alexander polynomial: Delta_K(t) = sum_{states s} (-1)^{w(s)} t^{a(s)} where w(s) is the writhe and a(s) is the area of the state. The area a(s) is exactly the area under a lattice path determined by the state. Conjecture: every Alexander polynomial arises as a lattice path generating function, and vice versa. This means the Alexander polynomial is not just a knot invariant \u2014 it is a combinatorial object that counts lattice paths. Test: compute the Alexander polynomials for the first 50 knots and verify that each can be expressed as a lattice path generating function. Impact: knot invariants are combinatorial. The Alexander polynomial counts lattice paths, connecting topology to combinatorics.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0890",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T12:06:38.565444+00:00",
-    "title": "Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
   },
   {
     "consumed_by_exp_id": "",
@@ -5734,6 +5733,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T14:16:24.434577+00:00",
     "title": "That a rectified-linear classifier's decision boundary is"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Knots, Lattices, and Signed Enumeration\n\nThis cycle settled the naive \"Alexander polynomial = lattice-path count\"\nconjecture in the negative and isolated the correct signed object. The following\nconjectures push the surviving structure further. Each is bold, falsifiable, and\ndirectly motivated by what we found.\n\n## 1. Sign obstruction is exactly the failure of positivity\n\n**Conjecture.** A Laurent polynomial `P(t)` with integer coefficients arises as an\n*unsigned* lattice-path area generating function if and only if all of its\ncoefficients are non-negative; and every symmetric integer Laurent polynomial\nwith `P(1) = \u00b11` arises as a *signed* state sum.\n\nThe key insight is that the only obstruction separating \"counts paths\" from\n\"is a knot polynomial\" is the sign group: positivity is both necessary and\nsufficient for the unsigned model, while the signed model is unobstructed among\nthe reciprocal, unit-normalized polynomials that knot invariants must satisfy.\n\nWhy now? We have a clean impossibility result for a specific negative\ncoefficient and an explicit signed realization of the same polynomial; the next\nstep is to promote both to exact characterizations across all inputs.\n\n## 2. Involutions are the source of every knot-polynomial symmetry\n\n**Conjecture.** Every reciprocity symmetry of a knot polynomial (Alexander\n`\u0394(t) = \u0394(t^{-1})`, and the analogous symmetries of the Conway and, suitably\nspecialized, Jones polynomials) is induced by an area-negating, weight-preserving\ninvolution of an underlying state set, and conversely any such involution forces\nthe corresponding palindromic symmetry.\n\nThe key insight is that symmetry of the invariant is not an analytic accident but\na combinatorial fixed-point phenomenon: pairing states of opposite area with\nequal sign is the whole content of reciprocity.\n\nWhy now? We proved that an area-negating, sign-preserving involution makes a\nsigned state sum palindromic, and exhibited the trefoil's involution explicitly;\ngeneralizing the pairing to other invariants is the natural next probe.\n\n## 3. Extremal density of state families\n\n**Conjecture.** For knots whose state sets are `n`-uniform families of `n`-subsets\nof the `2n` step slots, a knot whose state family is \"dense\" (at least `C(k,n)`\nstates) must have at least `C(k, n-1)` sub-states, and this bound is attained\nexactly by the maximally symmetric (torus-knot) families.\n\nThe key insight is that Kruskal\u2013Katona is not merely an analogy for state sums\nbut a genuine constraint: the shadow of a state family lower-bounds the number of\nlower-order states, tying knot complexity to extremal set theory.\n\nWhy now? We already have the shadow lower bound for arbitrary path sub-families;\nidentifying which knots realize the extremal cliques would convert a general\ninequality into a classification.\n\n## 4. The q-refinement: area statistics and Gaussian binomials\n\n**Conjecture.** Summing `q^{area}` over *all* monotone paths from `(0,0)` to\n`(n,n)` yields the Gaussian binomial coefficient `[2n choose n]_q`, and the\nsigned refinement of this statistic specializes, under the state-to-path\ndictionary, to the two-variable Alexander (Conway potential) polynomial of the\ncorresponding family of pretzel knots.\n\nThe key insight is that the area statistic is not a bookkeeping device but a\ngenuine `q`-deformation: the unsigned side is a classical `q`-binomial identity,\nand the signed side deforms it into a knot invariant.\n\nWhy now? We have both the exact path count `C(2n,n)` and a working signed\narea statistic; interpolating them with the `q`-grading is the immediate refinement.\n\n## 5. Positivity islands among knots\n\n**Conjecture.** The set of knots whose reduced Alexander polynomial has\nnon-negative coefficients (hence *can* be an unsigned lattice-path count) is\nexactly the set of knots with trivial Alexander polynomial, i.e. `\u0394_K(t) = 1`;\nevery non-trivially-Alexander knot is forced off the positive island.\n\nThe key insight is that positivity of the Alexander polynomial is so restrictive\nthat it collapses to triviality, making the unsigned conjecture true only in the\ndegenerate case and quantifying exactly how far every real knot lies from it.\n\nWhy now? Our small-case survey found a negative coefficient for every\nnon-trivial knot examined; turning this empirical pattern into a theorem would\npin down the exact boundary of the refuted conjecture.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0905",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "34e9f39c",
+    "status": "available",
+    "timestamp": "2026-07-10T14:32:29.673755+00:00",
+    "title": "This cycle settled the naive \"Alexander polynomial = lattice-path count\""
   },
   {
     "consumed_by_exp_id": "",
