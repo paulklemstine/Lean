@@ -1,322 +1,175 @@
-#!/usr/bin/env python3
 """
-Demonstration: The Uncertainty Principle as a Fourier-Algebraic Phenomenon
+Numerical demonstrations of the transform uncertainty principle.
 
-This script demonstrates that the uncertainty principle arises from polynomial
-root bounds, not from quantum mechanics. It shows:
+The uncertainty principle -- Delta(x) * Delta(k) >= 1/(4*pi) for a signal and its
+Fourier transform -- is not a law of physics but a theorem about integral
+transforms whose image is holomorphic.  This script demonstrates several
+consequences numerically:
 
-1. Polynomial root bound → evaluation support bound
-2. DFT uncertainty principle on Z/nZ
-3. Vandermonde uncertainty principle with distinct points
-4. Numerical verification of the MDS conjecture for small cases
+  1. The quantitative Heisenberg bound and the Gaussian as its equality case.
+  2. The time-frequency trade-off: narrowing a signal broadens its transform.
+  3. The infinite-support / null-zero-set behaviour of entire functions
+     (sine, cosine) versus the nowhere-vanishing Gaussian.
+  4. The discrete Donoho-Stark inequality |supp f| * |supp Fhat| >= N.
+
+Only numpy is required.
 """
+
+from __future__ import annotations
 
 import numpy as np
-from typing import List, Tuple
-
-
-def support_size(v: np.ndarray, tol: float = 1e-10) -> int:
-    """Count the number of nonzero entries in a vector."""
-    return int(np.sum(np.abs(v) > tol))
-
-
-def dft_matrix(n: int) -> np.ndarray:
-    """Construct the n×n DFT matrix: M[j,k] = omega^(jk) where omega = e^{2πi/n}."""
-    omega = np.exp(2j * np.pi / n)
-    return np.array([[omega ** (j * k) for k in range(n)] for j in range(n)])
-
-
-def vandermonde_matrix(pts: np.ndarray) -> np.ndarray:
-    """Construct the Vandermonde matrix V[i,j] = pts[i]^j."""
-    n = len(pts)
-    return np.array([[pts[i] ** j for j in range(n)] for i in range(n)])
-
-
-def polynomial_eval_support(coeffs: np.ndarray, pts: np.ndarray, tol: float = 1e-10) -> int:
-    """Evaluate polynomial with given coefficients at given points, return support size."""
-    evals = np.polyval(coeffs[::-1], pts)
-    return support_size(evals, tol)
-
-
-# ============================================================
-# Demo 1: Polynomial Root Bound
-# ============================================================
-print("=" * 60)
-print("Demo 1: Polynomial Root Bound")
-print("=" * 60)
-print()
-print("A polynomial of degree d has at most d roots.")
-print("This is the algebraic core of ALL uncertainty principles.")
-print()
-
-for degree in [2, 5, 10]:
-    # Random polynomial of given degree
-    coeffs = np.random.randn(degree + 1)
-    coeffs[-1] = 1.0  # monic
-    roots = np.roots(coeffs[::-1])
-    n_roots = len([r for r in roots if abs(r.imag) < 1e-8])
-    print(f"  Degree {degree}: polynomial has {n_roots} real roots (≤ {degree})")
-
-print()
-
-# ============================================================
-# Demo 2: DFT Uncertainty Principle on Z/nZ
-# ============================================================
-print("=" * 60)
-print("Demo 2: DFT Uncertainty on Z/nZ")
-print("=" * 60)
-print()
-print("For any nonzero f on Z/nZ:")
-print("  |supp(f)| + |supp(f̂)| ≥ n + 1")
-print("  |supp(f)| · |supp(f̂)| ≥ n")
-print()
-
-for n in [5, 7, 11]:
-    M = dft_matrix(n)
-    min_sum = float('inf')
-    min_prod = float('inf')
-    violations = 0
-    total = 0
-
-    # Test random vectors
-    for _ in range(10000):
-        # Random sparse vector
-        f = np.zeros(n, dtype=complex)
-        k = np.random.randint(1, n + 1)
-        indices = np.random.choice(n, k, replace=False)
-        f[indices] = np.random.randn(k) + 1j * np.random.randn(k)
-
-        f_hat = M @ f
-        s_f = support_size(f)
-        s_fhat = support_size(f_hat)
-
-        total += 1
-        if s_f + s_fhat < n + 1:
-            violations += 1
-        min_sum = min(min_sum, s_f + s_fhat)
-        min_prod = min(min_prod, s_f * s_fhat)
-
-    print(f"  n = {n}: min(|supp(f)|+|supp(f̂)|) = {min_sum} ≥ {n+1}? {'YES' if min_sum >= n+1 else 'NO'}")
-    print(f"         min(|supp(f)|·|supp(f̂)|) = {min_prod} ≥ {n}? {'YES' if min_prod >= n else 'NO'}")
-    print(f"         Violations: {violations}/{total}")
-    print()
-
-
-# ============================================================
-# Demo 3: Degree-Evaluation Uncertainty
-# ============================================================
-print("=" * 60)
-print("Demo 3: Degree-Evaluation Uncertainty")
-print("=" * 60)
-print()
-print("For a nonzero polynomial of degree d evaluated at n distinct points:")
-print("  (# nonzero evaluations) ≥ n - d")
-print()
-
-n = 20
-pts = np.linspace(-1, 1, n)  # n distinct points
-
-for degree in [0, 3, 7, 15, 19]:
-    coeffs = np.random.randn(degree + 1)
-    evals = np.array([np.polyval(coeffs[::-1], x) for x in pts])
-    s = support_size(evals, tol=1e-8)
-    bound = n - degree
-    print(f"  degree={degree:2d}: support of evals = {s:2d} ≥ {max(bound,0):2d} (n-d)? {'YES' if s >= bound else 'NO'}")
-
-print()
-
-
-# ============================================================
-# Demo 4: Vandermonde vs DFT — Support-Support Bound
-# ============================================================
-print("=" * 60)
-print("Demo 4: Vandermonde vs DFT Support Bounds")
-print("=" * 60)
-print()
-print("The support-support bound |supp(c)| + |supp(eval)| ≥ n+1")
-print("holds for DFT but NOT for general Vandermonde!")
-print()
-
-n = 7
-
-# DFT case
-M_dft = dft_matrix(n)
-min_sum_dft = float('inf')
-for _ in range(5000):
-    c = np.zeros(n, dtype=complex)
-    k = np.random.randint(1, n + 1)
-    idx = np.random.choice(n, k, replace=False)
-    c[idx] = np.random.randn(k) + 1j * np.random.randn(k)
-    evals = M_dft @ c
-    s_sum = support_size(c) + support_size(evals)
-    min_sum_dft = min(min_sum_dft, s_sum)
-
-print(f"  DFT (n={n}): min(|supp(c)| + |supp(eval)|) = {min_sum_dft} ≥ {n+1}? {'YES' if min_sum_dft >= n+1 else 'NO'}")
-
-# Vandermonde case with random points
-pts = np.array([0.1 * i for i in range(n)])
-M_vand = vandermonde_matrix(pts)
-min_sum_vand = float('inf')
-for _ in range(5000):
-    c = np.zeros(n)
-    c[-1] = 1.0  # single high-degree coefficient
-    evals = M_vand @ c
-    s_sum = support_size(c) + support_size(evals)
-    min_sum_vand = min(min_sum_vand, s_sum)
-
-print(f"  Vandermonde (n={n}): min(|supp(c)| + |supp(eval)|) = {min_sum_vand} ≥ {n+1}? {'YES' if min_sum_vand >= n+1 else 'NO (expected)'}")
-print()
-print("  The DFT has the MDS property; general Vandermonde does not.")
-print("  This is why the DFT uncertainty principle is STRONGER than")
-print("  the general polynomial uncertainty principle.")
-
-print()
-print("=" * 60)
-print("Conclusion: The uncertainty principle is a theorem about")
-print("polynomial root bounds, not about quantum mechanics.")
-print("=" * 60)
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Polynomial Root Bound as Uncertainty Engine
-
-Demonstrates that the polynomial root bound is the algebraic core
-of the uncertainty principle: a degree-d polynomial evaluated at n
-points has at most d zeros.
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-
-
-def polyeval(coeffs, x):
-    return sum(c * x**k for k, c in enumerate(coeffs))
-
-
-fig, axes = plt.subplots(2, 3, figsize=(18, 10))
-
-n_pts = 30
-pts = np.linspace(-2, 2, n_pts)
-
-configs = [
-    (1, "Degree 1: at most 1 root"),
-    (3, "Degree 3: at most 3 roots"),
-    (5, "Degree 5: at most 5 roots"),
-    (8, "Degree 8: at most 8 roots"),
-    (12, "Degree 12: at most 12 roots"),
-    (20, "Degree 20: at most 20 roots"),
-]
-
-for idx, (degree, title) in enumerate(configs):
-    ax = axes[idx // 3][idx % 3]
-
-    # Random polynomial of given degree
-    np.random.seed(42 + idx)
-    coeffs = np.random.randn(degree + 1)
-    coeffs[degree] = 1.0  # monic
-
-    # Fine evaluation for curve
-    x_fine = np.linspace(-2, 2, 500)
-    y_fine = np.array([polyeval(coeffs, x) for x in x_fine])
-
-    # Evaluation at discrete points
-    y_pts = np.array([polyeval(coeffs, x) for x in pts])
-    nonzero = np.abs(y_pts) > 0.01
-    n_nonzero = np.sum(nonzero)
-    n_roots_approx = n_pts - n_nonzero
-
-    ax.plot(x_fine, y_fine, 'b-', linewidth=1.5, alpha=0.7)
-    ax.scatter(pts[nonzero], y_pts[nonzero], c='green', s=20, zorder=5,
-              label=f'Nonzero: {n_nonzero}')
-    ax.scatter(pts[~nonzero], y_pts[~nonzero], c='red', s=40, marker='x',
-              zorder=5, label=f'≈ Zero: {n_roots_approx}')
-    ax.axhline(y=0, color='gray', linewidth=0.5)
-    ax.set_title(title, fontsize=12)
-    ax.set_ylim(-5, 5)
-    ax.legend(fontsize=9, loc='upper right')
-    ax.grid(True, alpha=0.3)
-
-    # Add uncertainty bound annotation
-    bound = max(n_pts - degree, 0)
-    ax.annotate(f'Bound: ≥{bound} nonzero\n(n−d = {n_pts}−{degree})',
-                xy=(0.02, 0.02), xycoords='axes fraction',
-                fontsize=8, style='italic',
-                bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
-
-plt.suptitle('Polynomial Root Bound: The Engine Behind Uncertainty',
-             fontsize=15, y=1.01)
-plt.tight_layout()
-plt.savefig('polynomial_roots.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved polynomial_roots.png")
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Uncertainty Principle Surface
-
-Shows the trade-off between input support and output support for
-the DFT transform. The surface n ≤ supp(f) + supp(f̂) is the
-uncertainty boundary.
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-
-
-def dft_matrix(n):
-    omega = np.exp(2j * np.pi / n)
-    return np.array([[omega ** (j * k) for k in range(n)] for j in range(n)])
-
-
-def support_size(v, tol=1e-10):
-    return int(np.sum(np.abs(v) > tol))
-
-
-def compute_uncertainty_data(n, n_samples=5000):
-    M = dft_matrix(n)
-    data = []
-    for _ in range(n_samples):
-        f = np.zeros(n, dtype=complex)
-        k = np.random.randint(1, n + 1)
-        idx = np.random.choice(n, k, replace=False)
-        f[idx] = np.random.randn(k) + 1j * np.random.randn(k)
-        f_hat = M @ f
-        s_f = support_size(f)
-        s_fhat = support_size(f_hat)
-        data.append((s_f, s_fhat))
-    return data
-
-
-fig, axes = plt.subplots(1, 3, figsize=(18, 5))
-
-for idx, n in enumerate([7, 11, 17]):
-    ax = axes[idx]
-    data = compute_uncertainty_data(n)
-    s_f_vals = [d[0] for d in data]
-    s_fhat_vals = [d[1] for d in data]
-
-    # Scatter plot of (supp_f, supp_fhat)
-    ax.scatter(s_f_vals, s_fhat_vals, alpha=0.3, s=10, c='steelblue')
-
-    # Uncertainty boundary: s_f + s_fhat = n + 1
-    x_line = np.arange(1, n + 1)
-    y_line = n + 1 - x_line
-    ax.plot(x_line, y_line, 'r-', linewidth=2, label=f'$|S_f| + |S_{{\\hat f}}| = {n+1}$')
-    ax.fill_between(x_line, 0, np.maximum(y_line, 0), alpha=0.1, color='red')
-
-    ax.set_xlabel('$|\\mathrm{supp}(f)|$', fontsize=12)
-    ax.set_ylabel('$|\\mathrm{supp}(\\hat{f})|$', fontsize=12)
-    ax.set_title(f'DFT Uncertainty on $\\mathbb{{Z}}/{n}\\mathbb{{Z}}$', fontsize=13)
-    ax.set_xlim(0, n + 1)
-    ax.set_ylim(0, n + 1)
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
-
-plt.suptitle('The Uncertainty Principle: Support Trade-off', fontsize=15, y=1.02)
-plt.tight_layout()
-plt.savefig('uncertainty_surface.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved uncertainty_surface.png")
+
+
+# ---------------------------------------------------------------------------
+# 1. Quantitative uncertainty: Delta(x) * Delta(k) >= 1/(4*pi)
+# ---------------------------------------------------------------------------
+def spreads(signal: np.ndarray, dt: float) -> tuple[float, float]:
+    """Return (Delta_x, Delta_k), the RMS spreads of a signal and its FFT.
+
+    The signal is normalised so that the discrete integral of |f|^2 is 1, then
+    second central moments are taken in both the time and (ordinary) frequency
+    domains.  The product is bounded below by 1/(4*pi).
+    """
+    n = signal.size
+    t = (np.arange(n) - n / 2) * dt
+
+    power = np.abs(signal) ** 2
+    power = power / (power.sum() * dt)
+    mu_t = np.sum(t * power) * dt
+    var_x = np.sum((t - mu_t) ** 2 * power) * dt
+
+    fhat = np.fft.fftshift(np.fft.fft(np.fft.ifftshift(signal))) * dt
+    # ordinary frequency k (cycles per unit), not angular frequency
+    k = np.fft.fftshift(np.fft.fftfreq(n, d=dt))
+    pk = np.abs(fhat) ** 2
+    pk = pk / (pk.sum() * (k[1] - k[0]))
+    mu_k = np.sum(k * pk) * (k[1] - k[0])
+    var_k = np.sum((k - mu_k) ** 2 * pk) * (k[1] - k[0])
+
+    return float(np.sqrt(var_x)), float(np.sqrt(var_k))
+
+
+def demo_heisenberg_bound() -> None:
+    print("=" * 70)
+    print("1. Quantitative uncertainty  Delta(x) * Delta(k) >= 1/(4*pi)")
+    print("=" * 70)
+    bound = 1.0 / (4.0 * np.pi)
+    n = 4096
+    dt = 0.01
+    t = (np.arange(n) - n / 2) * dt
+    print(f"Theoretical lower bound 1/(4*pi) = {bound:.6f}\n")
+    print(f"{'signal':<28}{'Delta_x':>10}{'Delta_k':>10}{'product':>12}")
+    for width in (0.5, 1.0, 2.0, 4.0):
+        g = np.exp(-t ** 2 / (2 * width ** 2))
+        dx, dk = spreads(g, dt)
+        print(f"{'Gaussian sigma=' + str(width):<28}{dx:>10.4f}{dk:>10.4f}{dx * dk:>12.6f}")
+    print("\nAll Gaussians saturate the bound (product ~ 1/(4*pi)); the Gaussian")
+    print("is the extremal object of the uncertainty principle.\n")
+
+
+# ---------------------------------------------------------------------------
+# 2. Time-frequency trade-off for the box / sinc pair
+# ---------------------------------------------------------------------------
+def demo_box_sinc_tradeoff() -> None:
+    print("=" * 70)
+    print("2. Time-frequency trade-off: box_w  <->  w * sinc(w k)")
+    print("=" * 70)
+    print("A box of width w has Fourier transform w*sinc(w*k); the narrower the")
+    print("box in time, the wider its transform in frequency.\n")
+    print(f"{'box width w':>14}{'effective transform support':>32}")
+
+    k = np.linspace(-200, 200, 400001)
+    tau = 0.05  # threshold relative to peak
+    for w in (4.0, 2.0, 1.0, 0.5, 0.25):
+        # transform of indicator[-w/2, w/2] is w * sinc(w*k) = sin(pi w k)/(pi k)
+        with np.errstate(divide="ignore", invalid="ignore"):
+            trans = np.where(k == 0, w, np.sin(np.pi * w * k) / (np.pi * k))
+        peak = np.abs(trans).max()
+        eff = np.sum(np.abs(trans) > tau * peak) * (k[1] - k[0])
+        print(f"{w:>14.3f}{eff:>32.2f}")
+    print("\nEffective transform support grows without bound as w -> 0: a signal")
+    print("of finite support cannot have a transform of finite support.\n")
+
+
+# ---------------------------------------------------------------------------
+# 3. Entire functions: null zero set, infinite support, Gaussian nowhere zero
+# ---------------------------------------------------------------------------
+def demo_entire_zero_sets() -> None:
+    print("=" * 70)
+    print("3. Zero sets of entire functions on a complex grid")
+    print("=" * 70)
+    re = np.linspace(-10, 10, 2001)
+    im = np.linspace(-10, 10, 2001)
+    X, Y = np.meshgrid(re, im)
+    Zc = X + 1j * Y
+    cell = (re[1] - re[0]) * (im[1] - im[0])
+    area = (re[-1] - re[0]) * (im[-1] - im[0])
+
+    eps = 1e-3
+    for name, f in (
+        ("sin(z)", np.sin),
+        ("cos(z)", np.cos),
+        ("exp(-z^2) (Gaussian)", lambda z: np.exp(-z ** 2)),
+    ):
+        vals = f(Zc)
+        exact_zero_area = np.sum(vals == 0) * cell
+        small_area = np.sum(np.abs(vals) < eps) * cell
+        print(f"{name:<24} |exact-zero area|={exact_zero_area:7.3f}   "
+              f"|value<{eps} area|={small_area:8.3f}  (box area={area:.1f})")
+    print("\nNone of these entire functions vanish on a set of positive area:")
+    print("sin, cos vanish only at isolated points; the Gaussian never vanishes")
+    print("at all (its 'small-value' region is rapid decay off the real axis,")
+    print("not true zeros). Every nonzero entire function has a null zero set.\n")
+
+
+# ---------------------------------------------------------------------------
+# 4. Discrete Donoho-Stark uncertainty: |supp f| * |supp Fhat| >= N
+# ---------------------------------------------------------------------------
+def demo_donoho_stark() -> None:
+    print("=" * 70)
+    print("4. Discrete uncertainty (Donoho-Stark):  |supp f| * |supp Fhat| >= N")
+    print("=" * 70)
+    n = 60
+    print(f"N = {n}\n")
+    print(f"{'signal':<26}{'|supp f|':>10}{'|supp Fhat|':>14}{'product':>10}{'>=N?':>7}")
+    rng = np.random.default_rng(0)
+
+    def report(name: str, f: np.ndarray) -> None:
+        fh = np.fft.fft(f)
+        sf = int(np.sum(np.abs(f) > 1e-9))
+        sh = int(np.sum(np.abs(fh) > 1e-9))
+        prod = sf * sh
+        print(f"{name:<26}{sf:>10}{sh:>14}{prod:>10}{'yes' if prod >= n else 'NO':>7}")
+
+    # a single spike -> full spectrum
+    delta = np.zeros(n, dtype=complex)
+    delta[0] = 1.0
+    report("delta (spike)", delta)
+
+    # a Dirac comb of period sqrt(N)-ish divisor -> comb (equality case)
+    comb = np.zeros(n, dtype=complex)
+    comb[::6] = 1.0  # period 6 divides 60, spectrum is a comb of period 10
+    report("Dirac comb (period 6)", comb)
+
+    # a random sparse signal
+    sparse = np.zeros(n, dtype=complex)
+    idx = rng.choice(n, size=5, replace=False)
+    sparse[idx] = rng.standard_normal(5)
+    report("random 5-sparse", sparse)
+    print("\nThe product of the two support sizes never drops below N.\n")
+
+
+def main() -> None:
+    demo_heisenberg_bound()
+    demo_box_sinc_tradeoff()
+    demo_entire_zero_sets()
+    demo_donoho_stark()
+    print("=" * 70)
+    print("Conclusion: every invertible integral transform with a holomorphic")
+    print("image carries its own uncertainty principle -- all instances of the")
+    print("rigidity of analytic functions.")
+    print("=" * 70)
+
+
+if __name__ == "__main__":
+    main()

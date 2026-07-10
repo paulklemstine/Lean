@@ -1,193 +1,221 @@
-# The Uncertainty Principle Is a Fourier Thing: Position-Momentum Duality as Algebraic Root Bound
+# A Unified Uncertainty Principle for Holomorphic Integral Transforms
 
 ## Abstract
 
-We develop a unified algebraic framework for uncertainty principles across integral transforms, demonstrating that the Heisenberg uncertainty principle and its generalizations are consequences of the polynomial root bound rather than physical axioms. Our main contributions are: (1) a formal proof of the degree-evaluation uncertainty principle for Vandermonde transforms, stating that for a nonzero polynomial of degree *d* evaluated at *n* distinct points, the evaluation support satisfies degree + support ≥ *n*; (2) a formal proof of the polynomial identity theorem as the algebraic core of analytic continuation; (3) the definition of *TransformDuality*, a novel abstract structure capturing the "no blind spots" property of transform kernels; and (4) a precise conjecture relating the MDS (Maximum Distance Separable) property to the additive uncertainty bound. All algebraic results are machine-verified. We argue that the uncertainty principle is fundamentally about the algebraic impossibility of a polynomial simultaneously vanishing at many points while having bounded degree.
+The Heisenberg uncertainty principle is traditionally presented as a foundational law of quantum mechanics. It is, more accurately, a theorem of harmonic analysis: it expresses the impossibility of simultaneously concentrating a function and its Fourier transform. In its sharpest qualitative form — the Benedicks–Amrein–Berthier phenomenon — a nonzero function and its Fourier transform cannot both be supported on sets of finite Lebesgue measure. We show that this qualitative uncertainty principle is not a peculiarity of the Fourier transform but a structural feature shared by *every invertible integral transform whose image consists of holomorphic functions on a connected open domain*. The common engine is a single, classical fact from complex analysis: a holomorphic function on a connected open set that vanishes on a nonempty open subset (or, over the whole plane, on a set of positive measure) vanishes identically. We isolate this engine as an abstract lemma and derive from it: (i) the compact-support Fourier uncertainty principle for entire functions; (ii) the null-zero-set and infinite-support consequences; (iii) the positive-measure (Benedicks–Amrein–Berthier) form for entire images; and (iv) uncertainty principles for the Laplace transform (half-plane domain) and the Mellin transform (strip domain). We illustrate the theory on worked examples — the sine and cosine (building blocks of the sinc kernel), and the Gaussian (the fixed point of the Fourier transform and the extremal object of the inequality) — and discuss extensions to the Z-transform, the two-sided Laplace transform, the Borel transform, the discrete Donoho–Stark inequality, and the Radon transform.
 
-**Keywords**: uncertainty principle, Fourier analysis, polynomial root bound, Vandermonde matrix, MDS codes, transform duality
+**Keywords.** Uncertainty principle, Fourier transform, Laplace transform, Mellin transform, identity theorem, entire functions, Benedicks–Amrein–Berthier theorem, Paley–Wiener, analytic continuation.
 
 ---
 
 ## 1. Introduction
 
-The Heisenberg uncertainty principle, stating Δx · Δp ≥ ℏ/2, is conventionally understood as a fundamental physical law governing quantum measurement. However, this inequality is a mathematical theorem about Fourier transforms, derivable from the Cauchy-Schwarz inequality applied to L²(ℝ) functions and their Fourier transforms.
+### 1.1 The uncertainty principle as mathematics
 
-In this work, we trace the uncertainty principle to its algebraic root: the fact that a nonzero polynomial of degree *d* over an integral domain has at most *d* roots. This single algebraic fact, combined with the observation that discrete Fourier transforms are polynomial evaluations, yields all known discrete uncertainty principles.
+The uncertainty principle of quantum mechanics asserts that the product of the standard deviations of a particle's position and momentum is bounded below,
 
-### 1.1 Main Results
+$$\Delta x \cdot \Delta p \ge \frac{\hbar}{2}.$$
 
-Our formally verified results include:
+The position and momentum wavefunctions of a quantum system are, however, a Fourier-transform pair. Once this is recognized, the inequality is seen to be a statement purely about a function $f$ and its Fourier transform $\hat f$, with Planck's constant $\hbar$ serving only as a unit conversion. The mathematical content is:
 
-**Theorem (Polynomial Root Bound).** Let *R* be an integral domain, *p* ∈ R[x] a nonzero polynomial, and *S* ⊆ R a finite set with p(s) = 0 for all s ∈ S. Then |S| ≤ deg(p).
+$$\left(\int t^2 |f(t)|^2\, dt\right)\left(\int k^2 |\hat f(k)|^2\, dt\right) \ge \frac{1}{16\pi^2}\left(\int |f|^2\right)^2,$$
 
-**Theorem (Degree-Evaluation Uncertainty).** Let *F* be a field, c : Fin n → F a nonzero coefficient vector, and pts : Fin n → F an injective map. Then deg(p_c) + |{i : p_c(pts(i)) ≠ 0}| ≥ n, where p_c = Σ c(k) X^k.
+the classical variance uncertainty inequality, with the Gaussian as the unique equality case. No physics is involved.
 
-**Theorem (Polynomial Identity Theorem).** If p ∈ R[x] has deg(p) < n and p vanishes at n distinct points, then p = 0.
+### 1.2 Qualitative uncertainty and the goal of this paper
 
-**Theorem (Vandermonde Injectivity).** The polynomial evaluation map at n distinct points is injective on polynomials of degree < n.
+The variance inequality is the *quantitative* face of uncertainty. There is a sharper *qualitative* face: a function and its transform cannot both be **strongly confined**. The strongest confinement is having support of finite measure. The definitive results here are:
 
-**Theorem (Basis Spread).** For any transform matrix with no zero entries, each standard basis vector maps to a vector with full support.
+- **Benedicks (1985), Amrein–Berthier (1977).** If $f \in L^1(\mathbb R^n)$ and both $\{f \ne 0\}$ and $\{\hat f \ne 0\}$ have finite Lebesgue measure, then $f = 0$.
 
-### 1.2 Novel Definitions
+Our thesis is that the qualitative uncertainty principle, at least for transforms whose image is holomorphic, follows from a *single* mechanism — analytic rigidity — and is therefore a universal feature of integral transforms rather than a Fourier-specific accident. Concretely:
 
-We introduce the `TransformDuality` structure, abstracting the properties of transform matrices that give rise to uncertainty principles. This structure captures a transform kernel M : Fin n → Fin n → F with the "no blind spots" property (no zero entries), and provides the framework for stating and proving uncertainty bounds.
+- the Fourier transform of a compactly supported $L^1$ function extends to an **entire** function of the complex frequency variable (Paley–Wiener);
+- the Laplace transform of a function supported on $[a,\infty)$ is **holomorphic on a right half-plane**;
+- the Mellin transform is **holomorphic on a vertical strip**;
 
-## 2. Background
+and in each case the transform lives on an open, connected domain $U \subseteq \mathbb C$. On any such domain the identity principle forbids the transform from vanishing on an open set unless it vanishes identically — which is precisely the impossibility of confinement.
 
-### 2.1 The Classical Uncertainty Principle
+### 1.3 Contributions
 
-For f ∈ L²(ℝ) with Fourier transform f̂, the Heisenberg uncertainty principle states:
-
-$$ \left(\int x^2 |f(x)|^2 \, dx\right) \cdot \left(\int \xi^2 |\hat{f}(\xi)|^2 \, d\xi\right) \geq \frac{1}{16\pi^2} \left(\int |f(x)|^2 \, dx\right)^2 $$
-
-Equality holds if and only if f is a Gaussian. This continuous inequality is usually proved via the Cauchy-Schwarz inequality and integration by parts.
-
-### 2.2 The Discrete Uncertainty Principle
-
-For finite groups, the uncertainty principle takes a sharper combinatorial form. For a finite abelian group G of order n, and a nonzero function f : G → ℂ with Fourier transform f̂:
-
-$$ |\text{supp}(f)| \cdot |\text{supp}(\hat{f})| \geq |G| $$
-
-This was proved by Donoho and Stark (1989) and refined by Tao (2005) who showed the additive bound |supp(f)| + |supp(f̂)| ≥ n + 1 for groups of prime order.
-
-### 2.3 The Polynomial Connection
-
-The DFT of a function f : ℤ/nℤ → ℂ is:
-
-$$ \hat{f}(k) = \sum_{j=0}^{n-1} f(j) \omega^{jk}, \quad \omega = e^{2\pi i/n} $$
-
-This is the evaluation of the polynomial p(x) = Σ f(j) x^j at the n-th roots of unity ω^k. The DFT matrix is a Vandermonde matrix with evaluation points ω⁰, ω¹, ..., ω^{n-1}.
-
-## 3. The Algebraic Core
-
-### 3.1 Polynomial Root Bound
-
-**Theorem 3.1 (Polynomial Root Bound).** Let R be an integral domain, p ∈ R[x] with p ≠ 0, and S ⊆ R a finite set such that p(a) = 0 for all a ∈ S. Then |S| ≤ natDegree(p).
-
-*Proof sketch.* The multiset of roots of p has cardinality at most natDegree(p) by the division algorithm. Each element of S belongs to this multiset, so |S| ≤ |roots(p)| ≤ natDegree(p). □
-
-This is formalized as `polynomial_zeros_le_degree` using Mathlib's `Polynomial.card_roots'`.
-
-### 3.2 Evaluation Support Bound
-
-**Theorem 3.2 (Polynomial Nonzero Evaluations).** Let F be a field, p ∈ F[x] with p ≠ 0, and pts : Fin n → F injective. Then:
-
-$$ |\{i : p(\text{pts}(i)) \neq 0\}| \geq n - \text{natDegree}(p) $$
-
-*Proof sketch.* The set of indices where p vanishes maps injectively (via pts) to roots of p, so has cardinality ≤ natDegree(p). The complement has cardinality ≥ n - natDegree(p). □
-
-### 3.3 Degree-Evaluation Uncertainty
-
-**Theorem 3.3 (Degree-Evaluation Uncertainty).** For c : Fin n → F nonzero with polynomial p_c = coeffsToPoly(n, c), and pts : Fin n → F injective:
-
-$$ \text{natDegree}(p_c) + |\text{supp}(\text{vandermonde}(\text{pts}, c))| \geq n $$
-
-*Proof sketch.* Apply Theorem 3.2 to p_c, noting that vandermonde(pts, c)(i) = p_c(pts(i)) by `coeffsToPoly_eval`. □
-
-This is the honest algebraic content of the uncertainty principle. The "degree" plays the role of bandwidth (frequency support), and the evaluation support plays the role of time support.
-
-### 3.4 The Identity Theorem
-
-**Theorem 3.4 (Polynomial Identity Theorem).** If p ∈ R[x] has natDegree(p) < n and p vanishes at n distinct points, then p = 0.
-
-*Proof sketch.* If p ≠ 0, Theorem 3.1 gives n ≤ natDegree(p), contradicting natDegree(p) < n. □
-
-This is the algebraic version of the identity theorem for analytic functions, and it drives the uncertainty principle for the Laplace transform: the Laplace transform of a well-behaved function is analytic, and an analytic function that vanishes on too large a set must be zero.
-
-### 3.5 Vandermonde Injectivity
-
-**Theorem 3.5.** The evaluation map p ↦ (p(pts(0)), ..., p(pts(n-1))) is injective on polynomials of degree < n when pts is injective.
-
-*Proof.* If p and q agree at all n points, then p - q vanishes at n points with degree < n. By Theorem 3.4, p - q = 0. □
-
-This is equivalent to the invertibility of the Vandermonde matrix, and it is the reason why polynomial interpolation works.
-
-## 4. Transform Duality Framework
-
-### 4.1 Definition
-
-We define a `TransformDuality` over a field F on Fin n as a kernel M : Fin n → Fin n → F satisfying:
-- **No zero entries**: M(i,j) ≠ 0 for all i, j
-
-The transform of f : Fin n → F is Tf(i) = Σ_j M(i,j) f(j).
-
-### 4.2 Basis Spread Theorem
-
-**Theorem 4.1.** For any TransformDuality T, the transform of the j-th standard basis vector has support of size n.
-
-*Proof.* T(e_j)(i) = M(i,j), which is nonzero by the no-zero-entry property. □
-
-This means that every single coordinate of the input "excites" all coordinates of the output — there are no "blind spots" in the transform.
-
-### 4.3 MDS Conjecture
-
-The no-zero-entry property alone is insufficient for the full support-support uncertainty bound. We conjecture that the MDS property — every square submatrix is invertible — is the precise characterization:
-
-**Conjecture 4.2.** An n×n matrix M over a field F satisfies |supp(f)| + |supp(Mf)| ≥ n + 1 for all nonzero f if and only if M has the MDS property.
-
-The "if" direction is known (it is the Singleton bound from coding theory). The "only if" direction would establish MDS as a complete characterization of strong uncertainty.
-
-**Testable Prediction.** For the 4×4 DFT matrix over GF(5):
-- The matrix should be MDS (all 2×2, 3×3, and 4×4 submatrices invertible)
-- Every nonzero vector should satisfy |supp| + |supp(DFT)| ≥ 5
-
-## 5. Extensions to Continuous Transforms
-
-### 5.1 Laplace Transform
-
-The Laplace transform L[f](s) = ∫₀^∞ f(t)e^{-st} dt of a function f supported on [0, ∞) is analytic in Re(s) > 0. By the identity theorem for analytic functions (the continuous-space generalization of our Theorem 3.4), if L[f] vanishes on any set with a limit point in the right half-plane, then L[f] ≡ 0, which implies f ≡ 0.
-
-This is the Laplace uncertainty principle: f and L[f] cannot both be "compactly supported" unless f = 0.
-
-### 5.2 Mellin Transform
-
-The Mellin transform M[f](s) = ∫₀^∞ f(t) t^{s-1} dt is related to the Laplace transform by the substitution t = e^{-u}. The same analyticity argument applies: M[f] is analytic in a vertical strip, so it cannot vanish on a set with a limit point unless f = 0.
-
-### 5.3 General Principle
-
-For any integral transform K[f](s) = ∫ K(s,t) f(t) dt where the kernel K(s,t) is analytic in s for each t, the transform K[f] is analytic in s (under appropriate integrability conditions). The identity theorem then implies that K[f] cannot vanish on a set with a limit point unless f = 0 (assuming injectivity of the transform).
-
-## 6. The Algebraic vs. Physical Uncertainty Principle
-
-The Heisenberg uncertainty principle Δx · Δp ≥ ℏ/2 involves standard deviations (L² norms) rather than supports. The relationship to our algebraic results is:
-
-1. **Algebraic (this paper)**: Support bounds from polynomial root counts
-2. **Finite group (Donoho-Stark)**: Support product bounds from Cauchy-Schwarz and Parseval
-3. **Continuous (Heisenberg)**: Standard deviation bounds from Cauchy-Schwarz and integration by parts
-
-All three levels share the same structural cause: the transform reshuffles information in a way that prevents simultaneous concentration. The algebraic level is the most fundamental — it requires only the ring-theoretic fact that integral domains have no zero divisors.
-
-## 7. Discussion
-
-### 7.1 What Makes the DFT Special
-
-Not all Vandermonde matrices give the support-support uncertainty bound. The DFT matrix over ℤ/pℤ (p prime) satisfies the MDS property because its Vandermonde nodes are all n-th roots of unity, and any subset of roots of unity is "sufficiently spread" to make all Vandermonde determinants nonzero.
-
-For a general Vandermonde matrix with distinct (but arbitrary) nodes, we get only the weaker degree-evaluation uncertainty. The gap between these two bounds — the difference between MDS and non-MDS — is precisely the gap between the DFT uncertainty principle and the general polynomial uncertainty.
-
-### 7.2 Implications for Signal Processing
-
-The degree-evaluation uncertainty has direct implications for compressed sensing and signal recovery: if a signal is known to be "sparse" in one domain (few nonzero entries), it must be "spread" in the transform domain. This is the theoretical foundation of compressed sensing algorithms.
-
-### 7.3 Philosophical Implications
-
-The fact that the uncertainty principle is algebraic rather than physical has profound implications. It suggests that uncertainty is not a peculiarity of quantum mechanics but a universal feature of dual representations. Any system that admits two complementary descriptions — time/frequency, position/momentum, spatial/spectral — will exhibit uncertainty, regardless of whether the system is quantum, classical, or purely mathematical.
-
-## 8. Future Work
-
-1. **MDS Characterization**: Prove the MDS conjecture (Conjecture 4.2) formally.
-2. **Continuous Extensions**: Formalize the identity theorem for analytic functions and its application to the Laplace uncertainty principle.
-3. **Categorical Framework**: Develop a categorical description of transform duality that unifies discrete and continuous uncertainty.
-4. **Computational Bounds**: Establish tight bounds on the computational complexity of verifying the MDS property.
-
-## References
-
-1. Donoho, D. L., & Stark, P. B. (1989). Uncertainty principles and signal recovery. *SIAM J. Appl. Math.*, 49(3), 906–931.
-2. Tao, T. (2005). An uncertainty principle for cyclic groups of prime order. *Math. Res. Lett.*, 12(1), 121–127.
-3. Terras, A. (1999). *Fourier Analysis on Finite Groups and Applications*. Cambridge University Press.
-4. Matolcsi, M., & Szücs, J. (1973). Intersections des mesures spectrales conjugées. *C. R. Acad. Sci. Paris*, 277, 841–843.
-5. Amrein, W. O., & Berthier, A. M. (1977). On support properties of Lᵖ-functions and their Fourier transforms. *J. Funct. Anal.*, 24(3), 258–267.
+1. We isolate the **abstract uncertainty engine** (Theorem 3.1): a function analytic on a preconnected set $U$ vanishing on a nonempty open $W \subseteq U$ vanishes on all of $U$.
+2. We derive the **Fourier compact-support principle** (Theorem 4.1): an entire function with compact support is zero.
+3. We prove the **measure-theoretic consequences** (Theorems 4.2–4.5): the zero set of a nonzero entire function is null; its support has infinite measure; vanishing on a positive-measure set forces zero (Benedicks–Amrein–Berthier for entire images); finite-measure support forces zero.
+4. We instantiate the engine on the **Laplace** (Theorem 6.1) and **Mellin** (Theorem 6.2) transforms.
+5. We supply **worked examples** — sine/cosine and the Gaussian — with explicit measure computations.
 
 ---
 
-*All algebraic results in Sections 3–4 have been formally verified in Lean 4 using Mathlib, with proofs depending only on the standard axioms (propext, Classical.choice, Quot.sound).*
+## 2. Preliminaries and definitions
+
+Throughout, $\mathbb C$ denotes the complex plane, identified with $\mathbb R^2$ for measure-theoretic purposes, and $\operatorname{vol}$ denotes two-dimensional Lebesgue measure.
+
+**Definition 2.1 (Holomorphic / analytic on a set).** A function $f : \mathbb C \to \mathbb C$ is *analytic on a neighborhood of a set* $U$ if for every $z \in U$ there is an open ball around $z$ on which $f$ is given by a convergent power series. When $U = \mathbb C$ we call $f$ **entire**. For open $U$, analyticity on a neighborhood of $U$ coincides with complex differentiability on $U$.
+
+**Definition 2.2 (Support and tsupport).** The *support* of $f$ is $\operatorname{supp} f = \{z : f(z) \ne 0\}$. Its *topological support* (or closed support) is $\operatorname{tsupp} f = \overline{\operatorname{supp} f}$. We say $f$ has **compact support** if $\operatorname{tsupp} f$ is compact.
+
+**Definition 2.3 (Preconnected set).** A set $U$ is *preconnected* if it cannot be split by two open sets each meeting $U$ into disjoint nonempty pieces. Every convex set — in particular $\mathbb C$, any half-plane, any strip, any ball — is preconnected.
+
+**Definition 2.4 (Zero set).** The *zero set* of $f$ is $Z(f) = \{z : f(z) = 0\}$.
+
+**Definition 2.5 (Integral transform, informal).** An *integral transform* sends a signal $f$ to a function $T[f](s) = \int f(t)\,K(s,t)\,dt$ for a kernel $K$. Examples: the **Fourier** kernel $e^{-2\pi i s t}$; the **Laplace** kernel $e^{-st}$ on $[a,\infty)$; the **Mellin** kernel $t^{s-1}$ on $(0,\infty)$. In each case, for suitable signals, $s \mapsto T[f](s)$ extends holomorphically to an open connected region of $\mathbb C$ (the plane, a half-plane, a strip respectively).
+
+---
+
+## 3. The abstract uncertainty engine
+
+The whole theory rests on the identity principle for analytic functions.
+
+**Theorem 3.1 (Identity-principle uncertainty).** *Let $f : \mathbb C \to \mathbb C$ be analytic on a neighborhood of a preconnected set $U$. Let $W \subseteq U$ be open and nonempty, and suppose $f \equiv 0$ on $W$. Then $f \equiv 0$ on all of $U$.*
+
+**Proof sketch.** Pick $z_0 \in W$. Since $W$ is open, $W$ is a neighborhood of $z_0$, so $f$ is *eventually zero* near $z_0$ (it is zero on a whole neighborhood). By the identity theorem for analytic functions on a preconnected set — an analytic function that is locally zero at one point of a preconnected domain is zero throughout — $f$ vanishes on all of $U$. $\qquad\blacksquare$
+
+**Interpretation.** Theorem 3.1 *is* the uncertainty principle in its most general holomorphic form. If a transform $T[f]$ is holomorphic on a connected open domain $U$ and is supported on a set $S \subsetneq U$ whose complement in $U$ contains a nonempty open set $W$ (for example, if $S$ has empty interior, or is compact and $U$ is not), then $T[f] \equiv 0$ on $W$, hence on $U$, hence — by invertibility of $T$ — $f = 0$. The specific transform only determines the shape of $U$:
+
+| Transform | Domain of holomorphy $U$ | Preconnected? |
+|---|---|---|
+| Fourier (compact support) | $\mathbb C$ | yes (convex) |
+| Laplace on $[a,\infty)$ | right half-plane $\{\operatorname{Re} s > 0\}$ | yes (convex) |
+| Mellin | vertical strip $\{a < \operatorname{Re} s < b\}$ | yes (convex) |
+| Two-sided Laplace | horizontal/vertical strip | yes (convex) |
+| Z-transform | annulus | yes (connected) |
+
+---
+
+## 4. The Fourier uncertainty principle and its measure-theoretic forms
+
+We now specialize $U = \mathbb C$, i.e. to entire functions, the setting of the Fourier transform of compactly supported signals via Paley–Wiener.
+
+**Theorem 4.1 (Compact-support form).** *An entire function $f$ with compact support is identically zero.*
+
+**Proof sketch.** Since $\operatorname{tsupp} f$ is compact and $\mathbb C$ is not compact, the complement $(\operatorname{tsupp} f)^c$ is a nonempty open set on which $f \equiv 0$. Apply Theorem 3.1 with $U = \mathbb C$ (preconnected) and $W = (\operatorname{tsupp} f)^c$: $f \equiv 0$ on $\mathbb C$. $\qquad\blacksquare$
+
+This is the cleanest statement of Fourier uncertainty: a compactly supported signal (whose transform is entire by Paley–Wiener) cannot also have a compactly supported transform, unless it is zero.
+
+We now quantify how *little* a nonzero transform can vanish.
+
+**Theorem 4.2 (Null zero set).** *If $f$ is entire and $f \not\equiv 0$, then $\operatorname{vol}(Z(f)) = 0$.*
+
+**Proof sketch.** Choose $x$ with $f(x) \ne 0$. By analyticity, the set $\{f \ne 0\}$ is **codiscrete** (its complement is discrete): the zeros of a nonzero analytic function are isolated. Hence $Z(f)$ is discrete. Since $f$ is continuous, $Z(f)$ is closed. A closed, discrete subset of the second-countable (hence Lindelöf) space $\mathbb C$ is countable. A countable subset of $\mathbb R^2$ has Lebesgue measure zero. $\qquad\blacksquare$
+
+**Theorem 4.3 (Infinite support).** *If $f$ is entire and $f \not\equiv 0$, then $\operatorname{vol}(\operatorname{supp} f) = \infty$.*
+
+**Proof sketch.** The plane splits as $\mathbb C = \operatorname{supp} f \cup Z(f)$, so $\infty = \operatorname{vol}(\mathbb C) \le \operatorname{vol}(\operatorname{supp} f) + \operatorname{vol}(Z(f)) = \operatorname{vol}(\operatorname{supp} f) + 0$. Hence $\operatorname{vol}(\operatorname{supp} f) = \infty$. $\qquad\blacksquare$
+
+**Theorem 4.4 (Benedicks–Amrein–Berthier form, entire image).** *If $f$ is entire and $\operatorname{vol}(Z(f)) > 0$, then $f \equiv 0$.*
+
+**Proof sketch.** Contrapositive of Theorem 4.2: if $f \not\equiv 0$ then $\operatorname{vol}(Z(f)) = 0$, contradicting positivity. $\qquad\blacksquare$
+
+**Theorem 4.5 (Measure-theoretic uncertainty).** *If $f$ is entire and $\operatorname{vol}(\operatorname{supp} f) < \infty$, then $f \equiv 0$.*
+
+**Proof sketch.** Contrapositive of Theorem 4.3. $\qquad\blacksquare$
+
+Theorems 4.4 and 4.5 are the Benedicks–Amrein–Berthier conclusion for the class of transforms with entire image: a signal and its (entire) transform cannot both be supported on sets of finite measure.
+
+---
+
+## 5. Worked examples
+
+### 5.1 Sine, cosine, and the sinc kernel (Fourier)
+
+The sinc function $\operatorname{sinc}(k) = \sin(\pi k)/(\pi k)$ is the Fourier transform of the box indicator $\mathbf 1_{[-1,1]}$ — the canonical example of a compactly supported signal with a fully spread-out transform. Its numerator is built from $\sin$ and $\cos$, which are entire.
+
+**Proposition 5.1.** *$\sin$ and $\cos$ are entire, and neither is identically zero (since $\sin(\pi/2) = 1$ and $\cos 0 = 1$).*
+
+**Corollary 5.2.** *$\operatorname{vol}(Z(\sin)) = \operatorname{vol}(Z(\cos)) = 0$, and $\operatorname{vol}(\operatorname{supp}\sin) = \infty$.*
+
+These follow directly from Theorems 4.2 and 4.3. The sinc kernel's transform (the box) is compactly supported, but the sine wave itself — as a function on the plane — vanishes only on the discrete null set $\{n\pi\}$ and is otherwise nonzero, illustrating the infinite-support conclusion.
+
+### 5.2 The Gaussian: the extremal object
+
+**Proposition 5.3.** *The function $z \mapsto e^{-z^2}$ is entire and nowhere zero; hence $\operatorname{supp}(e^{-z^2}) = \mathbb C$ and $\operatorname{vol}(\operatorname{supp}(e^{-z^2})) = \infty$.*
+
+**Proof sketch.** The complex exponential never vanishes, so $e^{-z^2} \ne 0$ for all $z$; its support is the whole plane. $\qquad\blacksquare$
+
+The Gaussian is the fixed point of the Fourier transform ($\widehat{e^{-\pi t^2}} = e^{-\pi k^2}$) and the unique minimizer of the variance uncertainty product. Its complex incarnation is the *equality case* made visible: not only can it not be confined, it does not vanish anywhere at all — the smoothest, most symmetric refusal of localization.
+
+---
+
+## 6. Uncertainty for the Laplace and Mellin transforms
+
+The same engine, with a different domain $U$, yields uncertainty principles for other transforms.
+
+**Theorem 6.1 (Laplace uncertainty).** *Let $f$ be holomorphic on the right half-plane $H = \{\operatorname{Re} s > 0\}$ — as every Laplace transform of an $L^1$ signal supported on $[a,\infty)$ is on its region of convergence. If $f$ vanishes on a nonempty open subset $W \subseteq H$, then $f \equiv 0$ on $H$; consequently, by injectivity of the Laplace transform, the signal is zero.*
+
+**Proof sketch.** $H$ is convex, hence preconnected. Apply Theorem 3.1 with $U = H$. $\qquad\blacksquare$
+
+**Theorem 6.2 (Mellin uncertainty).** *Let $f$ be holomorphic on a vertical strip $S = \{a < \operatorname{Re} s < b\}$ — the strip of holomorphy of a Mellin transform. If $f$ vanishes on a nonempty open subset $W \subseteq S$, then $f \equiv 0$ on $S$.*
+
+**Proof sketch.** A strip is the intersection of two half-planes $\{\operatorname{Re} s > a\}$ and $\{\operatorname{Re} s < b\}$, each convex; the intersection is convex, hence preconnected. Apply Theorem 3.1 with $U = S$. $\qquad\blacksquare$
+
+**Remark 6.3.** The convexity (hence preconnectedness) of the half-plane and the strip is exactly the hypothesis Theorem 3.1 needs. The two-sided Laplace transform (strip), the Z-transform (annulus, connected but not convex), and the Borel transform (a growth-determined region) are all covered identically, each yielding its own uncertainty principle.
+
+---
+
+## 7. Algorithms
+
+The theory is qualitative, but its predictions are numerically checkable. We describe two algorithms used in the accompanying computational demonstrations.
+
+### 7.1 Concentration trade-off estimator
+
+**Purpose.** Given a discretized signal, estimate the time-spread $\Delta x$ and frequency-spread $\Delta k$ (via second moments of $|f|^2$ and $|\hat f|^2$) and verify $\Delta x \cdot \Delta k \ge 1/(4\pi)$ numerically, confirming the Gaussian saturates the bound.
+
+**Pseudocode.**
+```
+Input: sampled signal f on a grid of N points, spacing dt
+1. normalize f so that sum |f|^2 dt = 1
+2. compute mean time  mu_t = sum t |f|^2 dt
+3. compute Delta_x^2 = sum (t - mu_t)^2 |f|^2 dt
+4. compute fhat = FFT(f), frequencies k, normalize similarly
+5. compute Delta_k^2 = sum (k - mu_k)^2 |fhat|^2 dk
+6. return Delta_x * Delta_k, compare to 1/(4*pi)
+```
+
+### 7.2 Support-measure certifier
+
+**Purpose.** Empirically confirm that as a compactly supported signal is narrowed (support measure $\to \varepsilon$), the effective support of its transform grows without bound, illustrating Theorem 4.3.
+
+**Pseudocode.**
+```
+Input: family of box signals of width w -> 0
+For each width w:
+  1. build box_w = indicator of [-w/2, w/2]
+  2. compute transform (analytically: sinc scaled by w)
+  3. measure effective support = { k : |transform(k)| > tau } for threshold tau
+  4. record (w, measure_of_effective_support)
+Output: table showing product stays bounded below / support blows up
+```
+
+---
+
+## 8. Applications and discussion
+
+**Signal processing.** The uncertainty principle is the theoretical ceiling on joint time–frequency resolution. Every windowed transform (short-time Fourier transform, wavelets, Gabor frames) is a design under this constraint. Recognizing the constraint as a theorem — not an artifact of finite data — clarifies that no algorithm can evade it.
+
+**Quantum mechanics.** The identification of position–momentum uncertainty with Fourier uncertainty demystifies the former: it is a mathematical necessity for any wave description, independent of measurement or interpretation.
+
+**Number theory and scaling problems.** Mellin uncertainty (Theorem 6.2) is the analytic backbone behind rigidity statements for Dirichlet series and zeta-type functions: a Mellin transform cannot vanish on an open subset of its strip without vanishing identically.
+
+**Unified viewpoint.** The central message is economy: one lemma (Theorem 3.1) governs the entire zoo of transform uncertainty principles. The transform chooses the domain; rigidity does the rest.
+
+---
+
+## 9. Future directions
+
+1. **Paley–Wiener, formalized.** Prove that the Fourier transform of a compactly supported $L^1$ (or $L^2$) function extends to an entire function of exponential type, closing the loop between the *signal* and the *entire transform* used here, upgrading "the transform is entire ⇒ …" to a theorem directly about $\hat f$.
+
+2. **Benedicks–Amrein–Berthier proper.** The full theorem — $f$ and $\hat f$ cannot both be supported on sets of finite Lebesgue measure unless $f = 0$ — for the genuine Fourier transform on $\mathbb R^n$ (no analyticity assumed). The present development proves the entire-image special case; the general case needs a different (measure-theoretic / Zygmund) argument.
+
+3. **Quantitative Heisenberg.** Formalize $\Delta x \cdot \Delta k \ge 1/2$ via the variance form $\|x f\|_2 \cdot \|\xi\,\hat f\|_2 \ge (1/4\pi)\|f\|_2^2$, the sharp inequality with the Gaussian as the equality case — connecting to the Gaussian's full-plane support as the extremal object.
+
+4. **Discrete uncertainty (Donoho–Stark).** For the DFT on $\mathbb Z/N$, $|\operatorname{supp} f|\cdot|\operatorname{supp}\hat f| \ge N$ for $f \ne 0$: a finite-dimensional, fully computable analogue provable via Plancherel and an $L^\infty$/Vandermonde bound.
+
+5. **Radon transform.** A support theorem: if $f$ on $\mathbb R^2$ is supported in a strip and its Radon transform is supported in a set of finite measure of line-space, then $f = 0$. This needs the microlocal / holomorphic-extension machinery of the Radon transform.
+
+6. **Other holomorphic transforms.** The engine Theorem 3.1 applies verbatim to the two-sided Laplace transform (strip), the Z-transform (annulus), and the Borel transform, each giving its own uncertainty principle by choosing the domain $U$.
+
+---
+
+## 10. Conclusion
+
+The uncertainty principle is not a law of physics but a theorem of complex analysis wearing physical clothing. Its engine is the rigidity of holomorphic functions: an analytic function on a connected open domain that vanishes on an open set vanishes everywhere. From this one fact flow the compact-support Fourier principle, the null-zero-set and infinite-support results, the positive-measure Benedicks–Amrein–Berthier form, and — by merely changing the domain — uncertainty principles for the Laplace and Mellin transforms and beyond. Every invertible transform with a holomorphic image has its own uncertainty principle, and they are all, at bottom, the same principle.

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4b429121",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Zero-Knowledge Certification of Proofs\n\nThis cycle established three probabilistic pillars of a zero-knowledge\nproof-checking protocol: (i) independent repetition multiplies a pr",
-      "quality_score": 0.7118800000000001,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-02T14:13:50",
-      "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
-    },
-    {
       "cycle_id": "bfccf79e",
       "domain": "Bridges",
       "key_insight": "# Future Directions\n\nBold, testable conjectures emerging from the study of `a⁵ − a` and its\ndivisibility structure.\n\n## 1. The universal denominator of `aⁿ − a`\n\n**Conjecture.** For each exponent `n ≥",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-10T05:18:26",
       "title": "The Zeta Function of a Graph: Number Theory on Networks"
+    },
+    {
+      "cycle_id": "48961a11",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Optimal Strategy in Social-Deduction Games\n\nThe current cycle established the exact symmetry backbone of Bayesian werewolf\nplay: under population-only information every player ca",
+      "quality_score": 0.83,
+      "sorry_count": 4,
+      "theorem_count": 16,
+      "timestamp": "2026-07-10T05:35:47",
+      "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3ec587ed",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## Completed work\n\n`Catalog/Physics/AiryPolynomial.lean` formalizes and fully proves two statements\nabout Airy's equation, working entirely inside the polynomial ring `ℝ[X]` using",
-      "quality_score": 0.624552,
-      "sorry_count": 0,
-      "theorem_count": 2,
-      "timestamp": "2026-06-29T17:59:54",
-      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
-    },
     {
       "cycle_id": "c9fb85eb",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-10T05:18:26",
       "title": "The Zeta Function of a Graph: Number Theory on Networks"
+    },
+    {
+      "cycle_id": "48961a11",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Optimal Strategy in Social-Deduction Games\n\nThe current cycle established the exact symmetry backbone of Bayesian werewolf\nplay: under population-only information every player ca",
+      "quality_score": 0.83,
+      "sorry_count": 4,
+      "theorem_count": 16,
+      "timestamp": "2026-07-10T05:35:47",
+      "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "492f9d48",
-      "domain": "Algebra",
-      "name": "gG_pos",
-      "quality": 0.8151999999999999
-    },
-    {
-      "cycle_id": "8d243e81",
-      "domain": "Novelty",
-      "name": "K_origin",
-      "quality": 0.7115
-    },
-    {
-      "cycle_id": "8d243e81",
-      "domain": "Novelty",
-      "name": "K_xaxis",
-      "quality": 0.7115
-    },
     {
       "cycle_id": "8d243e81",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "exhibits",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "48961a11",
+      "domain": "Applications",
+      "name": "is",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "48961a11",
+      "domain": "Applications",
+      "name": "choose_identity",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "48961a11",
+      "domain": "Applications",
+      "name": "posterior_eq_prior",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-10T05:18:26",
+  "last_updated": "2026-07-10T05:35:47",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "7469cf90",
-      "domain": "Applications",
-      "sorry_count": 4,
-      "timestamp": "2026-07-01T23:10:20"
-    },
     {
       "context": "`Lemmens-Seidel-73`); here we prove the *reduction* to it with zero `sorry`s.; eigenvalue `−3`.  Both rank facts are formalised with zero `sorry`s, reducing; engines are captured here rigorously and w",
       "cycle_id": "946cfca3",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 6,
       "timestamp": "2026-07-10T05:18:18"
+    },
+    {
+      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "48961a11",
+      "domain": "Applications",
+      "sorry_count": 4,
+      "timestamp": "2026-07-10T05:35:47"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "bb909d34",
-        "quality": 0.8344800000000001,
-        "theorems": 10,
-        "title": "Anabelomorphic Equivalence"
-      },
-      {
         "cycle_id": "829d5920",
         "quality": 0.6395200000000001,
         "theorems": 17,
@@ -3141,6 +3135,12 @@
         "quality": 0.72,
         "theorems": 54,
         "title": "The Fundamental Theorem of Cakes: Algebraic Geometry of Baking"
+      },
+      {
+        "cycle_id": "48961a11",
+        "quality": 0.83,
+        "theorems": 16,
+        "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
       }
     ],
     "Bridges": [

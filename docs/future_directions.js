@@ -3,6 +3,20 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 48961a11 (Q=0.830), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a werewolf). The villagers win if all werewolves are eliminated; the werewolves win if they equal or outnu",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_48961a11_cfcf399f",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "48961a11",
+    "status": "available",
+    "timestamp": "2026-07-10T05:35:47.039582+00:00",
+    "title": "Deepening: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
+  },
+  {
     "consumed_by_exp_id": "4936bb72",
     "description": "Building on cycle 4d30d98b (Q=0.830), which proved 9 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Ihara zeta function of a finite graph G is zeta_G(u) = prod_{[C]} (1 - u^{|C|})^{-1} where the product is over prime cycles (closed walks that are not powers of shorter walks). For a (q+1)-regular graph, zeta_G(u) = (1-u^2)^{-(n-1)(q-1)/2} * det(I - A*u + (q-1)*u^2*I)^{-1} where A is the adjacen",
     "domains": [
@@ -214,6 +228,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-09T23:08:57.326588+00:00",
     "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 48961a11 (Q=0.830) proved 16 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a were",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_48961a11_4faaf9b6",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "48961a11",
+    "status": "available",
+    "timestamp": "2026-07-10T05:35:47.121314+00:00",
+    "title": "Close Proofs: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
   },
   {
     "consumed_by_exp_id": "",
@@ -8875,6 +8903,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cryptography from Chaos: Encrypting with the Logistic Map"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Optimal Strategy in Social-Deduction Games\n\nThe current cycle established the exact symmetry backbone of Bayesian werewolf\nplay: under population-only information every player carries identical suspicion\n`k/n`, the werewolf advantage is `k/(n-k)`, parity is reached precisely when\n`n \u2264 2k`, and the consensus-elimination game value is a genuine probability. The\nfollowing conjectures build on those exact results.\n\n## Conjecture 1 \u2014 The parity threshold is a phase transition in win probability\n\nAs the werewolf fraction crosses the parity boundary `k = n/2`, the villager\nwin-probability of the consensus-elimination game drops discontinuously to zero,\nand just below it decays like a fixed power of the villager surplus `n - 2k`.\n\nThe key insight is that the exact threshold `n \u2264 2k` proved here is not merely a\nterminal condition but the organizing center of the whole win-probability\nsurface: distance to parity, not raw counts, is the correct order parameter.\n\nWhy now? We now possess an exactly specified game value with proven `[0,1]`\nbounds and a closed-form parity criterion, so the shape of the value function\nnear the boundary can be studied rigorously rather than by simulation alone.\n\n## Conjecture 2 \u2014 Information adds a bounded multiplicative edge over uniform play\n\nAny villager strategy using per-round evidence improves the single-round\ndetection probability from the symmetric baseline `k/n` to at most `1`, and the\nresulting gain in overall win-probability is bounded by a factor depending only\non the number of rounds, not on `n`.\n\nThe key insight is that the symmetry theorem pins the *uninformed* detection rate\nexactly at `k/n`, giving a clean, provable baseline against which any\ninformation-driven improvement must be measured.\n\nWhy now? With posterior = prior established as an equality, the \"value of\ninformation\" becomes a well-posed comparison between a fixed baseline and an\noptimized alternative rather than a vague heuristic claim.\n\n## Conjecture 3 \u2014 Optimal werewolf count scales like the square root of the population\n\nFor the game to be balanced (villager win-probability bounded away from both 0\nand 1 as `n \u2192 \u221e`), the number of werewolves must grow on the order of `\u221an`.\n\nThe key insight is that the survival law `(n-t)/n` makes the expected number of\nwerewolves removed over a round-limited game a concrete, analyzable quantity, and\nbalancing removals against parity pressure forces a sub-linear werewolf count.\n\nWhy now? The exchangeability survival law and the exact advantage ratio give both\nhalves of the balance equation in closed form, so the `\u221an` scaling can be derived\ninstead of merely observed in simulation.\n\n## Conjecture 4 \u2014 Monotone comparative statics extend to full mixed rulesets\n\nThe strict monotonicity of suspicion (increasing in werewolves, decreasing in\npopulation) and of the werewolf advantage persists verbatim when nightly\neliminations are added, so that comparative statics proven for the consensus\nmodel transfer to the classical day/night game.\n\nThe key insight is that monotonicity here is driven purely by the counting ratios\n`k/n` and `k/(n-k)`, which are ruleset-independent, suggesting the qualitative\nconclusions survive richer dynamics.\n\nWhy now? Having isolated the monotonicity to pure ratio algebra, we can test its\nrobustness against added game mechanics without re-deriving the base case.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0852",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "48961a11",
+    "status": "available",
+    "timestamp": "2026-07-10T05:35:41.850012+00:00",
+    "title": "The current cycle established the exact symmetry backbone of Bayesian werewolf"
+  },
+  {
     "consumed_by_exp_id": "90bde271",
     "description": "The Erdos-Renyi random graph G(n, p) has n vertices where each edge appears independently with probability p. At p = log(n)/n, G(n,p) becomes connected. But what if p is COMPLEX? Define G(n, z) where z is a complex number: each edge (i,j) appears with 'probability' z, meaning the edge weight is z instead of 0 or 1. The resulting 'complex graph' is a weighted complete graph where edge (i,j) has weight z if the edge exists and 0 otherwise. The adjacency matrix A_z has entries that are either z or 0. Conjecture: The complex eigenvalues of A_z trace out a circle of radius |z|*sqrt(n) in the complex plane, centered at the origin. As n -> infinity, the empirical spectral distribution of A_z converges to the circular law (like the Ginibre ensemble) because A_z is a random matrix with i.i.d. entries of mean z*p and variance |z|^2*p*(1-p). The 'hallucination' is that for Im(z) != 0, the graph has complex-valued connectivity \u2014 information flows with both amplitude and phase, and the phase creates interference patterns that are visible in the spectral density. Test: generate A_z for n = 1000 with z = 0.5 + 0.3i, compute eigenvalues, and verify they lie in a disk of radius sqrt(n)*|z|. Compare with the Ginibre ensemble prediction. Impact: complex-valued random graphs have circular spectra \u2014 the hallucination of complex probabilities creates beautiful circular eigenvalue distributions.",
     "domains": [
@@ -8902,21 +8945,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-09T19:55:16.452095+00:00",
     "title": "Close Proofs: Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
-  },
-  {
-    "consumed_by_exp_id": "48961a11",
-    "description": "In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a werewolf). The villagers win if all werewolves are eliminated; the werewolves win if they equal or outnumber villagers. Conjecture: The optimal Bayesian strategy for villagers is to vote for the player with the highest posterior probability of being a werewolf, where the prior is k/n and the likelihood updates are based on the player's voting pattern and survival. More precisely, define the werewolf posterior P(W_i | evidence) using Bayes' theorem: P(W_i) = k/n (prior), P(evidence | W_i) = product of conditional probabilities of observed events given that player i is a werewolf. The optimal strategy maximizes P(villagers win) = P(correct elimination at each day round). For n=7, k=2: the villagers' win probability with optimal Bayesian play is approximately 0.36 (known from game theory). Conjecture: For general n and k, the villagers' win probability is approximately C * (1 - k/(n-k))^2 where C is a constant depending on the information structure. Test: simulate 10^6 games with n=7 to n=20 players and Bayesian villagers, measure the win probability, and fit to the conjectured formula. Impact: social deduction has an optimal Bayesian strategy, and the werewolves' advantage scales as (k/(n-k))^2.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0837",
-    "priority_score": 0.72,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T03:16:18.512491+00:00",
-    "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
   },
   {
     "consumed_by_exp_id": "",
@@ -8990,5 +9018,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-10T01:13:32.642655+00:00",
     "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Category theory studies objects and morphisms between them. A joke has a setup (an object) and a punchline (a morphism that subverts expectations). Define the category Joke where objects are setups and morphisms are punchlines. A joke J: S -> P is a morphism from setup S to punchline P that factors through an unexpected category. The humor of a joke is measured by its 'surprise': the distance between the expected punchline (the limit of the setup category) and the actual punchline. Conjecture: The funniest jokes are those where the setup category has a colimit that is far from the limit. Formally, if S is a setup with expected resolution lim(S) and the actual punchline P is a colimit colim(S'), then the humor H(J) = d(lim(S), colim(S')), where d is a metric on the category of punchlines. Puns have H close to 0 (the punchline is near the expected resolution). Absurdist humor has H large (the punchline is in a completely different category). The universal property of jokes: a joke J is universal if for any other joke J' with the same setup, there is a unique natural transformation J => J'. The funniest jokes are universal \u2014 they are the terminal objects in the category of jokes with a given setup. Test: formalize 100 jokes as category-theoretic objects and compute H(J) for each. Correlate with human funniness ratings. Impact: humor is a colimit. The funnier the joke, the further the punchline is from the expected limit of the setup.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0851",
+    "priority_score": 0.62,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T05:35:24.861903+00:00",
+    "title": "The Category Theory of Jokes: Universal Properties of Humor"
   }
 ];
