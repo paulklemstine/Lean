@@ -39232,7 +39232,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 3716954d (Q=0.780), which proved 29 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: L-functions are the DNA of mathematics — each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Applications"
       ],
@@ -39352,7 +39352,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 84ab5171 (Q=0.820), which proved 55 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Applications"
       ],
@@ -39497,6 +39497,46 @@
       "thread_id": "",
       "timestamp": "2026-07-09T21:23:45.652130+00:00",
       "title": "Deepening: Power‑of‑Two Perfect Matching Count in Class B Graphs"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle e7035fce (Q=0.820), which proved 21 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Mendeleev's periodic table arranges elements by atomic number Z, but Z is just the charge of the nucleus. Conjecture: the periodic table is the spectrum of an operator on a Hilbert space of dimension equal to the number of stable isotopes. Define the 'nuclear Hamiltonian' H on L^2(R^3) by H = -hbar^",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Applications"
+      ],
+      "github_issue": 0,
+      "id": "push_e7035fce_bd8c0405",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9199999999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "e7035fce",
+      "source_path": "The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-10T00:21:21.581372+00:00",
+      "title": "Deepening: The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
     },
     {
       "ambition_level": "extension",
