@@ -301,7 +301,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b0a297ce",
     "description": "Cycle 4936bb72 (Q=0.850) proved 11 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Building on cycle 4d30d98b (Q=0.830), which proved 9 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. ",
     "domains": [
       "Novelty"
@@ -310,7 +310,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "4936bb72",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T07:49:49.968157+00:00",
     "title": "Close Proofs: The Zeta Function of a Graph: Number Theory on Networks"
   },
@@ -5259,21 +5259,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The Fundamental Theorem of Cakes: Algebraic Geometry of Baking"
   },
   {
-    "consumed_by_exp_id": "9696343b",
-    "description": "Bach's chorales are the gold standard of Western harmony. But what if we could MEASURE the harmonic complexity using topology? Encode each chord as a point in a 12-dimensional space (one dimension per pitch class). A sequence of chords traces a path in this space. Compute the persistent homology of the point cloud of all chords in a Bach chorale. Conjecture: Bach's chorales have persistent H_1 (1-dimensional cycles) that survive across a wide range of scales, indicating circular harmonic motion (the circle of fifths). In contrast, random chord sequences have H_1 bars that die quickly. The longest H_1 bar in a Bach chorale corresponds to the circle of fifths \u2014 the fundamental harmonic cycle. Pop music has shorter H_1 bars (less complex harmonic cycles). Atonal music has no persistent H_1 (no harmonic cycles). Test: compute persistent homology barcodes for 100 Bach chorales, 100 pop songs, and 100 atonal pieces. Verify: Bach has H_1 bars of length > 0.5 (in normalized pitch-class space), pop has bars of length 0.2-0.5, atonal has no persistent H_1. Impact: the topology of music IS its harmonic structure. Bach's genius is literally topological \u2014 his music has longer harmonic cycles.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0854",
-    "priority_score": 0.76,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T05:52:57.315450+00:00",
-    "title": "Persistent Homology of Musical Harmony: The Topology of Bach"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions: Log-Concavity in the d-Hoggatt Hierarchy\n\nThis cycle established a sharp dichotomy for the *total* d-Hoggatt numbers\n`H_d(n) = \u2211_k H_d(n,k)`: the `d = 1` totals `2^n` are infinitely log-concave\n(indeed log-linear), while the `d = 2` totals (Catalan numbers) are strictly\nlog-convex, and the `d = 3` totals (Baxter numbers) are empirically log-convex.\nThe following conjectures are the natural next targets.\n\n## Conjecture 1 \u2014 Universal log-convexity of the totals for d \u2265 2\n\nFor every `d \u2265 2`, the total d-Hoggatt numbers are strictly log-convex:\n`H_d(n+1)\u00b2 < H_d(n) \u00b7 H_d(n+2)` for all `n \u2265 0`.\n\nThe key insight is that each `H_d(n)` is a positively weighted sum of products\nof binomial coefficients whose dominant growth ratio increases with `n`, so the\ntotals inherit the log-convexity of the Catalan case rather than the\nlog-concavity of the individual rows. Why now? The Catalan (`d = 2`) case is now\nsettled from a two-term recurrence, and the Baxter (`d = 3`) case matches it\nterm-by-term in the computed data, suggesting a single recurrence-driven\nargument covers the whole family.\n\n## Conjecture 2 \u2014 Row-sum log-convexity is a summation phenomenon\n\nIf `T(n,k)` is any triangle whose rows are log-concave and whose row-ratio\n`T(n+1,k)/T(n,k)` is nondecreasing in `n`, then the row sums `S(n) = \u2211_k T(n,k)`\nare log-convex.\n\nThe key insight is that log-convexity of the totals is not special to Hoggatt\ntriangles but follows from monotone amplification of a common growth factor\nacross rows, a Chebyshev-sum / rearrangement effect. Why now? Having seen the\nsame negative discriminant `\u0394_n < 0` for both Catalan and Baxter totals, the\nphenomenon is clearly structural rather than coincidental and deserves a triangle\n-level hypothesis.\n\n## Conjecture 3 \u2014 Infinite log-concavity of the rows\n\nFor every `d \u2265 1`, each fixed row `k \u21a6 H_d(n,k)` of the d-Hoggatt triangle is\ninfinitely log-concave.\n\nThe key insight is that the log-concavity operator, when applied to a finite\npositive log-concave row with the golden-ratio-squared safety factor\n`a_k\u00b2 \u2265 ((3+\u221a5)/2) \u00b7 a_{k-1} a_{k+1}`, reproduces that same safety factor, so a\nsingle closure lemma propagates through all iterates. Why now? The threshold\nconstant `(3+\u221a5)/2` is exactly the fixed point of the operator's worst-case\nratio, and the toolkit built this cycle (the operator `\ud835\udcdb`, its annihilation of\nlog-linear sequences, and closure under products) already contains the moving\nparts needed to attack the closure lemma.\n\n## Conjecture 4 \u2014 A log-concave \"renormalization\" of the totals\n\nFor every `d \u2265 2` there is an explicit positive normalizing sequence `w_d(n)`\n(e.g. a ratio of factorials) such that the renormalized totals\n`H_d(n) / w_d(n)` are infinitely log-concave, even though the raw totals are\nlog-convex.\n\nThe key insight is that log-convexity of the totals is caused by a smooth,\npredictable growth factor which can be divided out, leaving a residual sequence\ngoverned by the same infinite-log-concavity mechanism as the rows. Why now? The\nexact growth ratio `(n+2)(2n+3)/((2n+1)(n+3))` for the Catalan totals is now\nknown in closed form, giving a concrete first candidate for `w_2` and a template\nfor higher `d`.\n\n## Conjecture 5 \u2014 Tropical dequantization of the dichotomy\n\nUnder the tropical (min-plus) limit that sends a positive sequence `a_n` to its\nvaluations `v_n = \u2212log a_n`, log-concavity becomes convexity of `v` and\nlog-linearity becomes affinity of `v`. The `d = 1`/`d \u2265 2` dichotomy then reads:\n`v` is affine for `d = 1` and strictly concave for `d \u2265 2`.\n\nThe key insight is that the log-concavity operator degenerates, in the tropical\nlimit, to a second finite difference, so infinite log-concavity corresponds to a\nsequence of iterated finite differences retaining a fixed sign \u2014 a purely\npiecewise-linear, tropical-geometric condition. Why now? Casting the numeric\ndichotomy in the min-plus semiring links this combinatorial question to tropical\nconvexity, where second-difference sign conditions are the natural objects and\npowerful piecewise-linear tools are available.\n",
     "domains": [
@@ -5377,6 +5362,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T07:49:40.047041+00:00",
     "title": "Spectral\u2013arithmetic dictionary for the Ihara zeta fun"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalises the *algebraic skeleton* of the \"topology of Bach\"\nmission: pitch-class space as `\u2124/12\u2124`, harmonic cycles as cyclic subgroups, and\nthe circle of fifths as the unique-up-to-symmetry longest such cycle. What is\nproved is a self-contained, machine-checked chain:\n\n1. `cycleLen_eq` \u2014 harmonic cycle length `= 12 / gcd(12, k)`.\n2. Concrete values (fifth `12`, tritone `2`, third `3`, whole tone `6`, \u2026).\n3. `cycleLen_le`, `fifth_cycleLen_maximal`, `cycleLen_dvd_12` \u2014 the fifth is a\n   longest cycle; every cycle length divides `12`.\n4. `cycleLen_eq_12_iff`, `maximal_generators` \u2014 spanning intervals are exactly\n   those coprime to `12`, namely `{1, 5, 7, 11}`.\n5. `fifth_generates`, `generates_iff` \u2014 the fifth generates the whole\n   pitch-class group; generation \u21d4 coprimality.\n6. `cof_hamiltonian` \u2014 the explicit circle of fifths is a Hamiltonian cycle.\n7. `barLen`, `fifth_barLen_gt_half`, `tritone_barLen_lt_half` \u2014 the mission's\n   normalised persistence-bar thresholds (Bach `> 0.5`, atonal `< 0.5`).\n\n## Natural next steps\n\n- **Genuine persistent homology.** Replace the proxy `cycleLen` with an actual\n  Vietoris\u2013Rips filtration on a finite metric pitch-class space (the \"torus\"\n  metric `d(a,b) = min(|a-b|, 12-|a-b|)` on `\u2124/12\u2124`, or a weighted graph metric\n  along fifths). Prove that `H\u2081` of the Rips complex is non-trivial at the scale\n  where the circle-of-fifths cycle appears, and compute its birth/death. Mathlib\n  now has simplicial/`SimplicialComplex` machinery to build on.\n\n- **Betti numbers of circulant graphs.** The interval-`k` harmonic motion is a\n  circulant graph `Cay(\u2124/12\u2124, {\u00b1k})`; its cycle structure and first Betti number\n  `b\u2081 = |E| - |V| + (# components)` can be computed group-theoretically. Formalise\n  `b\u2081` for these graphs and connect it to `cycleLen`.\n\n- **Other temperaments.** Everything generalises from `12` to arbitrary `n`-tone\n  equal temperament (`\u2124/n\u2124`): the longest harmonic cycle has length `n`, attained\n  exactly by intervals coprime to `n` (there are `\u03c6(n)` of them). A parametrised\n  version of `IntervalCycles.lean` over `\u2124/n\u2124` would state and prove this in full\n  generality (19-TET, 31-TET, etc.).\n\n- **Voice-leading geometry.** Encode chords (not just single intervals) as\n  multisets of pitch classes and study the orbifold `T\u207f/S\u2099` of Tymoczko's\n  voice-leading spaces; the circle of fifths reappears as a geodesic loop.\n\n- **Empirical bridge.** Connect the normalised `barLen` thresholds to a real\n  persistence computation over corpora (Bach chorales vs. pop vs. atonal),\n  closing the loop with the mission's stated experiment.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0865",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "9696343b",
+    "status": "available",
+    "timestamp": "2026-07-10T08:05:52.335311+00:00",
+    "title": "This project formalises the *algebraic skeleton* of the \"topology of Bach\""
   },
   {
     "consumed_by_exp_id": "",

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "583299ca",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures growing out of the combinatorial and inverse-limit core of torsion\nlocal–global compatibility for conjugate self-dual representations over CM fields.",
-      "quality_score": 0.7779935103225806,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-03T07:33:59",
-      "title": "Torsion local-global compatibility at p = ℓ for GL_n over CM fields"
-    },
-    {
       "cycle_id": "70c42dc4",
       "domain": "Geometry",
       "key_insight": "# Future Directions — Phantom Topologies\n\nBold, falsifiable conjectures arising from this cycle's finding that the real line\nis the two-observer consensus of the lower- and upper-limit topologies, whi",
@@ -499,19 +489,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-10T07:49:49",
       "title": "Deepening: The Zeta Function of a Graph: Number Theory on Networks"
+    },
+    {
+      "cycle_id": "9696343b",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThis project formalises the *algebraic skeleton* of the \"topology of Bach\"\nmission: pitch-class space as `ℤ/12ℤ`, harmonic cycles as cyclic subgroups, and\nthe circle of fifths as",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 29,
+      "timestamp": "2026-07-10T08:05:57",
+      "title": "Persistent Homology of Musical Harmony: The Topology of Bach"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ee65478f",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — Extremality of projective-plane designs in coupon collection\n\nThis cycle established two anchors. First, the inclusion–exclusion form of the\nexpected covering time is a faithful",
-      "quality_score": 0.44923399999999997,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-29T23:31:43",
-      "title": "Extremality of Projective Plane Block Designs in the Coupon Collector's Problem"
-    },
     {
       "cycle_id": "99e4c1c9",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-10T07:49:49",
       "title": "Deepening: The Zeta Function of a Graph: Number Theory on Networks"
+    },
+    {
+      "cycle_id": "9696343b",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThis project formalises the *algebraic skeleton* of the \"topology of Bach\"\nmission: pitch-class space as `ℤ/12ℤ`, harmonic cycles as cyclic subgroups, and\nthe circle of fifths as",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 29,
+      "timestamp": "2026-07-10T08:05:57",
+      "title": "Persistent Homology of Musical Harmony: The Topology of Bach"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3716954d",
-      "domain": "Applications",
-      "name": "zeroOneSequences_uncountable",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "7e60f6c2",
-      "domain": "Bridges",
-      "name": "logSuccCount_growth",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "7e60f6c2",
-      "domain": "Bridges",
-      "name": "logSuccCount_subadditive",
-      "quality": 0.83
-    },
     {
       "cycle_id": "7e60f6c2",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "det_funeq",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "9696343b",
+      "domain": "Applications",
+      "name": "cof_length",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "9696343b",
+      "domain": "Applications",
+      "name": "cof_nodup",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "9696343b",
+      "domain": "Applications",
+      "name": "cof_complete",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-10T07:49:49",
+  "last_updated": "2026-07-10T08:05:57",
   "open_questions": [
     {
       "context": "No `sorry`; axioms are the standard `propext`/`Classical.choice`/`Quot.sound`.; No `sorry`; axioms are the standard three.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "e50512ae",
-        "quality": 0.74264,
-        "theorems": 15,
-        "title": "Optimality of the polynomial factor in the Naslund–Sawin bound for sunflower‑fre"
-      },
-      {
         "cycle_id": "55f141e7",
         "quality": 0.7,
         "theorems": 26,
@@ -3141,6 +3135,12 @@
         "quality": 0.78,
         "theorems": 14,
         "title": "The Category Theory of Jokes: Universal Properties of Humor"
+      },
+      {
+        "cycle_id": "9696343b",
+        "quality": 0.72,
+        "theorems": 29,
+        "title": "Persistent Homology of Musical Harmony: The Topology of Bach"
       }
     ],
     "Bridges": [
