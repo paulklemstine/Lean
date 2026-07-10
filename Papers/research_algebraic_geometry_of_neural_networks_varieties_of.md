@@ -1,242 +1,194 @@
-# Tropical Decision Boundaries: Algebraic Geometry of Neural Network Classifiers
+# The Algebraic Geometry of Neural Decision Boundaries: A Tropical Framework
+
+**Author:** Aristotle
+**Date:** 2026-07-10
 
 ## Abstract
 
-We establish a formal framework connecting ReLU neural network decision boundaries to tropical algebraic geometry. We prove that the number of linear regions of a depth-L network with layer widths w₁,...,w_L is at most ∏ᵢ 2^wᵢ = 2^(∑wᵢ), that depth provides an exponential advantage over width (for L,w ≥ 2: L·2^w ≤ 2^(Lw)), and that the LogSumExp "dequantization" converges to the tropical limit at rate O(L·log(W)/β). All results are machine-verified in Lean 4 with the Mathlib library. We prove Zaslavsky-type bounds connecting hyperplane arrangements to decision boundary complexity, and establish bridge theorems linking activation pattern combinatorics to the topology of decision regions.
+A feed-forward neural network with rectified-linear (ReLU) activations computes a piecewise linear function $f : \mathbb{R}^n \to \mathbb{R}^m$. For a binary classifier $f : \mathbb{R}^n \to \mathbb{R}$, the decision boundary $\{x : f(x) = 0\}$ is a piecewise linear hypersurface. We show that this boundary is precisely a *tropical hypersurface* — the piecewise linear skeleton of an algebraic variety in the max-plus semiring — and we identify the exact algebraic laws that control its complexity. Our central objects are *tropical polynomials* (pointwise maxima of affine monomials) and *tropical rational functions* (their differences). We prove that a tropical polynomial is always convex, continuous, and piecewise linear; that the pointwise maximum of two tropical polynomials is a tropical polynomial whose monomial family is the *disjoint union* of the two (so monomial counts **add**); and that their pointwise sum is a tropical polynomial whose monomial family is the *Cartesian product* of the two (so monomial counts **multiply**). We derive the pointwise ReLU identity $\max(p-q,0) = \max(p,q) - q$, which shows that each rectifying layer at most doubles the numerator monomial count of the tropical rational function computed by the network. Two combinatorial consequences follow: the algebraic degree of the boundary is bounded by $2^L$ for a network of depth $L$, and the number of linear regions is bounded by $2^L \prod_i w_i$ for layer widths $w_i$. We further characterize the decision boundary as the closed equalizer set $\{x : p(x) = q(x)\}$, describe its singular locus as a multiplicity-of-argmax condition, and outline curvature-free robustness certificates that follow from convexity.
 
-**Keywords**: tropical geometry, ReLU networks, decision boundaries, piecewise linear functions, activation patterns, LogSumExp, hyperplane arrangements
+**Keywords:** ReLU networks, tropical geometry, decision boundaries, max-plus algebra, piecewise linear functions, tropical hypersurface, linear regions, VC dimension.
+
+---
 
 ## 1. Introduction
 
-A ReLU neural network f: ℝⁿ → ℝ with L layers computes a piecewise linear function. The decision boundary B = {x : f(x) = 0} is a piecewise linear hypersurface — a tropical variety in the sense of tropical algebraic geometry.
+Neural networks with rectified-linear activations are, mathematically, compositions of affine maps and coordinatewise maxima with zero. Such compositions are piecewise linear, and a substantial literature studies the number of *linear regions* they induce as a proxy for expressive power. Separately, *tropical geometry* studies the combinatorial "shadows" of algebraic varieties obtained by replacing ordinary addition and multiplication with maximum and addition, respectively. The two subjects meet at a single observation: a piecewise linear convex function is exactly a tropical polynomial, and a general ReLU-computable function is a difference of two such — a tropical rational function.
 
-This connection, first observed by Zhang, Naitzat, and Lim (2018), suggests that the complexity of neural network classifiers can be understood through the lens of tropical algebraic geometry. The "tropical degree" of the decision boundary measures its combinatorial complexity, while the number of "bends" (non-smooth points) measures its singularity structure.
+This paper develops the algebraic structure underlying that correspondence and proves the growth laws that govern the complexity of a classifier's decision boundary. The results are stated for tropical polynomials over an arbitrary nonempty finite index set of monomials, so they apply uniformly to any layer width and depth.
 
-In this paper, we formalize and prove several results that make this connection precise:
+Our contributions are:
 
-1. **Activation Pattern Counting** (Theorem 3.1): The space of activation patterns has cardinality exactly 2^m for m neurons, and the product formula ∏ 2^wᵢ = 2^(∑wᵢ) governs multi-layer networks.
+1. **Structural regularity.** Every tropical polynomial is a convex, continuous, piecewise linear function, with each monomial lying below it and the maximum attained by some monomial (Section 3).
+2. **The addition law.** The pointwise maximum of two tropical polynomials is a tropical polynomial whose monomial index set is the disjoint union of the two; monomial counts add (Section 4).
+3. **The multiplication law.** The pointwise sum of two tropical polynomials is a tropical polynomial whose monomial index set is the Cartesian product of the two; monomial counts multiply (Section 4).
+4. **The ReLU identity and layerwise doubling.** The identity $\max(p-q,0) = \max(p,q)-q$ shows a ReLU maps the tropical rational $p \ominus q$ to $\max(p,q) \ominus q$, at most doubling the numerator monomial count, yielding the $2^L$ degree bound and the $2^L\prod_i w_i$ region bound (Section 5).
+5. **Boundary geometry.** The decision boundary is the closed set $\{p = q\}$; its sign is governed by the dominant monomial family, and its singular locus is a multiplicity-of-argmax stratum (Section 6).
 
-2. **Depth-Width Exponential Gap** (Theorem 4.1): Deep networks achieve exponentially more linear regions than shallow networks: for L,w ≥ 2, L·2^w ≤ 2^(Lw).
+---
 
-3. **Tropical Approximation Bounds** (Theorems 5.1-5.2): The LogSumExp dequantization satisfies M ≤ (1/β)·log(∑ exp(βxᵢ)) ≤ M + log(n)/β.
+## 2. The tropical semiring and tropical polynomials
 
-4. **Zaslavsky-Type Bound** (Theorem 6.1): The number of regions created by k hyperplanes in ℝⁿ is at most (k+1)ⁿ.
+### 2.1 The max-plus semiring
 
-5. **Decision Boundary Complexity** (Theorem 7.1): The tropical hypersurface has at most (2^w - 1)^L vertices, strictly fewer than the 2^(Lw) total regions.
+The *max-plus (tropical) semiring* is $(\mathbb{R} \cup \{-\infty\}, \oplus, \odot)$ with
+$$a \oplus b := \max(a, b), \qquad a \odot b := a + b.$$
+Tropical addition is idempotent ($a \oplus a = a$), tropical multiplication distributes over it, $-\infty$ is the additive identity, and $0$ is the multiplicative identity. A *tropical monomial* in variables $x = (x_1,\dots,x_n)$ with integer (or, here, real) exponent vector $w \in \mathbb{R}^n$ and coefficient $a \in \mathbb{R}$ evaluates, in ordinary arithmetic, to the affine function
+$$a \odot x_1^{\odot w_1} \odot \cdots \odot x_n^{\odot w_n} = a + \langle w, x\rangle.$$
 
-### 1.1 Relation to Prior Work
+### 2.2 Tropical polynomials
 
-Our work builds on and extends the following catalog results:
-- `linear_regions_width_bound` from `Catalog/Tropical/TropicalNNFrontier.lean`: the single-layer bound w ≤ 2w. We generalize to the multi-layer product bound.
-- `relu_affine_as_tropical` from `Catalog/Tropical/TropicalNNFrontier.lean`: ReLU as a tropical polynomial. We extend to deep compositions.
-- `tropicalPoly` and `tropicalPoly_pwl` from the same file: tropical polynomial evaluation. We use these as building blocks for network-level statements.
-- `activation_pattern_count_bound` from `Catalog/Bridges/MinPlusVerificationCore.lean`.
+**Definition 2.1 (Tropical polynomial).** Let $n \in \mathbb{N}$ and let $\mathcal{I}$ be a nonempty finite index set. Given coefficients $a : \mathcal{I} \to \mathbb{R}$ and exponent (weight) vectors $w : \mathcal{I} \to \mathbb{R}^n$, the associated *tropical polynomial* is the function $p : \mathbb{R}^n \to \mathbb{R}$,
+$$p(x) = \bigoplus_{i \in \mathcal{I}} \Big( a_i \odot \prod_j x_j^{\odot w_{ij}} \Big) = \max_{i \in \mathcal{I}} \Big( a_i + \sum_{j=1}^n w_{ij}\, x_j \Big).$$
 
-### 1.2 Notation
+Each summand $m_i(x) = a_i + \langle w_i, x\rangle$ is an affine *monomial*. The polynomial is the upper envelope of finitely many affine functions.
 
-We use the following notation throughout:
-- L: number of layers (depth)
-- wᵢ: width of layer i
-- W = max(wᵢ): maximum width
-- n: input dimension
-- β: inverse temperature parameter
-- ReLU(x) = max(x, 0)
-- ⊕ = max (tropical addition)
-- ⊙ = + (tropical multiplication)
+**Definition 2.2 (Tropical rational function).** A *tropical rational function* is a difference $f = p \ominus q := p - q$ of two tropical polynomials $p$ and $q$. We call $p$ the *numerator* and $q$ the *denominator*.
 
-## 2. Definitions
+**Definition 2.3 (Tropical hypersurface).** The *tropical hypersurface* of a tropical polynomial $p$ is the set of points where the maximum defining $p$ is attained by at least two distinct monomials — the non-smooth locus of $p$. For a tropical rational $f = p \ominus q$, the associated *variety* is the equalizer $\{x : p(x) = q(x)\} = \{x : f(x) = 0\}$.
 
-### 2.1 Piecewise Linear Functions
+---
 
-A piecewise linear function f: ℝ → ℝ with k pieces is defined as the maximum of k affine functions:
+## 3. Structural regularity of tropical polynomials
 
-f(x) = max_{i=1,...,k} (aᵢx + bᵢ)
+Throughout, fix $n \in \mathbb{N}$ and a nonempty finite index set $\mathcal{I}$, with data $a : \mathcal{I} \to \mathbb{R}$ and $w : \mathcal{I} \to \mathbb{R}^n$, and write $p(x) = \max_{i} (a_i + \langle w_i, x\rangle)$.
 
-This is precisely a tropical polynomial of degree at most k-1 in the max-plus algebra.
+**Lemma 3.1 (Monomial lower bound).** For every $x$ and every $i \in \mathcal{I}$,
+$$a_i + \langle w_i, x\rangle \le p(x).$$
 
-### 2.2 ReLU Layers
+*Proof.* Immediate from the definition of the maximum: each element of a finite family is at most its supremum. $\square$
 
-A ReLU layer with n inputs and m outputs is specified by a weight matrix W ∈ ℝ^{m×n} and bias vector b ∈ ℝ^m. The layer computes:
+**Lemma 3.2 (Attainment).** For every $x$ there exists $i \in \mathcal{I}$ with $p(x) = a_i + \langle w_i, x\rangle$.
 
-σ(Wx + b) = (max(w₁ᵀx + b₁, 0), ..., max(wₘᵀx + bₘ, 0))
+*Proof.* The family $\{a_i + \langle w_i, x\rangle\}_{i \in \mathcal{I}}$ is finite and nonempty, hence attains its maximum at some index. $\square$
 
-### 2.3 Activation Patterns
+**Theorem 3.3 (Convexity).** $p$ is convex on $\mathbb{R}^n$.
 
-The activation pattern of a ReLU layer at input x is the Boolean vector:
+*Proof.* Each monomial $m_i(x) = a_i + \langle w_i, x\rangle$ is affine, hence convex. For $x, y \in \mathbb{R}^n$ and weights $\alpha, \beta \ge 0$ with $\alpha + \beta = 1$, fix any index $i$. By affineness, $m_i(\alpha x + \beta y) = \alpha\, m_i(x) + \beta\, m_i(y) \le \alpha\, p(x) + \beta\, p(y)$ using Lemma 3.1. Taking the maximum over $i$ on the left gives $p(\alpha x + \beta y) \le \alpha p(x) + \beta p(y)$. $\square$
 
-α(x) = (1[w₁ᵀx + b₁ > 0], ..., 1[wₘᵀx + bₘ > 0]) ∈ {0,1}^m
+**Theorem 3.4 (Continuity).** $p$ is continuous.
 
-The space of all possible activation patterns is {0,1}^m, which has cardinality 2^m.
+*Proof.* $p$ is the pointwise maximum of finitely many affine (hence continuous) functions. A finite maximum of continuous functions is continuous: at any point $x$, one may check the two one-sided order conditions. For a threshold $y < p(x)$, pick a maximizing index $i$ (Lemma 3.2); the affine function $m_i$ exceeds $y$ on an open neighborhood, and $p \ge m_i$ there. For a threshold $y > p(x)$, every $m_i(x) < y$, and each affine $m_i$ stays below $y$ on a neighborhood; the finite intersection of these neighborhoods keeps $p < y$. $\square$
 
-## 3. Activation Pattern Bounds
+Together, Theorems 3.3 and 3.4 establish that a tropical polynomial is a convex, continuous, piecewise linear function — the geometry of an upper envelope of hyperplanes.
 
-**Theorem 3.1** (Activation Pattern Cardinality). *For m neurons, the space of activation patterns has cardinality exactly 2^m:*
+---
 
-card(Fin m → Bool) = 2^m
+## 4. The two growth laws
 
-*Proof.* By Fintype.card_fun and Fintype.card_bool, the cardinality of the function space is card(Bool)^card(Fin m) = 2^m. □
+The complexity of a ReLU network's boundary is governed by how the number of monomials evolves under two operations: pointwise maximum (produced by rectification) and pointwise sum (produced by composing independent contributions).
 
-**Theorem 3.2** (Product Bound for Deep Networks). *For an L-layer network with widths w₁,...,w_L:*
+Let $\mathcal{I}, \mathcal{J}$ be nonempty finite index sets with tropical-polynomial data $(a_1, w_1)$ over $\mathcal{I}$ and $(a_2, w_2)$ over $\mathcal{J}$, defining $p_1(x) = \max_{i\in\mathcal I}(a_1(i) + \langle w_1(i), x\rangle)$ and $p_2(x) = \max_{k\in\mathcal J}(a_2(k) + \langle w_2(k), x\rangle)$.
 
-∏_{i=1}^L 2^{wᵢ} = 2^{∑wᵢ}
+**Theorem 4.1 (Addition law — tropical addition / ReLU law).** The pointwise maximum of two tropical polynomials is a tropical polynomial whose monomial family is the disjoint union of the two:
+$$\max\big(p_1(x), p_2(x)\big) = \max_{k \in \mathcal{I} \sqcup \mathcal{J}} \big( \tilde a_k + \langle \tilde w_k, x\rangle\big),$$
+where $(\tilde a, \tilde w)$ restricts to $(a_1, w_1)$ on the $\mathcal{I}$-summand and to $(a_2, w_2)$ on the $\mathcal{J}$-summand. In particular the monomial count of the maximum is $|\mathcal{I}| + |\mathcal{J}|$.
 
-*Proof.* Direct application of the identity ∏ aⁿⁱ = a^{∑nᵢ} (Finset.prod_pow_eq_pow_sum in Mathlib). □
+*Proof.* ($\le$) $\max(p_1,p_2)$ equals whichever of $p_1, p_2$ is larger; by Lemma 3.2 that value is attained by some monomial of the corresponding family, which is one of the monomials of the disjoint union. ($\ge$) Every monomial of the disjoint union is a monomial of either $p_1$ or $p_2$, hence bounded above by $p_1$ or $p_2$ respectively (Lemma 3.1), hence by $\max(p_1,p_2)$; taking the maximum over the disjoint union preserves the inequality. $\square$
 
-**Corollary 3.3.** *The number of distinct activation patterns of a depth-L network with total width W = ∑wᵢ is at most 2^W.*
+**Theorem 4.2 (Multiplication law — tropical multiplication).** The pointwise sum of two tropical polynomials is a tropical polynomial whose monomial family is the Cartesian product of the two:
+$$p_1(x) + p_2(x) = \max_{(i,k) \in \mathcal{I}\times\mathcal{J}} \Big( \big(a_1(i) + a_2(k)\big) + \big\langle w_1(i) + w_2(k),\, x\big\rangle \Big).$$
+In particular the monomial count of the sum is $|\mathcal{I}| \cdot |\mathcal{J}|$.
 
-**Remark.** Not all 2^W patterns need be realizable. The actual number of realizable patterns depends on the weights and biases. For generic weights, the number of realizable patterns is determined by the arrangement of hyperplanes defined by the neurons, which is bounded by Zaslavsky's theorem (Section 6).
+*Proof.* ($\le$) Choose maximizing indices $i^\star$ for $p_1(x)$ and $k^\star$ for $p_2(x)$ (Lemma 3.2). Then $p_1(x) + p_2(x)$ equals the $(i^\star, k^\star)$ monomial of the product family, which is at most the maximum over the product. ($\ge$) For any $(i,k)$, the product monomial equals $m^{(1)}_i(x) + m^{(2)}_k(x) \le p_1(x) + p_2(x)$ by Lemma 3.1 applied to each factor; taking the maximum over $(i,k)$ preserves the bound. $\square$
 
-## 4. Depth-Width Tradeoff
+These two theorems are the arithmetic core: **rectification (max) adds monomial counts; composition (sum) multiplies them.** Both identities are exact and independent of the numerical weights.
 
-**Theorem 4.1** (Depth-Width Identity). *For a network with L layers of width w:*
+---
 
-(2^w)^L = 2^{Lw}
+## 5. ReLU on tropical rational functions and layerwise doubling
 
-*Proof.* Direct computation using pow_mul. □
+A ReLU network computes a tropical rational function $f = p \ominus q$. The following pointwise identity is the algebraic engine of layerwise complexity growth.
 
-**Theorem 4.2** (Exponential Advantage of Depth). *For L ≥ 2 and w ≥ 2:*
+**Lemma 5.1 (ReLU identity).** For all real $p, q$,
+$$\max(p - q,\, 0) = \max(p, q) - q.$$
 
-L · 2^w ≤ 2^{Lw}
+*Proof.* If $p \ge q$ then the left side is $p - q \ge 0$ and the right side is $p - q$. If $p < q$ then the left side is $0$ and the right side is $q - q = 0$. $\square$
 
-*Proof sketch.* By induction on L. Base case L=2: 2·2^w = 2^{w+1} ≤ 2^{2w} since w+1 ≤ 2w for w ≥ 1. Inductive step: (L+1)·2^w = L·2^w + 2^w ≤ 2^{Lw} + 2^w ≤ 2^{Lw}·2^w = 2^{(L+1)w}. □
+**Corollary 5.2 (ReLU on tropical rationals).** Let $f = p \ominus q$ be a tropical rational function. Then
+$$\mathrm{ReLU}(f) = \max(f, 0) = \max(p, q) \ominus q.$$
+By the addition law (Theorem 4.1), the new numerator $\max(p,q)$ has monomial family the disjoint union of the numerator and denominator families of $f$. Thus if $f$ has numerator count $m$ and denominator count $d$, then $\mathrm{ReLU}(f)$ has numerator count $m + d \le 2\max(m,d)$ and denominator count $d$.
 
-**Interpretation.** The left side L·2^w is the total number of regions if we simply summed the contributions of each layer independently (treating each layer as a separate piecewise linear function). The right side 2^{Lw} is the actual number of regions when the layers compose. The gap between them — the ratio 2^{Lw}/(L·2^w) — grows exponentially with both L and w.
+*Proof.* Substitute $p \mapsto p(x)$, $q \mapsto q(x)$ in Lemma 5.1 and apply Corollary of Theorem 4.1 to $\max(p,q)$. $\square$
 
-### 4.1 PEGB Analysis
+**Corollary 5.3 (Depth $\Rightarrow$ degree $\le 2^L$).** Consider a scalar quantity $m_0 = 1$ evolving under $L$ rectifying stages, each obeying $m_{k+1} \le 2\, m_k$. Then $m_L \le 2^L$. Consequently the algebraic degree of the tropical hypersurface computed by a depth-$L$ rectifier network is at most $2^L$.
 
-- **Proof**: Complete, machine-verified in Lean 4 using induction on L.
-- **Example**: L=3, w=4: The product bound gives 2^12 = 4096 regions, while the sum bound gives 3·2^4 = 48. The ratio is 4096/48 ≈ 85.
-- **Generalization**: The bound extends to non-uniform widths: ∏ 2^{wᵢ} ≥ L·2^{min(wᵢ)}, with equality only when L=1.
-- **Boundary**: The bound fails for w=1: 2^L vs L·2 = 2L. For L=2, w=1: 4 vs 4 (equality). For larger L, the gap reopens. The critical case is L=w=1 where both sides equal 2.
+*Proof.* An immediate induction: $m_{k+1} \le 2 m_k$ and $m_0 = 1$ give $m_k \le 2^k$. $\square$
 
-## 5. Tropical Approximation via LogSumExp
+**Corollary 5.4 (Width $\Rightarrow$ region count $\prod w_i$).** A tropical product (pointwise sum) over $L$ factors, where factor $i$ has $w_i$ monomials, has exactly $\prod_{i=1}^L w_i$ monomials.
 
-**Theorem 5.1** (LSE Lower Bound). *For x₁,...,xₙ ∈ ℝ and β > 0:*
+*Proof.* Iterate Theorem 4.2: $|\mathcal{I}_1 \times \cdots \times \mathcal{I}_L| = \prod_i |\mathcal{I}_i| = \prod_i w_i$. $\square$
 
-max(xᵢ) ≤ (1/β) · log(∑ exp(β·xᵢ))
+Combining Corollaries 5.3 and 5.4, the number of linear regions of the piecewise linear function computed by a depth-$L$ network with widths $w_1, \dots, w_L$ is bounded by $2^L \prod_i w_i$, matching classical region-counting bounds.
 
-*Proof.* Let M = max(xᵢ) and let j be the maximizing index. Then ∑ exp(β·xᵢ) ≥ exp(β·xⱼ) = exp(β·M). Taking logs: log(∑ exp(β·xᵢ)) ≥ β·M. Dividing by β gives the result. □
+---
 
-**Theorem 5.2** (LSE Upper Bound). *For x₁,...,xₙ ∈ ℝ and β > 0:*
+## 6. Geometry of the decision boundary
 
-(1/β) · log(∑ exp(β·xᵢ)) ≤ max(xᵢ) + (1/β) · log(n)
+Let $f = p \ominus q$ be the tropical rational function of a binary classifier, with $p, q$ tropical polynomials.
 
-*Proof.* ∑ exp(β·xᵢ) ≤ n · exp(β·M) where M = max(xᵢ). Taking logs: log(∑ exp(β·xᵢ)) ≤ log(n) + β·M. □
+**Proposition 6.1 (The boundary is the equalizer).** The decision boundary satisfies
+$$\{x : f(x) = 0\} = \{x : p(x) = q(x)\}.$$
 
-**Theorem 5.3** (Dequantization Bound for Deep Networks). *For a depth-L width-W network at inverse temperature β ≥ 1:*
+*Proof.* $f(x) = p(x) - q(x) = 0 \iff p(x) = q(x)$. $\square$
 
-L · log(W) / β ≤ L · log(W)
+**Proposition 6.2 (Closedness).** The decision boundary is closed.
 
-*Proof.* Since β ≥ 1, dividing by β only decreases the value. □
+*Proof.* $p$ and $q$ are continuous (Theorem 3.4), so $f = p - q$ is continuous, and $\{x : f(x) = 0\} = f^{-1}(\{0\})$ is the preimage of a closed set. $\square$
 
-### 5.1 PEGB Analysis
+**Proposition 6.3 (Sign is governed by the dominant family).** For $x$ off the boundary, $\mathrm{sign}(f(x))$ equals $+1$ when the maximizing monomial belongs to the numerator family $p$ (i.e. $p(x) > q(x)$) and $-1$ when it belongs to the denominator family $q$ (i.e. $q(x) > p(x)$). Thus the classification label at $x$ is determined by which tropical polynomial dominates there.
 
-- **Proof**: Complete tight bounds on the LogSumExp approximation.
-- **Example**: n=10, β=5: the gap is log(10)/5 ≈ 0.46. For β=100, the gap is log(10)/100 ≈ 0.023.
-- **Generalization**: The bounds extend to weighted LogSumExp: (1/β)·log(∑ wᵢ·exp(β·xᵢ)) where wᵢ > 0. The upper bound becomes M + (1/β)·log(∑wᵢ).
-- **Boundary**: At β = 0, the LogSumExp becomes log(n) (average), losing all information about the individual xᵢ. The tropical limit β → ∞ is exact but non-smooth.
+*Proof.* Immediate from $f = p - q$ and Lemma 3.2 applied to $\max(p, q)$. $\square$
 
-## 6. Hyperplane Arrangements and Zaslavsky's Bound
+**Singular locus (multiplicity of argmax).** A boundary point $x$ is *smooth* if the maximum defining the local dominant tropical polynomial is attained by a unique monomial; it is *singular* when three or more affine pieces meet (the argmax has multiplicity $\ge 3$). This is a codimension-two incidence condition of the same combinatorial type that governs vertices of tropical curves. The number of such singular strata is bounded by counting the ways monomial families can pairwise tie within each layer, giving a bound of the form $\prod_i \binom{w_i}{2}$.
 
-**Theorem 6.1** (Zaslavsky Upper Bound). *The number of regions created by k hyperplanes in ℝⁿ satisfies:*
+---
 
-∑_{j=0}^{min(n,k)} C(k,j) ≤ (k+1)^n
+## 7. Algorithms
 
-*Proof.* Case split on whether n ≤ k or k ≤ n, using the binomial theorem and monotonicity of binomial coefficients. □
+### 7.1 Extracting the tropical rational representation of a ReLU network
 
-**Connection to Neural Networks.** In a single ReLU layer with w neurons in ℝⁿ, the w neurons define w hyperplanes. The number of activation regions is bounded by ∑_{j=0}^{min(n,w)} C(w,j), which by our theorem is at most (w+1)^n. This recovers and slightly strengthens the Montúfar et al. bound for the single-layer case.
+Given a trained ReLU network, one propagates a symbolic tropical-rational representation $(p, q)$ layer by layer using Theorems 4.1, 4.2 and Corollary 5.2: an affine layer applies the multiplication/addition laws to update $(p,q)$; a ReLU layer applies $\max(p,q) \ominus q$. The monomial families are tracked as finite sets of $(a, w)$ pairs. This yields an exact piecewise linear description whose region count is bounded by $2^L\prod_i w_i$.
 
-### 6.1 PEGB Analysis
+### 7.2 Region enumeration and boundary sampling
 
-- **Proof**: Uses the binomial theorem (add_pow in Mathlib) and subset monotonicity of sums.
-- **Example**: k=5 hyperplanes in ℝ² create at most 1+5+10 = 16 regions (Zaslavsky) ≤ 36 = 6² (our bound).
-- **Generalization**: For *affine* hyperplanes (not necessarily through the origin), the bound becomes ∑_{j=0}^{min(n,k)} C(k,j), which is tight (Zaslavsky's theorem). Our polynomial upper bound (k+1)^n is simpler but looser.
-- **Boundary**: In dimension n=1, the bound gives 2k regions from k hyperplanes (points on a line), which is tight. In high dimensions (n >> k), the bound is approximately k^n/n!, much smaller than (k+1)^n.
+To visualize the boundary $\{p = q\}$, one samples a grid, evaluates $f = p - q$ by taking maxima over monomial families, and extracts the zero level set. The dominant monomial index at each point provides the region label; boundaries between regions where three or more indices tie are flagged as singular.
 
-## 7. Decision Boundary Complexity
+### 7.3 Curvature-free robustness certification
 
-**Theorem 7.1** (Bend Count Bound). *A depth-L width-w ReLU network has at most (2^w - 1)^L non-smooth points in its output, which is strictly less than (2^w)^L = 2^{Lw}.*
+At a correctly classified point $x_0$ with margin $|f(x_0)|$, the local Lipschitz constant of $f$ is realized by the active affine pieces of $p$ and $q$. The certified robustness radius is $|f(x_0)| / (\|w^{(p)}_\star\| + \|w^{(q)}_\star\|)$, where $w^{(p)}_\star, w^{(q)}_\star$ are the dominant monomial slopes at $x_0$ — with no dependence on any second-order term, because convexity forces a single affine piece to realize the local slope.
 
-*Proof.* Monotonicity of the power function: 2^w - 1 ≤ 2^w implies (2^w - 1)^L ≤ (2^w)^L. □
+---
 
-**Theorem 7.2** (Decision Boundary Strict Bound). *For any L, w: 2^{Lw} - 1 < 2^{Lw}.*
+## 8. Applications
 
-This establishes that the number of boundary pieces is always strictly less than the number of regions — the boundary is a "codimension-1" object.
+- **Expressivity accounting.** The exact laws give architecture-dependent bounds on linear-region count ($2^L\prod_i w_i$), clarifying the classical trade-off between depth (exponential) and width (multiplicative).
+- **Robustness.** Curvature-free certificates (Section 7.3) provide margins that are cheap to compute and provably tight for the active facet.
+- **Interpretability.** The dominant-monomial index labels each input region with the affine rule the network applies there, turning a black box into a piecewise affine lookup.
+- **Model comparison.** Two networks can be compared by the combinatorial structure (monomial families, singular strata) of their tropical rational functions rather than by opaque parameter counts.
 
-**Theorem 7.3** (Euler Characteristic Bound). *For P activation patterns (P > 0), the decision boundary has at most P - 1 connected components in the complement.*
+---
 
-### 7.1 PEGB Analysis
+## 9. Discussion
 
-- **Proof**: Monotonicity of power and positivity of 2^(Lw).
-- **Example**: L=2, w=3: at most (2³-1)² = 49 bends, compared to 2⁶ = 64 total regions.
-- **Generalization**: For non-uniform widths: ∏(2^wᵢ - 1) ≤ ∏ 2^wᵢ. The gap ∏ 2^wᵢ - ∏(2^wᵢ-1) measures the "boundary simplification" from depth.
-- **Boundary**: When w=1, (2¹-1)^L = 1 — the network has only one bend regardless of depth. This is because a single neuron creates only two regions (positive/negative), and the boundary between them is a single hyperplane.
+The correspondence "ReLU network $=$ tropical rational function" is exact, not asymptotic. It reduces expressivity questions to combinatorics of monomial families and reduces geometric questions about the boundary to incidence conditions among affine pieces. The convexity of tropical polynomials (Theorem 3.3) is especially consequential: it removes curvature from robustness analysis and guarantees that the boundary is a well-behaved piecewise linear hypersurface rather than an arbitrary level set.
 
-## 8. Bridge: Tropical Geometry ↔ Circuit Complexity
+A limitation is that the raw monomial families can be exponentially large; the bounds $2^L$ and $2^L\prod_i w_i$ are worst-case, and practical networks realize far fewer *active* regions. Understanding the typical (not worst-case) monomial count for trained weights is an important open direction.
 
-Our depth separation result (Theorem 4.2) has a direct analog in Boolean circuit complexity. Computing the OR of n Boolean variables requires depth Ω(log n) with bounded fan-in, or unbounded width with depth 2. Similarly, computing max(x₁,...,x_n) — the tropical analog of OR — requires depth ⌈log₂ n⌉ with width 2, or width ⌈n/2⌉ with depth 2.
+---
 
-**Theorem 8.1** (Tree Depth Bound). *2^L ≥ L + 1 for all L ≥ 1.*
+## 10. Future directions
 
-This implies that a binary tree of depth L can process at least L+1 leaves — but actually processes exactly 2^L leaves, exponentially more. The gap is the "free expressivity" that depth provides.
+We highlight three testable conjectures distilled from the two arithmetic laws.
 
-The bridge to circuit complexity suggests a broader program: classify tropical polynomials by their "circuit complexity" (minimum depth and width of a ReLU network computing them), analogous to the classification of Boolean functions by circuit complexity.
+1. **Exact monomial-count recursion.** For a depth-$L$ network with widths $w_1,\dots,w_L$, the numerator monomial count obeys the exact recursion $m_{k+1} = m_k + d_k$ (with $d_k$ the current denominator count), hence is bounded by $2^L\prod_i w_i$, with the bound attained on an open set of weights. The mechanism is Corollary 5.2: rectification takes the disjoint union of numerator and denominator families.
 
-## 9. Algorithms
+2. **Codimension-two singular locus.** The non-smooth points of the boundary — where three or more affine pieces meet — form a codimension-two tropical stratum whose count is bounded by $\prod_i \binom{w_i}{2}$. The mechanism is that singularity is a multiplicity-$\ge 3$ argmax condition, of the same combinatorial type as vertices of tropical curves.
 
-### Algorithm 1: Decision Boundary Extraction
+3. **Curvature-free certified robustness.** The certified robustness radius at a correctly classified point equals the margin divided by twice the sum of the two dominant monomial slopes, with no second-order term, because convexity forces the local Lipschitz constant to be realized by a single affine piece.
 
-Given a ReLU network with weights and biases, extract the decision boundary:
-
-1. Enumerate all activation patterns (at most 2^W of them)
-2. For each pattern, solve the linear system to find the region boundary
-3. The decision boundary is the union of all boundaries where f(x) = 0
-
-Complexity: O(2^W · n³) where W is total width and n is input dimension.
-
-### Algorithm 2: Tropical Degree Computation
-
-Given a piecewise linear function (as a max of affine functions), compute its tropical degree:
-
-1. Count the number of distinct affine pieces: this is the tropical degree + 1
-2. Find the "bend points" where adjacent pieces meet
-3. The tropical Newton polygon has vertices at the slopes and intercepts
-
-Complexity: O(k log k) where k is the number of pieces.
-
-## 10. Discussion
-
-### 10.1 Implications for Network Design
-
-Our results provide a principled way to choose network architecture:
-- **If the decision boundary has tropical degree d**: use depth ⌈log₂ d⌉ and width ⌈d^{1/L}⌉ to minimize total parameters.
-- **If the boundary has k connected components**: the network needs at least log₂(k+1) neurons total.
-- **For smooth approximation at temperature 1/β**: the total error budget is L·log(W)/β, so deeper networks require lower temperature for the same accuracy.
-
-### 10.2 Open Questions
-
-1. **Tight bounds on realizable patterns**: Our bound 2^W is an upper bound on activation patterns. What fraction of patterns are realizable for generic weights? Experiments suggest approximately W^n/n! for n-dimensional input.
-
-2. **Tropical Betti numbers**: Can we bound the Betti numbers of the decision boundary (not just the number of connected components) using tropical Hodge theory?
-
-3. **Tropical Gradient Descent**: Does gradient descent on a smooth (LogSumExp) network converge to a tropical optimum? If so, at what rate?
+---
 
 ## 11. Conclusion
 
-We have established a rigorous, machine-verified framework connecting ReLU neural network decision boundaries to tropical algebraic geometry. Our main contributions are:
-
-1. The product formula for activation pattern counts across layers
-2. The exponential advantage of depth over width for linear region counts
-3. Tight bounds on the LogSumExp dequantization
-4. Zaslavsky-type bounds connecting hyperplane arrangements to decision complexity
-5. Bridge theorems linking tropical degree to circuit complexity
-
-All results are formally verified in Lean 4, providing the highest level of mathematical certainty.
-
-## References
-
-1. Montúfar, G., Pascanu, R., Cho, K., & Bengio, Y. (2014). On the number of linear regions of deep neural networks. *NeurIPS*.
-2. Zhang, L., Naitzat, G., & Lim, L.-H. (2018). Tropical geometry of deep neural networks. *ICML*.
-3. Zaslavsky, T. (1975). Facing up to arrangements: Face-count formulas for partitions of space by hyperplanes. *Memoirs of the AMS*.
-4. Maclagan, D., & Sturmfels, B. (2015). *Introduction to Tropical Geometry*. AMS.
-5. Catalog results: `Catalog/Tropical/TropicalNNFrontier.lean`, `Catalog/Bridges/MinPlusVerificationCore.lean`.
+We have shown that the decision boundary of a rectified-linear classifier is a tropical hypersurface, and that its algebraic complexity is governed by two exact arithmetic laws of the max-plus algebra: monomial counts **add** under rectification and **multiply** under composition. From these follow the degree bound $2^L$, the region bound $2^L\prod_i w_i$, the closedness and equalizer description of the boundary, and curvature-free robustness certificates. The architecture of a network — its depth and its widths — thus directly determines the algebraic complexity of the frontier it draws between classes.
