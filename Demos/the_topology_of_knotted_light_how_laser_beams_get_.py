@@ -1,353 +1,184 @@
-#!/usr/bin/env python3
 """
-Demo: Alexander Polynomials and OAM Spectra of Knotted Light
+The Topology of Knotted Light: Alexander Polynomials in the OAM Spectrum
+========================================================================
 
-Computes and verifies the mathematical results connecting knot invariants
-to orbital angular momentum spectra of structured laser beams.
+Numerical demonstrations of the correspondence between the vortex knot of a
+"knotted light" beam and its orbital-angular-momentum (OAM) spectrum, mediated
+by the Alexander polynomial of the knot.
+
+For a knot K with Alexander polynomial Delta_K and modular period N, the OAM
+spectrum is
+        OAM(Delta_K, N) = { l : Delta_K(exp(2*pi*i*l/N)) = 0 }.
+
+We verify:
+  * trefoil    Delta = t^2 - t + 1        -> sixth roots of unity, l = 1, 5 (mod 6)
+  * cinquefoil Delta = t^4 - t^3 + t^2 - t + 1 -> tenth roots, l = 1,3,7,9 (mod 10)
+  * unknot     Delta = 1                  -> empty spectrum
+  * figure-8   Delta = t^2 - 3t + 1       -> golden-ratio roots OFF the unit circle
+
+Self-contained; requires only the Python standard library (cmath, math).
 """
 
-import numpy as np
-from typing import Callable
+from __future__ import annotations
+
+import cmath
+import math
+from typing import Callable, Dict, List, Tuple
+
+# --------------------------------------------------------------------------- #
+# Alexander polynomials as complex evaluation functions                       #
+# --------------------------------------------------------------------------- #
+
+def alex_unknot(z: complex) -> complex:
+    """Alexander polynomial of the unknot: Delta(t) = 1."""
+    return 1.0 + 0j
 
 
-def alexander_trefoil(t: complex) -> complex:
-    """Alexander polynomial of the trefoil knot: t^2 - t + 1"""
-    return t**2 - t + 1
+def alex_trefoil(z: complex) -> complex:
+    """Trefoil 3_1: Delta(t) = t^2 - t + 1  (= 6th cyclotomic polynomial)."""
+    return z ** 2 - z + 1
 
 
-def alexander_figure_eight(t: complex) -> complex:
-    """Alexander polynomial of the figure-eight knot: t^2 - 3t + 1"""
-    return t**2 - 3*t + 1
+def alex_figure_eight(z: complex) -> complex:
+    """Figure-eight 4_1: Delta(t) = t^2 - 3t + 1."""
+    return z ** 2 - 3 * z + 1
 
 
-def alexander_cinquefoil(t: complex) -> complex:
-    """Alexander polynomial of the cinquefoil knot: t^4 - t^3 + t^2 - t + 1"""
-    return t**4 - t**3 + t**2 - t + 1
+def alex_cinquefoil(z: complex) -> complex:
+    """Cinquefoil 5_1: Delta(t) = t^4 - t^3 + t^2 - t + 1  (= 10th cyclotomic)."""
+    return z ** 4 - z ** 3 + z ** 2 - z + 1
 
 
-def alexander_unknot(t: complex) -> complex:
-    """Alexander polynomial of the unknot: 1"""
-    return complex(1, 0)
+# --------------------------------------------------------------------------- #
+# OAM spectrum by root testing on roots of unity                             #
+# --------------------------------------------------------------------------- #
+
+def root_of_unity(l: float, N: int) -> complex:
+    """Return exp(2*pi*i*l/N), the phase point associated with OAM value l."""
+    return cmath.exp(2j * math.pi * l / N)
 
 
-def knot_determinant(alexander_poly: Callable, name: str) -> int:
-    """Compute the knot determinant |Δ_K(-1)|"""
-    det_val = abs(round(alexander_poly(-1).real))
-    print(f"  det({name}) = |Δ(-1)| = {det_val}")
-    return det_val
+def oam_spectrum(delta: Callable[[complex], complex], N: int,
+                 tol: float = 1e-9) -> List[int]:
+    """Enumerate l in {0,...,N-1} that lie in the OAM spectrum of `delta`.
 
-
-def alexander_at_one(alexander_poly: Callable, name: str) -> int:
-    """Compute Δ_K(1) (Fox normalization)"""
-    val = round(alexander_poly(1).real)
-    print(f"  Δ_{name}(1) = {val}")
-    return val
-
-
-def oam_spectrum(alexander_poly: Callable, N: int, tol: float = 1e-10) -> list:
+    l is quantized iff |Delta(exp(2*pi*i*l/N))| < tol.
     """
-    Compute the OAM spectrum: {l in 0..N-1 : |Δ_K(e^{2πil/N})| < tol}
-    """
-    spectrum = []
+    spectrum: List[int] = []
     for l in range(N):
-        t = np.exp(2j * np.pi * l / N)
-        val = abs(alexander_poly(t))
-        if val < tol:
+        if abs(delta(root_of_unity(l, N))) < tol:
             spectrum.append(l)
     return spectrum
 
 
-def discriminant(b: int, c: int = 1) -> int:
-    """Quadratic discriminant b^2 - 4c"""
-    return b**2 - 4*c
+# --------------------------------------------------------------------------- #
+# Root localization / unit-circle test                                        #
+# --------------------------------------------------------------------------- #
+
+def quadratic_roots(a: float, b: float, c: float) -> Tuple[complex, complex]:
+    """Roots of a*t^2 + b*t + c via the quadratic formula (complex-safe)."""
+    disc = cmath.sqrt(b * b - 4 * a * c)
+    return ((-b + disc) / (2 * a), (-b - disc) / (2 * a))
 
 
-def main():
-    print("=" * 60)
-    print("KNOTTED LIGHT: Alexander Polynomials & OAM Spectra")
-    print("=" * 60)
-    
-    # --- Knot Determinants ---
-    print("\n1. KNOT DETERMINANTS |Δ_K(-1)|:")
-    knots = [
-        (alexander_unknot, "unknot"),
-        (alexander_trefoil, "trefoil"),
-        (alexander_figure_eight, "figure-eight"),
-        (alexander_cinquefoil, "cinquefoil"),
+def on_unit_circle(z: complex, tol: float = 1e-9) -> bool:
+    """True iff |z| = 1 to within tolerance."""
+    return abs(abs(z) - 1.0) < tol
+
+
+# --------------------------------------------------------------------------- #
+# Structural invariants                                                        #
+# --------------------------------------------------------------------------- #
+
+def knot_determinant(delta: Callable[[complex], complex]) -> int:
+    """Knot determinant det(K) = |Delta(-1)|."""
+    return round(abs(delta(-1.0 + 0j)))
+
+
+def normalization(delta: Callable[[complex], complex]) -> int:
+    """Delta(1); should be +/- 1 for a knot."""
+    return round(delta(1.0 + 0j).real)
+
+
+def reciprocity_residual(delta: Callable[[complex], complex], deg: int,
+                         z: complex) -> float:
+    """|z^deg * Delta(1/z) - Delta(z)|; should be ~0 for a palindromic Delta."""
+    return abs(z ** deg * delta(1.0 / z) - delta(z))
+
+
+# --------------------------------------------------------------------------- #
+# Demonstrations                                                               #
+# --------------------------------------------------------------------------- #
+
+def demo_spectra() -> None:
+    print("=" * 68)
+    print("OAM SPECTRA (quantized angular-momentum values)")
+    print("=" * 68)
+    cases: Dict[str, Tuple[Callable[[complex], complex], int]] = {
+        "unknot     0_1": (alex_unknot, 6),
+        "trefoil    3_1": (alex_trefoil, 6),
+        "figure-8   4_1": (alex_figure_eight, 8),
+        "cinquefoil 5_1": (alex_cinquefoil, 10),
+    }
+    for name, (delta, N) in cases.items():
+        spec = oam_spectrum(delta, N)
+        print(f"  {name}:  N = {N:2d}   OAM spectrum (mod N) = {spec}")
+    print()
+    print("  Expected: unknot []  |  trefoil [1,5]  |  fig-8 []  |  cinquefoil [1,3,7,9]")
+    print()
+
+
+def demo_roots() -> None:
+    print("=" * 68)
+    print("ROOT LOCALIZATION: on vs. off the unit circle")
+    print("=" * 68)
+
+    r1, r2 = quadratic_roots(1, -1, 1)  # trefoil
+    print(f"  trefoil   roots: {r1:.4f}, {r2:.4f}")
+    print(f"            |roots| = {abs(r1):.6f}, {abs(r2):.6f}  "
+          f"on unit circle: {on_unit_circle(r1) and on_unit_circle(r2)}")
+
+    g1, g2 = quadratic_roots(1, -3, 1)  # figure-eight
+    phi2 = (3 + math.sqrt(5)) / 2
+    psi2 = (3 - math.sqrt(5)) / 2
+    print(f"  figure-8  roots: {g1.real:.6f}, {g2.real:.6f}")
+    print(f"            golden phi^2 = {phi2:.6f}, psi^2 = {psi2:.6f}")
+    print(f"            |roots| = {abs(g1):.6f}, {abs(g2):.6f}  "
+          f"on unit circle: {on_unit_circle(g1) and on_unit_circle(g2)}")
+    print(f"            product of roots phi^2 * psi^2 = {phi2 * psi2:.6f}  (=1)")
+    print()
+
+
+def demo_invariants() -> None:
+    print("=" * 68)
+    print("STRUCTURAL INVARIANTS")
+    print("=" * 68)
+    data = [
+        ("trefoil    3_1", alex_trefoil, 2),
+        ("figure-8   4_1", alex_figure_eight, 2),
+        ("cinquefoil 5_1", alex_cinquefoil, 4),
     ]
-    for poly, name in knots:
-        knot_determinant(poly, name)
-    
-    # Granny knot (trefoil # trefoil)
-    granny = lambda t: alexander_trefoil(t) * alexander_trefoil(t)
-    knot_determinant(granny, "granny (trefoil#trefoil)")
-    
-    # --- Fox Normalization ---
-    print("\n2. FOX NORMALIZATION Δ_K(1):")
-    for poly, name in knots:
-        alexander_at_one(poly, name)
-    
-    # --- Cyclotomic Identification ---
-    print("\n3. CYCLOTOMIC IDENTIFICATION:")
-    print("  Trefoil polynomial = 6th cyclotomic polynomial Φ₆?")
-    # Check: Φ₆ has roots at e^{±iπ/3} (primitive 6th roots of unity)
-    roots_6 = [np.exp(2j * np.pi * k / 6) for k in [1, 5]]  # primitive 6th roots
-    for k, root in zip([1, 5], roots_6):
-        val = alexander_trefoil(root)
-        print(f"    Δ_trefoil(e^{{2πi·{k}/6}}) = {val:.2e}  (should be ≈ 0)")
-    
-    print("  Cinquefoil polynomial = 10th cyclotomic polynomial Φ₁₀?")
-    roots_10 = [np.exp(2j * np.pi * k / 10) for k in [1, 3, 7, 9]]  # primitive 10th roots
-    for k, root in zip([1, 3, 7, 9], roots_10):
-        val = alexander_cinquefoil(root)
-        print(f"    Δ_cinquefoil(e^{{2πi·{k}/10}}) = {val:.2e}  (should be ≈ 0)")
-    
-    # --- Discriminant Analysis ---
-    print("\n4. DISCRIMINANT ANALYSIS (palindromic quadratics t² + bt + 1):")
-    for b in range(-4, 5):
-        D = discriminant(b)
-        root_type = "unit circle (crystalline)" if D < 0 else "real (metallic)" if D > 0 else "degenerate"
-        print(f"  b = {b:+d}: D = {D:+d}  → roots on {root_type}")
-    
-    print(f"\n  Trefoil (b=-1):      D = {discriminant(-1)} < 0 → complex roots on unit circle ✓")
-    print(f"  Figure-eight (b=-3): D = {discriminant(-3)} > 0 → real roots ✓")
-    
-    # --- OAM Spectrum Computation ---
-    print("\n5. OAM SPECTRA (roots of Δ_K at N-th roots of unity):")
-    
-    for N in [3, 6, 12, 30]:
-        spectrum = oam_spectrum(alexander_trefoil, N)
-        print(f"  Trefoil OAM spectrum mod {N}: {spectrum}")
-    
-    for N in [5, 10, 20, 30]:
-        spectrum = oam_spectrum(alexander_cinquefoil, N)
-        print(f"  Cinquefoil OAM spectrum mod {N}: {spectrum}")
-    
-    # Unknot should always be empty
-    for N in [3, 6, 10]:
-        spectrum = oam_spectrum(alexander_unknot, N)
-        print(f"  Unknot OAM spectrum mod {N}: {spectrum}  (should be empty)")
-    
-    # Figure-eight: no roots on unit circle (real roots)
-    for N in [4, 8, 12, 100]:
-        spectrum = oam_spectrum(alexander_figure_eight, N)
-        print(f"  Figure-eight OAM spectrum mod {N}: {spectrum}")
-    
-    # --- Divisibility Verification ---
-    print("\n6. DIVISIBILITY: Δ_K | t^N - 1")
-    # Verify trefoil | t^6 - 1 by checking quotient
-    print("  Trefoil divides t⁶ - 1:")
-    quotient_trefoil = lambda t: t**4 + t**3 - t - 1
-    for t_val in [2, 3, -1, 0.5, 1j]:
-        lhs = alexander_trefoil(t_val) * quotient_trefoil(t_val)
-        rhs = t_val**6 - 1
-        print(f"    t={t_val}: Δ·q = {lhs:.6f}, t⁶-1 = {rhs:.6f}, match = {abs(lhs - rhs) < 1e-10}")
-    
-    print("  Cinquefoil divides t¹⁰ - 1:")
-    quotient_cinquefoil = lambda t: t**6 + t**5 - t - 1
-    for t_val in [2, 3, -1, 0.5]:
-        lhs = alexander_cinquefoil(t_val) * quotient_cinquefoil(t_val)
-        rhs = t_val**10 - 1
-        print(f"    t={t_val}: Δ·q = {lhs:.6f}, t¹⁰-1 = {rhs:.6f}, match = {abs(lhs - rhs) < 1e-10}")
-    
-    # --- Palindromic Structure ---
-    print("\n7. PALINDROMIC STRUCTURE (coeff[0] = coeff[deg]):")
-    print(f"  Trefoil: coeff[0] = 1, coeff[2] = 1  ✓")
-    print(f"  Figure-eight: coeff[0] = 1, coeff[2] = 1  ✓")
-    print(f"  Cinquefoil: coeff[0] = 1, coeff[4] = 1  ✓")
-    
-    # --- Conjecture Test ---
-    print("\n8. CONJECTURE TEST: Alexander-OAM Correspondence")
-    print("  For trefoil (N=3 crossings):")
-    print(f"    OAM spectrum mod 6: {oam_spectrum(alexander_trefoil, 6)}")
-    print(f"    Predicted from Φ₆ roots: l ≡ 1 or 5 (mod 6)")
-    print("  For cinquefoil (N=5 crossings):")
-    print(f"    OAM spectrum mod 10: {oam_spectrum(alexander_cinquefoil, 10)}")
-    print(f"    Predicted from Φ₁₀ roots: l ≡ 1, 3, 7, or 9 (mod 10)")
-    
-    print("\n" + "=" * 60)
-    print("All computations complete. Results match formal proofs.")
-    print("=" * 60)
+    for name, delta, deg in data:
+        det = knot_determinant(delta)
+        norm = normalization(delta)
+        recip = reciprocity_residual(delta, deg, 1.3 + 0.7j)
+        print(f"  {name}:  Delta(1) = {norm:+d}   det = |Delta(-1)| = {det}"
+              f"   reciprocity residual = {recip:.2e}")
+    print()
+    print("  Expected determinants: trefoil 3, figure-8 5, cinquefoil 5 (all odd).")
+    print()
 
 
-if __name__ == "__main__":
-    main()
+def main() -> None:
+    print()
+    print("THE TOPOLOGY OF KNOTTED LIGHT")
+    print("Alexander polynomials in the orbital-angular-momentum spectrum")
+    print()
+    demo_spectra()
+    demo_roots()
+    demo_invariants()
+    print("Done.")
 
-
-#!/usr/bin/env python3
-"""
-Visualization: Palindromic Discriminant Classification
-
-Shows how the discriminant of palindromic quadratic Alexander polynomials
-t² + bt + 1 determines whether roots lie on the unit circle (OAM spectrum
-is discrete/crystalline) or off it (metallic/continuous).
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-
-
-def main():
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-    
-    # --- Left panel: Discriminant vs b ---
-    b_vals = np.linspace(-5, 5, 1000)
-    discriminants = b_vals**2 - 4
-    
-    ax1.fill_between(b_vals, discriminants, 0, where=(discriminants < 0),
-                     alpha=0.3, color='#2196F3', label='Crystalline (D < 0)')
-    ax1.fill_between(b_vals, discriminants, 0, where=(discriminants > 0),
-                     alpha=0.3, color='#FF5722', label='Metallic (D > 0)')
-    ax1.plot(b_vals, discriminants, 'k-', linewidth=2)
-    ax1.axhline(y=0, color='gray', linewidth=0.5, linestyle='--')
-    
-    # Mark specific knots
-    knots = [(-1, 'Trefoil', '#2196F3'), (-3, 'Figure-8', '#FF5722')]
-    for b, name, color in knots:
-        D = b**2 - 4
-        ax1.plot(b, D, 'o', color=color, markersize=12, zorder=5)
-        ax1.annotate(f'{name}\n(b={b}, D={D})', (b, D),
-                    textcoords="offset points", xytext=(15, 10),
-                    fontsize=10, color=color, fontweight='bold')
-    
-    ax1.set_xlabel('Coefficient b', fontsize=12)
-    ax1.set_ylabel('Discriminant D = b² − 4', fontsize=12)
-    ax1.set_title('Palindromic Quadratic Classification\nt² + bt + 1', fontsize=13)
-    ax1.legend(fontsize=11)
-    ax1.set_xlim(-5, 5)
-    ax1.set_ylim(-6, 22)
-    ax1.grid(True, alpha=0.3)
-    
-    # --- Right panel: Root loci on complex plane ---
-    theta = np.linspace(0, 2*np.pi, 200)
-    ax2.plot(np.cos(theta), np.sin(theta), 'k--', alpha=0.3, linewidth=1)
-    
-    colors = plt.cm.coolwarm(np.linspace(0, 1, 9))
-    for idx, b in enumerate(range(-4, 5)):
-        D = b**2 - 4
-        if D < 0:
-            # Complex roots on unit circle
-            re = -b / 2
-            im = np.sqrt(-D) / 2
-            ax2.plot(re, im, 'o', color=colors[idx], markersize=8)
-            ax2.plot(re, -im, 'o', color=colors[idx], markersize=8)
-            label = f'b={b}'
-            ax2.annotate(label, (re, im), textcoords="offset points",
-                        xytext=(8, 5), fontsize=8, color=colors[idx])
-        elif D > 0:
-            # Real roots
-            r1 = (-b + np.sqrt(D)) / 2
-            r2 = (-b - np.sqrt(D)) / 2
-            ax2.plot(r1, 0, 's', color=colors[idx], markersize=8)
-            ax2.plot(r2, 0, 's', color=colors[idx], markersize=8)
-            if abs(b) <= 4:
-                ax2.annotate(f'b={b}', (r1, 0), textcoords="offset points",
-                            xytext=(5, 8), fontsize=8, color=colors[idx])
-        else:
-            # Double root at ±1
-            r = -b / 2
-            ax2.plot(r, 0, 'D', color=colors[idx], markersize=10)
-    
-    ax2.set_xlabel('Re(root)', fontsize=12)
-    ax2.set_ylabel('Im(root)', fontsize=12)
-    ax2.set_title('Root Loci of t² + bt + 1\n(circles=crystalline, squares=metallic)', fontsize=13)
-    ax2.set_aspect('equal')
-    ax2.set_xlim(-3.5, 3.5)
-    ax2.set_ylim(-2, 2)
-    ax2.grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig('discriminant_classification.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: discriminant_classification.png")
-
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: OAM Spectra of Knotted Light Beams
-
-Plots the Alexander polynomial roots on the unit circle and the
-corresponding OAM spectra for trefoil, figure-eight, and cinquefoil knots.
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.patches import Circle
-
-
-def alexander_trefoil(t):
-    return t**2 - t + 1
-
-def alexander_figure_eight(t):
-    return t**2 - 3*t + 1
-
-def alexander_cinquefoil(t):
-    return t**4 - t**3 + t**2 - t + 1
-
-def find_roots_on_circle(poly_func, n_points=10000, tol=1e-6):
-    """Find approximate roots of polynomial on unit circle."""
-    thetas = np.linspace(0, 2*np.pi, n_points, endpoint=False)
-    values = np.array([abs(poly_func(np.exp(1j*t))) for t in thetas])
-    # Find local minima below tolerance
-    roots = []
-    for i in range(len(values)):
-        if values[i] < tol:
-            if (i == 0 or values[i] <= values[i-1]) and (i == len(values)-1 or values[i] <= values[(i+1) % len(values)]):
-                roots.append(thetas[i])
-    return roots
-
-def plot_polynomial_on_circle(ax, poly_func, title, color):
-    """Plot |Δ(e^{iθ})| around the unit circle."""
-    thetas = np.linspace(0, 2*np.pi, 1000)
-    values = [abs(poly_func(np.exp(1j*t))) for t in thetas]
-    
-    # Unit circle background
-    circle = Circle((0, 0), 1, fill=False, color='lightgray', linewidth=1)
-    ax.add_patch(circle)
-    
-    # Plot values as radial distance from unit circle
-    r = 1 + 0.3 * np.array(values) / max(values)
-    x = r * np.cos(thetas)
-    y = r * np.sin(thetas)
-    ax.plot(x, y, color=color, linewidth=2)
-    
-    # Mark roots
-    roots = find_roots_on_circle(poly_func)
-    for theta in roots:
-        ax.plot(np.cos(theta), np.sin(theta), 'o', color='red', 
-                markersize=10, zorder=5)
-        angle_deg = np.degrees(theta)
-        ax.annotate(f'{angle_deg:.0f}°', 
-                    (1.15*np.cos(theta), 1.15*np.sin(theta)),
-                    fontsize=9, ha='center', va='center', color='red')
-    
-    ax.set_xlim(-1.8, 1.8)
-    ax.set_ylim(-1.8, 1.8)
-    ax.set_aspect('equal')
-    ax.set_title(title, fontsize=12, fontweight='bold')
-    ax.axhline(y=0, color='lightgray', linewidth=0.5)
-    ax.axvline(x=0, color='lightgray', linewidth=0.5)
-
-def main():
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-    
-    plot_polynomial_on_circle(axes[0], alexander_trefoil, 
-                              'Trefoil: t² − t + 1 = Φ₆', '#2196F3')
-    plot_polynomial_on_circle(axes[1], alexander_figure_eight,
-                              'Figure-Eight: t² − 3t + 1', '#FF9800')
-    plot_polynomial_on_circle(axes[2], alexander_cinquefoil,
-                              'Cinquefoil: t⁴ − t³ + t² − t + 1 = Φ₁₀', '#4CAF50')
-    
-    fig.suptitle('Alexander Polynomial Magnitude on the Unit Circle\n(Red dots = roots = OAM spectral values)', 
-                 fontsize=14, fontweight='bold')
-    plt.tight_layout()
-    plt.savefig('oam_spectrum_visualization.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: oam_spectrum_visualization.png")
 
 if __name__ == "__main__":
     main()

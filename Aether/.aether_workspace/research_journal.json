@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "12b5f4b2",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — additive strong blocking sets beyond the `h = 1` Fano base case\n\nThese conjectures are derived directly from this cycle's findings: the threshold\nin `PG(2,2)` is exactly `6 = 3(q",
-      "quality_score": 0.6807300000000001,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-06-28T23:55:24",
-      "title": "Fano-plane threshold for additive strong blocking sets in the h=1 case"
-    },
-    {
       "cycle_id": "3c64518a",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Forbidden pc-minors for Daisy Cubes\n\nDerived from this cycle's formalized findings:\n- `daisy_isometric` — daisy cubes are partial cubes (isometric subgraphs of `Q_n`);\n- `meet_on",
@@ -2501,6 +2491,16 @@
       "theorem_count": 46,
       "timestamp": "2026-07-10T02:41:36",
       "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
+    },
+    {
+      "cycle_id": "7976e906",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\nThe file `MachineLearning/RipsDoublingLowerBound.lean` establishes, with complete\nLean proofs and only the standard axioms, the combinatorial and metric core behind\nthe statement",
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "theorem_count": 22,
+      "timestamp": "2026-07-10T02:59:06",
+      "title": "Exponential Lower Bound for Rips c-Approximation in Bounded Doubling Dimension"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-10T02:41:36",
+  "last_updated": "2026-07-10T02:59:06",
   "open_questions": [
     {
       "context": "Main results (all sorry-free):; sorry-free, to an explicit finite list of quartic Thue equations whose known; What survived: the entire *structural* reduction is fully formal and sorry-free.",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "d9f17c93",
-        "quality": 0.3829593469387754,
-        "theorems": 11,
-        "title": "Pickover Clifford Attractor Family"
-      },
-      {
         "cycle_id": "71ab9721",
         "quality": 0.6771,
         "theorems": 15,
@@ -3575,6 +3569,12 @@
         "quality": 0.39727681,
         "theorems": 6,
         "title": "Conjecture: Balanced graphs coincide with hereditary clique‑Helly graphs"
+      },
+      {
+        "cycle_id": "7976e906",
+        "quality": 0.62,
+        "theorems": 22,
+        "title": "Exponential Lower Bound for Rips c-Approximation in Bounded Doubling Dimension"
       }
     ],
     "Novelty": [
