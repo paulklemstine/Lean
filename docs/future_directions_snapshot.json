@@ -4711,6 +4711,34 @@
     "title": "Unconditional Euclidean Systems for Ray Classes in Totally Real Galois Fields"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "real-rooted polynomials",
+      "Eulerian numbers",
+      "triangular matrix products"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every n ≥ 0, the n-th row generating function of the square of the Eulerian triangle—defined as the polynomial ∑_k (∑_j A(n,j)·A(j,k)) x^k where A(n,k) is the Eulerian number counting permutations of [n] with k descents—has only real roots. This extends the paper's results on powers of Pascal, Stirling, and Narayana triangles to the still-open Eulerian case.",
+    "domain_bridges": [
+      "Polynomial real-rootedness",
+      "Eulerian numbers",
+      "Matrix products of combinatorial triangles"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0417",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Attempt to decompose the Eulerian triangle square as a product of triangles whose individual real-rootedness preservation is known, or extend the rectangular additive convolution framework to construct an interlacing chain for the squared Eulerian row generating functions. Alternatively, establish that the Eulerian triangle square arises from a Narayana-type transformation applied to a suitable real-rooted polynomial.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01572v1",
+    "status": "available",
+    "timestamp": "2026-07-06T01:27:06.611331+00:00",
+    "title": "Real-rootedness of the square of the Eulerian triangle"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "math.CO",
@@ -9652,6 +9680,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "A Sudoku puzzle is a constraint satisfaction problem on a 9x9 grid. The 'spectral gap' of a Sudoku puzzle is the gap between the two largest eigenvalues of the transition matrix of the Markov chain that randomly swaps two compatible entries. The spectral gap determines the mixing time: the number of swaps needed to generate a uniformly random solution. Conjecture: the spectral gap of a Sudoku puzzle undergoes a phase transition at the critical density d_c = 17/81 (the density of the minimal number of clues, 17, divided by 81). For puzzles with fewer than 17 clues, the spectral gap is large (the Markov chain mixes quickly, meaning there are many solutions). For puzzles with exactly 17 clues, the spectral gap is minimal (the chain mixes slowly, meaning solutions are hard to find). For puzzles with more than 30 clues, the spectral gap is zero (the chain is reducible, meaning the puzzle has a unique solution and no swaps are possible). Conjecture: the spectral gap lambda_1 - lambda_2 of the Sudoku Markov chain satisfies: lambda_1 - lambda_2 > epsilon for d < 17/81 (many solutions, fast mixing), lambda_1 - lambda_2 ~ 0 for d ~ 17/81 (critical point, slow mixing), and the chain is absorbing for d > 30/81 (unique solution, no mixing). Test: compute the spectral gap for Sudoku puzzles with varying numbers of clues and verify the phase transition. Impact: Sudoku has a spectral gap phase transition. The hardness of the puzzle is determined by the gap, not by the number of clues.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0909",
+    "lineage_refs": [],
+    "priority_score": 0.77,
+    "proof_strategy": "Define the Sudoku Markov chain M: state space = valid completions of the puzzle. Transitions: swap two compatible entries (entries in different rows, columns, and boxes). The transition matrix P has entries P(i,j) = probability of moving from state i to state j. The spectral gap is lambda_1 - lambda_2 where lambda_1 = 1 (the stationary distribution eigenvalue) and lambda_2 is the second-largest eigenvalue. For a connected state space (many solutions): lambda_1 - lambda_2 > 0, and the mixing time is O(1/(lambda_1 - lambda_2)). For a unique solution: the chain has only one state, so lambda_1 = lambda_2 = 1 (no gap). For critical puzzles (17 clues): the state space has many solutions but they are 'far apart' (connected only through long chains of swaps), so lambda_2 is close to 1 and the gap is small. Phase transition conjecture: as the number of clues k increases from 0 to 81, the spectral gap lambda_1 - lambda_2 transitions from large (many solutions, fast mixing) to small (few solutions, slow mixing) to zero (unique solution, no mixing). The critical point is k = 17 (the minimum number of clues for a unique solution). Test: generate Sudoku puzzles with k = 17, 20, 25, 30, 35, 40 clues, compute the transition matrix M for the swap Markov chain, find eigenvalues, measure spectral gap. For k >= 30 (unique solution), the chain has 1 state.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T15:16:58.746626+00:00",
+    "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle dd8b10c1 (Q=0.720) proved 54 theorems in Applications but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: A cake is a smooth projective variety over R: it has a base (a smooth manifold with boundary), frosting (a sheaf of sections supported on the boundary), and layers (a stratification by codimension). T",
     "domain_bridges": [],
     "domains": [
@@ -9670,7 +9718,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b1691bd9",
     "description": "The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surface V(f) = {x : f(x) = 0} is a piecewise linear hypersurface. Conjecture: every rational homology class in H_{n-2}(V(f), Q) is represented by an algebraic cycle (a subvariety of V(f) of codimension 1). Since V(f) is piecewise linear, its homology groups are finitely generated and every cycle is a formal sum of linear pieces. Each linear piece is an algebraic cycle (a hyperplane section). Conjecture: the piecewise linear Hodge conjecture holds — every homology class in V(f) is a sum of hyperplane sections. This is TRUE for piecewise linear varieties because every face of a polyhedron is cut out by a linear equation. The deeper conjecture: for a ReLU network with L layers and widths (n, w_1, ..., w_L, 1), the Hodge numbers h^{p,q}(V(f)) satisfy h^{p,q} <= (w_1 choose p) * (w_L choose q) * prod_{i=2}^{L-1} w_i. Test: compute H_{n-2}(V(f)) for small ReLU networks and verify that every class is represented by hyperplane sections. Impact: the Hodge conjecture is trivially true for neural network decision surfaces. The non-trivial content is the BOUND on Hodge numbers.",
     "domain_bridges": [],
     "domains": [
@@ -9683,7 +9731,7 @@
     "proof_strategy": "For a ReLU network f: R^n -> R with L layers, the decision surface V(f) is a polyhedral complex. Each linear region of f defines a halfspace H_i = {x : a_i . x + b_i > 0}, and V(f) is the union of boundaries of these halfspaces. The homology H_{n-2}(V(f), Z) is generated by the (n-2)-dimensional faces of V(f). Each such face is the intersection of exactly 2 hyperplanes: face_{ij} = {x : a_i . x + b_i = 0, a_j . x + b_j = 0}. Each face is an algebraic cycle (a codimension-2 subvariety of R^n cut out by 2 linear equations). The Hodge conjecture for V(f): every class in H_{n-2}(V(f), Q) is represented by a formal sum of these faces. This is trivially true because H_{n-2}(V(f), Z) is free abelian generated by the faces. The non-trivial content: the NUMBER of faces is bounded by (w_1 choose 2) * prod_{i=2}^{L} w_i (the product of binomial coefficients of widths). This gives the Hodge number bound h^{1,1}(V(f)) <= (w_1 choose 2) * prod w_i. More generally, h^{p,q}(V(f)) <= (w_1 choose p) * (w_L choose q) * prod w_i. Test: for a 2-layer ReLU network with n=2, w_1=4, compute V(f), enumerate faces, compute H_0(V(f)), and verify every class is a sum of vertices.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T12:39:07.666361+00:00",
     "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
   },
