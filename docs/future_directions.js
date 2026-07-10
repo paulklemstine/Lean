@@ -313,6 +313,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle cf42e929 (Q=0.790), which proved 26 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Poincare conjecture (proved by Perelman) states that every simply connected closed 3-manifold is homeomorphic to the 3-sphere. For data: a point cloud X = {x_1, ..., x_n} in R^d may or may not lie on a manifold. Conjecture: the Poincare conjecture for data states that if the persistent homology ",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "push_cf42e929_021058a3",
+    "priority_score": 0.89,
+    "research_mode": "team",
+    "source_exp_id": "cf42e929",
+    "status": "available",
+    "timestamp": "2026-07-10T22:14:01.734603+00:00",
+    "title": "Deepening: The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Two quantum particles are entangled if measuring one instantly affects the other. But entanglement is also a topological property: if you represent the state of two qubits as a curve in R^3, entanglement IS the linking number. Conjecture: For any pure state of two qubits |psi> in C^2 tensor C^2, the concurrence C(psi) = 2|alpha*delta - beta*gamma| (where psi = alpha|00> + beta|01> + gamma|10> + delta|11>) equals the absolute value of the linking number of two curves derived from the Hopf fibration applied to psi. Specifically, map psi to S^7 via normalization, then project to S^4 via the Hopf map, and the preimages of two points in S^4 are linked circles in S^7 whose linking number equals the concurrence. This means: entanglement is MEASURED by topology, and maximally entangled states correspond to the Hopf link (linking number 1). Test: for 1000 random two-qubit states, compute the concurrence and the linking number of the Hopf preimages, and verify they are equal. Prove the equality for the Bell states. Impact: quantum entanglement is not mysterious \u2014 it is the linking number of the Hopf fibration. Two particles are entangled if and only if their Hopf preimages are linked.",
     "domains": [
       "Novelty",
@@ -5471,21 +5485,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
   },
   {
-    "consumed_by_exp_id": "cf42e929",
-    "description": "The Poincare conjecture (proved by Perelman) states that every simply connected closed 3-manifold is homeomorphic to the 3-sphere. For data: a point cloud X = {x_1, ..., x_n} in R^d may or may not lie on a manifold. Conjecture: the Poincare conjecture for data states that if the persistent homology of X satisfies H_0(X) = Z, H_1(X) = 0, H_2(X) = 0, ..., H_{d-1}(X) = 0, then X lies on (or near) a d-sphere. More precisely, if the Vietoris-Rips complex of X at scale epsilon has the homology of S^d (trivial homology except H_0 = Z and H_d = Z), then X is epsilon-close to a subset of S^d. Conjecture: the smallest epsilon such that VR_epsilon(X) has the homology of S^d is the 'Poincare threshold' of X, and it satisfies epsilon_star = C * d^{1/2} * n^{-1/d} for some constant C, where n is the number of points. This is the manifold detection threshold: below epsilon_star, X looks like a d-sphere; above epsilon_star, X looks like something else. Test: generate point clouds on S^d for d = 1, 2, 3 and compute the Poincare threshold. Impact: the Poincare conjecture for data says that manifold detection is a topological problem, and the detection threshold scales as n^{-1/d}.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0934",
-    "priority_score": 0.79,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T19:31:41.534502+00:00",
-    "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prime gaps \u2014 the spaces between consecutive primes \u2014 are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable \u2014 given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random \u2014 they are a solvable crossword puzzle with deterministic rules.",
     "domains": [
@@ -6337,6 +6336,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T21:41:33.880097+00:00",
     "title": "Two independent, verified facts about the decision surfac"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# The Poincar\u00e9 Conjecture for Data \u2014 Results and Future Directions\n\nDomain: Algebra / Topological Data Analysis. Mode: Contrarian (prove bold conjectures,\ncount disproofs). All statements are formalized and machine-checked in\n`Algebra/PoincareDataScaling.lean`, `Algebra/PoincareDataMetric.lean`, and\n`Algebra/PoincareDataDisproof.lean` (only `propext`, `Classical.choice`, `Quot.sound`).\n\n## What the informal conjecture claimed\n\nFor a point cloud of `n` points sampled from a `d`-dimensional object, the manifold-detection\n(\"Poincar\u00e9\") threshold \u2014 the smallest scale at which the Vietoris\u2013Rips complex acquires the\nhomology of `S^d` \u2014 was conjectured to be *exactly*\n\n    \u03b5_\u22c6 = C \u00b7 d^{1/2} \u00b7 n^{-1/d}.\n\nWe isolate three separable assertions inside this formula and settle each.\n\n## Proved\n\nWe work in a clean, Nerve-Lemma-faithful discrete model: the Chebyshev cube\n`Fin d \u2192 Fin m` stands for a sampled cube-like object, a `Finset S` is the point cloud,\nand \"the Rips/\u010cech complex recovers the object\" is modelled by `S` being an \u2113^\u221e `r`-cover.\n\n1. **The `n^{-1/d}` exponent is real (lower bound).**\n   `covering_lower_bound` : any `r`-cover satisfies `m^d \u2264 |S| \u00b7 (2r+1)^d`.\n   `covering_radius_scaling` : consequently `(m : \u211d) \u2264 |S|^{1/d} \u00b7 (2r+1)`, i.e.\n   the covering radius obeys `2r+1 \u2265 m \u00b7 n^{-1/d}`.\n\n2. **The exponent `-1/d` is sharp (matching upper bound).**\n   `exact_cover_exists` : when `m = (2r+1)\u00b7t` there is an explicit grid `r`-cover with\n   exactly `t^d = (m/(2r+1))^d` samples; `min_cover_card` : every `r`-cover has at least\n   `t^d` samples. Together the minimal cover size is *exactly* `t^d`, so no exponent other\n   than `-1/d` is possible.\n\n3. **The `d^{1/2}` factor is a metric artifact.**\n   `linfty_le_l2`, `l2_le_sqrt_d_linfty`, `sqrt_d_is_sharp` : the sharp norm comparison\n   `\u2016x\u2016_\u221e \u2264 \u2016x\u2016_2 \u2264 \u221ad \u00b7 \u2016x\u2016_\u221e`, with `\u221ad` attained. The `d^{1/2}` is exactly the constant\n   converting the \u2113^\u221e covering radius (where packing is clean) into the Euclidean scale\n   (where `S^d` and the Rips parameter live). It reflects the choice of metric, not topology.\n\n## Disproved\n\n4. **The exact power law is false.**\n   `no_exact_inverse_power_law` (with `minRad_7_3`, `minRad_7_4`, `minRad_step`):\n   the minimal covering radius `r_\u22c6(n)` is a genuine *step function* of `n` \u2014 for `m = 7`,\n   `d = 1` it equals `1` for all of `n \u2208 {3,4,5,6}`. A strictly decreasing law `C\u00b7n^{-1}`\n   cannot be constant on a range, so **no positive constant `C` reproduces the threshold\n   exactly**. The conjectured equality must be downgraded to a scaling relation `\u224d`.\n\nNet verdict: the manifold-detection threshold does scale like `n^{-1/d}` (proved, sharp),\nthe `d^{1/2}` is an \u2113^\u221e\u2192\u2113\u00b2 conversion constant (proved), but the clean equality\n`\u03b5_\u22c6 = C\u00b7d^{1/2}\u00b7n^{-1/d}` is false as stated (disproved) \u2014 it holds only up to constants.\n\n## Future directions\n\n* **From cubes to spheres.** Replace the Chebyshev cube by a discretization of `S^d`\n  with an Ahlfors-regular measure; the same `\u03bc(ball) \u224d \u03b5^d` volume input yields the same\n  `n^{-1/d}` law. Formalizing Ahlfors regularity in Mathlib would generalize\n  `covering_lower_bound` to arbitrary `d`-regular metric measure spaces.\n\n* **Genuine persistent homology.** The present model uses the Nerve-Lemma covering\n  condition as a proxy for \"the Rips complex has the homology of `S^d`\". Building\n  Vietoris\u2013Rips complexes and their persistent homology in Lean (currently absent from\n  Mathlib) would let one state the topological hypothesis directly and prove the\n  covering condition is *necessary* for homology recovery.\n\n* **Homology does not determine geometry.** A deeper contrarian target: exhibit two point\n  clouds with identical persistence diagrams (same Betti numbers in every degree) that are\n  far apart in Gromov\u2013Hausdorff distance \u2014 e.g. samples from a lens space vs. a genuine\n  sphere, or Milnor's exotic-sphere-flavoured obstructions. This would refute the strong\n  form \"sphere-homology \u21d2 \u03b5-close to a sphere\" and quantify the stability gap.\n\n* **Sharp constants.** Determine the best `C = C(d)` in the two-sided bound (the covering\n  vs. packing constant of `S^d`), connecting to the sphere-covering literature.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0949",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "cf42e929",
+    "status": "available",
+    "timestamp": "2026-07-10T22:13:54.943673+00:00",
+    "title": "Domain: Algebra / Topological Data Analysis. Mode: Contrarian (prove bold conjec"
   },
   {
     "consumed_by_exp_id": "",
