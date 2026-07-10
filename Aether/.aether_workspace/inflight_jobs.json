@@ -556,7 +556,7 @@
     "github_issue": 0,
     "aristotle_self_score": 0.83
   },
-  "b0a297ce": {
+  "e758a315-dca2-4a55-ad47-d945c1d47698": {
     "job_id": "b0a297ce",
     "cycle_n": 49,
     "concept": {
@@ -573,9 +573,9 @@
     },
     "prompt": "            # Phase A Research Mission v24: Close Proofs: The Zeta Function of a Graph: Number Theory on Networks\n\n            ## Concept\n            **Domain**: Novelty\n            **Research mode**: team\n            **Title**: Close Proofs: The Zeta Function of a Graph: Number Theory on Networks\n            **Description**: Cycle 4936bb72 (Q=0.850) proved 11 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Building on cycle 4d30d98b (Q=0.830), which proved 9 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. \n            **Mathematical framing**: Cycle 4936bb72 (Q=0.850) proved 11 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Building on cycle 4d30d98b (Q=0.830), which proved 9 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. \n\n\n\n            ## v24: Minimalist\nProve interesting theorems in Lean 4. Complete proofs only \u2014 0 sorries.\nClear docstrings. Nothing else. No Lab Notes, no team roles, no process\ndocumentation. Use your full compute on mathematics.\n\n\n            ### Guardrails (non-negotiable)\n            - No trivial theorems (True, Inhabited-only, native_decide-only, rfl-only).\n            - No circular proofs \u2014 a theorem must not reference itself in its own proof.\n            - No truncated/stubbed declarations \u2014 every theorem needs a complete `:= by ...` proof.\n            - No `sorry` in main theorems.\n            - Every file must be self-contained (compiles independently).\n\n            ### Output\n            Return `.lean` files and `FUTURE_DIRECTIONS.md` only. Focus all compute\n            on the mathematics.\n\n\n### MANDATORY PHASE A SELF-EVALUATION\nAdditionally, you MUST write a JSON file named `quality_score.json` in your output directory.\nThis file must contain a single JSON object containing your self-evaluation score (a float between 0.0 and 1.0) based on your compile correctness, proof depth, and mathematical novelty.\nExample format:\n{\n  \"self_score\": 0.85\n}\nDo NOT include any extra formatting, markdown code blocks, or text in `quality_score.json`.\n\n\n### Computational Evidence Stage (Recommended)\n\nBefore writing the formal Lean 4 proof, you are strongly encouraged to produce\ncomputational evidence for the claim. Create a file named `ComputationalEvidence.md`\nin the project directory with:\n\n1. **Small-case calculations** \u2014 compute the first several instances of the object/conjecture.\n2. **OEIS search results** \u2014 if a sequence appears, note its OEIS ID and first terms.\n3. **Counterexample hunt** \u2014 test the universal claim on a representative sample; report any counterexample found.\n4. **Plots or tables** \u2014 include any relevant visual/numerical data.\n\nIf you choose to skip this stage, you MUST explicitly justify why computational\nevidence is unnecessary or infeasible in a `SkipEvidenceJustification.md` file.\n\nDo not let the evidence stage dominate the project; keep it concise and directly\nrelevant to the theorem you intend to prove.\n",
     "project_dir": "/home/raver1975/lean/Aether/.aether_workspace/projects/b0a297ce",
-    "project_id": null,
-    "status": "preparing",
-    "dispatch_time": 0.0,
+    "project_id": "e758a315-dca2-4a55-ad47-d945c1d47698",
+    "status": "dispatched",
+    "dispatch_time": 1783670774.0724669,
     "complete_time": 0.0,
     "result_lean": null,
     "result_demo": null,
