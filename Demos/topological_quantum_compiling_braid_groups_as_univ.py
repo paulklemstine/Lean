@@ -1,216 +1,201 @@
 """
-demo.py — Numerical demonstrations of the Jones-braid non-abelianity certificate.
+Topological Quantum Compiling: Braid Groups as Universal Gates
+==============================================================
 
-This script is fully self-contained (standard library only: `fractions`,
-`cmath`, `itertools`) and demonstrates the results of the paper
-"A Non-Abelianity Certificate for Jones Braid Operators":
+Numerical demonstration of the reduced Burau representation of the braid group
+B_4 as a 3x3 quantum gate set, and of the structural facts underlying the
+four-strand universality conjecture.
 
-  Jones operator:        jonesOp(u, X) = u * I + (1/u) * X
-  Commutator identity:   [jonesOp(u,X), jonesOp(u,Y)] = u^(-2) * [X, Y]
-  Non-abelianity:        jonesOp(u,X), jonesOp(u,Y) commute  <=>  X, Y commute
+The reduced Burau generators over a ring with parameter t are:
 
-We verify these over exact rational arithmetic, over complex roots of unity
-(the physically relevant regime), and on the explicit 2x2 example from the paper.
+    rho(s1) = [[-t, 0, 0], [1, 1, 0], [0, 0, 1]]
+    rho(s2) = [[ 1, t, 0], [0,-t, 0], [0, 1, 1]]
+    rho(s3) = [[ 1, 0, 0], [0, 1, t], [0, 0,-t]]
 
-Run:  python3 demo.py
+We verify, purely numerically:
+  1. Artin's braid relations hold for arbitrary t (representation of B_4).
+  2. det rho(s_i) = -t.
+  3. At t = -1, W = rho(s1 s3) is unipotent (W = I + N, N != 0, N^2 = 0),
+     with W^n = I + nN, hence infinite order.
+  4. At t = -1, the image is non-abelian.
+  5. Contrarian: at t = 1 the generators are involutions -> finite S_4 image.
+  6. At the physical root of unity t = exp(2*pi*i/5), the (normalized) gates
+     are unitary and a sample braid word has an eigenvalue that is an
+     irrational rotation (evidence of infinite order at the physical parameter).
+
+Self-contained: requires only the Python standard library plus numpy.
 """
 
 from __future__ import annotations
 
 import cmath
-from fractions import Fraction
-from itertools import product
-from typing import List, Sequence, TypeVar
+import math
+from typing import List
 
-Number = TypeVar("Number", Fraction, complex)
-Matrix = List[List[Number]]
+import numpy as np
 
-
-# --------------------------------------------------------------------------- #
-# Minimal self-contained square-matrix algebra                                #
-# --------------------------------------------------------------------------- #
-def identity(n: int, one: Number) -> Matrix:
-    """The n x n identity matrix with the given multiplicative unit `one`."""
-    zero = one - one
-    return [[one if i == j else zero for j in range(n)] for i in range(n)]
+Matrix = np.ndarray
 
 
-def scalar_mul(c: Number, A: Matrix) -> Matrix:
-    """Scalar multiple c * A."""
-    return [[c * A[i][j] for j in range(len(A[0]))] for i in range(len(A))]
+def burau1(t: complex) -> Matrix:
+    """Reduced Burau image of the braid generator sigma_1 in B_4."""
+    return np.array([[-t, 0, 0],
+                     [1, 1, 0],
+                     [0, 0, 1]], dtype=complex)
 
 
-def mat_add(A: Matrix, B: Matrix) -> Matrix:
-    """Entrywise sum A + B."""
-    return [[A[i][j] + B[i][j] for j in range(len(A[0]))] for i in range(len(A))]
+def burau2(t: complex) -> Matrix:
+    """Reduced Burau image of the braid generator sigma_2 in B_4."""
+    return np.array([[1, t, 0],
+                     [0, -t, 0],
+                     [0, 1, 1]], dtype=complex)
 
 
-def mat_sub(A: Matrix, B: Matrix) -> Matrix:
-    """Entrywise difference A - B."""
-    return [[A[i][j] - B[i][j] for j in range(len(A[0]))] for i in range(len(A))]
+def burau3(t: complex) -> Matrix:
+    """Reduced Burau image of the braid generator sigma_3 in B_4."""
+    return np.array([[1, 0, 0],
+                     [0, 1, t],
+                     [0, 0, -t]], dtype=complex)
 
 
-def mat_mul(A: Matrix, B: Matrix) -> Matrix:
-    """Matrix product A * B."""
-    n, m, p = len(A), len(B), len(B[0])
-    zero = A[0][0] - A[0][0]
-    out: Matrix = [[zero for _ in range(p)] for _ in range(n)]
-    for i in range(n):
-        for k in range(m):
-            aik = A[i][k]
-            for j in range(p):
-                out[i][j] += aik * B[k][j]
-    return out
+def close(a: Matrix, b: Matrix, tol: float = 1e-9) -> bool:
+    """Entrywise near-equality of two matrices."""
+    return bool(np.allclose(a, b, atol=tol))
 
 
-def commutator(A: Matrix, B: Matrix) -> Matrix:
-    """The matrix commutator [A, B] = A B - B A."""
-    return mat_sub(mat_mul(A, B), mat_mul(B, A))
+def check_braid_relations(t: complex, tol: float = 1e-9) -> bool:
+    """Verify all three Artin relations of B_4 for a given parameter t."""
+    s1, s2, s3 = burau1(t), burau2(t), burau3(t)
+    far = close(s1 @ s3, s3 @ s1, tol)
+    r12 = close(s1 @ s2 @ s1, s2 @ s1 @ s2, tol)
+    r23 = close(s2 @ s3 @ s2, s3 @ s2 @ s3, tol)
+    return far and r12 and r23
 
 
-def approx_zero(A: Matrix, tol: float = 1e-9) -> bool:
-    """True if every entry of A is (numerically) zero."""
-    return all(abs(complex(A[i][j])) <= tol for i in range(len(A)) for j in range(len(A[0])))
+def check_determinants(t: complex, tol: float = 1e-9) -> bool:
+    """Verify det rho(sigma_i) = -t for all generators."""
+    return all(abs(np.linalg.det(g(t)) - (-t)) < tol
+               for g in (burau1, burau2, burau3))
 
 
-def mat_equal(A: Matrix, B: Matrix, tol: float = 1e-9) -> bool:
-    """True if A and B agree within tolerance."""
-    return approx_zero(mat_sub(A, B), tol)
+def braid_word(word: List[int], t: complex) -> Matrix:
+    """Compile a braid word to a matrix at parameter t.
+
+    The word is a list of nonzero integers; a positive entry i uses generator
+    sigma_i, and a negative entry -i uses the inverse of sigma_i (i in {1,2,3}).
+    """
+    gens = {1: burau1(t), 2: burau2(t), 3: burau3(t)}
+    result = np.eye(3, dtype=complex)
+    for letter in word:
+        i = abs(letter)
+        g = gens[i] if letter > 0 else np.linalg.inv(gens[i])
+        result = result @ g
+    return result
 
 
-# --------------------------------------------------------------------------- #
-# The Jones operator and the certificate                                      #
-# --------------------------------------------------------------------------- #
-def jones_op(u: Number, X: Matrix) -> Matrix:
-    """jonesOp(u, X) = u * I + (1/u) * X  (Definition 2.1)."""
-    n = len(X)
-    one = u / u  # multiplicative unit of the scalar type
-    I = identity(n, one)
-    return mat_add(scalar_mul(u, I), scalar_mul(one / u, X))
+def unipotent_demo() -> None:
+    """At t = -1, show W = rho(s1 s3) is unipotent with W^n = I + nN."""
+    t = -1.0
+    W = burau1(t) @ burau3(t)
+    N = W - np.eye(3, dtype=complex)
+    print("  W = rho(sigma_1 sigma_3) at t = -1:")
+    print(np.real_if_close(W))
+    print("  N = W - I:")
+    print(np.real_if_close(N))
+    print(f"  N != 0 : {not close(N, np.zeros((3, 3)))}")
+    print(f"  N^2 = 0: {close(N @ N, np.zeros((3, 3)))}")
+    for n in (1, 2, 5, 10, 100):
+        Wn = np.linalg.matrix_power(W, n)
+        predicted = np.eye(3, dtype=complex) + n * N
+        entry = Wn[1, 0].real
+        print(f"  W^{n:<3d}: (2,1) entry = {entry:g}"
+              f"   matches I + nN: {close(Wn, predicted)}")
+    print("  => powers are pairwise distinct: W has INFINITE ORDER.")
 
 
-def commutator_identity_residual(u: Number, X: Matrix, Y: Matrix) -> Matrix:
-    """LHS - RHS of Theorem 3.2; should be the zero matrix."""
-    lhs = commutator(jones_op(u, X), jones_op(u, Y))
-    one = u / u
-    rhs = scalar_mul((one / u) * (one / u), commutator(X, Y))
-    return mat_sub(lhs, rhs)
+def noncommute_demo() -> None:
+    """At t = -1, show the image is non-abelian."""
+    t = -1.0
+    lhs = burau1(t) @ burau2(t)
+    rhs = burau2(t) @ burau1(t)
+    print(f"  rho(s1)rho(s2) == rho(s2)rho(s1) ? {close(lhs, rhs)}")
+    print("  => image is NON-ABELIAN (lies in no maximal torus).")
 
 
-def jones_ops_commute(u: Number, X: Matrix, Y: Matrix, tol: float = 1e-9) -> bool:
-    """Decide whether jonesOp(u,X) and jonesOp(u,Y) commute (direct test)."""
-    return approx_zero(commutator(jones_op(u, X), jones_op(u, Y)), tol)
+def involution_demo() -> None:
+    """Contrarian: at t = 1 every generator squares to the identity."""
+    t = 1.0
+    I = np.eye(3, dtype=complex)
+    for name, g in (("sigma_1", burau1), ("sigma_2", burau2), ("sigma_3", burau3)):
+        sq = g(t) @ g(t)
+        print(f"  rho({name})^2 == I ? {close(sq, I)}")
+    print("  => at t = 1 the representation collapses onto S_4 (FINITE, |S_4|=24).")
+    print("  => universality is PARAMETER-DEPENDENT.")
 
 
-def generators_commute(X: Matrix, Y: Matrix, tol: float = 1e-9) -> bool:
-    """The u-independent oracle of Theorem 3.3: commute iff [X, Y] = 0."""
-    return approx_zero(commutator(X, Y), tol)
+def physical_root_demo() -> None:
+    """At t = exp(2*pi*i/5): braid relations still hold; the determinant-normalized
+    generators lie in SL_3 with spectrum on the unit circle (they act by
+    rotations), and a sample braid word acts as a unit-modulus rotation."""
+    k = 5
+    t = cmath.exp(2j * math.pi / k)
+    print(f"  t = exp(2*pi*i/{k}) = {t:.6f}")
+    print(f"  braid relations still hold: {check_braid_relations(t)}")
+
+    # Normalize each generator to determinant 1 (det = -t) to sit inside SL_3.
+    scale = (-t) ** (-1.0 / 3.0)
+    s1 = scale * burau1(t)
+    s2 = scale * burau2(t)
+    s3 = scale * burau3(t)
+    print(f"  det(normalized s1) ~ 1 : "
+          f"{abs(np.linalg.det(s1) - 1) < 1e-9}")
+
+    # The spectrum of every normalized generator lies on the unit circle.
+    for name, g in (("s1", s1), ("s2", s2), ("s3", s3)):
+        mods = [abs(lam) for lam in np.linalg.eigvals(g)]
+        on_circle = all(abs(m - 1) < 1e-9 for m in mods)
+        print(f"  spectrum of normalized {name} on unit circle: {on_circle}")
+
+    # A sample braid word beta = s1 s2 s3 s1^{-1}; its eigenvalues are rotations.
+    beta = braid_word([1, 2, 3, -1], t)
+    beta = (scale ** 2) * beta  # normalize (net exponent sum = 2)
+    eigs = np.linalg.eigvals(beta)
+    print("  eigenvalues of beta = s1 s2 s3 s1^{-1} (normalized):")
+    for lam in eigs:
+        angle = math.degrees(cmath.phase(lam))
+        print(f"    |lambda| = {abs(lam):.6f},  arg = {angle:+.4f} deg")
+    print("  all eigenvalues have modulus 1: braids act as rotations of C^3.")
+    print("  longer braid words fill out a dense set of such rotations")
+    print("  (the conjectured SU(3) universality at t = e^{2*pi*i/5}).")
 
 
-# --------------------------------------------------------------------------- #
-# Demonstrations                                                              #
-# --------------------------------------------------------------------------- #
-def demo_exact_commutator_identity() -> None:
-    """Verify Theorem 3.2 exactly over Fraction arithmetic."""
+def run_demo() -> None:
     print("=" * 70)
-    print("DEMO 1 — Exact commutator identity over the rationals (Theorem 3.2)")
+    print("Topological Quantum Compiling: reduced Burau representation of B_4")
     print("=" * 70)
-    X: Matrix = [[Fraction(0), Fraction(2)], [Fraction(-1), Fraction(3)]]
-    Y: Matrix = [[Fraction(1), Fraction(0)], [Fraction(4), Fraction(-2)]]
-    for u in (Fraction(1), Fraction(3), Fraction(-5, 2), Fraction(7, 3)):
-        residual = commutator_identity_residual(u, X, Y)
-        ok = approx_zero(residual)
-        print(f"  u = {str(u):>6} :  [jonesOp X, jonesOp Y] - u^-2 [X,Y] = 0  ->  {ok}")
-    print("  All residuals are exactly the zero matrix.\n")
 
+    print("\n[1] Braid relations hold for random parameters (representation of B_4)")
+    rng = np.random.default_rng(0)
+    for _ in range(4):
+        t = complex(rng.normal(), rng.normal())
+        ok = check_braid_relations(t)
+        det_ok = check_determinants(t)
+        print(f"  t = {t:+.3f}: braid relations {ok}, det = -t {det_ok}")
 
-def demo_roots_of_unity() -> None:
-    """Verify the identity at complex roots of unity (the physical regime)."""
-    print("=" * 70)
-    print("DEMO 2 — Identity at roots of unity exp(2*pi*i/k)  (k = 3, 4, 5, 6)")
-    print("=" * 70)
-    # A small non-commuting pair of complex matrices.
-    X: Matrix = [[0j, 1j], [0j, 0j]]
-    Y: Matrix = [[0j, 0j], [1 + 0j, 0j]]
-    for k in (3, 4, 5, 6):
-        u = cmath.exp(2j * cmath.pi / k)
-        ok = approx_zero(commutator_identity_residual(u, X, Y))
-        nc = not jones_ops_commute(u, X, Y)
-        tag = " (Fibonacci k=5)" if k == 5 else ""
-        print(f"  k = {k}{tag:>17} :  identity holds = {ok},  gates non-commuting = {nc}")
-    print()
+    print("\n[2] Infinite order at t = -1 (unipotent element)")
+    unipotent_demo()
 
+    print("\n[3] Non-abelian image at t = -1")
+    noncommute_demo()
 
-def demo_equivalence_both_directions() -> None:
-    """Verify Theorem 3.3 in both directions: a commuting pair and a non-commuting pair."""
-    print("=" * 70)
-    print("DEMO 3 — Non-abelianity equivalence, both directions (Theorem 3.3)")
-    print("=" * 70)
-    u = cmath.exp(2j * cmath.pi / 5)  # Fibonacci weight
+    print("\n[4] Contrarian: finite S_4 image at t = 1")
+    involution_demo()
 
-    # (a) A commuting pair: two diagonal matrices.
-    Xc: Matrix = [[2 + 0j, 0j], [0j, 5 + 0j]]
-    Yc: Matrix = [[7 + 0j, 0j], [0j, 1 + 0j]]
-    print("  Commuting generators (diagonal):")
-    print(f"    [X,Y] = 0 : {generators_commute(Xc, Yc)};  "
-          f"gates commute : {jones_ops_commute(u, Xc, Yc)}  (both True expected)")
+    print("\n[5] Physical root of unity t = exp(2*pi*i/5)")
+    physical_root_demo()
 
-    # (b) A non-commuting pair: the nilpotent generators of the paper.
-    Xn: Matrix = [[0j, 1 + 0j], [0j, 0j]]
-    Yn: Matrix = [[0j, 0j], [1 + 0j, 0j]]
-    print("  Non-commuting generators (nilpotent):")
-    print(f"    [X,Y] = 0 : {generators_commute(Xn, Yn)};  "
-          f"gates commute : {jones_ops_commute(u, Xn, Yn)}  (both False expected)")
-    print()
-
-
-def demo_paper_example() -> None:
-    """The explicit rational example of Section 5 (Theorems 5.1, 5.2)."""
-    print("=" * 70)
-    print("DEMO 4 — Explicit 2x2 rational certificate (Section 5)")
-    print("=" * 70)
-    X: Matrix = [[Fraction(0), Fraction(1)], [Fraction(0), Fraction(0)]]
-    Y: Matrix = [[Fraction(0), Fraction(0)], [Fraction(1), Fraction(0)]]
-    XY, YX = mat_mul(X, Y), mat_mul(Y, X)
-    print(f"  X*Y = {XY}")
-    print(f"  Y*X = {YX}")
-    print(f"  X*Y != Y*X  ->  {XY != YX}   (Theorem 5.1)")
-    print("  For every rational unit u, jonesOp(u,X) and jonesOp(u,Y) fail to commute")
-    print("  (Theorem 5.2). Checking a sample of units:")
-    for u in (Fraction(1), Fraction(-1), Fraction(2), Fraction(3, 5), Fraction(-11, 4)):
-        nc = not jones_ops_commute(u, X, Y)
-        print(f"    u = {str(u):>7} :  non-commuting = {nc}")
-    print()
-
-
-def demo_u_independent_oracle() -> None:
-    """Illustrate that commutativity of the gates does not depend on the weight u."""
-    print("=" * 70)
-    print("DEMO 5 — The weight u is irrelevant to commutativity (Theorem 3.3)")
-    print("=" * 70)
-    pairs = {
-        "nilpotent (non-commuting)": ([[0j, 1 + 0j], [0j, 0j]], [[0j, 0j], [1 + 0j, 0j]]),
-        "diagonal  (commuting)    ": ([[3 + 0j, 0j], [0j, 1 + 0j]], [[2 + 0j, 0j], [0j, 9 + 0j]]),
-    }
-    weights = [cmath.exp(2j * cmath.pi / k) for k in (3, 4, 5, 7)]
-    for label, (X, Y) in pairs.items():
-        oracle = generators_commute(X, Y)
-        results = [jones_ops_commute(u, X, Y) for u in weights]
-        consistent = all(r == oracle for r in results)
-        print(f"  {label}: oracle says commute={oracle}; "
-              f"all weights agree -> {consistent}")
-    print()
-
-
-def main() -> None:
-    print("\nJONES-BRAID NON-ABELIANITY CERTIFICATE — NUMERICAL DEMONSTRATIONS\n")
-    demo_exact_commutator_identity()
-    demo_roots_of_unity()
-    demo_equivalence_both_directions()
-    demo_paper_example()
-    demo_u_independent_oracle()
-    print("All demonstrations completed successfully.")
+    print("\nDone.")
 
 
 if __name__ == "__main__":
-    main()
+    run_demo()

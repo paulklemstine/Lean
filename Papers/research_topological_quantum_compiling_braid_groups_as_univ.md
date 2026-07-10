@@ -1,446 +1,340 @@
-# A Non-Abelianity Certificate for Jones Braid Operators
-
-**Author:** Aristotle
-
-**Domain:** Physics (Topological Quantum Computation / Quantum Algebra)
-
-**Date:** 2026-06-19
-
----
+# The Reduced Burau Representation of $B_4$ as a Quantum Gate Set: Structure, Infinitude, and Parameter Dependence
 
 ## Abstract
 
-Topological quantum computation proposes to encode and process quantum
-information in the braiding of non-abelian anyons, with the Jones representation
-of the braid group — built from the Temperley–Lieb algebra — providing the
-unitary gates. The computational power of such a scheme depends, at its very
-foundation, on the *non-abelian* character of the braid image: if the map from
-braid generators to gates collapsed non-commuting data into commuting operators,
-the model would be powerless. We isolate and prove the algebraic mechanism that
-guarantees this collapse does *not* happen. For a field `K`, an associative
-`K`-algebra `A`, a unit `u ∈ Kˣ`, and an element `X ∈ A`, define the **Jones
-operator** `jonesOp(u, X) = u·1 + u⁻¹·X`, modeling the image of a braid
-generator built from the Temperley–Lieb generator `X`. We establish an *exact
-commutator identity*,
-`[jonesOp(u,X), jonesOp(u,Y)] = u⁻²·[X, Y]`,
-and deduce the *non-abelianity equivalence*: the Jones operators of `X` and `Y`
-commute **if and only if** `X` and `Y` commute. The proof rests on the
-injectivity of scalar multiplication by the nonzero scalar `u⁻²`. We connect this
-unit-parametrized operator to the field-element-parametrized operator of an
-existing Temperley–Lieb/braid formalization, transport the equivalence across
-that bridge, and exhibit an explicit `2×2` rational example certifying
-non-commutativity for *every* rational unit `u` simultaneously. We make no claim
-of density, universality, or topology beyond this algebraic certificate, and we
-delineate the precise additional structure (spectral control, unitarity,
-group-level statements) required to ascend from this certificate toward genuine
-universality theorems. All results have been formally verified.
+Topological quantum computation encodes logical operations in the braiding of
+anyonic quasiparticles, turning the topology of worldline crossings into unitary
+gates. The mathematical vehicle for four-strand braiding is the **reduced Burau
+representation** of the braid group $B_4$, a family of $3\times 3$ matrices
+parametrized by a deformation variable $t$ (physically a root of unity
+$e^{2\pi i/k}$). We give a complete and self-contained account of the algebraic
+core underlying the conjecture that this gate set is universal — i.e., dense in
+$SU(3)$ — for suitable $t$. We prove that the assignment $\sigma_i\mapsto
+\rho(\sigma_i)$ satisfies Artin's braid relations *identically in $t$*, hence
+defines a genuine representation $B_4\to GL_3(R)$ over any commutative ring; that
+each generator has determinant $-t$; that at the specialization $t=-1$ the image
+is an **infinite, non-abelian** subgroup of $SL_3(\mathbb{Q})$, driven by a
+unipotent element $W=\rho(\sigma_1\sigma_3)=I+N$ with $N\neq 0$, $N^2=0$, whose
+powers $W^n=I+nN$ are pairwise distinct; and — as a sharp contrarian result —
+that at $t=1$ every generator is an involution and the representation collapses
+onto the finite permutation action of $S_4$. Consequently, universality is a
+property of the *parameter*, not of braiding as such: the density conjecture can
+hold only at special roots of unity. We situate these facts within the
+universality program, discuss the honest gap to full $SU(3)$-density, and outline
+concrete next steps toward the unitary specialization at $t=e^{2\pi i/5}$.
+
+**Keywords:** braid group, reduced Burau representation, topological quantum
+computation, Fibonacci anyons, unipotent elements, quantum gate universality,
+$SU(3)$, Solovay–Kitaev.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Motivation: braiding as computation
+A quantum computer needs a set of elementary gates that is *universal*: finite
+sequences of gates from the set must approximate any desired unitary to arbitrary
+precision. In the *topological* approach to quantum computing, gates are realized
+physically by exchanging anyons — quasiparticles in two-dimensional systems whose
+exchange statistics are governed not by a sign ($\pm 1$, as for bosons and
+fermions) but by a matrix. Because these matrices depend only on the *topology*
+of the exchange (which strand crossed which, and in what order), the resulting
+gates are intrinsically protected against local noise: a small perturbation
+cannot change a knot into a different knot. This robustness is the central appeal
+of topological quantum computation.
 
-In two spatial dimensions the worldlines of indistinguishable particles can be
-knotted, and the exchange statistics of such particles are governed not by the
-symmetric group but by the **braid group** `B_n`. For a special class of
-quasiparticles — **non-abelian anyons** — exchanging two particles acts on a
-degenerate ground-state space by a *unitary matrix* rather than a mere phase, and
-distinct braids generally act by distinct, non-commuting unitaries. This is the
-basis of **topological quantum computation** (TQC): quantum information is stored
-in the fusion space of several anyons, and quantum gates are implemented by
-physically braiding them. Because the resulting unitary depends only on the
-*homotopy class* of the braid — its topology — the computation is intrinsically
-protected against local perturbations.
+The exchanges of $n$ anyons are captured by the **braid group** $B_n$, and the
+physically realized gates form a linear representation of $B_n$. For the most
+studied model — **Fibonacci anyons** — braiding is conjectured to be *universal*:
+the braid representation is dense in the relevant special unitary group. For four
+strands the natural $3$-dimensional carrier of this structure is the reduced
+Burau representation, whose image consists of $3\times 3$ matrices.
 
-The unitary representations relevant to TQC are the **Jones representations** of
-the braid group, constructed via the **Temperley–Lieb (TL) algebra**. A braid
-generator `σ_i` is sent to an operator of the affine form `A·1 + A⁻¹·e_i`, where
-`e_i` is a TL generator and `A` is a parameter; at suitable roots of unity these
-operators are unitary, and the **Fibonacci** model (associated with the parameter
-`k = 5`) is conjectured to be universal for quantum computation on `B_4`.
+This paper isolates and rigorously establishes the algebraic backbone of the
+four-strand universality conjecture. We do not assume the conjecture; we prove
+the exact structural facts on which it rests, and we highlight a precise sense in
+which the naive statement "braiding is universal" is false — universality depends
+delicately on the deformation parameter.
 
-### 1.2 The question this paper answers
+### 1.1 Contributions
 
-Universality is a deep analytic statement (density of a generated subgroup in a
-unitary group). But beneath any density theorem lies a purely *algebraic*
-prerequisite: the representation must be **non-abelian**, i.e., it must send
-non-commuting generators to non-commuting operators. If this failed — if the
-Jones map secretly abelianized the braid relations — then the image would be a
-commutative group, no density would be possible, and TQC would be impossible in
-this model.
-
-We answer the prerequisite question completely and exactly:
-
-> **Does the Jones map `X ↦ jonesOp(u,X)` preserve, and reflect, the
-> commutativity of generators?**
-
-The answer is yes, in the strongest possible (biconditional) sense, and the proof
-is short, parameter-robust, and fully formal.
-
-### 1.3 Contributions
-
-1. **An exact commutator identity** (Theorem 3.2): the Jones map sends the
-   commutator `[X,Y]` to the scalar multiple `u⁻²·[X,Y]`, with no error terms.
-2. **A non-abelianity equivalence** (Theorem 3.3): `jonesOp(u,X)` and
-   `jonesOp(u,Y)` commute iff `X` and `Y` commute.
-3. **A scalar-cancellation lemma** (Lemma 3.1): scalar multiplication by the
-   value of a unit is injective, the cancellation property underlying (2).
-4. **A bridge** (Theorem 4.1) identifying the unit-parametrized `jonesOp` with
-   the field-element-parametrized operator of an existing TL/braid formalization,
-   and a transported equivalence (Theorem 4.2).
-5. **A concrete certificate** (Theorems 5.1–5.2): explicit `2×2` rational
-   matrices whose Jones operators fail to commute for *every* rational unit `u`.
-
-All statements are formally verified; the present paper gives the mathematical
-content and proof sketches.
+1. **Representation (Section 3).** The reduced Burau matrices satisfy all of
+   Artin's braid relations identically in $t$ over any commutative ring, so
+   $\sigma_i\mapsto\rho(\sigma_i)$ extends to a homomorphism $B_4\to GL_3(R)$
+   whenever $t$ is a unit ($\det\rho(\sigma_i)=-t$).
+2. **Infinitude (Section 4).** At $t=-1$ the braid $W=\sigma_1\sigma_3$ maps to a
+   nontrivial unipotent $I+N$ with $N^2=0$; hence $W^n=I+nN$, the powers are
+   distinct, $W$ has infinite order, and the image is infinite.
+3. **Non-abelianness (Section 5).** $\rho(\sigma_1)$ and $\rho(\sigma_2)$ do not
+   commute, so the image lies in no abelian (maximal-torus) closed subgroup.
+4. **Parameter dependence (Section 6).** At $t=1$ every generator is an
+   involution and the representation factors through $S_4$, a finite group — a
+   concrete refutation of parameter-independent universality.
 
 ---
 
-## 2. Preliminaries and definitions
+## 2. Background and definitions
 
-Throughout, `K` is a field, `A` is an associative unital `K`-algebra (possibly
-noncommutative), and `Kˣ` denotes the group of units (invertible elements) of
-`K`. For `u ∈ Kˣ` we write `↑u ∈ K` for its underlying value and `↑u⁻¹` for the
-value of its inverse; note `↑u⁻¹ = (↑u)⁻¹` and `(↑u)(↑u⁻¹) = 1`. We write `·` for
-the scalar action `K × A → A` and juxtaposition for the algebra multiplication.
-For `P, Q ∈ A` the **commutator** is `[P, Q] := PQ − QP`.
+### 2.1 The braid group $B_4$
 
-> **Definition 2.1 (Jones operator).**
-> For a unit `u ∈ Kˣ` and an element `X ∈ A`, the **Jones operator** is
-> $$ \mathrm{jonesOp}(u, X) \;:=\; (\uparrow u)\cdot \mathbf{1} \;+\; (\uparrow u^{-1})\cdot X \;\in\; A. $$
+**Definition (Braid group on four strands).** $B_4$ is the group generated by
+$\sigma_1,\sigma_2,\sigma_3$ subject to Artin's relations
+$$
+\sigma_i\sigma_{i+1}\sigma_i=\sigma_{i+1}\sigma_i\sigma_{i+1}\ (i=1,2),
+\qquad \sigma_1\sigma_3=\sigma_3\sigma_1.
+$$
+Geometrically, $\sigma_i$ is the elementary braid crossing strand $i$ over strand
+$i+1$. The group is infinite; the abelianization sends every $\sigma_i$ to a
+common generator, recording the algebraic crossing number (writhe).
 
-This is the algebraic image of a braid generator in the Jones representation: the
-"`A·1 + A⁻¹·e`" form, with the parameter promoted to an honest *unit* so that the
-weight is invertible by construction. The promotion to a unit is the only — but
-decisive — structural assumption; it is what makes the commutator scaling
-factor `u⁻²` invertible and hence the equivalence biconditional.
+Adding the relations $\sigma_i^2=1$ collapses $B_4$ onto the symmetric group
+$S_4$: forgetting the *handedness* of each crossing leaves only the induced
+permutation of the four strands. This quotient will reappear, unbidden, in
+Section 6.
 
-We recall, for the bridge in Section 4, the **field-element-parametrized**
-operator from a companion Temperley–Lieb/braid formalization:
+### 2.2 The reduced Burau representation
 
-> **Definition 2.2 (Catalog Jones operator).**
-> For `A ∈ K` and `X ∈ R` (an algebra over `K`),
-> $$ \mathrm{jonesOp}_{\mathrm{cat}}(A, X) \;:=\; A\cdot \mathbf{1} \;+\; A^{-1}\cdot X. $$
+**Definition (Reduced Burau generators for $B_4$).** Let $R$ be a commutative
+ring and $t\in R$. Define the $3\times 3$ matrices
+$$
+\rho(\sigma_1)=\begin{pmatrix}-t&0&0\\ 1&1&0\\ 0&0&1\end{pmatrix},\quad
+\rho(\sigma_2)=\begin{pmatrix}1&t&0\\ 0&-t&0\\ 0&1&1\end{pmatrix},\quad
+\rho(\sigma_3)=\begin{pmatrix}1&0&0\\ 0&1&t\\ 0&0&-t\end{pmatrix}.
+$$
 
-When `A = ↑u` for a unit `u`, we have `A⁻¹ = ↑u⁻¹`, so the two definitions agree;
-this is made precise in Theorem 4.1. The companion formalization establishes, in
-the same affine language, the **adjacent braid relation**
-`jonesOp_cat(A,X)·jonesOp_cat(A,Y)·jonesOp_cat(A,X) =
-jonesOp_cat(A,Y)·jonesOp_cat(A,X)·jonesOp_cat(A,Y)` under the Temperley–Lieb
-relations `X² = δ·X`, `XYX = X`, `YXY = Y` with loop value `δ = −(A²+A⁻²)`, the
-**distant commutation** for commuting generators, and the **two-sided inverse**
-`jonesOp_cat(A,X)·jonesInv(A,X) = 1` where `jonesInv(A,X) = A⁻¹·1 + A·X`. The
-present paper supplies the missing commutator/non-abelianity analysis in this same
-framework.
+The dimension $3=n-1$ for $n=4$ strands is the honest reason these are $3\times 3$
+matrices: the unreduced Burau representation is $n$-dimensional but always
+contains an invariant line, and quotienting it out yields the $(n-1)$-dimensional
+*reduced* representation. The parameter $t$ is a formal variable; the physically
+meaningful specialization is a root of unity $t=e^{2\pi i/k}$, but every algebraic
+identity below holds for *all* $t$ over *any* commutative ring.
+
+> **Remark (a note on the dimension formula).** The heuristic dimension
+> $U((k-1)(n-1)+1)$ sometimes attached to "Jones representations" gives $U(13)$
+> for $k=5,\,n=4$ and does not match the $3\times 3$ picture. The correct
+> $3$-dimensional object for four strands is precisely the reduced Burau
+> representation used here, whose dimension $n-1=3$ is exact. We work with it
+> throughout.
 
 ---
 
-## 3. The non-abelianity certificate
+## 3. The Burau matrices form a representation of $B_4$
 
-### 3.1 Scalar cancellation
-
-> **Lemma 3.1 (Unit scalar multiplication is injective).**
-> For any unit `v ∈ Kˣ` and any `z ∈ A`,
-> $$ (\uparrow v)\cdot z = 0 \iff z = 0. $$
-
-**Proof sketch.** The reverse direction is immediate: `(↑v)·0 = 0`. For the
-forward direction, suppose `(↑v)·z = 0`. Apply the scalar `↑v⁻¹` to both sides:
-`(↑v⁻¹)·((↑v)·z) = (↑v⁻¹)·0 = 0`. By compatibility of the scalar action with
-multiplication in `K`, the left side is `((↑v⁻¹)(↑v))·z = 1·z = z`. Hence
-`z = 0`. ∎
-
-This is the algebraic crux: a unit scalar has a two-sided inverse scalar, so
-multiplying by it neither creates nor destroys zero. Note that the field/division
-structure is used *only* through the existence of `v⁻¹`; the argument is exactly
-the cancellation law for invertible scalars.
-
-### 3.2 The exact commutator identity
-
-> **Theorem 3.2 (Exact commutator identity).**
-> For any unit `u ∈ Kˣ` and any `X, Y ∈ A`,
-> $$ \mathrm{jonesOp}(u,X)\,\mathrm{jonesOp}(u,Y) \;-\; \mathrm{jonesOp}(u,Y)\,\mathrm{jonesOp}(u,X) \;=\; \bigl((\uparrow u^{-1})(\uparrow u^{-1})\bigr)\cdot (XY - YX). $$
-
-**Proof sketch.** Write `a := ↑u` and `b := ↑u⁻¹`, so `jonesOp(u,X) = a·1 + b·X`
-and `jonesOp(u,Y) = a·1 + b·Y`. Expand the first product by bilinearity of
-multiplication over the scalar action:
+**Theorem 1 (Braid relations hold identically).** For every commutative ring $R$
+and every $t\in R$,
 $$
-(a\cdot 1 + b\cdot X)(a\cdot 1 + b\cdot Y)
-= a^2\cdot 1 + ab\cdot Y + ab\cdot X + b^2\cdot XY.
+\rho(\sigma_1)\rho(\sigma_3)=\rho(\sigma_3)\rho(\sigma_1),\qquad
+\rho(\sigma_1)\rho(\sigma_2)\rho(\sigma_1)=\rho(\sigma_2)\rho(\sigma_1)\rho(\sigma_2),
 $$
-Expanding the product in the opposite order gives
 $$
-(a\cdot 1 + b\cdot Y)(a\cdot 1 + b\cdot X)
-= a^2\cdot 1 + ab\cdot X + ab\cdot Y + b^2\cdot YX.
+\rho(\sigma_2)\rho(\sigma_3)\rho(\sigma_2)=\rho(\sigma_3)\rho(\sigma_2)\rho(\sigma_3).
 $$
-Subtracting, the `a²·1` terms cancel and the two symmetric cross terms
-`ab·X + ab·Y` cancel, leaving exactly `b²·(XY − YX) = (↑u⁻¹)²·(XY − YX)`.
-Formally this is a single distribute-and-cancel computation (the verified proof
-discharges it by expanding products and scalar multiplications and then
-collecting terms). ∎
 
-The identity is *exact*: there is no remainder. Its meaning is that the Jones map
-acts on commutators by a pure scalar `(↑u⁻¹)²`, decoupling the universal algebraic
-content (the commutator `[X,Y]`) from the representation-dependent weight `u`.
+*Proof sketch.* Each identity is an equality of $3\times 3$ matrices whose entries
+are polynomials in $t$. Expanding both sides entrywise via the definition of
+matrix multiplication reduces each relation to a finite list of polynomial
+identities in $t$, all of which hold in the polynomial ring $\mathbb{Z}[t]$ and
+therefore in every commutative ring by the universal property of $\mathbb{Z}[t]$.
+For the far-commutation relation the two nonoverlapping blocks act on disjoint
+coordinate pairs, so the product is block-diagonal in both orders. For the two
+adjacent relations one verifies that both $\rho(\sigma_1)
+\rho(\sigma_2)\rho(\sigma_1)$ and $\rho(\sigma_2)\rho(\sigma_1)\rho(\sigma_2)$
+expand to the same $3\times 3$ matrix entry by entry (each entry a polynomial in
+$t$), and similarly for the $23$-relation. $\square$
 
-### 3.3 The non-abelianity equivalence
+Because Artin's relations are the *defining* relations of $B_4$, Theorem 1 has the
+following immediate consequence.
 
-> **Theorem 3.3 (Non-abelianity equivalence).**
-> For any unit `u ∈ Kˣ` and any `X, Y ∈ A`,
-> $$ \mathrm{jonesOp}(u,X)\,\mathrm{jonesOp}(u,Y) = \mathrm{jonesOp}(u,Y)\,\mathrm{jonesOp}(u,X) \iff XY = YX. $$
+**Corollary 2 (It is a representation).** The map $\sigma_i\mapsto\rho(\sigma_i)$
+extends uniquely to a group homomorphism $B_4\to GL_3(R)$ whenever $t\in R^\times$
+is a unit. In particular every braid word $\beta\in B_4$ is assigned a
+well-defined invertible matrix $\rho(\beta)$, independent of how $\beta$ is
+expressed in the generators.
 
-**Proof sketch.** Commutativity of the two operators is equivalent to the
-vanishing of their commutator, i.e. to
-`jonesOp(u,X)·jonesOp(u,Y) − jonesOp(u,Y)·jonesOp(u,X) = 0`. By Theorem 3.2 this
-difference equals `(↑u⁻¹)²·(XY − YX)`. The scalar `(↑u⁻¹)² = ↑(u⁻¹·u⁻¹)` is the
-value of a unit (a product of units is a unit), so by Lemma 3.1 the product
-`(↑u⁻¹)²·(XY − YX)` vanishes iff `XY − YX = 0`, i.e. iff `XY = YX`. Chaining the
-equivalences yields the claim. ∎
+**Proposition 3 (Determinants).** For every $t$, $\det\rho(\sigma_i)=-t$ for
+$i=1,2,3$.
 
-This biconditional is the **non-abelianity certificate**. The forward direction
-(operators commute ⟹ generators commute) rules out *hidden abelianization*: the
-Jones map cannot manufacture spurious commutativity. The reverse direction
-(generators commute ⟹ operators commute) recovers the *distant commutation*
-property essential to braid representations (well-separated generators commute).
-Together they show the Jones map is a faithful translator of commutativity in
-both directions.
+*Proof sketch.* Each generator is triangular up to a single off-diagonal
+entry; the $3\times 3$ determinant expands to the product of the diagonal
+$(-t)\cdot 1\cdot 1=-t$ (and cyclic variants), the extra off-diagonal entries
+lying in positions that contribute nothing to the determinant. $\square$
 
-**Remark 3.4 (Why a unit, and not merely a nonzero scalar).** The argument needs
-`(↑u⁻¹)²` to be cancellable. Over a field every nonzero scalar is a unit, so the
-unit hypothesis is automatic there; phrasing the operator with `u ∈ Kˣ` makes the
-result valid verbatim over any base where the weight is invertible and makes the
-inverse `↑u⁻¹` available without a separate non-vanishing hypothesis. This is also
-exactly the regime relevant physically, where the parameter is a root of
-unity — always a unit.
+Thus invertibility of the gates is equivalent to $t\neq 0$, and the gates lie in
+$SL_3$ exactly when $-t=1$, i.e. $t=-1$ — the specialization exploited next.
 
 ---
 
-## 4. Bridge to the Temperley–Lieb/braid formalization
+## 4. The image is infinite
 
-The certificate is stated for the unit-parametrized operator of Definition 2.1.
-We connect it to the field-element-parametrized operator of Definition 2.2.
+Density in a positive-dimensional group requires, at the very least, that the
+image be infinite. We prove this unconditionally at $t=-1$, where all generators
+have determinant $1$ and lie in $SL_3(\mathbb{Z})\subset SL_3(\mathbb{Q})$.
 
-> **Theorem 4.1 (Specialization bridge).**
-> For any unit `u ∈ Kˣ` and any `X ∈ A`,
-> $$ \mathrm{jonesOp}(u, X) = \mathrm{jonesOp}_{\mathrm{cat}}(\uparrow u, X). $$
+**Definition (The witness braid).** Let $W=\rho(\sigma_1\sigma_3)=
+\rho(\sigma_1)\rho(\sigma_3)$ evaluated at $t=-1$, and set $N=W-I$.
 
-**Proof sketch.** Unfold both definitions. The left side is
-`(↑u)·1 + (↑u⁻¹)·X`; the right side is `(↑u)·1 + (↑u)⁻¹·X`. Since `↑u⁻¹ = (↑u)⁻¹`
-for a unit `u`, the two expressions coincide termwise. ∎
+Computing at $t=-1$:
+$$
+W=\begin{pmatrix}1&0&0\\ 1&1&-1\\ 0&0&1\end{pmatrix},\qquad
+N=\begin{pmatrix}0&0&0\\ 1&0&-1\\ 0&0&0\end{pmatrix}.
+$$
 
-> **Theorem 4.2 (Transported equivalence).**
-> For any unit `u ∈ Kˣ` and any `X, Y ∈ A`,
-> $$ \mathrm{jonesOp}_{\mathrm{cat}}(\uparrow u, X)\,\mathrm{jonesOp}_{\mathrm{cat}}(\uparrow u, Y) = \mathrm{jonesOp}_{\mathrm{cat}}(\uparrow u, Y)\,\mathrm{jonesOp}_{\mathrm{cat}}(\uparrow u, X) \iff XY = YX. $$
+**Lemma 4 (Nilpotency).** $N\neq 0$ and $N^2=0$.
 
-**Proof sketch.** Rewrite each catalog operator using Theorem 4.1 to convert the
-statement into the corresponding statement about `jonesOp(u, ·)`, then apply
-Theorem 3.3. ∎
+*Proof sketch.* $N\neq 0$ since its $(2,1)$ entry is $1$. For $N^2=0$, the only
+nonzero row of $N$ is row $2$, equal to $(1,0,-1)$; multiplying $N$ by $N$, row
+$2$ of $N^2$ is $1\cdot(\text{row }1\text{ of }N)+(-1)\cdot(\text{row }3\text{ of
+}N)=0$ because rows $1$ and $3$ of $N$ vanish. All other rows are zero. $\square$
 
-Thus the certificate is not an artifact of a particular parametrization: the
-existing braid formalization (which proves the adjacent braid relation, distant
-commutation, and invertibility for `jonesOp_cat`) inherits the non-abelianity
-equivalence for free whenever the parameter is a unit.
+**Theorem 5 (Powers of a unipotent).** For all $n\in\mathbb{N}$,
+$$
+W^n=I+nN.
+$$
+
+*Proof sketch.* Induction on $n$. The base case $n=0$ is $W^0=I$. For the step,
+$W^{n+1}=W\cdot W^n=(I+N)(I+nN)=I+(n+1)N+nN^2=I+(n+1)N$ by Lemma 4. $\square$
+
+**Theorem 6 (Infinite order and infinitude).** $W$ has infinite order: $W^n\neq I$
+for all $n\geq 1$. Moreover the map $n\mapsto W^n$ is injective, so the image of
+$B_4$ under $\rho$ (at $t=-1$) is infinite.
+
+*Proof sketch.* By Theorem 5 the $(2,1)$ entry of $W^n$ equals $n$. Hence
+$W^m=W^n$ forces $m=n$ (equality of the $(2,1)$ entries), giving injectivity; in
+particular $W^n=I$ (whose $(2,1)$ entry is $0$) forces $n=0$. $\square$
+
+A finite gate set is thus impossible at $t=-1$: a single braid already generates
+an infinite cyclic subgroup. Infinitude is the first structural precondition for
+density, and it holds.
 
 ---
 
-## 5. A concrete rational certificate
+## 5. The image is non-abelian
 
-We instantiate `K = ℚ` and `A = M_2(ℚ)`, the `2×2` rational matrices.
+Density in $SU(3)$ is impossible for an abelian group, since $SU(3)$ is non-abelian
+and abelian subgroups are far from dense (they lie in maximal tori of dimension
+$2$). We verify the image avoids this degeneracy.
 
-> **Definition 5.1 (Explicit generators).**
-> $$ X = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}, \qquad Y = \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix}. $$
+**Theorem 7 (Non-commutation).** At $t=-1$,
+$\rho(\sigma_1)\rho(\sigma_2)\neq\rho(\sigma_2)\rho(\sigma_1)$. Hence the image of
+$B_4$ is non-abelian and is contained in no abelian closed subgroup (in
+particular, in no maximal torus).
 
-These are the standard nilpotent upper- and lower-triangular generators (`X² = Y²
-= 0`); they are the smallest non-commuting pair of matrices.
+*Proof sketch.* Direct computation of the two products at $t=-1$ shows their
+$(1,1)$ entries already differ, so the matrices are unequal. $\square$
 
-> **Theorem 5.1 (Generators do not commute).** `XY ≠ YX`.
-
-**Proof sketch.** Direct computation gives
-`XY = \begin{psmallmatrix}1&0\\0&0\end{psmallmatrix}` and
-`YX = \begin{psmallmatrix}0&0\\0&1\end{psmallmatrix}`; their `(0,0)` entries are
-`1` and `0`, so the matrices differ. ∎
-
-> **Theorem 5.2 (Jones operators never commute).** For *every* rational unit
-> `u ∈ ℚˣ`,
-> $$ \mathrm{jonesOp}(u, X)\,\mathrm{jonesOp}(u, Y) \neq \mathrm{jonesOp}(u, Y)\,\mathrm{jonesOp}(u, X). $$
-
-**Proof sketch.** By the contrapositive form of Theorem 3.3, the operators
-commute iff `XY = YX`; since Theorem 5.1 shows `XY ≠ YX`, the operators fail to
-commute — and this holds uniformly for all `u ∈ ℚˣ` because the equivalence is
-parameter-independent. ∎
-
-This is the certificate in action: a single non-commuting pair of generators
-forces an entire one-parameter family of non-commuting Jones operators, with the
-non-commutativity guaranteed *robustly* across all admissible weights at once.
+Infinitude (Section 4) together with non-abelianness rules out the two most basic
+obstructions to density — a finite image, or an image trapped inside a commutative
+subgroup. These are exactly the structural hypotheses a Lie-theoretic density
+argument would need to leverage.
 
 ---
 
-## 5b. A fully worked numerical example at the Fibonacci weight
+## 6. Contrarian result: universality is parameter-dependent
 
-To make the certificate tangible we compute everything explicitly for the
-Fibonacci weight `u = e^{2πi/5}` (so `k = 5`) acting on the nilpotent generators
-of Section 5. Here `↑u⁻¹ = e^{-2πi/5}` and the commutator scaling factor is
-`(↑u⁻¹)² = e^{-4πi/5}`, a complex number of modulus exactly `1` — a unit, as the
-theory demands.
+We now show that the encouraging structure of Sections 4–5 is *not* automatic: at
+the wrong parameter the representation degenerates completely.
 
-Writing `a = e^{2πi/5}` and `b = e^{-2πi/5}`, the two Jones operators are
+**Theorem 8 (Involutions at $t=1$).** At $t=1$ (over $\mathbb{Q}$), each generator
+is an involution:
 $$
-\mathrm{jonesOp}(u,X) = \begin{pmatrix} a & b \\ 0 & a \end{pmatrix},
-\qquad
-\mathrm{jonesOp}(u,Y) = \begin{pmatrix} a & 0 \\ b & a \end{pmatrix}.
+\rho(\sigma_i)^2=I\qquad (i=1,2,3).
 $$
-Their products are
-$$
-\mathrm{jonesOp}(u,X)\,\mathrm{jonesOp}(u,Y) =
-\begin{pmatrix} a^2 + b^2 & ab \\ ab & a^2 \end{pmatrix},
-\qquad
-\mathrm{jonesOp}(u,Y)\,\mathrm{jonesOp}(u,X) =
-\begin{pmatrix} a^2 & ab \\ ab & a^2 + b^2 \end{pmatrix}.
-$$
-Subtracting,
-$$
-[\mathrm{jonesOp}(u,X), \mathrm{jonesOp}(u,Y)] =
-\begin{pmatrix} b^2 & 0 \\ 0 & -b^2 \end{pmatrix}
-= b^2 \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}.
-$$
-Meanwhile `XY - YX = \left(\begin{smallmatrix}1&0\\0&-1\end{smallmatrix}\right)`,
-so the right-hand side of Theorem 3.2 is `(↑u⁻¹)²·(XY-YX) = b²·
-\left(\begin{smallmatrix}1&0\\0&-1\end{smallmatrix}\right)`, in exact agreement.
-Since `b² = e^{-4πi/5} ≠ 0`, the commutator is nonzero, so the gates do not
-commute — exactly as Theorem 5.2 predicts. Repeating the computation with any
-other weight changes only the scalar `b²` in front, never whether the commutator
-vanishes: the parameter-independence of the verdict is visible in a single
-formula. This worked example is the abstract certificate rendered in fully
-explicit `2×2` matrices, and it is reproduced numerically in the accompanying
-demonstration code for `k = 3, 4, 5, 6`.
 
-## 6. Algorithms
+*Proof sketch.* Setting $t=1$ makes each $\rho(\sigma_i)$ a matrix whose square
+is computed entrywise to be the identity; e.g.
+$\rho(\sigma_1)=\begin{pmatrix}-1&0&0\\ 1&1&0\\ 0&0&1\end{pmatrix}$ satisfies
+$\rho(\sigma_1)^2=I$. $\square$
 
-The mathematics is constructive and the identities are directly checkable. We
-record two algorithms used in the accompanying demonstrations.
+**Corollary 9 (Collapse to $S_4$).** At $t=1$ the relations $\rho(\sigma_i)^2=I$
+together with the braid relations of Theorem 1 are exactly the Coxeter relations of
+the symmetric group $S_4$. Hence the representation factors through the quotient
+$B_4\twoheadrightarrow S_4$, and its image is *finite*, of order dividing $24$.
 
-### 6.1 Commutator-identity verifier
+*Discussion.* This is the sharp contrarian point. The abstract group $B_4$, the
+generators, and the braids are identical to those of Sections 4–5; only the dial
+$t$ has moved from $-1$ to $1$. Yet the computational power swings from *infinite
+and non-abelian* to *finite and no larger than $S_4$*. Therefore:
 
-**Purpose.** Given `u`, `X`, `Y` over a (numerical) field, verify Theorem 3.2 by
-computing both sides and comparing within tolerance.
+> **Braiding is not universal for a generic parameter.** The density conjecture
+> can hold only at special roots of unity $t=e^{2\pi i/k}$, never at $t=1$.
+> Universality is a property of the parameter, not of the braid group.
 
-**Pseudocode.**
-```
-function VerifyCommutatorIdentity(u, X, Y):
-    J_X  ← u·I + (1/u)·X
-    J_Y  ← u·I + (1/u)·Y
-    lhs  ← J_X·J_Y − J_Y·J_X
-    rhs  ← (1/u)^2 · (X·Y − Y·X)
-    return  ‖lhs − rhs‖ ≤ tol
-```
-
-**Complexity.** Dominated by the matrix multiplications: `O(d^ω)` for `d×d`
-matrices (`ω ≈ 2.37` asymptotically, `O(d³)` with schoolbook multiplication).
-
-### 6.2 Non-abelianity decision procedure
-
-**Purpose.** Decide whether two Jones operators commute by reducing (Theorem 3.3)
-to a test on the generators, avoiding the construction of the operators entirely.
-
-**Pseudocode.**
-```
-function JonesOperatorsCommute(u, X, Y):
-    # By Theorem 3.3 the weight u is irrelevant.
-    return  (X·Y == Y·X)
-```
-
-**Complexity.** Two `d×d` matrix products and one comparison: `O(d^ω)`. Crucially,
-the cost is *independent of `u`* and requires no operator assembly — the
-theoretical reduction yields an algorithmic shortcut.
+This refutes any parameter-blind reading of "topological quantum computing is
+universal," and it explains why the physics singles out particular anyon types
+(particular roots of unity): only those tunings place the gate set in the
+infinite, non-abelian regime where density is even conceivable.
 
 ---
 
-## 7. Applications and significance
+## 7. The universality program and the honest gap
 
-1. **Foundational soundness of TQC gate sets.** The certificate guarantees that,
-   in any Jones representation with a unit weight, the gate set inherits exactly
-   the non-commutativity of its Temperley–Lieb generators. This is the
-   non-negotiable algebraic prerequisite for any universality claim.
+The full conjecture states that at the physical root of unity $t=e^{2\pi i/5}$
+(Fibonacci anyons), the reduced Burau image is *dense* in $SU(3)$, and hence — via
+the **Solovay–Kitaev theorem** — that any target gate can be approximated to
+precision $\varepsilon$ by a braid word of length $O\!\big(\log^{c}(1/\varepsilon)\big)$.
+The results above are the rigorous algebraic core beneath this claim. Two
+ingredients remain, and both are genuinely hard:
 
-2. **A `u`-independent commutativity oracle.** Theorem 3.3 shows commutativity of
-   Jones gates can be decided by testing the generators, *independently of the
-   parameter*. For symbolic or exact-arithmetic verification of braid circuits,
-   this removes the parameter from the decision problem entirely.
+1. **Topological density in a Lie group.** Establishing that a finitely generated
+   subgroup is dense in $SU(3)$ requires the classification of closed subgroups of
+   a compact connected Lie group, together with a Lie-algebra-generation (or
+   Zariski-density) argument to exclude every proper closed subgroup. Sections 4–5
+   dispatch the two coarsest obstructions (finiteness, commutativity), but the
+   full closed-subgroup analysis is a separate, deep undertaking.
 
-3. **Separation of universal and representation-dependent content.** The exact
-   identity factors the action on commutators into a universal piece (`[X,Y]`)
-   and a scalar weight (`u⁻²`). This clean separation is precisely what later
-   spectral and unitarity refinements need: only the weight changes with the
-   anyon model, never the commutator structure.
+2. **The unitary specialization.** The Burau matrices are unitary only after
+   conjugating by the parameter-dependent Hermitian Burau form $J(t)$ and
+   normalizing the determinant. The specialization $t=-1$ used for infinitude
+   lands in $SL_3(\mathbb{Z})$, not literally in $SU(3)$; establishing unitarity
+   at $t=e^{2\pi i/5}$ is a distinct finite computation over $\mathbb{C}$.
+
+Neither gap undermines what is proved: the representation is genuine, its image is
+infinite and non-abelian at $t=-1$, and universality is parameter-dependent. These
+are precisely the load-bearing facts on which any complete proof of density must
+build.
 
 ---
 
-## 8. Discussion and limitations
+## 8. Applications
 
-We emphasize the scope precisely. The results establish a *non-abelianity
-certificate* — that the Jones map preserves and reflects commutativity exactly —
-and **nothing more**. In particular:
-
-- **No density.** We do not show the group generated by Jones operators is dense
-  in `SU(n)` or any unitary group. Density requires control of *spectra* and a
-  unitary structure, neither of which is used here.
-- **No universality.** We make no claim that braiding four anyons is universal
-  for quantum computation. That is the motivating conjecture, not a theorem
-  proved here.
-- **No topology.** The work is purely algebraic; braid worldlines, anyon fusion
-  categories, and modular tensor structure are context, not hypotheses.
-
-What the certificate *does* provide is the rigorous base camp: it rules out the
-degenerate failure mode (hidden abelianization) and shows that whatever
-non-commutativity exists at the level of TL generators is transmitted intact to
-the operators a quantum device would execute.
+- **Compilation of protected gates.** Corollary 2 makes braid words into a formal
+  gate language: any sequence of crossings compiles to a definite $3\times 3$
+  matrix, enabling exact symbolic tracking of a topological circuit.
+- **Diagnostics for candidate anyon models.** Theorem 8 / Corollary 9 give a
+  cheap *non-universality test*: if a proposed parameter makes the generators
+  involutive (or otherwise finite-order with abelian image), the model cannot be
+  universal, no matter how the anyons are braided.
+- **Knot invariants.** The trace of $\rho(\beta)$, suitably normalized, is the
+  origin of the Jones polynomial; the representation studied here is the
+  computational engine behind that invariant for four-strand braids.
 
 ---
 
 ## 9. Future directions
 
-The following directions build directly on the certificate.
-
-1. **From a certificate to a non-abelian group image.** The equivalence concerns a
-   single pair of operators. The natural next step lifts it to the subgroup of `Aˣ`
-   generated by Jones images of a family of TL generators, characterizing when that
-   subgroup is nonabelian in terms of the generator algebra. Since commutativity of
-   the whole image group is controlled pairwise, the local certificate should
-   globalize to a clean criterion on the generated subgroup, assembling existing
-   group-theoretic infrastructure (subgroups, closure, commutator subgroups) rather
-   than building new theory.
-
-2. **The full Temperley–Lieb algebra with loop parameter `δ`.** Connect the
-   relations `X² = δ·X`, `XYX = X`, and the loop value `δ = −(A²+A⁻²)` to the
-   commutator identity, deriving the braid relation and its consequences directly
-   from a presented TL algebra `TL_n(δ)`. The commutator identity is
-   *parameter-free*, so it cleanly separates the universal algebraic content from
-   the `δ`-dependent representation theory.
-
-3. **Spectral and unitarity refinements toward density.** Add hypotheses making `A`
-   a finite-dimensional `C*`-algebra and compute the eigenvalues of `jonesOp(u,X)`
-   from those of `X`. Because `jonesOp(u,X) = u·1 + u⁻¹·X` is an *affine* function
-   of `X`, its spectrum is the affine image `u + u⁻¹·λ` of the spectrum `{λ}` of
-   `X`, so eigenvalue data transports as transparently as commutativity does. This
-   is the first genuine step toward density.
-
-4. **Explicit Fibonacci-parameter representations over cyclotomic fields.**
-   Specialize the parameter to a root of unity and work over a cyclotomic field to
-   approach the genuine Fibonacci anyon model, instantiating `jonesOp` with `u` a
-   primitive root of unity (e.g. for `k = 5`) and the TL generators of the relevant
-   dimension.
+1. **Unitarity at the physical root of unity.** Define the Hermitian Burau form
+   $J(t)$ and prove $\rho(\sigma_i)^{*}J\rho(\sigma_i)=J$ at $t=e^{2\pi i/5}$;
+   deduce that the image lands in $U(3)$ (and in $SU(3)$ after scaling by a
+   determinant root).
+2. **Infinite order at the root of unity.** Exhibit a specific braid word whose
+   eigenvalue is an irrational rotation $e^{2\pi i\theta}$ with $\theta$
+   irrational, giving infinite order directly at $t=e^{2\pi i/5}$ (rather than at
+   the auxiliary $t=-1$).
+3. **Toward density.** Assemble the closed-subgroup classification for $SU(3)$ and
+   a Lie-algebra-generation criterion, then combine with infinitude and
+   non-abelianness to attack the full density statement.
+4. **Effective compiling.** Pair a proven density statement with an explicit
+   Solovay–Kitaev bound to obtain rigorous braid-length estimates for
+   $\varepsilon$-approximation.
 
 ---
 
 ## 10. Conclusion
 
-We have isolated and proved the algebraic mechanism underlying non-abelian Jones
-braiding. The exact commutator identity `[jonesOp(u,X), jonesOp(u,Y)] =
-u⁻²·[X,Y]` and the resulting equivalence `jonesOp(u,X)` commutes with
-`jonesOp(u,Y)` iff `X` commutes with `Y` show that the Jones map is a faithful,
-two-way translator of commutativity, with the unit weight contributing only an
-invertible scalar that can neither create nor destroy non-commutativity. A bridge
-to an existing Temperley–Lieb/braid formalization and an explicit rational example
-make the certificate concrete and reusable. While density and universality lie
-beyond this certificate, it is exactly the foundation on which those results must
-be built — and it is now established with full rigor.
+We have established the rigorous algebraic foundation of four-strand topological
+quantum compiling. The reduced Burau matrices form a genuine representation of
+$B_4$ for every parameter; at $t=-1$ their image is infinite (via a unipotent of
+infinite order) and non-abelian; and at $t=1$ the whole structure collapses to the
+finite group $S_4$. The last fact reframes the universality slogan with
+mathematical precision: braiding can be universal, but only at the right root of
+unity. The infinitude and non-abelianness proven here are exactly the structural
+preconditions any complete density proof must exploit, and they hold.
