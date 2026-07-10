@@ -1777,6 +1777,7 @@ Research mode: {concept.research_mode}
                                     break
                         except Exception as e:
                             print(f"[Extract] Failed to parse Aristotle self-score file {f}: {e}")
+                        continue  # Don't treat self-score files as package deliverables
                     # JSON package files (PACKAGE.json or similar)
                     json_package_files.append(fp)
                 elif f.endswith(".md") and f not in ("README.md", "PROMPT.md"):
