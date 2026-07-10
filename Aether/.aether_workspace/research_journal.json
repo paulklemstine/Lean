@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a725bb00",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Metric embeddings of the Petersen graph into abelian Cayley graphs\n\nThis cycle established a clean two-part obstruction: a *metric* principle (an\nisometric image of an edge is an",
-      "quality_score": 0.7976880000000001,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-01T23:31:29",
-      "title": "Petersen Graph Non-Embeddability into Abelian Cayley Graphs"
-    },
-    {
       "cycle_id": "b87dcfdc",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Explicit class field theory beyond the cyclotomic case\n\nThis cycle established three load-bearing facts: (i) the cyclotomic Galois group has\norder equal to Euler's totient and is",
@@ -499,19 +489,19 @@
       "theorem_count": 61,
       "timestamp": "2026-07-10T01:48:37",
       "title": "Infinite Chess: Checkmate in Omega Moves"
+    },
+    {
+      "cycle_id": "4de79d68",
+      "domain": "Logic",
+      "key_insight": "# Hilbert's Hotel for Primes — deepening: future directions\n\nThis cycle deepens the earlier work in `Novelty/PrimeHotelRearrangement.lean` (well-behaved\nprime-hotel rearrangements: displacement ratio",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 56,
+      "timestamp": "2026-07-10T01:48:49",
+      "title": "Deepening: Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "60145036",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Tightness of the Density Threshold for Configurations in Linear Hypergraphs\n\nThis cycle (see `Catalog/Novelty/LinearHypergraphConfigTightness.lean`) upgraded the catalog's\none-si",
-      "quality_score": 0.3726553552511416,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T23:21:59",
-      "title": "Tightness of the Density Threshold for Configurations in Linear Hypergraphs"
-    },
     {
       "cycle_id": "4f7ad584",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 61,
       "timestamp": "2026-07-10T01:48:37",
       "title": "Infinite Chess: Checkmate in Omega Moves"
+    },
+    {
+      "cycle_id": "4de79d68",
+      "domain": "Logic",
+      "key_insight": "# Hilbert's Hotel for Primes — deepening: future directions\n\nThis cycle deepens the earlier work in `Novelty/PrimeHotelRearrangement.lean` (well-behaved\nprime-hotel rearrangements: displacement ratio",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 56,
+      "timestamp": "2026-07-10T01:48:49",
+      "title": "Deepening: Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "242f16a7",
-      "domain": "Novelty",
-      "name": "m_ne_zero_zmod",
-      "quality": 0.79104
-    },
-    {
-      "cycle_id": "bb909d34",
-      "domain": "Applications",
-      "name": "card_residueUnits",
-      "quality": 0.8344800000000001
-    },
-    {
-      "cycle_id": "bb909d34",
-      "domain": "Applications",
-      "name": "AnabelEquiv",
-      "quality": 0.8344800000000001
-    },
     {
       "cycle_id": "bb909d34",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Pythagorean",
       "name": "ApproxLipschitzWith",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "4de79d68",
+      "domain": "Logic",
+      "name": "deforms",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "4de79d68",
+      "domain": "Logic",
+      "name": "LipschitzWith",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "4de79d68",
+      "domain": "Logic",
+      "name": "ApproxLipschitzWith",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-10T01:48:37",
+  "last_updated": "2026-07-10T01:48:49",
   "open_questions": [
     {
       "context": "Main results (all sorry-free):; sorry-free, to an explicit finite list of quartic Thue equations whose known; What survived: the entire *structural* reduction is fully formal and sorry-free.",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "032896b2",
-        "quality": 0.547645269003818,
-        "theorems": 150,
-        "title": "Pythagorean Triples in Gaussian Integers"
-      },
-      {
         "cycle_id": "a2ad5506",
         "quality": 0.38339676363636366,
         "theorems": 6,
@@ -3513,6 +3507,12 @@
         "quality": 0.72,
         "theorems": 46,
         "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
+      },
+      {
+        "cycle_id": "4de79d68",
+        "quality": 0.83,
+        "theorems": 56,
+        "title": "Deepening: Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Pr"
       }
     ],
     "MachineLearning": [

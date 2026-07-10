@@ -5536,21 +5536,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Overfull Conjecture"
   },
   {
-    "consumed_by_exp_id": "794fdf29",
-    "description": "For a prime power q and a positive integer n, the maximum codimension of a cyclically covering subspace of F_q^n, denoted h_q(n), is zero if and only if every nonzero cyclic code in F_q^n contains a codeword of full Hamming weight.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0461",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02239v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T16:37:22.623666+00:00",
-    "title": "Equivalence of Vanishing Cyclically Covering Codimension and Full-Weight Cyclic Codes"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The maximum of the logarithm of the absolute value of the Riemann zeta function on the critical line over the interval [T, 2T], defined as M_T = max_{t \u2208 [T, 2T]} log|\u03b6(1/2 + it)|, satisfies the convergence in distribution: M_T - log(log(T)) + (3/2)log(log(log(T))) converges to the sum of two independent Gumbel random variables as T \u2192 \u221e. This captures the extreme value statistics of the number-theoretic analogue to the black hole microstate counts proposed in the paper.",
     "domains": [
@@ -10198,6 +10183,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T01:48:32.389766+00:00",
     "title": "The file `Catalog/Pythagorean/InfiniteChessOmega.lean` develops an abstract,"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes the bridge\n\n> `h_q(n) = 0`  \u21d4  every nonzero cyclic code in `\ud835\udd3d_q^n` has a full-weight codeword,\n\nwhere `h_q(n)` is the maximum codimension of a cyclically covering subspace of\n`\ud835\udd3d_q^n`.  The proof (in `CyclicCoveringFullWeight.lean`) goes through a\nFourier/duality map `phi a : x \u21a6 (k \u21a6 \u27eaa, shift\u1d4f x\u27eb)` whose range is a cyclic code\nand whose associated hyperplane `ker \u27eaa,\u00b7\u27eb` is cyclically covering exactly when that\nrange omits all full-weight words.\n\n## Natural next steps\n\n1. **Quantitative version.** Formalize `h_q(n)` as an actual natural number\n   (maximum codimension) and prove the sharper statement `h_q(n) = n \u2212 max { dim C :\n   C cyclic, C has no full-weight codeword }`, refining the present `= 0` boundary\n   case into an exact formula.\n\n2. **Positivity criteria.** Prove `h_q(n) \u2265 1` whenever `n` is not coprime to `q`\n   or, more generally, whenever `x\u207f \u2212 1` has a nontrivial repeated/degree factor,\n   using the even-weight code as an explicit witness (as in the `n = 3` example).\n\n3. **Known values.** Formalize small exact values such as `h\u2082(3) = 1` and the\n   coprime cases `h_q(n) = 0` when every nonzero cyclic code is full-weight.\n\n4. **Reversal-free bridge.** The current argument uses the coordinate reversal\n   `rev` to move a codeword to a functional. It would be cleaner to package the\n   correspondence `a \u21a6 \u27e8a\u27e9` (single-generator cyclic code) as an explicit bijection\n   between covering hyperplanes and nonzero cyclic codes without full-weight words,\n   via the ring `\ud835\udd3d_q[x]/(x\u207f \u2212 1)`.\n\n5. **Ring-theoretic refactor.** Recast cyclic codes as ideals of\n   `\ud835\udd3d_q[x]/(x\u207f \u2212 1)` and the shift as multiplication by `x`, connecting to\n   Mathlib's `Polynomial` / quotient-ring API and to BCH/Reed\u2013Solomon theory.\n\n6. **Covering-code connections.** Relate `h_q(n)` to covering radii and to the\n   normalized-covering-codimension lower bounds studied by Cameron\u2013Ellis\u2013Raynaud,\n   opening a path toward asymptotic estimates.\n",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_0829",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "794fdf29",
+    "status": "available",
+    "timestamp": "2026-07-10T01:48:39.431002+00:00",
+    "title": "This project formalizes the bridge"
   },
   {
     "consumed_by_exp_id": "",
