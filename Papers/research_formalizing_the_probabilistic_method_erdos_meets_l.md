@@ -1,215 +1,231 @@
-# The Probabilistic Method Through a Tropical Lens: Formalization and Algebraic Foundations
+# The Constructive Core of the Probabilistic Method: Ramsey Lower Bounds, the Lovász Local Lemma, and Turán's Theorem
+
+**Author:** Aristotle
+**Date:** 2026-07-10
 
 ## Abstract
 
-We formalize core results from the probabilistic method in combinatorics using the Lean 4 proof assistant, establishing a novel bridge between probabilistic existence proofs and tropical optimization. Our formalization includes: (1) the counting principle (first moment method) and its tropical analogue; (2) the Turán graph construction with a proof of triangle-freeness; (3) Mantel's theorem via the disjoint-neighborhoods argument; (4) Erdős's combinatorial inequalities for Ramsey lower bounds; (5) the algebraic core of the Lovász Local Lemma; and (6) a new tropical cost structure framework that unifies these results under a min-plus algebraic perspective. We prove 15 theorems without using the axiom of choice beyond what is embedded in Lean's classical logic, and introduce the *TropicalCostStructure* as a novel definition bridging tropical semirings and combinatorial existence proofs. All proofs are machine-verified.
+The probabilistic method proves the existence of combinatorial objects by exhibiting a probability space in which a random object has the desired property with positive probability. We present a unified, self-contained development of three pillars of the method, emphasizing throughout that the underlying arguments are *constructive* — finite counting statements in disguise. First, we prove Erdős's exponential lower bound on the diagonal Ramsey numbers, $R(k,k) > 2^{k/2}$, entirely by a finite union-bound count over edge-colorings, with no appeal to measure theory. Second, we develop the measure-theoretic backbone of the probabilistic method in a general probability space: the first-moment (union-bound) existence principle, the independent case of the Lovász Local Lemma (yielding the exact product formula $P(\bigcap A_i^c) = \prod (1 - P(A_i))$), and a general **chain-rule positivity principle** that isolates the essential inductive content of the Local Lemma under a single conditional-avoidability hypothesis. Third, we package Turán's theorem in its classical real-analytic form, bounding the edges of a $K_{r+1}$-free graph by $(1 - 1/r)n^2/2$, with the bound achieved constructively by the Turán graph. We conclude with the algorithmic reading of these results — the Moser–Tardos resampling perspective — and discuss the sense in which Erdős's existence proofs are algorithms in disguise.
 
-**Keywords**: Probabilistic method, Ramsey theory, Turán graph, Lovász Local Lemma, tropical algebra, formalization
+**Keywords:** probabilistic method, Ramsey numbers, Lovász Local Lemma, Turán's theorem, first-moment method, union bound, extremal graph theory, constructive existence.
+
+---
 
 ## 1. Introduction
 
-The probabilistic method, pioneered by Erdős [1], proves the existence of combinatorial structures by showing that a randomly chosen structure has the desired property with positive probability. Despite its name, the method requires no probability theory beyond elementary counting—a fact that makes it amenable to formalization.
+Since Erdős's 1947 note on the Ramsey numbers, the *probabilistic method* has grown from a single ingenious trick into a systematic engine of existence proofs across combinatorics, number theory, and theoretical computer science. Its logical shape is always the same: to prove that an object with a desired property $P$ exists, construct a probability space of candidate objects and show
 
-Our contribution is threefold:
+$$P(\text{a random candidate has property } P) > 0.$$
 
-1. **Formalization**: We provide machine-verified proofs of fundamental results from the probabilistic method, including the counting principle, Turán graph properties, Mantel's theorem, Erdős's Ramsey inequalities, and the LLL algebraic core.
+An event of positive probability is nonempty, so a candidate with property $P$ must exist.
 
-2. **Novel framework**: We introduce the `TropicalCostStructure`, a formal framework that recasts probabilistic existence proofs as tropical optimization problems. This makes precise the observation that the first moment method is a min-plus analogue of the averaging argument.
+This paper assembles a coherent treatment of three landmark applications and the abstract principles beneath them, with two guiding themes.
 
-3. **Structural insights**: Our formalization reveals that key arguments in the probabilistic method—notably the disjoint-neighborhoods proof of Mantel's theorem and the product-positivity proof of the LLL—have natural tropical interpretations.
+1. **Unification.** The Ramsey lower bound, the Lovász Local Lemma, and (dually) Turán's theorem are usually taught as separate episodes. We present them from a common vantage: a small toolkit of positivity principles — the union bound, the independence product formula, and a chain-rule induction — from which the concrete results follow.
 
-## 2. Definitions
+2. **Constructivity.** We stress that these existence proofs, despite their probabilistic framing, are finite and constructive at heart. The Ramsey bound is proved by counting colorings directly, without probability spaces. Turán's optimum is attained by an explicit graph. And the Local Lemma admits an algorithmic (Moser–Tardos) reading. Erdős's "non-constructive" proofs are, on inspection, algorithms wearing the costume of chance.
 
-### 2.1 The Turán Graph
+The remainder of the paper is organized as follows. Section 2 fixes notation. Section 3 develops the finite counting proof of the Ramsey lower bound. Section 4 develops the measure-theoretic principles: the first-moment method, the independent Local Lemma, and the chain-rule positivity principle. Section 5 treats Turán's theorem. Section 6 discusses algorithms and constructivity, and Section 7 lists open directions.
 
-**Definition (Turán adjacency).** For natural numbers n, r with r > 0, the Turán graph T(n,r) has vertex set {0, 1, ..., n-1} with vertices i and j adjacent if and only if i mod r ≠ j mod r.
+---
 
-This partitions vertices into r classes by their residue mod r; two vertices are adjacent iff they belong to different classes. For r = 2, this gives a complete bipartite graph.
+## 2. Preliminaries and Notation
 
-### 2.2 Triangle-Freeness
+For a natural number $n$ we write $[n] = \{0, 1, \dots, n-1\}$ for a set of $n$ vertices, and $K_n$ for the complete graph on $[n]$, whose edge set has size $\binom{n}{2}$. An **edge two-coloring** of $K_n$ is a function $c$ assigning to each unordered pair of distinct vertices a color in $\{\text{red}, \text{blue}\}$ (equivalently a Boolean).
 
-**Definition.** A simple graph G is *triangle-free* if for all vertices a, b, c, it is not the case that G.Adj(a,b) ∧ G.Adj(b,c) ∧ G.Adj(a,c).
+Given a vertex set $S \subseteq [n]$, its **internal edge set** $E(S)$ consists of the unordered pairs of *distinct* vertices both lying in $S$; we have $|E(S)| = \binom{|S|}{2}$. A set $S$ is **monochromatic** under $c$ if all edges of $E(S)$ receive a single common color.
 
-### 2.3 Tropical Cost Structure
+**Definition 2.1 (Arrow relation).** We say $n \to (k,k)$, read "$n$ arrows $(k,k)$," if *every* edge two-coloring of $K_n$ contains a monochromatic $k$-clique, i.e. some $k$-element set $S$ that is monochromatic. The diagonal Ramsey number is $R(k,k) = \min\{n : n \to (k,k)\}$. Thus $R(k,k) > n$ is *precisely* the statement $\neg\,(n \to (k,k))$: there exists a coloring of $K_n$ with no monochromatic $k$-clique.
 
-**Definition (TropicalCostStructure).** A tropical cost structure on a finite type α consists of a cost function `cost : α → ℕ`. The *tropical minimum* exists if there exists an element with zero cost. The *Tropical Existence Principle* states: if Σ_a cost(a) < |α|, then min_a cost(a) = 0.
+For the measure-theoretic sections, we work over an arbitrary probability space $(\Omega, \mathcal{F}, \mu)$ with $\mu(\Omega) = 1$, and a finite family of measurable "bad events" $A_i \subseteq \Omega$, $i \in \iota$, where $\iota$ is a finite index set. We write $A_i^c$ for the complement. The object of interest is the "all good" event $\bigcap_i A_i^c$.
 
-This definition bridges the probabilistic method and tropical algebra:
-- In probability: E[X] < 1 ⟹ P(X = 0) > 0
-- In tropical algebra: ⊕-sum(costs) < n ⟹ min(costs) = 0
+---
 
-### 2.4 Algebraic LLL Configuration
+## 3. Erdős's Ramsey Lower Bound by Finite Counting
 
-**Definition (AlgLLLConfig).** An algebraic LLL configuration for n events consists of:
-- Probability bounds prob : Fin n → ℚ
-- Dependency graph dep : Fin n → Finset (Fin n)
-- Non-negativity: ∀ i, 0 ≤ prob i
-- No self-dependency: ∀ i, i ∉ dep i
+We prove $R(k,k) > 2^{k/2}$ by pure counting over the finite set of colorings, making the argument manifestly constructive.
 
-## 3. Main Results
+### 3.1 The counting theorem
 
-### 3.1 The Counting Principle
+Let $N = \binom{n}{2}$ be the total number of edges of $K_n$, so there are exactly $2^N$ edge two-colorings.
 
-**Theorem 1 (Counting Principle).** Let α be a nonempty finite type and P : α → Prop a decidable predicate. If |{a ∈ α | P(a)}| < |α|, then ∃ a, ¬P(a).
+**Lemma 3.1 (Internal edge count).** For any vertex set $S$, the number of internal edges is $|E(S)| = \binom{|S|}{2}$.
 
-*Proof sketch.* By contraposition: if ∀ a, P(a), then the filter equals the universe, giving |filter| = |α|, contradicting the strict inequality. □
+*Proof.* Internal edges of $S$ are exactly the two-element subsets of $S$, and there are $\binom{|S|}{2}$ of them. $\square$
 
-This is the formal heart of the first moment method. The standard probabilistic statement "E[X] < 1 implies P(X = 0) > 0" is a special case.
+**Lemma 3.2 (Union-bound count).** Fix a $k$-element vertex set $S$. The number of edge two-colorings under which $S$ is monochromatic is at most
 
-### 3.2 Tropical First Moment
+$$2 \cdot 2^{\,N - \binom{k}{2}}.$$
 
-**Theorem 2 (Tropical First Moment).** For costs : Fin n → ℕ, if Σᵢ costs(i) < n, then ∃ i, costs(i) = 0.
+*Proof.* A coloring making $S$ monochromatic is determined by two independent choices: (i) the single common color assigned to all $\binom{k}{2}$ internal edges of $S$ (2 choices), and (ii) an arbitrary assignment of colors to the remaining $N - \binom{k}{2}$ edges (at most $2^{N - \binom{k}{2}}$ choices). Formally, restricting a monochromatic-on-$S$ coloring to the edges *outside* $E(S)$ is injective once the common color is fixed, and there are two possible common colors; summing the two cases and bounding each restriction count by the total number of assignments of the outside edges gives the claim. $\square$
 
-*Proof sketch.* By contraposition: if all costs ≥ 1, then Σ costs ≥ n. □
+**Theorem 3.3 (Erdős's counting theorem).** Let $2 \le k \le n$. If
 
-**Theorem 3 (Tropical Existence Principle).** For any TropicalCostStructure S on a nonempty finite type, if Σ_a S.cost(a) < |α|, then ∃ a, S.cost(a) = 0.
+$$2 \cdot \binom{n}{k} < 2^{\binom{k}{2}},$$
 
-This bridges the combinatorial counting principle with tropical algebra: the condition Σ costs < n is the tropical analogue of "expected value < 1."
+then $\neg\,(n \to (k,k))$; equivalently $R(k,k) > n$.
 
-### 3.3 Turán Graph Triangle-Freeness
+*Proof.* Suppose for contradiction that $n \to (k,k)$: every coloring has a monochromatic $k$-set. Then every one of the $2^N$ colorings lies in the union, over all $k$-sets $S$, of the sets $M_S = \{c : S \text{ is monochromatic under } c\}$. Hence
 
-**Theorem 4.** For n ≥ 2, the Turán graph T(n,2) is triangle-free.
+$$2^N \;\le\; \sum_{|S| = k} |M_S| \;\le\; \binom{n}{k} \cdot 2 \cdot 2^{N - \binom{k}{2}},$$
 
-*Proof.* Suppose vertices a, b, c form a triangle. Then a%2 ≠ b%2, b%2 ≠ c%2, and a%2 ≠ c%2. Since each value is 0 or 1, a%2 ≠ b%2 and b%2 ≠ c%2 force a%2 = c%2, contradicting a%2 ≠ c%2. □
+using Lemma 3.2 and that there are $\binom{n}{k}$ vertex sets of size $k$. Dividing by $2^{N - \binom{k}{2}}$ yields $2^{\binom{k}{2}} \le 2\binom{n}{k}$, contradicting the hypothesis. Therefore some coloring avoids every monochromatic $k$-set. $\square$
 
-The formalized proof is notably concise: after unfolding `turanAdj`, the `omega` tactic handles the modular arithmetic automatically.
+The proof is a first-moment argument stated in the language of counting: $2\binom{n}{k}2^{-\binom{k}{2}}$ is exactly the expected number of monochromatic $k$-cliques under a uniformly random coloring, and Theorem 3.3 says that when this expectation is below one, a clique-free coloring exists. No probability space is required; the entire argument is a finite inequality between cardinalities.
 
-### 3.4 Mantel's Theorem (Degree Form)
+### 3.2 The explicit exponential bound
 
-**Theorem 5 (Disjoint Neighborhoods).** In a triangle-free graph G, if u and v are adjacent, then N(u) ∩ N(v) = ∅.
+To turn Theorem 3.3 into an explicit growth rate we choose $n = 2^{\lfloor k/2 \rfloor}$ and verify the hypothesis. Two elementary estimates do the work.
 
-*Proof.* If w ∈ N(u) ∩ N(v), then u-w, w-v, u-v forms a triangle. □
+**Lemma 3.4 (Exponent inequality).** For all $k$, $\;\lfloor k/2 \rfloor \cdot k \le \binom{k}{2} + \lfloor k/2 \rfloor$. (Equality for even $k$; slack for odd $k$.)
 
-**Theorem 6 (Mantel's Degree Sum).** In a triangle-free graph on Fin n, for any edge {u,v}: deg(u) + deg(v) ≤ n.
+**Lemma 3.5 (Factorial lower bound).** For $k \ge 3$, $\;2^{\lfloor k/2\rfloor + 1} < k!$.
 
-*Proof.* By Theorem 5, N(u) and N(v) are disjoint subsets of Fin n. Their union has cardinality deg(u) + deg(v) ≤ |Fin n| = n. □
+**Theorem 3.6 (Number-theoretic core).** For $k \ge 3$ and $n = 2^{\lfloor k/2\rfloor}$,
 
-This gives the classical Mantel's theorem: summing over all edges, we get 2|E| ≤ n²/2, so |E| ≤ n²/4.
+$$2 \cdot \binom{n}{k} < 2^{\binom{k}{2}}.$$
 
-### 3.5 Erdős's Ramsey Inequalities
+*Proof sketch.* Using $\binom{n}{k} \le n^k / k!$ (from $n^{\underline{k}} = k!\binom{n}{k}$ and $n^{\underline{k}} \le n^k$) we get $k!\cdot 2\binom{n}{k} \le 2 n^k$. Since $n = 2^{\lfloor k/2\rfloor}$, Lemma 3.4 gives $2n^k = 2^{1 + \lfloor k/2\rfloor k} \le 2^{\binom{k}{2} + \lfloor k/2\rfloor + 1}$. Finally Lemma 3.5 gives $2^{\lfloor k/2\rfloor + 1} < k!$, so $2^{\binom{k}{2} + \lfloor k/2\rfloor + 1} < k! \cdot 2^{\binom{k}{2}}$. Chaining, $k!\cdot 2\binom{n}{k} < k!\cdot 2^{\binom{k}{2}}$, and cancelling $k! > 0$ yields the claim. $\square$
 
-**Theorem 7 (Exponential Dominance).** For k ≥ 3, 2^k > 2k.
+**Corollary 3.7 (Erdős's lower bound).** For $k \ge 3$,
 
-*Proof.* By induction from k = 3. Base: 2³ = 8 > 6. Step: 2^{k+1} = 2·2^k > 2·2k = 4k ≥ 2(k+1). □
+$$R(k,k) > 2^{k/2}.$$
 
-**Theorem 8 (Choose-Two Formula).** For k ≥ 2, C(k,2) = k(k-1)/2.
+*Proof.* Combine Theorem 3.6 with Theorem 3.3 at $n = 2^{\lfloor k/2\rfloor}$ (handling the trivial regime $k > 2^{\lfloor k/2\rfloor}$ separately, where no $k$-set fits and the arrow relation fails outright). $\square$
 
-**Theorem 9 (Erdős Criterion, k=3).** For n ≤ 2: 2·C(n,3) < 2^{C(3,2)}.
+**Concrete instances.** The counting theorem yields exact small cases directly:
 
-**Theorem 10 (Erdős Criterion, k=4).** For n ≤ 3: 2·C(n,4) < 2^{C(4,2)}.
+- $R(4,4) > 5$: since $2\binom{5}{4} = 10 < 2^{\binom{4}{2}} = 2^6 = 64$, there is a red/blue coloring of $K_5$ with no monochromatic $K_4$. Hence $R(4,4) \ge 6$.
+- $R(6,6) > 8$: since $2\binom{8}{6} = 56 < 2^{\binom{6}{2}} = 2^{15} = 32768$, there is a coloring of $K_8$ with no monochromatic $K_6$.
 
-**Theorem 11 (Binomial-Power Bound).** k! · C(n,k) ≤ n^k.
+---
 
-*Proof.* k! · C(n,k) = n·(n-1)·...·(n-k+1) = n^{(k)} ≤ n^k since each factor ≤ n. Uses `Nat.descFactorial_le_pow` from Mathlib. □
+## 4. The Probabilistic Method in a General Probability Space
 
-These inequalities form the quantitative backbone of Erdős's proof that R(k,k) > 2^{k/2}: the number of potentially monochromatic k-cliques in a random 2-coloring of K_n is 2·C(n,k)·2^{-C(k,2)}, which is less than 1 when n < 2^{k/2}.
+We now record the abstract positivity principles, valid over any probability space $(\Omega, \mathcal{F}, \mu)$ with finitely many measurable bad events $\{A_i\}_{i \in \iota}$.
 
-### 3.6 The LLL Algebraic Core
+### 4.1 The first-moment / union-bound principle
 
-**Theorem 12 (LLL Algebraic Core).** If x : Fin n → ℚ satisfies 0 < x_i < 1 for all i, then ∏ᵢ (1 - xᵢ) > 0.
+**Theorem 4.1 (First-moment positivity).** If $\sum_{i} \mu(A_i) < 1$, then
 
-*Proof.* Each factor 1 - xᵢ > 0 since xᵢ < 1. A product of positive rationals is positive. □
+$$\mu\!\left(\bigcap_i A_i^c\right) > 0.$$
 
-**Theorem 13 (Symmetric LLL Bound).** For all n, d with d > 0: (d/(d+1))^n > 0.
+*Proof.* By finite subadditivity, $\mu(\bigcup_i A_i) \le \sum_i \mu(A_i) < 1$. Since $\bigcap_i A_i^c = (\bigcup_i A_i)^c$ and $\mu$ is a probability measure, $\mu(\bigcap_i A_i^c) = 1 - \mu(\bigcup_i A_i) > 0$. $\square$
 
-*Proof.* d/(d+1) > 0, and a positive rational raised to a natural power is positive. □
+**Corollary 4.2 (Probabilistic method).** If $\sum_i \mu(A_i) < 1$, there exists an outcome $\omega \in \Omega$ with $\omega \notin A_i$ for every $i$.
 
-### 3.7 Ramsey Good Colorings
+*Proof.* An event of positive measure is nonempty; take any point of $\bigcap_i A_i^c$. $\square$
 
-**Theorem 14 (Erdős-Ramsey, k=3, n=2).** There exists a 2-coloring of K₂ with no monochromatic triangle.
+This is the exact abstraction of the Ramsey argument of Section 3: with $\Omega$ the uniform space of colorings and $A_i$ the event "clique $i$ is monochromatic," the hypothesis $\sum_i \mu(A_i) < 1$ is $2\binom{n}{k}2^{-\binom{k}{2}} < 1$.
 
-*Proof.* The all-true coloring works vacuously: no 3-element subset of Fin 2 exists. □
+### 4.2 The Lovász Local Lemma: independent case
 
-**Theorem 15 (Erdős Tropical Instance).** No 3-element subset of Fin 2 exists.
+When the bad events are mutually independent, we get an exact formula rather than an inequality.
 
-*Proof.* Any subset of Fin 2 has at most 2 elements by the pigeonhole principle. □
+**Theorem 4.3 (Independent LLL, product formula).** If the events $\{A_i\}$ are mutually independent, then
 
-## 4. Algorithms
+$$\mu\!\left(\bigcap_i A_i^c\right) = \prod_i \bigl(1 - \mu(A_i)\bigr).$$
 
-### 4.1 Derandomized Erdős Construction
+*Proof.* Mutual independence of the $A_i$ is inherited by their complements $A_i^c$; applying the independence multiplication rule to the finite family $\{A_i^c\}$ gives $\mu(\bigcap_i A_i^c) = \prod_i \mu(A_i^c)$, and $\mu(A_i^c) = 1 - \mu(A_i)$ since $\mu$ is a probability measure. $\square$
 
-The probabilistic proof of R(k,k) > 2^{k/2} can be derandomized via the method of conditional expectations:
+**Corollary 4.4 (Independent LLL, positivity).** If the $\{A_i\}$ are mutually independent and $\mu(A_i) < 1$ for every $i$, then $\mu(\bigcap_i A_i^c) > 0$; hence some outcome avoids all $A_i$.
 
-```
-Algorithm DerandomizedErdos(n, k):
-  Initialize partial coloring c = empty
-  For each edge e in K_n:
-    Let f₀ = E[mono cliques | c ∪ {e → 0}]
-    Let f₁ = E[mono cliques | c ∪ {e → 1}]
-    Set c(e) = argmin(f₀, f₁)
-  Return c
-```
+*Proof.* Each factor $1 - \mu(A_i)$ is strictly positive, so their finite product is strictly positive. $\square$
 
-This runs in time O(n² · C(n,k)) and produces a coloring with at most ⌊2·C(n,k)·2^{-C(k,2)}⌋ monochromatic k-cliques.
+This is the Local Lemma in the dependency-degree $d = 0$ regime. The requirement is dramatically weaker than the union bound: no constraint on the *sum* of probabilities, only that each individually is below $1$.
 
-### 4.2 Moser-Tardos Algorithm (Constructive LLL)
+### 4.3 The chain-rule positivity principle
 
-```
-Algorithm MoserTardos(variables, constraints, sampler):
-  Sample all variables randomly
-  While some constraint is violated:
-    Pick a violated constraint C
-    Resample all variables in C
-  Return current assignment
-```
+The genuine content of the Local Lemma is to reach the positivity conclusion $\mu(\bigcap_i A_i^c) > 0$ *without* assuming full independence. We isolate the measure-theoretic backbone common to every such argument: a greedy, chain-rule induction under a single conditional hypothesis.
 
-Expected running time: O(n · d · log(1/p)) resamplings.
+**Definition 4.5 (Conditional avoidability).** The family $\{A_i\}$ is *conditionally avoidable* if for every finite set $S \subseteq \iota$ of indices and every $i \notin S$,
 
-## 5. Discussion
+$$\mu\!\left(\bigcap_{j \in S} A_j^c\right) > 0 \;\;\Longrightarrow\;\; \mu\!\left(A_i \cap \bigcap_{j \in S} A_j^c\right) < \mu\!\left(\bigcap_{j \in S} A_j^c\right).$$
 
-### 5.1 The Tropical-Probabilistic Correspondence
+Equivalently, the conditional probability $\mu(A_i \mid \bigcap_{j\in S} A_j^c) < 1$: no single bad event fills up the space of outcomes already surviving $S$.
 
-Our formalization reveals a systematic correspondence:
+**Theorem 4.6 (Chain-rule positivity, induction form).** If $\{A_i\}$ is conditionally avoidable, then for *every* finite $S \subseteq \iota$,
 
-| Probability | Tropical (min-plus) |
-|---|---|
-| E[X] < 1 | ⊕-sum < n |
-| P(X = 0) > 0 | min = 0 |
-| First moment method | Counting principle |
-| Conditional expectation | Tropical gradient |
-| Lovász Local Lemma | Tropical fixed point |
+$$\mu\!\left(\bigcap_{j \in S} A_j^c\right) > 0.$$
 
-The `TropicalCostStructure` captures this correspondence formally: it abstracts the pattern "cost function on finite structure, total cost below threshold, therefore zero-cost element exists."
+*Proof.* Induction on $S$. For $S = \emptyset$ the intersection is $\Omega$, of measure $1 > 0$. For the inductive step, insert a new index $i \notin S$ into a set with $\mu(\bigcap_{j\in S} A_j^c) > 0$. Write
 
-### 5.2 Constructivity
+$$\bigcap_{j \in S \cup \{i\}} A_j^c \;=\; A_i^c \cap \bigcap_{j\in S} A_j^c \;=\; \Bigl(\bigcap_{j\in S} A_j^c\Bigr) \setminus \Bigl(A_i \cap \bigcap_{j\in S} A_j^c\Bigr).$$
 
-Our formalization avoids the axiom of choice beyond what is standard in Lean's `Classical.choice`. The key results (counting principle, Turán construction, Erdős criterion) are constructive in the sense that they either produce explicit witnesses or reduce to finite enumeration.
+By the difference rule for measures, its measure equals $\mu(\bigcap_{j\in S} A_j^c) - \mu(A_i \cap \bigcap_{j\in S} A_j^c)$, which is strictly positive by the conditional-avoidability hypothesis applied to $S$ and $i$. $\square$
 
-The LLL algebraic core is constructive in a deeper sense: the product ∏(1-xᵢ) is a computable quantity once the witness vector x is given. The non-constructive part is finding the witness, which the Moser-Tardos algorithm solves.
+**Theorem 4.7 (Chain-rule LLL).** If $\{A_i\}_{i\in\iota}$ (with $\iota$ finite) is conditionally avoidable, then
 
-### 5.3 Limitations and Future Work
+$$\mu\!\left(\bigcap_{i} A_i^c\right) > 0,$$
 
-Our formalization covers the *combinatorial* core of the probabilistic method but does not formalize:
-- Full Ramsey numbers and the definition R(k,k)
-- Probability spaces and measure-theoretic statements
-- The full Lovász Local Lemma with dependency graphs
-- Turán's theorem for general r (not just r=2)
+and consequently there exists an outcome $\omega$ with $\omega \notin A_i$ for all $i$.
 
-These extensions are natural targets for future formalization efforts.
+*Proof.* Apply Theorem 4.6 with $S = \iota$; positivity gives nonemptiness, hence the witnessing outcome. $\square$
 
-## 6. Conjecture
+Theorem 4.7 is the reusable core of the Local Lemma: dependency-graph bookkeeping is entirely abstracted into Definition 4.5. Specializing to independent events, the conditional probability $\mu(A_i \mid \bigcap_{j\in S} A_j^c)$ equals the unconditional $\mu(A_i) < 1$, recovering Corollary 4.4. For the full asymmetric Local Lemma with degree $d$ and $e\,p\,(d+1) \le 1$, the remaining work is precisely to *verify* Definition 4.5 via the standard conditional-probability induction $\mu(A_i \mid \bigcap_{j\in S} A_j^c) \le 2p$ — a program we outline in Section 7.
 
-**Conjecture (Erdős-Tropical Duality).** For every probabilistic existence proof using the first moment method, there exists a tropical linear program whose optimal value is 0 if and only if the desired structure exists.
+---
 
-*Testable prediction*: For the Ramsey problem with parameters (n, k), define the tropical LP:
-  minimize ⊕_{S ∈ C(V,k)} (indicator of S being monochromatic)
-  over all edge 2-colorings of K_n
-The optimal value is 0 iff n < R(k,k).
+## 5. Turán's Theorem: the Extremal Dual
 
-For k = 3, n = 2: verified (Theorem 14). For k = 3, n = 5: the optimal value should be 0 (since R(3,3) = 6). This can be verified computationally.
+The probabilistic method produces objects that *avoid* structure. Its extremal dual asks how much structure can be packed in before an unavoidable clique appears. The archetype is Turán's theorem.
 
-## 7. References
+**Definition 5.1.** A graph $G$ is $K_{r+1}$-*free* (clique-free of order $r+1$) if it contains no $r+1$ pairwise-adjacent vertices.
 
-[1] P. Erdős, "Some remarks on the theory of graphs," *Bull. Amer. Math. Soc.*, vol. 53, pp. 292–294, 1947.
+**Definition 5.2 (Turán graph).** The Turán graph $T(n, r)$ is the complete $r$-partite graph on $n$ vertices whose parts are as equal in size as possible (each of size $\lfloor n/r\rfloor$ or $\lceil n/r\rceil$): two vertices are adjacent iff they lie in different parts. It is $K_{r+1}$-free, since any clique uses at most one vertex from each of the $r$ parts.
 
-[2] W. Mantel, "Problem 28," *Wiskundige Opgaven*, vol. 10, pp. 60–61, 1907.
+**Theorem 5.3 (Turán, combinatorial form).** Let $G$ be a $K_{r+1}$-free graph on $n$ vertices with $r \ge 1$. Then
 
-[3] P. Turán, "On an extremal problem in graph theory," *Mat. Fiz. Lapok*, vol. 48, pp. 436–452, 1941.
+$$2r \cdot |E(G)| \;\le\; (r-1)\, n^2.$$
 
-[4] P. Erdős and L. Lovász, "Problems and results on 3-chromatic hypergraphs and some related questions," in *Infinite and Finite Sets*, vol. 10, pp. 609–627, North-Holland, 1975.
+*Proof sketch.* Among all $K_{r+1}$-free graphs on $n$ vertices there is an edge-maximal one, and it is isomorphic to the Turán graph $T(n,r)$. Thus $|E(G)|$ is at most the number of edges of $T(n,r)$, and a direct count of the complete $r$-partite graph with balanced parts gives $2r \cdot |E(T(n,r))| \le (r-1)n^2$. Chaining the two inequalities yields the bound. $\square$
 
-[5] R. Moser and G. Tardos, "A constructive proof of the general Lovász Local Lemma," *J. ACM*, vol. 57, no. 2, article 11, 2010.
+**Theorem 5.4 (Turán, real-analytic form).** Under the hypotheses of Theorem 5.3,
 
-[6] N. Alon and J. H. Spencer, *The Probabilistic Method*, 4th ed., Wiley, 2016.
+$$|E(G)| \;\le\; \left(1 - \frac{1}{r}\right)\frac{n^2}{2}.$$
 
-[7] D. Maclagan and B. Sturmfels, *Introduction to Tropical Geometry*, AMS, 2015.
+*Proof.* Divide the inequality of Theorem 5.3 by $2r > 0$ and simplify $\frac{(r-1)n^2}{2r} = \bigl(1 - \tfrac1r\bigr)\tfrac{n^2}{2}$. $\square$
+
+Two features distinguish Turán's theorem from the probabilistic results. First, the bound is *tight*: it is attained exactly by the Turán graph $T(n,r)$ when $r \mid n$. Second, existence of the extremal object is fully *constructive* — the champion is written down explicitly. Where Ramsey's lower bound guarantees a clique-free coloring somewhere in an exponential haystack, Turán's theorem hands you the optimizer directly.
+
+---
+
+## 6. Algorithms and Constructivity
+
+A recurring criticism of the probabilistic method is that it proves existence without exhibiting the object. The results above show this criticism is largely superficial.
+
+**Ramsey is counting.** Theorem 3.3 makes no reference to probability: it is an inequality between the cardinality $2^N$ of all colorings and the sum of cardinalities $|M_S|$. In principle one could certify a clique-free coloring of $K_n$ by exhaustive or guided search over the finite space of colorings; the counting theorem guarantees the search is nonempty. The probabilistic phrasing is a convenience, not a necessity.
+
+**Turán is explicit.** The extremal graph is $T(n,r)$, constructed directly. No search is needed at all.
+
+**The Local Lemma is an algorithm.** The most striking modern development is the Moser–Tardos theorem: the existence conclusion of the Local Lemma is realized by a simple randomized *resampling algorithm*. In the variable model — where each bad event $A_i$ depends on a subset of independent random variables — the procedure is:
+
+1. Sample all variables.
+2. While some bad event $A_i$ currently holds, pick one and resample exactly the variables it depends on.
+3. Output the assignment when no bad event holds.
+
+Under the Local Lemma condition $e\,p\,(d+1) \le 1$, this loop terminates in an expected number of resamplings bounded (roughly) linearly in the number of events, by an *entropy-compression* / witness-tree argument: an execution that resampled too often could be encoded in fewer bits than its own randomness, an impossibility. Thus the Local Lemma is not an oracle but a constructive procedure with a proved expected running-time bound.
+
+The unifying moral: Erdős's "non-constructive" proofs were algorithms in disguise. Behind the coin flips lies arithmetic; behind the arithmetic, a construction.
+
+---
+
+## 7. Discussion and Future Directions
+
+The development above cleanly separates the *abstract positivity engine* (Section 4) from the *concrete instantiations* (Sections 3 and 5). This separation suggests several natural continuations.
+
+1. **General (asymmetric) Lovász Local Lemma.** With the chain-rule positivity principle (Theorem 4.7) in place, the remaining work is to verify its conditional hypothesis (Definition 4.5) from a dependency graph of maximum degree $d$ satisfying $e\,p\,(d+1) \le 1$. The standard route is the induction on conditional probabilities $\mu(A_i \mid \bigcap_{j\in S} A_j^c) \le 2p$; this requires developing conditional-probability estimates and the mutual-independence-from-non-neighbours hypothesis on top of a general probability framework.
+
+2. **Moser–Tardos constructive LLL.** Formalize the resampling algorithm and its expected $O(n \cdot d)$ running-time bound (the witness-tree / entropy-compression argument), turning the existence statement into an algorithm with a proved termination bound.
+
+3. **Ramsey numbers as a defined quantity.** Combine the arrow relation and the counting bounds to define $R(k,k)$ as a genuine numerical invariant and derive both the lower bound $R(k,k) > 2^{k/2}$ and matching small-case computations within one framework.
+
+4. **Higher moments and the Lovász sieve.** Extend the first-moment principle to second-moment and Janson-type inequalities, capturing concentration phenomena beyond mere positivity.
+
+5. **Off-diagonal and hypergraph Ramsey bounds.** Generalize the counting theorem of Section 3 to $R(s,t)$ and to $r$-uniform hypergraphs, where the same union-bound skeleton applies with adjusted exponents.
+
+---
+
+## 8. Conclusion
+
+We have presented a unified, self-contained account of three pillars of the probabilistic method: Erdős's exponential Ramsey lower bound $R(k,k) > 2^{k/2}$ proved by finite counting; a general measure-theoretic toolkit comprising the first-moment principle, the independent Lovász Local Lemma with its exact product formula, and a chain-rule positivity principle abstracting the Local Lemma's inductive core; and Turán's theorem in its classical real-analytic form with its explicit extremal graph. Throughout, the emphasis has been on constructivity: these celebrated existence results are, at bottom, finite counting statements and explicit constructions — algorithms in the costume of chance.

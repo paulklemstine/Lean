@@ -1,354 +1,233 @@
-#!/usr/bin/env python3
 """
-Probabilistic Method: Numerical Demonstrations
+Numerical demonstrations for the constructive core of the probabilistic method.
 
-Demonstrates key results from the Erdős probabilistic method:
-1. Erdős's R(k,k) > 2^{k/2} bound
-2. Turán graph edge counts
-3. Lovász Local Lemma conditions
-4. Tropical cost verification
+This self-contained script illustrates three landmark results:
+
+  1. Erdos's Ramsey lower bound  R(k,k) > 2^{k/2}, via the finite union-bound
+     count  2 * C(n,k) < 2^{C(k,2)}.
+  2. The Lovasz Local Lemma:
+       - the first-moment / union-bound principle,
+       - the independent-case product formula  P(no bad event) = prod (1 - p_i),
+       - the Moser-Tardos resampling algorithm (constructive LLL).
+  3. Turan's theorem: a K_{r+1}-free graph on n vertices has at most
+     (1 - 1/r) n^2 / 2 edges, attained by the explicit Turan graph.
+
+Everything is pure standard-library Python with type hints.
 """
 
-from math import comb, factorial, log2, exp, floor
-from itertools import combinations
+from __future__ import annotations
+
+import math
 import random
+from itertools import combinations
+from typing import Callable, Dict, List, Tuple
 
-def erdos_bound(k: int) -> int:
-    """Compute the Erdős lower bound on R(k,k): floor(2^{k/2})."""
-    return floor(2 ** (k / 2))
 
-def erdos_criterion(n: int, k: int) -> bool:
-    """Check if the Erdős criterion holds: 2 * C(n,k) < 2^C(k,2)."""
-    return 2 * comb(n, k) < 2 ** comb(k, 2)
+# ---------------------------------------------------------------------------
+# 1. Erdos's Ramsey lower bound by finite counting
+# ---------------------------------------------------------------------------
 
-def turan_edge_count(n: int, r: int) -> int:
-    """Compute the number of edges in the Turán graph T(n,r)."""
-    count = 0
-    for i in range(n):
-        for j in range(i + 1, n):
-            if i % r != j % r:
-                count += 1
-    return count
+def erdos_counting_holds(n: int, k: int) -> bool:
+    """Return True iff the Erdos counting hypothesis 2*C(n,k) < 2^{C(k,2)} holds.
 
-def turan_formula(n: int, r: int) -> float:
-    """Compute the Turán edge count formula: (1 - 1/r) * n^2 / 2."""
-    return (1 - 1/r) * n**2 / 2
+    When True, there exists a red/blue edge-coloring of K_n with no
+    monochromatic K_k, i.e. R(k,k) > n.
+    """
+    return 2 * math.comb(n, k) < 2 ** math.comb(k, 2)
 
-def check_triangle_free(n: int, r: int = 2) -> bool:
-    """Verify that T(n,r) is triangle-free (for r=2)."""
-    for a in range(n):
-        for b in range(a + 1, n):
-            for c in range(b + 1, n):
-                if (a % r != b % r) and (b % r != c % r) and (a % r != c % r):
-                    return False
-    return True
 
-def lll_symmetric_check(p: float, d: int) -> bool:
-    """Check the symmetric LLL condition: e * p * (d+1) <= 1."""
-    return exp(1) * p * (d + 1) <= 1
+def expected_mono_cliques(n: int, k: int) -> float:
+    """Expected number of monochromatic K_k under a uniform random coloring of K_n.
 
-def count_monochromatic_cliques(n: int, k: int, coloring: list) -> int:
-    """Count monochromatic k-cliques in a 2-coloring of K_n."""
-    vertices = list(range(n))
-    count = 0
-    for S in combinations(vertices, k):
-        # Check if S is monochromatic (all edges same color)
-        colors = set()
-        for i in range(len(S)):
-            for j in range(i + 1, len(S)):
-                colors.add(coloring[S[i]][S[j]])
-        if len(colors) <= 1:
-            count += 1
-    return count
+    Equal to 2 * C(n,k) * 2^{-C(k,2)}.  When < 1, a clique-free coloring exists.
+    """
+    return 2.0 * math.comb(n, k) * 2.0 ** (-math.comb(k, 2))
 
-def random_coloring(n: int) -> list:
-    """Generate a random 2-coloring of K_n."""
-    c = [[0]*n for _ in range(n)]
-    for i in range(n):
-        for j in range(i + 1, n):
-            c[i][j] = random.randint(0, 1)
-            c[j][i] = c[i][j]
-    return c
 
-def demo_erdos_bounds():
-    """Demonstrate Erdős's R(k,k) bounds."""
-    print("=" * 60)
-    print("ERDŐS'S RAMSEY LOWER BOUNDS: R(k,k) > 2^{k/2}")
-    print("=" * 60)
-    print(f"{'k':>4} {'2^{k/2}':>10} {'Known R(k,k)':>15} {'2*C(n,k)':>12} {'2^{C(k,2)}':>12}")
-    print("-" * 60)
-    known = {3: 6, 4: 18, 5: '43-48', 6: '102-165', 7: '205-540'}
-    for k in range(3, 8):
-        n = erdos_bound(k)
-        c2 = 2 * comb(n, k)
-        p2 = 2 ** comb(k, 2)
-        rk = known.get(k, '?')
-        print(f"{k:>4} {n:>10} {str(rk):>15} {c2:>12} {p2:>12}")
-    print()
+def erdos_lower_bound(k: int) -> int:
+    """Largest n we can certify with n = 2^{floor(k/2)} giving R(k,k) > n."""
+    return 2 ** (k // 2)
 
-def demo_turan_graph():
-    """Demonstrate Turán graph properties."""
-    print("=" * 60)
-    print("TURÁN GRAPH T(n,2): EDGE COUNTS AND TRIANGLE-FREENESS")
-    print("=" * 60)
-    print(f"{'n':>4} {'Edges':>8} {'n²/4':>8} {'⌊n²/4⌋':>8} {'Tri-free?':>10}")
-    print("-" * 60)
-    for n in range(2, 16):
-        edges = turan_edge_count(n, 2)
-        formula = turan_formula(n, 2)
-        floor_formula = n * n // 4
-        tri_free = check_triangle_free(n, 2)
-        print(f"{n:>4} {edges:>8} {formula:>8.1f} {floor_formula:>8} {'Yes' if tri_free else 'No':>10}")
-    print()
 
-def demo_lll():
-    """Demonstrate LLL conditions."""
-    print("=" * 60)
-    print("LOVÁSZ LOCAL LEMMA: SYMMETRIC CONDITION e*p*(d+1) ≤ 1")
-    print("=" * 60)
-    print(f"{'d':>4} {'max p':>10} {'(1-p)^n (n=100)':>18}")
-    print("-" * 60)
-    for d in [1, 2, 5, 10, 20, 50, 100]:
-        p_max = 1 / (exp(1) * (d + 1))
-        avoidance = (1 - p_max) ** 100
-        print(f"{d:>4} {p_max:>10.6f} {avoidance:>18.10f}")
-    print()
+def demo_ramsey() -> None:
+    print("=" * 70)
+    print("1. ERDOS RAMSEY LOWER BOUND  R(k,k) > 2^{k/2}")
+    print("=" * 70)
+    print(f"{'k':>3} {'n=2^floor(k/2)':>16} {'E[#mono cliques]':>20} {'R(k,k)>n?':>12}")
+    for k in range(3, 12):
+        n = erdos_lower_bound(k)
+        exp = expected_mono_cliques(n, k)
+        ok = erdos_counting_holds(n, k)
+        print(f"{k:>3} {n:>16} {exp:>20.6f} {str(ok):>12}")
 
-def demo_tropical_cost():
-    """Demonstrate the tropical existence principle."""
-    print("=" * 60)
-    print("TROPICAL EXISTENCE PRINCIPLE")
-    print("=" * 60)
-    
-    # For K_5 with k=3: find a coloring with 0 monochromatic triangles
-    n, k = 5, 3
-    print(f"\nSearching for triangle-free 2-coloring of K_{n}...")
-    best = float('inf')
-    best_coloring = None
-    for trial in range(1000):
-        c = random_coloring(n)
-        count = count_monochromatic_cliques(n, k, c)
-        if count < best:
-            best = count
-            best_coloring = c
-        if count == 0:
-            print(f"  Found in {trial + 1} trials! Zero monochromatic triangles.")
+    print("\nConcrete small cases certified by counting:")
+    for n, k in [(5, 4), (8, 6)]:
+        lhs, rhs = 2 * math.comb(n, k), 2 ** math.comb(k, 2)
+        print(f"  R({k},{k}) > {n}:  2*C({n},{k}) = {lhs} < 2^C({k},2) = {rhs}"
+              f"  -> {lhs < rhs}")
+
+
+# ---------------------------------------------------------------------------
+# 2a. First-moment / union-bound principle
+# ---------------------------------------------------------------------------
+
+def union_bound_positive(probs: List[float]) -> Tuple[bool, float]:
+    """First-moment principle.
+
+    If sum(probs) < 1 then P(no bad event) >= 1 - sum(probs) > 0.
+    Returns (guarantee_holds, lower_bound_on_prob_all_good).
+    """
+    s = sum(probs)
+    return (s < 1.0, max(0.0, 1.0 - s))
+
+
+# ---------------------------------------------------------------------------
+# 2b. Independent Lovasz Local Lemma: exact product formula
+# ---------------------------------------------------------------------------
+
+def independent_all_good(probs: List[float]) -> float:
+    """For mutually independent bad events, P(no bad event) = prod (1 - p_i)."""
+    out = 1.0
+    for p in probs:
+        out *= (1.0 - p)
+    return out
+
+
+def demo_lll_principles() -> None:
+    print("\n" + "=" * 70)
+    print("2. LOVASZ LOCAL LEMMA PRINCIPLES")
+    print("=" * 70)
+
+    probs = [0.1, 0.2, 0.15, 0.05]
+    ok, lb = union_bound_positive(probs)
+    print(f"Union bound: p = {probs}, sum = {sum(probs):.3f}")
+    print(f"  guarantee P(all good) > 0 ? {ok};  lower bound = {lb:.3f}")
+
+    many = [0.3] * 5  # sum = 1.5 > 1, union bound FAILS...
+    ok2, _ = union_bound_positive(many)
+    exact = independent_all_good(many)
+    print(f"\nIndependent case: p = {many}, sum = {sum(many):.3f}")
+    print(f"  union bound guarantee? {ok2}  (fails: sum >= 1)")
+    print(f"  but if independent, exact P(all good) = prod(1-p_i) = {exact:.5f} > 0")
+
+
+# ---------------------------------------------------------------------------
+# 2c. Moser-Tardos constructive LLL on a k-SAT instance
+# ---------------------------------------------------------------------------
+
+Clause = List[Tuple[int, bool]]  # list of (variable_index, required_polarity)
+
+
+def clause_satisfied(clause: Clause, assign: Dict[int, bool]) -> bool:
+    """A clause is satisfied if at least one literal matches the assignment."""
+    return any(assign[v] == polarity for v, polarity in clause)
+
+
+def moser_tardos(
+    num_vars: int,
+    clauses: List[Clause],
+    rng: random.Random,
+    max_steps: int = 100_000,
+) -> Tuple[Dict[int, bool], int]:
+    """Moser-Tardos resampling algorithm for the constructive LLL.
+
+    Sample all variables; while some clause is violated, pick one and resample
+    exactly the variables it depends on.  Under e*p*(d+1) <= 1 this terminates
+    in expected O(#clauses) resamplings.  Returns (assignment, #resamplings).
+    """
+    assign: Dict[int, bool] = {v: rng.random() < 0.5 for v in range(num_vars)}
+    steps = 0
+    while steps < max_steps:
+        violated = [c for c in clauses if not clause_satisfied(c, assign)]
+        if not violated:
+            return assign, steps
+        c = rng.choice(violated)
+        for v, _ in c:                      # resample the clause's variables
+            assign[v] = rng.random() < 0.5
+        steps += 1
+    return assign, steps
+
+
+def demo_moser_tardos() -> None:
+    print("\n" + "=" * 70)
+    print("2c. MOSER-TARDOS CONSTRUCTIVE LLL (random k-SAT)")
+    print("=" * 70)
+    rng = random.Random(2026)
+    num_vars, k, num_clauses = 40, 5, 60   # sparse => LLL condition holds
+    clauses: List[Clause] = []
+    for _ in range(num_clauses):
+        vs = rng.sample(range(num_vars), k)
+        clauses.append([(v, rng.random() < 0.5) for v in vs])
+
+    total_steps = 0
+    trials = 20
+    for _ in range(trials):
+        assign, steps = moser_tardos(num_vars, clauses, rng)
+        assert all(clause_satisfied(c, assign) for c in clauses)
+        total_steps += steps
+    print(f"vars={num_vars}, clause width k={k}, clauses={num_clauses}")
+    print(f"  all {trials} runs found a satisfying assignment")
+    print(f"  average resamplings until success: {total_steps / trials:.1f}")
+
+
+# ---------------------------------------------------------------------------
+# 3. Turan's theorem and the explicit Turan graph
+# ---------------------------------------------------------------------------
+
+def turan_graph_edges(n: int, r: int) -> int:
+    """Number of edges of the Turan graph T(n, r): complete r-partite, balanced."""
+    sizes = [n // r + (1 if i < n % r else 0) for i in range(r)]
+    total = n * (n - 1) // 2
+    within = sum(s * (s - 1) // 2 for s in sizes)   # non-edges (inside parts)
+    return total - within
+
+
+def turan_bound(n: int, r: int) -> float:
+    """Turan's upper bound (1 - 1/r) * n^2 / 2 on edges of a K_{r+1}-free graph."""
+    return (1.0 - 1.0 / r) * n * n / 2.0
+
+
+def max_clique_size(n: int, adj: List[List[bool]]) -> int:
+    """Brute-force maximum clique size (small n only), to verify K_{r+1}-freeness."""
+    best = 0
+    verts = list(range(n))
+    for size in range(n, 0, -1):
+        if size <= best:
             break
-    
-    expected = 2 * comb(n, k) / (2 ** comb(k, 2))
-    print(f"  Expected monochromatic triangles per random coloring: {expected:.3f}")
-    print(f"  Best found: {best}")
-    print(f"  Erdős criterion (2*C({n},{k}) < 2^C({k},2)): {erdos_criterion(n, k)}")
-    print()
+        for combo in combinations(verts, size):
+            if all(adj[a][b] for a, b in combinations(combo, 2)):
+                return size
+    return best
 
-def demo_binomial_bound():
-    """Demonstrate the choose * factorial ≤ power bound."""
-    print("=" * 60)
-    print("BINOMIAL BOUND: k! * C(n,k) ≤ n^k")
-    print("=" * 60)
-    print(f"{'n':>4} {'k':>4} {'k!*C(n,k)':>12} {'n^k':>12} {'Ratio':>10}")
-    print("-" * 60)
-    for n in [5, 10, 20, 50]:
-        for k in [2, 3, 4]:
-            lhs = comb(n, k) * factorial(k)
-            rhs = n ** k
-            ratio = lhs / rhs if rhs > 0 else 0
-            print(f"{n:>4} {k:>4} {lhs:>12} {rhs:>12} {ratio:>10.4f}")
-    print()
+
+def demo_turan() -> None:
+    print("\n" + "=" * 70)
+    print("3. TURAN'S THEOREM  |E| <= (1 - 1/r) n^2 / 2")
+    print("=" * 70)
+    print(f"{'n':>4} {'r':>3} {'T(n,r) edges':>14} {'bound':>12} {'<= bound?':>10}")
+    for n, r in [(6, 2), (9, 3), (10, 3), (12, 4), (15, 5)]:
+        e = turan_graph_edges(n, r)
+        b = turan_bound(n, r)
+        print(f"{n:>4} {r:>3} {e:>14} {b:>12.2f} {str(e <= b + 1e-9):>10}")
+
+    # verify the Turan graph is actually K_{r+1}-free for a small case
+    n, r = 9, 3
+    parts = [i % r for i in range(n)]
+    adj = [[parts[i] != parts[j] and i != j for j in range(n)] for i in range(n)]
+    omega = max_clique_size(n, adj)
+    print(f"\nT({n},{r}) largest clique = {omega} (must be <= r = {r}, "
+          f"so K_{{{r+1}}}-free: {omega <= r})")
+
+
+# ---------------------------------------------------------------------------
+
+def main() -> None:
+    demo_ramsey()
+    demo_lll_principles()
+    demo_moser_tardos()
+    demo_turan()
+    print("\nAll demonstrations complete.")
+
 
 if __name__ == "__main__":
-    random.seed(42)
-    demo_erdos_bounds()
-    demo_turan_graph()
-    demo_lll()
-    demo_tropical_cost()
-    demo_binomial_bound()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Lovász Local Lemma Conditions
-
-Visualizes the LLL parameter space and avoidance probability.
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-from math import exp
-
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-# Plot 1: LLL feasible region
-ax1 = axes[0]
-ds = np.arange(1, 51)
-p_max = 1 / (np.e * (ds + 1))
-
-ax1.semilogy(ds, p_max, 'b-', linewidth=2, label='p_max = 1/(e(d+1))')
-ax1.fill_between(ds, 0, p_max, alpha=0.2, color='blue', label='LLL feasible region')
-ax1.set_xlabel('d (dependency degree)', fontsize=14)
-ax1.set_ylabel('p (probability bound)', fontsize=14)
-ax1.set_title('Symmetric LLL: Feasible Region', fontsize=16)
-ax1.legend(fontsize=11)
-ax1.grid(True, alpha=0.3)
-ax1.set_ylim(1e-4, 1)
-
-# Plot 2: Avoidance probability lower bound
-ax2 = axes[1]
-ns = range(1, 201)
-for d in [2, 5, 10, 20]:
-    p = 1 / (exp(1) * (d + 1))
-    avoidance = [(1 - p) ** n for n in ns]
-    x_witness = 1 / (d + 1)
-    avoidance_witness = [(1 - x_witness) ** n for n in ns]
-    ax2.semilogy(list(ns), avoidance_witness, linewidth=2, 
-                label=f'd={d}, x=1/(d+1)')
-
-ax2.set_xlabel('n (number of events)', fontsize=14)
-ax2.set_ylabel('∏(1 - x_i) (avoidance bound)', fontsize=14)
-ax2.set_title('LLL Avoidance Probability Lower Bound', fontsize=16)
-ax2.legend(fontsize=11)
-ax2.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('lll_conditions.png', dpi=150, bbox_inches='tight')
-print("Saved lll_conditions.png")
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Erdős's Ramsey Lower Bounds
-
-Shows the exponential growth of the Erdős bound R(k,k) > 2^{k/2}
-alongside known Ramsey numbers.
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-from math import comb, floor
-
-def erdos_bound(k):
-    return floor(2 ** (k / 2))
-
-def erdos_expected_mono(n, k):
-    """Expected number of monochromatic k-cliques in random 2-coloring of K_n."""
-    return 2 * comb(n, k) * 2 ** (-comb(k, 2))
-
-# Known Ramsey numbers
-known_R = {3: 6, 4: 18}
-known_R_lower = {5: 43, 6: 102, 7: 205, 8: 282, 9: 565}
-known_R_upper = {5: 48, 6: 165, 7: 540, 8: 1870, 9: 6588}
-
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-# Plot 1: Erdős bound vs known values
-ax1 = axes[0]
-ks = range(3, 10)
-erdos_bounds = [erdos_bound(k) for k in ks]
-ax1.semilogy(list(ks), erdos_bounds, 'bo-', linewidth=2, markersize=8, label='Erdős bound 2^{k/2}')
-
-# Known exact values
-exact_k = [3, 4]
-exact_R = [known_R[k] for k in exact_k]
-ax1.semilogy(exact_k, exact_R, 'r^', markersize=12, label='Known R(k,k)')
-
-# Known ranges
-for k in range(5, 10):
-    ax1.semilogy([k, k], [known_R_lower[k], known_R_upper[k]], 'g-', linewidth=3, alpha=0.7)
-    ax1.semilogy(k, known_R_lower[k], 'gv', markersize=8)
-    ax1.semilogy(k, known_R_upper[k], 'g^', markersize=8)
-
-ax1.semilogy([5], [known_R_lower[5]], 'gv', markersize=8, label='Known range')
-
-ax1.set_xlabel('k', fontsize=14)
-ax1.set_ylabel('R(k,k)', fontsize=14)
-ax1.set_title("Erdős's Ramsey Lower Bound", fontsize=16)
-ax1.legend(fontsize=11)
-ax1.grid(True, alpha=0.3)
-
-# Plot 2: Expected monochromatic cliques
-ax2 = axes[1]
-for k in [3, 4, 5]:
-    ns = range(2, 30)
-    expected = [erdos_expected_mono(n, k) for n in ns]
-    ax2.semilogy(list(ns), expected, linewidth=2, label=f'k={k}')
-    # Mark where expected = 1
-    threshold_n = erdos_bound(k)
-    ax2.axvline(x=threshold_n, color='gray', linestyle='--', alpha=0.5)
-
-ax2.axhline(y=1, color='red', linestyle='-', linewidth=1.5, alpha=0.7, label='Threshold = 1')
-ax2.set_xlabel('n (number of vertices)', fontsize=14)
-ax2.set_ylabel('Expected monochromatic K_k', fontsize=14)
-ax2.set_title('First Moment Method: E[mono K_k] vs n', fontsize=16)
-ax2.legend(fontsize=11)
-ax2.grid(True, alpha=0.3)
-ax2.set_ylim(1e-3, 1e8)
-
-plt.tight_layout()
-plt.savefig('ramsey_bounds.png', dpi=150, bbox_inches='tight')
-print("Saved ramsey_bounds.png")
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Turán Graph Structure
-
-Visualizes the Turán graph T(n,2) showing its bipartite structure
-and the edge count approaching n²/4.
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-
-def turan_edge_count(n, r):
-    count = 0
-    for i in range(n):
-        for j in range(i + 1, n):
-            if i % r != j % r:
-                count += 1
-    return count
-
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-# Plot 1: Edge count vs n²/4
-ax1 = axes[0]
-ns = range(2, 31)
-actual = [turan_edge_count(n, 2) for n in ns]
-formula = [n*n/4 for n in ns]
-floor_formula = [n*n//4 for n in ns]
-
-ax1.plot(list(ns), actual, 'bo-', markersize=5, label='T(n,2) edge count')
-ax1.plot(list(ns), formula, 'r--', linewidth=2, label='n²/4 (continuous)')
-ax1.plot(list(ns), floor_formula, 'g^', markersize=4, label='⌊n²/4⌋')
-ax1.set_xlabel('n', fontsize=14)
-ax1.set_ylabel('Number of edges', fontsize=14)
-ax1.set_title("Turán Graph T(n,2): Edge Count", fontsize=16)
-ax1.legend(fontsize=11)
-ax1.grid(True, alpha=0.3)
-
-# Plot 2: Edge density approaching 1/2
-ax2 = axes[1]
-ns_large = range(2, 101)
-densities = []
-for n in ns_large:
-    e = turan_edge_count(n, 2)
-    max_edges = n * (n - 1) / 2
-    densities.append(e / max_edges if max_edges > 0 else 0)
-
-ax2.plot(list(ns_large), densities, 'b-', linewidth=2)
-ax2.axhline(y=0.5, color='red', linestyle='--', linewidth=1.5, label='Density limit = 1/2')
-ax2.set_xlabel('n', fontsize=14)
-ax2.set_ylabel('Edge density |E|/C(n,2)', fontsize=14)
-ax2.set_title("Turán Graph Density → 1/2", fontsize=16)
-ax2.legend(fontsize=11)
-ax2.grid(True, alpha=0.3)
-ax2.set_ylim(0.35, 0.55)
-
-plt.tight_layout()
-plt.savefig('turan_graph.png', dpi=150, bbox_inches='tight')
-print("Saved turan_graph.png")
+    main()
