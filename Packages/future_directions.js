@@ -115,20 +115,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Cryptography from Chaos: Encrypting with the Logistic Map"
   },
   {
-    "consumed_by_exp_id": "9b14e09c",
-    "description": "Building on cycle 14000bf9 (Q=0.820), which proved 46 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A jigsaw puzzle has N pieces, each with 4 edges. The 'signature' of a piece is the tuple (top, right, bottom, left) of edge types (flat, tab, blank). Two pieces fit together if their adjacent edges are complementary (tab meets blank). Conjecture: Solving a jigsaw puzzle is NP-complete. The reduction",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_14000bf9_00a5bb92",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "14000bf9",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T02:41:36.119425+00:00",
-    "title": "Deepening: The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 7ca0f553 (Q=0.820), which proved 61 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Infinite chess is chess on an infinite board. It is known that there are positions where White can force checkmate but only in omega (the first infinite ordinal) moves. Conjecture: There exists a position on the infinite chess board where White can force checkmate in exactly omega^omega moves, but n",
     "domains": [
@@ -5522,6 +5508,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T09:58:09.118265+00:00",
     "title": "This project formalizes the *order-theoretic bridge* connecting structural"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: The Topology and Conservation Laws of Assembled Puzzles\n\nThis cycle established a conservation law for jigsaw assemblies \u2014 in any validly\nassembled row or rectangle the exposed tabs and blanks balance exactly \u2014 together\nwith a boundary-topology reading and an order-two symmetry group governing the\nmatching relation. The following conjectures push these findings further.\n\n## 1. A conservation law for arbitrary simply connected regions\n\n**Conjecture.** The tab\u2013blank balance holds not only for rectangles but for every\nassembly whose footprint is a simply connected region of the square lattice: the\nnumber of exposed tabs equals the number of exposed blanks whenever the outer\nboundary consists entirely of flat edges.\n\nThe key insight is that the signed edge potential behaves like a discrete\ndivergence: complementation negates it, so each shared interior edge cancels\nagainst itself, and only the boundary can carry a net charge. A flat boundary\ncarries none, so the total must vanish regardless of the region's shape.\n\nWhy now? The rectangular case is fully settled, and its proof already factors\nthrough purely one-dimensional slices; extending the slicing argument to staircase\nand L-shaped footprints is the natural next step and would connect puzzle\nassembly to discrete exterior calculus.\n\n## 2. Genus obstructions to assembling a puzzle on a surface\n\n**Conjecture.** If pieces are assembled on a closed surface of genus `g` rather\nthan on a flat rectangle, the tab\u2013blank balance is corrected by a term determined\nsolely by `g`: on the torus the balance is exact, while on higher-genus surfaces a\nfixed defect appears that cannot be removed by any choice of pieces.\n\nThe key insight is that the boundary term in the conservation law is a topological\ninvariant of the assembly surface; changing the genus changes the way interior\nedges can be paired, and the unpaired remainder is forced to match an Euler-\ncharacteristic count.\n\nWhy now? The flat conservation law isolates exactly the boundary contribution, so\nthe same potential can be transported onto quotient surfaces where the boundary is\nreplaced by identifications \u2014 the cleanest possible setting to detect a genus term.\n\n## 3. The symmetry group grows with richer edge alphabets\n\n**Conjecture.** If the edge alphabet is enlarged from three shapes to `2k + 1`\nshapes (one self-complementary border shape and `k` complementary tab/blank\npairs), the automorphism group of the interlocking relation is the hyperoctahedral\ngroup of order `2^k \u00b7 k!`, and its centre is always the single order-two\n\"flip every interlock\" symmetry.\n\nThe key insight is that preserving the matching relation is equivalent to\ncommuting with the complementation involution, and for `k` independent\ncomplementary pairs this centraliser is exactly the group of signed permutations\nof the pairs.\n\nWhy now? The three-shape case pins the automorphism group at order two and shows\nit is generated by the complementation flip; the signed-permutation structure is\nalready visible there and only needs more pairs to unfold into its full form.\n\n## 4. Assembly hardness survives the conservation constraint\n\n**Conjecture.** Deciding whether a bag of pieces admits a valid rectangular\nassembly remains as hard as Boolean satisfiability even when the input is\nguaranteed to satisfy the tab\u2013blank balance, so the conservation law \u2014 though a\ngenuine necessary condition \u2014 provides no shortcut to a solution.\n\nThe key insight is that the reduction from satisfiability can be padded with inert\nflat pieces to enforce the balance without changing solvability, showing the\ninvariant is orthogonal to the combinatorial difficulty.\n\nWhy now? With both the reduction and the conservation law in hand, it is finally\npossible to ask whether the invariant is a useful filter; the padding argument\nsuggests it is not, and settling this sharpens the boundary between structure and\nhardness in tiling problems.\n\n## 5. Uniqueness of assembly from boundary data\n\n**Conjecture.** For a rectangle whose interior interface shapes are all non-flat, a\nvalid assembly is rigid: the entire interface pattern is determined by the shapes\nexposed along one full row and one full column, so the number of distinct valid\nassemblies is at most exponential in the perimeter rather than the area.\n\nThe key insight is that each interlocking constraint propagates a shape from one\ncell to its neighbour, so boundary data seeds a deterministic fill of the interior\nwhenever no flat edge interrupts the propagation.\n\nWhy now? The interface complementation rule is already known to force each left\nedge from its neighbour's right edge; turning this local determinism into a global\ncounting bound is the immediate combinatorial payoff.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0879",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "9b14e09c",
+    "status": "available",
+    "timestamp": "2026-07-10T10:45:43.041724+00:00",
+    "title": "Conservation law for jigsaw assemblies \u2014 in any validly"
   },
   {
     "consumed_by_exp_id": "a9aa7bbf",
