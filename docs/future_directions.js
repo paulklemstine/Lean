@@ -327,6 +327,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle bb33d4fa (Q=0.780), which proved 13 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For an edge-colored graph that is a minimal obstruction to total rainbow forests, there exists a unique subset A \u2286 E(G) where r\u2081(A) + r\u2082(E\\A) < t, and this failure is strict for no other subset.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "push_bb33d4fa_673a9012",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "bb33d4fa",
+    "status": "available",
+    "timestamp": "2026-07-10T14:32:43.571596+00:00",
+    "title": "Deepening: Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality "
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "In 2023, Smith et al. discovered 'the hat' \u2014 a single tile shape that tiles the plane but only aperiodically (no periodic tiling exists). This solved the aperiodic monotile problem. But deeper questions remain: How many distinct aperiodic monotiles exist? Conjecture: The set of aperiodic monotiles forms a 1-parameter family (the 'hat spectrum') parameterized by a continuous parameter t in [0,1] where t=0 gives the hat, t=1 gives the turtle (a known variant), and intermediate values give intermediate shapes. The key property: each shape in the hat spectrum tiles the plane aperiodically, and no two shapes in the spectrum admit a common periodic tiling. The boundary of the hat spectrum is the curve in R^2 that separates the region of aperiodic monotiles from the region of periodic tiles. This boundary is a piecewise-smooth curve determined by the constraint that the tile must enforce a hierarchical substitution rule. Test: parameterize the hat spectrum by interpolating between the hat and turtle, compute the substitution rule for each t, and verify that the substitution rule enforces aperiodicity for all t in [0,1]. Impact: aperiodic monotiles are not isolated curiosities \u2014 they form a continuous family, and the hat is just one point on the spectrum.",
     "domains": [
       "Novelty",
@@ -470,7 +484,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
   },
   {
-    "consumed_by_exp_id": "34993b85",
+    "consumed_by_exp_id": "",
     "description": "The Riemann zeta function zeta(s) has non-trivial zeros at s = 1/2 + i*gamma_n on the critical line (assuming RH). These zeros encode deep arithmetic information. Conjecture: the zeros gamma_n are the spectrum of a self-adjoint operator on a Hilbert space, and this operator is the Casimir element of a quantum group G_q. Specifically, define the 'zeta quantum group' G_q as the q-deformation of SU(2) where q = e^{2*pi*i*gamma_1} (using the first zero gamma_1 ~ 14.13). The Casimir element C_q of G_q has eigenvalues that are quadratic functions of the representation labels, and the spectrum of C_q is {n(n+1) : n in N}. Conjecture: the Riemann zeros gamma_n are related to the spectrum of C_q by gamma_n = f(spectrum(C_q)) for some function f. If f is linear, this would mean the zeros are evenly spaced, which is false (the zeros have Poisson-like spacings). If f is logarithmic, gamma_n ~ pi*n/log(n) which matches the average spacing. Conjecture: the spectral statistics of C_q match the GUE random matrix statistics of the Riemann zeros (Montgomery's pair correlation conjecture). Test: compute the spectrum of C_q for G_q with q = e^{2*pi*i*gamma_1} and compare the spectral statistics with the Riemann zeros. Impact: the Riemann hypothesis is a representation-theoretic statement about quantum groups.",
     "domains": [
       "Novelty",
@@ -480,7 +494,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-10T12:06:38.636322+00:00",
     "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem"
   },
@@ -1254,20 +1268,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T20:15:36.843139+00:00",
     "title": "Non-existence of solutions for (a^n+1)(b^n+1)=x\u00b2 when gcd(a,b) > 1 and n is even"
-  },
-  {
-    "consumed_by_exp_id": "bb33d4fa",
-    "description": "For an edge-colored graph that is a minimal obstruction to total rainbow forests, there exists a unique subset A \u2286 E(G) where r\u2081(A) + r\u2082(E\\A) < t, and this failure is strict for no other subset.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0165",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.31240v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T20:43:33.710473+00:00",
-    "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality for exactly one edge subset"
   },
   {
     "consumed_by_exp_id": "",
@@ -5615,7 +5615,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The file `Catalog/Novelty/TuringFlowersAlgebraicGeometry.lean` establishes the"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3d209fc8",
     "description": "# Future Directions \u2014 The Topology of Arithmetic\n\nThis cycle established that the zero-dimensional persistent homology of the prime\npoint cloud is a genuine persistence module whose entire structure \u2014 functorial\nmerging, total persistence, global merge scale, unbounded bars, and Betti number \u2014\nis read off the sequence of prime gaps. The following conjectures push that\ncorrespondence further.\n\n## 1. The barcode length distribution follows the Hardy\u2013Littlewood law\n\n**Conjecture.** For each even `g`, the asymptotic density of H\u2080 bars of death scale\nexactly `g` among the first `N` bars is proportional to the Hardy\u2013Littlewood\nsingular series for gap `g`; in particular bars of length `2`, `4`, and `6` occur\nwith the classically predicted relative frequencies, and no even length is ever\nabsent from arbitrarily long windows.\n\n*The key insight is* that a bar of death scale `g` is exactly a maximal run whose\nbounding gap equals `g`, so the bar-length histogram of the barcode is literally\nthe prime-gap histogram, transporting the entire analytic theory of gap\ndistribution into a topological invariant.\n\n*Why now?* The present cycle proved the barcode is unbounded and that its bar\nlengths are precisely the gaps; the natural next quantitative step is the\ndistribution of those lengths, for which the Hardy\u2013Littlewood conjectures give a\nsharp, testable target.\n\n## 2. Total persistence grows like `n log n`\n\n**Conjecture.** The total persistence of the first `n` bars \u2014 proved here to equal\n`p_n \u2212 2` \u2014 satisfies `p_n \u2212 2 \u223c n log n`, and more precisely the normalized total\npersistence `(p_n \u2212 2)/(n log n) \u2192 1`.\n\n*The key insight is* that total persistence is not an independent analytic quantity\nbut is identically the `n`-th prime minus two, so the growth rate of aggregate\ntopological persistence is exactly the prime number theorem in disguise.\n\n*Why now?* With the telescoping identity `total_persistence = p_n \u2212 2` in hand, the\nasymptotics of total persistence reduce to a known and provable statement about\n`p_n`, making this the most immediately reachable refinement.\n\n## 3. The Betti curve has a universal staircase profile\n\n**Conjecture.** Viewed as a function of the scale `\u03b5`, the Betti number\n`b\u2080(\u03b5, n) = 1 + #{gaps \u2264 n exceeding \u03b5}` is a right-continuous decreasing step\nfunction whose rescaled profile, under `\u03b5 \u21a6 \u03b5 / log p_n`, converges to a\ndeterministic limiting curve as `n \u2192 \u221e`.\n\n*The key insight is* that each downward step of the Betti curve is triggered by one\nprime gap crossing the threshold `\u03b5`, so the shape of the curve is a cumulative\ncount of gaps and its limiting profile encodes the limiting law of normalized\nprime gaps.\n\n*Why now?* This cycle gave the exact finite-scale formula for `b\u2080`; converting an\nexact counting formula into a scaling limit is the standard and now well-motivated\ncontinuation.\n\n## 4. Higher-dimensional prime clouds carry genuine loops\n\n**Conjecture.** Placing the primes on a curve in the plane by `p_n \u21a6 (p_n, p_{n+1})`\n(consecutive-pair embedding) yields a point cloud whose first persistent homology\n`H\u2081` is non-trivial: there exist persistent one-dimensional cycles whose birth and\ndeath scales are controlled by consecutive triples of gaps.\n\n*The key insight is* that correlations between neighbouring gaps \u2014 invisible to the\none-dimensional cloud, whose `H\u2081` vanishes \u2014 become geometric loops once the primes\nare lifted to a gap-recording curve, turning gap correlations into topology.\n\n*Why now?* The one-dimensional theory is now complete and shows `H\u2081` is trivial on\nthe line; the first place new topology can appear is the two-dimensional lift,\nwhich is the minimal setting where gap correlations can close up into cycles.\n\n## 5. The merge tree of the primes is a self-similar random-like tree\n\n**Conjecture.** The single-linkage merge tree of the prime cloud \u2014 whose internal\nnode heights are the successive record gaps \u2014 is, after normalization, statistically\nindistinguishable from the merge tree of a Poisson process with slowly varying\nintensity `1/log x`, in the sense of convergence of its scaled height profile.\n\n*The key insight is* that single-linkage clustering on a line is entirely determined\nby the gaps, so the merge tree of the primes is a deterministic functional of the\ngap sequence, and its comparison to a Poisson model is a precise formulation of the\nheuristic that primes behave like random numbers with density `1/log x`.\n\n*Why now?* Having identified components with fibres of the component-root map and\nthe merge scale with the maximum gap, the merge tree is now a fully specified\ncombinatorial object ready for a distributional comparison.\n",
     "domains": [
       "Algebra",
@@ -5625,7 +5625,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "df72d5fe",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T12:07:03.634158+00:00",
     "title": "That the zero-dimensional persistent homology of the prim"
   },
@@ -5748,6 +5748,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T14:32:29.673755+00:00",
     "title": "This cycle settled the naive \"Alexander polynomial = lattice-path count\""
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project analyses the mission conjecture \u2014 *\"a minimal obstruction to total rainbow\nforests fails the Rainbow Forest Inequality (RFI) for exactly one edge subset\"* \u2014 through\nthe lens of matroid intersection (Edmonds) and, specifically, **edge deletion**.\n\n## What was established (`Speculative/RainbowForestDeletion.lean`)\n\n- **Rainbow Forest Inequality (weak duality).** `rainbow_forest_inequality`: every common\n  independent set `I` (total rainbow forest) satisfies `|I| \u2264 r\u2081(A) + r\u2082(A\u1d9c)` for all `A`;\n  hence `RFI_of_commonIndep` \u2014 a size-`t` total rainbow forest forces RFI at `t`. This is\n  the \"easy\" half of Edmonds' Matroid Intersection Theorem.\n- **Deletion monotonicity.** `deletion_objective_le`: the Edmonds objective of `G - e` never\n  exceeds that of `G`. Consequently `deletion_preserves_obstruction`: any RFI-violating\n  subset of `G` yields a violating subset of every deletion `G - e`.\n- **Collapse of edge-minimality.** `deletionRFI_imp_RFI`: one satisfied deletion already\n  forces RFI for `G`; therefore `no_edge_minimal_obstruction`: for monotone matroid ranks\n  the notion of an edge-minimal obstruction is contradictory. This is the root-cause reason\n  the naive uniqueness reading fails: there is no well-defined minimal obstruction whose\n  \"unique failing subset\" could be discussed.\n- **Non-vacuity.** `exists_genuine_obstruction` / `genuine_obstruction_has_failing_deletion`\n  give an honest obstruction on the two-edge ground set `Bool`, confirming the hypotheses\n  are inhabited.\n\nTogether with the complementary submodular-lattice picture (minimizers of a submodular\nobjective form a sublattice, with a unique smallest and largest certificate, and naive\nuniqueness is false), the picture of the mission conjecture is:\n\n> The failing subsets of a *tight* obstruction form a distributive sublattice (unique\n> smallest / largest certificate), while *edge-minimal* obstructions do not exist at all.\n\n## Open threads\n\n1. **Contraction minimality.** Deletion cannot repair RFI, but *contraction* `G / e`\n   changes both matroids' ranks non-monotonically in `A`. Is there a contraction-minimal\n   notion under which a genuine uniqueness statement holds? Formalising `r_{M/e}` and the\n   contracted objective would let one test this.\n2. **Sharp uniqueness criterion.** Characterise exactly when a tight obstruction has a\n   single failing subset (least = greatest minimizer). Candidate sufficient conditions:\n   strict submodularity of one rank, or connectivity of the exchange graph.\n3. **Quantitative deletion bound.** Strengthen `deletion_objective_le` to an equality-case\n   analysis: for which `e` is `min obj_{G-e} = min obj_G`? These are the edges lying in\n   every maximum total rainbow forest.\n4. **Full Edmonds min-max.** Only weak duality (`\u2264`) is formalised here. Proving the strong\n   direction (existence of a common independent set meeting the min) would close the loop\n   and is a substantial Mathlib contribution in its own right.\n5. **From abstract ranks to actual graphs.** Instantiate `r\u2081` as the graphic-matroid rank of\n   a `SimpleGraph` and `r\u2082` as a colouring partition-matroid rank, deriving the results for\n   concrete edge-coloured graphs.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0906",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "bb33d4fa",
+    "status": "available",
+    "timestamp": "2026-07-10T14:32:39.876660+00:00",
+    "title": "This project analyses the mission conjecture \u2014 *\"a minimal obstruction to total "
   },
   {
     "consumed_by_exp_id": "",

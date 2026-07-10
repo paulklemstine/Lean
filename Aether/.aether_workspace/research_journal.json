@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8d243e81",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nResearch directions arising from the Lean formalization of the split geometry\n`g = sech²(y) dx² + cosh²(x) dy²` on `ℝ²` (see `research_paper.md` and the Lean files in\nthis directo",
-      "quality_score": 0.7115,
-      "sorry_count": 0,
-      "theorem_count": 26,
-      "timestamp": "2026-07-09T03:18:19",
-      "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
-    },
-    {
       "cycle_id": "c38e66e4",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions: Power-of-Two Matching Counts\n\nThis cycle established a clean multiplicative law for perfect matchings of *block\ngraphs* — superpositions of identical gadgets with no edges between",
@@ -499,19 +489,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-10T14:32:36",
       "title": "Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
+    },
+    {
+      "cycle_id": "bb33d4fa",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions\n\nThis project analyses the mission conjecture — *\"a minimal obstruction to total rainbow\nforests fails the Rainbow Forest Inequality (RFI) for exactly one edge subset\"* — through\nt",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-10T14:32:43",
+      "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality for exactly one edge"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8875d434",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Independence Ratios of Unit-Distance Graphs\n\nThis cycle established a clean, sharp relationship between colourability and the\nindependence ratio of finite graphs, instantiated it",
-      "quality_score": 0.7476214285714285,
-      "sorry_count": 5,
-      "theorem_count": 14,
-      "timestamp": "2026-07-01T15:19:18",
-      "title": "Minimum Independence Ratio Constraint"
-    },
     {
       "cycle_id": "52dd778d",
       "domain": "Applications",
@@ -2501,15 +2491,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-10T14:32:36",
       "title": "Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
+    },
+    {
+      "cycle_id": "bb33d4fa",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions\n\nThis project analyses the mission conjecture — *\"a minimal obstruction to total rainbow\nforests fails the Rainbow Forest Inequality (RFI) for exactly one edge subset\"* — through\nt",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-10T14:32:43",
+      "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality for exactly one edge"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3fa70466",
-      "domain": "Novelty",
-      "name": "mode_as_poly",
-      "quality": 0.79
-    },
     {
       "cycle_id": "3fa70466",
       "domain": "Novelty",
@@ -2803,9 +2797,15 @@
       "domain": "Applications",
       "name": "trefoil_one",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "bb33d4fa",
+      "domain": "NumberTheory",
+      "name": "rainbow_forest_inequality",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-10T14:32:36",
+  "last_updated": "2026-07-10T14:32:43",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "fdb1bb82",
-        "quality": 0.452,
-        "theorems": 19,
-        "title": "Euler-Mascheroni Constant: Irrationality Approaches"
-      },
-      {
         "cycle_id": "3fc75f2f",
         "quality": 0.3972276,
         "theorems": 6,
@@ -3699,6 +3693,12 @@
         "quality": 0.82,
         "theorems": 14,
         "title": "Power‑of‑Two Perfect Matching Count in Class B Graphs"
+      },
+      {
+        "cycle_id": "bb33d4fa",
+        "quality": 0.78,
+        "theorems": 13,
+        "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality "
       }
     ],
     "Physics": [
