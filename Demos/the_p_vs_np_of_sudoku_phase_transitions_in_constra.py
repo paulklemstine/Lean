@@ -1,314 +1,232 @@
 """
-Demo: Phase Transitions in Sudoku Constraint Satisfaction
+Numerical demonstrations for:
 
-Demonstrates the key mathematical results from the formalization:
-1. Constraint degree decomposition (Sudoku = Latin + Box)
-2. Phase transition detection via sampling
-3. Hardness peak analysis
-4. Convergence of constraint degree ratio to 3/2
+    The Chromatic Number of the Sudoku Constraint Graph,
+    and the Phase Transition of Random Sudoku.
+
+This self-contained script demonstrates the paper's main results:
+
+  1. The shift construction produces a valid completed n-Sudoku grid,
+     proving that every empty n^2 x n^2 grid is solvable (upper bound
+     chi(G_n) <= n^2).
+  2. The first row is a clique of size n^2 in the Sudoku constraint graph
+     (lower bound chi(G_n) >= n^2), so chi(G_n) = n^2.
+  3. Valid Sudoku solutions are exactly proper colorings of the constraint
+     graph (the bridge theorem), checked on explicit grids.
+  4. The random-instance solvability phase transition, whose conjectured
+     critical clue density is d_c(n) = (n^2 - 1) / n^2.
+
+Run:  python demo.py
 """
+
+from __future__ import annotations
 
 import random
-import math
-from algorithms import (
-    sudoku_constraint_degree,
-    latin_square_constraint_degree,
-    box_additional_constraints,
-    critical_density,
-    constraint_interaction_strength,
-    cluster_ratio,
-    hardness_function,
-    constraint_degree_ratio,
-    generate_random_partial_latin_square,
-    is_latin_square_completable,
-    backtracking_tree_size,
-)
+from itertools import combinations, product
+from typing import Dict, Iterable, List, Optional, Tuple
+
+Cell = Tuple[int, int]
 
 
-def demo_degree_decomposition():
-    """Demonstrate the Box-Row Interaction Theorem."""
-    print("=" * 60)
-    print("THEOREM: Sudoku Degree Decomposition")
-    print("  sudokuDegree(n) = latinDegree(n) + boxExtra(n)")
-    print("  3n² - 2n - 1 = 2(n² - 1) + (n-1)²")
-    print("=" * 60)
-
-    for n in range(2, 10):
-        sd = sudoku_constraint_degree(n)
-        ld = latin_square_constraint_degree(n)
-        ba = box_additional_constraints(n)
-        assert sd == ld + ba, f"Decomposition failed for n={n}!"
-        grid_size = n * n
-        print(f"  n={n} ({grid_size}×{grid_size} grid): "
-              f"Sudoku={sd}, Latin={ld}, Box={ba}, "
-              f"Verified: {ld}+{ba}={ld+ba} ✓")
-
-    print()
+# ---------------------------------------------------------------------------
+# 1. The shift construction: an explicit solution of the empty grid
+# ---------------------------------------------------------------------------
+def sudoku_val(n: int, r: int, c: int) -> int:
+    """Value at cell (r, c) of the closed-form completed grid:
+        (n * (r mod n) + r // n + c) mod n^2.
+    """
+    return (n * (r % n) + r // n + c) % (n * n)
 
 
-def demo_phase_transition_small():
-    """Demonstrate phase transition for 4×4 Latin squares."""
-    print("=" * 60)
-    print("EXPERIMENT: Phase Transition in 4×4 Latin Squares")
-    print(f"  Critical density d_c = {critical_density(4):.4f}")
-    print("=" * 60)
-
-    n = 4
-    total = n * n
-    num_samples = 50
-
-    for num_filled in range(0, total + 1):
-        d = num_filled / total
-        sat_count = 0
-
-        for _ in range(num_samples):
-            partial = generate_random_partial_latin_square(n, num_filled)
-            if partial is None:
-                continue
-            grid = [[-1] * n for _ in range(n)]
-            for r, c, v in partial:
-                grid[r][c] = v
-            if is_latin_square_completable(grid, n):
-                sat_count += 1
-
-        sat_prob = sat_count / num_samples
-        bar = "█" * int(sat_prob * 40)
-        marker = " ← d_c" if abs(d - critical_density(n)) < 0.05 else ""
-        print(f"  d={d:.3f} ({num_filled:2d}/{total}): P(sat)={sat_prob:.2f} {bar}{marker}")
-
-    print()
+def shift_grid(n: int) -> List[List[int]]:
+    """Return the full n^2 x n^2 completed grid from the shift construction."""
+    m = n * n
+    return [[sudoku_val(n, r, c) for c in range(m)] for r in range(m)]
 
 
-def demo_hardness_peak():
-    """Demonstrate the hardness peak theorem."""
-    print("=" * 60)
-    print("THEOREM: Hardness Peak at d = 1/2")
-    print("  H(d) = d(1-d)n⁴ ≤ H(1/2) = n⁴/4")
-    print("=" * 60)
-
-    n = 3
-    max_h = hardness_function(n, 0.5)
-    print(f"  For n={n}: max hardness H(1/2) = {max_h:.1f}")
-    print()
-
-    for d_pct in range(0, 105, 5):
-        d = d_pct / 100
-        h = hardness_function(n, d)
-        bar_len = int(h / max_h * 50) if max_h > 0 else 0
-        bar = "█" * bar_len
-        dc = critical_density(n)
-        marker = " ← d_c" if abs(d - dc) < 0.025 else ""
-        print(f"  d={d:.2f}: H={h:8.1f} {bar}{marker}")
-
-    print()
+# ---------------------------------------------------------------------------
+# 2. Constraint relations and the constraint graph
+# ---------------------------------------------------------------------------
+def same_row(p: Cell, q: Cell) -> bool:
+    return p[0] == q[0]
 
 
-def demo_degree_ratio_convergence():
-    """Demonstrate convergence of Sudoku/Latin degree ratio to 3/2."""
-    print("=" * 60)
-    print("THEOREM: Constraint Degree Ratio → 3/2")
-    print("  (3n² - 2n - 1) / (2(n² - 1)) → 3/2 as n → ∞")
-    print("=" * 60)
-
-    for n in [2, 3, 4, 5, 10, 20, 50, 100, 500, 1000]:
-        r = constraint_degree_ratio(n)
-        gap = abs(r - 1.5)
-        expected_gap = 1 / (n + 1)
-        print(f"  n={n:5d}: ratio={r:.8f}, |ratio - 3/2|={gap:.8f}, "
-              f"1/(n+1)={expected_gap:.8f}")
-
-    print()
+def same_col(p: Cell, q: Cell) -> bool:
+    return p[1] == q[1]
 
 
-def demo_cluster_ratio():
-    """Demonstrate cluster ratio at critical density."""
-    print("=" * 60)
-    print("THEOREM: Cluster Ratio at Critical Density = 1/n")
-    print("=" * 60)
-
-    for n in range(2, 15):
-        dc = critical_density(n)
-        cr = cluster_ratio(n, dc)
-        expected = 1 / n
-        print(f"  n={n:3d}: d_c={dc:.6f}, cluster_ratio={cr:.6f}, "
-              f"1/n={expected:.6f}, match={abs(cr - expected) < 1e-10}")
-
-    print()
+def same_box(n: int, p: Cell, q: Cell) -> bool:
+    return (p[0] // n == q[0] // n) and (p[1] // n == q[1] // n)
 
 
-def demo_backtracking_phases():
-    """Demonstrate easy/hard phases via backtracking tree size."""
-    print("=" * 60)
-    print("THEOREM: Easy Phase (effective branching < 1)")
-    print("  Tree size shrinks exponentially when eff. branching < 1")
-    print("=" * 60)
-
-    depth = 10
-    for eff_b in [0.3, 0.5, 0.7, 0.9, 1.0, 1.1, 1.5, 2.0, 3.0]:
-        # decompose into branching * (1 - pruning)
-        branching = eff_b * 2  # arbitrary decomposition
-        pruning = 0.5
-        size = backtracking_tree_size(branching, depth, pruning)
-        phase = "EASY" if eff_b < 1 else ("CRITICAL" if eff_b == 1.0 else "HARD")
-        print(f"  eff_b={eff_b:.1f}: tree_size={size:12.1f}, phase={phase}")
-
-    print()
+def adjacent(n: int, p: Cell, q: Cell) -> bool:
+    """Edge of the Sudoku constraint graph G_n."""
+    if p == q:
+        return False
+    return same_row(p, q) or same_col(p, q) or same_box(n, p, q)
 
 
-if __name__ == "__main__":
-    print("\n🔬 CSP Phase Transition Demo\n")
-    demo_degree_decomposition()
-    demo_degree_ratio_convergence()
-    demo_cluster_ratio()
-    demo_hardness_peak()
-    demo_backtracking_phases()
-    demo_phase_transition_small()
-    print("✅ All demonstrations complete.")
+def cells(n: int) -> List[Cell]:
+    m = n * n
+    return [(r, c) for r in range(m) for c in range(m)]
 
 
-"""
-Visualization: Phase Transition in Constraint Satisfaction
-
-Standalone script generating publication-quality plots of the CSP
-phase transition, constraint degree decomposition, and convergence behavior.
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-def sudoku_constraint_degree(n):
-    return 3 * n**2 - 2 * n - 1
-
-def latin_square_constraint_degree(n):
-    return 2 * (n**2 - 1)
-
-def box_additional_constraints(n):
-    return (n - 1) ** 2
-
-def critical_density(n):
-    return (n**2 - 1) / n**2
-
-def hardness_function(n, d):
-    return d * (1 - d) * n**4
-
-def constraint_degree_ratio(n):
-    return (3*n**2 - 2*n - 1) / (2*(n**2 - 1))
-
-def cluster_ratio(n, d):
-    return (1 - d) * n
+# ---------------------------------------------------------------------------
+# 3. Validity / proper-coloring checks (the bridge)
+# ---------------------------------------------------------------------------
+def is_valid_solution(n: int, g: Dict[Cell, int]) -> bool:
+    """True iff no two distinct cells sharing a row, column, or block agree."""
+    cs = cells(n)
+    for p, q in combinations(cs, 2):
+        if adjacent(n, p, q) and g[p] == g[q]:
+            return False
+    return True
 
 
-def plot_degree_decomposition():
-    fig, ax = plt.subplots(figsize=(10, 6))
-    ns = np.arange(2, 20)
-    sudoku = [sudoku_constraint_degree(n) for n in ns]
-    latin = [latin_square_constraint_degree(n) for n in ns]
-    box = [box_additional_constraints(n) for n in ns]
-
-    ax.bar(ns - 0.2, latin, 0.4, label='Latin Square (row+col)', color='#2196F3', alpha=0.8)
-    ax.bar(ns + 0.2, box, 0.4, bottom=[latin[i] for i in range(len(ns))],
-           label='Box Extra', color='#FF5722', alpha=0.8)
-    ax.bar(ns + 0.2, latin, 0.4, label='_', color='#2196F3', alpha=0.3)
-    ax.plot(ns, sudoku, 'ko-', markersize=5, label='Sudoku Total', linewidth=2)
-
-    ax.set_xlabel('Box size n', fontsize=14)
-    ax.set_ylabel('Constraint Degree', fontsize=14)
-    ax.set_title('Sudoku = Latin Square + Box Constraints\n'
-                 'sudokuDegree(n) = 2(n²-1) + (n-1)²', fontsize=14)
-    ax.legend(fontsize=12)
-    ax.grid(True, alpha=0.3)
-    plt.tight_layout()
-    plt.savefig('viz_degree_decomposition.png', dpi=150)
-    plt.close()
-    print("Saved: viz_degree_decomposition.png")
+def is_proper_coloring(n: int, g: Dict[Cell, int]) -> bool:
+    """Identical predicate, phrased via graph adjacency (bridge theorem)."""
+    cs = cells(n)
+    for p, q in combinations(cs, 2):
+        if adjacent(n, p, q) and g[p] == g[q]:
+            return False
+    return True
 
 
-def plot_ratio_convergence():
-    fig, ax = plt.subplots(figsize=(10, 6))
-    ns = np.arange(2, 200)
-    ratios = [constraint_degree_ratio(n) for n in ns]
-    gaps = [abs(r - 1.5) for r in ratios]
-    expected = [1/(n+1) for n in ns]
-
-    ax.plot(ns, ratios, 'b-', linewidth=2, label='Sudoku/Latin degree ratio')
-    ax.axhline(y=1.5, color='r', linestyle='--', linewidth=1.5, label='Limit = 3/2')
-    ax.fill_between(ns, ratios, 1.5, alpha=0.1, color='blue')
-
-    ax.set_xlabel('Box size n', fontsize=14)
-    ax.set_ylabel('Degree Ratio', fontsize=14)
-    ax.set_title('Constraint Degree Ratio Converges to 3/2\n'
-                 '|ratio - 3/2| = 1/(n+1)', fontsize=14)
-    ax.legend(fontsize=12, loc='lower right')
-    ax.grid(True, alpha=0.3)
-    ax.set_ylim(1.0, 1.6)
-    plt.tight_layout()
-    plt.savefig('viz_ratio_convergence.png', dpi=150)
-    plt.close()
-    print("Saved: viz_ratio_convergence.png")
+def grid_to_map(grid: List[List[int]]) -> Dict[Cell, int]:
+    return {(r, c): grid[r][c] for r in range(len(grid)) for c in range(len(grid[0]))}
 
 
-def plot_hardness_landscape():
-    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-
-    for idx, n in enumerate([3, 5, 9]):
-        ax = axes[idx]
-        ds = np.linspace(0, 1, 200)
-        hs = [hardness_function(n, d) for d in ds]
-        dc = critical_density(n)
-
-        ax.plot(ds, hs, 'b-', linewidth=2)
-        ax.axvline(x=dc, color='r', linestyle='--', linewidth=1.5,
-                   label=f'd_c = {dc:.3f}')
-        ax.axvline(x=0.5, color='g', linestyle=':', linewidth=1.5,
-                   label='d = 1/2 (max)')
-
-        h_at_dc = hardness_function(n, dc)
-        ax.plot(dc, h_at_dc, 'ro', markersize=8)
-        ax.plot(0.5, hardness_function(n, 0.5), 'g^', markersize=8)
-
-        ax.set_xlabel('Density d', fontsize=12)
-        ax.set_ylabel('H(d)', fontsize=12)
-        ax.set_title(f'n={n} ({n**2}×{n**2} grid)', fontsize=13)
-        ax.legend(fontsize=10)
-        ax.grid(True, alpha=0.3)
-
-    plt.suptitle('Hardness Function H(d) = d(1-d)n⁴', fontsize=15, y=1.02)
-    plt.tight_layout()
-    plt.savefig('viz_hardness_landscape.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: viz_hardness_landscape.png")
+# ---------------------------------------------------------------------------
+# 4. Clique certifying the chromatic lower bound
+# ---------------------------------------------------------------------------
+def first_row_is_clique(n: int) -> bool:
+    """The first row is a clique of size n^2 in G_n."""
+    m = n * n
+    row = [(0, c) for c in range(m)]
+    return all(adjacent(n, p, q) for p, q in combinations(row, 2)) and len(row) == m
 
 
-def plot_cluster_ratio():
-    fig, ax = plt.subplots(figsize=(10, 6))
-    ns = np.arange(2, 30)
-    crs = [1/n for n in ns]
-    dcs = [critical_density(n) for n in ns]
+# ---------------------------------------------------------------------------
+# 5. Backtracking solver for puzzles (precoloring extension)
+# ---------------------------------------------------------------------------
+def solve(n: int, clues: Dict[Cell, int]) -> Optional[Dict[Cell, int]]:
+    """Backtracking search with the minimum-remaining-values heuristic.
+    Returns a completion extending `clues`, or None if unsolvable.
+    """
+    m = n * n
+    g: Dict[Cell, int] = dict(clues)
+    all_cells = cells(n)
 
-    ax2 = ax.twinx()
-    ax.bar(ns, crs, color='#4CAF50', alpha=0.7, label='Cluster ratio at d_c')
-    ax2.plot(ns, dcs, 'ro-', markersize=4, linewidth=2, label='Critical density d_c')
+    def candidates(cell: Cell) -> List[int]:
+        used = set()
+        for other in all_cells:
+            if other in g and adjacent(n, cell, other):
+                used.add(g[other])
+        return [v for v in range(m) if v not in used]
 
-    ax.set_xlabel('Grid size n', fontsize=14)
-    ax.set_ylabel('Cluster ratio 1/n', fontsize=14, color='#4CAF50')
-    ax2.set_ylabel('Critical density d_c', fontsize=14, color='red')
-    ax.set_title('Solution Clustering at Phase Transition\n'
-                 'Cluster ratio = 1/n → 0 as grid grows', fontsize=14)
-    ax.legend(loc='upper left', fontsize=12)
-    ax2.legend(loc='upper right', fontsize=12)
-    ax.grid(True, alpha=0.3)
-    plt.tight_layout()
-    plt.savefig('viz_cluster_ratio.png', dpi=150)
-    plt.close()
-    print("Saved: viz_cluster_ratio.png")
+    # consistency of the clues themselves
+    for p, q in combinations(list(g.keys()), 2):
+        if adjacent(n, p, q) and g[p] == g[q]:
+            return None
+
+    def backtrack() -> bool:
+        empty = [cell for cell in all_cells if cell not in g]
+        if not empty:
+            return True
+        # MRV: pick the most constrained empty cell
+        cell = min(empty, key=lambda c: len(candidates(c)))
+        opts = candidates(cell)
+        if not opts:
+            return False
+        for v in opts:
+            g[cell] = v
+            if backtrack():
+                return True
+            del g[cell]
+        return False
+
+    return dict(g) if backtrack() else None
+
+
+# ---------------------------------------------------------------------------
+# 6. Random-instance phase transition
+# ---------------------------------------------------------------------------
+def random_puzzle(n: int, density: float, rng: random.Random) -> Dict[Cell, int]:
+    """Random clue set at the given density, sampled from a valid solution
+    (so puzzles at any density remain solvable in this benign model; for a
+    harder model one would sample clue symbols independently)."""
+    full = grid_to_map(shift_grid(n))
+    all_cells = cells(n)
+    k = round(density * len(all_cells))
+    chosen = rng.sample(all_cells, k)
+    return {cell: full[cell] for cell in chosen}
+
+
+def critical_density(n: int) -> float:
+    return (n * n - 1) / (n * n)
+
+
+def estimate_solvability(n: int, density: float, trials: int,
+                         rng: random.Random) -> float:
+    """Fraction of random puzzles (with independently sampled clue symbols)
+    that admit a completion -- a solvability probability estimate."""
+    m = n * n
+    all_cells = cells(n)
+    k = round(density * len(all_cells))
+    solved = 0
+    for _ in range(trials):
+        chosen = rng.sample(all_cells, k)
+        clues = {cell: rng.randrange(m) for cell in chosen}
+        if solve(n, clues) is not None:
+            solved += 1
+    return solved / trials
+
+
+# ---------------------------------------------------------------------------
+# Driver
+# ---------------------------------------------------------------------------
+def main() -> None:
+    rng = random.Random(12345)
+
+    print("=" * 68)
+    print(" Sudoku constraint graph: chromatic number and phase transition")
+    print("=" * 68)
+
+    for n in (2, 3):
+        m = n * n
+        print(f"\n--- n = {n}  ({m}x{m} grid, {m} symbols) ---")
+
+        grid = shift_grid(n)
+        gmap = grid_to_map(grid)
+
+        print("Shift-construction grid:")
+        for row in grid:
+            print("  " + " ".join(f"{v:2d}" for v in row))
+
+        valid = is_valid_solution(n, gmap)
+        proper = is_proper_coloring(n, gmap)
+        print(f"Valid Sudoku solution?           {valid}")
+        print(f"Proper coloring of G_n?          {proper}  (bridge: agree = {valid == proper})")
+        print(f"First row is a clique of size {m}? {first_row_is_clique(n)}")
+        print(f"=> chromatic number chi(G_{n}) = {m} = n^2")
+        print(f"Conjectured critical clue density d_c({n}) = "
+              f"(n^2-1)/n^2 = {critical_density(n):.4f}")
+
+    # Phase-transition sweep for n = 2 (4x4), small enough to solve exhaustively.
+    print("\n" + "=" * 68)
+    print(" Phase transition sweep (n = 2, random clue symbols)")
+    print("=" * 68)
+    n = 2
+    dc = critical_density(n)
+    print(f" critical density d_c = {dc:.3f}")
+    print(f"{'density':>9} | {'P(solvable)':>12}")
+    print("-" * 26)
+    for pct in range(0, 101, 10):
+        d = pct / 100.0
+        p = estimate_solvability(n, d, trials=60, rng=rng)
+        marker = "  <-- near d_c" if abs(d - dc) <= 0.05 else ""
+        print(f"{d:9.2f} | {p:12.3f}{marker}")
 
 
 if __name__ == "__main__":
-    plot_degree_decomposition()
-    plot_ratio_convergence()
-    plot_hardness_landscape()
-    plot_cluster_ratio()
-    print("\nAll visualizations generated.")
+    main()
