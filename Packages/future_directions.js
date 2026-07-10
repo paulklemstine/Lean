@@ -300,7 +300,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "81ffd6ce",
     "description": "Cycle 34a8cfea (Q=0.820) proved 13 theorems in Novelty but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The chromatic polynomial chi_G(k) counts the number of proper k-colorings of a graph G. For a friendship graph, chi_G(k) counts the number of ways to assign k emotions to people such that no two frien",
     "domains": [
       "Novelty"
@@ -309,7 +309,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "34a8cfea",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T07:33:38.427733+00:00",
     "title": "Close Proofs: Graph Coloring with Emotions: The Chromatic Polynomial Meets Psycholog"
   },
