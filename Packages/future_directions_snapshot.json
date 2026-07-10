@@ -656,7 +656,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "34e9f39c",
     "description": "The Alexander polynomial Delta_K(t) of a knot K is a Laurent polynomial that encodes topological information about the knot. Conjecture: for any knot K with n crossings, the Alexander polynomial Delta_K(t) can be expressed as the generating function of lattice paths in Z^2 that avoid a region determined by the knot diagram. Specifically, define the 'knot lattice' L_K as the set of lattice paths from (0,0) to (n,n) that avoid the 'forbidden region' R_K determined by the crossing structure of K. Then Delta_K(t) = sum_{p in L_K} t^{area(p)} where area(p) is the area under the path p. This conjecture follows from the state sum formula for the Alexander polynomial: Delta_K(t) = sum_{states s} (-1)^{w(s)} t^{a(s)} where w(s) is the writhe and a(s) is the area of the state. The area a(s) is exactly the area under a lattice path determined by the state. Conjecture: every Alexander polynomial arises as a lattice path generating function, and vice versa. This means the Alexander polynomial is not just a knot invariant — it is a combinatorial object that counts lattice paths. Test: compute the Alexander polynomials for the first 50 knots and verify that each can be expressed as a lattice path generating function. Impact: knot invariants are combinatorial. The Alexander polynomial counts lattice paths, connecting topology to combinatorics.",
     "domain_bridges": [],
     "domains": [
@@ -669,7 +669,7 @@
     "proof_strategy": "The Alexander polynomial Delta_K(t) is computed from the Alexander module H_1(X_K, Z[t, t^{-1}]) where X_K is the infinite cyclic cover of the knot complement. The presentation matrix (Alexander matrix) has entries that are Laurent polynomials. Delta_K(t) = det(M) where M is the (n-1) x (n-1) Alexander matrix after deleting one row and one column. Lattice path connection: the state sum for Delta_K(t) can be written as Delta_K(t) = sum_{s in states} t^{area(s)} * (-1)^{writhe(s)}. Each state s corresponds to a lattice path from (0,0) to (n,n) in Z^2, and area(s) is the area under this path. The forbidden region R_K is determined by the over/under crossings: at each crossing, the path must go either above or below the crossing, and the forbidden region is the set of paths that violate the knot's crossing constraints. More precisely: for a knot diagram with n crossings, each crossing is resolved as either A-type (horizontal pass) or B-type (vertical pass). The lattice path goes from (0,0) to (2,n) stepping right (A-type) or up (B-type) at each crossing. The area under the path is the sum of the vertical positions. Delta_K(t) = sum_{paths avoiding R_K} t^{area(path)}. Test: for the trefoil (3_1), compute the 8 lattice paths from (0,0) to (2,3), identify the 2 paths that avoid the forbidden region, and verify that the sum of t^{area} matches the Alexander polynomial Delta_{3_1}(t) = t - 1 + t^{-1}.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T12:06:38.565444+00:00",
     "title": "Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
   },
@@ -1191,38 +1191,6 @@
     "status": "available",
     "timestamp": "2026-07-02T17:32:26.643836+00:00",
     "title": "Existence of Uniform-Scaled Spanning Subgraphs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "LuczakRucińskiVoigt1993",
-      "Kreuter1996",
-      "DasMorrisTreglown2020",
-      "Ramsey1929"
-    ],
-    "consumed_by_exp_id": "c22096e0",
-    "description": "Conjecture: For any fixed integer r≥2 and any collection of graphs H1, …, Hr, let ψ = ∥_{j=1}^r (ω67(Hj)‑1). Define the critical edge density π_c = 1‑1/ψ. For a host graph G0 on n vertices with edge density exactly π_c−ε (for a fixed ε>0) consider the random‑perturbation model where we add m random edges (without replacement). Then the minimal number of edges that forces the perturbed graph to be (H1, …, Hr)_v‑Ramsey satisfies\n\n    m_c(n) = π_c * (n choose 2) + Ψ(n^{3/2}),\n\nand there is a sharp threshold: if m = m_c(n) + ω(n^{3/2}) then with high probability the perturbed graph is (H1, …, Hr)_v‑Ramsey; if m = m_c(n) − ω(n^{3/2}) then with high probability it is not. Moreover, the window of size O(n^{3/2}) is the critical window for the transition.",
-    "domain_bridges": [
-      "probabilistic method",
-      "random graphs",
-      "Turán theory",
-      "chromatic number",
-      "supersaturation",
-      "concentration inequalities"
-    ],
-    "domains": [
-      "Computation",
-      "Pythagorean"
-    ],
-    "id": "fd_0076",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "1. Prove a stability theorem characterising vertex‑Ramsey graphs as Turán‑type graphs with only a few missing edges. 2. Derive supersaturation results for the vertex‑Ramsey property in terms of edge density. 3. Apply differential‑equation / sparse random graph techniques to the random‑edge addition process, establishing that once the density exceeds π_c by ≈ n^{−1/2} the property holds w.h.p., and that below this threshold it fails w.h.p. via a second‑moment or Chernoff argument. 4. Combine these to locate the critical window of width θ(n^{3/2}).",
-    "research_mode": "team",
-    "source_exp_id": "2606.30548v2",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T17:52:40.366510+00:00",
-    "title": "Precise threshold for vertex‑Ramsey property in random perturbations"
   },
   {
     "ambition_level": "extension",
@@ -10257,6 +10225,26 @@
     "status": "available",
     "timestamp": "2026-07-10T12:23:16.155145+00:00",
     "title": "This project formalizes the combinatorial-fixed-point core of the \"Sperner ⇒ Nas"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThis project formalises the **deterministic core** of the vertex-Ramsey\nthreshold: for clique targets `s : κ → ℕ` with `sᵢ ≥ 1`,\n\n```\nKₙ  →_v  (K_{s i})_i      ⇔      ∑_i (s_i − 1) < n,\n```\n\nso the vertex-Ramsey number of a clique family is `1 + ∑_i (s_i − 1)`\n(`VertexRamsey.completeGraph_vertexArrows_iff` /\n`completeGraph_vertexArrows_iff_card_ge`).  The general positive direction is\n`vertexArrows_of_isClique`: any host graph with a clique larger than\n`∑_i (s_i − 1)` is vertex-Ramsey.  Monotonicity in the host and in the target\nsizes is recorded, and the extremal colouring is built explicitly\n(`exists_bounded_coloring`).\n\nThe clique targets have since been generalised to **arbitrary target graphs**\n`H_i` (on finite vertex types `β_i`): `GraphVertexArrows` asks every colouring to\ncontain a monochromatic copy of some `H_i` (an injective adjacency-preserving\nmap with monochromatic image), and `completeGraph_graphVertexArrows` shows that\non the complete host the same clique threshold suffices —\n`∑_i (|β_i| − 1) < n` forces a monochromatic copy of some `H_i`.  This realises\nnext step 1 below for the complete host, since a monochromatic `K_{|V(H_i)|}`\nalready contains a copy of `H_i`.\n\n## Sum vs. product\n\nThe random-perturbation conjecture in the mission is phrased with the **product**\n`ψ = ∏_j (ω(H_j) − 1)` and edge density `π_c = 1 − 1/ψ` — a Turán / edge-density\nparameter.  The *vertex* problem formalised here is instead governed by the\n**sum** `∑_j (ω(H_j) − 1)`: the vertex-Ramsey number of the clique family is\n`1 + ∑_j (ω(H_j) − 1)`.  Making this sum-vs-product dichotomy precise (vertex\ncolourings ↔ sum; edge colourings / densities ↔ product) is the cleanest next\ntarget and clarifies where each parameter comes from.\n\n## Concrete next steps\n\n1. **General `Hⱼ` (not just cliques).** *Done for the complete host*\n   (`GraphVertexArrows`, `completeGraph_graphVertexArrows`): arbitrary target\n   graphs `Hⱼ` are handled via injective adjacency-preserving copies, and the\n   threshold `∑_i (|V(Hⱼ)| − 1) < n` transfers verbatim.  The remaining refinement\n   is to sharpen `|V(Hⱼ)|` to the clique number `ω(Hⱼ)` and to prove the matching\n   converse (extremal colouring) on `Kₙ` for general `Hⱼ`.\n\n2. **Turán / edge side.** Formalise `ex(n, K_{ψ+1}) = (1 − 1/ψ) · C(n,2) + o(n²)`\n   for the density `π_c`, connecting `ψ` to the host edge density in the\n   conjecture. Mathlib has Turán's theorem; wiring it to `π_c` is feasible.\n\n3. **Random perturbation model.** Introduce `G₀ ∪ G(n, m)` and the \"window\"\n   language (`ω(n^{3/2})`). The sharp-threshold statement itself is a deep\n   probabilistic result (Das–Morris–Treglown), but the deterministic pieces\n   here — the exact clique threshold and the extremal colouring — are exactly\n   the ingredients used in such proofs and can be exported as lemmas.\n\n4. **Quantitative window.** In the deterministic complete-graph case the\n   transition is a single value (`N(s)`); phrasing this as a degenerate\n   \"critical window\" and then relaxing to near-complete hosts is a natural\n   bridge toward the `O(n^{3/2})` window of the conjecture.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0895",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "c22096e0",
+    "status": "available",
+    "timestamp": "2026-07-10T12:23:25.891720+00:00",
+    "title": "This project formalises the **deterministic core** of the vertex-Ramsey"
   },
   {
     "ambition_level": "extension",

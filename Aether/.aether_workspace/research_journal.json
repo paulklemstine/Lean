@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "bdd384c4",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThese conjectures are distilled from a study of *phantom topologies*: a \"reality\" is\nthe topology all observers agree on (the common open sets of a family of finer observer\ntopolo",
-      "quality_score": 0.83176,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-04T22:25:53",
-      "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-    },
-    {
       "cycle_id": "59aff0ea",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nThese conjectures grow out of a study of how the coefficients of a power series\nbehave when their large-index asymptotics are governed by an oscillatory term\nattached to a root of",
@@ -499,19 +489,19 @@
       "theorem_count": 25,
       "timestamp": "2026-07-10T12:23:22",
       "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
+    },
+    {
+      "cycle_id": "c22096e0",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nThis project formalises the **deterministic core** of the vertex-Ramsey\nthreshold: for clique targets `s : κ → ℕ` with `sᵢ ≥ 1`,\n\n```\nKₙ  →_v  (K_{s i})_i      ⇔      ∑_i (s_i − 1",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-10T12:23:29",
+      "title": "Precise threshold for vertex‑Ramsey property in random perturbations"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "562c0234",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — Simulation-Based Privacy for Colouring Proofs\n\nThe results of this cycle establish, for the three-colouring proof of a graph,\nthat a single challenged edge reveals a transcript w",
-      "quality_score": 0.74152,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-01T04:21:22",
-      "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
-    },
     {
       "cycle_id": "90d1d2b2",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 25,
       "timestamp": "2026-07-10T12:23:22",
       "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
+    },
+    {
+      "cycle_id": "c22096e0",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nThis project formalises the **deterministic core** of the vertex-Ramsey\nthreshold: for clique targets `s : κ → ℕ` with `sᵢ ≥ 1`,\n\n```\nKₙ  →_v  (K_{s i})_i      ⇔      ∑_i (s_i − 1",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-10T12:23:29",
+      "title": "Precise threshold for vertex‑Ramsey property in random perturbations"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b152086d",
-      "domain": "Applications",
-      "name": "of",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "b152086d",
-      "domain": "Applications",
-      "name": "eqOn_zero_of_vanishes_on_open",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "996ff4be",
-      "domain": "Applications",
-      "name": "here",
-      "quality": 0.78
-    },
     {
       "cycle_id": "996ff4be",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "E2_pure",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "c22096e0",
+      "domain": "Novelty",
+      "name": "VertexArrows",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "c22096e0",
+      "domain": "Novelty",
+      "name": "VertexArrows",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "c22096e0",
+      "domain": "Novelty",
+      "name": "exists_large_fiber_finset",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-10T12:23:22",
+  "last_updated": "2026-07-10T12:23:29",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "4d30d98b",
-        "quality": 0.83,
-        "theorems": 9,
-        "title": "The Zeta Function of a Graph: Number Theory on Networks"
-      },
-      {
         "cycle_id": "34a8cfea",
         "quality": 0.82,
         "theorems": 13,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 7,
         "title": "Deepening: Turing's Flowers: Morphogenesis as Algebraic Geometry"
+      },
+      {
+        "cycle_id": "c22096e0",
+        "quality": 0.7,
+        "theorems": 16,
+        "title": "Precise threshold for vertex‑Ramsey property in random perturbations"
       }
     ],
     "NumberTheory": [
