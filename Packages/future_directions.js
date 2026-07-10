@@ -6031,6 +6031,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "The file `AutomaticSequences.lean` establishes, for an arbitrary DFA `M` over a"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Topology of Argumentation\n\nThis project formalizes, from first principles in Lean 4 / Mathlib, the core of\nDung's abstract argumentation theory together with the topological structure of\nthe conflict-free complex `K(AF)`. Three self-contained files:\n\n* `ArgumentationCore.lean` \u2014 conflict-freeness, defense, admissibility, the\n  characteristic (defense) operator, its monotonicity, its preservation of\n  conflict-freeness, downward closure of conflict-free sets, and **Dung's\n  Fundamental Lemma**.\n* `ArgumentationExtensions.lean` \u2014 preferred and complete extensions, existence\n  of preferred extensions via **Zorn's Lemma**, the theorem **every preferred\n  extension is complete**, and the grounded extension as the least fixed point\n  of the defense operator, contained in every preferred extension.\n* `ArgumentationSimplicial.lean` \u2014 the **abstract simplicial complex** `K(AF)`,\n  the Euler characteristic, the contractibility of the full simplex\n  (`chi = 1`), and an **explicit refutation** of the conjectured identity\n  `chi(K(AF)) = |preferred| \u2212 |grounded|`.\n\n## What was established (theorems, not sketches)\n\n1. `K(AF)` is a bona fide simplicial complex: conflict-free sets are downward\n   closed. The correct carrier of the topology is the *conflict-free* family,\n   not the (non-downward-closed) family of preferred extensions.\n2. The defense operator `charF` is monotone and preserves conflict-freeness;\n   admissibility is exactly \"conflict-free and below `charF`\".\n3. Fundamental Lemma \u21d2 preferred = complete; preferred extensions always exist.\n4. The grounded extension refines every preferred extension (skeptical \u2286\n   credulous).\n5. The literal Euler = semantics conjecture is false, with a one-argument\n   witness and a supporting numerical survey (`ComputationalEvidence.md`).\n\n## Promising next steps\n\n### A. A *correct* Euler/semantics bridge\nThe naive identity fails, but the survey suggests structured relationships worth\nformalizing:\n- For the **complete conflict graph** (mutual attacks everywhere), `K(AF)` is\n  `n` isolated points and `chi = n = #(preferred extensions)`. Conjecture and\n  prove: for *symmetric, irreflexive* frameworks, `chi(K(AF))` equals the number\n  of preferred extensions, and more precisely the preferred extensions are\n  exactly the maximal independent sets (the facets of `K(AF)`).\n- Relate `H_0(K(AF))` (connected components of the conflict graph) to the\n  decomposition of an AF into independent sub-debates, and prove semantics\n  distribute over connected components.\n\n### B. Homology, not just Euler characteristic\nDefine simplicial chains/boundaries over `K(AF)` and its (reduced) homology\n`H_n`. Mathlib now has enough homological algebra to define the chain complex of\nan abstract simplicial complex. Targets:\n- `H_0` counts connected components of the conflict graph.\n- Identify `H_1` generators with induced cycles in the conflict graph\n  (\"circular disagreements\"), making precise the informal \"circular arguments\n  are 1-holes\".\n- The Euler\u2013Poincar\u00e9 formula `chi = \u03a3 (-1)^n dim H_n` as a theorem, linking the\n  combinatorial `eulerChar` here to Betti numbers.\n\n### C. Independence-complex machinery\n`K(AF)` is the independence complex of the symmetric closure of the attack\ngraph. Porting standard results (e.g. shellability/contractibility criteria,\nthe fold lemma) would give homotopy-type computations of `K(AF)` directly from\ngraph structure.\n\n### D. Further Dung semantics\n- Formalize stable and ideal semantics and their inclusions among\n  grounded \u2286 ideal \u2286 preferred.\n- Prove the grounded extension is itself conflict-free/complete in the finite\n  case by induction on the iterates of `charF` (the general transfinite case\n  needs a chain-continuity argument beyond `OrderHom.lfp_induction`).\n- Coincidence theorems: for well-founded (acyclic) frameworks, grounded =\n  preferred = stable is the unique extension.\n\n### E. Quantitative topology of real debates\nWith the homology API in place, compute `H_*` for argument graphs extracted from\ndebate corpora and study which topological invariants correlate with rhetorical\nphenomena (deadlock \u2194 nontrivial `H_1`, fragmentation \u2194 large `H_0`).\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0929",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "00abb0ac",
+    "status": "available",
+    "timestamp": "2026-07-10T18:12:01.549366+00:00",
+    "title": "This project formalizes, from first principles in Lean 4 / Mathlib, the core of"
+  },
+  {
     "consumed_by_exp_id": "76f66aa5",
     "description": "A ReLU network f: R -> R with L layers of width w is a piecewise linear function with at most w^L pieces. By the universal approximation theorem, such networks can approximate any continuous function. But HOW WELL can they approximate specific constants? Conjecture: a ReLU network with L layers of width w can approximate pi to within epsilon using O(w * L * log(1/epsilon)) parameters. More precisely, there exists a ReLU network f with L = O(log(log(1/epsilon))) layers and w = O(log(1/epsilon)) width such that |f(1) - pi| < epsilon. This is because pi can be computed by the Leibniz formula pi/4 = 1 - 1/3 + 1/5 - ..., and a ReLU network can implement the partial sums. The number of terms needed is O(1/epsilon), and each term can be computed by a constant-depth ReLU subnetwork. The depth needed is O(log(1/epsilon)) for the sum and O(log(log(1/epsilon))) for the individual terms. Conjecture: the approximation rate for rational numbers by ReLU networks is O(1/(w^L)), matching the piecewise linear structure. For irrational numbers like pi, the rate is O(1/(w * L * 2^L)), which is slower but still exponential in depth. Test: construct ReLU networks that approximate pi, e, and sqrt(2) and measure the approximation error as a function of network size. Impact: ReLU networks approximate constants at a rate determined by their depth and width. Pi requires O(log(log(1/epsilon))) depth.",
     "domains": [
@@ -6059,6 +6074,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-10T00:38:41.094757+00:00",
     "title": "Erdos-Renyi on Acid: Random Graphs That Hallucinate"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0927",
+    "priority_score": 0.73,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T18:11:39.565605+00:00",
+    "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
   {
     "consumed_by_exp_id": "",
@@ -6119,6 +6149,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Ramanujan's Taxicab Number as a Sum of Three Cubes: 1729 Revisited"
   },
   {
+    "consumed_by_exp_id": "7900b8be",
+    "description": "Arrow's impossibility theorem states that no ranked voting system with 3+ alternatives can be Pareto efficient, non-dictatorial, and independent of irrelevant alternatives (IIA). Conjecture: Arrow's theorem is a curvature statement. The space of preference profiles is a Riemannian manifold M with the Fisher information metric. The social welfare function F: M -> M is a mapping from profiles to social preferences. Arrow's conditions translate to geometric conditions: (1) Pareto efficiency means F preserves the direction of unanimous preference (F is 'forward-looking'). (2) IIA means F is a local mapping (the social preference at x depends only on local information near x). (3) Non-dictatorial means F is not a projection onto a single voter's preference. Conjecture: the only smooth, local, forward-looking maps on a positively curved manifold are projections (dictatorships). This is because a positively curved manifold has the property that parallel transport around a small loop rotates vectors (Holonomy), and a local, forward-looking map must preserve this holonomy, which forces it to be a projection. Conjecture: the curvature of the preference space is related to the 'polarization' of the electorate: when preferences are polarized (bimodal), the curvature is positive (sphere-like), and Arrow's theorem applies. When preferences are unimodal (consensus), the curvature is zero (flat), and majority rule works. Test: compute the curvature of the preference space for synthetic election data and verify the connection to Arrow's theorem. Impact: Arrow's impossibility is a theorem of differential geometry. Voting is curved.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0928",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-10T18:11:39.634722+00:00",
+    "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "A periodic rhythm in music is a function f: Z -> {0, 1} that is periodic: f(n + p) = f(n) for some period p. The symmetry group of a rhythm with period p is a subgroup of Z/pZ. But music also has 2D patterns: a drum pattern is a function g: Z x Z -> {0, 1} (onset grid in time x pitch). The symmetry group of a drum pattern is a subgroup of Z x Z, which is a wallpaper group in 1D. In 2D, the wallpaper groups classify all possible symmetries of periodic patterns. There are exactly 17 wallpaper groups in 2D. Conjecture: the 17 wallpaper groups correspond to 17 fundamentally different types of rhythmic structure in music. Specifically: (1) p1: no symmetry (free rhythm), (2) p2: 2-fold rotational symmetry (call-and-response), (3) pm: mirror symmetry (palindrome), (4) pg: glide reflection (canon), (5) cm: mirror + glide (round), (6) pmm: double mirror (bilateral palindrome), (7) pmg: mirror + glide (inverted canon), (8) pgg: double glide (double canon), (9) cmm: double mirror + glide (round + palindrome), (10) p4: 4-fold rotation (4-bar cycle), (11) p4m: 4-fold + mirrors (variations on a theme), (12) p4g: 4-fold + glides (inverted variations), (13) p3: 3-fold rotation (3-bar blues), (14) p3m1: 3-fold + mirrors, (15) p31m: 3-fold + glides, (16) p6: 6-fold rotation (whole-tone scale symmetry), (17) p6m: 6-fold + mirrors (maximal symmetry, the 'perfect' rhythm). Test: classify 1000 drum patterns by their wallpaper group and verify the distribution matches musical practice. Impact: there are exactly 17 types of rhythm in music, classified by the wallpaper groups.",
     "domains": [
@@ -6146,21 +6191,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-09T21:05:48.019889+00:00",
     "title": "Close Proofs: Tensor Amplification and Spectral Transfer for Sidorenko-Type Inequali"
-  },
-  {
-    "consumed_by_exp_id": "00abb0ac",
-    "description": "An argumentation framework AF = (A, R) consists of a set of arguments A and an attack relation R subset A x A. The preferred extensions of AF are the maximal admissible sets (subsets S of A that defend themselves against all attacks and are maximal with this property). Conjecture: the preferred extensions of AF form a simplicial complex K(AF) on the vertex set A. The homology groups H_n(K(AF)) measure the 'holes' in the argumentation structure. H_0 measures the number of connected components (independent debate threads). H_1 measures circular arguments (cycles where each argument attacks the next, and the last attacks the first). H_2 measures 'spheres' of arguments (3D cycles where arguments form a spherical shell). Conjecture: for any argumentation framework, the Euler characteristic chi(K(AF)) = |A| - |R| + sum_{n>=2} (-1)^n * dim(H_n) equals |preferred extensions| - |grounded extension size|. This connects the topology of the argument to its semantics. Test: construct K(AF) for 100 argumentation frameworks from debate transcripts, compute homology groups, and verify the Euler characteristic formula. Impact: arguments have topology. Circular arguments are 1-holes, and 3D argument spheres are 2-holes. The shape of a debate is a topological invariant.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0902",
-    "priority_score": 0.67,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T13:27:23.259777+00:00",
-    "title": "The Topology of Argumentation: Why Debates Have Holes"
   },
   {
     "consumed_by_exp_id": "",

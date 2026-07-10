@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-10T17:56:10.562288+00:00",
+  "last_updated": "2026-07-10T18:12:08.526957+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -3505,6 +3505,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-10T17:56:10.538985+00:00",
       "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 4,
+      "domain": "Novelty",
+      "duration_seconds": 961.6501069068909,
+      "end_time": 1783707116.104015,
+      "files_integrated": 4,
+      "job_id": "00abb0ac",
+      "outcome_quality": 0.74,
+      "phase": "complete",
+      "phase_a_prompt_version": "v28",
+      "phase_a_quality_score": 0.74,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v28",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.508,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.74,
+        "novelty": 0.74,
+        "proof_depth": 0.74,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783706154.4539082,
+      "strategy_count": 0,
+      "theorem_count": 58,
+      "theorem_novelty_disproof": 2,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 35,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-10T18:12:08.506800+00:00",
+      "title": "The Topology of Argumentation: Why Debates Have Holes"
     }
   ]
 }

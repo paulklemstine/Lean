@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7ca0f553",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions\n\nThe file `Catalog/Pythagorean/InfiniteChessOmega.lean` develops an abstract,\nfaithful model of winning game trees and their **ordinal game values**, and\nproves that the values `ω`",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 61,
-      "timestamp": "2026-07-10T01:48:37",
-      "title": "Infinite Chess: Checkmate in Omega Moves"
-    },
-    {
       "cycle_id": "4de79d68",
       "domain": "Logic",
       "key_insight": "# Hilbert's Hotel for Primes — deepening: future directions\n\nThis cycle deepens the earlier work in `Novelty/PrimeHotelRearrangement.lean` (well-behaved\nprime-hotel rearrangements: displacement ratio",
@@ -499,19 +489,19 @@
       "theorem_count": 17,
       "timestamp": "2026-07-10T17:56:08",
       "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
+    },
+    {
+      "cycle_id": "00abb0ac",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Topology of Argumentation\n\nThis project formalizes, from first principles in Lean 4 / Mathlib, the core of\nDung's abstract argumentation theory together with the topological",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 58,
+      "timestamp": "2026-07-10T18:12:07",
+      "title": "The Topology of Argumentation: Why Debates Have Holes"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c732c146",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions: Minimum Realization Numbers of Finite Abelian 2-Groups\n\nThis cycle established that the minimum number of elements of a poset whose\nsymmetry group is the Klein four-group is exact",
-      "quality_score": 0.6195219999999999,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-01T21:20:21",
-      "title": "β(Z₂ × Z_{2^n}) = 2^{n+1} + 2 for all positive integers n"
-    },
     {
       "cycle_id": "f29abd01",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 17,
       "timestamp": "2026-07-10T17:56:08",
       "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
+    },
+    {
+      "cycle_id": "00abb0ac",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Topology of Argumentation\n\nThis project formalizes, from first principles in Lean 4 / Mathlib, the core of\nDung's abstract argumentation theory together with the topological",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 58,
+      "timestamp": "2026-07-10T18:12:07",
+      "title": "The Topology of Argumentation: Why Debates Have Holes"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2fed8c0e",
-      "domain": "Geometry",
-      "name": "norm_e",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "2fed8c0e",
-      "domain": "Geometry",
-      "name": "e_pow",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "2fed8c0e",
-      "domain": "Geometry",
-      "name": "norm_e_sub_one",
-      "quality": 0.78
-    },
     {
       "cycle_id": "9f734f3e",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "exists_shorter_of_long",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "00abb0ac",
+      "domain": "Novelty",
+      "name": "mem_charF",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "00abb0ac",
+      "domain": "Novelty",
+      "name": "admissible_iff",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "00abb0ac",
+      "domain": "Novelty",
+      "name": "defends_mono",
+      "quality": 0.74
     }
   ],
-  "last_updated": "2026-07-10T17:56:08",
+  "last_updated": "2026-07-10T18:12:07",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "3fa70466",
-        "quality": 0.79,
-        "theorems": 10,
-        "title": "Turing's Flowers: Morphogenesis as Algebraic Geometry"
-      },
-      {
         "cycle_id": "e37aa20a",
         "quality": 0.83,
         "theorems": 12,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 26,
         "title": "Real-rootedness of the square of the Eulerian triangle"
+      },
+      {
+        "cycle_id": "00abb0ac",
+        "quality": 0.74,
+        "theorems": 58,
+        "title": "The Topology of Argumentation: Why Debates Have Holes"
       }
     ],
     "NumberTheory": [
