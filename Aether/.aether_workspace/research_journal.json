@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "bfccf79e",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\nBold, testable conjectures emerging from the study of `a⁵ − a` and its\ndivisibility structure.\n\n## 1. The universal denominator of `aⁿ − a`\n\n**Conjecture.** For each exponent `n ≥",
-      "quality_score": 0.712488,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-02T18:11:16",
-      "title": "Prove Fermats Little Theorem for p=5"
-    },
-    {
       "cycle_id": "3e52c27d",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Manifold-Constrained Dichotomy Counts\n\nThis cycle established that the number of linearly-separable labelings a\nclassifier family can realize on data drawn from a low-dimensional",
@@ -499,19 +489,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-10T05:35:47",
       "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
+    },
+    {
+      "cycle_id": "b152086d",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n`Core.lean` formalizes the *analytic engine* behind the uncertainty principle and its\ninstantiation on the Fourier, Laplace, and Mellin transforms:\n\n* the identity-principle uncer",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-10T05:35:58",
+      "title": "The Uncertainty Principle Is a Fourier Thing: Position-Momentum Duality"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c9fb85eb",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Tetradecagonal Numbers that are Perfect Cubes\n\nThe 14-gonal (tetradecagonal) number is\n\n    P₁₄(n) = 6n² − 5n = n(6n − 5).\n\nThe file `Catalog/Algebra/TetradecagonalCubes.lean` for",
-      "quality_score": 0.4432100000000001,
-      "sorry_count": 0,
-      "theorem_count": 4,
-      "timestamp": "2026-06-29T18:23:07",
-      "title": "Classification of Perfect Cubes in 14-gonal Numbers"
-    },
     {
       "cycle_id": "47d1dc51",
       "domain": "Novelty",
@@ -2501,21 +2491,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-10T05:35:47",
       "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
+    },
+    {
+      "cycle_id": "b152086d",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n`Core.lean` formalizes the *analytic engine* behind the uncertainty principle and its\ninstantiation on the Fourier, Laplace, and Mellin transforms:\n\n* the identity-principle uncer",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-10T05:35:58",
+      "title": "The Uncertainty Principle Is a Fourier Thing: Position-Momentum Duality"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "8d243e81",
-      "domain": "Novelty",
-      "name": "K_xaxis_nonpos",
-      "quality": 0.7115
-    },
-    {
-      "cycle_id": "c38e66e4",
-      "domain": "NumberTheory",
-      "name": "is",
-      "quality": 0.82
-    },
     {
       "cycle_id": "c38e66e4",
       "domain": "NumberTheory",
@@ -2803,9 +2791,21 @@
       "domain": "Applications",
       "name": "posterior_eq_prior",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "b152086d",
+      "domain": "Applications",
+      "name": "of",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "b152086d",
+      "domain": "Applications",
+      "name": "eqOn_zero_of_vanishes_on_open",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-10T05:35:47",
+  "last_updated": "2026-07-10T05:35:58",
   "open_questions": [
     {
       "context": "`Lemmens-Seidel-73`); here we prove the *reduction* to it with zero `sorry`s.; eigenvalue `−3`.  Both rank facts are formalised with zero `sorry`s, reducing; engines are captured here rigorously and w",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "829d5920",
-        "quality": 0.6395200000000001,
-        "theorems": 17,
-        "title": "Characterization of Bipartite Partial Duals of Orientable Hypermaps"
-      },
-      {
         "cycle_id": "59aff0ea",
         "quality": 0.8076800000000002,
         "theorems": 12,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 16,
         "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
+      },
+      {
+        "cycle_id": "b152086d",
+        "quality": 0.72,
+        "theorems": 20,
+        "title": "The Uncertainty Principle Is a Fourier Thing: Position-Momentum Duality"
       }
     ],
     "Bridges": [
