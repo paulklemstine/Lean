@@ -1,208 +1,332 @@
-# Persistent Homology of Musical Harmony: The Topology of Bach
+# The Topology of Harmony: Cyclic Structure of Musical Intervals and the Maximality of the Circle of Fifths
 
 ## Abstract
 
-We develop a rigorous mathematical framework for analyzing harmonic structure in music through topological data analysis. Chords are encoded as pitch class sets — subsets of ℤ/12ℤ — and a musical passage is represented as a point cloud in a Hamming metric space. The Vietoris-Rips filtration of this point cloud yields persistence diagrams that capture the topological complexity of harmonic motion. We prove that the circle of fifths, the fundamental organizing principle of Western tonal harmony, corresponds to a generator of the cyclic group ℤ/12ℤ, and that chord progressions following this circle produce persistent one-dimensional homological features. We establish that transposition acts as an isometry on chord space, making persistent homology a transposition-invariant measure of harmonic complexity. Key results are verified in Lean 4 with machine-checked proofs. Computational experiments distinguish Bach-style progressions (long H₁ bars) from pop (moderate bars) and atonal (short/absent bars) music.
+We develop a rigorous algebraic-topological model of tonal harmony in
+twelve-tone equal temperament and use it to prove, from first principles,
+the special status of the circle of fifths. Encoding the twelve pitch
+classes as the cyclic group $\mathrm{PC} = \mathbb{Z}/12\mathbb{Z}$, we
+define the *harmonic cycle length* of an interval of $k$ semitones as the
+additive order of $k$, the number of distinct pitch classes reached by
+stacking the interval. We establish the closed form
+$L(k) = 12/\gcd(12,k)$ and derive from it the complete
+inventory of harmonic cycles: the perfect fifth and semitone span all twelve
+pitch classes, the whole tone spans six, the minor third four, the major
+third three, and the tritone two. We prove that every cycle length divides
+twelve (a Lagrange-type constraint), that no interval generates a longer
+cycle than the perfect fifth, and that an interval spans the full chromatic
+aggregate if and only if it is coprime to twelve — the maximal generators
+being exactly $\{1,5,7,11\}$. We give the circle of fifths as an explicit
+Hamiltonian cycle on pitch-class space and interpret it as the longest
+one-dimensional cycle ($H_1$ generator) in the harmonic space. Finally, we
+introduce a normalized persistence-bar length
+$B(k) = L(k)/12 \in (0,1]$ and prove
+the separating thresholds $B(7) = 1 > 1/2$ and
+$B(6) = 1/6 < 1/2$, formalizing the intuition that
+circular tonal harmony produces long persistence bars while degenerate or
+atonal harmonic motion produces short ones. Everything generalizes verbatim
+to $n$-tone equal temperament, where the longest cycle has length $n$ and is
+attained by the $\varphi(n)$ intervals coprime to $n$.
 
-**Keywords**: persistent homology, pitch class sets, circle of fifths, Vietoris-Rips complex, topological data analysis, musical harmony
+**Keywords:** pitch-class space, circle of fifths, cyclic group, additive
+order, persistent homology, Hamiltonian cycle, equal temperament, Euler
+totient.
 
 ## 1. Introduction
 
-The analysis of harmonic structure in music has a long mathematical history, from Euler's *tonnetz* (1739) to Forte's pitch-class set theory (1973) and Tymoczko's geometric theory of voice leading (2011). However, these approaches typically study individual chords or local progressions rather than the *global* topological structure of a passage's harmonic content.
-
-Topological data analysis (TDA), and persistent homology in particular, provides tools for extracting multi-scale topological features from point cloud data. In recent years, TDA has been applied to musical analysis by several authors, but a rigorous algebraic foundation connecting pitch class set theory to persistent homology has been lacking.
-
-This paper provides such a foundation. We formalize pitch class sets as elements of the power set of ℤ/12ℤ, endow the space of chords with the Hamming metric, and construct the Vietoris-Rips filtration of chord clouds. We prove structural theorems about the circle of fifths as a group generator, transposition as an isometry, and common-tone connections between adjacent fifths-based chords. Several key results have been formalized and verified in Lean 4 using the Mathlib library.
-
-## 2. Mathematical Framework
-
-### 2.1 Pitch Class Space
-
-**Definition 2.1** (Pitch Class). A *pitch class* is an element of ℤ/12ℤ, the cyclic group of integers modulo 12. The 12 elements correspond to the 12 notes of the chromatic scale: C = 0, C♯ = 1, D = 2, ..., B = 11.
-
-**Definition 2.2** (Pitch Class Set). A *pitch class set* (PCS) is a finite subset S ⊆ ℤ/12ℤ. The set of all PCS is 𝒫(ℤ/12ℤ), which we denote by **PCS**.
-
-**Definition 2.3** (Transposition). For S ∈ **PCS** and t ∈ ℤ/12ℤ, the *transposition* T_t(S) = {s + t : s ∈ S}.
-
-**Definition 2.4** (Inversion). For S ∈ **PCS**, the *inversion* I(S) = {-s : s ∈ S}.
-
-### 2.2 The Hamming Metric
-
-**Definition 2.5** (Hamming Distance). For A, B ∈ **PCS**, the *Hamming distance* is:
-$$d_H(A, B) = |A \triangle B| = |A \setminus B| + |B \setminus A|$$
-
-**Theorem 2.1** (Hamming Distance is a Metric). The Hamming distance d_H on **PCS** satisfies:
-1. d_H(A, A) = 0
-2. d_H(A, B) = 0 ⟹ A = B
-3. d_H(A, B) = d_H(B, A) (symmetry)
-4. d_H(A, C) ≤ d_H(A, B) + d_H(B, C) (triangle inequality)
-
-*Proof.* Properties 1-3 follow directly from properties of symmetric difference. For the triangle inequality, note that A △ C ⊆ (A △ B) ∪ (B △ C). Each element in A \ C is either in A \ B or in B \ C, and similarly for C \ A. ∎
-
-**Theorem 2.2** (Transposition is an Isometry). For all A, B ∈ **PCS** and t ∈ ℤ/12ℤ:
-$$d_H(T_t(A), T_t(B)) = d_H(A, B)$$
-
-*Proof.* Since addition by t is a bijection on ℤ/12ℤ, we have T_t(A) \ T_t(B) = T_t(A \ B), and the image of a set under a bijection preserves cardinality. ∎
-
-*Lean 4 verification*: Both theorems are formally verified as `hammingDist_triangle` and `transpose_preserves_hammingDist`.
-
-### 2.3 The Circle of Fifths
-
-**Definition 2.6** (Fifth Step). The *fifth step* is the element 7 ∈ ℤ/12ℤ.
-
-**Definition 2.7** (Circle of Fifths). For start ∈ ℤ/12ℤ, the *circle of fifths* is the sequence:
-$$\text{CoF}(\text{start}, k) = \text{start} + 7k \pmod{12}$$
-
-**Theorem 2.3** (Circle of Fifths Generates ℤ/12ℤ). The element 7 generates ℤ/12ℤ. Equivalently:
-
-(a) *Periodicity*: CoF(start, 12) = start for all start.
-
-(b) *Injectivity*: For 0 ≤ i < j < 12, CoF(start, i) ≠ CoF(start, j).
-
-(c) *Surjectivity*: For every target ∈ ℤ/12ℤ, there exists k < 12 with CoF(start, k) = target.
-
-*Proof.* Since gcd(7, 12) = 1, the element 7 is a unit in ℤ/12ℤ, so multiplication by 7 is a bijection. The orbit of any element under repeated addition of 7 therefore has period exactly 12 and visits all elements. ∎
-
-*Lean 4 verification*: All three parts are formally verified as `circleOfFifths_period`, `circleOfFifths_injective_mod12`, and `circleOfFifths_surjective`.
-
-**Theorem 2.4** (Tritone Self-Inversion). The tritone interval 6 ∈ ℤ/12ℤ satisfies 6 + 6 = 0. It is the unique element of order 2 in ℤ/12ℤ.
-
-*Lean 4 verification*: `tritone_self_inverse`.
-
-### 2.4 Common Tone Theorem
-
-**Definition 2.8** (Major Triad). For root r ∈ ℤ/12ℤ, the *major triad* is M(r) = {r, r+4, r+7}.
-
-**Theorem 2.5** (Common Tone in Fifths Progression). For consecutive major triads in the circle-of-fifths progression, the fifth of chord k equals the root of chord k+1:
-$$r + 7k + 7 ∈ M(\text{CoF}(r, k)) \cap M(\text{CoF}(r, k+1))$$
-
-*Proof.* The element r + 7k + 7 is the third element of M(CoF(r, k)) = M(r + 7k) and the first element of M(CoF(r, k+1)) = M(r + 7(k+1)). ∎
-
-*Lean 4 verification*: `common_tone_fifths`.
-
-## 3. Vietoris-Rips Filtration
-
-### 3.1 Construction
-
-**Definition 3.1** (Chord Cloud). A *chord cloud* is a finite set 𝒞 ⊂ **PCS**.
-
-**Definition 3.2** (Rips Graph). At scale ε ∈ ℕ, the *Rips graph* R_ε(𝒞) has vertex set 𝒞 and edge set:
-$$E_ε = \{(A, B) ∈ 𝒞 × 𝒞 : A ≠ B, d_H(A, B) ≤ ε\}$$
-
-**Theorem 3.1** (Filtration Properties).
-1. R_0(𝒞) has no edges.
-2. If ε₁ ≤ ε₂, then E_{ε₁} ⊆ E_{ε₂} (monotonicity).
-3. The edge relation is symmetric.
-
-*Lean 4 verification*: `ripsEdge_zero_empty`, `ripsEdge_monotone`, `ripsEdge_symm`.
-
-### 3.2 Persistence
-
-As ε increases from 0, the Rips graph evolves:
-- **H₀** (connected components): Starts with |𝒞| components. Components merge as edges appear. A merge at scale ε produces an H₀ bar (0, ε).
-- **H₁** (cycles): A cycle is born when an edge creates a loop not filled by a triangle. It dies when a higher-dimensional simplex fills the cycle.
-
-The *persistence* of a bar (b, d) is d - b. Longer bars indicate more significant topological features.
-
-## 4. Fourier Analysis on ℤ/12ℤ
-
-### 4.1 The Discrete Fourier Transform
-
-**Definition 4.1** (DFT of a PCS). For S ∈ **PCS** and frequency k ∈ {0, ..., 11}:
-$$\hat{S}(k) = \sum_{p \in S} e^{2\pi i p k / 12}$$
-
-**Theorem 4.1** (Zeroth Fourier Coefficient). $|\hat{S}(0)|^2 = |S|^2$.
-
-*Proof.* $\hat{S}(0) = \sum_{p \in S} e^0 = |S|$. ∎
-
-*Lean 4 verification*: `fourier_zero_eq_card_sq`.
-
-### 4.2 Musical Interpretation
-
-The DFT coefficients have direct musical meanings:
-- **k = 0**: Chord density (cardinality)
-- **k = 1**: Chromaticity (clustering in pitch space)
-- **k = 5**: "Fifthness" (alignment with circle of fifths)
-- **k = 6**: Tritone content (whole-tone scale character)
-
-The 5th coefficient is particularly relevant: chords with high |$\hat{S}$(5)| are well-aligned with the circle of fifths. Bach's preference for circle-of-fifths motion means his chord clouds have consistently high 5th-coefficient magnitudes.
-
-## 5. Computational Experiments
-
-### 5.1 Experimental Design
-
-We compare three models of chord progression:
-1. **Bach model**: Circle-of-fifths progressions with major/minor triads and dominant 7ths
-2. **Pop model**: I-V-vi-IV pattern with limited harmonic vocabulary
-3. **Atonal model**: Random pitch class sets of variable size
-
-### 5.2 Results
-
-| Metric | Bach | Pop | Atonal |
-|--------|------|-----|--------|
-| Max H₁ persistence | High (3-5) | Moderate (1-3) | Low (0-2) |
-| # of H₁ bars | Many | Few (cyclic repetition) | Variable |
-| Harmonic diameter | Large | Small | Large |
-| Mean 5th-coefficient | High | Moderate | Low |
-
-The Bach model consistently produces the longest H₁ bars, reflecting the circle of fifths as a persistent topological feature. The pop model's repetitive structure (4 chords cycling) produces moderate persistence. The atonal model lacks systematic structure, yielding only short-lived topological features.
-
-### 5.3 Significance
-
-The key finding is that **harmonic sophistication has a topological signature**. The circle of fifths creates a genuine 1-cycle in the Vietoris-Rips filtration — a loop through harmonic space that persists across a wide range of scales. This persistence is a mathematical formalization of what musicians call "tonal coherence."
-
-## 6. Formal Verification
-
-All structural theorems in Sections 2-3 have been formally verified in Lean 4 using the Mathlib library. The key verified results are:
-
-1. **`seven_coprime_twelve`**: gcd(7, 12) = 1
-2. **`circleOfFifths_period`**: The circle has period 12
-3. **`circleOfFifths_injective_mod12`**: Distinct steps yield distinct pitch classes
-4. **`circleOfFifths_surjective`**: Every pitch class is visited
-5. **`hammingDist_triangle`**: Triangle inequality for chord distance
-6. **`transpose_preserves_hammingDist`**: Transposition is an isometry
-7. **`common_tone_fifths`**: Adjacent fifths chords share a common tone
-8. **`ripsEdge_monotone`**: Filtration monotonicity
-9. **`fourier_zero_eq_card_sq`**: Zeroth Fourier coefficient identity
-
-The formalization required approximately 250 lines of Lean 4 code. The circle of fifths properties leveraged the fact that ℤ/12ℤ is computationally decidable, while the metric space properties required abstract algebraic arguments about symmetric difference.
-
-## 7. Discussion
-
-### 7.1 Limitations
-
-This framework captures harmonic structure (chord content) but not:
-- **Temporal ordering**: The Vietoris-Rips complex treats the chord cloud as unordered
-- **Voice leading**: Individual voice movements within chord transitions
-- **Rhythm**: Temporal duration and metric placement of chords
-- **Counterpoint**: Independence of melodic lines
-
-### 7.2 Extensions
-
-Natural extensions include:
-- **Directed persistence**: Incorporating temporal ordering via zigzag persistence
-- **Multi-parameter persistence**: Using both Hamming distance and temporal distance
-- **Voice-leading metric**: Replacing Hamming distance with optimal transport distance
-- **Spectral analysis**: Using the Fourier representation instead of the chroma representation
-
-## 8. Conjecture: Bach Persistence Bound
-
-**Conjecture 8.1** (Bach Persistence Bound). For a chord cloud derived from a Bach chorale containing at least 8 distinct chords, the maximum H₁ persistence bar has length ≥ 3 in Hamming distance units.
-
-**Testable prediction**: Compute persistence diagrams for the 371 Bach chorales in the Bach Chorale Corpus. Verify that at least 90% have max H₁ persistence ≥ 3.
-
-**Computational test**: Download MIDI files from the Bach Chorale Corpus, extract chord sequences, compute Hamming-distance Vietoris-Rips persistence. The conjecture predicts a clear statistical separation from random chord sequences of the same length and chord vocabulary.
-
-## 9. Conclusion
-
-We have established a rigorous mathematical connection between musical harmony and topological data analysis. The circle of fifths — the organizing principle of Western tonal harmony — is both an algebraic generator of ℤ/12ℤ and a topological feature of harmonic space. Bach's systematic exploitation of circle-of-fifths motion creates persistent homological features that are absent in simpler or more random harmonic systems.
-
-The key insight is that **persistence measures sophistication**: the longer an H₁ bar persists, the more deeply the harmonic cycle penetrates the structure of the piece. Bach's genius, from this perspective, is literally topological — his music traces longer, more persistent cycles through harmonic space than any other composer's.
-
-## References
-
-1. Forte, A. (1973). *The Structure of Atonal Music*. Yale University Press.
-2. Tymoczko, D. (2011). *A Geometry of Music*. Oxford University Press.
-3. Edelsbrunner, H., & Harer, J. (2010). *Computational Topology: An Introduction*. American Mathematical Society.
-4. Carlsson, G. (2009). Topology and data. *Bulletin of the AMS*, 46(2), 255-308.
-5. Bergomi, M.G., Baratè, A., & Di Fabio, B. (2015). Towards a topological fingerprint of music. *Topology in Image Context*, Springer.
+The circle of fifths is arguably the single most important organizing
+principle of Western tonal harmony. Empirically, iterating the perfect
+fifth traverses all twelve pitch classes before returning to its origin,
+and this loop underwrites key relationships, modulation, and the sense of
+tonal "distance." Our aim is to strip this observation down to its
+mathematical core and prove, rather than assert, why the fifth occupies a
+privileged position — and to frame the result in the language of shape, so
+that the informal talk of harmonic "motion" and "cycles" acquires a
+literal, topological meaning.
+
+The guiding conjecture from the applied side is topological: if one forms
+the point cloud of chords appearing in a piece of music and computes its
+persistent homology, then genuinely tonal music (the Bach chorale being the
+paradigm) exhibits a long-lived first homology class $H_1$ — a persistent
+one-dimensional cycle — corresponding to circular harmonic motion along the
+circle of fifths, whereas music built on short harmonic cycles (much pop
+music) or without a consistent generating interval (atonal music) exhibits
+only short-lived or absent $H_1$ classes. This paper formalizes the
+*algebraic skeleton* underlying that picture: the cycles themselves, their
+exact lengths, the maximality of the fifth, and normalized bar-length
+thresholds that separate the regimes. We treat the length of the cyclic
+subgroup generated by an interval as a faithful combinatorial proxy for the
+length of the corresponding $H_1$ persistence bar.
+
+The paper is organized as follows. Section 2 sets up pitch-class space and
+the harmonic cycle length. Section 3 proves the closed-form formula and the
+concrete cycle inventory. Section 4 establishes the structural results:
+maximality of the fifth, the divisibility constraint, and the coprimality
+characterization of spanning intervals. Section 5 presents the explicit
+Hamiltonian circle of fifths and its topological reading. Section 6
+introduces normalized persistence bars and proves the separating thresholds.
+Section 7 discusses generalizations, applications, algorithms, and open
+problems.
+
+## 2. Pitch-class space and harmonic cycles
+
+**Definition 2.1 (Pitch-class space).** Under octave equivalence — the
+identification of pitches differing by whole octaves — the chromatic scale
+collapses to twelve *pitch classes*. We model these as the cyclic group
+$$\mathrm{PC} := \mathbb{Z}/12\mathbb{Z} = \{0,1,2,\dots,11\},$$
+with addition modulo $12$. Here $0 = \mathrm{C},\ 1 = \mathrm{C}\sharp,\
+2 = \mathrm{D},\ \dots,\ 11 = \mathrm{B}$. The group $\mathrm{PC}$ has
+exactly twelve elements.
+
+**Definition 2.2 (Interval).** An *interval* of $k$ semitones is the group
+element $k \bmod 12 \in \mathrm{PC}$. Musically salient intervals include the
+semitone ($k=1$), whole tone ($k=2$), minor third ($k=3$), major third
+($k=4$), perfect fourth ($k=5$), tritone ($k=6$), and perfect fifth ($k=7$).
+
+**Definition 2.3 (Harmonic cycle length).** *Stacking* an interval $k$ means
+repeatedly adding it: $0,\ k,\ 2k,\ 3k,\ \dots \pmod{12}$. Since $\mathrm{PC}$
+is finite this sequence is eventually periodic and, because $0$ is the
+identity, returns exactly to $0$. The **harmonic cycle length** of $k$,
+$$L(k) := \operatorname{ord}(k),$$
+is the additive order of $k$ in $\mathrm{PC}$: the smallest positive integer
+$m$ with $m \cdot k \equiv 0 \pmod{12}$, equivalently the number of distinct
+pitch classes visited before the loop closes. This is the cardinality of the
+cyclic subgroup $\langle k \rangle \leq \mathrm{PC}$ generated by the
+interval, and it is our combinatorial proxy for the length of the
+one-dimensional persistence bar attached to the harmonic gesture "keep
+transposing by $k$."
+
+## 3. The cycle-length formula and the harmonic inventory
+
+**Theorem 3.1 (Closed form).** For every $k \in \mathbb{N}$,
+$$L(k) = \frac{12}{\gcd(12,k)}.$$
+
+*Proof sketch.* The additive order of $k$ in $\mathbb{Z}/n\mathbb{Z}$ is
+$n/\gcd(n,k)$: the multiples of $k$ modulo $n$ are exactly the multiples of
+$d := \gcd(n,k)$, of which there are $n/d$, and this many steps are needed to
+return to $0$. Specializing $n = 12$ gives the claim. $\qquad\blacksquare$
+
+Theorem 3.1 is the arithmetic engine of the paper; every subsequent
+computation is a corollary. Evaluating it on the musical intervals yields
+the complete inventory of harmonic cycles.
+
+**Corollary 3.2 (Harmonic inventory).**
+
+| Interval | $k$ | $\gcd(12,k)$ | $L(k)$ | Musical object |
+|---|---|---|---|---|
+| Semitone | $1$ | $1$ | $12$ | chromatic scale |
+| Whole tone | $2$ | $2$ | $6$ | whole-tone scale |
+| Minor third | $3$ | $3$ | $4$ | diminished-seventh chord |
+| Major third | $4$ | $4$ | $3$ | augmented triad |
+| Perfect fourth | $5$ | $1$ | $12$ | full aggregate |
+| Tritone | $6$ | $6$ | $2$ | tritone dyad |
+| Perfect fifth | $7$ | $1$ | $12$ | circle of fifths |
+
+In particular $L(7) = 12$ (the perfect fifth spans all
+twelve pitch classes), $L(6) = 2$,
+$L(4) = 3$, $L(2) = 6$,
+$L(3) = 4$, and $L(1) = 12$.
+
+*Proof.* Direct evaluation of Theorem 3.1 at each $k$. $\qquad\blacksquare$
+
+Every entry in the rightmost column is a familiar object of music theory,
+and Corollary 3.2 shows that each is a theorem: the six-note whole-tone
+scale, the four-note diminished-seventh chord, the three-note augmented
+triad, and the two-note tritone are precisely the cycles the formula
+predicts.
+
+## 4. Structural results: maximality, divisibility, and spanning intervals
+
+**Theorem 4.1 (Uniform bound).** For every $k$,
+$L(k) \le 12$.
+
+*Proof.* By Theorem 3.1, $L(k) = 12/\gcd(12,k) \le 12$
+since $\gcd(12,k) \ge 1$. $\qquad\blacksquare$
+
+**Theorem 4.2 (Maximality of the fifth).** For every interval $k$,
+$$L(k) \le L(7) = 12.$$
+No interval generates a harmonic cycle longer than the circle of fifths.
+
+*Proof.* Combine Corollary 3.2 ($L(7) = 12$) with
+Theorem 4.1. $\qquad\blacksquare$
+
+**Theorem 4.3 (Divisibility — a Lagrange constraint).** Every harmonic
+cycle length divides twelve: $L(k) \mid 12$.
+
+*Proof.* Since $\gcd(12,k) \mid 12$, its cofactor $12/\gcd(12,k)$ also
+divides $12$. Equivalently, $\langle k\rangle$ is a subgroup of the
+twelve-element group $\mathrm{PC}$, so by Lagrange's theorem its order
+divides $12$. $\qquad\blacksquare$
+
+Theorem 4.3 says the possible harmonic cycle lengths are exactly the
+divisors of twelve, $\{1,2,3,4,6,12\}$; harmonic cycles "tile the octave."
+
+**Theorem 4.4 (Spanning $\iff$ coprimality).** An interval spans all twelve
+pitch classes if and only if it is coprime to twelve:
+$$L(k) = 12 \iff \gcd(12,k) = 1.$$
+
+*Proof sketch.* If $\gcd(12,k) = 1$ then $L(k) = 12/1 =
+12$. Conversely, writing $d = \gcd(12,k)$ we have $d \cdot (12/d) = 12$; if
+$12/d = 12$ then $d = 1$. $\qquad\blacksquare$
+
+**Corollary 4.5 (The maximal generators).** Among the twelve residues
+$0 \le k < 12$, exactly $k \in \{1,5,7,11\}$ satisfy
+$L(k) = 12$: the semitone, perfect fourth, perfect
+fifth, and major seventh. The perfect fifth $k=7$ is the classical
+circle-of-fifths representative.
+
+*Proof.* By Theorem 4.4 these are the $k < 12$ coprime to $12$; a finite
+check over $k = 0,\dots,11$ confirms the set is $\{1,5,7,11\}$. $\qquad\blacksquare$
+
+**Theorem 4.6 (Generation).** The subgroup of $\mathrm{PC}$ generated by the
+perfect fifth is the whole group: $\langle 7 \rangle = \mathrm{PC}$. More
+generally, $\langle k \rangle = \mathrm{PC}$ if and only if
+$\gcd(12,k) = 1$.
+
+*Proof sketch.* The cyclic subgroup generated by $k$ has cardinality
+$L(k)$. It equals the whole group precisely when this
+cardinality is $12$, which by Theorem 4.4 happens iff $\gcd(12,k) = 1$. For
+$k = 7$ this holds, so the fifth generates $\mathrm{PC}$: from any note,
+stacking fifths reaches every pitch class. $\qquad\blacksquare$
+
+Theorem 4.6 is the group-theoretic heart of the circle of fifths: it is not
+merely that stacking fifths *happens* to enumerate all twelve tones, but that
+the fifth is a generator of the entire harmonic group, a "master key" from
+which the whole tonal system unfolds.
+
+## 5. The circle of fifths as an explicit Hamiltonian cycle
+
+Theorems 4.4–4.6 are existential and structural; we can also exhibit the
+circle of fifths concretely and read off its topological meaning.
+
+**Definition 5.1 (The circle of fifths).** Let
+$$\mathrm{cof} := (0,\,7,\,2,\,9,\,4,\,11,\,6,\,1,\,8,\,3,\,10,\,5),$$
+the sequence of pitch classes obtained by stacking perfect fifths from $0$,
+i.e. the $i$-th entry is $7i \bmod 12$ for $i = 0,\dots,11$.
+
+**Theorem 5.2 (Hamiltonicity).** The sequence $\mathrm{cof}$ has length
+$12$, is duplicate-free, and contains every pitch class:
+$$\mathrm{cof}\ \text{is Nodup},\qquad |\mathrm{cof}| = 12,\qquad
+\forall x \in \mathrm{PC},\ x \in \mathrm{cof}.$$
+Consequently $\mathrm{cof}$ visits every vertex of pitch-class space exactly
+once and closes up — it is a Hamiltonian cycle on $\mathrm{PC}$.
+
+*Proof sketch.* Length twelve is immediate from the construction. Since the
+map $i \mapsto 7i \bmod 12$ is a bijection of $\mathbb{Z}/12\mathbb{Z}$ (as
+$7$ is a unit modulo $12$, being coprime to $12$), the twelve entries are
+distinct, hence duplicate-free; a bijection also makes the image all of
+$\mathrm{PC}$. As a set, $\mathrm{cof}$ therefore equals the full pitch-class
+universe. $\qquad\blacksquare$
+
+**Topological interpretation.** In the persistent-homology picture, a loop
+in the harmonic space that cannot be contracted to a point is a generator of
+the first homology $H_1$ — a one-dimensional hole, the same invariant that
+distinguishes a torus from a sphere. Theorem 5.2 realizes the circle of
+fifths as an explicit closed loop threading every vertex of pitch-class
+space exactly once. Because it spans the entire aggregate, and by Theorem 4.2
+no interval-generated cycle is longer, this loop is the *longest* one-cycle
+available in twelve-tone equal temperament: the persistent $H_1$ generator of
+harmony. Circular tonal motion is not a metaphor but a genuine noncontractible
+loop.
+
+## 6. Normalized persistence bars and the separating thresholds
+
+To compare harmonic complexity across pieces and styles on a common scale,
+we normalize cycle lengths by the size of the aggregate.
+
+**Definition 6.1 (Normalized persistence-bar length).** For an interval $k$,
+$$B(k) := \frac{L(k)}{12} \in (0,1].$$
+This rescales the harmonic cycle length into $[0,1]$; it is the model's
+normalized $H_1$-bar length, with $1$ meaning "sweeps the entire tonal
+universe in one loop" and values near $0$ meaning "closes immediately into a
+local gesture."
+
+**Theorem 6.2 (Range and maximum).** For every $k$,
+$B(k) \le 1$, and $B(7) = 1$ attains
+the maximum. No interval produces a longer normalized bar than the perfect
+fifth: $B(k) \le B(7)$ for all $k$.
+
+*Proof.* From $L(k) \le 12$ (Theorem 4.1) we get
+$B(k) \le 1$; and $L(7) = 12$ gives
+$B(7) = 1$. Maximality follows. $\qquad\blacksquare$
+
+**Theorem 6.3 (Separating thresholds).** The perfect fifth and the tritone
+sit on opposite sides of the half-scale threshold:
+$$B(7) = 1 > \tfrac12,\qquad
+B(6) = \tfrac16 < \tfrac12,$$
+and $B(6) < B(7)$.
+
+*Proof.* $B(7) = 12/12 = 1 > 1/2$ and
+$B(6) = 2/12 = 1/6 < 1/2$. $\qquad\blacksquare$
+
+**Interpretation and the empirical conjecture.** Theorem 6.3 formalizes the
+qualitative claim motivating the project. Harmonic motion organized around
+the circle of fifths — the paradigmatic tonal gesture of a Bach chorale —
+registers a normalized bar of length $1$, well above $1/2$: a long, persistent
+$H_1$ class. Harmonic motion built on short cycles such as the tritone
+registers a bar of length $1/6$, well below $1/2$. Music without a consistent
+generating interval, as in freely atonal writing, distributes its harmonic
+gestures across many short cycles and yields no long-lived $H_1$ class at all.
+The algebraic thresholds proved here are the skeleton of the predicted
+empirical separation:
+
+- **Tonal (Bach-type):** dominant $H_1$ bar with normalized length $> 0.5$
+  (here exactly $1$ for pure fifth motion).
+- **Short-cycle (pop-type):** intermediate bars, roughly $0.2$–$0.5$
+  (e.g. whole-tone $0.5$, minor-third $1/3 \approx 0.33$, major-third
+  $0.25$).
+- **Atonal:** no persistent $H_1$; bars near $0$ (tritone $1/6 \approx 0.17$
+  and below, with no consistent generator).
+
+## 7. Discussion, applications, and generalizations
+
+**Generalization to $n$-tone temperament.** Nothing in Sections 2–6 depends
+on the number twelve beyond arithmetic. Replacing $\mathrm{PC}$ by
+$\mathbb{Z}/n\mathbb{Z}$ gives $L_n(k) = n/\gcd(n,k)$,
+with maximum $n$ attained exactly by the intervals coprime to $n$. By
+definition of Euler's totient there are $\varphi(n)$ such generators. Thus
+in $19$-tone equal temperament the longest harmonic cycle has length $19$
+attained by $\varphi(19) = 18$ intervals; in $31$-tone temperament, length
+$31$ attained by $\varphi(31) = 30$ intervals. The circle of fifths is one
+instance of a universal law: the generators of a tonal system of size $n$ are
+exactly the residues coprime to $n$.
+
+**Applications.**
+- *Automatic key/scale identification.* The cycle inventory (Corollary 3.2)
+  classifies any interval-generated set by its generator, turning scale
+  recognition into a $\gcd$ computation.
+- *Harmonic-complexity scoring.* The normalized bar length gives a single
+  scalar summarizing how "far-reaching" a harmonic gesture is, usable as a
+  feature for corpus-scale stylistic comparison.
+- *Microtonal composition.* The $n$-tone generalization tells a composer
+  exactly which intervals will act as circle-of-fifths analogues in any equal
+  temperament — the $\varphi(n)$ residues coprime to $n$.
+
+**From proxy to genuine persistence.** The present model uses cyclic-subgroup
+size as a proxy for $H_1$ bar length. The natural next step is to compute
+actual persistent homology of a Vietoris–Rips filtration on a finite metric
+pitch-class space — for instance the "torus" metric
+$d(a,b) = \min(|a-b|, 12 - |a-b|)$ on $\mathbb{Z}/12\mathbb{Z}$, or a weighted
+graph metric measured along fifths — and to prove that the $H_1$ class born
+from circle-of-fifths motion has the longest bar. The interval-$k$ motion is
+the circulant graph $\mathrm{Cay}(\mathbb{Z}/12\mathbb{Z}, \{\pm k\})$, whose
+first Betti number $b_1 = |E| - |V| + (\text{components})$ can be computed
+group-theoretically and connected directly to $L$.
+
+**Voice-leading geometry.** Encoding chords as multisets of pitch classes
+leads to Tymoczko's voice-leading orbifolds $T^n/S_n$, in which the circle of
+fifths reappears as a geodesic loop; relating the discrete cycles proved here
+to those continuous geometries is a promising bridge.
+
+## 8. Conclusion
+
+Starting only from octave equivalence, we have shown that tonal harmony
+carries a precise and provable shape. The harmonic cycle length obeys the
+closed form $12/\gcd(12,k)$; the possible lengths are exactly the divisors of
+twelve; the perfect fifth generates the whole pitch-class group and realizes
+the unique-up-to-symmetry longest cycle, an explicit Hamiltonian loop through
+all twelve tones; and a normalized bar length cleanly separates far-reaching
+circular harmony (fifth, bar $=1$) from short, local harmony (tritone, bar
+$= 1/6$). The circle of fifths is, in a literal topological sense, the
+fundamental loop of harmony — the longest one-dimensional cycle that
+twelve-tone space permits.

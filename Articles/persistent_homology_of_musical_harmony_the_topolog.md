@@ -1,84 +1,194 @@
-# The Shape of Harmony: What Topology Reveals About Bach's Genius
+# The Hidden Shape of Harmony: How the Circle of Fifths Is a Loop You Can Prove
 
-*Why the greatest music in Western civilization traces invisible circles in mathematical space — and what that means for understanding beauty itself.*
+Play a single note on a piano, then the note seven white-and-black keys
+above it, then seven above *that*, and keep going. Something magical
+happens: you march through **every one of the twelve tones** of Western
+music — C, G, D, A, E, B, F♯, C♯, G♯, D♯, A♯, F — and only then arrive
+back where you began. Musicians have known this loop for centuries and
+given it a name that sounds like a carousel: the **circle of fifths**.
+It is the backbone of harmony, the map that tells composers which chords
+feel like "home" and which feel like they are pulling away.
 
----
+But here is a question a musician rarely asks and a mathematician cannot
+resist: *is that circle really a circle?* Not metaphorically — literally.
+Does harmony have a **shape**, and if it does, can we measure it, compare
+it across composers, and prove statements about it the way we prove the
+Pythagorean theorem?
 
-## A Hidden Geometry
+This article is about a small but complete answer to that question. We
+will encode the raw material of harmony as a piece of pure algebra, show
+that "stacking an interval" traces out cycles of precisely computable
+lengths, and prove that among all possible intervals, the perfect fifth
+generates the single longest cycle of them all — a loop that visits every
+pitch exactly once. In the language of shape, that loop is the fundamental
+one-dimensional hole in the space of harmony. Bach's genius, it turns out,
+has a topological signature.
 
-When Johann Sebastian Bach sat down to compose a chorale in 18th-century Leipzig, he was — without knowing it — drawing shapes in a twelve-dimensional space. Not metaphorically. Literally. Every chord he wrote can be represented as a point in a space with one dimension for each of the twelve notes of the chromatic scale. A progression of chords traces a path through this space, and the path's *shape* — its topology — encodes the harmonic logic of the music.
+## Twelve tones, one clock
 
-This is not a new age metaphor about "sacred geometry." It is mathematics, and it reveals something remarkable: Bach's music has a topological structure that is measurably different from pop music, random noise, and atonal compositions. The tool that reveals this difference is called *persistent homology*, a technique from the field of topological data analysis that has already transformed protein folding research, materials science, and neuroscience. Now it is being turned on music — with startling results.
+Forget octaves for a moment. To an ear, a high C and a low C are "the same
+note" in a deep sense — they blend, they substitute for one another, they
+share a name. Mathematicians call this *octave equivalence*, and once you
+accept it, the infinite piano keyboard collapses into just **twelve
+distinct pitch classes**. Label them $0$ through $11$, where $0$ is C, $1$
+is C♯, $2$ is D, and so on up to $11$, which is B.
 
-## Chords as Points in Space
+Now the crucial move. These twelve labels are not just a list; they wrap
+around. Go up twelve semitones from C and you are back at C. So the pitch
+classes behave exactly like the hours on a clock face — except with twelve
+positions where addition *wraps*: $11 + 1 = 0$, not $12$. This structure
+is one of the most fundamental objects in algebra, the cyclic group of
+integers modulo twelve, written $\mathbb{Z}/12\mathbb{Z}$. We will call
+this set of twelve pitch classes $\mathrm{PC}$.
 
-To understand the topology of harmony, we must first understand how a chord becomes a point. There are exactly twelve pitch classes in Western music: C, C♯, D, D♯, E, F, F♯, G, G♯, A, A♯, B. A chord is simply a *subset* of these twelve notes. A C major triad — the notes C, E, and G — is the subset {C, E, G}, or equivalently, the binary vector (1,0,0,0,1,0,0,1,0,0,0,0) in a twelve-dimensional space.
+An **interval** is simply a step size. A semitone is a step of $1$; a
+whole tone is a step of $2$; a major third is $4$; a perfect fifth is $7$;
+the restless, ambiguous tritone is $6$. To play an interval $k$ is to add
+$k$ to your current pitch class, on the clock, with wraparound.
 
-Now imagine a piece of music as a *cloud of points* — one point for each chord that appears. A Bach chorale might contain thirty or forty such points, clustering and spreading through twelve-dimensional space. The question that topology asks is: what is the *shape* of this cloud?
+## Stacking intervals traces a loop
 
-Not its position or orientation — topology doesn't care about those. Topology asks about *holes*. Are there loops in the cloud? Cavities? Higher-dimensional voids? These topological features reveal the deep structural patterns in the music.
+Here is where geometry sneaks in. Take an interval $k$ and *keep applying
+it*: start at $0$, go to $k$, then $2k$, then $3k$, all modulo $12$. Because
+there are only twelve pitch classes, you must eventually return to where you
+started. The sequence closes into a loop. The question is: **how long is
+that loop?** How many distinct pitch classes do you touch before coming home?
 
-## The Vietoris-Rips Filtration
+Call this number the **harmonic cycle length** of the interval $k$, written
+$L(k)$. It is, in precise algebraic terms, the *order*
+of the element $k$ in the clock group — the smallest number of steps that
+returns you to zero. And there is a beautifully clean formula for it.
 
-How do you find holes in a cloud of points? The key insight is to gradually connect nearby points and watch what happens. Imagine inflating a small ball around each chord-point. When two balls overlap — meaning the chords are "close" in harmonic space — we draw an edge between them. As the radius grows, edges proliferate, triangles fill in, and a complex geometric shape emerges from the point cloud.
+> **Theorem (Cycle-length formula).** For any interval $k$,
+> $$L(k) \;=\; \frac{12}{\gcd(12,\,k)},$$
+> where $\gcd(12,k)$ is the greatest common divisor of $12$ and $k$.
 
-The mathematical tool for "closeness" is the *Hamming distance*: the number of pitch classes that differ between two chords. C major {C,E,G} and G major {G,B,D} have Hamming distance 4 — they share only G and differ on four other notes.
+The intuition is that stacking $k$ can only ever land you on multiples of
+$\gcd(12,k)$, so you visit exactly the $12/\gcd(12,k)$ such multiples. Let
+us feed the musical intervals into this formula and watch harmony fall out
+of arithmetic:
 
-At a small scale (radius 1 or 2), only nearly identical chords are connected — the graph is sparse. At a large scale (radius 8 or more), everything connects to everything — the topology is trivial. The magic happens in between, where cycles form, persist, and eventually fill in. The *persistence* of a cycle — how long it survives as the scale increases — measures its significance.
+- **Perfect fifth**, $k = 7$: $\gcd(12,7) = 1$, so the cycle length is
+  $12/1 = 12$. The fifth touches **every pitch class** — the full circle
+  of fifths.
+- **Semitone**, $k = 1$: $\gcd(12,1) = 1$, cycle length $12$. The chromatic
+  scale also visits all twelve, just by tiny steps.
+- **Whole tone**, $k = 2$: $\gcd(12,2) = 2$, cycle length $6$. The
+  whole-tone scale — Debussy's shimmering favorite — has exactly six notes.
+- **Minor third**, $k = 3$: $\gcd(12,3) = 3$, cycle length $4$. Stack minor
+  thirds and you get the four-note diminished-seventh chord.
+- **Major third**, $k = 4$: $\gcd(12,4) = 4$, cycle length $3$. Three major
+  thirds form the augmented triad and return home.
+- **Tritone**, $k = 6$: $\gcd(12,6) = 6$, cycle length $2$. The tritone
+  splits the octave in half and snaps shut after just two notes.
 
-A cycle that forms at scale 2 and fills in at scale 7 is a persistent feature, a genuine structural pattern. A cycle that forms and immediately dies is noise. Persistent homology separates signal from noise, the essential from the accidental.
+Every one of these musical facts — the six-note whole-tone scale, the
+four-note diminished chord, the two-note tritone — is a *theorem*, a
+consequence of one arithmetic formula. The chords musicians memorize are
+the cycles this formula predicts.
 
-## The Circle of Fifths Is Literally a Circle
+## The fifth is the champion
 
-Here is where Bach enters. The most fundamental structure in Western harmony is the *circle of fifths*: C → G → D → A → E → B → F♯ → C♯ → G♯ → D♯ → A♯ → F → C. Starting from any note and moving up by a perfect fifth (seven semitones) twelve times, you visit every pitch class exactly once and return to where you started.
+Notice a pattern in the numbers: $12, 12, 6, 4, 3, 2$. No cycle is longer
+than twelve — of course, there are only twelve pitch classes to visit. But
+which intervals actually *achieve* twelve? This is the heart of the matter.
 
-This is not just a pedagogical device — it is a deep algebraic fact. In the group ℤ/12ℤ (integers modulo 12), the number 7 generates the entire group because gcd(7, 12) = 1. The "circle" is genuine: it is an algebraic cycle of order 12.
+> **Theorem (Maximality).** Every harmonic cycle has length at most $12$,
+> and an interval $k$ achieves the maximal length $12$ **if and only if**
+> $k$ shares no common factor with $12$ — that is, $\gcd(12,k) = 1$.
 
-Bach's chorale harmonizations *follow this circle*. His chord progressions systematically move through related keys, with each new chord sharing common tones with the previous one. The fifth of chord *k* is the root of chord *k+1* — a mathematical fact we can prove rigorously. This common-tone principle is the engine of smooth voice leading, and it creates a persistent one-dimensional cycle (a loop) in the topological analysis.
+The intervals coprime to $12$, among the twelve possibilities, are exactly
+$\{1, 5, 7, 11\}$: the semitone, the perfect fourth, the perfect fifth, and
+the major seventh. These four — and only these four — trace a path through
+all twelve tones. The perfect fifth, $k = 7$, is the one music theory
+crowned centuries ago, and now we see why it *had* to be a champion: it is
+one of the rare intervals arithmetically capable of binding the entire tonal
+universe into a single unbroken loop.
 
-## Measuring Harmonic Complexity
+There is an even stronger way to say this, in the language of generation.
 
-When we compute the persistent homology of a Bach chorale, we find H₁ bars — representing one-dimensional cycles — that are unusually long. They are born at small scales (nearby chords share common tones, creating short connections) and die only at large scales (the full circle of fifths requires traversing many harmonically distant regions before closing).
+> **Theorem (Generation).** Stacking the perfect fifth from any starting
+> note reaches every pitch class; the fifth *generates* the entire
+> pitch-class group. More generally, the interval $k$ generates all twelve
+> pitch classes if and only if $k$ is coprime to $12$.
 
-In contrast:
-- **Pop music** (the ubiquitous I–V–vi–IV progression) creates shorter H₁ bars. The harmonic vocabulary is smaller, the cycles close quickly, and the topological complexity is lower.
-- **Atonal music** generates many short-lived cycles with no dominant persistent feature. Without a tonal center or systematic harmonic motion, the point cloud is essentially random — its topology carries no long-range structure.
-- **Random chord sequences** have the shortest persistence bars of all. With no compositional logic, the "shape" of the cloud has no distinguished features.
+"Generation" is the algebraist's word for "you can get everywhere from here."
+The fifth is a master key to harmony: hand a composer a single note and the
+instruction "keep going up a fifth," and they can unlock all twelve tones.
 
-This is a quantifiable, reproducible measurement. The topology of Bach's harmony is measurably richer than that of a pop progression, and measurably more structured than atonal music. The numbers do not lie.
+## The circle, made explicit
 
-## Transposition Invariance: A Deep Symmetry
+We can even write the champion's route down. Starting at C ($0$) and
+stacking fifths, the pitch classes appear in this order:
+$$0,\ 7,\ 2,\ 9,\ 4,\ 11,\ 6,\ 1,\ 8,\ 3,\ 10,\ 5,$$
+and the thirteenth step lands back on $0$. This list has a remarkable
+property that mathematicians call being a **Hamiltonian cycle**: it is a
+route through the twelve-vertex space of pitch classes that visits every
+vertex **exactly once** before closing up. No pitch is skipped; none is
+repeated. It is, quite literally, a circle threaded through all of harmony.
 
-One of the most beautiful mathematical results in this framework is that **transposition preserves topology**. If you shift every note in a piece up by three semitones (transposing from C major to E♭ major), the Hamming distances between all pairs of chords remain exactly the same. This means the entire Vietoris-Rips filtration — and therefore the entire persistent homology — is unchanged.
+> **Theorem (Hamiltonicity).** The circle-of-fifths sequence has length
+> $12$, contains no repeats, and includes every pitch class. It is a
+> Hamiltonian cycle on the space of pitch classes.
 
-This is precisely the musician's intuition made rigorous: a piece of music "sounds the same" in any key. Topology captures exactly what is preserved under transposition — the shape of harmonic space — and discards exactly what changes — the absolute pitch level.
+This is the punchline of the geometric story. In the study of shape, a
+loop that cannot be shrunk to a point is called a *one-dimensional hole* —
+the same kind of hole that distinguishes a donut from a ball. The circle of
+fifths is exactly such a hole in the fabric of pitch-class space, and by
+the maximality theorem it is the **longest** such loop available. When we
+say harmony is "circular," we are pointing at a genuine, measurable,
+provable circle.
 
-Similarly, *inversion* (flipping every interval upside down) preserves the cardinality of chords. These are not arbitrary symmetries; they are the natural isometries of the harmonic metric space.
+## Measuring a composer on a scale from zero to one
 
-## The Fourier Connection
+To compare music across styles, it helps to put cycle lengths on a common
+ruler. Divide every cycle length by twelve, the size of the whole tonal
+universe, to get a **normalized bar length** between $0$ and $1$:
+$$B(k) \;=\; \frac{L(k)}{12}.$$
+A value near $1$ means the harmonic motion sweeps through nearly all of
+tonal space in one grand loop; a value near $0$ means it closes off almost
+immediately into a tiny, local gesture.
 
-There is another way to see the topology of harmony: through the Fourier transform. Each pitch class *k* can be mapped to a point on the unit circle via e^{2πik/12}. A chord maps to the *sum* of its pitch class vectors — a point in the complex plane whose magnitude and angle capture the chord's harmonic character.
+On this ruler the results are stark and clean:
 
-The Fourier coefficients have musical meanings. The 5th coefficient measures "fifthness" — how well the chord aligns with the circle of fifths. The 1st coefficient measures chromaticity. The 0th coefficient is simply the number of notes. This Fourier decomposition provides a *spectral* view of the same topological structure we see in persistent homology.
+> **Theorem (Thresholds).** The perfect fifth attains the maximum,
+> $B(7) = 1$, comfortably above the half-way mark.
+> The tritone attains $B(6) = 1/6 \approx 0.17$,
+> far below it. No interval scores higher than the fifth.
 
-Remarkably, the 0th Fourier magnitude squared is always exactly the square of the chord's cardinality — a mathematical fact that serves as a consistency check on the entire framework.
+This is the mathematical skeleton of a striking musical claim. Harmony that
+lives on the circle of fifths — the long, sweeping, tonal motion of a Bach
+chorale — registers as a **long loop**, a bar of length near $1$. Harmony
+built on short cycles like the tritone, or scattered without any consistent
+generating interval as in much atonal music, registers as **short loops** or
+no loop at all, bars clustered near $0$. The genius of tonal harmony, on
+this reading, is not a matter of taste but of shape: it uses the longest,
+most far-reaching cycle the twelve-tone universe permits.
 
-## What Topology Teaches Us About Beauty
+## Why this is more than a metaphor
 
-The most provocative implication of this work is that Bach's genius has a topological signature. His ability to navigate the full circle of fifths — to create harmonic progressions that are simultaneously locally smooth (common tones between adjacent chords) and globally cyclic (returning to the home key through distant harmonic regions) — is precisely what creates long persistent H₁ bars.
+It is tempting to dismiss "the shape of music" as a pretty figure of speech.
+What makes this story different is that every claim above is a genuine
+theorem, provable from the single axiom that octaves are equivalent and the
+twelve tones form a clock. The whole-tone scale has six notes; the
+diminished chord has four; the fifth reaches all twelve; the circle of
+fifths visits each pitch exactly once and is the longest loop possible —
+these are not analogies but logical consequences, as certain as $2 + 2 = 4$.
 
-Lesser composers create shorter cycles. Random processes create no persistent cycles at all. The persistent homology of a piece of music is, in a meaningful sense, a *measure of its harmonic sophistication*.
+And the framework reaches well beyond twelve tones. Replace the clock of
+size $12$ with a clock of size $n$ — the "microtonal" temperaments of
+$19$, $31$, or any number of equal divisions of the octave — and the same
+formula holds: the longest harmonic cycle has length $n$, and the intervals
+that achieve it are exactly those coprime to $n$, of which there are
+famously $\varphi(n)$, given by Euler's totient function. The circle of
+fifths is not a quirk of Western tuning; it is one instance of a universal
+arithmetic law about which intervals can bind an entire tonal system into a
+single loop.
 
-This does not mean that topology captures everything about musical beauty — timbre, rhythm, counterpoint, and text painting are beyond this framework. But it does mean that one crucial dimension of musical complexity — *harmonic structure* — has a precise mathematical characterization. And that characterization places Bach at the summit.
-
-## Looking Forward
-
-The topology of harmony opens new research frontiers. Can we classify musical styles by their persistence diagrams? Can we use persistent homology to detect when a piece modulates to a distant key (the creation of a new cycle) or returns home (the closing of an existing one)? Can generative AI systems be guided to produce music with specific topological profiles — say, "compose something with Bach-level H₁ persistence"?
-
-These questions are now tractable because we have the mathematical tools to formalize them. The Vietoris-Rips filtration, the Hamming metric, the Fourier transform on ℤ/12ℤ, and the machinery of persistent homology give us a rigorous language for talking about what musicians have always known intuitively: that Bach's harmonies have a depth and coherence that sets them apart.
-
-The shape of harmony is a circle — the circle of fifths — and Bach traced it more completely, more persistently, and more beautifully than anyone before or since.
-
----
-
-*The mathematical framework described here was developed using tools from algebraic topology, group theory, and harmonic analysis. The key structural results — that the circle of fifths generates all pitch classes, that transposition is an isometry of chord space, and that adjacent fifths-based chords share common tones — have been verified with machine-checked mathematical proofs.*
+Music theorists have long spoken of harmonic "motion," "direction," and
+"distance." This work suggests those words were never merely poetic. There
+really is a space of harmony, it really has holes, and the deepest, longest
+loop in it is the circle that has anchored Western music for four hundred
+years. The next time you hear a progression resolve — that sensation of
+travelling far and returning home — you are, in a precise and provable
+sense, walking around a circle that mathematics guarantees is there.
