@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "acc2ac17",
-      "domain": "Logic",
-      "key_insight": "# Future Directions\n\nThis project formalizes a small algebraic complexity theory of recipes, modelling a\nrecipe by its cooking time `C(R)` and verification time `V(R)` and classifying recipes\nas quick",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 46,
-      "timestamp": "2026-07-10T00:56:33",
-      "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
-    },
-    {
       "cycle_id": "90ef345f",
       "domain": "Probability",
       "key_insight": "# Future Directions — The Quadratic Recurrence and Its Hidden Arithmetic\n\nThese conjectures are distilled from the current cycle, which paired an analytic\nescape estimate for `z ↦ z² + c` with the ari",
@@ -499,19 +489,19 @@
       "theorem_count": 7,
       "timestamp": "2026-07-10T17:24:09",
       "title": "Deepening: Conjecture on Leading Term Cancellation"
+    },
+    {
+      "cycle_id": "3d209fc8",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — Quantitative Invariants of the Prime Barcode\n\nThis cycle turned the qualitative statement \"the zero-dimensional barcode of the\nprime point cloud is governed by the gap sequence\"",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 32,
+      "timestamp": "2026-07-10T17:56:03",
+      "title": "That the zero-dimensional persistent homology of the prim"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "21b9f7f8",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Franke decomposition and the pole geometry of Eisenstein series\n\nThe cycle established two complementary facts about level-one spherical automorphic forms on the\nmodular surface:",
-      "quality_score": 0.6964000000000001,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-01T18:44:41",
-      "title": "Franke Decomposition for SL(2, Z) Automorphic Forms"
-    },
     {
       "cycle_id": "f1070a48",
       "domain": "Novelty",
@@ -2501,15 +2491,19 @@
       "theorem_count": 7,
       "timestamp": "2026-07-10T17:24:09",
       "title": "Deepening: Conjecture on Leading Term Cancellation"
+    },
+    {
+      "cycle_id": "3d209fc8",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — Quantitative Invariants of the Prime Barcode\n\nThis cycle turned the qualitative statement \"the zero-dimensional barcode of the\nprime point cloud is governed by the gap sequence\"",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 32,
+      "timestamp": "2026-07-10T17:56:03",
+      "title": "That the zero-dimensional persistent homology of the prim"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a9aa7bbf",
-      "domain": "Geometry",
-      "name": "bubble_lt_sq",
-      "quality": 0.8
-    },
     {
       "cycle_id": "da4694df",
       "domain": "Applications",
@@ -2803,9 +2797,15 @@
       "domain": "Computation",
       "name": "coeffs_zero_of_vanishing_moments",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "3d209fc8",
+      "domain": "Shared",
+      "name": "sauerShelah_full",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-10T17:24:09",
+  "last_updated": "2026-07-10T17:56:03",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "0e89ca61",
-        "quality": 0.3714852771428572,
-        "theorems": 5,
-        "title": "Modular Height Formula for Unitary Shimura Varieties"
-      },
-      {
         "cycle_id": "bf529381",
         "quality": 0.34015242857142863,
         "theorems": 5,
@@ -3947,6 +3941,12 @@
         "quality": 0.63,
         "theorems": 31,
         "title": "Godel's Casino: Incomplete but Winnable Games"
+      },
+      {
+        "cycle_id": "3d209fc8",
+        "quality": 0.82,
+        "theorems": 32,
+        "title": "That the zero-dimensional persistent homology of the prim"
       }
     ],
     "Tropical": [

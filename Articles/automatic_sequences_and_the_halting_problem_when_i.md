@@ -1,225 +1,98 @@
-# When a Machine Already Knows the Answer: Automatic Sequences and the Limits of Prediction
+# When Can a Machine Know a Sequence Never Hits Zero?
 
-## A puzzle hidden in plain sight
+## A tiny machine with a big question
 
-Take the sequence
+Imagine a sequence of numbers stretching off to infinity:
 
-```
-0 1 1 0 1 0 0 1 1 0 0 1 0 1 1 0 ...
-```
+$$0,\,1,\,1,\,0,\,1,\,0,\,0,\,1,\,1,\,0,\,0,\,1,\,0,\,1,\,1,\,0,\,\dots$$
 
-It looks random. It is not. It is one of the most famous objects in
-combinatorics — the **Thue–Morse sequence** — and there is a beautifully simple
-rule that produces it. Write down the position number `n` in binary, count how
-many `1`s appear, and ask whether that count is even or odd. Even gives you a
-`0`; odd gives you a `1`. Position 6 is `110` in binary, which has two ones,
-which is even, so the sixth term is `0`. Position 7 is `111`, three ones, odd,
-so the seventh term is `1`. Run this for every `n` and the cryptic string above
-spills out, term by term, forever.
+This is the **Thue–Morse sequence**, and there is a delightfully simple rule behind it. Write a whole number $n$ in binary, count how many $1$s appear, and record whether that count is even ($0$) or odd ($1$). So $n = 3$ is $11$ in binary, which has two $1$s (even), giving $0$; while $n = 4$ is $100$, one $1$ (odd), giving $1$. Run this over $n = 0, 1, 2, 3, \dots$ and out tumbles the sequence above.
 
-What makes this rule special is not that it is *clever*. It is that it requires
-almost no memory. To compute any term you do not need to remember the whole
-sequence so far, or do any heavy arithmetic. You read the binary digits of `n`
-one at a time, and you flip a single internal switch — even or odd — each time
-you meet a `1`. That single switch is the entire "brain" of the machine. A
-device with a fixed, finite number of internal states, reading the digits of `n`
-and emitting an answer, is called a **deterministic finite automaton with
-output**, and a sequence produced this way is called an **automatic sequence**.
+What makes Thue–Morse special is not the arithmetic but the *machinery*. You do not need a powerful computer to produce it. A pocket-sized gadget with just **two internal states** suffices. Feed it the binary digits of $n$ one at a time; it flips between "even so far" and "odd so far" with each $1$ it reads, ignores every $0$, and reports its final state. Sequences that can be produced by such a finite, memoryless-except-for-a-handful-of-states gadget are called **automatic sequences**, and they sit at a fascinating crossroads of number theory, computer science, and logic.
 
-Automatic sequences sit at a remarkable crossroads. They are complex enough to
-model real phenomena — quasicrystals, certain patterns in physics, error-free
-combinatorial constructions — yet simple enough that a finite machine generates
-them. And it is exactly that finiteness that makes them *predictable* in a deep,
-formal sense. This article is about what "predictable" means here, why it is
-guaranteed, and where the guarantee runs out.
+This article is about a deceptively simple question you can ask of any such sequence:
 
-## The question that won't go away
+> **Does the value $0$ ever appear?**
 
-Computer scientists have one nightmare question that haunts everything they do:
-the **halting problem**. Given a program, will it ever stop? Alan Turing proved
-in 1936 that no single algorithm can answer this for *all* programs. There will
-always be programs whose behaviour we cannot predict in advance, no matter how
-clever we are. Undecidability is not a temporary gap in our knowledge; it is a
-permanent feature of the computational universe.
+And a subtler cousin:
 
-So here is a humbler, more concrete version of the same anxiety, asked about
-sequences instead of programs. Suppose somebody hands you a rule for a sequence
-`a_0, a_1, a_2, ...`. A natural question is:
+> **Does the value $0$ appear infinitely often?**
 
-> **Does the value `0` ever appear?** And if it does, does it appear infinitely
-> often, or only a few times before vanishing forever?
+For general computational processes, questions like these are the stuff of the famous **halting problem** — provably impossible for a machine to answer in all cases. The surprise, and the heart of this story, is that for automatic sequences these questions are *completely decidable*. There is a finite recipe that always terminates with the correct yes-or-no answer. We will see exactly why — and we will also fix a piece of folklore that, though widely repeated, is simply false.
 
-Call this the **zero-in-sequence problem**. It sounds innocent. But for general
-rules it is a genuine instance of the halting problem in disguise. "Does this
-sequence ever hit zero?" can encode "does this program ever halt?", and so for
-arbitrary sequences the question is **undecidable**. There is no universal
-zero-detector.
+## Finite automata: computing with almost no memory
 
-The central discovery this article celebrates is that for automatic
-sequences — the ones generated by a finite-state machine — the zero-in-sequence
-problem is **completely, provably decidable**. Not just in practice. In
-principle, with a guaranteed algorithm and a guaranteed running time. The finite
-machine that generates the sequence *cannot hide* whether it ever outputs zero.
+The gadget behind Thue–Morse is a **deterministic finite automaton**, or **DFA**. Strip it to essentials and a DFA is four things:
 
-## Why finiteness tames the infinite
+- a finite set of **states** $\sigma$ (Thue–Morse uses two: "even" and "odd");
+- an **alphabet** of input symbols (for Thue–Morse, the binary digits $0$ and $1$);
+- a **transition rule** that, given the current state and the next input symbol, dictates the next state;
+- a designated **start state** and a set of **accepting states**.
 
-The intuition is one of the oldest tricks in mathematics: the **pigeonhole
-principle**. If you have more pigeons than holes, two pigeons share a hole.
+You run a DFA on a finite word — a string of symbols — by starting in the start state and following the transition rule symbol by symbol. If you finish in an accepting state, the machine **accepts** the word; otherwise it **rejects**. The collection of all accepted words is the machine's **language**.
 
-A finite automaton has, say, `s` internal states. As it reads a long input
-word — say a word of length `s` or more — it visits `s + 1` states along the way
-(the start, plus one after each symbol). With only `s` distinct states
-available, two of those visits must land on the *same* state. The machine has
-returned to a configuration it has seen before.
+For the Thue–Morse machine, the input word is the binary expansion of $n$, the transition rule is "flip on $1$, stay on $0$," the start state is "even," and the single accepting state is "odd." The word for $n$ is accepted exactly when the digit sum is odd — exactly when the $n$-th term of the sequence is $1$. So asking "**is any term equal to $1$?**" is the same as asking "**does the machine accept any word at all?**", and asking "**is any term equal to $0$?**" is the same question for the complementary machine (swap accepting and non-accepting states). In every case, the value-hunting question about a sequence becomes a **nonemptiness question about a language**: *does this automaton accept at least one word?*
 
-That repeated state is a **loop**. And a loop can be travelled any number of
-times. If reading a certain word leads the machine to output a zero, and that
-word is long enough to contain a loop, then we can pump the loop — go around it
-twice, three times, a million times — and *every* one of those longer words also
-ends at the same output state. One zero becomes infinitely many zeros.
+That translation is the whole game. If we can decide language nonemptiness, we can decide whether a value ever occurs.
 
-Turn that around and you get a startlingly clean dichotomy:
+## The pigeonhole heart of the matter
 
-- If the machine ever outputs zero on some **short** word, zero appears in the
-  sequence.
-- If the machine outputs zero on some **long** word (long enough to contain a
-  loop), zero appears **infinitely often**.
-- Therefore, to decide whether zero ever appears at all, you only need to check
-  **finitely many short words** — words shorter than the number of states. If
-  none of them produces a zero, no word ever will.
+Here is the key intuition. A DFA has only finitely many states — say $s$ of them. Suppose it accepts some word. Watch the machine trace its path through the states as it reads that word. If the word is long — specifically, if it has length $s$ or more — then the machine visits **more states-along-the-way than it has states**. By the pigeonhole principle, it must return to a state it has already been in. It has gone in a **loop**.
 
-The infinite search collapses to a finite one. This is the heart of the matter:
-*a property that looks like it requires checking infinitely many inputs is
-settled by checking a bounded, finite list.* The unbounded future of the
-sequence is fully determined by its bounded past.
+That single observation drives everything.
 
-## Making the argument airtight
+**Loops can be cut out.** If the path revisits a state, the chunk of the word between the two visits drove the machine in a circle, landing it right back where it started. Snip that chunk out, and the shortened word steers the machine along the very same overall route to the very same final state. So it is *still accepted*. This is the "pump down" move: any accepted word of length $\ge s$ can be trimmed to a strictly shorter accepted word.
 
-Slogans about pigeonholes are persuasive, but the real content of this work is
-that the argument has been made *fully rigorous and mechanically verified* —
-every step checked against the axioms of mathematics with no hand-waving. Let us
-walk through the precise scaffolding, stated plainly.
+Repeat the trimming, and you cannot go forever — lengths are whole numbers and keep decreasing — so you eventually reach an accepted word of length **less than $s$**. This yields our first landmark result.
 
-First, the machine itself. A **deterministic finite automaton with output**
-(DFAO) over an alphabet of `k` symbols consists of three ingredients:
+> **Reachability Bound.** *A finite automaton's language is nonempty if and only if it accepts some word shorter than its number of states.*
 
-- an **initial state** `q0`, where the machine begins;
-- a **transition function** `step`, which, given the current state and the next
-  input symbol, tells you the next state;
-- an **output function** `out`, which attaches a value to every state.
+The payoff is immediate. There are only finitely many words shorter than $s$ (over a finite alphabet). To decide whether the machine accepts anything, **check them all**. The search is finite and always terminates. Hence:
 
-To process a whole word `w`, the machine starts at `q0` and applies `step` once
-for each symbol, sliding from state to state. The state it lands on at the end
-is what we call `run w`, and the answer it reports is `eval w = out(run w)`. A
-sequence `f : n ↦ f(n)` is **k-automatic** when there is such a machine together
-with an encoder turning each index `n` into a word (canonically, its base-`k`
-digits) so that `f(n)` equals `eval` of that word.
+> **Decidability of "Zero in the Sequence."** *For any automatic sequence, it is decidable whether a given value ever occurs: translate the value-search into a language-nonemptiness question and test all words shorter than the number of states.*
 
-The first verified theorem is an honesty check on what these machines can
-express:
+No halting problem, no undecidability — just an honest finite search with a guaranteed answer.
 
-> **Theorem (finite range).** Every k-automatic sequence takes only finitely
-> many distinct values.
+## The same loop, run the other way
 
-The reason is immediate once stated: every value `f(n)` is `out` applied to some
-state, and there are only finitely many states, so the set of possible outputs
-is finite. Modest as it sounds, this theorem is a powerful *obstruction*. It
-tells you, before you do any work, that vast families of sequences are simply
-**not** automatic.
+The pigeonhole loop also runs *forward*. Take the chunk of word that drove the machine in a circle. Instead of deleting it, **repeat it**. Two laps around the loop, three, a hundred — each returns the machine to the same state, so each produces a new, longer accepted word. One loop therefore begets infinitely many accepted words.
 
-The cleanest casualty is the most basic sequence imaginable:
+> **Pump Up.** *If a finite automaton accepts even a single word of length $\ge s$, its language is infinite.*
 
-> **Theorem (the counter is not automatic).** The sequence `a_n = n`
-> (`0, 1, 2, 3, ...`) is not k-automatic for any `k`.
+Combine pumping up with pumping down and you get a clean characterization of when infinitely many terms take a value:
 
-It cannot be, because it takes infinitely many values, and automatic sequences
-take finitely many. A finite-state machine can recognize intricate patterns in
-the *digits* of `n`, but it can never simply *count*. Counting requires
-unbounded memory; finite automata have none. This single example draws a sharp
-border around what automata can and cannot do.
+> **Infinitude Criterion.** *A finite automaton's language is infinite if and only if it accepts some word of length at least $s$ (the number of states).*
 
-Next comes the decision procedure itself, the formal payoff:
+And there is a sharpened version that makes the test practical. If any long word is accepted, you can pump it *down* until its length lands in the tidy window $[s,\,2s)$ — big enough to guarantee a loop, small enough to bound the search.
 
-> **Theorem (decidability of occurrence).** For a fixed finite automaton and a
-> fixed target value `a`, it is decidable whether some input word produces
-> output `a`.
+> **Bounded Infinitude Criterion.** *The language is infinite if and only if it accepts a word whose length lies between $s$ and $2s - 1$.*
 
-The proof is a constructive search. Starting from `{q0}`, you repeatedly
-**expand** the set of known-reachable states: for each state you already have,
-add every state you can step to with any of the `k` symbols. Each round either
-discovers a genuinely new state or changes nothing. Since there are only
-finitely many states, the process must **stabilize** — and a careful counting
-argument shows it stabilizes within at most `s` rounds, where `s` is the number
-of states. (If it had not stabilized after `s` rounds, you would have found more
-than `s` distinct states, which is impossible.) Once you have the complete set
-of reachable states, you simply look at their outputs. The target value `a` is
-achievable if and only if some reachable state is labelled `a`. The
-zero-in-sequence problem is exactly this with `a = 0`.
+Once again the criterion is a finite search, so:
 
-Finally, the one-dimensional case sharpens to a structural theorem about the
-shape of the whole sequence:
+> **Decidability of "Zero Infinitely Often."** *For any automatic sequence, it is decidable whether a given value occurs infinitely often: search the finitely many words of length below $2s$.*
 
-> **Theorem (unary sequences are eventually periodic).** If the machine reads a
-> single repeated symbol — equivalently, the sequence is `n ↦ out(next^n q0)`,
-> the output after applying one fixed transition `n` times — then the sequence is
-> **eventually periodic**: after some initial segment it repeats with a fixed
-> period forever.
+## A myth, politely corrected
 
-Again the engine is the pigeonhole principle, now applied to the orbit of
-iterates `q0, next(q0), next(next(q0)), ...`. With finitely many states, this
-orbit must eventually revisit a state, and from that moment on it cycles. The
-outputs therefore cycle too. There is no room for surprises in the tail.
+Textbooks and lecture notes sometimes offer a tempting shortcut: *"If a finite automaton accepts any word at all, it accepts infinitely many."* It sounds plausible — automata feel loopy and generative. **It is false.**
 
-## The edge of the map
+The counterexample is as small as they come. Take the two-state parity machine and ask it to accept only the single word $1$. It reads one symbol, lands in "odd," accepts, and that is the *only* word it ever accepts. Its language has exactly one element. Accepting *something* does not force accepting *infinitely many things*.
 
-Every good theorem comes with a boundary, and the boundary is where the real
-drama lives.
+The correct statement is the dichotomy above: acceptance of *any* word gives you nonemptiness, but infinitude requires acceptance of a *long* word — one of length at least the number of states. The distinction is not pedantry. Nonemptiness and infinitude are genuinely different questions, each with its own witness length ($< s$ for existence, $\ge s$ for infinitude), and conflating them papers over the very pumping argument that makes the theory work.
 
-Automatic sequences are the simplest members of a larger family called
-**morphic sequences**. A morphic sequence is generated not by reading the digits
-of `n`, but by a process of **substitution**: start with a symbol, repeatedly
-replace each symbol by a fixed word, and read off the limiting infinite string.
-Thue–Morse arises this way too — replace `0` by `01` and `1` by `10`, iterate,
-and the fixed point is exactly the Thue–Morse sequence. Morphic sequences are
-strictly more expressive than automatic ones, and they show up wherever growth
-and self-similarity meet.
+## Back to Thue–Morse
 
-For automatic sequences the zero-in-sequence problem is decidable, as we have
-seen. For morphic sequences, **it is not known whether it is decidable at all.**
-This is an open problem at the frontier of combinatorics on words. The line
-between "the machine has only finitely many states" and "the machine grows its
-own structure as it runs" turns out to be — conjecturally — the very line
-between decidable and undecidable. The same pigeonhole magic that tames
-automatic sequences has no obvious purchase once substitution lets the
-underlying structure expand without bound.
+Our two-state parity machine makes an excellent test case. It accepts the single word $1$, so its language is nonempty — the Thue–Morse sequence *does* contain the value $1$. It also accepts the length-$2$ word $10$, and since $2$ meets the "at least the number of states" threshold, the Infinitude Criterion certifies that its language is infinite: the value $1$ appears **infinitely often**. Both facts fall straight out of the general theory, with no need to inspect the sequence term by term.
 
-This is the punchline worth holding onto. Decidability is not a vague feeling of
-tractability; it is a precise property that switches on and off as you climb the
-ladder of generality. Finite memory gives you certainty. Self-growing structure
-takes it away — or at least, no one yet knows how to get it back.
+The Thue–Morse sequence also wears its "automatic" nature on its sleeve through two elegant recurrences. Writing $t(n)$ for its $n$-th term (as a parity, so arithmetic is modulo $2$):
 
-## Why this matters beyond the puzzle
+$$t(2n) = t(n), \qquad t(2n+1) = t(n) + 1.$$
 
-It is tempting to file all this under "elegant but abstract." It is not. The
-question "can a machine predict its own future behaviour?" is the question
-underlying program verification, hardware design, and the trustworthiness of the
-algorithms that increasingly run the world. Whenever we want a *guarantee* — this
-controller will never reach an unsafe state, this protocol will never deadlock,
-this generator will never emit a forbidden value — we are asking a
-zero-in-sequence question in some disguise.
+The first says that appending a binary digit $0$ (which is what doubling does) leaves the digit-sum parity unchanged. The second says appending a $1$ (doubling and adding one) flips it. Together they imply that consecutive pairs always disagree — $t(2n) \ne t(2n+1)$ for every $n$ — the signature restlessness that makes Thue–Morse never settle into a repeating pattern.
 
-The lesson of automatic sequences is encouraging and sobering at once. When the
-system in question has genuinely finite memory, we can always answer such
-questions, with a guaranteed algorithm and a guaranteed bound on the work
-required. The pigeonhole principle hands us certainty for free. But the moment
-the system can grow its own structure — allocate unbounded memory, rewrite its
-own rules, substitute complexity for itself as it runs — the guarantees
-evaporate, and we are back in Turing's shadow.
+## Where the ground gives way
 
-Between the predictable and the unknowable runs a single, sharp line. On one
-side sit the automatic sequences, finite machines whose entire infinite future
-is legible from a bounded glance at their past. On the other side lies
-everything else. Knowing exactly where that line falls — and being able to prove
-it, step by airtight step — is one of the quiet triumphs of modern mathematics.
-The machine, it turns out, sometimes already knows the answer. The art is in
-proving that it does.
+The clean decidability we have described marks a genuine frontier in the theory of sequences. Automatic sequences are the ones a finite automaton can generate, and for them the value-occurrence questions are decidable, full stop. Push just past this class — to **morphic sequences**, produced by iterating a symbol-substitution rule and then relabeling — and the picture clouds over. Morphic sequences are strictly more expressive; many natural sequences are morphic but not automatic. For them, whether the "does zero ever appear?" question is decidable in general is a genuine **open problem**.
+
+That is the deeper lesson. The boundary between *decidable* and *undecidable* in the world of sequences runs right along the boundary between *automatic* and *morphic*. On the automatic side, a finite pigeonhole argument tames every value-occurrence question. On the morphic side, the loops grow subtle enough that no one yet knows whether a universal recipe exists. Cryptographers and coding theorists care because automatic sequences — Thue–Morse, Rudin–Shapiro, the paperfolding sequence — supply low-correlation, easily generated pseudorandom strings whose structural questions we can actually *answer*. Knowing exactly which questions a small machine can settle, and where that power runs out, is knowing the shape of computation itself.
+
+The machine is tiny. The question it can answer — *will this ever be zero?* — is enormous. That such a small device can put such a large question to rest, while its slightly bigger cousin cannot, is one of the quiet marvels at the edge of the computable.
