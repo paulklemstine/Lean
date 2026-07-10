@@ -370,20 +370,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Pr"
   },
   {
-    "consumed_by_exp_id": "25448d9e",
-    "description": "Cycle 3fa70466 (Q=0.790) proved 10 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In 1952, Turing showed that reaction-diffusion equations produce patterns (spots, stripes, spirals) that explain biological morphogenesis. But Turing patterns are solutions to PDEs, which are hard to ",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_3fa70466_9f2bd55e",
-    "priority_score": 0.8400000000000001,
-    "research_mode": "team",
-    "source_exp_id": "3fa70466",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T08:38:10.272652+00:00",
-    "title": "Close Proofs: Turing's Flowers: Morphogenesis as Algebraic Geometry"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The Riemann zeta function zeta(s) has zeros at the non-trivial points s = 1/2 + i*gamma_n where gamma_n are the imaginary parts of the zeros. The Fourier transform of the zero counting function N(t) = #{gamma_n <= t} is related to the distribution of primes by the explicit formula. But what if we take the Fourier transform of zeta itself? Define Z(t) = zeta(1/2 + it) as a function of the real variable t. The Fourier transform Z_hat(w) = integral_{-inf}^{inf} Z(t) * e^{-2*pi*i*w*t} dt. Conjecture: Z_hat(w) has sharp peaks at w = log(p)/2*pi for each prime p. This is because the explicit formula expresses zeta(1/2+it) as a sum over primes: zeta(1/2+it) ~ sum_{p} p^{-1/2-it} = sum_{p} e^{-it*log(p)} / sqrt(p), which is a sum of complex exponentials with frequencies log(p). The Fourier transform of a sum of exponentials is a sum of delta functions at the frequencies log(p)/2*pi. So Z_hat(w) = sum_{p} delta(w - log(p)/2*pi) / sqrt(p) + (error from zeros and smooth terms). The peaks at w = log(p)/2*pi give a 'spectrogram' of the primes. Test: compute Z_hat(w) numerically for the first 10^6 zeros and verify the peaks at log(2)/2*pi, log(3)/2*pi, log(5)/2*pi, etc. Impact: you can HEAR the primes by playing the Fourier transform of the Riemann zeta function \u2014 each prime is a distinct note.",
     "domains": [
@@ -1257,7 +1243,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-existence of solutions for (a^n+1)(b^n+1)=x\u00b2 when gcd(a,b) > 1 and n is even"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3aea7ea7",
     "description": "For an edge-colored graph that is a minimal obstruction to total rainbow forests, there exists a unique subset A \u2286 E(G) where r\u2081(A) + r\u2082(E\\A) < t, and this failure is strict for no other subset.",
     "domains": [
       "Bridges"
@@ -1266,7 +1252,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31240v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T20:43:33.710473+00:00",
     "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality for exactly one edge subset"
   },
@@ -5628,6 +5614,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T11:50:38.660259+00:00",
     "title": "Coordinate-free conic classification of two-mode Turi"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Turing's Flowers: Morphogenesis as Algebraic Geometry\n\nThe file `Catalog/Novelty/TuringFlowersAlgebraicGeometry.lean` establishes the\ndegree/Chebyshev correspondence and the boundedness dichotomy that separates the\nthree linear-onset morphological classes (spots, stripes, labyrinths). Twelve\ntheorems are proved, all `sorry`-free. Natural next steps:\n\n## 1. Genus from complexification\nThe strongest form of the guiding conjecture reads pattern topology from the genus of\nthe complexified projective curve `T_n(X) \u2212 c = 0`. Formalizing this needs the theory\nof real/complex plane curves (smooth models, genus\u2013degree formula\n`g = (d\u22121)(d\u22122)/2`, real ovals vs. non-compact branches). This is presently the main\nmissing piece; Mathlib does not yet carry the genus\u2013degree formula in usable form.\n\n## 2. Exact degree of arbitrary multi-mode superpositions\nShow that a superposition `\u2211_{k=1}^{m} a_k cos(k \u03b8)` with `a_m \u2260 0` is a polynomial of\ndegree exactly `m` in `X = cos \u03b8` (leading coefficient `2^{m-1} a_m`). This upgrades\n`mode_as_poly` from single modes to genuine patterns and pins the algebraic degree to\nthe highest active mode.\n\n## 3. Two-dimensional level sets and lattices\nExtend the 1-D `cos(nx)` analysis to planar modes `cos(k\u00b7x)` for wave vectors on a\nhexagonal/square lattice, and connect the number of lattice orbits to the algebraic\ndegree of the resulting real variety (the sextic case corresponds to the classic\nhexagonal three-mode instability).\n\n## 4. Sharpness of the ellipse bound\n`ellipse_bounded` uses the loose radius `c/a + c/b`. Replace it with the sharp\nenclosing radius `\u221a(c/min(a,b))` and prove tightness by exhibiting a point achieving\nit, giving a metric characterization of spot size in terms of diffusion anisotropy.\n\n## 5. Periodicity lattice of stripes\n`stripe_periodic` records invariance under a single generator `2\u03c0`. Formalize the full\ntranslation lattice and the quotient torus, framing a stripe pattern as a function on\n`\u211d / 2\u03c0\u2124` and linking mode count to winding number.\n\n## 6. Link to the PDE\nConnect the algebraic level sets back to genuine reaction\u2013diffusion dynamics: derive\nthe linear dispersion relation, identify the band of unstable wave numbers, and show\nthat the truncated Fourier expansion at onset lands in the polynomial class studied\nhere.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0889",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "25448d9e",
+    "status": "available",
+    "timestamp": "2026-07-10T11:50:47.977073+00:00",
+    "title": "The file `Catalog/Novelty/TuringFlowersAlgebraicGeometry.lean` establishes the"
   },
   {
     "consumed_by_exp_id": "",

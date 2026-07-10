@@ -4871,14 +4871,14 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Edmonds' Matroid Intersection Theorem",
         "Rainbow Forest Inequality"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "3aea7ea7",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -4893,7 +4893,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0165",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-10T11:51:04.652772+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem minimal_obstruction_iff_unique_failure (G : EdgeColoredGraph) (t : ℕ) (H : minimal_obstruction G t) : ∃! A ⊆ E G, λA : EdgeSubset G, r1 A + r2 (E \\ A) < t",
       "lineage_refs": [],
@@ -4908,7 +4908,7 @@
       "source": "",
       "source_exp_id": "2606.31240v1",
       "source_path": "http://arxiv.org/abs/2606.31240v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T20:43:33.710473+00:00",
       "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality for exactly one edge subset"
@@ -43768,7 +43768,6 @@
     "famous_subtask",
     "famous_subtask",
     "famous_subtask",
-    "famous_subtask",
     "cross_domain_bridge",
     "famous_subtask",
     "famous_subtask",
@@ -43784,6 +43783,7 @@
     "famous_subtask",
     "famous_subtask",
     "famous_subtask",
+    "cross_domain_bridge",
     "cross_domain_bridge"
   ]
 }
