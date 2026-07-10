@@ -1,288 +1,450 @@
-# The Topology of Argumentation: Simplicial Complexes, Defense Filtrations, and Semantic Invariants
+# The Topology of Argumentation: Simplicial Structure and Euler Characteristic of Abstract Argumentation Frameworks
 
 ## Abstract
 
-We formalize the connection between Dung's abstract argumentation frameworks and algebraic topology by constructing the **argumentation complex** K(AF) — an abstract simplicial complex whose faces are the conflict-free sets of an argumentation framework AF = (A, R). We introduce the **defense filtration**, a novel mathematical structure that stratifies the grounded extension by defense depth, and prove several fundamental theorems: (1) the Symmetry Collapse Theorem, showing that in symmetric frameworks admissibility reduces to conflict-freeness; (2) a fully formalized proof of Dung's theorem that stable extensions are preferred; (3) the defense operator fixed-point theorem for finite frameworks; (4) stabilization of the defense filtration in at most |A| steps; and (5) admissibility of the grounded extension. All results are machine-verified in Lean 4 with Mathlib, providing the first complete formalization of these foundational argumentation-theoretic results.
+We develop, from first principles, the topological structure hidden inside Dung's
+abstract argumentation frameworks. An argumentation framework is a pair
+$(A, R)$ consisting of a set $A$ of arguments and an attack relation
+$R \subseteq A \times A$. We recall the acceptability semantics — conflict-free,
+admissible, complete, preferred, and grounded sets — and reconstruct their basic
+theory around a single operator, the *defense operator* $F$, proving that $F$ is
+monotone and preserves conflict-freeness, that admissibility is exactly
+"conflict-free and below $F$," and Dung's Fundamental Lemma. From the Fundamental
+Lemma we obtain, via a chain-union argument and Zorn's Lemma, the existence of
+preferred extensions, the theorem that every preferred extension is complete, and
+the containment of the grounded extension (the least fixed point of $F$) in every
+preferred extension.
 
-**Keywords**: argumentation framework, simplicial complex, defense filtration, grounded extension, preferred extension, Lean 4, formal verification
+We then turn to geometry. The conflict-free subsets of any framework are downward
+closed and therefore form an abstract simplicial complex $K(AF)$ on the vertex
+set of arguments; its non-self-attacking arguments are exactly its vertices. We
+define the (unreduced) Euler characteristic of a finite face family, prove that
+the full simplex on a nonempty vertex set is contractible with $\chi = 1$, and
+use this to *refute* the natural conjecture that
+$\chi(K(AF)) = \#(\text{preferred}) - \#(\text{grounded})$: the attack-free
+framework on one argument has $\chi = 1$ while the right-hand side is $0$. We
+close by isolating the family of symmetric frameworks, where a corrected
+correspondence between topology and semantics does hold, and by outlining a
+homological program in which $H_0$ counts independent debate threads, $H_1$
+detects circular disagreements, and $H_2$ detects argument spheres.
+
+**Keywords.** Abstract argumentation; Dung semantics; simplicial complex;
+Euler characteristic; homology; defense operator; preferred and grounded
+extensions; conflict-free complex.
 
 ---
 
 ## 1. Introduction
 
-Abstract argumentation frameworks, introduced by Dung (1995), provide a foundational model for reasoning about conflicting information. An argumentation framework AF = (A, R) consists of a set A of arguments and a binary attack relation R ⊆ A × A. The central question is: given a set of mutually attacking arguments, which subsets represent "rational" positions?
+Abstract argumentation, introduced by Dung, models reasoning under conflict at
+its barest combinatorial level. One discards the content of arguments and their
+justificatory force, retaining only *which arguments attack which*. Remarkably,
+this skeleton is enough to define robust notions of collective acceptability and
+to explain, in a uniform way, phenomena from nonmonotonic logic, logic
+programming, and multi-agent negotiation.
 
-Dung defined several answer-set semantics:
-- **Conflict-free sets**: no internal attacks
-- **Admissible sets**: conflict-free and self-defending
-- **Preferred extensions**: maximal admissible sets
-- **Stable extensions**: conflict-free sets that attack all non-members
-- **Grounded extension**: least fixed point of the defense operator
+Our thesis is that these frameworks also carry a genuine *topology*. Everyday talk
+of debates that "go in circles," "hang together," or "split into camps" is
+spatial, and we make it precise: the mutually compatible groups of arguments form
+a simplicial complex, and the holes of that complex — measured by homology and
+summarized by the Euler characteristic — are meaningful invariants of the debate.
 
-While these semantics have been extensively studied in AI and logic, their *topological* structure has received less attention. We observe that the conflict-free sets of any argumentation framework form an abstract simplicial complex — a combinatorial-topological object whose invariants (Euler characteristic, Betti numbers, f-vector) encode structural properties of the debate.
+The paper is organized around three movements.
 
-### 1.1 Contributions
+1. **Semantics (Sections 3–4).** We rebuild Dung's acceptability semantics around
+   the defense operator, culminating in the Fundamental Lemma, existence of
+   preferred extensions, preferred $\Rightarrow$ complete, and the position of the
+   grounded extension.
+2. **Geometry (Section 5).** We construct the conflict-free complex $K(AF)$,
+   identify its vertices, define the Euler characteristic, and compute it for the
+   full simplex.
+3. **The bridge, and its correction (Sections 6–7).** We state a natural
+   topology-equals-semantics conjecture, refute it with a minimal
+   counterexample, and describe the corrected correspondence and a homological
+   research program.
 
-1. **The Argumentation Complex**: We formally construct K(AF) as an abstract simplicial complex and compute its f-vector and Euler characteristic for several families of frameworks.
-
-2. **The Defense Filtration**: A novel mathematical structure — a sequence F₀ ⊆ F₁ ⊆ ... of finite sets converging to the grounded extension — that captures the "depth of reasoning" in an argumentation framework.
-
-3. **The Symmetry Collapse Theorem**: In symmetric frameworks (undirected conflict graphs), admissibility collapses to conflict-freeness.
-
-4. **Formalized Proofs**: All major results are machine-verified in Lean 4 with Mathlib, including Dung's theorem that stable implies preferred, the defense operator fixed-point property, and the stabilization of the defense filtration.
-
----
-
-## 2. Definitions
-
-### 2.1 Argumentation Framework
-
-**Definition 2.1** (Argumentation Framework). An *argumentation framework* is a pair AF = (A, R) where A is a set (of arguments) and R : A → A → Prop is a binary relation (the attack relation). We write a → b to mean R(a, b): argument a attacks argument b.
-
-### 2.2 Conflict-Free Sets and Admissibility
-
-**Definition 2.2** (Conflict-Free). A set S ⊆ A is *conflict-free* if for all a, b ∈ S, ¬R(a, b).
-
-**Definition 2.3** (Defense). A set S ⊆ A *defends* an argument a if for every b with R(b, a), there exists c ∈ S with R(c, b).
-
-**Definition 2.4** (Admissible). A set S is *admissible* if it is conflict-free and defends all its members.
-
-**Definition 2.5** (Preferred Extension). A set S is a *preferred extension* if it is a ⊆-maximal admissible set.
-
-**Definition 2.6** (Stable Extension). A set S is a *stable extension* if it is conflict-free and for every a ∉ S, there exists b ∈ S with R(b, a).
-
-### 2.3 The Defense Operator
-
-**Definition 2.7** (Defense Operator). The *defense operator* F : P(A) → P(A) maps S to the set of all arguments defended by S:
-  F(S) = {a ∈ A : ∀b. R(b,a) → ∃c ∈ S. R(c,b)}
-
-### 2.4 The Argumentation Complex (Novel)
-
-**Definition 2.8** (Argumentation Complex). The *argumentation complex* K(AF) is the abstract simplicial complex whose faces are the conflict-free sets of AF.
-
-**Definition 2.9** (Abstract Simplicial Complex). An *abstract simplicial complex* on a type α is a collection Σ of finite subsets of α satisfying:
-1. ∅ ∈ Σ
-2. If S ∈ Σ and T ⊆ S, then T ∈ Σ
-
-### 2.5 The Defense Filtration (Novel)
-
-**Definition 2.10** (Defense Filtration). The *defense filtration* of AF is the sequence of sets:
-- F₀ = ∅
-- F_{k+1} = {a ∈ A : ∀b. R(b,a) → ∃c ∈ F_k. R(c,b)}
-
-**Definition 2.11** (Defense Depth). The *defense depth* of an argument a is the minimum k ≥ 1 such that a ∈ F_k, or undefined if a is never included.
-
-**Definition 2.12** (Defense Diameter). The *defense diameter* of AF is the maximum defense depth over all arguments in the grounded extension.
+Everything is stated inline and proved (or proof-sketched) so that the paper is
+self-contained.
 
 ---
 
-## 3. Main Results
+## 2. Preliminaries and notation
 
-### 3.1 The Simplicial Complex Property
+Throughout, $A$ is an arbitrary set (the *arguments*) and
+$R \subseteq A \times A$ a binary relation (the *attacks*); we write $R(a,b)$ for
+"$a$ attacks $b$." The pair $AF = (A, R)$ is an **argumentation framework**. No
+finiteness is assumed except where explicitly stated (Sections 5–6). For
+$S \subseteq A$ we freely identify $S$ with the sub-collection of arguments it
+selects.
 
-**Theorem 3.1** (Simplicial Complex Property). *The conflict-free sets of any argumentation framework form an abstract simplicial complex.*
-
-*Proof.* We verify the two axioms:
-1. The empty set is conflict-free (vacuously, no attacks among its members).
-2. If S is conflict-free and T ⊆ S, then T is conflict-free: any pair in T is also a pair in S, which has no internal attacks. □
-
-*Lean name*: `conflict_free_subset_closed`, `conflict_free_empty`
-
-### 3.2 The Symmetry Collapse Theorem
-
-**Theorem 3.2** (Symmetry Collapse). *If the attack relation is symmetric (∀a,b. R(a,b) → R(b,a)), then a set is admissible if and only if it is conflict-free.*
-
-*Proof sketch.* The forward direction is by definition. For the reverse: let S be conflict-free and a ∈ S. If b attacks a, then by symmetry a attacks b. Since a ∈ S, the argument a itself serves as the defender. □
-
-This theorem has a surprising consequence: in symmetric (undirected) conflict graphs, the admissible sub-complex equals the entire argumentation complex K(AF). There is no distinction between passive coexistence (conflict-freeness) and active self-defense (admissibility).
-
-*Lean name*: `symmetric_admissible_iff_cf`
-
-### 3.3 Dung's Theorem: Stable Implies Preferred
-
-**Theorem 3.3** (Dung, 1995). *Every stable extension is a preferred extension.*
-
-*Proof.* Let S be a stable extension.
-
-**Admissibility**: S is conflict-free by definition. For defense: let a ∈ S and R(b, a). Since S is conflict-free, b ∉ S. Since S is stable, some c ∈ S attacks b.
-
-**Maximality**: Suppose T ⊇ S is admissible and a ∈ T. If a ∉ S, stability gives b ∈ S with R(b, a). Since b ∈ S ⊆ T, both a, b ∈ T with R(b, a), contradicting T being conflict-free. Hence a ∈ S and T ⊆ S. □
-
-*Lean name*: `stable_implies_preferred`
-
-### 3.4 Defense Operator Monotonicity and Fixed Points
-
-**Theorem 3.4** (Monotonicity). *The defense operator F is monotone: S ⊆ T implies F(S) ⊆ F(T).*
-
-*Lean name*: `defenseOp_monotone`
-
-**Theorem 3.5** (Grounded Extension Fixed Point). *For finite A, the grounded extension G = ⋃_n F^n(∅) satisfies F(G) = G.*
-
-*Proof.* Both inclusions:
-- (⊇) If a ∈ G, then a ∈ F^{n+1}(∅) = F(F^n(∅)) for some n. Since F^n(∅) ⊆ G, by monotonicity a ∈ F(G).
-- (⊆) If a ∈ F(G), each attacker b has a defender c ∈ G = ⋃_n F^n(∅), so c ∈ F^{n_b}(∅) for some n_b. Since A is finite, finitely many attackers exist, and taking N = max{n_b}, all defenders lie in F^N(∅). Then a ∈ F(F^N(∅)) = F^{N+1}(∅) ⊆ G. □
-
-*Lean names*: `groundedExt_sub_defenseOp`, `defenseOp_sub_groundedExt`
-
-### 3.5 Defense Filtration Stabilization
-
-**Theorem 3.6** (Stabilization). *For finite A with |A| = n, the defense filtration stabilizes in at most n steps: there exists N ≤ n such that F_k = F_N for all k ≥ N.*
-
-*Proof.* The filtration is a non-decreasing chain F₀ ⊆ F₁ ⊆ ... of subsets of a set of size n. If the chain is strictly increasing at every step, the cardinalities form a strictly increasing sequence of natural numbers bounded by n, which can have at most n + 1 terms. Hence the chain must stabilize within n steps. Once F_N = F_{N+1}, the recurrence F_{k+1} = F(F_k) ensures F_{k} = F_N for all k ≥ N. □
-
-*Lean name*: `defenseFiltration_stabilizes`
-
-### 3.6 Admissibility of the Grounded Extension
-
-**Theorem 3.7**. *The grounded extension is admissible.*
-
-This combines conflict-freeness (proved by an inductive argument on the defense filtration levels) with the self-defense property (which follows from the fixed-point property).
-
-*Lean name*: `groundedExt_admissible`
-
-### 3.7 Defense Diameter Bound
-
-**Theorem 3.8**. *The defense diameter of any finite argumentation framework is at most |A|.*
-
-This follows directly from the stabilization theorem: no argument can have defense depth exceeding the stabilization point.
-
-*Lean name*: `defenseDiameter_le_card`
+A finite set $s$ with $k$ elements, regarded as a face of a complex, has
+**dimension** $\dim s = k - 1$; the empty face has, by convention, dimension
+$-1$.
 
 ---
 
-## 4. The f-Vector and Euler Characteristic
+## 3. Conflict-freeness, defense, and admissibility
 
-### 4.1 Computational Examples
+**Definition 3.1 (Conflict-free).** A set $S \subseteq A$ is *conflict-free* if
+$$\forall a, b \in S,\ \neg R(a, b).$$
+No member of $S$ attacks another member of $S$.
 
-The **f-vector** (f₋₁, f₀, f₁, ...) counts faces by dimension. The **Euler characteristic** is χ = Σ (-1)^k f_k.
+**Definition 3.2 (Defense).** A set $S$ *defends* an argument $a$, written
+$a \in F(S)$, if
+$$\forall b,\ R(b, a) \Rightarrow \exists c \in S,\ R(c, b).$$
+Every attacker of $a$ is itself attacked by some member of $S$.
 
-| Framework | f-vector | χ | |Pref| | |Ground| |
-|-----------|----------|---|-------|---------|
-| Chain A→B→C | (1, 3, 1) | 1 | 1 | 2 |
-| 3-Cycle | (1, 3) | 2 | 1 | 0 |
-| 4-Cycle | (1, 4, 2) | 1 | 3 | 0 |
-| Symmetric 2+2 | (1, 4, 4) | -1 | 4 | 0 |
-| Diamond | (1, 5, 5, 1) | 0 | 1 | 2 |
+**Definition 3.3 (Defense operator).** The *characteristic* or *defense operator*
+is
+$$F(S) = \{\, a \in A : S \text{ defends } a \,\}.$$
 
-### 4.2 Observations
+**Definition 3.4 (Admissibility).** $S$ is *admissible* if it is conflict-free
+and defends each of its members: $S$ is conflict-free and $S \subseteq F(S)$.
 
-1. **Odd cycles** produce high Euler characteristic (χ = 2 for 3-cycle) with empty grounded extensions — complete argumentative deadlock.
+The reformulation is worth stating separately, since it is the algebraic pivot of
+the theory.
 
-2. **Symmetric frameworks** can have *negative* Euler characteristic, indicating topological "holes" in the debate structure.
+**Proposition 3.5 (Admissibility as a fixed-point inequality).** $S$ is
+admissible if and only if $S$ is conflict-free and $S \subseteq F(S)$.
 
-3. **The diamond framework** has χ = 0 and a non-trivial 2-simplex {B, C, E}, reflecting the presence of a three-way alliance.
+*Proof.* Immediate from Definitions 3.2–3.4: "$S$ defends each of its members" is
+literally the statement $S \subseteq F(S)$. $\qquad\blacksquare$
 
-### 4.3 Conjecture: Euler-Semantic Connection
+Two monotonicity facts follow directly.
 
-**Conjecture 4.1**. For irreflexive argumentation frameworks:
-  χ(K(AF)) ≡ |preferred extensions| (mod 2)
+**Lemma 3.6 (Monotonicity of defense).** If $S \subseteq T$ and $S$ defends $a$,
+then $T$ defends $a$. Consequently $F$ is monotone: $S \subseteq T \Rightarrow
+F(S) \subseteq F(T)$.
 
-This conjecture holds for all examples computed but remains unproven in general. A proof or counterexample would establish a direct bridge between the topology of the argumentation complex and the semantics of the framework.
+*Proof.* If $b$ attacks $a$, then since $S$ defends $a$ some $c \in S \subseteq T$
+attacks $b$; hence $T$ defends $a$. $\qquad\blacksquare$
 
----
+**Lemma 3.7 (Base values).** The empty set is conflict-free and admissible, and
+$F(\emptyset) = \{a : \forall b,\ \neg R(b,a)\}$ is exactly the set of *unattacked*
+arguments.
 
-## 5. Algorithms
+The next result is the linchpin that makes the grounded extension well-behaved.
 
-### 5.1 Defense Filtration Algorithm
+**Theorem 3.8 (Defense preserves conflict-freeness).** If $S$ is conflict-free,
+then $F(S)$ is conflict-free.
 
-```
-Input: AF = (A, R)
-Output: Defense filtration F₀, F₁, ..., F_N
+*Proof.* Suppose $a, b \in F(S)$ and, for contradiction, $R(a,b)$. Since $b \in
+F(S)$ and $a$ attacks $b$, there is $c \in S$ with $R(c,a)$. Since $a \in F(S)$
+and $c$ attacks $a$, there is $d \in S$ with $R(d,c)$. But $c, d \in S$ with
+$R(d,c)$ contradicts conflict-freeness of $S$. $\qquad\blacksquare$
 
-F₀ ← ∅
-for k = 1, 2, ... do
-    F_k ← {a ∈ A : ∀b. R(b,a) → ∃c ∈ F_{k-1}. R(c,b)}
-    if F_k = F_{k-1} then
-        return F₀, ..., F_k
-    end if
-end for
-```
+**Corollary 3.9 (Downward closure of conflict-freeness).** If $S \subseteq T$ and
+$T$ is conflict-free, then $S$ is conflict-free.
 
-**Complexity**: O(|A|² · |R|) per iteration, at most |A| iterations, so O(|A|³ · |R|) total.
+*Proof.* Any attack internal to $S$ is internal to $T$. $\qquad\blacksquare$
 
-### 5.2 Argumentation Complex Construction
-
-```
-Input: AF = (A, R)
-Output: K(AF) as a list of faces
-
-K ← {∅}
-for k = 1 to |A| do
-    for each k-subset S of A do
-        if ∀a,b ∈ S. (a,b) ∉ R then
-            K ← K ∪ {S}
-        end if
-    end for
-end for
-return K
-```
-
-**Complexity**: O(2^|A| · |A|²) in the worst case (enumeration of all subsets).
+Corollary 3.9 is elementary but decisive: it is the axiom that makes the
+conflict-free sets a simplicial complex (Section 5).
 
 ---
 
-## 6. Discussion
+## 4. The Fundamental Lemma and extension semantics
 
-### 6.1 Related Work
+**Theorem 4.1 (Dung's Fundamental Lemma).** If $S$ is admissible and $S$ defends
+$a$, then $S \cup \{a\}$ is admissible.
 
-The connection between argumentation frameworks and graph theory is well-established (see Baroni et al., 2011). The independence complex of a graph has been studied in topological combinatorics (Kozlov, 2008). Our contribution is the explicit bridge between these fields: treating the argumentation complex as a topological space whose invariants carry semantic information.
+*Proof.* Write $S' = S \cup \{a\}$. We first record three facts.
 
-The defense filtration is related to the Knaster-Tarski fixed-point computation, but our contribution is the explicit stratification and the defense depth metric, which provides a measure of "reasoning complexity" for individual arguments.
+- *(H1) No member of $S$ attacks $a$.* If $c \in S$ with $R(c,a)$, then since $S$
+  defends $a$ some $d \in S$ attacks $c$, contradicting conflict-freeness of $S$.
+- *(H2) $a$ attacks no member of $S$.* If $R(a,c)$ with $c \in S$, then since $S$
+  defends $c$ some $d \in S$ attacks $a$; but that contradicts (H1).
+- *(H3) $a$ does not attack itself.* If $R(a,a)$, then since $S$ defends $a$ some
+  $c \in S$ attacks $a$, contradicting (H1).
 
-### 6.2 Limitations
+*Conflict-freeness of $S'$.* For $x, y \in S'$ with $R(x,y)$ we split into cases:
+$x = y = a$ is excluded by (H3); $x = a, y \in S$ by (H2); $x \in S, y = a$ by
+(H1); $x, y \in S$ by conflict-freeness of $S$.
 
-1. The Euler characteristic alone is insufficient to distinguish all frameworks with different semantics.
-2. Computing full homology groups requires chain complex machinery not yet available in our Lean formalization.
-3. The exponential complexity of enumerating all conflict-free sets limits practical application to frameworks with ≤ 30 arguments.
+*Defense.* By Lemma 3.6, $S \subseteq S'$ implies every argument defended by $S$
+is defended by $S'$. Each member of $S$ is defended by $S$, hence by $S'$; and
+$a$ is defended by $S$, hence by $S'$. So $S'$ defends all its members.
+$\qquad\blacksquare$
 
-### 6.3 Connections to the Catalog
+Two semantic notions crystallize the extremes of maximal and minimal coherent
+positions.
 
-Our `stable_implies_preferred` theorem connects to the catalog's `independent_set_cover_bound` (in `Bridges/SubdIntegralityGap.lean`), as both concern maximal independent sets in conflict graphs. The defense filtration's stabilization argument parallels the convergence arguments in `Computation/InfoEfficientAlgorithms.lean`.
+**Definition 4.2 (Complete, preferred, grounded).**
+- $S$ is *complete* if it is admissible and $F(S) \subseteq S$ (equivalently,
+  admissible and a fixed point $F(S) = S$).
+- $S$ is *preferred* if it is a maximal admissible set: admissible, and whenever
+  $T$ is admissible with $S \subseteq T$ we have $T = S$.
+- The *grounded extension* is the least fixed point of $F$, written $G$.
+
+Since $F$ is a monotone self-map of the complete lattice of subsets of $A$, the
+Knaster–Tarski theorem guarantees that $G$ exists and satisfies $F(G) = G$, and
+that $G \subseteq S$ for every $S$ with $F(S) \subseteq S$.
+
+**Theorem 4.3 (Chain unions of admissible sets).** If $\mathcal{C}$ is a chain
+(totally ordered by inclusion) of admissible sets, then $\bigcup \mathcal{C}$ is
+admissible.
+
+*Proof.* *Conflict-free:* if $a \in S_1, b \in S_2$ with $S_1, S_2 \in
+\mathcal{C}$ and $R(a,b)$, then by totality one of $S_1 \subseteq S_2$ or $S_2
+\subseteq S_1$ holds, placing $a,b$ in a common member, contradicting its
+conflict-freeness. *Defense:* each $a \in \bigcup\mathcal{C}$ lies in some $S \in
+\mathcal{C}$, which defends $a$; by Lemma 3.6 so does the larger union.
+$\qquad\blacksquare$
+
+**Theorem 4.4 (Existence of preferred extensions).** Every admissible set
+$S_0$ is contained in a preferred extension. In particular (taking
+$S_0 = \emptyset$) every framework has at least one preferred extension.
+
+*Proof.* By Theorem 4.3 every chain in the poset of admissible sets containing
+$S_0$ has an admissible upper bound (its union). Zorn's Lemma yields a maximal
+admissible $S \supseteq S_0$; maximality is exactly the preferred condition.
+$\qquad\blacksquare$
+
+**Theorem 4.5 (Preferred $\Rightarrow$ complete).** Every preferred extension is
+complete.
+
+*Proof.* Let $S$ be preferred and let $a \in F(S)$. By the Fundamental Lemma
+(Theorem 4.1), $S \cup \{a\}$ is admissible and contains $S$; maximality forces
+$S \cup \{a\} = S$, i.e. $a \in S$. Hence $F(S) \subseteq S$, and with
+admissibility $S$ is complete. $\qquad\blacksquare$
+
+**Theorem 4.6 (Grounded $\subseteq$ preferred).** The grounded extension is
+contained in every complete extension, and hence in every preferred extension.
+
+*Proof.* A complete extension $S$ satisfies $F(S) \subseteq S$, so by leastness of
+$G$ (Knaster–Tarski) we have $G \subseteq S$. Every preferred extension is
+complete by Theorem 4.5. $\qquad\blacksquare$
+
+Theorem 4.6 is the skeptical-below-credulous principle: whatever is forced under
+grounded (skeptical) semantics is accepted under every preferred (credulous)
+position.
 
 ---
 
-## 7. Future Work
+## 5. The conflict-free complex $K(AF)$ and its Euler characteristic
 
-1. **Homology computation**: Formalize chain complexes and boundary operators in Lean to compute H_n(K(AF)) directly.
+**Definition 5.1 (Abstract simplicial complex).** An *abstract simplicial
+complex* on a vertex type $V$ is a family $\mathcal{K}$ of finite subsets of $V$
+(the *faces*) that is downward closed: if $s \in \mathcal{K}$ and $t \subseteq s$
+then $t \in \mathcal{K}$.
 
-2. **Persistent homology**: Extend the defense filtration to a filtered simplicial complex and compute persistent homology, revealing which topological features "persist" across defense levels.
+**Theorem 5.2 ($K(AF)$ is a simplicial complex).** For any framework $(A,R)$, the
+family
+$$K(AF) = \{\, s \subseteq A \text{ finite} : s \text{ is conflict-free} \,\}$$
+is an abstract simplicial complex on the vertex set $A$.
 
-3. **Tropical argumentation**: Apply tropical semiring operations to argument weights, connecting to the catalog's tropical geometry results.
+*Proof.* By Corollary 3.9, any subset of a conflict-free set is conflict-free, so
+the family is downward closed. The empty set is conflict-free (Lemma 3.7), so
+$K(AF)$ is nonempty. $\qquad\blacksquare$
 
-4. **Asymptotic f-vectors**: Characterize the f-vectors that arise from argumentation frameworks as |A| → ∞.
+**Remark 5.3 (Why not the preferred extensions).** It is tempting to take the
+*preferred extensions* as the faces of the complex. This fails: preferred
+extensions are *maximal* admissible sets, and a subset of a maximal set is
+generally not maximal, so that family is not downward closed and is not a
+simplicial complex. The correct carrier of the topology is the conflict-free
+family. Preferred extensions reappear inside $K(AF)$ as distinguished faces
+(Section 7), not as the complex itself.
+
+**Proposition 5.4 (Vertices of $K(AF)$).** For $a \in A$, the singleton $\{a\}$
+is a face of $K(AF)$ if and only if $\neg R(a,a)$. Thus the vertices of $K(AF)$
+are exactly the non-self-attacking arguments; self-attacking arguments are
+"phantom" points absent from the topology.
+
+*Proof.* $\{a\}$ is conflict-free iff $a$ does not attack $a$. $\qquad\blacksquare$
+
+We now measure holes numerically.
+
+**Definition 5.5 (Euler characteristic).** For a finite family $\mathcal{F}$ of
+faces, the (unreduced) *Euler characteristic* is
+$$\chi(\mathcal{F}) = \sum_{\emptyset \neq s \in \mathcal{F}} (-1)^{\dim s}
+   = \sum_{\emptyset \neq s \in \mathcal{F}} (-1)^{|s| - 1}.$$
+Equivalently $\chi = \#(\text{vertices}) - \#(\text{edges}) +
+\#(\text{triangles}) - \cdots$, and by the Euler–Poincaré principle
+$\chi = \sum_n (-1)^n \dim H_n$.
+
+**Theorem 5.6 (The full simplex is contractible).** Let $X$ be a finite vertex
+set and let $\mathcal{P}(X)$ be the complex of *all* subsets of $X$. Then
+$$\chi(\mathcal{P}(X)) = \begin{cases} 1 & X \neq \emptyset, \\ 0 & X = \emptyset. \end{cases}$$
+
+*Proof.* Write each summand as
+$$\Big(\text{if } s = \emptyset \text{ then } 0 \text{ else } (-1)^{|s|-1}\Big)
+   = -(-1)^{|s|} + [\,s = \emptyset\,],$$
+where $[\cdot]$ is the Iverson bracket; for $s \neq \emptyset$ this is the
+identity $(-1)^{|s|-1} = -(-1)^{|s|}$, and for $s = \emptyset$ both sides equal
+$0$ after adding the bracket term $1$ and subtracting $(-1)^0 = 1$. Summing over
+all $s \subseteq X$,
+$$\chi(\mathcal{P}(X)) = -\!\!\sum_{s \subseteq X}\!(-1)^{|s|}
+   + \sum_{s \subseteq X}[\,s=\emptyset\,].$$
+The second sum is $1$. For the first, the binomial identity
+$\sum_{s \subseteq X} (-1)^{|s|} = \sum_{k=0}^{|X|} \binom{|X|}{k}(-1)^k =
+(1-1)^{|X|}$ equals $0$ when $X \neq \emptyset$ and $1$ when $X = \emptyset$.
+Hence $\chi = -0 + 1 = 1$ for $X \neq \emptyset$ and $\chi = -1 + 1 = 0$ for
+$X = \emptyset$. $\qquad\blacksquare$
+
+Theorem 5.6 is the topological sanity check: a debate with *no* incompatibilities
+(the compatibility complex is a full simplex) is contractible — a solid blob with
+no holes and $\chi = 1$.
 
 ---
 
-## 8. References
+## 6. The Euler-equals-semantics conjecture, refuted
 
-1. Dung, P.M. (1995). "On the acceptability of arguments and its fundamental role in nonmonotonic reasoning, logic programming and n-person games." *Artificial Intelligence*, 77(2), 321-357.
+The two portraits of a finite framework — the topological invariant
+$\chi(K(AF))$ and the semantic counts $\#(\text{preferred extensions})$ and
+$|G|$ — invite a unifying identity. The most natural candidate is:
 
-2. Baroni, P., Caminada, M., & Giacomin, M. (2011). "An introduction to argumentation semantics." *The Knowledge Engineering Review*, 26(4), 365-410.
+> **Conjecture 6.1.** For every finite framework,
+> $$\chi(K(AF)) = \#(\text{preferred extensions}) - |G|.$$
 
-3. Kozlov, D. (2008). *Combinatorial Algebraic Topology*. Springer.
+**Theorem 6.2 (Refutation).** Conjecture 6.1 is false. It fails already for the
+attack-free framework $R_0$ on a single argument.
 
-4. Dunne, P.E. & Wooldridge, M. (2009). "Complexity of abstract argumentation." In *Argumentation in Artificial Intelligence*, Springer.
+*Proof.* Let $A = \{a\}$ and $R_0 = \emptyset$ (no attacks, in particular no
+self-attack).
+
+- *Topology.* Every subset of $\{a\}$ is conflict-free, so $K(R_0)$ is the full
+  simplex on one vertex — a single point. By Theorem 5.6 with $|X| = 1$,
+  $\chi(K(R_0)) = 1$.
+- *Preferred extensions.* Since $R_0$ has no attacks, every set is admissible, so
+  the unique maximal admissible set is the whole vertex set $\{a\}$. There is
+  exactly **one** preferred extension.
+- *Grounded extension.* With no attacks, $F(S) = A$ for every $S$; in particular
+  $F(\{a\}) = \{a\}$ and the least fixed point is $G = \{a\}$, so $|G| = 1$.
+
+The conjecture demands $\chi = 1 - 1 = 0$, but $\chi = 1$. Since $1 \neq 0$, the
+identity fails. $\qquad\blacksquare$
+
+The refutation is the smallest possible: a single uncontested argument. Its
+lesson is diagnostic. The right-hand side mixes an *unreduced* topological
+quantity ($\chi = 1$ for a point) with quantities natural to *reduced* homology
+and to face-counting; the off-by-one is precisely the discrepancy between reduced
+and unreduced Euler characteristics ($\tilde\chi = \chi - 1 = 0$ for a point).
+Any correct bridge must fix this bookkeeping and must compare *like with like* —
+faces with faces — rather than a global $\chi$ with a raw difference of counts.
 
 ---
 
-## Appendix: Lean 4 Formalization Summary
+## 7. A corrected correspondence: symmetric frameworks
 
-| Theorem | Lean Name | File |
-|---------|-----------|------|
-| Simplicial complex property | `conflict_free_subset_closed` | `ArgFramework.lean` |
-| Empty set is conflict-free | `conflict_free_empty` | `ArgFramework.lean` |
-| Empty set is admissible | `admissible_empty` | `ArgFramework.lean` |
-| Defense monotonicity | `defenseOp_monotone` | `ArgFramework.lean` |
-| Symmetry collapse | `symmetric_admissible_iff_cf` | `ArgFramework.lean` |
-| Stable is admissible | `stable_is_admissible` | `ArgFramework.lean` |
-| Stable implies preferred | `stable_implies_preferred` | `ArgFramework.lean` |
-| Defense iteration monotone | `defenseIter_mono` | `ArgFramework.lean` |
-| Grounded ⊆ F(Grounded) | `groundedExt_sub_defenseOp` | `ArgFramework.lean` |
-| F(Grounded) ⊆ Grounded | `defenseOp_sub_groundedExt` | `ArgFramework.lean` |
-| Admissibility extension | `admissible_extend` | `ArgFramework.lean` |
-| Defense filtration mono | `defenseFiltration_mono` | `ArgumentationComplex.lean` |
-| Filtration stabilizes | `defenseFiltration_stabilizes` | `ArgumentationComplex.lean` |
-| Grounded is admissible | `groundedExt_admissible` | `ArgumentationComplex.lean` |
-| Stable covers universe | `stable_covers_universe` | `ArgumentationComplex.lean` |
-| Defense depth positive | `defenseDepth_pos` | `ArgumentationComplex.lean` |
-| Diameter ≤ |A| | `defenseDiameter_le_card` | `ArgumentationComplex.lean` |
+The refutation does not abolish the topology–semantics link; it disciplines it.
+The cleanest positive theory appears for *symmetric* frameworks.
+
+**Definition 7.1.** A framework is *symmetric* if $R(a,b) \Leftrightarrow R(b,a)$
+and *irreflexive* if $\neg R(a,a)$ for all $a$.
+
+For a symmetric irreflexive framework, "conflict-free" is exactly "independent in
+the underlying (undirected) conflict graph," and defense is automatic: an
+independent set defends each of its members because each attacker is a neighbor,
+which the member itself attacks back. Consequently:
+
+- **Admissible $=$ conflict-free.** Every conflict-free set is admissible.
+- **Preferred $=$ maximal independent set.** The preferred extensions are exactly
+  the *facets* (maximal faces) of $K(AF)$ — the maximal independent sets of the
+  conflict graph.
+- **The complex is the independence complex** of the conflict graph, a
+  thoroughly studied object in topological combinatorics.
+
+In this regime the topology genuinely computes the semantics, provided one
+compares matching quantities. For the *complete conflict graph* on $n$ vertices
+(mutual attacks everywhere), $K(AF)$ is $n$ isolated points: $\chi = n$, and there
+are exactly $n$ singleton preferred extensions, so $\chi = \#(\text{preferred})$.
+More generally, for symmetric irreflexive frameworks we conjecture and expect to
+prove that $\chi(K(AF))$ equals the count of preferred extensions weighted
+through the facet structure of the independence complex, and that the connected
+components of the conflict graph induce a decomposition of the semantics: solving
+each independent sub-debate and recombining reproduces the extensions of the
+whole.
+
+---
+
+## 8. A homological program
+
+Euler characteristic is the shadow of finer invariants. We outline the natural
+next layer.
+
+**Chains and homology.** Orient the faces of $K(AF)$ and form the simplicial
+chain complex $\cdots \to C_2 \to C_1 \to C_0 \to 0$ over a field, with the usual
+alternating-face boundary maps. Its homology groups $H_n(K(AF))$ refine $\chi$ via
+$\chi = \sum_n (-1)^n \dim H_n$.
+
+**Interpretations.**
+- $H_0(K(AF))$ has dimension equal to the number of connected components of the
+  compatibility (equivalently, in the symmetric case, conflict) graph. These are
+  the *independent debate threads*, and one expects the semantics to distribute
+  over them.
+- $H_1(K(AF))$ detects *circular disagreements*: its generators correspond to
+  induced cycles of pairwise-compatible arguments that bound no filled region —
+  the formal content of an argument that "goes in circles."
+- $H_2(K(AF))$ detects *argument spheres*: hollow shells of compatible arguments
+  wrapping an empty core, the higher-order analogue of circularity.
+
+**Targets.** (i) Prove the $H_0$–components correspondence and the distribution
+of semantics over components. (ii) Characterize $H_1$ generators as induced
+conflict-graph cycles. (iii) Establish, for symmetric frameworks, an exact
+topology–semantics dictionary at the level of homology, superseding the naive
+Euler identity refuted in Section 6.
+
+---
+
+## 9. Discussion
+
+We have shown that Dung's acceptability semantics and the topology of the
+conflict-free complex are two coherent descriptions of the same object, linked but
+not by the naive Euler identity. Three points deserve emphasis.
+
+First, the *operator-centric* development — monotonicity, preservation of
+conflict-freeness, admissibility as $S \subseteq F(S)$, and the Fundamental Lemma
+— yields the entire extension theory (existence, preferred $\Rightarrow$
+complete, grounded below preferred) with uniform, short proofs, and it exposes the
+lattice-theoretic core (Knaster–Tarski for the grounded extension, Zorn for the
+preferred).
+
+Second, the *correct* carrier of the topology is the conflict-free family, not the
+preferred extensions; the downward-closure lemma is what elevates a purely
+logical notion to a geometric one. Self-attacking arguments are excluded as
+phantom vertices, a pleasing match between logic (self-defeat) and geometry
+(non-vertices).
+
+Third, the refuted conjecture is instructive rather than fatal. Its failure on a
+single point pinpoints a reduced-versus-unreduced bookkeeping error and steers us
+toward the symmetric regime, where the independence complex furnishes a genuine,
+provable dictionary between shape and semantics.
+
+---
+
+## 10. Future directions
+
+- **A correct Euler/semantics bridge.** For symmetric, irreflexive frameworks,
+  prove that $\chi(K(AF))$ equals the number of preferred extensions and that the
+  preferred extensions are exactly the facets (maximal faces) of $K(AF)$; relate
+  $H_0(K(AF))$ to the decomposition of a framework into independent sub-debates and
+  prove that the semantics distributes over connected components.
+- **Homology, not just Euler characteristic.** Define the simplicial chain
+  complex and (reduced) homology of $K(AF)$; prove that $H_0$ counts connected
+  components of the conflict graph and identify $H_1$ generators with induced
+  cycles ("circular disagreements"), making the informal notion precise, and
+  interpret $H_2$ as argument spheres.
+- **Quantitative debate analysis.** Compute the homological invariants of
+  frameworks extracted from real debate transcripts and study which topological
+  features (components, cycles, voids) predict semantic properties such as the
+  number of preferred extensions or the size of the grounded extension.
+
+---
+
+## Appendix: summary of results
+
+- **Proposition 3.5.** Admissible $\Leftrightarrow$ conflict-free and
+  $S \subseteq F(S)$.
+- **Lemma 3.6.** $F$ is monotone.
+- **Theorem 3.8.** $F$ preserves conflict-freeness.
+- **Corollary 3.9.** Conflict-free sets are downward closed.
+- **Theorem 4.1.** Fundamental Lemma: admissible $+$ defends $a$ $\Rightarrow$
+  $S \cup \{a\}$ admissible.
+- **Theorem 4.4.** Preferred extensions exist (Zorn).
+- **Theorem 4.5.** Preferred $\Rightarrow$ complete.
+- **Theorem 4.6.** Grounded $\subseteq$ every preferred extension.
+- **Theorem 5.2.** $K(AF)$ is a simplicial complex.
+- **Proposition 5.4.** Vertices of $K(AF)$ $=$ non-self-attacking arguments.
+- **Theorem 5.6.** Full simplex: $\chi = 1$ (nonempty), $0$ (empty).
+- **Theorem 6.2.** The identity $\chi = \#\text{preferred} - |G|$ is false
+  (single-argument witness).
