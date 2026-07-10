@@ -18336,7 +18336,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "14000bf9",
     "description": "A jigsaw puzzle has N pieces, each with 4 edges. The 'signature' of a piece is the tuple (top, right, bottom, left) of edge types (flat, tab, blank). Two pieces fit together if their adjacent edges are complementary (tab meets blank). Conjecture: Solving a jigsaw puzzle is NP-complete. The reduction: given a 3-SAT formula with n variables and m clauses, construct a jigsaw puzzle with N = 2n + m + 2 pieces where the only valid assembly corresponds to a satisfying assignment. Variable pieces: each variable x_i has two pieces (TRUE and FALSE), one with a tab and one with a blank on the assignment edge. Only one can be placed (mutual exclusion via complementary edges). Clause pieces: each clause C_j is a piece that has three input edges (one per literal) and one output edge. The piece fits only if at least one input edge is connected to a TRUE literal piece. The top-left corner and bottom-right corner enforce the boundary. Test: construct the reduction explicitly for a small 3-SAT instance (e.g., (x1 OR x2 OR NOT x3) AND (NOT x1 OR x3)) and verify the puzzle has a solution iff the formula is satisfiable. Impact: jigsaw puzzles are NP-complete, so the satisfying snap you feel when completing a puzzle is literally the same as solving a hard computational problem.",
     "domain_bridges": [],
     "domains": [
@@ -18349,7 +18349,7 @@
     "proof_strategy": "Define jigsaw puzzle instance: N pieces, each with 4 edges from alphabet {tab, blank, flat}. Two pieces P and Q fit together on edge e if P.e and Q.e are complementary (tab meets blank). Assembly: a placement of all N pieces in a rectangular grid such that all adjacent edges are complementary. Reduction from 3-SAT: given phi = (l_11 OR l_12 OR l_13) AND ... AND (l_m1 OR l_m2 OR l_m3), construct puzzle with 2n + m + 2 pieces. For variable x_i: create piece V_i^T (TRUE, with tab on the assignment edge) and V_i^F (FALSE, with blank on the assignment edge). Only one can be placed because their assignment edges are complementary to the same slot. For clause C_j = (l_j1 OR l_j2 OR l_j3): create piece C_j with three input edges. C_j fits only if at least one input connects to a TRUE literal piece (tab meets blank) or a FALSE literal piece with negation (blank meets tab). Corner pieces enforce the rectangular boundary. The puzzle has a solution iff phi is satisfiable. This is a polynomial reduction, so jigsaw puzzles are NP-hard. NP membership: given a placement, verify all edges are complementary in O(N) time. Test: construct for phi = (x1 OR x2 OR NOT x3) AND (NOT x1 OR x3).",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T00:01:24.348188+00:00",
     "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
   },
