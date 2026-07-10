@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-10T20:52:49.607000+00:00",
+  "last_updated": "2026-07-10T21:09:04.478060+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -3806,6 +3806,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-10T20:52:49.587234+00:00",
       "title": "The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 8,
+      "domain": "Physics",
+      "duration_seconds": 971.1026222705841,
+      "end_time": 1783717729.6038477,
+      "files_integrated": 4,
+      "job_id": "a6f348ea",
+      "outcome_quality": 0.8,
+      "phase": "complete",
+      "phase_a_prompt_version": "v25",
+      "phase_a_quality_score": 0.8,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v25",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.535,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.8,
+        "novelty": 0.8,
+        "proof_depth": 0.8,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783716758.5012255,
+      "strategy_count": 0,
+      "theorem_count": 20,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 16,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-10T21:09:04.457633+00:00",
+      "title": "Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
     }
   ]
 }
