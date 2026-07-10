@@ -87,7 +87,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f0066eca",
     "description": "Building on cycle 92e61cee (Q=0.830), which proved 11 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The leading $1/N$ term in the heat-kernel expansion vanishes under the given conditions.",
     "domains": [
       "Novelty"
@@ -96,7 +96,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "92e61cee",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T13:11:38.329718+00:00",
     "title": "Deepening: Conjecture on Leading Term Cancellation"
   },
