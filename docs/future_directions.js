@@ -18,6 +18,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 90ef345f (Q=0.830), which proved 751 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Mandelbrot set M is defined by z_{n+1} = z_n^2 + c, and the boundary of M is the locus of c values where the orbit of 0 is bounded but barely so. Each bulb of M corresponds to a rational number p/q (the period-q bulb at angle p/q). The size of the p/q bulb decreases with q, and the Fibonacci seq",
+    "domains": [
+      "Probability"
+    ],
+    "id": "push_90ef345f_41ee9d14",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "90ef345f",
+    "status": "available",
+    "timestamp": "2026-07-10T01:14:02.362998+00:00",
+    "title": "Deepening: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 643186e8 (Q=0.820), which proved 18 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do \u2014 as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: ",
     "domains": [
       "Algebra"
@@ -57,20 +71,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-10T00:21:15.177603+00:00",
     "title": "Deepening: Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle c38e66e4 (Q=0.820), which proved 14 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In every connected graph whose edges are either 1\u2011matching or 2\u2011matching edges and in which no perfect matching contains edges of both types, the number of perfect matchings is always a power of two.",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_c38e66e4_fc342391",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "c38e66e4",
-    "status": "available",
-    "timestamp": "2026-07-09T21:23:45.652130+00:00",
-    "title": "Deepening: Power\u2011of\u2011Two Perfect Matching Count in Class\u202fB Graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -157,6 +157,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T00:21:09.997327+00:00",
     "title": "Close Proofs: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 90ef345f (Q=0.830) proved 751 theorems in Probability but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The Mandelbrot set M is defined by z_{n+1} = z_n^2 + c, and the boundary of M is the locus of c values where the orbit of 0 is bounded but barely so. Each bulb of M corresponds to a rational number p/",
+    "domains": [
+      "Probability"
+    ],
+    "id": "sorry_fill_90ef345f_307288d2",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "90ef345f",
+    "status": "available",
+    "timestamp": "2026-07-10T01:14:02.439834+00:00",
+    "title": "Close Proofs: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Pr"
   },
   {
     "consumed_by_exp_id": "",
@@ -9797,21 +9811,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bypassed"
   },
   {
-    "consumed_by_exp_id": "90ef345f",
-    "description": "The Mandelbrot set M is defined by z_{n+1} = z_n^2 + c, and the boundary of M is the locus of c values where the orbit of 0 is bounded but barely so. Each bulb of M corresponds to a rational number p/q (the period-q bulb at angle p/q). The size of the p/q bulb decreases with q, and the Fibonacci sequence governs the spiral arrangement of bulbs. Conjecture: The period of the bulb at angle p/q (in lowest terms) is exactly q. Moreover, the Lyapunov exponent lambda(c) at the center of the p/q bulb equals log(2) * cos(pi*p/q). The 'prime bulbs' \u2014 bulbs at angles 1/q where q is prime \u2014 have special symmetry: they are the only bulbs with dihedral symmetry D_q. The composite bulbs have more complex symmetry groups. The prime factorization of the period determines the bulb's topology: a bulb of period n = p1^a1 * ... * pk^ak is topologically a product of k bulbs of periods p1^a1, ..., pk^ak. Test: for each rational p/q with q <= 20, locate the corresponding bulb in M, compute its Lyapunov exponent, and verify lambda = log(2) * cos(pi*p/q). Classify bulbs by the prime factorization of their period and verify the product structure. Impact: the Mandelbrot set is a visual calculator for prime factorization \u2014 every bulb encodes number-theoretic information about its period.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0798",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-09T20:47:34.624685+00:00",
-    "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
-  },
-  {
     "consumed_by_exp_id": "7a9dcf2f",
     "description": "Laser beams can carry orbital angular momentum (OAM), creating 'knotted light' \u2014 beams whose wavefronts are linked or knotted. A knotted light beam has a phase singularity (where the amplitude vanishes) that traces out a knot in 3D space. The simplest example is the trefoil beam, whose singularity traces a trefoil knot. Conjecture: The OAM spectrum of a knotted light beam encodes the Alexander polynomial of the knot. Specifically, if the singularity of the beam traces a knot K, then the OAM spectrum (the set of allowed angular momentum values) is {l : Delta_K(e^{2*pi*i*l/N}) = 0} where Delta_K is the Alexander polynomial of K and N is the crossing number. For the trefoil (Delta = t^2 - t + 1), the OAM spectrum includes l = 1/6, 5/6 (mod 1), giving OAM values l = 1, 5 (mod 6). For the unknot (Delta = 1), the OAM spectrum is trivial (l = 0 only). For the figure-eight knot (Delta = t^2 - 3t + 1), the OAM values include l = (3 \u00b1 sqrt(5))/2 mod 1. Test: compute the OAM spectrum of trefoil, figure-eight, and cinquefoil beams numerically and verify they match the Alexander polynomial predictions. Impact: knotted light carries knot invariants in its angular momentum \u2014 shining a laser through a knot-shaped hologram encodes the Alexander polynomial in the beam's quantum numbers.",
     "domains": [
@@ -10158,6 +10157,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Quadratic Recurrence and Its Hidden Arithmetic\n\nThese conjectures are distilled from the current cycle, which paired an analytic\nescape estimate for `z \u21a6 z\u00b2 + c` with the arithmetic of rotation numbers (additive\norders in `\u2124/q\u2124`, coprimality of consecutive Fibonacci numbers, and Cassini's\ndeterminant identity).\n\n## 1. The escape radius is sharp along the real axis\n\n**Conjecture.** For real parameters, `c` lies in the connectedness locus of the\nrecurrence if and only if `\u22122 \u2264 c \u2264 1/4`; in particular the escape bound \"modulus\n`> 2` escapes\" cannot be lowered below `2` while remaining valid for all directions.\n\nThe key insight is that the geometric lower bound `|x_{n+1}| \u2265 |x_n|(|x_n| \u2212 1)`\ndegrades to an *equality of leading order* exactly on the negative real axis, where\ncancellation between `x_n\u00b2` and `c` is maximal, pinning the critical threshold at the\nfixed value `2`.\n\nWhy now? The one-step and iterated growth estimates are already established\nconstructively, so the remaining work is a matching lower construction (an explicitly\nbounded orbit for `c = \u22122`), which the same modulus bookkeeping supports.\n\n## 2. Bulb period equals denominator \u2014 a complete order-theoretic dictionary\n\n**Conjecture.** The map `p/q \u21a6 addOrderOf(p mod q)` is a faithful invariant of\nhyperbolic components: two reduced rotation numbers label the same combinatorial\nbulb type if and only if their denominators \u2014 equivalently their additive orders \u2014\nagree, and the period is multiplicative across coprime denominators,\n`ord_{q\u2081q\u2082} = lcm(ord_{q\u2081}, ord_{q\u2082})` when `gcd(q\u2081, q\u2082) = 1`.\n\nThe key insight is that the Chinese Remainder decomposition of `\u2124/q\u2081q\u2082\u2124` turns the\n\"product structure of composite-period bulbs\" into the elementary statement that\nadditive order is multiplicative over coprime moduli.\n\nWhy now? The base cases (period `= q` in lowest terms, period `< q` otherwise) are in\nhand, so the composite case reduces to a CRT lemma already available in the ambient\nlibrary.\n\n## 3. Fibonacci fractions are the slowest-approximated rotation numbers\n\n**Conjecture.** Among all rotation numbers with bounded denominator, the Fibonacci\nratios `F_n/F_{n+1}` are the unique family whose Farey/Stern\u2013Brocot depth grows\nlinearly while their denominators grow exponentially; equivalently, they realize the\nextremal case of the three-distance (Steinhaus) phenomenon for the golden angle.\n\nThe key insight is that Cassini's identity `F_{n+1}\u00b2 \u2212 F_n F_{n+2} = (\u22121)\u207f` forces\nevery consecutive pair to be an *immediate* Farey neighbour, so no fraction of smaller\ndenominator can be inserted between them \u2014 the arithmetic origin of the golden spiral.\n\nWhy now? Coprimality of consecutive terms and the unit-determinant identity are both\nproved; the extremality statement is a counting argument over the mediant tree built\ndirectly on these two facts.\n\n## 4. A determinant criterion for adjacency of bulbs\n\n**Conjecture.** Two reduced rotation numbers `p/q` and `p'/q'` label adjacent bulbs\n(sharing a root point) if and only if `|p q' \u2212 p' q| = 1`, and the mediant\n`(p + p')/(q + q')` labels the largest bulb nestled in the gap between them.\n\nThe key insight is that the Farey adjacency `|p q' \u2212 p' q| = 1`, verified for the\nFibonacci family via Cassini, is exactly the unimodularity condition governing the\n`SL\u2082(\u2124)` action on the boundary circle that indexes the components.\n\nWhy now? The Fibonacci special case already exhibits the unit determinant; promoting it\nto a general adjacency criterion needs only the standard mediant/Stern\u2013Brocot\nrecursion, whose invariants are the determinants computed here.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0825",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "90ef345f",
+    "status": "available",
+    "timestamp": "2026-07-10T01:13:55.845049+00:00",
+    "title": "These conjectures are distilled from the current cycle, which paired an analytic"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Erdos-Renyi random graph G(n, p) has n vertices where each edge appears independently with probability p. At p = log(n)/n, G(n,p) becomes connected. But what if p is COMPLEX? Define G(n, z) where z is a complex number: each edge (i,j) appears with 'probability' z, meaning the edge weight is z instead of 0 or 1. The resulting 'complex graph' is a weighted complete graph where edge (i,j) has weight z if the edge exists and 0 otherwise. The adjacency matrix A_z has entries that are either z or 0. Conjecture: The complex eigenvalues of A_z trace out a circle of radius |z|*sqrt(n) in the complex plane, centered at the origin. As n -> infinity, the empirical spectral distribution of A_z converges to the circular law (like the Ginibre ensemble) because A_z is a random matrix with i.i.d. entries of mean z*p and variance |z|^2*p*(1-p). The 'hallucination' is that for Im(z) != 0, the graph has complex-valued connectivity \u2014 information flows with both amplitude and phase, and the phase creates interference patterns that are visible in the spectral density. Test: generate A_z for n = 1000 with z = 0.5 + 0.3i, compute eigenvalues, and verify they lie in a disk of radius sqrt(n)*|z|. Compare with the Ginibre ensemble prediction. Impact: complex-valued random graphs have circular spectra \u2014 the hallucination of complex probabilities creates beautiful circular eigenvalue distributions.",
     "domains": [
       "Novelty",
@@ -10172,7 +10186,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Erdos-Renyi on Acid: Random Graphs That Hallucinate"
   },
   {
-    "consumed_by_exp_id": "352dbc27",
+    "consumed_by_exp_id": "",
     "description": "Cycle 8202f9a7 (Q=0.675) proved 19 theorems in Novelty but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Develop a verified computational pipeline in Lean 4 that makes the conditional refinement of Page's theorem effective and algorithmic: for a given \u03b5>0, compute explicit C(\u03b5), Q\u2080(\u03b5) and enumerate primi",
     "domains": [
       "Novelty"
@@ -10181,7 +10195,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7249863157894737,
     "research_mode": "team",
     "source_exp_id": "8202f9a7",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-09T19:55:16.452095+00:00",
     "title": "Close Proofs: Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
   },
@@ -10200,7 +10214,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "27804b30",
     "description": "1729 = 10^3 + 9^3 = 12^3 + 1^3 is the smallest number expressible as a sum of two cubes in two ways (Ramanujan's taxicab number). But can 1729 be expressed as a sum of three cubes? That is, does 1729 = x^3 + y^3 + z^3 have integer solutions? Conjecture: 1729 = 1^3 + 10^3 + 8^3 = 1 + 1000 + 512 = 1513 (no). 1729 = 9^3 + 9^3 + 7^3 = 729 + 729 + 343 = 1801 (no). Actually, 1729 = 1^3 + 12^3 = 1728 + 1 = 1729 (the original). And 1729 = 10^3 + 9^3 = 1000 + 729 = 1729. So 1729 has TWO representations as a sum of two cubes. The question is: does 1729 have a representation as a sum of three cubes? The answer is YES: 1729 = 1^3 + (-12)^3 + 12^3 = 1 - 1728 + 1728 = 1 = NO, this gives 1, not 1729. Try 1729 = 10^3 + 9^3 + 0^3 = 1729. So 1729 = 10^3 + 9^3 + 0^3 is a trivial representation. The non-trivial question: does 1729 have a representation as x^3 + y^3 + z^3 with x,y,z all nonzero? Conjecture: 1729 has no non-trivial representation as a sum of three cubes with all terms nonzero. Test: brute-force search for x^3 + y^3 + z^3 = 1729 with x,y,z nonzero integers. Impact: even Ramanujan's favorite number has secrets \u2014 the taxicab number's relationship to sums of three cubes reveals new Diophantine structure.",
     "domains": [
       "Novelty",
@@ -10210,7 +10224,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T23:08:57.239960+00:00",
     "title": "Ramanujan's Taxicab Number as a Sum of Three Cubes: 1729 Revisited"
   },
@@ -10242,5 +10256,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-09T21:05:48.019889+00:00",
     "title": "Close Proofs: Tensor Amplification and Spectral Transfer for Sidorenko-Type Inequali"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Fermi paradox asks: if intelligent life is common, where is everyone? The pigeonhole principle answers: if there are more pigeons than holes, at least one hole contains more than one pigeon. Apply this to the cosmos: there are approximately 10^22 stars in the observable universe (pigeons) and approximately 10^10 habitable-zone planets (holes). By the pigeonhole principle, at least one habitable planet contains at least 10^12 stars' worth of interest... wait, that's the wrong way around. Correct: there are ~10^10 habitable planets (pigeons) and ~4.5 billion years of time (holes). By the pigeonhole principle, at least one time period of one year contains at least 2 habitable planets developing intelligence. But we observe zero contacts. Conjecture: The resolution is that intelligent life is NOT common \u2014 the expected number of technological civilizations in the observable universe is less than 1. More precisely: if we model the Drake equation with honest probability estimates, P(technological civilization per habitable planet) < 10^{-10}, making the expected number of civilizations < 10^0 = 1. The Fermi paradox is not a paradox at all \u2014 it is the pigeonhole principle correctly predicting that with very few pigeons (civilizations) and very many holes (planets + time), most holes are empty. Test: compute the Drake equation with conservative estimates and verify that E[civilizations] < 1. Impact: we are alone because probability says so. The universe is mostly empty because that's what the math predicts.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0824",
+    "priority_score": 0.65,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T01:13:32.642655+00:00",
+    "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
   }
 ];

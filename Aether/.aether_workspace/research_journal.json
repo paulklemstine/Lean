@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "dd442784",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Homology of Latin Square Graphs\n\nThese conjectures are distilled from the current cycle's findings on the clique\nstructure of Latin square graphs. Each is falsifiable and, we beli",
-      "quality_score": 0.759526,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-01T15:25:50",
-      "title": "Dimension of Second Clique Homology for Latin Square Graphs"
-    },
-    {
       "cycle_id": "f1070a48",
       "domain": "Novelty",
       "key_insight": "# Future Directions: independence ratio, unit distances, and colourings of the plane\n\nThese conjectures are distilled from the present cycle, which isolates the reduction\n\"independence ratio below `1/",
@@ -499,19 +489,19 @@
       "theorem_count": 46,
       "timestamp": "2026-07-10T00:56:33",
       "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
+    },
+    {
+      "cycle_id": "90ef345f",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — The Quadratic Recurrence and Its Hidden Arithmetic\n\nThese conjectures are distilled from the current cycle, which paired an analytic\nescape estimate for `z ↦ z² + c` with the ari",
+      "quality_score": 0.83,
+      "sorry_count": 1,
+      "theorem_count": 751,
+      "timestamp": "2026-07-10T01:14:02",
+      "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "cfea11f0",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Finite Optimal Transport & Wasserstein Distances\n\nDerived from the Stage 3 (Analyze) and Stage 4 (Critique) findings of this cycle.\nThis cycle established, with zero sorries:\n\n*",
-      "quality_score": 0.65976,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T23:17:20",
-      "title": "Optimal Transport and Wasserstein Distances"
-    },
     {
       "cycle_id": "f589dfb5",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 46,
       "timestamp": "2026-07-10T00:56:33",
       "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
+    },
+    {
+      "cycle_id": "90ef345f",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — The Quadratic Recurrence and Its Hidden Arithmetic\n\nThese conjectures are distilled from the current cycle, which paired an analytic\nescape estimate for `z ↦ z² + c` with the ari",
+      "quality_score": 0.83,
+      "sorry_count": 1,
+      "theorem_count": 751,
+      "timestamp": "2026-07-10T01:14:02",
+      "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-10T00:56:33",
+  "last_updated": "2026-07-10T01:14:02",
   "open_questions": [
-    {
-      "context": "All four compile with no `sorry` and only the standard axioms.; All compile with no `sorry`; the convex chain bottoms out in genuine Mathlib",
-      "cycle_id": "5f11db87",
-      "domain": "Applications",
-      "sorry_count": 2,
-      "timestamp": "2026-06-28T07:58:49"
-    },
     {
       "context": "Main results (all sorry-free):; sorry-free, to an explicit finite list of quartic Thue equations whose known; What survived: the entire *structural* reduction is fully formal and sorry-free.",
       "cycle_id": "60fa5375",
@@ -3016,6 +3009,13 @@
       "domain": "Bridges",
       "sorry_count": 4,
       "timestamp": "2026-07-10T00:21:09"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "90ef345f",
+      "domain": "Probability",
+      "sorry_count": 1,
+      "timestamp": "2026-07-10T01:14:02"
     }
   ],
   "research_threads": {
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "0a73d6d7",
-        "quality": 0.73856,
-        "theorems": 9,
-        "title": "Proof Complexity: Resolution and Cutting Planes"
-      },
-      {
         "cycle_id": "d5c197ae",
         "quality": 0.4285765151515152,
         "theorems": 7,
@@ -3823,6 +3817,12 @@
         "quality": 0.5183991264367817,
         "theorems": 12,
         "title": "The Aharoni-Korman Conjecture for Well-Founded FAC Posets"
+      },
+      {
+        "cycle_id": "90ef345f",
+        "quality": 0.83,
+        "theorems": 751,
+        "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
       }
     ],
     "Pythagorean": [
