@@ -145,6 +145,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 73d4b43b (Q=0.780), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Every mathematical proof is a directed acyclic graph (DAG): nodes are statements, edges are implications, and the acyclicity comes from the fact that you can't prove A from B and B from A without a circular argument (which is not a valid proof). Conjecture: The DAG of all mathematical proofs has a s",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_73d4b43b_7795d9f2",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "73d4b43b",
+    "status": "available",
+    "timestamp": "2026-07-10T05:00:51.739107+00:00",
+    "title": "Deepening: Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 7a9dcf2f (Q=0.780), which proved 81 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Laser beams can carry orbital angular momentum (OAM), creating 'knotted light' \u2014 beams whose wavefronts are linked or knotted. A knotted light beam has a phase singularity (where the amplitude vanishes) that traces out a knot in 3D space. The simplest example is the trefoil beam, whose singularity t",
     "domains": [
       "MachineLearning"
@@ -244,6 +258,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-10T04:08:16.263156+00:00",
     "title": "The Fourier Transform of the Riemann Zeta: Hearing the Primes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 73d4b43b (Q=0.780) proved 14 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Every mathematical proof is a directed acyclic graph (DAG): nodes are statements, edges are implications, and the acyclicity comes from the fact that you can't prove A from B and B from A without a ci",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_73d4b43b_2d922459",
+    "priority_score": 0.8300000000000001,
+    "research_mode": "team",
+    "source_exp_id": "73d4b43b",
+    "status": "available",
+    "timestamp": "2026-07-10T05:00:51.823169+00:00",
+    "title": "Close Proofs: Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
   },
   {
     "consumed_by_exp_id": "",
@@ -4126,21 +4154,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-05T19:39:27.575740+00:00",
     "title": "Decomposition of Countable FAC Posets into Finitely Many Scattered Subposets"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "A \u0394-matroid is strong if and only if it contains no peerless antipodes, defined as pairs of feasible sets with symmetric difference 4 that cannot be exchanged through the standard \u0394-matroid axioms. This provides a novel combinatorial criterion for strongness.",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_0349",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02419v1",
-    "status": "available",
-    "timestamp": "2026-07-05T20:09:50.341886+00:00",
-    "title": "Characterization of Strong \u0394-Matroids via Peerless Antipodes"
   },
   {
     "consumed_by_exp_id": "",
@@ -9770,21 +9783,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bypassed"
   },
   {
-    "consumed_by_exp_id": "73d4b43b",
-    "description": "Every mathematical proof is a directed acyclic graph (DAG): nodes are statements, edges are implications, and the acyclicity comes from the fact that you can't prove A from B and B from A without a circular argument (which is not a valid proof). Conjecture: The DAG of all mathematical proofs has a scale-free structure: the in-degree distribution follows a power law P(k) ~ k^{-gamma} with gamma \u2248 2.5. This means most theorems are proved from a small number of foundational results (the 'hubs'), and there are exponentially many theorems that depend on these hubs. The top 10 hub theorems in mathematics are: (1) Zorn's Lemma, (2) The Intermediate Value Theorem, (3) The Fundamental Theorem of Calculus, (4) The Sylow Theorems, (5) The Baire Category Theorem, (6) Hahn-Banach Theorem, (7) Urysohn's Lemma, (8) The Pigeonhole Principle, (9) Induction, (10) The Law of Excluded Middle. Conjecture: removing any of the top 10 hubs disconnects the proof DAG into at least 2 large components, each containing more than 10% of all theorems. This means mathematics is fragile: removing one foundational theorem makes many other theorems unprovable. Test: construct the proof DAG from Lean 4's Mathlib (all proofs and their dependencies), compute the in-degree distribution, and verify the power law. Impact: mathematics is a scale-free network, and its most important theorems are its most connected nodes \u2014 the hubs that hold the entire structure together.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0832",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T02:06:58.855559+00:00",
-    "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prime gaps \u2014 the spaces between consecutive primes \u2014 are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable \u2014 given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random \u2014 they are a solvable crossword puzzle with deterministic rules.",
     "domains": [
@@ -9800,7 +9798,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ae694210",
     "description": "A dataset with missing values is a sheaf on a poset: the poset is the set of feature subsets (ordered by inclusion), and the sheaf assigns to each feature subset the set of complete observations on those features. The missing data creates 'holes' in the sheaf: H^0 measures the global sections (complete observations) and H^1 measures the obstructions to patching local observations into global ones. Conjecture: For a dataset with missing rate r, the dimension of H^1 is approximately r * n * (r * log(1/r)), where n is the number of features. This means: the 'amount of missing information' grows super-linearly with the missing rate, and imputation is fundamentally harder than interpolation because H^1 > 0 means there is no consistent way to fill in the missing data. The sheaf-theoretic imputation: fill in missing values by finding the section s in H^0 that minimizes the coboundary delta(s) in H^1. This is the maximum likelihood imputation under the assumption that the data is locally consistent. Test: generate synthetic datasets with known ground truth, introduce missing values at rate r, compute H^0 and H^1 of the data sheaf, and verify dim(H^1) ~ r*n*r*log(1/r). Compare sheaf-theoretic imputation with standard methods (mean, KNN, MICE). Impact: missing data is a topological problem, and the sheaf cohomology tells you exactly how much information is lost and whether it can be recovered.",
     "domains": [
       "Novelty",
@@ -9810,7 +9808,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.78,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T03:33:45.828923+00:00",
     "title": "Sheaf Cohomology of Data: The Topology of Missing Information"
   },
@@ -9918,21 +9916,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-09T20:47:51.482127+00:00",
     "title": "This project formalizes a self-contained theory of **total nonnegativity** (all "
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Self-Improving Proofs\n\nThe file `SelfImprovingProofs.lean` formalises a proof-refinement system for a\nfixed target proposition `T`: an abstract type of candidate proofs, a\n`\u2115`-valued complexity `C`, a validity predicate, and a soundness guarantee.\nRefinement is `C(P') < C(P)` between valid candidates. We proved:\n\n* refinement is **well-founded** (`System.refines_wellFounded`) \u2014 no infinite\n  strict simplification;\n* finite chains are **length-bounded** by the initial complexity\n  (`nat_finite_strict_chain_bounded`), and this bound is **tight**\n  (`nat_strict_chain_achievable`, `chainSystem_arbitrarily_long`): for every `m`\n  there is a genuine refinement chain of exactly `m` steps \u2014 finite, but with no\n  uniform length bound;\n* every non-increasing refinement process **halts**\n  (`System.process_halts`, `nat_noninc_eventually_constant`);\n* a **simplest proof exists** (`System.exists_simplest`);\n* but the halting limit need **not** be simplest\n  (`refinement_limit_not_optimal`), with a concrete `\u221a2` counterexample whose\n  soundness is Mathlib's `irrational_sqrt_two`.\n\n## Directions\n\n1. **Syntactic complexity.** Replace the abstract `complexity : Proof \u2192 \u2115` with\n   a genuine measure on Lean `Expr`/tactic scripts (`length + depth + #lemmas`)\n   and re-derive the theorems for that concrete `C`.\n\n2. **Steepest-descent refinement.** Model a refinement *strategy* as a function\n   choosing the next candidate, and characterise which strategies do reach the\n   global minimum (e.g. always pick a strict refinement when one exists). The\n   current counterexample shows arbitrary non-increasing strategies fail.\n\n3. **Multi-objective complexity.** Take `C` valued in a well-order other than\n   `\u2115` (lexicographic `length \u00d7\u2097 depth \u00d7\u2097 #lemmas`, or ordinals) and check which\n   results survive; well-foundedness generalises to any `WellFoundedLT`.\n\n4. **Uncomputability of the optimum.** Formalise that \"the Kolmogorov-minimal\n   proof\" is not computable, sharpening why local refinement cannot in general\n   attain it.\n\n5. **Quantitative arbitrariness (done, extendable).** The tightness of the\n   length bound is now formalised: `chainSystem_arbitrarily_long` builds, for\n   every `m`, a system with a strict refinement chain of exactly `m` steps,\n   matching the `10^100` remark. A natural extension is to exhibit chains whose\n   *length as a function of the theorem's statement size* grows faster than any\n   computable function, sharpening the \"arbitrarily long\" slogan quantitatively.\n",
-    "domains": [
-      "Computation",
-      "Logic"
-    ],
-    "id": "fd_0800",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "6b9c675a",
-    "status": "available",
-    "timestamp": "2026-07-09T20:47:58.711884+00:00",
-    "title": "The file `SelfImprovingProofs.lean` formalises a proof-refinement system for a"
   },
   {
     "consumed_by_exp_id": "",
@@ -10206,18 +10189,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# G\u00f6del's Casino \u2014 Results and Future Directions\n\n## What was proved (`Catalog/Logic/GodelCasino.lean`)\n\nWe formalize a self-contained betting game (\"G\u00f6del's Casino\") over a finite space of\nmodels `\u03a9`. A statement is its truth-value assignment `s : \u03a9 \u2192 Bool`; a bet is a\n`Bool`; the per-world payoff is `+1` for a correct bet and `-1` otherwise. We evaluate\nbets both adversarially (worst world) and in expectation under the uniform prior\n(`expProfit`).\n\nThe mission's conjecture \u2014 that undecidable statements are *individually* winnable with a\nguaranteed positive expected profit, with a universal `\u2265 1/3` lower bound \u2014 is a\n**contrarian target**, and we settle it as follows.\n\n**Structure of the game.**\n- `payoff_zero_sum`, `expProfit_zero_sum`: the game is zero-sum; TRUE and FALSE bets on a\n  statement have opposite expected profits.\n- `sum_payoff_true`, `expProfit_true_formula`: the exact closed form\n  `expProfit s true = (2\u00b7#true \u2212 #worlds)/#worlds`.\n\n**Decidable statements are fully winnable.**\n- `expProfit_valid`, `expProfit_unsat`, `optProfit_valid`: valid/unsatisfiable statements\n  pay the maximum `1`.\n- `sound_strategy_wins`: the abstract \"bet TRUE on provable \u03a3\u2081\" strategy \u2014 if a proof\n  system is *sound* (only proves valid statements) then betting TRUE on a provable\n  statement wins. Crucially, this edge exists precisely because a provable statement is\n  decidable-true, not independent.\n\n**Independence cannot be beaten (the refutation).**\n- `expProfit_balanced`: a *balanced* statement (true in exactly half the worlds) gives\n  expected profit `0` for **every** bet.\n- `independent_has_loss`: for **any** independent statement and **any** bet, some world\n  yields payoff `-1`; the worst-case (guaranteed) profit is `\u2264 -1 < 0`.\n- `casino_no_edge_on_independent`: there is an independent statement (the two-world\n  `id` card, a Continuum-Hypothesis-like \"right in some model\" card) on which every bet\n  has expected profit exactly `0`. **This refutes the individual-winnability claim.**\n- `no_one_third_bound` / `one_third_bound_false`: a deck of balanced cards has average\n  optimal profit `0 < 1/3`, refuting the universal `\u2265 1/3` bound.\n\n**The honest positive statement.**\n- `optProfit_nonneg`: optimal profit is never negative.\n- `decidable_deck_wins`: a deck of *decidable* cards is won every round (`= 1`).\n- The evidence (`ComputationalEvidence.md`) shows a mixed deck with a fraction `f` of\n  decidable cards has average optimal profit exactly `f`.\n\n**Verdict.** The player's entire edge comes from the *decidable* cards; genuine\nincompleteness contributes exactly zero to expected profit and costs `1` in the worst\ncase. In this precise game-theoretic sense, incompleteness *is* a barrier, not a free\nlunch. The refined true statement is: \"You can win at the decidable fragment; the\nundecidable fragment is exactly a fair coin (expected `0`) or an adversarial loss.\"\n\n## Modeling notes / faithfulness\n\n- The refutation is not a technicality: the balanced two-world card is the exact analogue\n  of the mission's headline example (CH, \"right in some model\"). Betting either way is\n  right in one model and wrong in the other, so the symmetric expectation is `0` and the\n  adversarial value is `-1`.\n- An independent statement that is *biased* (not balanced) does admit a positive-expected\n  bet (e.g. `1/2` for a 3-of-4 card). So the real dividing line is **balance**, not\n  independence. This is a sharper statement than the original conjecture.\n\n## Future directions\n\n1. **Priors and calibration.** Replace the uniform prior over a finite world set with a\n   general probability measure and characterize exactly which statements admit a positive\n   expected bet (answer: those with `P(true) \u2260 1/2`). Relate this to a Bayesian agent's\n   credence in an independent sentence.\n\n2. **Repeated play / bankroll.** Add Kelly-style betting and study the almost-sure growth\n   rate of a bankroll: prove that the log-optimal growth is driven solely by the decidable\n   fraction and the calibration gap `|2\u00b7P(true) \u2212 1|` of the biased cards.\n\n3. **Genuine arithmetic hierarchy.** Connect the abstract `IsValid`/`IsIndependent`\n   predicates to Mathlib's first-order logic: model \u03a3\u2081-completeness of a consistent r.e.\n   theory and formalize that a true \u03a3\u2081 sentence is provable, making `sound_strategy_wins`\n   a corollary of a real metamathematical theorem rather than an abstract hypothesis.\n\n4. **Adversarial vs. stochastic gap.** Formalize the minimax value of the casino as a\n   two-player zero-sum game (house chooses the world, player the bet) and prove the value\n   equals the calibration gap, with balanced cards having value `0`.\n\n5. **Multi-valued / many-model bets.** Generalize `Bool` bets to bets on which of several\n   models is the \"real\" one, and study when a hedging portfolio across models beats the\n   single-bet value.\n",
+    "description": "# Future Directions \u2014 The Directed-Acyclic Structure of Dependency Networks\n\nThis cycle established the two load-bearing invariants of a finite dependency network:\na conservation law (aggregate in-degree = edge count = aggregate out-degree) forcing the\nexistence of above-average hubs, and the fact that finiteness plus acyclicity forces every\nnetwork to rest on dependency-free foundations and terminate at frontiers. The following\nconjectures push from these existence statements toward the quantitative shape of the\ndegree distribution.\n\n## Conjecture 1 \u2014 A layered rank function bounds the longest derivation\n\nEvery finite acyclic dependency network admits a rank function `\u03c1` into `\u2115` with\n`\u03c1 u < \u03c1 v` whenever `u` feeds `v`, and the number of ranks equals the length of the\nlongest derivation chain.\n\n*The key insight is* that the well-founded strict order supplied by transitive-closure\nirreflexivity is not merely an existence device: its height function is a canonical\n\"proof depth\" that stratifies the whole network into layers, turning the qualitative\n\"foundations exist\" statement into a quantitative depth spectrum.\n\n*Why now?* We have already isolated acyclicity as irreflexivity of the transitive closure\nand shown it yields a well-founded strict order; the rank function is the natural next\ninvariant extractable from that same well-foundedness, with no new hypotheses required.\n\n## Conjecture 2 \u2014 Hub concentration is super-average, not just average\n\nIn dependency networks whose edge count grows super-linearly in the number of statements,\nthe maximum in-degree grows without bound; more precisely, if `edgeCount \u2265 c \u00b7 n^{1+\u03b4}`\nthen some statement has in-degree at least `c \u00b7 n^{\u03b4}`.\n\n*The key insight is* that the pigeonhole hub bound `edgeCount \u2264 n \u00b7 maxInDeg` is one-sided\nand can be iterated: removing the top hub and reapplying it to the residual network yields a\ndescending ladder of hubs whose degrees are what a power law actually measures.\n\n*Why now?* The single-hub bound is already proved; the missing step is purely the residual\nargument, and the super-linear edge-growth regime is exactly the empirically observed regime\nfor large formal libraries.\n\n## Conjecture 3 \u2014 Removing a top hub fragments the network\n\nThere is an explicit constant `\u03b1 > 0` such that deleting a statement whose in-degree exceeds\n`\u03b1 \u00b7 edgeCount / n` leaves a residual network whose largest weakly-connected component omits\na constant fraction of all statements.\n\n*The key insight is* that in a tree the removal of any internal (degree `\u2265 2`) node provably\ndisconnects the graph, and a high-in-degree hub in a DAG behaves like an internal node of the\nspanning derivation forest \u2014 so fragility is a corollary of the tree-cut phenomenon already\nformalized for acyclic graphs.\n\n*Why now?* The tree-degree and edge-count bounds for acyclic graphs are in hand; the\nremaining work is to transfer the tree cut-vertex argument to the spanning forest of a DAG.\n\n## Conjecture 4 \u2014 Conservation forces a heavy-tailed in-degree distribution\n\nIf the out-degree of every statement is bounded by a constant `B` (each proof cites boundedly\nmany lemmas), then the in-degree distribution cannot be uniform: the fraction of statements\nwith in-degree at least `k` decays no faster than `1/k` for `k` up to the maximum in-degree.\n\n*The key insight is* that bounded out-degree caps the total edge budget at `B \u00b7 n`, while the\nconservation identity redistributes that budget across targets; a uniform target distribution\nwould violate the budget, so the mass must pile onto a few hubs \u2014 the mechanism behind a heavy\ntail.\n\n*Why now?* Both the conservation identity and the hub bound are now theorems, so the tail\nestimate becomes a counting argument over a fixed edge budget rather than a modelling\nassumption.\n",
     "domains": [
-      "Logic",
+      "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0845",
+    "id": "fd_0847",
     "priority_score": 0.75,
     "research_mode": "team",
-    "source_exp_id": "298c68ef",
+    "source_exp_id": "73d4b43b",
     "status": "available",
-    "timestamp": "2026-07-10T04:25:42.854637+00:00",
-    "title": "We formalize a self-contained betting game (\"G\u00f6del's Casino\") over a finite spac"
+    "timestamp": "2026-07-10T05:00:46.811992+00:00",
+    "title": "Two load-bearing invariants of a finite dependency ne"
   },
   {
     "consumed_by_exp_id": "90bde271",

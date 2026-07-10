@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-10T04:25:50.503482+00:00",
+  "last_updated": "2026-07-10T05:00:53.511276+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -1785,6 +1785,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-10T04:25:50.477546+00:00",
       "title": "Godel's Casino: Incomplete but Winnable Games"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 27,
+      "domain": "Applications",
+      "duration_seconds": 1023.4773786067963,
+      "end_time": 1783659628.6676192,
+      "files_integrated": 4,
+      "job_id": "73d4b43b",
+      "outcome_quality": 0.78,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.78,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.526,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.78,
+        "novelty": 0.78,
+        "proof_depth": 0.78,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.78,
+      "sorry_count": 4,
+      "sorry_density": 0.2857142857142857,
+      "start_time": 1783658605.1902406,
+      "strategy_count": 0,
+      "theorem_count": 14,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 8,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-10T05:00:53.479522+00:00",
+      "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
     }
   ]
 }
