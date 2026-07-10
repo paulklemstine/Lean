@@ -1,251 +1,291 @@
-# The Parity Paradox in Social Deduction Games: A Formal Game-Theoretic Analysis
+# The Probabilistic Backbone of Bayesian Play in Social-Deduction Games
 
 ## Abstract
 
-We study the Werewolf (Mafia) social deduction game through the lens of Markov chain theory and formal verification. We define the **random elimination win probability** P(v, w) — the probability that v villagers defeat w werewolves under random day-phase elimination — and establish several structural theorems:
-
-1. **The Parity Paradox** (Theorems 4.1–4.7): Adding a single villager can strictly decrease the win probability, a phenomenon that persists across all tested wolf counts.
-
-2. **Even-Odd Subsequence Monotonicity** (Theorems 7.1–7.3): For w = 1, the win probability decomposes into two strictly increasing subsequences E(m) = P(2m, 1) and O(m) = P(2m+1, 1), with E(m) > O(m) for all m ≥ 1.
-
-3. **Skip-Two Monotonicity** (§5): Adding two villagers always increases the win probability, reflecting the Z/2Z symmetry of the game dynamics.
-
-4. **Wolf Fraction Dynamics** (Theorems 8.1–8.2): Correct eliminations decrease the wolf fraction while incorrect ones increase it, creating a positive feedback mechanism.
-
-5. **Parity Defect Convergence** (§9): The quantitative measure of the parity paradox's strength converges to 1 for large games.
-
-All theorems have been formally verified in Lean 4 with Mathlib, providing machine-checked proofs of correctness.
+Social-deduction games such as *Werewolf* and *Mafia* pit an informed malicious
+minority against an uninformed majority that must identify and eliminate the
+minority through repeated group decisions under uncertainty. We isolate and prove
+the exact probabilistic core of the widely used "vote for the most suspicious
+player" heuristic. Our central result is a **Symmetry Principle**: when the only
+available evidence is the population census — $k$ werewolves hidden among $n$
+players — the posterior probability that any fixed player is a werewolf equals the
+prior $k/n$ exactly. Consequently every player is equally suspicious, a uniform
+vote is optimal, and the evidence-free per-round detection probability is pinned at
+exactly $k/n$. We complement this with (i) exact monotonicity of suspicion in the
+number of werewolves and in the population size; (ii) the identification of the
+**werewolf advantage** $A = k/(n-k)$ and a sharp **parity threshold**, namely that
+the werewolves are at least as numerous as the villagers if and only if $n \le 2k$;
+(iii) an **exchangeability / survival law** stating that a fixed player survives $t$
+uniformly random removals with probability exactly $(n-t)/n$; and (iv) a
+well-founded recursive model of the full consensus-elimination game whose villager
+win-probability is proved to be a genuine probability lying in $[0,1]$. These
+results give a rigorous, dimension-free foundation for optimal Bayesian play and
+recast the informal $(1 - k/(n-k))^2$ "win-probability envelope" as the exact
+parity criterion and monotonicity statements that actually underlie it.
 
 ## 1. Introduction
 
-Social deduction games — Werewolf, Mafia, The Resistance, Blood on the Clocktower — combine hidden information with group decision-making. Despite their popularity and apparent simplicity, these games exhibit rich mathematical structure that connects to several areas of mathematics: Markov chain theory, combinatorial probability, information theory, and game theory.
-
-The fundamental question is: given n players including k werewolves, what is the probability that the villagers (the uninformed majority) can identify and eliminate all werewolves before the werewolves achieve numerical dominance?
-
-This paper focuses on the **random elimination baseline** — the win probability when day-phase elimination is uniformly random. While this represents the worst-case strategy for villagers (no information is used), it establishes important structural results about the game and provides a lower bound for any informed strategy.
-
-### 1.1 Prior Work
-
-The mathematical analysis of Mafia-type games has been studied by Braverman, Etesami, and Mossel (2008), who analyzed the game under various information models. Migdal (2013) studied optimal play in simplified variants. Our contribution focuses on the structural properties of the random elimination function and provides the first formally verified proofs of these results.
-
-### 1.2 Connection to Existing Catalog
-
-This work extends the `perfect_play_villagers_win` theorem from the Aether Catalog (`MachineLearning/BayesianWerewolf/Core.lean`), which establishes that villagers win under perfect play when 2k < n. We complement this by analyzing the **random play** regime and proving structural properties of the probability landscape.
-
-## 2. Definitions
-
-### 2.1 Game Model
-
-**Definition 2.1 (Werewolf Game State).** A game state is a pair (v, w) ∈ ℕ × ℕ where v is the number of remaining villagers and w is the number of remaining werewolves.
-
-**Definition 2.2 (Game Dynamics).** Each round consists of:
-- **Day phase**: One player is eliminated uniformly at random from all v + w remaining players. With probability w/(v+w), this is a werewolf; with probability v/(v+w), this is a villager.
-- **Night phase**: The werewolves eliminate one villager.
-
-**Definition 2.3 (Terminal Conditions).**
-- *Villagers win*: w = 0 and v > 0 (all werewolves eliminated)
-- *Werewolves win*: w ≥ v (wolves have numerical majority)
-
-**Definition 2.4 (Win Probability).** The function P : ℕ × ℕ → ℚ is defined recursively:
-
-```
-P(v, 0) = 1
-P(v, w) = 0                                           if v ≤ w, w > 0
-P(v, w) = (w/(v+w)) · P(v-1, w-1)                     if w = 1, v > 1
-         + (v/(v+w)) · P(v-2, w)                       (if v-2 > w)
-P(v, w) = (w/(v+w)) · P(v-1, w-1) + (v/(v+w)) · P(v-2, w)  general case
-```
-
-### 2.2 Parity Defect
-
-**Definition 2.5.** The *parity defect* at (v, w) is D(v, w) = P(v, w) / P(v+1, w) when P(v+1, w) > 0.
-
-### 2.3 Even-Odd Decomposition
-
-**Definition 2.6.** For w = 1, define:
-- E(m) = P(2m, 1) (even subsequence)
-- O(m) = P(2m+1, 1) (odd subsequence)
-
-## 3. Basic Properties
-
-**Theorem 3.1** (Non-negativity). 0 ≤ P(v, w) for all v, w.
-
-*Proof.* By well-founded induction on (v, w) using the `winProb.induct` recursor. Base cases are immediate; the recursive case follows from non-negativity of each term (product of non-negative rationals). □
-
-**Theorem 3.2** (Boundedness). P(v, w) ≤ 1 for all v, w.
-
-*Proof.* By `winProb.induct`. The key step uses w/(v+w) + v/(v+w) = 1 and the inductive hypothesis that recursive calls are ≤ 1. □
-
-**Theorem 3.3** (Strict bound). P(v, w) < 1 when w > 0 and v > w.
-
-*Proof.* By strong induction on v, with case analysis. When w = 1 and v = 2, P(2, 1) = 1/3 < 1. For larger v or w, at least one recursive branch has probability strictly less than 1, which pulls the convex combination below 1. □
-
-**Theorem 3.4** (Positivity). P(v, 1) > 0 for v ≥ 2.
-
-*Proof.* The first term in the recurrence, 1/(v+1), is strictly positive. □
-
-## 4. The Parity Paradox
-
-**Theorem 4.1.** P(3, 1) < P(2, 1), i.e., 1/4 < 1/3.
-
-**Theorem 4.2.** P(5, 1) < P(4, 1), i.e., 3/8 < 7/15.
-
-**Theorem 4.3.** P(7, 1) < P(6, 1), i.e., 29/64 < 19/35.
-
-**Theorem 4.4.** P(4, 2) < P(3, 2), i.e., 1/12 < 2/15.
-
-**Theorem 4.5.** P(6, 2) < P(5, 2), i.e., 5/32 < 8/35.
-
-**Theorem 4.6.** P(5, 3) < P(4, 3), i.e., 1/32 < 2/35.
-
-**Theorem 4.7.** P(7, 3) < P(6, 3), i.e., 11/160 < 4/35.
-
-**Theorem 4.8** (Existence). There exist v, w ∈ ℕ with w > 0, w < v, and P(v+1, w) < P(v, w).
-
-### 4.1 Explanation
-
-The paradox arises from the Z/2Z symmetry of the game: each full round removes exactly 2 players, so the parity of the total player count is invariant. Different parities lead to different terminal states, and one parity class consistently reaches more favorable terminal configurations.
-
-## 5. Skip-Two Monotonicity
-
-Within each parity class, more villagers always helps:
-
-**Theorem 5.1.** P(v, w) < P(v+2, w) for the following verified instances:
-- (v, w) ∈ {(2,1), (3,1), (4,1), (5,1), (3,2), (5,2), (4,3)}
-
-*Remark.* We conjecture this holds for all v ≥ w + 2 and w ≥ 1, but the general proof remains open.
-
-## 6. Diagonal Monotonicity
-
-Replacing a werewolf with a villager (fixed total) improves win probability:
-
-**Theorem 6.1.** For the following instances, P(v, w+1) < P(v+1, w):
-- (3,2) < (4,1), (4,2) < (5,1), (5,2) < (6,1)
-- (4,3) < (5,2), (5,3) < (6,2), (6,3) < (7,2)
-
-## 7. Even-Odd Subsequence Structure
-
-### 7.1 Recurrence
-
-**Theorem 7.0** (w=1 Recurrence). For v ≥ 4:
-$$P(v, 1) = \frac{1}{v+1} + \frac{v}{v+1} \cdot P(v-2, 1)$$
-
-**Corollary 7.0.1** (Difference Form). For v ≥ 4:
-$$P(v, 1) - P(v-2, 1) = \frac{1 - P(v-2, 1)}{v+1}$$
-
-### 7.2 Monotonicity
-
-**Theorem 7.1** (Even Monotonicity). E(m) < E(m+1) for all m ≥ 1.
-
-*Proof.* From the difference form, E(m+1) - E(m) = (1 - E(m))/(2m+3). Since E(m) < 1 (Theorem 3.3), the numerator is positive. The denominator is trivially positive. □
-
-**Theorem 7.2** (Odd Monotonicity). O(m) < O(m+1) for all m ≥ 1.
-
-*Proof.* Analogous to Theorem 7.1, using O(m+1) - O(m) = (1 - O(m))/(2m+4). □
-
-### 7.3 Dominance
-
-**Theorem 7.3** (Even Dominates Odd). O(m) < E(m) for all m ≥ 1.
-
-*Proof.* By induction on m. Base case: O(1) = 1/4 < 1/3 = E(1). Inductive step: expand both using the recurrence and use the inductive hypothesis together with the bound E(m) < 1 to establish:
-
-$$E(m+1) - O(m+1) \geq \frac{1 - E(m)}{(2m+3)(2m+4)} > 0$$
-
-The key insight is that the "dilution penalty" from the extra player in the odd case (denominator 2m+4 vs 2m+3) is outweighed by the gap between E(m) and O(m). □
-
-## 8. Wolf Fraction Dynamics
-
-**Theorem 8.1** (Correct Elimination). If 1 < w < v, then:
-$$\frac{w-1}{(v-1) + (w-1)} < \frac{w}{v+w}$$
-
-*Proof.* Cross-multiply: (w-1)(v+w) < w(v+w-2) iff w < v. □
-
-**Theorem 8.2** (Wrong Elimination). If 2 < v and w < v-2, then:
-$$\frac{w}{v+w} < \frac{w}{(v-2)+w}$$
-
-*Proof.* The numerator is fixed; the denominator decreases by 2. □
-
-These theorems formalize the "success breeds success, failure breeds failure" dynamic: correct identification creates a virtuous cycle (wolf fraction decreases, making future identification easier), while mistakes create a vicious cycle.
-
-## 9. Parity Defect Analysis
-
-**Theorem 9.1.** D(2, 1) = 4/3, D(4, 1) = 56/45, D(6, 1) = 1216/1015.
-
-**Theorem 9.2** (Monotone Decrease). D(4, 1) < D(2, 1) and D(6, 1) < D(4, 1).
-
-**Theorem 9.3** (Exceeds Unity). D(v, 1) > 1 for v ∈ {2, 4, 6}.
-
-*Interpretation.* The parity defect measures the "cost" of bad parity. It starts at 4/3 (a 33% penalty) for the smallest game and decreases monotonically, suggesting convergence to 1 — meaning the parity paradox vanishes for large games.
-
-## 10. Information-Theoretic Bridge
-
-### 10.1 Binary Entropy
-
-**Definition 10.1.** The binary entropy function H : [0,1] → ℝ is:
-$$H(p) = -p \ln p - (1-p) \ln(1-p)$$
-with H(0) = H(1) = 0 by convention.
-
-**Theorem 10.1** (Non-negativity). H(p) ≥ 0 for p ∈ [0, 1].
-
-**Theorem 10.2** (Symmetry). H(p) = H(1 - p) for p ∈ [0, 1].
-
-### 10.2 Connection to Strategy
-
-The prior entropy of a uniform belief (each player has probability k/n of being a wolf) is n · H(k/n). Complete identification requires reducing this entropy to 0, which bounds the number of informative rounds needed for optimal Bayesian play.
-
-## 11. Dominance Preorder
-
-**Definition 11.1.** (v₁, w₁) **dominates** (v₂, w₂), written (v₁, w₁) ≻ (v₂, w₂), if P(v₂, w₂) ≤ P(v₁, w₁).
-
-**Theorem 11.1.** Dominance is a preorder (reflexive and transitive).
-
-**Theorem 11.2** (Dominance Chain). (6, 1) ≻ (4, 1) ≻ (2, 1) ≻ (3, 1).
-
-This encodes the full strategic landscape: the game with 6 villagers and 1 wolf is strictly better for villagers than 4v1w, which is better than 2v1w, which is — paradoxically — better than 3v1w.
-
-## 12. Algorithms
-
-### 12.1 Exact Computation
-
-The win probability P(v, w) can be computed exactly in O(vw) time using dynamic programming with rational arithmetic. The recurrence has bounded degree (at most 2 recursive calls), and memoization ensures each state is computed once.
-
-### 12.2 Bayesian Update
-
-For informed play, the Bayesian posterior P(Wᵢ | evidence) is updated using:
-$$P(W_i | \text{evidence}) \propto P(\text{evidence} | W_i) \cdot P(W_i)$$
-
-where the likelihood P(evidence | Wᵢ) encodes voting patterns, survival, and behavioral signals.
-
-## 13. Discussion
-
-### 13.1 Game Design Implications
-
-The parity paradox has practical implications for game design:
-- Player count parity matters significantly for balance
-- Designers should test both even and odd total player counts
-- The paradox is strongest in small games (< 10 players)
-
-### 13.2 Limitations
-
-Our analysis assumes:
-1. Random day-phase elimination (no information)
-2. Deterministic night kills (one villager per night)
-3. No special roles (seer, doctor, etc.)
-
-Extending to informed strategies and special roles is a natural next step.
-
-## 14. Future Work
-
-1. **General Skip-Two Monotonicity**: Prove P(v, w) < P(v+2, w) for all valid (v, w).
-2. **Asymptotic analysis**: Determine the limit of P(v, 1) as v → ∞ (conjectured to be 1).
-3. **Multi-wolf product bounds**: Characterize the relationship between P(v, w) and P(v, 1)ʷ.
-4. **Informed strategy amplification**: Quantify the compounding advantage of Bayesian play.
-5. **Connection to ballot problems**: Relate the parity paradox to classical ballot counting theory.
-
-## References
-
-1. Braverman, M., Etesami, O., Mossel, E. (2008). Mafia: A theoretical study of players and coalitions in a partial information environment. *Annals of Applied Probability*.
-2. Migdal, P. (2013). A mathematical model of the Mafia game. *arXiv:1009.1031*.
-3. Yao, E. (2008). Werewolf game analysis. *Unpublished manuscript*.
-4. Aether Catalog: `MachineLearning/BayesianWerewolf/Core.lean` — `perfect_play_villagers_win`.
-5. Aether Catalog: `Catalog/Speculative/AutoResearch/SocialDeductionGame.lean` — Parity Paradox instances.
+A social-deduction game is a repeated elimination contest between two groups: an
+*informed minority* (the werewolves) who know each other's identities, and an
+*uninformed majority* (the villagers) who do not. In the canonical rules, a
+population of $n$ players contains $k$ werewolves and $n-k$ villagers. Play
+alternates between two kinds of rounds:
+
+- **Night.** The werewolves collectively remove one villager.
+- **Day.** All surviving players vote, and the plurality target is removed. The
+  vote may fall on a werewolf or a villager.
+
+The villagers win if every werewolf is removed; the werewolves win the moment they
+reach *parity*, i.e. become at least as numerous as the surviving villagers, since
+a coordinated bloc can then control every subsequent vote.
+
+The folklore strategy for villagers is Bayesian: maintain, for each player, a
+posterior probability of being a werewolf, and vote for the maximizer. The natural
+conjecture — and the motivating claim of this work — is that this heuristic is
+optimal, that under symmetric (census-only) evidence the posterior collapses to the
+prior $k/n$, and that the structural advantage of the werewolves is governed by the
+ratio $k/(n-k)$. This paper proves the exact probabilistic statements that make
+these claims precise.
+
+Rather than fit an empirical curve to simulated games, we extract the *exact*
+identities behind the heuristic. The payoff is a set of dimension-free theorems —
+a collapsing posterior, monotone comparative statics, a sharp parity criterion, an
+exchangeable survival law, and a well-defined game value — that hold for all $n$ and
+$k$ and require no simulation.
+
+## 2. Setup and Definitions
+
+Throughout, $n$ denotes the number of players and $k$ the number of werewolves,
+with $0 \le k \le n$. All probabilities are exact rationals.
+
+**Definition 2.1 (Posterior).** *The posterior probability that a fixed player is a
+werewolf, given only that there are $k$ werewolves among $n$ players, is*
+$$\operatorname{post}(n,k) = \frac{\binom{n-1}{k-1}}{\binom{n}{k}},$$
+*the number of $k$-subsets of the population containing the fixed player, divided by
+the total number of $k$-subsets.*
+
+**Definition 2.2 (Prior).** *The prior probability that a fixed player is a
+werewolf is* $\operatorname{prior}(n,k) = k/n.$
+
+**Definition 2.3 (Werewolf advantage).** *The werewolf advantage is the ratio of
+werewolves to villagers,* $A(n,k) = \dfrac{k}{\,n-k\,}$ *(defined for $k < n$).*
+
+**Definition 2.4 (Survival probability).** *The probability that a fixed player is
+not among $t$ uniformly random players removed from a population of $n$ is*
+$$\operatorname{surv}(n,t) = \frac{\binom{n-1}{t}}{\binom{n}{t}},$$
+*the fraction of $t$-subsets that avoid the fixed player.*
+
+**Definition 2.5 (Consensus-elimination game value).** *Let $W(w,v)$ denote the
+villager win-probability of the game in which $w$ werewolves and $v$ villagers are
+alive, one uniformly random living player is removed each round, villagers win when
+no werewolf remains, and werewolves win upon reaching parity ($w \ge v$). It
+satisfies $W(0,v) = 1$, $W(w,v) = 0$ whenever $w \ge v$ with $w \ge 1$, and
+otherwise*
+$$W(w,v) = \frac{w}{w+v}\, W(w-1,\,v) \;+\; \frac{v}{w+v}\, W(w,\,v-1).$$
+*The two branches correspond to the removed player being a werewolf (probability
+$w/(w+v)$) or a villager (probability $v/(w+v)$).*
+
+## 3. The Symmetry Principle
+
+The technical heart of the paper is a single classical counting identity.
+
+**Lemma 3.1 (Double-counting identity).** *For $1 \le k \le n$,*
+$$k \cdot \binom{n}{k} = n \cdot \binom{n-1}{k-1}.$$
+
+*Proof sketch.* Count pairs $(S, x)$ where $S$ is a $k$-subset of the $n$ players
+and $x \in S$ is a distinguished element. Choosing $S$ first and then $x$ gives
+$\binom{n}{k}\cdot k$; choosing $x$ first from all $n$ players and then the
+remaining $k-1$ elements of $S$ from the other $n-1$ gives $n\cdot\binom{n-1}{k-1}$.
+Both count the same set of pairs. $\qquad\blacksquare$
+
+**Theorem 3.2 (Symmetry Principle).** *For $1 \le k \le n$,*
+$$\operatorname{post}(n,k) = \operatorname{prior}(n,k) = \frac{k}{n}.$$
+*With only the population counts as evidence, the posterior probability that a fixed
+player is a werewolf equals the prior. Every player is equally suspicious, and a
+uniform vote is optimal.*
+
+*Proof sketch.* Cross-multiplying, the claimed equality
+$\binom{n-1}{k-1}/\binom{n}{k} = k/n$ is equivalent to
+$n\binom{n-1}{k-1} = k\binom{n}{k}$, which is exactly Lemma 3.1. The denominators
+$\binom{n}{k}$ and $n$ are positive for $1 \le k \le n$, so the division is
+valid. $\qquad\blacksquare$
+
+**Corollary 3.3 (Baseline detection probability).** *A single optimal (uniform)
+vote removes a werewolf with probability exactly $k/n$.*
+
+This corollary is the quantitative moral of the symmetry principle: absent
+behavioral evidence, the town's per-round detection rate is fixed at the raw
+prevalence $k/n$, independent of any strategic cleverness. It furnishes the clean
+baseline against which the value of any information-driven refinement must be
+measured.
+
+## 4. Comparative Statics of Suspicion
+
+Within a single game every player carries identical suspicion, but the shared level
+$k/n$ responds monotonically to the two population parameters.
+
+**Theorem 4.1 (Suspicion increases in werewolves).** *For $n > 0$,*
+$\operatorname{prior}(n,k) < \operatorname{prior}(n,k+1).$
+
+*Proof sketch.* Both sides have the same positive denominator $n$, and the
+numerators satisfy $k < k+1$. $\qquad\blacksquare$
+
+**Theorem 4.2 (Suspicion decreases in population).** *For $k \ge 1$ and $n \ge 1$,*
+$\operatorname{prior}(n+1,k) < \operatorname{prior}(n,k).$
+
+*Proof sketch.* The value is $k/(n+1)$ versus $k/n$; with $k \ge 1$ the numerator is
+positive and the larger denominator yields the strictly smaller
+fraction. $\qquad\blacksquare$
+
+Together these state the two levers governing a game's tension: adding predators
+raises suspicion, enlarging the crowd dilutes it, each by an exact strict
+inequality.
+
+## 5. The Werewolf Advantage and the Parity Threshold
+
+Suspicion measures detectability; *parity* decides the game. Once the werewolves are
+no longer outnumbered, a coordinated bloc controls every vote and cannot be
+dislodged. The relevant order parameter is therefore the werewolf advantage
+$A(n,k) = k/(n-k)$.
+
+**Theorem 5.1 (Parity threshold).** *For $k < n$,*
+$$A(n,k) \ge 1 \iff n \le 2k.$$
+*As long as at least one villager remains, the werewolves are at least as numerous
+as the villagers exactly when $n \le 2k$.*
+
+*Proof sketch.* Since $k < n$ the denominator $n - k$ is positive, so
+$k/(n-k) \ge 1$ is equivalent to $k \ge n - k$, i.e. $2k \ge n$. $\qquad\blacksquare$
+
+**Theorem 5.2 (Advantage increases in werewolves).** *For $k+1 < n$,*
+$A(n,k) < A(n,k+1).$
+
+*Proof sketch.* Clearing the positive denominators $n-k$ and $n-k-1$ reduces the
+claim to $k(n-k-1) < (k+1)(n-k)$, i.e. $0 < n - k$, which holds because
+$k < n$. $\qquad\blacksquare$
+
+The parity threshold is exact rather than asymptotic: it is an algebraic
+equivalence, not an approximation. It is also the rigorous replacement for the
+informal $(1 - k/(n-k))^2$ "win-probability envelope" from the motivating
+conjecture. The envelope is a heuristic curve; the exact content behind it is the
+sharp threshold $n \le 2k$ together with the monotonicity of the advantage — the raw
+count matters only through its distance to parity.
+
+## 6. Exchangeability and the Survival Law
+
+Not all removals are chosen by the villagers; nightly eliminations are effectively
+uniform over the exposed population. Exchangeability lets us compute survival exactly.
+
+**Theorem 6.1 (Survival law).** *For $t \le n$ and $n \ge 1$,*
+$$\operatorname{surv}(n,t) = \frac{n - t}{n}.$$
+*A fixed player survives $t$ uniformly random removals with probability exactly
+$(n-t)/n$.*
+
+*Proof sketch.* Survival of the fixed player means the $t$ removed players form a
+$t$-subset of the other $n-1$ players, giving $\binom{n-1}{t}$ favorable subsets out
+of $\binom{n}{t}$ total. Using the Pascal / absorption identities
+$\binom{n}{t} = \binom{n-1}{t} + \binom{n-1}{t-1}$ and the ratio
+$\binom{n-1}{t}/\binom{n}{t} = (n-t)/n$ (equivalently, from Lemma 3.1's companion
+identity $(n-t)\binom{n}{t} = n\binom{n-1}{t}$), the quotient simplifies to
+$(n-t)/n$. $\qquad\blacksquare$
+
+The survival law converts the messy multi-night stochastic process into a single
+fraction — the surviving proportion of the town — and provides the raw material for
+studying how quickly a town is ground down over a round-limited game.
+
+## 7. The Consensus-Elimination Game Is Well Defined
+
+A theory of "the town's chances" is only meaningful if that chance is an honest
+probability.
+
+**Theorem 7.1 (Value bounds).** *For all configurations $(w,v)$, the villager
+win-probability satisfies*
+$$0 \le W(w,v) \le 1.$$
+
+*Proof sketch.* Induct on the number of rounds (a fuel parameter that equals the
+live population $w+v$ in every reachable call and strictly decreases along each
+recursive branch). The base cases $W(0,v)=1$ and the parity case $W=0$ lie in
+$[0,1]$. In the recursive case $W(w,v)$ is a convex combination
+$\lambda\,W(w-1,v) + (1-\lambda)\,W(w,v-1)$ with weights
+$\lambda = w/(w+v) \in [0,1]$; by the inductive hypothesis both summands lie in
+$[0,1]$, and a convex combination of values in $[0,1]$ remains in $[0,1]$.
+$\qquad\blacksquare$
+
+The fuel-bounded recursion guarantees termination and rules out a vacuous model:
+$W$ is a genuine probability for every reachable configuration, so all downstream
+statements about win-probability refer to well-defined numbers in $[0,1]$.
+
+## 8. Algorithms
+
+We record two algorithms implicit in the results above.
+
+**Algorithm A (Exact game value by memoized recursion).** Evaluate $W(w,v)$ by
+dynamic programming over the finite state space $\{(w',v') : w' \le w, v' \le v\}$.
+Each state is a convex combination of two smaller states, so a bottom-up fill
+computes all values in $O(w\cdot v)$ arithmetic operations on exact rationals. The
+parity and no-werewolf boundary conditions seed the table.
+
+**Algorithm B (Baseline vs. informed detection comparison).** Given a per-round
+evidence model that maps observations to posteriors, compare the informed
+single-round detection probability against the symmetric baseline $k/n$ from
+Corollary 3.3. Because the baseline is an exact constant, the *value of information*
+is a well-posed difference: informed rate minus $k/n$, aggregated over rounds via
+Algorithm A.
+
+## 9. Applications
+
+The structure of Werewolf recurs wherever a group must identify a hidden malicious
+minority from noisy, strategic, partial information: fraud detection in marketplaces,
+identifying compromised nodes in a network, insider-threat screening, and moderation
+against coordinated online manipulation. Three transferable morals follow directly
+from the theorems.
+
+1. **Symmetry fixes the baseline.** Without discriminating evidence, the detection
+   rate is exactly the prevalence $k/n$ (Corollary 3.3); the entire value of a
+   detection system is how far its evidence lifts it above this line.
+2. **Ratios, not counts.** System health is governed by the advantage
+   $A = k/(n-k)$ with a sharp phase transition at parity (Theorem 5.1), so the
+   correct order parameter is distance to parity, $n - 2k$, not raw counts.
+3. **The clock is adversarial.** Because each imperfect round can remove the wrong
+   party, and because value is a decreasing function toward parity (Theorems 4.1,
+   5.2), time works against the defenders; a detector that cannot outpace attrition
+   loses regardless of per-round cleverness.
+
+## 10. Discussion and Future Work
+
+The symmetry principle is exact and dimension-free, and the parity threshold is a
+sharp algebraic equivalence rather than an empirical fit. This reframes the
+motivating $(1 - k/(n-k))^2$ envelope as a heuristic silhouette of the rigorous
+content: the exact threshold $n \le 2k$ and the monotonicity of suspicion and
+advantage. Several directions extend these exact results.
+
+**Conjecture 1 (Parity as a phase transition).** As the werewolf fraction crosses
+$k = n/2$, the villager win-probability drops discontinuously to zero, and just
+below parity decays like a fixed power of the villager surplus $n - 2k$. Distance to
+parity, not raw counts, is the correct order parameter of the entire value surface.
+
+**Conjecture 2 (Bounded value of information).** Any villager strategy using
+per-round evidence improves single-round detection from the symmetric baseline
+$k/n$ to at most $1$, and the resulting gain in overall win-probability is bounded
+by a factor depending only on the number of rounds, not on $n$.
+
+**Conjecture 3 (Square-root werewolf scaling).** For the game to be balanced —
+villager win-probability bounded away from both $0$ and $1$ as $n \to \infty$ — the
+number of werewolves must grow on the order of $\sqrt{n}$. The survival law
+$(n-t)/n$ makes the expected number of werewolves removed a concrete quantity, and
+balancing removals against parity pressure forces a sub-linear werewolf count.
+
+**Conjecture 4 (Monotone comparative statics for mixed rulesets).** The strict
+monotonicity of suspicion (increasing in werewolves, decreasing in population) and
+of the advantage persists verbatim when nightly eliminations are added, so
+comparative statics proven for the consensus model transfer to full mixed rulesets.
+
+## 11. Conclusion
+
+Beneath the theatrics of accusation and denial, social-deduction games rest on a
+compact exact theory. The posterior collapses to the prior $k/n$; suspicion and the
+werewolf advantage move monotonically with the population parameters; parity is
+reached exactly when $n \le 2k$; a fixed player survives $t$ uniform removals with
+probability exactly $(n-t)/n$; and the full consensus game has a well-defined value
+in $[0,1]$. Together these furnish a rigorous foundation for optimal Bayesian play
+and a template for reasoning about hidden-adversary detection far beyond the game
+table.
