@@ -171,6 +171,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle a9aa7bbf (Q=0.800), which proved 18 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Sorting a list of n elements reduces the entropy from log(n!) bits to 0 bits, doing thermodynamic work W = kT * log(n!) in the process. But this is only true if sorting is irreversible \u2014 if the sorted list uniquely determines the input, then sorting is reversible and does no thermodynamic work. The ",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "push_a9aa7bbf_18cbb188",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "a9aa7bbf",
+    "status": "available",
+    "timestamp": "2026-07-10T10:46:04.413215+00:00",
+    "title": "Deepening: The Thermodynamics of Sorting: Entropy and Computational Work"
+  },
+  {
     "consumed_by_exp_id": "9f734f3e",
     "description": "Building on cycle 3fa70466 (Q=0.790), which proved 10 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In 1952, Turing showed that reaction-diffusion equations produce patterns (spots, stripes, spirals) that explain biological morphogenesis. But Turing patterns are solutions to PDEs, which are hard to analyze. Conjecture: Turing patterns are algebraic varieties. Specifically, the zero set of a Turing",
     "domains": [
@@ -326,20 +340,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T05:35:47.121314+00:00",
     "title": "Close Proofs: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
-  },
-  {
-    "consumed_by_exp_id": "b0a297ce",
-    "description": "Cycle 4936bb72 (Q=0.850) proved 11 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Building on cycle 4d30d98b (Q=0.830), which proved 9 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. ",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_4936bb72_a172f438",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "4936bb72",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T07:49:49.968157+00:00",
-    "title": "Close Proofs: The Zeta Function of a Graph: Number Theory on Networks"
   },
   {
     "consumed_by_exp_id": "",
@@ -768,7 +768,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of Uniform-Scaled Spanning Subgraphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c22096e0",
     "description": "Conjecture: For any fixed integer r\u22652 and any collection of graphs H1,\u202f\u2026, Hr, let \u03c8 = \u2225_{j=1}^r (\u03c967(Hj)\u20111). Define the critical edge density \u03c0_c = 1\u20111/\u03c8. For a host graph G0 on n vertices with edge density exactly \u03c0_c\u2212\u03b5 (for a fixed \u03b5>0) consider the random\u2011perturbation model where we add m random edges (without replacement). Then the minimal number of edges that forces the perturbed graph to be (H1,\u202f\u2026, Hr)_v\u2011Ramsey satisfies\n\n    m_c(n) = \u03c0_c * (n choose 2) + \u03a8(n^{3/2}),\n\nand there is a sharp threshold: if m = m_c(n) + \u03c9(n^{3/2}) then with high probability the perturbed graph is (H1,\u202f\u2026, Hr)_v\u2011Ramsey; if m = m_c(n) \u2212 \u03c9(n^{3/2}) then with high probability it is not. Moreover, the window of size O(n^{3/2}) is the critical window for the transition.",
     "domains": [
       "Computation",
@@ -778,7 +778,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T17:52:40.366510+00:00",
     "title": "Precise threshold for vertex\u2011Ramsey property in random perturbations"
   },
@@ -5525,19 +5525,34 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conservation law for jigsaw assemblies \u2014 in any validly"
   },
   {
-    "consumed_by_exp_id": "a9aa7bbf",
-    "description": "Sorting a list of n elements reduces the entropy from log(n!) bits to 0 bits, doing thermodynamic work W = kT * log(n!) in the process. But this is only true if sorting is irreversible \u2014 if the sorted list uniquely determines the input, then sorting is reversible and does no thermodynamic work. The key insight: comparison-based sorting makes irreversible comparisons (you learn a < b but discard the possibility a > b), and each comparison reduces entropy by at most 1 bit. So n*log(n) comparisons reduce entropy by at most n*log(n) bits, which matches log(n!) ~ n*log(n) bits. Conjecture: the minimum thermodynamic work of sorting n elements is W_min = kT * log(n!), and this work is achieved by optimal comparison-based sorting algorithms (merge sort, heapsort). Sub-optimal algorithms (bubble sort: n^2 comparisons) do more thermodynamic work than necessary: W_bubble = kT * n^2, wasting kT * (n^2 - n*log(n)) bits of entropy reduction. Conjecture: any sorting algorithm that makes C(n) comparisons does thermodynamic work proportional to C(n) * kT, and the optimal work is W_min = kT * n*log(n) (Stirling's approximation). Test: simulate sorting algorithms with entropy bookkeeping, verify W = kT * log(n!) for merge sort and W = kT * n^2 for bubble sort. Impact: sorting is a thermodynamic process. The n*log(n) lower bound is a consequence of the second law of thermodynamics.",
+    "consumed_by_exp_id": "",
+    "description": "# Future directions: number theory on networks\n\n`GraphZetaGlobalRH.lean` lifts the single-eigenvalue (local) Ihara/Ramanujan\ncorrespondence to the **global spectral Ihara zeta** `Z\u207b\u00b9(u) = \u220f_\u03bb (1 \u2212 \u03bbu + qu\u00b2)`\nand proves the full equivalence\n\n    RH for \u03b6_G  \u21d4  G is a Ramanujan graph,\n\ntogether with the global functional equation and Euler-product multiplicativity.\nNatural next steps:\n\n1. **From the spectrum to the adjacency matrix.** Connect `zetaInv` to\n   `det(I \u2212 A u + q u\u00b2 I)` via `Matrix.charpoly` / eigenvalue products, so the\n   results are stated directly for a `(q+1)`-regular graph `G` and its adjacency\n   matrix `A` rather than an abstract spectrum `\u03bb : \u03b9 \u2192 \u2102`.\n\n2. **The full Bass\u2013Ihara formula.** Include the `(1 \u2212 u\u00b2)^{(n\u22121)(q\u22121)/2}`\n   prefactor and prove the determinant identity\n   `\u03b6_G(u)\u207b\u00b9 = (1 \u2212 u\u00b2)^{(n\u22121)(q\u22121)/2} \u00b7 det(I \u2212 A u + q u\u00b2 I)` for regular\n   graphs, deducing the pole structure of `\u03b6_G` itself.\n\n3. **Prime geodesic counting.** Relate `u \u00b7 d/du log Z_G(u)` to the number of\n   closed non-backtracking tailless geodesics `N_m`, giving the graph analogue of\n   the explicit formula, and a \"prime geodesic theorem\" for Ramanujan graphs.\n\n4. **Weighted / irregular graphs.** Generalize the local factor to\n   `det(I \u2212 A u + Q u\u00b2)` with a diagonal degree matrix `Q`, extending the RH\n   dichotomy beyond the regular case.\n\n5. **Counting zeros on the circle.** Turn the qualitative dichotomy into an exact\n   count: the number of zeros of `Z\u207b\u00b9` on `|u| = 1/\u221aq` equals twice the number of\n   eigenvalues in the Ramanujan window, using `Polynomial.roots` multiplicities.\n\n6. **Zeta of coverings and the Ihara determinant of quotients.** Study how\n   `Z\u207b\u00b9` factors under graph coverings (the analogue of Artin factorization of\n   Dedekind zetas), building on the `zetaInv_union` multiplicativity.\n\n\n# Future directions: Carmichael's primitive divisor theorem for Fibonacci numbers\n\nThe files `Catalog/Shared/CarmichaelHelper.lean`, `Catalog/Shared/CarmichaelProof.lean`,\n`Catalog/Speculative/AutoResearch/CarmichaelComposite.lean`, and\n`Catalog/Speculative/CarmichaelPrimitiveDivisor.lean` establish, with complete\n`sorry`-free proofs:\n\n* **Prime case (all `n`).** For every prime `n \u2265 13`, `F(n)` has a primitive prime\n  divisor (`fib_primitive_divisor_prime`). This is fully general.\n* **Composite case (verified range).** For every composite `n` with\n  `13 \u2264 n \u2264 10000`, `F(n)` has a primitive prime divisor\n  (`fib_carmichael_composite`), proved by combining the structural primitivity\n  criterion `primPart_implies_primitive` (a genuine proof via the rank/apparition\n  argument through `Nat.fib_gcd`) with the finite verification `primPart_check`.\n\n## The open tail: unrestricted composite `n`\n\nCarmichael's classical theorem (1913) asserts that `F(n)` has a primitive prime\ndivisor for **all** `n \u2209 {1, 2, 6, 12}`, in particular for every composite\n`n \u2265 14`. The remaining, genuinely deep, ingredient is the composite case for\narbitrarily large `n`. A complete proof requires infrastructure not currently in\nMathlib:\n\n1. **Lifting-the-exponent for the Lucas sequence.** For a prime `p` with rank of\n   apparition `z = z(p)` (least `m > 0` with `p \u2223 F(m)`), control the `p`-adic\n   valuation `v_p(F(n))` in terms of `v_p(F(z))` and `v_p(n/z)`. This is the\n   analogue of the LTE lemma `multiplicity.Int.pow_sub_pow`, transported to the\n   ring `\u2124[\u03c6]` where `F(n) = (\u03b1^n \u2212 \u03b2^n)/\u221a5`.\n\n2. **Classification of intrinsic primes.** Using (1), show that every prime factor\n   of the primitive part `D_n = \u220f_{d \u2223 n} F(d)^{\u03bc(n/d)}` has rank exactly `n`,\n   with the sole possible exception of one \"intrinsic\" prime that divides `n` and\n   occurs to the first power. Consequently the non-primitive part of `D_n` divides\n   `n`.\n\n3. **Analytic size bound.** Prove `|D_n| = \u03b1^{\u03c6(n)} \u00b7 (1 + o(1))` (equivalently a\n   clean lower bound `|D_n| \u2265 c \u00b7 \u03b1^{\u03c6(n)}`) via the closed form and M\u00f6bius\n   inversion, together with a lower bound on Euler's totient `\u03c6(n)`. Since\n   `\u03b1^{\u03c6(n)}` dominates `n` for all `n > 12`, the primitive part exceeds its\n   possible intrinsic factor, forcing a genuine primitive prime divisor.\n\nCombining (2) and (3) yields the unbounded composite case and hence the full\nCarmichael theorem. Formalizing (1)\u2013(3) \u2014 none of which is available off the shelf\nin Mathlib \u2014 is the natural next step; the `primPart` / `fibCoprimePart`\nscaffolding already in place reduces the goal precisely to `1 < primPart n` for\ncomposite `n`, so only the size argument above remains.\n",
     "domains": [
-      "Novelty",
-      "Computation"
+      "Pythagorean",
+      "Algebra"
     ],
-    "id": "fd_0861",
-    "priority_score": 0.74,
+    "id": "fd_0880",
+    "priority_score": 0.75,
     "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T07:33:05.128962+00:00",
-    "title": "The Thermodynamics of Sorting: Entropy and Computational Work"
+    "source_exp_id": "b0a297ce",
+    "status": "available",
+    "timestamp": "2026-07-10T10:45:52.171714+00:00",
+    "title": "`GraphZetaGlobalRH.lean` lifts the single-eigenvalue (local) Ihara/Ramanujan"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Thermodynamics of Sorting\n\nThis project formalizes the information-theoretic (Landauer / second-law) content of the\n\"thermodynamics of sorting\" mission. Below we record what was **proved**, what was\n**refuted**, and open threads.\n\n## Proved (all with only `propext`, `Classical.choice`, `Quot.sound`)\n\n**`EntropyLowerBound.lean` \u2014 the entropy lower bound.**\n- `DTree.leaves_le_two_pow_height`: a binary decision tree of height `h` has `\u2264 2^h` leaves.\n- `sorting_comparison_lower_bound`: any decision tree that sorts `n` elements (`\u2265 n!`\n  leaves) has height `\u2265 \u2308log\u2082(n!)\u2309`. This is the entropy lower bound: worst-case\n  comparisons `\u2265` the Shannon entropy `log\u2082(n!)` of the uniform distribution over inputs.\n- `factorial_ge_half_pow`: `(n/2)^(n/2) \u2264 n!`.\n- `log_pow_ge`: `k\u00b7\u230alog_b a\u230b \u2264 \u230alog_b(a^k)\u230b`.\n- `log_factorial_ge`: `(n/2)\u00b7\u230alog\u2082(n/2)\u230b \u2264 \u230alog\u2082(n!)\u230b`, i.e. `log\u2082(n!) = \u03a9(n log n)`.\n- `sorting_nlogn_lower_bound`: hence any correct comparison sort makes `\u03a9(n log n)`\n  comparisons \u2014 the `n log n` lower bound *as a consequence of entropy accounting*.\n\n**`BubbleSortContrarian.lean` \u2014 a contrarian correction.**\n- `bubbleComparisons_eq`: bubble sort makes exactly `n(n-1)/2` comparisons (Gauss sum).\n- `bubble_sq_identity`: `2\u00b7C(n) + n = n\u00b2`, so `C(n) = (n\u00b2-n)/2`.\n- `bubble_lt_sq`: `C(n) < n\u00b2` for `n \u2265 1` \u2014 **the brief's `W_bubble = kT\u00b7n\u00b2` is refuted**;\n  the true work is `(n\u00b2-n)/2\u00b7kT`, overcounted by the quoted `n\u00b2` by a factor approaching 2.\n- `bubble_ge_entropy_floor`: `(n/2)\u00b7\u230alog\u2082(n/2)\u230b \u2264 C(n)`, so bubble sort still pays at least\n  the `\u03a9(n log n)` entropy floor (and asymptotically much more \u2014 the \"wasted\" work).\n\n**`Irreversibility.lean` \u2014 irreversibility = information erasure.**\n- `sort_perm_invariant`: all `n!` permutations of a list map to the *same* sorted output.\n- `sort_collapse_witness`, `sort_not_injective`: the sorting map is not injective, hence\n  irreversible; by Landauer's principle it must dissipate work, unlike a reversible map.\n\n## Refuted\n\n- **`W_bubble = kT\u00b7n\u00b2`** (as literally stated): the exact comparison count is `(n\u00b2-n)/2`,\n  not `n\u00b2`. Formalized in `bubble_lt_sq` / `bubble_sq_identity`.\n\n## Open / harder directions\n\n1. **Tightness of the entropy bound.** The bound `\u2308log\u2082(n!)\u2309` is *not* always achievable:\n   sorting 12 elements requires 30 comparisons while `\u2308log\u2082(12!)\u2309 = 29`. Formalizing the\n   Ford\u2013Johnson (merge-insertion) analysis, or the `S(n) \u2260 \u2308log\u2082 n!\u2309` gaps, would sharpen\n   the \"minimum work `= kT\u00b7log(n!)`\" conjecture into its correct (only-asymptotic) form.\n\n2. **Upper bound / achievability.** Formalize that merge sort achieves `\u2264 n\u2308log\u2082 n\u2309`\n   comparisons, matching the lower bound up to constants, closing the `\u0398(n log n)` window\n   thermodynamically.\n\n3. **Real-analytic Stirling.** Replace the elementary `\u03a9(n log n)` bound with the sharp\n   `log(n!) = n log n - n + O(log n)` (Mathlib's `Stirling`) to pin the leading constant of\n   `W_min / kT`.\n\n4. **Reversible sorting.** Formalize a reversible sorter (retaining the permutation as\n   output) and show its Landauer cost is `0`, contrasting with the irreversible map here \u2014\n   making precise the brief's \"if sorting is reversible it does no work\".\n\n5. **Beyond comparison sorts.** Radix/counting sort escape the `log\u2082(n!)` comparison bound;\n   a thermodynamic account of their bit-erasure would test the second-law framing outside\n   the comparison model.\n",
+    "domains": [
+      "Computation",
+      "Pythagorean"
+    ],
+    "id": "fd_0881",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a9aa7bbf",
+    "status": "available",
+    "timestamp": "2026-07-10T10:45:58.604676+00:00",
+    "title": "This project formalizes the information-theoretic (Landauer / second-law) conten"
   },
   {
     "consumed_by_exp_id": "",

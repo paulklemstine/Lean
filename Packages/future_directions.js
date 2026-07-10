@@ -171,6 +171,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle a9aa7bbf (Q=0.800), which proved 18 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Sorting a list of n elements reduces the entropy from log(n!) bits to 0 bits, doing thermodynamic work W = kT * log(n!) in the process. But this is only true if sorting is irreversible \u2014 if the sorted list uniquely determines the input, then sorting is reversible and does no thermodynamic work. The ",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "push_a9aa7bbf_18cbb188",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "a9aa7bbf",
+    "status": "available",
+    "timestamp": "2026-07-10T10:46:04.413215+00:00",
+    "title": "Deepening: The Thermodynamics of Sorting: Entropy and Computational Work"
+  },
+  {
     "consumed_by_exp_id": "9f734f3e",
     "description": "Building on cycle 3fa70466 (Q=0.790), which proved 10 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In 1952, Turing showed that reaction-diffusion equations produce patterns (spots, stripes, spirals) that explain biological morphogenesis. But Turing patterns are solutions to PDEs, which are hard to analyze. Conjecture: Turing patterns are algebraic varieties. Specifically, the zero set of a Turing",
     "domains": [
@@ -754,7 +768,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of Uniform-Scaled Spanning Subgraphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c22096e0",
     "description": "Conjecture: For any fixed integer r\u22652 and any collection of graphs H1,\u202f\u2026, Hr, let \u03c8 = \u2225_{j=1}^r (\u03c967(Hj)\u20111). Define the critical edge density \u03c0_c = 1\u20111/\u03c8. For a host graph G0 on n vertices with edge density exactly \u03c0_c\u2212\u03b5 (for a fixed \u03b5>0) consider the random\u2011perturbation model where we add m random edges (without replacement). Then the minimal number of edges that forces the perturbed graph to be (H1,\u202f\u2026, Hr)_v\u2011Ramsey satisfies\n\n    m_c(n) = \u03c0_c * (n choose 2) + \u03a8(n^{3/2}),\n\nand there is a sharp threshold: if m = m_c(n) + \u03c9(n^{3/2}) then with high probability the perturbed graph is (H1,\u202f\u2026, Hr)_v\u2011Ramsey; if m = m_c(n) \u2212 \u03c9(n^{3/2}) then with high probability it is not. Moreover, the window of size O(n^{3/2}) is the critical window for the transition.",
     "domains": [
       "Computation",
@@ -764,7 +778,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T17:52:40.366510+00:00",
     "title": "Precise threshold for vertex\u2011Ramsey property in random perturbations"
   },
@@ -5526,19 +5540,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "`GraphZetaGlobalRH.lean` lifts the single-eigenvalue (local) Ihara/Ramanujan"
   },
   {
-    "consumed_by_exp_id": "a9aa7bbf",
-    "description": "Sorting a list of n elements reduces the entropy from log(n!) bits to 0 bits, doing thermodynamic work W = kT * log(n!) in the process. But this is only true if sorting is irreversible \u2014 if the sorted list uniquely determines the input, then sorting is reversible and does no thermodynamic work. The key insight: comparison-based sorting makes irreversible comparisons (you learn a < b but discard the possibility a > b), and each comparison reduces entropy by at most 1 bit. So n*log(n) comparisons reduce entropy by at most n*log(n) bits, which matches log(n!) ~ n*log(n) bits. Conjecture: the minimum thermodynamic work of sorting n elements is W_min = kT * log(n!), and this work is achieved by optimal comparison-based sorting algorithms (merge sort, heapsort). Sub-optimal algorithms (bubble sort: n^2 comparisons) do more thermodynamic work than necessary: W_bubble = kT * n^2, wasting kT * (n^2 - n*log(n)) bits of entropy reduction. Conjecture: any sorting algorithm that makes C(n) comparisons does thermodynamic work proportional to C(n) * kT, and the optimal work is W_min = kT * n*log(n) (Stirling's approximation). Test: simulate sorting algorithms with entropy bookkeeping, verify W = kT * log(n!) for merge sort and W = kT * n^2 for bubble sort. Impact: sorting is a thermodynamic process. The n*log(n) lower bound is a consequence of the second law of thermodynamics.",
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Thermodynamics of Sorting\n\nThis project formalizes the information-theoretic (Landauer / second-law) content of the\n\"thermodynamics of sorting\" mission. Below we record what was **proved**, what was\n**refuted**, and open threads.\n\n## Proved (all with only `propext`, `Classical.choice`, `Quot.sound`)\n\n**`EntropyLowerBound.lean` \u2014 the entropy lower bound.**\n- `DTree.leaves_le_two_pow_height`: a binary decision tree of height `h` has `\u2264 2^h` leaves.\n- `sorting_comparison_lower_bound`: any decision tree that sorts `n` elements (`\u2265 n!`\n  leaves) has height `\u2265 \u2308log\u2082(n!)\u2309`. This is the entropy lower bound: worst-case\n  comparisons `\u2265` the Shannon entropy `log\u2082(n!)` of the uniform distribution over inputs.\n- `factorial_ge_half_pow`: `(n/2)^(n/2) \u2264 n!`.\n- `log_pow_ge`: `k\u00b7\u230alog_b a\u230b \u2264 \u230alog_b(a^k)\u230b`.\n- `log_factorial_ge`: `(n/2)\u00b7\u230alog\u2082(n/2)\u230b \u2264 \u230alog\u2082(n!)\u230b`, i.e. `log\u2082(n!) = \u03a9(n log n)`.\n- `sorting_nlogn_lower_bound`: hence any correct comparison sort makes `\u03a9(n log n)`\n  comparisons \u2014 the `n log n` lower bound *as a consequence of entropy accounting*.\n\n**`BubbleSortContrarian.lean` \u2014 a contrarian correction.**\n- `bubbleComparisons_eq`: bubble sort makes exactly `n(n-1)/2` comparisons (Gauss sum).\n- `bubble_sq_identity`: `2\u00b7C(n) + n = n\u00b2`, so `C(n) = (n\u00b2-n)/2`.\n- `bubble_lt_sq`: `C(n) < n\u00b2` for `n \u2265 1` \u2014 **the brief's `W_bubble = kT\u00b7n\u00b2` is refuted**;\n  the true work is `(n\u00b2-n)/2\u00b7kT`, overcounted by the quoted `n\u00b2` by a factor approaching 2.\n- `bubble_ge_entropy_floor`: `(n/2)\u00b7\u230alog\u2082(n/2)\u230b \u2264 C(n)`, so bubble sort still pays at least\n  the `\u03a9(n log n)` entropy floor (and asymptotically much more \u2014 the \"wasted\" work).\n\n**`Irreversibility.lean` \u2014 irreversibility = information erasure.**\n- `sort_perm_invariant`: all `n!` permutations of a list map to the *same* sorted output.\n- `sort_collapse_witness`, `sort_not_injective`: the sorting map is not injective, hence\n  irreversible; by Landauer's principle it must dissipate work, unlike a reversible map.\n\n## Refuted\n\n- **`W_bubble = kT\u00b7n\u00b2`** (as literally stated): the exact comparison count is `(n\u00b2-n)/2`,\n  not `n\u00b2`. Formalized in `bubble_lt_sq` / `bubble_sq_identity`.\n\n## Open / harder directions\n\n1. **Tightness of the entropy bound.** The bound `\u2308log\u2082(n!)\u2309` is *not* always achievable:\n   sorting 12 elements requires 30 comparisons while `\u2308log\u2082(12!)\u2309 = 29`. Formalizing the\n   Ford\u2013Johnson (merge-insertion) analysis, or the `S(n) \u2260 \u2308log\u2082 n!\u2309` gaps, would sharpen\n   the \"minimum work `= kT\u00b7log(n!)`\" conjecture into its correct (only-asymptotic) form.\n\n2. **Upper bound / achievability.** Formalize that merge sort achieves `\u2264 n\u2308log\u2082 n\u2309`\n   comparisons, matching the lower bound up to constants, closing the `\u0398(n log n)` window\n   thermodynamically.\n\n3. **Real-analytic Stirling.** Replace the elementary `\u03a9(n log n)` bound with the sharp\n   `log(n!) = n log n - n + O(log n)` (Mathlib's `Stirling`) to pin the leading constant of\n   `W_min / kT`.\n\n4. **Reversible sorting.** Formalize a reversible sorter (retaining the permutation as\n   output) and show its Landauer cost is `0`, contrasting with the irreversible map here \u2014\n   making precise the brief's \"if sorting is reversible it does no work\".\n\n5. **Beyond comparison sorts.** Radix/counting sort escape the `log\u2082(n!)` comparison bound;\n   a thermodynamic account of their bit-erasure would test the second-law framing outside\n   the comparison model.\n",
     "domains": [
-      "Novelty",
-      "Computation"
+      "Computation",
+      "Pythagorean"
     ],
-    "id": "fd_0861",
-    "priority_score": 0.74,
+    "id": "fd_0881",
+    "priority_score": 0.75,
     "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T07:33:05.128962+00:00",
-    "title": "The Thermodynamics of Sorting: Entropy and Computational Work"
+    "source_exp_id": "a9aa7bbf",
+    "status": "available",
+    "timestamp": "2026-07-10T10:45:58.604676+00:00",
+    "title": "This project formalizes the information-theoretic (Landauer / second-law) conten"
   },
   {
     "consumed_by_exp_id": "",

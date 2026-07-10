@@ -189,7 +189,7 @@
       "depth_estimate": 2,
       "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry"
       ],
@@ -2206,7 +2206,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "LuczakRucińskiVoigt1993",
         "Kreuter1996",
@@ -2215,7 +2215,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "c22096e0",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -2235,7 +2235,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0076",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-10T10:46:18.417586+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vertex_ramsey_perturbed_threshold {r : ℕ} (H : Fin r → Graph) (n : ℕ) (ε : ℝ) :\n  ∀ (G0 : Graph n) (m : ℕ),\n    (density G0 ≤ 1 - 1 / ∥_{j : Fin r} (chromatic_number (H j) - 1) - ε) →\n    (m = (1 - 1 / ∥_{j : Fin r} (chromatic_number (H j) - 1)) * (n choose 2) + t * n^(3/2)) →\n    (∀ t, w.h.p. (perturbed G0 (add_edges_random m) → (H : i : Fin r → H i) _v‑Ramsey)).",
       "lineage_refs": [],
@@ -2250,7 +2250,7 @@
       "source": "",
       "source_exp_id": "2606.30548v2",
       "source_path": "http://arxiv.org/abs/2606.30548v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-02T17:52:40.366510+00:00",
       "title": "Precise threshold for vertex‑Ramsey property in random perturbations"
@@ -2511,7 +2511,7 @@
         "Arithmetic Geometry",
         "Probabilistic Number Theory"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -3587,7 +3587,7 @@
         "Automorphic properties of q-series (Cohen)",
         "Circle method asymptotics (Hardy-Ramanujan-Rademacher tradition)"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -4542,7 +4542,7 @@
       "domain_bridges": [
         "math.AG"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -4740,7 +4740,7 @@
         "Combinatorial arrangement theory (intersection lattices, Ziegler pairs)",
         "Commutative algebra (Jacobian syzygies, free resolutions)"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -5868,7 +5868,7 @@
         "convex support functions",
         "geometric measure theory"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -6157,7 +6157,7 @@
         "discrete geometry",
         "computational complexity of chromatic numbers"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -6790,7 +6790,7 @@
         "Linear Algebra",
         "Enumerative Combinatorics"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Geometry",
         "Logic"
@@ -6931,7 +6931,7 @@
         "combinatorial topology",
         "infinite simplicial complexes"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -7834,7 +7834,7 @@
         "Geometric Topology (math.GT)",
         "Simplicial Complexes"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry"
       ],
@@ -8116,7 +8116,7 @@
         "spectral-expansion",
         "simplicial-complex-geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry"
       ],
@@ -9185,7 +9185,7 @@
         "p-adic uniformisation",
         "Modular curves"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -9281,7 +9281,7 @@
         "math.NT",
         "math.AG"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -9624,7 +9624,7 @@
         "modular_forms",
         "quaternion_algebras"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -10111,7 +10111,7 @@
         "Linear Algebra",
         "Algebraic Topology"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -10395,7 +10395,7 @@
         "computational_geometry",
         "matroid_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry"
       ],
@@ -10820,7 +10820,7 @@
         "algebraic_geometry",
         "combinatorics"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -11883,7 +11883,7 @@
         "Geometric Topology",
         "Combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry"
       ],
@@ -12661,7 +12661,7 @@
         "number_theory.cartier_manin_matrix",
         "data.polynomial.nonvanishing"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -12812,7 +12812,7 @@
         "class_field_theory",
         "p_adic_analysis"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -13706,7 +13706,7 @@
         "RB-domains",
         "Stochastic order"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -13854,7 +13854,7 @@
         "p-adic analysis",
         "Quaternion algebras"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -14966,7 +14966,7 @@
         "Algebraic Number Theory",
         "p-adic Analysis"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -15647,7 +15647,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Log-Concavity in the d-Hoggatt Hierarchy\n\nThis cycle established a sharp dichotomy for the *total* d-Hoggatt numbers\n`H_d(n) = ∑_k H_d(n,k)`: the `d = 1` totals `2^n` are infinitely log-concave\n(indeed log-linear), while the `d = 2` totals (Catalan numbers) are strictly\nlog-convex, and the `d = 3` totals (Baxter numbers) are empirically log-convex.\nThe following conjectures are the natural next targets.\n\n## Conjecture 1 — Universal log-convexity of the totals for d ≥ 2\n\nFor every `d ≥ 2`, the total d-Hoggatt numbers are strictly log-convex:\n`H_d(n+1)² < H_d(n) · H_d(n+2)` for all `n ≥ 0`.\n\nThe key insight is that each `H_d(n)` is a positively weighted sum of products\nof binomial coefficients whose dominant growth ratio increases with `n`, so the\ntotals inherit the log-convexity of the Catalan case rather than the\nlog-concavity of the individual rows. Why now? The Catalan (`d = 2`) case is now\nsettled from a two-term recurrence, and the Baxter (`d = 3`) case matches it\nterm-by-term in the computed data, suggesting a single recurrence-driven\nargument covers the whole family.\n\n## Conjecture 2 — Row-sum log-convexity is a summation phenomenon\n\nIf `T(n,k)` is any triangle whose rows are log-concave and whose row-ratio\n`T(n+1,k)/T(n,k)` is nondecreasing in `n`, then the row sums `S(n) = ∑_k T(n,k)`\nare log-convex.\n\nThe key insight is that log-convexity of the totals is not special to Hoggatt\ntriangles but follows from monotone amplification of a common growth factor\nacross rows, a Chebyshev-sum / rearrangement effect. Why now? Having seen the\nsame negative discriminant `Δ_n < 0` for both Catalan and Baxter totals, the\nphenomenon is clearly structural rather than coincidental and deserves a triangle\n-level hypothesis.\n\n## Conjecture 3 — Infinite log-concavity of the rows\n\nFor every `d ≥ 1`, each fixed row `k ↦ H_d(n,k)` of the d-Hoggatt triangle is\ninfinitely log-concave.\n\nThe key insight is that the log-concavity operator, when applied to a finite\npositive log-concave row with the golden-ratio-squared safety factor\n`a_k² ≥ ((3+√5)/2) · a_{k-1} a_{k+1}`, reproduces that same safety factor, so a\nsingle closure lemma propagates through all iterates. Why now? The threshold\nconstant `(3+√5)/2` is exactly the fixed point of the operator's worst-case\nratio, and the toolkit built this cycle (the operator `𝓛`, its annihilation of\nlog-linear sequences, and closure under products) already contains the moving\nparts needed to attack the closure lemma.\n\n## Conjecture 4 — A log-concave \"renormalization\" of the totals\n\nFor every `d ≥ 2` there is an explicit positive normalizing sequence `w_d(n)`\n(e.g. a ratio of factorials) such that the renormalized totals\n`H_d(n) / w_d(n)` are infinitely log-concave, even though the raw totals are\nlog-convex.\n\nThe key insight is that log-convexity of the totals is caused by a smooth,\npredictable growth factor which can be divided out, leaving a residual sequence\ngoverned by the same infinite-log-concavity mechanism as the rows. Why now? The\nexact growth ratio `(n+2)(2n+3)/((2n+1)(n+3))` for the Catalan totals is now\nknown in closed form, giving a concrete first candidate for `w_2` and a template\nfor higher `d`.\n\n## Conjecture 5 — Tropical dequantization of the dichotomy\n\nUnder the tropical (min-plus) limit that sends a positive sequence `a_n` to its\nvaluations `v_n = −log a_n`, log-concavity becomes convexity of `v` and\nlog-linearity becomes affinity of `v`. The `d = 1`/`d ≥ 2` dichotomy then reads:\n`v` is affine for `d = 1` and strictly concave for `d ≥ 2`.\n\nThe key insight is that the log-concavity operator degenerates, in the tropical\nlimit, to a second finite difference, so infinite log-concavity corresponds to a\nsequence of iterated finite differences retaining a fixed sign — a purely\npiecewise-linear, tropical-geometric condition. Why now? Casting the numeric\ndichotomy in the min-plus semiring links this combinatorial question to tropical\nconvexity, where second-difference sign conditions are the natural objects and\npowerful piecewise-linear tools are available.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical",
         "Geometry"
@@ -16395,7 +16395,7 @@
         "arithmetic of elliptic curves",
         "Iwasawa main conjecture"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -16997,7 +16997,7 @@
         "Mathlib.Combinatorics.SimpleGraph.Basic",
         "Mathlib.Analysis.Convex.Cone.Basic"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry"
       ],
@@ -17487,7 +17487,7 @@
         "Quadratic Twists",
         "Iwasawa Invariants"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry"
       ],
@@ -17783,7 +17783,7 @@
         "Analytic Number Theory",
         "Probability Theory"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -17930,7 +17930,7 @@
         "Graph Theory",
         "Combinatorial Topology"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry"
       ],
@@ -18179,7 +18179,7 @@
         "combinatorics_on_words",
         "finite_fields"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -18823,7 +18823,7 @@
         "topological combinatorics",
         "oriented matroids"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -19365,7 +19365,7 @@
         "graph chromatic number bounds via box complexes",
         "suspension functor in equivariant topology"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry"
       ],
@@ -19905,7 +19905,7 @@
         "Weierstrass models ↔ Minimal regular models",
         "Discriminant valuation ↔ Conductor exponent"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -21710,7 +21710,7 @@
         "Topological Graph Theory (homology of cycles on the torus)",
         "Statistical Mechanics (dimer partition functions)"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -23597,7 +23597,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: The Geometry and Universal Structure of Surprise\n\nThis cycle established two complementary pillars. First, *surprise* — the gap between\nthe most conservative and most divergent resolution of a setup — is a genuine\ngeometric invariant equal to the diameter of the resolution configuration\n(nonnegative, vanishing exactly on constant setups, monotone under refinement, and\nattained). Second, when a *canonical* (terminal) resolution exists, it is unique in the\nstrongest possible sense: up to a unique, coherent isomorphism, and it is rigid. The\nfollowing conjectures push both pillars further.\n\n## 1. Surprise as a genuine metric diameter in higher dimensions\n\n**Conjecture.** For a finite configuration of resolutions embedded in a Euclidean space\nof any dimension, the natural surprise invariant equals the metric diameter of the\nconfiguration's convex hull, and it remains monotone under enrichment and subadditive\nunder overlays of setups.\n\n**The key insight is** that the one-dimensional identity \"surprise = range = greatest\npairwise distance\" is not special to the line: it is a shadow of the general fact that\nthe extreme spread of a compact configuration is realised on its boundary.\n\n**Why now?** The one-dimensional case is fully settled here with an attained diameter\ncharacterisation, giving an exact template — extremal witnesses plus a uniform bound —\nthat generalises verbatim once \"endpoints\" are replaced by \"hull vertices.\"\n\n## 2. A vanishing dichotomy separating puns from absurdism\n\n**Conjecture.** The surprise invariant admits a sharp threshold: below it, every setup\nis equivalent (after normalisation) to a near-constant configuration; above it, setups\nnecessarily contain two resolutions in \"different categories\" that no refinement can\nreconcile.\n\n**The key insight is** that the zero-surprise characterisation is not merely a boundary\ncase but the base of a stratification: distance from the constant locus measures how\nfar a setup has escaped its expected resolution.\n\n**Why now?** We have proven the exact vanishing locus (surprise `0` iff all resolutions\ncoincide) and that surprise is monotone; a stratification by surprise value is the\nimmediate next quantitative refinement.\n\n## 3. Universal resolutions as limits of refinement chains\n\n**Conjecture.** Every setup whose resolutions form a directed refinement system admits a\nuniversal resolution, obtained as the colimit of the refinement chain, and this colimit\nis automatically rigid.\n\n**The key insight is** that terminality — proven here to force unique, coherent,\nrigidity-witnessing structure — is exactly the property a well-behaved colimit inherits,\nso existence of the canonical resolution reduces to directedness of refinements.\n\n**Why now?** The abstract uniqueness and rigidity of terminal resolutions are already in\nhand; the only missing ingredient for a general existence theorem is a construction, and\ndirected colimits supply the standard one.\n\n## 4. Sharp stability of surprise under perturbation\n\n**Status.** The basic stability estimate is now settled: perturbing every resolution of\na setup by at most `ε` changes its surprise by at most `2ε`. This confirms that surprise\nis a robust invariant — small changes in how each resolution is read cannot produce a\nlarge change in humor.\n\n**Conjecture (next step).** The factor `2` is optimal, and more is true: surprise is a\ncontraction under any reinterpretation that is itself a contraction of the resolution\naxis, and the estimate composes — a chain of `k` perturbations of sizes `ε₁, …, ε_k`\nmoves surprise by at most `2(ε₁ + ⋯ + ε_k)`, with equality achieved on suitably\n\"stretched\" two-point setups.\n\n**The key insight is** that surprise is built from two extremal selectors, each of which\nmoves by at most the perturbation size, so their difference is controlled — and that the\nworst case is realised precisely when the two extremes are pushed apart in opposite\ndirections, which pins down the sharp constant.\n\n**Why now?** The extremal (`IsGreatest`/`IsLeast`) characterisations of the two canonical\nresolutions, together with the just-established `2ε` stability bound, are exactly the\ningredients needed to identify the extremal configurations that make the constant sharp.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Algebra"
@@ -23649,7 +23649,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.8,
       "parent_direction": "",
       "priority_score": 0.74,
       "proof_strategy": "Define the entropy of a permutation: S(pi) = -sum_i p_i * log(p_i) where pi is a permutation of n elements. Initially, all n! permutations are equally likely, so S_initial = log(n!) bits. After sorting, only one permutation (the identity) is possible, so S_final = 0. The thermodynamic work is W = kT * (S_initial - S_final) = kT * log(n!). Each comparison in a sorting algorithm reduces entropy by at most 1 bit: comparing a and b tells you one bit (whether a < b or a > b), reducing the number of possible permutations by a factor of at most 2. So C comparisons reduce entropy by at most C bits. For optimal sorting: C(n) = n*log(n) (merge sort), so W = kT * n*log(n) ≈ kT * log(n!) (by Stirling). For bubble sort: C(n) = n^2/2, so W = kT * n^2/2 >> kT * log(n!). The excess work is kT * (n^2/2 - n*log(n)), which is thermodynamic waste. Test: implement merge sort and bubble sort with entropy counters, verify entropy reduction per comparison.",
@@ -23660,7 +23660,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-07-10T07:33:05.128962+00:00",
       "title": "The Thermodynamics of Sorting: Entropy and Computational Work"
@@ -23720,7 +23720,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — The Topology of Arithmetic\n\nThis cycle established that the zero-dimensional persistent barcode of the prime\npoint cloud on the line is exactly the sequence of prime gaps, and that the twin\nprime conjecture is the assertion that a length-`2` bar recurs forever.  The\nfollowing conjectures push the program further.\n\n## 1. The gap-value spectrum is the set of barcode step-points\n\n**Conjecture.** For the prime point cloud, the set of scales at which the number\nof connected components strictly decreases equals the set of values attained by\nthe gap sequence, and each even number `2k` that occurs as a gap contributes a\npositive-density family of bars of that exact death scale.\n\n*The key insight is* that on a line the barcode is a lossless recording of the\ngap multiset, so distributional questions about prime gaps (Polignac-type\nstatements) become questions about the multiplicity of individual bar lengths.\n\n*Why now?* The single-linkage characterisation proved this cycle turns \"how many\ngaps equal `2k`\" into \"how many bars have death scale `2k`\", making every result\non gap frequencies immediately a statement about barcode multiplicities.\n\n## 2. A persistence-stability form of the average gap law\n\n**Conjecture.** The empirical distribution of the first `N` finite `H_0` bar\nlengths, rescaled by `log p_N`, converges to a fixed limiting profile; in\nparticular the mean bar length is asymptotic to `log p_N`.\n\n*The key insight is* that the average bar length over the first `N` primes equals\n`(p_N − p_1)/N`, a telescoping identity, so the prime number theorem controls the\nfirst moment of the barcode directly.\n\n*Why now?* With the barcode identified with the gap sequence, the mean-length\nstatement is exactly `(p_{N+1} − 2)/N → ` the average gap, and only the higher\nmoments and the shape of the limiting profile remain open.\n\n## 3. Higher homology from the two-dimensional prime lattice\n\n**Conjecture.** Embedding primes as the planar cloud `p_n ↦ (p_n, p_{n+1})` and\nrunning the Rips filtration produces a first non-trivial `H_1` class whose birth\nscale is governed by admissible gap patterns `(g_n, g_{n+1})`, and the shortest\npersistent loop corresponds to the smallest admissible triple of consecutive\ngaps.\n\n*The key insight is* that genuine one-dimensional holes require at least three\npoints arranged non-collinearly, which on the gap side means a constraint on\nconsecutive gap *pairs* rather than single gaps.\n\n*Why now?* The one-dimensional theory is now fully understood, so the natural\nnext obstruction — the first appearance of `H_1` — isolates exactly the\ncombinatorics of consecutive-gap patterns, a well-studied but topologically\nunexploited object.\n\n## 4. Barcode rigidity distinguishes primes from random gap models\n\n**Conjecture.** The prime barcode differs measurably from that of a Poisson point\nprocess of matching local intensity: the fraction of length-`2` bars stays\nbounded away from the Poisson prediction, detectable purely from the barcode.\n\n*The key insight is* that twin primes are anomalously frequent compared with a\nmemoryless gap model, and this anomaly survives as a persistent statistical\nsignature in the length-`2` bar count.\n\n*Why now?* The exact identification of length-`2` bars with twin pairs gives a\nclean, model-free statistic on which prime and Poisson barcodes can be compared\nhead to head.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -23802,7 +23802,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThis project formalises the *algebraic skeleton* of the \"topology of Bach\"\nmission: pitch-class space as `ℤ/12ℤ`, harmonic cycles as cyclic subgroups, and\nthe circle of fifths as the unique-up-to-symmetry longest such cycle. What is\nproved is a self-contained, machine-checked chain:\n\n1. `cycleLen_eq` — harmonic cycle length `= 12 / gcd(12, k)`.\n2. Concrete values (fifth `12`, tritone `2`, third `3`, whole tone `6`, …).\n3. `cycleLen_le`, `fifth_cycleLen_maximal`, `cycleLen_dvd_12` — the fifth is a\n   longest cycle; every cycle length divides `12`.\n4. `cycleLen_eq_12_iff`, `maximal_generators` — spanning intervals are exactly\n   those coprime to `12`, namely `{1, 5, 7, 11}`.\n5. `fifth_generates`, `generates_iff` — the fifth generates the whole\n   pitch-class group; generation ⇔ coprimality.\n6. `cof_hamiltonian` — the explicit circle of fifths is a Hamiltonian cycle.\n7. `barLen`, `fifth_barLen_gt_half`, `tritone_barLen_lt_half` — the mission's\n   normalised persistence-bar thresholds (Bach `> 0.5`, atonal `< 0.5`).\n\n## Natural next steps\n\n- **Genuine persistent homology.** Replace the proxy `cycleLen` with an actual\n  Vietoris–Rips filtration on a finite metric pitch-class space (the \"torus\"\n  metric `d(a,b) = min(|a-b|, 12-|a-b|)` on `ℤ/12ℤ`, or a weighted graph metric\n  along fifths). Prove that `H₁` of the Rips complex is non-trivial at the scale\n  where the circle-of-fifths cycle appears, and compute its birth/death. Mathlib\n  now has simplicial/`SimplicialComplex` machinery to build on.\n\n- **Betti numbers of circulant graphs.** The interval-`k` harmonic motion is a\n  circulant graph `Cay(ℤ/12ℤ, {±k})`; its cycle structure and first Betti number\n  `b₁ = |E| - |V| + (# components)` can be computed group-theoretically. Formalise\n  `b₁` for these graphs and connect it to `cycleLen`.\n\n- **Other temperaments.** Everything generalises from `12` to arbitrary `n`-tone\n  equal temperament (`ℤ/nℤ`): the longest harmonic cycle has length `n`, attained\n  exactly by intervals coprime to `n` (there are `φ(n)` of them). A parametrised\n  version of `IntervalCycles.lean` over `ℤ/nℤ` would state and prove this in full\n  generality (19-TET, 31-TET, etc.).\n\n- **Voice-leading geometry.** Encode chords (not just single intervals) as\n  multisets of pitch classes and study the orbifold `Tⁿ/Sₙ` of Tymoczko's\n  voice-leading spaces; the circle of fifths reappears as a geodesic loop.\n\n- **Empirical bridge.** Connect the normalised `barLen` thresholds to a real\n  persistence computation over corpora (Bach chorales vs. pop vs. atonal),\n  closing the loop with the mission's stated experiment.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -23966,7 +23966,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Morphogenesis as Algebraic Geometry\n\nThe linear analysis established here recasts the onset of Turing patterns as\nconic-section geometry: the number of excited spatial modes is an algebraic degree,\nand the boundedness of the background level set separates spots from stripes and\nlabyrinths. Several bold, testable conjectures follow.\n\n## 1. The genus dictionary\n\n**Conjecture.** For a pattern generated by `k` spatial modes, the background level\nset is (generically) a smooth real curve whose complexification has genus at most\n`(k−1)(k−2)/2`, and the number of bounded ovals equals the number of distinct spot\nfamilies in the pattern.\n\n*The key insight is* that the mode count fixes the degree of the defining polynomial,\nand the classical genus–degree formula then caps the topological complexity, turning a\nstatement about pattern topology into an inequality about polynomial degree.\n\n*Why now?* The degree correspondence for single modes (Chebyshev) is fully in hand,\nso the remaining step is purely the theory of real plane curves — a mature subject —\napplied to explicitly known low-degree families.\n\n## 2. Sharp mode–degree equality\n\n**Conjecture.** A superposition of `k` modes with a nonzero top harmonic has a level\nset of algebraic degree *exactly* `k` in the Chebyshev coordinates, and no\nreparametrisation lowers this degree.\n\n*The key insight is* that the leading coefficient of the `k`-th Chebyshev polynomial\nis `2^{k-1} ≠ 0`, so the top mode cannot be cancelled by lower ones — degree is a\nfaithful invariant of mode count.\n\n*Why now?* The exact-degree statement is already proved for a single mode and for the\nsquared three-mode amplitude; extending it to arbitrary superpositions needs only\nleading-term bookkeeping, which is tractable.\n\n## 3. Hexagons are sextics\n\n**Conjecture.** Every hexagonally symmetric two-dimensional Turing pattern has a\nbackground level set defined by a sextic curve invariant under the order-6 dihedral\ngroup, and conversely every such invariant sextic is realised by a three-mode\nreaction–diffusion system.\n\n*The key insight is* that three modes reach degree six, and the hexagonal symmetry\ngroup acts on degree-six invariants with exactly the dimension needed to parametrise\nthe observed patterns.\n\n*Why now?* The degree-six ceiling for three-mode systems is established; the missing\ningredient is an invariant-theory computation of dihedral-invariant sextics, which is\nfinite-dimensional and explicit.\n\n## 4. Boundedness is a bifurcation invariant\n\n**Conjecture.** Along a reaction–diffusion bifurcation path, the transition from spot\nto labyrinth morphology coincides exactly with the moment the defining quadratic form\nloses definiteness (its discriminant changes sign), and this transition is detectable\nfrom the reaction kinetics alone.\n\n*The key insight is* that boundedness of a conic level set is controlled by the sign\nof the quadratic form's discriminant, so a morphological phase transition is an\nalgebraic sign change rather than a delicate PDE phenomenon.\n\n*Why now?* We have proved the two endpoints of this transition — definite forms give\nbounded spots, indefinite forms give unbounded labyrinths — so the conjecture is the\nnatural interpolation and is amenable to explicit discriminant tracking.\n\n## 5. Three-dimensional morphogenesis as algebraic surfaces\n\n**Conjecture.** In three spatial dimensions, a `k`-mode Turing pattern has a\nbackground level set that is a real algebraic surface of degree `k`, and the Turing\n\"gyroid\" and \"diamond\" phases correspond to specific cubic and quartic surfaces.\n\n*The key insight is* that the Chebyshev correspondence is dimension-agnostic: each\naxial mode contributes one polynomial degree, so multi-dimensional patterns inherit\nthe same degree = mode-count law, now for surfaces.\n\n*Why now?* The one-dimensional degree law and the planar conic dichotomy are proved;\nlifting to surfaces reuses the same Chebyshev machinery with additional coordinates.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -24130,7 +24130,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Homological Quantum Codes\n\nThis cycle established the exact dictionary \"logical qubits = middle homology\"\nfor the chain-complex model of CSS codes, and used it to compute the logical\ndimension of the hypercube homological code, refuting the folklore \"one qubit\"\nlaw for the hypercube *graph*. The following conjectures extend those findings.\n\n## 1. The distance of the hypercube homological code\n\n**Conjecture.** For the hypercube graph `Qₙ` (`n ≥ 2`), the homological code\n`HQECC(Qₙ)` has minimum distance equal to the girth of `Qₙ`, namely `4`,\nindependent of `n`; consequently it does **not** achieve the quantum Singleton\nbound `d = 2^{n/2}` for `n ≥ 5`.\n\nThe key insight is that in a one-dimensional complex the shortest nontrivial\ncycle is a shortest graph cycle, and every hypercube contains a 4-cycle while\ncontaining no triangle. Distance is therefore a girth invariant, decoupled from\nthe exponentially large number of encoded qubits computed in this cycle.\n\nWhy now? The present cycle pins down the encoded dimension `β₁(Qₙ) = 2ⁿ⁻¹(n−2)+1`\nexactly; the natural next parameter is the distance, and the girth heuristic is\ndirectly testable on the same family that already contradicted the qubit count.\n\n## 2. Euler characteristic as a code-rate obstruction\n\n**Conjecture.** For any connected graph complex, the code rate `k/n` of its\nhomological code equals `1 − (V−1)/E`, and among all connected graphs on a fixed\nnumber of edges the rate is maximized precisely by graphs with a single vertex\nof many loops (bouquets) and minimized by trees (rate `0`).\n\nThe key insight is that the Euler identity `β₀ − β₁ = V − E`, proved this cycle,\nturns the rate into a purely combinatorial ratio; extremizing it is a discrete\nisoperimetric problem on the vertex/edge counts.\n\nWhy now? The Euler identity was just established in full additive generality over\nan arbitrary field, so the rate formula is an immediate corollary awaiting an\nextremal analysis.\n\n## 3. Every finite-dimensional homology group is a logical space\n\n**Conjecture.** For every field `K` and every pair of natural numbers `k ≤ n`\nthere is a length-two chain complex over `K` with middle space of dimension `n`\nwhose homology has dimension exactly `k`; hence every logical/physical dimension\npair `(k, n)` is realized by some CSS chain complex.\n\nThe key insight is that the dimension formula `k = n − rank d₁ − rank d₂` proved\nthis cycle is not just an inequality but an exact accounting, so realizability\nreduces to choosing two maps with prescribed ranks summing to `n − k`.\n\nWhy now? With the exact dimension theorem in hand, the realizability question\nbecomes a rank-prescription problem in linear algebra rather than a homological\nmystery.\n\n## 4. Cohomological duality of the two check families\n\n**Conjecture.** For a CSS chain complex the `X`-logical space `ker d₁ / im d₂`\nand the `Z`-logical space `ker d₂ᵀ / im d₁ᵀ` have equal dimension, and this common\ndimension is a self-dual topological invariant of the complex.\n\nThe key insight is that transposition exchanges kernels and cokernels while\npreserving ranks, so the dimension formula forces the two homologies to match;\nCSS self-duality is thus a shadow of rank symmetry.\n\nWhy now? The additive rank-nullity backbone developed this cycle applies verbatim\nto the transposed complex, making the duality statement a direct next theorem\nrather than a separate development.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -24376,7 +24376,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: The Topology and Conservation Laws of Assembled Puzzles\n\nThis cycle established a conservation law for jigsaw assemblies — in any validly\nassembled row or rectangle the exposed tabs and blanks balance exactly — together\nwith a boundary-topology reading and an order-two symmetry group governing the\nmatching relation. The following conjectures push these findings further.\n\n## 1. A conservation law for arbitrary simply connected regions\n\n**Conjecture.** The tab–blank balance holds not only for rectangles but for every\nassembly whose footprint is a simply connected region of the square lattice: the\nnumber of exposed tabs equals the number of exposed blanks whenever the outer\nboundary consists entirely of flat edges.\n\nThe key insight is that the signed edge potential behaves like a discrete\ndivergence: complementation negates it, so each shared interior edge cancels\nagainst itself, and only the boundary can carry a net charge. A flat boundary\ncarries none, so the total must vanish regardless of the region's shape.\n\nWhy now? The rectangular case is fully settled, and its proof already factors\nthrough purely one-dimensional slices; extending the slicing argument to staircase\nand L-shaped footprints is the natural next step and would connect puzzle\nassembly to discrete exterior calculus.\n\n## 2. Genus obstructions to assembling a puzzle on a surface\n\n**Conjecture.** If pieces are assembled on a closed surface of genus `g` rather\nthan on a flat rectangle, the tab–blank balance is corrected by a term determined\nsolely by `g`: on the torus the balance is exact, while on higher-genus surfaces a\nfixed defect appears that cannot be removed by any choice of pieces.\n\nThe key insight is that the boundary term in the conservation law is a topological\ninvariant of the assembly surface; changing the genus changes the way interior\nedges can be paired, and the unpaired remainder is forced to match an Euler-\ncharacteristic count.\n\nWhy now? The flat conservation law isolates exactly the boundary contribution, so\nthe same potential can be transported onto quotient surfaces where the boundary is\nreplaced by identifications — the cleanest possible setting to detect a genus term.\n\n## 3. The symmetry group grows with richer edge alphabets\n\n**Conjecture.** If the edge alphabet is enlarged from three shapes to `2k + 1`\nshapes (one self-complementary border shape and `k` complementary tab/blank\npairs), the automorphism group of the interlocking relation is the hyperoctahedral\ngroup of order `2^k · k!`, and its centre is always the single order-two\n\"flip every interlock\" symmetry.\n\nThe key insight is that preserving the matching relation is equivalent to\ncommuting with the complementation involution, and for `k` independent\ncomplementary pairs this centraliser is exactly the group of signed permutations\nof the pairs.\n\nWhy now? The three-shape case pins the automorphism group at order two and shows\nit is generated by the complementation flip; the signed-permutation structure is\nalready visible there and only needs more pairs to unfold into its full form.\n\n## 4. Assembly hardness survives the conservation constraint\n\n**Conjecture.** Deciding whether a bag of pieces admits a valid rectangular\nassembly remains as hard as Boolean satisfiability even when the input is\nguaranteed to satisfy the tab–blank balance, so the conservation law — though a\ngenuine necessary condition — provides no shortcut to a solution.\n\nThe key insight is that the reduction from satisfiability can be padded with inert\nflat pieces to enforce the balance without changing solvability, showing the\ninvariant is orthogonal to the combinatorial difficulty.\n\nWhy now? With both the reduction and the conservation law in hand, it is finally\npossible to ask whether the invariant is a useful filter; the padding argument\nsuggests it is not, and settling this sharpens the boundary between structure and\nhardness in tiling problems.\n\n## 5. Uniqueness of assembly from boundary data\n\n**Conjecture.** For a rectangle whose interior interface shapes are all non-flat, a\nvalid assembly is rigid: the entire interface pattern is determined by the shapes\nexposed along one full row and one full column, so the number of distinct valid\nassemblies is at most exponential in the perimeter rather than the area.\n\nThe key insight is that each interlocking constraint propagates a shape from one\ncell to its neighbour, so boundary data seeds a deterministic fill of the interior\nwhenever no flat edge interrupts the propagation.\n\nWhy now? The interface complementation rule is already known to force each left\nedge from its neighbour's right edge; turning this local determinism into a global\ncounting bound is the immediate combinatorial payoff.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -24402,6 +24402,88 @@
       "thread_id": "th_a4929cc6",
       "timestamp": "2026-07-10T10:45:43.041724+00:00",
       "title": "Conservation law for jigsaw assemblies — in any validly"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future directions: number theory on networks\n\n`GraphZetaGlobalRH.lean` lifts the single-eigenvalue (local) Ihara/Ramanujan\ncorrespondence to the **global spectral Ihara zeta** `Z⁻¹(u) = ∏_λ (1 − λu + qu²)`\nand proves the full equivalence\n\n    RH for ζ_G  ⇔  G is a Ramanujan graph,\n\ntogether with the global functional equation and Euler-product multiplicativity.\nNatural next steps:\n\n1. **From the spectrum to the adjacency matrix.** Connect `zetaInv` to\n   `det(I − A u + q u² I)` via `Matrix.charpoly` / eigenvalue products, so the\n   results are stated directly for a `(q+1)`-regular graph `G` and its adjacency\n   matrix `A` rather than an abstract spectrum `λ : ι → ℂ`.\n\n2. **The full Bass–Ihara formula.** Include the `(1 − u²)^{(n−1)(q−1)/2}`\n   prefactor and prove the determinant identity\n   `ζ_G(u)⁻¹ = (1 − u²)^{(n−1)(q−1)/2} · det(I − A u + q u² I)` for regular\n   graphs, deducing the pole structure of `ζ_G` itself.\n\n3. **Prime geodesic counting.** Relate `u · d/du log Z_G(u)` to the number of\n   closed non-backtracking tailless geodesics `N_m`, giving the graph analogue of\n   the explicit formula, and a \"prime geodesic theorem\" for Ramanujan graphs.\n\n4. **Weighted / irregular graphs.** Generalize the local factor to\n   `det(I − A u + Q u²)` with a diagonal degree matrix `Q`, extending the RH\n   dichotomy beyond the regular case.\n\n5. **Counting zeros on the circle.** Turn the qualitative dichotomy into an exact\n   count: the number of zeros of `Z⁻¹` on `|u| = 1/√q` equals twice the number of\n   eigenvalues in the Ramanujan window, using `Polynomial.roots` multiplicities.\n\n6. **Zeta of coverings and the Ihara determinant of quotients.** Study how\n   `Z⁻¹` factors under graph coverings (the analogue of Artin factorization of\n   Dedekind zetas), building on the `zetaInv_union` multiplicativity.\n\n\n# Future directions: Carmichael's primitive divisor theorem for Fibonacci numbers\n\nThe files `Catalog/Shared/CarmichaelHelper.lean`, `Catalog/Shared/CarmichaelProof.lean`,\n`Catalog/Speculative/AutoResearch/CarmichaelComposite.lean`, and\n`Catalog/Speculative/CarmichaelPrimitiveDivisor.lean` establish, with complete\n`sorry`-free proofs:\n\n* **Prime case (all `n`).** For every prime `n ≥ 13`, `F(n)` has a primitive prime\n  divisor (`fib_primitive_divisor_prime`). This is fully general.\n* **Composite case (verified range).** For every composite `n` with\n  `13 ≤ n ≤ 10000`, `F(n)` has a primitive prime divisor\n  (`fib_carmichael_composite`), proved by combining the structural primitivity\n  criterion `primPart_implies_primitive` (a genuine proof via the rank/apparition\n  argument through `Nat.fib_gcd`) with the finite verification `primPart_check`.\n\n## The open tail: unrestricted composite `n`\n\nCarmichael's classical theorem (1913) asserts that `F(n)` has a primitive prime\ndivisor for **all** `n ∉ {1, 2, 6, 12}`, in particular for every composite\n`n ≥ 14`. The remaining, genuinely deep, ingredient is the composite case for\narbitrarily large `n`. A complete proof requires infrastructure not currently in\nMathlib:\n\n1. **Lifting-the-exponent for the Lucas sequence.** For a prime `p` with rank of\n   apparition `z = z(p)` (least `m > 0` with `p ∣ F(m)`), control the `p`-adic\n   valuation `v_p(F(n))` in terms of `v_p(F(z))` and `v_p(n/z)`. This is the\n   analogue of the LTE lemma `multiplicity.Int.pow_sub_pow`, transported to the\n   ring `ℤ[φ]` where `F(n) = (α^n − β^n)/√5`.\n\n2. **Classification of intrinsic primes.** Using (1), show that every prime factor\n   of the primitive part `D_n = ∏_{d ∣ n} F(d)^{μ(n/d)}` has rank exactly `n`,\n   with the sole possible exception of one \"intrinsic\" prime that divides `n` and\n   occurs to the first power. Consequently the non-primitive part of `D_n` divides\n   `n`.\n\n3. **Analytic size bound.** Prove `|D_n| = α^{φ(n)} · (1 + o(1))` (equivalently a\n   clean lower bound `|D_n| ≥ c · α^{φ(n)}`) via the closed form and Möbius\n   inversion, together with a lower bound on Euler's totient `φ(n)`. Since\n   `α^{φ(n)}` dominates `n` for all `n > 12`, the primitive part exceeds its\n   possible intrinsic factor, forcing a genuine primitive prime divisor.\n\nCombining (2) and (3) yields the unbounded composite case and hence the full\nCarmichael theorem. Formalizing (1)–(3) — none of which is available off the shelf\nin Mathlib — is the natural next step; the `primPart` / `fibCoprimePart`\nscaffolding already in place reduces the goal precisely to `1 < primPart n` for\ncomposite `n`, so only the size argument above remains.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0880",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "b0a297ce",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/b0a297ce",
+      "status": "available",
+      "thread_id": "th_159d7f86",
+      "timestamp": "2026-07-10T10:45:52.171714+00:00",
+      "title": "`GraphZetaGlobalRH.lean` lifts the single-eigenvalue (local) Ihara/Ramanujan"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions — The Thermodynamics of Sorting\n\nThis project formalizes the information-theoretic (Landauer / second-law) content of the\n\"thermodynamics of sorting\" mission. Below we record what was **proved**, what was\n**refuted**, and open threads.\n\n## Proved (all with only `propext`, `Classical.choice`, `Quot.sound`)\n\n**`EntropyLowerBound.lean` — the entropy lower bound.**\n- `DTree.leaves_le_two_pow_height`: a binary decision tree of height `h` has `≤ 2^h` leaves.\n- `sorting_comparison_lower_bound`: any decision tree that sorts `n` elements (`≥ n!`\n  leaves) has height `≥ ⌈log₂(n!)⌉`. This is the entropy lower bound: worst-case\n  comparisons `≥` the Shannon entropy `log₂(n!)` of the uniform distribution over inputs.\n- `factorial_ge_half_pow`: `(n/2)^(n/2) ≤ n!`.\n- `log_pow_ge`: `k·⌊log_b a⌋ ≤ ⌊log_b(a^k)⌋`.\n- `log_factorial_ge`: `(n/2)·⌊log₂(n/2)⌋ ≤ ⌊log₂(n!)⌋`, i.e. `log₂(n!) = Ω(n log n)`.\n- `sorting_nlogn_lower_bound`: hence any correct comparison sort makes `Ω(n log n)`\n  comparisons — the `n log n` lower bound *as a consequence of entropy accounting*.\n\n**`BubbleSortContrarian.lean` — a contrarian correction.**\n- `bubbleComparisons_eq`: bubble sort makes exactly `n(n-1)/2` comparisons (Gauss sum).\n- `bubble_sq_identity`: `2·C(n) + n = n²`, so `C(n) = (n²-n)/2`.\n- `bubble_lt_sq`: `C(n) < n²` for `n ≥ 1` — **the brief's `W_bubble = kT·n²` is refuted**;\n  the true work is `(n²-n)/2·kT`, overcounted by the quoted `n²` by a factor approaching 2.\n- `bubble_ge_entropy_floor`: `(n/2)·⌊log₂(n/2)⌋ ≤ C(n)`, so bubble sort still pays at least\n  the `Ω(n log n)` entropy floor (and asymptotically much more — the \"wasted\" work).\n\n**`Irreversibility.lean` — irreversibility = information erasure.**\n- `sort_perm_invariant`: all `n!` permutations of a list map to the *same* sorted output.\n- `sort_collapse_witness`, `sort_not_injective`: the sorting map is not injective, hence\n  irreversible; by Landauer's principle it must dissipate work, unlike a reversible map.\n\n## Refuted\n\n- **`W_bubble = kT·n²`** (as literally stated): the exact comparison count is `(n²-n)/2`,\n  not `n²`. Formalized in `bubble_lt_sq` / `bubble_sq_identity`.\n\n## Open / harder directions\n\n1. **Tightness of the entropy bound.** The bound `⌈log₂(n!)⌉` is *not* always achievable:\n   sorting 12 elements requires 30 comparisons while `⌈log₂(12!)⌉ = 29`. Formalizing the\n   Ford–Johnson (merge-insertion) analysis, or the `S(n) ≠ ⌈log₂ n!⌉` gaps, would sharpen\n   the \"minimum work `= kT·log(n!)`\" conjecture into its correct (only-asymptotic) form.\n\n2. **Upper bound / achievability.** Formalize that merge sort achieves `≤ n⌈log₂ n⌉`\n   comparisons, matching the lower bound up to constants, closing the `Θ(n log n)` window\n   thermodynamically.\n\n3. **Real-analytic Stirling.** Replace the elementary `Ω(n log n)` bound with the sharp\n   `log(n!) = n log n - n + O(log n)` (Mathlib's `Stirling`) to pin the leading constant of\n   `W_min / kT`.\n\n4. **Reversible sorting.** Formalize a reversible sorter (retaining the permutation as\n   output) and show its Landauer cost is `0`, contrasting with the irreversible map here —\n   making precise the brief's \"if sorting is reversible it does no work\".\n\n5. **Beyond comparison sorts.** Radix/counting sort escape the `log₂(n!)` comparison bound;\n   a thermodynamic account of their bit-erasure would test the second-law framing outside\n   the comparison model.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Computation",
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0881",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "a9aa7bbf",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/a9aa7bbf",
+      "status": "available",
+      "thread_id": "th_b77c4aac",
+      "timestamp": "2026-07-10T10:45:58.604676+00:00",
+      "title": "This project formalizes the information-theoretic (Landauer / second-law) conten"
     },
     {
       "ambition_level": "extension",
@@ -25211,6 +25293,46 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle a9aa7bbf (Q=0.800), which proved 18 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Sorting a list of n elements reduces the entropy from log(n!) bits to 0 bits, doing thermodynamic work W = kT * log(n!) in the process. But this is only true if sorting is irreversible — if the sorted list uniquely determines the input, then sorting is reversible and does no thermodynamic work. The ",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry"
+      ],
+      "github_issue": 0,
+      "id": "push_a9aa7bbf_18cbb188",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "a9aa7bbf",
+      "source_path": "The Thermodynamics of Sorting: Entropy and Computational Work",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-10T10:46:04.413215+00:00",
+      "title": "Deepening: The Thermodynamics of Sorting: Entropy and Computational Work"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
       "consumed_by_exp_id": "4de79d68",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -25377,7 +25499,7 @@
       "depth_estimate": 3,
       "description": "Cycle 3fa70466 (Q=0.790) proved 10 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In 1952, Turing showed that reaction-diffusion equations produce patterns (spots, stripes, spirals) that explain biological morphogenesis. But Turing patterns are solutions to PDEs, which are hard to ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Novelty"
       ],
@@ -25467,7 +25589,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.83,
       "parent_direction": "",
       "priority_score": 0.85,
       "proof_strategy": "",
@@ -25478,7 +25600,7 @@
       "source": "",
       "source_exp_id": "4936bb72",
       "source_path": "Deepening: The Zeta Function of a Graph: Number Theory on Networks",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-07-10T07:49:49.968157+00:00",
       "title": "Close Proofs: The Zeta Function of a Graph: Number Theory on Networks"
@@ -25777,7 +25899,7 @@
       "depth_estimate": 3,
       "description": "Cycle dd8b10c1 (Q=0.720) proved 54 theorems in Applications but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: A cake is a smooth projective variety over R: it has a base (a smooth manifold with boundary), frosting (a sheaf of sections supported on the boundary), and layers (a stratification by codimension). T",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Applications"
       ],
@@ -43121,105 +43243,105 @@
   "recent_domain_counts": {
     "Algebra": 10,
     "Bridges": 2,
-    "Computation": 6,
+    "Computation": 7,
     "Cryptography": 2,
     "Geometry": 2,
     "Logic": 6,
     "MachineLearning": 2,
-    "Novelty": 36,
+    "Novelty": 38,
     "NumberTheory": 6,
     "Physics": 5,
     "Pythagorean": 1,
     "Tropical": 2
   },
   "recent_theme_keywords": {
-    "'signature'": 1,
-    "14000bf9": 1,
-    "adjacent": 1,
     "algebraic": 2,
+    "algorithm": 1,
     "always": 6,
     "amplification": 3,
+    "approximation": 1,
     "because": 4,
-    "bottom": 1,
-    "building": 1,
+    "building": 2,
     "change": 4,
     "classes": 3,
     "classify": 2,
     "closure": 3,
-    "complementary": 1,
+    "comparison-based": 1,
+    "computational": 1,
     "compute": 18,
-    "conjecture": 36,
+    "conjecture": 38,
     "contains": 9,
     "corresponding": 6,
     "cycles": 2,
-    "deeper": 1,
+    "deeper": 2,
     "define": 8,
     "degree": 3,
     "different": 2,
-    "edges": 1,
+    "discard": 1,
+    "entropy": 1,
     "exactly": 6,
     "exists": 6,
-    "extend": 1,
-    "flat": 1,
+    "extend": 2,
     "formalizing": 3,
     "formula": 2,
     "framework": 4,
-    "general": 6,
+    "general": 7,
     "geometry": 4,
-    "graph": 3,
+    "graph": 4,
     "graphon": 3,
-    "impact": 32,
+    "impact": 33,
     "inequalities": 3,
     "infinite": 4,
     "information": 2,
+    "input": 1,
     "introduces": 3,
-    "jigsaw": 1,
+    "irreversible": 1,
     "lattice": 3,
+    "matches": 1,
     "mathematics": 4,
     "measure": 5,
-    "novelty": 1,
-    "np-complete": 1,
-    "np-completeness": 1,
-    "number": 23,
+    "merge": 1,
+    "minimum": 1,
+    "n*log(n": 1,
+    "novelty": 2,
+    "number": 24,
     "numbers": 5,
-    "original": 1,
-    "pieces": 1,
+    "original": 2,
     "points": 3,
     "precision": 2,
     "principles": 3,
     "probability": 2,
+    "process": 1,
     "product": 3,
     "properties": 6,
-    "proved": 5,
+    "proved": 6,
     "providing": 3,
     "proving": 3,
-    "puzzles": 1,
-    "q=0.820": 1,
     "random": 3,
-    "remaining": 1,
+    "reduces": 1,
+    "remaining": 2,
     "representing": 2,
-    "result": 1,
+    "result": 2,
     "riemann": 2,
-    "right": 1,
     "sequence": 7,
-    "setting": 1,
+    "setting": 2,
     "shorter": 2,
     "sidorenko-type": 3,
-    "solving": 1,
+    "sorted": 1,
     "spectral": 5,
     "standard": 2,
     "statements": 2,
-    "strongest": 1,
+    "strongest": 2,
     "structural": 3,
     "structure": 11,
     "tensor": 5,
     "tensor-amplification": 3,
     "tensor_z": 2,
     "theorem": 16,
-    "theorems": 1,
-    "theory": 6,
+    "theorems": 2,
+    "theory": 7,
     "there": 3,
-    "together": 1,
+    "thermodynamic": 1,
     "topological": 4,
     "topology": 7,
     "transfer": 3,
@@ -43227,7 +43349,7 @@
     "types": 2,
     "values": 3,
     "variety": 4,
-    "verify": 26,
+    "verify": 27,
     "vertices": 2,
     "without": 3,
     "words": 2,
@@ -43239,7 +43361,6 @@
     "famous_subtask",
     "famous_subtask",
     "famous_subtask",
-    "famous_subtask",
     "cross_domain_bridge",
     "famous_subtask",
     "famous_subtask",
@@ -43254,6 +43375,7 @@
     "famous_subtask",
     "famous_subtask",
     "famous_subtask",
-    "famous_subtask"
+    "famous_subtask",
+    "cross_domain_bridge"
   ]
 }

@@ -1159,7 +1159,7 @@
       "DasMorrisTreglown2020",
       "Ramsey1929"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c22096e0",
     "description": "Conjecture: For any fixed integer r≥2 and any collection of graphs H1, …, Hr, let ψ = ∥_{j=1}^r (ω67(Hj)‑1). Define the critical edge density π_c = 1‑1/ψ. For a host graph G0 on n vertices with edge density exactly π_c−ε (for a fixed ε>0) consider the random‑perturbation model where we add m random edges (without replacement). Then the minimal number of edges that forces the perturbed graph to be (H1, …, Hr)_v‑Ramsey satisfies\n\n    m_c(n) = π_c * (n choose 2) + Ψ(n^{3/2}),\n\nand there is a sharp threshold: if m = m_c(n) + ω(n^{3/2}) then with high probability the perturbed graph is (H1, …, Hr)_v‑Ramsey; if m = m_c(n) − ω(n^{3/2}) then with high probability it is not. Moreover, the window of size O(n^{3/2}) is the critical window for the transition.",
     "domain_bridges": [
       "probabilistic method",
@@ -1179,7 +1179,7 @@
     "proof_strategy": "1. Prove a stability theorem characterising vertex‑Ramsey graphs as Turán‑type graphs with only a few missing edges. 2. Derive supersaturation results for the vertex‑Ramsey property in terms of edge density. 3. Apply differential‑equation / sparse random graph techniques to the random‑edge addition process, establishing that once the density exceeds π_c by ≈ n^{−1/2} the property holds w.h.p., and that below this threshold it fails w.h.p. via a second‑moment or Chernoff argument. 4. Combine these to locate the critical window of width θ(n^{3/2}).",
     "research_mode": "team",
     "source_exp_id": "2606.30548v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T17:52:40.366510+00:00",
     "title": "Precise threshold for vertex‑Ramsey property in random perturbations"
   },
