@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "65ebb6ab",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — One-Sided Distance Distortion of Edge-Partition Labelings\n\nThe central finding of this cycle is sharp and one-sided: the parity labeling attached to any\nedge partition of a conne",
-      "quality_score": 0.5526146420618556,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-06-30T16:55:02",
-      "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
-    },
-    {
       "cycle_id": "d5c197ae",
       "domain": "Probability",
       "key_insight": "# Future Directions — Probabilistic Birch–Swinnerton-Dyer\n\nThis cycle established two probabilistic pillars of the Birch–Swinnerton-Dyer\ncircle: the Sato–Tate measure `(2/π) sin²θ dθ` is a genuine pro",
@@ -2501,6 +2491,16 @@
       "theorem_count": 18,
       "timestamp": "2026-07-10T10:46:04",
       "title": "The Thermodynamics of Sorting: Entropy and Computational Work"
+    },
+    {
+      "cycle_id": "81ffd6ce",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## Build & compilation status\n\nAll deliverable files of this cycle now compile end-to-end and are `sorry`-free.\nThe top-level Lake project builds them by default: `lake build` com",
+      "quality_score": 0.6,
+      "sorry_count": 6,
+      "theorem_count": 0,
+      "timestamp": "2026-07-10T11:18:05",
+      "title": "Close Proofs: Graph Coloring with Emotions: The Chromatic Polynomial Meets Psycholog"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-10T10:46:04",
+  "last_updated": "2026-07-10T11:18:05",
   "open_questions": [
-    {
-      "context": "`Lemmens-Seidel-73`); here we prove the *reduction* to it with zero `sorry`s.; eigenvalue `−3`.  Both rank facts are formalised with zero `sorry`s, reducing; engines are captured here rigorously and w",
-      "cycle_id": "7f2fc4f9",
-      "domain": "Pythagorean",
-      "sorry_count": 10,
-      "timestamp": "2026-07-02T20:59:14"
-    },
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
       "cycle_id": "bb3ce4ee",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 3,
       "timestamp": "2026-07-10T10:45:49"
+    },
+    {
+      "context": "+`sorry`-free. -/; -    sorry; +    documented future work rather than proved with `sorry`:",
+      "cycle_id": "81ffd6ce",
+      "domain": "Applications",
+      "sorry_count": 6,
+      "timestamp": "2026-07-10T11:18:05"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "73d4b43b",
-        "quality": 0.78,
-        "theorems": 14,
-        "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
-      },
-      {
         "cycle_id": "dd8b10c1",
         "quality": 0.72,
         "theorems": 54,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 32,
         "title": "Deepening: The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
+      },
+      {
+        "cycle_id": "81ffd6ce",
+        "quality": 0.6,
+        "theorems": 0,
+        "title": "Close Proofs: Graph Coloring with Emotions: The Chromatic Polynomial Meets Psych"
       }
     ],
     "Bridges": [
