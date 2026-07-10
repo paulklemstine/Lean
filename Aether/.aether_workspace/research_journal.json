@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "242f16a7",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Generalized Honeymoon Oberwolfach Schedules\n\nSetting. Two `n` newlywed couples must be seated over several nights. Every night the `2n`\nguests are split among tables whose sizes",
-      "quality_score": 0.79104,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-04T15:19:42",
-      "title": "Sufficiency of obvious necessary conditions for the generalized honeymoon Oberwolfach problem with m"
-    },
-    {
       "cycle_id": "bb909d34",
       "domain": "Applications",
       "key_insight": "# Future Directions — Anabelomorphic Equivalence\n\nFive falsifiable conjectures derived from this cycle's findings, which established that the tame\n(GL(1) residue) layer of a local field is completely",
@@ -499,19 +489,19 @@
       "theorem_count": 7,
       "timestamp": "2026-07-10T11:50:43",
       "title": "Deepening: Turing's Flowers: Morphogenesis as Algebraic Geometry"
+    },
+    {
+      "cycle_id": "25448d9e",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Turing's Flowers: Morphogenesis as Algebraic Geometry\n\nThe file `Catalog/Novelty/TuringFlowersAlgebraicGeometry.lean` establishes the\ndegree/Chebyshev correspondence and the boun",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-10T11:50:51",
+      "title": "Close Proofs: Turing's Flowers: Morphogenesis as Algebraic Geometry"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c69c4ab9",
-      "domain": "Logic",
-      "key_insight": "# Future Directions — Square-Root Cancellation for GL(2) Triple Correlation Sums\n\nThis cycle established two unconditional facts about the triple correlation sum\n`T_f(X,Y) = ∑_{n<X} ∑_{m<Y} λ_f(n) λ_f",
-      "quality_score": 0.4328038727272727,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-07-01T01:50:50",
-      "title": "Square-Root Cancellation for GL(2) Triple Correlation Sums"
-    },
     {
       "cycle_id": "adbfcd0f",
       "domain": "Applications",
@@ -2501,6 +2491,16 @@
       "theorem_count": 7,
       "timestamp": "2026-07-10T11:50:43",
       "title": "Deepening: Turing's Flowers: Morphogenesis as Algebraic Geometry"
+    },
+    {
+      "cycle_id": "25448d9e",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Turing's Flowers: Morphogenesis as Algebraic Geometry\n\nThe file `Catalog/Novelty/TuringFlowersAlgebraicGeometry.lean` establishes the\ndegree/Chebyshev correspondence and the boun",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-10T11:50:51",
+      "title": "Close Proofs: Turing's Flowers: Morphogenesis as Algebraic Geometry"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-10T11:50:43",
+  "last_updated": "2026-07-10T11:50:51",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "48961a11",
-        "quality": 0.83,
-        "theorems": 16,
-        "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
-      },
-      {
         "cycle_id": "b152086d",
         "quality": 0.72,
         "theorems": 20,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 17,
         "title": "The Arithmetic of Games: Surreal Numbers as Number Fields"
+      },
+      {
+        "cycle_id": "25448d9e",
+        "quality": 0.8,
+        "theorems": 0,
+        "title": "Close Proofs: Turing's Flowers: Morphogenesis as Algebraic Geometry"
       }
     ],
     "Bridges": [
