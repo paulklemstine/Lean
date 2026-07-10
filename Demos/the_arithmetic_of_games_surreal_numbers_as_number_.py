@@ -1,260 +1,193 @@
-#!/usr/bin/env python3
-"""
-Demo: Surreal Number Birthday Hierarchy
+"""Numerical demonstrations for *Dyadic Surreal Numbers and Finite Birthdays*.
 
-Demonstrates the birthday stratification of surreal numbers,
-dyadic rational approximation, and game tree construction.
+This self-contained script models the finite-birthday layer of Conway's
+surreal numbers.  Every surreal number appearing here is a dyadic rational
+``m / 2**n``; we model such a value by the exact fraction together with the
+data needed to recover the surreal facts of the paper:
+
+  * the birthday of the power of one half ``2**-n`` is exactly ``n + 1``;
+  * the powers of one half are positive, strictly decreasing and distinct;
+  * ``2**n * 2**-n = 1``   (rescaling law);
+  * ``2**-m * 2**-n = 2**-(m+n)``   (exponent law);
+  * the canonical map  ``m / 2**n  ->  m * 2**-n``  is an injective ring
+    homomorphism onto the dyadic surreals.
+
+Everything is checked with exact rational arithmetic, so the demonstrations
+are mathematically faithful rather than floating-point approximations.
 """
 
+from __future__ import annotations
+
+from dataclasses import dataclass
 from fractions import Fraction
-from typing import List, Tuple, Optional
+from math import gcd
 
 
-def is_dyadic(q: Fraction) -> bool:
-    """Check if a rational number is dyadic (denominator is a power of 2)."""
-    d = q.denominator
-    while d > 1:
-        if d % 2 != 0:
-            return False
-        d //= 2
-    return True
+# --------------------------------------------------------------------------- #
+#  Powers of one half and their birthdays
+# --------------------------------------------------------------------------- #
+def pow_half(n: int) -> Fraction:
+    """Return the dyadic value of the surreal power of one half ``2**-n``."""
+    if n < 0:
+        raise ValueError("n must be a natural number")
+    return Fraction(1, 2 ** n)
 
 
-def dyadic_birthday(q: Fraction) -> int:
-    """Compute the surreal birthday of a dyadic rational.
+def birthday_pow_half(n: int) -> int:
+    """Birthday of ``2**-n`` in Conway's construction, which equals ``n + 1``.
 
-    For q = m/2^n with m odd (or m=0), birthday = n.
-    For q = 0, birthday = 0.
-    For integer q != 0, birthday = |q|.
+    Base case ``2**0 = 1 = {0 | }`` is born on day 1; each midpoint
+    ``2**-(n+1) = {0 | 2**-n}`` costs exactly one additional day.
     """
-    if q == 0:
-        return 0
-    if q < 0:
-        return dyadic_birthday(-q)
-    if q.denominator == 1:
-        return int(q)
-    # q = m / 2^n with m odd
-    n = 0
-    d = q.denominator
-    while d > 1:
-        d //= 2
-        n += 1
-    return n
+    if n < 0:
+        raise ValueError("n must be a natural number")
+    return n + 1
 
 
-def surreals_at_day(n: int) -> List[Fraction]:
-    """Generate all surreal numbers (dyadic rationals) born by day n."""
-    if n == 0:
-        return [Fraction(0)]
-    prev = surreals_at_day(n - 1)
-    prev_sorted = sorted(prev)
-    new = []
-    # New numbers between consecutive elements
-    for i in range(len(prev_sorted) - 1):
-        mid = (prev_sorted[i] + prev_sorted[i + 1]) / 2
-        new.append(mid)
-    # New extremes
-    if prev_sorted:
-        new.append(prev_sorted[0] - 1)
-        new.append(prev_sorted[-1] + 1)
-    return sorted(set(prev + new))
+def is_finite_birthday(n: int) -> bool:
+    """Every power of one half is born strictly before day omega."""
+    return birthday_pow_half(n) < float("inf")  # always True; n + 1 is finite
 
 
-def dyadic_approx(q: Fraction, n: int) -> Fraction:
-    """Best dyadic approximation of q with denominator dividing 2^n."""
-    scaled = q * (2 ** n)
-    rounded = Fraction(int(scaled), 1)
-    return rounded / (2 ** n)
+# --------------------------------------------------------------------------- #
+#  Dyadic rationals and the canonical embedding
+# --------------------------------------------------------------------------- #
+@dataclass(frozen=True)
+class Dyadic:
+    """A dyadic rational ``m / 2**n`` kept in lowest terms."""
+
+    numerator: int   # the odd part times sign, once reduced
+    exponent: int    # non-negative power of two in the denominator
+
+    @staticmethod
+    def of_fraction(q: Fraction) -> "Dyadic":
+        """Build a Dyadic from a Fraction; raise if the value is not dyadic."""
+        den = q.denominator
+        exp = 0
+        while den % 2 == 0:
+            den //= 2
+            exp += 1
+        if den != 1:
+            raise ValueError(f"{q} is not a dyadic rational")
+        return Dyadic(q.numerator, exp)
+
+    def value(self) -> Fraction:
+        """The rational value ``numerator / 2**exponent``."""
+        return Fraction(self.numerator, 2 ** self.exponent)
 
 
-def surreal_count(n: int) -> int:
-    """Number of distinct surreals born by day n."""
-    return 2 ** (n + 1) - 1
+def dyadic_map(d: Dyadic) -> Fraction:
+    """Canonical map  ``m / 2**n  ->  m * 2**-n``  into the surreals.
+
+    Because our surreals-in-the-finite-layer are exactly dyadic rationals,
+    the surreal value coincides with the ordinary rational value.
+    """
+    return d.numerator * pow_half(d.exponent)
 
 
-def new_surreals_at(n: int) -> int:
-    """Number of NEW surreals born at day n."""
-    return 1 if n == 0 else 2 ** n
+def denominator_height(q: Fraction) -> int:
+    """The exponent n such that q = m / 2**n in lowest dyadic form."""
+    return Dyadic.of_fraction(q).exponent
 
 
-# ============================================================
-# DEMONSTRATIONS
-# ============================================================
-
-print("=" * 70)
-print("SURREAL NUMBER BIRTHDAY HIERARCHY")
-print("=" * 70)
-
-print("\n--- Day-by-Day Construction ---")
-for day in range(6):
-    surreals = surreals_at_day(day)
-    print(f"Day {day}: {len(surreals)} surreals")
-    if day <= 3:
-        print(f"  Values: {[str(s) for s in surreals]}")
-    else:
-        print(f"  Range: [{surreals[0]}, {surreals[-1]}]")
-
-print("\n--- Surreal Counting Formula ---")
-print("Verifying: surreal_count(n) = 2^(n+1) - 1")
-for n in range(8):
-    actual = len(surreals_at_day(n)) if n <= 5 else surreal_count(n)
-    formula = surreal_count(n)
-    check = "✓" if (n > 5 or actual == formula) else "✗"
-    print(f"  n={n}: s(n) = {formula}, new = {new_surreals_at(n)} {check}")
-
-print("\n--- Recurrence Verification ---")
-print("Verifying: s(n+1) = 2*s(n) + 1")
-for n in range(7):
-    lhs = surreal_count(n + 1)
-    rhs = 2 * surreal_count(n) + 1
-    check = "✓" if lhs == rhs else "✗"
-    print(f"  s({n+1}) = {lhs} = 2*{surreal_count(n)} + 1 = {rhs} {check}")
-
-print("\n--- Sum Decomposition ---")
-print("Verifying: s(n) = sum of new_surreals(k) for k=0..n")
-for n in range(7):
-    total = sum(new_surreals_at(k) for k in range(n + 1))
-    formula = surreal_count(n)
-    check = "✓" if total == formula else "✗"
-    terms = " + ".join(str(new_surreals_at(k)) for k in range(n + 1))
-    print(f"  n={n}: {terms} = {total} = {formula} {check}")
-
-print("\n--- Birthday-Denomination Correspondence ---")
-print("Verifying: birthday of m/2^n with m odd = n")
-test_cases = [
-    (1, 1, "1/2"),
-    (1, 2, "1/4"),
-    (3, 2, "3/4"),
-    (1, 3, "1/8"),
-    (5, 3, "5/8"),
-    (7, 4, "7/16"),
-]
-for m, n, label in test_cases:
-    q = Fraction(m, 2 ** n)
-    birthday = dyadic_birthday(q)
-    check = "✓" if birthday == n else "✗"
-    print(f"  {label} = {m}/2^{n}: birthday = {birthday}, expected {n} {check}")
-
-print("\n--- Dyadic Approximation ---")
-print("Verifying: |q - d| ≤ 1/2^n for best dyadic d")
-for q_num, q_den in [(1, 3), (1, 5), (2, 7), (3, 11)]:
-    q = Fraction(q_num, q_den)
-    print(f"  q = {q}:")
-    for n in range(1, 6):
-        d = dyadic_approx(q, n)
-        error = abs(q - d)
-        bound = Fraction(1, 2 ** n)
-        check = "✓" if error <= bound else "✗"
-        print(f"    n={n}: d = {float(d):.6f}, |q-d| = {float(error):.6f} ≤ {float(bound):.6f} {check}")
-
-print("\n--- All Dyadics are in the Subring ---")
-print("Verifying closure under arithmetic")
-dyadics = [Fraction(m, 2 ** n) for n in range(4) for m in range(-2 ** n, 2 ** n + 1)]
-dyadics = list(set(dyadics))[:20]  # sample
-add_closed = all(is_dyadic(a + b) for a in dyadics for b in dyadics)
-mul_closed = all(is_dyadic(a * b) for a in dyadics for b in dyadics)
-neg_closed = all(is_dyadic(-a) for a in dyadics)
-print(f"  Addition closed: {add_closed} ✓")
-print(f"  Multiplication closed: {mul_closed} ✓")
-print(f"  Negation closed: {neg_closed} ✓")
-
-print("\n--- Dyadic Sequence Convergence ---")
-print("dyadicSeq(n) = 1/2^n → 0")
-for n in range(10):
-    val = Fraction(1, 2 ** n)
-    print(f"  n={n}: 1/2^{n} = {float(val):.10f}")
-
-print("\n" + "=" * 70)
-print("All demonstrations completed successfully.")
-print("=" * 70)
+# --------------------------------------------------------------------------- #
+#  Demonstrations
+# --------------------------------------------------------------------------- #
+def demo_birthdays(max_n: int = 8) -> None:
+    print("== Birthdays of the powers of one half (birth(2^-n) = n + 1) ==")
+    for n in range(max_n + 1):
+        v = pow_half(n)
+        print(f"  2^-{n:<2} = {str(v):>9}   birthday = {birthday_pow_half(n)}"
+              f"   (< omega: {is_finite_birthday(n)})")
+    print()
 
 
-#!/usr/bin/env python3
-"""
-Visualization: Surreal Number Birthday Hierarchy
-
-Plots the surreal numbers born at each day, showing how the number line
-fills in with dyadic rationals.
-"""
-
-import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-from fractions import Fraction
-from typing import List, Set
+def demo_order(max_n: int = 6) -> None:
+    print("== The half-powers are positive, strictly decreasing, distinct ==")
+    values = [pow_half(n) for n in range(max_n + 1)]
+    print("  sequence:", "  >  ".join(str(v) for v in values))
+    assert all(v > 0 for v in values), "positivity failed"
+    assert all(values[i + 1] < values[i] for i in range(len(values) - 1)), \
+        "strict decrease failed"
+    assert len(set(values)) == len(values), "distinctness failed"
+    print("  positivity, strict decrease, and distinctness all verified.\n")
 
 
-def surreals_by_day(n: int) -> List[Fraction]:
-    """Generate all surreal numbers born by day n."""
-    if n == 0:
-        return [Fraction(0)]
-    prev = surreals_by_day(n - 1)
-    prev.sort()
-    new_values: Set[Fraction] = set(prev)
-    for i in range(len(prev) - 1):
-        mid = (prev[i] + prev[i + 1]) / 2
-        new_values.add(mid)
-    if prev:
-        new_values.add(prev[0] - 1)
-        new_values.add(prev[-1] + 1)
-    return sorted(new_values)
+def demo_rescaling(max_n: int = 8) -> None:
+    print("== Rescaling law:  2^n * 2^-n = 1 ==")
+    for n in range(max_n + 1):
+        lhs = (2 ** n) * pow_half(n)
+        assert lhs == 1, f"rescaling failed at n={n}"
+        print(f"  2^{n} * 2^-{n} = {lhs}")
+    print()
 
 
-def new_at_day(n: int) -> List[Fraction]:
-    """Get only the NEW surreals born at exactly day n."""
-    if n == 0:
-        return [Fraction(0)]
-    current = set(surreals_by_day(n))
-    prev = set(surreals_by_day(n - 1))
-    return sorted(current - prev)
+def demo_exponent_law(max_m: int = 4, max_n: int = 4) -> None:
+    print("== Exponent law:  2^-m * 2^-n = 2^-(m+n) ==")
+    for m in range(max_m + 1):
+        for n in range(max_n + 1):
+            lhs = pow_half(m) * pow_half(n)
+            rhs = pow_half(m + n)
+            assert lhs == rhs, f"exponent law failed at (m,n)=({m},{n})"
+    print(f"  verified for all 0 <= m <= {max_m}, 0 <= n <= {max_n}.")
+    print(f"  e.g. 2^-2 * 2^-3 = {pow_half(2) * pow_half(3)} = 2^-5 "
+          f"= {pow_half(5)}\n")
 
 
-# Create figure
-fig, axes = plt.subplots(2, 1, figsize=(14, 10), gridspec_kw={'height_ratios': [3, 1]})
+def demo_ring_homomorphism() -> None:
+    print("== The dyadic map is a unital, additive, multiplicative injection ==")
+    samples = [Fraction(3, 8), Fraction(-5, 16), Fraction(7, 4),
+               Fraction(1, 1), Fraction(-1, 2), Fraction(11, 32)]
+    ds = [Dyadic.of_fraction(q) for q in samples]
 
-# --- Plot 1: Birthday hierarchy ---
-ax1 = axes[0]
-colors = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#a65628', '#f781bf']
-max_day = 5
+    # unitality
+    assert dyadic_map(Dyadic.of_fraction(Fraction(1))) == 1
+    print("  unital:            Phi(1) = 1")
 
-for day in range(max_day + 1):
-    new = new_at_day(day)
-    y_positions = [day] * len(new)
-    x_positions = [float(s) for s in new]
-    size = max(80 - day * 12, 10)
-    ax1.scatter(x_positions, y_positions, s=size, c=colors[day % len(colors)],
-                label=f'Day {day}: {len(new)} new', zorder=5, edgecolors='black', linewidth=0.5)
-    # Label small values
-    if day <= 2:
-        for x, s in zip(x_positions, new):
-            ax1.annotate(str(s), (x, day), textcoords="offset points",
-                        xytext=(0, 8), ha='center', fontsize=7)
+    # additivity and multiplicativity
+    for a in ds:
+        for b in ds:
+            sum_ab = Dyadic.of_fraction(a.value() + b.value())
+            prod_ab = Dyadic.of_fraction(a.value() * b.value())
+            assert dyadic_map(sum_ab) == dyadic_map(a) + dyadic_map(b)
+            assert dyadic_map(prod_ab) == dyadic_map(a) * dyadic_map(b)
+    print("  additive:          Phi(x + y) = Phi(x) + Phi(y)  (all pairs)")
+    print("  multiplicative:    Phi(x * y) = Phi(x) * Phi(y)  (all pairs)")
 
-ax1.set_xlabel('Value', fontsize=12)
-ax1.set_ylabel('Birthday (Day)', fontsize=12)
-ax1.set_title('Surreal Number Birthday Hierarchy\nEach row shows numbers born at that day', fontsize=14)
-ax1.legend(loc='upper left', fontsize=9)
-ax1.set_yticks(range(max_day + 1))
-ax1.grid(True, alpha=0.3)
-ax1.invert_yaxis()
+    # injectivity: distinct dyadics map to distinct surreals
+    images = [dyadic_map(d) for d in ds]
+    assert len(set(images)) == len(set(q for q in samples))
+    print("  injective:         distinct dyadics -> distinct surreals\n")
 
-# --- Plot 2: Counting function ---
-ax2 = axes[1]
-days = list(range(10))
-counts = [2 ** (n + 1) - 1 for n in days]
-new_counts = [1] + [2 ** n for n in range(1, 10)]
 
-ax2.bar([d - 0.15 for d in days], counts, width=0.3, color='steelblue',
-        label='Total by day n', alpha=0.8)
-ax2.bar([d + 0.15 for d in days], new_counts, width=0.3, color='coral',
-        label='New at day n', alpha=0.8)
-ax2.set_xlabel('Day n', fontsize=12)
-ax2.set_ylabel('Count', fontsize=12)
-ax2.set_title('Surreal Counting: s(n) = 2^(n+1) - 1', fontsize=14)
-ax2.legend(fontsize=9)
-ax2.set_yscale('log')
-ax2.grid(True, alpha=0.3, which='both')
+def demo_thirds_have_no_finite_birthday(depth: int = 6) -> None:
+    print("== 1/3 is NOT dyadic: it has no finite birthday ==")
+    try:
+        Dyadic.of_fraction(Fraction(1, 3))
+    except ValueError:
+        print("  1/3 cannot be written as m / 2^n; it is born only at day omega.")
+    # show the binary approximations closing in from both sides
+    lower, upper = Fraction(0), Fraction(1)
+    print("  simplest-midpoint approximations to 1/3:")
+    for _ in range(depth):
+        mid = (lower + upper) / 2
+        if mid < Fraction(1, 3):
+            lower = mid
+        else:
+            upper = mid
+    print(f"    after {depth} bisections:  {lower}  <  1/3  <  {upper}\n")
 
-plt.tight_layout()
-plt.savefig('surreal_birthday_hierarchy.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved: surreal_birthday_hierarchy.png")
+
+def main() -> None:
+    print(__doc__)
+    demo_birthdays()
+    demo_order()
+    demo_rescaling()
+    demo_exponent_law()
+    demo_ring_homomorphism()
+    demo_thirds_have_no_finite_birthday()
+    print("All demonstrations completed successfully.")
+
+
+if __name__ == "__main__":
+    main()
