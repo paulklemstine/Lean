@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "48961a11",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Optimal Strategy in Social-Deduction Games\n\nThe current cycle established the exact symmetry backbone of Bayesian werewolf\nplay: under population-only information every player ca",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 16,
-      "timestamp": "2026-07-10T05:35:47",
-      "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
-    },
-    {
       "cycle_id": "b152086d",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\n`Core.lean` formalizes the *analytic engine* behind the uncertainty principle and its\ninstantiation on the Fourier, Laplace, and Mellin transforms:\n\n* the identity-principle uncer",
@@ -499,19 +489,19 @@
       "theorem_count": 26,
       "timestamp": "2026-07-10T22:14:01",
       "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
+    },
+    {
+      "cycle_id": "f9bf2df0",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — Isomorphisms of Meaning\n\nThis project formalizes the torsor structure of the set of isomorphisms between\ntwo isomorphic additive groups, the transport of all structural truth acr",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-10T22:14:14",
+      "title": "Isomorphisms of Meaning: When Structures Collide"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "38047daa",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: critical augmentations and the fractional chromatic number of the plane\n\nThis cycle isolated the exact counting mechanism behind the phenomenon whereby a 27-point\nplanar unit-dist",
-      "quality_score": 0.6813500000000001,
-      "sorry_count": 3,
-      "theorem_count": 16,
-      "timestamp": "2026-07-02T02:27:45",
-      "title": "Uniqueness of the Critical 2-Vertex Augmentation of G27"
-    },
     {
       "cycle_id": "f4462f16",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 26,
       "timestamp": "2026-07-10T22:14:01",
       "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
+    },
+    {
+      "cycle_id": "f9bf2df0",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — Isomorphisms of Meaning\n\nThis project formalizes the torsor structure of the set of isomorphisms between\ntwo isomorphic additive groups, the transport of all structural truth acr",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-10T22:14:14",
+      "title": "Isomorphisms of Meaning: When Structures Collide"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6c565e60",
-      "domain": "Applications",
-      "name": "card_neighborhoods",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "6c565e60",
-      "domain": "Applications",
-      "name": "shift_apply",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "e40b9050",
-      "domain": "Novelty",
-      "name": "monomial_le_tropVal",
-      "quality": 0.82
-    },
     {
       "cycle_id": "e40b9050",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "coverable_7_4_1",
       "quality": 0.79
+    },
+    {
+      "cycle_id": "f9bf2df0",
+      "domain": "NumberTheory",
+      "name": "iso_diff_by_aut",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "f9bf2df0",
+      "domain": "NumberTheory",
+      "name": "aut_unique_of_trans_eq",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "f9bf2df0",
+      "domain": "NumberTheory",
+      "name": "transport_addOrderOf",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-10T22:14:01",
+  "last_updated": "2026-07-10T22:14:14",
   "open_questions": [
     {
       "context": "## Sorry inventory (genuinely hard sub-steps, all non-circular); proved *without* reference to any sunflower bound.  (Hard; left as `sorry`.) -/; sorry",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "3fc75f2f",
-        "quality": 0.3972276,
-        "theorems": 6,
-        "title": "Quadratic Reciprocity: Five Proofs Formalized"
-      },
-      {
         "cycle_id": "5a8a4bbe",
         "quality": 0.6805899999999999,
         "theorems": 14,
@@ -3699,6 +3693,12 @@
         "quality": 0.78,
         "theorems": 13,
         "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality "
+      },
+      {
+        "cycle_id": "f9bf2df0",
+        "quality": 0.82,
+        "theorems": 16,
+        "title": "Isomorphisms of Meaning: When Structures Collide"
       }
     ],
     "Physics": [

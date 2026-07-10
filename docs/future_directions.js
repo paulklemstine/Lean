@@ -255,6 +255,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle f9bf2df0 (Q=0.820), which proved 16 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that isomorphic mathematical structures can carry semantically different meanings that no formal system can distinguish. Formalize the concept of 'isomorphism of isomorphisms' and show that categorical equivalence preserves truth but not meaning. Connect to Hofstadter's Copycat architecture fo",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "push_f9bf2df0_573b41a7",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "f9bf2df0",
+    "status": "available",
+    "timestamp": "2026-07-10T22:14:15.019602+00:00",
+    "title": "Deepening: Isomorphisms of Meaning: When Structures Collide"
+  },
+  {
     "consumed_by_exp_id": "478ae68b",
     "description": "Prove that any sufficiently powerful formal system necessarily contains strange loops: statements that refer to their own unprovability. Formalize G\u00f6del's first incompleteness theorem as a fixed-point in the lattice of provability predicates. Explore whether consciousness arises from tangled hierarchies of self-referential symbols.",
     "domains": [
@@ -526,21 +540,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-09T23:08:57.326588+00:00",
     "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
-  },
-  {
-    "consumed_by_exp_id": "f9bf2df0",
-    "description": "Prove that isomorphic mathematical structures can carry semantically different meanings that no formal system can distinguish. Formalize the concept of 'isomorphism of isomorphisms' and show that categorical equivalence preserves truth but not meaning. Connect to Hofstadter's Copycat architecture for analogical reasoning.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0937",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T20:04:00.693085+00:00",
-    "title": "Isomorphisms of Meaning: When Structures Collide"
   },
   {
     "consumed_by_exp_id": "",
@@ -5470,7 +5469,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Information Geometry of Optimization: Natural Gradient Follows Geodesics"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0ba9c9ed",
     "description": "Formalize chess played on an infinite board. Prove that the king can always escape on an infinite board and determine which finite-piece configurations are forced mates. Develop a theory of infinite combinatorial game value and prove its relationship to ordinal game values.",
     "domains": [
       "Novelty",
@@ -5480,7 +5479,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T21:57:34.411164+00:00",
     "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
   },
@@ -6351,6 +6350,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T22:13:54.943673+00:00",
     "title": "Domain: Algebra / Topological Data Analysis. Mode: Contrarian (prove bold conjec"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Isomorphisms of Meaning\n\nThis project formalizes the torsor structure of the set of isomorphisms between\ntwo isomorphic additive groups, the transport of all structural truth across an\nisomorphism, and the number-theoretic measurement of the residual ambiguity\n(\"meaning\") by Euler's totient.  Natural extensions:\n\n## 1. From automorphism groups to full torsors\n`autEquivIsoDom` / `isoEquivAutCod` are bijections of *sets*.  Upgrade them to an\nequivariant statement: `G \u2243+ H` is a right torsor under `Aut(G)` and a left\ntorsor under `Aut(H)`, with the two actions commuting.  Then\n`Nat.card (G \u2243+ H) = Nat.card (Aut G) = Nat.card (Aut H)` whenever `G \u2243+ H` is\nnonempty, generalizing `card_iso_to_zmod` beyond cyclic groups.\n\n## 2. The totient bridge for general finite abelian groups\nBy the structure theorem, `Aut(\u2a01 \u2124/n_i)` is a product of general linear groups\nover residue rings.  A formal `card_aut_of_abelian` computing `|Aut(A)|` for\nfinite abelian `A` would let `card_iso` be stated for every such `A`, quantifying\n\"meaning ambiguity\" in complete generality.\n\n## 3. Multiplicative and ring-theoretic collisions\nMirror the additive development for `MulEquiv` and `RingEquiv`.  A striking\nnumber-theoretic collision to formalize: `(ZMod p)\u02e3 \u2243* ZMod (p-1)` for prime `p`\n(a multiplicative structure among residues is secretly additive), sharpening the\nCRT example `crtCollision`.\n\n## 4. Categorical formulation\nRephrase transport (`structural_invariance`) as: any functor to `Prop` inverts\nisomorphisms.  The \"isomorphism of isomorphisms\" is then a statement about the\ncore groupoid; `Aut` is the automorphism group in the categorical sense and the\ntorsor is a `Aut`-principal homogeneous set.\n\n## 5. Logical / definability sharpening\n`structural_invariance` shows isomorphism-invariant predicates cannot separate\nisomorphic groups.  Connect this to a genuine definability statement: elements\nrelated by an automorphism satisfy the same first-order formulas with parameters\nfixed by that automorphism, making \"no formal system distinguishes them\" a\ntheorem of model theory rather than a schema over Lean predicates.\n\n## 6. Copycat / analogy quantification\nHofstadter's Copycat produces analogies \"map the role of `a` in `A` to its role\nin `B`\".  The formal counterpart here is: an analogy is an isomorphism, and the\nspace of equally valid analogies is the `Aut`-torsor.  A metric on this torsor\n(e.g. via a chosen generating set / Cayley graph of `Aut`) would formalize the\nnotion of \"conceptual slippage\" between competing analogies as graph distance.\n",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_0950",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f9bf2df0",
+    "status": "available",
+    "timestamp": "2026-07-10T22:14:03.962509+00:00",
+    "title": "This project formalizes the torsor structure of the set of isomorphisms between"
   },
   {
     "consumed_by_exp_id": "",

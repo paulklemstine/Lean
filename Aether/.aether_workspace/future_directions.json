@@ -27195,11 +27195,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "0ba9c9ed",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -27212,7 +27212,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0948",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-10T22:14:28.153475+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -27227,7 +27227,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-10T21:57:34.411164+00:00",
       "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
@@ -28648,7 +28648,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle bb33d4fa (Q=0.780), which proved 13 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For an edge-colored graph that is a minimal obstruction to total rainbow forests, there exists a unique subset A ⊆ E(G) where r₁(A) + r₂(E\\A) < t, and this failure is strict for no other subset.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "NumberTheory"
       ],
@@ -28993,6 +28993,46 @@
       "thread_id": "",
       "timestamp": "2026-07-10T20:20:23.542160+00:00",
       "title": "Deepening: The Combinatorics of Compiler Optimization: Register Allocation as Graph Colorin"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle f9bf2df0 (Q=0.820), which proved 16 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that isomorphic mathematical structures can carry semantically different meanings that no formal system can distinguish. Formalize the concept of 'isomorphism of isomorphisms' and show that categorical equivalence preserves truth but not meaning. Connect to Hofstadter's Copycat architecture fo",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "NumberTheory"
+      ],
+      "github_issue": 0,
+      "id": "push_f9bf2df0_573b41a7",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9199999999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "f9bf2df0",
+      "source_path": "Isomorphisms of Meaning: When Structures Collide",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-10T22:14:15.019602+00:00",
+      "title": "Deepening: Isomorphisms of Meaning: When Structures Collide"
     },
     {
       "ambition_level": "extension",
@@ -29877,6 +29917,7 @@
     "famous_subtask",
     "famous_subtask",
     "famous_subtask",
-    "cross_domain_bridge"
+    "cross_domain_bridge",
+    "famous_subtask"
   ]
 }
