@@ -1,447 +1,289 @@
-# The Borsuk–Ulam Route to Arrow-Style Impossibility: Social Choice as Topology
+# The Topological Kernel of Social Choice: What Borsuk–Ulam Does and Does Not Say About Arrow's Theorem
 
 ## Abstract
 
-We give a fully rigorous, machine-checked development of the thesis that
-*continuous* social choice is topology. Modeling the space of preference profiles
-over a fixed pair of alternatives as the circle $S^1$, with the antipodal map
-$\theta \mapsto \theta + \pi$ encoding total preference reversal, we prove a
-self-contained one-dimensional Borsuk–Ulam theorem directly from the Intermediate
-Value Theorem: every continuous, $2\pi$-periodic function $f:\mathbb{R}\to
-\mathbb{R}$ satisfies $f(\theta) = f(\theta+\pi)$ for some $\theta$. From this we
-derive an Arrow-style impossibility theorem: there is **no** social welfare
-function that is simultaneously continuous, reversal-respecting
-($\mathrm{swf}(\theta+\pi) = -\mathrm{swf}(\theta)$), and decisive
-($\mathrm{swf}(\theta)\neq 0$ for all $\theta$). We certify that the impossibility
-is non-vacuous by exhibiting witnesses satisfying each axiom individually,
-including $\sin$ (continuous, reversal-respecting, but not decisive) and the
-constant rule (continuous, decisive, but not reversal-respecting). Dropping
-continuity restores possibility via an explicit discontinuous square-wave rule,
-proving continuity to be the load-bearing axiom. Finally, we exhibit the forced
-social tie as the topological shadow of an algebraic fact: the freeness of the
-$\mathbb{Z}/2$ antipodal involution. The analytic obstruction (a zero of a
-continuous odd function) and the algebraic obstruction (a fixed-point-free
-order-two action) are identified as two faces of a single impossibility. All
-results have been formalized with zero unproven steps.
-
-**Keywords:** Borsuk–Ulam theorem, Arrow's impossibility theorem, social choice
-theory, Chichilnisky aggregation, intermediate value theorem, antipodal map,
-free group action, topological social choice.
-
----
+A recurring slogan in mathematical folklore asserts that Arrow's impossibility
+theorem is a corollary of the Borsuk–Ulam theorem, and that consequently every
+continuous social choice function is either discontinuous or dictatorial. We
+examine this claim rigorously and in two directions. First, we isolate the
+*genuine topological kernel* of the picture: the one-dimensional Borsuk–Ulam
+theorem, which states that a continuous $2\pi$-periodic function
+$f:\mathbb{R}\to\mathbb{R}$ admits an antipodal coincidence $f(x)=f(x+\pi)$, and
+whose social-choice reading is that no continuous, periodic scoring rule can
+strictly prefer every opinion to its antipode. Second, we give an explicit
+*disproof* of the over-strong conjecture: for every $n\ge 2$ the arithmetic mean
+is a continuous, unanimous (Pareto), anonymous, monotone, translation-invariant,
+and non-dictatorial aggregation rule on the contractible domain $\mathbb{R}^n$.
+This refutes "continuous $\Rightarrow$ dictatorial." We conclude by identifying
+the correct topological statements — Chichilnisky's impossibility theorem for
+aggregation on spheres and Baryshnikov's topological derivation of Arrow's
+discrete theorem — and explain precisely why the domain's topology, rather than
+the act of voting, is the seat of the obstruction.
 
 ## 1. Introduction
 
-Kenneth Arrow's impossibility theorem (1951) is the foundational negative result
-of social choice theory: no ranked aggregation rule over three or more
-alternatives can simultaneously satisfy unanimity (Pareto efficiency),
-independence of irrelevant alternatives, and non-dictatorship. Arrow's proof is
-combinatorial, exploiting the discrete structure of finite preference profiles.
-
-A parallel tradition, initiated by Graciela Chichilnisky (1980, 1982),
-recognized that when preferences are given a *topological* structure, aggregation
-impossibilities become consequences of algebraic topology — in particular of the
-non-contractibility of spheres and the behavior of continuous maps under
-antipodal symmetry. In this tradition, "fairness" axioms translate into
-equivariance and unanimity conditions, and impossibility becomes the statement
-that a certain continuous equivariant map cannot exist.
-
-This paper isolates the cleanest possible instance of that phenomenon and proves
-it from the ground up. We work on the circle $S^1$, the space of preference
-profiles over **two** alternatives $A$ and $B$, with the antipodal map encoding
-total reversal of every voter's opinion. Our central observations are:
-
-1. The one-dimensional Borsuk–Ulam theorem is *exactly* the Intermediate Value
-   Theorem in disguise (Section 3).
-2. The continuous Arrow-style impossibility is an immediate corollary
-   (Section 4).
-3. The impossibility is non-vacuous, witnessed by explicit functions
-   (Section 5).
-4. Continuity is the unique load-bearing axiom: dropping it restores a model
-   (Section 6).
-5. The obstruction is structurally algebraic — the freeness of the $\mathbb{Z}/2$
-   antipodal action — and the analytic and algebraic obstructions are formally
-   identified (Section 7).
-
-Every statement below has been formally verified with no remaining gaps. We
-emphasize what is *honestly* true: the full discrete Arrow theorem is **not**
-literally Borsuk–Ulam (the discrete and continuous settings differ), but the
-*continuous* impossibility genuinely is a Borsuk–Ulam corollary, and that is the
-theorem we state and prove.
-
----
-
-## 2. The model: preferences on a circle
-
-### 2.1 The preference circle
-
-We model the space of preference profiles over two alternatives $A, B$ as the
-circle $S^1$, coordinatized by an angle $\theta \in \mathbb{R}$ taken modulo
-$2\pi$. As $\theta$ traverses the circle, the aggregate disposition of the
-electorate slides continuously through all configurations from strongly-$A$ to
-strongly-$B$ and back.
-
-**Definition 2.1 (Circle function).** A *circle function* is a function
-$f:\mathbb{R}\to\mathbb{R}$ that is
-
-- **continuous**, and
-- **$2\pi$-periodic**: $f(\theta + 2\pi) = f(\theta)$ for all $\theta$.
-
-A circle function is precisely a continuous map $S^1 \to \mathbb{R}$ presented in
-angular coordinates.
-
-In the formal development this is the structure
-```
-structure IsCircleFn (f : ℝ → ℝ) : Prop where
-  cont : Continuous f
-  per  : Function.Periodic f (2 * π)
-```
-
-### 2.2 The antipodal map
-
-The **antipodal map** on the preference circle is $\theta \mapsto \theta + \pi$.
-Geometrically it is the diametrically opposite point on $S^1$. Interpretively it
-is **total preference reversal**: where the profile at $\theta$ ranks $A$ over
-$B$, the profile at $\theta + \pi$ ranks $B$ over $A$, for every voter
-simultaneously.
-
-The antipodal map is an **involution**: applying it twice,
-$\theta \mapsto \theta + \pi \mapsto \theta + 2\pi$, returns to $\theta$ modulo
-the period. It thus generates an action of the cyclic group $\mathbb{Z}/2$ on the
-circle. This involution is **free**: no point of $S^1$ equals its own antipode,
-because $\theta + \pi \equiv \theta \pmod{2\pi}$ has no solution. This algebraic
-fact will reappear in Section 7 as the structural cause of the impossibility.
-
-### 2.3 Social welfare functions
-
-**Definition 2.2 (Social welfare function).** A *social welfare function* (SWF)
-is a circle function $\mathrm{swf}:\mathbb{R}\to\mathbb{R}$. The value
-$\mathrm{swf}(\theta)$ is interpreted as the **social margin** of $A$ over $B$ at
-profile $\theta$: positive favors $A$, negative favors $B$, zero is a tie.
-
-#### Relationship to Arrow's classical axioms
-
-It is worth pausing on how the three axioms below correspond to Arrow's
-original triple of unanimity (Pareto efficiency), independence of irrelevant
-alternatives, and non-dictatorship, translated into the continuous,
-two-alternative setting.
-
-- *Unanimity / Pareto* becomes the demand that the social verdict track the
-  electorate's disposition; in the two-alternative continuous model its sharp
-  form is reversal symmetry, which says that a complete reversal of every
-  voter's opinion reverses the social margin. A rule violating reversal symmetry
-  would, at some configuration, contradict a unanimous flip.
-- *Non-dictatorship* is also enforced by reversal symmetry: a dictator's rule is
-  insensitive to reversing the rest of the electorate and tends to a fixed,
-  non-reversing verdict (the constant rule of Proposition 5.2 is exactly such a
-  degenerate dictator), so reversal symmetry excludes it.
-- *Decisiveness* is the continuous analogue of producing a strict, complete
-  social ordering with no ties.
-- *Continuity* has no discrete analogue in Arrow's framework; it is the
-  additional topological regularity, in the spirit of Chichilnisky, that makes
-  the problem genuinely geometric. It is precisely this axiom that, as we show in
-  Section 6, carries the entire weight of the impossibility.
-
-The upshot is that our three axioms are a faithful continuous rendering of
-Arrow's fairness desiderata, with continuity standing in for the topological
-hypothesis under which the impossibility becomes a theorem about spheres.
-
-We consider three axioms.
-
-- **(Continuity)** $\mathrm{swf}$ is a circle function (continuous and periodic).
-  Small changes in the electorate's disposition produce small changes in the
-  social margin.
-- **(Reversal symmetry / neutrality)** $\mathrm{swf}(\theta + \pi) =
-  -\,\mathrm{swf}(\theta)$ for all $\theta$: reversing every voter reverses the
-  social verdict. This is the two-alternative form of neutrality / anonymity-free
-  fairness; it also excludes a constant dictator.
-- **(Decisiveness)** $\mathrm{swf}(\theta) \neq 0$ for all $\theta$: society
-  always strictly prefers one alternative; there is never a tie.
-
----
-
-## 3. The one-dimensional Borsuk–Ulam theorem
-
-The classical Borsuk–Ulam theorem (Borsuk, 1933) states that every continuous
-map $F:S^n\to\mathbb{R}^n$ identifies some antipodal pair: $F(x) = F(-x)$ for some
-$x$. We require only the case $n = 1$, which we prove from scratch.
-
-**Theorem 3.1 (One-dimensional Borsuk–Ulam).** *Let $f$ be a circle function.
-Then there exists $\theta \in \mathbb{R}$ with*
-$$ f(\theta) = f(\theta + \pi). $$
-
-**Proof sketch.** Define the auxiliary "antipodal difference"
-$$ g(\theta) := f(\theta) - f(\theta + \pi). $$
-Then $g$ is continuous, being the difference of $f$ with the composition of $f$
-with the continuous shift $\theta \mapsto \theta + \pi$. Evaluate $g$ at the two
-endpoints $0$ and $\pi$:
-$$ g(0) = f(0) - f(\pi), \qquad g(\pi) = f(\pi) - f(2\pi) = f(\pi) - f(0), $$
-where the last equality uses $2\pi$-periodicity, $f(2\pi) = f(0)$. Hence
-$$ g(\pi) = -\,g(0). $$
-The function $g$ therefore takes opposite-signed values at $0$ and $\pi$ (or is
-zero at one of them). By the **Intermediate Value Theorem** applied on the
-interval $[0,\pi]$ (a "zero-crossing" lemma), $g$ has a zero: there exists
-$\theta$ with $g(\theta) = 0$, i.e. $f(\theta) = f(\theta + \pi)$.
-
-Concretely, if $g(0)\le 0$ then $g(\pi) = -g(0) \ge 0$, and the zero-crossing
-lemma on the continuous $g$ over $[0,\pi]$ yields the root; if $g(0) > 0$ apply
-the same lemma to the continuous function $-g$, whose values at $0$ and $\pi$ have
-the requisite signs. In either branch we recover $f(\theta) = f(\theta+\pi)$. ∎
-
-The proof is the formal content of `borsuk_ulam_one_dim`. The zero-crossing
-lemma is a packaged Intermediate Value Theorem: a continuous function on
-$[a,b]$ with $f(a)\le 0 \le f(b)$ has a root in $[a,b]$.
-
-**Remark 3.2.** This is the entire topological input. Everything downstream is a
-corollary. The "miracle" of Borsuk–Ulam in dimension one is simply that a
-continuous quantity cannot pass from negative to positive without vanishing — a
-restatement of the impossibility of teleportation under continuity.
-
----
-
-## 4. The continuous Arrow-style impossibility
-
-**Theorem 4.1 (No continuous decisive SWF).** *There is no social welfare
-function $\mathrm{swf}$ that is simultaneously*
-
-1. *a circle function (continuous and $2\pi$-periodic),*
-2. *reversal-respecting: $\mathrm{swf}(\theta + \pi) = -\,\mathrm{swf}(\theta)$
-   for all $\theta$, and*
-3. *decisive: $\mathrm{swf}(\theta) \neq 0$ for all $\theta$.*
-
-**Proof.** Suppose such a $\mathrm{swf}$ existed. Being a circle function, it
-satisfies the hypotheses of Theorem 3.1, so there is a profile $\theta^\star$
-with
-$$ \mathrm{swf}(\theta^\star) = \mathrm{swf}(\theta^\star + \pi). $$
-By reversal symmetry, the right-hand side equals $-\,\mathrm{swf}(\theta^\star)$,
-so
-$$ \mathrm{swf}(\theta^\star) = -\,\mathrm{swf}(\theta^\star) \;\Longrightarrow\;
-2\,\mathrm{swf}(\theta^\star) = 0 \;\Longrightarrow\;
-\mathrm{swf}(\theta^\star) = 0. $$
-This contradicts decisiveness at $\theta^\star$. ∎
-
-This is `no_continuous_decisive_swf`. In words: **a smooth, neutral aggregation
-rule must produce a tie somewhere.** The contradiction is forced purely by the
-topology of the circle together with the algebra of sign reversal; no further
-structure of the electorate is used.
-
-**Interpretation as Arrow's impossibility.** Decisiveness plays the role of a
-strict, always-resolved social ranking (no indifference); reversal symmetry
-encodes neutrality between the alternatives and rules out a fixed dictatorial
-verdict; continuity is the topological regularity that Chichilnisky-style
-aggregation imposes. The conclusion — that these cannot coexist — mirrors Arrow's
-discrete impossibility in the continuous category.
-
----
-
-## 5. Non-vacuity: the axioms are individually satisfiable
-
-An impossibility theorem is only meaningful if its hypotheses are not jointly
-unsatisfiable for trivial reasons. We certify non-vacuity by exhibiting
-functions satisfying the axioms individually and in pairs.
-
-**Theorem 5.1 (Reversal is satisfiable with continuity).** *There exists a circle
-function $\mathrm{swf}$ satisfying reversal symmetry
-$\mathrm{swf}(\theta + \pi) = -\,\mathrm{swf}(\theta)$.*
-
-**Proof.** Take $\mathrm{swf} = \sin$. It is continuous and $2\pi$-periodic, hence
-a circle function, and the classical identity $\sin(\theta + \pi) = -\sin\theta$
-is exactly reversal symmetry. ∎
-
-This is `reversal_axiom_satisfiable`. Note that $\sin$ is **not** decisive — it
-has zeros at $\theta = 0, \pi, \dots$ — exactly as Theorem 4.1 demands once
-continuity and reversal are present.
-
-**Proposition 5.2 (Decisiveness is satisfiable with continuity).** The constant
-function $\mathrm{swf}(\theta) = 1$ is a circle function and is decisive (it never
-vanishes), but it is **not** reversal-respecting, since $1 \neq -1$. It models a
-fixed dictatorial verdict ("$A$ always wins"), which the reversal axiom is
-designed to exclude.
-
-Together, Theorem 5.1 and Proposition 5.2 show that:
-
-- continuity + reversal is satisfiable (but not decisive), and
-- continuity + decisiveness is satisfiable (but not reversal-respecting).
-
-It is only the **full conjunction** of all three axioms that is contradictory.
-The impossibility is sharp and non-trivial.
-
----
-
-## 6. Continuity is the load-bearing axiom
-
-If we drop continuity, possibility returns. This certifies that continuity — the
-topological input — is exactly what generates the obstruction.
-
-**Definition 6.1 (Square-wave rule).** Define
-$$ \mathrm{socialWave}(\theta) := (-1)^{\lfloor \theta/\pi \rfloor}. $$
-On each half-circle $[k\pi, (k{+}1)\pi)$ this rule returns a constant $\pm 1$,
-alternating sign across consecutive halves.
-
-**Proposition 6.2 (A discontinuous decisive reversal-respecting rule exists).**
-The square-wave rule $\mathrm{socialWave}$ is
-
-- **decisive**: it only takes the values $\pm 1$, never $0$; and
-- **reversal-respecting**: $\mathrm{socialWave}(\theta + \pi) =
-  -\,\mathrm{socialWave}(\theta)$, since advancing by $\pi$ increments the floor
-  $\lfloor \theta/\pi\rfloor$ by one and hence flips the sign.
-
-(In the companion development this is `decisive_reversal_swf_exists`.)
-
-**Corollary 6.3 (Forced discontinuity).** The square-wave rule is **not
-continuous**.
-
-**Proof.** It is decisive and reversal-respecting. If it were also continuous, it
-would be a circle function satisfying all three axioms of Theorem 4.1, which is
-impossible. Hence it must fail continuity. ∎
-
-This is a striking inversion: rather than inspecting the graph of
-$\mathrm{socialWave}$ to *find* its jump, we *deduce the existence of a jump* from
-the impossibility theorem alone (`socialWave_not_continuous`). The
-discontinuity — the cliff at each half-circle boundary, where an infinitesimal
-change in disposition flips society from "$A$ wins" to "$B$ wins" — is the
-unavoidable cost of insisting on a decisive, neutral rule.
-
-We conjecture (Section 9, Conjecture 2) that continuity is the *unique* such
-load-bearing axiom: dropping any single one of the other three also restores a
-model.
-
----
-
-## 7. The structural cause: a free involution
-
-We now expose the algebraic skeleton of the impossibility. The antipodal map
-generates a $\mathbb{Z}/2$ action, and the decisive fact is that this action is
-**free**.
-
-**Lemma 7.1 (Freeness of the antipodal action).** *In the group $\mathbb{Z}/2$,
-the nonzero element acts on itself without fixed points: for every nonzero
-$g \in \mathbb{Z}/2$ and every $x \in \mathbb{Z}/2$, $g + x \neq x$.*
-
-This is the reusable algebraic lemma `zmod_add_free` from the
-Computation/Impossibility framework. Equivalently: no profile class equals its
-own reversal; the antipodal map has no fixed point.
-
-**Theorem 7.2 (Borsuk–Ulam ⇄ free involution bridge).** *Let $\mathrm{swf}$ be a
-circle function satisfying reversal symmetry $\mathrm{swf}(\theta+\pi) =
--\,\mathrm{swf}(\theta)$. Then both of the following hold:*
-
-1. *(Algebra) the antipodal generator $1\in\mathbb{Z}/2$ acts freely:
-   $\,\forall g\neq 0,\ \forall x,\ g + x \neq x$; and*
-2. *(Analysis) the SWF is forced to produce a social tie:
-   $\,\exists\,\theta,\ \mathrm{swf}(\theta) = 0$.*
-
-**Proof.** Part (1) is Lemma 7.1. For part (2), apply Theorem 3.1 to obtain
-$\theta$ with $\mathrm{swf}(\theta) = \mathrm{swf}(\theta + \pi)$; reversal
-symmetry rewrites the right side as $-\mathrm{swf}(\theta)$, forcing
-$\mathrm{swf}(\theta) = 0$. ∎
-
-This is `borsuk_ulam_arrow_bridge`. Its content is conceptual: the **analytic**
-obstruction (a guaranteed zero of a continuous odd function on the circle) is the
-visible *shadow* of an **algebraic** obstruction (the fixed-point-freeness of the
-$\mathbb{Z}/2$ antipodal involution). The same coin shows the face of the
-Intermediate Value Theorem on one side and the face of a free order-two group
-action on the other. A continuous, reversal-respecting function cannot avoid zero
-for precisely the reason that the antipodal map has no fixed point: there is no
-balanced profile for the symmetry to rest on, so the value it would have to take
-there is squeezed to zero. Social choice, in its continuous form, is topology;
-and that topology is, at root, the algebra of a free involution.
-
----
-
-## 8. Algorithms and computational content
-
-While the theorems are existence statements, they have constructive shadows that
-are computationally meaningful and are demonstrated in the accompanying code.
-
-**Algorithm A — Antipodal coincidence locator (bisection).** Given a circle
-function $f$ sampled to tolerance $\varepsilon$, locate $\theta$ with
-$|f(\theta) - f(\theta+\pi)| < \varepsilon$ by bisecting the antipodal-difference
-$g(\theta) = f(\theta) - f(\theta+\pi)$ on $[0,\pi]$, exploiting the sign change
-$g(\pi) = -g(0)$ guaranteed by periodicity. Complexity:
-$O(\log(1/\varepsilon))$ evaluations of $f$. This is the executable form of the
-proof of Theorem 3.1.
-
-**Algorithm B — Forced-tie certifier.** Given a candidate reversal-respecting SWF
-sampled on the circle, return a profile where the social margin crosses zero,
-certifying Theorem 4.1 numerically. Reduces to Algorithm A applied to the SWF
-itself.
-
-**Algorithm C — Discontinuity detector.** Given a decisive, reversal-respecting
-rule, scan for the sign-flip boundary mandated by Corollary 6.3, returning the
-location and magnitude of the jump. This operationalizes the *deduced* existence
-of a discontinuity.
-
-These appear with full pseudocode and Python implementations in the package.
-
----
-
-## 9. Future directions
-
-**Conjecture 1 — Higher-dimensional simultaneous ties (full Borsuk–Ulam).** For a
-continuous antipodal (odd) map $F:S^n\to\mathbb{R}^n$ with $F(-x) = -F(x)$, there
-is a single $x$ with $F(x) = 0$: all $n$ coordinates tie *simultaneously*. The
-one-dimensional development ties coordinates only independently; coordinatewise
-IVT is too weak. Simultaneous vanishing is exactly the content of full
-Borsuk–Ulam, so the social-choice corollary "all pairwise margins tie at one
-profile" is genuinely $n$-dimensional topology. A formalization (e.g. via degree
-theory or $\mathbb{Z}/2$-equivariant cohomology of spheres) would upgrade
-Theorem 4.1 to genuine multi-alternative Arrow.
-
-**Conjecture 2 — Continuity is the unique obstructed axiom.** Among {continuity,
-periodicity, reversal, decisiveness}, exactly one cannot be dropped-and-restored:
-removing continuity restores a model (proved, Section 6), and we conjecture that
-removing any single one of the other three also restores a model, while keeping
-all four is contradictory. The impossibility is a single topological cut, so the
-other three axioms should be individually inessential — a minimal unsatisfiable
-core whose size is dictated solely by topology. Constructing the three remaining
-witnesses (non-periodic, non-reversing, indecisive) would certify that
-$\mathrm{Continuous}$ is load-bearing and the others are not.
-
-**Conjecture 3 — The tie set is a nonempty, closed, antipode-stable set.** For a
-continuous reversal-respecting SWF, the tie set $\{\theta : \mathrm{swf}(\theta)
-= 0\}$ is nonempty (proved), closed (preimage of $\{0\}$ under a continuous map),
-and invariant under $\theta \mapsto \theta + \pi$; moreover its image in the
-circle has cardinality $\ge 2$. Antipode-stability plus continuity forces the
-zero set to be a $\mathbb{Z}/2$-invariant closed set, so a *single* tie is
-impossible — ties always come in antipodal pairs.
-
----
-
-## 10. Discussion
-
-The contribution of this work is not a new impossibility theorem but a *clarified
-ontology* for an old one, made fully rigorous. By taking seriously the idea that
-preference profiles form a sphere and that reversal is the antipodal map, the
-continuous Arrow-style impossibility is revealed to be a one-line corollary of
-the most elementary case of Borsuk–Ulam, which is itself the Intermediate Value
-Theorem. The chain
-$$ \text{IVT} \;\Rightarrow\; \text{Borsuk–Ulam}^{1} \;\Rightarrow\;
-\text{continuous Arrow impossibility} $$
-is short, honest, and complete.
-
-Three features deserve emphasis. First, **honesty about scope**: the discrete
-Arrow theorem is not literally Borsuk–Ulam; we prove the continuous impossibility,
-which genuinely is. Second, **non-vacuity**: explicit witnesses ($\sin$, the
-constant rule, the square wave) show that every axiom and every pair of axioms is
-satisfiable, so the impossibility is sharp. Third, **structural identification**:
-the analytic obstruction (a forced zero) and the algebraic obstruction (a free
-$\mathbb{Z}/2$ action) are formally tied together, substantiating the slogan that
-social choice, continuously construed, is topology.
-
-The broader lesson is methodological. Impossibility theorems across mathematics
-and economics — Arrow's, Gibbard–Satterthwaite, Chichilnisky's resource
-allocation results — frequently dissolve into topology once their objects are
-given the right space and their fairness axioms the right symmetry. The
-preference circle and its free antipodal involution are perhaps the smallest
-arena in which this dissolution can be witnessed end to end.
-
----
-
-## References (for context; this paper is self-contained)
-
-- K. J. Arrow, *Social Choice and Individual Values*, 1951.
-- K. Borsuk, *Drei Sätze über die n-dimensionale euklidische Sphäre*, 1933.
-- G. Chichilnisky, *Social choice and the topology of spaces of preferences*,
-  Advances in Mathematics, 1980.
-- J. Matoušek, *Using the Borsuk–Ulam Theorem*, Springer, 2003.
+Two impossibility theorems anchor two different disciplines. In economics,
+Arrow's theorem (1951) states that when there are at least three alternatives,
+no rule aggregating individual rankings into a social ranking can simultaneously
+satisfy unanimity (Pareto), independence of irrelevant alternatives (IIA), and
+non-dictatorship. In topology, the Borsuk–Ulam theorem states that any continuous
+map $f:S^n\to\mathbb{R}^n$ identifies a pair of antipodes,
+$f(x)=f(-x)$.
+
+The conjecture under examination proposes a bridge: encode preference profiles
+over $n$ alternatives as points on a "preference sphere" $S^{n-1}$, with
+antipodal points representing reversed preferences; let
+$f:S^{n-1}\to\mathbb{R}^{n-1}$ report the social preference; and invoke
+Borsuk–Ulam to force $f(x)=f(-x)$, a coincidence that supposedly contradicts
+Pareto efficiency. The proposed upshot is a slogan — *any social choice function
+on $n$ alternatives is either discontinuous or dictatorial* — and a grand thesis:
+*social choice is topology; Arrow's impossibility is a theorem about spheres.*
+
+Our contribution is to separate the true from the false with complete precision.
+
+- **Part I (Section 3).** We prove the one-dimensional Borsuk–Ulam theorem and
+  derive its faithful social-choice reading. This is the honest kernel of the
+  "contradiction with Pareto" the slogan invokes, correctly restricted to the
+  setting where it actually holds.
+- **Part II (Section 4).** We disprove the strong conjecture by exhibiting an
+  explicit continuous, unanimous, anonymous, monotone, translation-invariant,
+  non-dictatorial aggregator — the mean — on a contractible domain.
+- **Section 5** situates the honest thesis relative to Chichilnisky's and
+  Baryshnikov's theorems and explains the role of domain topology.
+
+The overarching finding is a clean dichotomy: **the Borsuk–Ulam obstruction
+requires a non-contractible domain (a sphere); on a contractible domain the
+obstruction vanishes and fair continuous aggregation exists.**
+
+## 2. Preliminaries and definitions
+
+Throughout, "continuous" refers to the usual Euclidean topology.
+
+**Definition 2.1 (Periodic function on the circle).** A function
+$f:\mathbb{R}\to\mathbb{R}$ is *$2\pi$-periodic* if $f(x+2\pi)=f(x)$ for all
+$x$. Such an $f$ is precisely a function on the circle $S^1=\mathbb{R}/2\pi\mathbb{Z}$;
+if in addition $f$ is continuous it is a continuous map $S^1\to\mathbb{R}^1$.
+The *antipode* of the point $x\in S^1$ is $x+\pi$ (a half-turn).
+
+**Definition 2.2 (Aggregation rule).** Fix $n\ge 1$ agents. Model each agent's
+opinion as a real number (a position on a one-dimensional spectrum). An
+*aggregation rule* is a map $F:\mathbb{R}^n\to\mathbb{R}$, written
+$F(p_1,\dots,p_n)$ where $p_i$ is agent $i$'s position.
+
+**Definition 2.3 (Axioms for an aggregation rule).** An aggregation rule $F$ is:
+
+- *Continuous* if it is continuous as a map $\mathbb{R}^n\to\mathbb{R}$;
+- *Unanimous (Pareto)* if $F(c,c,\dots,c)=c$ for every constant $c$;
+- *Anonymous* if $F(p_{\sigma(1)},\dots,p_{\sigma(n)})=F(p_1,\dots,p_n)$ for every
+  permutation $\sigma$ of the agents;
+- *Monotone* if $p_i\le q_i$ for all $i$ implies $F(p)\le F(q)$;
+- *Translation-invariant* if $F(p_1+c,\dots,p_n+c)=F(p_1,\dots,p_n)+c$ for every
+  constant $c$;
+- *Dictatorial* if there exists an agent $i$ with $F(p)=p_i$ for all profiles $p$;
+  *non-dictatorial* otherwise.
+
+**Definition 2.4 (Arithmetic mean rule).** The *mean aggregator* is
+$$\operatorname{avg}_n(p) \;=\; \frac{1}{n}\sum_{i=1}^{n} p_i.$$
+
+## 3. Part I: the one-dimensional Borsuk–Ulam theorem and its social-choice reading
+
+### 3.1 The theorem
+
+**Theorem 3.1 (One-dimensional Borsuk–Ulam).** *Let $f:\mathbb{R}\to\mathbb{R}$ be
+continuous and $2\pi$-periodic. Then there exists $x$ with $f(x)=f(x+\pi)$.*
+
+*Proof.* Define the antipodal difference
+$$g(x)=f(x)-f(x+\pi).$$
+Then $g$ is continuous as a difference of continuous functions (the second is
+$f$ precomposed with the continuous shift $x\mapsto x+\pi$). Using
+$2\pi$-periodicity,
+$$g(x+\pi)=f(x+\pi)-f(x+2\pi)=f(x+\pi)-f(x)=-g(x),$$
+so $g$ is odd under the half-turn; in particular $g(0)=-g(\pi)$. Thus $g(0)$ and
+$g(\pi)$ have opposite signs (or are both zero). If both are zero we are done at
+$x=0$; otherwise $g$ takes a positive and a negative value on the interval
+$[0,\pi]$, and by the Intermediate Value Theorem there is $c\in[0,\pi]$ with
+$g(c)=0$, i.e. $f(c)=f(c+\pi)$. $\blacksquare$
+
+This is the complete topological engine in its lowest dimension. Every
+higher-dimensional Borsuk–Ulam theorem generalizes the same principle — an
+antipodally odd continuous map must vanish — through more sophisticated
+algebraic-topological machinery (degree theory, the ham-sandwich theorem, the
+Lusternik–Schnirelmann covering theorem).
+
+### 3.2 The faithful social-choice reading
+
+Interpret the circle $S^1$ as a space of opinions, with $x$ and $x+\pi$ opposite
+stances, and let $f(x)$ be a continuous "social score" assigned to stance $x$.
+The slogan's "clash with Pareto efficiency" is the desire to strictly prefer
+every stance to its antipode. Theorem 3.1 forbids this.
+
+**Theorem 3.2 (No strictly antipodal preference).** *Let $f:\mathbb{R}\to\mathbb{R}$
+be continuous and $2\pi$-periodic. Then it is not the case that $f(x+\pi)<f(x)$
+for all $x$; symmetrically, it is not the case that $f(x)<f(x+\pi)$ for all $x$.*
+
+*Proof.* Suppose $f(x+\pi)<f(x)$ for all $x$. By Theorem 3.1 there is an $x_0$
+with $f(x_0)=f(x_0+\pi)$, contradicting the strict inequality at $x_0$. The
+symmetric statement is identical with the inequality reversed. $\blacksquare$
+
+Theorem 3.2 is the *correct* and defensible remnant of the informal
+"Borsuk–Ulam contradicts Pareto" argument: on a circular (non-contractible)
+opinion space, no continuous rule can strictly break every antipodal tie. It is
+an honest impossibility — but note carefully what it needs: a *periodic* score,
+i.e. a genuinely circular domain.
+
+## 4. Part II: disproof of "continuous implies dictatorial"
+
+The strong conjecture claims that continuity of an aggregation rule forces
+dictatorship. We refute it on a contractible domain, where no Borsuk–Ulam-type
+obstruction exists. All statements below concern the mean aggregator
+$\operatorname{avg}_n$ of Definition 2.4.
+
+**Lemma 4.1 (Unanimity/Pareto).** *For $n\ge 1$ and any constant $c$,
+$\operatorname{avg}_n(c,\dots,c)=c$.*
+
+*Proof.* $\frac{1}{n}\sum_{i=1}^n c=\frac{nc}{n}=c$. $\blacksquare$
+
+**Lemma 4.2 (Anonymity).** *For any permutation $\sigma$ of the $n$ agents and
+any profile $p$, $\operatorname{avg}_n(p\circ\sigma)=\operatorname{avg}_n(p)$.*
+
+*Proof.* A permutation merely reindexes the summands, and finite sums are
+invariant under reindexing: $\sum_i p_{\sigma(i)}=\sum_i p_i$. Dividing by $n$
+gives the claim. $\blacksquare$
+
+**Lemma 4.3 (Continuity).** *The map $\operatorname{avg}_n:\mathbb{R}^n\to\mathbb{R}$
+is continuous.*
+
+*Proof.* It is a finite sum of coordinate projections (each continuous) scaled
+by the constant $1/n$; sums and scalar multiples of continuous functions are
+continuous. $\blacksquare$
+
+**Lemma 4.4 (Monotonicity / strong Pareto).** *If $p_i\le q_i$ for all $i$, then
+$\operatorname{avg}_n(p)\le\operatorname{avg}_n(q)$.*
+
+*Proof.* Sums preserve the coordinatewise order, $\sum_i p_i\le\sum_i q_i$, and
+dividing by the positive constant $n$ preserves the inequality. $\blacksquare$
+
+**Lemma 4.5 (Translation invariance).** *For $n\ge 1$, any profile $p$, and any
+constant $c$, $\operatorname{avg}_n(p_1+c,\dots,p_n+c)=\operatorname{avg}_n(p)+c$.*
+
+*Proof.* $\frac{1}{n}\sum_i (p_i+c)=\frac{1}{n}\big(\sum_i p_i + nc\big)
+=\operatorname{avg}_n(p)+c$. $\blacksquare$
+
+**Lemma 4.6 (Non-dictatorship).** *For $n\ge 2$ there is no agent $i$ with
+$\operatorname{avg}_n(p)=p_i$ for all profiles $p$.*
+
+*Proof.* Fix any candidate dictator $i$. Consider the profile $p$ with $p_i=0$
+and $p_j=1$ for all $j\ne i$. Then
+$$\operatorname{avg}_n(p)=\frac{0+(n-1)\cdot 1}{n}=\frac{n-1}{n}.$$
+Since $n\ge 2$, we have $0<\frac{n-1}{n}<1$, so in particular
+$\operatorname{avg}_n(p)\ne 0=p_i$. Hence $i$ is not a dictator. As $i$ was
+arbitrary, no dictator exists. $\blacksquare$
+
+Assembling the lemmas yields the disproof.
+
+**Theorem 4.7 (Continuous non-dictatorial aggregator exists).** *For every
+$n\ge 2$ there exists an aggregation rule $F:\mathbb{R}^n\to\mathbb{R}$ that is
+simultaneously continuous, unanimous (Pareto), anonymous, monotone,
+translation-invariant, and non-dictatorial.*
+
+*Proof.* Take $F=\operatorname{avg}_n$. Continuity is Lemma 4.3, unanimity is
+Lemma 4.1, anonymity is Lemma 4.2, monotonicity is Lemma 4.4, translation
+invariance is Lemma 4.5, and non-dictatorship is Lemma 4.6. $\blacksquare$
+
+**Corollary 4.8.** *The conjecture "any social choice function on $n$
+alternatives is either discontinuous or dictatorial" is false.*
+
+*Proof.* For $n\ge 2$, Theorem 4.7 provides a rule that is both continuous and
+non-dictatorial. $\blacksquare$
+
+## 5. Discussion: where the topology actually lives
+
+Two independent reasons explain why the literal slogan fails, and together they
+locate the genuine mathematical content.
+
+**5.1 Domain topology is the seat of the obstruction.** Borsuk–Ulam produces a
+coincidence only on a *non-contractible* space — a sphere, which cannot be
+continuously shrunk to a point. The proof of Theorem 3.1 depends essentially on
+periodicity, i.e. on the circle's topology. If the opinion domain is
+*contractible* (a line, an interval, a simplex of von Neumann–Morgenstern
+utilities, or any convex set), there is no antipodal structure and no
+obstruction; Theorem 4.7 exhibits a fully fair continuous rule. The correct
+slogan is therefore not "continuous $\Rightarrow$ dictatorial" but rather:
+
+> Continuous, anonymous, unanimous aggregation is obstructed exactly when the
+> opinion space is non-contractible (spherical); on a contractible domain it is
+> freely available.
+
+**5.2 Discrete versus continuous.** Arrow's theorem concerns aggregation of
+*discrete linear orders* subject to Independence of Irrelevant Alternatives.
+There is no ambient topology and no continuity hypothesis in Arrow's setting, so
+a continuity-based argument cannot literally be Arrow's theorem. The two live in
+different categories: one topological, one order-theoretic and combinatorial.
+
+**5.3 The correct topological theorems.** The genuine topological impossibility
+is **Chichilnisky's theorem**: there is no continuous, anonymous,
+unanimity-respecting aggregation map $(S^1)^k\to S^1$ (more generally
+$(S^n)^k\to S^n$). Here the domain and codomain are honestly spheres, and the
+obstruction is real — its proof uses the homotopy/degree invariants that
+Borsuk–Ulam also exploits. Later, **Baryshnikov (1993)** gave a genuinely
+topological *derivation of Arrow's discrete theorem* by constructing a
+nerve/CW-complex model of the preference data and invoking obstructions of
+Borsuk–Ulam type on that model. Thus the honest form of the mission's thesis is:
+
+> Topological obstructions of Borsuk–Ulam type govern aggregation on spheres, and
+> Arrow's discrete theorem can be *recovered* through a geometric (nerve) encoding
+> of ranked preferences — but Arrow's theorem is not a one-line corollary of
+> Borsuk–Ulam, and continuity by itself never implies dictatorship.
+
+## 6. Algorithms
+
+We record two elementary but instructive algorithms used to demonstrate the
+results numerically.
+
+**Algorithm A (Antipodal coincidence search).** Given a continuous $2\pi$-periodic
+$f$ sampled on a grid, locate an approximate antipodal coincidence by finding a
+sign change of $g(x)=f(x)-f(x+\pi)$ on $[0,\pi]$ and bisecting to a zero. This
+constructively realizes Theorem 3.1.
+
+**Algorithm B (Fairness audit of the mean).** Given the mean aggregator, verify
+each Arrow-style axiom empirically: sample random profiles to check
+unanimity, anonymity (under random permutations), monotonicity (under random
+non-negative perturbations), translation invariance, and, for each agent,
+exhibit the witness profile of Lemma 4.6 certifying non-dictatorship.
+
+## 7. Applications
+
+- **Interpreting impossibility results.** The analysis clarifies a common
+  category error: the enemy of fair aggregation is the *shape of the opinion
+  space*, not the presence of voting. Practitioners choosing between spatial and
+  ordinal models of preference should know which regime carries a topological
+  obstruction.
+- **Design of aggregation mechanisms.** On contractible domains (spectra,
+  budgets, resource allocations), continuous fair rules like the mean, medians,
+  and other means are legitimately available; impossibility folklore does not
+  apply.
+- **Pedagogy of topology.** The one-dimensional Borsuk–Ulam theorem, via the odd
+  difference function and the Intermediate Value Theorem, is a self-contained
+  entry point to algebraic topology with a vivid interpretation.
+
+## 8. Future directions
+
+- Formalize Chichilnisky's theorem for $(S^1)^k\to S^1$ and connect it to the
+  one-dimensional kernel proved here.
+- Develop the nerve/CW model behind Baryshnikov's derivation and make the
+  discrete-to-topological bridge fully explicit.
+- Explore intermediate domains (e.g. spaces that are neither spheres nor
+  contractible) and classify precisely which admit continuous fair aggregation as
+  a function of their homotopy type.
+
+## 9. Conclusion
+
+The slogan "Arrow's impossibility is Borsuk–Ulam" is, taken literally, incorrect,
+and its derived claim "continuous $\Rightarrow$ dictatorial" is false — the mean
+is a standing counterexample for all $n\ge 2$. Yet the topological viewpoint is
+vindicated in its honest form: the one-dimensional Borsuk–Ulam theorem genuinely
+forbids strictly antipodal continuous preferences on a circle, and richer
+topological obstructions (Chichilnisky, Baryshnikov) govern aggregation on
+spheres and even reach back to Arrow's discrete theorem through a geometric
+encoding. Social choice really is topology — provided one remembers that the
+decisive variable is the *shape of the space of opinions*, not the ballot.

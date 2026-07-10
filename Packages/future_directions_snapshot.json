@@ -117,6 +117,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 92e61cee (Q=0.830), which proved 11 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The leading $1/N$ term in the heat-kernel expansion vanishes under the given conditions.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_92e61cee_15280faa",
+    "lineage_refs": [],
+    "priority_score": 0.9299999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "92e61cee",
+    "status": "available",
+    "timestamp": "2026-07-10T13:11:38.329718+00:00",
+    "title": "Deepening: Conjecture on Leading Term Cancellation"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle e37aa20a (Q=0.830), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The logistic map f(x) = r*x*(1-x) for r = 4 exhibits chaotic dynamics: small changes in initial conditions lead to exponentially diverging trajectories (Lyapunov exponent lambda = log(2)). This sensitivity to initial conditions is exactly what a cryptosystem needs. Conjecture: The logistic map at r ",
     "domain_bridges": [],
     "domains": [
@@ -2328,28 +2347,6 @@
     "status": "available",
     "timestamp": "2026-07-04T09:21:10.954489+00:00",
     "title": "Directed Clique-Width Bound for Semi-Complete Digraphs via Cycle Rank"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "arXiv:2203.08506",
-      "arXiv:1609.06334"
-    ],
-    "consumed_by_exp_id": "92e61cee",
-    "description": "The leading $1/N$ term in the heat-kernel expansion vanishes under the given conditions.",
-    "domain_bridges": "none",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0195",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Verification via convergence analysis",
-    "research_mode": "team",
-    "source_exp_id": "2606.28945v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-04T10:31:32.090166+00:00",
-    "title": "Conjecture on Leading Term Cancellation"
   },
   {
     "ambition_level": "grand_challenge",
@@ -10286,6 +10283,46 @@
     "status": "available",
     "timestamp": "2026-07-10T12:39:29.653013+00:00",
     "title": "This cycle sharpened the \"random polynomial behaves like a random permutation\""
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Leading-Term Cancellation and Spectral Balance\n\nThe results of this cycle establish that the leading correction to a spectral\nheat-kernel trace, `L(t) = Σᵢ dᵢ e^{−t Eᵢ}`, cancels identically exactly when the\ndiagonal shifts balance within each degenerate energy level. Three structural\nideas emerged: (i) transcendental cancellation is controlled by a Vandermonde\ndeterminant obtained from integer temperature samples; (ii) degeneracy is the\n*only* source of nontrivial cancellation; (iii) the level-partition of the\nspectrum organizes the whole phenomenon. These suggest the following bold,\nfalsifiable conjectures.\n\n## Conjecture 1 — Second-order cancellation is governed by off-diagonal balance\n\nThe subleading `1/N²` term of the heat-kernel trace cancels identically for all\ntemperatures if and only if, on each degenerate level, both the diagonal shift\nsum vanishes *and* the level-restricted sum of squared off-diagonal couplings\nweighted by inverse energy gaps vanishes.\n\n**The key insight is** that once the first-order (diagonal) obstruction is\nremoved, the next obstruction is a quadratic form in the off-diagonal couplings\nwhose kernel is again a level-by-level balance condition, mirroring the\nfirst-order structure one rung higher.\n\n**Why now?** The first-order picture is now completely pinned down, including the\nexact mechanism (intra-level balance) and the exact failure mode (simple\nspectra). This gives a clean base case and a precise notion of \"what must already\nvanish\" before the second-order term can be isolated, making the quadratic\nobstruction well-posed for the first time.\n\n## Conjecture 2 — Genericity of non-cancellation\n\nFor a fixed spectrum, the set of perturbations whose leading term cancels forms a\nproper linear subspace whose codimension equals the number of distinct energy\nvalues. Consequently, cancellation is a measure-zero, non-generic event unless\nforced by symmetry.\n\n**The key insight is** that the cancellation locus is precisely the joint kernel\nof the \"level-sum\" functionals, one per distinct eigenvalue, and these\nfunctionals are linearly independent, so the codimension counts the levels\nexactly.\n\n**Why now?** The characterization by level sums converts a hard analytic\ncondition (\"vanishes for all t\") into a finite linear system, so the dimension\ncount becomes a concrete, checkable claim rather than a heuristic about\n\"typical\" behavior.\n\n## Conjecture 3 — Symmetry certifies cancellation\n\nIf a finite symmetry group acts on the spectrum with the perturbation\ntransforming in a nontrivial irreducible representation, then every degenerate\nlevel carrying that representation has vanishing diagonal shift sum, so the\nleading term cancels automatically.\n\n**The key insight is** that the level-sum functional is the projection onto the\ntrivial isotypic component, so any perturbation living purely in a nontrivial\nrepresentation is annihilated level-by-level without any fine-tuning.\n\n**Why now?** With cancellation reduced to the vanishing of explicit level sums,\nthe connection to representation theory becomes a direct statement about\ncharacters, turning an accidental-looking analytic identity into a structural\nconsequence of symmetry.\n\n## Conjecture 4 — Rigidity across temperatures forces rigidity across gaps\n\nIf the leading term merely decays faster than every single exponential `e^{−t E_i}`\nas `t → ∞` (rather than vanishing identically), then the diagonal shift sum on\nthe lowest level must already vanish, and the argument cascades upward through the\ngaps.\n\n**The key insight is** that the slowest-decaying surviving level dominates the\nlarge-temperature asymptotics, so any anomalously fast decay is impossible unless\nthat level is already balanced, after which the next level inherits the same\nconstraint.\n\n**Why now?** The Vandermonde/moment reduction makes the large-`t` dominance\nargument fully rigorous, so the intuitive \"leading exponential wins\" heuristic can\nbe promoted to an inductive rigidity theorem across the entire gap structure.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_0900",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "92e61cee",
+    "status": "available",
+    "timestamp": "2026-07-10T13:11:32.187048+00:00",
+    "title": "The results of this cycle establish that the leading correction to a spectral"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Borsuk–Ulam and Social Choice\n\n## What was proved (file `BorsukUlamArrow.lean`, no `sorry`, standard axioms only)\n\n**Part I — the genuine topological kernel.**\n- `borsuk_ulam_1d`: the one-dimensional Borsuk–Ulam theorem. Every continuous\n  `2π`-periodic `f : ℝ → ℝ` (a continuous map `S¹ → ℝ¹`) has an antipodal\n  coincidence `f x = f (x + π)`. Proof via the intermediate value theorem on\n  `g(x) = f(x) − f(x+π)`, which is odd under the half-turn.\n- `no_strict_antipodal_preference` / `no_strict_antipodal_preference'`: the\n  honest social-choice reading — a continuous periodic \"social score\" cannot\n  *strictly* prefer every profile over its antipode. This is precisely the\n  \"contradiction with Pareto efficiency\" invoked in the mission description,\n  correctly isolated to where it actually holds.\n\n**Part II — the contrarian disproof.**\n- `avg` and the lemmas `avg_continuous`, `avg_unanimity`, `avg_anonymous`,\n  `avg_monotone` (strong Pareto/monotonicity), `avg_translation_invariant`\n  (neutrality under a common shift), `avg_not_dictatorial`, packaged as\n  `continuous_nondictatorial_aggregator_exists`: for every `n ≥ 2` the mean is a\n  continuous, unanimous (Pareto), anonymous, **non-dictatorial** aggregation\n  rule on the contractible domain `ℝ`. This **disproves** the mission's strong\n  conjecture that *\"any social choice function on `n` alternatives is either\n  discontinuous or dictatorial.\"*\n\n## Assessment of the mission conjecture\n\nThe bold claim \"Arrow's impossibility theorem is a corollary of Borsuk–Ulam\" is,\nas literally stated, **not correct**, and the derived slogan \"continuous ⟹\ndictatorial\" is **false**. Two independent reasons:\n\n1. **Domain topology matters.** Borsuk–Ulam produces an obstruction only on a\n   *non-contractible* space (a sphere). If the space of preferences is\n   contractible (a line, an interval, a simplex of von Neumann–Morgenstern\n   utilities), the mean is a continuous, anonymous, non-dictatorial, unanimous\n   rule — no obstruction exists. Our `continuous_nondictatorial_aggregator_exists`\n   makes this precise.\n\n2. **Discrete vs. continuous.** Arrow's theorem is about aggregation of *discrete\n   linear orders* satisfying Independence of Irrelevant Alternatives (IIA). There\n   is no ambient topology and no continuity hypothesis, so a continuity-based\n   argument cannot be a literal proof of it.\n\n## The correct topological statement (Chichilnisky / Baryshnikov)\n\nThe real theorem in \"topological social choice\" is **Chichilnisky's**: there is\nno continuous, anonymous, unanimity-respecting aggregation map\n`(S¹)^k → S¹` (more generally `(Sⁿ)^k → Sⁿ`). Baryshnikov (1993) later gave a\n*genuinely* topological derivation of Arrow's discrete theorem by building a\nnerve/CW model of the preference data and invoking such obstructions. So the\nhonest form of the mission's thesis is:\n\n> *Topological obstructions of Borsuk–Ulam type govern aggregation on\n> spheres; Arrow's discrete theorem can be recovered through a nerve\n> construction, but not by the naive `S^{n-1} → ℝ^{n-1}` argument.*\n\nConcrete next targets, in increasing difficulty:\n1. **Chichilnisky, k=2 agents on `S¹`.** Prove: no continuous\n   `F : S¹ × S¹ → S¹` with `F(x,x) = x` (unanimity) and `F(x,y) = F(y,x)`\n   (anonymity). Engine: the induced map on `π₁(S¹) = ℤ` must be\n   `(a,b) ↦ a·d + b·d` with `d = 1` (unanimity) yet symmetric-degree constraints\n   force a contradiction. A clean degree-theory formalization is feasible on top\n   of Mathlib's `π₁(S¹) ≃ ℤ` machinery.\n2. **General `k` on `S¹`**, then `Sⁿ` via Borsuk–Ulam-style parity.\n3. **Baryshnikov's nerve reduction** from the discrete Arrow setting to the\n   topological one — the deepest step, and the actual \"social choice is topology\"\n   statement.\n\n## Reusable artifacts\n\n`borsuk_ulam_1d` (IVT form) and the `avg` aggregator lemmas are stated generically\nand can be reused for any 1-D antipodal-coincidence argument or for building\nlarger continuous aggregation examples.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_0901",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "0884751e",
+    "status": "available",
+    "timestamp": "2026-07-10T13:11:41.437670+00:00",
+    "title": "**Part I — the genuine topological kernel.**"
   },
   {
     "ambition_level": "extension",

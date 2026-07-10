@@ -88,6 +88,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 92e61cee (Q=0.830), which proved 11 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The leading $1/N$ term in the heat-kernel expansion vanishes under the given conditions.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_92e61cee_15280faa",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "92e61cee",
+    "status": "available",
+    "timestamp": "2026-07-10T13:11:38.329718+00:00",
+    "title": "Deepening: Conjecture on Leading Term Cancellation"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle e37aa20a (Q=0.830), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The logistic map f(x) = r*x*(1-x) for r = 4 exhibits chaotic dynamics: small changes in initial conditions lead to exponentially diverging trajectories (Lyapunov exponent lambda = log(2)). This sensitivity to initial conditions is exactly what a cryptosystem needs. Conjecture: The logistic map at r ",
     "domains": [
       "Novelty"
@@ -1398,20 +1412,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-04T09:21:10.954489+00:00",
     "title": "Directed Clique-Width Bound for Semi-Complete Digraphs via Cycle Rank"
-  },
-  {
-    "consumed_by_exp_id": "92e61cee",
-    "description": "The leading $1/N$ term in the heat-kernel expansion vanishes under the given conditions.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0195",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.28945v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-04T10:31:32.090166+00:00",
-    "title": "Conjecture on Leading Term Cancellation"
   },
   {
     "consumed_by_exp_id": "",
@@ -5705,6 +5705,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T12:39:29.653013+00:00",
     "title": "This cycle sharpened the \"random polynomial behaves like a random permutation\""
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Leading-Term Cancellation and Spectral Balance\n\nThe results of this cycle establish that the leading correction to a spectral\nheat-kernel trace, `L(t) = \u03a3\u1d62 d\u1d62 e^{\u2212t E\u1d62}`, cancels identically exactly when the\ndiagonal shifts balance within each degenerate energy level. Three structural\nideas emerged: (i) transcendental cancellation is controlled by a Vandermonde\ndeterminant obtained from integer temperature samples; (ii) degeneracy is the\n*only* source of nontrivial cancellation; (iii) the level-partition of the\nspectrum organizes the whole phenomenon. These suggest the following bold,\nfalsifiable conjectures.\n\n## Conjecture 1 \u2014 Second-order cancellation is governed by off-diagonal balance\n\nThe subleading `1/N\u00b2` term of the heat-kernel trace cancels identically for all\ntemperatures if and only if, on each degenerate level, both the diagonal shift\nsum vanishes *and* the level-restricted sum of squared off-diagonal couplings\nweighted by inverse energy gaps vanishes.\n\n**The key insight is** that once the first-order (diagonal) obstruction is\nremoved, the next obstruction is a quadratic form in the off-diagonal couplings\nwhose kernel is again a level-by-level balance condition, mirroring the\nfirst-order structure one rung higher.\n\n**Why now?** The first-order picture is now completely pinned down, including the\nexact mechanism (intra-level balance) and the exact failure mode (simple\nspectra). This gives a clean base case and a precise notion of \"what must already\nvanish\" before the second-order term can be isolated, making the quadratic\nobstruction well-posed for the first time.\n\n## Conjecture 2 \u2014 Genericity of non-cancellation\n\nFor a fixed spectrum, the set of perturbations whose leading term cancels forms a\nproper linear subspace whose codimension equals the number of distinct energy\nvalues. Consequently, cancellation is a measure-zero, non-generic event unless\nforced by symmetry.\n\n**The key insight is** that the cancellation locus is precisely the joint kernel\nof the \"level-sum\" functionals, one per distinct eigenvalue, and these\nfunctionals are linearly independent, so the codimension counts the levels\nexactly.\n\n**Why now?** The characterization by level sums converts a hard analytic\ncondition (\"vanishes for all t\") into a finite linear system, so the dimension\ncount becomes a concrete, checkable claim rather than a heuristic about\n\"typical\" behavior.\n\n## Conjecture 3 \u2014 Symmetry certifies cancellation\n\nIf a finite symmetry group acts on the spectrum with the perturbation\ntransforming in a nontrivial irreducible representation, then every degenerate\nlevel carrying that representation has vanishing diagonal shift sum, so the\nleading term cancels automatically.\n\n**The key insight is** that the level-sum functional is the projection onto the\ntrivial isotypic component, so any perturbation living purely in a nontrivial\nrepresentation is annihilated level-by-level without any fine-tuning.\n\n**Why now?** With cancellation reduced to the vanishing of explicit level sums,\nthe connection to representation theory becomes a direct statement about\ncharacters, turning an accidental-looking analytic identity into a structural\nconsequence of symmetry.\n\n## Conjecture 4 \u2014 Rigidity across temperatures forces rigidity across gaps\n\nIf the leading term merely decays faster than every single exponential `e^{\u2212t E_i}`\nas `t \u2192 \u221e` (rather than vanishing identically), then the diagonal shift sum on\nthe lowest level must already vanish, and the argument cascades upward through the\ngaps.\n\n**The key insight is** that the slowest-decaying surviving level dominates the\nlarge-temperature asymptotics, so any anomalously fast decay is impossible unless\nthat level is already balanced, after which the next level inherits the same\nconstraint.\n\n**Why now?** The Vandermonde/moment reduction makes the large-`t` dominance\nargument fully rigorous, so the intuitive \"leading exponential wins\" heuristic can\nbe promoted to an inductive rigidity theorem across the entire gap structure.\n",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_0900",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "92e61cee",
+    "status": "available",
+    "timestamp": "2026-07-10T13:11:32.187048+00:00",
+    "title": "The results of this cycle establish that the leading correction to a spectral"
   },
   {
     "consumed_by_exp_id": "",

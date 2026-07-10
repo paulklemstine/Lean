@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e50512ae",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures emerging from this cycle's study of set families that avoid a\nthree-petal sunflower (three distinct sets with a common pairwise intersection) and the",
-      "quality_score": 0.74264,
-      "sorry_count": 7,
-      "theorem_count": 15,
-      "timestamp": "2026-07-06T09:42:26",
-      "title": "Optimality of the polynomial factor in the Naslund–Sawin bound for sunflower‑free families"
-    },
-    {
       "cycle_id": "048b9775",
       "domain": "Computation",
       "key_insight": "# Future Directions\n\nFive falsifiable conjectures growing out of the study of the characteristic-two\ncup-product form of a pro-2 Demushkin group and its canonical (Kummer/orientation) class.\n\n## 1. Th",
@@ -499,19 +489,19 @@
       "theorem_count": 8,
       "timestamp": "2026-07-10T12:39:35",
       "title": "Deepening: Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
+    },
+    {
+      "cycle_id": "92e61cee",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Leading-Term Cancellation and Spectral Balance\n\nThe results of this cycle establish that the leading correction to a spectral\nheat-kernel trace, `L(t) = Σᵢ dᵢ e^{−t Eᵢ}`, cancels",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-10T13:11:38",
+      "title": "Conjecture on Leading Term Cancellation"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3fc75f2f",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — Reciprocity through three lenses\n\nThis cycle assembled three structurally independent routes into quadratic\nresiduacity — cyclotomic Gauss sums, Eisenstein's lattice-point counti",
-      "quality_score": 0.3972276,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-07-01T08:49:04",
-      "title": "Quadratic Reciprocity: Five Proofs Formalized"
-    },
     {
       "cycle_id": "3257177e",
       "domain": "MachineLearning",
@@ -2501,21 +2491,19 @@
       "theorem_count": 8,
       "timestamp": "2026-07-10T12:39:35",
       "title": "Deepening: Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
+    },
+    {
+      "cycle_id": "92e61cee",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Leading-Term Cancellation and Spectral Balance\n\nThe results of this cycle establish that the leading correction to a spectral\nheat-kernel trace, `L(t) = Σᵢ dᵢ e^{−t Eᵢ}`, cancels",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-10T13:11:38",
+      "title": "Conjecture on Leading Term Cancellation"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "956fff13",
-      "domain": "Novelty",
-      "name": "gap_le_sub",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "956fff13",
-      "domain": "Novelty",
-      "name": "edge_gaps",
-      "quality": 0.82
-    },
     {
       "cycle_id": "4936bb72",
       "domain": "Novelty",
@@ -2803,9 +2791,21 @@
       "domain": "Applications",
       "name": "nCycles_mul_eq_factorial",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "92e61cee",
+      "domain": "Novelty",
+      "name": "heatKernelLeading_trace",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "92e61cee",
+      "domain": "Novelty",
+      "name": "trace_zero_of_leading_vanishes",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-10T12:39:35",
+  "last_updated": "2026-07-10T13:11:38",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "34a8cfea",
-        "quality": 0.82,
-        "theorems": 13,
-        "title": "Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology"
-      },
-      {
         "cycle_id": "956fff13",
         "quality": 0.82,
         "theorems": 12,
@@ -3637,6 +3631,12 @@
         "quality": 0.7,
         "theorems": 16,
         "title": "Precise threshold for vertex‑Ramsey property in random perturbations"
+      },
+      {
+        "cycle_id": "92e61cee",
+        "quality": 0.83,
+        "theorems": 11,
+        "title": "Conjecture on Leading Term Cancellation"
       }
     ],
     "NumberTheory": [
