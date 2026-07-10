@@ -17,20 +17,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
   },
   {
-    "consumed_by_exp_id": "4936bb72",
-    "description": "Building on cycle 4d30d98b (Q=0.830), which proved 9 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Ihara zeta function of a finite graph G is zeta_G(u) = prod_{[C]} (1 - u^{|C|})^{-1} where the product is over prime cycles (closed walks that are not powers of shorter walks). For a (q+1)-regular graph, zeta_G(u) = (1-u^2)^{-(n-1)(q-1)/2} * det(I - A*u + (q-1)*u^2*I)^{-1} where A is the adjacen",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_4d30d98b_a1b4059d",
-    "priority_score": 0.9299999999999999,
-    "research_mode": "team",
-    "source_exp_id": "4d30d98b",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T05:18:26.892702+00:00",
-    "title": "Deepening: The Zeta Function of a Graph: Number Theory on Networks"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 6490730e (Q=0.830), which proved 8 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For all natural numbers m, a, and d, the sum over all m-tuples (i_1, ..., i_m) of non-negative integers summing to d of the product of binomial coefficients \u220f_{j=1}^{m} C(a + i_j, a) equals C(ma + d + m - 1, d). This generalizes the identity stated in the paper for m=3 (used to simplify the Bogart-L",
     "domains": [
@@ -316,6 +302,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle 4936bb72 (Q=0.850) proved 11 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Building on cycle 4d30d98b (Q=0.830), which proved 9 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. ",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_4936bb72_a172f438",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "4936bb72",
+    "status": "available",
+    "timestamp": "2026-07-10T07:49:49.968157+00:00",
+    "title": "Close Proofs: The Zeta Function of a Graph: Number Theory on Networks"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 7e60f6c2 (Q=0.830) proved 23 theorems in Bridges but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search frac",
     "domains": [
       "Bridges"
@@ -415,7 +415,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "207fb5b4",
     "description": "The Calderbank-Shor-Steane (CSS) quantum error-correcting codes are constructed from classical linear codes C_1, C_2 with C_2 perp subset C_1. The CSS code encodes dim(C_1) - dim(C_2) logical qubits. This is exactly the definition of a cohomology group: H^1(C_1, C_2) = C_1 / C_2. Conjecture: every CSS code is equivalent to a cohomology computation on a simplicial complex, and vice versa. Specifically, given a simplicial complex K, the CSS code with C_1 = Z_1(K, F_2) (1-cycles) and C_2 = B_1(K, F_2) (1-boundaries) encodes dim(H_1(K, F_2)) logical qubits with distance d = min(length of shortest non-trivial cycle, length of shortest non-trivial cocycle). This is the homological quantum error-correcting code HQECC(K). The distance d equals the systole of K (the length of the shortest non-contractible cycle). Conjecture: for the hypercube Q_n (n-dimensional cube graph), the HQECC encodes 1 qubit with distance d = 2^{n/2} (achieving the quantum Singleton bound). Test: construct HQECC for Q_4, Q_6, Q_8 and verify the parameters. Impact: quantum error correction is cohomology. Every simplicial complex gives a quantum code, and the code parameters are topological invariants.",
     "domains": [
       "Novelty",
@@ -425,7 +425,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T07:16:52.295060+00:00",
     "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
   },
@@ -5362,6 +5362,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T07:49:31.767532+00:00",
     "title": "That the zero-dimensional persistent barcode of the prime"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Number Theory on Networks\n\nThis cycle established the spectral\u2013arithmetic dictionary for the Ihara zeta function of a\n`(q+1)`-regular graph: the local factor `1 \u2212 \u03bbu + qu\u00b2` obeys a functional equation under\n`u \u21a6 1/(qu)`, its zeros lie on the circle `|u| = 1/\u221aq` exactly when the Ramanujan bound\n`\u03bb\u00b2 \u2264 4q` holds, and for the cycle graph the whole determinant collapses to `(1 \u2212 u\u207f)\u00b2` via the\ncyclotomic factorization. The following conjectures push the dictionary further.\n\n## 1. The Ramanujan threshold is the unique real-zero boundary\n\n**Conjecture.** For a `(q+1)`-regular graph, the number of adjacency eigenvalues violating the\nRamanujan bound `|\u03bb| \u2264 2\u221aq` equals the number of real zeros of the Ihara zeta on the interval\n`(1/\u221aq, 1)`, counted with multiplicity, and each such eigenvalue contributes exactly one\nzero inside and one outside the critical circle.\n\n*The key insight is* that the product of the two reciprocal zeros of every local factor is the\nconstant `1/q`, so a zero can leave the critical circle only in an inside/outside pair, making the\ncount of off-circle zeros a rigid invariant of the spectral gap.\n\n*Why now?* The reciprocal-product law `\u03b1\u00b7\u03b2 = q` and the real-root dichotomy across `\u03bb\u00b2 = 4q` are\nnow proved in full; the remaining step is a bookkeeping argument over the spectrum, well within\nreach of the same real-analytic techniques.\n\n## 2. A trace-formula bridge between prime cycles and eigenvalues\n\n**Conjecture.** For a connected `(q+1)`-regular graph the logarithmic derivative of the Ihara zeta\nexpands as `u\u00b7d/du log \u03b6_G(u) = \u03a3_{m\u22651} N_m u\u1d50`, where `N_m` is the number of closed geodesics\nof length `m`, and `N_m = \u03a3_j \u03bb_j\u1d50\u207d\u1d4d\u1d49\u1d52\u207e` for the \"geodesic eigenvalues\" `\u03bb_j\u207d\u1d4d\u1d49\u1d52\u207e` obtained from\nthe reciprocal zeros of the determinant.\n\n*The key insight is* that taking the logarithmic derivative of the determinant form turns the\nproduct over the spectrum into a sum over the reciprocal zeros, converting a multiplicative\nidentity into an additive Selberg-type trace formula.\n\n*Why now?* The determinant factorization into local factors and its functional equation are\nestablished, giving the exact object whose logarithmic derivative produces the geodesic counts.\n\n## 3. Cyclotomic collapse characterizes vertex-transitive circulants\n\n**Conjecture.** Among connected `2`-regular-or-more circulant graphs, the Ihara zeta inverse\nfactors as a product of cyclotomic-type binomials `\u220f (1 \u2212 u\u1d48)^{e\u1d48}` if and only if the graph is a\ndisjoint-free circulant whose connection set is closed under negation; the cycle `C\u2099` with its\nclean `(1 \u2212 u\u207f)\u00b2` is the extremal minimal case.\n\n*The key insight is* that the adjacency eigenvalues of a circulant are values of a fixed\ntrigonometric polynomial at the `n`-th roots of unity, so the determinant is a resultant that\nfactors through cyclotomy exactly when the connection set is symmetric.\n\n*Why now?* The cycle case is proved via the roots-of-unity product, and the identical machinery\n(difference of powers over `n`-th roots, inverse reindexing) applies verbatim to any symmetric\ncirculant connection set.\n\n## 4. Ramanujan graphs saturate a determinant extremum\n\n**Conjecture.** Over all `(q+1)`-regular graphs on `n` vertices, the quantity\n`max_j |zero of local factor j| \u00b7 min_j |zero|` is minimized precisely by the Ramanujan graphs,\nwhere it equals `1/q` (all zeros on the circle), and every non-Ramanujan graph strictly exceeds it.\n\n*The key insight is* that the critical circle is the simultaneous minimizer of the outer radius and\nmaximizer of the inner radius, so being Ramanujan is an extremal (isoperimetric-type) property of\nthe zeta zeros rather than merely a spectral-gap inequality.\n\n*Why now?* We have proved both the on-circle law under the Ramanujan bound and the straddling\nbehavior when it fails; formulating the extremal statement is the natural synthesis of the two.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0864",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4936bb72",
+    "status": "available",
+    "timestamp": "2026-07-10T07:49:40.047041+00:00",
+    "title": "Spectral\u2013arithmetic dictionary for the Ihara zeta fun"
   },
   {
     "consumed_by_exp_id": "",

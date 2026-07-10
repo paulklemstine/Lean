@@ -406,6 +406,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Cycle 4936bb72 (Q=0.850) proved 11 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Building on cycle 4d30d98b (Q=0.830), which proved 9 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. ",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_4936bb72_a172f438",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4936bb72",
+    "status": "available",
+    "timestamp": "2026-07-10T07:49:49.968157+00:00",
+    "title": "Close Proofs: The Zeta Function of a Graph: Number Theory on Networks"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle 7e60f6c2 (Q=0.830) proved 23 theorems in Bridges but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search frac",
     "domain_bridges": [],
     "domains": [
@@ -540,7 +559,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "207fb5b4",
     "description": "The Calderbank-Shor-Steane (CSS) quantum error-correcting codes are constructed from classical linear codes C_1, C_2 with C_2 perp subset C_1. The CSS code encodes dim(C_1) - dim(C_2) logical qubits. This is exactly the definition of a cohomology group: H^1(C_1, C_2) = C_1 / C_2. Conjecture: every CSS code is equivalent to a cohomology computation on a simplicial complex, and vice versa. Specifically, given a simplicial complex K, the CSS code with C_1 = Z_1(K, F_2) (1-cycles) and C_2 = B_1(K, F_2) (1-boundaries) encodes dim(H_1(K, F_2)) logical qubits with distance d = min(length of shortest non-trivial cycle, length of shortest non-trivial cocycle). This is the homological quantum error-correcting code HQECC(K). The distance d equals the systole of K (the length of the shortest non-contractible cycle). Conjecture: for the hypercube Q_n (n-dimensional cube graph), the HQECC encodes 1 qubit with distance d = 2^{n/2} (achieving the quantum Singleton bound). Test: construct HQECC for Q_4, Q_6, Q_8 and verify the parameters. Impact: quantum error correction is cohomology. Every simplicial complex gives a quantum code, and the code parameters are topological invariants.",
     "domain_bridges": [],
     "domains": [
@@ -553,7 +572,7 @@
     "proof_strategy": "Define the CSS construction: given F_2-linear codes C_2 perp subset C_1 subset F_2^n, the CSS code is the subspace spanned by {|v + C_2> : v in C_1}. This encodes k = dim(C_1/C_2) = dim(H^1) logical qubits. Define HQECC(K): for a simplicial complex K, let C_1 = Z_1(K, F_2) (1-cycles mod F_2) and C_2 = B_1(K, F_2) (1-boundaries). Then H_1(K, F_2) = Z_1/B_1 is the first homology. The CSS code with these C_1, C_2 encodes dim(H_1) qubits. Distance: d_X = min weight of non-trivial cycle in Z_1 \\ B_1, d_Z = min weight of non-trivial cocycle. The code distance d = min(d_X, d_Z). For hypercube Q_n: H_1(Q_n, F_2) = F_2^{n choose 2} (since Q_n has n choose 2 independent 1-cycles). Wait, that's for n >= 3. Actually Q_n is bipartite, so H_1 has dimension (n choose 2). The systole of Q_n is 4 (the shortest cycle). So d = min(4, something). Need to compute d_Z: the shortest non-trivial cocycle. For Q_n, d_Z = 2^{n/2} by the MacWilliams identity. Test: construct CSS codes from simplicial complexes, compute parameters [[n, k, d]].",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T07:16:52.295060+00:00",
     "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
   },

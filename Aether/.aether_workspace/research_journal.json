@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "bb3ce4ee",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Dark Mathematics\n\nFive bold, falsifiable conjectures arising from this cycle's finding that darkness —\nknowing a witness must exist while being unable to name one — is real, stra",
-      "quality_score": 0.7902000000000001,
-      "sorry_count": 3,
-      "theorem_count": 15,
-      "timestamp": "2026-07-03T05:53:55",
-      "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-    },
-    {
       "cycle_id": "583299ca",
       "domain": "Cryptography",
       "key_insight": "# Future Directions\n\nBold, falsifiable conjectures growing out of the combinatorial and inverse-limit core of torsion\nlocal–global compatibility for conjugate self-dual representations over CM fields.",
@@ -499,19 +489,19 @@
       "theorem_count": 12,
       "timestamp": "2026-07-10T07:49:37",
       "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
+    },
+    {
+      "cycle_id": "4936bb72",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Number Theory on Networks\n\nThis cycle established the spectral–arithmetic dictionary for the Ihara zeta function of a\n`(q+1)`-regular graph: the local factor `1 − λu + qu²` obeys",
+      "quality_score": 0.85,
+      "sorry_count": 3,
+      "theorem_count": 11,
+      "timestamp": "2026-07-10T07:49:49",
+      "title": "Deepening: The Zeta Function of a Graph: Number Theory on Networks"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "60fa5375",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — fourth powers among polygonal numbers\n\nThis cycle studied which 14-gonal numbers `P₁₄(n) = 6n² − 5n` are perfect fourth\npowers. The product structure `n·(6n − 5)`, the coprimalit",
-      "quality_score": 0.5186266666666667,
-      "sorry_count": 4,
-      "theorem_count": 18,
-      "timestamp": "2026-06-29T23:28:10",
-      "title": "Complete Solutions to the 14-gonal Fourth Power Diophantine Equation"
-    },
     {
       "cycle_id": "ee65478f",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 12,
       "timestamp": "2026-07-10T07:49:37",
       "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
+    },
+    {
+      "cycle_id": "4936bb72",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Number Theory on Networks\n\nThis cycle established the spectral–arithmetic dictionary for the Ihara zeta function of a\n`(q+1)`-regular graph: the local factor `1 − λu + qu²` obeys",
+      "quality_score": 0.85,
+      "sorry_count": 3,
+      "theorem_count": 11,
+      "timestamp": "2026-07-10T07:49:49",
+      "title": "Deepening: The Zeta Function of a Graph: Number Theory on Networks"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "643186e8",
-      "domain": "Algebra",
-      "name": "fib_carmichael_composite",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "3716954d",
-      "domain": "Applications",
-      "name": "boolSequences_uncountable",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "3716954d",
-      "domain": "Applications",
-      "name": "allDirichletSeries_uncountable",
-      "quality": 0.78
-    },
     {
       "cycle_id": "3716954d",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "edge_gaps",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "4936bb72",
+      "domain": "Novelty",
+      "name": "localFactor_funeq",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "4936bb72",
+      "domain": "Novelty",
+      "name": "localFactor_factor",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "4936bb72",
+      "domain": "Novelty",
+      "name": "det_funeq",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-07-10T07:49:37",
+  "last_updated": "2026-07-10T07:49:49",
   "open_questions": [
-    {
-      "context": "`RhoDom.dominant_singleton_iff`, so it is not a self-contained restatement.  No `sorry`, no",
-      "cycle_id": "135cab00",
-      "domain": "Novelty",
-      "sorry_count": 1,
-      "timestamp": "2026-07-02T02:48:24"
-    },
     {
       "context": "No `sorry`; axioms are the standard `propext`/`Classical.choice`/`Quot.sound`.; No `sorry`; axioms are the standard three.",
       "cycle_id": "5e4735e1",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 6,
       "timestamp": "2026-07-10T07:33:38"
+    },
+    {
+      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
+      "cycle_id": "4936bb72",
+      "domain": "Novelty",
+      "sorry_count": 3,
+      "timestamp": "2026-07-10T07:49:49"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "eb8019d8",
-        "quality": 0.49735784528301885,
-        "theorems": 14,
-        "title": "Existence of Optimal Equidistant Codes for n ≡ 2 mod 4 with Unidentified Subcase"
-      },
-      {
         "cycle_id": "8d243e81",
         "quality": 0.7115,
         "theorems": 26,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 12,
         "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
+      },
+      {
+        "cycle_id": "4936bb72",
+        "quality": 0.85,
+        "theorems": 11,
+        "title": "Deepening: The Zeta Function of a Graph: Number Theory on Networks"
       }
     ],
     "NumberTheory": [
