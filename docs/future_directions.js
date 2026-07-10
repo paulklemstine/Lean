@@ -143,20 +143,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
   },
   {
-    "consumed_by_exp_id": "df72d5fe",
-    "description": "Building on cycle 956fff13 (Q=0.820), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The sequence of primes 2, 3, 5, 7, 11, 13, ... defines a point cloud in R where the n-th prime p_n is at position p_n on the real line. The gaps between primes create a topological structure. Define the persistent homology of the prime point cloud as the Rips filtration R_epsilon = {p_n : |p_m - p_n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_956fff13_71de901b",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "956fff13",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T07:49:37.464120+00:00",
-    "title": "Deepening: Persistent Homology of Prime Numbers: The Topology of Arithmetic"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle da4694df (Q=0.820), which proved 17 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conway's surreal numbers No form a proper class containing all real numbers, all ordinal numbers, and all infinitesimals. Every real number r has a surreal representation r = {r - 1 | r + 1}. Every ordinal alpha has a surreal representation alpha = {alpha |}. Every infinitesimal epsilon = {0 | 1, 1/",
     "domains": [
@@ -458,6 +444,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The Riemann zeta function zeta(s) has non-trivial zeros at s = 1/2 + i*gamma_n on the critical line (assuming RH). These zeros encode deep arithmetic information. Conjecture: the zeros gamma_n are the spectrum of a self-adjoint operator on a Hilbert space, and this operator is the Casimir element of a quantum group G_q. Specifically, define the 'zeta quantum group' G_q as the q-deformation of SU(2) where q = e^{2*pi*i*gamma_1} (using the first zero gamma_1 ~ 14.13). The Casimir element C_q of G_q has eigenvalues that are quadratic functions of the representation labels, and the spectrum of C_q is {n(n+1) : n in N}. Conjecture: the Riemann zeros gamma_n are related to the spectrum of C_q by gamma_n = f(spectrum(C_q)) for some function f. If f is linear, this would mean the zeros are evenly spaced, which is false (the zeros have Poisson-like spacings). If f is logarithmic, gamma_n ~ pi*n/log(n) which matches the average spacing. Conjecture: the spectral statistics of C_q match the GUE random matrix statistics of the Riemann zeros (Montgomery's pair correlation conjecture). Test: compute the spectrum of C_q for G_q with q = e^{2*pi*i*gamma_1} and compare the spectral statistics with the Riemann zeros. Impact: the Riemann hypothesis is a representation-theoretic statement about quantum groups.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0891",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T12:06:38.636322+00:00",
+    "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long \u2014 the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static \u2014 they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
     "domains": [
       "Novelty",
@@ -470,6 +471,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-08T16:01:43.810023+00:00",
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Alexander polynomial Delta_K(t) of a knot K is a Laurent polynomial that encodes topological information about the knot. Conjecture: for any knot K with n crossings, the Alexander polynomial Delta_K(t) can be expressed as the generating function of lattice paths in Z^2 that avoid a region determined by the knot diagram. Specifically, define the 'knot lattice' L_K as the set of lattice paths from (0,0) to (n,n) that avoid the 'forbidden region' R_K determined by the crossing structure of K. Then Delta_K(t) = sum_{p in L_K} t^{area(p)} where area(p) is the area under the path p. This conjecture follows from the state sum formula for the Alexander polynomial: Delta_K(t) = sum_{states s} (-1)^{w(s)} t^{a(s)} where w(s) is the writhe and a(s) is the area of the state. The area a(s) is exactly the area under a lattice path determined by the state. Conjecture: every Alexander polynomial arises as a lattice path generating function, and vice versa. This means the Alexander polynomial is not just a knot invariant \u2014 it is a combinatorial object that counts lattice paths. Test: compute the Alexander polynomials for the first 50 knots and verify that each can be expressed as a lattice path generating function. Impact: knot invariants are combinatorial. The Alexander polynomial counts lattice paths, connecting topology to combinatorics.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0890",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T12:06:38.565444+00:00",
+    "title": "Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
   },
   {
     "consumed_by_exp_id": "",
@@ -5632,6 +5648,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Topology of Arithmetic\n\nThis cycle established that the zero-dimensional persistent homology of the prime\npoint cloud is a genuine persistence module whose entire structure \u2014 functorial\nmerging, total persistence, global merge scale, unbounded bars, and Betti number \u2014\nis read off the sequence of prime gaps. The following conjectures push that\ncorrespondence further.\n\n## 1. The barcode length distribution follows the Hardy\u2013Littlewood law\n\n**Conjecture.** For each even `g`, the asymptotic density of H\u2080 bars of death scale\nexactly `g` among the first `N` bars is proportional to the Hardy\u2013Littlewood\nsingular series for gap `g`; in particular bars of length `2`, `4`, and `6` occur\nwith the classically predicted relative frequencies, and no even length is ever\nabsent from arbitrarily long windows.\n\n*The key insight is* that a bar of death scale `g` is exactly a maximal run whose\nbounding gap equals `g`, so the bar-length histogram of the barcode is literally\nthe prime-gap histogram, transporting the entire analytic theory of gap\ndistribution into a topological invariant.\n\n*Why now?* The present cycle proved the barcode is unbounded and that its bar\nlengths are precisely the gaps; the natural next quantitative step is the\ndistribution of those lengths, for which the Hardy\u2013Littlewood conjectures give a\nsharp, testable target.\n\n## 2. Total persistence grows like `n log n`\n\n**Conjecture.** The total persistence of the first `n` bars \u2014 proved here to equal\n`p_n \u2212 2` \u2014 satisfies `p_n \u2212 2 \u223c n log n`, and more precisely the normalized total\npersistence `(p_n \u2212 2)/(n log n) \u2192 1`.\n\n*The key insight is* that total persistence is not an independent analytic quantity\nbut is identically the `n`-th prime minus two, so the growth rate of aggregate\ntopological persistence is exactly the prime number theorem in disguise.\n\n*Why now?* With the telescoping identity `total_persistence = p_n \u2212 2` in hand, the\nasymptotics of total persistence reduce to a known and provable statement about\n`p_n`, making this the most immediately reachable refinement.\n\n## 3. The Betti curve has a universal staircase profile\n\n**Conjecture.** Viewed as a function of the scale `\u03b5`, the Betti number\n`b\u2080(\u03b5, n) = 1 + #{gaps \u2264 n exceeding \u03b5}` is a right-continuous decreasing step\nfunction whose rescaled profile, under `\u03b5 \u21a6 \u03b5 / log p_n`, converges to a\ndeterministic limiting curve as `n \u2192 \u221e`.\n\n*The key insight is* that each downward step of the Betti curve is triggered by one\nprime gap crossing the threshold `\u03b5`, so the shape of the curve is a cumulative\ncount of gaps and its limiting profile encodes the limiting law of normalized\nprime gaps.\n\n*Why now?* This cycle gave the exact finite-scale formula for `b\u2080`; converting an\nexact counting formula into a scaling limit is the standard and now well-motivated\ncontinuation.\n\n## 4. Higher-dimensional prime clouds carry genuine loops\n\n**Conjecture.** Placing the primes on a curve in the plane by `p_n \u21a6 (p_n, p_{n+1})`\n(consecutive-pair embedding) yields a point cloud whose first persistent homology\n`H\u2081` is non-trivial: there exist persistent one-dimensional cycles whose birth and\ndeath scales are controlled by consecutive triples of gaps.\n\n*The key insight is* that correlations between neighbouring gaps \u2014 invisible to the\none-dimensional cloud, whose `H\u2081` vanishes \u2014 become geometric loops once the primes\nare lifted to a gap-recording curve, turning gap correlations into topology.\n\n*Why now?* The one-dimensional theory is now complete and shows `H\u2081` is trivial on\nthe line; the first place new topology can appear is the two-dimensional lift,\nwhich is the minimal setting where gap correlations can close up into cycles.\n\n## 5. The merge tree of the primes is a self-similar random-like tree\n\n**Conjecture.** The single-linkage merge tree of the prime cloud \u2014 whose internal\nnode heights are the successive record gaps \u2014 is, after normalization, statistically\nindistinguishable from the merge tree of a Poisson process with slowly varying\nintensity `1/log x`, in the sense of convergence of its scaled height profile.\n\n*The key insight is* that single-linkage clustering on a line is entirely determined\nby the gaps, so the merge tree of the primes is a deterministic functional of the\ngap sequence, and its comparison to a Poisson model is a precise formulation of the\nheuristic that primes behave like random numbers with density `1/log x`.\n\n*Why now?* Having identified components with fibres of the component-root map and\nthe merge scale with the maximum gap, the merge tree is now a fully specified\ncombinatorial object ready for a distributional comparison.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0892",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "df72d5fe",
+    "status": "available",
+    "timestamp": "2026-07-10T12:07:03.634158+00:00",
+    "title": "That the zero-dimensional persistent homology of the prim"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Erdos-Renyi random graph G(n, p) has n vertices where each edge appears independently with probability p. At p = log(n)/n, G(n,p) becomes connected. But what if p is COMPLEX? Define G(n, z) where z is a complex number: each edge (i,j) appears with 'probability' z, meaning the edge weight is z instead of 0 or 1. The resulting 'complex graph' is a weighted complete graph where edge (i,j) has weight z if the edge exists and 0 otherwise. The adjacency matrix A_z has entries that are either z or 0. Conjecture: The complex eigenvalues of A_z trace out a circle of radius |z|*sqrt(n) in the complex plane, centered at the origin. As n -> infinity, the empirical spectral distribution of A_z converges to the circular law (like the Ginibre ensemble) because A_z is a random matrix with i.i.d. entries of mean z*p and variance |z|^2*p*(1-p). The 'hallucination' is that for Im(z) != 0, the graph has complex-valued connectivity \u2014 information flows with both amplitude and phase, and the phase creates interference patterns that are visible in the spectral density. Test: generate A_z for n = 1000 with z = 0.5 + 0.3i, compute eigenvalues, and verify they lie in a disk of radius sqrt(n)*|z|. Compare with the Ginibre ensemble prediction. Impact: complex-valued random graphs have circular spectra \u2014 the hallucination of complex probabilities creates beautiful circular eigenvalue distributions.",
     "domains": [
       "Novelty",
@@ -5689,7 +5720,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Ramanujan's Taxicab Number as a Sum of Three Cubes: 1729 Revisited"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "96d0d4ab",
     "description": "A periodic rhythm in music is a function f: Z -> {0, 1} that is periodic: f(n + p) = f(n) for some period p. The symmetry group of a rhythm with period p is a subgroup of Z/pZ. But music also has 2D patterns: a drum pattern is a function g: Z x Z -> {0, 1} (onset grid in time x pitch). The symmetry group of a drum pattern is a subgroup of Z x Z, which is a wallpaper group in 1D. In 2D, the wallpaper groups classify all possible symmetries of periodic patterns. There are exactly 17 wallpaper groups in 2D. Conjecture: the 17 wallpaper groups correspond to 17 fundamentally different types of rhythmic structure in music. Specifically: (1) p1: no symmetry (free rhythm), (2) p2: 2-fold rotational symmetry (call-and-response), (3) pm: mirror symmetry (palindrome), (4) pg: glide reflection (canon), (5) cm: mirror + glide (round), (6) pmm: double mirror (bilateral palindrome), (7) pmg: mirror + glide (inverted canon), (8) pgg: double glide (double canon), (9) cmm: double mirror + glide (round + palindrome), (10) p4: 4-fold rotation (4-bar cycle), (11) p4m: 4-fold + mirrors (variations on a theme), (12) p4g: 4-fold + glides (inverted variations), (13) p3: 3-fold rotation (3-bar blues), (14) p3m1: 3-fold + mirrors, (15) p31m: 3-fold + glides, (16) p6: 6-fold rotation (whole-tone scale symmetry), (17) p6m: 6-fold + mirrors (maximal symmetry, the 'perfect' rhythm). Test: classify 1000 drum patterns by their wallpaper group and verify the distribution matches musical practice. Impact: there are exactly 17 types of rhythm in music, classified by the wallpaper groups.",
     "domains": [
       "Novelty",
@@ -5699,7 +5730,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.68,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T10:13:59.325235+00:00",
     "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm"
   },

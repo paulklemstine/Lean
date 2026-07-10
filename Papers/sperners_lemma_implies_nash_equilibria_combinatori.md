@@ -1,82 +1,73 @@
-# Computational Evidence — Sperner ⟹ Fixed Points ⟹ Nash
+# Computational evidence
 
-This note records the small-case checks that motivated the formal theorems in
-`SpernerOneDim.lean`, `PotentialNash.lean`, and `TarskiNash.lean`.
+This project formalizes the combinatorial-fixed-point / game-theory story in two
+self-contained Lean files.  The claims are elementary enough that the "evidence"
+is itself checked by the Lean kernel (all theorems compile with no `sorry` and only
+the standard axioms `propext`, `Classical.choice`, `Quot.sound`).  The small-case
+computations that motivated the formal statements are recorded below.
 
-## 1. One-dimensional Sperner parity (`sperner1D_parity`)
+## 1. One-dimensional Sperner lemma (parity)
 
-Color the vertices `0..n` with two colors and count *bichromatic* edges
-(`c i ≠ c (i+1)`).
+For a colouring `c : ℕ → Bool`, `fullyColoured c n` counts edges `(i,i+1)`, `i < n`,
+whose endpoints differ.  The parity theorem says its cardinality is odd iff
+`c 0 ≠ c n`.  Small cases (`•` = false, `|` = true):
 
-| coloring (c 0 .. c n)        | bichromatic edges | count mod 2 | endpoints differ? |
-|------------------------------|-------------------|-------------|-------------------|
-| `0 0 0`                      | 0                 | 0           | no  (0)           |
-| `0 0 1`                      | 1                 | 1           | yes (1)           |
-| `0 1 0`                      | 2                 | 0           | no  (0)           |
-| `0 1 1`                      | 1                 | 1           | yes (1)           |
-| `0 1 0 1`                    | 3                 | 1           | yes (1)           |
-| `0 0 1 1 0`                  | 2                 | 0           | no  (0)           |
+| path (n=4)      | fully coloured edges | count | c0 ≠ c4 | parity |
+|-----------------|----------------------|-------|---------|--------|
+| `• • • • •`     | none                 | 0     | no      | even ✓ |
+| `• • | | |`     | {(1,2)}              | 1     | yes     | odd  ✓ |
+| `• | • | •`     | {(0,1),(1,2),(2,3),(3,4)} | 4 | no    | even ✓ |
+| `• | | • |`     | {(0,1),(2,3),(3,4)}  | 3     | yes     | odd  ✓ |
 
-In every row `count mod 2` equals the endpoint-difference indicator. This is
-exactly the statement `edgeCount c n % 2 = (if c 0 = c n then 0 else 1)`, and in
-particular a `0 … 1` coloring always has an *odd* (hence positive) number of
-bichromatic edges — the 1D "fully colored simplex".
+Every Sperner colouring (`c 0 = false`, `c n = true`) therefore has an odd, hence
+positive, number of fully labelled edges — the 1-D case of Sperner's lemma.
 
-## 2. Discrete IVT / Brouwer bracket (`discrete_ivt`, `discrete_brouwer`)
+## 2. Discrete Brouwer fixed point
 
-For `f 0 ≤ 0 < f n`, the first index `k` with `f k > 0` satisfies `f (k-1) ≤ 0`,
-giving the upward crossing. Sample `f = [-2, -1, 1, 3]` (n = 3): crossing at i = 1
-(`f 1 = -1 ≤ 0 < 1 = f 2`). ✓
+For `g : {0,…,n} → {0,…,n}` the theorem produces `i < n` with `g i ≥ i` and
+`g (i+1) ≤ i+1` (an approximate fixed point straddling an edge).  Example
+`n = 3`, `g = [2,3,1,3]`:
 
-For the diagonal bracket `discrete_brouwer`, take a self-map `h : {0..n} → ℤ` with
-`0 ≤ h 0` and `h n < n`. Example `h = [0, 0, 1, 2]` with n = 3 (so `h 3 = 2 < 3`):
-displacement `h j - j = [0, -1, -1, -1]`, the bracket `i ≤ h i ∧ h (i+1) ≤ i`
-holds at i = 0 (`0 ≤ h 0 = 0` and `h 1 = 0 ≤ 0`). ✓ This is an approximate fixed
-point of `h`.
+* `i=0`: `g 0 = 2 ≥ 0` but `g 1 = 3 ≤ 1`? no.
+* `i=1`: `g 1 = 3 ≥ 1` and `g 2 = 1 ≤ 2`? yes.  ✔  (edge `(1,2)` is a fixed edge)
 
-## 3. Potential games (`potential_game_has_pure_nash`)
+This is precisely the discretization used in Scarf/Sperner style algorithms.
 
-2×2 coordination game (a potential game), payoffs `(pA, pB)`:
+## 3. Matching Pennies
+
+Payoffs (row = player 1, `+1` on a match).  Best-response cycling shows there is
+**no pure equilibrium**:
 
 ```
-            b0        b1
-   a0   (2, 2)    (0, 0)
-   a1   (0, 0)    (1, 1)
+        H       T
+  H   (+1,-1) (-1,+1)
+  T   (-1,+1) (+1,-1)
 ```
 
-A potential is `Φ = pA = pB` here (identical-interest game). The global maximizer
-of `Φ` is `(a0, b0)` with value 2, and indeed `(a0, b0)` is a pure Nash
-equilibrium: A deviating to a1 gets 0 < 2, B deviating to b1 gets 0 < 2. The
-theorem's "argmax of the potential is Nash" recipe selects exactly this profile.
-(Note `(a1, b1)` is also a pure Nash but is *not* the potential maximizer — the
-theorem only certifies the global maximizer, which is the point of the existence
-claim.)
+Against the uniform column `(1/2,1/2)` every row of player 1 yields expected payoff
+`1/2·(+1) + 1/2·(-1) = 0`; symmetrically for player 2.  Hence the uniform profile is
+a Nash equilibrium (all deviations tie), which the file proves formally.
 
-## 4. Supermodular games via Tarski (`supermod_game_has_nash`)
+## 4. Prisoner's Dilemma
 
-Smallest instance: both strategy lattices the one-point lattice `PUnit`. Best
-responses are constant (hence monotone), and the unique profile is trivially a
-fixed point of the joint best-response map, hence Nash. More informatively, on the
-Boolean lattice `Bool` with `brA = brB = id` (each player matches the other — a
-supermodular coordination game), the joint map `(a,b) ↦ (b,a)` has fixed points
-`(false,false)` and `(true,true)`, both pure Nash equilibria; Tarski's theorem
-returns the least one, `(false,false)`.
+Payoffs (`false` = Cooperate, `true` = Defect), classic `(3,3),(0,5),(5,0),(1,1)`:
 
-## OEIS
+```
+          C       D
+  C     (3,3)   (0,5)
+  D     (5,0)   (1,1)
+```
 
-The bichromatic-edge parity table is governed by the indicator sequence and does
-not match a distinctive OEIS entry on its own; the underlying "number of sign
-changes" combinatorics is folklore (Sperner / discrete IVT) rather than a tabled
-integer sequence, so no OEIS ID is claimed.
+Against `D`, player 1 gets `1` from `D` versus `0` from `C`; symmetric for player 2.
+So `(D,D)` is the unique pure Nash equilibrium — proved via the pure-deviation
+principle `isNash_of_pure`.
 
 ## Counterexample hunt
 
-- Dropping `Nonempty A` (or `B`) in `potential_game_has_pure_nash` breaks the
-  argmax existence — confirmed necessary.
-- Dropping the strict `h n < n` in `discrete_brouwer` admits the boundary
-  fixed-point `h n = n` with no interior bracket — confirmed the strict
-  hypothesis is load-bearing.
-- Dropping `Monotone brA`/`brB` in `supermod_game_has_nash` is fatal: a game whose
-  joint best response is the order-reversing map on a chain with no fixed point
-  (e.g. anti-coordination on a 2-chain) has no pure Nash equilibrium, matching the
-  known failure of pure Nash for non-supermodular games.
+No counterexamples were sought against the *statements* (they are theorems, verified
+by Lean).  The design phase did rule out two tempting but false formulations:
+
+* The sign-change / discrete-IVT statements are **false at `n = 0`** (there is no
+  edge to straddle), so the theorems carry the hypothesis `0 < n`.
+* A naive "`c 0 ≠ c n` ⇒ *odd*" phrased over `ℕ`-truncated subtraction fails; the
+  parity is stated with `% 2` over `Finset.card` to avoid this.
