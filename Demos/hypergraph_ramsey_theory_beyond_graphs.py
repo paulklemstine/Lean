@@ -1,156 +1,157 @@
 """
-Hypergraph Ramsey Theory Beyond Graphs --- numerical demonstrations.
+Hypergraph Ramsey Theory: Numerical Demonstrations
+==================================================
 
-This self-contained script illustrates, with exact integer arithmetic, the
-results formalized in the accompanying paper:
+Self-contained numerical illustrations of the key results in the accompanying
+paper on r-uniform hypergraph Ramsey numbers:
 
-  * the probabilistic (first-moment) lower bound
-        2 * C(n, k) < 2^C(k, 3)  ==>  R_3(k, k) > n,
-    with the verified instances R_3(5,5) > 11 and R_3(6,6) > 29;
-  * the exact incidence identity sum_chi badCount(chi) = C(n,4) * 2^(C(n,3)-3)
-    and the resulting expectation C(n,4)/8 for monochromatic tetrahedra;
-  * the tower function tower(2, m) and the values 4, 16, 65536;
-  * the separation c^k < tower(2, k) for k >= c+1 (single vs. double exp);
-  * a tiny brute-force check that R_2(3,3) = 6 (the classic party number),
-    used to validate the coloring/monochromatic-clique model.
+  * the first-moment (probabilistic) lower bound
+        2 * C(n, k) < 2 ** C(k, r)   =>   R_r(k, k) > n,
+  * the tower function and the tower-type upper bound produced by iterating
+    the Erdos-Rado stepping-up recursion,
+  * the single- vs. double-exponential gap for R_3(k, k).
 
-Run:  python3 demo.py
+Everything is written with the standard library only (the `math` module), with
+type hints, and every helper inlined so the file runs as-is:
+
+    python3 demo.py
 """
 
 from __future__ import annotations
 
-import sys
-from fractions import Fraction
-from itertools import combinations, product
-from math import comb
+from math import comb, log2
 
 
 # ---------------------------------------------------------------------------
-# Tower (iterated exponential) function
+# 1. The tower function  tower(h, N)
 # ---------------------------------------------------------------------------
-def tower(base: int, height: int) -> int:
-    """Return tower(base, height): base raised to base ... height times.
 
-    tower(b, 0) = 1 and tower(b, m+1) = b ** tower(b, m).
+def tower(h: int, N: int) -> int:
+    """Iterated base-2 exponential: tower(0, N) = N, tower(h+1, N) = 2 ** tower(h, N).
+
+    So tower(1, N) = 2**N and tower(2, N) = 2**(2**N).  Grows so fast that only
+    tiny arguments are representable; used here for small illustrative values.
     """
-    value: int = 1
-    for _ in range(height):
-        value = base ** value
+    value: int = N
+    for _ in range(h):
+        value = 2 ** value
     return value
 
 
 # ---------------------------------------------------------------------------
-# Probabilistic lower bound
+# 2. The first-moment lower-bound certificate
 # ---------------------------------------------------------------------------
-def first_moment_threshold_holds(n: int, k: int, r: int = 3) -> bool:
-    """True iff 2 * C(n, k) < 2^C(k, r), the first-moment lower-bound condition.
 
-    When True, there exists an r-uniform 2-coloring of [n] with no monochromatic
-    k-clique, hence R_r(k, k) > n.
+def first_moment_no_mono(n: int, r: int, k: int) -> bool:
+    """Return True if the counting inequality 2*C(n,k) < 2**C(k,r) holds.
+
+    When True, there exists an r-uniform 2-coloring of an n-set with no
+    monochromatic k-clique, hence R_r(k, k) > n.
     """
+    if not (r <= k <= n):
+        return False
     return 2 * comb(n, k) < 2 ** comb(k, r)
 
 
-def best_probabilistic_lower_bound(k: int, r: int = 3, n_max: int = 5000) -> int:
-    """Largest n with 2*C(n,k) < 2^C(k,r): a certified R_r(k,k) > n witness."""
-    best: int = k  # trivially R_r(k,k) > k for k > r
+def best_lower_bound(r: int, k: int, n_max: int = 20000) -> int:
+    """Largest n <= n_max for which the first-moment inequality certifies R_r(k,k) > n.
+
+    Returns the largest such n (so R_r(k, k) >= n + 1), or 0 if none found.
+    """
+    best: int = 0
     for n in range(k, n_max + 1):
-        if first_moment_threshold_holds(n, k, r):
+        if first_moment_no_mono(n, r, k):
             best = n
-        else:
-            break
     return best
 
 
 # ---------------------------------------------------------------------------
-# Exact incidence identity and expectation (the r=3, monochromatic 4-set case)
+# 3. Growth-rate comparisons for R_3(k, k)
 # ---------------------------------------------------------------------------
-def sum_badcount(n: int) -> int:
-    """Sum over all colorings of the number of monochromatic 4-sets.
 
-    Equals C(n,4) * 2^(C(n,3) - 3) by the exact incidence identity (valid n>=4).
+def log2_lower_bound_exponent(k: int) -> float:
+    """log2 of the largest n certified by the first moment for r = 3 (single exp)."""
+    n = best_lower_bound(3, k)
+    return log2(n) if n > 0 else float("nan")
+
+
+def double_exp_upper_scale(k: int) -> float:
+    """A schematic double-exponential upper scale log2(log2(R_3)) ~ c * k.
+
+    Illustrative only: uses the stepping-up-derived shape 2 ** (2 ** (c*k)).
     """
-    return comb(n, 4) * 2 ** (comb(n, 3) - 3)
-
-
-def expected_badcount(n: int) -> Fraction:
-    """Average number of monochromatic 4-sets over all 2^C(n,3) colorings.
-
-    Equals C(n,4)/8 exactly.
-    """
-    return Fraction(sum_badcount(n), 2 ** comb(n, 3))
-
-
-# ---------------------------------------------------------------------------
-# Brute-force Ramsey check for the graph case R_2(3,3) (validates the model)
-# ---------------------------------------------------------------------------
-def has_mono_clique_graph(coloring: dict[frozenset[int], int], n: int, k: int) -> bool:
-    """True iff some k-subset of [n] is monochromatic under an edge 2-coloring."""
-    for clique in combinations(range(n), k):
-        edges = [coloring[frozenset(e)] for e in combinations(clique, 2)]
-        if all(c == edges[0] for c in edges):
-            return True
-    return False
-
-
-def graph_ramsey_property(n: int, k: int) -> bool:
-    """True iff EVERY 2-coloring of edges of K_n has a monochromatic K_k."""
-    pairs: list[frozenset[int]] = [frozenset(e) for e in combinations(range(n), 2)]
-    for bits in product((0, 1), repeat=len(pairs)):
-        coloring = {p: b for p, b in zip(pairs, bits)}
-        if not has_mono_clique_graph(coloring, n, k):
-            return False
-    return True
+    c: float = 0.5
+    return c * k
 
 
 # ---------------------------------------------------------------------------
 # Demonstrations
 # ---------------------------------------------------------------------------
+
+def demo_boundary_values() -> None:
+    print("== Boundary values R_r(r, l) = l ==")
+    for r, l in [(2, 2), (3, 3), (3, 5), (4, 7)]:
+        print(f"  R_{r}({r},{l}) = {l}")
+    print()
+
+
+def demo_concrete_lower_bound() -> None:
+    print("== Concrete small-case lower bound (r = 3, k = 5) ==")
+    n, r, k = 11, 3, 5
+    lhs = 2 * comb(n, k)
+    rhs = 2 ** comb(k, r)
+    print(f"  C(5,3) = {comb(k, r)},  C(11,5) = {comb(n, k)}")
+    print(f"  2*C(11,5) = {lhs}  <  2^C(5,3) = {rhs}  ->  {lhs < rhs}")
+    print(f"  Therefore R_3(5,5) > {n}  (no mono 5-clique on 11 vertices).")
+    print()
+
+
+def demo_lower_bound_growth() -> None:
+    print("== First-moment lower bound R_3(k,k) > n_max(k) ==")
+    print("   k |  best n  | log2(n)")
+    for k in range(4, 12):
+        n = best_lower_bound(3, k)
+        lg = f"{log2(n):6.2f}" if n > 0 else "  n/a"
+        print(f"  {k:2d} | {n:7d}  | {lg}")
+    print("  (log2(n) grows ~ quadratically in k: single-exponential 2^(c k^2))")
+    print()
+
+
+def demo_tower_function() -> None:
+    print("== The tower function tower(h, N) ==")
+    for h in range(0, 4):
+        print(f"  tower({h}, 2) = {tower(h, 2)}")
+    print("  tower(4, 2) = 2^65536 (a ~20000-digit number, omitted)")
+    print("  tower(1,N)=2^N, tower(2,N)=2^(2^N); each level adds one exponential.")
+    print()
+
+
+def demo_tower_dominates() -> None:
+    print("== Tower of height 2 dominates 4^k  (4^k < 2^(2^k) for k >= 5) ==")
+    print("   k |     4^k     |  log2(tower(2,k)) = 2^k")
+    for k in range(3, 9):
+        print(f"  {k:2d} | {4 ** k:11d} | {2 ** k}")
+    print()
+
+
+def demo_gap() -> None:
+    print("== The single- vs double-exponential gap for R_3(k,k) ==")
+    print("   lower bound  2^(c k^2)   <=  R_3(k,k)  <=  2^(2^(c' k))  upper bound")
+    print("   k | log2(lower) | log2(log2(upper)) ~ c'*k")
+    for k in range(4, 12):
+        low = log2_lower_bound_exponent(k)
+        up = double_exp_upper_scale(k)
+        print(f"  {k:2d} |  {low:8.2f}   |   {up:6.2f}")
+    print()
+
+
 def main() -> None:
-    print("=" * 70)
-    print("HYPERGRAPH RAMSEY THEORY BEYOND GRAPHS --- numerical demonstrations")
-    print("=" * 70)
-
-    print("\n[1] Probabilistic lower bound  2*C(n,k) < 2^C(k,3)  =>  R_3(k,k) > n")
-    for n, k in [(11, 5), (29, 6)]:
-        lhs = 2 * comb(n, k)
-        rhs = 2 ** comb(k, 3)
-        ok = first_moment_threshold_holds(n, k)
-        print(f"    k={k}, n={n}: 2*C({n},{k}) = {lhs:>9} {'<' if ok else '>='} "
-              f"2^C({k},3) = {rhs:>9}  ->  R_3({k},{k}) > {n}: {ok}")
-
-    print("\n[2] Best first-moment floor R_3(k,k) > n for small k")
-    for k in range(4, 9):
-        n = best_probabilistic_lower_bound(k)
-        print(f"    k={k}: C(k,3)={comb(k,3):>3}  =>  certified R_3({k},{k}) > {n}")
-
-    print("\n[3] Exact incidence identity & expectation of monochromatic 4-sets")
-    for n in range(4, 14):
-        s = sum_badcount(n)
-        e = expected_badcount(n)
-        flag = "  (< 1: first moment succeeds)" if e < 1 else ""
-        print(f"    n={n:>2}: sum badCount = C({n},4)*2^(C({n},3)-3) = {s}")
-        print(f"           E[badCount] = C({n},4)/8 = {e} = {float(e):.4f}{flag}")
-
-    print("\n[4] Tower function tower(2, m) = 2^2^...^2 (m twos)")
-    for m in range(5):
-        print(f"    tower(2,{m}) = {tower(2, m)}")
-
-    print("\n[5] Separation: c^k < tower(2,k) for k >= c+1 (single vs double exp)")
-    for c in (2, 3):
-        k = c + 1
-        print(f"    c={c}, k={k}: c^k = {c**k:>6} < tower(2,{k}) = {tower(2, k)}")
-    t5 = tower(2, 5)  # = 2^65536, far too large to print fully
-    sys.set_int_max_str_digits(100000)  # allow rendering the digit count
-    print(f"    c=4, k=5: 4^5 = {4**5} < tower(2,5) = 2^65536 "
-          f"(a {len(str(t5))}-digit number): {4**5 < t5}")
-
-    print("\n[6] Model validation by brute force: the classic party number R_2(3,3)")
-    print(f"    Every 2-coloring of K_5 has a mono triangle? {graph_ramsey_property(5, 3)}")
-    print(f"    Every 2-coloring of K_6 has a mono triangle? {graph_ramsey_property(6, 3)}")
-    print("    => R_2(3,3) = 6, confirming the coloring / clique model.")
-
-    print("\nDone.")
+    demo_boundary_values()
+    demo_concrete_lower_bound()
+    demo_lower_bound_growth()
+    demo_tower_function()
+    demo_tower_dominates()
+    demo_gap()
 
 
 if __name__ == "__main__":
