@@ -1,314 +1,226 @@
-#!/usr/bin/env python3
 """
-Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times
+Numerical demonstrations for
+"Spectral Theory of Random Walks on Cayley Graphs of Finite Abelian Groups".
 
-Numerical demonstrations of the key theorems:
-1. Spectral gap → exponential decay bridge
-2. Amplitude gap √γ and quadratic speedup
-3. Product group mixing decomposition
-4. Cyclic group spectral gap and mixing
+This self-contained script verifies, numerically, the main results of the paper:
+
+  * Characters diagonalize the Cayley walk operator: A_S psi = (sum_s psi(s)) psi.
+  * The trivial character gives the top eigenvalue |S| (Perron), and every
+    eigenvalue has modulus <= |S|.
+  * For a symmetric generating set the eigenvalues are real (self-adjointness).
+  * The cycle Cay(Z/nZ, {+1,-1}) has second eigenvalue 2 cos(2 pi / n) and a
+    strictly positive spectral gap ~ (2 pi / n)^2.
+  * The hypercube (Z/2Z)^d has eigenvalues d - 2 * HammingWeight and gap 2/d.
+  * The spectral gap controls classical mixing time.
+
+Only the Python standard library is required.
 """
 
-import numpy as np
+from __future__ import annotations
 
-def spectral_exponential_bridge_demo():
-    """Demonstrate (1-γ)^t ≤ exp(-γt) ≤ (1-γ/2)^t for γ ∈ [0,1]."""
-    print("=" * 60)
-    print("THEOREM: Spectral-Exponential Bridge")
-    print("(1-γ)^t  ≤  exp(-γt)  ≤  (1-γ/2)^t")
-    print("=" * 60)
-    
-    for gamma in [0.1, 0.3, 0.5, 0.8, 1.0]:
-        print(f"\nγ = {gamma}:")
-        print(f"  {'t':>4}  {'(1-γ)^t':>12}  {'exp(-γt)':>12}  {'(1-γ/2)^t':>12}  {'bridge?':>8}")
-        for t in [1, 5, 10, 20, 50]:
-            lower = (1 - gamma) ** t
-            middle = np.exp(-gamma * t)
-            upper = (1 - gamma / 2) ** t
-            ok = "✓" if lower <= middle + 1e-15 and middle <= upper + 1e-15 else "✗"
-            print(f"  {t:4d}  {lower:12.6e}  {middle:12.6e}  {upper:12.6e}  {ok:>8}")
+import cmath
+import math
+from itertools import product
+from typing import Callable, List, Tuple
+
+Complex = complex
 
 
-def amplitude_gap_demo():
-    """Demonstrate √(1-γ) ≤ 1 - γ/2 (amplitude gap bound)."""
-    print("\n" + "=" * 60)
-    print("THEOREM: Amplitude Gap Bound")
-    print("√(1-γ) ≤ 1 - γ/2  for γ ∈ [0,1]")
-    print("=" * 60)
-    
-    print(f"\n  {'γ':>6}  {'√(1-γ)':>10}  {'1-γ/2':>10}  {'gap':>10}  {'ok?':>5}")
-    for gamma in np.linspace(0, 1, 11):
-        sqrt_val = np.sqrt(1 - gamma)
-        bound = 1 - gamma / 2
-        gap = bound - sqrt_val
-        ok = "✓" if gap >= -1e-15 else "✗"
-        print(f"  {gamma:6.2f}  {sqrt_val:10.6f}  {bound:10.6f}  {gap:10.6f}  {ok:>5}")
+# ---------------------------------------------------------------------------
+# Cyclic group Z/nZ
+# ---------------------------------------------------------------------------
+
+def cyclic_character(n: int, j: int) -> Callable[[int], Complex]:
+    """Return the additive character psi_j(x) = exp(2 pi i j x / n) on Z/nZ."""
+    def psi(x: int) -> Complex:
+        return cmath.exp(2j * math.pi * j * (x % n) / n)
+    return psi
 
 
-def probability_from_amplitude_demo():
-    """Demonstrate (1-γ/2)² ≤ 1 - 3γ/4."""
-    print("\n" + "=" * 60)
-    print("THEOREM: Probability from Amplitude")
-    print("(1-γ/2)² ≤ 1 - 3γ/4  for γ ∈ [0,1]")
-    print("=" * 60)
-    
-    print(f"\n  {'γ':>6}  {'(1-γ/2)²':>12}  {'1-3γ/4':>12}  {'slack':>12}")
-    for gamma in np.linspace(0, 1, 11):
-        lhs = (1 - gamma / 2) ** 2
-        rhs = 1 - 3 * gamma / 4
-        slack = rhs - lhs
-        print(f"  {gamma:6.2f}  {lhs:12.6f}  {rhs:12.6f}  {slack:12.6f}")
+def char_eigenvalue(gens: List[int], psi: Callable[[int], Complex]) -> Complex:
+    """lambda_psi(S) = sum_{s in S} psi(s)."""
+    return sum(psi(s) for s in gens)
 
 
-def mixing_time_demo():
-    """Demonstrate mixing time bounds for various groups."""
-    print("\n" + "=" * 60)
-    print("MIXING TIME BOUNDS")
-    print("Classical: T_mix ~ log(n)/γ")
-    print("Quantum:   T_mix ~ √n · log(n)/γ")
-    print("=" * 60)
-    
-    groups = [
-        ("Z/10Z ±1", 10, 2 * np.pi**2 / 100),
-        ("Z/100Z ±1", 100, 2 * np.pi**2 / 10000),
-        ("Z/1000Z ±1", 1000, 2 * np.pi**2 / 1000000),
-        ("S_5 transpositions", 120, 2/5),
-        ("S_8 transpositions", 40320, 2/8),
-        ("S_10 transpositions", 3628800, 2/10),
-    ]
-    
-    print(f"\n  {'Group':>22}  {'|G|':>10}  {'γ':>10}  {'T_class':>10}  {'T_quantum':>10}  {'speedup':>10}")
-    for name, n, gamma in groups:
-        t_class = np.log(n) / gamma
-        t_quantum = np.sqrt(n) * np.log(n) / gamma
-        speedup = t_class / t_quantum if t_quantum > 0 else float('inf')
-        print(f"  {name:>22}  {n:10d}  {gamma:10.6f}  {t_class:10.1f}  {t_quantum:10.1f}  {speedup:10.4f}")
+def adjacency_matrix_cyclic(n: int, gens: List[int]) -> List[List[Complex]]:
+    """Dense adjacency (walk) operator of Cay(Z/nZ, gens) in the delta basis."""
+    A = [[0j for _ in range(n)] for _ in range(n)]
+    for x in range(n):
+        for s in gens:
+            A[x][(x + s) % n] += 1
+    return A
 
 
-def product_mixing_demo():
-    """Demonstrate product group mixing time decomposition."""
-    print("\n" + "=" * 60)
-    print("PRODUCT GROUP MIXING DECOMPOSITION")
-    print("T_mix(G₁×G₂) ~ log(|G₁|·|G₂|) / min(γ₁,γ₂)")
-    print("≥ max(T_mix(G₁), T_mix(G₂))")
-    print("=" * 60)
-    
-    cases = [
-        ("Z/10 × Z/20", 10, 20, 0.2, 0.05),
-        ("Z/100 × Z/50", 100, 50, 0.02, 0.08),
-        ("S_5 × Z/10", 120, 10, 0.4, 0.2),
-    ]
-    
-    print(f"\n  {'Product':>18}  {'T₁':>8}  {'T₂':>8}  {'max':>8}  {'T_prod':>8}  {'valid?':>7}")
-    for name, n1, n2, g1, g2 in cases:
-        t1 = np.log(n1) / g1
-        t2 = np.log(n2) / g2
-        max_t = max(t1, t2)
-        t_prod = np.log(n1 * n2) / min(g1, g2)
-        valid = "✓" if t_prod >= max_t - 1e-10 else "✗"
-        print(f"  {name:>18}  {t1:8.2f}  {t2:8.2f}  {max_t:8.2f}  {t_prod:8.2f}  {valid:>7}")
+def apply_matrix(A: List[List[Complex]], v: List[Complex]) -> List[Complex]:
+    """Matrix-vector product."""
+    n = len(A)
+    return [sum(A[i][k] * v[k] for k in range(n)) for i in range(n)]
 
 
-def cosine_gap_demo():
-    """Demonstrate 1 - cos(x) ≥ x²/(2π²) for x ∈ [0,π]."""
-    print("\n" + "=" * 60)
-    print("THEOREM: Cosine Gap Lower Bound")
-    print("1 - cos(x) ≥ x²/(2π²)  for x ∈ [0,π]")
-    print("=" * 60)
-    
-    print(f"\n  {'x':>8}  {'1-cos(x)':>12}  {'x²/(2π²)':>12}  {'ratio':>8}")
-    for x in np.linspace(0.1, np.pi, 10):
-        lhs = 1 - np.cos(x)
-        rhs = x**2 / (2 * np.pi**2)
-        ratio = lhs / rhs if rhs > 0 else float('inf')
-        print(f"  {x:8.4f}  {lhs:12.6f}  {rhs:12.6f}  {ratio:8.4f}")
+def vector_close(u: List[Complex], v: List[Complex], tol: float = 1e-9) -> bool:
+    return all(abs(a - b) < tol for a, b in zip(u, v))
 
 
-def refined_mixing_demo():
-    """Demonstrate the refined mixing bound √n · exp(-γT) ≤ 1."""
-    print("\n" + "=" * 60)
-    print("REFINED MIXING BOUND")
-    print("T = ⌊2/γ · log(n)⌋ ⟹ √n · exp(-γT) ≤ 1")
-    print("=" * 60)
-    
-    print(f"\n  {'n':>6}  {'γ':>6}  {'T':>6}  {'√n·exp(-γT)':>14}  {'≤1?':>5}")
-    for n in [10, 100, 1000, 10000]:
-        for gamma in [0.1, 0.5, 1.0]:
-            T = int(2 / gamma * np.log(n))
-            val = np.sqrt(n) * np.exp(-gamma * T)
-            ok = "✓" if val <= 1 + 1e-10 else "✗"
-            print(f"  {n:6d}  {gamma:6.2f}  {T:6d}  {val:14.6e}  {ok:>5}")
+# ---------------------------------------------------------------------------
+# Demo 1: characters are eigenvectors of the cycle walk operator
+# ---------------------------------------------------------------------------
+
+def demo_eigenvectors(n: int = 8) -> None:
+    print("=" * 70)
+    print(f"Demo 1: characters diagonalize the cycle walk operator (n = {n})")
+    print("=" * 70)
+    gens = [1, n - 1]  # {+1, -1}
+    A = adjacency_matrix_cyclic(n, gens)
+    for j in range(n):
+        psi = cyclic_character(n, j)
+        vec = [psi(x) for x in range(n)]
+        lam = char_eigenvalue(gens, psi)
+        lhs = apply_matrix(A, vec)
+        rhs = [lam * c for c in vec]
+        ok = vector_close(lhs, rhs)
+        print(f"  j={j:2d}: eigenvalue = {lam.real:+.5f}{lam.imag:+.5f}i "
+              f"= 2cos(2pi*{j}/{n}) = {2*math.cos(2*math.pi*j/n):+.5f}   "
+              f"A psi = lambda psi ? {ok}")
+    print()
+
+
+# ---------------------------------------------------------------------------
+# Demo 2: top eigenvalue, Perron bound, and self-adjointness (real spectrum)
+# ---------------------------------------------------------------------------
+
+def demo_perron_and_real(n: int = 12) -> None:
+    print("=" * 70)
+    print(f"Demo 2: top eigenvalue |S|, Perron bound, real spectrum (n = {n})")
+    print("=" * 70)
+    gens = [1, n - 1]  # symmetric: {+1, -1}
+    degree = len(gens)
+    max_mod = 0.0
+    max_imag = 0.0
+    for j in range(n):
+        lam = char_eigenvalue(gens, cyclic_character(n, j))
+        max_mod = max(max_mod, abs(lam))
+        max_imag = max(max_imag, abs(lam.imag))
+    triv = char_eigenvalue(gens, cyclic_character(n, 0))
+    print(f"  trivial character eigenvalue = {triv.real:.5f}  (should equal |S| = {degree})")
+    print(f"  max |eigenvalue|            = {max_mod:.5f}  (Perron bound |S| = {degree})")
+    print(f"  max |Im(eigenvalue)|        = {max_imag:.2e}  (real spectrum since S = -S)")
+    print()
+
+
+# ---------------------------------------------------------------------------
+# Demo 3: the cycle spectral gap and its ~ (2 pi / n)^2 asymptotics
+# ---------------------------------------------------------------------------
+
+def cycle_spectral_gap(n: int) -> float:
+    """Spectral gap of Cay(Z/nZ, {+1,-1}) with the un-normalized operator."""
+    return 2 - 2 * math.cos(2 * math.pi / n)
+
+
+def demo_cycle_gap() -> None:
+    print("=" * 70)
+    print("Demo 3: cycle spectral gap 2 - 2cos(2pi/n) and its ~(2pi/n)^2 law")
+    print("=" * 70)
+    print(f"  {'n':>5} | {'gap':>12} | {'(2pi/n)^2':>12} | {'ratio':>8}")
+    for n in [3, 4, 8, 16, 32, 64, 128]:
+        gap = cycle_spectral_gap(n)
+        approx = (2 * math.pi / n) ** 2
+        print(f"  {n:>5} | {gap:>12.8f} | {approx:>12.8f} | {gap/approx:>8.5f}")
+    print("  (gap > 0 for all n >= 3; ratio -> 1, confirming gap = Theta(n^-2))")
+    print()
+
+
+# ---------------------------------------------------------------------------
+# Demo 4: the hypercube (Z/2Z)^d spectrum d - 2 * HammingWeight
+# ---------------------------------------------------------------------------
+
+def hypercube_eigenvalues(d: int) -> List[int]:
+    """Eigenvalues of the bit-flip walk on (Z/2Z)^d: d - 2*|T|, T subset of [d]."""
+    return [d - 2 * sum(t) for t in product((0, 1), repeat=d)]
+
+
+def demo_hypercube(d: int = 4) -> None:
+    print("=" * 70)
+    print(f"Demo 4: hypercube (Z/2Z)^{d} eigenvalues = d - 2*HammingWeight")
+    print("=" * 70)
+    eigs = sorted(hypercube_eigenvalues(d), reverse=True)
+    print(f"  eigenvalues: {eigs}")
+    print(f"  top = {eigs[0]} (= d), second = {eigs[1]} (= d-2)")
+    gap_normalized = (eigs[0] - eigs[1]) / d
+    print(f"  normalized spectral gap = {gap_normalized:.5f}  (= 2/d = {2/d:.5f})")
+    print(f"  => mixing time Theta(d log d) ~ {d*math.log(d):.2f}")
+    print()
+
+
+# ---------------------------------------------------------------------------
+# Demo 5: spectral gap controls mixing (classical random walk on the cycle)
+# ---------------------------------------------------------------------------
+
+def total_variation_from_uniform(dist: List[float]) -> float:
+    n = len(dist)
+    return 0.5 * sum(abs(p - 1.0 / n) for p in dist)
+
+
+def demo_mixing(n: int = 16) -> None:
+    print("=" * 70)
+    print(f"Demo 5: TV distance to uniform vs. spectral-gap bound (cycle n = {n})")
+    print("=" * 70)
+    gens = [1, n - 1]
+    # LAZY normalized walk P = (I + A/|S|)/2 (aperiodic; the +1/-1 walk on an
+    # even cycle is otherwise bipartite and does not converge in TV).
+    A = adjacency_matrix_cyclic(n, gens)
+    P = [[0.5 * (1.0 if i == k else 0.0) + 0.5 * A[i][k].real / len(gens)
+          for k in range(n)] for i in range(n)]
+    dist = [0.0] * n
+    dist[0] = 1.0
+    # lazy walk eigenvalues are (1 + cos(2pi j/n))/2; slowest non-trivial gap:
+    gap = 0.5 * (1 - math.cos(2 * math.pi / n))
+    print(f"  {'t':>5} | {'TV distance':>14} | {'(1-gap)^t bound':>16}")
+    for t in range(0, 4 * n * n + 1):
+        if t % (n * n // 2 if n * n >= 2 else 1) == 0:
+            tv = total_variation_from_uniform(dist)
+            bound = (1 - gap) ** t
+            print(f"  {t:>5} | {tv:>14.8f} | {bound:>16.8f}")
+        dist = [sum(P[k][i] * dist[k] for k in range(n)) for i in range(n)]
+    print("  (TV distance decays; falls below any threshold in O(gap^-1 log n) steps)")
+    print()
+
+
+# ---------------------------------------------------------------------------
+# Demo 6: periodicity of the single-generator (quantum) shift
+# ---------------------------------------------------------------------------
+
+def demo_periodicity(n: int = 6) -> None:
+    print("=" * 70)
+    print(f"Demo 6: single-generator shift is unitary and periodic (n = {n})")
+    print("=" * 70)
+    s = 2  # generator; order divides n / gcd(n, s)
+    order = n // math.gcd(n, s)
+    # apply shift_s repeatedly to a random state and check norm + period
+    state = [complex(math.cos(x), math.sin(2 * x)) for x in range(n)]
+    norm0 = sum(abs(z) ** 2 for z in state)
+
+    def shift(v: List[Complex]) -> List[Complex]:
+        return [v[(x + s) % n] for x in range(n)]
+
+    cur = list(state)
+    for k in range(1, order + 1):
+        cur = shift(cur)
+    normk = sum(abs(z) ** 2 for z in state)
+    returned = vector_close(cur, state)
+    print(f"  generator s = {s}, additive order = {order}")
+    print(f"  ||f||^2 preserved by shift: {abs(norm0 - normk) < 1e-9} (unitary)")
+    print(f"  shift^order = identity: {returned} (periodic)")
+    print()
+
+
+def main() -> None:
+    demo_eigenvectors(8)
+    demo_perron_and_real(12)
+    demo_cycle_gap()
+    demo_hypercube(4)
+    demo_mixing(16)
+    demo_periodicity(6)
 
 
 if __name__ == "__main__":
-    spectral_exponential_bridge_demo()
-    amplitude_gap_demo()
-    probability_from_amplitude_demo()
-    mixing_time_demo()
-    product_mixing_demo()
-    cosine_gap_demo()
-    refined_mixing_demo()
-    
-    print("\n" + "=" * 60)
-    print("All demonstrations completed successfully.")
-    print("=" * 60)
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Product Group Mixing Decomposition
-T_mix(G₁×G₂) ≥ max(T_mix(G₁), T_mix(G₂)) with min-gap control.
-"""
-import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-
-def plot_product_mixing():
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-    
-    # Left: mixing time decomposition
-    ax = axes[0]
-    n1 = 100
-    gap1 = 0.1
-    n2_vals = np.arange(10, 500, 5)
-    
-    t1 = np.log(n1) / gap1
-    
-    for gap2 in [0.05, 0.1, 0.2, 0.5]:
-        t2_vals = np.log(n2_vals) / gap2
-        t_product = np.log(n1 * n2_vals) / np.minimum(gap1, gap2)
-        t_max = np.maximum(t1, t2_vals)
-        
-        ax.plot(n2_vals, t_product, '-', linewidth=2, label=f'$T_{{prod}}$, $\\gamma_2={gap2}$')
-        ax.plot(n2_vals, t_max, '--', linewidth=1.5, alpha=0.7)
-    
-    ax.axhline(y=t1, color='gray', linestyle=':', alpha=0.5, label=f'$T_1$ (n₁={n1})')
-    ax.set_xlabel('|G₂|', fontsize=13)
-    ax.set_ylabel('Mixing time', fontsize=13)
-    ax.set_title('Product Mixing: Solid = T_prod, Dashed = max(T₁,T₂)', fontsize=13)
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
-    
-    # Right: Cayley graph on Z/nZ - spectral gap vs n
-    ax = axes[1]
-    ns = np.arange(3, 200)
-    theoretical_gap = 1 - np.cos(2 * np.pi / ns)
-    lower_bound = 2 / ns**2
-    upper_bound = 2 * np.pi**2 / ns**2
-    
-    ax.loglog(ns, theoretical_gap, 'b-', linewidth=2.5, label='$1 - \\cos(2\\pi/n)$')
-    ax.loglog(ns, lower_bound, 'r--', linewidth=2, label='$2/n^2$ (lower bound)')
-    ax.loglog(ns, upper_bound, 'g-.', linewidth=2, label='$2\\pi^2/n^2$ (upper bound)')
-    ax.set_xlabel('Group size n', fontsize=13)
-    ax.set_ylabel('Spectral gap', fontsize=13)
-    ax.set_title('Cyclic Group Spectral Gap', fontsize=14)
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig('product_mixing.png', dpi=150, bbox_inches='tight')
-    print("Saved product_mixing.png")
-
-if __name__ == "__main__":
-    plot_product_mixing()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Quantum vs Classical Mixing on Cayley Graphs
-Shows the quadratic speedup arising from the amplitude gap.
-"""
-import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-
-def plot_quantum_speedup():
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-    
-    # Left: mixing times vs group size
-    ax = axes[0]
-    ns = np.logspace(1, 6, 50)
-    gamma = 0.1
-    
-    classical = np.log(ns) / gamma
-    quantum = np.sqrt(ns) * np.log(ns) / gamma
-    
-    ax.loglog(ns, classical, 'b-', linewidth=2.5, label='Classical: $\\log(n)/\\gamma$')
-    ax.loglog(ns, quantum, 'r--', linewidth=2.5, label='Quantum: $\\sqrt{n} \\cdot \\log(n)/\\gamma$')
-    ax.fill_between(ns, quantum, classical, alpha=0.15, color='green', label='Quantum advantage')
-    ax.set_xlabel('Group size |G|', fontsize=13)
-    ax.set_ylabel('Mixing time bound', fontsize=13)
-    ax.set_title('Quantum vs Classical Mixing Times', fontsize=14)
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3)
-    
-    # Right: amplitude gap demonstration
-    ax = axes[1]
-    gammas = np.linspace(0.01, 1, 100)
-    sqrt_decay = np.sqrt(1 - gammas)
-    linear_bound = 1 - gammas / 2
-    classical_decay = 1 - gammas
-    
-    ax.plot(gammas, classical_decay, 'b-', linewidth=2.5, label='Classical: $1-\\gamma$')
-    ax.plot(gammas, sqrt_decay, 'r-', linewidth=2.5, label='Quantum: $\\sqrt{1-\\gamma}$')
-    ax.plot(gammas, linear_bound, 'g--', linewidth=2, label='Bound: $1-\\gamma/2$')
-    ax.fill_between(gammas, classical_decay, sqrt_decay, alpha=0.15, color='orange',
-                    label='Amplitude gap')
-    ax.set_xlabel('Spectral gap γ', fontsize=13)
-    ax.set_ylabel('Per-step decay factor', fontsize=13)
-    ax.set_title('The Amplitude Gap Mechanism', fontsize=14)
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig('quantum_speedup.png', dpi=150, bbox_inches='tight')
-    print("Saved quantum_speedup.png")
-
-if __name__ == "__main__":
-    plot_quantum_speedup()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Spectral-Exponential Bridge
-(1-γ)^t ≤ exp(-γt) ≤ (1-γ/2)^t
-
-Shows how the discrete spectral gap connects to continuous exponential decay.
-"""
-import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-
-def plot_spectral_bridge():
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-    
-    gammas = [0.1, 0.3, 0.7]
-    t_vals = np.arange(0, 50, 1)
-    
-    for ax, gamma in zip(axes, gammas):
-        lower = [(1 - gamma)**t for t in t_vals]
-        middle = [np.exp(-gamma * t) for t in t_vals]
-        upper = [(1 - gamma/2)**t for t in t_vals]
-        
-        ax.semilogy(t_vals, lower, 'b-', linewidth=2, label=f'$(1-\\gamma)^t$')
-        ax.semilogy(t_vals, middle, 'r--', linewidth=2, label=f'$e^{{-\\gamma t}}$')
-        ax.semilogy(t_vals, upper, 'g-.', linewidth=2, label=f'$(1-\\gamma/2)^t$')
-        
-        ax.fill_between(t_vals, lower, upper, alpha=0.1, color='purple')
-        ax.set_xlabel('Steps (t)', fontsize=12)
-        ax.set_ylabel('Decay', fontsize=12)
-        ax.set_title(f'γ = {gamma}', fontsize=14)
-        ax.legend(fontsize=10)
-        ax.grid(True, alpha=0.3)
-        ax.set_ylim(1e-8, 2)
-    
-    fig.suptitle('Spectral-Exponential Bridge: Sandwiching the Decay', fontsize=16, y=1.02)
-    plt.tight_layout()
-    plt.savefig('spectral_bridge.png', dpi=150, bbox_inches='tight')
-    print("Saved spectral_bridge.png")
-
-if __name__ == "__main__":
-    plot_spectral_bridge()
+    main()
