@@ -60,6 +60,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle c05d7abb (Q=0.820), which proved 27 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearr",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_c05d7abb_b95081ef",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "c05d7abb",
+    "status": "available",
+    "timestamp": "2026-07-10T00:21:15.177603+00:00",
+    "title": "Deepening: Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle c38e66e4 (Q=0.820), which proved 14 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In every connected graph whose edges are either 1‑matching or 2‑matching edges and in which no perfect matching contains edges of both types, the number of perfect matchings is always a power of two.",
     "domain_bridges": [],
     "domains": [
@@ -18679,22 +18698,22 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c05d7abb",
-    "description": "Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearrangement of the primes q_1, q_2, ... such that the sequence of ratios q_n / p_n converges to 1. In other words, you can shuffle the primes almost arbitrarily and the room numbers barely change. More precisely, the set of permutations sigma for which p_{sigma(n)} / p_n has a limit is dense in the symmetric group (with the topology of pointwise convergence). But NOT every permutation works: the permutation that swaps all even-indexed primes with odd-indexed ones gives q_{2n}/p_{2n} = p_{2n-1}/p_{2n} which converges to 1 by the prime number theorem, but the permutation that reverses order gives q_n/p_n = p_{N-n}/p_n which diverges. Test: compute q_n/p_n for 10 random permutations of the first 10^6 primes and verify that most ratios converge to 1. Find the exact density of 'well-behaved' permutations. Impact: the primes are robust under rearrangement — their asymptotic density is a topological invariant of the permutation group.",
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Hilbert's Hotel for Primes\n\nThe file `PrimeHotelRearrangement.lean` formalizes, entirely without the prime number theorem:\n\n* **Finite support ⇒ well behaved** (`wellBehaved_of_finite_support`): if a rearrangement\n  moves only finitely many guests, the displacement ratio `p(σ n)/p n` is *eventually equal*\n  to `1`.\n* **Approximation** (`exists_finiteSupport_perm_agree`): every permutation of `ℕ` agrees, on\n  any finite initial segment, with some finitely supported permutation (built by composing\n  transpositions).\n* **Density** (`wellBehaved_dense`): the well-behaved rearrangements are dense in the symmetric\n  group `Sym(ℕ)` for the topology of pointwise convergence — the paper's central claim.\n* **Not universal** (`exists_not_wellBehaved`): an explicit involution assembled from a sparse\n  family of prime-doubling long-range swaps has displacement ratio `≥ 2` infinitely often, so\n  it is not well behaved.\n\n## Natural next steps\n\n1. **Topologize the statement.** Replace the \"agrees on `{0,…,N-1}`\" formulation of density by\n   the actual `Pi`-topology on `Equiv.Perm ℕ` (or `ℕ → ℕ`) and prove `Dense {σ | WellBehaved σ}`\n   as a `Dense` predicate. The current lemma is exactly the neighborhood-basis form of this.\n\n2. **The swap-even/odd example, honestly.** Prove that `σ : n ↦ n ⊕ 1` is well behaved. This\n   needs `p_{n+1}/p_n → 1`, i.e. that prime gaps are `o(p_n)`. With Mathlib's prime number\n   theorem this should be reachable; it is the canonical \"well behaved but not eventually\n   identity\" example.\n\n3. **Characterize well-behaved permutations.** Conjecture: `σ` is well behaved iff\n   `p(σ n)/p n → 1`, and (using PNT, `p_n ~ n log n`) this is equivalent to\n   `σ n / n → 1`. Thus the well-behaved permutations are precisely those with asymptotically\n   unit density distortion — a clean topological/asymptotic invariant.\n\n4. **Quantify the \"exact density\" question.** The mission asks for the density of well-behaved\n   permutations. Topologically the set is dense but *meager* (it is a countable-to-one shadow of\n   an `Fσ`-type condition); making \"density\" precise (Baire category, or a natural measure on\n   `Sym(ℕ)`) and computing it is open-ended and interesting.\n\n5. **Ratios with limits ≠ 1.** Generalize `WellBehaved` to \"the ratio has *a* limit `L`\" and\n   study which `L` are attainable and how the corresponding permutations sit inside `Sym(ℕ)`.\n\n6. **Other room-filling sequences.** Replace primes by any strictly monotone `a : ℕ → ℕ` with\n   `a` tending to infinity; the finite-support density argument is unchanged, and the negative\n   result goes through whenever `a` is unbounded. Only the *rate* results (steps 2–4) are\n   arithmetic-specific.\n",
     "domain_bridges": [],
     "domains": [
-      "Novelty",
-      "NumberTheory"
+      "Pythagorean",
+      "Algebra"
     ],
-    "id": "fd_0796",
+    "id": "fd_0820",
     "lineage_refs": [],
-    "priority_score": 0.74,
-    "proof_strategy": "Define a rearrangement of primes as a bijection sigma: N -> N, giving q_n = p_{sigma(n)}. Define a well-behaved rearrangement as one where q_n/p_n -> 1. Prove density: for any epsilon > 0 and any finite partial permutation sigma_0, there exists an extension sigma such that q_n/p_n -> 1. Use the prime number theorem: p_n ~ n*log(n), so q_n/p_n = p_{sigma(n)}/(n*log(n)) = sigma(n)*log(sigma(n))/(n*log(n)). For this to converge to 1, we need sigma(n) ~ n, i.e., sigma must be 'close to the identity' in the sense that sigma(n)/n -> 1. Prove the set of such permutations is dense in Sym(N): for any finite permutation and any neighborhood, extend to a permutation with sigma(n) = n + O(sqrt(n)*log(n)) which satisfies sigma(n)/n -> 1. Prove the reversal fails: sigma(n) = N-n gives sigma(n)/n = (N-n)/n -> infinity. Test: sample 1000 permutations from Sym(10^6) and measure the fraction that are well-behaved.",
+    "priority_score": 0.75,
+    "proof_strategy": "",
     "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-09T20:12:33.003700+00:00",
-    "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
+    "source_exp_id": "c05d7abb",
+    "status": "available",
+    "timestamp": "2026-07-10T00:21:12.467848+00:00",
+    "title": "The file `PrimeHotelRearrangement.lean` formalizes, entirely without the prime n"
   },
   {
     "ambition_level": "extension",

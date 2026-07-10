@@ -46,6 +46,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle c05d7abb (Q=0.820), which proved 27 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearr",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_c05d7abb_b95081ef",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "c05d7abb",
+    "status": "available",
+    "timestamp": "2026-07-10T00:21:15.177603+00:00",
+    "title": "Deepening: Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle c38e66e4 (Q=0.820), which proved 14 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In every connected graph whose edges are either 1\u2011matching or 2\u2011matching edges and in which no perfect matching contains edges of both types, the number of perfect matchings is always a power of two.",
     "domains": [
       "NumberTheory"
@@ -10099,19 +10113,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "This cycle established, for uniform self-similar search spaces, the exact identi"
   },
   {
-    "consumed_by_exp_id": "c05d7abb",
-    "description": "Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearrangement of the primes q_1, q_2, ... such that the sequence of ratios q_n / p_n converges to 1. In other words, you can shuffle the primes almost arbitrarily and the room numbers barely change. More precisely, the set of permutations sigma for which p_{sigma(n)} / p_n has a limit is dense in the symmetric group (with the topology of pointwise convergence). But NOT every permutation works: the permutation that swaps all even-indexed primes with odd-indexed ones gives q_{2n}/p_{2n} = p_{2n-1}/p_{2n} which converges to 1 by the prime number theorem, but the permutation that reverses order gives q_n/p_n = p_{N-n}/p_n which diverges. Test: compute q_n/p_n for 10 random permutations of the first 10^6 primes and verify that most ratios converge to 1. Find the exact density of 'well-behaved' permutations. Impact: the primes are robust under rearrangement \u2014 their asymptotic density is a topological invariant of the permutation group.",
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Hilbert's Hotel for Primes\n\nThe file `PrimeHotelRearrangement.lean` formalizes, entirely without the prime number theorem:\n\n* **Finite support \u21d2 well behaved** (`wellBehaved_of_finite_support`): if a rearrangement\n  moves only finitely many guests, the displacement ratio `p(\u03c3 n)/p n` is *eventually equal*\n  to `1`.\n* **Approximation** (`exists_finiteSupport_perm_agree`): every permutation of `\u2115` agrees, on\n  any finite initial segment, with some finitely supported permutation (built by composing\n  transpositions).\n* **Density** (`wellBehaved_dense`): the well-behaved rearrangements are dense in the symmetric\n  group `Sym(\u2115)` for the topology of pointwise convergence \u2014 the paper's central claim.\n* **Not universal** (`exists_not_wellBehaved`): an explicit involution assembled from a sparse\n  family of prime-doubling long-range swaps has displacement ratio `\u2265 2` infinitely often, so\n  it is not well behaved.\n\n## Natural next steps\n\n1. **Topologize the statement.** Replace the \"agrees on `{0,\u2026,N-1}`\" formulation of density by\n   the actual `Pi`-topology on `Equiv.Perm \u2115` (or `\u2115 \u2192 \u2115`) and prove `Dense {\u03c3 | WellBehaved \u03c3}`\n   as a `Dense` predicate. The current lemma is exactly the neighborhood-basis form of this.\n\n2. **The swap-even/odd example, honestly.** Prove that `\u03c3 : n \u21a6 n \u2295 1` is well behaved. This\n   needs `p_{n+1}/p_n \u2192 1`, i.e. that prime gaps are `o(p_n)`. With Mathlib's prime number\n   theorem this should be reachable; it is the canonical \"well behaved but not eventually\n   identity\" example.\n\n3. **Characterize well-behaved permutations.** Conjecture: `\u03c3` is well behaved iff\n   `p(\u03c3 n)/p n \u2192 1`, and (using PNT, `p_n ~ n log n`) this is equivalent to\n   `\u03c3 n / n \u2192 1`. Thus the well-behaved permutations are precisely those with asymptotically\n   unit density distortion \u2014 a clean topological/asymptotic invariant.\n\n4. **Quantify the \"exact density\" question.** The mission asks for the density of well-behaved\n   permutations. Topologically the set is dense but *meager* (it is a countable-to-one shadow of\n   an `F\u03c3`-type condition); making \"density\" precise (Baire category, or a natural measure on\n   `Sym(\u2115)`) and computing it is open-ended and interesting.\n\n5. **Ratios with limits \u2260 1.** Generalize `WellBehaved` to \"the ratio has *a* limit `L`\" and\n   study which `L` are attainable and how the corresponding permutations sit inside `Sym(\u2115)`.\n\n6. **Other room-filling sequences.** Replace primes by any strictly monotone `a : \u2115 \u2192 \u2115` with\n   `a` tending to infinity; the finite-support density argument is unchanged, and the negative\n   result goes through whenever `a` is unbounded. Only the *rate* results (steps 2\u20134) are\n   arithmetic-specific.\n",
     "domains": [
-      "Novelty",
-      "NumberTheory"
+      "Pythagorean",
+      "Algebra"
     ],
-    "id": "fd_0796",
-    "priority_score": 0.74,
+    "id": "fd_0820",
+    "priority_score": 0.75,
     "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-09T20:12:33.003700+00:00",
-    "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
+    "source_exp_id": "c05d7abb",
+    "status": "available",
+    "timestamp": "2026-07-10T00:21:12.467848+00:00",
+    "title": "The file `PrimeHotelRearrangement.lean` formalizes, entirely without the prime n"
   },
   {
     "consumed_by_exp_id": "352dbc27",

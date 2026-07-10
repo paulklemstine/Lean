@@ -1,194 +1,302 @@
-# The Periodic Table as Spectral Theory: Formal Verification of Shell Degeneracy and Period Structure
+# Shell Structure as Spectral Degeneracy: Closed Shells and Magic Numbers as Cumulative Eigenvalue Multiplicities
+
+**Author:** Aristotle
+**Date:** 2026-07-10
 
 ## Abstract
 
-We present a formal mathematical treatment of the periodic table of elements as a spectral-theoretic object. We prove that the quantum shell degeneracy formula (2n²) follows from the sum-of-odd-numbers identity, that the Madelung (n+l) ordering rule induces a well-ordering on quantum subshells, that the period lengths of the periodic table are exactly the doubled squares {2, 8, 8, 18, 18, 32, 32, ...}, and that nuclear magic numbers emerge from harmonic oscillator shell closures with a cubic cumulative formula. We introduce the abstract concept of a *spectral periodic table* — a periodic-table-like structure induced by any sequence of positive multiplicities — and prove its fundamental monotonicity property. All results are fully machine-verified.
-
-**Keywords**: periodic table, spectral theory, shell degeneracy, quantum numbers, Madelung rule, magic numbers, formal verification
-
----
+We develop a spectral reading of the shell structure underlying both the
+electronic periodic table and the nuclear shell model. The unifying
+principle is that a shell-structured Hamiltonian is, in an appropriate
+basis, a *diagonal operator*, so that the "elements" — closed shells,
+noble-gas configurations, and nuclear magic numbers — are exactly the
+*cumulative degeneracies of its eigenvalues*. We treat two shell models
+side by side. For the hydrogenic (Coulomb) model, the $n$-th shell has
+degeneracy $2n^2$, arising from the angular-momentum sum rule
+$\sum_{l=0}^{n-1}(2l+1)=n^2$ and spin doubling; the cumulative fillings
+$2,10,28,60,110,\dots$ obey the closed form $3\sum_{k=1}^{n}2k^2 =
+n(n+1)(2n+1)$. For the isotropic three-dimensional harmonic-oscillator
+(nuclear) model, level $N$ has degeneracy $(N+1)(N+2)$, and the
+cumulative fillings $2,8,20,40,70,112,\dots$ obey $3\sum_{N=0}^{n}
+(N+1)(N+2)=(n+1)(n+2)(n+3)$; the first three, $2,8,20$, are exactly the
+first three nuclear magic numbers. We prove both filling sequences are
+strictly increasing, and we make the spectral picture literal: placing
+shell energies on the diagonal of a Hermitian matrix, we exhibit each
+standard basis vector as an eigenvector with the corresponding shell
+energy as eigenvalue, and identify the trace with the total shell
+energy. We close by analyzing precisely where each model diverges from
+empirical data — the Madelung $(n+l)$ ordering for electrons and
+spin–orbit splitting for nuclei — showing these are reorderings and
+perturbations of the same spectra rather than new phenomena.
 
 ## 1. Introduction
 
-The periodic table of elements, first systematized by Mendeleev in 1869, arranges the chemical elements by atomic number Z. Its characteristic structure — periods of lengths 2, 8, 8, 18, 18, 32, 32 — arises from the quantum mechanics of electron shells. While this connection is well-known in physics and chemistry, a rigorous mathematical treatment of the combinatorial and number-theoretic identities that generate the periodic table's structure has been lacking.
+The periodic table arranges the chemical elements by atomic number $Z$,
+the nuclear charge. Its most striking feature is not that the elements
+form a list but that chemical behaviour *recurs periodically*: the
+noble gases, the alkali metals, and the halogens each reappear at regular
+intervals. Periodicity of this kind is the hallmark of an underlying
+eigenvalue problem. In quantum mechanics the allowed energies of a
+bound particle are the eigenvalues of a self-adjoint Hamiltonian, and
+degeneracies — several independent states sharing one energy — organize
+those eigenvalues into *shells*.
+
+The central thesis of this paper is that **shell structure is
+degeneracy structure**: the closed-shell numbers (noble gases for
+electrons, magic numbers for nucleons) are cumulative sums of the
+degeneracies of a shell Hamiltonian's eigenvalues. We formalize this for
+two canonical models and show that in each case the entire "table" is
+encoded in a single cubic polynomial, obtained by summing a quadratic
+degeneracy law. We then render the picture concretely by exhibiting a
+diagonal Hermitian Hamiltonian whose eigenvectors are standard basis
+vectors and whose eigenvalues are the shell energies. Finally we give a
+careful account of the models' validity: the mathematics is exact, while
+the identification with observed atomic and mass numbers is
+model-dependent and fails at precise, physically meaningful places.
+
+## 2. Definitions
+
+Throughout, $n, N, k, l, m$ denote non-negative integers, and sums over
+$l \in \{0,\dots,n-1\}$ are written $\sum_{l<n}$.
+
+**Definition 2.1 (Angular count).** The number of magnetic sublevels
+summed over the sub-shells $l = 0, \dots, n-1$ is
+$$A(n) := \sum_{l < n} (2l + 1).$$
+Physically, $A(n)$ counts the distinct spatial orientations of angular
+momentum available in the first $n$ sub-shells; each $l$ contributes the
+$2l+1$ magnetic quantum numbers $m \in \{-l, \dots, l\}$.
 
-In this work, we formalize three layers of mathematical structure:
+**Definition 2.2 (Coulomb shell degeneracy).** The degeneracy of the
+$n$-th hydrogenic shell, including the factor of two for electron spin,
+is
+$$D(n) := 2n^2.$$
 
-1. **Shell degeneracy** (§2): The identity ∑_{l=0}^{n-1} (2l+1) = n², which gives the 2n² formula for quantum shell capacity.
+**Definition 2.3 (Coulomb cumulative filling).** The number of electrons
+filling the first $n$ Coulomb shells is
+$$F(n) := \sum_{k < n} D(k+1) = \sum_{k=1}^{n} 2k^2.$$
 
-2. **Period structure** (§3): The Madelung ordering on subshells and the resulting period-length pattern.
+**Definition 2.4 (Oscillator level degeneracy).** The degeneracy of the
+$N$-th level of the isotropic three-dimensional harmonic oscillator is
+$$d(N) := (N+1)(N+2).$$
 
-3. **Nuclear shell model** (§4): The harmonic oscillator degeneracy formula and its connection to nuclear magic numbers.
+**Definition 2.5 (Oscillator cumulative filling).** The number of
+particles filling oscillator levels $0$ through $n$ is
+$$G(n) := \sum_{N=0}^{n} (N+1)(N+2).$$
 
-4. **Abstract spectral periodic tables** (§5): A general framework where any positive multiplicity sequence generates a "periodic table" with guaranteed monotonicity.
+**Definition 2.6 (Diagonal shell Hamiltonian).** Given shell energies
+$E_0, \dots, E_{d-1} \in \mathbb{R}$, the associated shell Hamiltonian is
+the $d \times d$ matrix $H$ with $H_{jj} = E_j$ and $H_{ij} = 0$ for
+$i \neq j$.
 
-## 2. Quantum Shell Degeneracy
+## 3. Main results
 
-### 2.1 The Sum-of-Odd-Numbers Identity
+### 3.1 The angular-momentum sum rule and spin doubling
 
-**Theorem 1** (sum_odd_eq_sq). *For all n ∈ ℕ,*
-$$\sum_{k=0}^{n-1} (2k+1) = n^2.$$
+**Theorem 3.1 (Angular-momentum sum rule).** For every $n$,
+$$A(n) = \sum_{l < n} (2l+1) = n^2.$$
+
+*Proof sketch.* Induction on $n$. For $n=0$ the empty sum is $0 = 0^2$.
+Assuming $A(n) = n^2$, the sub-shell $l = n$ contributes $2n+1$, so
+$A(n+1) = n^2 + (2n+1) = (n+1)^2$. $\square$
+
+**Theorem 3.2 (Spin doubling).** For every $n$, $D(n) = 2\,A(n)$; that
+is, $2n^2 = 2\sum_{l<n}(2l+1)$.
+
+*Proof sketch.* Immediate from Definition 2.2 and Theorem 3.1. $\square$
 
-*Proof sketch.* By induction on n. The base case n=0 is trivial. For the inductive step, ∑_{k=0}^{n} (2k+1) = n² + (2n+1) = (n+1)². □
-
-This identity has a well-known geometric interpretation: the k-th odd number (2k+1) counts the dots in an L-shaped gnomon added to a k×k square to form a (k+1)×(k+1) square.
-
-### 2.2 Shell Degeneracy
-
-**Definition.** The *orbital degeneracy* of shell n is orbitalDegeneracy(n) = ∑_{l=0}^{n-1} (2l+1).
-
-**Definition.** The *shell degeneracy* (including spin) is shellDegeneracy(n) = 2 · orbitalDegeneracy(n).
-
-**Theorem 2** (shellDegeneracy_eq). *shellDegeneracy(n) = 2n².*
-
-*Proof.* Immediate from Theorem 1. □
-
-### 2.3 Sum of Squares
-
-**Theorem 3** (sum_sq_formula). *For all n ∈ ℕ,*
-$$6 \sum_{k=0}^{n} k^2 = n(n+1)(2n+1).$$
-
-*Proof sketch.* By induction on n. The step uses the identity n(n+1)(2n+1) + 6(n+1)² = (n+1)(n+2)(2n+3). □
-
-This formula connects to the hydrogen spectrum's cumulative filling, where the cumulative degeneracy through shell N involves ∑ k².
-
-## 3. Madelung Ordering and Period Structure
-
-### 3.1 The Subshell Structure
-
-**Definition.** A *subshell* is a pair (n, l) ∈ ℕ² with n ≥ 1 and 0 ≤ l < n.
-
-**Definition.** The *Madelung number* of subshell (n, l) is n + l.
-
-**Definition.** The *Madelung ordering* is the lexicographic order on (n+l, n): subshell (n₁, l₁) precedes (n₂, l₂) if n₁+l₁ < n₂+l₂, or if n₁+l₁ = n₂+l₂ and n₁ < n₂.
-
-**Theorem 4** (madelungLt_irrefl). *The Madelung ordering is irreflexive.*
-
-**Theorem 5** (madelungLt_trans). *The Madelung ordering is transitive.*
-
-Together with a straightforward trichotomy proof, these establish that the Madelung ordering is a strict total order on finite subshells.
-
-### 3.2 The Madelung Filling Order
-
-The first subshells in Madelung order are:
-
-| Madelung # | Subshells | Capacities | Total |
-|:---:|:---:|:---:|:---:|
-| 1 | 1s | 2 | 2 |
-| 2 | 2s | 2 | 2 |
-| 3 | 2p, 3s | 6, 2 | 8 |
-| 4 | 3p, 4s | 6, 2 | 8 |
-| 5 | 3d, 4p, 5s | 10, 6, 2 | 18 |
-| 6 | 4d, 5p, 6s | 10, 6, 2 | 18 |
-| 7 | 4f, 5d, 6p, 7s | 14, 10, 6, 2 | 32 |
-
-### 3.3 Period Length Pattern
-
-**Definition.** periodicTablePeriodLengths = [2, 8, 8, 18, 18, 32, 32].
-
-**Theorem 6** (period_lengths_are_twice_squares). *Every period length is of the form 2n² for some n ∈ ℕ.*
-
-*Proof.* 2 = 2·1², 8 = 2·2², 18 = 2·3², 32 = 2·4². □
-
-### 3.4 Idealized Period Lengths
-
-**Definition.** idealPeriodLength(k) = 2·⌊(k+2)/2⌋².
-
-**Theorem 7** (period_pairing). *idealPeriodLength(2k) = idealPeriodLength(2k+1).*
-
-This is the mathematical expression of the fact that period lengths come in equal pairs: the first period has length 2, then two periods of length 8, two of 18, two of 32, etc.
-
-**Theorem 8** (period_pair_value). *idealPeriodLength(2k) = 2(k+1)².*
-
-### 3.5 Noble Gas Numbers
-
-**Definition.** nobleGasNumbers = [2, 10, 18, 36, 54, 86, 118].
-
-**Theorem 9** (noble_gas_are_partial_sums). *The noble gas atomic numbers are exactly the partial sums of the period lengths.*
-
-## 4. Nuclear Magic Numbers
-
-### 4.1 Harmonic Oscillator Shell Model
-
-**Definition.** HOShellDegeneracy(N) = (N+1)(N+2).
-
-**Definition.** cumulativeHO(N) = ∑_{k=0}^{N} HOShellDegeneracy(k).
-
-**Theorem 10** (cumulativeHO_formula). *3 · cumulativeHO(N) = (N+1)(N+2)(N+3).*
-
-*Proof sketch.* By induction on N. The step: (N+1)(N+2)(N+3) + 3(N+2)(N+3) = (N+2)(N+3)(N+4). □
-
-This formula reveals a deep connection: cumulativeHO(N) = C(N+3, 3), the binomial coefficient "N+3 choose 3". Shell filling counts the same thing as choosing 3 items from N+3.
-
-**Theorem 11** (ho_matches_magic_first_three). *cumulativeHO(0) = 2, cumulativeHO(1) = 8, cumulativeHO(2) = 20.*
-
-These match the first three nuclear magic numbers exactly. The divergence at N=3 (predicted 40, actual 28) is due to spin-orbit coupling, which is not captured by the pure harmonic oscillator model.
-
-## 5. Abstract Spectral Periodic Tables
-
-### 5.1 Framework
-
-**Definition.** A *spectral periodic table* T consists of:
-- A multiplicity function T.multiplicity : ℕ → ℕ
-- A cumulative function T.cumulative : ℕ → ℕ
-- Consistency: T.cumulative(n) = ∑_{k=0}^{n} T.multiplicity(k)
-- Positivity: T.multiplicity(n) > 0 for n > 0
-
-### 5.2 Monotonicity
-
-**Theorem 12** (spectral_cumulative_growth). *For any spectral periodic table T and n > 0, T.cumulative(n-1) < T.cumulative(n).*
-
-*Proof sketch.* By the cumulative consistency condition, T.cumulative(n) = T.cumulative(n-1) + T.multiplicity(n). Since T.multiplicity(n) > 0, the result follows. □
-
-This fundamental theorem guarantees that in any spectral periodic table, each new shell adds strictly more elements — the table always grows.
-
-### 5.3 Concrete Instances
-
-We define two concrete spectral periodic tables:
-- **hydrogenSpectrum**: degeneracy 2n², modeling the hydrogen atom
-- **harmonicSpectrum**: degeneracy (N+1)(N+2), modeling the nuclear harmonic oscillator
-
-## 6. The Madelung-Klechkovsky Conjecture
-
-The empirical observation that electron subshells fill in order of increasing n+l (Madelung's rule) has never been derived from first principles. It is sometimes called the Madelung-Klechkovsky rule, and despite its remarkable empirical accuracy (it correctly predicts the ground-state electron configuration for ~80% of elements), it has known exceptions (Cr, Cu, Pd, and others).
-
-**Conjecture** (Madelung-Klechkovsky). *For all atoms with Z ≤ 118, the ground-state electron configuration fills subshells in order of increasing (n+l, n), with at most 20 exceptions among the transition metals and lanthanides/actinides.*
-
-**Testable prediction**: For any proposed nuclear potential V(r), compute the single-electron energy levels E_{n,l} and check whether E_{n₁,l₁} < E_{n₂,l₂} whenever (n₁+l₁, n₁) < (n₂+l₂, n₂) in the Madelung order. A counterexample (beyond known exceptions) would refute the conjecture.
-
-## 7. Discussion
-
-### 7.1 Chemistry as Spectral Theory
-
-Our formalization reveals that the periodic table's structure is entirely determined by three mathematical ingredients:
-1. The sum-of-odd-numbers identity (shell degeneracy)
-2. A total order on quantum number pairs (filling rule)
-3. Cumulative summation (element counting)
-
-No physics beyond basic quantum mechanics is needed. The periodic table is, in a precise sense, a combinatorial object determined by the spectrum of the hydrogen Hamiltonian.
-
-### 7.2 The "Periodicity" Misnomer
-
-The periodic table is not periodic. Its period lengths grow without bound as 2⌈k/2⌉². A more accurate name would be the "spectral table" or "shell table" of elements. The quasiperiodic pairing (each length appearing twice) is the closest the table comes to true periodicity.
-
-### 7.3 Connection to Number Theory
-
-The identities we prove — ∑(2k+1) = n², 6∑k² = n(n+1)(2n+1), 3·C_HO(N) = (N+1)(N+2)(N+3) — are classical results in number theory. Their appearance in quantum mechanics illustrates a deep connection between combinatorial identities and physical shell structure. The cumulative HO formula, in particular, reveals that nuclear shell filling is counted by binomial coefficients: cumulativeHO(N) = C(N+3, 3).
-
-## 8. Future Work
-
-1. **Derive the Madelung rule from a Hamiltonian**: Can the (n+l, n) ordering be proven to minimize the total energy for a self-consistent atomic potential?
-
-2. **Spin-orbit magic numbers**: Formalize the spin-orbit coupling that transforms HO magic numbers (2, 8, 20, 40, ...) into the true nuclear magic numbers (2, 8, 20, 28, 50, 82, 126).
-
-3. **Superheavy elements**: Extend the formalization to predict the structure of period 8 (Z = 119-168) and the hypothetical "island of stability" around Z ≈ 126.
-
-4. **Relativistic corrections**: The Dirac equation modifies shell structure for heavy atoms. Formalize how relativistic effects alter the period structure.
-
-## References
-
-1. Madelung, E. (1936). *Mathematische Hilfsmittel des Physikers*. Springer.
-2. Klechkovsky, V. M. (1962). On the relationship between electron configurations of atoms and the periodic table. *Soviet Physics Doklady*, 6, 755.
-3. Goeppert Mayer, M. (1949). On closed shells in nuclei. *Physical Review*, 75(12), 1969.
-4. Jensen, J. H. D. (1949). On the magic numbers in nuclear structure. *Physical Review*, 75(11), 1766.
-5. Schwerdtfeger, P., et al. (2020). The periodic table and the physics that drives it. *Nature Reviews Chemistry*, 4(7), 359–380.
+Thus the Coulomb shell degeneracies are $D(1),D(2),\dots = 2,8,18,32,\dots$,
+the idealized row lengths of the periodic table.
+
+### 3.2 Closed form for the Coulomb fillings
+
+**Theorem 3.3 (Coulomb filling recurrence).** For every $n$,
+$$F(n+1) = F(n) + 2(n+1)^2.$$
+
+*Proof sketch.* The last term of the sum defining $F(n+1)$ is
+$D(n+1) = 2(n+1)^2$. $\square$
+
+**Theorem 3.4 (Closed form for Coulomb fillings).** For every $n$,
+$$3\,F(n) = n(n+1)(2n+1).$$
+Equivalently $F(n) = \tfrac{1}{3}n(n+1)(2n+1)$, giving
+$F(1),\dots,F(5) = 2, 10, 28, 60, 110$.
+
+*Proof sketch.* Induction on $n$ using Theorem 3.3; the inductive step
+reduces to the polynomial identity
+$n(n+1)(2n+1) + 3\cdot 2(n+1)^2 = (n+1)(n+2)(2n+3)$, verified by
+expansion. $\square$
+
+**Theorem 3.5 (Strict monotonicity of Coulomb fillings).** The map
+$n \mapsto F(n)$ is strictly increasing.
+
+*Proof sketch.* By Theorem 3.3, $F(n+1) - F(n) = 2(n+1)^2 > 0$, and a
+sequence with strictly positive successive differences is strictly
+increasing. $\square$
+
+Monotonicity guarantees the closed shells are distinct and well-ordered:
+no two Coulomb shells ever close at the same electron count.
+
+### 3.3 Closed form for the oscillator fillings
+
+**Theorem 3.6 (Closed form for oscillator fillings).** For every $n$,
+$$3\,G(n) = (n+1)(n+2)(n+3).$$
+Equivalently $G(n) = \tfrac{1}{3}(n+1)(n+2)(n+3)$, giving
+$G(0),\dots,G(5) = 2, 8, 20, 40, 70, 112$.
+
+*Proof sketch.* Induction on $n$. The base case $G(0) = 1\cdot 2 = 2$ and
+$3\cdot 2 = 1\cdot 2\cdot 3$. The inductive step adds
+$d(n+1) = (n+2)(n+3)$ and uses
+$(n+1)(n+2)(n+3) + 3(n+2)(n+3) = (n+2)(n+3)(n+4)$. $\square$
+
+**Theorem 3.7 (Strict monotonicity of oscillator fillings).** The map
+$n \mapsto G(n)$ is strictly increasing.
+
+*Proof sketch.* $G(n+1) - G(n) = (n+2)(n+3) > 0$. $\square$
+
+The first three values $G(0), G(1), G(2) = 2, 8, 20$ coincide with the
+first three empirical nuclear magic numbers. Moreover $F(1) = G(0) = 2$:
+both models agree on the very first closed shell (helium; the $Z=2$
+magic number).
+
+### 3.4 Elements as eigenvalues: the diagonal spectrum
+
+**Theorem 3.8 (Self-adjointness).** The shell Hamiltonian $H$ of
+Definition 2.6 is Hermitian: $H^{\dagger} = H$.
+
+*Proof sketch.* A real diagonal matrix equals its conjugate transpose
+entrywise. $\square$
+
+**Theorem 3.9 (Basis vectors are eigenvectors).** For each index $j$,
+the standard basis vector $e_j$ satisfies $H e_j = E_j\, e_j$; hence
+$e_j$ is an eigenvector of $H$ with eigenvalue $E_j$, the $j$-th shell
+energy.
+
+*Proof sketch.* The $i$-th component of $H e_j$ is $\sum_k H_{ik}(e_j)_k
+= H_{ij} = E_j\,\delta_{ij}$, which is the $i$-th component of
+$E_j e_j$. $\square$
+
+**Theorem 3.10 (Trace is total shell energy).** The trace of $H$ equals
+the total shell energy: $\operatorname{tr} H = \sum_{j} E_j$.
+
+*Proof sketch.* The trace is the sum of diagonal entries, and
+$H_{jj} = E_j$. $\square$
+
+Because the trace is invariant under change of orthonormal basis,
+$\sum_j E_j$ is a conserved bookkeeping invariant of the configuration —
+a *sum rule* independent of representation. Theorems 3.8–3.10 make the
+slogan "elements are eigenvalues" literal: a configuration is read off
+from the spectrum and multiplicities of a self-adjoint operator.
+
+### 3.5 The subshell count as magnetic quantum numbers
+
+The integer $2l+1$ summed in Definition 2.1 is not an abstract weight:
+it is the cardinality of the set of magnetic quantum numbers
+$\{-l, -l+1, \dots, l\}$. Each such $m$ indexes an azimuthal
+eigenfunction $\phi_m(\theta) = e^{i m \theta}$, which is $2\pi$-periodic
+in the angle $\theta$ precisely because $m$ is an integer. Thus the
+degeneracy factor $2l+1$ that drives the entire shell-filling arithmetic
+is the count of admissible, single-valued angular wavefunctions at
+angular momentum $l$ — grounding the combinatorics in the geometry of
+the sphere.
+
+## 4. Algorithms
+
+We summarize the computational content in three algorithms.
+
+**Algorithm 1 (Closed-shell generator).** Given a degeneracy law
+$d(k) = ak^2 + bk + c$ with $a > 0$, compute the cumulative fillings
+$F(n) = \sum_{k \le n} d(k)$ for $n = 0, \dots, M$. Because the running
+sum of a quadratic is a cubic, this runs in $O(M)$ arithmetic
+operations, and each $F(n)$ can alternatively be evaluated in $O(1)$
+from the closed-form cubic.
+
+**Algorithm 2 (Woods–Saxon eigenvalue solver).** Discretize the radial
+Schrödinger equation for a realistic nuclear mean-field potential
+$V(r) = -V_0 / (1 + e^{(r-R)/a})$ on a grid, assemble the tridiagonal
+Hamiltonian for each angular momentum $l$, and diagonalize. Collecting
+eigenvalues across $l$ and sorting by energy reproduces the shell
+ordering; the degeneracy $2(2l+1)$ of each level, accumulated, yields the
+predicted closed shells. Complexity is $O(P^3)$ per angular channel for a
+grid of $P$ points.
+
+**Algorithm 3 (Diagonal spectrum reader).** Given shell energies
+$E_0, \dots, E_{d-1}$, build the diagonal Hamiltonian $H$, verify
+$He_j = E_j e_j$ for each $j$, and report the trace $\sum_j E_j$. This is
+$O(d)$ and provides an executable witness of Theorems 3.8–3.10.
+
+## 5. Applications
+
+**Unification of two classification schemes.** The same summation
+principle produces the electronic periodic table skeleton and the
+nuclear magic numbers, exhibiting chemistry and nuclear stability as two
+instances of one spectral bookkeeping law.
+
+**Compression of the table.** A quadratic degeneracy law is three
+numbers $(a,b,c)$; the entire cumulative filling sequence follows as a
+cubic. This replaces a memorized list of closed-shell numbers with a
+generating polynomial.
+
+**Diagnostic value of failure.** The precise points where each model
+diverges from data localize the missing physics: past $Z=10$ for the
+Coulomb table (Madelung ordering) and past $20$ for the oscillator
+(spin–orbit splitting).
+
+## 6. Discussion
+
+Both models are exact as mathematics and heuristic as physics. The
+Coulomb fillings $2,10,28,60,110$ are the correct cumulative
+degeneracies of an $n^2$-degenerate spectrum but are *not* the observed
+noble gases $2,10,18,36,\dots$. Real electron filling follows the
+Madelung rule — orbitals fill in order of increasing $n+l$, ties broken
+by increasing $n$ — which is a *reordering* of the same eigenvalues, not
+a new spectrum. The first deviation occurs exactly past $Z=10$, where
+$(n+l)$ ordering first overtakes pure $n$ ordering.
+
+The oscillator fillings $2,8,20,40,70,112$ reproduce the first three
+magic numbers and then overshoot: the empirical values are
+$2,8,20,28,50,82,126$. The discrepancy is resolved by adding a diagonal
+spin–orbit term $\xi\, \mathbf{l}\cdot\mathbf{s}$, which splits each
+level's sublevels and lowers the highest-$j$ sublevel into the shell
+below, converting $40,70$ into $28,50$. The islands of stability are
+therefore a *perturbed* spectrum, not an independent phenomenon.
+
+The honest reading is that the theorems — sum rules, cubic fillings,
+strict monotonicity, and the diagonal spectrum — are exact, while the
+identification with real atomic and mass numbers is model-dependent.
+Even so, the framework's predictive successes ($2,8,20$; the row lengths
+$2,8,18,32$) and its precisely located failures make it a productive lens
+rather than a mere analogy.
+
+## 7. Future directions
+
+**A two-parameter family of periodic tables.** For every affine-quadratic
+degeneracy law $d(k) = ak^2 + bk + c$ with $a>0$, the cumulative filling
+$F(n) = \sum_{k\le n} d(k)$ is a cubic polynomial, and $(a,b,c)$ is
+uniquely recoverable from any four consecutive fillings. Each admissible
+triple names a distinct shell table; the Coulomb and oscillator tables
+are two lattice points in this space.
+
+**Spin–orbit as a rank-one spectral perturbation.** Adding a diagonal
+spin–orbit term to the isotropic oscillator should shift the fillings
+$2,8,20,40,70,112$ to the empirical magic numbers
+$2,8,20,28,50,82,126$, with the shifts equal to the partial sums of the
+highest-$j$ sublevel sizes.
+
+**The Madelung rule as a spectral ordering theorem.** The observed
+noble-gas numbers $2,10,18,36,54,86$ should be the cumulative degeneracies
+of the same $2n^2$ shells re-summed in order of increasing $n+l$ (ties by
+increasing $n$) — the ordered eigenvalue multiplicities of a Hamiltonian
+whose energies are monotone in $n+l$.
+
+**Trace invariants as chemical sum rules.** Truncations of the diagonal
+shell Hamiltonian should yield trace and higher-moment invariants that
+serve as configuration-independent chemical sum rules.
+
+## 8. Conclusion
+
+Shell structure is degeneracy structure. Closed shells — noble gases and
+magic numbers alike — are cumulative sums of eigenvalue multiplicities of
+a shell Hamiltonian, and these sums collapse to cubic polynomials
+generated by quadratic degeneracy laws. Made literal on a diagonal
+Hermitian matrix, the periodic table becomes the spectrum and
+multiplicity list of a self-adjoint operator. Chemistry, at the level of
+degeneracy bookkeeping, is applied spectral theory.

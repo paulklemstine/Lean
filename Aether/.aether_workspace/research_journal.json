@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8875d434",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Independence Ratios of Unit-Distance Graphs\n\nThis cycle established a clean, sharp relationship between colourability and the\nindependence ratio of finite graphs, instantiated it",
-      "quality_score": 0.7476214285714285,
-      "sorry_count": 5,
-      "theorem_count": 14,
-      "timestamp": "2026-07-01T15:19:18",
-      "title": "Minimum Independence Ratio Constraint"
-    },
-    {
       "cycle_id": "52dd778d",
       "domain": "Applications",
       "key_insight": "# Future Directions: sign changes of symmetric-power coefficients on thin sets\n\nThese conjectures grow out of the central finding of this cycle: the constraint \"`n` is a sum\nof `m` squares\" stops bind",
@@ -499,19 +489,19 @@
       "theorem_count": 23,
       "timestamp": "2026-07-10T00:21:09",
       "title": "Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
+    },
+    {
+      "cycle_id": "c05d7abb",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Hilbert's Hotel for Primes\n\nThe file `PrimeHotelRearrangement.lean` formalizes, entirely without the prime number theorem:\n\n* **Finite support ⇒ well behaved** (`wellBehaved_of_f",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 27,
+      "timestamp": "2026-07-10T00:21:15",
+      "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "bfc7b99e",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Factorial Square Solutions\n\nGenerated from the cycle that produced\n`Catalog/Applications/FactorialSquareObstructions.lean`, which proved:\n\n* `factorial_not_perfect_power`: `n!` (",
-      "quality_score": 0.44995,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-28T22:47:15",
-      "title": "The Non-Existence of New Factorial Square Solutions"
-    },
     {
       "cycle_id": "0a1f99db",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 23,
       "timestamp": "2026-07-10T00:21:09",
       "title": "Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
+    },
+    {
+      "cycle_id": "c05d7abb",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Hilbert's Hotel for Primes\n\nThe file `PrimeHotelRearrangement.lean` formalizes, entirely without the prime number theorem:\n\n* **Finite support ⇒ well behaved** (`wellBehaved_of_f",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 27,
+      "timestamp": "2026-07-10T00:21:15",
+      "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "fbcfb71f",
-      "domain": "Applications",
-      "name": "s2_mul_le",
-      "quality": 0.75424
-    },
-    {
-      "cycle_id": "fbcfb71f",
-      "domain": "Applications",
-      "name": "s2_mul_le_min",
-      "quality": 0.75424
-    },
-    {
-      "cycle_id": "ee6f49cd",
-      "domain": "Applications",
-      "name": "maximally",
-      "quality": 0.7998400000000001
-    },
     {
       "cycle_id": "ee6f49cd",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "searchDim_eq_entropy_ratio",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "c05d7abb",
+      "domain": "Novelty",
+      "name": "p_prime",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "c05d7abb",
+      "domain": "Novelty",
+      "name": "p_pos",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "c05d7abb",
+      "domain": "Novelty",
+      "name": "p_ne_zero_real",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-10T00:21:09",
+  "last_updated": "2026-07-10T00:21:15",
   "open_questions": [
     {
       "context": "All four compile with no `sorry` and only the standard axioms.; All compile with no `sorry`; the convex chain bottoms out in genuine Mathlib",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "d01d52df",
-        "quality": 0.642,
-        "theorems": 6,
-        "title": "Conjecture on the Structure of Minimal Obstructions to Total Rainbow Forests"
-      },
-      {
         "cycle_id": "1e8c0c26",
         "quality": 0.420858,
         "theorems": 3,
@@ -3637,6 +3631,12 @@
         "quality": 0.63,
         "theorems": 18,
         "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
+      },
+      {
+        "cycle_id": "c05d7abb",
+        "quality": 0.82,
+        "theorems": 27,
+        "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
       }
     ],
     "NumberTheory": [
