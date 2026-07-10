@@ -101,7 +101,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8b2bab35",
     "description": "Building on cycle 34a8cfea (Q=0.820), which proved 13 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The chromatic polynomial chi_G(k) counts the number of proper k-colorings of a graph G. For a friendship graph, chi_G(k) counts the number of ways to assign k emotions to people such that no two friends share the same emotion. Conjecture: The chromatic polynomial evaluated at k=6 (for the 6 basic em",
     "domains": [
       "Novelty"
@@ -110,7 +110,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "34a8cfea",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T07:33:38.350831+00:00",
     "title": "Deepening: Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology"
   },
@@ -169,6 +169,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T00:21:21.581372+00:00",
     "title": "Deepening: The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 3fa70466 (Q=0.790), which proved 10 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In 1952, Turing showed that reaction-diffusion equations produce patterns (spots, stripes, spirals) that explain biological morphogenesis. But Turing patterns are solutions to PDEs, which are hard to analyze. Conjecture: Turing patterns are algebraic varieties. Specifically, the zero set of a Turing",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_3fa70466_a76d3023",
+    "priority_score": 0.89,
+    "research_mode": "team",
+    "source_exp_id": "3fa70466",
+    "status": "available",
+    "timestamp": "2026-07-10T08:38:10.188131+00:00",
+    "title": "Deepening: Turing's Flowers: Morphogenesis as Algebraic Geometry"
   },
   {
     "consumed_by_exp_id": "",
@@ -369,6 +383,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T01:14:02.439834+00:00",
     "title": "Close Proofs: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Pr"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 3fa70466 (Q=0.790) proved 10 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In 1952, Turing showed that reaction-diffusion equations produce patterns (spots, stripes, spirals) that explain biological morphogenesis. But Turing patterns are solutions to PDEs, which are hard to ",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_3fa70466_9f2bd55e",
+    "priority_score": 0.8400000000000001,
+    "research_mode": "team",
+    "source_exp_id": "3fa70466",
+    "status": "available",
+    "timestamp": "2026-07-10T08:38:10.272652+00:00",
+    "title": "Close Proofs: Turing's Flowers: Morphogenesis as Algebraic Geometry"
   },
   {
     "consumed_by_exp_id": "",
@@ -5243,21 +5271,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sheaf Cohomology of Data: The Topology of Missing Information"
   },
   {
-    "consumed_by_exp_id": "3fa70466",
-    "description": "In 1952, Turing showed that reaction-diffusion equations produce patterns (spots, stripes, spirals) that explain biological morphogenesis. But Turing patterns are solutions to PDEs, which are hard to analyze. Conjecture: Turing patterns are algebraic varieties. Specifically, the zero set of a Turing pattern (where the concentration equals the background level) is a real algebraic curve in 2D (for spots and stripes) or a real algebraic surface in 3D (for more complex patterns). The degree of the curve is the number of modes in the reaction-diffusion system. For a two-mode system (like the Gray-Scott model), the pattern is a curve of degree 2 (a conic section: circles for spots, parallel lines for stripes, hyperbolas for labyrinthine patterns). For a three-mode system, the pattern is a curve of degree up to 6 (sextic curves that can produce hexagonal patterns). The genus of the curve determines the pattern topology: genus 0 gives spots (topologically a sphere), genus 1 gives stripes (topologically a torus), and genus g > 1 gives labyrinthine patterns with g+1 holes. Test: simulate Turing patterns in the Gray-Scott model, fit the zero-set to an algebraic curve of degree d, and verify that d = 2 for spots and stripes. Compute the genus and verify it matches the pattern topology. Impact: biological patterns are algebraic curves. The mathematics of seashells, leopard spots, and zebra stripes is the mathematics of conic sections.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0843",
-    "priority_score": 0.77,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T04:08:16.156000+00:00",
-    "title": "Turing's Flowers: Morphogenesis as Algebraic Geometry"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle dd8b10c1 (Q=0.720) proved 54 theorems in Applications but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: A cake is a smooth projective variety over R: it has a base (a smooth manifold with boundary), frosting (a sheaf of sections supported on the boundary), and layers (a stratification by codimension). T",
     "domains": [
@@ -5420,6 +5433,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T08:37:58.665759+00:00",
     "title": "**`Catalog/Novelty/StochasticGaloisRoots.lean` \u2014 the expected-roots identity.**"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Morphogenesis as Algebraic Geometry\n\nThe linear analysis established here recasts the onset of Turing patterns as\nconic-section geometry: the number of excited spatial modes is an algebraic degree,\nand the boundedness of the background level set separates spots from stripes and\nlabyrinths. Several bold, testable conjectures follow.\n\n## 1. The genus dictionary\n\n**Conjecture.** For a pattern generated by `k` spatial modes, the background level\nset is (generically) a smooth real curve whose complexification has genus at most\n`(k\u22121)(k\u22122)/2`, and the number of bounded ovals equals the number of distinct spot\nfamilies in the pattern.\n\n*The key insight is* that the mode count fixes the degree of the defining polynomial,\nand the classical genus\u2013degree formula then caps the topological complexity, turning a\nstatement about pattern topology into an inequality about polynomial degree.\n\n*Why now?* The degree correspondence for single modes (Chebyshev) is fully in hand,\nso the remaining step is purely the theory of real plane curves \u2014 a mature subject \u2014\napplied to explicitly known low-degree families.\n\n## 2. Sharp mode\u2013degree equality\n\n**Conjecture.** A superposition of `k` modes with a nonzero top harmonic has a level\nset of algebraic degree *exactly* `k` in the Chebyshev coordinates, and no\nreparametrisation lowers this degree.\n\n*The key insight is* that the leading coefficient of the `k`-th Chebyshev polynomial\nis `2^{k-1} \u2260 0`, so the top mode cannot be cancelled by lower ones \u2014 degree is a\nfaithful invariant of mode count.\n\n*Why now?* The exact-degree statement is already proved for a single mode and for the\nsquared three-mode amplitude; extending it to arbitrary superpositions needs only\nleading-term bookkeeping, which is tractable.\n\n## 3. Hexagons are sextics\n\n**Conjecture.** Every hexagonally symmetric two-dimensional Turing pattern has a\nbackground level set defined by a sextic curve invariant under the order-6 dihedral\ngroup, and conversely every such invariant sextic is realised by a three-mode\nreaction\u2013diffusion system.\n\n*The key insight is* that three modes reach degree six, and the hexagonal symmetry\ngroup acts on degree-six invariants with exactly the dimension needed to parametrise\nthe observed patterns.\n\n*Why now?* The degree-six ceiling for three-mode systems is established; the missing\ningredient is an invariant-theory computation of dihedral-invariant sextics, which is\nfinite-dimensional and explicit.\n\n## 4. Boundedness is a bifurcation invariant\n\n**Conjecture.** Along a reaction\u2013diffusion bifurcation path, the transition from spot\nto labyrinth morphology coincides exactly with the moment the defining quadratic form\nloses definiteness (its discriminant changes sign), and this transition is detectable\nfrom the reaction kinetics alone.\n\n*The key insight is* that boundedness of a conic level set is controlled by the sign\nof the quadratic form's discriminant, so a morphological phase transition is an\nalgebraic sign change rather than a delicate PDE phenomenon.\n\n*Why now?* We have proved the two endpoints of this transition \u2014 definite forms give\nbounded spots, indefinite forms give unbounded labyrinths \u2014 so the conjecture is the\nnatural interpolation and is amenable to explicit discriminant tracking.\n\n## 5. Three-dimensional morphogenesis as algebraic surfaces\n\n**Conjecture.** In three spatial dimensions, a `k`-mode Turing pattern has a\nbackground level set that is a real algebraic surface of degree `k`, and the Turing\n\"gyroid\" and \"diamond\" phases correspond to specific cubic and quartic surfaces.\n\n*The key insight is* that the Chebyshev correspondence is dimension-agnostic: each\naxial mode contributes one polynomial degree, so multi-dimensional patterns inherit\nthe same degree = mode-count law, now for surfaces.\n\n*Why now?* The one-dimensional degree law and the planar conic dichotomy are proved;\nlifting to surfaces reuses the same Chebyshev machinery with additional coordinates.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0869",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3fa70466",
+    "status": "available",
+    "timestamp": "2026-07-10T08:38:07.169747+00:00",
+    "title": "The linear analysis established here recasts the onset of Turing patterns as"
   },
   {
     "consumed_by_exp_id": "",

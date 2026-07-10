@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "87ba90ae",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — Fan-structure in Selmer group distributions\n\nThese conjectures grow directly out of the current cycle, in which the rank\ndistribution of subspaces of a finite vector space was sh",
-      "quality_score": 0.73448,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-03T14:49:45",
-      "title": "Fan-structure in Selmer group distributions over p-cyclic extensions"
-    },
-    {
       "cycle_id": "3fe1db8c",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nDerived from this cycle's study of intersecting families of permutations and the\nfixed-point bridge that recasts coordinate-agreement as a derangement condition.\n\n## 1. The matchi",
@@ -499,19 +489,19 @@
       "theorem_count": 17,
       "timestamp": "2026-07-10T08:38:04",
       "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
+    },
+    {
+      "cycle_id": "3fa70466",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Morphogenesis as Algebraic Geometry\n\nThe linear analysis established here recasts the onset of Turing patterns as\nconic-section geometry: the number of excited spatial modes is a",
+      "quality_score": 0.79,
+      "sorry_count": 4,
+      "theorem_count": 10,
+      "timestamp": "2026-07-10T08:38:10",
+      "title": "Turing's Flowers: Morphogenesis as Algebraic Geometry"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "230b77ce",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Certified Robustness via Cover Cohomology\n\nThese conjectures are derived from the present cycle, in which we proved that on a\ntree-shaped cover of a classifier's input space the",
-      "quality_score": 0.76576,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-06-30T02:56:43",
-      "title": "Certified Adversarial Robustness via Sheaf Cohomology"
-    },
     {
       "cycle_id": "8acf5433",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 17,
       "timestamp": "2026-07-10T08:38:04",
       "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
+    },
+    {
+      "cycle_id": "3fa70466",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Morphogenesis as Algebraic Geometry\n\nThe linear analysis established here recasts the onset of Turing patterns as\nconic-section geometry: the number of excited spatial modes is a",
+      "quality_score": 0.79,
+      "sorry_count": 4,
+      "theorem_count": 10,
+      "timestamp": "2026-07-10T08:38:10",
+      "title": "Turing's Flowers: Morphogenesis as Algebraic Geometry"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "acc2ac17",
-      "domain": "Logic",
-      "name": "recipe_trichotomy",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "7ca0f553",
-      "domain": "Pythagorean",
-      "name": "deforms",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "7ca0f553",
-      "domain": "Pythagorean",
-      "name": "LipschitzWith",
-      "quality": 0.82
-    },
     {
       "cycle_id": "7ca0f553",
       "domain": "Pythagorean",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "finiteField_gal_ne_symm",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "3fa70466",
+      "domain": "Novelty",
+      "name": "mode_as_poly",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "3fa70466",
+      "domain": "Novelty",
+      "name": "double_mode_quadratic",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "3fa70466",
+      "domain": "Novelty",
+      "name": "sextic_from_three_modes",
+      "quality": 0.79
     }
   ],
-  "last_updated": "2026-07-10T08:38:04",
+  "last_updated": "2026-07-10T08:38:10",
   "open_questions": [
-    {
-      "context": "No `sorry`; axioms are the standard `propext`/`Classical.choice`/`Quot.sound`.; No `sorry`; axioms are the standard three.",
-      "cycle_id": "5e4735e1",
-      "domain": "NumberTheory",
-      "sorry_count": 2,
-      "timestamp": "2026-07-02T15:54:30"
-    },
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "3e52c27d",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 3,
       "timestamp": "2026-07-10T07:49:49"
+    },
+    {
+      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "3fa70466",
+      "domain": "Novelty",
+      "sorry_count": 4,
+      "timestamp": "2026-07-10T08:38:10"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "8202f9a7",
-        "quality": 0.6749863157894737,
-        "theorems": 19,
-        "title": "Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
-      },
-      {
         "cycle_id": "6c21e233",
         "quality": 0.618,
         "theorems": 20,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 17,
         "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
+      },
+      {
+        "cycle_id": "3fa70466",
+        "quality": 0.79,
+        "theorems": 10,
+        "title": "Turing's Flowers: Morphogenesis as Algebraic Geometry"
       }
     ],
     "NumberTheory": [

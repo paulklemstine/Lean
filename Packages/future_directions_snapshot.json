@@ -135,7 +135,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8b2bab35",
     "description": "Building on cycle 34a8cfea (Q=0.820), which proved 13 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The chromatic polynomial chi_G(k) counts the number of proper k-colorings of a graph G. For a friendship graph, chi_G(k) counts the number of ways to assign k emotions to people such that no two friends share the same emotion. Conjecture: The chromatic polynomial evaluated at k=6 (for the 6 basic em",
     "domain_bridges": [],
     "domains": [
@@ -147,7 +147,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "34a8cfea",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T07:33:38.350831+00:00",
     "title": "Deepening: Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology"
   },
@@ -226,6 +226,25 @@
     "status": "available",
     "timestamp": "2026-07-10T00:21:21.581372+00:00",
     "title": "Deepening: The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 3fa70466 (Q=0.790), which proved 10 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In 1952, Turing showed that reaction-diffusion equations produce patterns (spots, stripes, spirals) that explain biological morphogenesis. But Turing patterns are solutions to PDEs, which are hard to analyze. Conjecture: Turing patterns are algebraic varieties. Specifically, the zero set of a Turing",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_3fa70466_a76d3023",
+    "lineage_refs": [],
+    "priority_score": 0.89,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "3fa70466",
+    "status": "available",
+    "timestamp": "2026-07-10T08:38:10.188131+00:00",
+    "title": "Deepening: Turing's Flowers: Morphogenesis as Algebraic Geometry"
   },
   {
     "ambition_level": "extension",
@@ -496,6 +515,25 @@
     "status": "available",
     "timestamp": "2026-07-10T01:14:02.439834+00:00",
     "title": "Close Proofs: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Pr"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 3fa70466 (Q=0.790) proved 10 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In 1952, Turing showed that reaction-diffusion equations produce patterns (spots, stripes, spirals) that explain biological morphogenesis. But Turing patterns are solutions to PDEs, which are hard to ",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_3fa70466_9f2bd55e",
+    "lineage_refs": [],
+    "priority_score": 0.8400000000000001,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "3fa70466",
+    "status": "available",
+    "timestamp": "2026-07-10T08:38:10.272652+00:00",
+    "title": "Close Proofs: Turing's Flowers: Morphogenesis as Algebraic Geometry"
   },
   {
     "ambition_level": "extension",
