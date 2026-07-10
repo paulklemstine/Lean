@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4de79d68",
-      "domain": "Logic",
-      "key_insight": "# Hilbert's Hotel for Primes — deepening: future directions\n\nThis cycle deepens the earlier work in `Novelty/PrimeHotelRearrangement.lean` (well-behaved\nprime-hotel rearrangements: displacement ratio",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 56,
-      "timestamp": "2026-07-10T01:48:49",
-      "title": "Deepening: Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
-    },
-    {
       "cycle_id": "14000bf9",
       "domain": "Novelty",
       "key_insight": "# Future Directions: The Mathematics of Jigsaw Puzzles\n\nThis cycle established that edge complementation is an order-two symmetry whose\nfixed points are exactly the border edges, that encoding truth v",
@@ -499,19 +489,19 @@
       "theorem_count": 58,
       "timestamp": "2026-07-10T18:12:07",
       "title": "The Topology of Argumentation: Why Debates Have Holes"
+    },
+    {
+      "cycle_id": "99c2e84e",
+      "domain": "Physics",
+      "key_insight": "# Future Directions\n\nThis project formalizes two cross-domain bridge theorems around the tropical\n(min-plus) semiring, motivated by the \"tropical cryptography\" / min-plus\nDiffie–Hellman proposal. All",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-07-10T18:43:44",
+      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f29abd01",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Chromatic thresholds for C4-free diameter-2 graphs\n\nThis cycle isolated the structural skeleton of the problem *\"when must a\nC4-free graph of diameter two fail to be 3-colorable?\"",
-      "quality_score": 0.61208,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-01T21:41:57",
-      "title": "Non-3-Colorability of C4-Free Diameter-2 Graphs with Maximum Degree at least 17"
-    },
     {
       "cycle_id": "acbfd883",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 58,
       "timestamp": "2026-07-10T18:12:07",
       "title": "The Topology of Argumentation: Why Debates Have Holes"
+    },
+    {
+      "cycle_id": "99c2e84e",
+      "domain": "Physics",
+      "key_insight": "# Future Directions\n\nThis project formalizes two cross-domain bridge theorems around the tropical\n(min-plus) semiring, motivated by the \"tropical cryptography\" / min-plus\nDiffie–Hellman proposal. All",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-07-10T18:43:44",
+      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.74
     }
   ],
-  "last_updated": "2026-07-10T18:12:07",
+  "last_updated": "2026-07-10T18:43:44",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "6ddef5de",
-        "quality": 0.66248,
-        "theorems": 10,
-        "title": "Diffusion Models as Stochastic Differential Equations"
-      },
-      {
         "cycle_id": "6218af01",
         "quality": 0.550667741935484,
         "theorems": 35,
@@ -3761,6 +3755,12 @@
         "quality": 0.7,
         "theorems": 10,
         "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
+      },
+      {
+        "cycle_id": "99c2e84e",
+        "quality": 0.8,
+        "theorems": 4,
+        "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
       }
     ],
     "Probability": [

@@ -570,21 +570,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem"
   },
   {
-    "consumed_by_exp_id": "99c2e84e",
-    "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
-    "domains": [
-      "Novelty",
-      "Cryptography"
-    ],
-    "id": "fd_0919",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T16:52:25.145008+00:00",
-    "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long \u2014 the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static \u2014 they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
     "domains": [
@@ -5386,7 +5371,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The Fundamental Theorem of Cakes: Algebraic Geometry of Baking"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "823f5582",
     "description": "The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surface V(f) = {x : f(x) = 0} is a piecewise linear hypersurface. Conjecture: every rational homology class in H_{n-2}(V(f), Q) is represented by an algebraic cycle (a subvariety of V(f) of codimension 1). Since V(f) is piecewise linear, its homology groups are finitely generated and every cycle is a formal sum of linear pieces. Each linear piece is an algebraic cycle (a hyperplane section). Conjecture: the piecewise linear Hodge conjecture holds \u2014 every homology class in V(f) is a sum of hyperplane sections. This is TRUE for piecewise linear varieties because every face of a polyhedron is cut out by a linear equation. The deeper conjecture: for a ReLU network with L layers and widths (n, w_1, ..., w_L, 1), the Hodge numbers h^{p,q}(V(f)) satisfy h^{p,q} <= (w_1 choose p) * (w_L choose q) * prod_{i=2}^{L-1} w_i. Test: compute H_{n-2}(V(f)) for small ReLU networks and verify that every class is represented by hyperplane sections. Impact: the Hodge conjecture is trivially true for neural network decision surfaces. The non-trivial content is the BOUND on Hodge numbers.",
     "domains": [
       "Novelty",
@@ -5396,7 +5381,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.76,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T12:39:07.666361+00:00",
     "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
   },
@@ -6059,6 +6044,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T18:12:01.549366+00:00",
     "title": "This project formalizes, from first principles in Lean 4 / Mathlib, the core of"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes two cross-domain bridge theorems around the tropical\n(min-plus) semiring, motivated by the \"tropical cryptography\" / min-plus\nDiffie\u2013Hellman proposal. All results live in\n`Catalog/Tropical/TropicalCryptoConnector.lean` and compile with only the\nstandard axioms (`propext`, `Classical.choice`, `Quot.sound`).\n\n## What is proved\n\n1. **`Matrix.pow_apply_eq_sum_path`** (linear algebra \u2194 combinatorial\n   optimization). For any commutative semiring `S` and `A : Matrix V V S`,\n   the `(i,j)` entry of `A^k` equals the sum over all length-`k` walks\n   `i = p\u2080, \u2026, p_k = j` of the product of traversed entries. Over the tropical\n   semiring this is the shortest-`k`-step-walk (Bellman/Floyd) identity.\n\n2. **`tropical_eigenvalue_additive`** (spectral theory \u2194 additive arithmetic).\n   A tropical eigenpair is preserved under matrix powers and the min-plus\n   eigenvalue satisfies `\u03bb(A^k) = k \u00b7 \u03bb(A)`. This linear leakage is the reason\n   the tropical discrete logarithm problem is not one-way in general.\n\n   The supporting `mulVec_pow_eq_smul` states the eigenvalue-power law over an\n   arbitrary commutative semiring.\n\n## Natural next steps\n\n- **`untrop` form of the shortest-path bridge.** Turn\n  `Matrix.pow_apply_eq_sum_path` into an explicit `min`/`+` statement:\n  `untrop ((A^k) i j) = \u2a05 (walks p) \u03a3_t untrop (A (p t) (p (t+1)))`,\n  using `Tropical.untrop_sum` / `Tropical.untrop_prod`. This makes the\n  \"shortest walk\" reading literal.\n\n- **Cycle-mean eigenvalue formula.** Prove the max-plus/min-plus spectral\n  theorem `\u03bb(A) = min over cycles C of (weight(C) / length(C))` and connect it\n  to `tropical_eigenvalue_additive`, giving a *complete* recovery algorithm for\n  `k` in the TDLP (a formal break of the naive scheme).\n\n- **Kleene star / all-pairs shortest paths.** Formalize `A* = \u2a01_{k} A^k`\n  (Floyd\u2013Warshall) and its convergence for matrices with nonnegative diagonal,\n  extending the walk-sum bridge from fixed length to reachability.\n\n- **Security consequences.** Formalize the reduction \"TDLP with\n  `untrop(\u03bb(A)) \u2260 0` \u21d2 recover `k` in polynomial time\", packaging the\n  eigenvalue attack as an explicit adversary, and contrast with the\n  known perturbation-based tropical schemes (Kotov\u2013Ushakov style) to state\n  precisely which structural assumptions any secure variant must avoid.\n\n- **General index sets.** Both theorems are already stated for an arbitrary\n  `Fintype` index `V`; specializing/benchmarking to `Fin n` and relating to\n  weighted digraphs would tie the algebra directly to standard graph APIs\n  (`SimpleGraph.Walk`).\n",
+    "domains": [
+      "Algebra",
+      "Tropical"
+    ],
+    "id": "fd_0931",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "99c2e84e",
+    "status": "available",
+    "timestamp": "2026-07-10T18:43:37.812924+00:00",
+    "title": "This project formalizes two cross-domain bridge theorems around the tropical"
   },
   {
     "consumed_by_exp_id": "76f66aa5",

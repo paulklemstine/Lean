@@ -5963,7 +5963,7 @@
         "mock modular forms",
         "class number asymptotics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -7309,7 +7309,7 @@
         "Extremal combinatorics",
         "Influence theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -8219,7 +8219,7 @@
         "Quantum mechanics ↔ Analytic number theory",
         "Spectral theory ↔ Lattice models"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Pythagorean",
         "Physics"
@@ -10441,7 +10441,7 @@
         "spectral_graph_theory",
         "extremal_graph_theory"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Pythagorean",
         "Physics"
@@ -11298,7 +11298,7 @@
         "probability theory",
         "topology of surfaces"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Pythagorean",
         "Physics"
@@ -11396,7 +11396,7 @@
         "Tensor power closure properties",
         "Graphon regularity and forcing principles"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -13951,7 +13951,7 @@
         "combinatorial_reconfiguration",
         "spectral_graph_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -17186,7 +17186,7 @@
         "linear_algebra",
         "combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -19028,7 +19028,7 @@
         "combinatorial_matrix_theory",
         "integer_sequences"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Pythagorean",
         "Physics"
@@ -19173,7 +19173,7 @@
         "hereditary graph classes",
         "algebraic combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -19610,7 +19610,7 @@
         "linear algebra",
         "linear programming"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Pythagorean",
         "Physics"
@@ -20297,7 +20297,7 @@
         "enumerative combinatorics",
         "probabilistic methods"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Pythagorean",
         "Physics"
@@ -20773,7 +20773,7 @@
         "Hamiltonicity",
         "Toughness"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -25104,11 +25104,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 2,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "823f5582",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -25121,7 +25121,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0897",
-      "last_attempt_time": "2026-07-10T15:10:24.349423+00:00",
+      "last_attempt_time": "2026-07-10T18:43:56.742194+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -25136,7 +25136,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-10T12:39:07.666361+00:00",
       "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
@@ -25237,7 +25237,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Leading-Term Cancellation and Spectral Balance\n\nThe results of this cycle establish that the leading correction to a spectral\nheat-kernel trace, `L(t) = Σᵢ dᵢ e^{−t Eᵢ}`, cancels identically exactly when the\ndiagonal shifts balance within each degenerate energy level. Three structural\nideas emerged: (i) transcendental cancellation is controlled by a Vandermonde\ndeterminant obtained from integer temperature samples; (ii) degeneracy is the\n*only* source of nontrivial cancellation; (iii) the level-partition of the\nspectrum organizes the whole phenomenon. These suggest the following bold,\nfalsifiable conjectures.\n\n## Conjecture 1 — Second-order cancellation is governed by off-diagonal balance\n\nThe subleading `1/N²` term of the heat-kernel trace cancels identically for all\ntemperatures if and only if, on each degenerate level, both the diagonal shift\nsum vanishes *and* the level-restricted sum of squared off-diagonal couplings\nweighted by inverse energy gaps vanishes.\n\n**The key insight is** that once the first-order (diagonal) obstruction is\nremoved, the next obstruction is a quadratic form in the off-diagonal couplings\nwhose kernel is again a level-by-level balance condition, mirroring the\nfirst-order structure one rung higher.\n\n**Why now?** The first-order picture is now completely pinned down, including the\nexact mechanism (intra-level balance) and the exact failure mode (simple\nspectra). This gives a clean base case and a precise notion of \"what must already\nvanish\" before the second-order term can be isolated, making the quadratic\nobstruction well-posed for the first time.\n\n## Conjecture 2 — Genericity of non-cancellation\n\nFor a fixed spectrum, the set of perturbations whose leading term cancels forms a\nproper linear subspace whose codimension equals the number of distinct energy\nvalues. Consequently, cancellation is a measure-zero, non-generic event unless\nforced by symmetry.\n\n**The key insight is** that the cancellation locus is precisely the joint kernel\nof the \"level-sum\" functionals, one per distinct eigenvalue, and these\nfunctionals are linearly independent, so the codimension counts the levels\nexactly.\n\n**Why now?** The characterization by level sums converts a hard analytic\ncondition (\"vanishes for all t\") into a finite linear system, so the dimension\ncount becomes a concrete, checkable claim rather than a heuristic about\n\"typical\" behavior.\n\n## Conjecture 3 — Symmetry certifies cancellation\n\nIf a finite symmetry group acts on the spectrum with the perturbation\ntransforming in a nontrivial irreducible representation, then every degenerate\nlevel carrying that representation has vanishing diagonal shift sum, so the\nleading term cancels automatically.\n\n**The key insight is** that the level-sum functional is the projection onto the\ntrivial isotypic component, so any perturbation living purely in a nontrivial\nrepresentation is annihilated level-by-level without any fine-tuning.\n\n**Why now?** With cancellation reduced to the vanishing of explicit level sums,\nthe connection to representation theory becomes a direct statement about\ncharacters, turning an accidental-looking analytic identity into a structural\nconsequence of symmetry.\n\n## Conjecture 4 — Rigidity across temperatures forces rigidity across gaps\n\nIf the leading term merely decays faster than every single exponential `e^{−t E_i}`\nas `t → ∞` (rather than vanishing identically), then the diagonal shift sum on\nthe lowest level must already vanish, and the argument cascades upward through the\ngaps.\n\n**The key insight is** that the slowest-decaying surviving level dominates the\nlarge-temperature asymptotics, so any anomalously fast decay is impossible unless\nthat level is already balanced, after which the next level inherits the same\nconstraint.\n\n**Why now?** The Vandermonde/moment reduction makes the large-`t` dominance\nargument fully rigorous, so the intuitive \"leading exponential wins\" heuristic can\nbe promoted to an inductive rigidity theorem across the entire gap structure.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Physics"
@@ -26098,7 +26098,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Cancellation structure of spectral heat-kernel expansions\n\nThis cycle sharpened the leading-order cancellation theory in two directions:\na **moment-spectrum** characterisation (`L ≡ 0` iff all power sums `∑ᵢ dᵢ Eᵢᵏ`\nvanish) and a **dimension formula** for the cancellation space\n(`n − #{distinct energy levels}`), both traced to the invertibility of a\nVandermonde system on the distinct energy values. The following conjectures push\nthat structure further.\n\n## 1. Sub-leading term cancels within a fixed degeneracy pattern\n\n**Conjecture.** Fix the pattern of degeneracies (the partition of levels into\nequal-energy blocks). Whenever the leading correction cancels, the *next* order\ncorrection `∑ᵢ dᵢ² e^{-tEᵢ}` (second-order Feynman–Hellmann) cancels for all `t`\nif and only if the second-order shifts also balance block-by-block, with a\ncancellation space of dimension `n − #{distinct levels}` — the *same* count.\n\n**The key insight is** that each order of perturbation theory sees the spectrum\nonly through the same level-aggregation map, so its cancellation freedom is a\nfixed invariant of the degeneracy pattern, independent of the order.\n\n**Why now?** The leading order has just been reduced to a single linear map\nwhose kernel dimension is exactly the degeneracy count; the natural next test is\nwhether that map controls all higher orders uniformly.\n\n## 2. Minimal sampling suffices\n\n**Conjecture.** For a spectrum with exactly `m` distinct levels, the leading term\ncancels for *all* `t` as soon as it cancels at any `m` distinct sample points\n`t₁, …, t_m`. Equivalently, `m` measurements pin down the entire cancellation.\n\n**The key insight is** that the level-projected function lives in an\n`m`-dimensional space of exponentials, so `m` independent evaluations already\ndetermine it — the transcendental identity is finite-dimensional in disguise.\n\n**Why now?** The Vandermonde pivot used here already shows that natural-number\nsamples `t = 0,1,2,…` suffice; compressing this to the minimal `m` samples is the\nsharp, experimentally testable version.\n\n## 3. Degeneracy is detectable from the cancellation dimension alone\n\n**Conjecture.** The dimension of the leading-term cancellation space is a\ncomplete invariant of the *coarse* spectral degeneracy: two spectra share the\nsame cancellation dimension for every perturbation class if and only if they have\nthe same number of distinct levels, regardless of the level values themselves.\n\n**The key insight is** that the dimension formula `n − #{distinct levels}`\ndepends on the spectrum only through its cardinality of distinct values, so the\ncancellation space forgets everything else about the energies.\n\n**Why now?** With the exact dimension count established, the degeneracy count\nbecomes an observable one can read off from cancellation phenomena rather than\nfrom the spectrum directly.\n\n## 4. Weighted / density-of-states generalisation\n\n**Conjecture.** Replace the counting of levels by a positive weight `wᵢ` (a\ndensity of states). The weighted leading term `∑ᵢ wᵢ dᵢ e^{-tEᵢ}` cancels for all\n`t` iff every *weighted* level sum vanishes, and the cancellation space still has\ndimension `n − #{distinct levels}` — the weights rescale but never change the\ndegeneracy count.\n\n**The key insight is** that positive weights are an invertible diagonal change of\nvariables on the shift vector, so they preserve the kernel dimension of the\nlevel-aggregation map exactly.\n\n**Why now?** The unweighted map is now understood as a surjection onto the space\nof levels; conjugating by a positive diagonal is the smallest deformation that\ntests robustness of the whole picture.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Physics"
@@ -28688,6 +28688,7 @@
     "|preferred": 1
   },
   "selection_log": [
+    "famous_subtask",
     "famous_subtask",
     "famous_subtask",
     "famous_subtask",
