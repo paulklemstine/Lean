@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "935491ef",
-      "domain": "Probability",
-      "key_insight": "# Future Directions\n\n## 1. Unimodality is not enough: the persistent gamma-gap of flat symmetric sequences\n\n**Conjecture.** For every degree `n ≥ 2`, the all-ones symmetric polynomial\n`1 + t + t^2 + ⋯",
-      "quality_score": 0.70296,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-06T19:50:56",
-      "title": "Minimal dimension of non-γ-positive symmetric edge polytopes"
-    },
-    {
       "cycle_id": "0c573935",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Surreal Topology\n\n## What was proved\n\nThe surreal-topology deliverable establishes a cross-domain bridge between\nConway's surreal numbers (combinatorial game theory / set theory)",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-10T13:11:44",
       "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
+    },
+    {
+      "cycle_id": "6c565e60",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThis project formalizes a rigorous fragment of the \"Galois theory of reversible\ncellular automata\" programme, working with binary CAs on the cyclic lattice\n`ℤ/n` (file `Reversibil",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 38,
+      "timestamp": "2026-07-10T14:00:20",
+      "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ddab9e68",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Balanced Partitions under Crystal Reflections\n\nFix integers `d, e > 1`. Call a partition **`d`-balanced** (with respect to `e`) if\nevery cell whose hook length is divisible by `e",
-      "quality_score": 0.63296,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-07-01T12:58:40",
-      "title": "Crystal Reflections Preserve d-Balanced Property of Partitions"
-    },
     {
       "cycle_id": "c4e68c8d",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-10T13:11:44",
       "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
+    },
+    {
+      "cycle_id": "6c565e60",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThis project formalizes a rigorous fragment of the \"Galois theory of reversible\ncellular automata\" programme, working with binary CAs on the cyclic lattice\n`ℤ/n` (file `Reversibil",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 38,
+      "timestamp": "2026-07-10T14:00:20",
+      "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "9696343b",
-      "domain": "Applications",
-      "name": "cof_length",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "9696343b",
-      "domain": "Applications",
-      "name": "cof_nodup",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "9696343b",
-      "domain": "Applications",
-      "name": "cof_complete",
-      "quality": 0.72
-    },
     {
       "cycle_id": "39669115",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "no_strict_antipodal_preference",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "6c565e60",
+      "domain": "Applications",
+      "name": "card_rules",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "6c565e60",
+      "domain": "Applications",
+      "name": "card_neighborhoods",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "6c565e60",
+      "domain": "Applications",
+      "name": "shift_apply",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-10T13:11:44",
+  "last_updated": "2026-07-10T14:00:20",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "39669115",
-        "quality": 0.83,
-        "theorems": 25,
-        "title": "The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction"
-      },
-      {
         "cycle_id": "9c1224fc",
         "quality": 0.72,
         "theorems": 22,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 8,
         "title": "Deepening: Stochastic Galois Theory: Random Permutations Have Generic Galois Gro"
+      },
+      {
+        "cycle_id": "6c565e60",
+        "quality": 0.72,
+        "theorems": 38,
+        "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
       }
     ],
     "Bridges": [
