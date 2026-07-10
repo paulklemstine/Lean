@@ -231,7 +231,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The Topology of Knotted Light: How Laser Beams Get Tangled"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ad612bee",
     "description": "The primes have density 0 in the integers, but what is the Hausdorff dimension of the set of primes viewed as a subset of R? Define the 'prime fractal' P as the set of primes with the metric d(p,q) = |1/log(p) - 1/log(q)|. This metric stretches out the primes so that the twin primes are close together and the large primes are spread out. Conjecture: The Hausdorff dimension dim_H(P, d) = 1. The primes with this metric are essentially a 1-dimensional set \u2014 they fill out a line when viewed through the logarithmic lens. This is because the prime number theorem pi(x) ~ x/log(x) means that in the d-metric, the 'length' of the primes up to x is sum_{p <= x} d(p, p+1) ~ sum_{p <= x} 1/(p*log(p)) ~ log(log(x)), which diverges. So the primes are 'long enough' to be 1-dimensional. But the Hausdorff dimension might be > 1 if the primes have fractal structure at small scales. In fact, dim_H(P, d) > 1 would mean the primes are more than a line \u2014 they have 'wrinkles' that fill more space. The twin prime conjecture predicts that there are infinitely many pairs of primes at d-distance ~ 1/(p*log(p)), creating a fractal dust that increases the dimension. Conjecture: dim_H(P, d) = 1 + epsilon where epsilon depends on the density of twin primes. If the twin prime conjecture is true, epsilon > 0. Test: estimate dim_H(P, d) by box-counting for primes up to 10^12 and verify it is close to 1 (or slightly above). Impact: the primes are a fractal with dimension 1 + epsilon, where epsilon measures the abundance of twin primes. If twin primes are infinite, the primes are more than a line \u2014 they are a fractal curve.",
     "domains": [
       "Novelty",
@@ -241,7 +241,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T03:16:18.428249+00:00",
     "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
   },
@@ -259,6 +259,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-08T16:01:43.810023+00:00",
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
+  },
+  {
+    "consumed_by_exp_id": "b152086d",
+    "description": "The Heisenberg uncertainty principle states that Delta(x) * Delta(p) >= hbar/2. But this is NOT a physical principle \u2014 it is a THEOREM of Fourier analysis. The Fourier transform of a function f(x) satisfies: if f is concentrated in a region of width Delta(x), then its Fourier transform f_hat is concentrated in a region of width Delta(k) >= 1/(2*Delta(x)). This is the Benedicks-Amrein-Berthier theorem: a function and its Fourier transform cannot both be supported on sets of finite measure. Conjecture: The uncertainty principle generalizes to all integral transforms. For the Laplace transform: if f is supported on [a, infinity), then the Laplace transform L[f](s) cannot be supported on a set of finite measure unless f = 0. For the Mellin transform: if f is supported on a geometric progression, then M[f](s) cannot be supported on a set of finite measure. For the Radon transform: if f is supported on a strip, then R[f] cannot be supported on a set of finite measure. The general principle: no invertible integral transform allows both a function and its transform to have compact support. Test: verify the uncertainty principle for the Fourier, Laplace, Mellin, and Radon transforms numerically. Construct functions with Delta(x) = epsilon and measure Delta(k) for each transform. Impact: the uncertainty principle is not about quantum mechanics \u2014 it is about the structure of integral transforms. Every transform has its own uncertainty principle.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0841",
+    "priority_score": 0.81,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-10T03:51:17.483434+00:00",
+    "title": "The Uncertainty Principle Is a Fourier Thing: Position-Momentum Duality"
   },
   {
     "consumed_by_exp_id": "",
@@ -10204,7 +10219,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   },
   {
-    "consumed_by_exp_id": "27804b30",
+    "consumed_by_exp_id": "",
     "description": "1729 = 10^3 + 9^3 = 12^3 + 1^3 is the smallest number expressible as a sum of two cubes in two ways (Ramanujan's taxicab number). But can 1729 be expressed as a sum of three cubes? That is, does 1729 = x^3 + y^3 + z^3 have integer solutions? Conjecture: 1729 = 1^3 + 10^3 + 8^3 = 1 + 1000 + 512 = 1513 (no). 1729 = 9^3 + 9^3 + 7^3 = 729 + 729 + 343 = 1801 (no). Actually, 1729 = 1^3 + 12^3 = 1728 + 1 = 1729 (the original). And 1729 = 10^3 + 9^3 = 1000 + 729 = 1729. So 1729 has TWO representations as a sum of two cubes. The question is: does 1729 have a representation as a sum of three cubes? The answer is YES: 1729 = 1^3 + (-12)^3 + 12^3 = 1 - 1728 + 1728 = 1 = NO, this gives 1, not 1729. Try 1729 = 10^3 + 9^3 + 0^3 = 1729. So 1729 = 10^3 + 9^3 + 0^3 is a trivial representation. The non-trivial question: does 1729 have a representation as x^3 + y^3 + z^3 with x,y,z all nonzero? Conjecture: 1729 has no non-trivial representation as a sum of three cubes with all terms nonzero. Test: brute-force search for x^3 + y^3 + z^3 = 1729 with x,y,z nonzero integers. Impact: even Ramanujan's favorite number has secrets \u2014 the taxicab number's relationship to sums of three cubes reveals new Diophantine structure.",
     "domains": [
       "Novelty",
@@ -10214,9 +10229,24 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-09T23:08:57.239960+00:00",
     "title": "Ramanujan's Taxicab Number as a Sum of Three Cubes: 1729 Revisited"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The chromatic polynomial chi_G(k) counts the number of proper k-colorings of a graph G. For a friendship graph, chi_G(k) counts the number of ways to assign k emotions to people such that no two friends share the same emotion. Conjecture: The chromatic polynomial evaluated at k=6 (for the 6 basic emotions: happiness, sadness, anger, fear, disgust, surprise) gives the number of 'emotionally consistent' assignments of emotions to a social network. The chromatic polynomial has a root at k=2 for any bipartite graph, meaning a social network that splits cleanly into two groups has exactly 0 ways to assign 2 emotions without friends sharing emotions. The real emotional chromatic number chi_E(G) of a social network G is the smallest k such that chi_G(k) > 0 and k >= 3 (since real emotions need at least 3 categories to avoid trivial assignments). For a complete graph K_n (a clique of n mutual friends), chi_E(K_n) = n (everyone needs a different emotion). For a cycle C_n (a circular friendship chain), chi_E(C_n) = 2 if n is even and 3 if n is odd (alternating emotions work for even cycles, but odd cycles need a third emotion). Test: compute chi_E(G) for 100 real social networks and verify that the emotional chromatic number is between 3 and 6 for most networks. Impact: the chromatic polynomial is not just combinatorics \u2014 it measures the emotional diversity of a social network.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0842",
+    "priority_score": 0.69,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-10T03:51:17.564638+00:00",
+    "title": "Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology"
   },
   {
     "consumed_by_exp_id": "dd8b10c1",
@@ -10248,7 +10278,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Tensor Amplification and Spectral Transfer for Sidorenko-Type Inequali"
   },
   {
-    "consumed_by_exp_id": "339ccc20",
+    "consumed_by_exp_id": "",
     "description": "The Fermi paradox asks: if intelligent life is common, where is everyone? The pigeonhole principle answers: if there are more pigeons than holes, at least one hole contains more than one pigeon. Apply this to the cosmos: there are approximately 10^22 stars in the observable universe (pigeons) and approximately 10^10 habitable-zone planets (holes). By the pigeonhole principle, at least one habitable planet contains at least 10^12 stars' worth of interest... wait, that's the wrong way around. Correct: there are ~10^10 habitable planets (pigeons) and ~4.5 billion years of time (holes). By the pigeonhole principle, at least one time period of one year contains at least 2 habitable planets developing intelligence. But we observe zero contacts. Conjecture: The resolution is that intelligent life is NOT common \u2014 the expected number of technological civilizations in the observable universe is less than 1. More precisely: if we model the Drake equation with honest probability estimates, P(technological civilization per habitable planet) < 10^{-10}, making the expected number of civilizations < 10^0 = 1. The Fermi paradox is not a paradox at all \u2014 it is the pigeonhole principle correctly predicting that with very few pigeons (civilizations) and very many holes (planets + time), most holes are empty. Test: compute the Drake equation with conservative estimates and verify that E[civilizations] < 1. Impact: we are alone because probability says so. The universe is mostly empty because that's what the math predicts.",
     "domains": [
       "Novelty",
@@ -10258,7 +10288,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.65,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-10T01:13:32.642655+00:00",
     "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
   }
