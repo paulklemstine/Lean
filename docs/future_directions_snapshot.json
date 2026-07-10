@@ -173,25 +173,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "8b2bab35",
-    "description": "Building on cycle 34a8cfea (Q=0.820), which proved 13 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The chromatic polynomial chi_G(k) counts the number of proper k-colorings of a graph G. For a friendship graph, chi_G(k) counts the number of ways to assign k emotions to people such that no two friends share the same emotion. Conjecture: The chromatic polynomial evaluated at k=6 (for the 6 basic em",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_34a8cfea_2d690ca1",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "34a8cfea",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T07:33:38.350831+00:00",
-    "title": "Deepening: Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 7ca0f553 (Q=0.820), which proved 61 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Infinite chess is chess on an infinite board. It is known that there are positions where White can force checkmate but only in omega (the first infinite ordinal) moves. Conjecture: There exists a position on the infinite chess board where White can force checkmate in exactly omega^omega moves, but n",
     "domain_bridges": [],
@@ -10034,6 +10015,26 @@
     "status": "available",
     "timestamp": "2026-07-10T09:26:14.435602+00:00",
     "title": "Exact dictionary \"logical qubits = middle homology\""
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis cycle deepened the \"Graph Coloring with Emotions\" thread from a qualitative invariant\n(`emoChrom`, the emotional chromatic number) to a **quantitative closed form**: the full chromatic\npolynomial of the friendship (windmill) graph.\n\n## What was proved (`Catalog/Novelty/FriendshipChromaticPolynomial.lean`)\n\n- `chromVal_friendship` : `P(F_n, q) = q · ((q-1)(q-2))^n` for all `n, q`, via an explicit bijection\n  (`frEquiv`) between proper colourings and (centre colour) × (per-triangle admissible pair), whose\n  fibre count `(q-1)(q-2)` is established in `pairColors_card`.\n- `friendship_chromVal_six` : `P(F_n, 6) = 6 · 20^n` — the original conjecture (six basic emotions).\n- `chromVal_pos_iff_colorable`, `friendship_colorable_three`, `friendship_colorable_six`,\n  `friendship_not_colorable_two`, `friendship_chromaticNumber` (`χ(F_n) = 3` for `n ≥ 1`).\n\n## Also proved (`Catalog/Novelty/FriendshipEmotionalChromaticNumber.lean`)\n\nThe bridge to the emotional-chromatic-number invariant (former next step 6, now **done**):\n\n- `emoChrom_friendship` : `emoChrom (F_n) = 3` for every `n`, obtained by feeding\n  `friendship_colorable_three` into `emoChrom_eq_three_iff`.\n- `emoChrom_friendship_within_window` : `3 ≤ emoChrom (F_n) ≤ 6` — every friendship network sits\n  inside the six-basic-emotions window.\n- `chromVal_emoChrom_friendship` : `P(F_n, emoChrom (F_n)) = 3 · 2^n`.\n- `emoChrom_eq_chromaticNumber_friendship` : for `n ≥ 1`, `emoChrom (F_n) = χ(F_n)` (both `3`).\n\n## Natural next steps\n\n1. **Generalized windmills `Wd(m, n)`** (`n` copies of `K_m` glued at a vertex): the same bijection\n   generalizes to `P = q · (q-1)^{\\underline{m-1}}{}^{\\,n}` where `(q-1)^{\\underline{m-1}}` is the\n   falling factorial `(q-1)(q-2)···(q-m+1)`. The friendship graph is the `m = 3` case.\n2. **Book graphs / fans / gear graphs**: other one-common-vertex gluings with clean product forms.\n3. **Deletion–contraction cross-check**: rederive `chromVal_friendship` from the recurrence in\n   `Catalog/Combinatorics/ChromaticPolynomial.lean` (deleting/contracting one triangle edge) and\n   prove the two derivations agree, tightening the bridge between the counting and algebraic views.\n4. **Polynomiality and roots**: lift `chromVal` to a genuine `Polynomial ℤ` and show its integer\n   roots are exactly `{0, 1, 2}`, matching the emotional floor `emoChrom = 3`.\n5. **Coefficient combinatorics**: expand `q·((q-1)(q-2))^n` and connect the alternating-sign\n   coefficients to Whitney's broken-circuit theorem for this graph family.\n6. **Bridge to `emoChrom`** — *done*, see `Catalog/Novelty/FriendshipEmotionalChromaticNumber.lean`\n   (`emoChrom_friendship : emoChrom (F_n) = 3`, extended to the whole family, plus the\n   window and chromatic-number consequences).\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0875",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "8b2bab35",
+    "status": "available",
+    "timestamp": "2026-07-10T09:58:00.083981+00:00",
+    "title": "This cycle deepened the \"Graph Coloring with Emotions\" thread from a qualitative"
   },
   {
     "ambition_level": "extension",
