@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "55f141e7",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The L-Function Universe\n\n## What is proved\n\n`Census.lean` builds a self-contained chain culminating in:\n\n* **Countability.** `instCountableSelbergDatum` : the universe of L-funct",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 26,
-      "timestamp": "2026-07-09T22:16:17",
-      "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
-    },
-    {
       "cycle_id": "643186e8",
       "domain": "Algebra",
       "key_insight": "# Future Directions: The Field with One Element Meets Tropical Geometry\n\nThis cycle established a precise, quantitative bridge between the min-plus\n(tropical / F₁) world and the topology of toric vari",
@@ -499,19 +489,19 @@
       "theorem_count": 26,
       "timestamp": "2026-07-10T15:04:38",
       "title": "Real-rootedness of the square of the Eulerian triangle"
+    },
+    {
+      "cycle_id": "f5358691",
+      "domain": "Computation",
+      "key_insight": "# Future directions — Persistent Cycles in Randomized Graphs\n\n## What was established\n\nThe mission target — *for every `ε>0` there is `K` such that for `d ≥ K` and\n`p ∈ [εd/log n, d/log n]`, `G_p` a.a",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-10T15:33:02",
+      "title": "Persistent Cycles in Randomized Graphs via Hyperstable Structural Constraints"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "dd442784",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Homology of Latin Square Graphs\n\nThese conjectures are distilled from the current cycle's findings on the clique\nstructure of Latin square graphs. Each is falsifiable and, we beli",
-      "quality_score": 0.759526,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-01T15:25:50",
-      "title": "Dimension of Second Clique Homology for Latin Square Graphs"
-    },
     {
       "cycle_id": "0eefe6b1",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 26,
       "timestamp": "2026-07-10T15:04:38",
       "title": "Real-rootedness of the square of the Eulerian triangle"
+    },
+    {
+      "cycle_id": "f5358691",
+      "domain": "Computation",
+      "key_insight": "# Future directions — Persistent Cycles in Randomized Graphs\n\n## What was established\n\nThe mission target — *for every `ε>0` there is `K` such that for `d ≥ K` and\n`p ∈ [εd/log n, d/log n]`, `G_p` a.a",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-10T15:33:02",
+      "title": "Persistent Cycles in Randomized Graphs via Hyperstable Structural Constraints"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "9c1224fc",
-      "domain": "Applications",
-      "name": "braid_rel_12",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "9c1224fc",
-      "domain": "Applications",
-      "name": "braid_rel_23",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "e37aa20a",
-      "domain": "Novelty",
-      "name": "is",
-      "quality": 0.83
-    },
     {
       "cycle_id": "e37aa20a",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "driven",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "f5358691",
+      "domain": "Computation",
+      "name": "must",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "f5358691",
+      "domain": "Computation",
+      "name": "prob_survives_antitone",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "f5358691",
+      "domain": "Computation",
+      "name": "exists_survivor_of_pos",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-10T15:04:38",
+  "last_updated": "2026-07-10T15:33:02",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "54abcfb1",
-        "quality": 0.45116,
-        "theorems": 17,
-        "title": "Tropical Differential Equations: Power Series Solutions"
-      },
-      {
         "cycle_id": "2e536cee",
         "quality": 0.7725600000000001,
         "theorems": 15,
@@ -3327,6 +3321,12 @@
         "quality": 0.63,
         "theorems": 25,
         "title": "Tensor Amplification and Spectral Transfer for Sidorenko-Type Inequalities"
+      },
+      {
+        "cycle_id": "f5358691",
+        "quality": 0.72,
+        "theorems": 16,
+        "title": "Persistent Cycles in Randomized Graphs via Hyperstable Structural Constraints"
       }
     ],
     "Cryptography": [

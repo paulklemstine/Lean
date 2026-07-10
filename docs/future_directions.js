@@ -157,7 +157,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "49853bf7",
     "description": "Building on cycle 8c745e9f (Q=0.820), which proved 26 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For every n \u2265 0, the n-th row generating function of the square of the Eulerian triangle\u2014defined as the polynomial \u2211_k (\u2211_j A(n,j)\u00b7A(j,k)) x^k where A(n,k) is the Eulerian number counting permutations of [n] with k descents\u2014has only real roots. This extends the paper's results on powers of Pascal, S",
     "domains": [
       "Novelty"
@@ -166,7 +166,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "8c745e9f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T15:04:38.394336+00:00",
     "title": "Deepening: Real-rootedness of the square of the Eulerian triangle"
   },
@@ -2082,20 +2082,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-04T19:57:33.862963+00:00",
     "title": "A structural decomposition theorem for countable FAC posets via scattered components"
-  },
-  {
-    "consumed_by_exp_id": "f5358691",
-    "description": "For every \\(\\epsilon > 0\\), there exists \\(K > 0\\) such that for all \\(d \\ge K\\) and \\(p \\in [\\epsilon d/\\log n, d/\\log n]\\), a graph \\(G\\) with average degree \\(d\\) satisfies: the random subgraph \\(G_p\\) obtained by retaining each edge of \\(G\\) independently with probability \\(p\\) contains a cycle of length at least \\(d - \\epsilon d\\) asymptotically almost surely as \\(n \\to \\infty\\).",
-    "domains": [
-      "Computation"
-    ],
-    "id": "fd_0313",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02483v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-04T23:36:00.875596+00:00",
-    "title": "Persistent Cycles in Randomized Graphs via Hyperstable Structural Constraints"
   },
   {
     "consumed_by_exp_id": "",
@@ -5284,7 +5270,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The Fundamental Theorem of Cakes: Algebraic Geometry of Baking"
   },
   {
-    "consumed_by_exp_id": "b1691bd9",
+    "consumed_by_exp_id": "",
     "description": "The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surface V(f) = {x : f(x) = 0} is a piecewise linear hypersurface. Conjecture: every rational homology class in H_{n-2}(V(f), Q) is represented by an algebraic cycle (a subvariety of V(f) of codimension 1). Since V(f) is piecewise linear, its homology groups are finitely generated and every cycle is a formal sum of linear pieces. Each linear piece is an algebraic cycle (a hyperplane section). Conjecture: the piecewise linear Hodge conjecture holds \u2014 every homology class in V(f) is a sum of hyperplane sections. This is TRUE for piecewise linear varieties because every face of a polyhedron is cut out by a linear equation. The deeper conjecture: for a ReLU network with L layers and widths (n, w_1, ..., w_L, 1), the Hodge numbers h^{p,q}(V(f)) satisfy h^{p,q} <= (w_1 choose p) * (w_L choose q) * prod_{i=2}^{L-1} w_i. Test: compute H_{n-2}(V(f)) for small ReLU networks and verify that every class is represented by hyperplane sections. Impact: the Hodge conjecture is trivially true for neural network decision surfaces. The non-trivial content is the BOUND on Hodge numbers.",
     "domains": [
       "Novelty",
@@ -5294,7 +5280,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.76,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-10T12:39:07.666361+00:00",
     "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
   },
@@ -5822,6 +5808,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T15:04:30.851132+00:00",
     "title": "These conjectures grow out of an explicit study of the square of the Eulerian tr"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions \u2014 Persistent Cycles in Randomized Graphs\n\n## What was established\n\nThe mission target \u2014 *for every `\u03b5>0` there is `K` such that for `d \u2265 K` and\n`p \u2208 [\u03b5d/log n, d/log n]`, `G_p` a.a.s. contains a cycle of length `\u2265 d \u2212 \u03b5d`* \u2014\nis a deep asymptotic random-graph theorem well beyond what can be fully\nformalized in one pass.  In **contrarian** mode we isolated its provable core,\nstated bold conjectures around it, and settled each.  All results are machine\nchecked (`propext, Classical.choice, Quot.sound` only) and each file compiles\nindependently.\n\n### `Retention.lean` \u2014 the independent edge-retention model (PROVED)\n* `sum_weight` \u2014 the retention weights form a probability mass function.\n* `prob_survives` \u2014 **exact survival law**: a fixed edge set `S` survives with\n  probability `p^{|S|}`.\n* `prob_nonneg`, `prob_mono`, `prob_le_one`, `prob_union_le` \u2014 a small but\n  complete probability calculus (monotonicity, boundedness, union bound).\n* `exp_surviving_eq` \u2014 linearity of expectation: expected number of surviving\n  members of a family `F` equals `\u2211_{S\u2208F} p^{|S|}`.\n\n### `Contrarian.lean` \u2014 conjectures proved and disproved\n* **DISPROVED** `single_structure_fragility` \u2014 the naive conjecture \"one fixed\n  long cycle survives a.a.s. for `p<1`\" is false; its survival probability is\n  `p^L \u2192 0`.\n* **PROVED** `prob_survivor_family_le` \u2014 finite union bound over a family of\n  cycles: `P(some cycle survives) \u2264 \u2211 p^{|S|}` (the true first-moment tool).\n* **PROVED** `prob_survives_antitone` \u2014 longer cycles are (weakly) harder to keep.\n* **PROVED** `exp_retained_edges` \u2014 expected number of retained edges is `p\u00b7|E|`.\n* `exists_survivor_of_pos` \u2014 positive expected count forces an actual survivor.\n\n### `LongPath.lean` \u2014 the deterministic engine (PROVED)\n* `exists_long_path` \u2014 **Erd\u0151s\u2013Gallai / Dirac backbone**: minimum degree `\u2265 k`\n  forces a path of length `\u2265 k`.\n* `exists_long_path_of_minDegree` \u2014 the minimum-degree phrasing.\n\n## Natural next steps\n\n1. **Long cycles, not just paths.** Upgrade `exists_long_path` to\n   `min degree \u2265 k \u21d2 circumference \u2265 k+1` (Dirac's cycle theorem): from the\n   maximal path, take the farthest neighbour of an endpoint and close the cycle\n   with `Walk.takeUntil` / rotation.  This is the deterministic statement most\n   directly matching the mission's \"cycle of length `\u2265 d \u2212 \u03b5d`\".\n\n2. **Second moment / lower bound on persistence.** The union bound gives only an\n   upper bound on `P(survivor)`.  Adding a Chebyshev/Paley\u2013Zygmund second-moment\n   estimate on `expSurviving` would turn \"positive expectation\" into\n   \"a.a.s. a survivor\", the positive half of the persistence theorem.\n\n3. **Couple the two halves.** Combine `prob_survives`/`exp_retained_edges` with\n   `exists_long_path` applied to the *retained* subgraph: show that `G_p` keeps\n   min degree `\u2248 pd` with high probability, then invoke the deterministic bound\n   to force a long path/cycle. This is the skeleton of the full theorem.\n\n4. **Sharpness.** Formalize that `K_{k+1}` (degree `k`, circumference `k+1`) and\n   `C_n` (degree `2`) make the deterministic bounds tight, and quantify the loss\n   in the `d \u2212 \u03b5d` slack.\n\n5. **Genuine measure-theoretic model.** Replace the finite mass-function `weight`\n   by a `MeasureTheory` product Bernoulli measure to state the `n \u2192 \u221e`\n   asymptotics (`atTop`/`a.a.s.`) verbatim as in the mission statement.\n",
+    "domains": [
+      "Computation",
+      "Pythagorean"
+    ],
+    "id": "fd_0910",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f5358691",
+    "status": "available",
+    "timestamp": "2026-07-10T15:32:55.846928+00:00",
+    "title": "The mission target \u2014 *for every `\u03b5>0` there is `K` such that for `d \u2265 K` and"
   },
   {
     "consumed_by_exp_id": "",
