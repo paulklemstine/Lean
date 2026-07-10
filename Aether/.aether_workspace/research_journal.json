@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "643186e8",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions: The Field with One Element Meets Tropical Geometry\n\nThis cycle established a precise, quantitative bridge between the min-plus\n(tropical / F₁) world and the topology of toric vari",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 18,
-      "timestamp": "2026-07-09T22:51:25",
-      "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
-    },
-    {
       "cycle_id": "84ab5171",
       "domain": "Applications",
       "key_insight": "# Future Directions — Cellular automata as varieties over the binary field\n\nThis cycle established that every elementary cellular automaton (ECA) is a\ndegree-≤3 polynomial map over the binary field, t",
@@ -499,19 +489,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-10T15:33:02",
       "title": "Persistent Cycles in Randomized Graphs via Hyperstable Structural Constraints"
+    },
+    {
+      "cycle_id": "cd5a9d7d",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions: Forced Structure in Symbolic Sequences\n\nThis cycle established two complementary \"forcing\" thresholds for sequences over a\nfinite alphabet: a *linear* pigeonhole threshold that fo",
+      "quality_score": 0.82,
+      "sorry_count": 3,
+      "theorem_count": 11,
+      "timestamp": "2026-07-10T15:48:57",
+      "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0eefe6b1",
-      "domain": "Shared",
-      "key_insight": "# Future Directions: Digit Sums of Prime Reciprocals and Beyond\n\nThe cycle established a closed form for the base-`b` digit sum of one period of\n`1/p` when the multiplicative order of `b` modulo `p` i",
-      "quality_score": 0.65777,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-07-01T16:51:06",
-      "title": "Digit Sum Formula for Prime Reciprocals with Half-Order Periods"
-    },
     {
       "cycle_id": "04b163c8",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-10T15:33:02",
       "title": "Persistent Cycles in Randomized Graphs via Hyperstable Structural Constraints"
+    },
+    {
+      "cycle_id": "cd5a9d7d",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions: Forced Structure in Symbolic Sequences\n\nThis cycle established two complementary \"forcing\" thresholds for sequences over a\nfinite alphabet: a *linear* pigeonhole threshold that fo",
+      "quality_score": 0.82,
+      "sorry_count": 3,
+      "theorem_count": 11,
+      "timestamp": "2026-07-10T15:48:57",
+      "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e37aa20a",
-      "domain": "Novelty",
-      "name": "logistic_zero",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "e37aa20a",
-      "domain": "Novelty",
-      "name": "logistic_one",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "207fb5b4",
-      "domain": "Applications",
-      "name": "here",
-      "quality": 0.83
-    },
     {
       "cycle_id": "207fb5b4",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Computation",
       "name": "exists_survivor_of_pos",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "cd5a9d7d",
+      "domain": "Pythagorean",
+      "name": "asserts",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "cd5a9d7d",
+      "domain": "Pythagorean",
+      "name": "produces",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "cd5a9d7d",
+      "domain": "Pythagorean",
+      "name": "rather",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-10T15:33:02",
+  "last_updated": "2026-07-10T15:48:57",
   "open_questions": [
-    {
-      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
-      "cycle_id": "3fe1db8c",
-      "domain": "Novelty",
-      "sorry_count": 3,
-      "timestamp": "2026-07-03T19:50:08"
-    },
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
       "cycle_id": "bb55b186",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 3,
       "timestamp": "2026-07-10T12:39:35"
+    },
+    {
+      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
+      "cycle_id": "cd5a9d7d",
+      "domain": "Pythagorean",
+      "sorry_count": 3,
+      "timestamp": "2026-07-10T15:48:57"
     }
   ],
   "research_threads": {
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "67990ab1",
-        "quality": 0.48928166666666667,
-        "theorems": 8,
-        "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
-      },
-      {
         "cycle_id": "72f1519b",
         "quality": 0.5317089325931801,
         "theorems": 10,
@@ -3885,6 +3879,12 @@
         "quality": 0.82,
         "theorems": 61,
         "title": "Infinite Chess: Checkmate in Omega Moves"
+      },
+      {
+        "cycle_id": "cd5a9d7d",
+        "quality": 0.82,
+        "theorems": 11,
+        "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
       }
     ],
     "Shared": [
