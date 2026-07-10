@@ -16647,7 +16647,7 @@
       "Chazal et al. 2014 - Persistence stability and interleaving distances",
       "Wagner 2016 - Correctly approximating the Rips and Čech complexes"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7976e906",
     "description": "For any fixed c in [1, sqrt(2)), there exists a family of finite metric spaces {X_n} with polynomially bounded doubling dimension such that any finitely presented c-approximation to the Vietoris-Rips filtrationrips(X_n) has size at least 2^{Omega(n)}. This establishes that bounded doubling dimension is a necessary geometric assumption for linear-size sparse approximations.",
     "domain_bridges": [
       "Topological data analysis bridges algebraic topology and computational geometry",
@@ -16664,7 +16664,7 @@
     "proof_strategy": "Construct explicit families of metric spaces using hypergraph-based constructions that encode set systems with large chromatic number. Show that any c-approximation must preserve distinguishing topological features that require exponentially many simplices. Apply category-theoretic interleaving arguments combined with geometric constructions to establish size lower bounds.",
     "research_mode": "team",
     "source_exp_id": "2607.06524v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T13:08:02.178509+00:00",
     "title": "Exponential Lower Bound for Rips c-Approximation in Bounded Doubling Dimension"
   },
@@ -18889,7 +18889,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "339ccc20",
     "description": "The Fermi paradox asks: if intelligent life is common, where is everyone? The pigeonhole principle answers: if there are more pigeons than holes, at least one hole contains more than one pigeon. Apply this to the cosmos: there are approximately 10^22 stars in the observable universe (pigeons) and approximately 10^10 habitable-zone planets (holes). By the pigeonhole principle, at least one habitable planet contains at least 10^12 stars' worth of interest... wait, that's the wrong way around. Correct: there are ~10^10 habitable planets (pigeons) and ~4.5 billion years of time (holes). By the pigeonhole principle, at least one time period of one year contains at least 2 habitable planets developing intelligence. But we observe zero contacts. Conjecture: The resolution is that intelligent life is NOT common — the expected number of technological civilizations in the observable universe is less than 1. More precisely: if we model the Drake equation with honest probability estimates, P(technological civilization per habitable planet) < 10^{-10}, making the expected number of civilizations < 10^0 = 1. The Fermi paradox is not a paradox at all — it is the pigeonhole principle correctly predicting that with very few pigeons (civilizations) and very many holes (planets + time), most holes are empty. Test: compute the Drake equation with conservative estimates and verify that E[civilizations] < 1. Impact: we are alone because probability says so. The universe is mostly empty because that's what the math predicts.",
     "domain_bridges": [],
     "domains": [
@@ -18902,7 +18902,7 @@
     "proof_strategy": "State the Drake equation: N = R* * f_p * n_e * f_l * f_i * f_c * L, where R* = rate of star formation (~1.5-3/yr), f_p = fraction with planets (~0.5-1), n_e = habitable planets per star (~0.01-0.4), f_l = fraction developing life (~0.01-1), f_i = fraction developing intelligence (~0.01-0.5), f_c = fraction developing technology (~0.01-0.5), L = longevity of civilization (~100-10^9 yr). Pessimistic estimate: N = 1.5 * 0.5 * 0.01 * 0.01 * 0.01 * 0.01 * 100 = 7.5 * 10^{-7} << 1. Optimistic estimate: N = 3 * 1 * 0.4 * 1 * 0.5 * 0.5 * 10^9 = 3 * 10^8 >> 1. The key parameter is f_l * f_i * f_c which spans 10 orders of magnitude. The Rare Earth hypothesis (f_l * f_i * f_c ~ 10^{-12}) gives N < 1, resolving the paradox. Pigeonhole: if N < 1, the expected number of civilizations is less than 1, so with probability > 0.5, we are the only one. Test: compute P(N >= 2) for various Drake parameter distributions and verify P(N >= 2) < 0.5 for conservative estimates.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T01:13:32.642655+00:00",
     "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
   }

@@ -35103,7 +35103,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Sheehy 2013 - Linear-size approximations in bounded doubling dimension",
         "Rabadán and Dey 2016 - Sparse approximations for topological inference",
@@ -35112,7 +35112,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "7976e906",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35129,7 +35129,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0733",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-10T01:50:08.498404+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vietoris_rips_exponential_lower_bound :\n  ∀ (c : ℝ), c ≥ 1 → c < Real.sqrt 2 →\n  ∃ (X_family : ℕ → Type*) (H : ∀ n, finite_metric_space (X_family n)),\n    (∃ (dim_bound : ℕ), ∀ n, doubling_dimension (H n) ≤ dim_bound) ∧\n    (∀ (c_approx : ℝ), c_approx ≥ 1 → c_approx < c →\n     ∀ (sparse_approx : ℕ),\n       ∃ n, approximation_size (rips_filtration (H n)) c_approx > 2 ^ (sparse_approx * n))",
       "lineage_refs": [],
@@ -35144,7 +35144,7 @@
       "source": "",
       "source_exp_id": "2607.06524v1",
       "source_path": "http://arxiv.org/abs/2607.06524v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-09T13:08:02.178509+00:00",
       "title": "Exponential Lower Bound for Rips c-Approximation in Bounded Doubling Dimension"
@@ -39264,11 +39264,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "339ccc20",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39281,7 +39281,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0824",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-10T01:50:14.016379+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -39296,7 +39296,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-10T01:13:32.642655+00:00",
       "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
@@ -40306,7 +40306,6 @@
   },
   "selection_log": [
     "cross_domain_bridge",
-    "cross_domain_bridge",
     "famous_subtask",
     "cross_domain_bridge",
     "cross_domain_bridge",
@@ -40324,6 +40323,7 @@
     "cross_domain_bridge",
     "famous_subtask",
     "famous_subtask",
+    "cross_domain_bridge",
     "cross_domain_bridge"
   ]
 }
