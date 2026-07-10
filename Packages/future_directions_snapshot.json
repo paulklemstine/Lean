@@ -60,6 +60,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 7e49f0c7 (Q=0.830), which proved 17 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Galois group of a random polynomial over Q is S_n with probability 1. This is the Hilbert irreducibility theorem in probabilistic form. But what about random polynomials over finite fields? For f in F_p[x] of degree n chosen uniformly at random, the Galois group is S_n with probability approachi",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_7e49f0c7_2b89c468",
+    "lineage_refs": [],
+    "priority_score": 0.9299999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "7e49f0c7",
+    "status": "available",
+    "timestamp": "2026-07-10T08:38:04.731918+00:00",
+    "title": "Deepening: Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 7e60f6c2 (Q=0.830), which proved 23 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search fractal dimension D(T) of a theorem T as the Hausdorff dimension of the set of all successful proof path",
     "domain_bridges": [],
     "domains": [
@@ -618,22 +637,22 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "7e49f0c7",
-    "description": "The Galois group of a random polynomial over Q is S_n with probability 1. This is the Hilbert irreducibility theorem in probabilistic form. But what about random polynomials over finite fields? For f in F_p[x] of degree n chosen uniformly at random, the Galois group is S_n with probability approaching 1 as p grows. Conjecture: the probability that Gal(f) is NOT S_n is O(p^{-1/2}) for fixed n, and the exceptional cases concentrate at polynomials with discriminant zero or small Galois groups. More precisely, P(Gal(f) != S_n) = c_n / sqrt(p) + O(1/p) where c_n depends only on n. For n=2: P(Gal(f) != S_2) = P(discriminant = 0) = 1/p. For n=3: P(Gal(f) != S_3) = P(f has a rational root) = 3/p + O(1/p^2). Test: enumerate all monic polynomials of degree n over F_p for small p and n, compute Galois groups, verify P(Gal != S_n) ~ c_n / sqrt(p). Impact: random polynomials have maximal Galois groups — algebraic randomness is generic.",
+    "consumed_by_exp_id": "",
+    "description": "The Robertson-Seymour theorem states that the set of finite graphs is well-quasi-ordered by the minor relation: any infinite sequence of graphs contains two where one is a minor of the other. This implies that any minor-closed graph property is characterized by a finite set of forbidden minors. Conjecture: the same theorem holds for representable matroids over any finite field. Specifically, for any finite field F_q, the set of F_q-representable matroids is well-quasi-ordered by the matroid minor relation. This would generalize the Robertson-Seymour theorem from graphs (F_2-representable matroids) to all finite fields. The conjecture is known to fail for general matroids (by the existence of infinite antichains of non-representable matroids), but for F_q-representable matroids with q <= 3, it is open. Conjecture: for F_3 (ternary matroids), the set of excluded minors for representability is finite. The current known excluded minors for F_3 are: the Fano matroid F_7, its dual F_7*, and the non-Pappus matroid. Test: enumerate ternary matroids of rank 3 on 9 elements, verify that all but the known excluded minors are F_3-representable. Impact: Robertson-Seymour for matroids would unify graph minor theory and matroid theory under a single well-quasi-ordering theorem.",
     "domain_bridges": [],
     "domains": [
       "Novelty",
       "Algebra"
     ],
-    "id": "fd_0855",
+    "id": "fd_0867",
     "lineage_refs": [],
-    "priority_score": 0.82,
-    "proof_strategy": "For a random monic polynomial f(x) = x^n + a_{n-1}x^{n-1} + ... + a_0 over F_p, the Galois group is a subgroup of S_n. Compute P(Gal(f) = S_n) by counting. For n=2: Gal(f) = S_2 unless discriminant = a_1^2 - 4*a_0 = 0, which happens for p choices of a_1 (each gives one a_0), so P = 1 - p/p^2 = 1 - 1/p. For n=3: Gal(f) != S_3 iff f has a rational root (3 choices of root, each determines f) or Gal = A_3 (discriminant is a square). Count both cases. For general n: use the fact that random permutations have cycle structure converging to the Poisson-Dirichlet distribution. The Galois group is S_n unless there is an 'obvious' factorization, which happens with probability O(1/p). Test: implement in Lean 4 + Python. For p=2..100 and n=2..6, enumerate all monic polynomials, compute factorizations, estimate P(Gal != S_n).",
+    "priority_score": 0.81,
+    "proof_strategy": "Define matroid minor: M' is a minor of M if M' can be obtained from M by a sequence of deletions and contractions. The Robertson-Seymour theorem for graphs: for any infinite sequence G_1, G_2, ..., there exist i < j such that G_i is a minor of G_j. Conjecture: the same holds for F_q-representable matroids. For q=2 (graphs): this is Robertson-Seymour. For q=3: this is open. Known result: the set of excluded minors for F_3-representability is {F_7, F_7*, non-Pappus}. The conjecture would follow from: (1) F_3-representable matroids are well-quasi-ordered under the minor relation, and (2) any minor-closed class of F_3-representable matroids has finitely many excluded minors. Step (1) requires showing that F_3-representable matroids contain no infinite antichain. The known antichains (uniform matroids U_{2,n} for n >= 4) are NOT F_3-representable for large n. Step (2) follows from (1) by the same argument as Robertson-Seymour. Test: enumerate all rank-3 matroids on 9 elements (there are ~100), check F_3-representability, verify that excluded minors are exactly F_7, F_7*, non-Pappus.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T05:52:57.383904+00:00",
-    "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
+    "status": "available",
+    "timestamp": "2026-07-10T08:37:34.442057+00:00",
+    "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
   },
   {
     "ambition_level": "extension",
@@ -9664,26 +9683,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "3fa70466",
-    "description": "In 1952, Turing showed that reaction-diffusion equations produce patterns (spots, stripes, spirals) that explain biological morphogenesis. But Turing patterns are solutions to PDEs, which are hard to analyze. Conjecture: Turing patterns are algebraic varieties. Specifically, the zero set of a Turing pattern (where the concentration equals the background level) is a real algebraic curve in 2D (for spots and stripes) or a real algebraic surface in 3D (for more complex patterns). The degree of the curve is the number of modes in the reaction-diffusion system. For a two-mode system (like the Gray-Scott model), the pattern is a curve of degree 2 (a conic section: circles for spots, parallel lines for stripes, hyperbolas for labyrinthine patterns). For a three-mode system, the pattern is a curve of degree up to 6 (sextic curves that can produce hexagonal patterns). The genus of the curve determines the pattern topology: genus 0 gives spots (topologically a sphere), genus 1 gives stripes (topologically a torus), and genus g > 1 gives labyrinthine patterns with g+1 holes. Test: simulate Turing patterns in the Gray-Scott model, fit the zero-set to an algebraic curve of degree d, and verify that d = 2 for spots and stripes. Compute the genus and verify it matches the pattern topology. Impact: biological patterns are algebraic curves. The mathematics of seashells, leopard spots, and zebra stripes is the mathematics of conic sections.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0843",
-    "lineage_refs": [],
-    "priority_score": 0.77,
-    "proof_strategy": "The Turing pattern u(x,y) satisfies the reaction-diffusion equation: partial_t u = D * nabla^2 u + f(u, v), partial_t v = D' * nabla^2 v + g(u, v). At steady state: D * nabla^2 u + f(u, v) = 0. The zero set {u = u_0} (where u_0 is the background concentration) is the pattern boundary. Linearize around the uniform state: u = u_0 + epsilon * w(x,y) where w satisfies D * nabla^2 w + f_u * w + f_v * z = 0 and similarly for z. The eigenfunctions are e^{i*k*x} with k determined by the Turing conditions. For a two-mode system, w = A*cos(k1*x) + B*cos(k2*y), so the zero set is A*cos(k1*x) + B*cos(k2*y) = u_0, which is approximately a degree-2 algebraic curve (ellipse, hyperbola, or parabola depending on k1, k2). For spots: A = B, k1 = k2 gives circles (degree 2). For stripes: A >> B gives parallel lines (degree 2 degenerate). For hexagonal patterns: three modes with k1, k2, k3 at 60 degrees give a degree-6 curve. Compute: fit the zero set of a simulated Turing pattern to an algebraic curve using least-squares polynomial regression. Verify the degree matches the number of modes. Test: Gray-Scott model with parameters for spots (F=0.035, k=0.065), stripes (F=0.025, k=0.055), labyrinthine (F=0.02, k=0.05).",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T04:08:16.156000+00:00",
-    "title": "Turing's Flowers: Morphogenesis as Algebraic Geometry"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Cycle dd8b10c1 (Q=0.720) proved 54 theorems in Applications but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: A cake is a smooth projective variety over R: it has a base (a smooth manifold with boundary), frosting (a sheaf of sections supported on the boundary), and layers (a stratification by codimension). T",
     "domain_bridges": [],
@@ -9879,6 +9878,46 @@
     "status": "available",
     "timestamp": "2026-07-10T08:21:57.460456+00:00",
     "title": "This project formalizes a **cross-domain bridge**: Sudoku (a constraint satisfac"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Stochastic Galois Theory over Finite Fields — Results and Future Directions\n\n## What was proved (all `sorry`-free, axioms `propext`/`Classical.choice`/`Quot.sound`)\n\n**`Catalog/Novelty/StochasticGaloisRoots.lean` — the expected-roots identity.**\nFor a monic degree-`n` polynomial over a finite commutative ring `K` (`q = |K|`, `n ≥ 1`),\nencoded by its coefficient vector `v : Fin n → K`,\n```\n∑ v, #{ r : K | monicEval n v r = 0 } = q^n            (total_root_incidences)\n```\ni.e. **the expected number of roots of a uniformly random monic degree-`n` polynomial is\nexactly `1`**. The proof is a clean double count: swap the sum over polynomials with the\nsum over base points, and observe that for a fixed `r` exactly `q^{n-1}` polynomials\nvanish at `r` (the constant coefficient is forced). A specialization\n`total_root_incidences_zmod` phrases it over `F_p`.\n\nThis is the cleanest universally-true instance of the \"random polynomial = random\npermutation\" dictionary: roots ↔ linear factors ↔ **fixed points of the Frobenius\npermutation**, and a uniform permutation in `S_n` also has exactly one fixed point on\naverage.\n\n**`Catalog/Novelty/StochasticGaloisDegreeTwo.lean` — exact degree-2 statistics.**\nOver a finite field `K` of odd characteristic (`q = |K|`):\n```\n2 · #{ reducible quadratics }   = q(q+1)                (card_reducible)\n2 · #{ irreducible quadratics } = q(q-1)                (card_irreducible)\n#{ quadratics with a repeated root } = q                (card_double_root)\n```\nproved from the two structural facts `sum_nroots` (total incidences `= q^2`) and\n`nroots_le_two` (a quadratic has `≤ 2` roots), via completing the square\n(`nroots_eq_disc`) and the square-root count lemmas. Consequences: proportion irreducible\n`→ 1/2` (the `S_2` `2`-cycle fraction) and proportion with vanishing discriminant `= 1/q`.\n\n**`Catalog/Novelty/StochasticGaloisCyclic.lean` — a structural correction.**\n```\nIsEmpty ((L ≃ₐ[K] L) ≃* Equiv.Perm (Fin n))   for finite L and n ≥ 3   (finiteField_gal_ne_symm)\n```\nOver a finite field every Galois group is cyclic (Frobenius), hence abelian, hence never\nisomorphic to the non-abelian `S_n` for `n ≥ 3`. The prompt's conjecture that\n`P(Gal = S_n) → 1` is therefore false at the group-theoretic level: `P(Gal = S_n) = 0`\nfor `n ≥ 3`. What survives is the *cycle-type/factorization* heuristic, not the\n\"maximal group\" one.\n\n## The corrected picture\n\nOver `ℚ`, Hilbert irreducibility gives `Gal = S_n` for almost all polynomials. Over `F_q`\nthis fails: Galois groups are cyclic. The right analogue is **Frobenius equidistribution**\n— the factorization type of a random monic degree-`n` polynomial (the cycle type of\nFrobenius on the roots) is distributed like the cycle type of a uniform random permutation\nin `S_n` as `q → ∞`. The proved theorems are the two cleanest exact cases of this:\nthe fixed-point count in all degrees, and the complete `n = 2` distribution.\n\n## Concrete next steps\n\n1. **Degree-3 full distribution.** Prove `#{irreducible monic cubics} = (q^3 - q)/3` and\n   the split of reducible cubics into `(x-r)(x-s)(x-t)` types, matching the `S_3` cycle\n   distribution `{3-cycles : 1/3, transpositions : 1/2, identity : 1/6}` in the limit. The\n   incidence method here generalizes: also count `∑ (#roots choose 2)` to access pair\n   statistics.\n\n2. **Gauss's formula in general.** Formalize `I_q(n) = (1/n) ∑_{d|n} μ(d) q^{n/d}` for the\n   number of monic irreducibles of degree `n` over `F_q`, giving proportion `→ 1/n`, the\n   `n`-cycle fraction. Mathlib has `X^{q^n} - X` factoring through irreducibles of degree\n   `d | n`; the Möbius inversion is the missing piece.\n\n3. **Higher moments / cycle index.** Prove that the `k`-th factorial moment of the number\n   of degree-`1` factors tends to `1` (Poisson(1) limit), the polynomial shadow of the\n   fixed-point Poisson law for random permutations. The `k = 1` case is exactly\n   `total_root_incidences`; `k = 2` needs the ordered-pair incidence count.\n\n4. **Squarefree density.** Prove `#{monic squarefree degree-n} = q^n - q^{n-1}` for\n   `n ≥ 2` (discriminant `≠ 0`), so the non-separable proportion is exactly `1/q` — the\n   general-`n` version of `card_double_root`, and the honest reading of the prompt's\n   `P(discriminant = 0)` claim.\n\n5. **Chebotarev over `F_q(t)`.** Frame the above as the function-field Chebotarev density\n   theorem for `S_n`-covers, connecting to the arithmetic (rather than geometric)\n   monodromy that genuinely can be `S_n`.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0868",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "7e49f0c7",
+    "status": "available",
+    "timestamp": "2026-07-10T08:37:58.665759+00:00",
+    "title": "**`Catalog/Novelty/StochasticGaloisRoots.lean` — the expected-roots identity.**"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Morphogenesis as Algebraic Geometry\n\nThe linear analysis established here recasts the onset of Turing patterns as\nconic-section geometry: the number of excited spatial modes is an algebraic degree,\nand the boundedness of the background level set separates spots from stripes and\nlabyrinths. Several bold, testable conjectures follow.\n\n## 1. The genus dictionary\n\n**Conjecture.** For a pattern generated by `k` spatial modes, the background level\nset is (generically) a smooth real curve whose complexification has genus at most\n`(k−1)(k−2)/2`, and the number of bounded ovals equals the number of distinct spot\nfamilies in the pattern.\n\n*The key insight is* that the mode count fixes the degree of the defining polynomial,\nand the classical genus–degree formula then caps the topological complexity, turning a\nstatement about pattern topology into an inequality about polynomial degree.\n\n*Why now?* The degree correspondence for single modes (Chebyshev) is fully in hand,\nso the remaining step is purely the theory of real plane curves — a mature subject —\napplied to explicitly known low-degree families.\n\n## 2. Sharp mode–degree equality\n\n**Conjecture.** A superposition of `k` modes with a nonzero top harmonic has a level\nset of algebraic degree *exactly* `k` in the Chebyshev coordinates, and no\nreparametrisation lowers this degree.\n\n*The key insight is* that the leading coefficient of the `k`-th Chebyshev polynomial\nis `2^{k-1} ≠ 0`, so the top mode cannot be cancelled by lower ones — degree is a\nfaithful invariant of mode count.\n\n*Why now?* The exact-degree statement is already proved for a single mode and for the\nsquared three-mode amplitude; extending it to arbitrary superpositions needs only\nleading-term bookkeeping, which is tractable.\n\n## 3. Hexagons are sextics\n\n**Conjecture.** Every hexagonally symmetric two-dimensional Turing pattern has a\nbackground level set defined by a sextic curve invariant under the order-6 dihedral\ngroup, and conversely every such invariant sextic is realised by a three-mode\nreaction–diffusion system.\n\n*The key insight is* that three modes reach degree six, and the hexagonal symmetry\ngroup acts on degree-six invariants with exactly the dimension needed to parametrise\nthe observed patterns.\n\n*Why now?* The degree-six ceiling for three-mode systems is established; the missing\ningredient is an invariant-theory computation of dihedral-invariant sextics, which is\nfinite-dimensional and explicit.\n\n## 4. Boundedness is a bifurcation invariant\n\n**Conjecture.** Along a reaction–diffusion bifurcation path, the transition from spot\nto labyrinth morphology coincides exactly with the moment the defining quadratic form\nloses definiteness (its discriminant changes sign), and this transition is detectable\nfrom the reaction kinetics alone.\n\n*The key insight is* that boundedness of a conic level set is controlled by the sign\nof the quadratic form's discriminant, so a morphological phase transition is an\nalgebraic sign change rather than a delicate PDE phenomenon.\n\n*Why now?* We have proved the two endpoints of this transition — definite forms give\nbounded spots, indefinite forms give unbounded labyrinths — so the conjecture is the\nnatural interpolation and is amenable to explicit discriminant tracking.\n\n## 5. Three-dimensional morphogenesis as algebraic surfaces\n\n**Conjecture.** In three spatial dimensions, a `k`-mode Turing pattern has a\nbackground level set that is a real algebraic surface of degree `k`, and the Turing\n\"gyroid\" and \"diamond\" phases correspond to specific cubic and quartic surfaces.\n\n*The key insight is* that the Chebyshev correspondence is dimension-agnostic: each\naxial mode contributes one polynomial degree, so multi-dimensional patterns inherit\nthe same degree = mode-count law, now for surfaces.\n\n*Why now?* The one-dimensional degree law and the planar conic dichotomy are proved;\nlifting to surfaces reuses the same Chebyshev machinery with additional coordinates.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0869",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "3fa70466",
+    "status": "available",
+    "timestamp": "2026-07-10T08:38:07.169747+00:00",
+    "title": "The linear analysis established here recasts the onset of Turing patterns as"
   },
   {
     "ambition_level": "extension",

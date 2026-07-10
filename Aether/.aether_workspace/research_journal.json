@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f91c88c3",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\nDerived from this cycle's findings about the octahedron `\\overline{3K₂}` — the\ncomplement of a perfect matching on six vertices — as the single forbidden induced\nsubgraph separati",
-      "quality_score": 0.78952,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-03T12:42:34",
-      "title": "Characterization of Balanced Distance-Hereditary Graphs by the Complement of 3-Matching"
-    },
-    {
       "cycle_id": "87ba90ae",
       "domain": "Algebra",
       "key_insight": "# Future Directions — Fan-structure in Selmer group distributions\n\nThese conjectures grow directly out of the current cycle, in which the rank\ndistribution of subspaces of a finite vector space was sh",
@@ -499,19 +489,19 @@
       "theorem_count": 25,
       "timestamp": "2026-07-10T08:22:03",
       "title": "The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction"
+    },
+    {
+      "cycle_id": "7e49f0c7",
+      "domain": "Novelty",
+      "key_insight": "# Stochastic Galois Theory over Finite Fields — Results and Future Directions\n\n## What was proved (all `sorry`-free, axioms `propext`/`Classical.choice`/`Quot.sound`)\n\n**`Catalog/Novelty/StochasticGal",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-07-10T08:38:04",
+      "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4aec8950",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Structured vs. Uniform Coverage\n\nThe cycle established that, on the points of a projective plane of order `q`, the\nmechanism that samples whole *lines* covers the point set stric",
-      "quality_score": 0.6655200000000001,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-06-30T02:34:47",
-      "title": "Projective Plane Coupon Collection Slowness"
-    },
     {
       "cycle_id": "230b77ce",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 25,
       "timestamp": "2026-07-10T08:22:03",
       "title": "The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction"
+    },
+    {
+      "cycle_id": "7e49f0c7",
+      "domain": "Novelty",
+      "key_insight": "# Stochastic Galois Theory over Finite Fields — Results and Future Directions\n\n## What was proved (all `sorry`-free, axioms `propext`/`Classical.choice`/`Quot.sound`)\n\n**`Catalog/Novelty/StochasticGal",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-07-10T08:38:04",
+      "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c05d7abb",
-      "domain": "Novelty",
-      "name": "p_ne_zero_real",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "acc2ac17",
-      "domain": "Logic",
-      "name": "below",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "acc2ac17",
-      "domain": "Logic",
-      "name": "Recipe",
-      "quality": 0.72
-    },
     {
       "cycle_id": "acc2ac17",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "base_n_unique",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "7e49f0c7",
+      "domain": "Novelty",
+      "name": "perm_not_comm",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "7e49f0c7",
+      "domain": "Novelty",
+      "name": "for",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "7e49f0c7",
+      "domain": "Novelty",
+      "name": "finiteField_gal_ne_symm",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-10T08:22:03",
+  "last_updated": "2026-07-10T08:38:04",
   "open_questions": [
     {
       "context": "No `sorry`; axioms are the standard `propext`/`Classical.choice`/`Quot.sound`.; No `sorry`; axioms are the standard three.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "8d243e81",
-        "quality": 0.7115,
-        "theorems": 26,
-        "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
-      },
-      {
         "cycle_id": "8202f9a7",
         "quality": 0.6749863157894737,
         "theorems": 19,
@@ -3637,6 +3631,12 @@
         "quality": 0.85,
         "theorems": 11,
         "title": "Deepening: The Zeta Function of a Graph: Number Theory on Networks"
+      },
+      {
+        "cycle_id": "7e49f0c7",
+        "quality": 0.83,
+        "theorems": 17,
+        "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
       }
     ],
     "NumberTheory": [

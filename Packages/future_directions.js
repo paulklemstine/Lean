@@ -46,6 +46,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 7e49f0c7 (Q=0.830), which proved 17 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Galois group of a random polynomial over Q is S_n with probability 1. This is the Hilbert irreducibility theorem in probabilistic form. But what about random polynomials over finite fields? For f in F_p[x] of degree n chosen uniformly at random, the Galois group is S_n with probability approachi",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_7e49f0c7_2b89c468",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "7e49f0c7",
+    "status": "available",
+    "timestamp": "2026-07-10T08:38:04.731918+00:00",
+    "title": "Deepening: Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 7e60f6c2 (Q=0.830), which proved 23 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search fractal dimension D(T) of a theorem T as the Hausdorff dimension of the set of all successful proof path",
     "domains": [
       "Bridges"
@@ -459,19 +473,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
   },
   {
-    "consumed_by_exp_id": "7e49f0c7",
-    "description": "The Galois group of a random polynomial over Q is S_n with probability 1. This is the Hilbert irreducibility theorem in probabilistic form. But what about random polynomials over finite fields? For f in F_p[x] of degree n chosen uniformly at random, the Galois group is S_n with probability approaching 1 as p grows. Conjecture: the probability that Gal(f) is NOT S_n is O(p^{-1/2}) for fixed n, and the exceptional cases concentrate at polynomials with discriminant zero or small Galois groups. More precisely, P(Gal(f) != S_n) = c_n / sqrt(p) + O(1/p) where c_n depends only on n. For n=2: P(Gal(f) != S_2) = P(discriminant = 0) = 1/p. For n=3: P(Gal(f) != S_3) = P(f has a rational root) = 3/p + O(1/p^2). Test: enumerate all monic polynomials of degree n over F_p for small p and n, compute Galois groups, verify P(Gal != S_n) ~ c_n / sqrt(p). Impact: random polynomials have maximal Galois groups \u2014 algebraic randomness is generic.",
+    "consumed_by_exp_id": "",
+    "description": "The Robertson-Seymour theorem states that the set of finite graphs is well-quasi-ordered by the minor relation: any infinite sequence of graphs contains two where one is a minor of the other. This implies that any minor-closed graph property is characterized by a finite set of forbidden minors. Conjecture: the same theorem holds for representable matroids over any finite field. Specifically, for any finite field F_q, the set of F_q-representable matroids is well-quasi-ordered by the matroid minor relation. This would generalize the Robertson-Seymour theorem from graphs (F_2-representable matroids) to all finite fields. The conjecture is known to fail for general matroids (by the existence of infinite antichains of non-representable matroids), but for F_q-representable matroids with q <= 3, it is open. Conjecture: for F_3 (ternary matroids), the set of excluded minors for representability is finite. The current known excluded minors for F_3 are: the Fano matroid F_7, its dual F_7*, and the non-Pappus matroid. Test: enumerate ternary matroids of rank 3 on 9 elements, verify that all but the known excluded minors are F_3-representable. Impact: Robertson-Seymour for matroids would unify graph minor theory and matroid theory under a single well-quasi-ordering theorem.",
     "domains": [
       "Novelty",
       "Algebra"
     ],
-    "id": "fd_0855",
-    "priority_score": 0.82,
+    "id": "fd_0867",
+    "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T05:52:57.383904+00:00",
-    "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
+    "status": "available",
+    "timestamp": "2026-07-10T08:37:34.442057+00:00",
+    "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
   },
   {
     "consumed_by_exp_id": "",
@@ -5391,6 +5405,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T08:21:57.460456+00:00",
     "title": "This project formalizes a **cross-domain bridge**: Sudoku (a constraint satisfac"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Stochastic Galois Theory over Finite Fields \u2014 Results and Future Directions\n\n## What was proved (all `sorry`-free, axioms `propext`/`Classical.choice`/`Quot.sound`)\n\n**`Catalog/Novelty/StochasticGaloisRoots.lean` \u2014 the expected-roots identity.**\nFor a monic degree-`n` polynomial over a finite commutative ring `K` (`q = |K|`, `n \u2265 1`),\nencoded by its coefficient vector `v : Fin n \u2192 K`,\n```\n\u2211 v, #{ r : K | monicEval n v r = 0 } = q^n            (total_root_incidences)\n```\ni.e. **the expected number of roots of a uniformly random monic degree-`n` polynomial is\nexactly `1`**. The proof is a clean double count: swap the sum over polynomials with the\nsum over base points, and observe that for a fixed `r` exactly `q^{n-1}` polynomials\nvanish at `r` (the constant coefficient is forced). A specialization\n`total_root_incidences_zmod` phrases it over `F_p`.\n\nThis is the cleanest universally-true instance of the \"random polynomial = random\npermutation\" dictionary: roots \u2194 linear factors \u2194 **fixed points of the Frobenius\npermutation**, and a uniform permutation in `S_n` also has exactly one fixed point on\naverage.\n\n**`Catalog/Novelty/StochasticGaloisDegreeTwo.lean` \u2014 exact degree-2 statistics.**\nOver a finite field `K` of odd characteristic (`q = |K|`):\n```\n2 \u00b7 #{ reducible quadratics }   = q(q+1)                (card_reducible)\n2 \u00b7 #{ irreducible quadratics } = q(q-1)                (card_irreducible)\n#{ quadratics with a repeated root } = q                (card_double_root)\n```\nproved from the two structural facts `sum_nroots` (total incidences `= q^2`) and\n`nroots_le_two` (a quadratic has `\u2264 2` roots), via completing the square\n(`nroots_eq_disc`) and the square-root count lemmas. Consequences: proportion irreducible\n`\u2192 1/2` (the `S_2` `2`-cycle fraction) and proportion with vanishing discriminant `= 1/q`.\n\n**`Catalog/Novelty/StochasticGaloisCyclic.lean` \u2014 a structural correction.**\n```\nIsEmpty ((L \u2243\u2090[K] L) \u2243* Equiv.Perm (Fin n))   for finite L and n \u2265 3   (finiteField_gal_ne_symm)\n```\nOver a finite field every Galois group is cyclic (Frobenius), hence abelian, hence never\nisomorphic to the non-abelian `S_n` for `n \u2265 3`. The prompt's conjecture that\n`P(Gal = S_n) \u2192 1` is therefore false at the group-theoretic level: `P(Gal = S_n) = 0`\nfor `n \u2265 3`. What survives is the *cycle-type/factorization* heuristic, not the\n\"maximal group\" one.\n\n## The corrected picture\n\nOver `\u211a`, Hilbert irreducibility gives `Gal = S_n` for almost all polynomials. Over `F_q`\nthis fails: Galois groups are cyclic. The right analogue is **Frobenius equidistribution**\n\u2014 the factorization type of a random monic degree-`n` polynomial (the cycle type of\nFrobenius on the roots) is distributed like the cycle type of a uniform random permutation\nin `S_n` as `q \u2192 \u221e`. The proved theorems are the two cleanest exact cases of this:\nthe fixed-point count in all degrees, and the complete `n = 2` distribution.\n\n## Concrete next steps\n\n1. **Degree-3 full distribution.** Prove `#{irreducible monic cubics} = (q^3 - q)/3` and\n   the split of reducible cubics into `(x-r)(x-s)(x-t)` types, matching the `S_3` cycle\n   distribution `{3-cycles : 1/3, transpositions : 1/2, identity : 1/6}` in the limit. The\n   incidence method here generalizes: also count `\u2211 (#roots choose 2)` to access pair\n   statistics.\n\n2. **Gauss's formula in general.** Formalize `I_q(n) = (1/n) \u2211_{d|n} \u03bc(d) q^{n/d}` for the\n   number of monic irreducibles of degree `n` over `F_q`, giving proportion `\u2192 1/n`, the\n   `n`-cycle fraction. Mathlib has `X^{q^n} - X` factoring through irreducibles of degree\n   `d | n`; the M\u00f6bius inversion is the missing piece.\n\n3. **Higher moments / cycle index.** Prove that the `k`-th factorial moment of the number\n   of degree-`1` factors tends to `1` (Poisson(1) limit), the polynomial shadow of the\n   fixed-point Poisson law for random permutations. The `k = 1` case is exactly\n   `total_root_incidences`; `k = 2` needs the ordered-pair incidence count.\n\n4. **Squarefree density.** Prove `#{monic squarefree degree-n} = q^n - q^{n-1}` for\n   `n \u2265 2` (discriminant `\u2260 0`), so the non-separable proportion is exactly `1/q` \u2014 the\n   general-`n` version of `card_double_root`, and the honest reading of the prompt's\n   `P(discriminant = 0)` claim.\n\n5. **Chebotarev over `F_q(t)`.** Frame the above as the function-field Chebotarev density\n   theorem for `S_n`-covers, connecting to the arithmetic (rather than geometric)\n   monodromy that genuinely can be `S_n`.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0868",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7e49f0c7",
+    "status": "available",
+    "timestamp": "2026-07-10T08:37:58.665759+00:00",
+    "title": "**`Catalog/Novelty/StochasticGaloisRoots.lean` \u2014 the expected-roots identity.**"
   },
   {
     "consumed_by_exp_id": "",
