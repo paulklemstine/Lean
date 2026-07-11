@@ -192,7 +192,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f8dd2b6a",
     "description": "Building on cycle f6b0dfd4 (Q=0.830), which proved 26 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct a category where composition is not associative but satisfies a controlled failure: (f circ g) circ h and f circ (g circ h) are naturally isomorphic but not equal. Prove that such almost-categories are exactly the bicategories and that every coherent loop-tolerant algebraic structure forms",
     "domain_bridges": [],
     "domains": [
@@ -204,7 +204,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "f6b0dfd4",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T13:21:45.766460+00:00",
     "title": "Deepening: Causal Loops in Category Theory: When Composition Loops Back"
   },

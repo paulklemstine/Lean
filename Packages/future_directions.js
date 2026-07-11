@@ -143,7 +143,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Categorification of Entropy: The Information Loss of Functors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f8dd2b6a",
     "description": "Building on cycle f6b0dfd4 (Q=0.830), which proved 26 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct a category where composition is not associative but satisfies a controlled failure: (f circ g) circ h and f circ (g circ h) are naturally isomorphic but not equal. Prove that such almost-categories are exactly the bicategories and that every coherent loop-tolerant algebraic structure forms",
     "domains": [
       "Novelty"
@@ -152,7 +152,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "f6b0dfd4",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T13:21:45.766460+00:00",
     "title": "Deepening: Causal Loops in Category Theory: When Composition Loops Back"
   },
@@ -422,20 +422,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-11T07:12:19.970065+00:00",
     "title": "Categorical Physics: The Shape of a Theory of Everything"
-  },
-  {
-    "consumed_by_exp_id": "1e86ff35",
-    "description": "Building on cycle 1978e429 (Q=0.800), which proved 26 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle c99af430 (Q=0.830) proved 0 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Construct a consistent formal system where the Liar sentence, Berry's paradox, and Russell's paradox are all provable theorems ",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_1978e429_33c113a4",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "1978e429",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T10:49:45.592025+00:00",
-    "title": "Deepening: Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
   },
   {
     "consumed_by_exp_id": "",
@@ -7427,6 +7413,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T13:38:19.459989+00:00",
     "title": "The formalization lives in `Catalog/Novelty/ImmortalityGame.lean`. It models a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis cycle deepens *\"Paradoxes as Theorems: Liar, Berry, and Russell Made\nConsistent\"* into a single **cross-domain bridge** and proves it in Lean 4 with\nno `sorry` and only the standard axioms.\n\n## What was proved (`Catalog/Logic/ParadoxesLawvereBridge.lean`)\n\nThe unifying result is **Lawvere's fixed-point theorem**\n(`lawvere_fixedPoint`, axiom-free): a point-surjection `A \u21a0 (A \u2192 C)` forces every\nendomap of `C` to have a fixed point. From its contrapositive\n(`lawvere_no_pointSurjective`) we derive, as instances of one diagonal:\n\n* `no_prop_pointSurjective`, `cantor_no_surjective` \u2014 **Cantor's theorem**;\n* `russell_paradox`, `russell_no_comprehension` \u2014 **Russell's paradox** / failure\n  of naive comprehension;\n* `liar_no_selfnegating`, `not_no_fixpoint` \u2014 the **Liar** (negation has no\n  propositional fixed point).\n\nThe counting shadow (**Berry / Chaitin**) is proved by pigeonhole\n(`berry_pigeonhole`, `chaitin_incompressible`), and the algebraic side of the\nbridge (`boolean_neg_fixpoint_trivial`, `no_boolean_neg_fixpoint` versus Belnap's\n`BV.has_designated_neg_fixpoint`) is packaged in `paradox_dichotomy` and\n`paradoxes_are_one_theorem`.\n\n## Concrete paraconsistent witness (`Catalog/Logic/ParadoxSelfSoundness.lean`)\n\nA self-contained companion file (depending only on Mathlib) develops the\nfour-valued Belnap base theory (`BelnapVal`, `ParaconsistentTheory`,\n`ParaconsistentTheory.isSound`, `HasExplosion`, `inconsistencyDegree`) and\nexhibits an explicit six-element model `paradoxModel : ParaconsistentTheory (Fin\n6)`. In it three distinct paradox sentences are simultaneously provable and\nglut-valued (`paradoxes_as_theorems`), every provable sentence is designated\n(`paradoxModel_self_sound`), explosion is rejected by an explicit counterexample\n(`paradoxModel_rejects_explosion`), and the inconsistency degree is exactly three\n(`paradoxModel_inconsistency_degree`). This is a fully computational realization\nof next step 3 below.\n\n## Promising next steps\n\n1. **G\u00f6del's diagonal lemma as a Lawvere instance.** Formalize a syntactic\n   provability predicate and a G\u00f6del numbering as a point-surjection, deriving the\n   diagonal lemma and the first incompleteness theorem uniformly from\n   `lawvere_fixedPoint`, completing the \"Liar \u2192 G\u00f6del\" leg of the bridge.\n\n2. **Category-theoretic Lawvere.** Restate `lawvere_fixedPoint` for a cartesian\n   closed category (weak point-surjectivity of `A \u2192 C^A`) and recover the\n   `Type`-level version as the concrete instance, making the bridge to category\n   theory literal rather than by analogy.\n\n3. **Paraconsistent object language.** Extend the Belnap `BV` fragment to a full\n   propositional calculus with a provability relation, and prove *inside* it that\n   the Liar/Russell/Berry sentences are theorems while non-explosion\n   (`\u22ac \u22a5`) is preserved \u2014 a machine-checked consistent paraconsistent theory.\n\n4. **Quantitative Berry.** Sharpen `berry_pigeonhole` to the density statement that\n   the fraction of `n`-bit-incompressible numbers below `2^{n+k}` tends to `1`,\n   connecting to Kolmogorov complexity in Mathlib once available.\n\n5. **Sheaf/fixed-point generalizations.** Investigate whether the same diagonal\n   yields Rice's theorem and the recursion theorem as further `lawvere_fixedPoint`\n   corollaries, unifying computability-theoretic limitations with the logical\n   ones.\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_1040",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1e86ff35",
+    "status": "available",
+    "timestamp": "2026-07-11T13:38:28.478969+00:00",
+    "title": "This cycle deepens *\"Paradoxes as Theorems: Liar, Berry, and Russell Made"
   },
   {
     "consumed_by_exp_id": "",
