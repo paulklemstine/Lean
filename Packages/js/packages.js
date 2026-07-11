@@ -828,28 +828,53 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         validItems.forEach((item, idx) => {
-            // Generate a random unique ID for iframe auto-sizer communication
+            // Generate a random unique ID for styling scope or communication
             const uniqueId = 'iframe_' + Math.random().toString(36).substr(2, 9);
-
             let demoHtml = item.html || '<p>No content</p>';
 
-            // If it's already a full HTML document, inject auto-sizer into it.
-            // If it's just a snippet, wrap it in a minimal document.
-            const isFullDoc = /<!DOCTYPE|<html[\s>]/i.test(demoHtml);
-            // Height-reporting script injected into every iframe so it measures
-            // its own content height from inside (much more reliable than
-            // measuring scrollHeight from outside) and posts it to the parent.
-            const autoSizer = `<script>
+            if (inline) {
+                // Scoping wrapper class to prevent CSS pollution to outer document
+                const wrapperClass = `inline-demo-${uniqueId}`;
+                
+                let cleanedHtml = demoHtml;
+                // Replace body or html selectors in CSS tags
+                cleanedHtml = cleanedHtml.replace(/<style>([\s\S]*?)<\/style>/gi, (match, css) => {
+                    const scopedCss = css.replace(/\b(body|html)\b/gi, `.${wrapperClass}`);
+                    return `<style>${scopedCss}</style>`;
+                });
+                
+                const wrapper = document.createElement('div');
+                wrapper.className = wrapperClass;
+                wrapper.style.cssText = 'width: 100%; position: relative;';
+                wrapper.innerHTML = cleanedHtml;
+                container.appendChild(wrapper);
+                
+                // Execute any inline or external script tags inside the injected HTML in order
+                const scripts = wrapper.querySelectorAll('script');
+                scripts.forEach(oldScript => {
+                    const newScript = document.createElement('script');
+                    if (oldScript.src) {
+                        newScript.src = oldScript.src;
+                    } else {
+                        newScript.textContent = `(function(){\n${oldScript.textContent}\n})();`;
+                    }
+                    document.body.appendChild(newScript);
+                    oldScript.remove();
+                });
+            } else {
+                // Fallback: Sandbox each demo in its own iframe via srcdoc for legacy sequential tab display
+                const isFullDoc = /<!DOCTYPE|<html[\s>]/i.test(demoHtml);
+                
+                // Inject auto-sizing overrides so the iframe page body collapses naturally to content height
+                const overrideStyle = `<style>html,body{height:auto!important;min-height:auto!important;margin:0!important;overflow:hidden!important;}</style>`;
+                const autoSizer = overrideStyle + `<script>
 (function(){
   var last=0,debounce=null;
   function report(){
     var h=Math.max(
       document.body.scrollHeight,
-      document.documentElement.scrollHeight,
       document.body.offsetHeight,
-      document.documentElement.offsetHeight,
       document.body.clientHeight,
-      document.documentElement.clientHeight,
       60
     );
     if(Math.abs(h-last)<5)return;
@@ -865,27 +890,20 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize',report);
 })();
 <\/script>`;
-            let srcdoc;
-            if (isFullDoc) {
-                // Inject auto-sizer before </body> (or </html> if no </body>)
-                if (demoHtml.includes('</body>')) {
-                    srcdoc = demoHtml.replace('</body>', autoSizer + '</body>');
-                } else {
-                    srcdoc = demoHtml.replace('</html>', autoSizer + '</html>');
-                }
-            } else {
-                srcdoc = `<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>body{margin:0;padding:16px;font-family:system-ui,sans-serif;color:#222}</style></head><body>${demoHtml}${autoSizer}</body></html>`;
-            }
 
-            const iframe = document.createElement('iframe');
-            iframe.srcdoc = srcdoc;
-            
-            if (inline) {
-                iframe.style.cssText = 'width:100%;border:none;min-height:60px;display:block;background:transparent;overflow:hidden;';
-                // Register this iframe so the message listener can resize it
-                window._aetherDemoIframes[uniqueId] = iframe;
-                container.appendChild(iframe);
-            } else {
+                let srcdoc;
+                if (isFullDoc) {
+                    if (demoHtml.includes('</body>')) {
+                        srcdoc = demoHtml.replace('</body>', autoSizer + '</body>');
+                    } else {
+                        srcdoc = demoHtml.replace('</html>', autoSizer + '</html>');
+                    }
+                } else {
+                    srcdoc = `<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>body{margin:0;padding:16px;font-family:system-ui,sans-serif;color:#222}</style></head><body>${demoHtml}${autoSizer}</body></html>`;
+                }
+
+                const iframe = document.createElement('iframe');
+                iframe.srcdoc = srcdoc;
                 iframe.style.cssText = 'width:100%;border:none;border-radius:0 0 12px 12px;min-height:60px;display:block;background:#fff;';
                 
                 const card = document.createElement('div');
@@ -900,13 +918,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 title.textContent = item.name || `Interactive Demo ${idx + 1}`;
 
                 header.appendChild(title);
-
-                if (item.description) {
-                    const desc = document.createElement('p');
-                    desc.style.cssText = 'color: var(--text-muted); font-size: 0.9em; margin: 4px 0 8px;';
-                    desc.textContent = item.description;
-                    header.appendChild(desc);
-                }
 
                 const content = document.createElement('div');
                 content.className = 'interactive-demo-content';
