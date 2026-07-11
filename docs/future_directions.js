@@ -32,6 +32,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 3399a930 (Q=0.830), which proved 22 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a rigorous theory of negative-dimensional spaces using pro-spectra and formal dimension theory. Prove that Euler characteristic extends to negative dimensions and that chi(X) for dim X = -n satisfies chi = (-1)^n \u00b7 |pi_0(X)|. Formalize the stabilization map from negative to positive dimensio",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_3399a930_5af2d1bb",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "3399a930",
+    "status": "available",
+    "timestamp": "2026-07-11T02:34:51.379273+00:00",
+    "title": "Deepening: Negative-Dimensional Topology: What Lives in Dimension -1?"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 39669115 (Q=0.830), which proved 25 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Sudoku is a constraint satisfaction problem (CSP). Random Sudoku instances exhibit a phase transition: for n^2 x n^2 grids, the probability of having a solution drops from ~1 to ~0 around a critical density of pre-filled cells. Conjecture: the phase transition occurs at density d_c(n) = (n^2 - 1) / ",
     "domains": [
       "Applications"
@@ -867,21 +881,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-10T12:06:38.636322+00:00",
     "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem"
-  },
-  {
-    "consumed_by_exp_id": "3399a930",
-    "description": "Develop a rigorous theory of negative-dimensional spaces using pro-spectra and formal dimension theory. Prove that Euler characteristic extends to negative dimensions and that chi(X) for dim X = -n satisfies chi = (-1)^n \u00b7 |pi_0(X)|. Formalize the stabilization map from negative to positive dimensions.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0965",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T00:55:56.763664+00:00",
-    "title": "Negative-Dimensional Topology: What Lives in Dimension -1?"
   },
   {
     "consumed_by_exp_id": "",
@@ -5238,7 +5237,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimally 1\u2011tough (K\u2081 \u222a P\u2084)-free graphs are Hamiltonian"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "39ced9f7",
     "description": "Conjecture that for every d \u2208 \u2115, every connected graph admits a tree-decomposition where each bag is (d,2d+1)-inseparable and each adhesion set has diameter at most 4d+2 (improving the 5d+2 bound of Theorem 1).",
     "domains": [
       "Pythagorean"
@@ -5247,7 +5246,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07030v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T10:41:07.742340+00:00",
     "title": "Improved adhesion bound in coarse block-cutvertex tree-decomposition"
   },
@@ -6718,6 +6717,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T02:34:35.200917+00:00",
     "title": "This project (`Catalog/Computation/SelfModifyingHaltChain.lean`) develops a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Negative-Dimensional Topology\n\nThis project builds a self-contained, machine-checked theory of negative-dimensional\nspaces in `Core.lean`.  We model virtual graded spaces as the Laurent-polynomial ring\n`\u2124[t, t\u207b\u00b9] = AddMonoidAlgebra \u2124 \u2124` (a concrete Spanier\u2013Whitehead / pro-spectrum\npicture: `t\u207b\u00b9` is desuspension, producing negative dimensions) and define the Euler\ncharacteristic as the ring homomorphism `\u03c7 : t \u21a6 -1`.\n\n## What was proved\n\n* **Euler characteristic extends to negative dimensions** and satisfies the requested\n  formula `\u03c7(X) = (-1)\u207f \u00b7 |\u03c0\u2080(X)|` for `dim X = -n` (`chi_pure_neg`, `chi_neg_dim`).\n* **Dimension `-1`** (the title question): a `k`-component `(-1)`-space has `\u03c7 = -k`\n  (`chi_dim_neg_one`).\n* `\u03c7` is a **ring homomorphism**: additive under disjoint union (`chi_add`) and\n  multiplicative under product \u2014 a K\u00fcnneth formula (`chi_mul`), with `\u03c7(point) = 1`.\n* **Suspension/desuspension** flip the sign of `\u03c7` (`chi_susp`, `chi_desusp`,\n  `chi_suspIter`), and are mutually inverse (`susp_desusp`, `desusp_susp`).\n* The **stabilization map** carries a `(-n)`-space to an honest `0`-dimensional space\n  (`stabilize_neg`, `stabilize_chi`).\n\n## What was disproved (contrarian results)\n\n* Not every negative-dimensional space has negative `\u03c7` (`disproof_all_neg_chi`):\n  even codimensions give `\u03c7 > 0`.\n* `\u03c7` is **not injective** (`disproof_chi_not_injective`): it only sees the parity of\n  the dimension, so it cannot recover the dimension.\n\n## Directions to extend\n\n1. **Betti numbers with genuine coefficients.**  Replace `\u2124` coefficients by graded\n   `\u2124`-modules / chain complexes and recover `\u03c7` as the alternating sum of ranks,\n   proving the present `\u03c7` agrees with the homological one for bounded complexes.\n2. **True `\u03c0\u2080` from a topological model.**  Here `|\u03c0\u2080|` is the rank in the defining\n   degree.  A next step is to attach an actual (pro-)space or spectrum and prove\n   `\u03c0\u2080` of that object matches this count, tightening the interpretation of the main\n   theorem.\n3. **Poincar\u00e9 duality in negative degrees.**  With `\u03c7(DX) = \u03c7(X)` for Spanier\u2013\n   Whitehead duals, formalize duality `t^d \u21a6 t^{-d}` and its interaction with `\u03c7`.\n4. **Multiplicative structure / Grothendieck ring.**  Study the image of `\u03c7` and the\n   ideal structure; characterize which integers arise as `\u03c7` of a nonnegative-cell\n   (genuine) space versus a virtual one.\n5. **Higher invariants beyond `\u03c7`.**  The disproof of injectivity shows `\u03c7` forgets\n   dimension; introduce a refined invariant (e.g. the full Poincar\u00e9 series, or a\n   `t`-graded Euler characteristic valued in `\u2124[t,t\u207b\u00b9]`) that is injective.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0980",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3399a930",
+    "status": "available",
+    "timestamp": "2026-07-11T02:34:48.069025+00:00",
+    "title": "This project builds a self-contained, machine-checked theory of negative-dimensi"
   },
   {
     "consumed_by_exp_id": "",

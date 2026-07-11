@@ -41,6 +41,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 3399a930 (Q=0.830), which proved 22 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a rigorous theory of negative-dimensional spaces using pro-spectra and formal dimension theory. Prove that Euler characteristic extends to negative dimensions and that chi(X) for dim X = -n satisfies chi = (-1)^n · |pi_0(X)|. Formalize the stabilization map from negative to positive dimensio",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_3399a930_5af2d1bb",
+    "lineage_refs": [],
+    "priority_score": 0.9299999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "3399a930",
+    "status": "available",
+    "timestamp": "2026-07-11T02:34:51.379273+00:00",
+    "title": "Deepening: Negative-Dimensional Topology: What Lives in Dimension -1?"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 39669115 (Q=0.830), which proved 25 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Sudoku is a constraint satisfaction problem (CSP). Random Sudoku instances exhibit a phase transition: for n^2 x n^2 grids, the probability of having a solution drops from ~1 to ~0 around a critical density of pre-filled cells. Conjecture: the phase transition occurs at density d_c(n) = (n^2 - 1) / ",
     "domain_bridges": [],
     "domains": [
@@ -9425,7 +9444,7 @@
       "NgScSeAsyIV",
       "GeoPapMin"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "39ced9f7",
     "description": "Conjecture that for every d ∈ ℕ, every connected graph admits a tree-decomposition where each bag is (d,2d+1)-inseparable and each adhesion set has diameter at most 4d+2 (improving the 5d+2 bound of Theorem 1).",
     "domain_bridges": [
       "metric geometry",
@@ -9440,7 +9459,7 @@
     "proof_strategy": "Refine the original construction by applying the coarse Menger theorem to find separators of smaller diameter that still separate large‑diameter parts, then use an iterative compression argument to reduce adhesion size while preserving the (d,2d+1)-inseparability of bags.",
     "research_mode": "team",
     "source_exp_id": "2607.07030v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T10:41:07.742340+00:00",
     "title": "Improved adhesion bound in coarse block-cutvertex tree-decomposition"
   },
