@@ -1941,13 +1941,13 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "MR3622140"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "f9466ee5",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -1964,7 +1964,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0067",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-11T08:52:11.978991+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem finiteness_semisimple {k : Type*} [Field] [CharP k p] [Fact p ≠ 0] [FiniteField k] {X : Type*} [Normal X] [GeometricallyConnected X] (D : DivisorOnCompactification X) (F : Type*) [Field] [CharP F p] [AlgebraicallyClosed F] [DiscreteTopology F] (n : ℕ) : Fintype (SemisimpleRep π₁(X,D) (GL n F)) := by sorry",
       "lineage_refs": [],
@@ -1979,7 +1979,7 @@
       "source": "",
       "source_exp_id": "2606.31341v1",
       "source_path": "http://arxiv.org/abs/2606.31341v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-02T13:33:35.154740+00:00",
       "title": "Finiteness conjecture for semisimple geometric representations of Hiranouchi's ramified fundamental group"
@@ -33350,6 +33350,7 @@
     "whether": 1
   },
   "selection_log": [
-    "abduction_followup"
+    "abduction_followup",
+    "cross_domain_bridge"
   ]
 }

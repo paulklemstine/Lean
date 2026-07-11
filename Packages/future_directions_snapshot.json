@@ -1830,7 +1830,7 @@
     "catalog_references": [
       "MR3622140"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f9466ee5",
     "description": "For a normal geometrically connected variety X over a finite field k, a compactification \\(\\overline{X}\\), an effective Cartier divisor D with support in \\(Z = \\overline{X} \\setminus X\\), and an algebraically closed field F of characteristic p with discrete topology, the set of isomorphism classes of continuous semisimple geometric representations \\(\\rho : \\pi_1(X,D) \\to \\GL_n(F)\\) is finite (up to conjugacy in \\(\\GL_n(F)\\)).",
     "domain_bridges": [
       "arithmetic geometry",
@@ -1847,7 +1847,7 @@
     "proof_strategy": "Use p-adic étale cohomology, comparison with characteristic zero via lifting, and apply known finiteness theorems for tamely ramified fundamental groups.",
     "research_mode": "team",
     "source_exp_id": "2606.31341v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T13:33:35.154740+00:00",
     "title": "Finiteness conjecture for semisimple geometric representations of Hiranouchi's ramified fundamental group"
   },
