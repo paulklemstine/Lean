@@ -158,6 +158,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 0be793c6 (Q=0.820), which proved 42 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct and classify finite projective planes where Desargues' theorem fails. Prove that such planes exist at every prime power order and that their collineation groups are strictly smaller than PGL. Formalize the connection to non-associative division algebras and Hall triple systems.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_0be793c6_f2db8510",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "0be793c6",
+    "status": "available",
+    "timestamp": "2026-07-11T02:51:11.452311+00:00",
+    "title": "Deepening: Non-Desarguesian Worlds: Geometry Without Desargues"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 0faef071 (Q=0.820), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own consistency. Formalize using modal fixed-point logics and Kripke frames.",
     "domains": [
       "Applications"
@@ -612,6 +626,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Systematically negate the ZFC axioms and study the resulting anti-mathematics. Prove that not-Extensionality yields a theory of indistinguishable sets, not-Infinity yields hereditarily finite set theory, and not-Choice yields universes where every set is measurable. Determine which anti-axioms are consistent with each other.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0981",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T02:50:51.916559+00:00",
+    "title": "Anti-Mathematics: What If All Axioms Were Negated?"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 0643b2b3 (Q=0.820) proved 11 theorems in Combinatorics but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The 'uncanny valley' in robotics states that as a robot becomes more human-like, acceptance increases until it looks almost human, then drops sharply before recovering. Conjecture: the same phenomenon",
     "domains": [
       "Combinatorics"
@@ -779,21 +808,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-10T22:30:11.162948+00:00",
     "title": "Cellular Automata at the Ordinals: Transfinite Computation"
-  },
-  {
-    "consumed_by_exp_id": "0be793c6",
-    "description": "Construct and classify finite projective planes where Desargues' theorem fails. Prove that such planes exist at every prime power order and that their collineation groups are strictly smaller than PGL. Formalize the connection to non-associative division algebras and Hall triple systems.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0962",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T00:39:31.398181+00:00",
-    "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
   },
   {
     "consumed_by_exp_id": "ace29f66",
@@ -6732,6 +6746,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T02:34:48.069025+00:00",
     "title": "This project builds a self-contained, machine-checked theory of negative-dimensi"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Non-Desarguesian Worlds\n\nThis project formalizes the algebraic engine behind non-Desarguesian planes and\ndelivers a fully verified concrete example. Two self-contained Lean files:\n\n* `QuasifieldAffinePlane.lean` \u2014 abstract theory: a `Quasifield` structure and a\n  proof that **every quasifield coordinatizes an affine plane** (two points\n  determine a unique line, Playfair's parallel axiom, non-degeneracy), together\n  with `DivisionRing.toQuasifield` showing division rings are the \"tame\"\n  (Desarguesian) special case.\n* `NearfieldPlaneOrder9.lean` \u2014 the **Dickson nearfield of order 9**, verified by\n  exhaustive computation to be a quasifield that is associative and\n  right-distributive but **not left-distributive** and **not commutative**, hence\n  not a division ring; it coordinatizes a non-Desarguesian affine plane of order\n  9 with 81 points and 90 lines.\n\n## What is proved\n\n1. General incidence theory of quasifield planes (fully general `Q`).\n2. A concrete proper nearfield of order 9 and all its quasifield axioms.\n3. The algebraic obstruction to Desargues: failure of left distributivity.\n\n## Natural next steps\n\n1. **Geometric Desargues failure.** Formalize a Desargues configuration\n   (two triangles perspective from a point) inside the coordinatized plane and\n   exhibit an explicit 10-point/10-line witness in the Dickson plane where the\n   axis of perspectivity fails. This turns the algebraic obstruction into a\n   directly geometric non-Desarguesian statement.\n\n2. **The coordinatization theorem.** Prove the converse bridge: an affine plane\n   in which (the little/major) Desargues theorem holds is coordinatized by a\n   division ring. This is the deep classical equivalence; the quasifield/plane\n   scaffolding here is the right starting point.\n\n3. **Existence at every prime power `q = p\u207f`, `n \u2265 2`.** Generalize the Dickson\n   twist to `GF(q\u00b2)` with the Frobenius `x \u21a6 x^q`, giving a proper nearfield and\n   a non-Desarguesian plane of order `q\u00b2` for every prime power `q`. The finite\n   `decide` proofs would be replaced by structural arguments about `GF(q\u00b2)` and\n   its Frobenius automorphism.\n\n4. **Collineation groups strictly smaller than PGL.** Formalize that the\n   collineation group of the Dickson plane fixes the distinguished nucleus and is\n   therefore a proper subgroup of `PGL(3, 9)` acting on the Desarguesian plane \u2014\n   the \"symmetry loss\" theme.\n\n5. **Hall systems and the classification of order-9 planes.** Connect the\n   nearfield plane to the Hall plane, its dual, and the Hughes plane, formalizing\n   the enumeration of the four projective planes of order 9.\n\n6. **Nucleus theory over quasifields.** Relate the left/middle/right nuclei of a\n   quasifield to the group of central collineations, tying non-associativity to\n   the Lenz\u2013Barlotti classification.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0982",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0be793c6",
+    "status": "available",
+    "timestamp": "2026-07-11T02:51:05.410039+00:00",
+    "title": "This project formalizes the algebraic engine behind non-Desarguesian planes and"
   },
   {
     "consumed_by_exp_id": "",
