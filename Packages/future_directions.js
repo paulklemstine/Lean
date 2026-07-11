@@ -782,7 +782,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cellular Automata at the Ordinals: Transfinite Computation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0be793c6",
     "description": "Construct and classify finite projective planes where Desargues' theorem fails. Prove that such planes exist at every prime power order and that their collineation groups are strictly smaller than PGL. Formalize the connection to non-associative division algebras and Hall triple systems.",
     "domains": [
       "Novelty",
@@ -792,7 +792,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T00:39:31.398181+00:00",
     "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
   },
