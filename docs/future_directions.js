@@ -1099,7 +1099,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fermat Near-Misses in the Twilight Zone"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dfaaa130",
     "description": "Construct a single algebraic object whose projections give S^0, S^1, S^2, ... simultaneously. Prove it exists as an inverse limit in the category of spheres. Show that its homology groups encode the Bernoulli numbers and that its cohomology ring is the polynomial ring on Stiefel-Whitney classes.",
     "domains": [
       "Novelty",
@@ -1109,7 +1109,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T11:07:24.978165+00:00",
     "title": "The Mega-Sphere: All Dimensions at Once"
   },
