@@ -853,20 +853,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Pr"
   },
   {
-    "consumed_by_exp_id": "0a5d3cfa",
-    "description": "Cycle c67f6099 (Q=0.820) proved 21 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that mathematical discovery undergoes phase transitions: long periods of incremental progress punctuated by sudden reorganizations (like percolation transitions). Formalize this using stati",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_c67f6099_d57ad97f",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "c67f6099",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T15:33:24.740639+00:00",
-    "title": "Close Proofs: Speculative: Mathematics as a Phase Transition"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle f0772bca (Q=0.830) proved 18 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Register allocation in a compiler assigns variables to CPU registers. The interference graph G has variables as vertices and edges between variables that are 'live' at the same time. Register allocati",
     "domains": [
@@ -1101,7 +1087,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Mathematics as an Evolving Ecosystem"
   },
   {
-    "consumed_by_exp_id": "21f0ccc8",
+    "consumed_by_exp_id": "",
     "description": "Every proof has a thermodynamic cost proportional to its Kolmogorov complexity. Define: cost(\u03c0) = K(\u03c0) * T * ln(2), where K is Kolmogorov complexity and T is temperature. Prove: shorter proofs have lower cost. Conjecture: there exist statements whose shortest proof has cost exceeding any computable bound (proof-theoretic analog of Chaitin's theorem). Show: the average cost of proving a random true statement of length n is \u0398(2^n).",
     "domains": [
       "Novelty",
@@ -1111,7 +1097,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-11T17:13:54.266169+00:00",
     "title": "Speculative: Proof Complexity and Thermodynamic Cost"
   },
@@ -1159,21 +1145,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-11T13:54:33.301868+00:00",
     "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
-  },
-  {
-    "consumed_by_exp_id": "c695f186",
-    "description": "Construct a simplicial complex from the citation graph of mathematical theorems: vertices are theorems, edges connect co-cited theorems, triangles connect tri-cited theorems, etc. Compute the persistent homology of this complex. Conjecture: H_1 reveals 'schools of mathematics' (connected research communities) and H_2 reveals 'paradigm shifts' (structural changes in the network). Prove: the Betti numbers grow as \u03b2_k \u2248 n^(k+1) where n is the number of theorems.",
-    "domains": [
-      "Novelty",
-      "MachineLearning"
-    ],
-    "id": "fd_1056",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T18:20:32.320925+00:00",
-    "title": "Speculative: Topological Data Analysis of Theorem Networks"
   },
   {
     "consumed_by_exp_id": "",
@@ -6019,7 +5990,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "This project formalizes \"social credit scores as topological invariants\" through"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a06d4115",
     "description": "# Future Directions \u2014 Negative-Dimensional Topology\n\nThis project builds a self-contained, machine-checked theory of negative-dimensional\nspaces in `Core.lean`.  We model virtual graded spaces as the Laurent-polynomial ring\n`\u2124[t, t\u207b\u00b9] = AddMonoidAlgebra \u2124 \u2124` (a concrete Spanier\u2013Whitehead / pro-spectrum\npicture: `t\u207b\u00b9` is desuspension, producing negative dimensions) and define the Euler\ncharacteristic as the ring homomorphism `\u03c7 : t \u21a6 -1`.\n\n## What was proved\n\n* **Euler characteristic extends to negative dimensions** and satisfies the requested\n  formula `\u03c7(X) = (-1)\u207f \u00b7 |\u03c0\u2080(X)|` for `dim X = -n` (`chi_pure_neg`, `chi_neg_dim`).\n* **Dimension `-1`** (the title question): a `k`-component `(-1)`-space has `\u03c7 = -k`\n  (`chi_dim_neg_one`).\n* `\u03c7` is a **ring homomorphism**: additive under disjoint union (`chi_add`) and\n  multiplicative under product \u2014 a K\u00fcnneth formula (`chi_mul`), with `\u03c7(point) = 1`.\n* **Suspension/desuspension** flip the sign of `\u03c7` (`chi_susp`, `chi_desusp`,\n  `chi_suspIter`), and are mutually inverse (`susp_desusp`, `desusp_susp`).\n* The **stabilization map** carries a `(-n)`-space to an honest `0`-dimensional space\n  (`stabilize_neg`, `stabilize_chi`).\n\n## What was disproved (contrarian results)\n\n* Not every negative-dimensional space has negative `\u03c7` (`disproof_all_neg_chi`):\n  even codimensions give `\u03c7 > 0`.\n* `\u03c7` is **not injective** (`disproof_chi_not_injective`): it only sees the parity of\n  the dimension, so it cannot recover the dimension.\n\n## Directions to extend\n\n1. **Betti numbers with genuine coefficients.**  Replace `\u2124` coefficients by graded\n   `\u2124`-modules / chain complexes and recover `\u03c7` as the alternating sum of ranks,\n   proving the present `\u03c7` agrees with the homological one for bounded complexes.\n2. **True `\u03c0\u2080` from a topological model.**  Here `|\u03c0\u2080|` is the rank in the defining\n   degree.  A next step is to attach an actual (pro-)space or spectrum and prove\n   `\u03c0\u2080` of that object matches this count, tightening the interpretation of the main\n   theorem.\n3. **Poincar\u00e9 duality in negative degrees.**  With `\u03c7(DX) = \u03c7(X)` for Spanier\u2013\n   Whitehead duals, formalize duality `t^d \u21a6 t^{-d}` and its interaction with `\u03c7`.\n4. **Multiplicative structure / Grothendieck ring.**  Study the image of `\u03c7` and the\n   ideal structure; characterize which integers arise as `\u03c7` of a nonnegative-cell\n   (genuine) space versus a virtual one.\n5. **Higher invariants beyond `\u03c7`.**  The disproof of injectivity shows `\u03c7` forgets\n   dimension; introduce a refined invariant (e.g. the full Poincar\u00e9 series, or a\n   `t`-graded Euler characteristic valued in `\u2124[t,t\u207b\u00b9]`) that is injective.\n",
     "domains": [
       "Algebra",
@@ -6029,7 +6000,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "3399a930",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T02:34:48.069025+00:00",
     "title": "This project builds a self-contained, machine-checked theory of negative-dimensi"
   },
@@ -6317,6 +6288,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T19:27:19.450922+00:00",
     "title": "The task line originally left four `sorry` placeholders across two files."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 TDA of Theorem Networks\n\nThe file `FlagComplex.lean` proves a self-contained chain of results about the flag\n(clique) complex of a theorem-citation network `G` and its `f`-vector `faceCount G k`\n(the number of `(k+1)`-cliques):\n\n1. `faceCount_zero` \u2014 `0`-faces are the theorems.\n2. `faceCount_top` \u2014 complete network: `faceCount \u22a4 k = C(n, k+1)`.\n3. `faceCount_le_top`, `faceCount_le_choose` \u2014 domination by the complete network.\n4. `faceCount_le_pow` \u2014 polynomial upper bound `faceCount G k \u2264 n^(k+1)`.\n5. `faceCount_top_lower` \u2014 polynomial lower bound `(n-k)^(k+1) \u2264 (k+1)!\u00b7faceCount \u22a4 k`.\n6. `euler_char_top` \u2014 Euler characteristic of the complete network is `1` (contractible).\n\n## Natural next steps\n\n- **General f-vector bounds.** Prove `faceCount G k \u2264 faceCount G (k-1) \u00b7 (something)`\n  Kruskal\u2013Katona-style shifting bounds, giving sharper control than `n^(k+1)` for\n  sparse networks.\n- **Sparse / bounded-degree networks.** If each theorem is co-cited with at most `d`\n  others, then `faceCount G k \u2264 n \u00b7 C(d, k)`, i.e. the complex is far smaller than the\n  simplex. Formalize this and contrast with the complete-network bound.\n- **Euler characteristic for general `G`.** Establish `\u03c7(G) = \u03a3_k (-1)^k faceCount G k`\n  and relate it to connected components (`\u03b2\u2080`) via `\u03c7 = \u03b2\u2080 - \u03b2\u2081 + \u2026`. Mathlib now has\n  simplicial and singular homology; a serious continuation would define the clique\n  complex as a Mathlib `SimplicialComplex`/`AbstractSimplicialComplex` and compute\n  `H\u2080`, verifying `\u03b2\u2080 = #components` (\"schools of mathematics\").\n- **Persistent homology.** Introduce a filtration by co-citation weight and study the\n  barcode. Mathlib lacks persistent homology; building the persistence module and its\n  interval decomposition would be a substantial but well-scoped project.\n- **Refuting / restating the growth conjecture.** The Euler-characteristic result shows\n  the literal \"Betti numbers grow like `n^(k+1)`\" is false for the complete model. A\n  refined conjecture worth pursuing: for random co-citation graphs `G(n,p)` in the\n  appropriate regime, `E[\u03b2_k]` is polynomial in `n` of degree `k+1` (Kahle's theorems on\n  the topology of random clique complexes). Formalizing Kahle-type thresholds is a\n  concrete long-term target.\n",
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_1066",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c695f186",
+    "status": "available",
+    "timestamp": "2026-07-11T20:17:42.831435+00:00",
+    "title": "The file `FlagComplex.lean` proves a self-contained chain of results about the f"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Mathematics as a Phase Transition\n\nThis cycle closed the outstanding placeholder results connecting the factorial\nnumber system to the general mixed-radix theory, and distilled the abstract\n\"sharp threshold\" skeleton that underlies phase-transition phenomena in monotone\ngrowth processes. The following conjectures extend those findings.\n\n## 1. Every monotone representational event has a computable critical length\n\n**Conjecture.** For any mixed-radix system whose bases are eventually at least\ntwo, and any monotone predicate on words that depends only on the represented\nvalue, the critical word length at which the predicate switches on is a\ncomputable, monotone function of the predicate's parameters.\n\nThe key insight is that a monotone yes/no event on a well-ordered timeline forces\nthe set of successful times to be an up-set, so the entire transition collapses to\na single threshold rather than spreading over a range. Why now? The mixed-radix\ncapacity threshold established in this cycle shows the skeleton is already\nnon-vacuous for positional systems; the remaining step is to make the threshold\nparametrically explicit and to identify exactly which value-predicates are\nmonotone in length.\n\n## 2. Sharpness is preserved under products of independent systems\n\n**Conjecture.** If two independent monotone growth processes each undergo a sharp\nthreshold, then their combined \"both succeed\" process also undergoes a sharp\nthreshold, located at the maximum of the two individual thresholds, while the\n\"either succeeds\" process is located at the minimum.\n\nThe key insight is that intersection and union of up-sets are again up-sets, so\nsharpness \u2014 being an interval boundary \u2014 is a lattice-theoretic invariant closed\nunder the natural combinators. Why now? With the single-process threshold theory\nin place, the natural next question is compositionality: real discovery processes\ncombine many monotone sub-events, and the max/min law would give a compositional\ncalculus for locating the aggregate transition.\n\n## 3. The factorial system is the slowest-percolating mixed-radix system\n\n**Conjecture.** Among all mixed-radix systems with bases bounded by a fixed\nincreasing envelope, the factorial system (bases `i + 1`) has the largest\ncapacity threshold for every target \u2014 its representational capacity crosses each\nlevel later than any competitor with uniformly smaller bases.\n\nThe key insight is that the running product of bases is monotone in each base, so\ncapacity thresholds are anti-monotone in the base sequence, making the smallest\nadmissible bases the slowest to percolate. Why now? The bridge proved this cycle\nidentifies the factorial system as a specific point in the mixed-radix family;\ncomparing thresholds across the family turns that structural embedding into a\nquantitative extremal statement.\n\n## 4. A width-versus-height trade-off governs positional phase transitions\n\n**Conjecture.** For a fixed target capacity, the critical word length and the\naverage base size obey an inverse relationship: doubling the geometric mean of the\nbases halves the critical length, up to an additive constant, uniformly in the\ntarget.\n\nThe key insight is that capacity is the product of the bases, so its logarithm is\nadditive in the per-place contributions, converting the multiplicative threshold\ninto a linear budget shared between \"how many places\" and \"how large each place.\"\nWhy now? The exponential lower bound on capacity proved this cycle already pins\nthe threshold between a target-sized and a logarithmic word length; sharpening the\nconstant would turn that sandwich into an exact trade-off law.\n\n## 5. Primitive-divisor emergence is a genuine phase transition in the Fibonacci sequence\n\n**Conjecture.** The appearance of a primitive prime divisor in the Fibonacci\nsequence is a sharp threshold phenomenon: there is a finite exceptional set below\nwhich primitive divisors may be absent, and above which every term possesses one,\nwith no intermediate regime of sporadic failures.\n\nThe key insight is that the imprimitive part of a Fibonacci term is controlled by\nits index while the term itself grows exponentially, so beyond a finite window the\nprimitive part is forced to exceed one \u2014 exactly the monotone-dominance pattern\nthat produces a sharp threshold. Why now? The prime-index case is already\nestablished and the finite exceptional window is verified up to a large bound; the\nmissing piece is the exponential-versus-polynomial comparison for the infinite\ncomposite tail, which the sharp-threshold framework of this cycle frames precisely\nas a crossing of two growth rates.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1067",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0a5d3cfa",
+    "status": "available",
+    "timestamp": "2026-07-11T20:17:52.356093+00:00",
+    "title": "This cycle closed the outstanding placeholder results connecting the factorial"
   },
   {
     "consumed_by_exp_id": "",
