@@ -3252,6 +3252,7 @@ Be precise, be deep, be world-class.
               "interactive_demos": [
                 {"title": "Beautiful Math-Rich Interactive Widget Title", "description": "Detailed description of the interactive widget and what users can explore.", "html": "<!DOCTYPE html><html>...</html>"}
               ],
+              "interactive_layout": "Markdown representing a Jupyter-like narrative combining rich narrative text and interactive widgets. You have full freedom and space to design the order, explanation layout, and overall presentation flow of the page. Use placeholders like {{interactive_demo:0}} (or {{widget:0}}), {{visualization:0}}, {{algorithm:0}}, and {{demo:0}} to embed the generated widgets, visualizations, algorithms, and Python demos inline with your descriptive text. Make it an engaging, multimedia presentation.",
               "lean_proofs": "LEAN_FILE_CONTENT_OR_PLACEHOLDER",
               "future_directions": "FUTURE_DIRECTIONS_CONTENT",
               "modules": {"demo": "# full demo.py source..."},
@@ -3299,6 +3300,9 @@ Be precise, be deep, be world-class.
                   arrays of objects with the required keys. Omit an array entirely if
                   you have no real entry for it rather than leaving it empty or filled
                   with placeholders.
+            - [ ] `interactive_layout` is fully written as a Jupyter-notebook-like markdown narrative, 
+                  referencing the generated elements inline via `{{interactive_demo:X}}`, `{{visualization:Y}}`,
+                  `{{algorithm:Z}}`, and `{{demo:W}}` placeholders.
             - [ ] `future_directions` contains the Phase A future directions provided
                   below, verbatim or lightly edited.
 

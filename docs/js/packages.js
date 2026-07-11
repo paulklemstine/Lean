@@ -266,20 +266,89 @@ document.addEventListener('DOMContentLoaded', () => {
             paperDiv.innerHTML = '<p style="color:var(--text-muted)">No research paper provided.</p>';
         }
 
-        // Interactive HTML demos
-        renderInteractiveHTMLDemos('content-interactive-demos', data.interactive_demos);
-
-        // Visualizations (generated images from Python scripts)
-        // Guard against string values (e.g. "MISSING" placeholders)
-        const visualizations = Array.isArray(data.visualizations) ? data.visualizations : [];
-        renderVisualizations('content-visualizations', visualizations);
-
-        // Algorithms: render both pseudocode and Python source implementations
-        const algorithms = Array.isArray(data.algorithms) ? data.algorithms : [];
-        renderCodeBlocks('content-algorithms', algorithms);
-        if (window.renderInteractiveDemos) {
-            const demos = Array.isArray(data.demos) ? data.demos : [];
-            window.renderInteractiveDemos('content-demos', demos);
+        // Demos / Interactive Tab
+        const demosTab = document.getElementById('tab-demos');
+        if (demosTab) {
+            if (data.interactive_layout) {
+                // Render Jupyter notebook-like custom layout
+                demosTab.innerHTML = '';
+                
+                let layoutHtml = window.renderMarkdownWithMath(data.interactive_layout);
+                const placeholderRe = /\{\{\s*(widget|interactive_demo|visualization|algorithm|demo)\s*:\s*(\d+)\s*\}\}/gi;
+                const renderTasks = [];
+                
+                layoutHtml = layoutHtml.replace(placeholderRe, (match, type, indexStr) => {
+                    const index = parseInt(indexStr, 10);
+                    const typeLower = type.toLowerCase();
+                    const containerId = `layout-${typeLower}-${index}-${Math.random().toString(36).substr(2, 9)}`;
+                    
+                    renderTasks.push({
+                        type: typeLower,
+                        index: index,
+                        containerId: containerId
+                    });
+                    
+                    return `<div id="${containerId}" style="margin: 24px 0;"></div>`;
+                });
+                
+                demosTab.innerHTML = `<div class="markdown-body" style="padding: 16px 0;">${layoutHtml}</div>`;
+                
+                renderTasks.forEach(task => {
+                    const targetContainer = document.getElementById(task.containerId);
+                    if (!targetContainer) return;
+                    
+                    if (task.type === 'widget' || task.type === 'interactive_demo') {
+                        const widgets = Array.isArray(data.interactive_demos) ? data.interactive_demos : [];
+                        if (widgets[task.index]) {
+                            renderInteractiveHTMLDemos(task.containerId, [widgets[task.index]]);
+                            const secTitle = targetContainer.querySelector('.section-title');
+                            if (secTitle) secTitle.remove();
+                        }
+                    } else if (task.type === 'visualization') {
+                        const visualizations = Array.isArray(data.visualizations) ? data.visualizations : [];
+                        if (visualizations[task.index]) {
+                            renderVisualizations(task.containerId, [visualizations[task.index]]);
+                            const secTitle = targetContainer.querySelector('.section-title');
+                            if (secTitle) secTitle.remove();
+                        }
+                    } else if (task.type === 'algorithm') {
+                        const algorithms = Array.isArray(data.algorithms) ? data.algorithms : [];
+                        if (algorithms[task.index]) {
+                            renderCodeBlocks(task.containerId, [algorithms[task.index]]);
+                            const secTitle = targetContainer.querySelector('.section-title');
+                            if (secTitle) secTitle.remove();
+                        }
+                    } else if (task.type === 'demo') {
+                        const demos = Array.isArray(data.demos) ? data.demos : [];
+                        if (demos[task.index] && window.renderInteractiveDemos) {
+                            window.renderInteractiveDemos(task.containerId, [demos[task.index]]);
+                            const secTitle = targetContainer.querySelector('.section-title');
+                            if (secTitle) secTitle.remove();
+                        }
+                    }
+                });
+            } else {
+                // Fallback sequential rendering
+                demosTab.innerHTML = `
+                    <div id="content-interactive-demos"></div>
+                    <div id="content-visualizations"></div>
+                    <div class="algorithms-list" id="content-algorithms"></div>
+                    <div class="demos-list" id="content-demos"></div>
+                `;
+                
+                renderInteractiveHTMLDemos('content-interactive-demos', data.interactive_demos);
+                
+                const visualizations = Array.isArray(data.visualizations) ? data.visualizations : [];
+                renderVisualizations('content-visualizations', visualizations);
+                
+                const algorithms = Array.isArray(data.algorithms) ? data.algorithms : [];
+                renderCodeBlocks('content-algorithms', algorithms);
+                
+                if (window.renderInteractiveDemos) {
+                    const demos = Array.isArray(data.demos) ? data.demos : [];
+                    window.renderInteractiveDemos('content-demos', demos);
+                }
+            }
         }
 
         // Future Directions tab
@@ -642,6 +711,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 editor.style.height = editor.scrollHeight + 'px';
             };
 
+            const outputContainer = document.createElement('div');
+            outputContainer.className = 'gallery-img-container viz-output-container';
+            outputContainer.innerHTML = '<div class="viz-placeholder" style="color: var(--text-muted); padding: 12px 0;">Loading visualization...</div>';
+
+            const runViz = () => {
+                if (!window.Aether.pyodideInstance) {
+                    outputContainer.innerHTML = '<div class="viz-placeholder" style="color: var(--text-muted); font-style: italic; padding: 12px 0;">Python engine is loading, will generate visualization automatically...</div>';
+                    setTimeout(runViz, 1000);
+                    return;
+                }
+                if (window.runVisualization) {
+                    const codeToRun = editor.value;
+                    if (!codeToRun || !codeToRun.trim() || isFilename(codeToRun.trim())) {
+                        outputContainer.innerHTML = '<div class="viz-placeholder" style="color: var(--text-muted); padding: 12px 0;">Source code not available for this visualization</div>';
+                        return;
+                    }
+                    window.runVisualization(codeToRun, outputContainer, genBtn);
+                }
+            };
+
             // Fetch code from code_file if not resolved yet
             if (!resolvedCode && item.code_file) {
                 fetch(item.code_file)
@@ -659,6 +748,11 @@ document.addEventListener('DOMContentLoaded', () => {
                             genBtn.textContent = 'Code Unavailable';
                         }
                         autoSizeEditor();
+                        if (code && code.trim()) {
+                            runViz();
+                        } else {
+                            outputContainer.innerHTML = '<div class="viz-placeholder" style="color: var(--text-muted); padding: 12px 0;">Source code not available for this visualization</div>';
+                        }
                     })
                     .catch(err => {
                         console.warn('Failed to fetch viz code:', item.code_file, err);
@@ -669,27 +763,14 @@ document.addEventListener('DOMContentLoaded', () => {
                             resolvedCode = modCode;
                             genBtn.disabled = false;
                             autoSizeEditor();
+                            runViz();
                         } else {
                             genBtn.disabled = true;
                             genBtn.textContent = 'Code Unavailable';
+                            outputContainer.innerHTML = '<div class="viz-placeholder" style="color: var(--text-muted); padding: 12px 0;">Source code not available for this visualization</div>';
                         }
                     });
             }
-
-            const outputContainer = document.createElement('div');
-            outputContainer.className = 'gallery-img-container viz-output-container';
-            outputContainer.innerHTML = '<div class="viz-placeholder" style="color: var(--text-muted); padding: 12px 0;">Click Generate to render the visualization</div>';
-
-            const runViz = () => {
-                if (window.runVisualization) {
-                    const codeToRun = editor.value;
-                    if (!codeToRun || !codeToRun.trim() || isFilename(codeToRun.trim())) {
-                        outputContainer.innerHTML = '<div class="viz-placeholder" style="color: var(--text-muted);">Source code not available for this visualization</div>';
-                        return;
-                    }
-                    window.runVisualization(codeToRun, outputContainer, genBtn);
-                }
-            };
 
             genBtn.addEventListener('click', runViz);
 
@@ -698,6 +779,11 @@ document.addEventListener('DOMContentLoaded', () => {
             card.appendChild(editor);
             card.appendChild(outputContainer);
             container.appendChild(card);
+
+            // Auto-run if the code is already resolved
+            if (resolvedCode && resolvedCode.trim()) {
+                runViz();
+            }
         });
     }
 
@@ -765,13 +851,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 header.appendChild(desc);
             }
 
+            // Generate a random unique ID for iframe auto-sizer communication
+            const uniqueId = 'iframe_' + Math.random().toString(36).substr(2, 9);
+
             // Sandbox each demo in its own iframe via srcdoc.  This gives each
             // demo its own document context, script scope, and CSS isolation.
-            // Fixes: (1) scripts referencing DOM elements that exist in the demo
-            // HTML now find them via getElementById; (2) function declarations
-            // are accessible to onclick handlers within the iframe; (3) no
-            // cross-demo ID collisions; (4) a bad demo can't crash the parent
-            // page or pollute the global scope; (5) no eval hacks needed.
             const content = document.createElement('div');
             content.className = 'interactive-demo-content';
             content.style.cssText = 'background: #fff; color: #222; border-radius: 0 0 12px 12px; overflow: visible;';
@@ -791,7 +875,7 @@ document.addEventListener('DOMContentLoaded', () => {
     var h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight,60);
     if(Math.abs(h-last)<5)return;
     last=h;
-    parent.postMessage({aetherIframeHeight:${idx},height:h},'*');
+    parent.postMessage({aetherIframeHeight:'${uniqueId}',height:h},'*');
   }
   report();
   setTimeout(report,100);setTimeout(report,500);setTimeout(report,2000);
@@ -820,7 +904,7 @@ document.addEventListener('DOMContentLoaded', () => {
             iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
 
             // Register this iframe so the message listener can resize it
-            window._aetherDemoIframes[idx] = iframe;
+            window._aetherDemoIframes[uniqueId] = iframe;
 
             content.appendChild(iframe);
             card.appendChild(header);
@@ -867,20 +951,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 let tabsHtml = '';
                 let blocksHtml = '';
 
+                // Generate a unique ID to avoid index collisions when multiple algorithms are rendered on the same page
+                const algoId = 'algo_' + Math.random().toString(36).substr(2, 9);
+
                 if (pseudocode && code) {
                     // Show tabs to switch between Pseudocode and Python Code
                     tabsHtml = `
                         <div class="algo-tabs" style="display: flex; background: var(--bg-elevated); border-bottom: 1px solid var(--border-color); padding: 0 16px;">
-                            <button class="algo-tab-btn active" data-target="pseudocode-${idx}" style="background: none; border: none; padding: 12px 16px; color: var(--text-main); border-bottom: 2px solid var(--primary-color, #7c3aed); font-weight: 600; cursor: pointer; font-size: 0.85rem;">Pseudocode</button>
-                            <button class="algo-tab-btn" data-target="python-${idx}" style="background: none; border: none; padding: 12px 16px; color: var(--text-muted); cursor: pointer; font-size: 0.85rem;">Python Code</button>
+                            <button class="algo-tab-btn active" data-target="pseudocode-${algoId}" style="background: none; border: none; padding: 12px 16px; color: var(--text-main); border-bottom: 2px solid var(--primary-color, #7c3aed); font-weight: 600; cursor: pointer; font-size: 0.85rem;">Pseudocode</button>
+                            <button class="algo-tab-btn" data-target="python-${algoId}" style="background: none; border: none; padding: 12px 16px; color: var(--text-muted); cursor: pointer; font-size: 0.85rem;">Python Code</button>
                         </div>
                     `;
                     blocksHtml = `
                         <div class="algo-blocks">
-                            <div id="pseudocode-${idx}" class="algo-block-content">
+                            <div id="pseudocode-${algoId}" class="algo-block-content">
                                 <pre style="margin:0; border-radius:0; border:none;"><code class="language-text">${window.escapeHtml(pseudocode)}</code></pre>
                             </div>
-                            <div id="python-${idx}" class="algo-block-content" style="display: none;">
+                            <div id="python-${algoId}" class="algo-block-content" style="display: none;">
                                 <pre style="margin:0; border-radius:0; border:none;"><code class="language-python">${window.escapeHtml(code)}</code></pre>
                             </div>
                         </div>
