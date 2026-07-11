@@ -1,546 +1,265 @@
-#!/usr/bin/env python3
 """
-Transfinite Game Theory — Interactive Demo
+Determinacy of Well-Founded Transfinite Games -- numerical demonstrations.
 
-Demonstrates key concepts from the formalization:
-1. Minimax computation for finite game trees
-2. Strategy exclusivity verification
-3. Ordinal rank computation
-4. Quasistrategy pruning
+This self-contained script illustrates the theory of two-player, normal-play
+games whose move relation is well-founded (no play lasts forever, though there is
+no fixed finite bound on play length).  It computes:
+
+  * the value function W(p)  (True iff the player to move wins), via the
+    Zermelo fixed-point equation  W(p) <-> exists q. (p -> q) and not W(q);
+  * the canonical greedy optimal strategy;
+  * full game trajectories under that strategy against an arbitrary legal
+    opponent, verifying that every play terminates and that the decisive
+    terminal position is reached on the opponent's (odd) turn;
+  * three worked games of increasing ordinal rank:
+        - Countdown on N               (rank omega),
+        - Lexicographic countdown N x N (rank omega^2),
+        - Subtraction game (a Nim-like impartial game, rank omega).
+
+Every function is inlined and uses only the Python standard library.
 """
 
-from typing import List, Optional, Tuple, Callable
+from __future__ import annotations
+
+from functools import lru_cache
+from typing import Callable, Hashable, Iterable, List, Optional, Tuple, TypeVar
+
+Position = TypeVar("Position", bound=Hashable)
 
 
-# ============================================================
-# Game Tree Representation
-# ============================================================
+# ---------------------------------------------------------------------------
+# Core engine: value function and canonical strategy for a well-founded game.
+# ---------------------------------------------------------------------------
+def make_value_function(
+    moves: Callable[[Position], Iterable[Position]],
+) -> Callable[[Position], bool]:
+    """Return W, the value function for a well-founded move relation.
 
-class GameTree:
-    """A finite game tree node."""
-    def __init__(self, children: Optional[List['GameTree']] = None, label: str = ""):
-        self.children = children or []
-        self.label = label
+    `moves(p)` yields all q with a legal move p -> q.  W(p) is True iff the
+    player to move at p has a winning strategy, defined by the Zermelo
+    fixed-point equation:  W(p)  <->  exists q in moves(p) with not W(q).
 
-    @property
-    def is_leaf(self) -> bool:
-        return len(self.children) == 0
+    Well-foundedness guarantees the recursion terminates.
+    """
 
-    def rank(self) -> int:
-        """Compute the game-theoretic rank."""
-        if self.is_leaf:
-            return 0
-        return max(c.rank() + 1 for c in self.children)
+    @lru_cache(maxsize=None)
+    def W(p: Position) -> bool:
+        return any(not W(q) for q in moves(p))
 
-    def is_winning(self) -> bool:
-        """Is the current position winning for the player to move?
-        Leaf = losing (no moves). Node = winning iff some child is losing."""
-        if self.is_leaf:
-            return False
-        return any(not c.is_winning() for c in self.children)
-
-    def size(self) -> int:
-        """Total number of nodes."""
-        return 1 + sum(c.size() for c in self.children)
+    return W
 
 
-def chain_game(n: int) -> GameTree:
-    """Create a linear chain game of depth n."""
-    if n == 0:
-        return GameTree(label=f"L")
-    return GameTree([chain_game(n - 1)], label=f"D{n}")
+def is_terminal(moves: Callable[[Position], Iterable[Position]], p: Position) -> bool:
+    """A position is terminal iff the player to move has no legal move."""
+    for _ in moves(p):
+        return False
+    return True
 
 
-def wide_game(n: int) -> GameTree:
-    """Create a wide game with n leaf children."""
-    return GameTree([GameTree(label=f"L{i}") for i in range(n)], label=f"W{n}")
+def optimal_move(
+    moves: Callable[[Position], Iterable[Position]],
+    W: Callable[[Position], bool],
+    p: Position,
+) -> Optional[Position]:
+    """The canonical greedy optimal move from a winning position p.
+
+    Returns a q with p -> q and W(q) == False (a move handing the opponent a
+    losing position), or None if p is losing/terminal.
+    """
+    if not W(p):
+        return None
+    for q in moves(p):
+        if not W(q):
+            return q
+    return None
 
 
-# ============================================================
-# Gale-Stewart Game Simulation
-# ============================================================
+def play(
+    moves: Callable[[Position], Iterable[Position]],
+    W: Callable[[Position], bool],
+    start: Position,
+    opponent: Callable[[Position], Position],
+) -> List[Position]:
+    """Play out the game from `start`.
 
-Strategy = Callable[[List[int]], int]
-
-def build_history(sigma: Strategy, tau: Strategy, n: int) -> List[int]:
-    """Build the first n moves from two strategies."""
-    history = []
-    for step in range(n):
-        if step % 2 == 0:
-            history.append(sigma(list(history)))
+    The analysed player uses the canonical greedy strategy at winning
+    positions; the opponent moves at losing positions.  Returns the full
+    trajectory ending at the first terminal position.
+    """
+    trajectory: List[Position] = [start]
+    p = start
+    while not is_terminal(moves, p):
+        if W(p):
+            nxt = optimal_move(moves, W, p)
+            assert nxt is not None
+            p = nxt
         else:
-            history.append(tau(list(history)))
-    return history
+            p = opponent(p)
+        trajectory.append(p)
+    return trajectory
 
 
-def canonical_play(sigma: Strategy, tau: Strategy, length: int = 20) -> List[int]:
-    """Generate the canonical play from two strategies."""
-    return build_history(sigma, tau, length)
+def first_legal_opponent(
+    moves: Callable[[Position], Iterable[Position]],
+) -> Callable[[Position], Position]:
+    """A concrete legal opponent strategy: take the first available legal move."""
+
+    def opp(p: Position) -> Position:
+        for q in moves(p):
+            return q
+        return p  # terminal: stay put (never actually reached during play)
+
+    return opp
 
 
-def check_exclusivity(
-    sigma: Strategy, tau: Strategy,
-    payoff: Callable[[List[int]], bool],
-    play_length: int = 20
-) -> Tuple[bool, List[int]]:
-    """Demonstrate the exclusivity theorem:
-    playing sigma against tau must produce a definite winner."""
-    play = canonical_play(sigma, tau, play_length)
-    player_i_wins = payoff(play)
-    return player_i_wins, play
+# ---------------------------------------------------------------------------
+# Game 1: Countdown on N  (rank omega).
+#   From a, move to any b < a.  Terminal position: 0.
+#   Theory predicts  W(n)  <->  n != 0.
+# ---------------------------------------------------------------------------
+def countdown_moves(a: int) -> Iterable[int]:
+    return range(a)  # 0, 1, ..., a-1  (all b < a)
 
 
-# ============================================================
-# Demo 1: Finite Game Trees
-# ============================================================
+def demo_countdown() -> None:
+    print("=" * 70)
+    print("GAME 1: Countdown on N  (ordinal rank omega)")
+    print("  From a, move to any b < a.  0 is the unique terminal position.")
+    print("=" * 70)
+    W = make_value_function(countdown_moves)
+    opp = first_legal_opponent(countdown_moves)
 
-def demo_game_trees():
-    print("=" * 60)
-    print("DEMO 1: Finite Game Trees")
-    print("=" * 60)
+    print("\n  Value function  W(n)  vs  the closed form  (n != 0):")
+    all_ok = True
+    for n in range(11):
+        predicted = n != 0
+        ok = W(n) == predicted
+        all_ok = all_ok and ok
+        print(f"    n = {n:2d}:  W = {str(W(n)):5s}   n!=0 = {str(predicted):5s}   {'OK' if ok else 'MISMATCH'}")
+    print(f"\n  Closed form W(n) <-> n != 0 verified for n <= 10: {all_ok}")
 
-    # Chain games
-    for n in range(6):
-        g = chain_game(n)
-        winning = g.is_winning()
-        print(f"  Chain depth {n}: rank={g.rank()}, "
-              f"winning={'Player I' if winning else 'Player II'}, "
-              f"size={g.size()}")
-
-    print("\n  Parity pattern: even depth → Player II wins, odd → Player I wins")
-
-    # Wide games
-    print()
-    for n in [1, 2, 3, 5, 10]:
-        g = wide_game(n)
-        print(f"  Wide game ({n} leaves): rank={g.rank()}, "
-              f"winning={'Player I' if g.is_winning() else 'Player II'}")
+    for start in (7, 1, 0):
+        traj = play(countdown_moves, W, start, opp)
+        term_turn = len(traj) - 1
+        parity = "odd (opponent stuck -> mover wins)" if term_turn % 2 == 1 else "even (mover stuck -> mover loses)"
+        print(f"\n  Trajectory from {start}: {traj}")
+        print(f"    terminal reached on turn {term_turn} = {parity}")
 
 
-# ============================================================
-# Demo 2: Strategy Exclusivity
-# ============================================================
-
-def demo_exclusivity():
-    print("\n" + "=" * 60)
-    print("DEMO 2: Strategy Exclusivity")
-    print("=" * 60)
-
-    # Game: Player I wins if sum of first 3 moves is even
-    def payoff(play: List[int]) -> bool:
-        return sum(play[:3]) % 2 == 0
-
-    # Strategy: always play 0
-    sigma_zero: Strategy = lambda h: 0
-    tau_zero: Strategy = lambda h: 0
-
-    # Strategy: always play 1
-    sigma_one: Strategy = lambda h: 1
-    tau_one: Strategy = lambda h: 1
-
-    # Strategy: play the move number
-    sigma_count: Strategy = lambda h: len(h)
-
-    scenarios = [
-        ("σ=0, τ=0", sigma_zero, tau_zero),
-        ("σ=0, τ=1", sigma_zero, tau_one),
-        ("σ=1, τ=0", sigma_one, tau_zero),
-        ("σ=1, τ=1", sigma_one, tau_one),
-        ("σ=count, τ=0", sigma_count, tau_zero),
-    ]
-
-    for name, sigma, tau in scenarios:
-        winner, play = check_exclusivity(sigma, tau, payoff, 6)
-        print(f"  {name}: play={play[:6]}, sum={sum(play[:3])}, "
-              f"winner={'Player I' if winner else 'Player II'}")
-
-    print("\n  Key insight: for EACH pair (σ, τ), exactly one player wins.")
-    print("  This is the exclusivity theorem in action.")
+# ---------------------------------------------------------------------------
+# Game 2: Lexicographic countdown on N x N  (rank omega^2).
+#   State (a, b).  A move either
+#     * decreases b to any b' < b  (keeping a), or
+#     * decreases a to any a' < a and resets b to any natural (here bounded
+#       by a display cap so the demo is finite to print) -- modelled as moving
+#       to (a', k) for any k < CAP.
+#   Terminal: (0, 0).  This game has rank omega^2 in general.
+# ---------------------------------------------------------------------------
+def lex_moves(state: Tuple[int, int], cap: int = 6) -> Iterable[Tuple[int, int]]:
+    a, b = state
+    for b2 in range(b):          # decrease b, keep a
+        yield (a, b2)
+    for a2 in range(a):          # decrease a, reset b to anything < cap
+        for k in range(cap):
+            yield (a2, k)
 
 
-# ============================================================
-# Demo 3: Ordinal Ranks
-# ============================================================
+def demo_lex() -> None:
+    print("\n" + "=" * 70)
+    print("GAME 2: Lexicographic countdown on N x N  (ordinal rank omega^2)")
+    print("  Decrease b, or decrease a and reset b.  Terminal: (0, 0).")
+    print("=" * 70)
+    W = make_value_function(lex_moves)
+    opp = first_legal_opponent(lex_moves)
 
-def demo_ordinal_ranks():
-    print("\n" + "=" * 60)
-    print("DEMO 3: Ordinal Rank Hierarchy")
-    print("=" * 60)
+    print("\n  Value table W(a, b):  (row a, column b)")
+    header = "      " + "".join(f"b={b:<4d}" for b in range(6))
+    print(header)
+    for a in range(6):
+        row = "".join(f"{str(W((a, b))):<6s}" for b in range(6))
+        print(f"   a={a}  {row}")
+    print("\n  Observe: (0,0) is the unique loss; every other position wins,")
+    print("  because a single move to (0,0) leaves the opponent stuck.")
 
-    # Build a tree: node with children of ranks 0, 1, 2
-    leaf = GameTree(label="leaf")
-    depth1 = GameTree([leaf], label="d1")
-    depth2 = GameTree([depth1], label="d2")
-
-    node = GameTree([leaf, depth1, depth2], label="root")
-
-    print(f"  Tree structure:")
-    print(f"    root → [leaf(r=0), d1(r=1), d2(r=2)]")
-    print(f"    Rank of root: {node.rank()}")
-    print(f"    Expected: max(0,1,2) + 1 = 3 ✓" if node.rank() == 3 else "    ERROR!")
-
-    # Demonstrate monotonicity
-    print(f"\n  Rank monotonicity (child < parent):")
-    for i, c in enumerate(node.children):
-        print(f"    child[{i}].rank = {c.rank()} < parent.rank = {node.rank()}: "
-              f"{'✓' if c.rank() < node.rank() else '✗'}")
+    for start in ((2, 3), (0, 0), (1, 0)):
+        traj = play(lex_moves, W, start, opp)
+        term_turn = len(traj) - 1
+        parity = "odd -> mover wins" if term_turn % 2 == 1 else "even -> mover loses"
+        print(f"\n  Trajectory from {start}: {traj}")
+        print(f"    terminal on turn {term_turn} ({parity})")
 
 
-# ============================================================
-# Demo 4: Open Game Detection
-# ============================================================
-
-def demo_open_games():
-    print("\n" + "=" * 60)
-    print("DEMO 4: Open and Clopen Games")
-    print("=" * 60)
-
-    # Clopen game: determined at stage 2
-    def clopen_payoff(play: List[int]) -> bool:
-        """Player I wins iff first two moves sum to > 5."""
-        if len(play) < 2:
-            return False
-        return play[0] + play[1] > 5
-
-    # Open game: Player I wins if ANY move is > 100
-    def open_payoff(play: List[int]) -> bool:
-        """Player I wins iff some move exceeds 100."""
-        return any(m > 100 for m in play)
-
-    print("  Clopen game (sum of first 2 moves > 5):")
-    print("    Determined at stage: 2")
-    print("    Is clopen: True (depends only on first 2 moves)")
-    print("    Is open: True (all clopen games are open)")
-    print("    Is closed: True (all clopen games are closed)")
-
-    print("\n  Open game (some move > 100):")
-    print("    Determined at stage: ∞ (not clopen)")
-    print("    Is open: True (winning witnessed by finite prefix)")
-    print("    Is closed: False (complement is not open)")
-
-    # Test with strategies
-    sigma_big: Strategy = lambda h: 200 if len(h) == 4 else 0
-    tau_zero: Strategy = lambda h: 0
-    play = canonical_play(sigma_big, tau_zero, 10)
-    print(f"\n  Open game with σ(len=4)=200: play={play}")
-    print(f"    Player I wins: {open_payoff(play)}")
+# ---------------------------------------------------------------------------
+# Game 3: Subtraction game  (impartial, Nim-like, rank omega).
+#   From a pile of n tokens, remove any number in `allowed` (e.g. {1, 2, 3}).
+#   Terminal: 0.  W(n) is the classic losing-positions pattern.
+# ---------------------------------------------------------------------------
+def subtraction_moves(n: int, allowed: Tuple[int, ...] = (1, 2, 3)) -> Iterable[int]:
+    for k in allowed:
+        if k <= n:
+            yield n - k
 
 
-# ============================================================
-# Demo 5: Determinacy Hierarchy
-# ============================================================
+def demo_subtraction() -> None:
+    print("\n" + "=" * 70)
+    print("GAME 3: Subtraction game, remove 1, 2, or 3 tokens (rank omega)")
+    print("  Terminal: 0.  Losing positions are the multiples of 4.")
+    print("=" * 70)
+    W = make_value_function(subtraction_moves)
+    opp = first_legal_opponent(subtraction_moves)
 
-def demo_hierarchy():
-    print("\n" + "=" * 60)
-    print("DEMO 5: Determinacy Hierarchy")
-    print("=" * 60)
+    print("\n  n :  W(n)   predicted-loss = (n % 4 == 0)")
+    all_ok = True
+    for n in range(17):
+        losing = (n % 4 == 0)
+        ok = (not W(n)) == losing
+        all_ok = all_ok and ok
+        print(f"   {n:2d} :  {str(W(n)):5s}  loss={str(losing):5s}  {'OK' if ok else 'X'}")
+    print(f"\n  Losing positions == multiples of 4 verified for n <= 16: {all_ok}")
 
-    hierarchy = [
-        ("Clopen (Σ⁰₀)", 0, "ZF"),
-        ("Open (Σ⁰₁)", 0, "ZF (Gale-Stewart)"),
-        ("Σ⁰₂", 1, "ZFC + sharps"),
-        ("Σ⁰₃", 2, "ZFC + measurable cardinal"),
-        ("Σ⁰₄", 3, "ZFC + 2 Woodin cardinals"),
-        ("Borel", "ω", "ZFC (Martin 1975)"),
-        ("Analytic (Σ¹₁)", "ω₁", "ZFC + sharps for all reals"),
-        ("Projective", "∞", "ZFC + ω Woodin cardinals"),
-        ("All sets (AD)", "Ω", "ZF + DC + large cardinals"),
-    ]
-
-    print(f"  {'Level':<20} {'Strength':<10} {'Required Axioms'}")
-    print(f"  {'-'*20} {'-'*10} {'-'*30}")
-    for level, strength, axioms in hierarchy:
-        print(f"  {level:<20} {str(strength):<10} {axioms}")
-
-    print("\n  Key insight: each step up the Borel hierarchy requires")
-    print("  strictly more set-theoretic axiom strength.")
-    print("  This is the deep connection between game complexity")
-    print("  and large cardinal axioms.")
+    for start in (10, 8, 5):
+        traj = play(subtraction_moves, W, start, opp)
+        term_turn = len(traj) - 1
+        parity = "odd -> mover wins" if term_turn % 2 == 1 else "even -> mover loses"
+        print(f"\n  Trajectory from {start}: {traj}")
+        print(f"    terminal on turn {term_turn} ({parity})")
 
 
-# ============================================================
-# Main
-# ============================================================
+# ---------------------------------------------------------------------------
+# Cross-check: the determinacy theorem, empirically.
+#   For a winning start, the play must terminate on an ODD turn for EVERY
+#   legal opponent; for a losing start, on an EVEN turn.
+# ---------------------------------------------------------------------------
+def demo_determinacy_check() -> None:
+    print("\n" + "=" * 70)
+    print("DETERMINACY CROSS-CHECK: MoverWins(p) <-> W(p)")
+    print("  For several opponents, terminal-turn parity matches W(start).")
+    print("=" * 70)
 
-if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║   TRANSFINITE GAME THEORY: GAMES THAT LAST FOREVER     ║")
-    print("╚══════════════════════════════════════════════════════════╝\n")
+    def make_opponent(offset: int) -> Callable[[int], int]:
+        def opp(p: int) -> int:
+            opts = list(countdown_moves(p))
+            if not opts:
+                return p
+            return opts[offset % len(opts)]
+        return opp
 
-    demo_game_trees()
-    demo_exclusivity()
-    demo_ordinal_ranks()
-    demo_open_games()
-    demo_hierarchy()
-
-    print("\n" + "=" * 60)
-    print("All demos completed successfully!")
-    print("=" * 60)
-
-
-#!/usr/bin/env python3
-"""
-Visualization 2: The Determinacy Hierarchy
-Shows the relationship between Borel complexity and axiom strength.
-"""
-
-import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-import numpy as np
-
-
-def main():
-    fig, ax = plt.subplots(figsize=(14, 9))
-
-    # Hierarchy levels
-    levels = [
-        {"name": "Clopen (Δ⁰₁)", "y": 0, "strength": 0, "color": "#81C784",
-         "axiom": "ZF", "det_year": "1913 (Zermelo)"},
-        {"name": "Open (Σ⁰₁)", "y": 1, "strength": 0, "color": "#66BB6A",
-         "axiom": "ZF", "det_year": "1953 (Gale-Stewart)"},
-        {"name": "Σ⁰₂", "y": 2, "strength": 1, "color": "#FFF176",
-         "axiom": "ZFC", "det_year": "1975 (Martin)"},
-        {"name": "Σ⁰₃", "y": 3, "strength": 2, "color": "#FFD54F",
-         "axiom": "ZFC", "det_year": "1975 (Martin)"},
-        {"name": "Borel", "y": 4, "strength": 5, "color": "#FFB74D",
-         "axiom": "ZFC", "det_year": "1975 (Martin)"},
-        {"name": "Analytic (Σ¹₁)", "y": 5.5, "strength": 10, "color": "#FF8A65",
-         "axiom": "ZFC + sharps", "det_year": "1985 (Harrington-Martin)"},
-        {"name": "Projective", "y": 7, "strength": 20, "color": "#EF5350",
-         "axiom": "ZFC + Woodin", "det_year": "1989 (Martin-Steel)"},
-        {"name": "AD (all sets)", "y": 9, "strength": 50, "color": "#AB47BC",
-         "axiom": "ZF + DC + LC", "det_year": "1962 (Mycielski-Steinhaus)"},
-    ]
-
-    # Draw boxes
-    box_width = 6
-    for level in levels:
-        rect = mpatches.FancyBboxPatch(
-            (0.5, level["y"] - 0.35), box_width, 0.7,
-            boxstyle="round,pad=0.1",
-            facecolor=level["color"], edgecolor='#424242',
-            linewidth=1.5, alpha=0.9
-        )
-        ax.add_patch(rect)
-
-        # Level name
-        ax.text(0.5 + box_width / 2, level["y"],
-                level["name"], ha='center', va='center',
-                fontsize=12, fontweight='bold', color='#212121')
-
-    # Draw strength bars
-    max_strength = 50
-    bar_x = 8
-    bar_width = 4
-
-    for level in levels:
-        w = bar_width * level["strength"] / max_strength
-        rect = mpatches.FancyBboxPatch(
-            (bar_x, level["y"] - 0.25), max(w, 0.05), 0.5,
-            boxstyle="round,pad=0.05",
-            facecolor=level["color"], edgecolor='#616161',
-            linewidth=1, alpha=0.7
-        )
-        ax.add_patch(rect)
-
-        # Axiom label
-        ax.text(bar_x + bar_width + 0.3, level["y"],
-                f'{level["axiom"]}  ({level["det_year"]})',
-                ha='left', va='center', fontsize=9, color='#424242')
-
-    # Arrows between levels
-    for i in range(len(levels) - 1):
-        y1 = levels[i]["y"] + 0.35
-        y2 = levels[i + 1]["y"] - 0.35
-        ax.annotate('', xy=(3.5, y2), xytext=(3.5, y1),
-                    arrowprops=dict(arrowstyle='->', color='#757575',
-                                   lw=1.5, connectionstyle='arc3,rad=0'))
-
-    # Labels
-    ax.text(3.5, -1.3, 'Topological Complexity →',
-            ha='center', va='center', fontsize=11, fontweight='bold',
-            color='#424242')
-    ax.text(bar_x + bar_width / 2, -1.3, 'Axiom Strength →',
-            ha='center', va='center', fontsize=11, fontweight='bold',
-            color='#424242')
-
-    # Title
-    ax.set_title('The Determinacy Hierarchy\n'
-                 'Topological Complexity vs. Axiomatic Strength',
-                 fontsize=16, fontweight='bold', pad=20)
-
-    # Annotation
-    ax.text(bar_x + bar_width / 2, 10.5,
-            'Each step up the hierarchy requires\n'
-            'strictly stronger set-theoretic axioms.\n'
-            'This is the deep bridge between\n'
-            'game theory and large cardinals.',
-            ha='center', va='center', fontsize=10,
-            style='italic', color='#616161',
-            bbox=dict(boxstyle='round,pad=0.5', facecolor='#F5F5F5',
-                     edgecolor='#BDBDBD'))
-
-    ax.set_xlim(-0.5, 20)
-    ax.set_ylim(-2, 11.5)
-    ax.axis('off')
-
-    plt.tight_layout()
-    plt.savefig('determinacy_hierarchy.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: determinacy_hierarchy.png")
+    W = make_value_function(countdown_moves)
+    for start in range(1, 8):
+        parities = set()
+        for offset in range(6):
+            traj = play(countdown_moves, W, start, make_opponent(offset))
+            parities.add((len(traj) - 1) % 2)
+        # Mover wins iff every play ends on an odd turn.
+        mover_wins = parities == {1}
+        consistent = mover_wins == W(start)
+        print(f"  start={start}: W={str(W(start)):5s}  MoverWins={str(mover_wins):5s}  "
+              f"consistent={consistent}")
 
 
 if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization 1: Game Tree with Minimax Values
-Shows a game tree colored by winning status.
-"""
-
-import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-import numpy as np
-from typing import List, Optional, Tuple, Dict
-
-
-class VizNode:
-    def __init__(self, children=None, terminal_value=None, label=""):
-        self.children = children or []
-        self.terminal_value = terminal_value
-        self.label = label
-        self.x = 0.0
-        self.y = 0.0
-        self.value = None  # minimax value
-
-    @property
-    def is_terminal(self):
-        return len(self.children) == 0
-
-
-def minimax(node: VizNode, depth: int = 0) -> bool:
-    if node.is_terminal:
-        node.value = node.terminal_value if node.terminal_value is not None else False
-        return node.value
-    if depth % 2 == 0:
-        node.value = any(minimax(c, depth + 1) for c in node.children)
-    else:
-        node.value = all(minimax(c, depth + 1) for c in node.children)
-    return node.value
-
-
-def layout_tree(node: VizNode, x: float = 0, y: float = 0,
-                x_span: float = 8, y_step: float = 1.5) -> None:
-    node.x = x
-    node.y = y
-    if node.children:
-        n = len(node.children)
-        child_span = x_span / max(n, 1)
-        start_x = x - x_span / 2 + child_span / 2
-        for i, child in enumerate(node.children):
-            layout_tree(child, start_x + i * child_span, y - y_step,
-                       child_span * 0.8, y_step)
-
-
-def draw_tree(ax, node: VizNode, depth: int = 0):
-    # Draw edges first
-    for child in node.children:
-        ax.plot([node.x, child.x], [node.y, child.y],
-                'k-', linewidth=1.5, alpha=0.5, zorder=1)
-        draw_tree(ax, child, depth + 1)
-
-    # Node color based on minimax value
-    color = '#4CAF50' if node.value else '#F44336'  # green=PI wins, red=PII wins
-    edge_color = '#2E7D32' if node.value else '#C62828'
-
-    # Shape based on player
-    if node.is_terminal:
-        marker = 's'  # square for terminal
-        size = 400
-    elif depth % 2 == 0:
-        marker = 'o'  # circle for Player I
-        size = 600
-    else:
-        marker = 'D'  # diamond for Player II
-        size = 500
-
-    ax.scatter(node.x, node.y, s=size, c=color, marker=marker,
-              edgecolors=edge_color, linewidths=2, zorder=3)
-
-    # Label
-    if node.label:
-        ax.annotate(node.label, (node.x, node.y), fontsize=7,
-                   ha='center', va='center', fontweight='bold',
-                   color='white', zorder=4)
-
-
-def main():
-    # Build an interesting game tree
-    # Level 3 leaves
-    l1 = VizNode(terminal_value=True, label="W")
-    l2 = VizNode(terminal_value=False, label="L")
-    l3 = VizNode(terminal_value=True, label="W")
-    l4 = VizNode(terminal_value=False, label="L")
-    l5 = VizNode(terminal_value=True, label="W")
-    l6 = VizNode(terminal_value=False, label="L")
-    l7 = VizNode(terminal_value=True, label="W")
-    l8 = VizNode(terminal_value=False, label="L")
-
-    # Level 2 (Player II nodes)
-    n1 = VizNode([l1, l2], label="II")
-    n2 = VizNode([l3, l4], label="II")
-    n3 = VizNode([l5, l6], label="II")
-    n4 = VizNode([l7, l8], label="II")
-
-    # Level 1 (Player I nodes)
-    m1 = VizNode([n1, n2], label="I")
-    m2 = VizNode([n3, n4], label="I")
-
-    # Root (Player I)
-    root = VizNode([m1, m2], label="I")
-
-    # Compute minimax
-    minimax(root)
-
-    # Layout
-    layout_tree(root)
-
-    # Draw
-    fig, ax = plt.subplots(1, 1, figsize=(12, 8))
-    draw_tree(ax, root)
-
-    ax.set_xlim(-6, 6)
-    ax.set_ylim(-6, 1.5)
-    ax.set_aspect('equal')
-    ax.axis('off')
-
-    # Legend
-    legend_elements = [
-        mpatches.Patch(facecolor='#4CAF50', edgecolor='#2E7D32',
-                      label='Player I wins'),
-        mpatches.Patch(facecolor='#F44336', edgecolor='#C62828',
-                      label='Player II wins'),
-        plt.Line2D([0], [0], marker='o', color='w', markerfacecolor='gray',
-                   markersize=12, label='Player I node'),
-        plt.Line2D([0], [0], marker='D', color='w', markerfacecolor='gray',
-                   markersize=10, label='Player II node'),
-        plt.Line2D([0], [0], marker='s', color='w', markerfacecolor='gray',
-                   markersize=10, label='Terminal'),
-    ]
-    ax.legend(handles=legend_elements, loc='lower right', fontsize=10,
-             framealpha=0.9)
-
-    ax.set_title('Game Tree with Minimax Values\n'
-                 '(Green = Player I wins, Red = Player II wins)',
-                 fontsize=14, fontweight='bold', pad=20)
-
-    plt.tight_layout()
-    plt.savefig('game_tree_minimax.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: game_tree_minimax.png")
-
-
-if __name__ == "__main__":
-    main()
+    demo_countdown()
+    demo_lex()
+    demo_subtraction()
+    demo_determinacy_check()
+    print("\nAll demonstrations complete.")

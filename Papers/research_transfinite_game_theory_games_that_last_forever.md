@@ -1,235 +1,413 @@
-# Transfinite Game Theory: Determinacy, Ordinal Ranks, and the Large Cardinal Hierarchy
+# Determinacy of Well-Founded Transfinite Games
 
 ## Abstract
 
-We develop a rigorous theory of infinite two-player sequential games (Gale-Stewart games) and their transfinite extensions. Our formalization encompasses: (1) the canonical play construction from paired strategies, (2) the exclusivity theorem showing at most one player can possess a winning strategy, (3) Zermelo's theorem extended to stage-0 clopen games, (4) the topological classification of games into open, closed, and clopen classes, (5) the Axiom of Determinacy (AD) with its dichotomy theorem, (6) the Wadge hierarchy as a preorder on games via continuous reductions, (7) ordinal-indexed game positions enabling transfinite game analysis, and (8) ordinal rank theory for game nodes with monotonicity and well-foundedness results. All results are machine-verified in Lean 4 with Mathlib, yielding 15+ sorry-free theorems. We conjecture a linear relationship between transfinite game length and the number of Woodin cardinals required for determinacy.
+We develop a self-contained theory of two-player, perfect-information games whose
+positions are ordered by a **well-founded** move relation, and we prove that
+every such game is determined. Well-foundedness — the nonexistence of any
+infinite descending chain of legal moves — is a strictly weaker hypothesis than
+finiteness: it permits game trees of arbitrary transfinite ordinal rank
+($\omega$, $\omega^2$, and beyond) while still forbidding any single play from
+lasting forever. We define the **value** $W(p)$ of a position by well-founded
+recursion, establish the **Zermelo fixed-point equation**
+$W(p) \iff \exists q\, (p \to q \wedge \neg W(q))$, and show that the canonical
+greedy strategy derived from $W$ forces a win from every winning position against
+every legal opponent. The central result is a transfinite form of **Zermelo's
+theorem**: the player to move can force a win at $p$ if and only if $W(p)$ holds,
+so every well-founded game is determined and $W$ computes its outcome. We
+illustrate the theory with the countdown game on $\mathbb{N}$, whose value
+function we compute in closed form, and we situate the result within the broader
+determinacy hierarchy that connects to large cardinal axioms.
+
+**Keywords:** transfinite game, well-founded relation, determinacy, Zermelo's
+theorem, Sprague–Grundy value, ordinal rank, winning strategy, normal play.
+
+---
 
 ## 1. Introduction
 
-### 1.1 Background
+A two-player game of perfect information is, at its combinatorial core, a set of
+*positions* together with a *move relation* specifying which positions can be
+reached from which in one turn. Under the **normal-play convention**, the two
+players alternate moves and a player who cannot move loses; equivalently, the
+last player to move wins. The foundational question is whether the game is
+**determined**: whether one of the two players necessarily possesses a strategy
+guaranteeing a win.
 
-Infinite game theory, initiated by Gale and Stewart [1953], studies two-player games of perfect information where both players make infinitely many moves. The central question — whether every such game is *determined* (one player must have a winning strategy) — has deep connections to descriptive set theory, large cardinal axioms, and the foundations of mathematics.
+Zermelo's theorem (1913) answers this affirmatively for *finite* games. The
+purpose of this paper is to identify the exact structural hypothesis under which
+Zermelo's conclusion survives into the infinite, and to prove it in that
+generality. That hypothesis is **well-foundedness** of the move relation.
 
-The Axiom of Determinacy (AD), proposed by Mycielski and Steinhaus [1962], asserts that every Gale-Stewart game is determined. While inconsistent with the full Axiom of Choice, AD is consistent with ZF + DC and has remarkable consequences: every set of reals is Lebesgue measurable, has the Baire property, and the perfect set property.
+The distinction between "finite" and "well-founded" is the conceptual pivot of
+the paper and deserves emphasis. Finiteness bounds the length of every play by a
+single fixed number. Well-foundedness makes no such bound: it merely forbids an
+infinite descending chain
 
-### 1.2 Contributions
+$$p_0 \to p_1 \to p_2 \to \cdots.$$
+
+A game may therefore admit plays of unbounded finite length — indeed of any
+transfinite ordinal rank — while still guaranteeing that *each individual play
+terminates*. This is precisely the regime of genuine transfinite games, and it is
+where the theory below lives. A position from which countably many moves lead to
+subgames of unbounded finite depth already has rank $\omega$; iterating the
+construction yields rank $\omega^2$, $\omega^\omega$, and so on.
 
 Our contributions are:
 
-1. **Formal framework**: A complete formalization of Gale-Stewart games, strategies, and canonical plays in Lean 4 with Mathlib.
+1. A definition of the value function $W$ by well-founded recursion, valid for
+   arbitrary well-founded move relations (Section 3).
+2. The Zermelo fixed-point equation and its immediate structural corollaries
+   (Section 3).
+3. A canonical optimal strategy, a proof that every play under it terminates, and
+   an alternation invariant controlling the parity of winning positions
+   (Section 4).
+4. The determinacy theorem: $F(p) \iff W(p)$ (Section 5).
+5. A fully worked transfinite instance, the countdown game, with its value
+   computed in closed form (Section 6).
 
-2. **Exclusivity theorem**: A machine-verified proof that winning strategies are exclusive — at most one player can have one (Theorem 3.1).
+Section 7 discusses the frontier beyond well-foundedness — Gale–Stewart, Borel
+determinacy, and the large-cardinal connection — and lists directions for
+extension.
 
-3. **AD dichotomy**: Under AD, exactly one player wins every game — a perfect partition of games into Player I victories and Player II victories (Theorem 5.1).
+---
 
-4. **Topological game theory**: Proofs that clopen games are simultaneously open and closed, and that the intersection of open games is open (Theorems 4.1–4.3).
+## 2. Setup and conventions
 
-5. **Wadge hierarchy**: Formalization of Wadge reducibility as a preorder with complement preservation (Theorems 6.1–6.3).
+Throughout, fix a type (set) of positions $P$ and a binary **move relation**
+$\mathrm{mv} \subseteq P \times P$. We write $p \to q$ for $\mathrm{mv}(p, q)$,
+read "there is a legal move from $p$ to $q$."
 
-6. **Ordinal rank theory**: Strict monotonicity of ordinal ranks along the child relation, with a monotonicity theorem for rank comparison (Theorems 7.1–7.2).
+**Definition 2.1 (Well-founded game).** The move relation is *well-founded* if the
+inverse relation is well-founded in the usual order-theoretic sense: there is no
+infinite sequence $(p_n)_{n \in \mathbb{N}}$ with $p_n \to p_{n+1}$ for all $n$.
+Equivalently, every nonempty set of positions has an element from which no move
+leads back into the set (a minimal element for the "is reachable from" order).
 
-7. **Transfinite positions**: A framework for ordinal-indexed game positions with extension and preservation properties.
+**Definition 2.2 (Terminal position).** A position $p$ is *terminal* if the player
+to move has no legal move: $\neg\,\exists q.\ p \to q$.
 
-8. **Conjecture**: A falsifiable conjecture relating game length to Woodin cardinal requirements.
+**Normal-play convention.** Players alternate. The player who faces a terminal
+position — i.e. cannot move — loses. The last player to have moved wins. Draws are
+impossible in this convention.
 
-## 2. Definitions
+**Remark 2.3 (Generality of the impartial model).** The setup is stated
+impartially: the moves available from $p$ do not visibly depend on which player is
+to move. This is no loss of generality. A *partisan* game, in which the two
+players have different move options, is modelled by encoding the identity of the
+player-to-move into the position itself — a position becomes a pair (board state,
+side to move), and each move flips the side. The impartial-looking theory below
+therefore captures all alternating two-player perfect-information games.
 
-### 2.1 Gale-Stewart Games
+---
 
-**Definition 2.1** (Play). A *play* is a function p : ℕ → ℕ, representing an infinite sequence of natural number moves.
+## 3. The value function and the Zermelo fixed point
 
-**Definition 2.2** (Game). A *game* is a set A ⊆ ℕ^ω. Player I wins if the play lands in A; Player II wins otherwise.
+The value function assigns to each position a Boolean indicating whether the
+player to move there has a winning strategy.
 
-**Definition 2.3** (Strategy). A *strategy* is a function σ : List ℕ → ℕ, mapping finite histories to moves.
+**Definition 3.1 (Value).** Define $W : P \to \{\text{true}, \text{false}\}$ by
+well-founded recursion on the move relation:
 
-**Definition 2.4** (Build History). Given strategies σ (Player I) and τ (Player II), the *built history* of length n is defined inductively:
-- buildHistory(σ, τ, 0) = []
-- buildHistory(σ, τ, n+1) = h ++ [σ(h)] if n is even, h ++ [τ(h)] if n is odd, where h = buildHistory(σ, τ, n)
+$$W(p) \;:=\; \exists q.\ \big(p \to q\big) \wedge \neg\, W(q).$$
 
-**Definition 2.5** (Canonical Play). The *canonical play* from strategies σ and τ is:
-  canonicalPlay(σ, τ)(n) = buildHistory(σ, τ, n+1)[n]
+Because the recursion refers only to values $W(q)$ at successor positions $q$ with
+$p \to q$, and because the move relation is well-founded, this definition is
+legitimate and determines $W$ uniquely. Well-foundedness is exactly the condition
+that licenses the recursion: every position is founded on the terminal positions
+below it through a well-ordered (though possibly transfinitely tall) tower of
+dependencies.
 
-**Definition 2.6** (Winning Strategy). Player I has a *winning strategy* for A if ∃σ, ∀τ, canonicalPlay(σ,τ) ∈ A. Player II has a winning strategy if ∃τ, ∀σ, canonicalPlay(σ,τ) ∉ A.
+**Theorem 3.2 (Zermelo fixed-point equation).** For every position $p$,
 
-**Definition 2.7** (Determined). A game A is *determined* if one player has a winning strategy.
+$$W(p) \iff \exists q.\ (p \to q) \wedge \neg\, W(q).$$
 
-### 2.2 Topological Classification
+*Proof.* Immediate by unfolding the well-founded recursion at $p$ (the fixed-point
+unrolling of the recursor). The equation says that a position is winning exactly
+when some legal move leads to a position that is losing for the opponent. $\square$
 
-**Definition 2.8** (Determined at Stage n). A game A is *determined at stage n* if ∀p,q: (∀i<n, p(i)=q(i)) → (p∈A ↔ q∈A).
+The fixed-point equation packages the entire local strategic logic, and every
+structural fact we need is a one-line consequence.
 
-**Definition 2.9** (Clopen Game). A game is *clopen* if it is determined at some finite stage.
+**Corollary 3.3 (Winning positions have a good move).** If $W(p)$, then there
+exists $q$ with $p \to q$ and $\neg W(q)$.
 
-**Definition 2.10** (Open Game). A game A is *open* if ∀p∈A, ∃n, ∀q: (∀i<n, q(i)=p(i)) → q∈A.
+*Proof.* The forward direction of Theorem 3.2. $\square$
 
-**Definition 2.11** (Closed Game). A game A is *closed* if Aᶜ is open.
+**Corollary 3.4 (Winners are never stuck).** If $W(p)$, then $p$ is not terminal.
 
-### 2.3 Wadge Reducibility
+*Proof.* By Corollary 3.3 there is a move $p \to q$, so $p$ has a legal move.
+$\square$
 
-**Definition 2.12** (Wadge Reducibility). A ≤_W B if there exists a continuous f : ℕ^ω → ℕ^ω with A = f⁻¹(B).
+**Corollary 3.5 (Terminal positions are losing).** If $p$ is terminal, then
+$\neg W(p)$.
 
-### 2.4 Ordinal Game Structures
+*Proof.* Contrapositive of Corollary 3.4. $\square$
 
-**Definition 2.13** (Transfinite Position). A transfinite position has ordinal length α and a function assigning moves to each ordinal β < α.
+**Corollary 3.6 (From a loss, every move gives the opponent a win).** If
+$\neg W(p)$, then for every $q$ with $p \to q$ we have $W(q)$.
 
-**Definition 2.14** (Game Node). A game node has n children, each with a natural number rank. Its ordinal rank is sup{childRank(i) + 1 : i < n}.
+*Proof.* Suppose $p \to q$ and, for contradiction, $\neg W(q)$. Then
+$\exists q.\ (p\to q)\wedge\neg W(q)$, so by the reverse direction of
+Theorem 3.2 we would have $W(p)$, contradicting the hypothesis. $\square$
 
-### 2.5 Quasistrategy
+Corollaries 3.3 and 3.6 together are the strategic dichotomy: at a winning
+position the mover *can* choose a move preserving the advantage; at a losing
+position *every* move surrenders the advantage.
 
-**Definition 2.15** (Quasistrategy). A quasistrategy Q is a set of positions such that:
-1. [] ∈ Q (contains the root)
-2. If pos ∈ Q and |pos| is odd (opponent's turn), then pos++[m] ∈ Q for all m
-3. If pos ∈ Q and |pos| is even (mover's turn), then pos++[m] ∈ Q for some m
+---
 
-## 3. Fundamental Results
+## 4. Strategies, termination, and alternation
 
-### Theorem 3.1 (Exclusivity)
-*At most one player can have a winning strategy.*
+We now convert the static value into a dynamic strategy and analyse the resulting
+plays.
 
-**Proof sketch.** If Player I has winning strategy σ and Player II has winning strategy τ, consider the canonical play from (σ, τ). By σ's winning property, the play is in A. By τ's winning property, the play is not in A. Contradiction. □
+**Definition 4.1 (Legal strategy).** A function $o : P \to P$ is a *legal
+strategy* if it produces a legal move from every non-terminal position:
+$\forall x.\ \neg\,\mathrm{Terminal}(x) \Rightarrow x \to o(x)$.
 
-### Theorem 3.2 (Determined Dichotomy)
-*If a game is determined, exactly one player wins.*
+**Proposition 4.2 (Legal strategies exist).** There is a legal strategy.
 
-**Proof sketch.** Determined ⟹ at least one wins (by definition). At most one wins (by Theorem 3.1). Hence exactly one wins. □
+*Proof.* At each non-terminal $x$, select some witness $q$ with $x \to q$ (using
+choice); at terminal positions set $o(x) = x$. This $o$ is legal by construction.
+$\square$
 
-## 4. Topological Game Theory
+**Definition 4.3 (Canonical optimal move).** Define $\mathrm{opt} : P \to P$ by:
+if $W(x)$, let $\mathrm{opt}(x)$ be a witness $q$ from Corollary 3.3 (a legal move
+to a losing position); otherwise $\mathrm{opt}(x) = x$.
 
-### Theorem 4.1 (Clopen ⊂ Open)
-*Every clopen game is open.*
+**Proposition 4.4.** If $W(x)$ then $x \to \mathrm{opt}(x)$ and
+$\neg W(\mathrm{opt}(x))$.
 
-**Proof sketch.** If A is determined at stage n, then for any p ∈ A, the first n moves of p witness membership: any q agreeing with p on these moves satisfies q ∈ A by the stage-n property. □
+*Proof.* By the definition of $\mathrm{opt}$ and Corollary 3.3. $\square$
 
-### Theorem 4.2 (Clopen ⊂ Closed)
-*Every clopen game is closed.*
+We analyse a game in which one distinguished player (the "mover" we are studying)
+uses the canonical strategy while the other plays an arbitrary legal strategy $o$.
 
-**Proof sketch.** Dual argument: for p ∉ A, the stage-n property ensures any q agreeing with p on the first n moves also satisfies q ∉ A. □
+**Definition 4.5 (One step).** Given a legal opponent strategy $o$, define the
+step map
 
-### Theorem 4.3 (Open Intersection)
-*The intersection of two open games is open.*
+$$\mathrm{step}(x) := \begin{cases} \mathrm{opt}(x) & \text{if } W(x), \\ o(x) & \text{if } \neg W(x). \end{cases}$$
 
-**Proof sketch.** If A has witness prefix nA and B has witness prefix nB for a play p, then max(nA, nB) witnesses membership in A ∩ B. □
+At a winning position the analysed player moves (optimally); at a losing position
+the opponent moves.
 
-### Theorem 4.4 (Zermelo Stage-0)
-*Every game determined at stage 0 is determined.*
+**Definition 4.6 (Trajectory).** The *trajectory* from $p$ is the sequence
+$t : \mathbb{N} \to P$ defined by $t(0) = p$ and $t(n+1) = \mathrm{step}(t(n))$.
 
-**Proof sketch.** At stage 0, all plays are equivalent: they are either all in A or all not in A. If all in A, Player I wins with any strategy. If none in A, Player II wins with any strategy. □
+**Lemma 4.7 (Step behaviour).**
+(a) If $W(x)$ then $x \to \mathrm{step}(x)$ and $\neg W(\mathrm{step}(x))$.
+(b) If $\neg W(x)$, $x$ is non-terminal, and $o$ is legal, then
+$x \to \mathrm{step}(x)$ and $W(\mathrm{step}(x))$.
 
-## 5. The Axiom of Determinacy
+*Proof.* (a) is Proposition 4.4 unfolded through Definition 4.5. For (b),
+$\mathrm{step}(x) = o(x)$; legality gives $x \to o(x)$, and Corollary 3.6 gives
+$W(o(x))$. $\square$
 
-### Theorem 5.1 (AD Dichotomy)
-*Under AD, for every game A, exactly one player has a winning strategy.*
+**Theorem 4.8 (Every play terminates).** Let $o$ be a legal strategy and $p$ any
+position. Then there exists $n \in \mathbb{N}$ with $\mathrm{Terminal}(t(n))$.
 
-**Proof sketch.** AD provides at least one winner. Exclusivity (Theorem 3.1) provides at most one. The combination gives a perfect dichotomy: (Player I wins ∧ Player II doesn't) ∨ (Player I doesn't ∧ Player II wins). □
+*Proof.* Suppose not: $t(n)$ is non-terminal for all $n$. Then Lemma 4.7 (using
+(a) when $W(t(n))$ and (b) otherwise) yields $t(n) \to t(n+1)$ for every $n$, an
+infinite descending chain of moves. This contradicts well-foundedness — formally,
+the nonempty set $\{t(n) : n \in \mathbb{N}\}$ would have no minimal element, since
+for any $t(i)$ in it the element $t(i+1)$ is also in it and satisfies
+$t(i) \to t(i+1)$. $\square$
 
-### Theorem 5.2 (AD Player I Characterization)
-*Under AD, Player I wins A iff Player II does not win A.*
+Theorem 4.8 is the load-bearing use of well-foundedness on the *dynamic* side: the
+same hypothesis that made the definition of $W$ legitimate also forces every
+concrete play to halt, without any finite bound on its length.
 
-### Theorem 5.3 (AD Player II Characterization)
-*Under AD, Player II wins A iff Player I does not win A.*
+**Theorem 4.9 (Alternation invariant).** Let $o$ be legal and $p$ any position.
+For every $n$, if no terminal position occurs strictly before turn $n$ (i.e.
+$t(k)$ is non-terminal for all $k < n$), then
 
-## 6. The Wadge Hierarchy
+$$W(t(n)) \iff \big(\,\mathrm{Even}(n) \iff W(p)\,\big).$$
 
-### Theorem 6.1 (Reflexivity)
-*WadgeReducible is reflexive: A ≤_W A via the identity function.*
+In particular, from a winning start $p$ (so $W(p)$ true), the winning positions
+along the play are exactly those at even turns.
 
-### Theorem 6.2 (Transitivity)
-*WadgeReducible is transitive: if A ≤_W B and B ≤_W C, then A ≤_W C.*
+*Proof.* Induction on $n$. For $n = 0$: $t(0) = p$, and $\mathrm{Even}(0)$ is
+true, so the claim reduces to $W(p) \iff W(p)$. For the step, assume the invariant
+at $n$ and that no terminal position occurs before turn $n+1$; in particular
+$t(n)$ is non-terminal. Two cases via Lemma 4.7:
 
-**Proof sketch.** Compose the continuous functions: if f witnesses A ≤_W B and g witnesses B ≤_W C, then g∘f witnesses A ≤_W C. Continuity is preserved under composition. □
+- If $W(t(n))$, then $\neg W(t(n+1))$ by (a). The inductive hypothesis gives
+  $\mathrm{Even}(n) \iff W(p)$. Since $\mathrm{Even}(n+1) \iff \neg\mathrm{Even}(n)$,
+  a truth-table check yields $\neg W(t(n+1)) \iff (\mathrm{Even}(n+1) \iff W(p))$.
+- If $\neg W(t(n))$, then $W(t(n+1))$ by (b). The inductive hypothesis gives
+  $\neg(\mathrm{Even}(n) \iff W(p))$, and again the parity flip yields the claim.
 
-### Theorem 6.3 (Complement Preservation)
-*If A ≤_W B, then Aᶜ ≤_W Bᶜ via the same continuous function.*
+$\square$
 
-**Proof sketch.** If A = f⁻¹(B), then Aᶜ = f⁻¹(Bᶜ), since preimage commutes with complement. □
+---
 
-## 7. Ordinal Rank Theory
+## 5. Determinacy
 
-### Theorem 7.1 (Rank Monotonicity)
-*For a game node with children, each child's rank is strictly less than the node's ordinal rank.*
+We formalise "the mover can force a win" and prove it coincides with $W$.
 
-**Proof sketch.** The node's ordinal rank is ⨆ᵢ(childRank(i) + 1). For any child i, childRank(i) < childRank(i) + 1 ≤ ⨆ᵢ(childRank(i) + 1). □
+**Definition 5.1 (Mover can force a win).** Say $F(p)$ holds if,
+against every legal opponent strategy $o$, the play first reaches a terminal
+position on an **odd** turn:
 
-### Theorem 7.2 (Rank Monotonicity for Expansion)
-*If node n₂ has at least as many children as n₁, and each corresponding child has at least as high a rank, then n₁.ordRank ≤ n₂.ordRank.*
+$$\forall o \text{ legal},\ \exists n.\ \mathrm{Odd}(n) \wedge \mathrm{Terminal}(t(n)) \wedge \big(\forall k < n.\ \neg\mathrm{Terminal}(t(k))\big).$$
 
-## 8. Transfinite Positions
+The odd-turn condition encodes exactly "the opponent is the one who gets stuck":
+turns $0, 2, 4, \dots$ are the analysed player's, so a terminal position first
+appearing on an odd turn means the opponent, on the move, cannot move and loses.
 
-### Theorem 8.1 (Extension Increases Length)
-*Extending a position strictly increases its ordinal length.*
+**Theorem 5.2 (Determinacy of well-founded games — Zermelo, transfinite form).**
+For every position $p$,
 
-### Theorem 8.2 (Extension Preserves History)
-*Extending a position preserves all earlier moves.*
+$$F(p) \iff W(p).$$
 
-### Theorem 8.3 (Extension New Move)
-*The move at the new position equals the extension argument.*
+Consequently every well-founded game is determined: exactly one player has a
+winning strategy, and $W(p)$ decides which.
 
-## 9. The Determinacy Hierarchy
+*Proof.*
+($\Rightarrow$) Suppose $F(p)$ but, for contradiction,
+$\neg W(p)$. Fix any legal $o$ (Proposition 4.2) and take the first terminal turn
+$n$, which is odd with no earlier terminal. The alternation invariant
+(Theorem 4.9) applies at $n$ and gives
+$W(t(n)) \iff (\mathrm{Even}(n) \iff W(p))$. Since $n$ is odd, $\mathrm{Even}(n)$
+is false; since $\neg W(p)$, the right-hand biconditional
+$(\mathrm{Even}(n) \iff W(p))$ is true, so $W(t(n))$ holds. But $t(n)$ is
+terminal, so $\neg W(t(n))$ by Corollary 3.5 — a contradiction.
 
-The relationship between determinacy at different Borel levels and the consistency strength of the underlying set theory forms a remarkable hierarchy:
+($\Leftarrow$) Suppose $W(p)$, and let $o$ be any legal strategy. By Theorem 4.8
+there is a first terminal turn; let $n$ be the least such (so no earlier turn is
+terminal). By Corollary 3.5, $\neg W(t(n))$. The alternation invariant gives
+$W(t(n)) \iff (\mathrm{Even}(n) \iff W(p))$; since $\neg W(t(n))$, the right side
+is false, i.e. $\neg(\mathrm{Even}(n) \iff W(p))$. Because $W(p)$ is true, this
+forces $\mathrm{Even}(n)$ false, i.e. $n$ is odd. Thus for every legal $o$ the
+first terminal turn is odd, which is precisely $F(p)$. $\square$
 
-| Borel Level | Determinacy | Required Axioms |
-|-------------|-------------|-----------------|
-| Clopen (Σ⁰₀) | ZF | None beyond ZF |
-| Open (Σ⁰₁) | ZF | Gale-Stewart |
-| Σ⁰ₙ | ZFC + n levels | Martin's theorem |
-| Borel | ZFC | Martin 1975 |
-| Analytic (Σ¹₁) | ZFC + sharps | Harrington-Martin |
-| Projective | ZFC + Woodin | Martin-Steel |
-| All sets (AD) | ZF + DC | Large cardinals |
+**Corollary 5.3 (Winning strategy realisation).** If $W(p)$, then the canonical
+strategy is a winning strategy: against every legal opponent it forces the game to
+end on the opponent's turn.
 
-## 10. Conjecture: Transfinite Determinacy Threshold
+*Proof.* The reverse direction of Theorem 5.2. $\square$
 
-**Conjecture 10.1.** For games of ordinal length ω·n, determinacy requires at least (n-1) Woodin cardinals in consistency strength.
+**Remark 5.4.** Determinacy here is constructive in the sense that the winning
+strategy is explicit — the greedy "move to a losing position" rule of
+Definition 4.3 — rather than merely existential. The value $W$ both decides the
+outcome and prescribes the play.
 
-**Testable Prediction.** The minimum consistency strength for Σ⁰ₙ determinacy equals n in the Martin hierarchy. Specifically:
-- Σ⁰₁ (open) determinacy: strength 0
-- Σ⁰₂ determinacy: strength 1 (sharps)
-- Σ⁰₃ determinacy: strength 2 (measurable cardinal)
+---
 
-**Test.** Verify that Martin's proof for Σ⁰ₙ determinacy uses exactly n levels of set-theoretic reflection. A non-linear jump would refute the conjecture.
+## 6. A worked transfinite instance: the countdown game
 
-## 11. Algorithms
+We instantiate the theory on a concrete game of ordinal rank $\omega$.
 
-### 11.1 Minimax for Finite Approximations
+**Definition 6.1 (Countdown game).** Positions are the natural numbers
+$\mathbb{N}$. The move relation is $a \to b \iff b < a$: from $a$ one may move to
+any strictly smaller number.
 
-For games determined at stage n, the minimax algorithm computes the winner in O(k^n) time, where k is the branching factor (or infinite for ℕ-valued games, requiring pruning).
+**Proposition 6.2 (Well-foundedness).** The countdown move relation is
+well-founded.
 
-### 11.2 Quasistrategy Computation
+*Proof.* The inverse relation is the strict order $<$ on $\mathbb{N}$, which is
+well-founded. There is no infinite strictly decreasing sequence of natural
+numbers. $\square$
 
-Given an open game with computable winning condition, a quasistrategy can be computed by iteratively pruning losing branches from the game tree.
+The rank of the countdown tree rooted at $n$ is exactly $n$. Ranging over all
+starting positions, the family realises plays of every finite length, so the
+game as a whole has ordinal rank $\omega$ — it is genuinely transfinite, not
+bounded by any single finite number, yet every play terminates.
 
-### 11.3 Ordinal Rank Computation
+**Proposition 6.3 (Terminal positions).** In the countdown game, $n$ is terminal
+$\iff n = 0$.
 
-For finite game trees, the ordinal rank can be computed in O(|T|) time by a single bottom-up traversal.
+*Proof.* If $n > 0$ then $0 < n$ is a legal move, so $n$ is non-terminal. If
+$n = 0$ then no $b < 0$ exists in $\mathbb{N}$, so $0$ is terminal. $\square$
 
-## 12. Discussion
+**Theorem 6.4 (Value of the countdown game).** For every $n \in \mathbb{N}$,
 
-### 12.1 Relationship to Prior Work
+$$W(n) \iff n \neq 0.$$
 
-Our formalization builds on the classical results of Gale-Stewart [1953], Martin [1975], and the descriptive set theory program of Moschovakis [1980]. The ordinal rank theory connects to Conway's surreal numbers and Berlekamp-Conway-Guy's combinatorial game theory.
+*Proof.* If $W(n)$, then by the fixed-point equation (Theorem 3.2) there is a move
+$n \to q$, i.e. some $q < n$; hence $n \neq 0$. Conversely, if $n \neq 0$, then
+$0 < n$ is a legal move to the position $0$; and $W(0)$ is false because $0$ is
+terminal (Corollary 3.5 with Proposition 6.3). Thus $n \to 0$ with $\neg W(0)$,
+so $W(n)$ by the fixed-point equation. $\square$
 
-### 12.2 The Quasistrategy Innovation
+The optimal play is transparent: from any positive $n$, move directly to $0$,
+leaving the opponent with no move. By Theorem 5.2 the player to move wins from
+every $n \neq 0$, and loses from $0$.
 
-The quasistrategy framework, while classical in descriptive set theory, provides a natural bridge between game-theoretic reasoning and topological structure. Our formalization of quasistrategies as sets of positions closed under opponent moves captures the essential game-theoretic intuition while enabling topological analysis.
+---
 
-### 12.3 Cross-Domain Connections
+## 7. Discussion and future directions
 
-The Wadge hierarchy connects game theory to topology and computability theory. Wadge reducibility via continuous functions is the game-theoretic analogue of many-one reducibility in computability theory. Under AD, the Wadge hierarchy is well-founded and well-ordered, providing a canonical complexity measure for sets of reals.
+### 7.1 What well-foundedness buys, and where it stops
 
-## 13. Future Work
+The entire development rests on a single hypothesis — well-foundedness — used
+twice: once to legitimise the recursive definition of $W$ (Section 3), and once to
+guarantee that every concrete play halts (Theorem 4.8). This is the exact frontier
+of the "greedy value function" method. The instant we permit plays of length
+exactly $\omega$ — infinite games in which the winner is decided by a property of
+the *entire* infinite play rather than by who gets stuck — there is no descending
+chain to exploit, no terminal position to serve as a base case, and the method
+collapses. A fundamentally different, strategy-tree argument is required.
 
-1. **Borel determinacy**: Formalize Martin's 1975 proof of Borel determinacy in ZFC.
-2. **Analytic determinacy**: Connect to the existence of sharps and inner model theory.
-3. **Woodin cardinal hierarchy**: Formalize the precise relationship between Woodin cardinals and projective determinacy.
-4. **Computational games**: Apply determinacy theory to verification of reactive systems.
-5. **Tropical game values**: Connect game ranks to tropical algebraic structures via the existing TransfiniteGameValues formalization.
+### 7.2 The determinacy hierarchy and large cardinals
 
-## References
+For infinite-length games on sequence spaces, determinacy becomes a graded
+phenomenon indexed by the topological complexity of the winning set:
 
-1. Gale, D. and Stewart, F.M. (1953). "Infinite games with perfect information." *Annals of Mathematics Studies* 28, 245–266.
-2. Martin, D.A. (1975). "Borel determinacy." *Annals of Mathematics* 102, 363–371.
-3. Martin, D.A. and Steel, J. (1989). "A proof of projective determinacy." *Journal of the American Mathematical Society* 2, 71–125.
-4. Mycielski, J. and Steinhaus, H. (1962). "A mathematical axiom contradicting the axiom of choice." *Bulletin de l'Académie Polonaise des Sciences* 10, 1–3.
-5. Moschovakis, Y.N. (1980). *Descriptive Set Theory*. North-Holland.
-6. Wadge, W.W. (1983). "Reducibility and determinateness on the Baire space." PhD thesis, UC Berkeley.
-7. Harrington, L. (1978). "Analytic determinacy and 0#." *Journal of Symbolic Logic* 43, 685–693.
+- **Gale–Stewart:** open and closed games are determined (in ZFC).
+- **Borel determinacy (Martin):** every game whose winning set is Borel is
+  determined; this already requires substantial ZFC machinery.
+- **Analytic determinacy:** follows from the existence of a measurable cardinal.
+- **The Axiom of Determinacy (AD):** the assertion that *all* games on the reals
+  are determined; it contradicts the Axiom of Choice but holds in canonical inner
+  models and is equiconsistent with large-cardinal hypotheses (e.g. infinitely
+  many Woodin cardinals).
+
+The theorem of this paper is the well-founded, base-of-the-hierarchy case: it is
+Zermelo's theorem, sharpened to arbitrary transfinite rank. It provides the secure
+foundation on which the taller and far more delicate theory is built.
+
+### 7.3 Future directions
+
+1. **Ordinal rank and play-length bounds.** Attach to each position its
+   well-founded rank as an ordinal and prove that the length of optimal play is
+   controlled by the rank, making the "transfinite length" quantitative and
+   connecting it to ordinal arithmetic ($\omega$, $\omega^2$, $\dots$).
+
+2. **Sprague–Grundy theory.** Refine the Boolean value $W$ to a Grundy value in
+   $\mathbb{N}$ (or the ordinals) via the minimal-excludant ($\mathrm{mex}$) of
+   successors, and prove the sum-of-games theorem for well-founded impartial
+   games.
+
+3. **Partisan games and surreal numbers.** Specialise the position-encoded-turn
+   model to Conway's partisan games and relate the value here to game values in
+   the theory of surreal numbers.
+
+4. **Beyond well-foundedness: topological determinacy.** Prove the Gale–Stewart
+   theorem for open and closed games on Baire space — the next milestone, which
+   requires plays of length exactly $\omega$ and a genuinely different argument.
+
+5. **The determinacy hierarchy and large cardinals.** Borel determinacy
+   (Martin's theorem), analytic determinacy from a measurable cardinal, and the
+   equivalence of AD with inner-model and large-cardinal hypotheses.
+
+6. **Concrete transfinite instances.** Work out the lexicographic game on
+   $\mathbb{N} \times \mathbb{N}$ (rank $\omega^2$) and ordinal-indexed countdown
+   games as further examples, computing their value functions explicitly.
+
+---
+
+## 8. Conclusion
+
+We have shown that a single structural hypothesis — well-foundedness of the move
+relation — is exactly what is needed to extend Zermelo's determinacy theorem from
+finite games to games of arbitrary transfinite rank. The value function $W$,
+defined by well-founded recursion and characterised by the Zermelo fixed-point
+equation, both decides the winner and prescribes an explicit greedy winning
+strategy. Every play under that strategy terminates in finitely many moves, and an
+alternation invariant pins down the parity of the decisive turn, yielding the
+determinacy theorem $F(p) \iff W(p)$. The countdown game
+illustrates the theory on an object of rank $\omega$. Beyond this well-founded
+frontier lies the deep and beautiful theory of infinite-length games, whose
+determinacy is woven into the fabric of large-cardinal set theory.
