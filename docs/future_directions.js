@@ -796,7 +796,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ace29f66",
     "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
     "domains": [
       "Novelty",
@@ -806,7 +806,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T01:44:47.705634+00:00",
     "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
@@ -5626,7 +5626,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Topology of Impossible Objects: Escher Stairs and Klein Bottles"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f4c4425a",
     "description": "Prove that 2-dimensional Newtonian gravity is mathematically pathological: orbits don't close, there's no stable circular orbit, and gravitational potential is logarithmic. Formalize the Bertrand-Darboux theorem failure in 2D and prove that stable planetary systems cannot exist in Flatland.",
     "domains": [
       "Novelty",
@@ -5636,7 +5636,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.79,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T01:28:27.766817+00:00",
     "title": "Flatland Catastrophe: When 2D Physics Breaks"
   },
