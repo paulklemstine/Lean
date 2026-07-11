@@ -1,322 +1,167 @@
-#!/usr/bin/env python3
 """
-Ramanujan Oracle Non-Computability: Numerical Demonstrations
+Numerical demonstrations for
+    "Reliable Intuition as a Non-Computable Resource:
+     Counting and Coding Barriers to a Ramanujan Oracle"
 
-This script demonstrates the key quantitative results from the Ramanujan Oracle
-theory, showing how the oracle space (3^N) exponentially exceeds the program
-space (b^k) for various parameters.
-"""
+An oracle is a Boolean verdict map on encoded statements.  On a finite block of
+N statements it restricts to a string in {0,1}^N.  This file demonstrates, with
+fully self-contained code, the three pillars of the development:
 
-import math
+  1. The diagonal (Cantor) construction: from any list of oracles we build one
+     that is absent from the list.
+  2. The Hamming-ball size formula: a radius-d ball contains exactly
+     sum_{k<=d} C(N,k) points, independent of its center.
+  3. The accuracy barrier: a family F of oracles with
+     |F| * sum_{k<=d} C(N,k) < 2^N cannot cover every truth pattern, so some
+     pattern is mispredicted by *every* oracle in F with more than d errors.
 
-
-def oracle_space(N: int) -> int:
-    """Number of possible oracles on N statements: 3^N."""
-    return 3 ** N
-
-
-def program_space(b: int, k: int) -> int:
-    """Number of possible programs of length k over alphabet b: b^k."""
-    return b ** k
-
-
-def information_content_oracle(N: int) -> float:
-    """Information content of an oracle on N statements in bits: N * log2(3)."""
-    return N * math.log2(3)
-
-
-def information_content_program(b: int, k: int) -> float:
-    """Information content of a program of length k over alphabet b in bits."""
-    return k * math.log2(b)
-
-
-def min_program_length(b: int, N: int) -> int:
-    """Minimum program length k such that b^k >= 3^N."""
-    if b <= 1:
-        return float('inf')
-    return math.ceil(N * math.log(3) / math.log(b))
-
-
-def gap_ratio(b: int, k: int, N: int) -> float:
-    """Ratio of oracle space to program space: 3^N / b^k."""
-    return (3 ** N) / (b ** k)
-
-
-def threshold_N(b: int, k: int) -> int:
-    """Minimum N such that 3^N > b^k."""
-    if b <= 0 or k <= 0:
-        return 1
-    return math.ceil(k * math.log(b) / math.log(3))
-
-
-def main():
-    print("=" * 70)
-    print("RAMANUJAN ORACLE NON-COMPUTABILITY: NUMERICAL DEMONSTRATIONS")
-    print("=" * 70)
-
-    # Demo 1: Oracle space vs program space
-    print("\n--- Demo 1: Oracle Space vs Program Space ---")
-    print(f"{'N':>4} {'3^N (oracles)':>20} {'2^N (binary progs)':>20} {'Gap ratio':>12}")
-    print("-" * 60)
-    for N in [1, 5, 10, 20, 50, 100]:
-        oracles = oracle_space(N)
-        programs = program_space(2, N)
-        ratio = oracles / programs
-        print(f"{N:>4} {oracles:>20,} {programs:>20,} {ratio:>12.2f}")
-
-    # Demo 2: Minimum program length
-    print("\n--- Demo 2: Minimum Program Length for Full Oracle Coverage ---")
-    print(f"{'N':>4} {'Min k (b=2)':>12} {'Min k (b=10)':>12} {'Min k (b=256)':>14}")
-    print("-" * 50)
-    for N in [1, 5, 10, 20, 50, 100, 1000]:
-        k2 = min_program_length(2, N)
-        k10 = min_program_length(10, N)
-        k256 = min_program_length(256, N)
-        print(f"{N:>4} {k2:>12} {k10:>12} {k256:>14}")
-
-    # Demo 3: Information deficit
-    print("\n--- Demo 3: Information Deficit (bits) ---")
-    print(f"{'N':>4} {'Oracle info':>14} {'Program info':>14} {'Deficit':>10} {'Deficit %':>10}")
-    print("-" * 56)
-    for N in [1, 10, 100, 1000]:
-        oracle_info = information_content_oracle(N)
-        prog_info = information_content_program(2, N)
-        deficit = oracle_info - prog_info
-        pct = (deficit / oracle_info) * 100
-        print(f"{N:>4} {oracle_info:>14.2f} {prog_info:>14.2f} {deficit:>10.2f} {pct:>9.1f}%")
-
-    # Demo 4: Threshold values
-    print("\n--- Demo 4: Threshold N for 3^N > b^k ---")
-    print(f"{'b':>4} {'k':>6} {'Threshold N':>12} {'3^N':>20} {'b^k':>20}")
-    print("-" * 66)
-    for b, k in [(2, 10), (2, 100), (10, 10), (10, 100), (256, 10), (256, 100)]:
-        N = threshold_N(b, k)
-        print(f"{b:>4} {k:>6} {N:>12} {3**N:>20,} {b**k:>20,}")
-
-    # Demo 5: The Ramanujan Oracle Theorem in action
-    print("\n--- Demo 5: Ramanujan Oracle Theorem ---")
-    print("For each (b, k), showing the N where programs fail to cover all oracles:")
-    print(f"{'b':>4} {'k':>6} {'b^k (programs)':>20} {'N chosen':>10} {'3^N (oracles)':>20}")
-    print("-" * 66)
-    for b in [2, 3, 10, 256]:
-        for k in [1, 5, 10]:
-            N = threshold_N(b, k) + 1
-            print(f"{b:>4} {k:>6} {b**k:>20,} {N:>10} {3**N:>20,}")
-
-    # Demo 6: Cantor's diagonal in action
-    print("\n--- Demo 6: Cantor Diagonal Construction (first 10 entries) ---")
-    print("Given enumeration f(n)(m) = (n + m) mod 3:")
-    print("Diagonal: f(n)(n) = 2n mod 3")
-    print("Anti-diagonal g(n) = 1 if f(n)(n) = 0, else 0")
-    print()
-    print(f"{'n':>4} {'f(n)(n)':>8} {'g(n)':>6}")
-    for n in range(10):
-        fnn = (2 * n) % 3
-        gn = 1 if fnn == 0 else 0
-        print(f"{n:>4} {fnn:>8} {gn:>6}")
-    print("\ng differs from f(n) at position n for every n → g ∉ range(f)")
-
-    print("\n" + "=" * 70)
-    print("All demonstrations complete. Key result: for any finite program")
-    print("length k, the oracle space 3^N exceeds the program space b^k")
-    print("for sufficiently large N, proving non-computability of oracles.")
-    print("=" * 70)
-
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Accuracy Distribution of Random Oracles
-
-Shows how oracle accuracy is distributed across all possible oracles,
-demonstrating that perfectly accurate oracles are exponentially rare.
+Run:  python3 demo.py
 """
 
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-import math
-from itertools import product
+from __future__ import annotations
+
+from itertools import combinations, product
+from math import comb, ceil, log2
+from typing import Callable, List, Optional, Tuple
 
 
-def accuracy_distribution(N: int) -> dict:
-    """Compute accuracy distribution for all 3^N oracles relative to truth = (0,0,...,0)."""
-    truth = (0,) * N
-    dist = {i: 0 for i in range(N + 1)}
-    for oracle in product(range(3), repeat=N):
-        acc = sum(1 for o, t in zip(oracle, truth) if o == t)
-        dist[acc] += 1
-    return dist
+# ---------------------------------------------------------------------------
+# 1. Oracles and the diagonal construction
+# ---------------------------------------------------------------------------
+
+Oracle = Callable[[int], bool]
 
 
-def binomial_coeff(n: int, k: int) -> int:
-    """Compute C(n, k)."""
-    if k < 0 or k > n:
-        return 0
-    return math.comb(n, k)
+def diagonal(enum: Callable[[int], Oracle]) -> Oracle:
+    """The diagonal oracle of an enumeration `enum` of oracles.
 
-
-def theoretical_distribution(N: int) -> dict:
+    D(n) = not enum(n)(n).  By construction D differs from enum(n) at input n,
+    hence D is not equal to any listed oracle.
     """
-    Theoretical accuracy distribution.
-    P(accuracy = a) = C(N, a) * 2^(N-a) / 3^N
-    (a positions agree, N-a positions each have 2 wrong choices)
-    """
-    dist = {}
-    total = 3 ** N
-    for a in range(N + 1):
-        count = binomial_coeff(N, a) * (2 ** (N - a))
-        dist[a] = count
-    return dist
+    return lambda n: not enum(n)(n)
 
 
-def main():
-    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-    fig.suptitle('Oracle Accuracy Distribution', fontsize=14, fontweight='bold')
+def demo_diagonal(num_checks: int = 8) -> None:
+    """Exhibit an oracle absent from a sample enumeration."""
+    # A concrete enumeration: enum(k) answers `bit k of n is 1`.
+    def enum(k: int) -> Oracle:
+        return lambda n: bool((n >> k) & 1)
 
-    # Plot 1: Empirical distribution for small N
-    ax = axes[0]
-    for N in [3, 4, 5, 6]:
-        dist = accuracy_distribution(N)
-        total = 3 ** N
-        accs = sorted(dist.keys())
-        probs = [dist[a] / total for a in accs]
-        ax.plot(accs, probs, 'o-', label=f'N={N}', markersize=4)
-    ax.set_xlabel('Accuracy (# correct)')
-    ax.set_ylabel('Fraction of oracles')
-    ax.set_title('Accuracy Distribution (empirical)')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-
-    # Plot 2: Theoretical distribution for larger N
-    ax = axes[1]
-    for N in [10, 20, 50]:
-        dist = theoretical_distribution(N)
-        total = 3 ** N
-        accs = sorted(dist.keys())
-        probs = [dist[a] / total for a in accs]
-        # Normalize x-axis to fraction
-        fracs = [a / N for a in accs]
-        ax.plot(fracs, probs, '-', label=f'N={N}', linewidth=1.5)
-    ax.axvline(x=1/3, color='red', linestyle='--', alpha=0.7, label='Random guess (1/3)')
-    ax.axvline(x=0.95, color='green', linestyle='--', alpha=0.7, label='95% threshold')
-    ax.set_xlabel('Accuracy fraction')
-    ax.set_ylabel('Fraction of oracles')
-    ax.set_title('Accuracy Distribution (theoretical)')
-    ax.legend(fontsize=8)
-    ax.grid(True, alpha=0.3)
-
-    # Plot 3: Cumulative — fraction of oracles above accuracy threshold
-    ax = axes[2]
-    for N in [10, 20, 50]:
-        dist = theoretical_distribution(N)
-        total = 3 ** N
-        thresholds = np.linspace(0, 1, 100)
-        cum_fracs = []
-        for t in thresholds:
-            min_acc = int(math.ceil(t * N))
-            above = sum(dist.get(a, 0) for a in range(min_acc, N + 1))
-            cum_fracs.append(above / total)
-        ax.semilogy(thresholds, [max(f, 1e-20) for f in cum_fracs], '-',
-                    label=f'N={N}', linewidth=1.5)
-    ax.axvline(x=0.95, color='green', linestyle='--', alpha=0.7, label='95% threshold')
-    ax.set_xlabel('Accuracy threshold')
-    ax.set_ylabel('Fraction of oracles above threshold (log)')
-    ax.set_title('Cumulative Accuracy Distribution')
-    ax.legend(fontsize=8)
-    ax.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('accuracy_distribution.png', dpi=150, bbox_inches='tight')
-    print("Saved: accuracy_distribution.png")
+    d = diagonal(enum)
+    print("=== 1. Diagonal construction (Cantor) ===")
+    for k in range(num_checks):
+        # D disagrees with enum(k) precisely at input k.
+        disagree = d(k) != enum(k)(k)
+        print(f"  input {k}: D(k)={int(d(k))}, enum(k)(k)={int(enum(k)(k))}, "
+              f"disagree={disagree}")
+    print("  => D differs from every listed oracle; not in the enumeration.\n")
 
 
-if __name__ == "__main__":
-    main()
+# ---------------------------------------------------------------------------
+# 2. Hamming distance and ball-size formula
+# ---------------------------------------------------------------------------
+
+def hamming(a: Tuple[int, ...], b: Tuple[int, ...]) -> int:
+    """Number of coordinates where two equal-length bit tuples differ."""
+    return sum(1 for x, y in zip(a, b) if x != y)
 
 
-#!/usr/bin/env python3
-"""
-Visualization: Oracle Space vs Program Space Gap
-
-Shows how 3^N (oracle space) exponentially dominates b^k (program space)
-as N grows, for various values of b and k.
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-import math
+def ball_size_formula(N: int, d: int) -> int:
+    """Closed form: |B_d(r)| = sum_{k=0}^{d} C(N,k)."""
+    return sum(comb(N, k) for k in range(d + 1))
 
 
-def main():
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-    fig.suptitle('Ramanujan Oracle Non-Computability: Quantitative Analysis',
-                 fontsize=14, fontweight='bold')
+def ball_size_bruteforce(N: int, d: int, center: Tuple[int, ...]) -> int:
+    """Direct count of length-N strings within Hamming distance d of `center`."""
+    return sum(1 for t in product((0, 1), repeat=N) if hamming(center, t) <= d)
 
-    # Plot 1: Oracle space vs program space (log scale)
-    ax = axes[0, 0]
-    N_vals = np.arange(1, 31)
-    oracle_sizes = [3**N for N in N_vals]
-    for b in [2, 4, 10]:
-        prog_sizes = [b**N for N in N_vals]
-        ax.semilogy(N_vals, prog_sizes, '--', label=f'{b}^N (programs, b={b})')
-    ax.semilogy(N_vals, oracle_sizes, 'r-', linewidth=2, label='3^N (oracles)')
-    ax.set_xlabel('N (number of statements)')
-    ax.set_ylabel('Space size (log scale)')
-    ax.set_title('Oracle Space vs Program Space')
-    ax.legend(fontsize=8)
-    ax.grid(True, alpha=0.3)
 
-    # Plot 2: Gap ratio (3/2)^N
-    ax = axes[0, 1]
-    N_vals = np.arange(1, 51)
-    ratio = [(3/2)**N for N in N_vals]
-    ax.semilogy(N_vals, ratio, 'b-', linewidth=2)
-    ax.axhline(y=1, color='red', linestyle='--', alpha=0.5, label='Parity (ratio=1)')
-    ax.set_xlabel('N')
-    ax.set_ylabel('Gap ratio 3^N / 2^N')
-    ax.set_title('Exponential Gap Growth (binary programs)')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
+def demo_ball_size(N: int = 6) -> None:
+    """Verify the ball-size formula for every center and radius."""
+    print("=== 2. Hamming ball-size formula ===")
+    all_ok = True
+    for d in range(N + 1):
+        formula = ball_size_formula(N, d)
+        # Check independence of center on a few representative centers.
+        for center in [tuple([0] * N), tuple([1] * N), tuple((i % 2) for i in range(N))]:
+            brute = ball_size_bruteforce(N, d, center)
+            ok = brute == formula
+            all_ok &= ok
+        print(f"  N={N}, d={d}: sum_C(N,k)={formula}  (brute-force matches: {ok})")
+    print(f"  cube size 2^N = {2 ** N}; all centers agree: {all_ok}\n")
 
-    # Plot 3: Minimum program length
-    ax = axes[1, 0]
-    N_vals = np.arange(1, 101)
-    for b in [2, 10, 256]:
-        min_k = [math.ceil(N * math.log(3) / math.log(b)) for N in N_vals]
-        ax.plot(N_vals, min_k, label=f'b={b}')
-    ax.plot(N_vals, N_vals, 'k--', alpha=0.5, label='k=N (identity)')
-    ax.set_xlabel('N (statements)')
-    ax.set_ylabel('Min program length k')
-    ax.set_title('Minimum Program Length for Oracle Coverage')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
 
-    # Plot 4: Information deficit
-    ax = axes[1, 1]
-    N_vals = np.arange(1, 101)
-    oracle_info = [N * math.log2(3) for N in N_vals]
-    binary_info = [N * 1.0 for N in N_vals]
-    deficit = [N * (math.log2(3) - 1) for N in N_vals]
-    ax.fill_between(N_vals, binary_info, oracle_info, alpha=0.3, color='red',
-                    label='Information deficit')
-    ax.plot(N_vals, oracle_info, 'r-', linewidth=2, label='Oracle info (N·log₂3)')
-    ax.plot(N_vals, binary_info, 'b-', linewidth=2, label='Program info (N bits)')
-    ax.set_xlabel('N (statements)')
-    ax.set_ylabel('Information (bits)')
-    ax.set_title('Information Deficit: Oracle vs Binary Program')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
+# ---------------------------------------------------------------------------
+# 3. The accuracy barrier
+# ---------------------------------------------------------------------------
 
-    plt.tight_layout()
-    plt.savefig('oracle_gap_analysis.png', dpi=150, bbox_inches='tight')
-    print("Saved: oracle_gap_analysis.png")
+def covering_threshold(N: int, d: int) -> float:
+    """2^N / sum_{k<=d} C(N,k): a family below this size cannot cover the cube."""
+    return (2 ** N) / ball_size_formula(N, d)
+
+
+def find_uncovered_pattern(
+    N: int, d: int, family: List[Tuple[int, ...]]
+) -> Optional[Tuple[int, ...]]:
+    """Return a truth pattern t with hamming(r,t) > d for all r in `family`,
+    or None if the family happens to cover the whole cube."""
+    for t in product((0, 1), repeat=N):
+        if all(hamming(r, t) > d for r in family):
+            return t
+    return None
+
+
+def demo_accuracy_barrier(N: int = 6, d: int = 1) -> None:
+    """Show that a family below the covering threshold is defeated."""
+    print("=== 3. Accuracy barrier ===")
+    thr = covering_threshold(N, d)
+    max_family = int(thr)  # any family this small must be defeated
+    print(f"  N={N}, d={d}: ball size={ball_size_formula(N, d)}, "
+          f"covering threshold 2^N/ballsize = {thr:.3f}")
+
+    # Build a family strictly below threshold, e.g. the first `max_family` strings.
+    all_strings = list(product((0, 1), repeat=N))
+    family = all_strings[:max_family]
+    product_val = len(family) * ball_size_formula(N, d)
+    print(f"  |F|={len(family)}, |F|*ballsize={product_val} < 2^N={2 ** N}: "
+          f"{product_val < 2 ** N}")
+
+    witness = find_uncovered_pattern(N, d, family)
+    print(f"  uncovered truth pattern: {witness}")
+    if witness is not None:
+        errs = [hamming(r, witness) for r in family]
+        print(f"  min errors of any oracle in F on this pattern: {min(errs)} > d={d}")
+    print("  => every oracle in F mispredicts this pattern with more than d errors.\n")
+
+
+# ---------------------------------------------------------------------------
+# 4. The 95% barrier: how the threshold explodes with the block size
+# ---------------------------------------------------------------------------
+
+def demo_95_percent(accuracy: float = 0.95) -> None:
+    """Tabulate the exponential blow-up of the covering threshold at 95%."""
+    print(f"=== 4. The {int(accuracy * 100)}% barrier: threshold blow-up ===")
+    print(f"  {'N':>5} {'d=N-m':>7} {'ball size':>16} {'threshold 2^N/ball':>22}")
+    for N in (20, 50, 100, 200, 400):
+        m = ceil(accuracy * N)
+        d = N - m
+        ball = ball_size_formula(N, d)
+        thr = (2 ** N) / ball
+        print(f"  {N:>5} {d:>7} {ball:>16} {thr:>22.3e}")
+    # Entropy estimate of the exponential rate.
+    p = 1 - accuracy
+    H = -p * log2(p) - (1 - p) * log2(1 - p)
+    print(f"  binary entropy H({p:.2f}) = {H:.4f}; "
+          f"threshold grows like 2^((1-H)N) = 2^({1 - H:.3f} N)\n")
+
+
+# ---------------------------------------------------------------------------
+
+def main() -> None:
+    demo_diagonal()
+    demo_ball_size(N=6)
+    demo_accuracy_barrier(N=6, d=1)
+    demo_95_percent(0.95)
 
 
 if __name__ == "__main__":
