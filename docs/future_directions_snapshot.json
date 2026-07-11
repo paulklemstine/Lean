@@ -517,6 +517,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 9ca5466b (Q=0.800), which proved 40 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that any technological civilization must discover computational complexity independently of its biological substrate. Formalize a universal complexity hierarchy and prove that P vs NP is a theorem about the structure of computation itself, not about any particular model. Show that even hyperco",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_9ca5466b_a1bd971c",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "9ca5466b",
+    "status": "available",
+    "timestamp": "2026-07-11T08:51:48.793508+00:00",
+    "title": "Deepening: Computational Complexity of Alien Civilizations"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle a6f348ea (Q=0.800), which proved 20 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Stone duality states that every Boolean algebra B is isomorphic to the clopen algebra of its Stone space S(B) (the space of ultrafilters on B). This connects syntax (Boolean algebra) with semantics (topology). Conjecture: every neural network f: R^n -> R^m has a 'Stone dual' which is a Boolean algeb",
     "domain_bridges": [],
     "domains": [
@@ -897,26 +916,6 @@
     "status": "failed",
     "timestamp": "2026-07-11T02:34:00.123116+00:00",
     "title": "Surreal Topology: Open Sets at Infinity"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "9ca5466b",
-    "description": "Prove that any technological civilization must discover computational complexity independently of its biological substrate. Formalize a universal complexity hierarchy and prove that P vs NP is a theorem about the structure of computation itself, not about any particular model. Show that even hypercomputational civilizations face analogous barriers.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0996",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T06:55:55.264449+00:00",
-    "title": "Computational Complexity of Alien Civilizations"
   },
   {
     "ambition_level": "extension",
@@ -12016,7 +12015,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f85e4d43",
     "description": "# Future Directions\n\nThe file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoretic\nbounds on encoding a neural connectome. Natural extensions:\n\n1. **Weighted / graded synapses.** `card_weighted_connectome` counts `w`-valued\n   synapse configurations. A description-length theorem of the form\n   `slots · log₂ w` bits would generalize the Boolean bit-length bound and\n   quantify the cost of storing synaptic strengths, not just topology.\n\n2. **Average-case (entropy) bounds.** `few_small_codewords` / `most_incompressible`\n   give a worst-case pigeonhole statement. Formalizing Shannon entropy of a\n   uniform distribution over connectomes (`H = C(N,2)` bits) and proving that no\n   uniquely-decodable code beats it (Kraft–McMillan) would upgrade the argument\n   from \"some mind is incompressible\" to \"the average mind is incompressible\".\n\n3. **Directed + weighted composition.** Combine `directed_count_sq` with the\n   weighted count to obtain the full state space `w^(N(N-1))` of directed,\n   graded connectomes and its exact bit-length.\n\n4. **Sharper Bekenstein packing.** `neuron_count_sqrt_bound` gives\n   `N ≤ 1 + √(2·capacity)`. Plugging in concrete SI values for `ħ, c` and a\n   cortex-scale `R, E` would yield an explicit numeric neuron ceiling, provable\n   by `norm_num`/interval arithmetic.\n\n5. **Merging hierarchies.** `synapseSlots_add` is the two-brain case of a general\n   superadditivity `C(∑Nᵢ, 2) = ∑ C(Nᵢ,2) + ∑_{i<j} Nᵢ Nⱼ`, which would formalize\n   the combinatorial explosion of cross-connections when many minds are fused.\n\n## Completed auxiliary theory\n\n* **Mixed-radix / factorial bridge** (`Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`).\n  The factorial number system is exhibited as the mixed-radix system with bases\n  `b i = i + 1`: `value_eq` (place values are factorials), `valid_iff` (the digit\n  bound `cᵢ ≤ i` is `cᵢ < i+1`), and `factorial_value_unique_via_mixed`, which\n  re-derives factoradic uniqueness as a corollary of the general\n  `MixedRadix.value_unique`.  All three are now fully proved.\n\n* **Carmichael primitive divisors for Fibonacci numbers** (`Catalog/Shared/CarmichaelProof.lean`,\n  `Catalog/Speculative/AutoResearch/CarmichaelComposite.lean`,\n  `Catalog/Speculative/CarmichaelPrimitiveDivisor.lean`).  For every `n` with\n  `13 ≤ n ≤ 10000`, `F(n)` has a primitive prime divisor.  The proof combines the\n  elementary prime case with a computationally certified composite case (the\n  `native_decide` checks `primPart_check` / `fib_coprime_part_pos_small`) fed\n  through the structural entry-point lemmas.\n\n## Open: the general Carmichael theorem\n\nThe headline Fibonacci results above are currently proved only on the certified\nrange `n ≤ 10000`.  The fully general statement — every `F(n)` with `n ∉ {1,2,6,12}`\nhas a primitive prime divisor — is *Carmichael's theorem*.  Removing the upper\nbound requires infrastructure not yet in Mathlib:\n\n* the primitive-part (cyclotomic) factorization `F(n) = ∏_{d∣n} Φ_d` of the\n  Fibonacci sequence, together with the fact that the `Φ_d` are the correct\n  \"primitive parts\";\n* a Zsygmondy-type growth bound showing `Φ_n` exceeds its only possible intrinsic\n  factor (the largest prime dividing `n`, appearing to the first power) once\n  `n > 12`.\n\nFormalizing these two ingredients would close the tail and upgrade\n`fib_primitive_divisor` to the unrestricted `n ≥ 13`.\n\n## Build & compilation status\n\nThe completed deliverables of this mission are collected under the `MindEncoding`\nlibrary target and build end-to-end with a plain `lake build`:\n\n* `Novelty.MindEncodingBounds`\n* `Novelty.MindEncodingRefined`\n* `Speculative.AutoResearch.MixedRadixFactorialBridge`\n* `Shared.CarmichaelHelper`, `Shared.CarmichaelProof`\n* `Speculative.AutoResearch.CarmichaelComposite`\n* `Speculative.CarmichaelPrimitiveDivisor`\n\nAll of them are `sorry`-free and their axiom audits show only the standard\naxioms (`propext`, `Classical.choice`, `Quot.sound`, plus\n`Lean.ofReduceBool`/`Lean.trustCompiler` for the `native_decide`-certified\nCarmichael range).\n\nThe project also ships a large shared `Catalog/` of files contributed by many\nunrelated cycles.  Every top-level directory is declared as its own `lean_lib`\n(so any individual module can be built by name), but the catalog as a whole is\n*not* buildable end-to-end: it contains numerous pre-existing dangling imports\n— references to source modules that were never included in the repository (for\nexample `Pythagorean.HOCriticalPairs`, `Physics.QuantumInfo.VonNeumannEntropy`,\n`Logic.LobFixedPoint`).  Repairing those would require recreating the missing\nsource files, which is outside the scope of this mission.  For that reason the\ndefault build target is the curated `MindEncoding` library rather than the full\ncatalog.\n",
     "domain_bridges": [],
     "domains": [
@@ -12029,7 +12028,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "0250199a",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T08:02:37.643508+00:00",
     "title": "The file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoret"
   },
@@ -12092,6 +12091,26 @@
     "status": "available",
     "timestamp": "2026-07-11T08:51:39.289698+00:00",
     "title": "This cycle isolated a clean dividing line inside a deformed arithmetic. Modellin"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Computational Complexity of Alien Civilizations\n\nThis project isolates the *substrate-independent* core of computational\nobstructions: **Lawvere's fixed-point theorem**. Every classical impossibility\nresult — Cantor's theorem, undecidability of the halting problem, Kleene's\nrecursion theorem, Gödel's first incompleteness theorem, Tarski's undefinability\nof truth, Russell's paradox — is one instance, obtained by choosing the answer\ntype `B` and the endofunction `f : B → B`. Because the theorem mentions no\nmachine model, bits, or physics, any civilization able to speak of functions is\nforced to rediscover the same structure. That is the precise sense in which\n\"computational complexity is discovered, not invented\".\n\n### What is proved (see the `.lean` files)\n\n* **`Lawvere.lean`** — Lawvere's fixed-point theorem (`lawvere`); its\n  contrapositive (`no_pointSurjective_of_fixpointFree`); Cantor's theorem in\n  Boolean form (`cantor_bool`); the strict `Bool`-power step\n  (`cantor_pow`: an injection `A ↪ A→Bool` but no surjection). Axiom-free core.\n* **`Uncomputability.lean`** — an abstract `ComputationModel` with no structural\n  assumptions; abstract undecidability (`diagonal_not_realized`), the\n  model-independence statement (`substrate_independent`), and the **oracle /\n  hypercomputation barrier** (`hypercomputation_barrier`): even with an arbitrary,\n  possibly non-computable oracle, no oracle-program decides the model's own jump.\n* **`Hierarchy.lean`** — the universal complexity hierarchy `Level n` with strict\n  steps (`strict_step`, `mk_lt`), monotonic cardinality (`mk_strictMono`), and no\n  maximal level (`no_maximal`).\n* **`Recursion.lean`** — the *positive* face: Kleene's recursion theorem\n  (`recursion_theorem`) and quines (`exists_quine`) in complete systems, together\n  with the duality `no_complete_semantics` (a system complete for its program\n  transformations is never complete for its own Boolean decisions).\n\n### Directions to extend\n\n1. **P vs NP as structure, not model.** Formalize abstract resource-bounded\n   classes as closure operators on decision behaviours and state P-vs-NP-type\n   separations as properties of the closure lattice. The relativization results\n   here (`hypercomputation_barrier`) are the seed of a Baker–Gill–Solovay-style\n   theorem: build oracles `A, B` with `P^A = NP^A` and `P^B ≠ NP^B`, proving\n   diagonalization alone cannot settle P vs NP — a genuinely substrate-independent\n   meta-theorem.\n\n2. **A concrete Time/Space Hierarchy Theorem.** Instantiate the abstract\n   `Level` tower with an explicit resource measure (step counts of a universal\n   simulator) and prove `DTIME(f) ⊊ DTIME(g)` for `f = o(g / log g)` via the same\n   diagonal, connecting the cardinal hierarchy to an honest complexity hierarchy.\n\n3. **Kleene's recursion theorem, computable category.** Replace the (Set-only\n   degenerate) point-surjectivity hypothesis with an *acceptable programming\n   system* built on `Nat.Partrec` / `Computable`, giving a non-degenerate\n   `recursion_theorem` and genuine quines over `ℕ`.\n\n4. **Gödel and Tarski from the same lemma.** Instantiate `lawvere` with the\n   provability/truth predicate to derive incompleteness and undefinability,\n   exhibiting them as literally the same theorem as the halting problem.\n\n5. **Hypercomputation ordinal hierarchy.** Iterate the jump `jump` transfinitely\n   (the arithmetical/hyperarithmetical hierarchy) and show the barrier persists at\n   every level and limit — formalizing \"even infinite-time / oracle civilizations\n   face analogous barriers\" as a well-founded transfinite recursion.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "id": "fd_1011",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "9ca5466b",
+    "status": "available",
+    "timestamp": "2026-07-11T08:51:45.629490+00:00",
+    "title": "This project isolates the *substrate-independent* core of computational"
   },
   {
     "ambition_level": "extension",

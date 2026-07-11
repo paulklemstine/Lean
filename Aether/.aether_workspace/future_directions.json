@@ -29573,11 +29573,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "f85e4d43",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -29590,7 +29590,7 @@
       ],
       "github_issue": 0,
       "id": "fd_1006",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-11T08:52:04.437146+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -29605,7 +29605,7 @@
       "source": "",
       "source_exp_id": "0250199a",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/0250199a",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_6d491145",
       "timestamp": "2026-07-11T08:02:37.643508+00:00",
       "title": "The file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoret"
@@ -33349,5 +33349,7 @@
     "universe": 1,
     "whether": 1
   },
-  "selection_log": []
+  "selection_log": [
+    "abduction_followup"
+  ]
 }
