@@ -814,7 +814,7 @@
     "github_issue": 0,
     "aristotle_self_score": 0.83
   },
-  "ea473918": {
+  "058801bc-3e3d-44bc-822a-b7cead92a79d": {
     "job_id": "ea473918",
     "cycle_n": 61,
     "concept": {
@@ -831,9 +831,9 @@
     },
     "prompt": "            # Phase A Research Mission v24: Deepening: The Unreasonable Effectiveness of Wrong Theories\n\n            ## Concept\n            **Domain**: Novelty\n            **Research mode**: team\n            **Title**: Deepening: The Unreasonable Effectiveness of Wrong Theories\n            **Description**: Building on cycle 5e3f6a63 (Q=0.780), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove a meta-theorem: for any approximately correct physical theory T, there exists a class of phenomena for which T makes predictions closer to truth than any known correct theory. Formalize using perturbation theory on theory-space and prove that the wrongness of T forms a convergent series toward\n            **Mathematical framing**: Building on cycle 5e3f6a63 (Q=0.780), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove a meta-theorem: for any approximately correct physical theory T, there exists a class of phenomena for which T makes predictions closer to truth than any known correct theory. Formalize using perturbation theory on theory-space and prove that the wrongness of T forms a convergent series toward\n\n\n\n            ## v24: Minimalist\nProve interesting theorems in Lean 4. Complete proofs only \u2014 0 sorries.\nClear docstrings. Nothing else. No Lab Notes, no team roles, no process\ndocumentation. Use your full compute on mathematics.\n\n\n            ### Guardrails (non-negotiable)\n            - No trivial theorems (True, Inhabited-only, native_decide-only, rfl-only).\n            - No circular proofs \u2014 a theorem must not reference itself in its own proof.\n            - No truncated/stubbed declarations \u2014 every theorem needs a complete `:= by ...` proof.\n            - No `sorry` in main theorems.\n            - Every file must be self-contained (compiles independently).\n\n            ### Output\n            Return `.lean` files and `FUTURE_DIRECTIONS.md` only. Focus all compute\n            on the mathematics.\n\n\n### MANDATORY PHASE A SELF-EVALUATION\nAdditionally, you MUST write a JSON file named `quality_score.json` in your output directory.\nThis file must contain a single JSON object containing your self-evaluation score (a float between 0.0 and 1.0) based on your compile correctness, proof depth, and mathematical novelty.\nExample format:\n{\n  \"self_score\": 0.85\n}\nDo NOT include any extra formatting, markdown code blocks, or text in `quality_score.json`.\n\n\n### Computational Evidence Stage (Recommended)\n\nBefore writing the formal Lean 4 proof, you are strongly encouraged to produce\ncomputational evidence for the claim. Create a file named `ComputationalEvidence.md`\nin the project directory with:\n\n1. **Small-case calculations** \u2014 compute the first several instances of the object/conjecture.\n2. **OEIS search results** \u2014 if a sequence appears, note its OEIS ID and first terms.\n3. **Counterexample hunt** \u2014 test the universal claim on a representative sample; report any counterexample found.\n4. **Plots or tables** \u2014 include any relevant visual/numerical data.\n\nIf you choose to skip this stage, you MUST explicitly justify why computational\nevidence is unnecessary or infeasible in a `SkipEvidenceJustification.md` file.\n\nDo not let the evidence stage dominate the project; keep it concise and directly\nrelevant to the theorem you intend to prove.\n",
     "project_dir": "/home/raver1975/lean/Aether/.aether_workspace/projects/ea473918",
-    "project_id": null,
-    "status": "preparing",
-    "dispatch_time": 0.0,
+    "project_id": "058801bc-3e3d-44bc-822a-b7cead92a79d",
+    "status": "dispatched",
+    "dispatch_time": 1783755981.386473,
     "complete_time": 0.0,
     "result_lean": null,
     "result_demo": null,
