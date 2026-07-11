@@ -697,6 +697,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize Cantor's hierarchy of infinities in Lean 4: aleph_0 (countable), aleph_1 (first uncountable), the continuum hypothesis (CH = aleph_1 = 2^aleph_0). Prove: the power set axiom guarantees strictly larger cardinals. Show: the Hartogs number of any set exists without AC. Explore: can we formalize large cardinals (measurable, supercompact) and their consistency strength hierarchy? Connect to Rucker's intuition that 'infinity is a place you can visit.'",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_1065",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T19:36:24.583932+00:00",
+    "title": "Rucker: Infinity and the Mind \u2014 Formalizing Different Sizes of Infinity"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Langlands program connects Galois groups (shapes) to automorphic forms (colors). Think of it this way: a Galois group is the group of symmetries of a shape (like the rotational symmetries of a polygon). An automorphic form is a coloring that respects the shape's symmetries (like a coloring of the polygon's vertices that is invariant under rotation). The Langlands correspondence says: for every 'shape' (Galois representation), there is a matching 'color' (automorphic form) and vice versa. Conjecture: This correspondence is a bijection between irreducible representations of Gal(Q_bar/Q) and cuspidal automorphic representations of GL_n over Q. For n=1, this is class field theory (every abelian extension of Q corresponds to a Dirichlet character). For n=2, this is the modularity theorem (every elliptic curve over Q corresponds to a weight-2 cusp form). The toddler version: each shape has exactly one matching color, and each color has exactly one matching shape. Test: verify the correspondence for all degree-2 extensions of Q up to discriminant 1000. Verify that each quadratic field Q(sqrt(d)) corresponds to a Dirichlet character chi_d via the correspondence chi_d(p) = (d/p) (Legendre symbol). Impact: Langlands is just shape-color matching. Shapes and colors are two ways of seeing the same mathematical object.",
     "domains": [
       "Novelty",
