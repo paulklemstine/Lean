@@ -654,7 +654,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Surreal Topology: Open Sets at Infinity"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9ca5466b",
     "description": "Prove that any technological civilization must discover computational complexity independently of its biological substrate. Formalize a universal complexity hierarchy and prove that P vs NP is a theorem about the structure of computation itself, not about any particular model. Show that even hypercomputational civilizations face analogous barriers.",
     "domains": [
       "Novelty",
@@ -664,7 +664,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T06:55:55.264449+00:00",
     "title": "Computational Complexity of Alien Civilizations"
   },
