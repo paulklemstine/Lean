@@ -1,211 +1,166 @@
-# The Unreasonable Effectiveness of Wrong Theories: Perturbation Theory on Theory Space
+# The Unreasonable Effectiveness of Wrong Theories: A Perturbative Geometry of Theory-Space
 
 ## Abstract
 
-We formalize a meta-theorem about the effectiveness of approximate physical theories using perturbation theory on a "theory space." We prove that for any approximately correct theory with geometrically bounded corrections and subcritical coupling, the wrongness of the theory forms a convergent series toward truth. We establish quantitative bounds on truncation error, prove the existence of optimal truncation orders for any desired precision, and demonstrate that for any nonzero correction, there always exists a phenomenon class where the uncorrected theory outperforms the corrected one. We introduce the notion of theory distance and prove it forms a pseudometric on theory space. A conjecture on the asymptotic optimality of wrong theories is formulated with computational evidence. All main results are formally verified in Lean 4 with Mathlib.
-
-**Keywords:** perturbation theory, theory space, approximation theory, convergent series, formal verification, philosophy of science
+We develop a rigorous geometric framework in which physical theories are points of a real inner-product space, the truth is a distinguished point, and the *wrongness* of a theory is its distance to the truth. Within this framework we prove a meta-theorem answering, in precise mathematical terms, why approximately correct theories are so effective — and why theories known to be wrong nevertheless remain indispensable. Three families of results are established. First, a **perturbative convergence theory**: sequences of corrections that sum to the truth-gap drive wrongness to zero, with an explicit tail bound and, under geometric decay of corrections, an explicit exponential convergence rate $M r^{n}/(1-r)$. Second, a **non-degeneracy principle**: a theory equals the truth if and only if it predicts every phenomenon perfectly. Third, the central **meta-theorem**: whenever two theories fail in non-parallel directions, there exists a phenomenon on which the "wrong" theory predicts the truth *exactly* while its rival errs — so a globally worse theory can strictly out-predict a globally better one locally. All results hold over an arbitrary real inner-product space and are developed from first principles.
 
 ## 1. Introduction
 
-The observation that simplified physical theories often outperform their more sophisticated successors on specific problem classes is well-documented in the history of physics. Newton's gravitational theory, despite being superseded by general relativity, remains the tool of choice for orbital mechanics. The Bohr model, though wrong in its physical picture, predicts hydrogen spectral lines with remarkable accuracy. The ideal gas law succeeds far beyond its regime of validity.
+The history of physics is a history of superseded theories, yet each superseded theory was, and often still is, extraordinarily useful. This tension — global falsity coexisting with local, sometimes exact, predictive success — is usually discussed philosophically. We give it a mathematical treatment.
 
-These observations raise a natural mathematical question: Is there a formal framework that explains why wrong theories are unreasonably effective? We answer this affirmatively by developing a perturbation-theoretic framework on "theory space" and proving rigorous bounds on the effectiveness of truncated theories.
+Our thesis is that once "theories," "truth," "phenomena," and "wrongness" are modeled geometrically, the effectiveness of wrong theories ceases to be mysterious and becomes a theorem about inner-product spaces. The essential ideas are:
 
-### 1.1 Related Work
+- **Theory-space** is a real inner-product space $E$; each theory is a point.
+- **Truth** is a fixed point $\tau \in E$.
+- **Wrongness** is Euclidean distance to truth.
+- **Phenomena** are directions (unit-free vectors) $u \in E$; a theory's prediction is the linear functional $\langle T, u\rangle$, and its prediction error is $|\langle T - \tau, u\rangle|$.
 
-The phrase "unreasonable effectiveness" originates from Wigner (1960), who asked why mathematics is so effective in the natural sciences. Our work addresses a complementary question: why *wrong* mathematics—truncated, approximate, or simplified—is often more effective than correct but complex alternatives.
+From these definitions we recover perturbation theory (the summation of corrections), a quantitative theory of convergence rates, and a geometric explanation for why wrong theories win on their own turf.
 
-The mathematical foundations draw on classical perturbation theory and the theory of convergent series. The formal verification leverages the Lean 4 proof assistant and the Mathlib library.
+The modeling choices deserve a word of justification. Representing a theory by its predictions is standard operationalism: two theories that make identical predictions on every conceivable measurement are, for our purposes, the same point of $E$. Representing a phenomenon by a direction rather than a point encodes the idea that an experiment probes a *contrast* — a linear combination of observables — and that its outcome, for a given theory, is the value of that linear functional. Wrongness as Euclidean distance is the least committal choice consistent with an inner-product geometry, and it is exactly the quantity minimized by least-squares fitting, orthogonal projection, and countless estimation procedures. The framework is therefore not exotic: it is the ambient geometry already implicit in how physical predictions are compared to data. What is new is the systematic use of that geometry to prove statements *about theories as a class*, rather than about any single theory.
 
-## 2. Definitions
+### 1.1 Contributions
 
-### 2.1 Perturbation Theory Structure
+1. A clean axiomatization of theory-space and wrongness (Section 2).
+2. Lipschitz stability of wrongness under corrections (Theorem 3.1).
+3. A convergence theorem: perturbative corrections summing to the truth-gap send wrongness to zero (Theorem 3.3), with a tail bound (Theorem 3.4) and its vanishing (Theorem 3.5).
+4. An explicit exponential convergence rate under geometric decay of corrections (Theorem 3.6).
+5. A non-degeneracy principle characterizing truth by phenomena (Theorem 4.2).
+6. The exactness of a wrong theory on phenomena orthogonal to its error (Theorem 4.3).
+7. The meta-theorem: a wrong theory strictly out-predicts a non-parallel rival on a constructed phenomenon (Theorem 4.4).
 
-**Definition 2.1** (Perturbation Theory). A *perturbation theory* is a triple $(b, \{c_k\}_{k \geq 0}, \varepsilon)$ where:
-- $b \in \mathbb{R}$ is the base prediction (zeroth-order theory)
-- $c_k \in \mathbb{R}$ is the $k$-th order correction coefficient
-- $\varepsilon \in \mathbb{R}$ is the coupling (perturbation) parameter
+## 2. The geometry of theory-space
 
-The $n$-th order partial sum (truncated theory) is:
-$$T_n = b + \sum_{k=0}^{n-1} \varepsilon^{k+1} c_k$$
+Throughout, $E$ is a real vector space. For the metric results we require only a norm; for the phenomenological results we require a real inner product $\langle\cdot,\cdot\rangle$ with induced norm $\|v\| = \sqrt{\langle v, v\rangle}$.
 
-**Definition 2.2** (Wrongness). The *wrongness at order $n$* is the contribution of the $n$-th correction:
-$$w_n = \varepsilon^{n+1} c_n$$
+**Definition 2.1 (Theory, truth, wrongness).** A *theory* is a point $T \in E$. A distinguished point $\tau \in E$ is the *truth*. The *wrongness* of $T$ (relative to $\tau$) is
+$$w(T) := \|T - \tau\|.$$
 
-**Definition 2.3** (Geometric Boundedness). A perturbation theory has *geometrically bounded corrections* with bound $M > 0$ if $|c_k| \leq M$ for all $k \geq 0$.
+**Definition 2.2 (Phenomenon, prediction, prediction error).** A *phenomenon* is a vector $u \in E$ interpreted as a measurement direction. The *prediction* of theory $T$ on $u$ is $\langle T, u\rangle$. The *prediction error* is
+$$\mathrm{err}(T, u) := |\langle T - \tau, u\rangle|.$$
 
-**Definition 2.4** (Truth Value). When the series converges, the *truth value* is:
-$$T^* = b + \sum_{k=0}^{\infty} \varepsilon^{k+1} c_k$$
+**Proposition 2.3 (Basic properties).** For all $T$: $w(T) \ge 0$, and $w(\tau) = 0$.
 
-### 2.2 Theory Space
+*Proof.* Immediate from $w(T) = \|T-\tau\|$ and the norm axioms. $\square$
 
-**Definition 2.5** (Theory Family). A *theory family* is a pair $(f, \sigma)$ where $f: \mathbb{R} \to \mathbb{R}$ is a continuous prediction function parameterized by the perturbation parameter.
+Wrongness inherits from the norm the familiar metric structure: it is symmetric in the sense that $\|T - \tau\| = \|\tau - T\|$, and it satisfies the triangle inequality $w(T_1) \le w(T_2) + \|T_1 - T_2\|$. The second inequality is the seed of the Lipschitz stability result below: no theory can be much wronger than a nearby theory. We emphasize that the results of this paper never require $E$ to be finite-dimensional; the metric layer requires only a normed space (Banach, once completeness is invoked for infinite correction series), and the phenomenological layer requires only an inner product. In the finite-dimensional case one may picture $E = \mathbb{R}^d$ with the usual dot product, and every statement specializes to elementary linear algebra.
 
-**Definition 2.6** (Theory Distance). The *theory distance* between parameter values $\varepsilon_1, \varepsilon_2$ is:
-$$d_F(\varepsilon_1, \varepsilon_2) = |f(\varepsilon_1) - f(\varepsilon_2)|$$
+**Definition 2.4 (Perturbative sequence).** Given a base theory $T_0 \in E$ and a sequence of *corrections* $c : \mathbb{N} \to E$, the $n$-th *partial theory* is
+$$T_n := T_0 + \sum_{i=0}^{n-1} c_i.$$
+In particular $T_0$ is the base theory (empty sum).
 
-### 2.3 Phenomenon Class
+## 3. Perturbative convergence theory
 
-**Definition 2.7** (Phenomenon Class). A *phenomenon class of size $N$* is a collection of $N$ perturbation theories $\{T_i\}_{i=1}^N$, representing $N$ different observables each modeled by its own perturbation expansion.
+This section uses only the normed-space structure of $E$.
 
-## 3. Main Results
+**Theorem 3.1 (Lipschitz stability of wrongness).** For any theory $T$ and correction $c$,
+$$|\,w(T + c) - w(T)\,| \le \|c\|.$$
 
-### 3.1 Convergence Theorems
+*Proof sketch.* By definition $w(T+c) - w(T) = \|T + c - \tau\| - \|T - \tau\|$. The reverse triangle inequality $|\,\|x\| - \|y\|\,| \le \|x - y\|$ applied to $x = T + c - \tau$ and $y = T - \tau$ gives the bound, since $x - y = c$. $\square$
 
-**Theorem 3.1** (Wrongness Summability). If a perturbation theory has geometrically bounded corrections with bound $M$ and $|\varepsilon| < 1$, then the series $\sum_{k=0}^{\infty} \varepsilon^{k+1} c_k$ is absolutely convergent.
+This says the wrongness functional is $1$-Lipschitz in the correction: bounded interventions cause bounded changes in accuracy, ruling out pathological sensitivity. The constant $1$ is sharp: taking $c$ parallel to $T - \tau$ and pointing away from $\tau$ makes $w(T + c) - w(T) = \|c\|$ exactly. Stability of this kind is what legitimizes the incremental methodology of physics: were wrongness able to swing wildly under small corrections, no perturbative program could be trusted, because a tiny modeling adjustment could catastrophically degrade every prediction.
 
-*Proof sketch.* By comparison with the geometric series: $|\varepsilon^{k+1} c_k| \leq M |\varepsilon|^{k+1}$, and $\sum M|\varepsilon|^{k+1} = M|\varepsilon|/(1-|\varepsilon|) < \infty$. □
+**Lemma 3.2 (Exactness criterion).** $w(T) = 0$ if and only if $T = \tau$.
 
-**Theorem 3.2** (Wrongness Term Bound). Under geometric boundedness with bound $M$:
-$$|w_n| \leq M \cdot |\varepsilon|^{n+1}$$
+*Proof.* $\|T - \tau\| = 0 \iff T - \tau = 0 \iff T = \tau$. $\square$
 
-*Proof.* Direct computation: $|w_n| = |\varepsilon^{n+1} c_n| = |\varepsilon|^{n+1} |c_n| \leq |\varepsilon|^{n+1} M$. □
+**Theorem 3.3 (Convergence to truth).** Suppose the corrections sum to the truth-gap in the sense that the series $\sum_i c_i$ converges to $\tau - T_0$. Then
+$$w(T_n) \xrightarrow[n\to\infty]{} 0,$$
+i.e. the partial theories converge to the truth.
 
-**Theorem 3.3** (Truncation Error Bound). The error from truncating at order $n$ satisfies:
-$$\left|\sum_{k=0}^{\infty} \varepsilon^{k+n+1} c_{k+n}\right| \leq \frac{M \cdot |\varepsilon|^{n+1}}{1 - |\varepsilon|}$$
+*Proof sketch.* If $\sum_{i=0}^{n-1} c_i \to \tau - T_0$, then $T_n = T_0 + \sum_{i=0}^{n-1} c_i \to \tau$ by continuity of vector addition. Composition with the continuous norm gives $w(T_n) = \|T_n - \tau\| \to \|\tau - \tau\| = 0$. $\square$
 
-*Proof.* Bound each term and sum the resulting geometric series. □
+**Theorem 3.4 (Perturbative tail bound).** Suppose $E$ is complete and the correction norms are summable, $\sum_i \|c_i\| < \infty$. Let $\tau = T_0 + \sum_i c_i$ be the fully corrected theory. Then the residual wrongness after $n$ terms is bounded by the tail of the norm series:
+$$w(T_n) \le \sum_{i=0}^{\infty} \|c_{i+n}\|.$$
 
-### 3.2 Convergence to Truth
+*Proof sketch.* Absolute summability implies summability, so $\sum_i c_i$ exists. Splitting the series at $n$ gives $\sum_i c_i = \sum_{i<n} c_i + \sum_i c_{i+n}$, hence $T_n - \tau = \sum_{i<n} c_i - \sum_i c_i = -\sum_i c_{i+n}$. Taking norms and applying the triangle inequality for infinite sums, $w(T_n) = \|\sum_i c_{i+n}\| \le \sum_i \|c_{i+n}\|$. $\square$
 
-**Theorem 3.4** (Partial Sums Convergence). Under geometric boundedness and $|\varepsilon| < 1$, the partial sums $T_n$ converge to the truth value $T^*$ as $n \to \infty$.
+**Theorem 3.5 (Vanishing of the tail bound).** For any correction sequence $c$, the tail bound tends to zero:
+$$\sum_{i=0}^{\infty} \|c_{i+n}\| \xrightarrow[n\to\infty]{} 0.$$
 
-*Proof.* Direct consequence of the summability of the wrongness series (Theorem 3.1) and the definition of $T^*$ as the infinite sum. □
+*Proof sketch.* The tails of a convergent nonnegative series vanish as the starting index increases; this is the standard fact that the sequence of tail sums of a summable series tends to $0$. $\square$
 
-**Theorem 3.5** (Optimal Truncation Existence). For any $\delta > 0$, there exists $n \in \mathbb{N}$ such that $|T^* - T_n| < \delta$.
+Together, Theorems 3.4 and 3.5 upgrade qualitative convergence to quantitative control: at every stage one can bound how far the truth remains, and that bound is guaranteed to close. The distinction between Theorem 3.3 and Theorem 3.4 is worth stressing. Theorem 3.3 needs only that the *vector* series converges; it makes no assumption on the sizes of individual corrections and gives no rate. Theorem 3.4 assumes *absolute* summability — a genuinely stronger hypothesis, since in infinite dimensions there exist convergent series that are not absolutely convergent — and in return delivers a computable residual certificate. In practice one almost always has control of $\sum_i \|c_i\|$ (for instance from a physical estimate of the size of each correction term), so Theorem 3.4 is the workhorse.
 
-*Proof.* Follows from convergence (Theorem 3.4) and the definition of limits. □
+**Theorem 3.6 (Explicit exponential rate).** Suppose $E$ is complete and the corrections decay geometrically: there exist $M \ge 0$ and $0 \le r < 1$ with $\|c_i\| \le M r^{i}$ for all $i$. With $\tau = T_0 + \sum_i c_i$, the residual wrongness decays exponentially:
+$$w(T_n) \le \frac{M\, r^{n}}{1 - r}.$$
 
-**Theorem 3.6** (Wrongness Convergence). The wrongness series $\sum_{k=0}^{n-1} w_k$ converges as $n \to \infty$, and its limit equals $T^* - b$: the total wrongness of the base theory.
+*Proof sketch.* Geometric decay makes $\sum_i \|c_i\|$ summable (dominated by $M\sum_i r^i$), so Theorem 3.4 applies and $w(T_n) \le \sum_i \|c_{i+n}\|$. Bounding termwise, $\sum_i \|c_{i+n}\| \le \sum_i M r^{i+n} = M r^{n} \sum_i r^{i} = M r^{n}/(1-r)$, using the geometric series sum $\sum_{i\ge 0} r^i = 1/(1-r)$ for $0 \le r < 1$. $\square$
 
-*Proof.* The wrongness at order $k$ equals $\varepsilon^{k+1} c_k$, which is summable by Theorem 3.1. The limit of the partial sums is the tsum, which by definition of $T^*$ equals $T^* - b$. □
+Theorem 3.6 is the mathematical core of practical perturbation theory: a fixed convergence ratio $r$ yields error decreasing by a constant factor per term, so a small number of corrections achieves high accuracy. Quantitatively, to certify residual wrongness below a tolerance $\varepsilon$ it suffices to take
+$$n \ge \frac{\log\!\big(\varepsilon (1-r)/M\big)}{\log r},$$
+which is logarithmic in $1/\varepsilon$: each additional decimal digit of accuracy costs a fixed number of correction terms. This is precisely the empirical experience of perturbative calculations in physics, where a handful of terms in a well-behaved expansion pins a quantity down to many significant figures. The theorem also exposes the failure mode: as $r \to 1^-$ the prefactor $1/(1-r)$ and the required $n$ both blow up, the mathematical signature of an asymptotic-but-slowly-convergent (or divergent) series.
 
-### 3.3 Effectiveness of Wrong Theories
+## 4. The phenomenological layer and the meta-theorem
 
-**Theorem 3.7** (Approximation Overshoot). If $c_1 \cdot c_2 \leq 0$ (opposite signs) and $|c_1| \leq 2|c_2|$, then $|c_1 + c_2| \leq |c_2|$.
+We now use the inner product. Phenomena are directions, and predictions are inner products.
 
-*Interpretation.* When the first-order correction overshoots (and is compensated by an opposite-sign second-order correction of comparable magnitude), the uncorrected prediction (error $|c_1 + c_2|$) is at least as accurate as the first-order corrected prediction (error $|c_2|$).
+**Lemma 4.1 (Exactness on orthogonal phenomena).** If a phenomenon $u$ is orthogonal to a theory's error vector, i.e. $\langle T - \tau, u\rangle = 0$, then $\mathrm{err}(T, u) = 0$: the theory predicts $u$ *exactly*, regardless of how wrong it is overall.
 
-*Proof.* Case analysis on signs. When $c_1$ and $c_2$ have opposite signs and $|c_1| \leq 2|c_2|$, one can verify $|c_1 + c_2| = ||c_1| - |c_2||$. Since $|c_1| \leq 2|c_2|$, either $|c_2| \geq |c_1|$ (giving $|c_1+c_2| = |c_2|-|c_1| \leq |c_2|$) or $|c_1| \leq 2|c_2|$ with $|c_1| > |c_2|$ (giving $|c_1+c_2| = |c_1|-|c_2| \leq |c_2|$). □
+*Proof.* $\mathrm{err}(T,u) = |\langle T - \tau, u\rangle| = |0| = 0$. $\square$
 
-**Theorem 3.8** (Existence of Effectiveness Domain). For any nonzero first-order correction $c_1 \neq 0$, there exists a second-order correction $c_2$ such that $|c_1 + c_2| < |c_2|$—i.e., the uncorrected theory strictly outperforms.
+This is the crucial asymmetry: wrongness is a single vector $T - \tau$, and a theory is flawless on the entire hyperplane orthogonal to that vector.
 
-*Proof.* Constructive: take $c_2 = -c_1 - c_1/2$ (or $c_2 = -c_1 - 1$ depending on sign). □
+**Theorem 4.2 (Non-degeneracy: truth is characterized by phenomena).** A theory equals the truth if and only if it predicts every phenomenon perfectly:
+$$T = \tau \iff \forall u \in E,\ \langle T - \tau, u\rangle = 0.$$
 
-### 3.4 Theory Space Geometry
+*Proof sketch.* ($\Rightarrow$) If $T = \tau$ then $T - \tau = 0$ and every inner product vanishes. ($\Leftarrow$) If $\langle T - \tau, u\rangle = 0$ for all $u$, take $u = T - \tau$; then $\langle T-\tau, T-\tau\rangle = 0$, so by positive-definiteness $T - \tau = 0$, i.e. $T = \tau$. $\square$
 
-**Theorem 3.9** (Triangle Inequality). Theory distance satisfies the triangle inequality:
-$$d_F(\varepsilon_1, \varepsilon_3) \leq d_F(\varepsilon_1, \varepsilon_2) + d_F(\varepsilon_2, \varepsilon_3)$$
+Thus no genuinely wrong theory can be perfect on all phenomena simultaneously — perfection everywhere is exactly truth.
 
-*Proof.* Immediate from the triangle inequality for absolute values. □
+**Theorem 4.3 (The exact-prediction hyperplane).** For a wrong theory $T \ne \tau$, the set of phenomena on which $T$ is exactly right is the orthogonal complement of its error vector,
+$$\{u \in E : \mathrm{err}(T,u) = 0\} = (T - \tau)^{\perp},$$
+a closed hyperplane of codimension one. When $\dim E \ge 2$ this set is infinite.
 
-### 3.5 Phenomenon Selection
+*Proof sketch.* $\mathrm{err}(T,u) = 0 \iff \langle T-\tau, u\rangle = 0 \iff u \in (T-\tau)^\perp$. Since $T - \tau \ne 0$, its orthogonal complement is a hyperplane. $\square$
 
-**Theorem 3.10** (Phenomenon Selection). Among $N > 0$ phenomena, there exists at least one phenomenon $i$ whose truncation error is at most the average error:
-$$|T_i^* - T_{i,n}| \leq \frac{1}{N}\sum_{j=1}^{N} |T_j^* - T_{j,n}|$$
+**Theorem 4.4 (Meta-theorem: a wrong theory out-predicts a non-parallel rival).** Let $A$ (our theory) and $B$ (a rival) be theories, and let $\tau$ be the truth. Assume:
+1. $A$ is genuinely wrong: $A \ne \tau$;
+2. the errors are non-parallel: $B - \tau \ne r\,(A - \tau)$ for every scalar $r \in \mathbb{R}$.
 
-*Proof.* Pigeonhole principle: if all errors exceeded the average, their sum would exceed $N$ times the average, which equals the sum—a contradiction. □
+Then there exists a phenomenon $u$ on which $A$ is exactly right while $B$ is wrong:
+$$\mathrm{err}(A, u) = 0 < \mathrm{err}(B, u).$$
 
-## 4. Algorithms
+*Proof sketch.* Write $a = A - \tau$ and $b = B - \tau$. Since $A \ne \tau$, $\langle a, a\rangle > 0$. Perform one Gram–Schmidt step: set
+$$t = \frac{\langle b, a\rangle}{\langle a, a\rangle}, \qquad u = b - t\, a.$$
+Then $u$ is orthogonal to $a$: indeed $\langle u, a\rangle = \langle b, a\rangle - t\langle a, a\rangle = 0$. Hence by Lemma 4.1, $\mathrm{err}(A, u) = |\langle a, u\rangle| = 0$: $A$ is exactly right on $u$.
 
-### 4.1 Optimal Truncation Algorithm
+For $B$, compute $\langle b, u\rangle = \langle b, b - t a\rangle = \langle b, b\rangle - t\langle b, a\rangle$. But $u = b - t a$ is nonzero: were $u = 0$, we would have $b = t a$, i.e. $B - \tau = t(A - \tau)$, contradicting non-parallelism. Since $u \ne 0$, $\|u\|^2 > 0$, and a short computation gives $\langle b, u\rangle = \langle u + t a, u\rangle = \langle u, u\rangle + t\langle a, u\rangle = \|u\|^2 > 0$. Therefore $\mathrm{err}(B, u) = |\langle b, u\rangle| = \|u\|^2 > 0$. Combining, $\mathrm{err}(A,u) = 0 < \mathrm{err}(B,u)$. $\square$
 
-Given a perturbation theory with known correction coefficients and coupling parameter:
+**Remark 4.5 (Interpretation).** The meta-theorem is not a claim that wrong theories are secretly correct. Globally, $w(A) \ge w(B)$ is entirely possible — $B$ may be nearer the truth on the whole. The theorem isolates a *phenomenon* aligned with the part of $B$'s error that $A$'s error cannot account for. On that measurement, $A$'s error is orthogonal (hence null) while $B$'s is not. Locality of measurement, not global superiority, is what lets a wrong theory win.
 
-```
-Algorithm OptimalTruncation(b, {c_k}, ε, δ):
-  n ← 0
-  partial_sum ← b
-  while estimated_tail_bound(n) > δ:
-    partial_sum ← partial_sum + ε^(n+1) * c_n
-    n ← n + 1
-  return (n, partial_sum)
-```
+**Remark 4.6 (Necessity of non-parallelism).** The hypothesis that the errors are non-parallel cannot be dropped. If $B - \tau = r(A - \tau)$ for some scalar $r$, then the two theories fail in the very same direction, and every phenomenon on which $A$ is exactly right (the hyperplane $(A-\tau)^\perp$) is also a phenomenon on which $B$ is exactly right. In that degenerate case no separating phenomenon exists, and the more accurate theory dominates everywhere it matters. The generic situation, however, is non-parallelism: in dimension $d \ge 2$ the set of error vectors parallel to a fixed one is a single line, a measure-zero exception. Thus for “almost every” pair of distinct wrong theories, each out-predicts the other on a suitable class of phenomena — a striking symmetry, since it means predictive superiority is never total.
 
-The tail bound $M|\varepsilon|^{n+1}/(1-|\varepsilon|)$ provides a computable stopping criterion.
+**Corollary 4.7 (Mutual domination).** If $A \ne \tau$, $B \ne \tau$, and the errors of $A$ and $B$ are non-parallel, then there is a phenomenon on which $A$ out-predicts $B$ *and* a phenomenon on which $B$ out-predicts $A$. Neither wrong theory is uniformly better than the other. *Proof.* Apply Theorem 4.4 twice, swapping the roles of $A$ and $B$; the non-parallelism hypothesis is symmetric. $\square$
 
-### 4.2 Theory Comparison Algorithm
+## 5. Algorithms
 
-Given two theories (truncated at different orders) and a set of phenomena:
+The proofs are constructive and translate directly into computation.
 
-```
-Algorithm CompareTheories(T_low, T_high, phenomena):
-  wins_low ← 0
-  wins_high ← 0
-  for each phenomenon p:
-    if |truth(p) - T_low(p)| < |truth(p) - T_high(p)|:
-      wins_low ← wins_low + 1
-    else:
-      wins_high ← wins_high + 1
-  return (wins_low, wins_high)
-```
+**Algorithm A (Winning-phenomenon construction).** Given errors $a = A - \tau$ (nonzero) and $b = B - \tau$ non-parallel to $a$, compute $t = \langle b,a\rangle/\langle a,a\rangle$ and return $u = b - t a$. Then $\mathrm{err}(A,u) = 0$ and $\mathrm{err}(B,u) = \|u\|^2 > 0$. Complexity: $O(d)$ in dimension $d$ (two inner products and an axpy).
 
-## 5. The Asymptotic Wrongness Conjecture
+**Algorithm B (Perturbative refinement with certified error).** Given $T_0$, corrections $c_i$, and a geometric bound $\|c_i\| \le M r^i$, iterate $T_{n+1} = T_n + c_n$ while reporting the certified residual $M r^{n}/(1-r)$. Stop when the certificate drops below a tolerance $\varepsilon$, which occurs after $n \ge \log(\varepsilon(1-r)/M)/\log r$ steps. Complexity: $O(d)$ per step; number of steps logarithmic in $1/\varepsilon$.
 
-**Conjecture 5.1.** For a perturbation theory with alternating-sign corrections ($c_k \cdot c_{k+1} \leq 0$ for all $k$), geometrically bounded corrections, and $|\varepsilon| < 1$, there exists an optimal truncation order $n_{\text{opt}}$ such that:
-1. $|T^* - T_{n_{\text{opt}}}| \leq |T^* - T_n|$ for all $n$
-2. $|T^* - b| \leq 2 \cdot |T^* - T_{n_{\text{opt}}}|$
+## 6. Applications
 
-The second condition states that the base theory's error is within a factor of 2 of the best possible truncation error.
+- **History and philosophy of science.** The framework formalizes why superseded theories (Newtonian gravity, ray optics, ideal gases) persist: each governs the hyperplane of phenomena orthogonal to its error, and on suitable phenomena out-predicts more accurate but differently-miscalibrated rivals.
+- **Numerical analysis and physics.** Theorem 3.6 is the abstract skeleton of convergence-rate estimates for perturbation series and iterative solvers; the tail bound provides a computable stopping criterion.
+- **Model selection.** The meta-theorem cautions that global accuracy metrics can be beaten pointwise; it motivates task-aware selection of "locally exact" models over globally superior ones.
 
-**Computational evidence.** We tested this conjecture with 100,000 random perturbation series:
-- Coupling $\varepsilon$ sampled uniformly from $[-0.5, 0.5]$
-- Corrections $c_k$ sampled with alternating signs, magnitudes uniform in $[0, 10]$
-- Series truncated at 50 terms
+## 7. Discussion
 
-The conjecture held in all 100,000 trials, with the maximum observed ratio being approximately 1.98.
+The results split naturally into a *diachronic* half — convergence and rates explaining why the sequence of corrected theories approaches truth, and how fast — and a *synchronic* half — the non-degeneracy principle and meta-theorem explaining why, at any fixed time, many wrong theories coexist, each exact on its own domain. The unifying object is the error vector $T - \tau$: its magnitude is wrongness, its direction determines the hyperplane of exact predictions, and the relation between two error vectors decides which theory wins a given phenomenon.
 
-## 6. Discussion
+A limitation is the linearity of the model: predictions are linear functionals of the theory. Nonlinear observables and dynamical theory-spaces (where theories are operators) are natural generalizations.
 
-### 6.1 Physical Interpretation
+## 8. Future work
 
-The mathematical framework captures a fundamental aspect of how physics works. Physical theories are typically organized as perturbation expansions around simple, solvable models:
+- **Variable convergence ratios.** Relax geometric decay to $\|c_{i+1}\| \le r_i \|c_i\|$ and derive product-form residual bounds.
+- **Large phenomenon classes.** Develop Theorem 4.3 into a dimension theory of exact-prediction sets, quantifying "how large" a wrong theory's domain of exactness is.
+- **Best rival among many.** For a finite family of rivals, prove existence of a phenomenon on which our theory is a strict pointwise minimizer of prediction error (a max–min/separating-hyperplane refinement).
+- **Measure-theoretic version.** Place a measure $\mu$ on phenomena, define weighted error $\int |\langle T - \tau, u\rangle|^2\, d\mu(u)$, and prove an $L^2$ analogue: a wrong theory can have smaller weighted error than a rival on classes where the rival's error concentrates.
+- **Operator theory-spaces.** Replace static points by operators/dynamical systems and study wrongness under evolution.
 
-- **Quantum electrodynamics**: perturbation in the fine structure constant $\alpha \approx 1/137$
-- **Celestial mechanics**: perturbation in mass ratios (e.g., Jupiter/Sun $\approx 10^{-3}$)
-- **Statistical mechanics**: perturbation in inverse temperature or density
+## 9. Conclusion
 
-In each case, the coupling parameter $\varepsilon$ is small, ensuring rapid convergence. Our Theorem 3.3 quantifies the error: for QED with $|\varepsilon| \approx 0.007$, the $n$-th order error decreases by a factor of $\sim 140$ at each order.
-
-### 6.2 Philosophy of Science
-
-Our results formalize an underappreciated aspect of scientific methodology: the rational use of known-false theories. When Kuhn described scientific revolutions as paradigm shifts, he overlooked the mathematical continuity of theory space. Our Theorem 3.9 (triangle inequality) shows that theory space has well-behaved geometry, making incremental progress natural.
-
-### 6.3 Limitations
-
-Our framework assumes:
-1. The perturbation series converges (many physical series are asymptotic, not convergent)
-2. Correction coefficients are bounded (some physical theories have factorially growing coefficients)
-3. A single coupling parameter (multi-parameter perturbation theory is richer)
-
-These limitations point toward important generalizations.
-
-## 7. Future Work
-
-1. **Asymptotic series**: Extend to divergent but Borel-summable perturbation series
-2. **Multi-parameter perturbation**: Theory space with multiple coupling constants
-3. **Categorical structure**: Theory space as a category with morphisms between theories
-4. **Information-theoretic bounds**: Connect truncation error to model complexity
-5. **Proof of the Asymptotic Wrongness Conjecture**: The factor-of-2 bound
-
-## 8. References
-
-1. Wigner, E.P. (1960). "The Unreasonable Effectiveness of Mathematics in the Natural Sciences." Communications in Pure and Applied Mathematics, 13(1), 1-14.
-2. Dyson, F.J. (1952). "Divergence of Perturbation Theory in Quantum Electrodynamics." Physical Review, 85(4), 631.
-3. Bender, C.M. and Orszag, S.A. (1999). Advanced Mathematical Methods for Scientists and Engineers. Springer.
-4. Kuhn, T.S. (1962). The Structure of Scientific Revolutions. University of Chicago Press.
-5. Reed, M. and Simon, B. (1978). Methods of Modern Mathematical Physics IV: Analysis of Operators. Academic Press.
-
-## Appendix: Formal Verification
-
-All theorems in Sections 3.1–3.5 have been formally verified in Lean 4 using the Mathlib library. The formal proofs are available in `Physics/TheorySpacePerturbation.lean`. No axioms beyond the standard foundations (propext, Classical.choice, Quot.sound) are used.
-
-The key formal definitions are:
-- `PerturbationTheory`: the structure capturing a perturbation expansion
-- `PerturbationTheory.GeomBounded`: the geometric boundedness condition
-- `PerturbationTheory.truthValue`: the limit of the full series
-- `PerturbationTheory.partialSum`: the truncated prediction
-- `PerturbationTheory.wrongnessAt`: the wrongness at each order
-- `TheoryFamily`: parameterized families of theories
-- `PhenomenonClass`: collections of phenomena for comparison
+By treating theories as points, truth as a target, and phenomena as directions, we converted a philosophical puzzle into geometry. Wrongness converges — often exponentially — under perturbative correction; truth is exactly the theory perfect on all phenomena; and every wrong theory, failing in its own direction, commands a hyperplane of phenomena on which it is exactly right and can strictly out-predict a rival. The effectiveness of wrong theories is not unreasonable: it is the geometry of error.

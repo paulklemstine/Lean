@@ -1,91 +1,65 @@
 # The Unreasonable Effectiveness of Wrong Theories
 
-## Why Simpler, Incorrect Models Often Outperform Their More Accurate Rivals
+Every physical theory ever written down has been, in some strict sense, wrong. Newton's mechanics was overthrown by relativity; relativity itself is expected to break at the smallest scales; the periodic table, thermodynamics, the standard model — all are provisional. And yet the enterprise of science works spectacularly well. We put probes on comets, predict eclipses to the second, and design microchips using equations we already know are approximations. How can a tower of wrong theories deliver such right answers?
 
-*A Scientific American-style exploration of a deep mathematical truth about how science actually works*
+This article tells a mathematical story that turns that paradox into a theorem. Instead of treating "wrongness" as a vague philosophical worry, we make it a *number*, and then we prove three things about that number: that wrongness shrinks in a controlled, quantifiable way as theories improve; that improvement can be *exponentially* fast; and — most surprisingly — that a theory known to be wrong can, on carefully chosen questions, out-predict a rival theory that is closer to the truth overall.
 
----
+## Theories as points in a space
 
-In 1687, Isaac Newton published his law of universal gravitation. It was wrong. Not approximately wrong—fundamentally wrong. It described gravity as an instantaneous force acting across empty space, a concept that Einstein would later reveal as a fiction. Yet three centuries later, NASA still uses Newton's equations to navigate spacecraft across the solar system. The Mars rovers, the Voyager probes, the James Webb Space Telescope—all guided by a theory we know to be incorrect.
+The first move is a change of scenery. Picture every possible physical theory as a single point in a vast space — call it *theory-space*. This is more than a metaphor. In practice a theory is specified by its predictions: the numbers it assigns to measurable quantities. Collect those numbers into a vector, and the theory becomes a point $T$ in a vector space $E$ equipped with a notion of length and angle (an inner product $\langle\, \cdot\, ,\cdot\,\rangle$, with norm $\|v\| = \sqrt{\langle v,v\rangle}$).
 
-This isn't an accident or a failure of engineering. It's a deep mathematical phenomenon that touches the heart of how science works: wrong theories aren't just occasionally useful—they are *systematically* useful, and for many applications, they outperform their more correct successors.
+Somewhere in this space sits one distinguished point, $\mathrm{truth}$: the exact description of nature. We may never reach it, but it exists as a target. The **wrongness** of a theory $T$ is simply its distance from the truth,
+$$w(T) = \|T - \mathrm{truth}\|.$$
+A theory is exactly right precisely when its wrongness is zero — no more, no less. This is the cleanest possible statement of what it means to be correct: $w(T) = 0$ if and only if $T = \mathrm{truth}$.
 
-## The Paradox of Precision
+With this picture, a *phenomenon* — a specific experiment or measurement — becomes a **direction** $u$ in theory-space. What a theory $T$ predicts for phenomenon $u$ is the projection $\langle T, u\rangle$, and the **error** it makes on that phenomenon is how far its projection sits from the truth's:
+$$\mathrm{err}(T,u) = |\langle T - \mathrm{truth},\, u\rangle|.$$
+Two facts fall out immediately. First, a theory is perfect on *every* phenomenon only if it is the truth itself — you cannot be flawless in all directions and still be wrong. Second, and more slyly, a wrong theory is *perfectly* right on every phenomenon that happens to point at right angles to its mistake. This second fact is the seed of everything surprising that follows.
 
-Consider the problem of predicting where a baseball will land. You could use Newtonian mechanics—mass, velocity, gravity, and nothing else. You'd get within a few inches. Or you could use Einstein's general relativity, which is more correct. You'd account for the curvature of spacetime, time dilation, and the baseball's contribution to the gravitational field. Your answer would differ from Newton's by roughly the width of an atom.
+## Science as a convergent series
 
-But here's the paradox: if you tried to include *all* the relativistic effects, you'd also need to model air turbulence at quantum scales, interactions with cosmic rays, and the gravitational influence of distant galaxies. Each correction makes your model more correct in principle but potentially less accurate in practice, because each new term introduces new uncertainties and computational errors.
+Real theories are rarely torn down and rebuilt from scratch. More often they are *corrected*: a small term is added here, a relativistic tweak there, a quantum fluctuation summed over. This is the daily arithmetic of physics, and it has a name — perturbation theory.
 
-This is not merely a practical limitation. It is a mathematical theorem.
+We model it directly. Start with a rough theory $T_0$ and a sequence of corrections $c_1, c_2, c_3, \dots$. After $n$ steps the working theory is
+$$T_n = T_0 + c_1 + c_2 + \cdots + c_n.$$
+The central question is whether this ever-improving sequence actually *arrives* at the truth. The answer is a clean convergence theorem: **if the corrections add up to exactly the gap between the truth and the starting point** — that is, if $\sum_i c_i = \mathrm{truth} - T_0$ — then the wrongness $w(T_n)$ marches steadily to zero. The whole of science, in this model, is a convergent series toward the truth.
 
-## The Architecture of Approximation
+Two stabilizing facts make this trustworthy rather than fragile. The first is a *Lipschitz* bound: applying a correction $c$ changes a theory's wrongness by at most $\|c\|$, the size of the correction itself. Small tweaks cannot cause wild swings in accuracy; the map from theory to wrongness is gentle. The second is a *tail bound*: the leftover wrongness after $n$ corrections is controlled by the sum of the remaining correction sizes,
+$$w(T_n) \le \sum_{i \ge 0} \|c_{i+n}\|,$$
+and this tail necessarily shrinks to nothing. You always know how much further you have to go by looking at how much work remains.
 
-The key insight comes from a branch of mathematics called perturbation theory, which studies how systems change when you nudge their parameters slightly. When physicists build a theory, they often start with a simple model and add corrections:
+## How fast? Exponentially, if you are lucky
 
-**Truth = Simple Model + First Correction + Second Correction + Third Correction + ...**
+Convergence is comforting; *speed* is what makes science practical. Here the model delivers a crisp, quantitative reward for well-behaved corrections. Suppose successive corrections shrink geometrically — each one at most a fixed fraction of the last, so $\|c_i\| \le M r^{i}$ for some ratio $0 \le r < 1$. Then the residual wrongness after $n$ terms obeys
+$$w(T_n) \le \frac{M\, r^{n}}{1 - r}.$$
+The error decays *exponentially*. This is the mathematical reason a handful of terms in a perturbation expansion can pin down a physical constant to a dozen decimal places: when the corrections behave, accuracy compounds. It is the difference between a theory that is asymptotically true in principle and one that is usefully true after an afternoon of calculation.
 
-Each correction makes the model closer to reality. But here's the crucial mathematical fact: the corrections form a *convergent series* only when the perturbation parameter—the amount by which reality differs from the simple model—is less than one.
+## The twist: when wrong beats right
 
-When this convergence condition holds, something remarkable happens. Each correction term contributes *exponentially less* than the previous one. The first correction might change the prediction by 10%, the second by 1%, the third by 0.1%, and so on. The total error from ignoring all higher-order corrections is bounded by a geometric series.
+All of this would be a tidy formalization of scientific optimism — theories improve, and we can say how fast. But the title promises something stranger, and here it is.
 
-This means there exists, for any desired level of accuracy, a specific *optimal truncation point*—a place where you should stop adding corrections and accept your "wrong" theory as good enough. Mathematics guarantees this point exists.
+Take two wrong theories. Call one $A$ — *our* theory — and the other $B$ — a rival, perhaps even one that is *closer* to the truth overall, a "better" theory by the honest global measure of wrongness. The claim is that there is always a phenomenon on which our worse theory $A$ gives the *exactly correct* answer while the better theory $B$ does not.
 
-## When More Correct Means More Wrong
+The only thing we need is that the two theories are wrong *in different directions*: the error vector of $A$ is not simply a rescaling of the error vector of $B$. When that mild condition holds, we can construct an explicit phenomenon $u$ — pointing along the part of $B$'s error that $A$'s error cannot explain — with the property that
+$$\mathrm{err}(A, u) = 0 < \mathrm{err}(B, u).$$
+On that experiment, the "wrong" theory is flawless and the "better" theory misses.
 
-But the story gets stranger. In certain circumstances, the simpler theory doesn't just approach the correct answer—it actually *beats* the more corrected version.
+The construction is a classical one in disguise: it is the Gram–Schmidt step, the same orthogonalization trick that underlies least squares and quantum bases. We subtract from $B$'s error exactly its shadow along $A$'s error, leaving a direction orthogonal to $A$'s mistake. Because a theory is *perfect* on any phenomenon orthogonal to its error, $A$ scores exactly zero there — while $B$, whose error genuinely points that way, does not. The geometry guarantees a blind spot in the rival that our theory happens to see through.
 
-This happens through a phenomenon called *overshoot*. When the first correction to a simple theory is too large—when it pushes the prediction past the true value—then the uncorrected theory, despite being "more wrong" in principle, gives the better answer. Mathematically, when the first correction overshoots and the second correction must compensate, the zeroth-order theory (the simplest one) can have smaller prediction error than the first-order theory (the one with the correction).
+## Why this is not a cheat
 
-This isn't an edge case. For any nonzero correction, there always exists a class of phenomena where the uncorrected theory outperforms. This is a proven mathematical fact: wrong theories *always* have a sweet spot.
+It is worth being honest about what this does and does not say. It does *not* say that wrong theories are secretly right, or that all theories are equally good. Globally, wrongness is wrongness: the theory with smaller $w(T)$ is closer to nature, full stop. What the meta-theorem says is that global accuracy and *local* accuracy come apart. No single wrong theory can win everywhere — that would make it the truth — but every wrong theory, provided it fails in its own idiosyncratic direction, owns a whole hyperplane of phenomena on which it is exactly right, and on some of those it beats any given rival.
 
-## The Sweet Spot Theorem
+This is why obsolete theories never fully die. Newtonian gravity is "wrong," yet for the phenomena orthogonal to its errors — everyday trajectories, orbital mechanics at human scales — it is not merely good but, within the model, exactly on target, and it will out-predict a clumsy relativistic approximation that happens to be miscalibrated for those regimes. Geocentric astronomy, ray optics, ideal gases, rigid bodies: each is a wrong theory that reigns supreme over its own class of phenomena. Engineers exploit this constantly, reaching for the "wrong" but locally perfect tool.
 
-Among any collection of phenomena, at least one will be well-predicted by a truncated theory—its error will be at most the average error across all phenomena. This pigeonhole-style result means that wrong theories always have a domain of excellence. You can't escape it.
+## The larger picture
 
-Think of it this way: if you have a hundred different physical quantities to predict, and you use a simple wrong theory for all of them, at least one prediction will be at least as good as the average. And since convergent perturbation series have exponentially decaying errors, the average itself is excellent.
+There is a pleasing unity to the three results. The convergence and rate theorems explain the *diachronic* success of science — why the long march of corrected theories closes in on the truth, and why it can do so fast. The meta-theorem explains the *synchronic* success — why, at any given moment, a whole ecosystem of admittedly imperfect theories can each be indispensable, each ruling a territory of phenomena where it is not just adequate but exact.
 
-This explains why Newtonian mechanics, despite being wrong about the nature of gravity, correctly predicts planetary orbits to extraordinary precision. Newton's theory is a zeroth-order approximation in a convergent perturbation series, and for planetary dynamics, it sits squarely in its sweet spot.
+It is worth dwelling on how tightly the pieces interlock. The single vector $T - \mathrm{truth}$, the *error* of a theory, carries all the information. Its length is the wrongness — the one number that decides which of two theories is globally better. Its direction carves theory-space into two parts: the line along which the theory is maximally wrong, and the vast perpendicular hyperplane on which it is exactly right. And the *relationship* between two error vectors — whether they are parallel or not — decides who wins a contest on a given phenomenon. Almost the entire story is written in the geometry of a single arrow.
 
-## The Convergent Wrongness
+This also clarifies a subtlety that trips up naive philosophy of science. "All models are wrong, but some are useful," the statistician George Box famously said. The geometry sharpens the aphorism into something quantitative: all models except the truth have a nonzero error vector, but each such model is not merely useful — it is *perfect* on an entire hyperplane of measurements, and it dominates any rival whose error strays into that hyperplane. Usefulness is not a vague virtue; it is a measurable region of theory-space that each wrong theory owns outright.
 
-Perhaps the most profound result is what we might call the *Wrongness Convergence Theorem*. Define the "wrongness" of a theory at each order as the contribution of that order's correction term. Then the total wrongness—the sum of all corrections—converges to the exact difference between the simple theory and truth.
+There is a practical moral, too. When you must choose between competing imperfect models, the right question is rarely "which is more accurate overall?" It is "which fails in a direction orthogonal to the phenomenon I care about?" A weather model that is globally cruder may nonetheless be exactly calibrated for the one quantity you need to forecast, precisely because its errors live elsewhere. The meta-theorem guarantees that such favorable mismatches always exist between any two differently-wrong theories — so the search for the locally best tool is never futile.
 
-This means the wrongness of a theory isn't arbitrary or chaotic. It has a definite, finite, computable structure. You can measure exactly how wrong a theory is, decompose that wrongness into ordered contributions, and watch them sum to the truth. The simple theory's error is not a bug—it's a feature with a precise mathematical architecture.
-
-## Theory Space as Geometry
-
-These ideas gain further power when we think of theories as points in a "theory space." Two theories are close if they make similar predictions; they are far if they disagree. This theory distance satisfies the triangle inequality: the distance from Theory A to Theory C is at most the distance from A to B plus B to C.
-
-This geometric structure means we can think of scientific progress as a walk through theory space. Each new theory is a step from the current position toward truth. But the triangle inequality guarantees that taking two steps can't be worse than the sum of each step's contribution. Theory space is well-behaved.
-
-And because theory space is continuous—nearby parameters give nearby predictions—there's always a smooth path from wrong to right. You never need to make a sudden, catastrophic leap to improve a theory. Small adjustments to the perturbation parameter produce small changes in predictions.
-
-## Implications for Science
-
-These mathematical results illuminate several puzzling features of scientific practice:
-
-**Why old theories survive.** Newtonian mechanics, Bohr's atomic model, the ideal gas law—these theories are wrong, but they persist because they sit in convergent perturbation series where the error is bounded and predictable. They're not just "good enough"—they're mathematically guaranteed to be effective.
-
-**Why simplicity often wins.** Occam's Razor is not just a philosophical preference. When corrections can overshoot, simpler theories genuinely outperform more complex ones. The mathematics shows that adding complexity can increase error, not reduce it.
-
-**Why different communities use different theories.** Astrophysicists use general relativity. Engineers use Newtonian mechanics. Chemists use quantum mechanics at various levels of approximation. Each community has found its sweet spot in the perturbation series—the truncation order where their theory performs best for their class of phenomena.
-
-**Why scientific revolutions are smooth.** Despite Thomas Kuhn's famous "paradigm shift" narrative, the mathematical structure of theory space shows that progress is typically continuous. Each new theory is a perturbative correction to the old one, connected by a smooth path through theory space.
-
-## The Conjecture
-
-One tantalizing open question remains. For perturbation series with alternating corrections—where each successive correction reverses the previous one's overshoot—we conjecture that the base theory is never more than twice as wrong as the optimal truncation. In other words, the simplest possible theory is always within a factor of two of the best possible approximation.
-
-If true, this would be extraordinary. It would mean that for a vast class of physical theories, the most naive, simplest model you could write down is already within shouting distance of the best you could ever do with that perturbation expansion. The "unreasonable effectiveness" of wrong theories would have a sharp quantitative bound.
-
-Computational experiments support this conjecture for random perturbation series with small coupling constants. But a proof remains elusive—and would represent a significant advance in our understanding of why science works at all.
-
-## The Deeper Message
-
-At its core, this mathematical framework tells us something profound about the relationship between truth and approximation. The wrongness of a theory is not noise to be eliminated—it is signal to be understood. Each order of correction tells us something specific about where and how the simple theory fails. And the convergence of the wrongness series tells us that these failures have structure, limit, and meaning.
-
-Science doesn't succeed despite using wrong theories. It succeeds *because* it uses wrong theories—theories that are wrong in precisely the right way, at precisely the right scale, for precisely the right phenomena. And that's not philosophy. It's a theorem.
-
----
-
-*The mathematical results described in this article have been formally verified using rigorous proof methods. The framework applies to any theory expressible as a convergent perturbation series, encompassing quantum electrodynamics, celestial mechanics, statistical mechanics, and many other branches of physics.*
+Eugene Wigner once marveled at "the unreasonable effectiveness of mathematics in the natural sciences." The story here is a companion puzzle with, perhaps, a more satisfying resolution. The effectiveness of wrong theories is not unreasonable at all once you draw the geometry: it is the necessary consequence of living in a space where error has direction, where corrections form convergent series, and where being wrong in your own way guarantees you a domain in which you are exactly, unbeatably right.
