@@ -339,20 +339,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Aleph-1 Surface: Geometry Between Dimensions"
   },
   {
-    "consumed_by_exp_id": "29aa9d96",
-    "description": "Building on cycle c67f6099 (Q=0.820), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conjecture that mathematical discovery undergoes phase transitions: long periods of incremental progress punctuated by sudden reorganizations (like percolation transitions). Formalize this using statistical mechanics: define an order parameter for 'mathematical coherence' and show it undergoes a sec",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_c67f6099_3d011daf",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "c67f6099",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T15:33:24.650821+00:00",
-    "title": "Deepening: Speculative: Mathematics as a Phase Transition"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle da4694df (Q=0.820), which proved 17 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conway's surreal numbers No form a proper class containing all real numbers, all ordinal numbers, and all infinitesimals. Every real number r has a surreal representation r = {r - 1 | r + 1}. Every ordinal alpha has a surreal representation alpha = {alpha |}. Every infinitesimal epsilon = {0 | 1, 1/",
     "domains": [
@@ -725,6 +711,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension). Show: the parallel postulate is NOT universal (non-Euclidean geometries exist). Conjecture: the Riemann Hypothesis IS universal (every sufficiently rich arithmetic system proves it or its negation). Explore: what would alien number theory look like? Would aliens discover primes?",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_1075",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T22:30:19.797682+00:00",
+    "title": "Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Langlands program connects Galois groups (shapes) to automorphic forms (colors). Think of it this way: a Galois group is the group of symmetries of a shape (like the rotational symmetries of a polygon). An automorphic form is a coloring that respects the shape's symmetries (like a coloring of the polygon's vertices that is invariant under rotation). The Langlands correspondence says: for every 'shape' (Galois representation), there is a matching 'color' (automorphic form) and vice versa. Conjecture: This correspondence is a bijection between irreducible representations of Gal(Q_bar/Q) and cuspidal automorphic representations of GL_n over Q. For n=1, this is class field theory (every abelian extension of Q corresponds to a Dirichlet character). For n=2, this is the modularity theorem (every elliptic curve over Q corresponds to a weight-2 cusp form). The toddler version: each shape has exactly one matching color, and each color has exactly one matching shape. Test: verify the correspondence for all degree-2 extensions of Q up to discriminant 1000. Verify that each quadratic field Q(sqrt(d)) corresponds to a Dirichlet character chi_d via the correspondence chi_d(p) = (d/p) (Legendre symbol). Impact: Langlands is just shape-color matching. Shapes and colors are two ways of seeing the same mathematical object.",
     "domains": [
       "Novelty",
@@ -999,7 +1000,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Category Theory as the DNA of Mathematics"
   },
   {
-    "consumed_by_exp_id": "0a9f9986",
+    "consumed_by_exp_id": "",
     "description": "Treat Lean 4's type checker as an 'environment' and formalized mathematics as 'organisms' adapting to it. Define fitness: f(M) = (number of theorems proved by M) / (lines of code in M). Prove: the fitness landscape has local optima corresponding to 'mathematical styles' (algebraic, analytic, combinatorial). Conjecture: Mathlib is a global fitness maximum for the set of theories expressible in CIC. Show: migrating a proof from one local optimum to another requires crossing a 'fitness valley' of temporarily decreased fitness.",
     "domains": [
       "Novelty",
@@ -1009,7 +1010,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-11T19:27:07.217097+00:00",
     "title": "Speculative: The Lean Theorem Prover as an Ecological Niche"
   },
@@ -1029,7 +1030,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rucker: Mind Tools \u2014 Mathematics as Cognitive Extension"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "de167401",
     "description": "Formalize Rucker's 'Lifebox' concept: a person's identity is determined by their information content, not their physical substrate. Define: two systems are 'person-equivalent' if they produce the same outputs for all inputs (functional equivalence). Prove: if the brain is a finite-state automaton, then person-equivalence is decidable. Show: if the brain uses quantum computation, person-equivalence is undecidable (by the no-cloning theorem). Conjecture: the Kolmogorov complexity of a person's identity is finite and bounded by ~10^15 bits.",
     "domains": [
       "Novelty",
@@ -1039,7 +1040,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T21:56:42.357787+00:00",
     "title": "Rucker: The Lifebox \u2014 Information-Theoretic Identity"
   },
@@ -6435,6 +6436,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T22:13:49.788424+00:00",
     "title": "That a type which fully quantifies over itself \u2014"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe file `PhaseTransitionCurieWeiss.lean` proves that the Curie\u2013Weiss mean-field\norder parameter `m = tanh(\u03b2 m)` undergoes a sharp, continuous (second-order)\nphase transition at the critical coupling `\u03b2_c = 1`:\n\n* no positive solution for `\u03b2 \u2264 1` (`curieWeiss_subcritical`),\n* a positive solution for `\u03b2 > 1` (`curieWeiss_supercritical`),\n* the sharp `iff` locating `\u03b2_c = 1` (`curieWeiss_phase_transition`),\n* uniqueness of the positive branch (`curieWeiss_unique_positive`),\n* boundedness `|m| < 1` and `\u00b1m` symmetry of solutions,\n* and that a positive external field destroys the sharp transition \u2014 the\n  field-driven equation `m = tanh(\u03b2 m + h)` has a positive solution\n  `m \u2208 (0, 1)` for *every* `\u03b2` when `h > 0`\n  (`curieWeiss_field_positive_solution`).\n\nNatural next steps:\n\n1. **Critical exponent.** Prove the quantitative onset\n   `m*(\u03b2) = sqrt(3(\u03b2\u22121)) + o(sqrt(\u03b2\u22121))` as `\u03b2 \u2192 1\u207a`, extracting the mean-field\n   exponent `1/2`. The two inequalities `tanh y < y` and `y \u2212 y\u00b3/3 < tanh y`\n   already bracket the branch; a matching cubic *upper* bound\n   `tanh y < y \u2212 y\u00b3/3 + 2y\u2075/15` would pin the exponent.\n\n2. **External field.** The *existence* half is now settled:\n   `curieWeiss_field_positive_solution` shows `m = tanh(\u03b2 m + h)` has a positive\n   solution for every `\u03b2` when `h > 0`, so the sharp `\u03b2_c = 1` dichotomy is\n   destroyed by any positive field.  Remaining: prove *uniqueness* of the\n   solution for `h \u2260 0` (single-valued branch for all `\u03b2`), recovering the\n   standard picture of a line of first-order transitions terminating at the\n   critical point `(\u03b2_c, h) = (1, 0)`.\n\n3. **Free energy / order parameter as minimizer.** Formalize the Curie\u2013Weiss\n   free energy `f(m) = m\u00b2/2 \u2212 (1/\u03b2) log cosh(\u03b2 m)` and prove its global\n   minimizer coincides with the stable solution of the self-consistency\n   equation, giving a variational characterization of the order parameter and a\n   genuine `analytic \u21a6 non-analytic` statement for the minimal free energy at\n   `\u03b2_c`.\n\n4. **Continuity and monotonicity of `\u03b2 \u21a6 m*(\u03b2)`.** Package the positive branch\n   as a function of `\u03b2` on `(1, \u221e)` and prove it is continuous, strictly\n   increasing, and tends to `1` as `\u03b2 \u2192 \u221e`.\n\n5. **Percolation analogue.** Port the same \"order parameter is `0` below /\n   positive above threshold\" template to bond percolation on a rooted tree,\n   where the survival probability of a branching process with mean offspring\n   `\u03bc` plays the role of the order parameter and `\u03bc_c = 1` is the critical point\n   (an exact analogue via generating-function fixed points).\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1076",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "29aa9d96",
+    "status": "available",
+    "timestamp": "2026-07-11T22:30:47.487400+00:00",
+    "title": "The file `PhaseTransitionCurieWeiss.lean` proves that the Curie\u2013Weiss mean-field"
   },
   {
     "consumed_by_exp_id": "",

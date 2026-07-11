@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a547c760",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThis development formalises the *microscopic weighting* of a finite Euclidean\nmetric space — the small-scale (`t → 0`) limit of Leinster's magnitude weighting\n— as a **distance-ma",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 33,
-      "timestamp": "2026-07-11T02:51:23",
-      "title": "Sign Characterization of Microscopic Weighting on Euclidean Subsets"
-    },
-    {
       "cycle_id": "08430233",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\n## What is proved here\n\n`TransfiniteComputation.lean` establishes a machine-checked **bridge** between\ncellular-automaton dynamics and ordinal / transfinite computation, via the t",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-11T22:13:56",
       "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
+    },
+    {
+      "cycle_id": "29aa9d96",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\nThe file `PhaseTransitionCurieWeiss.lean` proves that the Curie–Weiss mean-field\norder parameter `m = tanh(β m)` undergoes a sharp, continuous (second-order)\nphase transition at t",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 11,
+      "timestamp": "2026-07-11T22:30:55",
+      "title": "Deepening: Speculative: Mathematics as a Phase Transition"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e62d479c",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Knots That Think\n\nFive self-contained, falsifiable conjectures arising from this cycle's finding\nthat, among the trivial, trefoil, and figure-eight \"thought-knots\", only the\ntref",
-      "quality_score": 0.30277126000000004,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-04T09:19:00",
-      "title": "Knots That Think: Cognition as Braiding in Category Theory"
-    },
     {
       "cycle_id": "116dddb5",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-11T22:13:56",
       "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
+    },
+    {
+      "cycle_id": "29aa9d96",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\nThe file `PhaseTransitionCurieWeiss.lean` proves that the Curie–Weiss mean-field\norder parameter `m = tanh(β m)` undergoes a sharp, continuous (second-order)\nphase transition at t",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 11,
+      "timestamp": "2026-07-11T22:30:55",
+      "title": "Deepening: Speculative: Mathematics as a Phase Transition"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c06d8e8c",
-      "domain": "Applications",
-      "name": "uses",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "c06d8e8c",
-      "domain": "Applications",
-      "name": "exhibits",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "f6b0dfd4",
-      "domain": "Novelty",
-      "name": "flatten_nil",
-      "quality": 0.83
-    },
     {
       "cycle_id": "f6b0dfd4",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Physics",
       "name": "fib_carmichael_large",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "29aa9d96",
+      "domain": "Shared",
+      "name": "for",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "29aa9d96",
+      "domain": "Shared",
+      "name": "continuous_tanh",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "29aa9d96",
+      "domain": "Shared",
+      "name": "hasDerivAt_tanh",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-11T22:13:56",
+  "last_updated": "2026-07-11T22:30:55",
   "open_questions": [
-    {
-      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "5125e235",
-      "domain": "Computation",
-      "sorry_count": 4,
-      "timestamp": "2026-07-10T17:24:09"
-    },
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "90792fe8",
@@ -3016,6 +3009,13 @@
       "domain": "Physics",
       "sorry_count": 4,
       "timestamp": "2026-07-11T22:13:56"
+    },
+    {
+      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "29aa9d96",
+      "domain": "Shared",
+      "sorry_count": 4,
+      "timestamp": "2026-07-11T22:30:55"
     }
   ],
   "research_threads": {
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "bf529381",
-        "quality": 0.34015242857142863,
-        "theorems": 5,
-        "title": "Close Proofs: These conjectures continue the research cycle begun in"
-      },
-      {
         "cycle_id": "44e772b7",
         "quality": 0.69522,
         "theorems": 12,
@@ -3947,6 +3941,12 @@
         "quality": 0.82,
         "theorems": 32,
         "title": "That the zero-dimensional persistent homology of the prim"
+      },
+      {
+        "cycle_id": "29aa9d96",
+        "quality": 0.82,
+        "theorems": 11,
+        "title": "Deepening: Speculative: Mathematics as a Phase Transition"
       }
     ],
     "Tropical": [
