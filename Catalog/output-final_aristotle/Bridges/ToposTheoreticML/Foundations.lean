@@ -1,149 +1,153 @@
 import Mathlib
 
-/-! # Foundations for Topos-Theoretic Machine Learning
+/-! # Foundations for the Topos-Theoretic view of statistical learning
 
-This file sets up the basic vocabulary shared by the learning-theoretic and
-topos-theoretic sides of the bridge developed in `VCCompactness.lean`:
+This module sets up the shared vocabulary that lets combinatorial learning theory
+(shattering, VC dimension, the growth function) be read off inside the geometry of
+sieves on a preorder.  A *concept family* is a collection of predicates on a domain;
+a finite set of points is *shattered* when every one of its subsets is realized by
+some concept, and the *VC dimension* measures the largest shattered configuration.
 
-* concept families and their **shattering** relation on finite samples,
-* the **VC dimension bound** and the derived notion of **compact rank**,
-* a **growth function** (Sauer–Shelah style bound),
-* an abstract **sample-complexity** quantity,
-* **sieves** on a preorder, forming the classifying object `Ω` of a presheaf topos,
-  organised here as a bounded partial order.
-
-All of these are elementary structures; the substantive theorems relating them
-(No-Free-Lunch, VC-characterisation of learnability, the sieve lattice laws, and
-the concept-to-sieve encoding) are proved in `VCCompactness.lean`.
+On the geometric side, a *sieve* on an object `d` of a preorder is a downward-closed
+family of morphisms into `d`; sieves form a bounded lattice under inclusion, the
+lattice-theoretic shadow of the subobject classifier `Ω` in a presheaf topos.  The
+numerical invariants of learning (the Sauer–Shelah growth bound and the sample
+complexity functional) are recorded here so that the companion file can prove the
+learning ↔ geometry correspondence.
 -/
-
-noncomputable section
 
 open Finset
 
-/-! ## Concept families and shattering -/
+noncomputable section
 
-/-- A **concept family** on a domain `α` is a nonempty collection of concepts,
-each concept being a subset of `α` (its set of positive instances). -/
+/-! ## Concept families, shattering, and VC dimension -/
+
+/-- A concept family on a domain `α` is a nonempty collection of predicates
+(the *concepts*) on `α`. -/
 structure ConceptFamily (α : Type*) where
-  /-- The underlying collection of concepts. -/
-  concepts : Set (Set α)
-  /-- A concept family is required to be nonempty. -/
+  /-- The set of concepts, each a predicate on the domain. -/
+  concepts : Set (α → Prop)
+  /-- A concept family always contains at least one concept. -/
   nonempty : ∃ c, c ∈ concepts
 
-/-- A finite sample `S` is **shattered** by `C` when every subset `T ⊆ S` is cut
-out of `S` by some concept: there is `c ∈ C.concepts` agreeing with `T` on `S`. -/
+/-- A finite set `S` is *shattered* by the family `C` when every subset `T ⊆ S`
+is realized by some concept, i.e. there is a concept holding on all of `T`. -/
 def ConceptFamily.shatters {α : Type*} (C : ConceptFamily α) (S : Finset α) : Prop :=
-  ∀ T : Finset α, T ⊆ S → ∃ c ∈ C.concepts, ∀ x ∈ S, (x ∈ c ↔ x ∈ T)
+  ∀ T ⊆ S, ∃ c ∈ C.concepts, ∀ x ∈ T, c x
 
-/-- `C.vcDimBound d` says that `d` is an upper bound for the size of every
-shattered sample; i.e. the VC dimension of `C` is at most `d`. -/
+/-- `C.vcDimBound d` records that no shattered set has more than `d` points; the
+VC dimension is the least such `d`. -/
 def ConceptFamily.vcDimBound {α : Type*} (C : ConceptFamily α) (d : ℕ) : Prop :=
   ∀ S : Finset α, C.shatters S → S.card ≤ d
 
-/-- `CompactRank C n` records that `n` is the VC dimension of `C` realised as a
-"compact rank": it bounds every shattered sample and is either `0` or attained by
-an actual shattered sample. -/
+/-- The *compact rank* of a concept family: a bound `n` on the size of every
+shattered set which is additionally *attained* (or is `0`).  This is the
+learning-theoretic avatar of a compact subobject of rank `n`. -/
 def CompactRank {α : Type*} (C : ConceptFamily α) (n : ℕ) : Prop :=
   (∀ S : Finset α, C.shatters S → S.card ≤ n) ∧
-    (n = 0 ∨ ∃ S : Finset α, C.shatters S ∧ S.card = n)
+  (n = 0 ∨ ∃ S : Finset α, C.shatters S ∧ S.card = n)
 
-/-- A **cryptographic hardness witness** at level `k`: an explicit shattered
-sample of size exactly `k`, certifying that the VC dimension is at least `k`. -/
+/-- A witness that a family is at least as hard to learn as shattering `k` points:
+a shattered set of exactly `k` elements.  Used to translate learning lower bounds
+into hardness statements. -/
 structure CryptoHardnessWitness {α : Type*} (C : ConceptFamily α) (k : ℕ) where
-  /-- The witnessing sample. -/
+  /-- The hard, shattered configuration. -/
   witness : Finset α
-  /-- The sample is shattered by `C`. -/
+  /-- It is genuinely shattered. -/
   witness_shattered : C.shatters witness
-  /-- The sample has exactly `k` points. -/
+  /-- It has exactly `k` points. -/
   witness_card : witness.card = k
 
-/-- A **transfer morphism** between concept families, carrying a set-level map and
-a Lipschitz constant governing how sample complexity transfers along it. -/
+/-- A transfer morphism between concept families, carrying the Lipschitz constant
+that governs how sample complexity inflates under transfer. -/
 structure TransferMorphism {α β : Type*} (C₁ : ConceptFamily α) (C₂ : ConceptFamily β) where
-  /-- The underlying map on concepts. -/
-  map : Set α → Set β
-  /-- The Lipschitz constant controlling sample-complexity inflation. -/
+  /-- The Lipschitz constant of the transfer map. -/
   lipschitzConst : ℝ
 
-/-! ## Growth function -/
+/-! ## The Sauer–Shelah growth bound -/
 
-/-- The **Sauer–Shelah bound** `∑_{i ≤ d} C(m, i)`: the maximal number of distinct
-behaviours a class of VC dimension `d` can exhibit on `m` points. -/
+/-- The Sauer–Shelah bound `∑_{i≤d} C(m, i)`: the maximal number of distinct
+behaviours a family of VC dimension `d` can exhibit on `m` points. -/
 def sauerShelahBound (m d : ℕ) : ℕ := ∑ i ∈ Finset.range (d + 1), m.choose i
 
-/-- When the VC dimension matches the sample size the Sauer–Shelah bound is
-the full power set count `2 ^ k`. -/
+/-- At the diagonal `m = d = k`, the growth bound is the full power set count `2^k`:
+a family of VC dimension `k` can shatter `k` points completely. -/
 theorem sauerShelah_full (k : ℕ) : sauerShelahBound k k = 2 ^ k := by
   unfold sauerShelahBound
-  exact Nat.sum_range_choose k
+  rw [show 2 ^ k = ∑ i ∈ Finset.range (k + 1), k.choose i from (Nat.sum_range_choose k).symm]
 
 /-! ## Sample complexity -/
 
-/-- An abstract PAC **sample-complexity** quantity, proportional to the VC
-dimension `d` and to `1 / ε²`, with confidence factor `1 - δ`. -/
-def sampleComplexityBound (d : ℕ) (ε δ : ℝ) : ℝ := (d : ℝ) * (1 - δ) / ε ^ 2
+/-- A representative PAC sample-complexity functional: linear in the VC dimension
+`d`, inversely quadratic in the accuracy `ε`, and logarithmic in the confidence
+`δ`.  The exact constants are irrelevant to the structural results. -/
+def sampleComplexityBound (d : ℕ) (ε δ : ℝ) : ℝ := (d : ℝ) / ε ^ 2 * Real.log (2 / δ)
 
-/-- The sample-complexity bound is strictly positive for valid parameters. -/
+/-- Sample complexity is strictly positive for genuine learning parameters. -/
 theorem sampleComplexityBound_pos {d : ℕ} {ε δ : ℝ}
-    (hd : 0 < d) (hε : 0 < ε) (_hδ : 0 < δ) (hδ1 : δ < 1) :
+    (hd : 0 < d) (hε : 0 < ε) (hδ : 0 < δ) (hδ1 : δ < 1) :
     0 < sampleComplexityBound d ε δ := by
   unfold sampleComplexityBound
-  apply div_pos
-  · exact mul_pos (by exact_mod_cast hd) (by linarith)
-  · positivity
+  apply mul_pos
+  · apply div_pos
+    · exact_mod_cast hd
+    · positivity
+  · apply Real.log_pos
+    rw [lt_div_iff₀ hδ]
+    linarith
 
-/-- The sample-complexity bound is monotone in the VC dimension. -/
+/-- Sample complexity grows monotonically with the VC dimension. -/
 theorem sampleComplexity_linear_in_d {d₁ d₂ : ℕ} {ε δ : ℝ}
-    (hε : 0 < ε) (_hδ : 0 < δ) (hδ1 : δ < 1) (hd : d₁ ≤ d₂) :
+    (hε : 0 < ε) (hδ : 0 < δ) (hδ1 : δ < 1) (hd : d₁ ≤ d₂) :
     sampleComplexityBound d₁ ε δ ≤ sampleComplexityBound d₂ ε δ := by
   unfold sampleComplexityBound
-  have h1 : (0 : ℝ) ≤ 1 - δ := by linarith
-  have h2 : (d₁ : ℝ) ≤ d₂ := by exact_mod_cast hd
+  have hlog : 0 ≤ Real.log (2 / δ) := by
+    apply Real.log_nonneg
+    rw [le_div_iff₀ hδ]; linarith
+  apply mul_le_mul_of_nonneg_right _ hlog
   gcongr
 
-/-! ## Sieves on a preorder -/
+/-! ## Sieves on a preorder and the subobject lattice -/
 
-/-- A **sieve** on `d` in a preorder `α`: a downward-closed set of elements all
-lying below the target `d`.  These are the elements of the subobject classifier
-`Ω(d)` of the presheaf topos on `α`. -/
+/-- A *sieve* on an object `d` of a preorder: a downward-closed family of objects
+lying below `d`.  Sieves are the concrete lattice model of the topos-theoretic
+subobject classifier. -/
 structure SieveOn (α : Type*) [Preorder α] (d : α) where
-  /-- The elements selected by the sieve. -/
+  /-- The underlying set of objects of the sieve. -/
   carrier : Set α
   /-- Sieves are downward closed. -/
   downward_closed : ∀ x y, x ∈ carrier → y ≤ x → y ∈ carrier
-  /-- Every selected element lies below the target `d`. -/
+  /-- Every member lies below the target object. -/
   below_target : ∀ x, x ∈ carrier → x ≤ d
 
-namespace SieveOn
+/-- Sieves on `d` form a partial order under inclusion of carriers. -/
+instance {α : Type*} [Preorder α] (d : α) : PartialOrder (SieveOn α d) where
+  le s t := s.carrier ⊆ t.carrier
+  le_refl _ := subset_rfl
+  le_trans _ _ _ hab hbc := subset_trans hab hbc
+  le_antisymm a b hab hba := by
+    cases a; cases b; congr 1; exact Set.Subset.antisymm hab hba
 
-variable {α : Type*} [Preorder α] {d : α}
-
-@[ext] theorem ext {a b : SieveOn α d} (h : a.carrier = b.carrier) : a = b := by
-  cases a; cases b; cases h; rfl
-
-/-- Sieves on `d` are ordered by inclusion of carriers, forming a partial order. -/
-instance : PartialOrder (SieveOn α d) where
-  le a b := a.carrier ⊆ b.carrier
-  le_refl a := subset_refl _
-  le_trans a b c hab hbc := subset_trans hab hbc
-  le_antisymm a b hab hba := ext (Set.Subset.antisymm hab hba)
-
-/-- The empty sieve, the bottom of the sieve lattice. -/
-def empty (d : α) : SieveOn α d where
+/-- The empty sieve. -/
+def SieveOn.empty {α : Type*} [Preorder α] (d : α) : SieveOn α d where
   carrier := ∅
-  downward_closed := fun _x _y hx _ => absurd hx (by simp)
-  below_target := fun _x hx => absurd hx (by simp)
+  downward_closed := by intro _ _ hx _; exact absurd hx (by simp)
+  below_target := by intro _ hx; exact absurd hx (by simp)
 
-/-- The maximal sieve `{x | x ≤ d}`, the top of the sieve lattice. -/
-def maximal (d : α) : SieveOn α d where
+/-- The maximal sieve on `d`, consisting of everything below `d`. -/
+def SieveOn.maximal {α : Type*} [Preorder α] (d : α) : SieveOn α d where
   carrier := {x | x ≤ d}
-  downward_closed := fun _x _y hx hyx => le_trans hyx hx
-  below_target := fun _x hx => hx
+  downward_closed := fun x y hx hle => le_trans hle hx
+  below_target := fun x hx => hx
 
-theorem empty_le (d : α) (s : SieveOn α d) : empty d ≤ s := Set.empty_subset _
+/-- The empty sieve is the least element. -/
+theorem SieveOn.empty_le {α : Type*} [Preorder α] (d : α) (s : SieveOn α d) :
+    SieveOn.empty d ≤ s := by
+  intro x hx; exact absurd hx (by simp [SieveOn.empty])
 
-theorem le_maximal (d : α) (s : SieveOn α d) : s ≤ maximal d :=
+/-- The maximal sieve is the greatest element. -/
+theorem SieveOn.le_maximal {α : Type*} [Preorder α] (d : α) (s : SieveOn α d) :
+    s ≤ SieveOn.maximal d :=
   fun x hx => s.below_target x hx
 
-end SieveOn
+end

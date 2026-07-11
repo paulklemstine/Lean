@@ -1,51 +1,77 @@
-# Computational Evidence — Dream Logic Cycle v19c
+# Computational Evidence — Dream Logic
 
-All claims below were checked with `#eval` against the Lean definitions before
-formalisation, then turned into proved theorems.
+## 1. Four-valued truth tables (small-case verification)
 
-## 1. Knowledge join `kjoin` (truth/false/both/neither = T/F/B/N)
+Values: `tt`, `ff`, `both` (glut), `neither` (gap). Negation fixes the glut and gap:
 
-| ⊕ | N | T | F | B |
-|---|---|---|---|---|
-| **N** | N | T | F | B |
-| **T** | T | T | B | B |
-| **F** | F | B | F | B |
-| **B** | B | B | B | B |
+```
+neg:  tt↦ff   ff↦tt   both↦both   neither↦neither
+```
 
-Unit `N` (neither), absorbing `B` (both); disagreement `T⊕F = B` (a glut).
-Commutative, associative, idempotent — verified on all 16 pairs (→ `kjoin_comm`,
-`kjoin_assoc`, `kjoin_idem`).
+Conjunction = meet, disjunction = join of the truth order `ff < {both,neither} < tt`:
 
-## 2. Evidence accumulation `accumulate` (foldr ⊕ from N)
+```
+conj | tt   ff   both  neither        disj | tt  ff       both  neither
+-----+---------------------------      -----+------------------------------
+tt   | tt   ff   both  neither         tt   | tt  tt       tt    tt
+ff   | ff   ff   ff    ff              ff   | tt  ff       both  neither
+both | both ff   both  ff              both | tt  both     both  tt
+nei  | nei  ff   ff    neither         nei  | tt  neither  tt    neither
+```
 
-| evidence `e` | `accumulate e` | `dEntails e` |
-|---|---|---|
-| `[]` | N | **true** (default accept) |
-| `[F]` | F | **false** (retracted!) |
-| `[T]` | T | true |
-| `[T, F]` | B (glut) | true (no explosion) |
-| `[F, F]` | F | false |
-| `[T, T, F]` | B | true |
+Designated (accepted) values: `{tt, both}`.
 
-The `[]` → `[F]` transition is the witnessed **non-monotonic retraction**
-(`dEntails_nonmonotone`). The `[T,F]` glut row is `contradiction_coexists_no_explosion`.
+Contradiction column `conj a (neg a)`:
 
-## 3. Acceptance monotonicity (`designated` under ⊕)
+```
+a        : tt  ff  both  neither
+conj a ¬a : ff  ff  both  ff
+designated:  0   0    1     0
+```
 
-`designated`: N↦F, T↦T, F↦F, B↦T. Going *up* `kle` only ever crosses
-`F ↦ B` and `N ↦ T`, both *into* designation; never out. Checked on all
-`kle`-comparable pairs → `designated_kmono`. Hence the evidence layer is
-monotone and all non-monotonicity is the `N`-default firing.
+So `both` makes a contradiction designated (LNC fails) while `ff` stays non-designated
+(explosion fails). Excluded middle `disj a (neg a)`:
 
-## 4. Complement vs. negation
+```
+a        : tt  ff  both  neither
+disj a ¬a : tt  tt  both  neither
+designated:  1   1    1     0
+```
 
-For every `x` there is a lattice complement (`x ∧ c = F`, `x ∨ c = T`):
-N↔B, T↔F. But De Morgan `neg` fixes B and N, so `B ∧ neg B = B ∧ B = B ≠ F`:
-`neg` is **not** the complement (`neg_ne_complement`). This is the algebraic
-root of "contradictions coexist".
+`neither` breaks excluded middle (paracompleteness). These tables are reproduced exactly by
+the case-analysis proofs in `FourValued.lean`.
 
-## OEIS / sequences
+## 2. Closed-set model over ℝ (representative computations)
 
-No integer sequence is central to this cycle (the structures are the fixed
-4-element bilattice and finite truth tables), so an OEIS search is not
-applicable. The evidence above is exhaustive over the finite domain.
+Take `A = [0,1]`, negation `pneg A = closure(Aᶜ) = (-∞,0] ∪ [1,∞)`.
+
+- `A ∩ pneg A = {0,1}` — nonempty, so a contradiction coexists (boundary points).
+- `A ∪ pneg A = ℝ` — excluded middle survives.
+- These equal `frontier A = {0,1}`, matching the general "gluts are frontiers" identity.
+
+Union-closure test: `⋃ₙ [1/(n+1), 1]`:
+
+```
+n : 0 → [1,1]         partial union up to n
+    1 → [1/2,1]
+    2 → [1/3,1]
+    ...
+limit                 (0,1]   — NOT closed (0 is a limit point, absent)
+```
+
+So arbitrary unions of closed sets need not be closed; this is the structural counterexample
+formalized in `closed_not_iUnion_closed`.
+
+## 3. Counterexample hunt
+
+- Searched for a designated value making explosion hold: none — `ff` and `neither` remain
+  non-designated regardless of the contradiction, so explosion has no witness. Confirmed by
+  the exhaustive four-case tables above.
+- Searched for a closed region with empty frontier but nonempty proper interior on ℝ: none
+  in a connected space other than `∅` and `ℝ`; consistent with "gluts = frontiers".
+
+## Note
+
+The evidence is intentionally brief: the claims are finite/exact and are discharged by exact
+case analysis and explicit topological witnesses in the accompanying proofs, so no
+large-scale numerical search is needed.

@@ -256,6 +256,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 4d0c820d (Q=0.820), which proved 26 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize transreal arithmetic (Anderson's system: R \u222a {Phi, +inf, -inf} with Phi = 0/0). Prove the ring axioms fail but a wheel structure emerges. Determine which theorems of real analysis survive transreal extension and which collapse.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_4d0c820d_2a7be6c5",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "4d0c820d",
+    "status": "available",
+    "timestamp": "2026-07-11T04:13:20.698129+00:00",
+    "title": "Deepening: Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 7ca0f553 (Q=0.820), which proved 61 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Infinite chess is chess on an infinite board. It is known that there are positions where White can force checkmate but only in omega (the first infinite ordinal) moves. Conjecture: There exists a position on the infinite chess board where White can force checkmate in exactly omega^omega moves, but n",
     "domains": [
       "Pythagorean"
@@ -725,6 +739,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
   },
   {
+    "consumed_by_exp_id": "493ee817",
+    "description": "Cycle 4d0c820d (Q=0.820) proved 26 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize transreal arithmetic (Anderson's system: R \u222a {Phi, +inf, -inf} with Phi = 0/0). Prove the ring axioms fail but a wheel structure emerges. Determine which theorems of real analysis survive tr",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_4d0c820d_be5a9838",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "4d0c820d",
+    "status": "in_progress",
+    "timestamp": "2026-07-11T04:13:20.774112+00:00",
+    "title": "Close Proofs: Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Cycle 7e60f6c2 (Q=0.830) proved 23 theorems in Bridges but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search frac",
     "domains": [
@@ -924,21 +952,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-08T16:01:43.810023+00:00",
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
-  },
-  {
-    "consumed_by_exp_id": "4d0c820d",
-    "description": "Formalize transreal arithmetic (Anderson's system: R \u222a {Phi, +inf, -inf} with Phi = 0/0). Prove the ring axioms fail but a wheel structure emerges. Determine which theorems of real analysis survive transreal extension and which collapse.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0947",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T21:57:34.355461+00:00",
-    "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
   },
   {
     "consumed_by_exp_id": "",
@@ -6791,6 +6804,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T03:40:46.550671+00:00",
     "title": "This project formalizes the mathematical core of **impossible figures** (Penrose"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Total Arithmetics Beyond \u00b1\u221e\n\nThis cycle formalized Anderson's transreal line `\u211d \u222a {+\u221e, \u2212\u221e, \u03a6}`, confirmed that\nits two operations form commutative monoids sharing the absorbing element `\u03a6`,\nand showed that it satisfies **neither** the ring axioms **nor** the wheel\naxioms. Those findings suggest the following bold, testable conjectures.\n\n## 1. The impossibility of a distributive total division ring on \u211d \u222a {\u221e, \u03a6}\n\n**Conjecture.** Any structure that (i) contains `\u211d` as a sub-semiring, (ii) makes\ndivision total by adjoining finitely many \"infinite/undefined\" symbols, and\n(iii) retains both left and right distributivity, must identify `1` with `0`\n(hence collapse to a point).\n\nThe key insight is that once `0` acquires a two-sided partner `\u221e` with `0\u00b7\u221e`\nforced away from `0`, the correction term needed to save distributivity itself\ngets absorbed by the error element, so distributivity can only survive if `0`\nannihilates everything \u2014 which forces `1 = 0`.\n\nWhy now? We now have an explicit, fully specified total arithmetic in which every\ndistributivity failure is pinned to a single mechanism (`0\u00b7\u221e` poisoning), making\nthe obstruction concrete enough to attack in general rather than case by case.\n\n## 2. Wheel-ness is controlled by the number of signs at infinity\n\n**Conjecture.** The projective completion of `\u211d` with `k` distinguishable\ninfinite elements is a wheel if and only if `k \u2264 1`; for `k \u2265 2` at least one\nwheel axiom (the reciprocal involution or modified distributivity) necessarily\nfails.\n\nThe key insight is that the wheel involution `//x = x` forces every infinite\nelement to be the reciprocal of `0`, but there is only one `0`, so two or more\ninfinities cannot all be its involutive image.\n\nWhy now? The transreal line is exactly the `k = 2` case and is shown here to\nbreak both candidate axioms, while the classical one-point projective line is the\n`k = 1` case and is a wheel \u2014 giving both endpoints of the conjectured threshold.\n\n## 3. A real-analysis transfer principle keyed to the singular set\n\n**Conjecture.** A first-order theorem of real analysis extends verbatim to\ntransreal-valued functions precisely when its statement never quantifies a limit,\nsum, or product across the singular set `{+\u221e, \u2212\u221e, \u03a6}`; theorems that do (e.g.\nthe intermediate value theorem stated over all of `TReal`) fail, and the failure\nis always witnessed on a neighbourhood of `\u03a6`.\n\nThe key insight is that `\u03a6` is a global absorbing fixed point with no order\nrelation to the reals, so any statement whose truth depends on comparing values\nbecomes vacuous or false exactly where `\u03a6` enters.\n\nWhy now? With the monoid structure and the collapse of trichotomy both pinned\ndown, one can begin to classify analytic statements by whether their quantifiers\ntouch the singular set, turning a vague slogan into a decidable syntactic test.\n\n## 4. Nullity as a universal \"error monad\" for partial algebra\n\n**Conjecture.** The transreal multiplicative monoid is the free commutative monoid\non `\u211d\u00d7{\u00b1}` together with a freely adjoined absorbing element, quotient by the two\nrelations `0\u00b7(\u00b1\u221e) = \u03a6` and `\u03a6` absorbing; equivalently, `\u03a6` realizes the\n`Maybe`/error monad at the level of monoids, and every total extension of a\npartial commutative operation factors through it.\n\nThe key insight is that `\u03a6` behaves exactly like a propagating exception: once\nproduced it is preserved by every operation, which is precisely the universal\nproperty of adjoining a bottom/error element to a partial algebra.\n\nWhy now? The verified absorption laws (`\u03a6 + x = \u03a6`, `\u03a6 \u00b7 x = \u03a6`, `\u03a6/y = \u03a6`)\ngive the three defining equations of such a universal construction, so the\nfree/universal characterization is finally within reach.\n\n## 5. A quantitative \"defect\" invariant for non-distributive totalizations\n\n**Conjecture.** For a total commutative-monoid pair `(M, +, \u00b7)` extending a ring\n`R`, the set `D = { z : 0\u00b7z \u2260 0 }` is an ideal-like \"defect locus\", and both\ndistributivity and the wheel law hold off `D` and fail on all of `D`; the size\nand structure of `D` is a complete invariant of how far the totalization is from\nbeing a ring.\n\nThe key insight is that in the transreals distributivity fails *exactly* when the\nright factor lies in `D = {+\u221e, \u2212\u221e}` (where `0\u00b7z = \u03a6`), so the defect locus, not\nthe individual axioms, is the right object of study.\n\nWhy now? The transreals give a first worked example where `D` is small, explicit,\nand provably the precise obstruction, providing a template for defining and\ncomputing the invariant in richer totalizations (interval arithmetic, IEEE\nfloating point with NaN, wheels of fractions).\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0987",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4d0c820d",
+    "status": "available",
+    "timestamp": "2026-07-11T04:13:15.516267+00:00",
+    "title": "This cycle formalized Anderson's transreal line `\u211d \u222a {+\u221e, \u2212\u221e, \u03a6}`, confirmed tha"
   },
   {
     "consumed_by_exp_id": "",

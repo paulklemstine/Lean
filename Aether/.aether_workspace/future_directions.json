@@ -28107,7 +28107,7 @@
       "depth_estimate": 3,
       "description": "Prove that Novikov's self-consistency principle follows from the Banach fixed-point theorem applied to the causal structure of spacetime. Formalize time-travel paradoxes as boundary value problems and prove existence of self-consistent solutions for polynomial causal maps.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Novelty",
         "Physics"
@@ -28312,7 +28312,7 @@
       "depth_estimate": 3,
       "description": "Prove a meta-theorem: for any approximately correct physical theory T, there exists a class of phenomena for which T makes predictions closer to truth than any known correct theory. Formalize using perturbation theory on theory-space and prove that the wrongness of T forms a convergent series toward truth.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Novelty",
         "Physics"
@@ -28558,7 +28558,7 @@
       "depth_estimate": 3,
       "description": "Systematically negate the ZFC axioms and study the resulting anti-mathematics. Prove that not-Extensionality yields a theory of indistinguishable sets, not-Infinity yields hereditarily finite set theory, and not-Choice yields universes where every set is measurable. Determine which anti-axioms are consistent with each other.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Novelty",
         "Logic"
@@ -28722,7 +28722,7 @@
       "depth_estimate": 3,
       "description": "Formalize a Landauer-like principle for mathematical reasoning: every bit of information destroyed in a proof step costs at least kT ln 2 of entropy. Prove that there exist theorems whose shortest proof requires exponentially more erasure than creation, and connect to Kolmogorov complexity and the thermodynamic cost of verification.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Novelty",
         "Computation"
@@ -28845,7 +28845,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 01e9ab7a (Q=0.830), which proved 35 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the mathematical conditions under which impossible figures (Penrose triangles, Escher stairs) can exist as manifolds. Prove that every non-orientable 3-manifold contains an embedded Penrose triangle as a smoothly immersed surface. Classify which impossible figures are realizable as develop",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty"
       ],
@@ -29710,6 +29710,46 @@
       "thread_id": "",
       "timestamp": "2026-07-10T05:35:47.039582+00:00",
       "title": "Deepening: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 4d0c820d (Q=0.820), which proved 26 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize transreal arithmetic (Anderson's system: R ∪ {Phi, +inf, -inf} with Phi = 0/0). Prove the ring axioms fail but a wheel structure emerges. Determine which theorems of real analysis survive transreal extension and which collapse.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Novelty"
+      ],
+      "github_issue": 0,
+      "id": "push_4d0c820d_2a7be6c5",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9199999999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "4d0c820d",
+      "source_path": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-11T04:13:20.698129+00:00",
+      "title": "Deepening: Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
     },
     {
       "ambition_level": "extension",
@@ -31230,6 +31270,46 @@
       "thread_id": "",
       "timestamp": "2026-07-10T07:49:49.968157+00:00",
       "title": "Close Proofs: The Zeta Function of a Graph: Number Theory on Networks"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 1,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "493ee817",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Cycle 4d0c820d (Q=0.820) proved 26 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize transreal arithmetic (Anderson's system: R ∪ {Phi, +inf, -inf} with Phi = 0/0). Prove the ring axioms fail but a wheel structure emerges. Determine which theorems of real analysis survive tr",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Novelty"
+      ],
+      "github_issue": 0,
+      "id": "sorry_fill_4d0c820d_be5a9838",
+      "last_attempt_time": "2026-07-11T04:13:31.989097+00:00",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.85,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "4d0c820d",
+      "source_path": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity",
+      "status": "in_progress",
+      "thread_id": "",
+      "timestamp": "2026-07-11T04:13:20.774112+00:00",
+      "title": "Close Proofs: Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
     },
     {
       "ambition_level": "extension",
