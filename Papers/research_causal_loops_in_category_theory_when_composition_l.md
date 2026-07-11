@@ -1,444 +1,427 @@
-# Periodicity of Tensor Powers in Monoidal Categories: A Witness-Based Theory of Loop-Tolerant Composition
+# Causal Loops in Category Theory: A Concrete Non-Strict Monoidal Category of Parenthesizations
 
 ## Abstract
 
-We develop a self-contained theory of *periodicity* for objects of an arbitrary
-monoidal category, built entirely on a concrete, witness-based notion of
-isomorphism between iterated tensor powers. For an object `X` of a monoidal
-category `C`, we define the right-associated `n`-fold tensor power `Xⁿ` and study
-when the sequence `(Xⁿ)ₙ` repeats up to isomorphism. Our central structural
-result is **shift invariance**: a periodicity witness `Xᵐ ≅ Xᵐ⁺ᵈ` located at one
-height `m` transports along the tower to every greater height `m + k`, by left
-whiskering with `X`. From this we derive a clean detection principle — any
-isomorphism `Xᵐ ≅ Xⁿ` with `m < n` certifies periodicity with period `n − m` — and
-we establish the existence, positivity, and minimality of the least period of any
-periodic object. A foundational tool, the **additive comparison isomorphism**
-`Xᵐ⁺ⁿ ≅ Xᵐ ⊗ Xⁿ`, lifts the schoolbook exponent law to the categorical setting
-and is proved by induction using the associator and unitors. We frame the whole
-development through the lens of *loop-tolerant composition*: a monoidal category is
-precisely a setting in which re-association of products fails on the nose but holds
-up to coherent isomorphism, and periodicity is the phenomenon of the
-self-composition tower folding back on itself. The theory models, in a fully
-rigorous algebraic form, the self-consistency of finite-state causal loops and the
-finite-order "charges" of categorical symmetry. Every result is established
-constructively and without gaps.
+We construct an explicit, fully elementary monoidal category whose tensor product fails to
+be associative *on the nose* yet is repaired by a canonical invertible associator, and in
+which all of the Mac Lane coherence data holds automatically. The objects of the category
+are binary trees with labelled leaves — formal parenthesizations of words — and a morphism
+between two trees is a proof that they have the same underlying leaf-word. This category is
+**thin** (at most one morphism between any two objects) and a **groupoid** (every morphism
+invertible). We prove three things. First, a general structural principle: *any* choice of
+tensor data on a thin category automatically satisfies the pentagon, the triangle, and all
+naturality axioms, so that coherence is free. Second, the concrete realization: on the
+parenthesization trees the two bracketings $(a\otimes b)\otimes c$ and $a\otimes(b\otimes c)$
+are genuinely distinct objects joined by a unique associator isomorphism, so the category is
+a non-strict monoidal category. Third, a strictification result: every bracketing is
+canonically isomorphic to a right-nested normal form, two bracketings are isomorphic iff
+they share an underlying word, and the whole category is equivalent to the discrete category
+of words. This gives a hands-on, end-to-end model of the slogan *a coherent
+loop-tolerant algebraic structure is equivalent to a strict one*, and a miniature laboratory
+for the phenomenon of associativity holding only up to coherent isomorphism.
 
-**Keywords.** Monoidal category, tensor power, periodicity, associator, unitor,
-whiskering, minimal period, coherence, fusion rules, causal loop.
-
-**MSC 2020.** 18M05 (Monoidal categories), 18A05 (Categories: foundations),
-18M15 (Tannakian and fusion categories), 18D99.
+**Keywords.** monoidal category, associator, pentagon identity, coherence, thin category,
+strictification, parenthesization, Catalan structures, binary trees.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Motivation: controlled failure of strictness
+### 1.1 Motivation
 
-A recurring theme across modern mathematics and theoretical physics is that the
-correct notion of "sameness" is not equality but *isomorphism*, and that
-fundamental algebraic laws — associativity, unitality — hold not literally but up
-to canonical, coherent isomorphism. A **monoidal category** is the universal
-arena for this phenomenon. It is equipped with a tensor product `⊗`, a unit object
-`𝟙`, and structure isomorphisms — the associator `α` and the left/right unitors
-`λ`, `ρ` — encoding the controlled failure of `(A ⊗ B) ⊗ C` to be *equal* to
-`A ⊗ (B ⊗ C)`, replaced by a coherent isomorphism between them.
+The associative law $(a\cdot b)\cdot c = a\cdot(b\cdot c)$ is usually treated as an equation:
+two ways of grouping a product yield the same result. In higher category theory one takes a
+more refined stance. The two groupings are regarded as *distinct objects*, and the
+associative law is upgraded from an *equation* to a *specified invertible transformation* —
+the **associator** — witnessing that the two groupings are canonically isomorphic. This is
+the defining move of a **monoidal category**: a category equipped with a tensor product that
+is associative and unital only *up to coherent natural isomorphism*.
 
-This paper takes that controlled failure seriously and studies its dynamical
-consequence. Fix an object `X` and consider the tower of its iterated tensor
-powers
-```
-𝟙 = X⁰,  X¹,  X²,  X³,  ...
-```
-In a setting where sameness is isomorphism, this tower can do something a sequence
-of distinct numbers never could: it can **loop back on itself**, with a later
-power becoming isomorphic to an earlier one. We call this *periodicity*, and we
-give it a complete elementary theory.
+The price of this freedom is **coherence**. Once associativity is an isomorphism rather than
+an equation, one must ensure that all the different ways of re-bracketing a long product
+agree. Mac Lane's coherence theorem isolates two conditions — the **pentagon** and the
+**triangle** — from which all others follow, and guarantees that every formal diagram built
+from associators and unitors commutes.
 
-### 1.2 Why periodicity matters
+This paper isolates the phenomenon in its purest concrete form. We build a monoidal category
+directly out of parenthesizations, in which:
 
-Periodicity of tensor powers is not an abstract curiosity; it organizes several
-concrete situations.
+1. associativity **fails** as a literal equality of objects;
+2. the failure is **repaired** by a canonical, and in fact unique, associator; and
+3. all coherence is **automatic**, because the category is thin.
 
-- **Finite-order objects and categorified groups.** An object satisfying
-  `Xᵈ ≅ 𝟙` is an element of finite order in the categorified group of
-  invertible objects (the Picard groupoid). The smallest such `d` is its order.
-- **Fusion rules in quantum field theory.** In a fusion category modelling
-  anyonic excitations, tensor powers of a simple object decompose according to
-  fusion rules; periodic recurrence of (the isomorphism class of) `Xⁿ` encodes
-  selection rules and conserved topological charge.
-- **Finite monoidal categories and the pigeonhole principle.** When only finitely
-  many isomorphism classes exist, the infinite tower must repeat — periodicity is
-  forced. This is the categorical pigeonhole phenomenon.
-- **Self-consistent causal loops.** A finite-state process that evolves by
-  repeating a single operation cannot diverge; it must return to a previously
-  visited state and cycle with a definite period. Tensor-power periodicity is a
-  faithful algebraic model of this closed-timelike-curve self-consistency.
+We then show that the resulting structure, for all its apparent richness, **collapses**: it
+is categorically equivalent to the discrete (strict, loop-free) category of underlying words.
+This is a concrete, verifiable instance of Mac Lane's strictification theorem.
 
-### 1.3 Contributions
+### 1.2 The guiding metaphor
 
-We make the following contributions, all developed from first principles within an
-arbitrary monoidal category `C`:
+We think of a parenthesization as recording *how a composite computation is grouped*, and of
+the associator as recording *how composition loops back on itself* when the grouping is
+changed. The central conceptual claim is that when these loops are *coherent* — when the
+transformations recording re-association are rigid enough to be unique — the loop closes
+harmlessly: travelling out and back around a re-association cycle returns the identity. We
+make this precise below (Theorem 3.5) as the statement that a certain composite of associators
+around the pentagon equals the identity.
 
-1. A precise, *witness-based* formalization of periodicity: `HasPeriodAt`,
-   `HasPeriod`, `IsPeriodic`, the `PeriodSet`, and the least period `minPeriod`
-   (Section 3).
-2. The **additive comparison isomorphism** `Xᵐ⁺ⁿ ≅ Xᵐ ⊗ Xⁿ`, lifting the exponent
-   law to objects (Theorem 4.1).
-3. The **shift invariance theorem**: periodicity witnesses transport upward along
-   the tower (Theorem 5.1), with the corollary that loops occur arbitrarily high
-   (Corollary 5.2).
-4. A **detection principle**: any isomorphism `Xᵐ ≅ Xⁿ` with `m < n` implies
-   periodicity with period `n − m` (Theorem 5.3).
-5. The **least-period theory**: existence, characterization as a genuine period,
-   positivity, and minimality (Theorem 6.1).
+### 1.3 Contributions and organization
 
-We deliberately restrict attention to results provable cleanly from the concrete
-witness-based definition; braided/symmetric refinements, finite-skeleton
-consequences, full divisibility theory of the least period, and delooping
-equivalences are identified as future work (Section 8).
+- **Section 2** develops the abstract engine: thin categories and the principle that
+  coherence is free on them (Theorem 2.4).
+- **Section 3** constructs the parenthesization category, endows it with a monoidal
+  structure, and proves that it is non-strict with a unique associator (Theorems 3.2–3.5).
+- **Section 4** proves strictification: normal forms, the isomorphism criterion, the
+  flattening functor, and the equivalence to the discrete category of words
+  (Theorems 4.1–4.4).
+- **Section 5** gives algorithms and numerical illustrations.
+- **Sections 6–7** discuss applications and future directions.
 
 ---
 
-## 2. Preliminaries: monoidal categories
+## 2. Coherence from thinness
 
-We recall the structures we use, fixing notation. The reader familiar with
-monoidal categories may skip to Section 3.
+### 2.1 Thin categories
 
-A **category** `C` consists of objects and, between any two objects `A, B`, a set
-of morphisms `A ⟶ B`, with associative composition and identity morphisms. An
-**isomorphism** `A ≅ B` is a morphism with a two-sided inverse; we write `A ≅ B`
-both for the data of such an isomorphism and (loosely) for the proposition that
-one exists. Isomorphism is reflexive, symmetric, and transitive; we write `≪≫` for
-composition of isomorphisms and `(·).symm` for inversion.
+**Definition 2.1 (Thin category).** A category $\mathcal C$ is **thin** if for every pair of
+objects $X, Y$ the hom-set $\mathcal C(X,Y)$ has at most one element; equivalently, any two
+parallel morphisms $f, g\colon X\to Y$ are equal. A thin category is the same data as a
+preorder viewed as a category.
 
-A **monoidal category** is a category `C` equipped with:
+The defining property has an immediate and powerful consequence.
 
-- a **tensor product** bifunctor `⊗ : C × C → C`;
-- a **unit object** `𝟙`;
-- a natural **associator** isomorphism
-  `α_{A,B,C} : (A ⊗ B) ⊗ C ≅ A ⊗ (B ⊗ C)`;
-- natural **left and right unitors**
-  `λ_A : 𝟙 ⊗ A ≅ A` and `ρ_A : A ⊗ 𝟙 ≅ A`;
+**Proposition 2.2 (Every diagram commutes).** In a thin category, any two morphisms with the
+same source and target are equal. Consequently every diagram of morphisms commutes.
 
-subject to Mac Lane's pentagon and triangle coherence axioms, which guarantee that
-*all* formal diagrams built from `α`, `λ`, `ρ` commute. The only consequence of
-coherence we invoke explicitly is the existence and naturality of the structure
-isomorphisms themselves; we never need to manipulate the coherence diagrams
-directly.
+*Proof.* Immediate from Definition 2.1: two parallel morphisms are equal, and a diagram
+commutes iff certain parallel composites are equal. $\qquad\blacksquare$
 
-We use one further standard operation. Given a morphism or isomorphism
-`f : B ≅ B'` and a fixed object `A`, **left whiskering** produces an isomorphism
-`A ◁ f : A ⊗ B ≅ A ⊗ B'`. Whiskering preserves isomorphisms and is functorial; in
-particular `A ◁ (g ≪≫ f)` agrees with `(A ◁ g) ≪≫ (A ◁ f)`. We write the
-whiskered isomorphism abstractly as `whiskerLeftIso X e` for an isomorphism `e`.
+**Proposition 2.3 (Isomorphisms are unique).** In a thin category, between any two objects
+$X, Y$ there is at most one isomorphism; an isomorphism carries no information beyond its
+existence.
 
-Throughout, `C` is an arbitrary monoidal category; no braiding, symmetry,
-finiteness, or skeletality is assumed unless stated.
+*Proof.* Two isomorphisms $X\cong Y$ have equal underlying forward morphisms by thinness, and
+an isomorphism is determined by its forward morphism (its inverse is forced). $\qquad\blacksquare$
 
----
+### 2.2 The free-coherence principle
 
-## 3. Iterated tensor powers and the definition of periodicity
+Recall that a **monoidal category structure** on $\mathcal C$ consists of a tensor product
+bifunctor $\otimes$, a unit object $\mathbf 1$, and natural isomorphisms — the associator
+$\alpha_{X,Y,Z}\colon (X\otimes Y)\otimes Z\cong X\otimes(Y\otimes Z)$, the left unitor
+$\lambda_X\colon \mathbf 1\otimes X\cong X$, and the right unitor
+$\rho_X\colon X\otimes\mathbf 1\cong X$ — subject to the **pentagon** and **triangle** axioms
+and the naturality of $\alpha,\lambda,\rho$. A bare choice of such data *without* the axioms
+we call a **monoidal structure datum**.
 
-### 3.1 The tower of tensor powers
+**Theorem 2.4 (Coherence is free on a thin category).** Let $\mathcal C$ be a thin category
+equipped with any monoidal structure datum (a tensor product, a unit, and associator/unitor
+isomorphisms). Then the datum automatically satisfies the pentagon identity, the triangle
+identity, and every naturality condition; that is, $\mathcal C$ is a genuine monoidal
+category.
 
-**Definition 3.1 (tensor power).** For an object `X` of `C`, the right-associated
-`n`-fold tensor power `Xⁿ` (written `mpow X n`) is defined by recursion on `n`:
-```
-X⁰ = 𝟙,        Xⁿ⁺¹ = X ⊗ Xⁿ.
-```
+*Proof.* Each axiom asserts the equality of two morphisms sharing a common source and target.
+By Proposition 2.2 any such equality holds automatically. Concretely: the pentagon equates two
+morphisms $((W\otimes X)\otimes Y)\otimes Z \to W\otimes(X\otimes(Y\otimes Z))$; the triangle
+equates two morphisms $(X\otimes\mathbf 1)\otimes Y \to X\otimes Y$; each naturality square
+equates two morphisms with common endpoints. All hold by thinness. $\qquad\blacksquare$
 
-The base and step equations hold definitionally:
-- `mpow_zero`: `X⁰ = 𝟙`;
-- `mpow_succ`: `Xⁿ⁺¹ = X ⊗ Xⁿ`.
+Two axioms are worth stating explicitly, as they are the coherence conditions of interest.
 
-**Lemma 3.2 (first power).** `X¹ ≅ X`, witnessed by the right unitor
-`ρ_X : X ⊗ 𝟙 ≅ X` (recall `X¹ = X ⊗ X⁰ = X ⊗ 𝟙`). We call this isomorphism
-`mpowOneIso`.
+**Corollary 2.5 (Pentagon).** In any monoidal structure datum on a thin category, for all
+objects $W, X, Y, Z$,
+$$
+(\alpha_{W,X,Y}\otimes \mathrm{id}_Z)\;\circ\;\alpha_{W, X\otimes Y, Z}\;\circ\;(\mathrm{id}_W\otimes \alpha_{X,Y,Z})
+\;=\;
+\alpha_{W\otimes X, Y, Z}\;\circ\;\alpha_{W, X, Y\otimes Z}.
+$$
 
-**Lemma 3.3 (congruence).** Any equality of exponents `m = n` induces an
-isomorphism `Xᵐ ≅ Xⁿ`, namely the transport-of-identity isomorphism
-`eqToIso` along `m = n`. We call it `mpowCongr X h`. Although it is "merely" an
-identity transported across an index equality, it is the essential glue that lets
-us rewrite exponents inside isomorphism chains; it satisfies the expected
-functoriality (composing congruences along composed equalities).
+**Corollary 2.6 (Triangle).** In any monoidal structure datum on a thin category, for all
+objects $X, Y$,
+$$
+\alpha_{X,\mathbf 1,Y}\;\circ\;(\mathrm{id}_X\otimes \lambda_Y)\;=\;\rho_X\otimes \mathrm{id}_Y.
+$$
 
-### 3.2 Periodicity, witness-based
+Both follow from Theorem 2.4.
 
-The crux of the theory is to define periodicity *constructively*: not as an
-abstract property, but as the existence of an explicit isomorphism between two
-rungs of the tower.
+**Theorem 2.7 (The causal loop closes to the identity).** Fix objects $W, X, Y, Z$ in a thin
+monoidal category. Travel from $((W\otimes X)\otimes Y)\otimes Z$ to
+$W\otimes(X\otimes(Y\otimes Z))$ along the long (three-step) side of the pentagon, then return
+to the start along the inverse of the short (two-step) side. The resulting round trip is the
+identity:
+$$
+\Big[(\alpha_{W,X,Y}\otimes\mathrm{id}_Z)\circ\alpha_{W,X\otimes Y,Z}\circ(\mathrm{id}_W\otimes\alpha_{X,Y,Z})\Big]
+\circ\Big[\alpha_{W\otimes X,Y,Z}\circ\alpha_{W,X,Y\otimes Z}\Big]^{-1}
+=\mathrm{id}.
+$$
 
-**Definition 3.4 (periodicity witness at a height).** For natural numbers `m, d`,
-the object `X` **has period `d` starting at `m`**, written `HasPeriodAt X m d`, if
-there exists an isomorphism
-```
-Xᵐ ≅ Xᵐ⁺ᵈ.
-```
-Formally `HasPeriodAt X m d := Nonempty (Xᵐ ≅ Xᵐ⁺ᵈ)`.
+*Proof.* Both sides are endomorphisms of $((W\otimes X)\otimes Y)\otimes Z$; by thinness they
+are equal, and the identity is such an endomorphism. (Equivalently, apply the pentagon,
+Corollary 2.5, and cancel.) $\qquad\blacksquare$
 
-**Definition 3.5 (period).** `X` **has period `d`**, written `HasPeriod X d`, if
-`d > 0` and `HasPeriodAt X m d` holds for some `m`:
-```
-HasPeriod X d  :=  0 < d  ∧  ∃ m, HasPeriodAt X m d.
-```
-
-**Definition 3.6 (periodic object).** `X` **is periodic**, written `IsPeriodic X`,
-if it has some positive period: `IsPeriodic X := ∃ d, HasPeriod X d`.
-
-**Definition 3.7 (period set).** The **period set** of `X` is
-`PeriodSet X := { d | HasPeriod X d } ⊆ ℕ`.
-
-We chose the witness-based definition (an actual isomorphism, recorded as a
-`Nonempty` of an iso type) rather than a bare existential over isomorphism
-classes, because it makes the structural operations — whiskering, transitivity,
-re-indexing — directly available in proofs while remaining equivalent to the
-class-level statement.
+This is the abstract form of the mission's slogan: *when composition loops back, it loops back
+to where it started.*
 
 ---
 
-## 4. The additive comparison isomorphism
+## 3. The parenthesization category
 
-Before studying loops we record the algebraic backbone of the theory: tensor
-powers obey the exponent addition law, up to canonical isomorphism.
+### 3.1 Objects, morphisms, and thinness
 
-**Theorem 4.1 (additive comparison).** For every object `X` and all `m, n ∈ ℕ`,
-```
-Xᵐ⁺ⁿ ≅ Xᵐ ⊗ Xⁿ.
-```
-We denote this isomorphism `mpow_add_iso X m n`.
+Fix a set $\alpha$ of leaf labels.
 
-*Proof sketch.* Induct on `m` with `n` fixed.
+**Definition 3.1 (Parenthesization trees).** The set $\mathrm{PTree}(\alpha)$ of
+**parenthesization trees** over $\alpha$ is generated inductively by:
+- an empty tree $\mathrm{nil}$;
+- a leaf $\mathrm{leaf}(a)$ for each label $a\in\alpha$;
+- a node $\mathrm{node}(s,t)$ for any two trees $s, t$.
 
-- **Base `m = 0`.** We need `X⁰⁺ⁿ ≅ X⁰ ⊗ Xⁿ`, i.e. `Xⁿ ≅ 𝟙 ⊗ Xⁿ`. Rewrite the
-  exponent `0 + n = n` via `mpowCongr` (Lemma 3.3), then apply the inverse left
-  unitor `(λ_{Xⁿ})⁻¹ : Xⁿ ≅ 𝟙 ⊗ Xⁿ`. Composing gives the claim.
-- **Step `m ↦ m+1`.** Assume the isomorphism `iso : Xᵐ⁺ⁿ ≅ Xᵐ ⊗ Xⁿ`. We must
-  produce `X⁽ᵐ⁺¹⁾⁺ⁿ ≅ Xᵐ⁺¹ ⊗ Xⁿ`. First rewrite `(m+1) + n = (m + n) + 1` via
-  `mpowCongr`, so that `X⁽ᵐ⁺¹⁾⁺ⁿ ≅ X ⊗ Xᵐ⁺ⁿ` (by `mpow_succ`). Left-whisker the
-  inductive isomorphism by `X` to get `X ⊗ Xᵐ⁺ⁿ ≅ X ⊗ (Xᵐ ⊗ Xⁿ)`. Finally apply
-  the inverse associator `(α_{X, Xᵐ, Xⁿ})⁻¹ : X ⊗ (Xᵐ ⊗ Xⁿ) ≅ (X ⊗ Xᵐ) ⊗ Xⁿ`,
-  and note `(X ⊗ Xᵐ) ⊗ Xⁿ = Xᵐ⁺¹ ⊗ Xⁿ` by `mpow_succ`. Composing the three
-  isomorphisms yields the result. ∎
+We read $\mathrm{node}(s,t)$ as the formal bracketed product $(s\cdot t)$. The **flattening**
+map $\mathrm{flatten}\colon \mathrm{PTree}(\alpha)\to \mathrm{List}(\alpha)$ forgets the
+bracketing:
+$$
+\mathrm{flatten}(\mathrm{nil})=[\,],\qquad
+\mathrm{flatten}(\mathrm{leaf}(a))=[a],\qquad
+\mathrm{flatten}(\mathrm{node}(s,t))=\mathrm{flatten}(s)\mathbin{+\!\!+}\mathrm{flatten}(t),
+$$
+where $+\!\!+$ denotes list concatenation.
 
-Theorem 4.1 is the categorical lift of `xᵐ⁺ⁿ = xᵐ · xⁿ`. Its essential role is
-conceptual: it certifies that the tower of powers is a genuine *exponential*
-object in `C`, and it is the natural source of periodicity witnesses (any
-isomorphism `Xᵈ ≅ 𝟙` immediately yields `Xᵐ⁺ᵈ ≅ Xᵐ ⊗ Xᵈ ≅ Xᵐ ⊗ 𝟙 ≅ Xᵐ`, a
-period-`d` witness at every `m`).
+**Definition 3.2 (The parenthesization category).** Let the objects be parenthesization trees.
+For trees $s, t$ define the hom-set
+$$
+\mathcal P(s,t)\;=\;\{\text{proofs of } \mathrm{flatten}(s)=\mathrm{flatten}(t)\},
+$$
+a set with at most one element. Composition is transitivity of equality; the identity on $s$
+is reflexivity of $\mathrm{flatten}(s)=\mathrm{flatten}(s)$. This defines a category, the
+**parenthesization category** $\mathcal P(\alpha)$.
 
----
+**Theorem 3.1 (Thin groupoid).** The category $\mathcal P(\alpha)$ is thin, and it is a
+groupoid: every morphism is invertible.
 
-## 5. Shift invariance and detection
+*Proof.* Thinness holds because a hom-set is a set of proofs of a single equation, hence a
+subsingleton. Given $f\colon s\to t$, i.e. a proof $\mathrm{flatten}(s)=\mathrm{flatten}(t)$,
+its symmetric proof gives $f^{-1}\colon t\to s$; the two composites are identities by
+thinness. $\qquad\blacksquare$
 
-### 5.1 The central theorem
+Because $\mathcal P(\alpha)$ is thin, Theorem 2.4 applies to *any* monoidal datum we place on
+it.
 
-The defining structural feature of tensor-power periodicity is that a loop, once
-present at any single height, propagates up the entire tower.
+### 3.2 The monoidal structure
 
-**Theorem 5.1 (shift invariance of witnesses).** If `HasPeriodAt X m d`, then for
-every `k ∈ ℕ`,
-```
-HasPeriodAt X (m + k) d.
-```
+**Definition 3.3 (Tensor datum).** Define on $\mathcal P(\alpha)$:
+- **tensor of objects:** $s\otimes t := \mathrm{node}(s,t)$;
+- **unit:** $\mathbf 1 := \mathrm{nil}$;
+- **whiskering:** for $f\colon s\to t$, the morphisms $X\otimes f$ and $f\otimes Y$ are the
+  evident equalities obtained by concatenating $\mathrm{flatten}(X)$ on the left, or
+  $\mathrm{flatten}(Y)$ on the right, of the equation underlying $f$;
+- **associator:** $\alpha_{a,b,c}\colon (a\otimes b)\otimes c \to a\otimes(b\otimes c)$, the
+  morphism witnessed by the associativity of list concatenation,
+  $(\mathrm{flatten}(a)+\!\!+\mathrm{flatten}(b))+\!\!+\mathrm{flatten}(c)
+   = \mathrm{flatten}(a)+\!\!+(\mathrm{flatten}(b)+\!\!+\mathrm{flatten}(c))$;
+- **unitors:** $\lambda_a\colon \mathbf 1\otimes a\to a$ and $\rho_a\colon a\otimes\mathbf 1\to a$,
+  from $[\,]+\!\!+\ell=\ell$ and $\ell+\!\!+[\,]=\ell$ respectively.
 
-*Proof sketch.* Induct on `k`.
+**Theorem 3.2 (Monoidal category).** With the datum of Definition 3.3, $\mathcal P(\alpha)$ is
+a monoidal category. In particular the pentagon, triangle and all naturality axioms hold.
 
-- **Base `k = 0`.** `HasPeriodAt X (m+0) d` is `HasPeriodAt X m d`, the
-  hypothesis.
-- **Step `k ↦ k+1`.** By the inductive hypothesis we have an isomorphism
-  `e : Xᵐ⁺ᵏ ≅ X⁽ᵐ⁺ᵏ⁾⁺ᵈ`. Left-whisker by `X`:
-  `X ◁ e : X ⊗ Xᵐ⁺ᵏ ≅ X ⊗ X⁽ᵐ⁺ᵏ⁾⁺ᵈ`, i.e. `Xᵐ⁺ᵏ⁺¹ ≅ X⁽ᵐ⁺ᵏ⁺ᵈ⁾⁺¹` by
-  `mpow_succ`. Re-index the right-hand exponent using `mpowCongr` and the
-  arithmetic identity `(m + k + d) + 1 = m + (k + 1) + d`, obtaining
-  `Xᵐ⁺⁽ᵏ⁺¹⁾ ≅ Xᵐ⁺⁽ᵏ⁺¹⁾⁺ᵈ`. This is precisely `HasPeriodAt X (m + (k+1)) d`. ∎
+*Proof.* $\mathcal P(\alpha)$ is thin (Theorem 3.1), so Theorem 2.4 supplies every axiom for
+free. $\qquad\blacksquare$
 
-The proof is the entire conceptual engine of the theory distilled to one move:
-*tensoring an isomorphism on the left by `X` preserves it and advances the height
-by one.* Iterating advances the height arbitrarily.
+### 3.3 Non-strictness and uniqueness of the associator
 
-### 5.2 Corollaries
+**Theorem 3.3 (Associativity fails on the nose).** For all trees $a, b, c$, the objects
+$(a\otimes b)\otimes c$ and $a\otimes(b\otimes c)$ are distinct.
 
-**Corollary 5.2 (loops occur arbitrarily high).** If `HasPeriod X d`, then for
-every `k ∈ ℕ` there exists `m ≥ k` with `HasPeriodAt X m d`.
+*Proof.* Suppose $\mathrm{node}(\mathrm{node}(a,b),c)=\mathrm{node}(a,\mathrm{node}(b,c))$.
+Comparing first components forces $\mathrm{node}(a,b)=a$, i.e. a tree equal to a proper subtree
+of itself. Comparing sizes, $\mathrm{size}(\mathrm{node}(a,b))=\mathrm{size}(a)$ while
+$\mathrm{size}(\mathrm{node}(a,b))=\mathrm{size}(a)+\mathrm{size}(b)+1>\mathrm{size}(a)$, a
+contradiction. $\qquad\blacksquare$
 
-*Proof sketch.* By definition `HasPeriod X d` provides some `m₀` with
-`HasPeriodAt X m₀ d`. Apply Theorem 5.1 with shift `k` to obtain
-`HasPeriodAt X (m₀ + k) d`, and note `m₀ + k ≥ k`. ∎
+**Corollary 3.4 (Non-strict).** $\mathcal P(\alpha)$ is not a strict monoidal category: there
+exist objects (e.g. $a=b=c=\mathrm{nil}$) for which the source and target of the associator
+differ, so the associator cannot be an identity.
 
-**Theorem 5.3 (detection principle).** If `m < n` and there exists an isomorphism
-`Xᵐ ≅ Xⁿ`, then `X` is periodic, with period `n − m`.
+Despite this, the associator is completely canonical.
 
-*Proof sketch.* Set `d = n − m`; since `m < n`, `d > 0`. Rewrite the target
-exponent: `n = m + (n − m)` (valid because `m < n`), so the given isomorphism
-`Xᵐ ≅ Xⁿ`, composed with the congruence `mpowCongr` along `n = m + d`, yields
-`Xᵐ ≅ Xᵐ⁺ᵈ`, i.e. `HasPeriodAt X m d`. Together with `d > 0` this gives
-`HasPeriod X d`, hence `IsPeriodic X`. ∎
+**Theorem 3.5 (Uniqueness of the associator).** For all $a, b, c$, the associator
+$\alpha_{a,b,c}$ is the *unique* isomorphism $(a\otimes b)\otimes c\cong a\otimes(b\otimes c)$.
 
-Theorem 5.3 is the practical gateway to the theory: to prove an object periodic one
-need only exhibit *any* coincidence between two distinct rungs, with no need to
-identify a canonical starting height — Theorem 5.1 guarantees the loop is robust.
+*Proof.* $\mathcal P(\alpha)$ is thin, so by Proposition 2.3 there is at most one isomorphism
+between any two objects; $\alpha_{a,b,c}$ is one, hence the only one. $\qquad\blacksquare$
 
----
-
-## 6. The least period
-
-A periodic object generally admits many periods; among them there is a smallest,
-which serves as the object's fundamental frequency.
-
-**Theorem 6.1 (least period).** Let `X` be periodic, witnessed by
-`h : IsPeriodic X`. Then there is a natural number `minPeriod h` with the
-following properties:
-
-1. **(Specification)** `minPeriod h` is a period of `X`: `HasPeriod X (minPeriod h)`.
-2. **(Minimality)** For every `d ∈ PeriodSet X`, `minPeriod h ≤ d`.
-3. **(Positivity)** `0 < minPeriod h`.
-
-*Proof sketch.* Periodicity `h` asserts the predicate `HasPeriod X (·)` holds for
-some natural number. Because the natural numbers are well-ordered, the least such
-number exists; we take `minPeriod h` to be it (concretely, via the constructive
-least-witness operator `Nat.find` applied to `h`).
-
-1. The least-witness operator returns a value satisfying the predicate, so
-   `HasPeriod X (minPeriod h)` holds (this is `Nat.find_spec`).
-2. The least-witness operator returns a *lower bound*: any `d` satisfying the
-   predicate — i.e. any `d ∈ PeriodSet X` — dominates it,
-   `minPeriod h ≤ d` (this is `Nat.find_min'`).
-3. By (1), `HasPeriod X (minPeriod h)` holds, and by Definition 3.5 every period
-   is positive; extracting the first component gives `0 < minPeriod h`. ∎
-
-The least period is the categorical analogue of the order of a group element or
-the base frequency of a vibrating string. For the unit object `𝟙` it equals `1`;
-for an object satisfying `Xᵈ ≅ 𝟙` with `d` minimal, it equals `d`.
-
-**Remark 6.2 (on divisibility).** A complete theory of the least period would show
-the period set is closed under taking positive differences and hence consists
-exactly of the positive multiples of `minPeriod h`, mirroring the theory of the
-order of a group element. Establishing this requires closure of periods under
-modular reduction (subtracting the least period from any larger one while
-preserving a valid witness), which in turn needs a *cancellation*-type input not
-assumed here. We therefore record only the minimality inequality (Theorem 6.1(2))
-in this development and flag the full divisibility theory as future work
-(Section 8).
+Together, Theorems 3.3–3.5 realize the target phenomenon: associativity fails literally, but
+its failure is repaired by a canonical and unique invertible $2$-cell, with coherence holding
+automatically.
 
 ---
 
-## 7. Worked interpretations and examples
+## 4. Strictification: collapsing the loops
 
-We illustrate the theory in concrete monoidal categories. (These are
-interpretations of the abstract theorems, not additional formal results.)
+We now show that all of this apparent structure is, up to equivalence, strict.
 
-**Example 7.1 (the unit object).** Take `X = 𝟙`. Then `Xⁿ ≅ 𝟙` for all `n`
-(by repeated unitor isomorphisms), so `X⁰ ≅ X¹`, and Theorem 5.3 gives periodicity
-with period `1`. By Theorem 6.1 the least period is `1` — the tightest possible
-rhythm.
+**Definition 4.1 (Normal form).** For a word $\ell\in\mathrm{List}(\alpha)$ define the
+**right-nested tree** $\mathrm{ofList}(\ell)$ by
+$$
+\mathrm{ofList}([\,])=\mathrm{nil},\qquad
+\mathrm{ofList}(a::\ell')=\mathrm{node}(\mathrm{leaf}(a),\,\mathrm{ofList}(\ell')).
+$$
+It satisfies $\mathrm{flatten}(\mathrm{ofList}(\ell))=\ell$, so $\mathrm{ofList}$ is a section
+of $\mathrm{flatten}$ and picks a canonical bracketing for each word.
 
-**Example 7.2 (a cyclic charge).** In the category of finite-dimensional
-representations of the cyclic group `ℤ/3`, let `X` be a nontrivial
-one-dimensional character. Then `X³` is the trivial representation `𝟙`, so
-`X³ ≅ X⁰`. Theorem 5.3 yields periodicity with period `3`; one checks `X¹, X²`
-are nontrivial, so by Theorem 6.1 the least period is exactly `3`. This is the
-algebraic skeleton of three-fold colour neutrality.
+**Theorem 4.1 (Normalization).** Every tree $s$ is canonically isomorphic to its normal form:
+there is an isomorphism $s\cong \mathrm{ofList}(\mathrm{flatten}(s))$. In particular, all
+bracketings of a fixed word are canonically — and, by thinness, uniquely — isomorphic. This is
+Mac Lane's coherence theorem in concrete form for this family.
 
-**Example 7.3 (forced periodicity in finite categories).** Suppose `C` has only
-finitely many isomorphism classes of objects, say `N` of them. The infinite
-sequence `X⁰, X¹, …, X^N` has `N + 1` terms drawn from `N` classes, so by the
-pigeonhole principle two are isomorphic: `Xⁱ ≅ Xʲ` for some `i < j ≤ N`. By
-Theorem 5.3, `X` is periodic with period `j − i ≤ N`. Thus *every* object of a
-finite monoidal category is periodic, with least period at most `N`. This is the
-categorical statement that a finite-state self-composition must loop.
+*Proof.* Since $\mathrm{flatten}(\mathrm{ofList}(\mathrm{flatten}(s)))=\mathrm{flatten}(s)$,
+the equation of words gives a morphism $s\to \mathrm{ofList}(\mathrm{flatten}(s))$, which is an
+isomorphism because $\mathcal P(\alpha)$ is a groupoid; uniqueness is Proposition 2.3.
+$\qquad\blacksquare$
 
-**Example 7.4 (causal-loop reading).** Interpret `Xⁿ` as the state of a closed,
-finite, deterministic process after `n` repetitions of a single fixed operation
-"tensor with `X`." Example 7.3 says the process cannot escape to infinitely many
-states; it must return to a previously visited state and thereafter cycle.
-Theorem 5.1 says the cycle, once entered, is permanent (the loop reappears at every
-later step), and Theorem 6.1 names the cycle length. This is a faithful algebraic
-model of a self-consistent closed timelike curve: the system loops back, and the
-least period is the length of the loop it is bound to.
+**Theorem 4.2 (Isomorphism criterion).** Two trees $s, t$ are isomorphic if and only if
+$\mathrm{flatten}(s)=\mathrm{flatten}(t)$. The isomorphism class of a bracketing remembers only
+its underlying word, not how it is parenthesized.
 
----
+*Proof.* An isomorphism $s\cong t$ yields a morphism $s\to t$, i.e. a proof
+$\mathrm{flatten}(s)=\mathrm{flatten}(t)$. Conversely such a proof is a morphism, and every
+morphism is invertible (Theorem 3.1). $\qquad\blacksquare$
 
-## 8. Discussion and future work
+**Definition 4.2 (Flattening functor).** Let $\mathrm{Disc}(\mathrm{List}(\alpha))$ denote the
+**discrete category** on words: objects are words, and the only morphisms are identities. Define
+the **flattening functor**
+$$
+F\colon \mathcal P(\alpha)\to \mathrm{Disc}(\mathrm{List}(\alpha)),\qquad
+F(s)=\mathrm{flatten}(s),
+$$
+sending each morphism (an equality of words) to the corresponding identity-type morphism in the
+discrete target.
 
-### 8.1 Design choices
+**Theorem 4.3 (The loop is contracted).** Under $F$ the associator becomes an identity-type
+morphism: $F(\alpha_{a,b,c})$ is the identity morphism on the common word
+$\mathrm{flatten}(a)+\!\!+\mathrm{flatten}(b)+\!\!+\mathrm{flatten}(c)$. Strictification unbends
+the associator loop.
 
-The witness-based definition (Definitions 3.4–3.6) is the load-bearing decision in
-this development. By packaging periodicity as the existence of an explicit
-isomorphism between rungs, we make the proofs of shift invariance and detection
-short and structural — they manipulate isomorphisms directly via whiskering,
-composition, and re-indexing congruences — while remaining logically equivalent to
-the isomorphism-class statement. The right-associated convention for `Xⁿ` makes
-the recursion `Xⁿ⁺¹ = X ⊗ Xⁿ` definitional, which is why left whiskering by `X` is
-exactly the "advance the height by one" operation that drives Theorems 4.1 and 5.1.
+*Proof.* In the discrete category every hom-set is a subsingleton (each is empty or a single
+identity), so any two parallel morphisms coincide; $F(\alpha_{a,b,c})$ and the relevant
+identity are parallel. $\qquad\blacksquare$
 
-### 8.2 Future directions
+**Theorem 4.4 (Strictification / equivalence to the strict skeleton).** The flattening functor
+is an equivalence of categories,
+$$
+\mathcal P(\alpha)\;\simeq\;\mathrm{Disc}(\mathrm{List}(\alpha)),
+$$
+with inverse $G=\mathrm{ofList}$ (the normal-form functor). The entire non-strict monoidal
+structure — an object for every bracketing, an associator loop connecting them — is, up to
+equivalence, the strict discrete category of words.
 
-The following are natural, falsifiable extensions of the present theory.
+*Proof.* Take $G\colon \mathrm{Disc}(\mathrm{List}(\alpha))\to\mathcal P(\alpha)$ to send a word
+$\ell$ to $\mathrm{ofList}(\ell)$. Then $F\circ G$ is the identity on objects, since
+$\mathrm{flatten}(\mathrm{ofList}(\ell))=\ell$, giving $F\circ G\cong \mathrm{id}$. In the other
+direction, Theorem 4.1 gives, naturally in $s$, an isomorphism
+$s\cong \mathrm{ofList}(\mathrm{flatten}(s))=(G\circ F)(s)$, so $\mathrm{id}\cong G\circ F$; the
+required naturality and triangle identities are automatic by thinness of the source and
+discreteness of the target. Hence $F$ and $G$ form an adjoint equivalence. $\qquad\blacksquare$
 
-- **Full divisibility theory of the least period.** Show `PeriodSet X` is closed
-  under positive differences, hence equals the set of positive multiples of
-  `minPeriod h`. This requires closure of witnesses under modular reduction, e.g.
-  a cancellation hypothesis on `⊗`.
-- **Braided and symmetric refinements.** In a braided monoidal category, tensor
-  powers carry a `ℤ/n` (or symmetric-group) action; relate periodicity to the
-  representation theory of these actions and to the braid-group symmetry of `Xⁿ`.
-- **Finite/fusion category consequences.** Make Example 7.3 a formal theorem
-  (every object of a finite or fusion category is periodic with least period
-  bounded by the number of simple objects), and connect the period to the order of
-  `[X]` in the Grothendieck ring.
-- **Delooping and Picard groupoids.** For invertible `X`, identify the least
-  period with the order of `[X]` in the Picard group and study the delooping of
-  the resulting `ℤ/d`-grading.
-- **Quantitative bounds for causal loops.** Following the broader "causal loops"
-  programme, prove that the minimal consistent period of a finite-state loop is
-  bounded by its state count, and characterize the spectrum of attainable periods
-  as the cycle lengths of the eventual permutation on the periodic core.
-
-### 8.3 Conclusion
-
-We have given a complete elementary theory of when the self-composition tower of
-an object in a monoidal category loops back on itself. From the single principle
-that left whiskering preserves isomorphisms and advances the height, we obtained
-the additive comparison law, the shift invariance of periodicity witnesses, a
-robust detection criterion, and a well-defined, positive, minimal period. The
-theory is small, self-contained, and faithful to the "controlled failure of
-strictness" that defines monoidal categories — and it offers a precise algebraic
-model for the self-consistent loops that arise in symmetry, fusion, and the
-physics of finite causal cycles.
+This is the payoff of coherence: a *coherent* loop-tolerant structure is equivalent to a strict,
+loop-free one, in exact analogy with Mac Lane's strictification theorem for general monoidal
+categories.
 
 ---
 
-## Appendix A. Glossary of constructions
+## 5. Algorithms and numerical illustrations
 
-- `mpow X n` (`Xⁿ`): right-associated `n`-fold tensor power, `X⁰ = 𝟙`,
-  `Xⁿ⁺¹ = X ⊗ Xⁿ`.
-- `mpowOneIso X`: isomorphism `X¹ ≅ X` via the right unitor `ρ_X`.
-- `mpowCongr X h`: isomorphism `Xᵐ ≅ Xⁿ` induced by an exponent equality `m = n`.
-- `mpow_add_iso X m n`: additive comparison isomorphism `Xᵐ⁺ⁿ ≅ Xᵐ ⊗ Xⁿ`.
-- `HasPeriodAt X m d`: existence of `Xᵐ ≅ Xᵐ⁺ᵈ`.
-- `HasPeriod X d`: `0 < d` and `HasPeriodAt X m d` for some `m`.
-- `IsPeriodic X`: `HasPeriod X d` for some `d`.
-- `PeriodSet X`: `{ d | HasPeriod X d }`.
-- `minPeriod h`: least period of a periodic object (well-ordering of ℕ).
+The constructions above are entirely computable. We highlight three algorithms; full
+implementations appear in the accompanying demonstration code.
 
-## Appendix B. Logical dependency map
+### 5.1 Counting bracketings
 
-```
-mpow, mpow_zero, mpow_succ        (Definition 3.1)
-   │
-   ├── mpowOneIso  (ρ_X)          (Lemma 3.2)
-   ├── mpowCongr   (eqToIso)      (Lemma 3.3)
-   │       │
-   │       └── mpow_add_iso       (Theorem 4.1)   [uses λ, α, whiskering]
-   │
-HasPeriodAt / HasPeriod / IsPeriodic / PeriodSet   (Definitions 3.4–3.7)
-   │
-   ├── HasPeriodAt.shift          (Theorem 5.1)   [uses whiskering, mpowCongr]
-   │       └── HasPeriod.exists_witness_ge   (Corollary 5.2)
-   │
-   ├── isPeriodic_of_iso_lt       (Theorem 5.3)   [uses mpowCongr]
-   │
-   └── minPeriod, minPeriod_spec, minPeriod_le, minPeriod_pos
-                                  (Theorem 6.1)   [uses well-ordering Nat.find]
-```
+The number of parenthesization trees with a fixed leaf-word of length $n$ is the $(n-1)$-th
+Catalan number $C_{n-1}=\frac{1}{n}\binom{2(n-1)}{n-1}$, satisfying
+$$
+C_0=1,\qquad C_{m}=\sum_{i=0}^{m-1}C_i\,C_{m-1-i}.
+$$
+For $n=1,2,3,4,5$ the counts are $1,1,2,5,14$. This measures the size of each isomorphism
+class in $\mathcal P(\alpha)$: by Theorem 4.2 all $C_{n-1}$ trees over a fixed word of length
+$n$ are mutually (uniquely) isomorphic — a single connected component of the groupoid whose
+"vertex count" is a Catalan number and whose "edge count" is one bridge per ordered pair.
+
+### 5.2 Normalization and re-association distance
+
+Given any two bracketings of the same word, Theorem 4.1 provides a canonical isomorphism, but
+one can also realize a re-association *combinatorially* as a sequence of local rotations
+$(a\cdot b)\cdot c \leftrightarrow a\cdot(b\cdot c)$. The minimal number of such rotations
+between two trees is the **rotation distance**, famous for its connection to hyperbolic
+geometry and the diameter of the associahedron. Our normalization routine transports any tree
+to right-nested form and thereby produces an explicit witnessing path; the associator of
+Definition 3.3 is precisely the "certificate" that such a path exists, stripped of the choice
+of path.
+
+### 5.3 The pentagon check
+
+For four factors there are five bracketings and, from
+$((w x) y) z$ to $w(x(y z))$, two natural associator routes. The pentagon check verifies that
+both routes send the underlying word to the same result (they do, trivially, since the word is
+fixed), illustrating Corollary 2.5 at the level of the flattened data.
+
+---
+
+## 6. Applications and connections
+
+- **Mac Lane coherence, made concrete.** The parenthesization category is a minimal, fully
+  explicit witness of the coherence theorem: it exhibits *the* generic re-association groupoid
+  on a word and shows it is contractible (all objects uniquely isomorphic).
+
+- **Strictification in practice.** Theorem 4.4 is a bare-hands instance of "every monoidal
+  category is monoidally equivalent to a strict one," which underlies why practitioners may
+  safely omit associators in computations.
+
+- **Higher categories and homotopy.** The move from equality to coherent isomorphism is the
+  entry point to bicategories, tricategories, and $\infty$-categories, and to the homotopy
+  hypothesis relating higher groupoids to spaces. The thin case treated here is the
+  $(1,1)$-truncated shadow of these towers.
+
+- **Quantum algebra and topological computation.** Associators satisfying the pentagon are the
+  algebraic core of braided and fusion categories, of quantum invariants of knots and
+  $3$-manifolds, and of anyonic (topological) quantum computation, where coherence of the
+  associator is what makes the computation well-defined.
+
+---
+
+## 7. Discussion and future directions
+
+The core lesson is a principle: **rigidity guarantees coherence.** When the transformations
+recording re-association are unique — as they are in any thin category — the pentagon,
+triangle and naturality laws hold automatically, and the non-strict structure is equivalent
+to a strict one. The parenthesization category makes each half of this story concrete and
+checkable: associativity genuinely fails as an equation of objects, yet the repair is unique
+and coherence is free.
+
+Several extensions are natural:
+
+1. **Monoidal strictification.** Upgrade the equivalence of Theorem 4.4 to a *monoidal*
+   equivalence by equipping the discrete category of words with concatenation as tensor and
+   showing that the flattening functor is strong monoidal — the full statement of Mac Lane's
+   strictification theorem for this family.
+
+2. **Unitors and unit coherence.** Analyze the unit-coherence loops (the triangle) in the same
+   thin framework, comparing with the classical redundancy among the unit axioms.
+
+3. **Bicategorical delooping.** A one-object bicategory is a monoidal category; feeding the
+   parenthesization category through the delooping produces an explicit one-object bicategory
+   whose horizontal composition is non-associative on the nose — a direct model of an
+   "almost-category."
+
+4. **Non-thin obstructions.** The clean coherence here is *because* the category is thin. A
+   natural sequel is to exhibit a non-thin monoidal datum where the pentagon genuinely fails,
+   quantifying how thinness is exactly what removes the obstruction.
+
+---
+
+## 8. Conclusion
+
+We have built, from nothing but parenthesizations, a monoidal category in which associativity
+fails on the nose but is repaired by a canonical, unique associator, with all coherence holding
+automatically by thinness — and we have shown this structure collapses, up to equivalence, to
+the strict discrete category of words. The example is small enough to hold in the hand and
+complete enough to display the full arc of the theory: failure, canonical repair, free
+coherence, and strictification. It is a perfect miniature of the idea that, when composition
+loops back coherently, it loops back to exactly where it began.

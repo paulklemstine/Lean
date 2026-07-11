@@ -1,218 +1,259 @@
 """
-demo.py -- Periodicity of tensor powers in monoidal categories.
+Causal Loops in Category Theory: a concrete non-strict monoidal category.
 
-This script demonstrates, on concrete computable models of monoidal categories,
-the main results of the accompanying paper:
+This self-contained script demonstrates, numerically and constructively, the main
+results of the accompanying paper on the *parenthesization category*:
 
-  * mpow             : the right-associated n-fold tensor power  X^n
-                       (X^0 = 1, X^(n+1) = X (x) X^n)
-  * additive law     : X^(m+n)  ~=  X^m (x) X^n
-  * detection        : if X^m ~= X^n with m < n then X is periodic, period n-m
-  * shift invariance : a period at height m is a period at every height m+k
-  * least period     : the smallest positive period, with minimality
+  * Objects are binary trees with labelled leaves (formal parenthesizations).
+  * `flatten` forgets the bracketing, returning the underlying leaf-word.
+  * A morphism  s -> t  exists iff  flatten(s) == flatten(t), and is then unique
+    (the category is THIN) and invertible (it is a GROUPOID).
+  * The tensor product is  s (x) t := node(s, t), with unit the empty tree.
+  * Associativity FAILS on the nose: (a(x)b)(x)c  and  a(x)(b(x)c)  are distinct
+    trees, joined by a canonical, unique ASSOCIATOR isomorphism.
+  * STRICTIFICATION: every tree is (uniquely) isomorphic to its right-nested
+    normal form, and the whole category is equivalent to the discrete category
+    of words.
 
-Because the theory speaks of objects only up to ISOMORPHISM, every concrete model
-below represents an isomorphism class of objects by a canonical label, and the
-tensor product is realized as a binary operation on those labels.  This is
-faithful: two objects are "the same" exactly when their labels agree.
-
-The script is fully self-contained (standard library only) and uses type hints.
 Run:  python demo.py
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Callable, Dict, Hashable, List, Optional, Tuple
+from functools import lru_cache
+from math import comb
+from typing import List, Optional, Tuple, Union
 
-Label = Hashable  # a canonical name for an isomorphism class of objects
 
+# ----------------------------------------------------------------------------
+# Parenthesization trees
+# ----------------------------------------------------------------------------
 
-# ---------------------------------------------------------------------------
-# A computable model of a (small) monoidal category, tracked up to isomorphism.
-# ---------------------------------------------------------------------------
 @dataclass(frozen=True)
-class MonoidalModel:
-    """A finite model: iso-class labels, a unit, and a tensor on labels.
-
-    `tensor(a, b)` returns the label of  a (x) b.  Associativity and unitality
-    are assumed to hold on labels (they hold up to isomorphism in the category,
-    and labels are iso classes), which is exactly the setting of the paper.
-    """
-
-    name: str
-    labels: Tuple[Label, ...]
-    unit: Label
-    tensor: Callable[[Label, Label], Label]
-
-    def mpow_label(self, x: Label, n: int) -> Label:
-        """Label of the n-fold tensor power X^n  (X^0 = 1, X^(n+1) = X (x) X^n)."""
-        acc: Label = self.unit
-        for _ in range(n):
-            acc = self.tensor(x, acc)
-        return acc
-
-    def mpow_sequence(self, x: Label, upto: int) -> List[Label]:
-        """The labels of X^0, X^1, ..., X^upto."""
-        return [self.mpow_label(x, n) for n in range(upto + 1)]
+class Nil:
+    """The empty tree; the monoidal unit."""
 
 
-# ---------------------------------------------------------------------------
-# Core algorithmic facts about the tower of tensor powers.
-# ---------------------------------------------------------------------------
-def additive_law_holds(model: MonoidalModel, x: Label, bound: int) -> bool:
-    """Check X^(m+n) ~= X^m (x) X^n for all m, n <= bound (Theorem: add law)."""
-    for m in range(bound + 1):
-        xm = model.mpow_label(x, m)
-        for n in range(bound + 1):
-            lhs = model.mpow_label(x, m + n)
-            rhs = model.tensor(xm, model.mpow_label(x, n))
-            if lhs != rhs:
-                return False
-    return True
+@dataclass(frozen=True)
+class Leaf:
+    """A single labelled leaf."""
+    label: str
 
 
-def detect_period(model: MonoidalModel, x: Label, search: int) -> Optional[Tuple[int, int, int]]:
-    """Detection principle: find the FIRST collision X^m ~= X^n, m < n <= search.
-
-    Returns (m, n, d) with d = n - m, certifying periodicity with period d,
-    or None if no collision is found within the search window.
-    """
-    seen: Dict[Label, int] = {}
-    for n in range(search + 1):
-        lbl = model.mpow_label(x, n)
-        if lbl in seen:
-            m = seen[lbl]
-            return (m, n, n - m)
-        seen[lbl] = n
-    return None
+@dataclass(frozen=True)
+class Node:
+    """A binary node: the formal bracketed product (left . right)."""
+    left: "PTree"
+    right: "PTree"
 
 
-def shift_invariance_holds(model: MonoidalModel, x: Label, m: int, d: int, ks: int) -> bool:
-    """Verify shift invariance: X^(m+k) ~= X^(m+k+d) for all k <= ks,
-    given that X^m ~= X^(m+d) (Theorem: HasPeriodAt.shift)."""
-    if model.mpow_label(x, m) != model.mpow_label(x, m + d):
-        return False  # hypothesis fails; nothing to shift
-    for k in range(ks + 1):
-        if model.mpow_label(x, m + k) != model.mpow_label(x, m + k + d):
-            return False
-    return True
+PTree = Union[Nil, Leaf, Node]
 
 
-def period_set(model: MonoidalModel, x: Label, search: int) -> List[int]:
-    """All positive d <= search that are periods: some X^m ~= X^(m+d), m <= search."""
-    out: List[int] = []
-    for d in range(1, search + 1):
-        for m in range(search + 1):
-            if model.mpow_label(x, m) == model.mpow_label(x, m + d):
-                out.append(d)
-                break
+def flatten(t: PTree) -> List[str]:
+    """The underlying leaf-word of a tree, forgetting the bracketing."""
+    if isinstance(t, Nil):
+        return []
+    if isinstance(t, Leaf):
+        return [t.label]
+    return flatten(t.left) + flatten(t.right)
+
+
+def size(t: PTree) -> int:
+    """Total number of constructors in the tree (used for the non-strictness proof)."""
+    if isinstance(t, Nil):
+        return 1
+    if isinstance(t, Leaf):
+        return 1
+    return size(t.left) + size(t.right) + 1
+
+
+def show(t: PTree) -> str:
+    """Human-readable bracketing, e.g. Node(Leaf a, Node(Leaf b, Leaf c)) -> (a(bc))."""
+    if isinstance(t, Nil):
+        return "e"
+    if isinstance(t, Leaf):
+        return t.label
+    return "(" + show(t.left) + show(t.right) + ")"
+
+
+# The tensor product on objects and the unit.
+def tensor(s: PTree, t: PTree) -> PTree:
+    return Node(s, t)
+
+
+UNIT: PTree = Nil()
+
+
+# ----------------------------------------------------------------------------
+# Morphisms: a morphism s -> t is *witnessed* by flatten(s) == flatten(t).
+# In this thin groupoid a morphism carries no data beyond existence, so we model
+# "the morphism" as a boolean (exists?) plus the shared word.
+# ----------------------------------------------------------------------------
+
+def hom_exists(s: PTree, t: PTree) -> bool:
+    """Is there a morphism s -> t? (Equivalently: are s, t isomorphic?)"""
+    return flatten(s) == flatten(t)
+
+
+def are_isomorphic(s: PTree, t: PTree) -> bool:
+    """Isomorphism criterion: s ~= t  iff  flatten(s) == flatten(t)."""
+    return hom_exists(s, t)
+
+
+# The associator witnesses  (a(x)b)(x)c  ~=  a(x)(b(x)c).
+def associator_source(a: PTree, b: PTree, c: PTree) -> PTree:
+    return tensor(tensor(a, b), c)
+
+
+def associator_target(a: PTree, b: PTree, c: PTree) -> PTree:
+    return tensor(a, tensor(b, c))
+
+
+# ----------------------------------------------------------------------------
+# Normal form (right-nested tree) and strictification
+# ----------------------------------------------------------------------------
+
+def of_list(word: List[str]) -> PTree:
+    """The canonical right-nested tree of a word: a(b(c...))."""
+    result: PTree = Nil()
+    for label in reversed(word):
+        result = Node(Leaf(label), result)
+    return result
+
+
+def normalize(t: PTree) -> PTree:
+    """The normal form of t; t is (uniquely) isomorphic to normalize(t)."""
+    return of_list(flatten(t))
+
+
+# ----------------------------------------------------------------------------
+# Enumeration of all bracketings and Catalan counts
+# ----------------------------------------------------------------------------
+
+def all_bracketings(word: List[str]) -> List[PTree]:
+    """All parenthesization trees whose leaf-word is exactly `word` (word nonempty)."""
+    if len(word) == 1:
+        return [Leaf(word[0])]
+    out: List[PTree] = []
+    for i in range(1, len(word)):
+        for left in all_bracketings(word[:i]):
+            for right in all_bracketings(word[i:]):
+                out.append(Node(left, right))
     return out
 
 
-def min_period(model: MonoidalModel, x: Label, search: int) -> Optional[int]:
-    """The least positive period within the search window, or None."""
-    ps = period_set(model, x, search)
-    return min(ps) if ps else None
+@lru_cache(maxsize=None)
+def catalan(m: int) -> int:
+    """The m-th Catalan number C_m = binom(2m, m)/(m+1)."""
+    return comb(2 * m, m) // (m + 1)
 
 
-# ---------------------------------------------------------------------------
-# Concrete models.
-# ---------------------------------------------------------------------------
-def rep_cyclic_group(n: int) -> MonoidalModel:
-    """Rep(Z/n): iso classes are characters 0..n-1; tensor = addition mod n;
-    unit = the trivial character 0.  X^k of character a has label (a*k) mod n."""
-    return MonoidalModel(
-        name=f"Rep(Z/{n})",
-        labels=tuple(range(n)),
-        unit=0,
-        tensor=lambda a, b: (a + b) % n,
-    )
+# ----------------------------------------------------------------------------
+# Demonstrations
+# ----------------------------------------------------------------------------
 
-
-def vect_free_monoid(cap: int) -> MonoidalModel:
-    """A toy 'graded lines' model whose iso classes are 0,1,2,... (a free
-    commutative monoid on one generator), tensor = addition, unit = 0.  Here the
-    tower X^n (X = label 1) NEVER repeats -- it is the categorical analogue of
-    powers of a number and is the canonical NON-periodic example."""
-    return MonoidalModel(
-        name=f"GradedLines(cap={cap})",
-        labels=tuple(range(cap + 1)),
-        unit=0,
-        tensor=lambda a, b: a + b,  # may exceed cap; used only for small n
-    )
-
-
-def klein_four() -> MonoidalModel:
-    """Rep(Z/2 x Z/2): iso classes are pairs in {0,1}^2; tensor = componentwise
-    XOR; unit = (0,0).  Every nontrivial character squares to the unit."""
-    elts: Tuple[Label, ...] = tuple((a, b) for a in (0, 1) for b in (0, 1))
-    return MonoidalModel(
-        name="Rep(Z/2 x Z/2)",
-        labels=elts,
-        unit=(0, 0),
-        tensor=lambda u, v: ((u[0] ^ v[0]), (u[1] ^ v[1])),
-    )
-
-
-# ---------------------------------------------------------------------------
-# Driver.
-# ---------------------------------------------------------------------------
-def banner(title: str) -> None:
-    print("\n" + "=" * 70)
-    print(title)
+def demo_non_strictness() -> None:
     print("=" * 70)
+    print("1. ASSOCIATIVITY FAILS ON THE NOSE (but flattens equal)")
+    print("=" * 70)
+    a, b, c = Leaf("a"), Leaf("b"), Leaf("c")
+    lhs = associator_source(a, b, c)
+    rhs = associator_target(a, b, c)
+    print(f"  (a(x)b)(x)c = {show(lhs)}   size = {size(lhs)}")
+    print(f"  a(x)(b(x)c) = {show(rhs)}   size = {size(rhs)}")
+    print(f"  distinct objects?         {lhs != rhs}")
+    print(f"  same underlying word?     {flatten(lhs) == flatten(rhs)}  "
+          f"(both {''.join(flatten(lhs))})")
+    print(f"  associator exists (iso)?  {are_isomorphic(lhs, rhs)}")
+    print()
 
 
-def report_periodic_object(model: MonoidalModel, x: Label, search: int) -> None:
-    seq = model.mpow_sequence(x, min(search, 8))
-    print(f"  model         : {model.name}")
-    print(f"  object X       : {x}")
-    print(f"  tower X^0..    : {seq}")
-    print(f"  additive law   : X^(m+n) ~= X^m (x) X^n  ->  {additive_law_holds(model, x, 6)}")
-    det = detect_period(model, x, search)
-    if det is None:
-        print(f"  detection      : no collision within {search} steps (looks non-periodic)")
-        return
-    m, n, d = det
-    print(f"  detection      : X^{m} ~= X^{n}  =>  period d = {d}")
-    si = shift_invariance_holds(model, x, m, d, ks=search - n)
-    print(f"  shift invariance: period {d} holds at every height >= {m}  ->  {si}")
-    ps = period_set(model, x, search)
-    print(f"  period set      : {sorted(set(ps))}  (multiples of the least period)")
-    mp = min_period(model, x, search)
-    print(f"  least period    : minPeriod = {mp}  (positive, divides all others)")
+def demo_thin_unique_associator() -> None:
+    print("=" * 70)
+    print("2. THIN GROUPOID: the associator is the UNIQUE isomorphism")
+    print("=" * 70)
+    a, b, c = Leaf("a"), Leaf("b"), Leaf("c")
+    lhs, rhs = associator_source(a, b, c), associator_target(a, b, c)
+    # In a thin category there is at most one morphism; count = 0 or 1.
+    n_morphisms = 1 if hom_exists(lhs, rhs) else 0
+    print(f"  number of morphisms (a(x)b)(x)c -> a(x)(b(x)c): {n_morphisms}")
+    print(f"  invertible (groupoid)?  {hom_exists(rhs, lhs)}")
+    print(f"  => the associator carries no data beyond existence.")
+    print()
+
+
+def demo_catalan_and_iso_class() -> None:
+    print("=" * 70)
+    print("3. BRACKETINGS PER WORD = CATALAN NUMBERS; all mutually isomorphic")
+    print("=" * 70)
+    for n in range(1, 7):
+        word = [chr(ord("a") + i) for i in range(n)]
+        trees = all_bracketings(word)
+        # verify all bracketings of a fixed word are mutually isomorphic
+        all_iso = all(are_isomorphic(trees[0], t) for t in trees)
+        print(f"  |word| = {n}:  #bracketings = {len(trees):3d}  "
+              f"= C_{n-1} = {catalan(n - 1):3d}   all isomorphic? {all_iso}")
+    print()
+
+
+def demo_strictification() -> None:
+    print("=" * 70)
+    print("4. STRICTIFICATION: every tree ~= its right-nested normal form")
+    print("=" * 70)
+    word = ["a", "b", "c", "d"]
+    for t in all_bracketings(word):
+        nf = normalize(t)
+        ok = are_isomorphic(t, nf) and flatten(nf) == flatten(t)
+        print(f"  {show(t):12s} ~=  {show(nf):12s}   iso & word-preserving? {ok}")
+    print(f"  normal form is the same for all bracketings of {''.join(word)}: "
+          f"{show(of_list(word))}")
+    print("  => flatten is an equivalence onto the discrete category of words.")
+    print()
+
+
+def demo_pentagon() -> None:
+    print("=" * 70)
+    print("5. PENTAGON: two associator routes agree on the flattened data")
+    print("=" * 70)
+    w, x, y, z = Leaf("w"), Leaf("x"), Leaf("y"), Leaf("z")
+    start = tensor(tensor(tensor(w, x), y), z)          # ((wx)y)z
+    end = tensor(w, tensor(x, tensor(y, z)))            # w(x(yz))
+    # long route waypoints
+    long_route = [
+        start,
+        tensor(tensor(w, tensor(x, y)), z),             # (w(xy))z
+        tensor(w, tensor(tensor(x, y), z)),             # w((xy)z)
+        end,
+    ]
+    # short route waypoints
+    short_route = [
+        start,
+        tensor(tensor(w, x), tensor(y, z)),             # (wx)(yz)
+        end,
+    ]
+    long_ok = all(are_isomorphic(long_route[i], long_route[i + 1])
+                  for i in range(len(long_route) - 1))
+    short_ok = all(are_isomorphic(short_route[i], short_route[i + 1])
+                   for i in range(len(short_route) - 1))
+    print(f"  start = {show(start)}")
+    print(f"  end   = {show(end)}")
+    print(f"  long route  (3 associators) all iso?  {long_ok}")
+    print(f"  short route (2 associators) all iso?  {short_ok}")
+    print(f"  both routes reach the same object with the same word?  "
+          f"{are_isomorphic(start, end)}")
+    print("  => the causal loop closes to the identity (pentagon holds).")
+    print()
 
 
 def main() -> None:
-    banner("Example 1 -- Cyclic charge in Rep(Z/3): least period 3")
-    report_periodic_object(rep_cyclic_group(3), x=1, search=12)
-
-    banner("Example 2 -- Rep(Z/6), character of order 6 and of order 2/3")
-    report_periodic_object(rep_cyclic_group(6), x=1, search=18)  # order 6
-    print()
-    report_periodic_object(rep_cyclic_group(6), x=2, search=18)  # order 3
-    print()
-    report_periodic_object(rep_cyclic_group(6), x=3, search=18)  # order 2
-
-    banner("Example 3 -- Klein four group: every nontrivial char has period 2")
-    report_periodic_object(klein_four(), x=(1, 0), search=8)
-    print()
-    report_periodic_object(klein_four(), x=(1, 1), search=8)
-
-    banner("Example 4 -- The non-periodic baseline (graded lines)")
-    report_periodic_object(vect_free_monoid(cap=50), x=1, search=20)
-
-    banner("Example 5 -- Forced periodicity (pigeonhole) in a finite model")
-    # In Rep(Z/n) there are only n iso classes, so X^0..X^n (n+1 terms) must
-    # contain a repeat; the detected period is at most n.
-    for n in (4, 5, 7, 12):
-        det = detect_period(rep_cyclic_group(n), x=1, search=n)
-        assert det is not None, "pigeonhole guarantees a collision"
-        m, k, d = det
-        print(f"  Rep(Z/{n}): collision X^{m} ~= X^{k}, period {d} <= {n}  (n classes)")
-
-    print("\nAll demonstrations completed.")
+    demo_non_strictness()
+    demo_thin_unique_associator()
+    demo_catalan_and_iso_class()
+    demo_strictification()
+    demo_pentagon()
+    print("All demonstrations completed.")
 
 
 if __name__ == "__main__":
