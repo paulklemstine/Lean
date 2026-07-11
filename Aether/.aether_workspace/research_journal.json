@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "df72d5fe",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The Topology of Arithmetic\n\nThis cycle established that the zero-dimensional persistent homology of the prime\npoint cloud is a genuine persistence module whose entire structure —",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-07-10T12:07:09",
-      "title": "Deepening: Persistent Homology of Prime Numbers: The Topology of Arithmetic"
-    },
-    {
       "cycle_id": "2c002c80",
       "domain": "Applications",
       "key_insight": "# Future directions\n\nThis project formalizes the combinatorial-fixed-point core of the \"Sperner ⇒ Nash\"\nprogram in two files:\n\n* `Sperner1D.lean` — the one-dimensional Sperner lemma (parity form and o",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-11T05:18:16",
       "title": "Digital Immortality: Can a Mind Be Encoded?"
+    },
+    {
+      "cycle_id": "46d2d021",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Self-Modifying Halting ⟷ Lawvere/Cantor Bridge\n\nThis cycle contributes `Catalog/Computation/SelfModifyingLawvereBridge.lean`, a\nself-contained cross-domain bridge connecting **fi",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-07-11T06:06:45",
+      "title": "Deepening: Self-Modifying Code That Cannot Be Stopped"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b714fdc8",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nBold, testable conjectures distilled from this cycle's work on the divisibility\n`5 ∣ a⁵ − a`, its decimal-digit sharpening `10 ∣ a⁵ − a`, and the exponent-class\ngeneralisation `5",
-      "quality_score": 0.7480399999999999,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-07-02T20:14:02",
-      "title": "Prove Fermats Little Theorem for p=5"
-    },
     {
       "cycle_id": "7f2fc4f9",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-11T05:18:16",
       "title": "Digital Immortality: Can a Mind Be Encoded?"
+    },
+    {
+      "cycle_id": "46d2d021",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Self-Modifying Halting ⟷ Lawvere/Cantor Bridge\n\nThis cycle contributes `Catalog/Computation/SelfModifyingLawvereBridge.lean`, a\nself-contained cross-domain bridge connecting **fi",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-07-11T06:06:45",
+      "title": "Deepening: Self-Modifying Code That Cannot Be Stopped"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "cf42e929",
-      "domain": "Algebra",
-      "name": "not_coverable_7_3_0",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "cf42e929",
-      "domain": "Algebra",
-      "name": "coverable_7_4_1",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "f9bf2df0",
-      "domain": "NumberTheory",
-      "name": "iso_diff_by_aut",
-      "quality": 0.82
-    },
     {
       "cycle_id": "f9bf2df0",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "specialised",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "46d2d021",
+      "domain": "Applications",
+      "name": "and",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "46d2d021",
+      "domain": "Applications",
+      "name": "giving",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "46d2d021",
+      "domain": "Applications",
+      "name": "and",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-11T05:18:16",
+  "last_updated": "2026-07-11T06:06:45",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "6c565e60",
-        "quality": 0.72,
-        "theorems": 38,
-        "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
-      },
-      {
         "cycle_id": "34e9f39c",
         "quality": 0.82,
         "theorems": 20,
@@ -3141,6 +3135,12 @@
         "quality": 0.72,
         "theorems": 15,
         "title": "Improved adhesion bound in coarse block-cutvertex tree-decomposition"
+      },
+      {
+        "cycle_id": "46d2d021",
+        "quality": 0.82,
+        "theorems": 23,
+        "title": "Deepening: Self-Modifying Code That Cannot Be Stopped"
       }
     ],
     "Bridges": [

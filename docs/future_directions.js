@@ -381,7 +381,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Isomorphisms of Meaning: When Structures Collide"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1c874912",
     "description": "Building on cycle fec9de1f (Q=0.820), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove information-theoretic bounds on mind uploading: the minimum description length of a human mind exceeds any computable compression of its neural connectome. Formalize the Bekenstein bound applied to neural computation and show that the Kolmogorov complexity of consciousness is at least quadrati",
     "domains": [
       "Novelty"
@@ -390,7 +390,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "fec9de1f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T05:18:16.612897+00:00",
     "title": "Deepening: Digital Immortality: Can a Mind Be Encoded?"
   },
@@ -535,20 +535,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T05:00:51.739107+00:00",
     "title": "Deepening: Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
-  },
-  {
-    "consumed_by_exp_id": "46d2d021",
-    "description": "Building on cycle 75fb79ca (Q=0.780), which proved 27 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that any Turing-complete system with self-modification capabilities has no general algorithm for predicting its own termination. Formalize the halting problem for programs that can rewrite their own code mid-execution and show this is strictly harder than the classical halting problem. Connect",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_75fb79ca_e9b86f9d",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "75fb79ca",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T02:34:45.150096+00:00",
-    "title": "Deepening: Self-Modifying Code That Cannot Be Stopped"
   },
   {
     "consumed_by_exp_id": "",
@@ -6891,6 +6877,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T05:18:10.326982+00:00",
     "title": "That the description length of a neural connectome is"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Self-Modifying Halting \u27f7 Lawvere/Cantor Bridge\n\nThis cycle contributes `Catalog/Computation/SelfModifyingLawvereBridge.lean`, a\nself-contained cross-domain bridge connecting **fixed-point theory / set theory**\n(Lawvere's theorem, Cantor's theorem) with the **computability of\nself-modifying code** (halting problem, Kleene's recursion theorem).\n\n## What was proved\n\n* `lawvere_fixed_point` \u2014 Lawvere's fixed-point theorem (point-surjective form).\n* `no_point_surjection`, `cantor_bool`, `cantor_powerset` \u2014 Cantor's theorem in\n  Boolean and power-set form, as the fixed-point-free contrapositive of Lawvere.\n* `diagonal_no_decider` \u2014 the diagonalization engine, derived directly from\n  `cantor_bool` (halting-style diagonalization is a face of Cantor's theorem).\n* Self-modifying machine model (`SelfModMachine`, `run`, `halts`, `toStd`) plus\n  `selfmod_run_eq_std_run` and `selfmod_halts_iff_standard`: self-modification\n  adds no computational power over its fixed-program simulation.\n* `diagMachine`, `diag_run`, `diag_halts_iff`: an explicit self-modifying\n  machine whose halting predicate equals `Nat.Partrec.Code`'s halting problem.\n* `selfmod_halting_undecidable` and `selfmod_std_halting_undecidable` \u2014 a\n  **genuine, non-vacuous** proof that the self-modifying halting predicate is not\n  computable, by reduction to `ComputablePred.halting_problem`.\n* `selfmod_behavior_fixed_point` \u2014 Kleene's recursion theorem: no computable\n  self-modification rule can change the behavior of *every* program.\n* `lawvere_halting_bridge` \u2014 packages the set-theoretic and computational\n  impossibilities over one configuration space.\n\nA notable observation: the earlier cycle's `diagonal_no_decider`\n(`Catalog/Computation/SelfModifyingHalt.lean`) carries a `Surjective enum`\nhypothesis on `enum : \u03b1 \u2192 (\u03b1 \u2192 Bool)`, which Cantor's theorem makes\nunsatisfiable \u2014 so that statement is vacuously true. The new\n`selfmod_halting_undecidable` avoids this by reducing to Mathlib's honest\nhalting problem over `Nat.Partrec.Code`, giving a non-vacuous result.\n\n## Open directions\n\n1. **Strictly-modifying instances.** `diagMachine` never rewrites its program.\n   Build a self-modifying machine that provably changes its program infinitely\n   often yet still realizes the halting problem, quantifying \"self-modification\n   depth\" and relating it to the arithmetical hierarchy.\n\n2. **Turing degree of self-modifying halting.** Prove the self-modifying halting\n   set is `\u03a3\u2070\u2081`-complete (many-one equivalent to `\u2205'`), formalizing that\n   self-modification is *equivalent* to, not strictly harder than, classical\n   halting.\n\n3. **Quantitative recursion theorem.** Strengthen `selfmod_behavior_fixed_point`\n   to a *uniform* fixed point (an index for the quine computable from the rule),\n   and connect to explicit quine constructions.\n\n4. **Lawvere in an internal category.** Re-derive the halting undecidability as\n   an instance of Lawvere's theorem in the category of computable maps, making\n   the bridge functorial rather than by parallel corollaries.\n\n5. **Topology of the halting set.** Equip `Code` with a topology and show the\n   halting configuration set is open (`\u03a3\u2070\u2081`) but not closed, matching the\n   classical picture and adding a third area (point-set topology) to the bridge.\n",
+    "domains": [
+      "Bridges",
+      "Computation"
+    ],
+    "id": "fd_0992",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "46d2d021",
+    "status": "available",
+    "timestamp": "2026-07-11T06:06:38.533461+00:00",
+    "title": "This cycle contributes `Catalog/Computation/SelfModifyingLawvereBridge.lean`, a"
   },
   {
     "consumed_by_exp_id": "",
