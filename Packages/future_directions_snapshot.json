@@ -517,6 +517,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 9ca5466b (Q=0.800), which proved 40 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that any technological civilization must discover computational complexity independently of its biological substrate. Formalize a universal complexity hierarchy and prove that P vs NP is a theorem about the structure of computation itself, not about any particular model. Show that even hyperco",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_9ca5466b_a1bd971c",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "9ca5466b",
+    "status": "available",
+    "timestamp": "2026-07-11T08:51:48.793508+00:00",
+    "title": "Deepening: Computational Complexity of Alien Civilizations"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle a6f348ea (Q=0.800), which proved 20 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Stone duality states that every Boolean algebra B is isomorphic to the clopen algebra of its Stone space S(B) (the space of ultrafilters on B). This connects syntax (Boolean algebra) with semantics (topology). Conjecture: every neural network f: R^n -> R^m has a 'Stone dual' which is a Boolean algeb",
     "domain_bridges": [],
     "domains": [

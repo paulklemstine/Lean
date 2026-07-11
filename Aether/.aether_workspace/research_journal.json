@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f5358691",
-      "domain": "Computation",
-      "key_insight": "# Future directions — Persistent Cycles in Randomized Graphs\n\n## What was established\n\nThe mission target — *for every `ε>0` there is `K` such that for `d ≥ K` and\n`p ∈ [εd/log n, d/log n]`, `G_p` a.a",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-10T15:33:02",
-      "title": "Persistent Cycles in Randomized Graphs via Hyperstable Structural Constraints"
-    },
-    {
       "cycle_id": "cd5a9d7d",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions: Forced Structure in Symbolic Sequences\n\nThis cycle established two complementary \"forcing\" thresholds for sequences over a\nfinite alphabet: a *linear* pigeonhole threshold that fo",
@@ -499,19 +489,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-11T08:51:43",
       "title": "Counterfactual Number Theory: What If Primes Were Random?"
+    },
+    {
+      "cycle_id": "9ca5466b",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## Computational Complexity of Alien Civilizations\n\nThis project isolates the *substrate-independent* core of computational\nobstructions: **Lawvere's fixed-point theorem**. Every",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 40,
+      "timestamp": "2026-07-11T08:51:48",
+      "title": "Computational Complexity of Alien Civilizations"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "70c42dc4",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Phantom Topologies\n\nBold, falsifiable conjectures arising from this cycle's finding that the real line\nis the two-observer consensus of the lower- and upper-limit topologies, whi",
-      "quality_score": 0.7083999999999999,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-03T07:55:37",
-      "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-    },
     {
       "cycle_id": "12f18d90",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-11T08:51:43",
       "title": "Counterfactual Number Theory: What If Primes Were Random?"
+    },
+    {
+      "cycle_id": "9ca5466b",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## Computational Complexity of Alien Civilizations\n\nThis project isolates the *substrate-independent* core of computational\nobstructions: **Lawvere's fixed-point theorem**. Every",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 40,
+      "timestamp": "2026-07-11T08:51:48",
+      "title": "Computational Complexity of Alien Civilizations"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0ba9c9ed",
-      "domain": "Probability",
-      "name": "proved",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "fd7d55eb",
-      "domain": "Bridges",
-      "name": "mem_earlierNeighbours",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "fd7d55eb",
-      "domain": "Bridges",
-      "name": "colorable_of_earlierDegree_lt",
-      "quality": 0.82
-    },
     {
       "cycle_id": "2ca6565f",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "inH_mul",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "9ca5466b",
+      "domain": "Applications",
+      "name": "Level_zero",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "9ca5466b",
+      "domain": "Applications",
+      "name": "Level_succ",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "9ca5466b",
+      "domain": "Applications",
+      "name": "bool_ne_not",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-11T08:51:43",
+  "last_updated": "2026-07-11T08:51:48",
   "open_questions": [
     {
       "context": "+Everything in this file is complete and `sorry`-free.; +range as a self-contained, `sorry`-free statement.  It isolates exactly the part; -    sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "3399a930",
-        "quality": 0.83,
-        "theorems": 22,
-        "title": "Negative-Dimensional Topology: What Lives in Dimension -1?"
-      },
-      {
         "cycle_id": "a547c760",
         "quality": 0.72,
         "theorems": 33,
@@ -3141,6 +3135,12 @@
         "quality": 0.72,
         "theorems": 19,
         "title": "Hypercomputation: Computing the Uncomputable"
+      },
+      {
+        "cycle_id": "9ca5466b",
+        "quality": 0.8,
+        "theorems": 40,
+        "title": "Computational Complexity of Alien Civilizations"
       }
     ],
     "Bridges": [
